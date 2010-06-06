@@ -147,7 +147,7 @@ typedef struct {
 //---------------
   int packs;              // number of packets in buffer
   int bytes;              // total bytes of packets in buffer
-  demux_packet_t *first;  // read to current buffer from here
+  demux_packet_t *first;  // read to first buffer after the current buffer from here
   demux_packet_t *last;   // append new packets from input stream to here
   demux_packet_t *current;// needed for refcounting of the buffer
   int id;                 // stream ID  (for multiple audio/video streams)
