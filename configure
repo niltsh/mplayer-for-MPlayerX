@@ -8773,6 +8773,7 @@ CC_O       = -o \$@
 LD         = gcc
 RANLIB     = $_ranlib
 YASM       = $_yasm
+YASMDEP    = $_yasm
 YASMFLAGS  = $YASMFLAGS
 
 CONFIG_STATIC = yes
