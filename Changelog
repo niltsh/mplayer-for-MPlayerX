@@ -29,6 +29,9 @@ MPlayer (1.0)
     * remove vf_yuy2, functionality is replaced by -vf format=yuv2
 
     Drivers:
+    * -vo yuv4mpeg:interlaced no longer does its own interlaced RGB->YUV
+      conversion. Use -vf scale=::1 to keep the same behaviour and report
+      if there are any issues with that.
     * X11: Window manager choses Window position by default.
       Add geometry=50%:50% to your configuration to get the old behaviour.
     * -vo md5sum md5 calculation changed so output matches FFmpeg's -f framemd5
