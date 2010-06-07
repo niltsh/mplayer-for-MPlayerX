@@ -163,7 +163,7 @@ static subtitle *sub_read_line_sami(stream_t* st, subtitle *current, int utf16) 
 	    if (*s == '\0') break;
 	    else if (!strncasecmp (s, "<br>", 4)) {
 		*p = '\0'; p = text; trail_space (text);
-		if (text[0] != '\0')
+		if (text[0] != '\0' && current->lines < SUB_MAX_TEXT)
 		    current->text[current->lines++] = strdup (text);
 		s += 4;
 	    }
@@ -244,7 +244,7 @@ static subtitle *sub_read_line_sami(stream_t* st, subtitle *current, int utf16) 
     if (current->end <= 0) {
         current->end = current->start + sub_slacktime;
 	*p = '\0'; trail_space (text);
-	if (text[0] != '\0')
+	if (text[0] != '\0' && current->lines < SUB_MAX_TEXT)
 	    current->text[current->lines++] = strdup (text);
     }
 
