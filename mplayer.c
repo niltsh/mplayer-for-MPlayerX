@@ -292,7 +292,7 @@ static char *stream_dump_name="stream.dump";
        int stream_dump_type=0;
 
 // A-V sync:
-static float default_max_pts_correction=-1;//0.01f;
+static float default_max_pts_correction=1;
 static float max_pts_correction=0;//default_max_pts_correction;
 static float c_total=0;
        float audio_delay=0;
