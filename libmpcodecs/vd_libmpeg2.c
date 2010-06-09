@@ -38,8 +38,6 @@ static const vd_info_t info =
 
 LIBVD_EXTERN(libmpeg2)
 
-//#include "libvo/video_out.h"	// FIXME!!!
-
 #include "libmpeg2/mpeg2.h"
 #include "libmpeg2/attributes.h"
 #include "libmpeg2/mpeg2_internal.h"
@@ -82,7 +80,6 @@ static int control(sh_video_t *sh,int cmd,void* arg,...){
 static int init(sh_video_t *sh){
     vd_libmpeg2_ctx_t *context;
     mpeg2dec_t * mpeg2dec;
-//    const mpeg2_info_t * info;
     int accel;
 
     accel = 0;
@@ -145,8 +142,6 @@ static void draw_slice (void * _sh, uint8_t * const * src, unsigned int y){
     const mpeg2_info_t * info = mpeg2_info (mpeg2dec);
     int stride[MP_MAX_PLANES] = {mpeg2dec->decoder.stride, mpeg2dec->decoder.uv_stride, mpeg2dec->decoder.uv_stride};
     uint8_t *srcs[MP_MAX_PLANES] = {src[0], src[1], src[2]};
-
-//  printf("draw_slice() y=%d  \n",y);
 
     mpcodecs_draw_slice(sh, srcs,
 		stride, info->sequence->picture_width,
@@ -232,7 +227,6 @@ static mp_image_t* decode(sh_video_t *sh,void* data,int len,int flags){
             drop_frame |= framedrop>=2; // hard drop
             if (drop_frame) {
                mpeg2_skip(mpeg2dec, 1);
-	       //printf("Dropping Frame ...\n");
 	       break;
 	    }
             mpeg2_skip(mpeg2dec, 0); //mpeg2skip skips frames until set again to 0
@@ -306,7 +300,6 @@ static mp_image_t* decode(sh_video_t *sh,void* data,int len,int flags){
 		    memcpy(mpeg2dec->pending_buffer+mpeg2dec->pending_length, data, len);
 		    mpeg2dec->pending_length += len;
 		}
-//		fprintf(stderr, "pending = %d\n", mpeg2dec->pending_length);
 		return mpi;
 	    }
 	}
