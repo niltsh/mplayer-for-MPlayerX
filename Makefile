@@ -445,7 +445,6 @@ SRCS_COMMON = asxparser.c \
               libmpcodecs/vf_pullup.c \
               libmpcodecs/vf_rectangle.c \
               libmpcodecs/vf_remove_logo.c \
-              libmpcodecs/vf_rgb2bgr.c \
               libmpcodecs/vf_rgbtest.c \
               libmpcodecs/vf_rotate.c \
               libmpcodecs/vf_sab.c \
