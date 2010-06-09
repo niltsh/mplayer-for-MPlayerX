@@ -339,7 +339,7 @@ Codecs:
   --enable-libdca           enable libdca support [autodetect]
   --disable-mp3lib          disable builtin mp3lib [autodetect]
   --disable-liba52          disable liba52 [autodetect]
-  --disable-libmpeg2        disable builtin libmpeg2 [autodetect]
+  --disable-libmpeg2-internal disable builtin libmpeg2 [autodetect]
   --disable-musepack        disable musepack support [autodetect]
   --disable-libopencore_amrnb disable libopencore_amr narrowband [autodetect]
   --disable-libopencore_amrwb disable libopencore_amr wideband [autodetect]
@@ -634,7 +634,7 @@ _theora=auto
 _mp3lib=auto
 _liba52=auto
 _libdca=auto
-_libmpeg2=auto
+_libmpeg2_internal=auto
 _faad=auto
 _faad_internal=auto
 _faad_fixed=no
@@ -1031,8 +1031,8 @@ for ac_option do
   --disable-liba52)     _liba52=no      ;;
   --enable-libdca)      _libdca=yes     ;;
   --disable-libdca)     _libdca=no      ;;
-  --enable-libmpeg2)    _libmpeg2=yes   ;;
-  --disable-libmpeg2)   _libmpeg2=no    ;;
+  --enable-libmpeg2_internal)    _libmpeg2_internal=yes   ;;
+  --disable-libmpeg2_internal)   _libmpeg2_internal=no    ;;
   --enable-musepack)    _musepack=yes   ;;
   --disable-musepack)   _musepack=no    ;;
   --enable-faad)        _faad=yes       ;;
@@ -6837,12 +6837,14 @@ fi
 echores "$_liba52"
 
 echocheck "internal libmpeg2 support"
-if test "$_libmpeg2" = auto ; then
+if test "$_libmpeg2_internal" = auto ; then
   _libmpeg2=yes
+  _libmpeg2_internal=yes
   if alpha && test cc_vendor=gnu; then
     case $cc_version in
       2*|3.0*|3.1*) # cannot compile MVI instructions
-        _libmpeg2=no
+        _libmpeg2_=no
+        _libmpeg2_internal=no
         res_comment="broken gcc"
         ;;
     esac
@@ -6850,10 +6852,12 @@ if test "$_libmpeg2" = auto ; then
 fi
 if test "$_libmpeg2" = yes ; then
   def_libmpeg2='#define CONFIG_LIBMPEG2 1'
+  def_libmpeg2_internal='#define CONFIG_LIBMPEG2_INTERNAL 1'
   codecmodules="libmpeg2(internal) $codecmodules"
 else
   def_libmpeg2='#undef CONFIG_LIBMPEG2'
-  nocodecmodules="libmpeg2(internal) $nocodecmodules"
+  def_libmpeg2_internal='#undef CONFIG_LIBMPEG2_INTERNAL'
+  nocodecmodules="libmpeg2 $nocodecmodules"
 fi
 echores "$_libmpeg2"
 
@@ -8658,6 +8662,7 @@ LIBMAD = $_mad
 LIBMENU = $_menu
 LIBMENU_DVBIN = $_menu_dvbin
 LIBMPEG2 = $_libmpeg2
+LIBMPEG2_INTERNAL = $_libmpeg2_internal
 LIBNEMESI = $_nemesi
 LIBNUT = $_libnut
 LIBSMBCLIENT = $_smb
@@ -9035,6 +9040,7 @@ $def_libdca
 $def_libdv
 $def_liblzo
 $def_libmpeg2
+$def_libmpeg2_internal
 $def_mad
 $def_mp3lame
 $def_mp3lame_preset
