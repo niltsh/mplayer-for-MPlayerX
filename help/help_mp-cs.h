@@ -830,8 +830,6 @@ static const char help_text[]=
 #define MSGTR_VO_CantCreateDirectory "Nelze vytvořit výstupní adresář."
 #define MSGTR_VO_CantCreateFile "Nelze vytvořit výstupní soubor."
 #define MSGTR_VO_DirectoryCreateSuccess "Úspěšně vytvořen výstupní adresář."
-#define MSGTR_VO_ParsingSuboptions "Interpretuji podvolby."
-#define MSGTR_VO_SuboptionsParsedOK "Podvolby interpretovány OK."
 #define MSGTR_VO_ValueOutOfRange "hodnota mimo rozsah"
 #define MSGTR_VO_NoValueSpecified "Nebyla zadána hodnota."
 #define MSGTR_VO_UnknownSuboptions "neznámá(é) podvolba(y)"

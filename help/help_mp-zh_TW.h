@@ -1001,8 +1001,6 @@ static const char help_text[]=
 #define MSGTR_VO_CantCreateDirectory "無法創建輸出目録。"
 #define MSGTR_VO_CantCreateFile "無法創建輸出文件。"
 #define MSGTR_VO_DirectoryCreateSuccess "輸出目録創建成功。"
-#define MSGTR_VO_ParsingSuboptions "解析子選項。"
-#define MSGTR_VO_SuboptionsParsedOK "子選項解析成功。"
 #define MSGTR_VO_ValueOutOfRange "值超出範圍"
 #define MSGTR_VO_NoValueSpecified "没有指定值。"
 #define MSGTR_VO_UnknownSuboptions "未知子選項"

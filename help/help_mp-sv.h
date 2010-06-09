@@ -810,8 +810,6 @@ static const char help_text[]=
 #define MSGTR_VO_CantCreateDirectory "Oförmögen att skapa ut-katalog."
 #define MSGTR_VO_CantCreateFile "Oförmögen att skapa utfil."
 #define MSGTR_VO_DirectoryCreateSuccess "Ut-katalog skapad."
-#define MSGTR_VO_ParsingSuboptions "Tolkar suboptions." // FIXME suboptions?
-#define MSGTR_VO_SuboptionsParsedOK "Suboptions tolkad OK." // -''-
 #define MSGTR_VO_ValueOutOfRange "Värden utanför godkänd rymd"
 #define MSGTR_VO_NoValueSpecified "Inget värde angett."
 #define MSGTR_VO_UnknownSuboptions "Okänd suboption" // -''-

@@ -824,8 +824,6 @@ static const char help_text[]=
 #define MSGTR_VO_CantCreateDirectory "Не можу створити директорію виводу."
 #define MSGTR_VO_CantCreateFile "Не можу створити файл виводу."
 #define MSGTR_VO_DirectoryCreateSuccess "Директорія виводу успішно створена."
-#define MSGTR_VO_ParsingSuboptions "Перевіряю синтаксис субопцій."
-#define MSGTR_VO_SuboptionsParsedOK "Перевірка синтаксису закінчилась успішно."
 #define MSGTR_VO_ValueOutOfRange "значення за межами доступного діапазону"
 #define MSGTR_VO_NoValueSpecified "Не вказано значення."
 #define MSGTR_VO_UnknownSuboptions "невідома(і) субопція(ї)"

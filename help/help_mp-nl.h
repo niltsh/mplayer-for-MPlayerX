@@ -793,8 +793,6 @@ static const char help_text[]=
 #define MSGTR_VO_CantCreateDirectory "Kan de output directory niet aanmaken."
 #define MSGTR_VO_CantCreateFile "Kan het output bestand niet aanmaken."
 #define MSGTR_VO_DirectoryCreateSuccess "Output directory succesvol aangemaakt."
-#define MSGTR_VO_ParsingSuboptions "Subopties worden geparsd."
-#define MSGTR_VO_SuboptionsParsedOK "Subopties parsing OK."
 #define MSGTR_VO_ValueOutOfRange "Waarde buiten het bereik"
 #define MSGTR_VO_NoValueSpecified "Geen waarde opgegeven."
 #define MSGTR_VO_UnknownSuboptions "Onbekende suboptie(s)"

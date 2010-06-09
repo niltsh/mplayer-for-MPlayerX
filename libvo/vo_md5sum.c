@@ -112,8 +112,8 @@ static int preinit(const char *arg)
         {NULL, 0, NULL, NULL}
     };
 
-    mp_msg(MSGT_VO, MSGL_INFO, "%s: %s\n", info.short_name,
-                                            MSGTR_VO_ParsingSuboptions);
+    mp_msg(MSGT_VO, MSGL_V, "%s: %s\n", info.short_name,
+           "Parsing suboptions.");
 
     md5sum_outfile = strdup("md5sums");
     if (subopt_parse(arg, subopts) != 0) {
@@ -123,8 +123,8 @@ static int preinit(const char *arg)
     mp_msg(MSGT_VO, MSGL_V, "%s: outfile --> %s\n", info.short_name,
                                                             md5sum_outfile);
 
-    mp_msg(MSGT_VO, MSGL_INFO, "%s: %s\n", info.short_name,
-                                            MSGTR_VO_SuboptionsParsedOK);
+    mp_msg(MSGT_VO, MSGL_V, "%s: %s\n", info.short_name,
+           "Suboptions parsed OK.");
     return 0;
 }
 

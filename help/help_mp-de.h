@@ -1043,8 +1043,6 @@ static const char help_text[]=
 #define MSGTR_VO_CantCreateDirectory "Kann Ausgabeverzeichnis nicht erstellen."
 #define MSGTR_VO_CantCreateFile "Kann Ausgabedatei nicht erstellen."
 #define MSGTR_VO_DirectoryCreateSuccess "Ausgabeverzeichnis erfolgreich erstellt."
-#define MSGTR_VO_ParsingSuboptions "Unteroptionen werden geparst."
-#define MSGTR_VO_SuboptionsParsedOK "Parsen der Unteroptionen OK."
 #define MSGTR_VO_ValueOutOfRange "Wert außerhalb des gültigen Bereichs"
 #define MSGTR_VO_NoValueSpecified "Kein Wert angegeben."
 #define MSGTR_VO_UnknownSuboptions "unbekannte Unteroption(en)"

@@ -837,8 +837,6 @@ static const char help_text[]=
 #define MSGTR_VO_CantCreateDirectory "Unable to create output directory."
 #define MSGTR_VO_CantCreateFile "Unable to create output file."
 #define MSGTR_VO_DirectoryCreateSuccess "Output directory successfully created."
-#define MSGTR_VO_ParsingSuboptions "Parsing suboptions."
-#define MSGTR_VO_SuboptionsParsedOK "Suboptions parsed OK."
 #define MSGTR_VO_ValueOutOfRange "value out of range"
 #define MSGTR_VO_NoValueSpecified "No value specified."
 #define MSGTR_VO_UnknownSuboptions "unknown suboption(s)"

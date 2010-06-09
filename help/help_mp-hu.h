@@ -836,8 +836,6 @@ static const char help_text[]=
 #define MSGTR_VO_CantCreateDirectory "Nem tudtam létrehozni a célkönyvtárat."
 #define MSGTR_VO_CantCreateFile "A kimeneti fájl nem hozható létre."
 #define MSGTR_VO_DirectoryCreateSuccess "A célkönyvtárat sikeresen létrehoztam."
-#define MSGTR_VO_ParsingSuboptions "Alopciók értelmezése."
-#define MSGTR_VO_SuboptionsParsedOK "Alopciók értelmezése rendben."
 #define MSGTR_VO_ValueOutOfRange "érték határon kívül"
 #define MSGTR_VO_NoValueSpecified "Nincs érték megadva."
 #define MSGTR_VO_UnknownSuboptions "ismeretlen alopció(k)"
