@@ -126,36 +126,8 @@ Index: libmpeg2/cpu_state.c
      if (accel & MPEG2_ACCEL_PPC_ALTIVEC) {
  	mpeg2_cpu_state_save = state_save_altivec;
  	mpeg2_cpu_state_restore = state_restore_altivec;
---- libmpeg2/decode.c	2006-06-16 20:12:26.000000000 +0200
-+++ libmpeg2/decode.c	2006-06-16 20:12:50.000000000 +0200
-@@ -345,6 +349,15 @@
-     fbuf->buf[1] = buf[1];
-     fbuf->buf[2] = buf[2];
-     fbuf->id = id;
-+    // HACK! FIXME! At first I frame, copy pointers to prediction frame too!
-+    if (mpeg2dec->custom_fbuf && !mpeg2dec->fbuf[1]->buf[0]){
-+	mpeg2dec->fbuf[1]->buf[0]=buf[0];
-+	mpeg2dec->fbuf[1]->buf[1]=buf[1];
-+	mpeg2dec->fbuf[1]->buf[2]=buf[2];
-+	mpeg2dec->fbuf[1]->id=NULL;
-+    }
-+//    printf("libmpeg2: FBUF 0:%p 1:%p 2:%p\n",
-+//	mpeg2dec->fbuf[0]->buf[0],mpeg2dec->fbuf[1]->buf[0],mpeg2dec->fbuf[2]->buf[0]);
- }
-
- void mpeg2_custom_fbuf (mpeg2dec_t * mpeg2dec, int custom_fbuf)
 --- libmpeg2/header.c	2006-06-16 20:12:26.000000000 +0200
 +++ libmpeg2/header.c	2006-06-16 20:12:50.000000000 +0200
-@@ -100,6 +104,9 @@
-     mpeg2dec->decoder.convert = NULL;
-     mpeg2dec->decoder.convert_id = NULL;
-     mpeg2dec->picture = mpeg2dec->pictures;
-+    memset(&mpeg2dec->fbuf_alloc[0].fbuf, 0, sizeof(mpeg2_fbuf_t));
-+    memset(&mpeg2dec->fbuf_alloc[1].fbuf, 0, sizeof(mpeg2_fbuf_t));
-+    memset(&mpeg2dec->fbuf_alloc[2].fbuf, 0, sizeof(mpeg2_fbuf_t));
-     mpeg2dec->fbuf[0] = &mpeg2dec->fbuf_alloc[0].fbuf;
-     mpeg2dec->fbuf[1] = &mpeg2dec->fbuf_alloc[1].fbuf;
-     mpeg2dec->fbuf[2] = &mpeg2dec->fbuf_alloc[2].fbuf;
 @@ -872,6 +879,7 @@
  	mpeg2dec->scaled[idx] = decoder->q_scale_type;
  	for (i = 0; i < 32; i++) {

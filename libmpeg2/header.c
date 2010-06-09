@@ -104,9 +104,6 @@ void mpeg2_header_state_init (mpeg2dec_t * mpeg2dec)
     mpeg2dec->decoder.convert = NULL;
     mpeg2dec->decoder.convert_id = NULL;
     mpeg2dec->picture = mpeg2dec->pictures;
-    memset(&mpeg2dec->fbuf_alloc[0].fbuf, 0, sizeof(mpeg2_fbuf_t));
-    memset(&mpeg2dec->fbuf_alloc[1].fbuf, 0, sizeof(mpeg2_fbuf_t));
-    memset(&mpeg2dec->fbuf_alloc[2].fbuf, 0, sizeof(mpeg2_fbuf_t));
     mpeg2dec->fbuf[0] = &mpeg2dec->fbuf_alloc[0].fbuf;
     mpeg2dec->fbuf[1] = &mpeg2dec->fbuf_alloc[1].fbuf;
     mpeg2dec->fbuf[2] = &mpeg2dec->fbuf_alloc[2].fbuf;

@@ -19,10 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * Modified for use with MPlayer, see libmpeg2_changes.diff for the exact changes.
- * detailed changelog at http://svn.mplayerhq.hu/mplayer/trunk/
- * $Id$
  */
 
 #include "config.h"
@@ -349,15 +345,6 @@ void mpeg2_set_buf (mpeg2dec_t * mpeg2dec, uint8_t * buf[3], void * id)
     fbuf->buf[1] = buf[1];
     fbuf->buf[2] = buf[2];
     fbuf->id = id;
-    // HACK! FIXME! At first I frame, copy pointers to prediction frame too!
-    if (mpeg2dec->custom_fbuf && !mpeg2dec->fbuf[1]->buf[0]){
-	mpeg2dec->fbuf[1]->buf[0]=buf[0];
-	mpeg2dec->fbuf[1]->buf[1]=buf[1];
-	mpeg2dec->fbuf[1]->buf[2]=buf[2];
-	mpeg2dec->fbuf[1]->id=NULL;
-    }
-//    printf("libmpeg2: FBUF 0:%p 1:%p 2:%p\n",
-//	mpeg2dec->fbuf[0]->buf[0],mpeg2dec->fbuf[1]->buf[0],mpeg2dec->fbuf[2]->buf[0]);
 }
 
 void mpeg2_custom_fbuf (mpeg2dec_t * mpeg2dec, int custom_fbuf)
