@@ -52,6 +52,8 @@ typedef struct {
     int width;
     int height;
     double aspect;
+    unsigned char *pending_buffer;
+    int pending_length;
 } vd_libmpeg2_ctx_t;
 
 // to set/get/query special features/parameters
@@ -115,9 +117,6 @@ static int init(sh_video_t *sh){
     context->mpeg2dec = mpeg2dec;
     sh->context = context;
 
-    mpeg2dec->pending_buffer = 0;
-    mpeg2dec->pending_length = 0;
-
     return 1;
 }
 
@@ -126,7 +125,7 @@ static void uninit(sh_video_t *sh){
     int i;
     vd_libmpeg2_ctx_t *context = sh->context;
     mpeg2dec_t * mpeg2dec = context->mpeg2dec;
-    if (mpeg2dec->pending_buffer) free(mpeg2dec->pending_buffer);
+    if (context->pending_buffer) free(context->pending_buffer);
     mpeg2dec->decoder.convert=NULL;
     mpeg2dec->decoder.convert_id=NULL;
     mpeg2_close (mpeg2dec);
@@ -170,8 +169,8 @@ static mp_image_t* decode(sh_video_t *sh,void* data,int len,int flags){
     ((char*)data+len)[3]=0xff;
     len+=4;
 
-    if (mpeg2dec->pending_length) {
-	mpeg2_buffer (mpeg2dec, mpeg2dec->pending_buffer, mpeg2dec->pending_buffer + mpeg2dec->pending_length);
+    if (context->pending_length) {
+	mpeg2_buffer (mpeg2dec, context->pending_buffer, context->pending_buffer + context->pending_length);
     } else {
         mpeg2_buffer (mpeg2dec, data, (uint8_t *)data+len);
     }
@@ -185,9 +184,9 @@ static mp_image_t* decode(sh_video_t *sh,void* data,int len,int flags){
 
 	switch(state){
 	case STATE_BUFFER:
-	    if (mpeg2dec->pending_length) {
+	    if (context->pending_length) {
 		// just finished the pending data, continue with processing of the passed buffer
-		mpeg2dec->pending_length = 0;
+		context->pending_length = 0;
     		mpeg2_buffer (mpeg2dec, data, (uint8_t *)data+len);
     	    } else {
 	        // parsing of the passed buffer finished, return.
@@ -288,17 +287,17 @@ static mp_image_t* decode(sh_video_t *sh,void* data,int len,int flags){
 	    // decoding done:
 	    if(info->display_fbuf) {
 		mp_image_t* mpi = info->display_fbuf->id;
-		if (mpeg2dec->pending_length == 0) {
-		    mpeg2dec->pending_length = mpeg2dec->buf_end - mpeg2dec->buf_start;
-		    mpeg2dec->pending_buffer = realloc(mpeg2dec->pending_buffer, mpeg2dec->pending_length);
-		    memcpy(mpeg2dec->pending_buffer, mpeg2dec->buf_start, mpeg2dec->pending_length);
+		if (context->pending_length == 0) {
+		    context->pending_length = mpeg2dec->buf_end - mpeg2dec->buf_start;
+		    context->pending_buffer = realloc(context->pending_buffer, context->pending_length);
+		    memcpy(context->pending_buffer, mpeg2dec->buf_start, context->pending_length);
 		} else {
 		    // still some data in the pending buffer, shouldn't happen
-		    mpeg2dec->pending_length = mpeg2dec->buf_end - mpeg2dec->buf_start;
-		    memmove(mpeg2dec->pending_buffer, mpeg2dec->buf_start, mpeg2dec->pending_length);
-		    mpeg2dec->pending_buffer = realloc(mpeg2dec->pending_buffer, mpeg2dec->pending_length + len);
-		    memcpy(mpeg2dec->pending_buffer+mpeg2dec->pending_length, data, len);
-		    mpeg2dec->pending_length += len;
+		    context->pending_length = mpeg2dec->buf_end - mpeg2dec->buf_start;
+		    memmove(context->pending_buffer, mpeg2dec->buf_start, context->pending_length);
+		    context->pending_buffer = realloc(context->pending_buffer, context->pending_length + len);
+		    memcpy(context->pending_buffer+context->pending_length, data, len);
+		    context->pending_length += len;
 		}
 		return mpi;
 	    }

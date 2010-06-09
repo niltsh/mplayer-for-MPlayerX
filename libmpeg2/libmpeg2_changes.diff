@@ -355,16 +355,6 @@ Index: libmpeg2/motion_comp_vis.c
  };
 
  typedef struct {
-@@ -223,6 +232,9 @@
-     //int8_t q_scale_type, scaled[4];
-     uint8_t quantizer_matrix[4][64];
-     uint8_t new_quantizer_matrix[4][64];
-+
-+    unsigned char *pending_buffer;
-+    int pending_length;
- };
-
- typedef struct {
 @@ -226,7 +238,7 @@
  };
 
