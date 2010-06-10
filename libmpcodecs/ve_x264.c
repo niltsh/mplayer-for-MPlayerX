@@ -56,7 +56,6 @@ typedef struct h264_module_t {
 } h264_module_t;
 
 extern char* passtmpfile;
-static int turbo = 0;
 static x264_param_t param;
 static int parse_error = 0;
 
@@ -65,74 +64,78 @@ static int encode_frame(struct vf_instance *vf, x264_picture_t *pic_in);
 
 void x264enc_set_param(const m_option_t* opt, char* arg)
 {
-    static int initted = 0;
-    if(!initted) {
-        x264_param_default(&param);
-        x264_param_parse(&param, "psnr", "no");
-        x264_param_parse(&param, "ssim", "no");
-        initted = 1;
-    }
+    static int initialized = 0;
+    int slow_firstpass = 0;
+    char *preset = NULL, *tune = NULL, *profile = NULL;
+    char *p, *copy, *name;
 
-    if(!arg) {
+    if (!initialized) {
+        x264_param_default(&param);
+        initialized = 1;
+    }
+    if (!arg) {
+        mp_msg(MSGT_CFGPARSER, MSGL_ERR, "Option x264encopts: no options provided\n");
         parse_error = 1;
         return;
-    }
+    } else if (!*arg)
+        /* Empty arguments, just doing initialization of default parameters. */
+        return;
 
-    while(*arg) {
-        char *name = arg;
-        char *value;
-        int ret;
-
-        arg += strcspn(arg, ":");
-        if(*arg) {
-            *arg = 0;
-            arg++;
-        }
-
-        value = strchr( name, '=' );
-        if(value) {
-            *value = 0;
-            value++;
-        }
-
-        if(!strcmp(name, "turbo")) {
-            turbo = value ? atoi(value) : 1;
+    /* Step 1: look for initial preset/tune. */
+    copy = p = strdup(arg);
+    while ((name = strsep(&copy, ":"))) {
+        char *value = strpbrk(name, "=:");
+        if (!value)
             continue;
-        }
+        *value++ = 0;
+        if (!strcasecmp(name, "preset"))
+            preset = value;
+        else if (!strcasecmp(name, "tune"))
+            tune = value;
+    }
+    if (x264_param_default_preset(&param, preset, tune) < 0) {
+        mp_msg(MSGT_CFGPARSER, MSGL_ERR, "Option x264encopts: Invalid preset or tune.\n");
+        parse_error = 1;
+    }
+    free(p);
 
+    /* Step 2: explicit user overrides */
+    while ((name = strsep(&arg, ":")) && *name) {
+        int ret = 0;
+        char *value = strpbrk(name, "=:");
+
+        if (value)
+            *value++ = 0;
+        if (!strcasecmp(name, "profile"))
+            profile = value;
+        else if (!strcasecmp(name, "turbo")) {
+            mp_msg(MSGT_CFGPARSER, MSGL_WARN, "Option x264encopts: turbo option is deprecated; "
+                                              "use slow_firstpass to disable turbo\n");
+            if (value && *value == '0')
+                slow_firstpass = 1;
+        } else if (!strcasecmp(name, "slow_firstpass"))
+            slow_firstpass = 1;
+        else if (strcasecmp(name, "preset") && strcasecmp(name, "tune")) {
         ret = x264_param_parse(&param, name, value);
         if(ret == X264_PARAM_BAD_NAME)
 	    mp_msg(MSGT_CFGPARSER, MSGL_ERR, "Option x264encopts: Unknown suboption %s\n", name);
         if(ret == X264_PARAM_BAD_VALUE)
 	    mp_msg(MSGT_CFGPARSER, MSGL_ERR, "Option x264encopts: Bad argument %s=%s\n", name, value ? value : "(null)");
 
+        }
         /* mark this option as done, so it's not reparsed if there's another -x264encopts */
         *name = 0;
 
         parse_error |= ret;
     }
 
-    if(param.rc.b_stat_write && !param.rc.b_stat_read) {
-        /* Adjust or disable some flags to gain speed in the first pass */
-        if(turbo == 1)
-        {
-            param.i_frame_reference = ( param.i_frame_reference + 1 ) >> 1;
-            param.analyse.i_subpel_refine = FFMAX( FFMIN( 3, param.analyse.i_subpel_refine - 1 ), 1 );
-            param.analyse.inter &= ( ~X264_ANALYSE_PSUB8x8 );
-            param.analyse.inter &= ( ~X264_ANALYSE_BSUB16x16 );
-            param.analyse.i_trellis = 0;
-        }
-        else if(turbo >= 2)
-        {
-            param.i_frame_reference = 1;
-            param.analyse.i_subpel_refine = 1;
-            param.analyse.i_me_method = X264_ME_DIA;
-            param.analyse.inter = 0;
-            param.analyse.b_transform_8x8 = 0;
-            param.analyse.b_weighted_bipred = 0;
-            param.analyse.i_trellis = 0;
-        }
-    }
+    /* Step 3: Apply fast first pass (turbo) options. */
+    if (!slow_firstpass)
+        x264_param_apply_fastfirstpass(&param);
+
+    /* Step 4: enforce profile */
+    if (profile && x264_param_apply_profile(&param, profile) < 0)
+        parse_error = 1;
 }
 
 static int config(struct vf_instance *vf, int width, int height, int d_width, int d_height, unsigned int flags, unsigned int outfmt) {
