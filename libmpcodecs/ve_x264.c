@@ -116,11 +116,12 @@ void x264enc_set_param(const m_option_t* opt, char* arg)
         } else if (!strcasecmp(name, "slow_firstpass"))
             slow_firstpass = 1;
         else if (strcasecmp(name, "preset") && strcasecmp(name, "tune")) {
-        ret = x264_param_parse(&param, name, value);
-        if(ret == X264_PARAM_BAD_NAME)
-	    mp_msg(MSGT_CFGPARSER, MSGL_ERR, "Option x264encopts: Unknown suboption %s\n", name);
-        if(ret == X264_PARAM_BAD_VALUE)
-	    mp_msg(MSGT_CFGPARSER, MSGL_ERR, "Option x264encopts: Bad argument %s=%s\n", name, value ? value : "(null)");
+            ret = x264_param_parse(&param, name, value);
+            if (ret == X264_PARAM_BAD_NAME)
+                mp_msg(MSGT_CFGPARSER, MSGL_ERR, "Option x264encopts: Unknown suboption %s\n", name);
+            if (ret == X264_PARAM_BAD_VALUE)
+                mp_msg(MSGT_CFGPARSER, MSGL_ERR, "Option x264encopts: Bad argument %s=%s\n",
+                       name, value ? value : "(null)");
 
         }
         /* mark this option as done, so it's not reparsed if there's another -x264encopts */
