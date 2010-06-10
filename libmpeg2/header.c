@@ -20,10 +20,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * Modified for use with MPlayer, see libmpeg2_changes.diff for the exact changes.
- * detailed changelog at http://svn.mplayerhq.hu/mplayer/trunk/
- * $Id$
  */
 
 #include "config.h"
@@ -876,7 +872,6 @@ static void prescale (mpeg2dec_t * mpeg2dec, int idx)
 	mpeg2dec->scaled[idx] = decoder->q_scale_type;
 	for (i = 0; i < 32; i++) {
 	    k = decoder->q_scale_type ? non_linear_scale[i] : (i << 1);
-	    decoder->quantizer_scales[i] = k;
 	    for (j = 0; j < 64; j++)
 		decoder->quantizer_prescale[idx][i][j] =
 		    k * mpeg2dec->quantizer_matrix[idx][j];

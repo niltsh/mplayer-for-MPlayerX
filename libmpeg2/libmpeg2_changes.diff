@@ -126,16 +126,6 @@ Index: libmpeg2/cpu_state.c
      if (accel & MPEG2_ACCEL_PPC_ALTIVEC) {
  	mpeg2_cpu_state_save = state_save_altivec;
  	mpeg2_cpu_state_restore = state_restore_altivec;
---- libmpeg2/header.c	2006-06-16 20:12:26.000000000 +0200
-+++ libmpeg2/header.c	2006-06-16 20:12:50.000000000 +0200
-@@ -872,6 +879,7 @@
- 	mpeg2dec->scaled[idx] = decoder->q_scale_type;
- 	for (i = 0; i < 32; i++) {
- 	    k = decoder->q_scale_type ? non_linear_scale[i] : (i << 1);
-+	    decoder->quantizer_scales[i] = k;
- 	    for (j = 0; j < 64; j++)
- 		decoder->quantizer_prescale[idx][i][j] =
- 		    k * mpeg2dec->quantizer_matrix[idx][j];
 --- libmpeg2/idct.c	(revision 26652)
 +++ libmpeg2/idct.c	(working copy)
 @@ -235,34 +239,40 @@
@@ -343,18 +333,6 @@ Index: libmpeg2/motion_comp_vis.c
 
 --- libmpeg2/mpeg2_internal.h	2006-06-16 20:12:26.000000000 +0200
 +++ libmpeg2/mpeg2_internal.h	2006-06-16 20:12:50.000000000 +0200
-@@ -152,6 +156,11 @@
-
-     /* XXX: stuff due to xine shit */
-     int8_t q_scale_type;
-+
-+    int quantizer_scales[32];
-+    int quantizer_scale;
-+    char* quant_store;
-+    int quant_stride;
- };
-
- typedef struct {
 @@ -226,7 +238,7 @@
  };
 
@@ -364,38 +342,3 @@ Index: libmpeg2/motion_comp_vis.c
      uint8_t regv[12*16];
  #endif
      int dummy;
---- libmpeg2/slice.c	2006-06-16 20:12:26.000000000 +0200
-+++ libmpeg2/slice.c	2006-06-16 20:12:50.000000000 +0200
-@@ -142,6 +146,7 @@
-
-     quantizer_scale_code = UBITS (bit_buf, 5);
-     DUMPBITS (bit_buf, bits, 5);
-+    decoder->quantizer_scale = decoder->quantizer_scales[quantizer_scale_code];
-
-     decoder->quantizer_matrix[0] =
- 	decoder->quantizer_prescale[0][quantizer_scale_code];
-@@ -1564,6 +1569,24 @@
-
- #define NEXT_MACROBLOCK							\
- do {									\
-+    if(decoder->quant_store) {						\
-+	if (decoder->picture_structure == TOP_FIELD)			\
-+	    decoder->quant_store[2 * decoder->quant_stride		\
-+				 * (decoder->v_offset >> 4)		\
-+				 + (decoder->offset >> 4)]		\
-+		= decoder->quantizer_scale;				\
-+	else if (decoder->picture_structure == BOTTOM_FIELD)		\
-+	    decoder->quant_store[2 * decoder->quant_stride		\
-+				 * (decoder->v_offset >> 4)		\
-+				 + decoder->quant_stride		\
-+				 + (decoder->offset >> 4)]		\
-+		= decoder->quantizer_scale;				\
-+	else								\
-+	    decoder->quant_store[decoder->quant_stride			\
-+				 * (decoder->v_offset >> 4)		\
-+				 + (decoder->offset >> 4)]		\
-+		= decoder->quantizer_scale;				\
-+    }									\
-     decoder->offset += 16;						\
-     if (decoder->offset == decoder->width) {				\
- 	do { /* just so we can use the break statement */		\

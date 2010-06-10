@@ -8890,8 +8890,7 @@ cat > $TMPH << EOF
 #undef FAST_OSD
 #undef FAST_OSD_TABLE
 
-/* Define this to enable MPEG-1/2 image postprocessing in libmpeg2 */
-#define MPEG12_POSTPROC 1
+/* needed for libmpeg2 */
 #define ATTRIBUTE_ALIGNED_MAX 16
 
 
