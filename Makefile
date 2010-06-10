@@ -326,8 +326,7 @@ SRCS_COMMON-$(WIN32DLL)              += libmpcodecs/ad_acm.c \
 SRCS_COMMON-$(XANIM_CODECS)          += libmpcodecs/vd_xanim.c
 SRCS_COMMON-$(XMMS_PLUGINS)          += libmpdemux/demux_xmms.c
 SRCS_COMMON-$(XVID4)                 += libmpcodecs/vd_xvid4.c
-SRCS_COMMON-$(ZR)                    += libmpcodecs/vd_zrmjpeg.c \
-                                        libmpcodecs/vf_zrmjpeg.c
+
 SRCS_COMMON = asxparser.c \
               codec-cfg.c \
               cpudetect.c \
@@ -661,7 +660,9 @@ SRCS_MPLAYER-$(XVIDIX)        += libvo/vo_xvidix.c
 SRCS_MPLAYER-$(XVMC)          += libvo/vo_xvmc.c
 SRCS_MPLAYER-$(XVR100)        += libvo/vo_xvr100.c
 SRCS_MPLAYER-$(YUV4MPEG)      += libvo/vo_yuv4mpeg.c
-SRCS_MPLAYER-$(ZR)            += libvo/jpeg_enc.c libvo/vo_zr.c libvo/vo_zr2.c
+SRCS_MPLAYER-$(ZR)            += libmpcodecs/vd_zrmjpeg.c \
+                                 libmpcodecs/vf_zrmjpeg.c \
+                                 libvo/jpeg_enc.c libvo/vo_zr.c libvo/vo_zr2.c
 
 SRCS_MPLAYER = command.c \
                m_property.c \
