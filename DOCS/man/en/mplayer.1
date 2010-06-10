@@ -10123,30 +10123,93 @@ ABR is recommended, since it does not require guessing a quantizer.
 Subsequent passes are ABR, and must specify bitrate.
 .REss
 .
+.
 .TP
-.B turbo=<0\-2>
-Fast first pass mode.
-During the first pass of a two or more pass encode it is possible to gain
-speed by disabling some options with negligible or even no impact on the
-final pass output quality.
+.B profile=<name>
+Constrain options to be compatible with an H.264 profile.
 .PD 0
 .RSs
-.IPs 0
-disabled (default)
-.IPs 1
-Reduce subq, frameref and disable some inter-macroblock partition analysis
-modes.
-.IPs 2
-Reduce subq and frameref to 1, use a diamond ME search and disable all
-partition analysis modes.
+.IPs baseline
+no8x8dct bframes=0 nocabac cqm=flat weightp=0 nointerlaced qp>0
+.IPs main
+no8x8dct cqm=flat qp>0
+.IPs high
+qp>0 (default)
 .RE
-.RS
-Level 1 can increase first pass speed up to 2x with no change in the global
-PSNR of the final pass compared to a full quality first pass.
+.PD 1
+.
+.TP
+.B preset=<name>
+Use a preset to select encoding settings.
+.PD 0
+.RSs
+.IPs ultrafast
+no8x8dct aq_mode=0 b_adapt=0 bframes=0 nodeblock nombtree me=dia
+nomixed_refs partitions=none ref=1 scenecut=0 subq=0 trellis=0
+noweight_b weightp=0
+.IPs superfast
+nombtree me=dia nomixed_refs partitions=i8x8,i4x4 ref=1 subq=1 trellis=0
+weightp=0
+.IPs veryfast
+nombtree nomixed_refs ref=1 subq=2 trellis=0 weightp=0
+.IPs faster
+nomixed_refs rc_lookahead=20 ref=5 subq=4 weightp=1
+.IPs fast
+rc_lookahead=30 ref=2 subq=6
+.IPs medium
+Default settings apply.
+.IPs slow
+b_adapt=2 direct=auto me=umh rc_lookahead=50 ref=5 subq=8
+.IPs slower
+b_adapt=2 direct=auto me=umh partitions=all rc_lookahead=60 ref=8 subq=9
+trellis=2
+.IPs veryslow
+b_adapt=2 b_frames=8 direct=auto me=umh me_range=24 partitions=all ref=16
+subq=10 trellis=2 rc_lookahead=60
+.IPs placebo
+bframes=16 b_adapt=2 direct=auto nofast_pskip me=tesa me_range=24
+partitions=all rc_lookahead=60 ref=16 subq=10 trellis=2
+.RE
+.PD 1
+.
+.TP
+.B tune=<name,[name,...]>
+Tune the settings for a particular type of source or situation.
+All tuned settings are overridden by explicit user-settings.
+Multiple tunings are separated by commas, but only one psy tuning can be
+used at a time.
+.PD 0
+.RSs
+.IPs film (psy tuning)
+deblock=-1,-1 psy-rd=<unset>,0.15
+.IPs animation (psy tuning)
+b_frames={+2} deblock=1,1 psy-rd=0.4:<unset> aq_strength=0.6
+ref={double if >1 else 1}
+.IPs grain (psy tuning)
+aq_strength=0.5 nodct_decimate deadzone_inter=6 deadzone_intra=6
+deblock=-2,-2 ipratio=1.1 pbratio=1.1 psy-rd=<unset>,0.25 qcomp=0.8
+.IPs stillimage (psy tuning)
+aq_strength=1.2 deblock=-3,-3 psy-rd=2.0,0.7
+.IPs psnr (psy tuning)
+aq_mode=0 nopsy
+.IPs ssim (psy tuning)
+aq_mode=2 nopsy
+.IPs fastdecode
+nocabac nodeblock noweight_b weightp=0
+.IPs zerolatency
+bframes=0 force_cfr rc_lookahead=0 sync_lookahead=0 sliced_threads
+.RE
+.PD 1
+.
+.TP
+.B slow_firstpass
+Disables the following faster options with pass=1:
+no_8x8dct me=dia partitions=none ref=1 subq={2 if >2 else unchanged}
+trellis=0 fast_pskip.
+These settings significantly improve encoding speed while having little or
+no impact on the quality of the final pass.
 .br
-Level 2 can increase first pass speed up to 4x with about +/\- 0.05dB change
-in the global PSNR of the final pass compared to a full quality first pass.
-.REss
+This option is implied with preset=placebo.
 .
 .TP
 .B keyint=<value>
