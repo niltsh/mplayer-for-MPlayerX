@@ -339,6 +339,7 @@ Codecs:
   --enable-libdca           enable libdca support [autodetect]
   --disable-mp3lib          disable builtin mp3lib [autodetect]
   --disable-liba52          disable liba52 [autodetect]
+  --disable-libmpeg2        disable libmpeg2 [autodetect]
   --disable-libmpeg2-internal disable builtin libmpeg2 [autodetect]
   --disable-musepack        disable musepack support [autodetect]
   --disable-libopencore_amrnb disable libopencore_amr narrowband [autodetect]
@@ -634,6 +635,7 @@ _theora=auto
 _mp3lib=auto
 _liba52=auto
 _libdca=auto
+_libmpeg2=auto
 _libmpeg2_internal=auto
 _faad=auto
 _faad_internal=auto
@@ -1031,8 +1033,10 @@ for ac_option do
   --disable-liba52)     _liba52=no      ;;
   --enable-libdca)      _libdca=yes     ;;
   --disable-libdca)     _libdca=no      ;;
-  --enable-libmpeg2_internal)    _libmpeg2_internal=yes   ;;
-  --disable-libmpeg2_internal)   _libmpeg2_internal=no    ;;
+  --enable-libmpeg2)    _libmpeg2=yes   ;;
+  --disable-libmpeg2)   _libmpeg2=no    ;;
+  --enable-libmpeg2-internal)    _libmpeg2_internal=yes   ;;
+  --disable-libmpeg2-internal)   _libmpeg2_internal=no    ;;
   --enable-musepack)    _musepack=yes   ;;
   --disable-musepack)   _musepack=no    ;;
   --enable-faad)        _faad=yes       ;;
@@ -6836,30 +6840,46 @@ else
 fi
 echores "$_liba52"
 
-echocheck "internal libmpeg2 support"
+
+echocheck "libmpeg2 support"
 if test "$_libmpeg2_internal" = auto ; then
-  _libmpeg2=yes
-  _libmpeg2_internal=yes
   if alpha && test cc_vendor=gnu; then
     case $cc_version in
       2*|3.0*|3.1*) # cannot compile MVI instructions
-        _libmpeg2_=no
         _libmpeg2_internal=no
-        res_comment="broken gcc"
         ;;
     esac
+  else
+    _libmpeg2=yes
+    _libmpeg2_internal=yes
+    res_comment="internal"
   fi
 fi
+if test "$_libmpeg2" = auto ; then
+  _libmpeg2=no
+  cat > $TMPC << EOF
+#include <stdint.h>
+#include <mpeg2dec/mpeg2.h>
+int main(void) { return 0; }
+EOF
+  cc_check -lmpeg2 && _libmpeg2=yes && extra_ldflags="$extra_ldflags -lmpeg2"
+fi
+
+def_libmpeg2='#undef CONFIG_LIBMPEG2'
+def_libmpeg2_internal='#undef CONFIG_LIBMPEG2_INTERNAL'
 if test "$_libmpeg2" = yes ; then
   def_libmpeg2='#define CONFIG_LIBMPEG2 1'
-  def_libmpeg2_internal='#define CONFIG_LIBMPEG2_INTERNAL 1'
-  codecmodules="libmpeg2(internal) $codecmodules"
+  if test "$_libmpeg2_internal" = yes ; then
+    def_libmpeg2_internal='#define CONFIG_LIBMPEG2_INTERNAL 1'
+    codecmodules="libmpeg2(internal) $codecmodules"
+  else
+    codecmodules="libmpeg2 $codecmodules"
+  fi
 else
-  def_libmpeg2='#undef CONFIG_LIBMPEG2'
-  def_libmpeg2_internal='#undef CONFIG_LIBMPEG2_INTERNAL'
   nocodecmodules="libmpeg2 $nocodecmodules"
 fi
 echores "$_libmpeg2"
+
 
 echocheck "libdca support"
 if test "$_libdca" = auto ; then

@@ -18,6 +18,7 @@ MPlayer (1.0)
     * internal liba52 copy removed
     * CineForm HD (CFHD) via binary DLL
     * VP8 decoding through libvpx wrapper in FFmpeg
+    * support for external libmpeg2 added
 
     Demuxers:
     * Mostly fixed timing issues with some H.264 (PAFF) samples
