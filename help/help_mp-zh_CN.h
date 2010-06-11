@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 31032 (MSGTR_AudioStreamRedefined)
+// Synced with help_mp-en.h rev. 31353 (MSGTR_AudioStreamRedefined)
 // Reminder of hard terms which need better/final solution later:
 //   (file links to be updated later if available!);
 //   NAV; section/subsection;  XScreenSaver; keycolor;
@@ -1090,9 +1090,7 @@ static const char help_text[]=
 // vo_yuv4mpeg.c
 #define MSGTR_VO_YUV4MPEG_InterlacedHeightDivisibleBy4 "隔行扫描模式要求图像高度能被 4 整除。"
 #define MSGTR_VO_YUV4MPEG_InterlacedLineBufAllocFail "无法为隔行扫描模式分配扫描行缓冲。"
-#define MSGTR_VO_YUV4MPEG_InterlacedInputNotRGB "输入信号不是 RGB 格式，不能按色彩域拆分色度信息！"
 #define MSGTR_VO_YUV4MPEG_WidthDivisibleBy2 "图像宽度必须能被 2 整除。"
-#define MSGTR_VO_YUV4MPEG_NoMemRGBFrameBuf "内存不够，无法分配 RGB 帧缓冲。"
 #define MSGTR_VO_YUV4MPEG_OutFileOpenError "无法获取内存或文件句柄以写入“%s”！"
 #define MSGTR_VO_YUV4MPEG_OutFileWriteError "图像写入输出错误！"
 #define MSGTR_VO_YUV4MPEG_UnknownSubDev "未知子设备：%s"
