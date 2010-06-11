@@ -4789,34 +4789,6 @@ else
   novomodules="xvidix $novomodules"
 fi
 
-echocheck "/dev/mga_vid"
-if test "$_mga" = auto ; then
-  _mga=no
-  test -c /dev/mga_vid && _mga=yes
-fi
-if test "$_mga" = yes ; then
-  def_mga='#define CONFIG_MGA 1'
-  vomodules="mga $vomodules"
-else
-  def_mga='#undef CONFIG_MGA'
-  novomodules="mga $novomodules"
-fi
-echores "$_mga"
-
-echocheck "xmga"
-if test "$_xmga" = auto ; then
-  _xmga=no
-  test "$_x11" = yes && test "$_mga" = yes && _xmga=yes
-fi
-if test "$_xmga" = yes ; then
-  def_xmga='#define CONFIG_XMGA 1'
-  vomodules="xmga $vomodules"
-else
-  def_xmga='#undef CONFIG_XMGA'
-  novomodules="xmga $novomodules"
-fi
-echores "$_xmga"
-
 
 echocheck "GGI"
 if test "$_ggi" = auto ; then
@@ -7457,6 +7429,34 @@ test "$_libswscale_a"  = yes && def_libswscale_a='#define CONFIG_LIBSWSCALE_A 1'
 test "$_libswscale_so" = yes \
   && def_libswscale_so='#define CONFIG_LIBSWSCALE_SO 1'
 echores "$_libswscale"
+
+echocheck "/dev/mga_vid"
+if test "$_mga" = auto ; then
+  _mga=no
+  test -c /dev/mga_vid && _mga=yes
+fi
+if test "$_mga" = yes ; then
+  def_mga='#define CONFIG_MGA 1'
+  vomodules="mga $vomodules"
+else
+  def_mga='#undef CONFIG_MGA'
+  novomodules="mga $novomodules"
+fi
+echores "$_mga"
+
+echocheck "xmga"
+if test "$_xmga" = auto ; then
+  _xmga=no
+  test "$_x11" = yes && test "$_mga" = yes && _xmga=yes
+fi
+if test "$_xmga" = yes ; then
+  def_xmga='#define CONFIG_XMGA 1'
+  vomodules="xmga $vomodules"
+else
+  def_xmga='#undef CONFIG_XMGA'
+  novomodules="xmga $novomodules"
+fi
+echores "$_xmga"
 
 echocheck "libopencore_amr narrowband"
 if test "$_libopencore_amrnb" = auto ; then
