@@ -7688,6 +7688,7 @@ if test "$_libvpx_lavc" = auto; then
     cat > $TMPC << EOF
 #include <vpx/vpx_decoder.h>
 #include <vpx/vp8dx.h>
+struct vpx_codec_ctx decoder;
 int main(void) { vpx_codec_dec_init(NULL, &vpx_codec_vp8_dx_algo, NULL, 0); return 0; }
 EOF
     cc_check -lvpx && _libvpx_lavc=yes && extra_ldflags="$extra_ldflags -lvpx"
