@@ -1,6 +1,9 @@
 MPlayer (1.0)
 
   rc4: "Yes We Can"
+    Gui: Changes towards removing the Gui
+    * The Gui will no longer display any error or warning messages
+
     Decoders:
     * YUY2 Lossless Codec (YLC0) via binary DLL
     * Truemotion RT codec (TR20) via binary DLL

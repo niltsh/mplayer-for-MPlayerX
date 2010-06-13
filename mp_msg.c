@@ -29,13 +29,6 @@
 #include <errno.h>
 #endif
 
-#if defined(FOR_MENCODER)
-#undef CONFIG_GUI
-int use_gui;
-#else
-#include "gui/interface.h"
-#endif
-
 #include "mp_msg.h"
 
 /* maximum message length of mp_msg */
@@ -195,11 +188,6 @@ void mp_msg(int mod, int lev, const char *format, ... ){
     va_end(va);
     tmp[MSGSIZE_MAX-2] = '\n';
     tmp[MSGSIZE_MAX-1] = 0;
-
-#ifdef CONFIG_GUI
-    if(use_gui)
-        guiMessageBox(lev, tmp);
-#endif
 
 #if defined(CONFIG_ICONV) && defined(MSG_CHARSET)
     if (mp_msg_charset && strcasecmp(mp_msg_charset, "noconv")) {
