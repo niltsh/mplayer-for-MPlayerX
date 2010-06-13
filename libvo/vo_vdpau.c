@@ -45,8 +45,6 @@
 
 #include "libavcodec/vdpau.h"
 
-#include "gui/interface.h"
-
 #include "libavutil/common.h"
 #include "libavutil/mathematics.h"
 

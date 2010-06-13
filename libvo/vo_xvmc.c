@@ -49,7 +49,6 @@
 #include "aspect.h"
 
 #include "subopt-helper.h"
-#include "gui/interface.h"
 
 #include "libavutil/common.h"
 
