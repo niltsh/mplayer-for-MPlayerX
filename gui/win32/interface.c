@@ -676,7 +676,7 @@ int guiGetEvent(int type, void *arg)
             /* MPlayer asks us to quit */
             switch((int) arg)
             {
-                case MP_CMD_GUI_FULLSCREEN:
+                case MP_CMD_VO_FULLSCREEN:
                     mplFullScreen();
                     break;
                 case MP_CMD_QUIT:
@@ -687,32 +687,6 @@ int guiGetEvent(int type, void *arg)
                     exit_player(EXIT_QUIT);
                     return 0;
                 }
-                case MP_CMD_GUI_STOP:
-                    guiGetEvent(guiCEvent, (void *) guiSetStop);
-                    break;
-                case MP_CMD_GUI_PLAY:
-                    guiGetEvent(guiCEvent, (void *) guiSetPlay);
-                    break;
-                case MP_CMD_GUI_SKINBROWSER:
-                    if(fullscreen) guiSetEvent(evFullScreen);
-                    PostMessage(mygui->mainwindow, WM_COMMAND, (WPARAM) ID_SKINBROWSER, 0);
-                    break;
-                case MP_CMD_GUI_PLAYLIST:
-                    if(fullscreen) guiSetEvent(evFullScreen);
-                    PostMessage(mygui->mainwindow, WM_COMMAND, (WPARAM) ID_PLAYLIST, 0);
-                    break;
-                case MP_CMD_GUI_PREFERENCES:
-                    if(fullscreen) guiSetEvent(evFullScreen);
-                    PostMessage(mygui->mainwindow, WM_COMMAND, (WPARAM) ID_PREFS, 0);
-                    break;
-                case MP_CMD_GUI_LOADFILE:
-                    if(fullscreen) guiSetEvent(evFullScreen);
-                    PostMessage(mygui->mainwindow, WM_COMMAND, (WPARAM) IDFILE_OPEN, 0);
-                    break;
-                case MP_CMD_GUI_LOADSUBTITLE:
-                    if(fullscreen) guiSetEvent(evFullScreen);
-                    PostMessage(mygui->mainwindow, WM_COMMAND, (WPARAM) IDSUBTITLE_OPEN, 0);
-                    break;
                 default:
                     break;
             }

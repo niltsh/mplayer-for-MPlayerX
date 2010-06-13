@@ -176,17 +176,6 @@ static const mp_cmd_t mp_cmds[] = {
   { MP_CMD_TV_TELETEXT_ADD_DEC, "teletext_add_dec", 1, { {MP_CMD_ARG_STRING,{0}}, {-1,{0}} } },
   { MP_CMD_TV_TELETEXT_GO_LINK, "teletext_go_link", 1, { {MP_CMD_ARG_INT,{0}}, {-1,{0}} } },
 
-#ifdef CONFIG_GUI
-  { MP_CMD_GUI_LOADFILE, "gui_loadfile", 0, { {-1,{0}} } },
-  { MP_CMD_GUI_LOADSUBTITLE, "gui_loadsubtitle", 0, { {-1,{0}} } },
-  { MP_CMD_GUI_ABOUT, "gui_about", 0, { {-1,{0}} } },
-  { MP_CMD_GUI_PLAY, "gui_play", 0, { {-1,{0}} } },
-  { MP_CMD_GUI_STOP, "gui_stop", 0, { {-1,{0}} } },
-  { MP_CMD_GUI_PLAYLIST, "gui_playlist", 0, { {-1,{0}} } },
-  { MP_CMD_GUI_PREFERENCES, "gui_preferences", 0, { {-1,{0}} } },
-  { MP_CMD_GUI_SKINBROWSER, "gui_skinbrowser", 0, { {-1,{0}} } },
-#endif
-
 #ifdef CONFIG_DVDNAV
   { MP_CMD_DVDNAV, "dvdnav", 1, { {MP_CMD_ARG_STRING, {0}}, {-1,{0}} } },
 #endif
@@ -500,21 +489,6 @@ static const mp_cmd_bind_t def_cmd_binds[] = {
   { { 0 }, NULL }
 };
 
-
-#ifdef CONFIG_GUI
-static const mp_cmd_bind_t gui_def_cmd_binds[] = {
-
-  { { 'l', 0 }, "gui_loadfile" },
-  { { 't', 0 }, "gui_loadsubtitle" },
-  { { KEY_ENTER, 0 }, "gui_play" },
-  { { KEY_ESC, 0 }, "gui_stop" },
-  { { 'p', 0 }, "gui_playlist" },
-  { { 'r', 0 }, "gui_preferences" },
-  { { 'c', 0 }, "gui_skinbrowser" },
-
-  { { 0 }, NULL }
-};
-#endif
 
 #ifndef MP_MAX_KEY_FD
 #define MP_MAX_KEY_FD 10
@@ -1551,13 +1525,6 @@ mp_input_bind_keys(const int keys[MP_MAX_KEY_DOWN+1], char* cmd) {
 }
 
 static void
-mp_input_add_binds(const mp_cmd_bind_t* list) {
-  int i;
-  for(i = 0 ; list[i].cmd ; i++)
-    mp_input_bind_keys(list[i].input,list[i].cmd);
-}
-
-static void
 mp_input_free_binds(mp_cmd_bind_t* binds) {
   int i;
 
@@ -1745,11 +1712,6 @@ mp_input_get_section(void) {
 void
 mp_input_init(int use_gui) {
   char* file;
-
-#ifdef CONFIG_GUI
-  if(use_gui)
-    mp_input_add_binds(gui_def_cmd_binds);
-#endif
 
   file = config_file[0] != '/' ? get_path(config_file) : config_file;
   if(!file)

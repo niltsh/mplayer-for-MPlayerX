@@ -3,6 +3,8 @@ MPlayer (1.0)
   rc4: "Yes We Can"
     Gui: Changes towards removing the Gui
     * The Gui will no longer display any error or warning messages
+    * Special Gui slave commands (gui_*) were removed, as well as
+      the related key bindings
 
     Decoders:
     * YUY2 Lossless Codec (YLC0) via binary DLL

@@ -995,7 +995,7 @@ static int mp_property_fullscreen(m_option_t *prop, int action, void *arg,
     case M_PROPERTY_STEP_DOWN:
 #ifdef CONFIG_GUI
         if (use_gui)
-            guiGetEvent(guiIEvent, (char *) MP_CMD_GUI_FULLSCREEN);
+            guiGetEvent(guiIEvent, (char *) MP_CMD_VO_FULLSCREEN);
         else
 #endif
         if (vo_config_count)
@@ -3280,11 +3280,6 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
         build_afilter_chain(sh_audio, &ao_data);
         break;
         default:
-#ifdef CONFIG_GUI
-            if ((use_gui) && (cmd->id > MP_CMD_GUI_EVENTS))
-                guiGetEvent(guiIEvent, (char *) cmd->id);
-            else
-#endif
                 mp_msg(MSGT_CPLAYER, MSGL_V,
                        "Received unknown cmd %s\n", cmd->name);
         }

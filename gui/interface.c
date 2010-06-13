@@ -356,19 +356,6 @@ void guiDone( void )
  wsXDone();
 }
 
-int guiCMDArray[] =
- {
-  evLoadPlay,
-  evLoadSubtitle,
-  evAbout,
-  evPlay,
-  evStop,
-  evPlayList,
-  evPreferences,
-  evFullScreen,
-  evSkinBrowser
- };
-
 extern int              stream_dump_type;
 extern int  		vcd_track;
 extern m_obj_settings_t * vf_settings;
@@ -621,8 +608,6 @@ int guiGetEvent( int type,void * arg )
 	  case MP_CMD_VO_FULLSCREEN:
 	       mplEventHandling( evFullScreen,0 );
 	       break;
-          default:
-	       mplEventHandling( guiCMDArray[ (int)arg - MP_CMD_GUI_EVENTS - 1 ],0 );
 	 }
 	break;
    case guiReDraw:
