@@ -89,22 +89,6 @@ static const m_option_t gui_opts[] =
     {   NULL, NULL, 0, 0, 0, 0, NULL }
 };
 
-char *gfgets(char *str, int size, FILE *f)
-{
-    char *s = fgets(str, size, f);
-    char c;
-    if(s)
-    {
-        c = s[strlen(s) - 1];
-        if ((c == '\n') || (c == '\r'))
-            s[strlen(s) - 1]=0;
-        c = s[strlen(s) - 1];
-        if ((c == '\n') || (c == '\r'))
-            s[strlen(s) - 1]=0;
-    }
-    return s;
-}
-
 int cfg_read(void)
 {
     char *cfg = get_path("gui.conf");
