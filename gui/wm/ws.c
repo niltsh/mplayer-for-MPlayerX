@@ -189,7 +189,7 @@ static int wsErrorHandler( Display * dpy, XErrorEvent * Event )
  fprintf(stderr,"[ws]  Request code: %d\n",Event->request_code );
  fprintf(stderr,"[ws]  Minor code: %d\n",Event->minor_code );
  fprintf(stderr,"[ws]  Modules: %s\n",current_module?current_module:"(NULL)" );
- exit( 0 );
+ return 0;
 }
 
 void wsXInit( void* mDisplay )
