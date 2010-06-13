@@ -232,8 +232,6 @@ void guiInit( void )
  mplMenuInit();
  mplPBInit();
 
- vo_setwindow( appMPlayer.subWindow.WindowID, appMPlayer.subWindow.wGC );
-
 // i=wsHideFrame|wsMaxSize|wsHideWindow;
 // if ( appMPlayer.mainDecoration ) i=wsShowFrame|wsMaxSize|wsHideWindow;
  i=wsShowFrame|wsMaxSize|wsHideWindow;

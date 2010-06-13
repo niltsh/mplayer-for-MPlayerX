@@ -749,14 +749,6 @@ GC vo_gc = NULL;
 GC f_gc = NULL;
 XSizeHints vo_hint;
 
-#ifdef CONFIG_GUI
-void vo_setwindow(Window w, GC g)
-{
-    vo_window = w;
-    vo_gc = g;
-}
-#endif
-
 void vo_x11_uninit(void)
 {
     saver_on(mDisplay);
@@ -768,10 +760,6 @@ void vo_x11_uninit(void)
         XFreeGC(mDisplay, f_gc);
         f_gc = NULL;
     }
-#ifdef CONFIG_GUI
-    /* destroy window only if it's not controlled by the GUI */
-    if (!use_gui)
-#endif
     {
         if (vo_gc)
         {
@@ -1658,11 +1646,7 @@ void vo_vm_switch(void)
 
 void vo_vm_close(void)
 {
-#ifdef CONFIG_GUI
-    if (vidmodes != NULL && vo_window != None)
-#else
     if (vidmodes != NULL)
-#endif
     {
         int i, modecount;
 
