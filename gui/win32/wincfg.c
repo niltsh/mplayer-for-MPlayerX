@@ -45,7 +45,7 @@ int   gtkCacheSize = 2048;
 int   gtkAutoSyncOn = 0;
 int   gtkAutoSync = 0;
 
-int sub_window = 0;
+int sub_window = 1;
 int console = 0;
 
 int gui_save_pos = 1;
