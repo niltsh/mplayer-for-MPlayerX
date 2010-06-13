@@ -40,6 +40,7 @@
 #include "video_out_internal.h"
 #include "x11_common.h"
 #include "aspect.h"
+#include "font_load.h"
 #include "sub.h"
 #include "subopt-helper.h"
 
