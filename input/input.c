@@ -1710,7 +1710,7 @@ mp_input_get_section(void) {
 }
 
 void
-mp_input_init(int use_gui) {
+mp_input_init(void) {
   char* file;
 
   file = config_file[0] != '/' ? get_path(config_file) : config_file;

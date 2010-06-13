@@ -2982,7 +2982,7 @@ if(!codecs_file || !parse_codec_cfg(codecs_file)){
 
 // Init input system
 current_module = "init_input";
-mp_input_init(use_gui);
+mp_input_init();
   mp_input_add_key_fd(-1,0,mplayer_get_key,NULL);
 if(slave_mode)
   mp_input_add_cmd_fd(0,USE_SELECT,MP_INPUT_SLAVE_CMD_FUNC,NULL);
