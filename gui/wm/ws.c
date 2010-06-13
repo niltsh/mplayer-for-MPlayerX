@@ -108,7 +108,7 @@ unsigned long        wsKeyTable[512];
 int                  wsUseXShm = 1;
 int                  wsUseXShape = 1;
 
-inline int wsSearch( Window win );
+int wsSearch( Window win );
 
 // ---
 
@@ -547,7 +547,7 @@ void wsDestroyWindow( wsTWindow * win )
 //   Handle events.
 // ----------------------------------------------------------------------------------------------
 
-inline int wsSearch( Window win )
+int wsSearch( Window win )
 {
  int i;
  for ( i=0;i<wsWLCount;i++ ) if ( wsWindowList[i] && wsWindowList[i]->WindowID == win ) return i;
