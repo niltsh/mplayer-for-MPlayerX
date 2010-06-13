@@ -30,6 +30,9 @@
 #include "aspect.h"
 #include "geometry.h"
 
+#ifdef CONFIG_GUI
+#include "gui/interface.h"
+#endif
 #include "mp_msg.h"
 #include "help_mp.h"
 #include "input/input.h"
@@ -361,6 +364,12 @@ int config_video_out(const vo_functions_t *vo, uint32_t width, uint32_t height,
     vo_dy += xinerama_y;
     vo_dwidth = d_width;
     vo_dheight = d_height;
+#ifdef CONFIG_GUI
+    if (use_gui) {
+      // GUI creates and manages window for us
+      guiGetEvent(guiSetShVideo, 0);
+    }
+#endif
   }
 
   return vo->config(width, height, d_width, d_height, flags, title, format);

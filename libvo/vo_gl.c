@@ -36,9 +36,6 @@
 
 #include "gl_common.h"
 #include "aspect.h"
-#ifdef CONFIG_GUI
-#include "gui/interface.h"
-#endif
 #include "fastmemcpy.h"
 #include "libass/ass_mp.h"
 
@@ -638,17 +635,9 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
   int_pause = 0;
   vo_flipped = !!(flags & VOFLAG_FLIPPING);
 
-#ifdef CONFIG_GUI
-  if (use_gui) {
-    // GUI creates and manages window for us
-    guiGetEvent(guiSetShVideo, 0);
-    goto glconfig;
-  }
-#endif
   if (create_window(d_width, d_height, flags, title) < 0)
     return -1;
 
-glconfig:
   if (vo_config_count)
     uninitGl();
   if (glctx.setGlWindow(&glctx) == SET_WINDOW_FAILED)

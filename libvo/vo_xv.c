@@ -59,10 +59,6 @@ Buffer allocation:
 
 #include "input/input.h"
 
-#ifdef CONFIG_GUI
-#include "gui/interface.h"
-#endif
-
 #include "libavutil/common.h"
 
 static const vo_info_t info = {
@@ -229,11 +225,6 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
             return -1;
     }
 
-#ifdef CONFIG_GUI
-    if (use_gui)
-        guiGetEvent(guiSetShVideo, 0);  // the GUI will set up / resize the window
-    else
-#endif
     {
 #ifdef CONFIG_XF86VM
         if (vm)

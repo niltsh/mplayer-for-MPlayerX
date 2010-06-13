@@ -552,6 +552,7 @@ int guiGetEvent( int type,void * arg )
 	  guiIntfStruct.MovieHeight=vo_dheight;
           if (guiWinID>=0)
             wsMoveWindow( &appMPlayer.mainWindow,0,0, vo_dheight);
+          WinID = appMPlayer.subWindow.WindowID;
          }
 	break;
 #ifdef CONFIG_DVDREAD
