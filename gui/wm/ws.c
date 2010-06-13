@@ -210,6 +210,8 @@ if(mDisplay){
   }
 }
 
+ XSetErrorHandler( wsErrorHandler );
+
 /* enable DND atoms */
 wsXDNDInitialize();
 
@@ -330,7 +332,6 @@ wsXDNDInitialize();
      wsConvFunc=rgb32tobgr15;
      break;
   }
- XSetErrorHandler( wsErrorHandler );
 }
 
 // ----------------------------------------------------------------------------------------------
