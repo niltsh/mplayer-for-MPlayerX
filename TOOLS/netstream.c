@@ -253,7 +253,7 @@ static int make_fd_set(fd_set* fds, client_t** _cl, int listen) {
 /// Hack to 'cleanly' exit
 static int run_server = 1;
 
-void exit_sig(int sig) {
+static void exit_sig(int sig) {
   static int count = 0;
   sig++; // gcc warning
   count++;
