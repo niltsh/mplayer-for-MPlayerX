@@ -745,8 +745,8 @@ void vo_x11_classhint(Display * display, Window window, const char *name)
 }
 
 Window vo_window = None;
-GC vo_gc = NULL;
-GC f_gc = NULL;
+GC vo_gc = None;
+GC f_gc = None;
 XSizeHints vo_hint;
 
 void vo_x11_uninit(void)
@@ -755,17 +755,17 @@ void vo_x11_uninit(void)
     if (vo_window != None)
         vo_showcursor(mDisplay, vo_window);
 
-    if (f_gc)
+    if (f_gc != None)
     {
         XFreeGC(mDisplay, f_gc);
-        f_gc = NULL;
+        f_gc = None;
     }
     {
-        if (vo_gc)
+        if (vo_gc != None)
         {
             XSetBackground(mDisplay, vo_gc, 0);
             XFreeGC(mDisplay, vo_gc);
-            vo_gc = NULL;
+            vo_gc = None;
         }
         if (vo_window != None)
         {
@@ -1043,7 +1043,7 @@ Window vo_x11_create_smooth_window(Display * mDisplay, Window mRoot,
         XCreateWindow(mDisplay, mRootWin, x, y, width, height, 0, depth,
                       CopyFromParent, vis, xswamask, &xswa);
     XSetWMProtocols(mDisplay, ret_win, &XAWM_DELETE_WINDOW, 1);
-    if (!f_gc)
+    if (f_gc == None)
         f_gc = XCreateGC(mDisplay, ret_win, 0, 0);
     XSetForeground(mDisplay, f_gc, 0);
 
@@ -1151,7 +1151,7 @@ void vo_x11_clearwindow_part(Display * mDisplay, Window vo_window,
 {
     int u_dheight, u_dwidth, left_ov, left_ov2;
 
-    if (!f_gc)
+    if (f_gc == None)
         return;
 
     u_dheight = use_fs ? vo_screenheight : vo_dheight;
@@ -1179,7 +1179,7 @@ void vo_x11_clearwindow_part(Display * mDisplay, Window vo_window,
 
 void vo_x11_clearwindow(Display * mDisplay, Window vo_window)
 {
-    if (!f_gc)
+    if (f_gc == None)
         return;
     XFillRectangle(mDisplay, vo_window, f_gc, 0, 0, vo_screenwidth,
                    vo_screenheight);
