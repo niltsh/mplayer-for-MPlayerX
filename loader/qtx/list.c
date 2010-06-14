@@ -28,10 +28,6 @@
 #include "loader/ldt_keeper.h"
 #include "loader/wine/winbase.h"
 
-#define __stdcall __attribute__((__stdcall__))
-#define __cdecl   __attribute__((__cdecl__))
-#define APIENTRY
-
 int main(void) {
     void *handler;
     ComponentDescription desc;

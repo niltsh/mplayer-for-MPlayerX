@@ -26,10 +26,6 @@
 #include "loader/wine/winbase.h"
 #include "mp_msg.h"
 
-#define __stdcall __attribute__((__stdcall__))
-#define __cdecl   __attribute__((__cdecl__))
-#define APIENTRY
-
 unsigned int* x_table[0x00001837];
 
 static    OSErr (*InitializeQTML)(long flags);
