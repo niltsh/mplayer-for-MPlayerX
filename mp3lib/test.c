@@ -25,6 +25,7 @@
 #include <sys/time.h>
 
 #include "config.h"
+#include "libmpcodecs/ad_mp3lib.h"
 #include "mp3lib/mp3.h"
 #include "cpudetect.h"
 
