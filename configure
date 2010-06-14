@@ -5644,7 +5644,7 @@ fi
 if test "$_ossaudio" = yes ; then
   def_ossaudio='#define CONFIG_OSS_AUDIO 1'
   aomodules="oss $aomodules"
-     cat > $TMPC << EOF
+  cat > $TMPC << EOF
 #include <sys/ioctl.h>
 #include <$_soundcard_header>
 #ifdef OPEN_SOUND_SYSTEM
@@ -5653,17 +5653,17 @@ int main(void) { return 0; }
 #error Not the real thing
 #endif
 EOF
-     _real_ossaudio=no
-     cc_check && _real_ossaudio=yes
-     if test "$_real_ossaudio" = yes; then
-       def_ossaudio_devdsp='#define PATH_DEV_DSP "/dev/dsp"'
-     elif netbsd || openbsd ; then
-       def_ossaudio_devdsp='#define PATH_DEV_DSP "/dev/sound"'
-       extra_ldflags="$extra_ldflags -lossaudio"
-     else
-       def_ossaudio_devdsp='#define PATH_DEV_DSP "/dev/dsp"'
-     fi
-    def_ossaudio_devmixer='#define PATH_DEV_MIXER "/dev/mixer"'
+  _real_ossaudio=no
+  cc_check && _real_ossaudio=yes
+  if test "$_real_ossaudio" = yes; then
+      def_ossaudio_devdsp='#define PATH_DEV_DSP "/dev/dsp"'
+  elif netbsd || openbsd ; then
+      def_ossaudio_devdsp='#define PATH_DEV_DSP "/dev/sound"'
+      extra_ldflags="$extra_ldflags -lossaudio"
+  else
+      def_ossaudio_devdsp='#define PATH_DEV_DSP "/dev/dsp"'
+  fi
+  def_ossaudio_devmixer='#define PATH_DEV_MIXER "/dev/mixer"'
 else
   def_ossaudio='#undef CONFIG_OSS_AUDIO'
   def_ossaudio_devdsp='#define PATH_DEV_DSP ""'
