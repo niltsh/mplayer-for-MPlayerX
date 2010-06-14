@@ -39,7 +39,7 @@ static inline unsigned int GetTimer(void){
 
 static FILE* mp3file=NULL;
 
-static int mplayer_audio_read(char *buf, int size)
+int mplayer_audio_read(char *buf, int size)
 {
     return fread(buf,1,size,mp3file);
 }
