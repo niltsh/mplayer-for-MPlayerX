@@ -874,7 +874,7 @@ endif
 version.h: version.sh
 	./$< `$(CC) -dumpversion`
 
-%(EXESUF): %.c
+%$(EXESUF): %.c
 
 
 
