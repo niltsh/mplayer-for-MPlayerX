@@ -31,7 +31,7 @@
 #define mp_msg(t, l, ...) fprintf(stderr, __VA_ARGS__)
 #endif
 
-#include "get_path.c"
+#include "path.c"
 
 static void remove_key(long handle, const char* name) {
     int i, len;
