@@ -27,7 +27,6 @@
 #include "qtxsdk/select.h"
 #include "loader/ldt_keeper.h"
 
-char* get_path(const char* x){  return strdup(x);}
 void* LoadLibraryA(char* name);
 void* GetProcAddress(void* handle,char* func);
 
