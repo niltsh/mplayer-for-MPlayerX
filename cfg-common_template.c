@@ -16,9 +16,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef MPLAYER_CFG_COMMON_OPTS_H
-#define MPLAYER_CFG_COMMON_OPTS_H
-
 // you may _not_ include any files here since this is included
 // in the middle of an array declaration
 
@@ -366,5 +363,3 @@
     {"fontconfig", "MPlayer was compiled without fontconfig support.\n", CONF_TYPE_PRINT, CONF_NOCFG, 0, 0, NULL},
     {"nofontconfig", "MPlayer was compiled without fontconfig support.\n", CONF_TYPE_PRINT, CONF_NOCFG, 0, 0, NULL},
 #endif /* CONFIG_FONTCONFIG */
-
-#endif /* MPLAYER_CFG_COMMON_OPTS_H */

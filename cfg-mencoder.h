@@ -273,7 +273,7 @@ const m_option_t mencoder_opts[]={
     {"lavfopts",  lavfopts_conf, CONF_TYPE_SUBCONFIG, CONF_GLOBAL, 0, 0, NULL},
 #endif
 
-#include "cfg-common-opts.h"
+#include "cfg-common_template.c"
 
 //   {"-help", help_text, CONF_TYPE_PRINT, CONF_NOCFG, 0, 0, NULL},
 //   {"help", help_text, CONF_TYPE_PRINT, CONF_NOCFG, 0, 0, NULL},
