@@ -25,6 +25,8 @@
 
 #include "vd_internal.h"
 
+//#undef MPEG12_POSTPROC
+
 static const vd_info_t info =
 {
 	"libmpeg2 MPEG 1/2 Video decoder",
@@ -253,6 +255,23 @@ static mp_image_t* decode(sh_video_t *sh,void* data,int len,int flags){
 	    mpi_new->fields |= MP_IMGFIELD_ORDERED;
             if (!(info->current_picture->flags&PIC_FLAG_PROGRESSIVE_FRAME))
                 mpi_new->fields |= MP_IMGFIELD_INTERLACED;
+/*
+ * internal libmpeg2 does export quantization values per slice
+ * we let postproc know them to fine tune it's strength
+ */
+#if defined(MPEG12_POSTPROC) && defined(CONFIG_LIBMPEG2_INTERNAL)
+	    mpi_new->qstride=info->sequence->width>>4;
+	    {
+	    char **p = &context->quant_store[type==PIC_FLAG_CODING_TYPE_B ?
+					2 : (context->quant_store_idx ^= 1)];
+	    *p = realloc(*p, mpi_new->qstride*(info->sequence->height>>4));
+	    mpi_new->qscale = *p;
+	    }
+	    mpeg2dec->decoder.quant_store=mpi_new->qscale;
+	    mpeg2dec->decoder.quant_stride=mpi_new->qstride;
+	    mpi_new->pict_type=type; // 1->I, 2->P, 3->B
+	    mpi_new->qscale_type= 1;
+#endif
 
 	    if (mpi_new->flags&MP_IMGFLAG_DRAW_CALLBACK
 	        && !(mpi_new->flags&MP_IMGFLAG_DIRECT)) {

@@ -156,6 +156,11 @@ struct mpeg2_decoder_s {
 
     /* XXX: stuff due to xine shit */
     int8_t q_scale_type;
+
+    int quantizer_scales[32];
+    int quantizer_scale;
+    char* quant_store;
+    int quant_stride;
 };
 
 typedef struct {
