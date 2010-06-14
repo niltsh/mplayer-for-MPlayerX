@@ -286,7 +286,7 @@ void pt_iter_replace_entry(play_tree_iter_t* iter, play_tree_t* entry);
 /// Adds a new file to the playtree, if it is not valid it is created.
 void pt_add_file(play_tree_t** ppt, char* filename);
 
-// Two macros to use only the iter and not the other things.
+// Macro to use only the iter and not the other things.
 #define pt_iter_add_file(iter, filename) pt_add_file(&iter->tree, filename)
 
 /// Resets the iter and goes back to head.
