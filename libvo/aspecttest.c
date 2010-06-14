@@ -27,7 +27,6 @@
 /* default zoom state 0 off, 1 on */
 #define DEF_ZOOM 1
 
-extern float monitor_aspect;
 int vo_dheight;
 int vo_dwidth;
 int vo_fs;
