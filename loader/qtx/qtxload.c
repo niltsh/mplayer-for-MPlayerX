@@ -23,10 +23,8 @@
 #include "qtxsdk/components.h"
 #include "qtxsdk/select.h"
 #include "loader/ldt_keeper.h"
+#include "loader/wine/winbase.h"
 #include "mp_msg.h"
-
-void* LoadLibraryA(char* name);
-void* GetProcAddress(void* handle,char* func);
 
 #define __stdcall __attribute__((__stdcall__))
 #define __cdecl   __attribute__((__cdecl__))

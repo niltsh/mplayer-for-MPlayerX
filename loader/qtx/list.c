@@ -26,9 +26,7 @@
 #include "qtxsdk/components.h"
 #include "qtxsdk/select.h"
 #include "loader/ldt_keeper.h"
-
-void* LoadLibraryA(char* name);
-void* GetProcAddress(void* handle,char* func);
+#include "loader/wine/winbase.h"
 
 #define __stdcall __attribute__((__stdcall__))
 #define __cdecl   __attribute__((__cdecl__))
