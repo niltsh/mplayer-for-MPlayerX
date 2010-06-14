@@ -31,7 +31,8 @@
 
 static FILE* mp3file=NULL;
 
-int mplayer_audio_read(char *buf,int size){
+static int mplayer_audio_read(char *buf, int size)
+{
     return fread(buf,1,size,mp3file);
 }
 
