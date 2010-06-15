@@ -7230,7 +7230,7 @@ if test "$_librtmp" = yes && test "$_network" = yes; then
 else
   nolibrtmp=yes
   _librtmp=no
-  def_librtmp='#undef CONFIG_LIBRTMP'
+  def_librtmp='#define CONFIG_LIBRTMP 0'
   noinputmodules="librtmp $noinputmodules"
 fi
 echores "$_librtmp"
@@ -9305,7 +9305,6 @@ $def_yasm
 #define CONFIG_FFSERVER 0
 #define CONFIG_GPL 1
 #define CONFIG_GRAY 0
-#define CONFIG_LIBRTMP 0
 #define CONFIG_LIBVORBIS 0
 #define CONFIG_POWERPC_PERF 0
 #define CONFIG_SMALL 0
