@@ -9324,6 +9324,8 @@ $def_yasm
 #define HAVE_POLL_H 1
 #define HAVE_PPC4XX 0
 #define HAVE_STRERROR_R 0
+#define HAVE_SYMVER_ASM_LABEL 0
+#define HAVE_SYMVER_GNU_ASM 0
 #define HAVE_SYS_SELECT_H 0
 #define HAVE_VFP_ARGS 1
 #define HAVE_VIRTUALALLOC 0
