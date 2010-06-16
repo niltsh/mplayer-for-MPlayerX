@@ -929,7 +929,7 @@ static const char help_text[]=
 #define MSGTR_LIBVO_MGA_AspectResized "[VO_MGA] aspect()：改变大小为 %dx%d。\n"
 #define MSGTR_LIBVO_MGA_Uninit "[VO] 卸载！\n"
 
-// mga_common.c
+// mga_template.c
 #define MSGTR_LIBVO_MGA_ErrorInConfigIoctl "[MGA] mga_vid_config ioctl 错误（mga_vid.o 版本错误？）"
 #define MSGTR_LIBVO_MGA_CouldNotGetLumaValuesFromTheKernelModule "[MGA] 无法在内核模块中获得亮度值！\n"
 #define MSGTR_LIBVO_MGA_CouldNotSetLumaValuesFromTheKernelModule "[MGA] 无法在内核模块中设置亮度值！\n"

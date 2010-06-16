@@ -1562,7 +1562,7 @@ static const char help_text[]=
 
 // ================================== LIBMPVO ====================================
 
-// mga_common.c
+// mga_template.c
 
 #define MSGTR_LIBVO_MGA_ErrorInConfigIoctl "[MGA] błąd w mga_vid_config ioctl (zła wersja mga_vid.o ?)"
 #define MSGTR_LIBVO_MGA_CouldNotGetLumaValuesFromTheKernelModule "[MGA] Nie mogłem pobrać wartości luma z modułu jądra!\n"

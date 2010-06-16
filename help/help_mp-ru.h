@@ -939,7 +939,7 @@ static const char help_text[]=
 #define MSGTR_LIBVO_MGA_AspectResized "[VO_MGA] aspect(): изменён размер в %dx%d.\n"
 #define MSGTR_LIBVO_MGA_Uninit "[VO] деинициализация!\n"
 
-// mga_common.c
+// mga_template.c
 #define MSGTR_LIBVO_MGA_ErrorInConfigIoctl "[MGA] ошибка в mga_vid_config ioctl (неверная версия mga_vid.o?)"
 #define MSGTR_LIBVO_MGA_CouldNotGetLumaValuesFromTheKernelModule "[MGA] Не могу получить значения люмы из модуля ядра!\n"
 #define MSGTR_LIBVO_MGA_CouldNotSetLumaValuesFromTheKernelModule "[MGA] Не могу установить значения люмы из модуля ядра!\n"

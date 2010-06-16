@@ -938,7 +938,7 @@ static const char help_text[]=
 #define MSGTR_LIBVO_MGA_AspectResized "[VO_MGA] aspect(): škálováno na %dx%d.\n"
 #define MSGTR_LIBVO_MGA_Uninit "[VO] odinicializace!\n"
 
-// mga_common.c
+// mga_template.c
 #define MSGTR_LIBVO_MGA_ErrorInConfigIoctl "[MGA] chyba v mga_vid_config ioctl (špatná verze mga_vid.o?)"
 #define MSGTR_LIBVO_MGA_CouldNotGetLumaValuesFromTheKernelModule "[MGA] Nelze získat jasové hodnoty z jaderného modulu!\n"
 #define MSGTR_LIBVO_MGA_CouldNotSetLumaValuesFromTheKernelModule "[MGA] Nelze nastavit jasové hodnoty z jaderného modulu!\n"

@@ -1686,7 +1686,7 @@ static const char help_text[]=
 
 // ================================== LIBMPVO ====================================
 
-// mga_common.c
+// mga_template.c
 
 #define MSGTR_LIBVO_MGA_ErrorInConfigIoctl "[MGA] mga_video_ayarı'nda ioctl hatası (yanlış mga_vid.o sürümü?)"
 #define MSGTR_LIBVO_MGA_CouldNotGetLumaValuesFromTheKernelModule "[MGA] Kernel modülünden luma değerlerine ulaşılamadı!\n"

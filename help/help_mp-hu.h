@@ -945,7 +945,7 @@ static const char help_text[]=
 #define MSGTR_LIBVO_MGA_AspectResized "[VO_MGA] aspect(): átméretezve erre: %dx%d.\n"
 #define MSGTR_LIBVO_MGA_Uninit "[VO] uninit!\n"
 
-// mga_common.c
+// mga_template.c
 #define MSGTR_LIBVO_MGA_ErrorInConfigIoctl "[MGA] hiba az mga_vid_config ioctl-ben (hibás verziójú mga_vid.o?)"
 #define MSGTR_LIBVO_MGA_CouldNotGetLumaValuesFromTheKernelModule "[MGA] Nem kérdezhetőek le a luma értékek a kernel modulból!\n"
 #define MSGTR_LIBVO_MGA_CouldNotSetLumaValuesFromTheKernelModule "[MGA] Nem állíthatóak be a luma értékek a kernel modulból!\n"

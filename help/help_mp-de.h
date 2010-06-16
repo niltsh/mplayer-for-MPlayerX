@@ -1709,7 +1709,7 @@ static const char help_text[]=
 
 // ================================== LIBVO ====================================
 
-// mga_common.c
+// mga_template.c
 #define MSGTR_LIBVO_MGA_ErrorInConfigIoctl "[MGA] Fehler im ioctl von mga_vid_config (falsche mga_vid.o-Version?)"
 #define MSGTR_LIBVO_MGA_CouldNotGetLumaValuesFromTheKernelModule "[MGA] Konnte die Helligkeitswerte vom Kernelmodul nicht ermitteln!\n"
 #define MSGTR_LIBVO_MGA_CouldNotSetLumaValuesFromTheKernelModule "[MGA] Konnte die Helligkeitswerte vom Kernelmodul nicht setzen!\n"
