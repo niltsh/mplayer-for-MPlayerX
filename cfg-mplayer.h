@@ -38,8 +38,6 @@ extern char *lirc_configfile;
 extern float vo_panscanrange;
 /* only used at startup (setting these values from configfile) */
 extern char *vo_geometry;
-
-extern int fs_layer;
 extern int stop_xscreensaver;
 
 extern int menu_startup;
