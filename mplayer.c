@@ -2681,6 +2681,7 @@ int gui_no_filename=0;
   // Create the config context and register the options
   mconfig = m_config_new();
   m_config_register_options(mconfig,mplayer_opts);
+  m_config_register_options(mconfig, common_opts);
   mp_input_register_options(mconfig);
 
   // Preparse the command line

@@ -596,6 +596,7 @@ user_correct_pts = 0;
   // Create the config context and register the options
   mconfig = m_config_new();
   m_config_register_options(mconfig,mencoder_opts);
+  m_config_register_options(mconfig, common_opts);
 
   // Preparse the command line
   m_config_preparse_command_line(mconfig,argc,argv);
