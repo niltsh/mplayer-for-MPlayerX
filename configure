@@ -7431,8 +7431,6 @@ echocheck "/dev/mga_vid"
 if test "$_mga" = auto ; then
   _mga=no
   test -c /dev/mga_vid && _mga=yes
-  test "$_libswscale_a" = no && _mga=no &&
-    res_comment="mga requires libswscale.a"
 fi
 if test "$_mga" = yes ; then
   def_mga='#define CONFIG_MGA 1'

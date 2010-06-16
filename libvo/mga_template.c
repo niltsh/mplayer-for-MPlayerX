@@ -67,6 +67,7 @@ static void draw_osd(void)
 }
 
 
+#ifdef CONFIG_LIBSWSCALE_A
 static void
 draw_slice_g200(uint8_t *image[], int stride[], int width,int height,int x,int y)
 {
@@ -84,6 +85,7 @@ draw_slice_g200(uint8_t *image[], int stride[], int width,int height,int x,int y
 		width, height,
 		stride[1], stride[2], bespitch);
 }
+#endif
 
 static void
 draw_slice_g400(uint8_t *image[], int stride[], int w,int h,int x,int y)
@@ -126,9 +128,11 @@ draw_slice(uint8_t *src[], int stride[], int w,int h,int x,int y)
 	    w,h,x,y);
 #endif
 
+#ifdef CONFIG_LIBSWSCALE_A
 	if (mga_vid_config.card_type == MGA_G200)
             draw_slice_g200(src,stride,w,h,x,y);
 	else
+#endif
             draw_slice_g400(src,stride,w,h,x,y);
 	return 0;
 }
@@ -429,6 +433,12 @@ static int mga_init(int width,int height,unsigned int format){
 			return -1;
 		}
 	}
+#ifndef CONFIG_LIBSWSCALE_A
+	if (mga_vid_config.card_type == MGA_G200) {
+		mp_msg(MSGT_VO, MSGL_FATAL, "G200 cards are only support with static libswscale\n");
+		return -1;
+	}
+#endif
 
 	mp_msg(MSGT_VO,MSGL_V,"[MGA] Using %d buffers.\n",mga_vid_config.num_frames);
 
