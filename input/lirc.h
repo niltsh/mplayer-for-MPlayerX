@@ -19,6 +19,8 @@
 #ifndef MPLAYER_LIRC_H
 #define MPLAYER_LIRC_H
 
+extern char *lirc_configfile;
+
 int
 mp_input_lirc_init(void);
 

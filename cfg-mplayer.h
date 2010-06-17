@@ -24,14 +24,13 @@
  */
 
 #include "cfg-common.h"
+#include "input/lirc.h"
 #include "libmpcodecs/vd.h"
 #include "libmenu/menu.h"
 #include "libvo/aspect.h"
 #include "libvo/vo_fbdev.h"
 #include "libvo/vo_zr.h"
 #include "mp_fifo.h"
-
-extern char *lirc_configfile;
 
 extern float vo_panscanrange;
 /* only used at startup (setting these values from configfile) */
