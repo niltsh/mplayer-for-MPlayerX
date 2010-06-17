@@ -24,6 +24,8 @@
  */
 
 #include "cfg-common.h"
+#include "gui/app.h"
+#include "gui/interface.h"
 #include "input/lirc.h"
 #include "libmpcodecs/vd.h"
 #include "libmenu/menu.h"
@@ -36,9 +38,6 @@
 #include "unrar_exec.h"
 
 extern const m_option_t dxr2_opts[];
-
-extern char * skinName;
-extern int guiWinID;
 
 
 const m_option_t vd_conf[]={
