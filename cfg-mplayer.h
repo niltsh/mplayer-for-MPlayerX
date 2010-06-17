@@ -28,12 +28,11 @@
 #include "libmpcodecs/vd.h"
 #include "libmenu/menu.h"
 #include "libvo/aspect.h"
+#include "libvo/geometry.h"
 #include "libvo/vo_fbdev.h"
 #include "libvo/vo_zr.h"
 #include "mp_fifo.h"
 
-/* only used at startup (setting these values from configfile) */
-extern char *vo_geometry;
 extern int stop_xscreensaver;
 
 extern char *unrar_executable;
