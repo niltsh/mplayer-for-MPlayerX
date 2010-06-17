@@ -23,6 +23,14 @@
 #include "libmpcodecs/mp_image.h"
 #include "libmpcodecs/vf.h"
 
+extern char *menu_chroot;
+extern char *menu_fribidi_charset;
+extern int menu_flip_hebrew;
+extern int menu_fribidi_flip_commas;
+extern int menu_keepdir;
+extern int menu_startup;
+
+
 struct menu_priv_s;
 typedef struct  menu_s menu_t;
 

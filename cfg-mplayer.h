@@ -25,6 +25,7 @@
 
 #include "cfg-common.h"
 #include "libmpcodecs/vd.h"
+#include "libmenu/menu.h"
 #include "libvo/aspect.h"
 #include "libvo/vo_fbdev.h"
 #include "libvo/vo_zr.h"
@@ -38,13 +39,6 @@ extern float vo_panscanrange;
 /* only used at startup (setting these values from configfile) */
 extern char *vo_geometry;
 extern int stop_xscreensaver;
-
-extern int menu_startup;
-extern int menu_keepdir;
-extern char *menu_chroot;
-extern char *menu_fribidi_charset;
-extern int menu_flip_hebrew;
-extern int menu_fribidi_flip_commas;
 
 extern char *unrar_executable;
 
