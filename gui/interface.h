@@ -160,6 +160,7 @@ extern guiInterface_t guiIntfStruct;
 #define guiALL		0xffffffff
 
 extern int use_gui;
+extern int guiWinID;
 
 void guiInit( void );
 void guiDone( void );
