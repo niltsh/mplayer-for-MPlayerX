@@ -24,6 +24,7 @@
  */
 
 #include "libmpcodecs/ve_x264.h"
+#include "libmpdemux/muxer_avi.h"
 #include "cfg-common.h"
 
 extern const m_option_t faacopts_conf[];
@@ -165,9 +166,6 @@ const m_option_t of_conf[]={
     "\n", CONF_TYPE_PRINT, CONF_NOCFG, 0, 0, NULL},
     {NULL, NULL, 0, 0, 0, 0, NULL}
 };
-
-extern float avi_aspect_override; /* defined in libmpdemux/muxer_avi.c */
-extern int write_odml; /* defined in libmpdemux/muxer_avi.c */
 
 const m_option_t mencoder_opts[]={
     /* name, pointer, type, flags, min, max */

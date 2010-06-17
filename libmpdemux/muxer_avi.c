@@ -29,7 +29,7 @@
 #include "stream/stream.h"
 #include "demuxer.h"
 #include "stheader.h"
-
+#include "muxer_avi.h"
 #include "muxer.h"
 #include "aviheader.h"
 #include "ms_hdr.h"
