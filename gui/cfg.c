@@ -31,6 +31,7 @@
 #include "libmpcodecs/vd.h"
 #include "libvo/sub.h"
 #include "libvo/video_out.h"
+#include "libvo/x11_common.h"
 #include "stream/stream.h"
 #include "libmpdemux/demuxer.h"
 #include "libass/ass_mp.h"
@@ -99,7 +100,6 @@ gtkASS_t gtkASS;
 #endif
 // ---
 
-extern int    stop_xscreensaver;
 extern int    disable_gui_conf;
 int m_config_parse_config_file(m_config_t* config, char *conffile);
 

@@ -31,6 +31,7 @@
 #include "libao2/audio_out.h"
 #include "libvo/sub.h"
 #include "libvo/video_out.h"
+#include "libvo/x11_common.h"
 #include "stream/stream.h"
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"
@@ -192,8 +193,6 @@ static void prCListRow( GtkCList * clist,gint row,gint column,GdkEvent * event,g
 #if defined(CONFIG_FREETYPE) || defined(CONFIG_ICONV)
 static void prEntry( GtkContainer * container,gpointer user_data );
 #endif
-
-extern int    stop_xscreensaver;
 
 void ShowPreferences( void )
 {

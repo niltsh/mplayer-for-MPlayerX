@@ -31,9 +31,8 @@
 #include "libvo/geometry.h"
 #include "libvo/vo_fbdev.h"
 #include "libvo/vo_zr.h"
+#include "libvo/x11_common.h"
 #include "mp_fifo.h"
-
-extern int stop_xscreensaver;
 
 extern char *unrar_executable;
 

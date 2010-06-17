@@ -59,6 +59,8 @@ extern int mLocalDisplay;
 
 extern int vo_mouse_autohide;
 
+extern int stop_xscreensaver;
+
 int vo_init( void );
 void vo_uninit( void );
 void vo_hidecursor ( Display* , Window );
