@@ -33,8 +33,7 @@
 #include "libvo/vo_zr.h"
 #include "libvo/x11_common.h"
 #include "mp_fifo.h"
-
-extern char *unrar_executable;
+#include "unrar_exec.h"
 
 extern const m_option_t dxr2_opts[];
 
