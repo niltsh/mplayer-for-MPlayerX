@@ -36,6 +36,7 @@
 #include "m_option.h"
 #include "sub.h"
 #include "path.h"
+#include "libmpcodecs/vd.h"
 #include "libmpdemux/mpeg_packetizer.h"
 #include "x11_common.h"
 
@@ -43,7 +44,6 @@
 
 
 extern float monitor_aspect;
-extern float movie_aspect;
 
 int dxr2_fd = -1;
 
