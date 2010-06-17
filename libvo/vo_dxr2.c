@@ -30,6 +30,7 @@
 #include <errno.h>
 
 #include "config.h"
+#include "aspect.h"
 #include "video_out.h"
 #include "video_out_internal.h"
 #include "mp_msg.h"
@@ -42,8 +43,6 @@
 
 #include <dxr2ioctl.h>
 
-
-extern float monitor_aspect;
 
 int dxr2_fd = -1;
 
