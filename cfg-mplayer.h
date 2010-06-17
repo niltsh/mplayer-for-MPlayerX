@@ -32,7 +32,6 @@
 #include "libvo/vo_zr.h"
 #include "mp_fifo.h"
 
-extern float vo_panscanrange;
 /* only used at startup (setting these values from configfile) */
 extern char *vo_geometry;
 extern int stop_xscreensaver;
