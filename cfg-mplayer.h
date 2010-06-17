@@ -31,13 +31,12 @@
 #include "libmenu/menu.h"
 #include "libvo/aspect.h"
 #include "libvo/geometry.h"
+#include "libvo/vo_dxr2.h"
 #include "libvo/vo_fbdev.h"
 #include "libvo/vo_zr.h"
 #include "libvo/x11_common.h"
 #include "mp_fifo.h"
 #include "unrar_exec.h"
-
-extern const m_option_t dxr2_opts[];
 
 
 const m_option_t vd_conf[]={
