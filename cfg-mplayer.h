@@ -25,6 +25,7 @@
 
 #include "cfg-common.h"
 #include "libmpcodecs/vd.h"
+#include "libvo/aspect.h"
 #include "libvo/vo_zr.h"
 
 extern int key_fifo_size;
@@ -54,10 +55,6 @@ extern const m_option_t dxr2_opts[];
 extern char * skinName;
 extern int guiWinID;
 
-
-/* from libvo/aspect.c */
-extern float force_monitor_aspect;
-extern float monitor_pixel_aspect;
 
 const m_option_t vd_conf[]={
     {"help", "Use MPlayer with an appropriate video file instead of live partners to avoid vd.\n", CONF_TYPE_PRINT, CONF_NOCFG|CONF_GLOBAL, 0, 0, NULL},
