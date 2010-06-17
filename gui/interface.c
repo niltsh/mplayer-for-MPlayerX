@@ -400,8 +400,6 @@ void guiLoadFont( void )
 #endif
 }
 
-extern mp_osd_obj_t* vo_osd_list;
-
 extern char **sub_name;
 
 void guiLoadSubtitle( char * name )

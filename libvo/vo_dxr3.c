@@ -587,8 +587,6 @@ static void draw_alpha(int x, int y, int w, int h, unsigned char* src, unsigned 
 #endif
 }
 
-extern mp_osd_obj_t* vo_osd_list;
-
 static void draw_osd(void)
 {
 #ifdef SPU_SUPPORT

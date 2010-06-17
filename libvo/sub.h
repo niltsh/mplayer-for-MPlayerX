@@ -82,6 +82,8 @@ extern int vo_osd_teletext_format;
 extern int vo_osd_progbar_type;
 extern int vo_osd_progbar_value;   // 0..255
 
+extern mp_osd_obj_t *vo_osd_list;
+
 extern void* vo_spudec;
 extern void* vo_vobsub;
 

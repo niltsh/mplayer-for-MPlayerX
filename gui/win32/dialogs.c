@@ -46,7 +46,6 @@ int get_video_colors(sh_video_t *sh_video, const char *item, int *value);
 guiInterface_t guiIntfStruct;
 int addurl = 0;
 
-extern mp_osd_obj_t* vo_osd_list;
 extern char **sub_name;
 
 void guiLoadSubtitle(char *name)
