@@ -26,13 +26,11 @@
 #include "cfg-common.h"
 #include "libmpcodecs/vd.h"
 #include "libvo/aspect.h"
+#include "libvo/vo_fbdev.h"
 #include "libvo/vo_zr.h"
 
 extern int key_fifo_size;
 extern unsigned doubleclick_time;
-
-extern char *fb_mode_cfgfile;
-extern char *fb_mode_name;
 
 extern char *lirc_configfile;
 

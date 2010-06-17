@@ -47,6 +47,7 @@
 #include "aspect.h"
 #include "mp_msg.h"
 #include "libavutil/common.h"
+#include "vo_fbdev.h"
 
 static const vo_info_t info = {
     "Framebuffer Device",
