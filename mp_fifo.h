@@ -19,6 +19,10 @@
 #ifndef MPLAYER_MP_FIFO_H
 #define MPLAYER_MP_FIFO_H
 
+extern int key_fifo_size;
+extern unsigned doubleclick_time;
+
+
 int mplayer_get_key(int fd);
 void mplayer_put_key(int code);
 

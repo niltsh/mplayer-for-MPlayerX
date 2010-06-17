@@ -29,9 +29,7 @@
 #include "libvo/aspect.h"
 #include "libvo/vo_fbdev.h"
 #include "libvo/vo_zr.h"
-
-extern int key_fifo_size;
-extern unsigned doubleclick_time;
+#include "mp_fifo.h"
 
 extern char *lirc_configfile;
 
