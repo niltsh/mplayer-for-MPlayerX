@@ -23,15 +23,12 @@
 #include "config.h"
 #include "m_config.h"
 #include "m_option.h"
+#include "mp_msg.h"
 
 #include "libmpcodecs/ad.h"
 #include "libmpcodecs/vd.h"
 #include "libmpdemux/demux_ts.h"
 #include "osdep/priority.h"
-
-extern char *mp_msg_charset;
-extern int mp_msg_color;
-extern int mp_msg_module;
 
 /* defined in codec-cfg.c */
 extern char * codecs_file;
@@ -266,9 +263,6 @@ const m_option_t audio_filter_conf[]={
     {"force", &af_cfg.force, CONF_TYPE_INT, CONF_RANGE, 0, 7, NULL},
     {NULL, NULL, 0, 0, 0, 0, NULL}
 };
-
-extern int mp_msg_levels[MSGT_MAX];
-extern int mp_msg_level_all;
 
 const m_option_t msgl_config[]={
     { "all", &mp_msg_level_all, CONF_TYPE_INT, CONF_RANGE, -1, 9, NULL},

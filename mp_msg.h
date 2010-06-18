@@ -126,6 +126,15 @@ extern int verbose;
 
 #define MSGT_MAX 64
 
+
+extern char *mp_msg_charset;
+extern int mp_msg_color;
+extern int mp_msg_module;
+
+extern int mp_msg_levels[MSGT_MAX];
+extern int mp_msg_level_all;
+
+
 void mp_msg_init(void);
 int mp_msg_test(int mod, int lev);
 
