@@ -26,14 +26,12 @@
 #include "mp_msg.h"
 
 #include "libmpcodecs/ad.h"
+#include "libmpcodecs/dec_video.h"
 #include "libmpcodecs/vd.h"
 #include "libmpdemux/demux_ts.h"
 #include "osdep/priority.h"
 #include "stream/network.h"
 #include "codec-cfg.h"
-
-/* defined in dec_video.c */
-extern int field_dominance;
 
 /* from dec_audio, currently used for ac3surround decoder only */
 extern int audio_output_channels;
