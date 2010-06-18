@@ -29,6 +29,7 @@
 #include "libmpcodecs/vd.h"
 #include "libmpdemux/demux_ts.h"
 #include "osdep/priority.h"
+#include "stream/network.h"
 
 /* defined in codec-cfg.c */
 extern char * codecs_file;
@@ -40,17 +41,7 @@ extern int field_dominance;
 extern int audio_output_channels;
 extern int fakemono;
 
-/* defined in network.c */
-extern char *network_username;
-extern char *network_password;
-extern int   network_bandwidth;
-extern char *network_useragent;
-extern char *network_referrer;
-extern int   network_cookies_enabled;
-extern char *cookies_file;
-
 extern int network_prefer_ipv4;
-extern int network_ipv4_only_proxy;
 extern int reuse_socket;
 
 extern int dvd_speed; /* stream/stream_dvd.c */

@@ -53,6 +53,16 @@ typedef struct {
 	int demuxer_type;
 } mime_struct_t;
 
+extern char *cookies_file;
+extern char *network_password;
+extern char *network_referrer;
+extern char *network_useragent;
+extern char *network_username;
+
+extern int   network_bandwidth;
+extern int   network_cookies_enabled;
+extern int   network_ipv4_only_proxy;
+
 streaming_ctrl_t *streaming_ctrl_new(void);
 int streaming_bufferize( streaming_ctrl_t *streaming_ctrl, char *buffer, int size);
 
