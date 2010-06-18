@@ -23,6 +23,10 @@
 
 #define TS_MAX_PROBE_SIZE 2000000
 
+extern off_t ts_probe;
+extern int   ts_prog;
+extern int   ts_keep_broken;
+
 int mp_a52_framesize(uint8_t *buf, int *srate);
 
 #endif /* MPLAYER_DEMUX_TS_H */
