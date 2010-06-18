@@ -47,7 +47,6 @@ extern const m_option_t cdda_opts[];
 
 extern char* sub_stream;
 extern int demuxer_type, audio_demuxer_type, sub_demuxer_type;
-extern int audio_substream_id;
 extern off_t ps_probe;
 
 extern int sws_flags;
