@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 31353 (MSGTR_AudioStreamRedefined)
+// Synced with help_mp-en.h rev. 31430 (MSGTR_MPDEMUX_AVIHDR_EmptyList)
 // Reminder of hard terms which need better/final solution later:
 //   (file links to be updated later if available!);
 //   NAV; section/subsection;  XScreenSaver; keycolor;
@@ -1372,8 +1372,8 @@ static const char help_text[]=
 #define MSGTR_WritingTrailer "正在写入索引...\n"
 
 // demuxer.c, demux_*.c
-#define MSGTR_AudioStreamRedefined "警告：重复定义音频流头部 %d。\n"
-#define MSGTR_VideoStreamRedefined "警告: 重复定义视频流头部 %d。\n"
+#define MSGTR_AudioStreamRedefined "警告：重复定义了音频流头部 %d。\n"
+#define MSGTR_VideoStreamRedefined "警告: 重复定义了视频流头部 %d。\n"
 #define MSGTR_TooManyAudioInBuffer "\n缓冲中音频包太多（%d 个包存在于 %d 字节中）。\n"
 #define MSGTR_TooManyVideoInBuffer "\n缓冲中视频包太多（%d 个包存在于 %d 字节中）。\n"
 #define MSGTR_MaybeNI "可能播放了一个非交错合并的媒体流/文件，或者是编解码运行失败？\n" \
