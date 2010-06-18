@@ -184,6 +184,7 @@ typedef struct urlItem
  char    * url;
 } URLItem;
 
+extern char   * skinName;
 extern plItem * plList;
 extern plItem * plCurrent;
 extern plItem * plLastPlayed;

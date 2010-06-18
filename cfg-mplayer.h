@@ -24,7 +24,6 @@
  */
 
 #include "cfg-common.h"
-#include "gui/app.h"
 #include "gui/interface.h"
 #include "input/lirc.h"
 #include "libmpcodecs/vd.h"
@@ -34,7 +33,6 @@
 #include "libvo/vo_dxr2.h"
 #include "libvo/vo_fbdev.h"
 #include "libvo/vo_zr.h"
-#include "libvo/x11_common.h"
 #include "mp_fifo.h"
 #include "unrar_exec.h"
 
