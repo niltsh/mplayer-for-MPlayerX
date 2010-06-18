@@ -30,9 +30,7 @@
 #include "libmpdemux/demux_ts.h"
 #include "osdep/priority.h"
 #include "stream/network.h"
-
-/* defined in codec-cfg.c */
-extern char * codecs_file;
+#include "codec-cfg.h"
 
 /* defined in dec_video.c */
 extern int field_dominance;

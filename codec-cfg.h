@@ -44,6 +44,9 @@
 #define CODECS_STATUS__MAX              2
 
 
+extern char *codecs_file;
+
+
 #if !defined(GUID_TYPE) && !defined(GUID_DEFINED)
 #define GUID_TYPE    1
 #define GUID_DEFINED 1
