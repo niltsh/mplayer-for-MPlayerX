@@ -1055,8 +1055,8 @@ int main(int argc, char* argv[])
         nr[1] = nr_acodecs;
 
         printf("/* GENERATED FROM %s, DO NOT EDIT! */\n\n",argv[1]);
-        printf("#include <stddef.h>\n",argv[1]);
-        printf("#include \"codec-cfg.h\"\n\n",argv[1]);
+        printf("#include <stddef.h>\n");
+        printf("#include \"codec-cfg.h\"\n\n");
         printf("#define CODEC_CFG_MIN %i\n\n", codecs_conf_release);
 
         for (i=0; i<2; i++) {
