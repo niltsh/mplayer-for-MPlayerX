@@ -23,7 +23,7 @@
 #include "mp_image.h"
 
 extern m_obj_settings_t* vf_settings;
-extern m_obj_list_t vf_obj_list;
+extern const m_obj_list_t vf_obj_list;
 
 struct vf_instance;
 struct vf_priv_s;
