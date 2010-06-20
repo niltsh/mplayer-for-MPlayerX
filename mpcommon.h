@@ -19,6 +19,7 @@
 #ifndef MPLAYER_MPCOMMON_H
 #define MPLAYER_MPCOMMON_H
 
+#include "m_option.h"
 #include "subreader.h"
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"
@@ -27,6 +28,8 @@
 extern double sub_last_pts;
 extern ass_track_t *ass_track;
 extern subtitle *vo_sub_last;
+
+extern const m_option_t noconfig_opts[];
 
 void print_version(const char* name);
 void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvdsub, int reset);

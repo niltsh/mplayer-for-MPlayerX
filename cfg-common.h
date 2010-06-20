@@ -44,6 +44,7 @@
 #include "stream/tcp.h"
 #include "stream/udp.h"
 #include "codec-cfg.h"
+#include "mpcommon.h"
 
 #ifdef CONFIG_CDDA
 #include "stream/cdd.h"
@@ -300,8 +301,6 @@ const m_option_t msgl_config[]={
     {NULL, NULL, 0, 0, 0, 0, NULL}
 
 };
-
-extern const m_option_t noconfig_opts[];
 
 extern const m_option_t lavc_decode_opts_conf[];
 extern const m_option_t xvid_dec_opts[];
