@@ -52,8 +52,6 @@
 #include "libaf/equalizer.h"
 #include "libass/ass_mp.h"
 
-extern af_cfg_t af_cfg;
-
 #ifdef CONFIG_ICONV
 #include <iconv.h>
 #endif
@@ -61,6 +59,7 @@ extern af_cfg_t af_cfg;
 #include "stream/stream.h"
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"
+#include "libmpcodecs/dec_audio.h"
 #include "libmpcodecs/dec_video.h"
 
 #ifdef CONFIG_DVDREAD

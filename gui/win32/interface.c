@@ -40,6 +40,7 @@
 #include "libao2/audio_out.h"
 #include "access_mpcontext.h"
 #include "libmpcodecs/vd.h"
+#include "libmpcodecs/dec_audio.h"
 #include "gui/mplayer/gmplayer.h"
 #include "mp_core.h"
 #include "gui.h"
@@ -49,7 +50,6 @@
 #endif
 
 extern int vcd_track;
-extern af_cfg_t af_cfg;
 int guiWinID = 0;
 
 char *skinName = NULL;
