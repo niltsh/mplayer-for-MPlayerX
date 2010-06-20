@@ -30,6 +30,7 @@
 #include "libmpcodecs/dec_video.h"
 #include "libmpcodecs/vd.h"
 #include "libmpdemux/demux_ts.h"
+#include "libmpdemux/demuxer.h"
 #include "osdep/priority.h"
 #include "stream/network.h"
 #include "stream/stream_dvd_common.h"
@@ -44,8 +45,6 @@ extern const m_option_t demux_rawaudio_opts[];
 extern const m_option_t demux_rawvideo_opts[];
 extern const m_option_t cdda_opts[];
 
-extern char* sub_stream;
-extern int demuxer_type, audio_demuxer_type, sub_demuxer_type;
 extern off_t ps_probe;
 
 extern int sws_flags;
