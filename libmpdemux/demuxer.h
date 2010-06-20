@@ -178,6 +178,7 @@ struct demuxer;
 extern int demuxer_type;
 extern int audio_demuxer_type;
 extern int sub_demuxer_type;
+extern int audio_stream_cache;
 extern int correct_pts;
 extern int user_correct_pts;
 extern char *sub_stream;

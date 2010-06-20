@@ -166,9 +166,6 @@ extern int rtsp_transport_sctp;
 extern int rtsp_port;
 extern char *rtsp_destination;
 
-
-extern int audio_stream_cache;
-
 const m_option_t scaler_filter_conf[]={
     {"lgb", &sws_lum_gblur, CONF_TYPE_FLOAT, 0, 0, 100.0, NULL},
     {"cgb", &sws_chr_gblur, CONF_TYPE_FLOAT, 0, 0, 100.0, NULL},
