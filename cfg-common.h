@@ -174,8 +174,6 @@ const m_option_t scaler_filter_conf[]={
     {NULL, NULL, 0, 0, 0, 0, NULL}
 };
 
-extern char *cdrom_device;
-
 const m_option_t vivoopts_conf[]={
     {"version", &vivo_param_version, CONF_TYPE_INT, 0, 0, 0, NULL},
     /* audio options */

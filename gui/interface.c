@@ -355,7 +355,6 @@ void guiDone( void )
 }
 
 extern int              stream_dump_type;
-extern int  		vcd_track;
 
 void guiLoadFont( void )
 {

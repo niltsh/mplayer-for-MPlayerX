@@ -49,7 +49,6 @@
 #include <cdio/cdio.h>
 #endif
 
-extern int vcd_track;
 int guiWinID = 0;
 
 char *skinName = NULL;
