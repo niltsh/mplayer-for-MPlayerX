@@ -202,7 +202,7 @@ extern int vivo_param_bytesperblock;
 extern int vivo_param_width;
 extern int vivo_param_height;
 extern int vivo_param_vformat;
-extern char *dvd_device, *cdrom_device;
+extern char *cdrom_device;
 
 const m_option_t vivoopts_conf[]={
     {"version", &vivo_param_version, CONF_TYPE_INT, 0, 0, 0, NULL},
