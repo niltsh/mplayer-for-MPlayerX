@@ -19,6 +19,14 @@
 #ifndef MPLAYER_VF_SCALE_H
 #define MPLAYER_VF_SCALE_H
 
+extern int sws_chr_vshift;
+extern int sws_chr_hshift;
+
+extern float sws_chr_gblur;
+extern float sws_lum_gblur;
+extern float sws_chr_sharpen;
+extern float sws_lum_sharpen;
+
 extern int sws_flags;
 
 int get_sws_cpuflags(void);

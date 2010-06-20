@@ -169,13 +169,6 @@ extern char *rtsp_destination;
 
 extern int audio_stream_cache;
 
-extern int sws_chr_vshift;
-extern int sws_chr_hshift;
-extern float sws_chr_gblur;
-extern float sws_lum_gblur;
-extern float sws_chr_sharpen;
-extern float sws_lum_sharpen;
-
 const m_option_t scaler_filter_conf[]={
     {"lgb", &sws_lum_gblur, CONF_TYPE_FLOAT, 0, 0, 100.0, NULL},
     {"cgb", &sws_chr_gblur, CONF_TYPE_FLOAT, 0, 0, 100.0, NULL},
