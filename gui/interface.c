@@ -40,6 +40,7 @@
 #include "mp_core.h"
 #include "mplayer.h"
 #include "libmpcodecs/vd.h"
+#include "libmpcodecs/vf.h"
 #include "libvo/x11_common.h"
 #include "libvo/video_out.h"
 #include "libvo/font_load.h"
@@ -356,7 +357,6 @@ void guiDone( void )
 
 extern int              stream_dump_type;
 extern int  		vcd_track;
-extern m_obj_settings_t * vf_settings;
 
 void guiLoadFont( void )
 {
