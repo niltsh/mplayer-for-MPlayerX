@@ -30,6 +30,7 @@
 #include "libmpcodecs/dec_video.h"
 #include "libmpcodecs/vd.h"
 #include "libmpdemux/demux_ts.h"
+#include "libmpdemux/demux_viv.h"
 #include "libmpdemux/demuxer.h"
 #include "osdep/priority.h"
 #include "stream/network.h"
@@ -193,15 +194,6 @@ const m_option_t scaler_filter_conf[]={
     {NULL, NULL, 0, 0, 0, 0, NULL}
 };
 
-/* VIVO demuxer options: */
-extern int vivo_param_version;
-extern char *vivo_param_acodec;
-extern int vivo_param_abitrate;
-extern int vivo_param_samplerate;
-extern int vivo_param_bytesperblock;
-extern int vivo_param_width;
-extern int vivo_param_height;
-extern int vivo_param_vformat;
 extern char *cdrom_device;
 
 const m_option_t vivoopts_conf[]={

@@ -32,6 +32,7 @@
 #include "stream/stream.h"
 #include "demuxer.h"
 #include "stheader.h"
+#include "demux_viv.h"
 
 /* parameters ! */
 int vivo_param_version = -1;
