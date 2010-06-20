@@ -25,6 +25,8 @@
 #ifndef MPLAYER_TCP_H
 #define MPLAYER_TCP_H
 
+extern int network_prefer_ipv4;
+
 /* Connect to a server using a TCP connection */
 int connect2Server (char *host, int port, int verb);
 

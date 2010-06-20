@@ -41,14 +41,13 @@
 #include "stream/network.h"
 #include "stream/pvr.h"
 #include "stream/stream_dvd_common.h"
+#include "stream/tcp.h"
+#include "stream/udp.h"
 #include "codec-cfg.h"
 
 #ifdef CONFIG_CDDA
 #include "stream/cdd.h"
 #endif
-
-extern int network_prefer_ipv4;
-extern int reuse_socket;
 
 /* defined in libmpdemux: */
 extern const m_option_t demux_rawaudio_opts[];
