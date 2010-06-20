@@ -38,6 +38,7 @@
 #include "demuxer.h"
 #include "stheader.h"
 #include "mf.h"
+#include "demux_audio.h"
 
 #include "libaf/af_format.h"
 #include "libmpcodecs/dec_teletext.h"
@@ -1090,8 +1091,6 @@ int audio_stream_cache = 0;
 char *demuxer_name = NULL;       // parameter from -demuxer
 char *audio_demuxer_name = NULL; // parameter from -audio-demuxer
 char *sub_demuxer_name = NULL;   // parameter from -sub-demuxer
-
-extern int hr_mp3_seek;
 
 extern float stream_cache_min_percent;
 extern float stream_cache_seek_min_percent;
