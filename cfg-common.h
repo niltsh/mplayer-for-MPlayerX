@@ -32,12 +32,11 @@
 #include "libmpdemux/demux_ts.h"
 #include "osdep/priority.h"
 #include "stream/network.h"
+#include "stream/stream_dvd_common.h"
 #include "codec-cfg.h"
 
 extern int network_prefer_ipv4;
 extern int reuse_socket;
-
-extern int dvd_speed; /* stream/stream_dvd.c */
 
 /* defined in libmpdemux: */
 extern int hr_mp3_seek;
