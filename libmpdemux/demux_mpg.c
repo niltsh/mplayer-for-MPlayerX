@@ -33,6 +33,7 @@
 #include "parse_es.h"
 #include "stheader.h"
 #include "mp3_hdr.h"
+#include "demux_mpg.h"
 
 //#define MAX_PS_PACKETSIZE 2048
 #define MAX_PS_PACKETSIZE (224*1024)
