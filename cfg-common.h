@@ -29,6 +29,7 @@
 #include "libmpcodecs/dec_audio.h"
 #include "libmpcodecs/dec_video.h"
 #include "libmpcodecs/vd.h"
+#include "libmpcodecs/vf_scale.h"
 #include "libmpdemux/demux_mpg.h"
 #include "libmpdemux/demux_ts.h"
 #include "libmpdemux/demux_viv.h"
@@ -47,8 +48,6 @@ extern int hr_mp3_seek;
 extern const m_option_t demux_rawaudio_opts[];
 extern const m_option_t demux_rawvideo_opts[];
 extern const m_option_t cdda_opts[];
-
-extern int sws_flags;
 
 
 #include "stream/tv.h"

@@ -149,7 +149,6 @@ static void draw_alpha_null(int x0, int y0, int w, int h,
 
 static struct SwsContext *swsContext = NULL;
 static int dst_width;
-extern int sws_flags;
 
 static XVisualInfo vinfo;
 
