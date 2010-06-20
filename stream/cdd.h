@@ -29,6 +29,10 @@
 #endif
 #include <sys/types.h>
 
+#include "m_option.h"
+
+extern const m_option_t cdda_opts[];
+
 typedef struct {
 	char cddb_hello[1024];
 	unsigned long disc_id;

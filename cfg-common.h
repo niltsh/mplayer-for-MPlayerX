@@ -40,6 +40,10 @@
 #include "stream/stream_dvd_common.h"
 #include "codec-cfg.h"
 
+#ifdef CONFIG_CDDA
+#include "stream/cdd.h"
+#endif
+
 extern int network_prefer_ipv4;
 extern int reuse_socket;
 
@@ -47,7 +51,6 @@ extern int reuse_socket;
 extern int hr_mp3_seek;
 extern const m_option_t demux_rawaudio_opts[];
 extern const m_option_t demux_rawvideo_opts[];
-extern const m_option_t cdda_opts[];
 
 
 #include "stream/tv.h"
