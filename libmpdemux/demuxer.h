@@ -183,6 +183,10 @@ extern int correct_pts;
 extern int user_correct_pts;
 extern char *sub_stream;
 
+extern int rtsp_transport_http;
+extern int rtsp_transport_sctp;
+extern int rtsp_transport_tcp;
+
 /**
  * Demuxer description structure
  */
