@@ -54,8 +54,6 @@
 #include "tcp.h"
 //#include "libreal/rmff.h"
 
-extern int network_bandwidth;
-
 #define FOURCC_TAG( ch0, ch1, ch2, ch3 ) \
         (((long)(unsigned char)(ch3)       ) | \
         ( (long)(unsigned char)(ch2) << 8  ) | \

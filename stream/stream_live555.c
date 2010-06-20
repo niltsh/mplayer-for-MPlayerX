@@ -28,8 +28,6 @@
 #include "libmpdemux/demuxer.h"
 #include "help_mp.h"
 
-extern int network_bandwidth;
-
 static int _rtsp_streaming_seek(int fd, off_t pos, streaming_ctrl_t* streaming_ctrl) {
   return -1; // For now, we don't handle RTSP stream seeking
 }

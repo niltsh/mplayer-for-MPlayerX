@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "network.h"
 #include "stream.h"
 #include "url.h"
 #include "udp.h"
@@ -70,7 +71,6 @@ static int
 rtp_stream_open (stream_t *stream, int mode, void *opts, int *file_format)
 {
   URL_t *url;
-  extern int network_bandwidth;
 
   mp_msg (MSGT_OPEN, MSGL_INFO, "STREAM_RTP, URL: %s\n", stream->url);
   stream->streaming_ctrl = streaming_ctrl_new ();

@@ -46,8 +46,6 @@
 
 #define RTSP_DEFAULT_PORT 554
 
-extern int network_bandwidth;
-
 static int
 rtsp_streaming_read (int fd, char *buffer,
                      int size, streaming_ctrl_t *stream_ctrl)
