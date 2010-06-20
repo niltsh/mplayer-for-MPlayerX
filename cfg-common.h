@@ -38,6 +38,7 @@
 #include "libpostproc/postprocess.h"
 #include "osdep/priority.h"
 #include "stream/network.h"
+#include "stream/pvr.h"
 #include "stream/stream_dvd_common.h"
 #include "codec-cfg.h"
 
@@ -140,16 +141,6 @@ const m_option_t tvopts_conf[]={
     {NULL, NULL, 0, 0, 0, 0, NULL}
 };
 #endif /* CONFIG_TV */
-
-extern int pvr_param_aspect_ratio;
-extern int pvr_param_sample_rate;
-extern int pvr_param_audio_layer;
-extern int pvr_param_audio_bitrate;
-extern char *pvr_param_audio_mode;
-extern int pvr_param_bitrate;
-extern char *pvr_param_bitrate_mode;
-extern int pvr_param_bitrate_peak;
-extern char *pvr_param_stream_type;
 
 #ifdef CONFIG_PVR
 const m_option_t pvropts_conf[]={

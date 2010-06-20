@@ -30,6 +30,17 @@
 #include "stream.h"
 #include "tv.h"
 
+extern char *pvr_param_audio_mode;
+extern char *pvr_param_bitrate_mode;
+extern char *pvr_param_stream_type;
+
+extern int pvr_param_aspect_ratio;
+extern int pvr_param_audio_bitrate;
+extern int pvr_param_audio_layer;
+extern int pvr_param_bitrate;
+extern int pvr_param_bitrate_peak;
+extern int pvr_param_sample_rate;
+
 /**
  * @brief Get the current station name.
  *        The pointer is valid, till the stream is closed.
