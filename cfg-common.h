@@ -33,6 +33,7 @@
 #include "libmpdemux/demux_ts.h"
 #include "libmpdemux/demux_viv.h"
 #include "libmpdemux/demuxer.h"
+#include "libpostproc/postprocess.h"
 #include "osdep/priority.h"
 #include "stream/network.h"
 #include "stream/stream_dvd_common.h"
@@ -48,7 +49,6 @@ extern const m_option_t demux_rawvideo_opts[];
 extern const m_option_t cdda_opts[];
 
 extern int sws_flags;
-extern char* pp_help;
 
 
 #include "stream/tv.h"
