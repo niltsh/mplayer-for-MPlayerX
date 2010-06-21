@@ -1,10 +1,11 @@
 MPlayer (1.0)
 
   rc4: "Yes We Can"
-    Gui: Changes towards removing the Gui
-    * The Gui will no longer display any error or warning messages
-    * Special Gui slave commands (gui_*) were removed, as well as
-      the related key bindings
+
+    GUI: Changes towards removing the GUI
+    * The GUI will no longer display any error or warning messages.
+    * Special GUI slave commands (gui_*) were removed, along with
+      the related key bindings.
 
     Decoders:
     * YUY2 Lossless Codec (YLC0) via binary DLL
@@ -13,7 +14,7 @@ MPlayer (1.0)
     * add new FourCCs (m1v1, yuvs, VYUY, Y42B, V422, YUNV, UYNV, UYNY, uyv1,
       2Vu1, P422, HDYC, IJLV, MVJP)
       TwoCCs (0xA106, 0x6c75, 0xAAC0, 0x55005354)
-      to existing decoders.
+      to existing decoders
     * AMR now handled via OpenCORE decoder
     * updated Windows Media Screen Codec (MSS1, MSS2) via binary DLL
     * CoreAVC H.264 decoder via binary DLL (Windows only)
@@ -24,6 +25,7 @@ MPlayer (1.0)
     * CineForm HD (CFHD) via binary DLL
     * VP8 decoding through libvpx wrapper in FFmpeg
     * support for external libmpeg2 added
+    * hardware MPEG decoder priority lowered
 
     Demuxers:
     * Mostly fixed timing issues with some H.264 (PAFF) samples
@@ -40,16 +42,16 @@ MPlayer (1.0)
 
     Drivers:
     * -vo yuv4mpeg:interlaced no longer does its own interlaced RGB->YUV
-      conversion. Use -vf scale=::1 to keep the same behaviour and report
+      conversion. Use -vf scale=::1 to keep the same behavior and report
       if there are any issues with that.
-    * X11: Window manager choses Window position by default.
-      Add geometry=50%:50% to your configuration to get the old behaviour.
+    * X11: Window manager chooses Window position by default.
+      Add geometry=50%:50% to your configuration to get the old behavior.
     * -vo md5sum md5 calculation changed so output matches FFmpeg's -f framemd5
     * Support for more formats in OpenGL video output drivers (different YUV
       subsampling, 16 bit per component)
     * Selectable YUV to RGB conversion standard for -vo gl
       (-vo gl:colorspace=...:levelconv=...)
-    * -vo gl now tries to use yuv=2 by default if possible.
+    * -vo gl now tries to use yuv=2 by default if possible
     * -vo matrixview finally added
     * add OS/2 KAI audio driver (-ao kai)
 
@@ -61,18 +63,18 @@ MPlayer (1.0)
     * support for UTF-16 encoded external subtitles
     * support for 8 channel audio
     * sync dvd:// and dvdnav:// features
-    * support for MPEG-4 ASP in VDPAU video output (non B-frame only)
+    * support for MPEG-4 ASP in VDPAU video output (non-B-frame only)
     * support for live and non-live DVB teletext with demuxer lavf
     * -name, -title and -use-filename-title options for MPlayer
-    * support for stream handling via FFmpeg, in particular rtmp and rtsp
+    * support for stream handling via FFmpeg, in particular RTMP and RTSP
       (use e.g. ffmpeg://http://example.com/test)
     * experimental support for external libass, configure with
       --disable-ass-internal
     * better support for 16-bit-per-component formats and formats
-      with alpha channel.
+      with alpha channel
     * better out-of-the-box support for compiling for ARM, IA64,
       MinGW32 and MinGW-w64, MinGW has ASLR enabled with recent
-      enough binutils.
+      enough binutils
     * libdvdcss synced with upstream Subversion snapshot
 
     MEncoder:
@@ -81,6 +83,7 @@ MPlayer (1.0)
 
 
   rc3: "BikeshedCounter AKA Godot" May 30, 2010
+
     Decoders:
     * support for X8 frames (fixes "J-type picture is not supported" for WMV2)
     * support for DTS WAV/DTS-CD passthrough by ad_hwac3
@@ -524,7 +527,7 @@ MPlayer (1.0)
       correctly and -subcp must be set for all non-UTF-8 subtitles
     * more audio-truncation fixes
     * libavutil mandatory for MPlayer compilation
-    * more intuitive -edlout behaviour
+    * more intuitive -edlout behavior
     * -nortc is now default since -rtc has disadvantages with recent kernels
 
 
@@ -1337,7 +1340,7 @@ MPlayer (1.0)
     * SSE optimizations enabled under MinGW
     * SSE support under OpenBSD
     * AltiVec support under NetBSD
-    * GCC 3.4 support (due to changed behaviour in ASM code snippets)
+    * GCC 3.4 support (due to changed behavior in ASM code snippets)
 
     Demuxers:
     * Matroska containing RealVideo works better
