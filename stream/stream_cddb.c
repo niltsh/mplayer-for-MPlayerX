@@ -719,30 +719,6 @@ static int cddb_get_proto_level(cddb_data_t *cddb_data)
     return cddb_http_request("stat", cddb_proto_level_parse, cddb_data);
 }
 
-static int cddb_freedb_sites_parse(HTTP_header_t *http_hdr, cddb_data_t *cddb_data)
-{
-    int ret, status;
-
-    ret = sscanf(http_hdr->body, "%d ", &status);
-    if (ret != 1) {
-        mp_msg(MSGT_DEMUX, MSGL_ERR, MSGTR_ParseError);
-        return -1;
-    }
-
-    switch (status) {
-    case 210:
-        // TODO: Parse the sites
-        ret = cddb_data->anonymous;    // For gcc complaining about unused parameter.
-        return 0;
-    case 401:
-        mp_msg(MSGT_DEMUX, MSGL_FIXME, MSGTR_MPDEMUX_CDDB_NoSitesInfoAvailable);
-        break;
-    default:
-        mp_msg(MSGT_DEMUX, MSGL_FIXME, MSGTR_MPDEMUX_CDDB_UnhandledCode);
-    }
-    return -1;
-}
-
 static void cddb_create_hello(cddb_data_t *cddb_data)
 {
     char host_name[51];
