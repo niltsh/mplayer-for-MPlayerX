@@ -52,8 +52,6 @@
 
 #include "libmpdemux/demuxer.h"
 
-extern char *cdrom_device;
-
 static struct stream_priv_s {
   int track;
   char* device;

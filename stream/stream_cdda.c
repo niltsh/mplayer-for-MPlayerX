@@ -38,8 +38,6 @@
 #endif
 
 
-extern char *cdrom_device;
-
 static struct cdda_params {
   int speed;
   int paranoia_mode;
