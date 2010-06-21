@@ -22,6 +22,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
+#include <toolame.h>
+
 #include "m_option.h"
 #include "mp_msg.h"
 #include "libmpdemux/aviheader.h"
@@ -32,6 +34,13 @@
 #include "ae_toolame.h"
 #include "libmpdemux/mp3_hdr.h"
 
+
+typedef struct {
+	toolame_options *toolame_ctx;
+	int channels, srate, bitrate;
+	int vbr;
+	int16_t left_pcm[1152], right_pcm[1152];
+} mpae_toolame_ctx;
 
 static int
     param_bitrate = 192,
