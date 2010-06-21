@@ -29,8 +29,6 @@ extern int             mainVisible;
 extern int             mplMainAutoPlay;
 extern int             mplMiddleMenu;
 
-extern char          * dvd_device;
-
 void mplInit( void * disp );
 
 void mplMainDraw( void );
