@@ -337,6 +337,7 @@ extern int vcd_track;
 
 extern char * audio_stream;
 extern char *cdrom_device;
+extern char *dvd_device;
 
 typedef struct {
  int id; // 0 - 31 mpeg; 128 - 159 ac3; 160 - 191 pcm
