@@ -291,9 +291,6 @@ const m_option_t msgl_config[]={
 
 };
 
-extern const m_option_t lavc_decode_opts_conf[];
-extern const m_option_t xvid_dec_opts[];
-
 const m_option_t common_opts[] = {
 // ------------------------- common options --------------------
     {"quiet", &quiet, CONF_TYPE_FLAG, CONF_GLOBAL, 0, 1, NULL},

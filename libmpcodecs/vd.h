@@ -19,6 +19,7 @@
 #ifndef MPLAYER_VD_H
 #define MPLAYER_VD_H
 
+#include "m_option.h"
 #include "mp_image.h"
 #include "mpc_info.h"
 #include "libmpdemux/stheader.h"
@@ -47,6 +48,9 @@ extern int vd_use_slices;
 extern int vidmode;
 extern float movie_aspect;
 extern float screen_size_xy;
+
+extern const m_option_t lavc_decode_opts_conf[];
+extern const m_option_t xvid_dec_opts[];
 
 #define VDCTRL_QUERY_FORMAT 3 /* test for availabilty of a format */
 #define VDCTRL_QUERY_MAX_PP_LEVEL 4 /* test for postprocessing support (max level) */
