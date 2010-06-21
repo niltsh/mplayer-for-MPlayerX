@@ -743,11 +743,6 @@ static int cddb_freedb_sites_parse(HTTP_header_t *http_hdr, cddb_data_t *cddb_da
     return -1;
 }
 
-static int cddb_get_freedb_sites(cddb_data_t *cddb_data)
-{
-    return cddb_http_request("sites", cddb_freedb_sites_parse, cddb_data);
-}
-
 static void cddb_create_hello(cddb_data_t *cddb_data)
 {
     char host_name[51];
@@ -796,8 +791,6 @@ static int cddb_retrieve(cddb_data_t *cddb_data)
                MSGTR_MPDEMUX_CDDB_FailedToGetProtocolLevel);
         return -1;
     }
-
-    //cddb_get_freedb_sites(&cddb_data);
 
     sprintf(command, "cddb+query+%08lx+%d+%s%d", cddb_data->disc_id,
             cddb_data->tracks, offsets, time_len);
