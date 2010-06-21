@@ -20,10 +20,6 @@
 #define MPLAYER_CFG_COMMON_H
 
 #include <sys/types.h>
-#include "config.h"
-#include "m_config.h"
-#include "m_option.h"
-#include "mp_msg.h"
 
 #include "libmpcodecs/ad.h"
 #include "libmpcodecs/dec_audio.h"
@@ -38,20 +34,20 @@
 #include "libmpdemux/mf.h"
 #include "libpostproc/postprocess.h"
 #include "osdep/priority.h"
+#include "stream/cdd.h"
 #include "stream/network.h"
 #include "stream/pvr.h"
 #include "stream/stream_dvd_common.h"
+#include "stream/stream_radio.h"
 #include "stream/tcp.h"
+#include "stream/tv.h"
 #include "stream/udp.h"
 #include "codec-cfg.h"
+#include "config.h"
+#include "m_config.h"
+#include "m_option.h"
+#include "mp_msg.h"
 #include "mpcommon.h"
-
-#ifdef CONFIG_CDDA
-#include "stream/cdd.h"
-#endif
-
-#include "stream/tv.h"
-#include "stream/stream_radio.h"
 
 
 
