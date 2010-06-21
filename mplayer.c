@@ -355,7 +355,15 @@ static char* rtc_device;
 edl_record_ptr edl_records = NULL; ///< EDL entries memory area
 edl_record_ptr next_edl_record = NULL; ///< only for traversing edl_records
 short edl_decision = 0; ///< 1 when an EDL operation has been made.
+short edl_needs_reset = 0; ///< 1 if we need to reset EDL next pointer
+short edl_backward = 0; ///< 1 if we need to skip to the beginning of the next EDL record
 FILE* edl_fd = NULL; ///< fd to write to when in -edlout mode.
+// Number of seconds to add to the seek when jumping out
+// of EDL scene in backward direction. This is needed to
+// have some time after the seek to decide what to do next
+// (next seek, pause,...), otherwise after the seek it will
+// enter the same scene again and skip forward immediately
+float edl_backward_extra_sec = 2;
 int use_filedir_conf;
 int use_filename_title;
 
@@ -2545,31 +2553,12 @@ static void pause_loop(void)
 #endif
 }
 
-
-// Find the right mute status and record position for new file position
-static void edl_seek_reset(MPContext *mpctx)
-{
-    mpctx->edl_muted = 0;
-    next_edl_record = edl_records;
-
-    while (next_edl_record) {
-	if (next_edl_record->start_sec >= mpctx->sh_video->pts)
-	    break;
-
-	if (next_edl_record->action == EDL_MUTE)
-	    mpctx->edl_muted = !mpctx->edl_muted;
-	next_edl_record = next_edl_record->next;
-    }
-    if ((mpctx->user_muted | mpctx->edl_muted) != mpctx->mixer.muted)
-	mixer_mute(&mpctx->mixer);
-}
-
-
 // Execute EDL command for the current position if one exists
 static void edl_update(MPContext *mpctx)
 {
-    if (!next_edl_record)
-	return;
+    if (!edl_records) {
+        return;
+    }
 
     if (!mpctx->sh_video) {
 	mp_msg(MSGT_CPLAYER, MSGL_ERR, MSGTR_EdlNOsh_video);
@@ -2579,24 +2568,66 @@ static void edl_update(MPContext *mpctx)
 	return;
     }
 
-    if (mpctx->sh_video->pts >= next_edl_record->start_sec) {
-	if (next_edl_record->action == EDL_SKIP) {
-	    mpctx->osd_function = OSD_FFW;
-	    abs_seek_pos = 0;
-	    rel_seek_secs = next_edl_record->length_sec;
-	    mp_msg(MSGT_CPLAYER, MSGL_DBG4, "EDL_SKIP: start [%f], stop "
-		   "[%f], length [%f]\n", next_edl_record->start_sec,
-		   next_edl_record->stop_sec, next_edl_record->length_sec);
-	    edl_decision = 1;
+    // This indicates that we need to reset next EDL record according
+    // to new PTS due to seek or other condition
+    if (edl_needs_reset) {
+        edl_needs_reset = 0;
+        mpctx->edl_muted = 0;
+        next_edl_record = edl_records;
+
+        // Find next record, also skip immediately if we are already
+        // inside any record
+        while (next_edl_record) {
+            if (next_edl_record->start_sec > mpctx->sh_video->pts)
+                break;
+            if (next_edl_record->stop_sec >= mpctx->sh_video->pts) {
+                if (edl_backward) {
+                    mpctx->osd_function = OSD_REW;
+                    edl_decision = 1;
+                    abs_seek_pos = 0;
+                    rel_seek_secs = -(mpctx->sh_video->pts -
+                                      next_edl_record->start_sec +
+                                      edl_backward_extra_sec);
+                    mp_msg(MSGT_CPLAYER, MSGL_DBG4, "EDL_SKIP: pts [%f], "
+                           "offset [%f], start [%f], stop [%f], length [%f]\n",
+                           mpctx->sh_video->pts, rel_seek_secs,
+                           next_edl_record->start_sec, next_edl_record->stop_sec,
+                           next_edl_record->length_sec);
+                    return;
+                }
+                break;
+            }
+
+            if (next_edl_record->action == EDL_MUTE)
+                mpctx->edl_muted = !mpctx->edl_muted;
+
+            next_edl_record = next_edl_record->next;
 	}
+        if ((mpctx->user_muted | mpctx->edl_muted) != mpctx->mixer.muted)
+            mixer_mute(&mpctx->mixer);
+    }
+
+    if (next_edl_record &&
+        mpctx->sh_video->pts >= next_edl_record->start_sec) {
+        if (next_edl_record->action == EDL_SKIP) {
+            mpctx->osd_function = OSD_FFW;
+            edl_decision = 1;
+            abs_seek_pos = 0;
+            rel_seek_secs = next_edl_record->stop_sec - mpctx->sh_video->pts;
+            mp_msg(MSGT_CPLAYER, MSGL_DBG4, "EDL_SKIP: pts [%f], offset [%f], "
+                   "start [%f], stop [%f], length [%f]\n",
+                   mpctx->sh_video->pts, rel_seek_secs,
+                   next_edl_record->start_sec, next_edl_record->stop_sec,
+                   next_edl_record->length_sec);
+        }
 	else if (next_edl_record->action == EDL_MUTE) {
-	    mpctx->edl_muted = !mpctx->edl_muted;
-	    if ((mpctx->user_muted | mpctx->edl_muted) != mpctx->mixer.muted)
-		mixer_mute(&mpctx->mixer);
-	    mp_msg(MSGT_CPLAYER, MSGL_DBG4, "EDL_MUTE: [%f]\n",
-		   next_edl_record->start_sec );
-	}
-	next_edl_record = next_edl_record->next;
+            mpctx->edl_muted = !mpctx->edl_muted;
+            if ((mpctx->user_muted | mpctx->edl_muted) != mpctx->mixer.muted)
+                mixer_mute(&mpctx->mixer);
+            mp_msg(MSGT_CPLAYER, MSGL_DBG4, "EDL_MUTE: [%f]\n",
+                   next_edl_record->start_sec );
+        }
+        next_edl_record = next_edl_record->next;
     }
 }
 
@@ -2643,7 +2674,10 @@ static int seek(MPContext *mpctx, double amount, int style)
         ass_flush_events(((sh_sub_t *)mpctx->d_sub->sh)->ass_track);
 #endif
 
-    edl_seek_reset(mpctx);
+    if (edl_records) {
+        edl_needs_reset = 1;
+        edl_backward = amount < 0;
+    }
 
     c_total = 0;
     max_pts_correction = 0.1;
@@ -3874,15 +3908,17 @@ if(!mpctx->sh_video) {
 
 //====================== FLIP PAGE (VIDEO BLT): =========================
 
-        current_module="flip_page";
-        if (!frame_time_remaining && blit_frame) {
-	   unsigned int t2=GetTimer();
+if (!edl_needs_reset) {
+    current_module="flip_page";
+    if (!frame_time_remaining && blit_frame) {
+        unsigned int t2=GetTimer();
 
-	   if(vo_config_count) mpctx->video_out->flip_page();
-	   mpctx->num_buffered_frames--;
+        if(vo_config_count) mpctx->video_out->flip_page();
+        mpctx->num_buffered_frames--;
 
-	   vout_time_usage += (GetTimer() - t2) * 0.000001;
-        }
+        vout_time_usage += (GetTimer() - t2) * 0.000001;
+    }
+}
 //====================== A-V TIMESTAMP CORRECTION: =========================
 
   adjust_sync_and_print_status(frame_time_remaining, mpctx->time_frame);
