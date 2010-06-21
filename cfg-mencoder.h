@@ -28,13 +28,11 @@
 #include "libmpcodecs/ae_toolame.h"
 #include "libmpcodecs/ae_twolame.h"
 #include "libmpcodecs/ve_x264.h"
+#include "libmpdemux/muxer.h"
 #include "libmpdemux/muxer_avi.h"
 #include "cfg-common.h"
 
 extern const m_option_t lavcopts_conf[];
-extern const m_option_t lavfopts_conf[];
-extern const m_option_t mpegopts_conf[];
-extern const m_option_t nuvopts_conf[];
 extern const m_option_t vfwopts_conf[];
 extern const m_option_t xvidencopts_conf[];
 

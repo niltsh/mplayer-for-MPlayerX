@@ -22,6 +22,7 @@
 #include <stdint.h>
 #include <sys/types.h>
 #include "aviheader.h"
+#include "m_option.h"
 #include "ms_hdr.h"
 #include "stream/stream.h"
 
@@ -126,6 +127,10 @@ typedef struct muxbuf_t {
 } muxbuf_t;
 
 extern char *force_fourcc;
+
+extern const m_option_t lavfopts_conf[];
+extern const m_option_t mpegopts_conf[];
+extern const m_option_t nuvopts_conf[];
 
 muxer_t *muxer_new_muxer(int type,stream_t *stream);
 #define muxer_new_stream(muxer,a) muxer->cont_new_stream(muxer,a)
