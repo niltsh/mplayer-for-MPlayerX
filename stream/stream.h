@@ -20,6 +20,7 @@
 #define MPLAYER_STREAM_H
 
 #include "config.h"
+#include "m_option.h"
 #include "mp_msg.h"
 #include "url.h"
 #include <string.h>
@@ -338,6 +339,8 @@ extern int vcd_track;
 extern char * audio_stream;
 extern char *cdrom_device;
 extern char *dvd_device;
+
+extern const m_option_t dvbin_opts_conf[];
 
 typedef struct {
  int id; // 0 - 31 mpeg; 128 - 159 ac3; 160 - 191 pcm

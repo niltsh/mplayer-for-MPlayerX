@@ -37,6 +37,7 @@
 #include "stream/cdd.h"
 #include "stream/network.h"
 #include "stream/pvr.h"
+#include "stream/stream.h"
 #include "stream/stream_dvd_common.h"
 #include "stream/stream_radio.h"
 #include "stream/tcp.h"
@@ -148,8 +149,6 @@ const m_option_t pvropts_conf[]={
     {NULL, NULL, 0, 0, 0, 0, NULL}
 };
 #endif /* CONFIG_PVR */
-
-extern const m_option_t dvbin_opts_conf[];
 
 extern int rtsp_port;
 extern char *rtsp_destination;
