@@ -1902,7 +1902,7 @@ static const char help_text[]=
 // stream_cdda.c
 #define MSGTR_MPDEMUX_CDDA_CantOpenCDDADevice "Nem nyitható meg a CDDA eszköz.\n"
 #define MSGTR_MPDEMUX_CDDA_CantOpenDisc "Nem nyitható meg a lemez.\n"
-#define MSGTR_MPDEMUX_CDDA_AudioCDFoundWithNTracks "Audió CD-t találtam %ld sávval.\n"
+#define MSGTR_MPDEMUX_CDDA_AudioCDFoundWithNTracks "Audió CD-t találtam %d sávval.\n"
 
 // stream_cddb.c
 #define MSGTR_MPDEMUX_CDDB_FailedToReadTOC "Hiba a TOC olvasása közben.\n"

@@ -1464,7 +1464,7 @@ static const char help_text[]=
 
 #define MSGTR_MPDEMUX_CDDA_CantOpenCDDADevice "CDDA aygıtı açılamıyor.\n"
 #define MSGTR_MPDEMUX_CDDA_CantOpenDisc "CD açılamıyor.\n"
-#define MSGTR_MPDEMUX_CDDA_AudioCDFoundWithNTracks "%ld parça içeren ses CD'si bulundu.\n"
+#define MSGTR_MPDEMUX_CDDA_AudioCDFoundWithNTracks "%d parça içeren ses CD'si bulundu.\n"
 
 // cddb.c
 

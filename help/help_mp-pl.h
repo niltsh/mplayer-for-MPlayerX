@@ -1363,7 +1363,7 @@ static const char help_text[]=
 
 #define MSGTR_MPDEMUX_CDDA_CantOpenCDDADevice "Nie omgę otworzyć urządzenia CDDA.\n"
 #define MSGTR_MPDEMUX_CDDA_CantOpenDisc "Nie mogę otworzyć płyty.\n"
-#define MSGTR_MPDEMUX_CDDA_AudioCDFoundWithNTracks "Znalazłem płytę audio z %ld ścieżkami.\n"
+#define MSGTR_MPDEMUX_CDDA_AudioCDFoundWithNTracks "Znalazłem płytę audio z %d ścieżkami.\n"
 
 // cddb.c
 

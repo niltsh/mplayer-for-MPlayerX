@@ -1432,7 +1432,7 @@ static const char help_text[]=
 
 #define MSGTR_MPDEMUX_CDDA_CantOpenCDDADevice "打不開 CDDA 設備。\n"
 #define MSGTR_MPDEMUX_CDDA_CantOpenDisc "打不開盤。\n"
-#define MSGTR_MPDEMUX_CDDA_AudioCDFoundWithNTracks "發現音頻 CD，共 %ld 音軌。\n"
+#define MSGTR_MPDEMUX_CDDA_AudioCDFoundWithNTracks "發現音頻 CD，共 %d 音軌。\n"
 
 // cddb.c
 

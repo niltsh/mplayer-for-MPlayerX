@@ -1895,7 +1895,7 @@ static const char help_text[]=
 // stream_cdda.c
 #define MSGTR_MPDEMUX_CDDA_CantOpenCDDADevice "Nelze otevřít CDDA zařízení.\n"
 #define MSGTR_MPDEMUX_CDDA_CantOpenDisc "Nelze otevřít disk.\n"
-#define MSGTR_MPDEMUX_CDDA_AudioCDFoundWithNTracks "Nalezeno audio CD s %ld stopami\n"
+#define MSGTR_MPDEMUX_CDDA_AudioCDFoundWithNTracks "Nalezeno audio CD s %d stopami\n"
 
 // stream_cddb.c
 #define MSGTR_MPDEMUX_CDDB_FailedToReadTOC "Selhalo čtení TOC.\n"

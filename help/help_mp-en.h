@@ -1902,7 +1902,7 @@ static const char help_text[]=
 // stream_cdda.c
 #define MSGTR_MPDEMUX_CDDA_CantOpenCDDADevice "Can't open CDDA device.\n"
 #define MSGTR_MPDEMUX_CDDA_CantOpenDisc "Can't open disc.\n"
-#define MSGTR_MPDEMUX_CDDA_AudioCDFoundWithNTracks "Found audio CD with %ld tracks.\n"
+#define MSGTR_MPDEMUX_CDDA_AudioCDFoundWithNTracks "Found audio CD with %d tracks.\n"
 
 // stream_cddb.c
 #define MSGTR_MPDEMUX_CDDB_FailedToReadTOC "Failed to read TOC.\n"
