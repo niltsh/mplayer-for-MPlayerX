@@ -17,7 +17,13 @@
  */
 
 #include "config.h"
-
+#ifndef CONFIG_LIBCDIO
+#include <cdda_interface.h>
+#include <cdda_paranoia.h>
+#else
+#include <cdio/cdda.h>
+#include <cdio/paranoia.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -37,6 +43,20 @@
 #define CD_FRAMESIZE_RAW CDIO_CD_FRAMESIZE_RAW
 #endif
 
+
+typedef struct {
+#ifndef CONFIG_LIBCDIO
+	cdrom_drive* cd;
+	cdrom_paranoia* cdp;
+#else
+	cdrom_drive_t* cd;
+	cdrom_paranoia_t* cdp;
+#endif
+	int sector;
+	int start_sector;
+	int end_sector;
+	cd_info_t *cd_info;
+} cdda_priv;
 
 static struct cdda_params {
   int speed;
