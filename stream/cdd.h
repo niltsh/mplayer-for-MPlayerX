@@ -25,24 +25,6 @@
 
 extern const m_option_t cdda_opts[];
 
-typedef struct {
-	char cddb_hello[1024];
-	unsigned long disc_id;
-	unsigned int tracks;
-	char *cache_dir;
-	char *freedb_server;
-	int freedb_proto_level;
-	int anonymous;
-	char category[100];
-	char *xmcd_file;
-	size_t xmcd_file_size;
-	void *user_data;
-} cddb_data_t;
-
-typedef struct {
-	unsigned int min, sec, frame;
-} cd_toc_t;
-
 typedef struct cd_track {
 	char *name;
 	unsigned int track_nb;
