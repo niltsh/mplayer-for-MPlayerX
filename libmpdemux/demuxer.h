@@ -28,6 +28,7 @@
 #ifdef CONFIG_ASS
 #include "libass/ass_mp.h"
 #endif
+#include "m_option.h"
 
 #ifdef HAVE_BUILTIN_EXPECT
 #define likely(x) __builtin_expect ((x) != 0, 1)
@@ -186,6 +187,11 @@ extern char *sub_stream;
 extern int rtsp_transport_http;
 extern int rtsp_transport_sctp;
 extern int rtsp_transport_tcp;
+
+extern const m_option_t demux_rawaudio_opts[];
+extern const m_option_t demux_rawvideo_opts[];
+extern const m_option_t lavfdopts_conf[];
+
 
 /**
  * Demuxer description structure

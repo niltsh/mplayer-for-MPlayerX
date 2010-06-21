@@ -50,11 +50,6 @@
 #include "stream/cdd.h"
 #endif
 
-/* defined in libmpdemux: */
-extern const m_option_t demux_rawaudio_opts[];
-extern const m_option_t demux_rawvideo_opts[];
-
-
 #include "stream/tv.h"
 #include "stream/stream_radio.h"
 
@@ -159,7 +154,6 @@ const m_option_t pvropts_conf[]={
 #endif /* CONFIG_PVR */
 
 extern const m_config_t dvbin_opts_conf[];
-extern const m_option_t lavfdopts_conf[];
 
 extern int rtsp_port;
 extern char *rtsp_destination;
