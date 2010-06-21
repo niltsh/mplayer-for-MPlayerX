@@ -77,6 +77,7 @@ typedef enum
 	AUDIO_DTS	= 0x2001,
 	AUDIO_LPCM_BE  	= 0x10001,
 	AUDIO_AAC	= mmioFOURCC('M', 'P', '4', 'A'),
+	AUDIO_AAC_LATM	= mmioFOURCC('M', 'P', '4', 'L'),
 	AUDIO_TRUEHD	= mmioFOURCC('T', 'R', 'H', 'D'),
 	SPU_DVD		= 0x3000000,
 	SPU_DVB		= 0x3000001,
@@ -85,7 +86,6 @@ typedef enum
 	SL_PES_STREAM	= 0xD000000,
 	SL_SECTION	= 0xD100000,
 	MP4_OD		= 0xD200000,
-	AUDIO_AAC_LATM	= mmioFOURCC('M', 'P', '4', 'L'),
 } es_stream_type_t;
 
 typedef struct {
