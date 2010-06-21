@@ -20,6 +20,9 @@
 #define MPLAYER_AE_TOOLAME_H
 
 #include "ae.h"
+#include "m_option.h"
+
+extern const m_option_t toolameopts_conf[];
 
 int mpae_init_toolame(audio_encoder_t *encoder);
 

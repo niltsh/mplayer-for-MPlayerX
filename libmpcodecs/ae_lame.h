@@ -20,6 +20,9 @@
 #define MPLAYER_AE_LAME_H
 
 #include "ae.h"
+#include "m_option.h"
+
+extern const m_option_t lameopts_conf[];
 
 int mpae_init_lame(audio_encoder_t *encoder);
 

@@ -20,6 +20,9 @@
 #define MPLAYER_AE_TWOLAME_H
 
 #include "ae.h"
+#include "m_option.h"
+
+extern const m_option_t twolameopts_conf[];
 
 int mpae_init_twolame(audio_encoder_t *encoder);
 

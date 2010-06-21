@@ -19,8 +19,11 @@
 #ifndef MPLAYER_AE_FAAC_H
 #define MPLAYER_AE_FAAC_H
 
-#include "ae.h"
 #include "libmpdemux/muxer.h"
+#include "ae.h"
+#include "m_option.h"
+
+extern const m_option_t faacopts_conf[];
 
 int mpae_init_faac(audio_encoder_t *encoder);
 

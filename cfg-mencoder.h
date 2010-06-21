@@ -23,18 +23,18 @@
  * config for cfgparser
  */
 
+#include "libmpcodecs/ae_faac.h"
+#include "libmpcodecs/ae_lame.h"
+#include "libmpcodecs/ae_toolame.h"
+#include "libmpcodecs/ae_twolame.h"
 #include "libmpcodecs/ve_x264.h"
 #include "libmpdemux/muxer_avi.h"
 #include "cfg-common.h"
 
-extern const m_option_t faacopts_conf[];
-extern const m_option_t lameopts_conf[];
 extern const m_option_t lavcopts_conf[];
 extern const m_option_t lavfopts_conf[];
 extern const m_option_t mpegopts_conf[];
 extern const m_option_t nuvopts_conf[];
-extern const m_option_t toolameopts_conf[];
-extern const m_option_t twolameopts_conf[];
 extern const m_option_t vfwopts_conf[];
 extern const m_option_t xvidencopts_conf[];
 
