@@ -22,6 +22,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
+#include <twolame.h>
+
 #include "m_option.h"
 #include "mp_msg.h"
 #include "libmpdemux/aviheader.h"
@@ -32,6 +34,11 @@
 #include "ae_twolame.h"
 #include "libmpdemux/mp3_hdr.h"
 
+
+typedef struct {
+	twolame_options *twolame_ctx;
+	int vbr;
+} mpae_twolame_ctx;
 
 static int
     param_bitrate = 192,
