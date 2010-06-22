@@ -21,8 +21,6 @@
 
 include config.mak
 
-.SUFFIXES:
-
 ###### variable declarations #######
 
 SRCS_AUDIO_INPUT-$(ALSA1X)           += stream/ai_alsa1x.c
@@ -1155,3 +1153,7 @@ endif
 
 .PHONY: all doxygen *install* *tools drivers dhahelper*
 .PHONY: checkheaders *clean dep depend tests
+
+# Disable suffix rules.  Most of the builtin rules are suffix rules,
+# so this saves some time on slow systems.
+.SUFFIXES:
