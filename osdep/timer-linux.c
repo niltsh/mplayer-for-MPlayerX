@@ -86,17 +86,3 @@ void InitTimer(void)
 {
     GetRelativeTime();
 }
-
-
-#if 0
-#include <stdio.h>
-int main(void)
-{
-    float t = 0;
-    InitTimer();
-    while (1) {
-        t += GetRelativeTime();
-        printf("time = %10.6f\r", t);
-        fflush(stdout); }
-}
-#endif
