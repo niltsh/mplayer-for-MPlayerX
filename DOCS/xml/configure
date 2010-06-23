@@ -177,8 +177,6 @@ done
 
 echo "Looking for a valid XSLT processor..."
 # Checks for xsltproc, then checks for the Saxon processor (it needs Java).
-# Also checks for Jade/OpenJade.
-#FIXME: Add support for the xalan/xalan2 XSLT processors.
 
 if xsltproc --version > /dev/null 2>&1
 then
@@ -263,57 +261,6 @@ cd \$_DIRNAME &&
         echo "Saxon is unusable without stylesheets."
       fi
     fi
-  fi
-fi
-
-if test -z "$_xsltcommand"
-then
-  # Java not found.
-  # now try openjade/jade.
-  for _try_jade in jade openjade
-  do
-    if command -v $_try_jade > /dev/null
-    then
-      _jade=$_try_jade
-      break
-    fi
-  done
-  if test -n "$_jade"
-  then
-    echo "xsltproc and Saxon XSLT processors not found."
-    echo "I will try to use OpenJade or Jade (using '$_jade')."
-    echo "They aren't (currently) fully supported, however."
-    for _try_docbook_dsl in \
-      /usr/share/sgml/docbook/stylesheet/dsssl/modular/html/docbook.dsl \
-      /usr/local/share/sgml/docbook/stylesheet/dsssl/modular/html/docbook.dsl
-    do
-      if test -f "$_try_docbook_dsl"
-      then
-        _docbook_dsl=$_try_docbook_dsl
-        break
-      fi
-    done
-    for _try_xml_dcl in \
-      /usr/share/sgml/declaration/xml.dcl \
-      /usr/local/share/sgml/declaration/xml.dcl
-    do
-      if test -f "$_try_xml_dcl"
-      then
-        _xml_dcl=$_try_xml_dcl
-        break
-      fi
-    done
-      if test "x$_docbook_dsl" = "x" -o "x$_xml_dcl" = "x"
-      then
-        echo "One of the files docbook.dsl and xml.dcl or both of them weren't found."
-        echo "Bailing out."
-        exit 1
-      fi
-    _xsltcommand="cd \$1 && $_jade -t xml -d $_docbook_dsl $_xml_dcl \$_IN_DIR/\$3"
-  else
-    echo "No valid XSLT processor found."
-    echo "Bailing out."
-    exit 1
   fi
 fi
 
