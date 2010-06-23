@@ -176,8 +176,6 @@ EOF
 done
 
 echo "Looking for a valid XSLT processor..."
-# Checks for xsltproc, then checks for the Saxon processor (it needs Java).
-
 if xsltproc --version > /dev/null 2>&1
 then
   if test -z "$_fake_chunk_xsl"
@@ -197,73 +195,6 @@ then
   fi
 fi
 
-# xsltproc not found.
-# Now try to find a good Java virtual machine.
-# FIXME: We need more checks for Java virtual machines.
-if test -z "$_xsltcommand"
-then
-  #FIXME: Add more suitable machines!!!
-  for _try_java in java gij-3.3 gij-3.2 gij-3.1 gij-3.0 gij
-  do
-    if $_try_java --version > /dev/null 2>&1 || $_try_java -version > /dev/null 2>&1
-    then
-      _java=$_try_java
-      break
-    fi
-  done
-  if test -z "$_java"
-  then
-    echo "Java VM not found."
-  else
-    # Try to find the right jar files for classpath.
-    # This must not trigger on something like saxon-fop-6.4.4.jar.
-    for _try_saxon_jar in \
-      /usr/share/java/saxon-[0-9]*.jar \
-      /usr/local/share/java/saxon-[0-9]*.jar \
-      /usr/share/java/saxon.jar \
-      /usr/local/share/java/saxon.jar
-    do
-      if test -f "$_try_saxon_jar"
-      then
-        _saxon_jar=$_try_saxon_jar
-        #Don't break to find the _latest_ saxon.jar.
-      fi
-    done
-    if test -n "$_saxon_jar"
-    then
-      if test -z "$_fake_chunk_xsl"
-      then
-#        _xsltcommand="cd \$1 && if test \"\`dirname \$2 | head -c 1\`\" = \".\" ; then $_java  -classpath $_saxon_jar com.icl.saxon.StyleSheet \$_IN_DIR/\$3 \$_IN_DIR/\$2 ; else $_java  -classpath $_saxon_jar com.icl.saxon.StyleSheet \$_IN_DIR/\$3 \$2 ;fi"
-        _xsltcommand="
-if test \"\`dirname \$2 | head -c 1\`\" = \".\"
-then
-  _STYLESHEET=\$_IN_DIR/\$2
-else
-  _STYLESHEET=\$2
-fi
-
-if test -d \$1
-then
-  _DIRNAME=\"\$1\"
-  _OUTPUT=\"\"
-else
-  _DIRNAME=\"\`dirname \$1\`\"
-  _OUTPUT=\"-o \`basename \$1\`\"
-fi
-
-cd \$_DIRNAME &&
-  java  -classpath /usr/share/java/saxon.jar com.icl.saxon.StyleSheet \$_OUTPUT \$_IN_DIR/\$3 \$_STYLESHEET
-  "
-
-        echo "Found the Saxon XSLT Processor ($_saxon_jar), using Java VM '$_java'."
-      else
-        echo "Found the Saxon XSLT processor but no stylesheets on your system."
-        echo "Saxon is unusable without stylesheets."
-      fi
-    fi
-  fi
-fi
-
 
 
 cat > $_xsltwrapper << EOF
@@ -273,7 +204,6 @@ cat > $_xsltwrapper << EOF
 # **************************************************
 # This is a small wrapper script around many ways to call the XSLT processor.
 # It accepts 3 arguments: <output_dir> <stylesheet_name> <main XML file name>
-_IN_DIR=\`pwd\`
 
 $_sgmlcatalog
 $_xsltcommand
