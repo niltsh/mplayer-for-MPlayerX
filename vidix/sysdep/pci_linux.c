@@ -29,7 +29,7 @@
 #include <errno.h>
 #ifdef __i386__
 //#include <sys/perm.h> doesn't exist on libc5 systems
-int iopl();
+int iopl(int level);
 #elif defined(__sh__)
 #define iopl(x) 1
 #else
