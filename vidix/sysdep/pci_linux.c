@@ -110,7 +110,7 @@ static __inline__ int enable_os_io(void)
     dhahelper_initialized = -1;
 #endif
 
-#if defined(__powerpc__) && defined(__linux__)
+#ifdef __powerpc__
 /* should be fixed? */
 #else
     if (iopl(3) != 0)
@@ -131,7 +131,7 @@ static __inline__ int disable_os_io(void)
 	close(dhahelper_fd);
     else
 #endif
-#if defined(__powerpc__) && defined(__linux__)
+#ifdef __powerpc__
 /* should be fixed? */
 #else
     if (iopl(0) != 0)
@@ -141,7 +141,7 @@ static __inline__ int disable_os_io(void)
 }
 
 #if (defined(__powerpc__) || defined(__sparc__) || defined(__sparc64__) \
-    || defined(__x86_64__) || defined(__sh__)) && defined(__linux__) && !defined(CONFIG_SVGAHELPER)
+    || defined(__x86_64__) || defined(__sh__)) && !defined(CONFIG_SVGAHELPER)
 #define CONFIG_PCI_LINUX_PROC
 #endif
 
