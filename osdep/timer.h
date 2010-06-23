@@ -19,7 +19,7 @@
 #ifndef MPLAYER_TIMER_H
 #define MPLAYER_TIMER_H
 
-extern const char *timer_name;
+extern const char timer_name[];
 
 void InitTimer(void);
 unsigned int GetTimer(void);

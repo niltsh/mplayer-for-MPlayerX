@@ -29,7 +29,7 @@
 #include "config.h"
 #include "timer.h"
 
-const char *timer_name =
+const char timer_name[] =
 #ifdef HAVE_NANOSLEEP
     "nanosleep()";
 #else

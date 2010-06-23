@@ -22,7 +22,7 @@
 #include <mmsystem.h>
 #include "timer.h"
 
-const char *timer_name = "Windows native";
+const char timer_name[] = "Windows native";
 
 // Returns current time in microseconds
 unsigned int GetTimer(void)
