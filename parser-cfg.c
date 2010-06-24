@@ -262,8 +262,6 @@ out:
 	return ret;
 }
 
-extern int mp_msg_levels[];
-
 /// Parse the command line option that must be handled at startup.
 int m_config_preparse_command_line(m_config_t *config, int argc, char **argv)
 {
