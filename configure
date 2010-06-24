@@ -7602,9 +7602,6 @@ echores "$_libvpx_lavc"
 echocheck "libnut"
 if test "$_libnut" = auto ; then
   cat > $TMPC << EOF
-#include <stdio.h>
-#include <stdlib.h>
-#include <inttypes.h>
 #include <libnut.h>
 nut_context_tt * nut;
 int main(void) { (void)nut_error(0); return 0; }
