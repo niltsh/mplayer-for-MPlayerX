@@ -150,8 +150,6 @@ const m_option_t pvropts_conf[]={
 };
 #endif /* CONFIG_PVR */
 
-extern int rtsp_port;
-
 const m_option_t scaler_filter_conf[]={
     {"lgb", &sws_lum_gblur, CONF_TYPE_FLOAT, 0, 0, 100.0, NULL},
     {"cgb", &sws_chr_gblur, CONF_TYPE_FLOAT, 0, 0, 100.0, NULL},

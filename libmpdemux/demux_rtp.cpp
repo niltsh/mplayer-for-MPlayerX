@@ -24,6 +24,7 @@ extern "C" {
 #ifdef __MINGW32__    // with.  they are each protected from
 #include <windows.h>  // windows.h, but not the other way around.
 #endif
+#include "demuxer.h"
 #include "demux_rtp.h"
 #include "stheader.h"
 }
@@ -118,7 +119,6 @@ int rtsp_transport_tcp = 0;
 int rtsp_transport_http = 0;
 #endif
 
-extern int rtsp_port;
 #ifdef CONFIG_LIBAVCODEC
 extern AVCodecContext *avcctx;
 #endif
