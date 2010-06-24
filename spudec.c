@@ -37,6 +37,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
+#include "libvo/sub.h"
 #include "libvo/video_out.h"
 #include "spudec.h"
 #include "vobsub.h"
@@ -55,7 +56,6 @@
 int spu_aamode = 3;
 int spu_alignment = -1;
 float spu_gaussvar = 1.0;
-extern int sub_pos;
 
 typedef struct packet_t packet_t;
 struct packet_t {
