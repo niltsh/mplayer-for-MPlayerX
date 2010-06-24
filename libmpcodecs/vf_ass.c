@@ -38,7 +38,7 @@
 #include "vf.h"
 
 #include "libvo/fastmemcpy.h"
-
+#include "libvo/sub.h"
 #include "m_option.h"
 #include "m_struct.h"
 
@@ -70,7 +70,6 @@ static const struct vf_priv_s {
 
 extern ass_track_t* ass_track;
 extern float sub_delay;
-extern int sub_visibility;
 
 static int config(struct vf_instance *vf,
 	int width, int height, int d_width, int d_height,

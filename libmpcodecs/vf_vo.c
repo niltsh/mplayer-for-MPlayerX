@@ -26,6 +26,7 @@
 #include "mp_image.h"
 #include "vf.h"
 
+#include "libvo/sub.h"
 #include "libvo/video_out.h"
 
 #ifdef CONFIG_ASS
@@ -35,7 +36,6 @@ extern ass_track_t* ass_track;
 
 //===========================================================================//
 
-extern int sub_visibility;
 extern float sub_delay;
 
 struct vf_priv_s {
