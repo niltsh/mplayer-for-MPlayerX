@@ -29,6 +29,9 @@ extern double sub_last_pts;
 extern ass_track_t *ass_track;
 extern subtitle *vo_sub_last;
 
+extern float sub_delay;
+extern float sub_fps;
+
 extern const m_option_t noconfig_opts[];
 
 void print_version(const char* name);

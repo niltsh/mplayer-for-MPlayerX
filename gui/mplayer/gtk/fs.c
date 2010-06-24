@@ -33,6 +33,7 @@
 #include "gui/app.h"
 #include "gui/interface.h"
 #include "help_mp.h"
+#include "mpcommon.h"
 #include "stream/stream.h"
 
 #include "gui/mplayer/widgets.h"

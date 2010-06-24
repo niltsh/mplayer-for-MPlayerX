@@ -31,7 +31,9 @@
 
 #include "config.h"
 #include "mp_msg.h"
+#include "mpcommon.h"
 #include "subreader.h"
+#include "libvo/sub.h"
 #include "stream/stream.h"
 #include "libavutil/common.h"
 #include "libavutil/avstring.h"
@@ -1085,11 +1087,7 @@ static int sub_autodetect (stream_t* st, int *uses_time, int utf16) {
     return SUB_INVALID;  // too many bad lines
 }
 
-extern int sub_utf8;
 int sub_utf8_prev=0;
-
-extern float sub_delay;
-extern float sub_fps;
 
 #ifdef CONFIG_ICONV
 static iconv_t icdsc = (iconv_t)(-1);

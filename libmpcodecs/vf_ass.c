@@ -31,7 +31,7 @@
 #include "config.h"
 #include "mp_msg.h"
 #include "help_mp.h"
-
+#include "mpcommon.h"
 #include "img_format.h"
 #include "mp_image.h"
 #include "vd.h"
@@ -68,8 +68,6 @@ static const struct vf_priv_s {
 	unsigned char* dirty_rows;
 } vf_priv_dflt;
 
-extern ass_track_t* ass_track;
-extern float sub_delay;
 
 static int config(struct vf_instance *vf,
 	int width, int height, int d_width, int d_height,

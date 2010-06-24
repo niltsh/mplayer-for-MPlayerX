@@ -37,8 +37,6 @@ static int nosub_range_start=-1;
 static int nosub_range_end=-1;
 static const sub_data *last_sub_data = NULL;
 
-extern float sub_delay;
-extern float  sub_fps;
 
 void step_sub(sub_data *subd, float pts, int movement) {
     subtitle *subs;

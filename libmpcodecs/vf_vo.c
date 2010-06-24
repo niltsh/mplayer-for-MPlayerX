@@ -22,7 +22,7 @@
 
 #include "config.h"
 #include "mp_msg.h"
-
+#include "mpcommon.h"
 #include "mp_image.h"
 #include "vf.h"
 
@@ -31,12 +31,9 @@
 
 #ifdef CONFIG_ASS
 #include "libass/ass_mp.h"
-extern ass_track_t* ass_track;
 #endif
 
 //===========================================================================//
-
-extern float sub_delay;
 
 struct vf_priv_s {
     double pts;
