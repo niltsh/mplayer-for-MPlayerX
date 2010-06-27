@@ -27,7 +27,7 @@
  */
 
 #include <errno.h>
-#ifdef __i386__
+#if ARCH_X86
 //#include <sys/perm.h> doesn't exist on libc5 systems
 int iopl(int level);
 #elif defined(__sh__)
