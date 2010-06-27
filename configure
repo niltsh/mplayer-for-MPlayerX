@@ -3262,7 +3262,7 @@ echores "$_struct_sockaddr_sa_len"
 echocheck "arpa/inet.h"
 arpa_inet_h=no
 def_arpa_inet_h='#define HAVE_ARPA_INET_H 0'
-header_check arpa_inet.h && arpa_inet_h=yes &&
+header_check arpa/inet.h && arpa_inet_h=yes &&
   def_arpa_inet_h='#define HAVE_ARPA_INET_H 1'
 echores "$arpa_inet_h"
 
