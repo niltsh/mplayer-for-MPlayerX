@@ -23,7 +23,7 @@ MPlayer (1.0)
     * JPEG 2000 support via OpenJPEG
     * internal liba52 copy removed
     * CineForm HD (CFHD) via binary DLL
-    * VP8 decoding through libvpx wrapper in FFmpeg
+    * VP8 en-/decoding through libvpx wrapper and native decoder in FFmpeg
     * support for external libmpeg2 added
     * hardware MPEG decoder priority lowered
 
