@@ -7589,6 +7589,7 @@ fi
 if test "$_libvpx_lavc" = yes ; then
   def_libvpx_lavc='#define CONFIG_LIBVPX 1'
   _libavdecoders="$_libavdecoders LIBVPX_DECODER"
+  _libavencoders="$_libavencoders LIBVPX_ENCODER"
   codecmodules="libvpx $codecmodules"
 else
   def_libvpx_lavc='#define CONFIG_LIBVPX 0'
