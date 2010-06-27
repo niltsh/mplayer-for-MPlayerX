@@ -26,6 +26,8 @@ MPlayer (1.0)
     * VP8 en-/decoding through libvpx wrapper and native decoder in FFmpeg
     * support for external libmpeg2 added
     * hardware MPEG decoder priority lowered
+    * support for external FAAD removed, since FFmpeg decoder is complete
+      and only internal FAAD supports LATM it is pointless.
 
     Demuxers:
     * Mostly fixed timing issues with some H.264 (PAFF) samples
