@@ -38,6 +38,7 @@
 #include "mp_msg.h"
 #include "help_mp.h"
 #include "osdep/shmem.h"
+#include "osdep/timer.h"
 #include "network.h"
 #include "stream.h"
 #include "libmpdemux/demuxer.h"
