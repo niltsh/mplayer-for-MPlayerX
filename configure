@@ -7577,7 +7577,7 @@ echores "$_libschroedinger_lavc"
 echocheck "libvpx"
 if test "$_libvpx_lavc" = auto; then
   _libvpx_lavc=no
-    cat > $TMPC << EOF
+  cat > $TMPC << EOF
 #include <vpx/vpx_encoder.h>
 #include <vpx/vpx_decoder.h>
 #include <vpx/vp8dx.h>
@@ -7589,7 +7589,7 @@ int main(void) {
   return 0;
 }
 EOF
-    cc_check -lvpx && _libvpx_lavc=yes && extra_ldflags="$extra_ldflags -lvpx"
+  cc_check -lvpx && _libvpx_lavc=yes && extra_ldflags="$extra_ldflags -lvpx"
 fi
 if test "$_libvpx_lavc" = yes ; then
   def_libvpx_lavc='#define CONFIG_LIBVPX 1'
