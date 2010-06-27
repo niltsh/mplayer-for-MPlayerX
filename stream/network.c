@@ -275,7 +275,7 @@ http_send_request( URL_t *url, off_t pos ) {
 	}
 	mp_msg(MSGT_NETWORK,MSGL_DBG2,"Request: [%s]\n", http_hdr->buffer );
 
-	ret = send( fd, http_hdr->buffer, http_hdr->buffer_size, 0 );
+	ret = send( fd, http_hdr->buffer, http_hdr->buffer_size, DEFAULT_SEND_FLAGS );
 	if( ret!=(int)http_hdr->buffer_size ) {
 		mp_msg(MSGT_NETWORK,MSGL_ERR,MSGTR_MPDEMUX_NW_ErrSendingHTTPRequest);
 		goto err_out;
