@@ -1934,7 +1934,7 @@ cat > $TMPC << EOF
 int main(void) { return 0; }
 EOF
   if test "$_runtime_cpudetection" = no ; then
-    if test $cc_vendor != "intel" ; then
+    if test $cc_vendor != "intel" && test $cc_vendor != "clang" ; then
       cc_check -march=native && proc=native
     fi
     if test "$proc" = "amdfam10"; then
@@ -2087,7 +2087,7 @@ int main(void) { return 0; }
 EOF
     # This is a stripped-down version of the i386 fallback.
     if test "$_runtime_cpudetection" = no ; then
-      if test $cc_vendor != "intel" ; then
+      if test $cc_vendor != "intel" && test $cc_vendor != "clang" ; then
         cc_check -march=native && proc=native
       fi
       # --- AMD processors ---
