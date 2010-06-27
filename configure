@@ -1596,7 +1596,7 @@ else
     if test "$cc_name_tmp" = "clang"; then
       echocheck "$_cc version"
       cc_vendor=clang
-      cc_version=$($_cc -v 2>&1 | head -n 1 | cut -d ' ' -f 3)
+      cc_version=$($_cc -dumpversion 2>&1)
       res_comment="experimental support only"
       echores "clang $cc_version"
       break
