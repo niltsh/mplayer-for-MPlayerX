@@ -1592,6 +1592,15 @@ else
     echores "$cc_version"
     break
     fi
+    cc_name_tmp=$($_cc -v 2>&1 | head -n 1 | cut -d ' ' -f 1)
+    if test "$cc_name_tmp" = "clang"; then
+      echocheck "$_cc version"
+      cc_vendor=clang
+      cc_version=$($_cc -v 2>&1 | head -n 1 | cut -d ' ' -f 3)
+      res_comment="experimental support only"
+      echores "clang $cc_version"
+      break
+    fi
     cc_name_tmp=$($_cc -V 2>&1 | head -n 1 | cut -d ' ' -f 2,3)
     if test "$cc_name_tmp" = "Sun C"; then
       echocheck "$_cc version"
