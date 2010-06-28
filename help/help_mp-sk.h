@@ -4,7 +4,6 @@
 
 // ========================= MPlayer help ===========================
 
-#ifdef HELP_MP_DEFINE_STATIC
 // Preklad do slovenčiny
 
 static const char help_text[]=
@@ -46,7 +45,6 @@ static const char help_text[]=
 "\n"
 " * * * * PREČÍTAJTE SI MAN STRÁNKU PRE DETAILY (ĎALŠIE VOĽBY A KLÁVESY)! * * * *\n"
 "\n";
-#endif
 
 #define MSGTR_SamplesWanted "Potrebujeme vzorky tohto formátu, aby sme zlepšili podporu. Prosím kontaktujte vývojárov.\n"
 

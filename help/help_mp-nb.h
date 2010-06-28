@@ -3,7 +3,6 @@
 
 // ========================= MPlayer hjelp ===========================
 
-#ifdef HELP_MP_DEFINE_STATIC
 static const char help_text[]=
 "Bruk:    mplayer [valg] [sti/]filnavn\n"
 "\n"
@@ -40,7 +39,6 @@ static const char help_text[]=
 "\n"
 " * * * SE PÅ MANSIDE FOR DETALJER, FLERE (AVANSERTE) VALG OG TASTER! * * *\n"
 "\n";
-#endif
 
 // ========================= MPlayer messages ===========================
 

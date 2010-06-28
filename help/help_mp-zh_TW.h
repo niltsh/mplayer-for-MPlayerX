@@ -8,7 +8,6 @@
 
 // ========================= MPlayer help ===========================
 
-#ifdef HELP_MP_DEFINE_STATIC
 static const char help_text[]=
 "用法:   mplayer [選項] [URL|路徑/]文件名\n"
 "\n"
@@ -48,7 +47,6 @@ static const char help_text[]=
 "\n"
 " * * *  詳細内容，更多的(高級)選項和控製鍵，請參見手册頁  * * *\n"
 "\n";
-#endif
 
 // libmpcodecs/ad_dvdpcm.c:
 #define MSGTR_SamplesWanted "這個格式的采様需要更好的支持。請聯係開發者。\n"

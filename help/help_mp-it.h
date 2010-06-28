@@ -7,7 +7,6 @@
 
 // ========================= MPlayer help ===========================
 
-#ifdef HELP_MP_DEFINE_STATIC
 static const char help_text[]=
 "Uso:   mplayer [opzioni] [url|percorso/]nome_file\n"
 "\n"
@@ -47,7 +46,6 @@ static const char help_text[]=
 "\n"
 " * * * VEDI PAGINA MAN PER DETTAGLI, ULTERIORI OPZIONI AVANZATE E TASTI! * * *\n"
 "\n";
-#endif
 
 // ========================= MPlayer messages ===========================
 

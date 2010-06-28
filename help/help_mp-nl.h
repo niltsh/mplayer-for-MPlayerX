@@ -2,7 +2,6 @@
 //maintained by:   Philippe De Swert <philippedeswert@scarlet.be>
 //synced with help_mp-en.h revision 1.152
 
-#ifdef HELP_MP_DEFINE_STATIC
 static const char help_text[]=
 "Gebruik:   mplayer [opties] [url|pad/]bestandsnaam\n"
 "\n"
@@ -42,7 +41,6 @@ static const char help_text[]=
 "\n"
 " * * * ZIE MANPAGE VOOR DETAILS, OVERIGE (GEAVANCEERDE) OPTIES EN TOETSEN! * * *\n"
 "\n";
-#endif
 
 #define MSGTR_SamplesWanted "Samples van dit formaat zijn gewenst om de ondersteuning ervan te verbetern. Gelieve de ontwikkelaars te contacteren."
 

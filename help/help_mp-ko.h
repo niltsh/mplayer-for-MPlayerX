@@ -3,7 +3,6 @@
 
 // ========================= MPlayer help ===========================
 
-#ifdef HELP_MP_DEFINE_STATIC
 static const char help_text[]=
 "사용법:   mplayer [선택사항] [url|경로/]파일명\n"
 "\n"
@@ -43,7 +42,6 @@ static const char help_text[]=
 "\n"
 " * * * 더 자세한 (고급) 선택사항 및 조정키는 MAN 페이지를 참조하세요. * * *\n"
 "\n";
-#endif
 
 // ========================= MPlayer messages ===========================
 

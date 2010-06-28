@@ -8,7 +8,6 @@
 //
 // ========================= MPlayer help ===========================
 
-#ifdef HELP_MP_DEFINE_STATIC
 static const char help_text[]=
 "Folosire: mplayer [opþiuni] [url|cale/]numefiºier\n"
 "\n"
@@ -54,7 +53,6 @@ static const char help_text[]=
 "\n"
 " * * * VEZI PAGINA MAN PENTRU DETALII, ALTE OPÞIUNI (AVANSATE) ªI TASTE * * *\n"
 "\n";
-#endif
 
 // ========================= MPlayer messages ===========================
 

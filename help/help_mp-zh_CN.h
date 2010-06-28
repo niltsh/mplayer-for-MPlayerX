@@ -9,7 +9,6 @@
 
 // ========================= MPlayer help ===========================
 
-#ifdef HELP_MP_DEFINE_STATIC
 static const char help_text[]=
 "用法：            mplayer [选项] [URL|路径/]文件名\n"
 "\n"
@@ -49,7 +48,6 @@ static const char help_text[]=
 "\n"
 " * * * 参见手册相关页面可获取具体内容，及更多（高级）选项和控制键的信息 * * *\n"
 "\n";
-#endif
 
 // ========================= MPlayer messages ===========================
 

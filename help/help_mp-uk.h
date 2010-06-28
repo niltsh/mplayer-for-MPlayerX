@@ -6,7 +6,6 @@
 
 // ========================= MPlayer help ===========================
 
-#ifdef HELP_MP_DEFINE_STATIC
 static const char help_text[]=
 "Запуск:   mplayer [опції] [path/]filename\n"
 "\n"
@@ -46,7 +45,6 @@ static const char help_text[]=
 "\n"
 " * * * ДЕТАЛЬНІШЕ ДИВ. ДОКУМЕНТАЦІЮ, ПРО ДОДАТКОВІ ОПЦІЇ І КЛЮЧІ! * * *\n"
 "\n";
-#endif
 
 // ========================= MPlayer messages ===========================
 
