@@ -37,7 +37,6 @@ const m_option_t ovc_conf[]={
     {"copy", &out_video_codec, CONF_TYPE_FLAG, 0, 0, VCODEC_COPY, NULL},
     {"frameno", &out_video_codec, CONF_TYPE_FLAG, 0, 0, VCODEC_FRAMENO, NULL},
     {"lavc", &out_video_codec, CONF_TYPE_FLAG, 0, 0, VCODEC_LIBAVCODEC, NULL},
-//    {"null", &out_video_codec, CONF_TYPE_FLAG, 0, 0, VCODEC_NULL, NULL},
     {"raw", &out_video_codec, CONF_TYPE_FLAG, 0, 0, VCODEC_RAW, NULL},
     {"vfw", &out_video_codec, CONF_TYPE_FLAG, 0, 0, VCODEC_VFW, NULL},
     {"libdv", &out_video_codec, CONF_TYPE_FLAG, 0, 0, VCODEC_LIBDV, NULL},
@@ -262,9 +261,6 @@ const m_option_t mencoder_opts[]={
     {"lavfopts",  lavfopts_conf, CONF_TYPE_SUBCONFIG, CONF_GLOBAL, 0, 0, NULL},
 #endif
 
-//   {"-help", help_text, CONF_TYPE_PRINT, CONF_NOCFG, 0, 0, NULL},
-//   {"help", help_text, CONF_TYPE_PRINT, CONF_NOCFG, 0, 0, NULL},
-//   {"h", help_text, CONF_TYPE_PRINT, CONF_NOCFG, 0, 0, NULL},
     {NULL, NULL, 0, 0, 0, 0, NULL}
 };
 
