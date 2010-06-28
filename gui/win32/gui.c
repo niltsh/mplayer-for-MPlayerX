@@ -29,7 +29,7 @@
 #include <windowsx.h>
 #include <shlobj.h>
 
-#include "version.h"
+#include "mpcommon.h"
 #include "mplayer.h"
 #include "mp_fifo.h"
 #include "mp_msg.h"
@@ -85,12 +85,12 @@ void console_toggle(void)
         HWND hwnd = NULL;
         console = 1;
         AllocConsole();
-        SetConsoleTitle(MP_TITLE);
+        SetConsoleTitle(mplayer_version);
 
         /* disable the close button for now */
         while (!hwnd)
         {
-            hwnd = FindWindow(NULL, MP_TITLE);
+            hwnd = FindWindow(NULL, mplayer_version);
             Sleep(100);
         }
         DeleteMenu(GetSystemMenu(hwnd, 0), SC_CLOSE, MF_BYCOMMAND);

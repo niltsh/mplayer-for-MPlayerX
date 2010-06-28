@@ -71,7 +71,7 @@
 #include "osdep/osdep.h"
 
 #include "cdd.h"
-#include "version.h"
+#include "mpcommon.h"
 #include "stream.h"
 #include "network.h"
 #include "libavutil/common.h"
@@ -756,8 +756,8 @@ static void cddb_create_hello(cddb_data_t *cddb_data)
         }
         user_name = getenv("LOGNAME");
     }
-    sprintf(cddb_data->cddb_hello, "&hello=%s+%s+%s+%s",
-            user_name, host_name, "MPlayer", VERSION);
+    sprintf(cddb_data->cddb_hello, "&hello=%s+%s+%s",
+            user_name, host_name, mplayer_version);
 }
 
 static int cddb_retrieve(cddb_data_t *cddb_data)

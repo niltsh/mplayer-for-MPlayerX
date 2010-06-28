@@ -882,7 +882,7 @@ version.h: version.sh
 # Make sure all generated header files are created.
 codec-cfg.d codec-cfg.o: codecs.conf.h
 $(DEPS) $(MENCODER_DEPS) $(MPLAYER_DEPS): help_mp.h
-$(call ADDSUFFIXES,.d .o,mpcommon vobsub stream/stream_cddb stream/network libmpdemux/muxer_avi gui/win32/gui osdep/mplayer.rc): version.h
+$(call ADDSUFFIXES,.d .o,mpcommon osdep/mplayer.rc): version.h
 
 gui/%: CFLAGS += -Wno-strict-prototypes
 

@@ -32,6 +32,9 @@ extern subtitle *vo_sub_last;
 extern float sub_delay;
 extern float sub_fps;
 
+extern const char *mencoder_version;
+extern const char *mplayer_version;
+
 extern const m_option_t noconfig_opts[];
 
 void print_version(const char* name);
