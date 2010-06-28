@@ -37,69 +37,67 @@
 #define ACODEC_FAAC 6
 #define ACODEC_TWOLAME 7
 
+#ifdef __MINGW32__
+#define SIGHUP   1
+#define SIGQUIT  3
+#define SIGPIPE 13
+#endif
+
+#include "config.h"
+
+#include <inttypes.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <signal.h>
-#include "config.h"
-
-#ifdef __MINGW32__
-#define        SIGHUP 1
-#define        SIGQUIT 3
-#define        SIGPIPE 13
-#endif
+#include <sys/time.h>
 #if defined(__MINGW32__) || defined(__CYGWIN__)
 #include <windows.h>
 #endif
 
-#include <sys/time.h>
-
-#include "mp_msg.h"
-#include "help_mp.h"
-
-#include "codec-cfg.h"
-#include "m_option.h"
-#include "m_config.h"
-#include "parser-mecmd.h"
-#include "parser-cfg.h"
-#include "mp_fifo.h"
-#include "path.h"
-
-#include "stream/stream.h"
-#include "libmpdemux/aviprint.h"
-#include "libmpdemux/demuxer.h"
-#include "libmpdemux/stheader.h"
-#include "libmpdemux/mp3_hdr.h"
-#include "libmpdemux/muxer.h"
-
 #include "input/input.h"
-#include "libvo/video_out.h"
-
 #include "libaf/af_format.h"
-
-#include "libmpcodecs/mp_image.h"
+#include "libao2/audio_out.h"
+#include "libass/ass_mp.h"
+#include "libavcodec/avcodec.h"
+#include "libmpcodecs/ae.h"
 #include "libmpcodecs/dec_audio.h"
 #include "libmpcodecs/dec_video.h"
-#include "libmpcodecs/vf.h"
+#include "libmpcodecs/mp_image.h"
 #include "libmpcodecs/vd.h"
-
-// for MPEGLAYER3WAVEFORMAT:
+#include "libmpcodecs/vf.h"
+#include "libmpdemux/aviprint.h"
+#include "libmpdemux/demuxer.h"
+#include "libmpdemux/mp3_hdr.h"
 #include "libmpdemux/ms_hdr.h"
-
-#include <inttypes.h>
-
+#include "libmpdemux/muxer.h"
+#include "libmpdemux/stheader.h"
 #include "libvo/fastmemcpy.h"
-
+#include "libvo/font_load.h"
+#include "libvo/sub.h"
+#include "libvo/video_out.h"
+#include "osdep/priority.h"
 #include "osdep/timer.h"
-
+#include "stream/stream.h"
 #ifdef CONFIG_DVDREAD
 #include "stream/stream_dvd.h"
 #endif
-
 #include "stream/stream_dvdnav.h"
-#include "libavcodec/avcodec.h"
+#include "codec-cfg.h"
+#include "edl.h"
+#include "help_mp.h"
+#include "m_config.h"
+#include "m_option.h"
+#include "mp_fifo.h"
+#include "mp_msg.h"
+#include "mpcommon.h"
+#include "parser-cfg.h"
+#include "parser-mecmd.h"
+#include "path.h"
+#include "spudec.h"
+#include "vobsub.h"
 
-#include "libmpcodecs/ae.h"
+
 int vo_doublebuffering=0;
 int vo_directrendering=0;
 int vo_config_count=1;
@@ -147,8 +145,6 @@ double cur_video_time_usage=0;
 double cur_vout_time_usage=0;
 int benchmark=0;
 
-#include "osdep/priority.h"
-
 // A-V sync:
 int delay_corrected=1;
 static float default_max_pts_correction=-1;//0.01f;
@@ -182,9 +178,6 @@ char* passtmpfile="divx2pass.log";
 
 static int play_n_frames=-1;
 static int play_n_frames_mf=-1;
-
-#include "libvo/font_load.h"
-#include "libvo/sub.h"
 
 // sub:
 char *font_name=NULL;
@@ -226,9 +219,7 @@ void mplayer_put_key(int code)
 {
 }
 
-#include "libass/ass_mp.h"
 char *current_module;
-#include "mpcommon.h"
 
 // Needed by mpcommon.c
 void set_osd_subtitle(subtitle *subs) {
@@ -260,19 +251,16 @@ typedef struct {
     int already_read;
 } s_frame_data;
 
-#include "edl.h"
 static edl_record_ptr edl_records = NULL; ///< EDL entries memory area
 static edl_record_ptr next_edl_record = NULL; ///< only for traversing edl_records
 static short edl_muted; ///< Stores whether EDL is currently in muted mode.
 static short edl_seeking; ///< When non-zero, stream is seekable.
 static short edl_seek_type; ///< When non-zero, frames are discarded instead of seeking.
 
+/* This header requires all the global variable declarations. */
 #include "cfg-mencoder.h"
 
-#include "spudec.h"
-#include "vobsub.h"
 
-#include "libao2/audio_out.h"
 /* FIXME */
 static void mencoder_exit(int level, const char *how)
 {
