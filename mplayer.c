@@ -367,6 +367,11 @@ int use_filedir_conf;
 int use_filename_title;
 
 static unsigned int initialized_flags=0;
+
+/// step size of mixer changes
+int volstep = 3;
+
+
 #include "mpcommon.h"
 #include "command.h"
 
@@ -618,9 +623,6 @@ static void print_file_properties(const MPContext *mpctx, const char *filename)
       mp_msg(MSGT_IDENTIFY,MSGL_INFO,"ID_CHAPTERS=%d\n", mpctx->demuxer->num_chapters);
   }
 }
-
-/// step size of mixer changes
-int volstep = 3;
 
 #ifdef CONFIG_DVDNAV
 static void mp_dvdnav_context_free(MPContext *ctx){
