@@ -780,6 +780,7 @@ typedef struct dp_hdr_s {
     uint32_t chunktab;        // offset to chunk offset array
 } dp_hdr_t;
 
+#if HAVE_BIGENDIAN
 static void swap_palette(void *pal)
 {
     int i;
@@ -787,6 +788,7 @@ static void swap_palette(void *pal)
     for (i = 0; i < AVPALETTE_COUNT; i++)
         p[i] = le2me_32(p[i]);
 }
+#endif
 
 // decode a frame
 static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
