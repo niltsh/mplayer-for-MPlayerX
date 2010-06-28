@@ -7577,7 +7577,10 @@ echores "$_libschroedinger_lavc"
 echocheck "libvpx"
 if test "$_libvpx_lavc" = auto; then
   _libvpx_lavc=no
-  cat > $TMPC << EOF
+  if test "$_libavcodec_a" != yes; then
+    res_comment="dynamic linking to libvpx is irrelevant when using dynamic libavcodec"
+  else
+    cat > $TMPC << EOF
 #include <vpx/vpx_encoder.h>
 #include <vpx/vpx_decoder.h>
 #include <vpx/vp8dx.h>
@@ -7589,7 +7592,8 @@ int main(void) {
   return 0;
 }
 EOF
-  cc_check -lvpx && _libvpx_lavc=yes && extra_ldflags="$extra_ldflags -lvpx"
+    cc_check -lvpx && _libvpx_lavc=yes && extra_ldflags="$extra_ldflags -lvpx"
+  fi
 fi
 if test "$_libvpx_lavc" = yes ; then
   def_libvpx_lavc='#define CONFIG_LIBVPX 1'
