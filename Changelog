@@ -28,6 +28,7 @@ MPlayer (1.0)
     * hardware MPEG decoder priority lowered
     * support for external FAAD removed, since FFmpeg decoder is complete
       and only internal FAAD supports LATM it is pointless.
+    * external libmpg123 support
 
     Demuxers:
     * Mostly fixed timing issues with some H.264 (PAFF) samples
