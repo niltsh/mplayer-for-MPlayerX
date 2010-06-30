@@ -330,6 +330,7 @@ void stream_set_interrupt_callback(int (*cb)(int));
 /// wait for time milliseconds
 int stream_check_interrupt(int time);
 
+extern int dvd_speed;
 extern int dvd_title;
 extern int dvd_chapter;
 extern int dvd_last_chapter;
