@@ -58,7 +58,6 @@
 /* Globals / Externs */
 void renderinfobox(skin_t *skin, window_priv_t *priv);
 void renderwidget(skin_t *skin, image *dest, widget *item, int state);
-void print_version(void);
 float sub_aspect;
 
 DWORD oldtime;
@@ -107,7 +106,7 @@ void console_toggle(void)
         fp = freopen("con", "w", stdout);
         *stderr = *fp;
         setvbuf(stderr, NULL, _IONBF, 0);
-        print_version();
+        print_version("MPlayer");
         console_state = 1;
     }
 }
