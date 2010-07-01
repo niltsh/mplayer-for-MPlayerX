@@ -339,6 +339,7 @@ Codecs:
   --disable-libvorbis       disable libvorbis support [autodetect]
   --disable-speex           disable Speex support [autodetect]
   --enable-theora           enable OggTheora libraries [autodetect]
+  --enable-faad             enable external FAAD2 (AAC) [autodetect]
   --disable-faad-internal   disable internal FAAD2 (AAC) [autodetect]
   --enable-faad-fixed       enable fixed-point mode in internal FAAD2 [disabled]
   --disable-faac            disable support for FAAC (AAC encoder) [autodetect]
@@ -655,7 +656,7 @@ _liba52=auto
 _libdca=auto
 _libmpeg2=auto
 _libmpeg2_internal=auto
-_faad=no
+_faad=auto
 _faad_internal=auto
 _faad_fixed=no
 _faac=auto
@@ -1058,6 +1059,8 @@ for ac_option do
   --disable-libmpeg2-internal)   _libmpeg2_internal=no    ;;
   --enable-musepack)    _musepack=yes   ;;
   --disable-musepack)   _musepack=no    ;;
+  --enable-faad)        _faad=yes       ;;
+  --disable-faad)       _faad=no        ;;
   --enable-faad-internal)       _faad_internal=yes      ;;
   --disable-faad-internal)      _faad_internal=no       ;;
   --enable-faad-fixed)  _faad_fixed=yes ;;
