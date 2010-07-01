@@ -344,7 +344,7 @@ int muxer_init_muxer_lavf(muxer_t *muxer)
 	if(priv == NULL)
 		return 0;
 
-	priv->oc = av_alloc_format_context();
+	priv->oc = avformat_alloc_context();
 	if(!priv->oc)
 	{
 		mp_msg(MSGT_MUXER, MSGL_FATAL, "Could not get format context.\n");
@@ -352,9 +352,9 @@ int muxer_init_muxer_lavf(muxer_t *muxer)
 	}
 
 	if(conf_format)
-		fmt = guess_format(conf_format, NULL, NULL);
+		fmt = av_guess_format(conf_format, NULL, NULL);
 	if(! fmt)
-		fmt = guess_format(NULL, out_filename, NULL);
+		fmt = av_guess_format(NULL, out_filename, NULL);
 	if(! fmt)
 	{
 		mp_msg(MSGT_MUXER, MSGL_FATAL, "Cannot get specified format.\n");
