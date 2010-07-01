@@ -191,7 +191,7 @@ void vo_hidecursor(Display * disp, Window win)
     colormap = DefaultColormap(disp, DefaultScreen(disp));
     if ( !XAllocNamedColor(disp, colormap, "black", &black, &dummy) )
     {
-      return; // color alloc failed, give up
+        return; // color alloc failed, give up
     }
     bm_no = XCreateBitmapFromData(disp, win, bm_no_data, 8, 8);
     no_ptr = XCreatePixmapCursor(disp, bm_no, bm_no, &black, &black, 0, 0);
@@ -416,8 +416,8 @@ int vo_init(void)
     XWindowAttributes attribs;
     char *dispName;
 
-	if (vo_rootwin)
-		WinID = 0; // use root window
+    if (vo_rootwin)
+        WinID = 0; // use root window
 
     if (vo_depthonscreen)
     {
@@ -947,9 +947,9 @@ void vo_x11_nofs_sizepos(int x, int y, int width, int height)
   }
   else
   {
-   vo_dwidth = width;
-   vo_dheight = height;
-   XMoveResizeWindow(mDisplay, vo_window, x, y, width, height);
+    vo_dwidth = width;
+    vo_dheight = height;
+    XMoveResizeWindow(mDisplay, vo_window, x, y, width, height);
   }
 }
 
@@ -1084,10 +1084,10 @@ void vo_x11_create_vo_window(XVisualInfo *vis, int x, int y,
     }
     if (WinID) vo_x11_update_geometry();
     else
-        // Do not capture events since it might break the parent application
-        // if it relies on events being forwarded to the parent of WinID.
-        // It also is consistent with the w32_common.c code.
-    vo_x11_selectinput_witherr(mDisplay, vo_window,
+      // Do not capture events since it might break the parent application
+      // if it relies on events being forwarded to the parent of WinID.
+      // It also is consistent with the w32_common.c code.
+      vo_x11_selectinput_witherr(mDisplay, vo_window,
           StructureNotifyMask | KeyPressMask | PointerMotionMask |
           ButtonPressMask | ButtonReleaseMask | ExposureMask);
     goto final;
