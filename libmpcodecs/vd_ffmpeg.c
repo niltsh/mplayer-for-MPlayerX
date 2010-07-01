@@ -189,8 +189,6 @@ static void mp_msp_av_log_callback(void *ptr, int level, const char *fmt,
     default          :  mp_level= MSGL_ERR ; break;
     }
 
-    if (!mp_msg_test(type, mp_level)) return;
-
     if(ptr){
         if(!strcmp(avc->class_name, "AVCodecContext")){
             AVCodecContext *s= ptr;
@@ -214,6 +212,8 @@ static void mp_msp_av_log_callback(void *ptr, int level, const char *fmt,
 #endif
         }
     }
+
+    if (!mp_msg_test(type, mp_level)) return;
 
     if(print_prefix && avc) {
         mp_msg(type, mp_level, "[%s @ %p]", avc->item_name(ptr), avc);
