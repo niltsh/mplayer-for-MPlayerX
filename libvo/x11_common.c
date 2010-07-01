@@ -794,6 +794,16 @@ void vo_x11_uninit(void)
 static unsigned int mouse_timer;
 static int mouse_waiting_hide;
 
+static int check_resize(void)
+{
+    int old_w = vo_dwidth, old_h = vo_dheight;
+    int old_x = vo_dx,     old_y = vo_dy;
+    vo_x11_update_geometry();
+    if (vo_dwidth != old_w || vo_dheight != old_h || vo_dx != old_x || vo_dy != old_y)
+        return VO_EVENT_RESIZE;
+    return 0;
+}
+
 int vo_x11_check_events(Display * mydisplay)
 {
     int ret = 0;
@@ -810,6 +820,8 @@ int vo_x11_check_events(Display * mydisplay)
         mouse_waiting_hide = 0;
     }
 
+    if (WinID > 0)
+        ret |= check_resize();
     while (XPending(mydisplay))
     {
         XNextEvent(mydisplay, &Event);
@@ -832,13 +844,7 @@ int vo_x11_check_events(Display * mydisplay)
 //         if (vo_fs && Event.xconfigure.width != vo_screenwidth && Event.xconfigure.height != vo_screenheight) break;
                 if (vo_window == None)
                     break;
-                {
-                    int old_w = vo_dwidth, old_h = vo_dheight;
-		    int old_x = vo_dx, old_y = vo_dy;
-                    vo_x11_update_geometry();
-                    if (vo_dwidth != old_w || vo_dheight != old_h || vo_dx != old_x || vo_dy != old_y)
-                        ret |= VO_EVENT_RESIZE;
-                }
+                ret |= check_resize();
                 break;
             case KeyPress:
                 {
