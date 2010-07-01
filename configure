@@ -1538,8 +1538,8 @@ if os2 ; then
   def_priority="#define CONFIG_PRIORITY 1"
 fi
 
-for I in "$TMPDIR" "$TEMPDIR" "/tmp" ; do
-  test "$I" && break
+for tmpdir in "$TMPDIR" "$TEMPDIR" "/tmp" ; do
+  test "$tmpdir" && break
 done
 
 mplayer_tmpdir="$tmpdir/mplayer-configure-$RANDOM-$$"
