@@ -824,13 +824,13 @@ all: $(ALL_PRG-yes)
 	$(CC) $(ASFLAGS) -c -o $@ $<
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
 
 %.o: %.cpp
-	$(CC) $(CXXFLAGS) -c -o $@ $<
+	$(CC) $(DEPFLAGS) $(CXXFLAGS) -c -o $@ $<
 
 %.o: %.m
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
 
 %-rc.o: %.rc
 	$(WINDRES) -I. $< $@
