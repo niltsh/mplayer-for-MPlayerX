@@ -1545,7 +1545,7 @@ done
 mplayer_tmpdir="$tmpdir/mplayer-configure-$RANDOM-$$"
 mkdir $mplayer_tmpdir || die "Unable to create tmpdir."
 
-TMPLOG="$mplayer_tmpdir/config.log"
+TMPLOG="config.log"
 TMPC="$mplayer_tmpdir/tmp.c"
 TMPCPP="$mplayer_tmpdir/tmp.cpp"
 TMPEXE="$mplayer_tmpdir/tmp$_exesuf"
