@@ -7134,7 +7134,7 @@ echocheck "RTMPDump Streaming Media library"
 if test "$_librtmp" = auto  && test "$_network" = yes ; then
   cat > $TMPC << EOF
 #include <librtmp/rtmp.h>
-int main(void) { RTMP r; RTMP_Init(&r); return 0; }
+int main(void) { RTMP r; RTMP_Socket(&r); return 0; }
 EOF
   cc_check -lrtmp && _librtmp=yes && extra_ldflags="$extra_ldflags -lrtmp"
   if test "$_librtmp" != yes && $_pkg_config --exists librtmp ; then
