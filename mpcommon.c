@@ -136,7 +136,7 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
                 }
             } else {
                 // DVD sub
-                len = ds_get_packet_sub(d_dvdsub, (unsigned char**)&packet);
+                len = ds_get_packet_sub(d_dvdsub, (unsigned char**)&packet, NULL, NULL);
                 if (len > 0) {
                     // XXX This is wrong, sh_video->pts can be arbitrarily
                     // much behind demuxing position. Unfortunately using
@@ -171,12 +171,11 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
         }
         if (d_dvdsub->non_interleaved)
             ds_get_next_pts(d_dvdsub);
-        while (d_dvdsub->first) {
-            double subpts = ds_get_next_pts(d_dvdsub);
-            if (subpts > curpts)
+        while (1) {
+            double subpts = curpts;
+            len = ds_get_packet_sub(d_dvdsub, &packet, &subpts, &endpts);
+            if (len < 0)
                 break;
-            endpts = d_dvdsub->first->endpts;
-            len = ds_get_packet_sub(d_dvdsub, &packet);
             if (type == 'm') {
                 if (len < 2) continue;
                 len = FFMIN(len - 2, AV_RB16(packet));

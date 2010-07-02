@@ -1659,7 +1659,7 @@ if(sh_audio && !demuxer2){
  if(vobsub_writer){
      unsigned char* packet=NULL;
      int len;
-     while((len=ds_get_packet_sub(d_dvdsub,&packet))>0){
+     while((len=ds_get_packet_sub(d_dvdsub,&packet, NULL, NULL))>0){
 	 mp_msg(MSGT_MENCODER,MSGL_V,"\rDVD sub: len=%d  v_pts=%5.3f  s_pts=%5.3f  \n",len,sh_video->pts,d_dvdsub->pts);
 	     vobsub_out_output(vobsub_writer,packet,len,mux_v->timer + d_dvdsub->pts - sh_video->pts);
      }

@@ -396,7 +396,8 @@ static inline int demux_getc(demux_stream_t *ds){
 void ds_free_packs(demux_stream_t *ds);
 int ds_get_packet(demux_stream_t *ds,unsigned char **start);
 int ds_get_packet_pts(demux_stream_t *ds, unsigned char **start, double *pts);
-int ds_get_packet_sub(demux_stream_t *ds,unsigned char **start);
+int ds_get_packet_sub(demux_stream_t *ds,unsigned char **start,
+                      double *pts, double *endpts);
 double ds_get_next_pts(demux_stream_t *ds);
 int ds_parse(demux_stream_t *sh, uint8_t **buffer, int *len, double pts, off_t pos);
 void ds_clear_parser(demux_stream_t *sh);

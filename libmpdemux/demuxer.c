@@ -794,15 +794,41 @@ int ds_get_packet_pts(demux_stream_t *ds, unsigned char **start, double *pts)
     return len;
 }
 
-int ds_get_packet_sub(demux_stream_t *ds, unsigned char **start)
+/**
+ * Get a subtitle packet. In particular avoid reading the stream.
+ * \param pts input: maximum pts value of subtitle packet. NOPTS or NULL for any.
+ *            output: start/referece pts of subtitle
+ *            May be NULL.
+ * \param endpts output: pts for end of display time. May be NULL.
+ * \return -1 if no packet is available
+ */
+int ds_get_packet_sub(demux_stream_t *ds, unsigned char **start,
+                      double *pts, double *endpts)
 {
     int len;
+    *start = NULL;
+    // initialize pts
+    if (pts)
+        *pts    = MP_NOPTS_VALUE;
+    if (endpts)
+        *endpts = MP_NOPTS_VALUE;
     if (ds->buffer_pos >= ds->buffer_size) {
-        *start = NULL;
         if (!ds->packs)
             return -1;  // no sub
         if (!ds_fill_buffer(ds))
             return -1;  // EOF
+    }
+    // only start of buffer has valid pts
+    if (ds->buffer_pos == 0) {
+        if (endpts)
+            *endpts = ds->current->endpts;
+        if (pts) {
+            *pts    = ds->current->pts;
+            // check if we are too early
+            if (*pts != MP_NOPTS_VALUE && ds->current->pts != MP_NOPTS_VALUE &&
+                ds->current->pts > *pts)
+                return -1;
+        }
     }
     len = ds->buffer_size - ds->buffer_pos;
     *start = &ds->buffer[ds->buffer_pos];
