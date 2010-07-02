@@ -90,6 +90,7 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
     unsigned char *packet=NULL;
     int len;
     char type = d_dvdsub->sh ? ((sh_sub_t *)d_dvdsub->sh)->type : 'v';
+    int text_sub = type == 't' || type == 'm' || type == 'a' || type == 'd';
     static subtitle subs;
     if (reset) {
         sub_clear_text(&subs, MP_NOPTS_VALUE);
@@ -160,7 +161,7 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
 
         if (spudec_changed(vo_spudec))
             vo_osd_changed(OSDTYPE_SPU);
-    } else if (dvdsub_id >= 0 && (type == 't' || type == 'm' || type == 'a' || type == 'd')) {
+    } else if (dvdsub_id >= 0 && text_sub) {
         double curpts = refpts + sub_delay;
         double endpts;
         if (type == 'd' && !d_dvdsub->demuxer->teletext) {
@@ -246,7 +247,7 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
             if (d_dvdsub->non_interleaved)
                 ds_get_next_pts(d_dvdsub);
         }
-        if (sub_clear_text(&subs, curpts))
+        if (text_sub && sub_clear_text(&subs, curpts))
             set_osd_subtitle(&subs);
     }
     current_module=NULL;
