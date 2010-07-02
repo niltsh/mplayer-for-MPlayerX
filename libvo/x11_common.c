@@ -812,8 +812,6 @@ int vo_x11_check_events(Display * mydisplay)
     KeySym keySym;
     static XComposeStatus stat;
 
-// unsigned long  vo_KeyTable[512];
-
     if ((vo_mouse_autohide) && mouse_waiting_hide &&
                                  (GetTimerMS() - mouse_timer >= 1000)) {
         vo_hidecursor(mydisplay, vo_window);
@@ -840,8 +838,6 @@ int vo_x11_check_events(Display * mydisplay)
                 ret |= VO_EVENT_EXPOSE;
                 break;
             case ConfigureNotify:
-//         if (!vo_fs && (Event.xconfigure.width == vo_screenwidth || Event.xconfigure.height == vo_screenheight)) break;
-//         if (vo_fs && Event.xconfigure.width != vo_screenwidth && Event.xconfigure.height != vo_screenheight) break;
                 if (vo_window == None)
                     break;
                 ret |= check_resize();
