@@ -1658,11 +1658,8 @@ echores $_host_cc
 
 echocheck "cross compilation"
 if test $_cross_compile = auto ; then
-  cat > $TMPC << EOF
-int main(void) { return 0; }
-EOF
   _cross_compile=yes
-  cc_check && "$TMPEXE" && _cross_compile=no
+  cflag_check "" && "$TMPEXE" && _cross_compile=no
 fi
 echores $_cross_compile
 
