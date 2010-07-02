@@ -1091,8 +1091,6 @@ void vo_x11_create_vo_window(XVisualInfo *vis, int x, int y,
       XGetWindowAttributes(mDisplay, vo_window, &attribs);
       vo_x11_selectinput_witherr(mDisplay, vo_window,
                                  attribs.your_event_mask | ExposureMask);
-
-      vo_x11_update_geometry();
     } else
       // Do not capture events since it might break the parent application
       // if it relies on events being forwarded to the parent of WinID.
@@ -1100,6 +1098,8 @@ void vo_x11_create_vo_window(XVisualInfo *vis, int x, int y,
       vo_x11_selectinput_witherr(mDisplay, vo_window,
           StructureNotifyMask | KeyPressMask | PointerMotionMask |
           ButtonPressMask | ButtonReleaseMask | ExposureMask);
+
+    vo_x11_update_geometry();
     goto final;
   }
   if (vo_window == None) {
