@@ -812,7 +812,7 @@ int vo_x11_check_events(Display * mydisplay)
     KeySym keySym;
     static XComposeStatus stat;
 
-    if ((vo_mouse_autohide) && mouse_waiting_hide &&
+    if (vo_mouse_autohide && mouse_waiting_hide &&
                                  (GetTimerMS() - mouse_timer >= 1000)) {
         vo_hidecursor(mydisplay, vo_window);
         mouse_waiting_hide = 0;
