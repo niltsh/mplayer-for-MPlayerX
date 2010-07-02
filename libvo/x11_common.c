@@ -1085,9 +1085,14 @@ void vo_x11_create_vo_window(XVisualInfo *vis, int x, int y,
       XInstallColormap(mDisplay, col_map);
     }
     if (WinID) {
-      vo_x11_update_geometry();
       // Expose events can only really be handled by us, so request them.
-      vo_x11_selectinput_witherr(mDisplay, vo_window, ExposureMask);
+      // Do not remove existing masks so GUI keeps working.
+      XWindowAttributes attribs;
+      XGetWindowAttributes(mDisplay, vo_window, &attribs);
+      vo_x11_selectinput_witherr(mDisplay, vo_window,
+                                 attribs.your_event_mask | ExposureMask);
+
+      vo_x11_update_geometry();
     } else
       // Do not capture events since it might break the parent application
       // if it relies on events being forwarded to the parent of WinID.
