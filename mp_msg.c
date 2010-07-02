@@ -181,6 +181,7 @@ void mp_msg(int mod, int lev, const char *format, ... ){
     char tmp[MSGSIZE_MAX];
     FILE *stream = lev <= MSGL_WARN ? stderr : stdout;
     static int header = 1;
+    size_t len;
 
     if (!mp_msg_test(mod, lev)) return; // do not display
     va_start(va, format);
@@ -223,7 +224,8 @@ void mp_msg(int mod, int lev, const char *format, ... ){
     if (header)
         print_msg_module(stream, mod);
     set_msg_color(stream, lev);
-    header = tmp[strlen(tmp)-1] == '\n' || tmp[strlen(tmp)-1] == '\r';
+    len = strlen(tmp);
+    header = len && (tmp[len-1] == '\n' || tmp[len-1] == '\r');
 
     fprintf(stream, "%s", tmp);
     if (mp_msg_color)
