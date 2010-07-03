@@ -345,6 +345,7 @@ Codecs:
   --enable-tremor           enable external Tremor [autodetect]
   --disable-libvorbis       disable libvorbis support [autodetect]
   --disable-speex           disable Speex support [autodetect]
+  --disable-libgsm          disable libgsm support [autodetect]
   --enable-theora           enable OggTheora libraries [autodetect]
   --enable-faad             enable external FAAD2 (AAC) [autodetect]
   --disable-faad-internal   disable internal FAAD2 (AAC) [autodetect]
@@ -656,6 +657,7 @@ _tremor_internal=yes
 _tremor_low=no
 _libvorbis=auto
 _speex=auto
+_libgsm=auto
 _theora=auto
 _mpg123=auto
 _mp3lib=auto
@@ -1044,6 +1046,8 @@ for ac_option do
   --disable-libvorbis)  _libvorbis=no   ;;
   --enable-speex)       _speex=yes      ;;
   --disable-speex)      _speex=no       ;;
+  --enable-libgsm)      _libgsm=yes     ;;
+  --disable-libgsm)     _libgsm=no      ;;
   --enable-tremor)      _tremor=yes     ;;
   --disable-tremor)     _tremor=no      ;;
   --enable-tremor-internal)     _tremor_internal=yes    ;;
@@ -6607,6 +6611,27 @@ else
 fi
 echores "$_speex"
 
+echocheck "libgsm"
+if test "$_libgsm" = auto ; then
+  _libgsm=no
+  cat > $TMPC << EOF
+#include <gsm/gsm.h>
+int main(void) { gsm_create(); return 0; }
+EOF
+  cc_check -lgsm && _libgsm=yes
+fi
+if test "$_libgsm" = yes ; then
+  def_libgsm='#define CONFIG_LIBGSM 1'
+  extra_ldflags="$extra_ldflags -lgsm"
+  _libavencoders="$_libavencoders LIBGSM_ENCODER LIBGSM_MS_ENCODER"
+  _libavdecoders="$_libavdecoders LIBGSM_DECODER LIBGSM_MS_DECODER"
+  codecmodules="libgsm $codecmodules"
+else
+  def_libgsm='#define CONFIG_LIBGSM 0'
+  nocodecmodules="libgsm $nocodecmodules"
+fi
+echores "$_libgsm"
+
 echocheck "OggTheora support"
 if test "$_theora" = auto ; then
   _theora=no
@@ -8951,6 +8976,7 @@ $def_mp3lib
 $def_mpg123
 $def_musepack
 $def_speex
+$def_libgsm
 $def_theora
 $def_toolame
 $def_tremor
