@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 31512 (MSGTR_MPDEMUX_MKV_ZlibInitializationFailed)
+// Synced with help_mp-en.h rev. 31579 (MSGTR_LIBMENU_NoEntryFoundInTheMenuDefinition)
 // Reminder of hard terms which need better/final solution later:
 //   (file links to be updated later if available!);
 //   NAV; section/subsection;  XScreenSaver; keycolor;
@@ -291,7 +291,7 @@ static const char help_text[]=
 #define MSGTR_LimitingAudioPreload "限制音频预加载长度为 0.4s。\n"
 #define MSGTR_IncreasingAudioDensity "增加音频密度至 4。\n"
 #define MSGTR_ZeroingAudioPreloadAndMaxPtsCorrection "强制音频预加载长度为 0，最大 PTS 校验长度为 0。\n"
-#define MSGTR_CBRAudioByterate "\n\nCBR 音频：%d 字节/秒，%d 字节/块\n"
+#define MSGTR_CBRAudioByterate "\n\nCBR 音频：%d 字节/秒，%d 字节/段\n"
 #define MSGTR_LameVersion "LAME 版本 %s（%s）\n\n"
 #define MSGTR_InvalidBitrateForLamePreset "错误：指定的比特率超出该预设配置的有效范围。\n"\
 "\n"\
@@ -1438,7 +1438,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_ASFHDR_HeaderMallocFailed "无法为文件头部分配 %d 字节的存放空间。\n"
 #define MSGTR_MPDEMUX_ASFHDR_EOFWhileReadingHeader "读 ASF 头部时遇到文件结尾，文件损坏或不完整？\n"
 #define MSGTR_MPDEMUX_ASFHDR_DVRWantsLibavformat "DVR 可能只能与 libavformat 一同使用，如果有问题请尝试 -demuxer 35。\n"
-#define MSGTR_MPDEMUX_ASFHDR_NoDataChunkAfterHeader "文件头部之后没有数据块！\n"
+#define MSGTR_MPDEMUX_ASFHDR_NoDataChunkAfterHeader "文件头部之后没有数据段！\n"
 #define MSGTR_MPDEMUX_ASFHDR_AudioVideoHeaderNotFound "ASF：未找到音频或视频头部 - 文件损坏？\n"
 #define MSGTR_MPDEMUX_ASFHDR_InvalidLengthInASFHeader "ASF 头部长度无效！\n"
 #define MSGTR_MPDEMUX_ASFHDR_DRMLicenseURL "DRM 许可证 URL 地址：%s\n"
@@ -1453,10 +1453,10 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_AVIHDR_RegeneratingKeyfTableForMPEG4 "为 MPEG4 视频重新生成关键帧表。\n"
 #define MSGTR_MPDEMUX_AVIHDR_FoundWaveFmt "找到‘wf’，%d 字节，%d\n"
 #define MSGTR_MPDEMUX_AVIHDR_FoundAVIV2Header "AVI：发现 dmlh (size=%d) (total_frames=%d)\n"
-#define MSGTR_MPDEMUX_AVIHDR_ReadingIndexBlockChunksForFrames  "正在读取索引数据块，%d 块数据用于 %d 帧 (fpos=%"PRId64")。\n"
+#define MSGTR_MPDEMUX_AVIHDR_ReadingIndexBlockChunksForFrames  "正在读取索引数据段，%d 段数据用于 %d 帧 (fpos=%"PRId64")。\n"
 #define MSGTR_MPDEMUX_AVIHDR_AdditionalRIFFHdr "额外的 RIFF 头部数据...\n"
 #define MSGTR_MPDEMUX_AVIHDR_WarnNotExtendedAVIHdr "** 警告：这不是扩展格式的 AVI 头部..\n"
-#define MSGTR_MPDEMUX_AVIHDR_BrokenChunk "数据块损坏？ chunksize=%d  (id=%.4s)\n"
+#define MSGTR_MPDEMUX_AVIHDR_BrokenChunk "数据段损坏？chunksize=%d  (id=%.4s)\n"
 #define MSGTR_MPDEMUX_AVIHDR_BuildingODMLidx "AVI：ODML：构造 ODML 索引 (%d superindexchunks)。\n"
 #define MSGTR_MPDEMUX_AVIHDR_BrokenODMLfile "AVI：ODML：检测到损坏的（不完整的？）文件。将使用传统的索引模式。\n"
 #define MSGTR_MPDEMUX_AVIHDR_CantReadIdxFile "无法读索引文件 %s：%s\n"
@@ -1465,7 +1465,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_AVIHDR_PrematureEOF "过早结束的索引文件 %s\n"
 #define MSGTR_MPDEMUX_AVIHDR_IdxFileLoaded "已加载索引文件：%s\n"
 #define MSGTR_MPDEMUX_AVIHDR_GeneratingIdx "正在生成索引：%3lu %s     \r"
-#define MSGTR_MPDEMUX_AVIHDR_IdxGeneratedForHowManyChunks "AVI：为 %d 块数据生成索引表！\n"
+#define MSGTR_MPDEMUX_AVIHDR_IdxGeneratedForHowManyChunks "AVI：为 %d 段数据生成索引表！\n"
 #define MSGTR_MPDEMUX_AVIHDR_Failed2WriteIdxFile "无法写入索引文件 %s：%s\n"
 #define MSGTR_MPDEMUX_AVIHDR_IdxFileSaved "已保存索引文件：%s\n"
 
@@ -1480,31 +1480,31 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_MKV_ZlibDecompressionFailed "[mkv] zlib 解压失败。\n"
 #define MSGTR_MPDEMUX_MKV_LzoInitializationFailed "[mkv] lzo 初始化失败。\n"
 #define MSGTR_MPDEMUX_MKV_LzoDecompressionFailed "[mkv] lzo 解压失败。\n"
-#define MSGTR_MPDEMUX_MKV_TrackEncrypted "[mkv] 轨迹号 %u 已加密但解密还没\n[mkv] 实现。跳过轨迹。\n"
-#define MSGTR_MPDEMUX_MKV_UnknownContentEncoding "[mkv] 轨迹 %u 的内容编码类型未知。跳过轨迹。\n"
-#define MSGTR_MPDEMUX_MKV_UnknownCompression "[mkv] 轨迹 %u 已压缩, 用了未知的/不支持的压缩\n[mkv] 算法(%u)。跳过轨迹。\n"
-#define MSGTR_MPDEMUX_MKV_ZlibCompressionUnsupported "[mkv] 轨迹 %u 已用 zlib 压缩但 mplayer 还没编译成\n[mkv] 支持 zlib 压缩。跳过轨迹。\n"
-#define MSGTR_MPDEMUX_MKV_TrackIDName "[mkv] 轨迹 ID %u: %s (%s) \"%s\", %s\n"
-#define MSGTR_MPDEMUX_MKV_TrackID "[mkv] 轨迹 ID %u: %s (%s), %s\n"
-#define MSGTR_MPDEMUX_MKV_UnknownCodecID "[mkv] 未知的/不支持的 CodecID (%s) 或者缺少的/坏的 CodecPrivate\n[mkv] 数据(轨迹 %u)。\n"
-#define MSGTR_MPDEMUX_MKV_FlacTrackDoesNotContainValidHeaders "[mkv] FLAC 轨迹没含有效的头部。\n"
-#define MSGTR_MPDEMUX_MKV_UnknownAudioCodec "[mkv] 未知的/不支持的音频编解码器 ID '%s' 对于轨迹 %u 或者缺少的/有缺点的\n[mkv] 编解码器私有数据。\n"
-#define MSGTR_MPDEMUX_MKV_SubtitleTypeNotSupported "[mkv] 不支持字幕类型 '%s'。\n"
-#define MSGTR_MPDEMUX_MKV_WillPlayVideoTrack "[mkv] 将播放视频轨迹 %u。\n"
-#define MSGTR_MPDEMUX_MKV_NoVideoTrackFound "[mkv] 没有找到/所要的视频轨迹。\n"
-#define MSGTR_MPDEMUX_MKV_NoAudioTrackFound "[mkv] 没有找到/所要的音频轨迹。\n"
-#define MSGTR_MPDEMUX_MKV_WillDisplaySubtitleTrack "[mkv] 将播放字幕轨迹 %u。\n"
-#define MSGTR_MPDEMUX_MKV_NoBlockDurationForSubtitleTrackFound "[mkv] 警告: 对于所找到的字幕轨迹没有 BlockDuration。\n"
-#define MSGTR_MPDEMUX_MKV_TooManySublines "[mkv] Warning: 太多的字幕要渲染, 跳过。\n"
-#define MSGTR_MPDEMUX_MKV_TooManySublinesSkippingAfterFirst "\n[mkv] 警告: 太多的字幕要渲染, %i 以后跳过。n"
+#define MSGTR_MPDEMUX_MKV_TrackEncrypted "[mkv] 轨道 %u 已加密，但解密还未实现。跳过该轨道。\n"
+#define MSGTR_MPDEMUX_MKV_UnknownContentEncoding "[mkv] 轨道 %u 内容的编码类型未知。跳过该轨道。\n"
+#define MSGTR_MPDEMUX_MKV_UnknownCompression "[mkv] 轨道 %u 使用了未知/不支持的压缩算法（%u）。\n[mkv] 跳过该轨道。\n"
+#define MSGTR_MPDEMUX_MKV_ZlibCompressionUnsupported "[mkv] 轨道 %u 已经 zlib 压缩，但 mplayer 未以支持 zlib 压缩\n[mkv] 选项编译。跳过该轨道。\n"
+#define MSGTR_MPDEMUX_MKV_TrackIDName "[mkv] 轨道 ID %u：%s (%s) \"%s\"，%s\n"
+#define MSGTR_MPDEMUX_MKV_TrackID "[mkv] 轨道 ID %u：%s (%s), %s\n"
+#define MSGTR_MPDEMUX_MKV_UnknownCodecID "[mkv] 未知的/不支持的编解码器 ID（%s），也可能是编解码器私有数据\n[mkv] 缺少/损坏（轨道 %u）。\n"
+#define MSGTR_MPDEMUX_MKV_FlacTrackDoesNotContainValidHeaders "[mkv] FLAC 轨道未含有效的头部信息。\n"
+#define MSGTR_MPDEMUX_MKV_UnknownAudioCodec "[mkv] 未知/不支持的音频编解码器 ID‘%s’（轨道 %u），也可能是编解码器\n[mkv] 私有数据缺少/损坏。\n"
+#define MSGTR_MPDEMUX_MKV_SubtitleTypeNotSupported "[mkv] 未支持字幕类型‘%s’。\n"
+#define MSGTR_MPDEMUX_MKV_WillPlayVideoTrack "[mkv] 将播放视频轨道 %u。\n"
+#define MSGTR_MPDEMUX_MKV_NoVideoTrackFound "[mkv] 未找到/不需要视频轨道。\n"
+#define MSGTR_MPDEMUX_MKV_NoAudioTrackFound "[mkv] 未找到/不需要音频轨道。\n"
+#define MSGTR_MPDEMUX_MKV_WillDisplaySubtitleTrack "[mkv] 将播放字幕轨道 %u。\n"
+#define MSGTR_MPDEMUX_MKV_NoBlockDurationForSubtitleTrackFound "[mkv] 警告：所找到的字幕轨道没有字幕段持续时间信息。\n"
+#define MSGTR_MPDEMUX_MKV_TooManySublines "[mkv] Warning：需渲染的字幕过多，跳过。\n"
+#define MSGTR_MPDEMUX_MKV_TooManySublinesSkippingAfterFirst "\n[mkv] 警告：需渲染的字幕过多，路过前 %i 个后的字幕。n"
 
 // demux_nuv.c
-#define MSGTR_MPDEMUX_NUV_NoVideoBlocksInFile "文件中没有视频块。\n"
+#define MSGTR_MPDEMUX_NUV_NoVideoBlocksInFile "文件中没有视频数据段。\n"
 
 // demux_xmms.c
-#define MSGTR_MPDEMUX_XMMS_FoundPlugin "找到插件: %s (%s)。\n"
-#define MSGTR_MPDEMUX_XMMS_ClosingPlugin "关闭插件: %s。\n"
-#define MSGTR_MPDEMUX_XMMS_WaitForStart "等待XMMS插件开始播放‘%s’...\n"
+#define MSGTR_MPDEMUX_XMMS_FoundPlugin "找到插件：%s（%s）。\n"
+#define MSGTR_MPDEMUX_XMMS_ClosingPlugin "关闭插件：%s。\n"
+#define MSGTR_MPDEMUX_XMMS_WaitForStart "等待 XMMS 插件开始播放‘%s’...\n"
 
 
 // ========================== LIBMENU ===================================
