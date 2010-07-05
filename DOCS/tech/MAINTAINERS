@@ -127,6 +127,7 @@ streams:
     * stream_dvb.c - Nico Sabbi
     * stream_dvd.c - Nico Sabbi
     * stream_dvdnav.c - Nico Sabbi and Benjamin Zores
+    * stream_bluray.c - Benjamin Zores
 
 codec support:
     * FFmpeg: Michael Niedermayer

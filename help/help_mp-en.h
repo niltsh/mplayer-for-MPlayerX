@@ -1895,6 +1895,7 @@ static const char help_text[]=
 #define MSGTR_SMBFileNotFound "Could not open from LAN: '%s'\n"
 #define MSGTR_SMBNotCompiled "MPlayer was not compiled with SMB reading support.\n"
 
+#define MSGTR_CantOpenBluray "Couldn't open Blu-ray device: %s\n"
 #define MSGTR_CantOpenDVD "Couldn't open DVD device: %s (%s)\n"
 
 // stream_cdda.c
@@ -1965,6 +1966,11 @@ static const char help_text[]=
 #define MSGTR_DVDsubtitleChannel "Selected DVD subtitle channel: %d language: %c%c\n"
 #define MSGTR_DVDsubtitleLanguage "subtitle ( sid ): %d language: %s\n"
 #define MSGTR_DVDnumSubtitles "number of subtitles on disk: %d\n"
+
+// stream_bluray.c
+#define MSGTR_BlurayNoDevice "No Blu-ray device/location was specified ...\n"
+#define MSGTR_BlurayNoTitles "Can't find any Blu-ray-compatible title here.\n"
+#define MSGTR_BlurayOK "Blu-ray successfully opened.\n"
 
 // stream_radio.c
 #define MSGTR_RADIO_ChannelNamesDetected "[radio] Radio channel names detected.\n"
