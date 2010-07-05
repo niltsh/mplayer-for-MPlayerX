@@ -72,14 +72,6 @@ const LIBVO_EXTERN(gl_nosw)
 #undef info
 #undef preinit
 
-#ifdef CONFIG_GL_X11
-static int                  wsGLXAttrib[] = { GLX_RGBA,
-                                       GLX_RED_SIZE,1,
-                                       GLX_GREEN_SIZE,1,
-                                       GLX_BLUE_SIZE,1,
-                                       GLX_DOUBLEBUFFER,
-                                       None };
-#endif
 static MPGLContext glctx;
 
 static int use_osd;
@@ -597,6 +589,7 @@ static int create_window(uint32_t d_width, uint32_t d_height, uint32_t flags, co
 #endif
 #ifdef CONFIG_GL_X11
   if (glctx.type == GLTYPE_X11) {
+    static int wsGLXAttrib[] = {GLX_RGBA, GLX_RED_SIZE, 1, GLX_GREEN_SIZE, 1, GLX_BLUE_SIZE, 1, GLX_DOUBLEBUFFER, None};
     XVisualInfo *vinfo=glXChooseVisual( mDisplay,mScreen,wsGLXAttrib );
     if (vinfo == NULL)
     {
