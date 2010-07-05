@@ -9006,7 +9006,6 @@ $def_mp3lib
 $def_mpg123
 $def_musepack
 $def_speex
-$def_libgsm
 $def_theora
 $def_toolame
 $def_tremor
@@ -9301,6 +9300,7 @@ $def_ebx_available
 /* External libraries used through libavcodec. */
 $def_faac_lavc
 $def_libdirac_lavc
+$def_libgsm
 $def_libopencore_amrnb
 $def_libopencore_amrwb
 $def_libopenjpeg
