@@ -6614,6 +6614,7 @@ elif test "$_libvorbis" = yes ; then
   codecmodules="libvorbis $codecmodules"
   res_comment="libvorbis"
   extra_ldflags="$extra_ldflags -lvorbis -logg"
+  _libavencoders="$_libavencoders LIBVORBIS_ENCODER"
 else
   _vorbis=no
   nocodecmodules="libvorbis $nocodecmodules"
