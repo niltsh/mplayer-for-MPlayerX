@@ -573,23 +573,23 @@ _libavcodec_a=auto
 _libopencore_amrnb=auto
 _libopencore_amrwb=auto
 libopenjpeg=auto
-_libavdecoders_all=$(sed -n 's/^[^#]*DEC.*(.*, *\(.*\)).*/\1_decoder/p' libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
-_libavdecoders=$(echo $_libavdecoders_all | sed -e 's/ LIB[A-Z0-9_]*_DECODER//g' -e s/MPEG4AAC_DECODER//)
-_libavencoders_all=$(sed -n 's/^[^#]*ENC.*(.*, *\(.*\)).*/\1_encoder/p' libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
-_libavencoders=$(echo $_libavencoders_all | sed -e 's/ LIB[A-Z0-9_]*_ENCODER//g' -e s/AAC_ENCODER//)
-_libavparsers_all=$(sed -n 's/^[^#]*PARSER.*(.*, *\(.*\)).*/\1_parser/p' libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
-_libavparsers=$_libavparsers_all
-_libavbsfs_all=$(sed -n 's/^[^#]*BSF.*(.*, *\(.*\)).*/\1_bsf/p' libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
-_libavbsfs=$_libavbsfs_all
-_libavhwaccels_all=$(sed -n 's/^[^#]*HWACCEL.*(.*, *\(.*\)).*/\1_hwaccel/p' libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
+libavdecoders_all=$(sed -n 's/^[^#]*DEC.*(.*, *\(.*\)).*/\1_decoder/p' libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
+libavdecoders=$(echo $libavdecoders_all | sed -e 's/ LIB[A-Z0-9_]*_DECODER//g' -e s/MPEG4AAC_DECODER//)
+libavencoders_all=$(sed -n 's/^[^#]*ENC.*(.*, *\(.*\)).*/\1_encoder/p' libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
+libavencoders=$(echo $libavencoders_all | sed -e 's/ LIB[A-Z0-9_]*_ENCODER//g' -e s/AAC_ENCODER//)
+libavparsers_all=$(sed -n 's/^[^#]*PARSER.*(.*, *\(.*\)).*/\1_parser/p' libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
+libavparsers=$libavparsers_all
+libavbsfs_all=$(sed -n 's/^[^#]*BSF.*(.*, *\(.*\)).*/\1_bsf/p' libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
+libavbsfs=$libavbsfs_all
+libavhwaccels_all=$(sed -n 's/^[^#]*HWACCEL.*(.*, *\(.*\)).*/\1_hwaccel/p' libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
 # Disable all hardware accelerators for now.
-_libavhwaccels=
-_libavdemuxers_all=$(sed -n 's/^[^#]*DEMUX.*(.*, *\(.*\)).*/\1_demuxer/p' libavformat/allformats.c | tr '[a-z]' '[A-Z]')
-_libavdemuxers=$(echo $_libavdemuxers_all | sed -e 's/ LIB[A-Z0-9_]*_DEMUXER//g' -e s/REDIR_DEMUXER// -e s/AVISYNTH_DEMUXER//)
-_libavmuxers_all=$(sed -n 's/^[^#]*_MUX.*(.*, *\(.*\)).*/\1_muxer/p' libavformat/allformats.c | tr '[a-z]' '[A-Z]')
-_libavmuxers=$(echo $_libavmuxers_all | sed -e 's/ LIB[A-Z0-9_]*_MUXER//g' -e s/RTP_MUXER// -e s/RTSP_MUXER//)
-_libavprotocols_all=$(sed -n 's/^[^#]*PROTOCOL.*(.*, *\(.*\)).*/\1_protocol/p' libavformat/allformats.c | tr '[a-z]' '[A-Z]')
-_libavprotocols=$_libavprotocols_all
+libavhwaccels=
+libavdemuxers_all=$(sed -n 's/^[^#]*DEMUX.*(.*, *\(.*\)).*/\1_demuxer/p' libavformat/allformats.c | tr '[a-z]' '[A-Z]')
+libavdemuxers=$(echo $libavdemuxers_all | sed -e 's/ LIB[A-Z0-9_]*_DEMUXER//g' -e s/REDIR_DEMUXER// -e s/AVISYNTH_DEMUXER//)
+libavmuxers_all=$(sed -n 's/^[^#]*_MUX.*(.*, *\(.*\)).*/\1_muxer/p' libavformat/allformats.c | tr '[a-z]' '[A-Z]')
+libavmuxers=$(echo $libavmuxers_all | sed -e 's/ LIB[A-Z0-9_]*_MUXER//g' -e s/RTP_MUXER// -e s/RTSP_MUXER//)
+libavprotocols_all=$(sed -n 's/^[^#]*PROTOCOL.*(.*, *\(.*\)).*/\1_protocol/p' libavformat/allformats.c | tr '[a-z]' '[A-Z]')
+libavprotocols=$libavprotocols_all
 _libavcodec_so=auto
 _libavformat_a=auto
 _libavformat_so=auto
@@ -1200,18 +1200,18 @@ for ac_option do
   --disable-libopencore_amrnb)  _libopencore_amrnb=no   ;;
   --enable-libopencore_amrwb)   _libopencore_amrwb=yes  ;;
   --disable-libopencore_amrwb)  _libopencore_amrwb=no   ;;
-  --enable-decoder=*)  _libavdecoders="$_libavdecoders $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
-  --disable-decoder=*) _libavdecoders=$(echo $_libavdecoders | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
-  --enable-encoder=*)  _libavencoders="$_libavencoders $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
-  --disable-encoder=*) _libavencoders=$(echo $_libavencoders | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
-  --enable-parser=*)   _libavparsers="$_libavparsers $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
-  --disable-parser=*)  _libavparsers=$(echo $_libavparsers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
-  --enable-protocol=*)   _libavprotocols="$_libavprotocols $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
-  --disable-protocol=*)  _libavprotocols=$(echo $_libavprotocols | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
-  --enable-demuxer=*)  _libavdemuxers="$_libavdemuxers $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
-  --disable-demuxer=*) _libavdemuxers=$(echo $_libavdemuxers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
-  --enable-muxer=*)    _libavmuxers="$_libavmuxers $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
-  --disable-muxer=*)    _libavmuxers=$(echo $_libavmuxers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
+  --enable-decoder=*)  libavdecoders="$libavdecoders $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
+  --disable-decoder=*) libavdecoders=$(echo $libavdecoders | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
+  --enable-encoder=*)  libavencoders="$libavencoders $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
+  --disable-encoder=*) libavencoders=$(echo $libavencoders | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
+  --enable-parser=*)   libavparsers="$libavparsers $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
+  --disable-parser=*)  libavparsers=$(echo $libavparsers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
+  --enable-protocol=*)   libavprotocols="$libavprotocols $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
+  --disable-protocol=*)  libavprotocols=$(echo $libavprotocols | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
+  --enable-demuxer=*)  libavdemuxers="$libavdemuxers $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
+  --disable-demuxer=*) libavdemuxers=$(echo $libavdemuxers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
+  --enable-muxer=*)    libavmuxers="$libavmuxers $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
+  --disable-muxer=*)    libavmuxers=$(echo $libavmuxers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
   --enable-libavformat_a)       _libavformat_a=yes      ;;
   --disable-libavformat_a)      _libavformat_a=no       ;;
   --enable-libavformat_so)      _libavformat_so=yes     ;;
@@ -3357,8 +3357,8 @@ else
   noinputmodules="network $noinputmodules"
   def_network='#undef CONFIG_NETWORK'
   _ftp=no
-  _libavprotocols=$(echo $_libavprotocols | sed -e s/GOPHER_PROTOCOL// -e s/HTTP_PROTOCOL// -e s/RTMP_PROTOCOL// -e s/RTP_PROTOCOL// -e s/TCP_PROTOCOL// -e s/UDP_PROTOCOL//)
-  _libavdemuxers=$(echo $_libavdemuxers | sed -e s/RTSP_DEMUXER// -e s/SDP_DEMUXER//)
+  libavprotocols=$(echo $libavprotocols | sed -e s/GOPHER_PROTOCOL// -e s/HTTP_PROTOCOL// -e s/RTMP_PROTOCOL// -e s/RTP_PROTOCOL// -e s/TCP_PROTOCOL// -e s/UDP_PROTOCOL//)
+  libavdemuxers=$(echo $libavdemuxers | sed -e s/RTSP_DEMUXER// -e s/SDP_DEMUXER//)
 fi
 echores "$_network"
 
@@ -4506,7 +4506,7 @@ if test "$_xvmc" = yes ; then
 else
   def_xvmc='#define CONFIG_XVMC 0'
   novomodules="xvmc $novomodules"
-  _libavdecoders=$(echo $_libavdecoders | sed -e s/MPEG_XVMC_DECODER//)
+  libavdecoders=$(echo $libavdecoders | sed -e s/MPEG_XVMC_DECODER//)
 fi
 echores "$_xvmc"
 
@@ -4531,7 +4531,7 @@ if test "$_vdpau" = yes ; then
 else
   def_vdpau='#define CONFIG_VDPAU 0'
   novomodules="vdpau $novomodules"
-  _libavdecoders=$(echo $_libavdecoders | sed -e s/MPEG_VDPAU_DECODER// -e s/MPEG1_VDPAU_DECODER// -e s/H264_VDPAU_DECODER// -e s/WMV3_VDPAU_DECODER// -e s/VC1_VDPAU_DECODER// -e s/MPEG4_VDPAU_DECODER//)
+  libavdecoders=$(echo $libavdecoders | sed -e s/MPEG_VDPAU_DECODER// -e s/MPEG1_VDPAU_DECODER// -e s/H264_VDPAU_DECODER// -e s/WMV3_VDPAU_DECODER// -e s/VC1_VDPAU_DECODER// -e s/MPEG4_VDPAU_DECODER//)
 fi
 echores "$_vdpau"
 
@@ -5076,8 +5076,8 @@ echores "$libopenjpeg"
 if test "$libopenjpeg" = yes ; then
   def_libopenjpeg='#define CONFIG_LIBOPENJPEG 1'
   extra_ldflags="$extra_ldflags -lopenjpeg"
-  _libavdecoders="$_libavdecoders LIBOPENJPEG_DECODER"
-  _libavencoders="$_libavencoders LIBOPENJPEG_ENCODER"
+  libavdecoders="$libavdecoders LIBOPENJPEG_DECODER"
+  libavencoders="$libavencoders LIBOPENJPEG_ENCODER"
   codecmodules="OpenJPEG $codecmodules"
 else
   def_libopenjpeg='#define CONFIG_LIBOPENJPEG 0'
@@ -6447,8 +6447,8 @@ if test "$_zlib" = yes ; then
   extra_ldflags="$extra_ldflags -lz"
 else
   def_zlib='#define CONFIG_ZLIB 0'
-  _libavdecoders=$(echo $_libavdecoders | sed -e s/FLASHSV_DECODER// -e s/PNG_DECODER// -e s/ZMBV_DECODER// -e s/ZLIB_DECODER// -e s/DXA_DECODER// -e s/TSCC_DECODER//)
-  _libavencoders=$(echo $_libavencoders | sed -e s/FLASHSV_ENCODER// -e s/PNG_ENCODER// -e s/ZMBV_ENCODER// -e s/ZLIB_ENCODER//)
+  libavdecoders=$(echo $libavdecoders | sed -e s/FLASHSV_DECODER// -e s/PNG_DECODER// -e s/ZMBV_DECODER// -e s/ZLIB_DECODER// -e s/DXA_DECODER// -e s/TSCC_DECODER//)
+  libavencoders=$(echo $libavencoders | sed -e s/FLASHSV_ENCODER// -e s/PNG_ENCODER// -e s/ZMBV_ENCODER// -e s/ZLIB_ENCODER//)
 fi
 echores "$_zlib"
 
@@ -6614,7 +6614,7 @@ elif test "$_libvorbis" = yes ; then
   codecmodules="libvorbis $codecmodules"
   res_comment="libvorbis"
   extra_ldflags="$extra_ldflags -lvorbis -logg"
-  _libavencoders="$_libavencoders LIBVORBIS_ENCODER"
+  libavencoders="$libavencoders LIBVORBIS_ENCODER"
 else
   _vorbis=no
   nocodecmodules="libvorbis $nocodecmodules"
@@ -6652,8 +6652,8 @@ fi
 if test "$_libgsm" = yes ; then
   def_libgsm='#define CONFIG_LIBGSM 1'
   extra_ldflags="$extra_ldflags -lgsm"
-  _libavencoders="$_libavencoders LIBGSM_ENCODER LIBGSM_MS_ENCODER"
-  _libavdecoders="$_libavdecoders LIBGSM_DECODER LIBGSM_MS_DECODER"
+  libavencoders="$libavencoders LIBGSM_ENCODER LIBGSM_MS_ENCODER"
+  libavdecoders="$libavdecoders LIBGSM_DECODER LIBGSM_MS_DECODER"
   codecmodules="libgsm $codecmodules"
 else
   def_libgsm='#define CONFIG_LIBGSM 0'
@@ -6888,7 +6888,7 @@ if test "$_faac" = yes ; then
   if test "$_faac_lavc" = yes ; then
     def_faac_lavc="#define CONFIG_LIBFAAC 1"
     libs_mplayer="$libs_mplayer $_ld_faac"
-    _libavencoders="$_libavencoders LIBFAAC_ENCODER"
+    libavencoders="$libavencoders LIBFAAC_ENCODER"
   fi
   codecmodules="faac $codecmodules"
 else
@@ -7440,8 +7440,8 @@ if test "$_libopencore_amrnb" = yes ; then
   _libopencore_amr=yes
   extra_ldflags="$extra_ldflags -lopencore-amrnb"
   def_libopencore_amrnb='#define CONFIG_LIBOPENCORE_AMRNB 1'
-  _libavdecoders="$_libavdecoders LIBOPENCORE_AMRNB_DECODER"
-  _libavencoders="$_libavencoders LIBOPENCORE_AMRNB_ENCODER"
+  libavdecoders="$libavdecoders LIBOPENCORE_AMRNB_DECODER"
+  libavencoders="$libavencoders LIBOPENCORE_AMRNB_ENCODER"
   codecmodules="libopencore_amrnb $codecmodules"
 else
   def_libopencore_amrnb='#define CONFIG_LIBOPENCORE_AMRNB 0'
@@ -7467,7 +7467,7 @@ if test "$_libopencore_amrwb" = yes ; then
   _libopencore_amr=yes
   extra_ldflags="$extra_ldflags -lopencore-amrwb"
   def_libopencore_amrwb='#define CONFIG_LIBOPENCORE_AMRWB 1'
-  _libavdecoders="$_libavdecoders LIBOPENCORE_AMRWB_DECODER"
+  libavdecoders="$libavdecoders LIBOPENCORE_AMRWB_DECODER"
   codecmodules="libopencore_amrwb $codecmodules"
 else
   def_libopencore_amrwb='#define LIBOPENCORE_AMRWB 0'
@@ -7526,7 +7526,7 @@ EOF
 fi
 if test "$_xvid_lavc" = yes ; then
   def_xvid_lavc='#define CONFIG_LIBXVID 1'
-  _libavencoders="$_libavencoders LIBXVID_ENCODER"
+  libavencoders="$libavencoders LIBXVID_ENCODER"
 else
   _xvid_lavc=no
   def_xvid_lavc='#define CONFIG_LIBXVID 0'
@@ -7557,7 +7557,7 @@ if test "$_x264" = yes ; then
   if test "$_x264_lavc" = yes ; then
     def_x264_lavc='#define CONFIG_LIBX264 1'
     libs_mplayer="$libs_mplayer $_ld_x264"
-    _libavencoders="$_libavencoders LIBX264_ENCODER"
+    libavencoders="$libavencoders LIBX264_ENCODER"
   fi
 else
   _x264_lavc=no
@@ -7601,8 +7601,8 @@ EOF
 fi
 if test "$_libdirac_lavc" = yes ; then
   def_libdirac_lavc='#define CONFIG_LIBDIRAC 1'
-  _libavencoders="$_libavencoders LIBDIRAC_ENCODER"
-  _libavdecoders="$_libavdecoders LIBDIRAC_DECODER"
+  libavencoders="$libavencoders LIBDIRAC_ENCODER"
+  libavdecoders="$libavdecoders LIBDIRAC_DECODER"
   codecmodules="libdirac $codecmodules"
 else
   def_libdirac_lavc='#define CONFIG_LIBDIRAC 0'
@@ -7633,8 +7633,8 @@ EOF
 fi
 if test "$_libschroedinger_lavc" = yes ; then
   def_libschroedinger_lavc='#define CONFIG_LIBSCHROEDINGER 1'
-  _libavencoders="$_libavencoders LIBSCHROEDINGER_ENCODER"
-  _libavdecoders="$_libavdecoders LIBSCHROEDINGER_DECODER"
+  libavencoders="$libavencoders LIBSCHROEDINGER_ENCODER"
+  libavdecoders="$libavdecoders LIBSCHROEDINGER_DECODER"
   codecmodules="libschroedinger $codecmodules"
 else
   def_libschroedinger_lavc='#define CONFIG_LIBSCHROEDINGER 0'
@@ -7665,8 +7665,8 @@ EOF
 fi
 if test "$_libvpx_lavc" = yes ; then
   def_libvpx_lavc='#define CONFIG_LIBVPX 1'
-  _libavdecoders="$_libavdecoders LIBVPX_DECODER"
-  _libavencoders="$_libavencoders LIBVPX_ENCODER"
+  libavdecoders="$libavdecoders LIBVPX_DECODER"
+  libavencoders="$libavencoders LIBVPX_ENCODER"
   codecmodules="libvpx $codecmodules"
 else
   def_libvpx_lavc='#define CONFIG_LIBVPX 0'
@@ -7752,7 +7752,7 @@ EOF
   test "$_mp3lame_lavc" = auto && _mp3lame_lavc=yes
   if test "$_mp3lame_lavc" = yes ; then
     def_mp3lame_lavc="#define CONFIG_LIBMP3LAME 1"
-    _libavencoders="$_libavencoders LIBMP3LAME_ENCODER"
+    libavencoders="$libavencoders LIBMP3LAME_ENCODER"
     libs_mplayer="$libs_mplayer $_ld_mp3lame"
   fi
 else
@@ -7771,10 +7771,10 @@ if test "$_mencoder" = yes ; then
 else
   # mpeg1video for vf_lavc, snow for vf_uspp / vf_mcdeint,
   # png for vf_screenshot, mjpeg for zr
-  _libavencoders="MPEG1VIDEO_ENCODER SNOW_ENCODER"
-  test "$_zlib" = yes && _libavencoders="$_libavencoders PNG_ENCODER"
-  test "$_zr" = yes && _libavencoders="$_libavencoders MJPEG_ENCODER"
-  _libavmuxers=""
+  libavencoders="MPEG1VIDEO_ENCODER SNOW_ENCODER"
+  test "$_zlib" = yes && libavencoders="$libavencoders PNG_ENCODER"
+  test "$_zr" = yes && libavencoders="$libavencoders MJPEG_ENCODER"
+  libavmuxers=""
   def_muxers='#define CONFIG_MUXERS 0'
 fi
 echores "$_mencoder"
@@ -8133,7 +8133,7 @@ if test "$_gui" = yes ; then
 
   # Required libraries
   if test "$_libavcodec" != yes ||
-      ! echo $_libavdecoders | grep -q PNG_DECODER ; then
+      ! echo $libavdecoders | grep -q PNG_DECODER ; then
     die "The GUI requires libavcodec with PNG support (needs zlib)."
   fi
   test "$_freetype" = no && test "$_bitmap_font" = no && \
@@ -8778,14 +8778,14 @@ HAVE_SHM        = $_shm
 HAVE_W32THREADS = $_w32threads
 HAVE_YASM       = $have_yasm
 
-$(echo $_libavdecoders  | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
-$(echo $_libavencoders  | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
-$(echo $_libavparsers   | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
-$(echo $_libavdemuxers  | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
-$(echo $_libavmuxers    | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
-$(echo $_libavprotocols | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
-$(echo $_libavbsfs      | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
-$(echo $_libavhwaccels  | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
+$(echo $libavdecoders  | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
+$(echo $libavencoders  | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
+$(echo $libavparsers   | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
+$(echo $libavdemuxers  | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
+$(echo $libavmuxers    | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
+$(echo $libavprotocols | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
+$(echo $libavbsfs      | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
+$(echo $libavhwaccels  | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
 EOF
 
 #############################################################################
@@ -9297,14 +9297,14 @@ $def_mp3lame_lavc
 $def_x264_lavc
 $def_xvid_lavc
 
-$(ff_config_enable "$_libavdecoders_all" "$_libavdecoders")
-$(ff_config_enable "$_libavencoders_all" "$_libavencoders")
-$(ff_config_enable "$_libavparsers_all"  "$_libavparsers")
-$(ff_config_enable "$_libavdemuxers_all" "$_libavdemuxers")
-$(ff_config_enable "$_libavmuxers_all"   "$_libavmuxers")
-$(ff_config_enable "$_libavprotocols_all" "$_libavprotocols")
-$(ff_config_enable "$_libavbsfs_all" "$_libavbsfs")
-$(ff_config_enable "$_libavhwaccels_all"  "$_libavhwaccels")
+$(ff_config_enable "$libavdecoders_all"  "$libavdecoders")
+$(ff_config_enable "$libavencoders_all"  "$libavencoders")
+$(ff_config_enable "$libavparsers_all"   "$libavparsers")
+$(ff_config_enable "$libavdemuxers_all"  "$libavdemuxers")
+$(ff_config_enable "$libavmuxers_all"    "$libavmuxers")
+$(ff_config_enable "$libavprotocols_all" "$libavprotocols")
+$(ff_config_enable "$libavbsfs_all"      "$libavbsfs")
+$(ff_config_enable "$libavhwaccels_all"  "$libavhwaccels")
 
 #endif /* MPLAYER_CONFIG_H */
 EOF
