@@ -336,7 +336,7 @@ FILE* edl_fd = NULL; ///< fd to write to when in -edlout mode.
 // have some time after the seek to decide what to do next
 // (next seek, pause,...), otherwise after the seek it will
 // enter the same scene again and skip forward immediately
-float edl_backward_extra_sec = 2;
+float edl_backward_delay = 2;
 int use_filedir_conf;
 int use_filename_title;
 
@@ -2545,7 +2545,7 @@ static void edl_update(MPContext *mpctx)
                     abs_seek_pos = 0;
                     rel_seek_secs = -(mpctx->sh_video->pts -
                                       next_edl_record->start_sec +
-                                      edl_backward_extra_sec);
+                                      edl_backward_delay);
                     mp_msg(MSGT_CPLAYER, MSGL_DBG4, "EDL_SKIP: pts [%f], "
                            "offset [%f], start [%f], stop [%f], length [%f]\n",
                            mpctx->sh_video->pts, rel_seek_secs,

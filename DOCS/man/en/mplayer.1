@@ -879,6 +879,18 @@ later.
 See http://www.mplayerhq.hu/\:DOCS/\:HTML/\:en/\:edl.html for details.
 .
 .TP
+.B \-edl-backward-delay <number>
+When using EDL during playback and jumping backwards it is possible to
+end up in the middle of an EDL record.
+In that case MPlayer will seek further backwards to the start position
+of the EDL record and then immediately skip the scene specified in the
+EDL record.
+To avoid this kind of behavior, MPlayer jumps to a fixed time interval
+before the start of the EDL record.
+This parameter allows you to specify that time interval in seconds
+(default: 2 seconds).
+.
+.TP
 .B \-enqueue (GUI only)
 Enqueue files given on the command line in the playlist instead of playing them
 immediately.

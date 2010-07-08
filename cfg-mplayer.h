@@ -102,6 +102,7 @@ const m_option_t mplayer_opts[]={
     {"noalsa", "-noalsa has been removed. Remove it from your config file.\n",
      CONF_TYPE_PRINT, 0, 0, 0, NULL},
     {"edlout", &edl_output_filename,  CONF_TYPE_STRING, 0, 0, 0, NULL},
+    {"edl-backward-delay", &edl_backward_delay,  CONF_TYPE_INT, CONF_MIN, 0, 0, NULL},
 
 #ifdef CONFIG_X11
     {"display", &mDisplayName, CONF_TYPE_STRING, 0, 0, 0, NULL},
