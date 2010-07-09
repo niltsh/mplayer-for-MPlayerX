@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 31579 (MSGTR_LIBMENU_NoEntryFoundInTheMenuDefinition)
+// Synced with help_mp-en.h rev. 31631 (MSGTR_LIBMENU_ListMenuEntryDefinitionsNeedAName)
 // Reminder of hard terms which need better/final solution later:
 //   (file links to be updated later if available!);
 //   NAV; section/subsection;  XScreenSaver; keycolor;
@@ -1510,19 +1510,19 @@ static const char help_text[]=
 // ========================== LIBMENU ===================================
 
 // common
-#define MSGTR_LIBMENU_NoEntryFoundInTheMenuDefinition "[MENU] 菜单定义中没有找到条目。\n"
+#define MSGTR_LIBMENU_NoEntryFoundInTheMenuDefinition "[MENU] 菜单定义中未找到菜单项。\n"
 
 // libmenu/menu.c
-#define MSGTR_LIBMENU_SyntaxErrorAtLine "[MENU] 语法错误: 行 %d\n"
-#define MSGTR_LIBMENU_MenuDefinitionsNeedANameAttrib "[MENU] 菜单定义需要名称属性 (行 %d)。\n"
-#define MSGTR_LIBMENU_BadAttrib "[MENU] 错误属性 %s=%s，在菜单 '%s' 的 %d 行\n"
-#define MSGTR_LIBMENU_UnknownMenuType "[MENU] 未知菜单类型 '%s' (行 %d)\n"
-#define MSGTR_LIBMENU_CantOpenConfigFile "[MENU] 打不开菜单配置文件: %s\n"
-#define MSGTR_LIBMENU_ConfigFileIsTooBig "[MENU] 配置文件过长 (> %d KB)\n"
+#define MSGTR_LIBMENU_SyntaxErrorAtLine "[MENU] 语法错误：第 %d 行\n"
+#define MSGTR_LIBMENU_MenuDefinitionsNeedANameAttrib "[MENU] 菜单定义需要名称属性（第 %d 行）。\n"
+#define MSGTR_LIBMENU_BadAttrib "[MENU] 无效属性 %s=%s，菜单‘%s’的第 %d 行\n"
+#define MSGTR_LIBMENU_UnknownMenuType "[MENU] 未知菜单类型‘%s’（第 %d 行）\n"
+#define MSGTR_LIBMENU_CantOpenConfigFile "[MENU] 无法打开菜单配置文件：%s\n"
+#define MSGTR_LIBMENU_ConfigFileIsTooBig "[MENU] 配置文件过大（> %d KB）\n"
 #define MSGTR_LIBMENU_ConfigFileIsEmpty "[MENU] 配置文件为空。\n"
-#define MSGTR_LIBMENU_MenuNotFound "[MENU] 没找到菜单 %s。\n"
-#define MSGTR_LIBMENU_MenuInitFailed "[MENU] 菜单 '%s': 初始化失败。\n"
-#define MSGTR_LIBMENU_UnsupportedOutformat "[MENU] 输出格式不支持!!!!\n"
+#define MSGTR_LIBMENU_MenuNotFound "[MENU] 未找到菜单 %s。\n"
+#define MSGTR_LIBMENU_MenuInitFailed "[MENU] 菜单‘%s’：初始化失败。\n"
+#define MSGTR_LIBMENU_UnsupportedOutformat "[MENU] 不支持该输出格式！\n"
 
 // libmenu/menu_cmdlist.c
 #define MSGTR_LIBMENU_ListMenuEntryDefinitionsNeedAName "[MENU] 列表菜单条目的定义需要名称 (行 %d)。\n"
@@ -1874,11 +1874,12 @@ static const char help_text[]=
 #define MSGTR_ConnToServer "连接到服务器: %s\n"
 #define MSGTR_FileNotFound "找不到文件: '%s'\n"
 
-#define MSGTR_SMBInitError "不能初始 libsmbclient 库: %d\n"
-#define MSGTR_SMBFileNotFound "打不开局域网内的: '%s'\n"
+#define MSGTR_SMBInitError "无法初始化 libsmbclient 库: %d\n"
+#define MSGTR_SMBFileNotFound "无法打开局域网内的: '%s'\n"
 #define MSGTR_SMBNotCompiled "MPlayer 没有编译成支持 SMB 的读取。\n"
 
-#define MSGTR_CantOpenDVD "打不开 DVD 设备：%s（%s）\n"
+#define MSGTR_CantOpenBluray "无法打开蓝光设备：%s\n"
+#define MSGTR_CantOpenDVD "无法打开 DVD 设备：%s（%s）\n"
 
 // stream_cdda.c
 #define MSGTR_MPDEMUX_CDDA_CantOpenCDDADevice "打不开 CDDA 设备。\n"
@@ -1949,7 +1950,12 @@ static const char help_text[]=
 #define MSGTR_DVDsubtitleLanguage "字幕号(sid): %d 语言: %s\n"
 #define MSGTR_DVDnumSubtitles "盘上的字幕数: %d\n"
 
-// stream/stream_radio.c
+// stream_bluray.c
+#define MSGTR_BlurayNoDevice "未指定蓝光 DVD 的设备/位置...\n"
+#define MSGTR_BlurayNoTitles "无法在此找到与蓝光 DVD 相兼容的标题内容。\n"
+#define MSGTR_BlurayOK "成功打开蓝光 DVD。\n"
+
+// stream_radio.c
 #define MSGTR_RADIO_ChannelNamesDetected "[radio] 检测到广播通道名。\n"
 #define MSGTR_RADIO_FreqRange "[radio] 允许的频率范围是 %.2f-%.2f MHz。\n"
 #define MSGTR_RADIO_WrongFreqForChannel "[radio] 错误的通道频率 %s\n"
