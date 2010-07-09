@@ -7517,7 +7517,7 @@ fi
 echores "$_xvid"
 
 echocheck "Xvid two pass plugin"
-if test "$_xvid" = yes && test "$_xvid_lavc" = auto ; then
+if test "$_mencoder" = yes && test "$_xvid" = yes && test "$_xvid_lavc" = auto ; then
   cat > $TMPC << EOF
 #include <xvid.h>
 int main(void) { xvid_plugin_2pass2_t s; s.vbv_size=0; return 0; }
