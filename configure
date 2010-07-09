@@ -7526,7 +7526,7 @@ EOF
 fi
 if test "$_xvid_lavc" = yes ; then
   def_xvid_lavc='#define CONFIG_LIBXVID 1'
-  libavencoders="$libavencoders LIBXVID_ENCODER"
+  libavencoders="$libavencoders LIBXVID"
 else
   _xvid_lavc=no
   def_xvid_lavc='#define CONFIG_LIBXVID 0'
