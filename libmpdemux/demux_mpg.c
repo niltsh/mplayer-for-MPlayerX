@@ -484,6 +484,8 @@ static int demux_mpg_read_packet(demuxer_t *demux,int id){
 
         if(demux->sub->id > -1)
           demux->sub->id &= 0x1F;
+        if(!dvdsub_lang && demux->sub->id == -1)
+          demux->sub->id = aid;
         if(demux->sub->id==aid){
             ds=demux->sub;
         }
