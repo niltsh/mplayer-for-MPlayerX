@@ -27,7 +27,7 @@
 
 #include "mp_msg.h"
 #include "help_mp.h"
-#include "mpbswap.h"
+#include "libavutil/intreadwrite.h"
 #include "path.h"
 
 #include "vd_internal.h"
@@ -272,7 +272,7 @@ static int init(sh_video_t *sh){
 	}
 	init_data = (struct rv_init_t){11, sh->disp_w, sh->disp_h, 0, 0, AV_RB32(extrahdr), 1, AV_RB32(extrahdr + 4)}; // rv30
 
-	mp_msg(MSGT_DECVIDEO,MSGL_V,"realvideo codec id: 0x%08X  sub-id: 0x%08X\n",init_data.format,init_data.sub_format);
+	mp_msg(MSGT_DECVIDEO,MSGL_V,"realvideo codec id: 0x%08X  sub-id: 0x%08X\n",init_data.format,init_data.subformat);
 
 	path = malloc(strlen(codec_path) + strlen(sh->codec->dll) + 2);
 	if (!path) return 0;
@@ -308,7 +308,7 @@ static int init(sh_video_t *sh){
 	    return 0;
 	}
 	// setup rv30 codec (codec sub-type and image dimensions):
-	if((sh->format<=0x30335652) && (be2me_32(((unsigned int*)extrahdr)[1])>=0x20200002)){
+	if((sh->format<=0x30335652) && AV_RB32(extrahdr + 4)>=0x20200002){
 	    int i, cmsg_cnt;
 	    uint32_t cmsg24[16]={sh->disp_w,sh->disp_h};
 	    cmsg_data_t cmsg_data={0x24,1+(extrahdr[1]&7), &cmsg24[0]};
@@ -394,7 +394,7 @@ static mp_image_t* decode(sh_video_t *sh,void* data,int len,int flags){
 	}
 
 	for (i=0; i<2*(chunks+1); i++)
-		extra[i] = le2me_32(extra[i]);
+		extra[i] = le2ne_32(extra[i]);
 
 #ifdef CONFIG_WIN32DLL
 	if (dll_type == 1)
