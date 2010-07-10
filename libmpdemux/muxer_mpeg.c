@@ -26,6 +26,7 @@
 #include "mp_msg.h"
 #include "help_mp.h"
 
+#include "libavutil/intreadwrite.h"
 #include "aviheader.h"
 #include "ms_hdr.h"
 
@@ -421,7 +422,7 @@ static muxer_stream_t* mpegfile_new_stream(muxer_t *muxer,int type){
       spriv->last_pts += conf_init_vdelay * 90 * 300;
     }
     spriv->id = 0xe0 + muxer->num_videos;
-    s->ckid = be2me_32 (0x100 + spriv->id);
+    s->ckid = be2ne_32 (0x100 + spriv->id);
     if(priv->is_genmpeg1 || priv->is_genmpeg2) {
       int v = (conf_vbuf_size ? conf_vbuf_size*1024 :
         (s->h.dwSuggestedBufferSize ? s->h.dwSuggestedBufferSize : 46*1024));
@@ -458,7 +459,7 @@ static muxer_stream_t* mpegfile_new_stream(muxer_t *muxer,int type){
       spriv->last_pts += conf_init_adelay * 90 * 300;
     spriv->pts = spriv->last_pts;
     spriv->id = 0xc0 + muxer->num_audios;
-    s->ckid = be2me_32 (0x100 + spriv->id);
+    s->ckid = be2ne_32 (0x100 + spriv->id);
     if(priv->is_genmpeg1 || priv->is_genmpeg2) {
       int a1 = (conf_abuf_size ? conf_abuf_size*1024 :
         (s->h.dwSuggestedBufferSize ? s->h.dwSuggestedBufferSize : 4*1024));
@@ -579,7 +580,7 @@ static int write_mpeg_pack_header(muxer_t *muxer, char *buff)
 	muxer_priv_t *priv;
 
 	priv = (muxer_priv_t *) muxer->priv;
-	*(uint32_t *)buff = be2me_32(PACK_HEADER_START_CODE);
+	AV_WB32(buff, PACK_HEADER_START_CODE);
 	if(priv->mux==MUX_MPEG1)
 	{
 		write_mpeg_ts(&buff[4], priv->scr, 0x20); // 0010 and SCR
@@ -606,7 +607,7 @@ static int write_mpeg_system_header(muxer_t *muxer, char *buff)
 	priv = (muxer_priv_t *) muxer->priv;
 
 	len = 0;
-	*(uint32_t *)(&buff[len]) = be2me_32(SYSTEM_HEADER_START_CODE);
+	AV_WB32(&buff[len], SYSTEM_HEADER_START_CODE);
 	len += 4;
 	*(uint16_t *)(&buff[len]) = 0; 	//fake length, we'll fix it later
 	len += 2;
@@ -630,7 +631,7 @@ static int write_mpeg_system_header(muxer_t *muxer, char *buff)
 		len += 2;
 	}
 
-	*(uint16_t *)(&buff[4]) = be2me_16(len - 6);	// length field fixed
+	AV_WB16(&buff[4], len - 6);	// length field fixed
 
 	return len;
 }
@@ -640,19 +641,20 @@ static int write_mpeg_psm(muxer_t *muxer, char *buff)
 	int len;
 	uint8_t i;
 	uint16_t dlen;
+	uint32_t crc;
 	muxer_priv_t *priv;
 	priv = (muxer_priv_t *) muxer->priv;
 
 	len = 0;
-	*(uint32_t *)(&buff[len]) = be2me_32(PSM_START_CODE);
+	AV_WB32(&buff[len], PSM_START_CODE);
 	len += 4;
-	*(uint16_t *)(&buff[len]) = 0; 	//fake length, we'll fix it later
+	AV_WB16(&buff[len], 0); 	//fake length, we'll fix it later
 	len += 2;
 	buff[len++] = 0xe0;		//1 current, 2 bits reserved, 5 version 0
 	buff[len++] = 0xff;		//7 reserved, 1 marker
 	buff[len] = buff[len+1] = 0;	//length  of the program descriptors (unused)
 	len += 2;
-	*(uint16_t *)(&buff[len]) = 0; //length of the es descriptors
+	AV_WB16(&buff[len], 0); //length of the es descriptors
 	len += 2;
 
 	dlen = 0;
@@ -672,11 +674,12 @@ static int write_mpeg_psm(muxer_t *muxer, char *buff)
 			dlen += 4;
 		}
 	}
-	*(uint16_t *)(&buff[10]) = be2me_16(dlen);	//length of the es descriptors
+	AV_WB16(&buff[10], dlen);	//length of the es descriptors
 
-	*(uint16_t *)(&buff[4]) = be2me_16(len - 6 + 4);	// length field fixed, including size of CRC32
+	AV_WB16(&buff[4], len - 6 + 4);	// length field fixed, including size of CRC32
 
-	*(uint32_t *)(&buff[len]) = be2me_32(CalcCRC32(buff, len));
+        crc = CalcCRC32(buff, len);
+	AV_WB32(&buff[len], crc);
 
 	len += 4;	//for crc
 
@@ -763,7 +766,7 @@ static int write_mpeg_pes_header(muxer_headers_t *h, uint8_t *pes_id, uint8_t *b
 		}
 	}
 
-	*((uint16_t*) &buff[4]) = be2me_16(len + plen - 6);	//fix pes packet size
+	AV_WB16(&buff[4], len + plen - 6);	//fix pes packet size
 	return len;
 }
 
@@ -774,7 +777,7 @@ static void write_pes_padding(uint8_t *buff, uint16_t len)
 	buff[0] = buff[1] = 0;
 	buff[2] = 1;
 	buff[3] = 0xbe;
-	*((uint16_t*) &buff[4]) = be2me_16(len - 6);
+	AV_WB16(&buff[4], len - 6);
 	memset(&buff[6], 0xff, len - 6);
 }
 
@@ -786,14 +789,14 @@ static int write_nav_pack(uint8_t *buff)
 
 	mp_msg(MSGT_MUXER, MSGL_DBG3, "NAV\n");
 	len = 0;
-	*(uint32_t *)(&buff[len]) = be2me_32(PES_PRIVATE2);
+	AV_WB32(&buff[len], PES_PRIVATE2);
 	len += 4;
 	buff[len++] = 0x3;
 	buff[len++] = 0xd4;
 	memset(&buff[len], 0, 0x03d4);
         len += 0x03d4;
 
-	*(uint32_t *)(&buff[len]) = be2me_32(PES_PRIVATE2);
+	AV_WB32(&buff[len], PES_PRIVATE2);
 	len += 4;
 	buff[len++] = 0x3;
 	buff[len++] = 0xfa;
@@ -2238,7 +2241,7 @@ static void fix_parameters(muxer_stream_t *stream)
 		spriv->max_buffer_size = 4*1024;
 		if(stream->wf->wFormatTag == AUDIO_A52)
 		{
-			stream->ckid = be2me_32 (0x1bd);
+			stream->ckid = be2ne_32 (0x1bd);
 			if(priv->is_genmpeg1 || priv->is_genmpeg2)
 				fix_audio_sys_header(priv, spriv->id, 0xbd, FFMAX(conf_abuf_size, 58)*1024);	//only one audio at the moment
 			spriv->id = 0xbd;
