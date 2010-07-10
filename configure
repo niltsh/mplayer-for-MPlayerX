@@ -1812,6 +1812,7 @@ fi
 
 def_fast_64bit='#define HAVE_FAST_64BIT 0'
 def_fast_unaligned='#define HAVE_FAST_UNALIGNED 0'
+def_av_fast_unaligned='#define AV_HAVE_FAST_UNALIGNED 0'
 def_local_aligned_8='#define HAVE_LOCAL_ALIGNED_8 0'
 def_local_aligned_16='#define HAVE_LOCAL_ALIGNED_16 0'
 arch_all='X86 IA64 SPARC ARM AVR32 SH4 PPC ALPHA MIPS PA_RISC S390 S390X VAX BFIN XTENSA TOMI GENERIC'
@@ -1821,6 +1822,7 @@ case "$host_arch" in
   arch='x86'
   subarch='x86_32'
   def_fast_unaligned='#define HAVE_FAST_UNALIGNED 1'
+  def_av_fast_unaligned='#define AV_HAVE_FAST_UNALIGNED 1'
   def_local_aligned_8='#define HAVE_LOCAL_ALIGNED_8 1'
   def_local_aligned_16='#define HAVE_LOCAL_ALIGNED_16 1'
   iproc=486
@@ -2069,6 +2071,7 @@ case "$host_arch" in
     arch='x86'
     subarch='x86_64'
     def_fast_unaligned='#define HAVE_FAST_UNALIGNED 1'
+    def_av_fast_unaligned='#define AV_HAVE_FAST_UNALIGNED 1'
     def_fast_64bit='#define HAVE_FAST_64BIT 1'
     iproc='x86_64'
 
@@ -2196,6 +2199,7 @@ case "$host_arch" in
   avr32)
     arch='avr32'
     def_fast_unaligned='#define HAVE_FAST_UNALIGNED 1'
+    def_av_fast_unaligned='#define AV_HAVE_FAST_UNALIGNED 1'
     iproc='avr32'
     test $_fast_clz = "auto" && _fast_clz=yes
     ;;
@@ -2209,6 +2213,7 @@ case "$host_arch" in
     arch='ppc'
     def_dcbzl='#define HAVE_DCBZL 0'
     def_fast_unaligned='#define HAVE_FAST_UNALIGNED 1'
+    def_av_fast_unaligned='#define AV_HAVE_FAST_UNALIGNED 1'
     def_local_aligned_8='#define HAVE_LOCAL_ALIGNED_8 1'
     def_local_aligned_16='#define HAVE_LOCAL_ALIGNED_16 1'
     iproc='ppc'
@@ -9320,6 +9325,7 @@ cat > "$TMPH" << EOF
 #ifndef AVUTIL_AVCONFIG_H
 #define AVUTIL_AVCONFIG_H
 $def_av_bigendian
+$def_av_fast_unaligned
 #endif /* AVUTIL_AVCONFIG_H */
 EOF
 
