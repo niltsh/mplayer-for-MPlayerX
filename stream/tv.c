@@ -781,7 +781,7 @@ static demuxer_t* demux_open_tv(demuxer_t *demuxer)
 		goto no_audio;
 	}
 
-	sh_audio = new_sh_audio(demuxer, 0);
+	sh_audio = new_sh_audio(demuxer, 0, NULL);
 
 	funcs->control(tvh->priv, TVI_CONTROL_AUD_GET_SAMPLERATE,
                    &sh_audio->samplerate);
