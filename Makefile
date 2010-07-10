@@ -122,6 +122,7 @@ SRCS_COMMON-$(LIBASS_INTERNAL)       += libass/ass.c \
                                         libass/ass_utils.c \
 
 SRCS_COMMON-$(LIBAVCODEC)            += av_opts.c \
+                                        av_sub.c \
                                         libaf/af_lavcresample.c \
                                         libmpcodecs/ad_ffmpeg.c \
                                         libmpcodecs/vd_ffmpeg.c \

@@ -29,6 +29,7 @@
 #include "spudec.h"
 #include "version.h"
 #include "vobsub.h"
+#include "av_sub.h"
 #include "libmpcodecs/dec_teletext.h"
 #include "libavutil/intreadwrite.h"
 #include "m_option.h"
@@ -84,14 +85,22 @@ if (HAVE_CMOV)
 #endif /* ARCH_X86 */
 }
 
+static int is_text_sub(int type)
+{
+    return type == 't' || type == 'm' || type == 'a';
+}
+
+static int is_av_sub(int type)
+{
+    return type == 'p';
+}
 
 void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvdsub, int reset)
 {
     double curpts = refpts - sub_delay;
     unsigned char *packet=NULL;
     int len;
-    char type = d_dvdsub->sh ? ((sh_sub_t *)d_dvdsub->sh)->type : 'v';
-    int text_sub = type == 't' || type == 'm' || type == 'a' || type == 'd';
+    int type = d_dvdsub->sh ? ((sh_sub_t *)d_dvdsub->sh)->type : 'v';
     static subtitle subs;
     if (reset) {
         sub_clear_text(&subs, MP_NOPTS_VALUE);
@@ -102,6 +111,10 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
             spudec_reset(vo_spudec);
             vo_osd_changed(OSDTYPE_SPU);
         }
+#ifdef CONFIG_LIBAVCODEC
+        if (is_av_sub(type))
+            reset_avsub(d_dvdsub->sh);
+#endif
     }
     // find sub
     if (subdata) {
@@ -121,7 +134,6 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
         (vobsub_id >= 0 || (dvdsub_id >= 0 && type == 'v'))) {
         int timestamp;
         current_module = "spudec";
-        spudec_heartbeat(vo_spudec, 90000*curpts);
         /* Get a sub packet from the DVD or a vobsub */
         while(1) {
             // Vobsub
@@ -156,10 +168,8 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
             if (vo_vobsub || timestamp >= 0)
                 spudec_assemble(vo_spudec, packet, len, timestamp);
         }
-
-        if (spudec_changed(vo_spudec))
-            vo_osd_changed(OSDTYPE_SPU);
-    } else if (dvdsub_id >= 0 && text_sub) {
+    } else if (dvdsub_id >= 0 && (is_text_sub(type) || is_av_sub(type) || type == 'd')) {
+        int orig_type = type;
         double endpts;
         if (type == 'd' && !d_dvdsub->demuxer->teletext) {
             tt_stream_props tsp = {0};
@@ -171,9 +181,17 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
             ds_get_next_pts(d_dvdsub);
         while (1) {
             double subpts = curpts;
+            type = orig_type;
             len = ds_get_packet_sub(d_dvdsub, &packet, &subpts, &endpts);
             if (len < 0)
                 break;
+            if (is_av_sub(type)) {
+#ifdef CONFIG_LIBAVCODEC
+                type = decode_avsub(d_dvdsub->sh, &packet, &len, &subpts, &endpts);
+                if (type <= 0)
+#endif
+                    continue;
+            }
             if (type == 'm') {
                 if (len < 2) continue;
                 len = FFMIN(len - 2, AV_RB16(packet));
@@ -244,9 +262,15 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
             if (d_dvdsub->non_interleaved)
                 ds_get_next_pts(d_dvdsub);
         }
-        if (text_sub && sub_clear_text(&subs, curpts))
+        if (sub_clear_text(&subs, curpts))
             set_osd_subtitle(&subs);
     }
+    if (vo_spudec) {
+        spudec_heartbeat(vo_spudec, 90000*curpts);
+        if (spudec_changed(vo_spudec))
+            vo_osd_changed(OSDTYPE_SPU);
+    }
+
     current_module=NULL;
 }
 
