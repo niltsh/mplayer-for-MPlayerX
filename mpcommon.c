@@ -130,9 +130,11 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
     }
 
     // DVD sub:
-    if (vo_config_count && vo_spudec &&
+    if (vo_config_count &&
         (vobsub_id >= 0 || (dvdsub_id >= 0 && type == 'v'))) {
         int timestamp;
+        if (!vo_spudec)
+            vo_spudec = spudec_new(NULL);
         current_module = "spudec";
         /* Get a sub packet from the DVD or a vobsub */
         while(1) {
