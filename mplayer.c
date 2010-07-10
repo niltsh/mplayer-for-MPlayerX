@@ -677,8 +677,7 @@ void uninit_player(unsigned int mask){
     vo_vobsub=NULL;
   }
 
-  if (mask&INITIALIZED_SPUDEC){
-    initialized_flags&=~INITIALIZED_SPUDEC;
+  if (vo_spudec){
     current_module="uninit_spudec";
     spudec_free(vo_spudec);
     vo_spudec=NULL;
@@ -1157,7 +1156,6 @@ void update_set_of_subtitles(void)
 void init_vo_spudec(void) {
   if (vo_spudec)
     spudec_free(vo_spudec);
-  initialized_flags &= ~INITIALIZED_SPUDEC;
   vo_spudec = NULL;
 
   // we currently can't work without video stream
@@ -1196,7 +1194,6 @@ void init_vo_spudec(void) {
   }
 
   if (vo_spudec!=NULL) {
-    initialized_flags|=INITIALIZED_SPUDEC;
     mp_property_do("sub_forced_only", M_PROPERTY_SET, &forced_subs_only, mpctx);
   }
 }
