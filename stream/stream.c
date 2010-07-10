@@ -42,6 +42,7 @@
 #include "network.h"
 #include "stream.h"
 #include "libmpdemux/demuxer.h"
+#include "libavutil/common.h"
 #include "libavutil/intreadwrite.h"
 
 #include "m_option.h"
