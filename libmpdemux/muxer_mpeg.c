@@ -422,7 +422,7 @@ static muxer_stream_t* mpegfile_new_stream(muxer_t *muxer,int type){
       spriv->last_pts += conf_init_vdelay * 90 * 300;
     }
     spriv->id = 0xe0 + muxer->num_videos;
-    s->ckid = be2ne_32 (0x100 + spriv->id);
+    s->ckid = av_be2ne32(0x100 + spriv->id);
     if(priv->is_genmpeg1 || priv->is_genmpeg2) {
       int v = (conf_vbuf_size ? conf_vbuf_size*1024 :
         (s->h.dwSuggestedBufferSize ? s->h.dwSuggestedBufferSize : 46*1024));
@@ -459,7 +459,7 @@ static muxer_stream_t* mpegfile_new_stream(muxer_t *muxer,int type){
       spriv->last_pts += conf_init_adelay * 90 * 300;
     spriv->pts = spriv->last_pts;
     spriv->id = 0xc0 + muxer->num_audios;
-    s->ckid = be2ne_32 (0x100 + spriv->id);
+    s->ckid = av_be2ne32(0x100 + spriv->id);
     if(priv->is_genmpeg1 || priv->is_genmpeg2) {
       int a1 = (conf_abuf_size ? conf_abuf_size*1024 :
         (s->h.dwSuggestedBufferSize ? s->h.dwSuggestedBufferSize : 4*1024));
@@ -2241,7 +2241,7 @@ static void fix_parameters(muxer_stream_t *stream)
 		spriv->max_buffer_size = 4*1024;
 		if(stream->wf->wFormatTag == AUDIO_A52)
 		{
-			stream->ckid = be2ne_32 (0x1bd);
+			stream->ckid = av_be2ne32(0x1bd);
 			if(priv->is_genmpeg1 || priv->is_genmpeg2)
 				fix_audio_sys_header(priv, spriv->id, 0xbd, FFMAX(conf_abuf_size, 58)*1024);	//only one audio at the moment
 			spriv->id = 0xbd;

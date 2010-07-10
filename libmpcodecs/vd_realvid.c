@@ -394,7 +394,7 @@ static mp_image_t* decode(sh_video_t *sh,void* data,int len,int flags){
 	}
 
 	for (i=0; i<2*(chunks+1); i++)
-		extra[i] = le2ne_32(extra[i]);
+		extra[i] = av_le2ne32(extra[i]);
 
 #ifdef CONFIG_WIN32DLL
 	if (dll_type == 1)
