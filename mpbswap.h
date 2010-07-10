@@ -23,6 +23,13 @@
 #include "config.h"
 #include "libavutil/bswap.h"
 
+#define bswap_16(v) av_bswap16(v)
+#define bswap_32(v) av_bswap32(v)
+#define le2me_16(v) av_le2ne16(v)
+#define le2me_32(v) av_le2ne32(v)
+#define le2me_64(v) av_le2ne64(v)
+#define be2me_32(v) av_be2ne32(v)
+
 #ifndef HAVE_SWAB
 void swab(const void *from, void *to, ssize_t n);
 #endif
