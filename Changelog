@@ -62,6 +62,7 @@ MPlayer (1.0)
     * add OS/2 KAI audio driver (-ao kai)
 
     Other:
+    * experimental support for PGS (BluRay-compatible) subtitles.
     * -nosub option for disabling auto-selected subtitles
     * support for displaying subs in the terminal (FIXME)
     * support for subtitles with audio-only files
