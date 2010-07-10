@@ -324,7 +324,7 @@ static demuxer_t* demux_open_avs(demuxer_t* demuxer)
       }
     if (audio_samplesize)
     {
-        sh_audio_t *sh_audio = new_sh_audio(demuxer, 0);
+        sh_audio_t *sh_audio = new_sh_audio(demuxer, 0, NULL);
         found = 1;
         mp_msg(MSGT_DEMUX, MSGL_V, "AVS: Clip has audio -> Channels = %d - Freq = %d\n", AVS->video_info->nchannels, AVS->video_info->audio_samples_per_second);
 

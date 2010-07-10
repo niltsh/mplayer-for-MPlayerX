@@ -326,7 +326,7 @@ static int demux_audio_open(demuxer_t* demuxer) {
   if(!frmt)
     return 0;
 
-  sh_audio = new_sh_audio(demuxer,0);
+  sh_audio = new_sh_audio(demuxer,0, NULL);
 
   switch(frmt) {
   case MP3:

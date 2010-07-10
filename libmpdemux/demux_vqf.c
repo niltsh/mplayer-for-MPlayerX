@@ -48,7 +48,7 @@ static demuxer_t* demux_open_vqf(demuxer_t* demuxer) {
 
   s = demuxer->stream;
 
-  sh_audio = new_sh_audio(demuxer,0);
+  sh_audio = new_sh_audio(demuxer,0, NULL);
   sh_audio->wf = w = malloc(sizeof(WAVEFORMATEX)+sizeof(headerInfo));
   hi = (headerInfo *)&w[1];
   memset(hi,0,sizeof(headerInfo));

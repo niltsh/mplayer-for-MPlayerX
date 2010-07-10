@@ -321,7 +321,7 @@ static demuxer_t* demux_open_film(demuxer_t* demuxer)
         if (audio_channels > 0)
         {
           // create and initialize the audio stream header
-          sh_audio = new_sh_audio(demuxer, 0);
+          sh_audio = new_sh_audio(demuxer, 0, NULL);
           demuxer->audio->id = 0;
           demuxer->audio->sh = sh_audio;
           sh_audio->ds = demuxer->audio;
@@ -353,7 +353,7 @@ static demuxer_t* demux_open_film(demuxer_t* demuxer)
         // otherwise, make some assumptions about the audio
 
         // create and initialize the audio stream header
-        sh_audio = new_sh_audio(demuxer, 0);
+        sh_audio = new_sh_audio(demuxer, 0, NULL);
         demuxer->audio->sh = sh_audio;
         sh_audio->ds = demuxer->audio;
 

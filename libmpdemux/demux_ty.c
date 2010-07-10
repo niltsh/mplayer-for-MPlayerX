@@ -569,7 +569,7 @@ static int demux_ty_fill_buffer( demuxer_t *demux, demux_stream_t *dsds )
                }
 
                demux->audio->id = aid;
-               if( !demux->a_streams[ aid ] ) new_sh_audio( demux, aid );
+               if( !demux->a_streams[ aid ] ) new_sh_audio( demux, aid, NULL );
                if( demux->audio->id == aid )
                {
                   demux_stream_t *ds = demux->audio;

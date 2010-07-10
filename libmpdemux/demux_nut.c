@@ -113,7 +113,7 @@ static demuxer_t * demux_open_nut(demuxer_t * demuxer) {
 			WAVEFORMATEX *wf =
 				calloc(sizeof(WAVEFORMATEX) +
 				              s[i].codec_specific_len, 1);
-			sh_audio_t* sh_audio = new_sh_audio(demuxer, i);
+			sh_audio_t* sh_audio = new_sh_audio(demuxer, i, NULL);
 			int j;
 			mp_msg(MSGT_DEMUX, MSGL_INFO, MSGTR_AudioID, "nut", i);
 

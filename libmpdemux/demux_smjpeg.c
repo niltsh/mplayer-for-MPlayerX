@@ -149,7 +149,7 @@ static demuxer_t* demux_open_smjpeg(demuxer_t* demuxer){
 	    sh_video->bih->biSizeImage = sh_video->disp_w*sh_video->disp_h;
 	    break;
 	case mmioFOURCC('_','S','N','D'):
-	    sh_audio = new_sh_audio(demuxer, 0);
+	    sh_audio = new_sh_audio(demuxer, 0, NULL);
 	    demuxer->audio->id = 0;
 	    demuxer->audio->sh = sh_audio;
 	    sh_audio->ds = demuxer->audio;

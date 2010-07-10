@@ -862,7 +862,7 @@ int demux_ogg_open(demuxer_t *demuxer)
 
         // Check for Vorbis
         if (pack.bytes >= 7 && !strncmp(&pack.packet[1], "vorbis", 6)) {
-            sh_a = new_sh_audio_aid(demuxer, ogg_d->num_sub, n_audio);
+            sh_a = new_sh_audio_aid(demuxer, ogg_d->num_sub, n_audio, NULL);
             sh_a->format = FOURCC_VORBIS;
             ogg_d->subs[ogg_d->num_sub].vorbis = 1;
             ogg_d->subs[ogg_d->num_sub].id     = n_audio;
@@ -871,7 +871,7 @@ int demux_ogg_open(demuxer_t *demuxer)
                    "[Ogg] stream %d: audio (Vorbis), -aid %d\n",
                    ogg_d->num_sub, n_audio - 1);
         } else if (pack.bytes >= 80 && !strncmp(pack.packet, "Speex", 5)) {
-            sh_a = new_sh_audio_aid(demuxer, ogg_d->num_sub, n_audio);
+            sh_a = new_sh_audio_aid(demuxer, ogg_d->num_sub, n_audio, NULL);
             sh_a->wf         = calloc(1, sizeof(WAVEFORMATEX) + pack.bytes);
             sh_a->format     = FOURCC_SPEEX;
             sh_a->samplerate = sh_a->wf->nSamplesPerSec = AV_RL32(&pack.packet[36]);
@@ -938,7 +938,7 @@ int demux_ogg_open(demuxer_t *demuxer)
             theora_info_clear(&inf);
 #endif /* CONFIG_OGGTHEORA */
         } else if (pack.bytes >= 4 && !strncmp (&pack.packet[0], "fLaC", 4)) {
-            sh_a = new_sh_audio_aid(demuxer, ogg_d->num_sub, n_audio);
+            sh_a = new_sh_audio_aid(demuxer, ogg_d->num_sub, n_audio, NULL);
             sh_a->format = mmioFOURCC('f', 'L', 'a', 'C');
             ogg_d->subs[ogg_d->num_sub].id = n_audio;
             n_audio++;
@@ -948,7 +948,7 @@ int demux_ogg_open(demuxer_t *demuxer)
                    "[Ogg] stream %d: audio (FLAC), -aid %d\n",
                    ogg_d->num_sub, n_audio - 1);
         } else if (pack.bytes >= 51 && !strncmp(&pack.packet[1], "FLAC", 4)) {
-            sh_a = new_sh_audio_aid(demuxer, ogg_d->num_sub, n_audio);
+            sh_a = new_sh_audio_aid(demuxer, ogg_d->num_sub, n_audio, NULL);
             sh_a->format = mmioFOURCC('f', 'L', 'a', 'C');
             ogg_d->subs[ogg_d->num_sub].id = n_audio;
             n_audio++;
@@ -995,7 +995,7 @@ int demux_ogg_open(demuxer_t *demuxer)
             } else if (AV_RL32(pack.packet + 96) == 0x05589F81) {
                 unsigned int extra_size;
 
-                sh_a = new_sh_audio_aid(demuxer, ogg_d->num_sub, n_audio);
+                sh_a = new_sh_audio_aid(demuxer, ogg_d->num_sub, n_audio, NULL);
                 extra_size = AV_RL16(pack.packet + 140);
                 sh_a->wf         = calloc(1, sizeof(WAVEFORMATEX) + extra_size);
                 sh_a->format     = sh_a->wf->wFormatTag     = AV_RL16(pack.packet + 124);
@@ -1072,7 +1072,7 @@ int demux_ogg_open(demuxer_t *demuxer)
                     extra_offset  = 4;
                 }
 
-                sh_a = new_sh_audio_aid(demuxer, ogg_d->num_sub, n_audio);
+                sh_a = new_sh_audio_aid(demuxer, ogg_d->num_sub, n_audio, NULL);
                 sh_a->wf         = calloc(1, sizeof(WAVEFORMATEX) + extra_size);
                 sh_a->format     = sh_a->wf->wFormatTag = strtol(buffer, NULL, 16);
                 sh_a->channels   = sh_a->wf->nChannels  = AV_RL16(&st->sh.audio.channels);
@@ -1105,7 +1105,7 @@ int demux_ogg_open(demuxer_t *demuxer)
                 ogg_d->subs[ogg_d->num_sub].id         = ogg_d->n_text;
                 if (demuxer->sub->id == ogg_d->n_text)
                     text_id = ogg_d->num_sub;
-                new_sh_sub(demuxer, ogg_d->n_text);
+                new_sh_sub(demuxer, ogg_d->n_text, NULL);
                 ogg_d->n_text++;
                 ogg_d->text_ids = realloc_struct(ogg_d->text_ids, ogg_d->n_text, sizeof(*ogg_d->text_ids));
                 ogg_d->text_ids[ogg_d->n_text - 1] = ogg_d->num_sub;
@@ -1387,7 +1387,7 @@ demuxer_t *init_avi_with_ogg(demuxer_t *demuxer)
 
     // Finish setting up the ogg demuxer
     od->priv = ogg_d;
-    sh_audio = new_sh_audio(od, 0);
+    sh_audio = new_sh_audio(od, 0, NULL);
     od->audio->id = 0;
     od->video->id = -2;
     od->audio->sh = sh_audio;

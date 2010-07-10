@@ -133,7 +133,7 @@ static int pva_check_file(demuxer_t * demuxer)
 static demuxer_t * demux_open_pva (demuxer_t * demuxer)
 {
 	sh_video_t *sh_video = new_sh_video(demuxer,0);
-        sh_audio_t *sh_audio = new_sh_audio(demuxer,0);
+        sh_audio_t *sh_audio = new_sh_audio(demuxer,0, NULL);
 
 
 	pva_priv_t * priv;

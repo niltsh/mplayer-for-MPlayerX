@@ -172,7 +172,7 @@ static demuxer_t* demux_open_ra(demuxer_t* demuxer)
 	memset(ra_priv, 0, sizeof(ra_priv_t));
 
 	demuxer->priv = ra_priv;
-	sh = new_sh_audio(demuxer, 0);
+	sh = new_sh_audio(demuxer, 0, NULL);
 	demuxer->audio->id = 0;
 	sh->ds=demuxer->audio;
 	demuxer->audio->sh = sh;

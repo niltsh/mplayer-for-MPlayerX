@@ -254,7 +254,7 @@ demuxer_t *new_demuxer(stream_t *stream, int type, int a_id, int v_id,
     return d;
 }
 
-sh_sub_t *new_sh_sub_sid(demuxer_t *demuxer, int id, int sid)
+sh_sub_t *new_sh_sub_sid(demuxer_t *demuxer, int id, int sid, const char *lang)
 {
     if (id > MAX_S_STREAMS - 1 || id < 0) {
         mp_msg(MSGT_DEMUXER, MSGL_WARN,
@@ -269,6 +269,10 @@ sh_sub_t *new_sh_sub_sid(demuxer_t *demuxer, int id, int sid)
         demuxer->s_streams[id] = sh;
         sh->sid = sid;
         mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_SUBTITLE_ID=%d\n", sid);
+        if (lang && lang[0] && strcmp(lang, "und")) {
+            sh->lang = strdup(lang);
+            mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_SID_%d_LANG=%s\n", sid, lang);
+        }
     }
     if (sid == dvdsub_id) {
         demuxer->sub->id = id;
@@ -292,7 +296,7 @@ static void free_sh_sub(sh_sub_t *sh)
     free(sh);
 }
 
-sh_audio_t *new_sh_audio_aid(demuxer_t *demuxer, int id, int aid)
+sh_audio_t *new_sh_audio_aid(demuxer_t *demuxer, int id, int aid, const char *lang)
 {
     if (id > MAX_A_STREAMS - 1 || id < 0) {
         mp_msg(MSGT_DEMUXER, MSGL_WARN,
@@ -314,6 +318,10 @@ sh_audio_t *new_sh_audio_aid(demuxer_t *demuxer, int id, int aid)
         sh->audio_out_minsize = 8192;   /* default size, maybe not enough for Win32/ACM */
         sh->pts = MP_NOPTS_VALUE;
         mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_AUDIO_ID=%d\n", aid);
+        if (lang && lang[0] && strcmp(lang, "und")) {
+            sh->lang = strdup(lang);
+            mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_AID_%d_LANG=%s\n", aid, lang);
+        }
     }
     return demuxer->a_streams[id];
 }

@@ -1338,7 +1338,7 @@ static void lschunks(demuxer_t* demuxer,int level,off_t endpos,mov_track_t* trak
 	    mov_build_index(trak,priv->timescale);
 	    switch(trak->type){
 	    case MOV_TRAK_AUDIO: {
-		sh_audio_t* sh=new_sh_audio(demuxer,priv->track_db);
+		sh_audio_t* sh=new_sh_audio(demuxer,priv->track_db, NULL);
 		mp_msg(MSGT_DEMUX, MSGL_INFO, MSGTR_AudioID, "mov", priv->track_db);
 		gen_sh_audio(sh, trak, priv->timescale);
 		break;
@@ -1353,7 +1353,7 @@ static void lschunks(demuxer_t* demuxer,int level,off_t endpos,mov_track_t* trak
 		if (trak->fourcc == mmioFOURCC('m','p','4','s') ||
 		    trak->fourcc == mmioFOURCC('t','x','3','g') ||
 		    trak->fourcc == mmioFOURCC('t','e','x','t')) {
-			sh_sub_t *sh = new_sh_sub(demuxer, priv->track_db);
+			sh_sub_t *sh = new_sh_sub(demuxer, priv->track_db, NULL);
 			mp_msg(MSGT_DEMUX, MSGL_INFO, MSGTR_SubtitleID, "mov", priv->track_db);
 			if (trak->fourcc == mmioFOURCC('m','p','4','s'))
 				init_vobsub(sh, trak);

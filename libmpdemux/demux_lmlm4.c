@@ -247,7 +247,7 @@ static int demux_lmlm4_fill_buffer(demuxer_t *demux, demux_stream_t *ds)
             return -1; //goto hdr;
         }
 	if(demux->audio->id==-1){
-	    if(!demux->a_streams[id]) new_sh_audio(demux,id);
+	    if(!demux->a_streams[id]) new_sh_audio(demux,id, NULL);
 	    demux->audio->id=id;
 	    demux->audio->sh=demux->a_streams[id];
 	    ((sh_audio_t*)(demux->audio->sh))->format=0x50; // mpeg audio layer 1/2
@@ -320,7 +320,7 @@ static demuxer_t* demux_open_lmlm4(demuxer_t* demuxer){
     sh_video->bih->biCompression = sh_video->format;
     sh_video->bih->biSizeImage = sh_video->disp_w*sh_video->disp_h;
 
-    sh_audio = new_sh_audio(demuxer, 0);
+    sh_audio = new_sh_audio(demuxer, 0, NULL);
     demuxer->audio->sh = sh_audio;
     sh_audio->ds = demuxer->audio;
 

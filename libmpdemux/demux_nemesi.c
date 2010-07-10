@@ -222,7 +222,7 @@ static demuxer_t* demux_open_rtp(demuxer_t* demuxer)
 
         if (ptinfo->type == AU) {
             if (ndsd->session[NEMESI_SESSION_AUDIO] == NULL) {
-                sh_audio_t* sh_audio = new_sh_audio(demuxer,0);
+                sh_audio_t* sh_audio = new_sh_audio(demuxer,0, NULL);
                 WAVEFORMATEX* wf;
                 demux_stream_t* d_audio = demuxer->audio;
                 demuxer->audio->id = 0;
