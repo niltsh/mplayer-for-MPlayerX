@@ -180,6 +180,7 @@ int lavc_param_atag = 0;
 int lavc_param_abitrate = 224;
 int lavc_param_audio_global_header= 0;
 static char *lavc_param_avopt = NULL;
+char *lavc_param_audio_avopt = NULL;
 
 #include "m_option.h"
 
@@ -328,6 +329,7 @@ const m_option_t lavcopts_conf[]={
         {"b_sensitivity", &lavc_param_b_sensitivity, CONF_TYPE_INT, CONF_RANGE, 1, INT_MAX, NULL},
 	{"level", &lavc_param_level, CONF_TYPE_INT, CONF_RANGE, INT_MIN, INT_MAX, NULL},
         {"o", &lavc_param_avopt, CONF_TYPE_STRING, 0, 0, 0, NULL},
+        {"audio_o", &lavc_param_audio_avopt, CONF_TYPE_STRING, 0, 0, 0, NULL},
 	{NULL, NULL, 0, 0, 0, 0, NULL}
 };
 

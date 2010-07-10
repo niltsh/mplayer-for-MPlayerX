@@ -31,6 +31,7 @@
 #include "libmpdemux/muxer.h"
 #include "ae_lavc.h"
 #include "help_mp.h"
+#include "av_opts.h"
 #include "libaf/af_format.h"
 #include "libaf/reorder_ch.h"
 #include "libavcodec/avcodec.h"
@@ -42,6 +43,7 @@ extern char *lavc_param_acodec;
 extern int  lavc_param_abitrate;
 extern int  lavc_param_atag;
 extern int  lavc_param_audio_global_header;
+extern char *lavc_param_audio_avopt;
 extern int  avcodec_initialized;
 static int compressed_frame_size = 0;
 #ifdef CONFIG_LIBAVFORMAT
@@ -232,6 +234,12 @@ int mpae_init_lavc(audio_encoder_t *encoder)
                 lavc_actx->bit_rate = encoder->params.bitrate = lavc_param_abitrate * 1000;
         else
                 lavc_actx->bit_rate = encoder->params.bitrate = lavc_param_abitrate;
+        if(lavc_param_audio_avopt){
+            if(parse_avopts(lavc_actx, lavc_param_audio_avopt) < 0){
+                mp_msg(MSGT_MENCODER,MSGL_ERR, "Your options /%s/ look like gibberish to me pal\n", lavc_param_audio_avopt);
+                return 0;
+            }
+        }
 
 
 	/*
