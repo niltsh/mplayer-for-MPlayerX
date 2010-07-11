@@ -70,8 +70,8 @@ static int control(struct af_instance_s* af, int cmd, void* arg)
 
     if (s->ctx_out_rate != af->data->rate || s->ctx_in_rate != data->rate || s->ctx_filter_size != s->filter_length ||
         s->ctx_phase_shift != s->phase_shift || s->ctx_linear != s->linear || s->ctx_cutoff != s->cutoff) {
-    if(s->avrctx) av_resample_close(s->avrctx);
-    s->avrctx= av_resample_init(af->data->rate, /*in_rate*/data->rate, s->filter_length, s->phase_shift, s->linear, s->cutoff);
+        if(s->avrctx) av_resample_close(s->avrctx);
+        s->avrctx= av_resample_init(af->data->rate, /*in_rate*/data->rate, s->filter_length, s->phase_shift, s->linear, s->cutoff);
         s->ctx_out_rate    = af->data->rate;
         s->ctx_in_rate     = data->rate;
         s->ctx_filter_size = s->filter_length;
