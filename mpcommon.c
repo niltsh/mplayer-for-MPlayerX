@@ -131,7 +131,7 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
 
     // DVD sub:
     if (vo_config_count &&
-        (vobsub_id >= 0 || (dvdsub_id >= 0 && type == 'v'))) {
+        (vobsub_id >= 0 || type == 'v')) {
         int timestamp;
         if (!vo_spudec)
             vo_spudec = spudec_new(NULL);
@@ -170,7 +170,7 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
             if (vo_vobsub || timestamp >= 0)
                 spudec_assemble(vo_spudec, packet, len, timestamp);
         }
-    } else if (dvdsub_id >= 0 && (is_text_sub(type) || is_av_sub(type) || type == 'd')) {
+    } else if (is_text_sub(type) || is_av_sub(type) || type == 'd') {
         int orig_type = type;
         double endpts;
         if (type == 'd' && !d_dvdsub->demuxer->teletext) {
