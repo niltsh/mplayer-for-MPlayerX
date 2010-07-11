@@ -445,15 +445,15 @@ int device_id;
         devid_def = device_id;
     }
 
-        /* Retrieve the name of the device. */
-        err = GetAudioPropertyString(devid_def,
-                                    kAudioObjectPropertyName,
-                                    &psz_name);
-        if (err != noErr)
-        {
-            ao_msg(MSGT_AO, MSGL_WARN, "could not get default audio device name: [%4.4s]\n", (char *)&err);
-            goto err_out;
-        }
+    /* Retrieve the name of the device. */
+    err = GetAudioPropertyString(devid_def,
+                                 kAudioObjectPropertyName,
+                                 &psz_name);
+    if (err != noErr)
+    {
+        ao_msg(MSGT_AO, MSGL_WARN, "could not get default audio device name: [%4.4s]\n", (char *)&err);
+        goto err_out;
+    }
 
     ao_msg(MSGT_AO,MSGL_V, "got audio output device ID: %"PRIu32" Name: %s\n", devid_def, psz_name );
 
@@ -506,6 +506,7 @@ int device_id;
             ao_msg(MSGT_AO, MSGL_WARN, "could not check whether device is alive: [%4.4s]\n", (char *)&err);
         if (!b_alive)
             ao_msg(MSGT_AO, MSGL_WARN, "device is not alive\n" );
+
         /* S/PDIF output need device in HogMode. */
         err = GetAudioProperty(ao->i_selected_dev,
                                kAudioDevicePropertyHogMode,
@@ -615,11 +616,11 @@ err_out:
  *****************************************************************************/
 static int OpenSPDIF(void)
 {
-    OSStatus                err = noErr;
-    UInt32                  i_param_size, b_mix = 0;
-    Boolean                 b_writeable = 0;
-    AudioStreamID           *p_streams = NULL;
-    int                     i, i_streams = 0;
+    OSStatus                    err = noErr;
+    UInt32                      i_param_size, b_mix = 0;
+    Boolean                     b_writeable = 0;
+    AudioStreamID               *p_streams = NULL;
+    int                         i, i_streams = 0;
     AudioObjectPropertyAddress  property_address;
 
     /* Start doing the SPDIF setup process. */
