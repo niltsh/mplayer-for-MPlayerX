@@ -732,7 +732,7 @@ void spudec_calc_bbox(void *me, unsigned int dxs, unsigned int dys, unsigned int
 /* transform mplayer's alpha value into an opacity value that is linear */
 static inline int canon_alpha(int alpha)
 {
-  return alpha ? 256 - alpha : 0;
+  return (uint8_t)-alpha;
 }
 
 typedef struct {
