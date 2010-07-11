@@ -97,6 +97,6 @@ int decode_avsub(struct sh_sub *sh, uint8_t **data, int *size, double *pts, doub
         }
     }
     if (got_sub)
-        ; // TODO: free sub once there is a free function...
+        avsubtitle_free(&sub);
     return new_type;
 }
