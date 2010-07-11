@@ -1304,6 +1304,8 @@ void spudec_set_paletted(void *this, const uint8_t *pal_img, int pal_stride,
   packet->packet = malloc(packet->data_len);
   img  = packet->packet;
   aimg = packet->packet + stride * h;
+  // TODO: this would be a lot faster by converting the
+  // palette first.
   for (y = 0; y < h; y++) {
     for (x = 0; x < w; x++) {
       uint32_t pixel = pal[pal_img[x]];
