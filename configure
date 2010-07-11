@@ -8778,6 +8778,7 @@ CONFIG_VDPAU    = $_vdpau
 CONFIG_XVMC     = $_xvmc
 CONFIG_ZLIB     = $_zlib
 
+HAVE_GNU_AS     = yes
 HAVE_PTHREADS   = $_pthreads
 HAVE_SHM        = $_shm
 HAVE_W32THREADS = $_w32threads
@@ -9256,6 +9257,7 @@ $def_yasm
 
 #define HAVE_ATTRIBUTE_PACKED 1
 #define HAVE_GETHRTIME 0
+#define HAVE_GNU_AS 1
 #define HAVE_INLINE_ASM 1
 #define HAVE_ISATTY 0
 #define HAVE_LDBRX 0
