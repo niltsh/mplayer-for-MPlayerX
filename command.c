@@ -106,7 +106,7 @@ static void update_global_sub_size(MPContext *mpctx)
     // update number of demuxer sub streams
     for (i = 0; i < MAX_S_STREAMS; i++)
         if (mpctx->demuxer->s_streams[i])
-            cnt = i + 1;
+            cnt++;
     if (cnt > mpctx->sub_counts[SUB_SOURCE_DEMUX])
         mpctx->sub_counts[SUB_SOURCE_DEMUX] = cnt;
 
@@ -115,7 +115,7 @@ static void update_global_sub_size(MPContext *mpctx)
     // update global size
     mpctx->global_sub_size = 0;
     for (i = 0; i < SUB_SOURCES; i++)
-        mpctx->global_sub_size = mpctx->sub_counts[i];
+        mpctx->global_sub_size += mpctx->sub_counts[i];
 }
 
 static int sub_pos_by_source(MPContext *mpctx, int src)
