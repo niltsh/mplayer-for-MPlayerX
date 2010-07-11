@@ -92,7 +92,7 @@ static int is_text_sub(int type)
 
 static int is_av_sub(int type)
 {
-    return type == 'p';
+    return type == 'b' || type == 'p' || type == 'x';
 }
 
 void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvdsub, int reset)
