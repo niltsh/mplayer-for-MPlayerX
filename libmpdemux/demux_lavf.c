@@ -612,13 +612,9 @@ static int demux_lavf_fill_buffer(demuxer_t *demux, demux_stream_t *dsds){
     }
 
     if(pkt.destruct == av_destruct_packet && !CONFIG_MEMALIGN_HACK){
-        dp=malloc(sizeof(demux_packet_t));
+        dp=new_demux_packet(0);
         dp->len=pkt.size;
-        dp->next=NULL;
-        dp->refcount=1;
-        dp->master=NULL;
         dp->buffer=pkt.data;
-        dp->stream_pts = MP_NOPTS_VALUE;
         pkt.destruct= NULL;
     }else{
         dp=new_demux_packet(pkt.size);
