@@ -834,12 +834,7 @@ void spudec_draw_scaled(void *me, unsigned int dxs, unsigned int dys, void (*dra
 
     if (!(spu_aamode&16) && (spu->orig_frame_width == 0 || spu->orig_frame_height == 0
 	|| (spu->orig_frame_width == dxs && spu->orig_frame_height == dys))) {
-      if (spu->image)
-      {
-	draw_alpha(spu->start_col, spu->start_row, spu->width, spu->height,
-		   spu->image, spu->aimage, spu->stride);
-	spu->spu_changed = 0;
-      }
+      spudec_draw(spu, draw_alpha);
     }
     else {
       if (spu->scaled_frame_width != dxs || spu->scaled_frame_height != dys) {	/* Resizing is needed */
