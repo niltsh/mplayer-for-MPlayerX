@@ -181,6 +181,8 @@ void mp_msg(int mod, int lev, const char *format, ... ){
     char tmp[MSGSIZE_MAX];
     FILE *stream = lev <= MSGL_WARN ? stderr : stdout;
     static int header = 1;
+    // indicates if last line printed was a status line
+    static int statusline;
     size_t len;
 
     if (!mp_msg_test(mod, lev)) return; // do not display
@@ -220,6 +222,11 @@ void mp_msg(int mod, int lev, const char *format, ... ){
       }
     }
 #endif
+
+    // as a status line normally is intended to be overwitten by next status line
+    // output a '\n' to get a normal message on a separate line
+    if (statusline && lev != MSGL_STATUS) fprintf(stream, "\n");
+    statusline = lev == MSGL_STATUS;
 
     if (header)
         print_msg_module(stream, mod);
