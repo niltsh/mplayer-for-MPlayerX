@@ -220,7 +220,7 @@ void rtpCodecInitialize_audio(demuxer_t* demuxer,
   flags = 0;
   // Create a dummy audio stream header
   // to make the main MPlayer code happy:
-  sh_audio_t* sh_audio = new_sh_audio(demuxer,0);
+  sh_audio_t* sh_audio = new_sh_audio(demuxer,0, NULL);
   WAVEFORMATEX* wf = (WAVEFORMATEX*)calloc(1,sizeof(WAVEFORMATEX));
   sh_audio->wf = wf;
   demux_stream_t* d_audio = demuxer->audio;
