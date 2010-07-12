@@ -400,18 +400,20 @@ OSStatus err;
 UInt32 size, maxFrames, b_alive;
 char *psz_name;
 AudioDeviceID devid_def = 0;
-int device_id;
+int device_id, display_help = 0;
 
     const opt_t subopts[] = {
         {"device_id", OPT_ARG_INT, &device_id, NULL},
+        {"help", OPT_ARG_BOOL, &display_help, NULL},
         {NULL}
     };
 
     // set defaults
     device_id = 0;
 
-    if (subopt_parse(ao_subdevice, subopts) != 0) {
+    if (subopt_parse(ao_subdevice, subopts) != 0 || display_help) {
         print_help();
+        if (!display_help)
         return 0;
     }
 
