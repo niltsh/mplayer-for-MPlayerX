@@ -403,8 +403,8 @@ AudioDeviceID devid_def = 0;
 int device_id, display_help = 0;
 
     const opt_t subopts[] = {
-        {"device_id", OPT_ARG_INT, &device_id, NULL},
-        {"help", OPT_ARG_BOOL, &display_help, NULL},
+        {"device_id", OPT_ARG_INT,  &device_id,    NULL},
+        {"help",      OPT_ARG_BOOL, &display_help, NULL},
         {NULL}
     };
 
@@ -414,7 +414,7 @@ int device_id, display_help = 0;
     if (subopt_parse(ao_subdevice, subopts) != 0 || display_help) {
         print_help();
         if (!display_help)
-        return 0;
+            return 0;
     }
 
     ao_msg(MSGT_AO,MSGL_V, "init([%dHz][%dch][%s][%d])\n", rate, channels, af_fmt2str_short(format), flags);
