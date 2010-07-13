@@ -2800,6 +2800,16 @@ int main(void) { __asm__ volatile ("add 0, 0, 0"); return 0; }
 EOF
 cc_check && ibm_asm=yes && def_ibm_asm='#define HAVE_IBM_ASM 1'
 echores "$ibm_asm"
+
+def_gnu_as='#define HAVE_GNU_AS 0'
+gnu_as=no
+echocheck "GNU assembler"
+cat > $TMPC << EOF
+int main(void) { __asm__ volatile (".macro m n\n\\n:.int 0\n.endm\nm x"); return 0; }
+EOF
+cc_check && gnu_as=yes && def_gnu_as='#define HAVE_GNU_AS 1'
+echores "$gnu_as"
+
 fi
 
 if arm ; then
@@ -8792,7 +8802,7 @@ CONFIG_VDPAU    = $_vdpau
 CONFIG_XVMC     = $_xvmc
 CONFIG_ZLIB     = $_zlib
 
-HAVE_GNU_AS     = yes
+HAVE_GNU_AS     = $gnu_as
 HAVE_PTHREADS   = $_pthreads
 HAVE_SHM        = $_shm
 HAVE_W32THREADS = $_w32threads
@@ -9231,6 +9241,7 @@ $def_exp2
 $def_exp2f
 $def_fast_64bit
 $def_fast_unaligned
+$def_gnu_as
 $def_hardcoded_tables
 $def_ibm_asm
 $def_libavcodec_mpegaudio_hp
@@ -9273,7 +9284,6 @@ $def_yasm
 
 #define HAVE_ATTRIBUTE_PACKED 1
 #define HAVE_GETHRTIME 0
-#define HAVE_GNU_AS 1
 #define HAVE_INLINE_ASM 1
 #define HAVE_ISATTY 0
 #define HAVE_LDBRX 0
