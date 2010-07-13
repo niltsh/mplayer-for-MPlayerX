@@ -2786,6 +2786,15 @@ int main(void) { __asm__ volatile ("lwzx %1, %y0" :: "Z"(*(int*)0), "r"(0)); ret
 EOF
 cc_check && xform_asm=yes && def_xform_asm='#define HAVE_XFORM_ASM 1'
 echores "$xform_asm"
+
+def_ibm_asm='#define HAVE_IBM_ASM 0'
+ibm_asm=no
+echocheck "IBM ASM support"
+cat > $TMPC << EOF
+int main(void) { __asm__ volatile ("add 0, 0, 0"); return 0; }
+EOF
+cc_check && ibm_asm=yes && def_ibm_asm='#define HAVE_IBM_ASM 1'
+echores "$ibm_asm"
 fi
 
 if arm ; then
@@ -9218,6 +9227,7 @@ $def_exp2f
 $def_fast_64bit
 $def_fast_unaligned
 $def_hardcoded_tables
+$def_ibm_asm
 $def_libavcodec_mpegaudio_hp
 $def_llrint
 $def_llrintf
