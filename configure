@@ -2645,6 +2645,7 @@ echores $_asmalign_pot
 
 
 echocheck "PIC"
+def_pic='#define CONFIG_PIC 0'
 pic=no
 cat > $TMPC << EOF
 int main(void) {
@@ -2654,7 +2655,8 @@ int main(void) {
     return 0;
 }
 EOF
-cc_check && pic=yes && extra_cflags="$extra_cflags -DPIC"
+cc_check && pic=yes && extra_cflags="$extra_cflags -DPIC" &&
+  def_pic='#define CONFIG_PIC 0'
 echores $pic
 
 
@@ -9242,6 +9244,7 @@ $def_lrint
 $def_memalign_hack
 $def_mlib
 $def_mkstemp
+$def_pic
 $def_posix_memalign
 $def_pthreads
 $def_round
