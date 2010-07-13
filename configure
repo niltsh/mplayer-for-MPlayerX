@@ -2643,6 +2643,21 @@ else
 fi
 echores $_asmalign_pot
 
+
+echocheck "PIC"
+pic=no
+cat > $TMPC << EOF
+int main(void) {
+#if !(defined(__PIC__) || defined(__pic__) || defined(PIC))
+#error PIC not enabled
+#endif
+    return 0;
+}
+EOF
+cc_check && pic=yes && extra_cflags="$extra_cflags -DPIC"
+echores $pic
+
+
 if x86 ; then
 echocheck "10 assembler operands"
 ten_operands=no
@@ -2680,18 +2695,6 @@ EOF
 cc_check && ebx_available=yes && def_ebx_available='#define HAVE_EBX_AVAILABLE 1'
 echores $ebx_available
 
-echocheck "PIC"
-pic=no
-cat > $TMPC << EOF
-int main(void) {
-#if !(defined(__PIC__) || defined(__pic__) || defined(PIC))
-#error PIC not enabled
-#endif
-    return 0;
-}
-EOF
-cc_check && pic=yes && extra_cflags="$extra_cflags -DPIC"
-echores $pic
 
 echocheck "yasm"
 if test -z "$YASMFLAGS" ; then
