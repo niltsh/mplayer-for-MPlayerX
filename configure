@@ -8951,6 +8951,7 @@ $def_kstat
 $def_macosx_bundle
 $def_macosx_finder
 $def_maemo
+$def_memalign_hack
 $def_named_asm_args
 $def_priority
 $def_quicktime
@@ -9252,7 +9253,6 @@ $def_local_aligned_16
 $def_log2
 $def_log2f
 $def_lrint
-$def_memalign_hack
 $def_mlib
 $def_mkstemp
 $def_pic
