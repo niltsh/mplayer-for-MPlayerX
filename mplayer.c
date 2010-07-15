@@ -1652,6 +1652,7 @@ static void update_osd_msg(void) {
 void reinit_audio_chain(void) {
     if (!mpctx->sh_audio)
         return;
+    if (!(initialized_flags & INITIALIZED_ACODEC)) {
     current_module="init_audio_codec";
     mp_msg(MSGT_CPLAYER,MSGL_INFO,"==========================================================================\n");
     if(!init_best_audio_codec(mpctx->sh_audio,audio_codec_list,audio_fm_list)){
@@ -1659,8 +1660,10 @@ void reinit_audio_chain(void) {
     }
     initialized_flags|=INITIALIZED_ACODEC;
     mp_msg(MSGT_CPLAYER,MSGL_INFO,"==========================================================================\n");
+    }
 
 
+    if (!(initialized_flags & INITIALIZED_AO)) {
     current_module="af_preinit";
     ao_data.samplerate=force_srate;
     ao_data.channels=0;
@@ -1694,6 +1697,8 @@ void reinit_audio_chain(void) {
            mpctx->audio_out->info->name, mpctx->audio_out->info->author);
     if(strlen(mpctx->audio_out->info->comment) > 0)
         mp_msg(MSGT_CPLAYER,MSGL_V,"AO: Comment: %s\n", mpctx->audio_out->info->comment);
+    }
+
     // init audio filters:
     current_module="af_init";
     if(!build_afilter_chain(mpctx->sh_audio, &ao_data)) {
@@ -2120,6 +2125,7 @@ static int fill_audio_out_buffers(void)
     int playflags=0;
     int audio_eof=0;
     int bytes_to_write;
+    int format_change = 0;
     sh_audio_t * const sh_audio = mpctx->sh_audio;
 
     current_module="play_audio";
@@ -2143,6 +2149,7 @@ static int fill_audio_out_buffers(void)
     }
 
     while (bytes_to_write) {
+	int res;
 	playsize = bytes_to_write;
 	if (playsize > MAX_OUTBURST)
 	    playsize = MAX_OUTBURST;
@@ -2151,7 +2158,11 @@ static int fill_audio_out_buffers(void)
 	// Fill buffer if needed:
 	current_module="decode_audio";
 	t = GetTimer();
-	if (decode_audio(sh_audio, playsize) < 0) // EOF or error
+	if (!format_change) {
+	    res = decode_audio(sh_audio, playsize);
+	    format_change = res == -2;
+	}
+	if (!format_change && res < 0) // EOF or error
 	    if (mpctx->d_audio->eof) {
 		audio_eof = 1;
 		if (sh_audio->a_out_buffer_len == 0)
@@ -2161,7 +2172,7 @@ static int fill_audio_out_buffers(void)
 	tt = t*0.000001f; audio_time_usage+=tt;
 	if (playsize > sh_audio->a_out_buffer_len) {
 	    playsize = sh_audio->a_out_buffer_len;
-	    if (audio_eof)
+	    if (audio_eof || format_change)
 		playflags |= AOPLAY_FINAL_CHUNK;
 	}
 	if (!playsize)
@@ -2182,12 +2193,16 @@ static int fill_audio_out_buffers(void)
 		    sh_audio->a_out_buffer_len);
 	    mpctx->delay += playback_speed*playsize/(double)ao_data.bps;
 	}
-	else if (audio_eof && mpctx->audio_out->get_delay() < .04) {
+	else if ((format_change || audio_eof) && mpctx->audio_out->get_delay() < .04) {
 	    // Sanity check to avoid hanging in case current ao doesn't output
 	    // partial chunks and doesn't check for AOPLAY_FINAL_CHUNK
 	    mp_msg(MSGT_CPLAYER, MSGL_WARN, "Audio output truncated at end.\n");
 	    sh_audio->a_out_buffer_len = 0;
 	}
+    }
+    if (format_change) {
+	uninit_player(INITIALIZED_AO);
+	reinit_audio_chain();
     }
     return 1;
 }

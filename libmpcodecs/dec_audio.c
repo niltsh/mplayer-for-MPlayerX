@@ -388,8 +388,11 @@ static int filter_n_bytes(sh_audio_t *sh, int len)
 	int minlen = len - sh->a_buffer_len;
 	int maxlen = sh->a_buffer_size - sh->a_buffer_len;
 	int ret = sh->ad_driver->decode_audio(sh, buf, minlen, maxlen);
-	if (ret <= 0) {
-	    error = -1;
+	int format_change = sh->samplerate != filter_input.rate ||
+	                    sh->channels != filter_input.nch ||
+	                    sh->sample_format != filter_input.format;
+	if (ret <= 0 || format_change) {
+	    error = format_change ? -2 : -1;
 	    len = sh->a_buffer_len;
 	    break;
 	}
@@ -446,6 +449,7 @@ int decode_audio(sh_audio_t *sh_audio, int minlen)
     max_decode_len -= max_decode_len % unitsize;
 
     while (sh_audio->a_out_buffer_len < minlen) {
+	int res;
 	int declen = (minlen - sh_audio->a_out_buffer_len) / filter_multiplier
 	    + (unitsize << 5); // some extra for possible filter buffering
 	if (huge_filter_buffer)
@@ -465,8 +469,9 @@ int decode_audio(sh_audio_t *sh_audio, int minlen)
 	    /* if this iteration does not fill buffer, we must have lots
 	     * of buffering in filters */
 	    huge_filter_buffer = 1;
-	if (filter_n_bytes(sh_audio, declen) < 0)
-	    return -1;
+	res = filter_n_bytes(sh_audio, declen);
+	if (res < 0)
+	    return res;
     }
     return 0;
 }
