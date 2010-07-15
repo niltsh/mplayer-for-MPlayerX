@@ -1653,50 +1653,50 @@ void reinit_audio_chain(void) {
     if (!mpctx->sh_audio)
         return;
     if (!(initialized_flags & INITIALIZED_ACODEC)) {
-    current_module="init_audio_codec";
-    mp_msg(MSGT_CPLAYER,MSGL_INFO,"==========================================================================\n");
-    if(!init_best_audio_codec(mpctx->sh_audio,audio_codec_list,audio_fm_list)){
-        goto init_error;
-    }
-    initialized_flags|=INITIALIZED_ACODEC;
-    mp_msg(MSGT_CPLAYER,MSGL_INFO,"==========================================================================\n");
+        current_module="init_audio_codec";
+        mp_msg(MSGT_CPLAYER,MSGL_INFO,"==========================================================================\n");
+        if(!init_best_audio_codec(mpctx->sh_audio,audio_codec_list,audio_fm_list)){
+            goto init_error;
+        }
+        initialized_flags|=INITIALIZED_ACODEC;
+        mp_msg(MSGT_CPLAYER,MSGL_INFO,"==========================================================================\n");
     }
 
 
     if (!(initialized_flags & INITIALIZED_AO)) {
-    current_module="af_preinit";
-    ao_data.samplerate=force_srate;
-    ao_data.channels=0;
-    ao_data.format=audio_output_format;
-    // first init to detect best values
-    if(!init_audio_filters(mpctx->sh_audio,   // preliminary init
-                           // input:
-                           mpctx->sh_audio->samplerate,
-                           // output:
-                           &ao_data.samplerate, &ao_data.channels, &ao_data.format)){
-        mp_msg(MSGT_CPLAYER,MSGL_ERR,MSGTR_AudioFilterChainPreinitError);
-        exit_player(EXIT_ERROR);
-    }
-    current_module="ao2_init";
-    mpctx->audio_out = init_best_audio_out(audio_driver_list,
-                                           0, // plugin flag
-                                           ao_data.samplerate,
-                                           ao_data.channels,
-                                           ao_data.format, 0);
-    if(!mpctx->audio_out){
-        mp_msg(MSGT_CPLAYER,MSGL_ERR,MSGTR_CannotInitAO);
-        goto init_error;
-    }
-    initialized_flags|=INITIALIZED_AO;
-    mp_msg(MSGT_CPLAYER,MSGL_INFO,"AO: [%s] %dHz %dch %s (%d bytes per sample)\n",
-           mpctx->audio_out->info->short_name,
-           ao_data.samplerate, ao_data.channels,
-           af_fmt2str_short(ao_data.format),
-           af_fmt2bits(ao_data.format)/8 );
-    mp_msg(MSGT_CPLAYER,MSGL_V,"AO: Description: %s\nAO: Author: %s\n",
-           mpctx->audio_out->info->name, mpctx->audio_out->info->author);
-    if(strlen(mpctx->audio_out->info->comment) > 0)
-        mp_msg(MSGT_CPLAYER,MSGL_V,"AO: Comment: %s\n", mpctx->audio_out->info->comment);
+        current_module="af_preinit";
+        ao_data.samplerate=force_srate;
+        ao_data.channels=0;
+        ao_data.format=audio_output_format;
+        // first init to detect best values
+        if(!init_audio_filters(mpctx->sh_audio,   // preliminary init
+                               // input:
+                               mpctx->sh_audio->samplerate,
+                               // output:
+                               &ao_data.samplerate, &ao_data.channels, &ao_data.format)){
+            mp_msg(MSGT_CPLAYER,MSGL_ERR,MSGTR_AudioFilterChainPreinitError);
+            exit_player(EXIT_ERROR);
+        }
+        current_module="ao2_init";
+        mpctx->audio_out = init_best_audio_out(audio_driver_list,
+                                               0, // plugin flag
+                                               ao_data.samplerate,
+                                               ao_data.channels,
+                                               ao_data.format, 0);
+        if(!mpctx->audio_out){
+            mp_msg(MSGT_CPLAYER,MSGL_ERR,MSGTR_CannotInitAO);
+            goto init_error;
+        }
+        initialized_flags|=INITIALIZED_AO;
+        mp_msg(MSGT_CPLAYER,MSGL_INFO,"AO: [%s] %dHz %dch %s (%d bytes per sample)\n",
+               mpctx->audio_out->info->short_name,
+               ao_data.samplerate, ao_data.channels,
+               af_fmt2str_short(ao_data.format),
+               af_fmt2bits(ao_data.format)/8 );
+        mp_msg(MSGT_CPLAYER,MSGL_V,"AO: Description: %s\nAO: Author: %s\n",
+               mpctx->audio_out->info->name, mpctx->audio_out->info->author);
+        if(strlen(mpctx->audio_out->info->comment) > 0)
+            mp_msg(MSGT_CPLAYER,MSGL_V,"AO: Comment: %s\n", mpctx->audio_out->info->comment);
     }
 
     // init audio filters:
