@@ -24,12 +24,9 @@ while read -r line; do
         if grep -q "^#define $curr[	 ]" "$TRANSLATION" ; then
             curr=""
         fi
-    else
-        if [ -z "$line" ]; then
-            curr=""
-        fi
+    elif [ -z "$line" ]; then
+        curr=""
     fi
-
     if [ -n "$curr" ]; then
         printf "%s\n" "$line"
     fi
