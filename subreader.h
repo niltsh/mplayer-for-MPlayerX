@@ -105,7 +105,7 @@ void dump_sami(sub_data* subd, float fps);
 void sub_free( sub_data * subd );
 void find_sub(sub_data* subd,int key);
 void step_sub(sub_data *subd, float pts, int movement);
-void sub_add_text(subtitle *sub, const char *txt, int len, double endpts);
+void sub_add_text(subtitle *sub, const char *txt, int len, double endpts, int strip_markup);
 int sub_clear_text(subtitle *sub, double pts);
 
 #endif /* MPLAYER_SUBREADER_H */

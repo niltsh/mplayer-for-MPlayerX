@@ -231,7 +231,7 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
                     if (subpts != MP_NOPTS_VALUE) {
                         subtitle tmp_subs = {0};
                         if (endpts == MP_NOPTS_VALUE) endpts = subpts + 3;
-                        sub_add_text(&tmp_subs, packet, len, endpts);
+                        sub_add_text(&tmp_subs, packet, len, endpts, 0);
                         tmp_subs.start = subpts * 100;
                         tmp_subs.end = endpts * 100;
                         ass_process_subtitle(ass_track, &tmp_subs);
@@ -258,7 +258,7 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
                     len -= p - packet;
                     packet = p;
                 }
-                sub_add_text(&subs, packet, len, endpts);
+                sub_add_text(&subs, packet, len, endpts, 1);
                 set_osd_subtitle(&subs);
             }
             if (d_dvdsub->non_interleaved)

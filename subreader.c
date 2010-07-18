@@ -33,10 +33,12 @@
 #include "mp_msg.h"
 #include "mpcommon.h"
 #include "subreader.h"
+#include "subassconvert.h"
 #include "libvo/sub.h"
 #include "stream/stream.h"
 #include "libavutil/common.h"
 #include "libavutil/avstring.h"
+#include "libass/ass_mp.h"
 
 #ifdef CONFIG_ENCA
 #include <enca.h>
@@ -296,7 +298,11 @@ static subtitle *sub_read_line_microdvd(stream_t *st,subtitle *current, int utf1
 		      "{%ld}{%ld}%[^\r\n]",
 		      &(current->start), &(current->end), line2) < 3));
 
-    p=line2;
+    if (ass_enabled) {
+        subassconvert_microdvd(line2, line, LINE_LEN + 1);
+        p = line;
+    } else
+        p = line2;
 
     next=p, i=0;
     while ((next =sub_readtext (next, &(current->text[i])))) {
@@ -365,12 +371,70 @@ static subtitle *sub_read_line_subrip(stream_t* st, subtitle *current, int utf16
     return current;
 }
 
+static subtitle *sub_ass_read_line_subviewer(stream_t *st, subtitle *current, int utf16)
+{
+    int h1, m1, s1, ms1, h2, m2, s2, ms2, j = 0;
+
+    while (!current->text[0]) {
+        char line[LINE_LEN + 1], full_line[LINE_LEN + 1], sep;
+        int i;
+
+        /* Parse SubRip header */
+        if (!stream_read_line(st, line, LINE_LEN, utf16))
+            return NULL;
+        if (sscanf(line, "%d:%d:%d%[,.:]%d --> %d:%d:%d%[,.:]%d",
+                     &h1, &m1, &s1, &sep, &ms1, &h2, &m2, &s2, &sep, &ms2) < 10)
+            continue;
+
+        current->start = h1 * 360000 + m1 * 6000 + s1 * 100 + ms1 / 10;
+        current->end   = h2 * 360000 + m2 * 6000 + s2 * 100 + ms2 / 10;
+
+        /* Concat lines */
+        full_line[0] = 0;
+        for (i = 0; i < SUB_MAX_TEXT; i++) {
+            int blank = 1, len = 0;
+            char *p;
+
+            if (!stream_read_line(st, line, LINE_LEN, utf16))
+                break;
+
+            for (p = line; *p != '\n' && *p != '\r' && *p; p++, len++)
+                if (*p != ' ' && *p != '\t')
+                    blank = 0;
+
+            if (blank)
+                break;
+
+            *p = 0;
+
+            if (len >= sizeof(full_line) - j - 2)
+                break;
+
+            if (j != 0)
+                full_line[j++] = '\n';
+            strcpy(&full_line[j], line);
+            j += len;
+        }
+
+        /* Use the ASS/SSA converter to transform the whole lines */
+        if (full_line[0]) {
+            char converted_line[LINE_LEN + 1];
+            subassconvert_subrip(full_line, converted_line, LINE_LEN + 1);
+            current->text[0] = strdup(converted_line);
+            current->lines = 1;
+        }
+    }
+    return current;
+}
+
 static subtitle *sub_read_line_subviewer(stream_t *st,subtitle *current, int utf16) {
     char line[LINE_LEN+1];
     int a1,a2,a3,a4,b1,b2,b3,b4;
     char *p=NULL;
     int i,len;
 
+    if (ass_enabled)
+        return sub_ass_read_line_subviewer(st, current, utf16);
     while (!current->text[0]) {
 	if (!stream_read_line (st, line, LINE_LEN, utf16)) return NULL;
 	if ((len=sscanf (line, "%d:%d:%d%[,.:]%d --> %d:%d:%d%[,.:]%d",&a1,&a2,&a3,(char *)&i,&a4,&b1,&b2,&b3,(char *)&i,&b4)) < 10)
@@ -2290,12 +2354,13 @@ void sub_free( sub_data * subd )
  * \param txt text to parse
  * \param len length of text in txt
  * \param endpts pts at which this subtitle text should be removed again
+ * \param strip_markup if strip markup is set (!= 0), markup tags like <b></b> are ignored
  *
  * <> and {} are interpreted as comment delimiters, "\n", "\N", '\n', '\r'
  * and '\0' are interpreted as newlines, duplicate, leading and trailing
  * newlines are ignored.
  */
-void sub_add_text(subtitle *sub, const char *txt, int len, double endpts) {
+void sub_add_text(subtitle *sub, const char *txt, int len, double endpts, int strip_markup) {
   int comment = 0;
   int double_newline = 1; // ignore newlines at the beginning
   int i, pos;
@@ -2308,42 +2373,48 @@ void sub_add_text(subtitle *sub, const char *txt, int len, double endpts) {
   buf = malloc(MAX_SUBLINE + 1);
   sub->text[sub->lines] = buf;
   sub->endpts[sub->lines] = endpts;
-  for (i = 0; i < len && pos < MAX_SUBLINE; i++) {
-    char c = txt[i];
-    if (c == '<') comment |= 1;
-    if (c == '{') comment |= 2;
-    if (comment) {
-      if (c == '}') comment &= ~2;
-      if (c == '>') comment &= ~1;
-      continue;
-    }
-    if (pos == MAX_SUBLINE - 1) {
-      i--;
-      c = 0;
-    }
-    if (c == '\\' && i + 1 < len) {
-      c = txt[++i];
-      if (c == 'n' || c == 'N') c = 0;
-    }
-    if (c == '\n' || c == '\r') c = 0;
-    if (c) {
-      double_newline = 0;
-      buf[pos++] = c;
-    } else if (!double_newline) {
-      if (sub->lines >= SUB_MAX_TEXT - 1) {
-        mp_msg(MSGT_VO, MSGL_WARN, "Too many subtitle lines\n");
-        break;
+
+  if (!strip_markup) {
+    subassconvert_subrip(txt, buf, MAX_SUBLINE + 1);
+    sub->text[sub->lines] = buf;
+  } else {
+    for (i = 0; i < len && pos < MAX_SUBLINE; i++) {
+      char c = txt[i];
+      if (c == '<') comment |= 1;
+      if (c == '{') comment |= 2;
+      if (comment) {
+        if (c == '}') comment &= ~2;
+        if (c == '>') comment &= ~1;
+        continue;
       }
-      double_newline = 1;
-      buf[pos] = 0;
-      sub->lines++;
-      pos = 0;
-      buf = malloc(MAX_SUBLINE + 1);
-      sub->text[sub->lines] = buf;
-      sub->endpts[sub->lines] = endpts;
+      if (pos == MAX_SUBLINE - 1) {
+        i--;
+        c = 0;
+      }
+      if (c == '\\' && i + 1 < len) {
+        c = txt[++i];
+        if (c == 'n' || c == 'N') c = 0;
+      }
+      if (c == '\n' || c == '\r') c = 0;
+      if (c) {
+        double_newline = 0;
+        buf[pos++] = c;
+      } else if (!double_newline) {
+        if (sub->lines >= SUB_MAX_TEXT - 1) {
+          mp_msg(MSGT_VO, MSGL_WARN, "Too many subtitle lines\n");
+          break;
+        }
+        double_newline = 1;
+        buf[pos] = 0;
+        sub->lines++;
+        pos = 0;
+        buf = malloc(MAX_SUBLINE + 1);
+        sub->text[sub->lines] = buf;
+        sub->endpts[sub->lines] = endpts;
+      }
     }
+    buf[pos] = 0;
   }
-  buf[pos] = 0;
   if (sub->lines < SUB_MAX_TEXT &&
       strlen(sub->text[sub->lines]))
     sub->lines++;
