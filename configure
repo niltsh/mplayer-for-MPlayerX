@@ -305,7 +305,7 @@ Optional features:
   --disable-vstream      disable TiVo vstream client support [autodetect]
   --disable-pthreads     disable Posix threads support [autodetect]
   --disable-w32threads   disable Win32 threads support [autodetect]
-  --disable-ass-internal disable internal SSA/ASS subtitle support [autodetect]
+  --enable-ass-internal  enable internal SSA/ASS subtitle support [autodetect]
   --disable-ass          disable SSA/ASS subtitle support [autodetect]
   --enable-rpath         enable runtime linker path for extra libs [disabled]
 
@@ -785,7 +785,7 @@ _vstream=auto
 _pthreads=auto
 _w32threads=auto
 _ass=auto
-ass_internal=yes
+ass_internal=no
 _rpath=no
 _asmalign_pot=auto
 _stream_cache=yes
@@ -6389,7 +6389,7 @@ EOF
             res_comment="external"
             extra_ldflags="$extra_ldflags -lass"
         else
-            _ass=no
+            ass_internal=yes
         fi
     fi
 fi
