@@ -148,11 +148,7 @@ static int control(struct vf_instance *vf, int request, void* data)
                 double dar = (double) (res.w - res.ml - res.mr) / (res.h - res.mt - res.mb);
                 ass_set_frame_size(vf->priv->ass_priv, res.w, res.h);
                 ass_set_margins(vf->priv->ass_priv, res.mt, res.mb, res.ml, res.mr);
-#if defined(LIBASS_VERSION) && LIBASS_VERSION >= 0x00907010
                 ass_set_aspect_ratio(vf->priv->ass_priv, dar, (double)res.srcw/res.srch);
-#else
-                ass_set_aspect_ratio(vf->priv->ass_priv, (double)res.w / res.h);
-#endif
             }
 
             images.imgs = ass_mp_render_frame(vf->priv->ass_priv, ass_track, (pts+sub_delay) * 1000 + .5, &images.changed);

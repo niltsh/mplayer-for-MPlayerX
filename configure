@@ -6377,11 +6377,10 @@ EOF
     cat > $TMPC << EOF
 #include <ass/ass.h>
 int main(void) {
-#if defined(LIBASS_VERSION) && LIBASS_VERSION >= 0x00907010
-  ass_process_force_style(0);
-#else
-  process_force_style(0);
+#if !defined(LIBASS_VERSION) || LIBASS_VERSION < 0x00910000
+#error "libass version too old"
 #endif
+  ass_process_force_style(0);
   return 0;
 }
 EOF
