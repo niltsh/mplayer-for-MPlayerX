@@ -294,10 +294,26 @@ void ass_configure_fonts(ass_renderer_t* priv) {
 	free(family);
 }
 
+static void message_callback(int level, const char *format, va_list va, void *ctx)
+{
+	int n;
+	char *str;
+	va_list dst;
+
+	va_copy(dst, va);
+	n = vsnprintf(NULL, 0, format, va);
+	if (n > 0 && (str = malloc(n + 1))) {
+		vsnprintf(str, n + 1, format, dst);
+		mp_msg(MSGT_ASS, level, "[ass] %s\n", str);
+		free(str);
+	}
+}
+
 ass_library_t* ass_init(void) {
 	ass_library_t* priv;
 	char* path = get_path("fonts");
 	priv = ass_library_init();
+	ass_set_message_cb(priv, message_callback, NULL);
 	ass_set_fonts_dir(priv, path);
 	ass_set_extract_fonts(priv, extract_embedded_fonts);
 	ass_set_style_overrides(priv, ass_force_style_list);
