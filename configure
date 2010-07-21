@@ -570,6 +570,7 @@ _prefix="/usr/local"
 _libavutil_a=auto
 _libavutil_so=auto
 _libavcodec_a=auto
+_libavcore_a=auto
 _libopencore_amrnb=auto
 _libopencore_amrwb=auto
 libopenjpeg=auto
@@ -7280,6 +7281,43 @@ if test "$_libavutil" = no ; then
 fi
 echores "$_libavutil"
 
+echocheck "FFmpeg libavcore"
+if test "$_libavcore_a" = auto ; then
+  if test -d libavcore ; then
+    _libavcore_a=yes
+    res_comment="static"
+  fi
+elif test "$_libavcore_so" = auto ; then
+  _libavcore_so=no
+  cat > $TMPC << EOF
+#include <libavcore/avcore.h>
+int main(void) { return 0; }
+EOF
+  if $_pkg_config --exists libavcore ; then
+    _inc_libavcore=$($_pkg_config --cflags libavcore)
+    _ld_tmp=$($_pkg_config --libs libavcore)
+    cc_check $_inc_libavcore $_ld_tmp && extra_ldflags="$extra_ldflags $_ld_tmp" \
+      && _libavcore_so=yes
+  elif cc_check -lavcore $_ld_lm ; then
+    extra_ldflags="$extra_ldflags -lavcore"
+    _libavcore_so=yes
+    res_comment="using libavcore.so, but static libavcore is recommended"
+  fi
+fi
+_libavcore=no
+def_libavcore='#undef CONFIG_LIBAVCORE'
+def_libavcore_a='#undef CONFIG_LIBAVCORE_A'
+def_libavcore_so='#undef CONFIG_LIBAVCORE_SO'
+test "$_libavcore_a" = yes || test "$_libavcore_so" = yes && _libavcore=yes
+test "$_libavcore"    = yes && def_libavcore='#define CONFIG_LIBAVCORE 1'
+test "$_libavcore_a"  = yes && def_libavcore_a='#define CONFIG_LIBAVCORE_A 1'
+test "$_libavcore_so" = yes && def_libavcore_so='#define CONFIG_LIBAVCORE_SO 1'
+# neither static nor shared libavcore is available, but it is mandatory ...
+if test "$_libavcore" = no ; then
+  die "You need static or shared libavcore, MPlayer will not compile without!"
+fi
+echores "$_libavcore"
+
 echocheck "FFmpeg libavcodec"
 if test "$_libavcodec_a" = auto ; then
   _libavcodec_a=no
@@ -8748,6 +8786,9 @@ LIBAVUTIL_SO   = $_libavutil_so
 LIBAVCODEC     = $_libavcodec
 LIBAVCODEC_A   = $_libavcodec_a
 LIBAVCODEC_SO  = $_libavcodec_so
+LIBAVCORE      = $_libavcore
+LIBAVCORE_A    = $_libavcore_a
+LIBAVCORE_SO   = $_libavcore_so
 LIBAVFORMAT    = $_libavformat
 LIBAVFORMAT_A  = $_libavformat_a
 LIBAVFORMAT_SO = $_libavformat_so
@@ -9217,6 +9258,9 @@ $def_zr
 $def_libavcodec
 $def_libavcodec_a
 $def_libavcodec_so
+$def_libavcore
+$def_libavcore_a
+$def_libavcore_so
 $def_libavformat
 $def_libavformat_a
 $def_libavformat_so

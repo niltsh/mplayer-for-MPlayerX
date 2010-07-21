@@ -716,6 +716,7 @@ SRCS_MENCODER = mencoder.c \
 
 COMMON_LIBS-$(LIBAVFORMAT_A)      += libavformat/libavformat.a
 COMMON_LIBS-$(LIBAVCODEC_A)       += libavcodec/libavcodec.a
+COMMON_LIBS-$(LIBAVCORE_A)        += libavcore/libavcore.a
 COMMON_LIBS-$(LIBAVUTIL_A)        += libavutil/libavutil.a
 COMMON_LIBS-$(LIBPOSTPROC_A)      += libpostproc/libpostproc.a
 COMMON_LIBS-$(LIBSWSCALE_A)       += libswscale/libswscale.a
@@ -758,6 +759,7 @@ DIRS =  . \
         libavcodec/sh4 \
         libavcodec/sparc \
         libavcodec/x86 \
+        libavcore \
         libavformat \
         libavutil \
         libavutil/arm \
@@ -805,6 +807,7 @@ ADD_ALL_DIRS    = $(call ADDSUFFIXES,$(1),$(DIRS))
 ADD_ALL_EXESUFS = $(1) $(call ADDSUFFIXES,$(EXESUFS_ALL),$(1))
 
 FFMPEGPARTS = libavcodec \
+              libavcore \
               libavformat \
               libavutil \
               libpostproc \
