@@ -373,6 +373,7 @@ static subtitle *sub_read_line_subrip(stream_t* st, subtitle *current, int utf16
     return current;
 }
 
+#ifdef CONFIG_ASS
 static subtitle *sub_ass_read_line_subviewer(stream_t *st, subtitle *current, int utf16)
 {
     int h1, m1, s1, ms1, h2, m2, s2, ms2, j = 0;
@@ -428,6 +429,7 @@ static subtitle *sub_ass_read_line_subviewer(stream_t *st, subtitle *current, in
     }
     return current;
 }
+#endif
 
 static subtitle *sub_read_line_subviewer(stream_t *st,subtitle *current, int utf16) {
     char line[LINE_LEN+1];
