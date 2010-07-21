@@ -298,10 +298,12 @@ static subtitle *sub_read_line_microdvd(stream_t *st,subtitle *current, int utf1
 		      "{%ld}{%ld}%[^\r\n]",
 		      &(current->start), &(current->end), line2) < 3));
 
+#ifdef CONFIG_ASS
     if (ass_enabled) {
         subassconvert_microdvd(line2, line, LINE_LEN + 1);
         p = line;
     } else
+#endif
         p = line2;
 
     next=p, i=0;
@@ -433,8 +435,10 @@ static subtitle *sub_read_line_subviewer(stream_t *st,subtitle *current, int utf
     char *p=NULL;
     int i,len;
 
+#ifdef CONFIG_ASS
     if (ass_enabled)
         return sub_ass_read_line_subviewer(st, current, utf16);
+#endif
     while (!current->text[0]) {
 	if (!stream_read_line (st, line, LINE_LEN, utf16)) return NULL;
 	if ((len=sscanf (line, "%d:%d:%d%[,.:]%d --> %d:%d:%d%[,.:]%d",&a1,&a2,&a3,(char *)&i,&a4,&b1,&b2,&b3,(char *)&i,&b4)) < 10)
