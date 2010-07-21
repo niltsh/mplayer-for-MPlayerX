@@ -108,6 +108,7 @@ SRCS_COMMON-$(LADSPA)                += libaf/af_ladspa.c
 SRCS_COMMON-$(LIBA52)                += libmpcodecs/ad_liba52.c
 SRCS_COMMON-$(LIBASS)                += libmpcodecs/vf_ass.c \
                                         libass/ass_mp.c \
+                                        subassconvert.c \
 
 SRCS_COMMON-$(LIBASS_INTERNAL)       += libass/ass.c \
                                         libass/ass_bitmap.c \
@@ -347,7 +348,6 @@ SRCS_COMMON = asxparser.c \
               playtreeparser.c \
               spudec.c \
               sub_cc.c \
-              subassconvert.c \
               subopt-helper.c \
               subreader.c \
               vobsub.c \
