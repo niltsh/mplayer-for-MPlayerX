@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 31631 (MSGTR_LIBMENU_ListMenuEntryDefinitionsNeedAName)
+// Synced with help_mp-en.h rev. 31752 (MSGTR_LIBMENU_ListMenuEntryDefinitionsNeedAName)
 // Reminder of hard terms which need better/final solution later:
 //   (file links to be updated later if available!);
 //   NAV; section/subsection;  XScreenSaver; keycolor;
@@ -2098,3 +2098,7 @@ static const char help_text[]=
 
 // url.c
 #define MSGTR_MPDEMUX_URL_StringAlreadyEscaped "字符串似乎已经经过 url_escape %c%c1%c2 换码了。\n"
+
+// subtitles
+#define MSGTR_SUBTITLES_SubRip_UnknownFontColor "SubRip：字幕含有未知字体颜色：%s\n"
+
