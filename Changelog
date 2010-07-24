@@ -32,6 +32,7 @@ MPlayer (1.0)
     * Mostly fixed timing issues with some H.264 (PAFF) samples
     * Matroska and Ogg demuxers switched to use libavformat by default.
       Report issues and use -demuxer ogg and -demuxer mkv to work around them.
+    * experimental support for using binary Quicktime codecs with -demuxer lavf.
     * support for TrueHD in Blu-ray streams in libmpdemux
     * more Blu-ray codec support with lavf
     * fix length in ASF/WMV files
