@@ -34,6 +34,7 @@ static int pngRead( unsigned char * fname,txSample * bf )
  int             len;
  AVCodecContext *avctx;
  AVFrame        *frame;
+ AVPacket       pkt;
 
  FILE *fp=fopen( fname,"rb" );
  if ( !fp )
@@ -53,7 +54,12 @@ static int pngRead( unsigned char * fname,txSample * bf )
  frame = avcodec_alloc_frame();
  avcodec_register_all();
  avcodec_open(avctx, avcodec_find_decoder(CODEC_ID_PNG));
- avcodec_decode_video(avctx, frame, &decode_ok, data, len);
+ av_init_packet(&pkt);
+ pkt.data = data;
+ pkt.size = len;
+ // HACK: make PNGs decode normally instead of as CorePNG delta frames
+ pkt.flags = PKT_FLAG_KEY;
+ avcodec_decode_video2(avctx, frame, &decode_ok, &pkt);
  memset(bf, 0, sizeof(*bf));
  switch (avctx->pix_fmt) {
    case PIX_FMT_GRAY8:    bf->BPP =  8; break;
