@@ -2141,10 +2141,7 @@ problems, or DVD subtitle problems, give <option>:sync</option> a try.
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 
-<sect1 id="other">
-<title>Other visualization hardware</title>
-
-<sect2 id="zr">
+<sect1 id="zr">
 <title>Zr</title>
 
 <para>
@@ -2241,11 +2238,11 @@ during playback, it will crash your computer. It is, however, fine to
 wait for <application>MPlayer</application>
 to finish and <emphasis role="bold">THEN</emphasis> stop XawTV.
 </para>
-</sect2>
+</sect1>
 
 <!-- ********** -->
 
-<sect2 id="blinkenlights">
+<sect1 id="blinkenlights">
 <title>Blinkenlights</title>
 
 <para>
@@ -2260,7 +2257,6 @@ has to offer. Just watch some of the
 On the Arcade video you can see the Blinkenlights output driver in
 action at 00:07:50.
 </para>
-</sect2>
 </sect1>
 
 
