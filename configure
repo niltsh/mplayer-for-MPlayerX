@@ -2721,7 +2721,9 @@ else
 fi
 
 echo "pabsw xmm0, xmm0" > $TMPS
-yasm_check || _yasm=""
+if test "$_yasm" ; then
+  yasm_check || die "yasm not found, use --yasm='' if you really want to compile without"
+fi
 if test $_yasm ; then
   def_yasm='#define HAVE_YASM 1'
   have_yasm="yes"
