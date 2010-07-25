@@ -632,13 +632,13 @@ static int control(uint32_t request, void *data, ...)
 		[self set_winSizeMult: 2];
 	if(sender == kFullScreenCmd)
 	{
-		vo_fs = (!(vo_fs));
+		vo_fs = !vo_fs;
 		[self fullscreen:NO];
 	}
 
 	if(sender == kKeepAspectCmd)
 	{
-		vo_keepaspect = (!(vo_keepaspect));
+		vo_keepaspect = !vo_keepaspect;
 		if(vo_keepaspect)
 			[kKeepAspectCmd setState:NSOnState];
 		else
@@ -649,7 +649,7 @@ static int control(uint32_t request, void *data, ...)
 
 	if(sender == kPanScanCmd)
 	{
-		vo_panscan = (!(vo_panscan));
+		vo_panscan = !vo_panscan;
 		if(vo_panscan)
 			[kPanScanCmd setState:NSOnState];
 		else
@@ -763,7 +763,7 @@ static int control(uint32_t request, void *data, ...)
 	//automatically hide mouse cursor (and future on-screen control?)
 	if(isFullscreen && !mouseHide && !isRootwin)
 	{
-		if( ((curTime - lastMouseHide) >= 5) || (lastMouseHide == 0) )
+		if(curTime - lastMouseHide >= 5 || lastMouseHide == 0)
 		{
 			CGDisplayHideCursor(kCGDirectMainDisplay);
 			mouseHide = TRUE;
@@ -773,7 +773,7 @@ static int control(uint32_t request, void *data, ...)
 
 	//update activity every 30 seconds to prevent
 	//screensaver from starting up.
-	if( ((curTime - lastScreensaverUpdate) >= 30) || (lastScreensaverUpdate == 0) )
+	if(curTime - lastScreensaverUpdate >= 30 || lastScreensaverUpdate == 0)
 	{
 		UpdateSystemActivity(UsrActivity);
 		lastScreensaverUpdate = curTime;
