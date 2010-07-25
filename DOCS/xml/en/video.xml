@@ -171,8 +171,7 @@ didn't support YUY2 or YV12 colorspaces. Verify that you have XFree86
 version 4.2.0 or later, it can handle YV12 and YUY2 while previous
 versions, including 4.1.0, <emphasis role="bold">crash with YV12</emphasis>.
 If you experience strange effects using <option>-vo xv</option>, try SDL
-(it has XVideo, too) and see if it helps. Check the
-<link linkend="sdl">SDL</link> section for details.
+(it has XVideo, too) and see if it helps.
 </para>
 
 <para>
@@ -624,39 +623,6 @@ with every chipset driver for XFree out there.
 </para></listitem>
 </itemizedlist>
 
-</sect1>
-
-<!-- ********** -->
-
-<sect1 id="sdl">
-<title>SDL</title>
-
-<para>
-<acronym>SDL</acronym> (Simple Directmedia Layer) is basically a unified
-video/audio interface. Programs that use it know only about SDL, and not
-about what video or audio driver does SDL actually use. For example a Doom
-port using SDL can run on svgalib, aalib, X, fbdev, and others, you only
-have to specify the (for example) video driver to use with the
-<envar>SDL_VIDEODRIVER</envar> environment variable. Well, in theory.
-</para>
-
-<para>
-With <application>MPlayer</application>, we used its X11 driver's software
-scaler ability for cards/drivers that doesn't support XVideo, until we made
-our own (faster, nicer) software scaler. Also we used its aalib output, but
-now we have ours which is more comfortable. Its DGA mode was better than
-ours, until recently. Get it now? :)
-</para>
-
-<para>
-It also helps with some buggy drivers/cards if the video is jerky (not slow
-system problem), or audio is lagging.
-</para>
-
-<para>
-SDL video output supports displaying subtitles under the movie, on the (if
-present) black bar.
-</para>
 </sect1>
 
 <!-- ********** -->
