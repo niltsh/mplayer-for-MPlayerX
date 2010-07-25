@@ -198,23 +198,14 @@ static inline void spudec_cut_image(spudec_handle_t *this)
 	  this->height = last_y - first_y +1;
   } else {
 	  this->height = 0;
-	  this->image_size = 0;
 	  return;
   }
 
 //  printf("new h %d new start %d (sz %d st %d)---\n\n", this->height, this->start_row, this->image_size, this->stride);
 
-  image = malloc(2 * this->stride * this->height);
-  if(image){
-    this->image_size = this->stride * this->height;
-    aimage = image + this->image_size;
-    memcpy(image, this->image + this->stride * first_y, this->image_size);
-    memcpy(aimage, this->aimage + this->stride * first_y, this->image_size);
-    free(this->image);
-    this->image = image;
-    this->aimage = aimage;
-  } else {
-    mp_msg(MSGT_SPUDEC, MSGL_FATAL, "Fatal: update_spu: malloc requested %d bytes\n", 2 * this->stride * this->height);
+  if (first_y > 0) {
+    memmove(this->image,  this->image  + this->stride * first_y, this->stride * this->height);
+    memmove(this->aimage, this->aimage + this->stride * first_y, this->stride * this->height);
   }
 }
 
