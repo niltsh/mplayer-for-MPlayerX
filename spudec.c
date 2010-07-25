@@ -179,8 +179,6 @@ static inline void spudec_cut_image(spudec_handle_t *this)
 {
   unsigned int fy, ly;
   unsigned int first_y, last_y;
-  unsigned char *image;
-  unsigned char *aimage;
 
   if (this->stride == 0 || this->height == 0) {
     return;
