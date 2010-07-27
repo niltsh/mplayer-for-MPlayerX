@@ -3,7 +3,7 @@
 //... Okay enough of the hw, now send the other two!
 //
 // Updated by: Gabrov <gabrov@freemail.hu>
-// Sync'ed with help_mp-en.h r31032 (2010. 04. 25.)
+// Sync'ed with help_mp-en.h r31752 (2010. 07. 27.)
 
 
 // ========================= MPlayer help ===========================
@@ -1105,9 +1105,7 @@ static const char help_text[]=
 // vo_yuv4mpeg.c
 #define MSGTR_VO_YUV4MPEG_InterlacedHeightDivisibleBy4 "Az interlaced módhoz néggyel osztható kép magasság szükséges."
 #define MSGTR_VO_YUV4MPEG_InterlacedLineBufAllocFail "Nem sikerült sor buffert foglalni az interlaced módhoz."
-#define MSGTR_VO_YUV4MPEG_InterlacedInputNotRGB "Input nem RGB, nem lehet szétválasztani a színeket mezőnként!"
 #define MSGTR_VO_YUV4MPEG_WidthDivisibleBy2 "A kép szélességnek kettővel oszthatónak kell lennie."
-#define MSGTR_VO_YUV4MPEG_NoMemRGBFrameBuf "Nincs elég memória az RGB framebuffer lefoglalásához."
 #define MSGTR_VO_YUV4MPEG_OutFileOpenError "Nincs elegendő memória vagy fájl handle a(z) \"%s\" írásához!"
 #define MSGTR_VO_YUV4MPEG_OutFileWriteError "Hiba a kép kimenetre írása közben!"
 #define MSGTR_VO_YUV4MPEG_UnknownSubDev "Ismeretlen aleszköz: %s"
@@ -1444,7 +1442,7 @@ static const char help_text[]=
 #define MSGTR_LeaveTelecineMode "\ndemux_mpg: 30000/1001fps NTSC formátumot találtam, frameráta váltás.\n"
 #define MSGTR_EnterTelecineMode "\ndemux_mpg: 24000/1001fps progresszív NTSC formátumot találtam, frameráta váltás.\n"
 
-#define MSGTR_CacheFill "\rCache feltöltés: %5.2f%% (%"PRId64" bytes)   "
+#define MSGTR_CacheFill "\rCache feltöltés: %5.2f%% (%"PRId64" bájt)   "
 #define MSGTR_NoBindFound "Nincs semmi sem összerendelve a(z) '%s' gombbal."
 #define MSGTR_FailedToOpen "Nem lehet megnyitni: %s.\n"
 
@@ -1895,6 +1893,7 @@ static const char help_text[]=
 #define MSGTR_SMBFileNotFound "Nem nyitható meg a hálózatról: '%s'\n"
 #define MSGTR_SMBNotCompiled "Nincs befordítva az MPlayerbe az SMB támogatás\n"
 
+#define MSGTR_CantOpenBluray "Nem tudom megnyitni a Blu-ray eszközt: %s\n"
 #define MSGTR_CantOpenDVD "Nem tudom megnyitni a DVD eszközt: %s (%s)\n"
 
 // stream_cdda.c
@@ -1965,6 +1964,11 @@ static const char help_text[]=
 #define MSGTR_DVDsubtitleChannel "Kiválasztott DVD felirat csatorna: %d nyelv: %c%c\n"
 #define MSGTR_DVDsubtitleLanguage "felirat ( sid ): %d nyelv: %s\n"
 #define MSGTR_DVDnumSubtitles "feliratok szám a lemezen: %d\n"
+
+// stream_bluray.c
+#define MSGTR_BlurayNoDevice "Nem lett megadva Blu-ray eszköz/hely ...\n"
+#define MSGTR_BlurayNoTitles "Itt nem található Blu-ray-kompatibilis sáv.\n"
+#define MSGTR_BlurayOK "Blu-ray sikeresen megnyitva.\n"
 
 // stream_radio.c
 #define MSGTR_RADIO_ChannelNamesDetected "[radio] Rádió csatornák neve megtalálva.\n"
@@ -2110,3 +2114,7 @@ static const char help_text[]=
 
 // url.c
 #define MSGTR_MPDEMUX_URL_StringAlreadyEscaped "A karakterlánc már escape-ltnek tűnik az url_escape-ben %c%c1%c2\n"
+
+// feliratok
+#define MSGTR_SUBTITLES_SubRip_UnknownFontColor "SubRip: ismeretlen betű szín a feliratban: %s\n"
+
