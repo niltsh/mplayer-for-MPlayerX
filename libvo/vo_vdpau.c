@@ -420,7 +420,7 @@ static int win_x11_init_vdpau_flip_queue(void)
 {
     VdpStatus vdp_st;
     // {0, 0, 0, 0} makes every black window on top shine through
-    VdpColor vdp_bg = {0.01, 0.01, 0.01, 0};
+    VdpColor vdp_bg = {0.01, 0.02, 0.03, 0};
 
     vdp_st = vdp_presentation_queue_target_create_x11(vdp_device, vo_window,
                                                       &vdp_flip_target);
