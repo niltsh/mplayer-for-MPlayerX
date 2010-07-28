@@ -25,6 +25,7 @@ done
 
 if test -n "$catalog"; then
   echo "Found SGML catalog at $catalog"
+  catalog_opts=--catalogs
 else
   echo "No SGML catalog found."
 fi
@@ -167,11 +168,7 @@ echo "Looking for a valid XSLT processor..."
 if xsltproc --version > /dev/null 2>&1; then
   if test -z "$fake_chunk_xsl"; then
     echo "Found xsltproc. If it works, it's probably the best choice."
-    if test -n "$catalog"; then
-      xsltcommand="xsltproc --catalogs -o \$\$1 \$\$2 \$\$3"
-    else
-      xsltcommand="xsltproc -o \$\$1 \$\$2 \$\$3"
-    fi
+    xsltcommand="xsltproc $catalog_opts -o \$\$1 \$\$2 \$\$3"
   else
     echo "Found xsltproc but no stylesheets on your system."
     echo "xsltproc is unusable without stylesheets."
@@ -182,11 +179,7 @@ fi
 echo "Searching for XML checker..."
 if command -v xmllint > /dev/null 2>&1; then
   echo "Found xmllint"
-  if test -n "$catalog"; then
-    xmllint_command="xmllint --noout --noent --postvalid --catalogs \$*"
-  else
-    xmllint_command="xmllint --noout --noent --postvalid \$*"
-  fi
+    xmllint_command="xmllint --noout --noent --postvalid $catalog_opts \$*"
 else
   echo "Not found"
   xmllint_command=true
