@@ -180,7 +180,7 @@ fi
 echo "Searching for XML checker..."
 if command -v xmllint > /dev/null 2>&1; then
   echo "Found xmllint"
-    xmllint_command="xmllint --noout --noent --postvalid $catalog_opts \$*"
+  xmllint_command="xmllint --noout --noent --postvalid $catalog_opts \$*"
 else
   echo "Not found"
   xmllint_command=true
