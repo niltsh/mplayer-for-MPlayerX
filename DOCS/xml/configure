@@ -177,17 +177,8 @@ if xsltproc --version > /dev/null 2>&1; then
 fi
 
 
-echo "Searching for XML checker..."
-if command -v xmllint > /dev/null 2>&1; then
-  echo "Found xmllint"
-  xmllint_command="xmllint --noout --noent --postvalid $catalog_opts \$*"
-else
-  echo "Not found"
-  xmllint_command=true
-fi
-
 cat > xml.mak << EOF
 CATALOG = $catalog
-XMLLINT_COMMAND = $xmllint_command
+XMLLINT_COMMAND = xmllint --noout --noent --postvalid $catalog_opts \$*
 XSLT_COMMAND = $xsltcommand
 EOF
