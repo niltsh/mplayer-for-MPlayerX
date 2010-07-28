@@ -8,6 +8,7 @@ for try_catalog in \
   /etc/sgml/catalog \
   /usr/share/xml/docbook/*/catalog.xml \
   /opt/local/share/xml/docbook-xml/*/catalog.xml \
+  /opt/local/share/xml/docbook/*/catalog.xml \
   /usr/share/sgml/docbook/*/*catalog \
   /usr/share/apps/ksgmltools2/customization/en/catalog \
   /usr/share/sgml/catalog \
