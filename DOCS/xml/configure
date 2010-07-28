@@ -87,7 +87,6 @@ if test -z "$docbook_xsl"
 then
   docbook_xsl=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/html/docbook.xsl
   echo "Not found. Using default ($docbook_xsl)"
-  fake_docbook_xsl=yes
 else
   echo "Found docbook.xsl at $docbook_xsl"
 fi
