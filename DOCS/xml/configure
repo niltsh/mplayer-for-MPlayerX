@@ -158,7 +158,7 @@ for lang in `grep 'DOC_LANGS =' ../../config.mak|cut -d= -f2`; do
 [
 EOF
 
-  for file in `find $lang en -name \*.xml -exec basename \{\} \; | sort -u`; do
+  for file in $(find en -name \*.xml -exec basename \{\} \;); do
     echo '<!ENTITY '$file' SYSTEM "'$file'">' >> $lang/main.xml
   done
 
