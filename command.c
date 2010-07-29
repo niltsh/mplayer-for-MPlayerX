@@ -98,32 +98,6 @@ static void rescale_input_coordinates(int ix, int iy, double *dx, double *dy)
            vo_dheight, vo_fs);
 }
 
-static int sub_pos_by_source(MPContext *mpctx, int src);
-
-static void update_global_sub_size(MPContext *mpctx)
-{
-    int i;
-    int cnt = 0;
-
-    // update number of demuxer sub streams
-    for (i = 0; i < MAX_S_STREAMS; i++)
-        if (mpctx->demuxer->s_streams[i])
-            cnt++;
-    if (cnt > mpctx->sub_counts[SUB_SOURCE_DEMUX])
-        mpctx->sub_counts[SUB_SOURCE_DEMUX] = cnt;
-
-    // update global size
-    mpctx->global_sub_size = 0;
-    for (i = 0; i < SUB_SOURCES; i++)
-        mpctx->global_sub_size += mpctx->sub_counts[i];
-
-    // update global_sub_pos if we auto-detected a demuxer sub
-    if (mpctx->global_sub_pos == -1 &&
-        mpctx->demuxer->sub && mpctx->demuxer->sub->id >= 0)
-        mpctx->global_sub_pos = sub_pos_by_source(mpctx, SUB_SOURCE_DEMUX) +
-                                mpctx->demuxer->sub->id;
-}
-
 static int sub_pos_by_source(MPContext *mpctx, int src)
 {
     int i, cnt = 0;
@@ -165,6 +139,30 @@ static int sub_source_pos(MPContext *mpctx)
 static int sub_source(MPContext *mpctx)
 {
     return sub_source_by_pos(mpctx, mpctx->global_sub_pos);
+}
+
+static void update_global_sub_size(MPContext *mpctx)
+{
+    int i;
+    int cnt = 0;
+
+    // update number of demuxer sub streams
+    for (i = 0; i < MAX_S_STREAMS; i++)
+        if (mpctx->demuxer->s_streams[i])
+            cnt++;
+    if (cnt > mpctx->sub_counts[SUB_SOURCE_DEMUX])
+        mpctx->sub_counts[SUB_SOURCE_DEMUX] = cnt;
+
+    // update global size
+    mpctx->global_sub_size = 0;
+    for (i = 0; i < SUB_SOURCES; i++)
+        mpctx->global_sub_size += mpctx->sub_counts[i];
+
+    // update global_sub_pos if we auto-detected a demuxer sub
+    if (mpctx->global_sub_pos == -1 &&
+        mpctx->demuxer->sub && mpctx->demuxer->sub->id >= 0)
+        mpctx->global_sub_pos = sub_pos_by_source(mpctx, SUB_SOURCE_DEMUX) +
+                                mpctx->demuxer->sub->id;
 }
 
 /**
