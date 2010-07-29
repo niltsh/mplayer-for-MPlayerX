@@ -1,5 +1,12 @@
 MPlayer (1.0)
 
+  rc5:
+    Demuxers:
+    * experimental support for using binary Quicktime codecs with -demuxer lavf.
+
+    Other:
+    * experimental support for PGS (BluRay-compatible) subtitles.
+
   rc4: "Yes We Can"
 
     GUI: Changes towards removing the GUI
@@ -32,7 +39,6 @@ MPlayer (1.0)
     * Mostly fixed timing issues with some H.264 (PAFF) samples
     * Matroska and Ogg demuxers switched to use libavformat by default.
       Report issues and use -demuxer ogg and -demuxer mkv to work around them.
-    * experimental support for using binary Quicktime codecs with -demuxer lavf.
     * support for TrueHD in Blu-ray streams in libmpdemux
     * more Blu-ray codec support with lavf
     * fix length in ASF/WMV files
@@ -63,7 +69,6 @@ MPlayer (1.0)
     * add OS/2 KAI audio driver (-ao kai)
 
     Other:
-    * experimental support for PGS (BluRay-compatible) subtitles.
     * -nosub option for disabling auto-selected subtitles
     * support for displaying subs in the terminal (FIXME)
     * support for subtitles with audio-only files
