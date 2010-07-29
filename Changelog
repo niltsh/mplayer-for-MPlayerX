@@ -5,7 +5,7 @@ MPlayer (1.0)
     * experimental support for using binary Quicktime codecs with -demuxer lavf.
 
     Other:
-    * experimental support for PGS (BluRay-compatible) subtitles.
+    * experimental support for PGS (BluRay-compatible), DVB and XSUB subtitles.
 
   rc4: "Yes We Can"
 
