@@ -3763,7 +3763,14 @@ echores "$_dvdio"
 
 echocheck "sys/cdio.h"
 _cdio=no
-header_check sys/cdio.h && _cdio=yes
+cat > $TMPC << EOF
+// types.h needed to workaround broken headers
+// on e.g. OpenSolaris
+#include <sys/types.h>
+#include <sys/cdio.h>
+int main(void) { return 0; }
+EOF
+compile_check $TMPC && _cdio=yes
 if test "$_cdio" = yes ; then
   def_cdio='#define DVD_STRUCT_IN_SYS_CDIO_H 1'
 else
