@@ -98,6 +98,8 @@ static void rescale_input_coordinates(int ix, int iy, double *dx, double *dy)
            vo_dheight, vo_fs);
 }
 
+static int sub_pos_by_source(MPContext *mpctx, int src);
+
 static void update_global_sub_size(MPContext *mpctx)
 {
     int i;
@@ -110,12 +112,16 @@ static void update_global_sub_size(MPContext *mpctx)
     if (cnt > mpctx->sub_counts[SUB_SOURCE_DEMUX])
         mpctx->sub_counts[SUB_SOURCE_DEMUX] = cnt;
 
-    // TODO: possibly adjust global_sub_pos
-
     // update global size
     mpctx->global_sub_size = 0;
     for (i = 0; i < SUB_SOURCES; i++)
         mpctx->global_sub_size += mpctx->sub_counts[i];
+
+    // update global_sub_pos if we auto-detected a demuxer sub
+    if (mpctx->global_sub_pos == -1 &&
+        mpctx->demuxer->sub && mpctx->demuxer->sub->id >= 0)
+        mpctx->global_sub_pos = sub_pos_by_source(mpctx, SUB_SOURCE_DEMUX) +
+                                mpctx->demuxer->sub->id;
 }
 
 static int sub_pos_by_source(MPContext *mpctx, int src)
