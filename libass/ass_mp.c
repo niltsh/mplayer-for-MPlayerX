@@ -36,7 +36,7 @@
 #endif
 
 // libass-related command line options
-ass_library_t* ass_library;
+ASS_Library* ass_library;
 int ass_enabled = 0;
 float ass_font_scale = 1.;
 float ass_line_spacing = 0.;
@@ -70,8 +70,8 @@ extern char* sub_cp;
 static char* sub_cp = 0;
 #endif
 
-ass_track_t* ass_default_track(ass_library_t* library) {
-	ass_track_t* track = ass_new_track(library);
+ASS_Track* ass_default_track(ASS_Library* library) {
+	ASS_Track* track = ass_new_track(library);
 
 	track->track_type = TRACK_TYPE_ASS;
 	track->Timer = 100.;
@@ -82,7 +82,7 @@ ass_track_t* ass_default_track(ass_library_t* library) {
 		ass_read_styles(track, ass_styles_file, sub_cp);
 
 	if (track->n_styles == 0) {
-		ass_style_t* style;
+		ASS_Style* style;
 		int sid;
 		double fs;
 		uint32_t c1, c2;
@@ -120,14 +120,14 @@ ass_track_t* ass_default_track(ass_library_t* library) {
 		style->ScaleY = 1.;
 	}
 
-	process_force_style(track);
+	ass_process_force_style(track);
 	return track;
 }
 
-static int check_duplicate_plaintext_event(ass_track_t* track)
+static int check_duplicate_plaintext_event(ASS_Track* track)
 {
 	int i;
-	ass_event_t* evt = track->events + track->n_events - 1;
+	ASS_Event* evt = track->events + track->n_events - 1;
 
 	for (i = 0; i<track->n_events - 1; ++i) // ignoring last event, it is the one we are comparing with
 		if (track->events[i].Start == evt->Start &&
@@ -138,17 +138,17 @@ static int check_duplicate_plaintext_event(ass_track_t* track)
 }
 
 /**
- * \brief Convert subtitle to ass_event_t for the given track
- * \param ass_track_t track
+ * \brief Convert subtitle to ASS_Event for the given track
+ * \param track ASS_Track
  * \param sub subtitle to convert
  * \return event id
  * note: assumes that subtitle is _not_ fps-based; caller must manually correct
  *   Start and Duration in other case.
  **/
-int ass_process_subtitle(ass_track_t* track, subtitle* sub)
+int ass_process_subtitle(ASS_Track* track, subtitle* sub)
 {
         int eid;
-        ass_event_t* event;
+        ASS_Event* event;
 	int len = 0, j;
 	char* p;
 	char* end;
@@ -194,13 +194,13 @@ int ass_process_subtitle(ass_track_t* track, subtitle* sub)
 
 
 /**
- * \brief Convert subdata to ass_track
+ * \brief Convert subdata to ASS_Track
  * \param subdata subtitles struct from subreader
  * \param fps video framerate
- * \return newly allocated ass_track, filled with subtitles from subdata
+ * \return newly allocated ASS_Track, filled with subtitles from subdata
  */
-ass_track_t* ass_read_subdata(ass_library_t* library, sub_data* subdata, double fps) {
-	ass_track_t* track;
+ASS_Track* ass_read_subdata(ASS_Library* library, sub_data* subdata, double fps) {
+	ASS_Track* track;
 	int i;
 
 	track = ass_default_track(library);
@@ -218,10 +218,10 @@ ass_track_t* ass_read_subdata(ass_library_t* library, sub_data* subdata, double 
 	return track;
 }
 
-ass_track_t* ass_read_stream(ass_library_t* library, const char *fname, char *charset) {
+ASS_Track* ass_read_stream(ASS_Library* library, const char *fname, char *charset) {
 	int i;
 	char *buf = NULL;
-	ass_track_t *track;
+	ASS_Track *track;
 	size_t sz = 0;
 	size_t buf_alloc = 0;
 	stream_t *fd;
@@ -263,7 +263,7 @@ ass_track_t* ass_read_stream(ass_library_t* library, const char *fname, char *ch
 	return track;
 }
 
-void ass_configure(ass_renderer_t* priv, int w, int h, int unscaled) {
+void ass_configure(ASS_Renderer* priv, int w, int h, int unscaled) {
 	int hinting;
 	ass_set_frame_size(priv, w, h);
 	ass_set_margins(priv, ass_top_margin, ass_bottom_margin, 0, 0);
@@ -277,7 +277,7 @@ void ass_configure(ass_renderer_t* priv, int w, int h, int unscaled) {
 	ass_set_line_spacing(priv, ass_line_spacing);
 }
 
-void ass_configure_fonts(ass_renderer_t* priv) {
+void ass_configure_fonts(ASS_Renderer* priv) {
 	char *dir, *path, *family;
 	dir = get_path("fonts");
 	if (font_fontconfig < 0 && sub_font_name) path = strdup(sub_font_name);
@@ -309,8 +309,8 @@ static void message_callback(int level, const char *format, va_list va, void *ct
 	}
 }
 
-ass_library_t* ass_init(void) {
-	ass_library_t* priv;
+ASS_Library* ass_init(void) {
+	ASS_Library* priv;
 	char* path = get_path("fonts");
 	priv = ass_library_init();
 	ass_set_message_cb(priv, message_callback, NULL);
@@ -323,7 +323,7 @@ ass_library_t* ass_init(void) {
 
 int ass_force_reload = 0; // flag set if global ass-related settings were changed
 
-ass_image_t* ass_mp_render_frame(ass_renderer_t *priv, ass_track_t* track, long long now, int* detect_change) {
+ASS_Image* ass_mp_render_frame(ASS_Renderer *priv, ASS_Track* track, long long now, int* detect_change) {
 	if (ass_force_reload) {
 		ass_set_margins(priv, ass_top_margin, ass_bottom_margin, 0, 0);
 		ass_set_use_margins(priv, ass_use_margins);

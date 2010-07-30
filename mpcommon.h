@@ -26,7 +26,7 @@
 #include "libass/ass_mp.h"
 
 extern double sub_last_pts;
-extern ass_track_t *ass_track;
+extern ASS_Track *ass_track;
 extern subtitle *vo_sub_last;
 
 extern float sub_delay;

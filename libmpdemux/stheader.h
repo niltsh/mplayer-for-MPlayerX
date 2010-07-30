@@ -126,7 +126,7 @@ typedef struct sh_sub {
   unsigned char* extradata; // extra header data passed from demuxer
   int extradata_len;
 #ifdef CONFIG_ASS
-  ass_track_t* ass_track;  // for SSA/ASS streams (type == 'a')
+  ASS_Track* ass_track;  // for SSA/ASS streams (type == 'a')
 #endif
 } sh_sub_t;
 

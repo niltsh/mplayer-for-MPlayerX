@@ -114,7 +114,7 @@ typedef struct MPContext {
 #ifdef CONFIG_ASS
     // set_of_ass_tracks[i] contains subtitles from set_of_subtitles[i]
     // parsed by libass or NULL if format unsupported
-    ass_track_t* set_of_ass_tracks[MAX_SUBTITLE_FILES];
+    ASS_Track* set_of_ass_tracks[MAX_SUBTITLE_FILES];
 #endif
     sub_data* set_of_subtitles[MAX_SUBTITLE_FILES];
 

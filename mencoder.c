@@ -325,7 +325,7 @@ static void add_subtitles(char *filename, float fps, int silent)
 {
     sub_data *subd;
 #ifdef CONFIG_ASS
-    ass_track_t *asst = 0;
+    ASS_Track *asst = 0;
 #endif
 
     if (!filename) return;

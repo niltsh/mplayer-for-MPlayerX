@@ -2425,7 +2425,7 @@ static void remove_subtitle_range(MPContext *mpctx, int start, int count)
     int after = mpctx->set_of_sub_size - end;
     sub_data **subs = mpctx->set_of_subtitles;
 #ifdef CONFIG_ASS
-    ass_track_t **ass_tracks = mpctx->set_of_ass_tracks;
+    ASS_Track **ass_tracks = mpctx->set_of_ass_tracks;
 #endif
     if (count < 0 || count > mpctx->set_of_sub_size ||
         start < 0 || start > mpctx->set_of_sub_size - count) {

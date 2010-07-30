@@ -39,7 +39,7 @@ struct vf_priv_s {
     double pts;
     const vo_functions_t *vo;
 #ifdef CONFIG_ASS
-    ass_renderer_t* ass_priv;
+    ASS_Renderer* ass_priv;
     int prev_visibility;
 #endif
 };
@@ -130,7 +130,7 @@ static int control(struct vf_instance *vf, int request, void* data)
 #ifdef CONFIG_ASS
     case VFCTRL_INIT_EOSD:
     {
-        vf->priv->ass_priv = ass_renderer_init((ass_library_t*)data);
+        vf->priv->ass_priv = ass_renderer_init((ASS_Library*)data);
         if (!vf->priv->ass_priv) return CONTROL_FALSE;
         ass_configure_fonts(vf->priv->ass_priv);
         vf->priv->prev_visibility = 0;
@@ -138,7 +138,7 @@ static int control(struct vf_instance *vf, int request, void* data)
     }
     case VFCTRL_DRAW_EOSD:
     {
-        mp_eosd_images_t images = {NULL, 2};
+        EOSD_ImageList images = {NULL, 2};
         double pts = vf->priv->pts;
         if (!vo_config_count || !vf->priv->ass_priv) return CONTROL_FALSE;
         if (sub_visibility && vf->priv->ass_priv && ass_track && (pts != MP_NOPTS_VALUE)) {

@@ -854,13 +854,13 @@ static void draw_eosd(void)
     }
 }
 
-static void generate_eosd(mp_eosd_images_t *imgs)
+static void generate_eosd(EOSD_ImageList *imgs)
 {
     VdpStatus vdp_st;
     VdpRect destRect;
     int j, found;
-    ass_image_t *img = imgs->imgs;
-    ass_image_t *i;
+    ASS_Image *img = imgs->imgs;
+    ASS_Image *i;
 
     // Nothing changed, no need to redraw
     if (imgs->changed == 0)
