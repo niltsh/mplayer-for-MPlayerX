@@ -783,6 +783,7 @@ dvb_config_t *dvb_get_config(void)
 			continue;
 		}
 
+		conf_file = get_path("channels.conf");
 		switch(type)
 		{
 			case TUNER_TER:
