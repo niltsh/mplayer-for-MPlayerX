@@ -345,6 +345,11 @@ static unsigned int initialized_flags=0;
 /// step size of mixer changes
 int volstep = 3;
 
+#ifdef CONFIG_CRASH_DEBUG
+static char *prog_path;
+static int crash_debug = 0;
+#endif
+
 /* This header requires all the global variable declarations. */
 #include "cfg-mplayer.h"
 
@@ -790,11 +795,6 @@ static void child_sighandler(int x){
   pid_t pid;
   while((pid=waitpid(-1,NULL,WNOHANG)) > 0);
 }
-#endif
-
-#ifdef CONFIG_CRASH_DEBUG
-static char *prog_path;
-static int crash_debug = 0;
 #endif
 
 static void exit_sighandler(int x){
