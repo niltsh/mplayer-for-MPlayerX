@@ -40,9 +40,6 @@
 #include "mpeg_hdr.h"
 #include "mp3_hdr.h"
 
-#ifdef CONFIG_LIBA52
-#include <a52dec/a52.h>
-#endif
 
 #define PACK_HEADER_START_CODE 0x01ba
 #define SYSTEM_HEADER_START_CODE 0x01bb
@@ -2075,7 +2072,7 @@ static int analyze_mpa(muxer_stream_t *s)
 
 static int parse_audio(muxer_stream_t *s, int finalize, unsigned int *nf, double *timer, double delay, int drop)
 {
-	int i, j, len, chans, srate, spf, layer, dummy, tot, num, frm_idx;
+	int i, j, len, chans, srate, spf, layer, tot, num, frm_idx;
 	int finished;
 	unsigned int frames;
 	uint64_t idur;
@@ -2124,11 +2121,7 @@ static int parse_audio(muxer_stream_t *s, int finalize, unsigned int *nf, double
 				if(s->b_buffer[i] == 0x0B && s->b_buffer[i+1] == 0x77)
 				{
 					srate = 0;
-				#ifdef CONFIG_LIBA52
-					len = a52_syncinfo(&(s->b_buffer[i]), &dummy, &srate, &dummy);
-				#else
 					len = mp_a52_framesize(&(s->b_buffer[i]), &srate);
-				#endif
 					if((len > 0) && (srate == s->wf->nSamplesPerSec) && (i + len <= s->b_buffer_len))
 					{
 						dur = (double) 1536 / (double) srate;
