@@ -760,7 +760,8 @@ static void create_osd_texture(int x0, int y0, int w, int h,
 static void do_render_osd(int type) {
   int draw_osd  = (type & RENDER_OSD)  && osdtexCnt > 0;
   int draw_eosd = (type & RENDER_EOSD) && eosdDispList;
-  if (draw_osd || draw_eosd) {
+  if (!draw_osd && !draw_eosd)
+    return;
     // set special rendering parameters
     if (!scaled_osd) {
       mpglMatrixMode(GL_PROJECTION);
@@ -788,7 +789,6 @@ static void do_render_osd(int type) {
     if (!scaled_osd)
       mpglPopMatrix();
     mpglBindTexture(gl_target, 0);
-  }
 }
 
 static void draw_osd(void)
