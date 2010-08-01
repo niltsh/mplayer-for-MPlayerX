@@ -159,10 +159,16 @@ static void update_global_sub_size(MPContext *mpctx)
         mpctx->global_sub_size += mpctx->sub_counts[i];
 
     // update global_sub_pos if we auto-detected a demuxer sub
-    if (mpctx->global_sub_pos == -1 &&
-        mpctx->demuxer->sub && mpctx->demuxer->sub->id >= 0)
-        mpctx->global_sub_pos = sub_pos_by_source(mpctx, SUB_SOURCE_DEMUX) +
-                                mpctx->demuxer->sub->id;
+    if (mpctx->global_sub_pos == -1) {
+        int sub_id = -1;
+        if (mpctx->demuxer->sub)
+            sub_id = mpctx->demuxer->sub->id;
+        if (sub_id < 0)
+            sub_id = dvdsub_id;
+        if (sub_id >= 0 && sub_id < mpctx->sub_counts[SUB_SOURCE_DEMUX])
+            mpctx->global_sub_pos = sub_pos_by_source(mpctx, SUB_SOURCE_DEMUX) +
+                                    sub_id;
+    }
 }
 
 /**
@@ -1666,7 +1672,7 @@ static int mp_property_sub_source(m_option_t *prop, int action, void *arg,
 static int mp_property_sub_by_type(m_option_t *prop, int action, void *arg,
                                    MPContext *mpctx)
 {
-    int source, is_cur_source, offset;
+    int source, is_cur_source, offset, new_pos;
     update_global_sub_size(mpctx);
     if (!mpctx->sh_video || mpctx->global_sub_size <= 0)
         return M_PROPERTY_UNAVAILABLE;
@@ -1685,6 +1691,7 @@ static int mp_property_sub_by_type(m_option_t *prop, int action, void *arg,
         return M_PROPERTY_UNAVAILABLE;
 
     is_cur_source = sub_source(mpctx) == source;
+    new_pos = mpctx->global_sub_pos;
     switch (action) {
     case M_PROPERTY_GET:
         if (!arg)
@@ -1713,14 +1720,14 @@ static int mp_property_sub_by_type(m_option_t *prop, int action, void *arg,
             int index = *(int *)arg;
             if (source == SUB_SOURCE_VOBSUB)
                 index = vobsub_get_index_by_id(vo_vobsub, index);
-            mpctx->global_sub_pos = offset + index;
+            new_pos = offset + index;
             if (index < 0 || index > mpctx->sub_counts[source]) {
-                mpctx->global_sub_pos = -1;
+                new_pos = -1;
                 *(int *) arg = -1;
             }
         }
         else
-            mpctx->global_sub_pos = -1;
+            new_pos = -1;
         break;
     case M_PROPERTY_STEP_UP:
     case M_PROPERTY_STEP_DOWN: {
@@ -1729,27 +1736,27 @@ static int mp_property_sub_by_type(m_option_t *prop, int action, void *arg,
         int step = (step_all > 0) ? 1 : -1;
         int max_sub_pos_for_source = -1;
         if (!is_cur_source)
-            mpctx->global_sub_pos = -1;
+            new_pos = -1;
         while (step_all) {
-            if (mpctx->global_sub_pos == -1) {
+            if (new_pos == -1) {
                 if (step > 0)
-                    mpctx->global_sub_pos = offset;
+                    new_pos = offset;
                 else if (max_sub_pos_for_source == -1) {
                     // Find max pos for specific source
-                    mpctx->global_sub_pos = mpctx->global_sub_size - 1;
-                    while (mpctx->global_sub_pos >= 0
+                    new_pos = mpctx->global_sub_size - 1;
+                    while (new_pos >= 0
                             && sub_source(mpctx) != source)
-                        --mpctx->global_sub_pos;
+                        new_pos--;
                 }
                 else
-                    mpctx->global_sub_pos = max_sub_pos_for_source;
+                    new_pos = max_sub_pos_for_source;
             }
             else {
-                mpctx->global_sub_pos += step;
-                if (mpctx->global_sub_pos < offset ||
-                        mpctx->global_sub_pos >= mpctx->global_sub_size ||
+                new_pos += step;
+                if (new_pos < offset ||
+                        new_pos >= mpctx->global_sub_size ||
                         sub_source(mpctx) != source)
-                    mpctx->global_sub_pos = -1;
+                    new_pos = -1;
             }
             step_all -= step;
         }
@@ -1758,8 +1765,7 @@ static int mp_property_sub_by_type(m_option_t *prop, int action, void *arg,
     default:
         return M_PROPERTY_NOT_IMPLEMENTED;
     }
-    --mpctx->global_sub_pos;
-    return mp_property_sub(prop, M_PROPERTY_STEP_UP, NULL, mpctx);
+    return mp_property_sub(prop, M_PROPERTY_SET, &new_pos, mpctx);
 }
 
 /// Subtitle delay (RW)
