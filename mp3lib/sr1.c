@@ -24,9 +24,6 @@
 
 #include "libavutil/common.h"
 
-#undef fprintf
-#undef printf
-
 #if ARCH_X86_64
 // 3DNow! and 3DNow!Ext routines don't compile under AMD64
 #undef HAVE_AMD3DNOW
