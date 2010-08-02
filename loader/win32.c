@@ -4748,7 +4748,7 @@ static void WINAPI expGlobalMemoryStatus(
 	lpmem->dwAvailPageFile = 16*1024*1024;
     }
     expGetSystemInfo(&si);
-    lpmem->dwTotalVirtual  = si.lpMaximumApplicationAddress-si.lpMinimumApplicationAddress;
+    lpmem->dwTotalVirtual  = (uint8_t *)si.lpMaximumApplicationAddress-(uint8_t *)si.lpMinimumApplicationAddress;
     /* FIXME: we should track down all the already allocated VM pages and substract them, for now arbitrarily remove 64KB so that it matches NT */
     lpmem->dwAvailVirtual  = lpmem->dwTotalVirtual-64*1024;
     memcpy(&cached_memstatus,lpmem,sizeof(MEMORYSTATUS));
