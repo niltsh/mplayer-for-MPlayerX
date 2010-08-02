@@ -4995,8 +4995,8 @@ static WIN_BOOL WINAPI expGetOpenFileNameA(/*LPOPENFILENAMEA*/ void* lpfn)
     return 1;
 }
 
-static char * WINAPI expPathFindExtensionA(const char *path) {
-  char *ext;
+static const char * WINAPI expPathFindExtensionA(const char *path) {
+  const char *ext;
   if (!path)
     ext = NULL;
   else {
@@ -5008,8 +5008,8 @@ static char * WINAPI expPathFindExtensionA(const char *path) {
   return ext;
 }
 
-static char * WINAPI expPathFindFileNameA(const char *path) {
-  char *name;
+static const char * WINAPI expPathFindFileNameA(const char *path) {
+  const char *name;
   if (!path || strlen(path) < 2)
     name = path;
   else {
