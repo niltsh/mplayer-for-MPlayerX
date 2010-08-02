@@ -5142,7 +5142,7 @@ struct libs
 {
     char name[64];
     int length;
-    struct exports* exps;
+    const struct exports* exps;
 };
 
 #define FF(X,Y) \
@@ -5151,7 +5151,7 @@ struct libs
 #define UNDEFF(X, Y) \
     {#X, Y, (void*)-1},
 
-struct exports exp_kernel32[]=
+static const struct exports exp_kernel32[]=
 {
     FF(GetVolumeInformationA,-1)
     FF(GetDriveTypeA,-1)
@@ -5327,7 +5327,7 @@ struct exports exp_kernel32[]=
     UNDEFF(FlsFree, -1)
 };
 
-struct exports exp_msvcrt[]={
+static const struct exports exp_msvcrt[]={
     FF(malloc, -1)
     FF(_initterm, -1)
     FF(__dllonexit, -1)
@@ -5391,7 +5391,7 @@ struct exports exp_msvcrt[]={
     FF(realloc,-1)
     {"puts",-1,(void*)&puts}
 };
-struct exports exp_winmm[]={
+static const struct exports exp_winmm[]={
     FF(GetDriverModuleHandle, -1)
     FF(timeGetTime, -1)
     FF(DefDriverProc, -1)
@@ -5404,10 +5404,10 @@ struct exports exp_winmm[]={
     FF(waveOutGetNumDevs, -1)
 #endif
 };
-struct exports exp_psapi[]={
+static const struct exports exp_psapi[]={
     FF(GetModuleBaseNameA, -1)
 };
-struct exports exp_user32[]={
+static const struct exports exp_user32[]={
     FF(LoadIconA,-1)
     FF(LoadStringA, -1)
     FF(wsprintfA, -1)
@@ -5455,7 +5455,7 @@ struct exports exp_user32[]={
     FF(CharNextA, -1)
     FF(EnumDisplaySettingsA, -1)
 };
-struct exports exp_advapi32[]={
+static const struct exports exp_advapi32[]={
     FF(RegCloseKey, -1)
     FF(RegCreateKeyA, -1)
     FF(RegCreateKeyExA, -1)
@@ -5467,7 +5467,7 @@ struct exports exp_advapi32[]={
     FF(RegSetValueExA, -1)
     FF(RegQueryInfoKeyA, -1)
 };
-struct exports exp_gdi32[]={
+static const struct exports exp_gdi32[]={
     FF(CreateCompatibleDC, -1)
     FF(CreateFontA, -1)
     FF(DeleteDC, -1)
@@ -5480,10 +5480,10 @@ struct exports exp_gdi32[]={
     FF(CreateRectRgn, -1)
 #endif
 };
-struct exports exp_version[]={
+static const struct exports exp_version[]={
     FF(GetFileVersionInfoSizeA, -1)
 };
-struct exports exp_ole32[]={
+static const struct exports exp_ole32[]={
     FF(CoCreateFreeThreadedMarshaler,-1)
     FF(CoCreateInstance, -1)
     FF(CoInitialize, -1)
@@ -5496,22 +5496,22 @@ struct exports exp_ole32[]={
 };
 // do we really need crtdll ???
 // msvcrt is the correct place probably...
-struct exports exp_crtdll[]={
+static const struct exports exp_crtdll[]={
     FF(memcpy, -1)
     FF(wcscpy, -1)
 };
-struct exports exp_comctl32[]={
+static const struct exports exp_comctl32[]={
     FF(StringFromGUID2, -1)
     FF(InitCommonControls, 17)
 #ifdef CONFIG_QTX_CODECS
     FF(CreateUpDownControl, 16)
 #endif
 };
-struct exports exp_wsock32[]={
+static const struct exports exp_wsock32[]={
     FF(htonl,8)
     FF(ntohl,14)
 };
-struct exports exp_msdmo[]={
+static const struct exports exp_msdmo[]={
     FF(memcpy, -1) // just test
     FF(MoCopyMediaType, -1)
     FF(MoCreateMediaType, -1)
@@ -5520,7 +5520,7 @@ struct exports exp_msdmo[]={
     FF(MoFreeMediaType, -1)
     FF(MoInitMediaType, -1)
 };
-struct exports exp_oleaut32[]={
+static const struct exports exp_oleaut32[]={
     FF(SysAllocStringLen, 4)
     FF(SysFreeString, 6)
     FF(VariantInit, 8)
@@ -5545,7 +5545,7 @@ struct exports exp_oleaut32[]={
 	23022	  411  _purecall
 */
 #ifdef REALPLAYER
-struct exports exp_pncrt[]={
+static const struct exports exp_pncrt[]={
     FF(malloc, -1) // just test
     FF(free, -1) // just test
     FF(fprintf, -1) // just test
@@ -5565,21 +5565,21 @@ struct exports exp_pncrt[]={
 #endif
 
 #ifdef CONFIG_QTX_CODECS
-struct exports exp_ddraw[]={
+static const struct exports exp_ddraw[]={
     FF(DirectDrawCreate, -1)
 };
 #endif
 
-struct exports exp_comdlg32[]={
+static const struct exports exp_comdlg32[]={
     FF(GetOpenFileNameA, -1)
 };
 
-struct exports exp_shlwapi[]={
+static const struct exports exp_shlwapi[]={
     FF(PathFindExtensionA, -1)
     FF(PathFindFileNameA, -1)
 };
 
-struct exports exp_msvcr80[]={
+static const struct exports exp_msvcr80[]={
     FF(_CIpow,-1)
     FF(_CIsin,-1)
     FF(_CIcos,-1)
@@ -5593,7 +5593,7 @@ struct exports exp_msvcr80[]={
     {"??3@YAXPAX@Z", -1, expdelete}
 };
 
-struct exports exp_msvcp60[]={
+static const struct exports exp_msvcp60[]={
     {"??0_Lockit@std@@QAE@XZ", -1, exp_0Lockit_dummy},
     {"??1_Lockit@std@@QAE@XZ", -1, exp_1Lockit_dummy}
 };
@@ -5601,7 +5601,7 @@ struct exports exp_msvcp60[]={
 #define LL(X) \
     {#X".dll", sizeof(exp_##X)/sizeof(struct exports), exp_##X},
 
-struct libs libraries[]={
+static const struct libs libraries[]={
     LL(kernel32)
     LL(msvcrt)
     LL(winmm)
