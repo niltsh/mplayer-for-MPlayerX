@@ -345,11 +345,13 @@ Codecs:
   --disable-libnut          disable libnut [autodetect]
   --disable-libavutil_a     disable static libavutil [autodetect]
   --disable-libavcodec_a    disable static libavcodec [autodetect]
+  --disable-libavcore_a     disable static libavcore [autodetect]
   --disable-libavformat_a   disable static libavformat [autodetect]
   --disable-libpostproc_a   disable static libpostproc [autodetect]
   --disable-libswscale_a    disable static libswscale [autodetect]
   --disable-libavutil_so    disable shared libavutil [autodetect]
   --disable-libavcodec_so   disable shared libavcodec [autodetect]
+  --disable-libavcore_so    disable shared libavcore [autodetect]
   --disable-libavformat_so  disable shared libavformat [autodetect]
   --disable-libpostproc_so  disable shared libpostproc [autodetect]
   --disable-libswscale_so   disable shared libswscale [autodetect]
@@ -585,6 +587,7 @@ _libavutil_a=auto
 _libavutil_so=auto
 _libavcodec_a=auto
 _libavcore_a=auto
+_libavcore_so=auto
 _libopencore_amrnb=auto
 _libopencore_amrwb=auto
 libopenjpeg=auto
@@ -1211,6 +1214,10 @@ for ac_option do
   --disable-libavcodec_a)       _libavcodec_a=no        ;;
   --enable-libavcodec_so)       _libavcodec_so=yes      ;;
   --disable-libavcodec_so)      _libavcodec_so=no       ;;
+  --enable-libavcore_a)         _libavcore_a=yes        ;;
+  --disable-libavcore_a)        _libavcore_a=no         ;;
+  --enable-libavcore_so)        _libavcore_so=yes       ;;
+  --disable-libavcore_so)       _libavcore_so=no        ;;
   --enable-libopencore_amrnb)   _libopencore_amrnb=yes  ;;
   --disable-libopencore_amrnb)  _libopencore_amrnb=no   ;;
   --enable-libopencore_amrwb)   _libopencore_amrwb=yes  ;;
