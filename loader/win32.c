@@ -141,7 +141,7 @@ static void c_longcount_notsc(long long* z)
 }
 static unsigned int localcount_stub(void);
 static void longcount_stub(long long*);
-static unsigned int (*localcount)()=localcount_stub;
+static unsigned int (*localcount)(void)=localcount_stub;
 static void (*longcount)(long long*)=longcount_stub;
 
 static pthread_mutex_t memmut = PTHREAD_MUTEX_INITIALIZER;
@@ -2758,7 +2758,7 @@ static int WINAPI expMonitorFromPoint(void *p, int flags)
 }
 
 static int WINAPI expEnumDisplayMonitors(void *dc, RECT *r,
-    int WINAPI (*callback_proc)(), void *callback_param)
+    int WINAPI (*callback_proc)(HMONITOR, HDC, LPRECT, LPARAM), void *callback_param)
 {
     dbgprintf("EnumDisplayMonitors(0x%x, 0x%x, 0x%x, 0x%x) => ?\n",
 	dc, r, callback_proc, callback_param);
@@ -2858,7 +2858,7 @@ static int WINAPI expCreateRectRgn(int x, int y, int width, int height)
     return 0;
 }
 
-static int WINAPI expEnumWindows(int (*callback_func)(), void *callback_param)
+static int WINAPI expEnumWindows(int (*callback_func)(HWND, LPARAM), void *callback_param)
 {
     int i, i2;
     dbgprintf("EnumWindows(0x%x, 0x%x) => 1\n", callback_func, callback_param);
