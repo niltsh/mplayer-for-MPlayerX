@@ -678,8 +678,9 @@ static pthread_mutex_t mlist_lock = PTHREAD_MUTEX_INITIALIZER;
 
 void destroy_event(void* event)
 {
+    mutex_list *pp;
     pthread_mutex_lock(&mlist_lock);
-    mutex_list* pp=mlist;
+    pp=mlist;
     //    printf("garbage collector: destroy_event(%x)\n", event);
     while(pp)
     {
