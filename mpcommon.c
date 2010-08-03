@@ -133,8 +133,6 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
     if (vo_config_count &&
         (vobsub_id >= 0 || type == 'v')) {
         int timestamp;
-        if (!vo_spudec)
-            vo_spudec = spudec_new(NULL);
         current_module = "spudec";
         /* Get a sub packet from the DVD or a vobsub */
         while(1) {
@@ -167,6 +165,12 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
                 }
             }
             if (len<=0 || !packet) break;
+            // create it only here, since with some broken demuxers we might
+            // type = v but no DVD sub and we currently do not change the
+            // "original frame size" ever after init, leading to wrong-sized
+            // PGS subtitles.
+            if (!vo_spudec)
+                vo_spudec = spudec_new(NULL);
             if (vo_vobsub || timestamp >= 0)
                 spudec_assemble(vo_spudec, packet, len, timestamp);
         }
