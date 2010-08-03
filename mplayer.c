@@ -664,6 +664,11 @@ void uninit_player(unsigned int mask){
 #ifdef CONFIG_DVDNAV
     mp_dvdnav_context_free(mpctx);
 #endif
+    if (vo_spudec){
+      current_module="uninit_spudec";
+      spudec_free(vo_spudec);
+      vo_spudec=NULL;
+    }
   }
 
   // Must be after libvo uninit, as few vo drivers (svgalib) have tty code.
@@ -680,12 +685,6 @@ void uninit_player(unsigned int mask){
     current_module="uninit_vobsub";
     if(vo_vobsub) vobsub_close(vo_vobsub);
     vo_vobsub=NULL;
-  }
-
-  if (vo_spudec){
-    current_module="uninit_spudec";
-    spudec_free(vo_spudec);
-    vo_spudec=NULL;
   }
 
   if(mask&INITIALIZED_AO){
