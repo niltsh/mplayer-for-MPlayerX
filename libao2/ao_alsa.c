@@ -62,7 +62,7 @@ static const ao_info_t info =
     "ALSA-0.9.x-1.x audio output",
     "alsa",
     "Alex Beregszaszi, Zsolt Barat <joy@streamminister.de>",
-    "under developement"
+    "under development"
 };
 
 LIBAO_EXTERN(alsa)

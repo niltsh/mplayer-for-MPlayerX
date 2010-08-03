@@ -1775,7 +1775,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_AIALSA_UnavailableAccessType "Access type not available.\n"
 #define MSGTR_MPDEMUX_AIALSA_UnavailableSampleFmt "Sample format not available.\n"
 #define MSGTR_MPDEMUX_AIALSA_UnavailableChanCount "Channel count not available - reverting to default: %d\n"
-#define MSGTR_MPDEMUX_AIALSA_CannotInstallHWParams "Unable to install hardware paramameters: %s"
+#define MSGTR_MPDEMUX_AIALSA_CannotInstallHWParams "Unable to install hardware parameters: %s"
 #define MSGTR_MPDEMUX_AIALSA_PeriodEqualsBufferSize "Can't use period equal to buffer size (%u == %lu)\n"
 #define MSGTR_MPDEMUX_AIALSA_CannotInstallSWParams "Unable to install software parameters:\n"
 #define MSGTR_MPDEMUX_AIALSA_ErrorOpeningAudio "Error opening audio: %s\n"
