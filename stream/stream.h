@@ -54,6 +54,7 @@
 #define STREAMTYPE_BLURAY 20
 
 #define STREAM_BUFFER_SIZE 2048
+#define STREAM_MAX_SECTOR_SIZE (8*1024)
 
 #define VCD_SECTOR_SIZE 2352
 #define VCD_SECTOR_OFFS 24
@@ -162,7 +163,7 @@ typedef struct stream {
 #ifdef CONFIG_NETWORKING
   streaming_ctrl_t *streaming_ctrl;
 #endif
-  unsigned char buffer[STREAM_BUFFER_SIZE>VCD_SECTOR_SIZE?STREAM_BUFFER_SIZE:VCD_SECTOR_SIZE];
+  unsigned char buffer[STREAM_BUFFER_SIZE>STREAM_MAX_SECTOR_SIZE?STREAM_BUFFER_SIZE:STREAM_MAX_SECTOR_SIZE];
 } stream_t;
 
 #ifdef CONFIG_NETWORKING
