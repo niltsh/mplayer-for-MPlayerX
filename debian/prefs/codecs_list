@@ -1,0 +1,10 @@
+i386    @MAINSITE@ releases/codecs essential-20071007.tar.bz2
+powerpc @MAINSITE@ releases/codecs essential-ppc-20071007.tar.bz2
+amd64   @MAINSITE@ releases/codecs essential-amd64-20071007.tar.bz2
+alpha   @MAINSITE@ releases/codecs essential-alpha-20061028.tar.bz2
+
+
+
+
+
+

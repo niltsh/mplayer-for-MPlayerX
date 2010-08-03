@@ -58,7 +58,7 @@ Documentation translations:
     * Russian: Vladimir Voroshilov
 
 Platforms/ports:
-    * Debian packaging: Diego Biurrun
+    * Debian/Ubuntu packaging: Reinhard Tartler, Diego Biurrun
     * Red Hat/RPM packaging: Dominik Mierzejewski
     * FreeBSD: Vladimir Kushnir, Nexus
     * BSD/OS: Steven Schultz

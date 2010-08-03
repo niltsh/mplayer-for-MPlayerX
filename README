@@ -133,22 +133,15 @@ Sometimes running 'ldconfig' is enough to fix the problem.
 NOTE: If you run Debian you can configure, compile and build a proper Debian
 .deb package with only one command:
 
-  fakeroot debian/rules binary
+  debian/daily-build.sh -b
 
-If you want to pass custom options to configure, you can set up the
-DEB_BUILD_OPTIONS environment variable. For instance, if you want GUI
-and OSD menu support you would use:
-
-  DEB_BUILD_OPTIONS="--enable-gui --enable-menu" fakeroot debian/rules binary
-
-You can also pass some variables to the Makefile. For example, if you want
-to compile with gcc 3.4 even if it's not the default compiler:
-
-  CC=gcc-3.4 DEB_BUILD_OPTIONS="--enable-gui" fakeroot debian/rules binary
+If you want to modify options to configure, please adjust the file
+debian/rules to your needs.
 
 To clean up the source tree run the following command:
 
   fakeroot debian/rules clean
+  rm debian/changelog
 
 ______________________________________
 STEP4: Choose an onscreen display font

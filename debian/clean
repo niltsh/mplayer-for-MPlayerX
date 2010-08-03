@@ -1,0 +1,7 @@
+debian/postrm
+debian/menu
+debian/TODO.Debian
+debian/templates
+debian/mime
+debian/config
+debian/dirs

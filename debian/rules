@@ -1,0 +1,193 @@
+#!/usr/bin/make -f
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+# Support multiple makes at once
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+NUMJOBS = -j$(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+else
+# on i386 and amd64, we query the system unless overriden by DEB_BUILD_OPTIONS
+ifeq      ($(DEB_BUILD_ARCH),i386)
+NUMJOBS := -j$(shell getconf _NPROCESSORS_ONLN 2>/dev/null || echo 1)
+else ifeq ($(DEB_BUILD_ARCH),amd64)
+NUMJOBS := -j$(shell getconf _NPROCESSORS_ONLN 2>/dev/null || echo 1)
+endif
+endif
+
+
+# do not run the actual rules of this makefile in parallel. sub-makes
+# can go in parallel
+.NOTPARALLEL:
+
+############
+
+DEB_SOURCE := $(shell dpkg-parsechangelog | sed -n 's/^Source: //p')
+DEB_VERSION := $(shell dpkg-parsechangelog | sed -n 's/^Version: //p')
+UPSTREAM_VERSION := $(shell echo $(DEB_VERSION) | sed -r 's/[^:]+://; s/-[^-]+$$//')
+SVN_VERSION := $(shell echo $(UPSTREAM_VERSION) | sed -nr 's/^[0-9.:-~]+\+svn([0-9]+)$$/\1/p')
+
+
+#UPSTREAMSOURCE := upstream SVN repository
+UPSTREAMSOURCE := http://www1.mplayerhq.hu/MPlayer/releases/MPlayer-1.0rc1.tar.bz2
+
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_HOST_ARCH       ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+DEB_HOST_ARCH_OS    ?= $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
+DEB_HOST_ARCH_CPU   ?= $(shell dpkg-architecture -qDEB_HOST_ARCH_CPU)
+
+
+# XXX enable-menu is frowned upon by upstream
+CONFIGURE_FLAGS = \
+	--prefix=/usr \
+	--confdir=/etc/mplayer \
+	--enable-xvmc \
+	--enable-menu \
+	--disable-arts \
+	--enable-largefiles \
+	--language=all \
+	$(archconf)
+
+ifeq ($(DEB_HOST_ARCH),i386)
+#configure optimizes for the cpu detected at ./configure time
+#in order to build a generic binary, avoid non-standard opcodes through gcc
+  archconf += --target=i586-linux
+  CONFIGURE_FLAGS += --enable-runtime-cpudetection
+endif
+ifeq ($(DEB_HOST_ARCH),amd64)
+  CONFIGURE_FLAGS += --enable-runtime-cpudetection
+endif
+ifeq ($(DEB_HOST_ARCH),kfreebsd-i386)
+  CONFIGURE_FLAGS += --enable-runtime-cpudetection
+endif
+ifeq ($(DEB_HOST_ARCH),kfreebsd-amd64)
+  CONFIGURE_FLAGS += --enable-runtime-cpudetection
+endif
+ifeq ($(DEB_HOST_ARCH),powerpc)
+  CONFIGURE_FLAGS += --enable-runtime-cpudetection
+endif
+ifeq ($(DEB_HOST_ARCH),alpha)
+#Avoid high optimization through gcc.
+# see http://permalink.gmane.org/gmane.linux.debian.ports.alpha/7295
+  archconf += --target=alpha_ev5-linux
+endif
+
+# generate debugging symbols for mplayer-dbg for all archs but mipsen,
+# see bug #520113
+ifeq (,$(findstring mips,$(DEB_HOST_ARCH)))
+CONFIGURE_FLAGS += --enable-debug
+endif
+
+ifeq (linux,$(DEB_HOST_ARCH_OS))
+    CONFIGURE_FLAGS += --enable-mga --enable-3dfx --enable-tdfxfb
+endif
+
+# See http://wiki.debian.org/Teams/Dpkg/DebianRules; #465282  and
+# https://wiki.ubuntu.com/DistCompilerFlags
+CLEAN_ENV=env -u CFLAGS -u CPPFLAGS -u LDFLAGS -u FFLAGS -u CXXFLAGS
+
+build: build-arch build-indep
+
+####### build-arch
+build-arch:
+	dh_testdir
+	dh_prep -a
+	$(MAKE) -f debian/rules debian/mplayer/usr/bin/mplayer
+	$(MAKE) -f debian/rules debian/mencoder/usr/bin/mencoder
+	$(MAKE) -f debian/rules debian/mplayer-gui/usr/bin/gmplayer
+
+# build non-gui version
+# & mencoder
+debian/mplayer/usr/bin/mplayer debian/mencoder/usr/bin/mencoder:
+	dh_testdir
+	$(CLEAN_ENV) \
+	./configure $(CONFIGURE_FLAGS) --disable-gui
+	$(CLEAN_ENV) \
+	$(MAKE) $(NUMJOBS) mplayer mencoder
+	$(MAKE) install-mplayer DESTDIR=$(CURDIR)/debian/mplayer
+	$(MAKE) install-mplayer-man DESTDIR=$(CURDIR)/debian/mplayer
+	$(MAKE) install-mencoder DESTDIR=$(CURDIR)/debian/mencoder
+	$(MAKE) install-mencoder-man DESTDIR=$(CURDIR)/debian/mplayer
+	install -D -m 644 debian/mplayer.conf \
+	                  $(CURDIR)/debian/mplayer/etc/mplayer/mplayer.conf
+
+# build gui version
+debian/mplayer-gui/usr/bin/gmplayer:
+	dh_testdir
+	$(CLEAN_ENV) \
+	./configure $(CONFIGURE_FLAGS) --enable-gui
+	$(CLEAN_ENV) \
+	$(MAKE) $(NUMJOBS) mplayer
+	install -D -m 755 mplayer $(CURDIR)/debian/mplayer-gui/usr/bin/gmplayer
+	install -D -m 644 etc/mplayer.desktop \
+	                  $(CURDIR)/debian/mplayer-gui/usr/share/applications/mplayer.desktop
+	install -D -m 644 etc/mplayer.xpm \
+	                  $(CURDIR)/debian/mplayer-gui/usr/share/pixmaps/mplayer.xpm
+
+
+# binaries already installed via build rules as we have to build several flavors
+install-arch: build-arch
+
+###### build-indep
+DOCS/HTML/en/index.html:
+	sh debian/all-lang-config-mak.sh > config.mak
+	cd DOCS/xml && ./configure
+	$(MAKE) -C DOCS/xml html-chunked
+
+build-indep:
+	dh_testdir
+	dh_prep -i
+	test ! -f DOCS/HTML/en/index.html || $(MAKE) -f debian/rules DOCS/HTML/en/index.html
+
+# commands to compile the documentation
+install-indep: build-indep
+	dh_installchangelogs -i
+	dh_installdocs -i
+	dh_compress -i
+	dh_fixperms -i
+
+################ clean
+
+clean:
+	dh_testdir
+	dh_testroot
+	[ ! -f config.mak ] || $(MAKE) -C DOCS/xml releaseclean && $(MAKE) distclean
+	dh_clean snapshot_version
+
+# Build architecture-independent packages
+binary-indep: install-indep
+
+# Build architecture-dependent packages
+binary-arch: install-arch
+	dh_testdir
+	dh_testroot
+	dh_install -a
+	dh_installchangelogs -a
+	dh_installdocs -a
+	dh_installexamples -a
+	dh_installmenu -a
+	dh_installmime -a
+	dh_installman -a
+	dh_strip -a --dbg-package=mplayer-dbg
+	dh_link
+	dh_compress -a
+	dh_fixperms -a
+	dh_makeshlibs -a
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+
+get-orig-source:
+	dh_testdir
+	sh debian/get-orig-source.sh -d $(SVN_VERSION)
+
+PHONY += build clean binary-indep binary-arch binary-common binary
+PHONY += install binary binary-arch binary-indep clean checkroot get-orig-source
+PHONY += autocontrol fix-orig-source copy-orig-from-svn download-and-unpack-orig
+
+.PHONY: $(PHONY)
