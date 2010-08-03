@@ -52,6 +52,7 @@
 
 static int (*stream_check_interrupt_cb)(int time) = NULL;
 
+extern const stream_info_t stream_info_bd;
 extern const stream_info_t stream_info_vcd;
 extern const stream_info_t stream_info_cdda;
 extern const stream_info_t stream_info_netstream;
@@ -83,6 +84,7 @@ extern const stream_info_t stream_info_dvd;
 extern const stream_info_t stream_info_bluray;
 
 static const stream_info_t* const auto_open_streams[] = {
+  &stream_info_bd,
 #ifdef CONFIG_VCD
   &stream_info_vcd,
 #endif
