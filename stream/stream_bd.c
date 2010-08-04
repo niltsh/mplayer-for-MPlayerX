@@ -30,8 +30,8 @@
 #include "m_option.h"
 #include "stream.h"
 
-static const int BD_UNIT_SIZE = 6144;
-static const char *BD_UKF_PATH = "/%s/AACS/Unit_Key_RO.inf";
+static const int   BD_UNIT_SIZE = 6144;
+static const char *BD_UKF_PATH  = "/%s/AACS/Unit_Key_RO.inf";
 static const char *BD_M2TS_PATH = "/%s/BDMV/STREAM/%05d.m2ts";
 
 static const char *DEFAULT_BD_DEVICE = "/mnt/bd";
@@ -42,7 +42,7 @@ static const uint8_t BD_CBC_IV[] = {
 };
 
 static const struct stream_priv_s {
-    int title;
+    int   title;
     char *device;
 } stream_priv_dflts = {
     0,
@@ -69,24 +69,24 @@ static const struct m_struct_st stream_opts = {
 
 typedef union {
     uint64_t u64[2];
-    uint8_t u8[16];
+    uint8_t  u8[16];
 } key;
 
 struct uks {
-    int count;
+    int  count;
     key *keys;
 };
 
 struct bd_priv {
-    key vuk;
-    key iv;
-    int title;
-    const char *device;
-    FILE *title_file;
+    key           vuk;
+    key           iv;
+    int           title;
+    const char   *device;
+    FILE         *title_file;
     struct AVAES *aescbc;
     struct AVAES *aeseed;
-    off_t pos;
-    struct uks uks;
+    off_t         pos;
+    struct uks    uks;
 };
 
 static void bd_stream_close(stream_t *s)
@@ -182,7 +182,8 @@ static int bd_get_uks(struct bd_priv *bd)
         //This means: first string up to whitespace is discid
         sscanf(line, "%40s", d);
         for (i = 0; i < 20; ++i) {
-            if (sscanf(&d[i*2], "%2x", &byte) != 1) break;
+            if (sscanf(&d[i*2], "%2x", &byte) != 1)
+                break;
             id[i] = byte;
         }
         if (memcmp(id, discid, 20) != 0)
@@ -190,10 +191,12 @@ static int bd_get_uks(struct bd_priv *bd)
         mp_msg(MSGT_OPEN, MSGL_V, "KeyDB found Entry for DiscID:\n%s\n", line);
 
         vst = strstr(line, "| V |");
-        if (vst == 0) break;
+        if (vst == 0)
+            break;
         sscanf(&vst[6], "%32s", d);
         for (i = 0; i < 16; i++) {
-            if (sscanf(&d[i*2], "%2x", &byte) != 1) break;
+            if (sscanf(&d[i*2], "%2x", &byte) != 1)
+                break;
             bd->vuk.u8[i] = byte;
         }
         vukfound = 1;
@@ -224,10 +227,12 @@ static int bd_get_uks(struct bd_priv *bd)
         j = av_aes_init(a, bd->vuk.u8, 128, 1);
 
         mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_BD_DISCID=");
-        for (j = 0; j < 20; j++) mp_msg(MSGT_IDENTIFY, MSGL_INFO, "%02x", discid[j]);
+        for (j = 0; j < 20; j++)
+            mp_msg(MSGT_IDENTIFY, MSGL_INFO, "%02x", discid[j]);
         mp_msg(MSGT_IDENTIFY, MSGL_INFO, "\n");
         mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_BD_VUK=");
-        for (j = 0; j < 20; j++) mp_msg(MSGT_IDENTIFY, MSGL_INFO, "%02x", discid[j]);
+        for (j = 0; j < 20; j++)
+            mp_msg(MSGT_IDENTIFY, MSGL_INFO, "%02x", discid[j]);
         mp_msg(MSGT_IDENTIFY, MSGL_INFO, "\n");
 
         for (i = 0; i < bd->uks.count; i++) {
@@ -278,7 +283,8 @@ static off_t bd_read(struct bd_priv *bd, uint8_t *buf, int len)
         av_aes_init(bd->aescbc, enc_seed.u8, 128, 1);
 
         // decrypt
-        av_aes_crypt(bd->aescbc, &buf[16], &buf[16], (len - 16) / 16, bd->iv.u8, 1);
+        av_aes_crypt(bd->aescbc, &buf[16], &buf[16],
+                     (len - 16) / 16, bd->iv.u8, 1);
     }
 
     bd->pos += read_len;
