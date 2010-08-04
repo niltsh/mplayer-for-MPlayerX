@@ -107,6 +107,11 @@ static int bd_stream_seek(stream_t *s, off_t pos)
 
     // must seek to start of unit
     pos -= pos % BD_UNIT_SIZE;
+    if (fseek(bd->title_file, pos, SEEK_SET) < 0) {
+        s->eof = 1;
+        return 0;
+    }
+
     bd->pos = pos;
     s->pos  = pos;
 
@@ -256,8 +261,6 @@ static off_t bd_read(struct bd_priv *bd, uint8_t *buf, int len)
     len &= ~15;
     if (!len)
         return 0;
-
-    fseek(bd->title_file, bd->pos, SEEK_SET);
 
     read_len = fread(buf, 1, len, bd->title_file);
     if (read_len != len)
