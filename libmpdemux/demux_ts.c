@@ -1655,16 +1655,13 @@ static int pes_parse2(unsigned char *buf, uint16_t packet_len, ES_stream_t *es, 
 
 static int ts_sync(stream_t *stream)
 {
-	int c=0;
-
 	mp_msg(MSGT_DEMUX, MSGL_DBG3, "TS_SYNC \n");
 
-	while(((c=stream_read_char(stream)) != 0x47) && ! stream->eof);
+	while (!stream->eof)
+		if (stream_read_char(stream) == 0x47)
+			return 1;
 
-	if(c == 0x47)
-		return c;
-	else
-		return 0;
+	return 0;
 }
 
 
