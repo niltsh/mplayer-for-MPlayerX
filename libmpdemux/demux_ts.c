@@ -2781,7 +2781,6 @@ static int fill_extradata(mp4_decoder_config_t * mp4_dec, ES_stream_t *tss)
 static int ts_parse(demuxer_t *demuxer , ES_stream_t *es, unsigned char *packet, int probe)
 {
 	ES_stream_t *tss;
-	uint8_t done = 0;
 	int buf_size, is_start, pid, base;
 	int len, cc, cc_ok, afc, retv = 0, is_video, is_audio, is_sub;
 	ts_priv_t * priv = (ts_priv_t*) demuxer->priv;
@@ -2797,7 +2796,7 @@ static int ts_parse(demuxer_t *demuxer , ES_stream_t *es, unsigned char *packet,
 	TS_stream_info *si;
 
 
-	while(! done)
+	while(1)
 	{
 		bad = ts_error = 0;
 		ds = NULL;
