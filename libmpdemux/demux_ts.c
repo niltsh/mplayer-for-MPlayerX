@@ -2800,8 +2800,8 @@ static int ts_parse(demuxer_t *demuxer , ES_stream_t *es, unsigned char *packet,
 	while(! done)
 	{
 		bad = ts_error = 0;
-		ds = (demux_stream_t*) NULL;
-		dp = (demux_packet_t **) NULL;
+		ds = NULL;
+		dp = NULL;
 		dp_offset = buffer_size = NULL;
 		rap_flag = 0;
 		mp4_dec = NULL;
