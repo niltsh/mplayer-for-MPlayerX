@@ -249,6 +249,7 @@ static int bd_get_uks(struct bd_priv *bd)
     return 1;
 }
 
+// NOTE: we assume buf is sufficiently aligned to 64 bit read/writes
 static off_t bd_read(struct bd_priv *bd, uint8_t *buf, int len)
 {
     int read_len;
@@ -268,7 +269,6 @@ static off_t bd_read(struct bd_priv *bd, uint8_t *buf, int len)
     } else {
         // reset aes context as at start of unit
         key enc_seed;
-        int i;
         bd->iv = BD_CBC_IV;
 
         // set up AES key from uk and seed
@@ -278,8 +278,8 @@ static off_t bd_read(struct bd_priv *bd, uint8_t *buf, int len)
         av_aes_crypt(bd->aeseed, enc_seed.u8, buf, 1, NULL, 0);
 
         // perform xor
-        for (i = 0; i < 16; i++)
-            enc_seed.u8[i] ^= buf[i];
+        enc_seed.u64[0] ^= AV_RN64A(buf);
+        enc_seed.u64[1] ^= AV_RN64A(buf + 8);
 
         // set uk AES-CBC key from enc_seed and BD_CBC_IV
         av_aes_init(bd->aescbc, enc_seed.u8, 128, 1);
