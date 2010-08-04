@@ -271,9 +271,6 @@ static off_t bd_read(struct bd_priv *bd, uint8_t *buf, int len)
         key enc_seed;
         bd->iv = BD_CBC_IV;
 
-        // set up AES key from uk and seed
-        av_aes_init(bd->aeseed, bd->uks.keys[0].u8, 128, 0);
-
         // perform encryption of first 16 bytes of unit (seed)
         av_aes_crypt(bd->aeseed, enc_seed.u8, buf, 1, NULL, 0);
 
@@ -339,6 +336,9 @@ static int bd_stream_open(stream_t *s, int mode, void* opts, int* file_format)
 
     bd->aescbc = av_malloc(av_aes_size);
     bd->aeseed = av_malloc(av_aes_size);
+
+    // set up AES key from uk
+    av_aes_init(bd->aeseed, bd->uks.keys[0].u8, 128, 0);
 
     snprintf(filename, sizeof(filename), BD_M2TS_PATH, bd->device, bd->title);
     mp_msg(MSGT_OPEN, MSGL_STATUS, "Opening %s\n", filename);
