@@ -36,11 +36,6 @@ static const char *BD_M2TS_PATH = "/%s/BDMV/STREAM/%05d.m2ts";
 
 static const char *DEFAULT_BD_DEVICE = "/mnt/bd";
 
-static const uint8_t BD_CBC_IV[] = {
-    0x0b, 0xa0, 0xf8, 0xdd, 0xfe, 0xa6, 0x1f, 0xb3,
-    0xd8, 0xdf, 0x9f, 0x56, 0x6a, 0x05, 0x0f, 0x78
-};
-
 static const struct stream_priv_s {
     int   title;
     char *device;
@@ -71,6 +66,13 @@ typedef union {
     uint64_t u64[2];
     uint8_t  u8[16];
 } key;
+
+static const key BD_CBC_IV = {
+    .u8 = {
+    0x0b, 0xa0, 0xf8, 0xdd, 0xfe, 0xa6, 0x1f, 0xb3,
+    0xd8, 0xdf, 0x9f, 0x56, 0x6a, 0x05, 0x0f, 0x78
+    }
+};
 
 struct uks {
     int  count;
@@ -267,7 +269,7 @@ static off_t bd_read(struct bd_priv *bd, uint8_t *buf, int len)
         // reset aes context as at start of unit
         key enc_seed;
         int i;
-        memcpy(bd->iv.u8, BD_CBC_IV, sizeof(bd->iv.u8));
+        bd->iv = BD_CBC_IV;
 
         // set up AES key from uk and seed
         av_aes_init(bd->aeseed, bd->uks.keys[0].u8, 128, 0);
