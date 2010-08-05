@@ -3266,6 +3266,7 @@ if test "$_struct_sockaddr_storage" = auto; then
 #if HAVE_WINSOCK2_H
 #include <winsock2.h>
 #else
+#include <sys/types.h>
 #include <sys/socket.h>
 #endif
 int main(void) { struct sockaddr_storage sas; return 0; }
