@@ -59,6 +59,7 @@ Build-Depends: debhelper (>= 7),
                vstream-client-dev,
                x11proto-core-dev,
                xsltproc,
+               yasm [i386 amd64],
                zlib1g-dev
 
 Package: mplayer-gui
