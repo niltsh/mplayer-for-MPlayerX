@@ -178,3 +178,11 @@ URL:        http://www.reactos.org/
 Directory:  vidix/dhahelperwin/ntverp.h vidix/dhahelperwin/common.ver
 Copyright:  Alex Ionescu (alex.ionescu@reactos.org)
 License:    GNU General Public License
+
+Name:       libass
+Version:    0.9.10
+URL:        http://code.google.com/p/libass/
+Directory:  libass/
+Copyright:  2006 Evgeniy Stepanov <eugeni.stepanov@gmail.com>
+            2009 Grigori Goronzy <greg@geekmind.org>
+License:    GNU General Public License
