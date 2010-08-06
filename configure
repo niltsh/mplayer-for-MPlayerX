@@ -8856,6 +8856,7 @@ CONFIG_DWT     = yes
 CONFIG_FFT     = yes
 CONFIG_GOLOMB  = yes
 CONFIG_H264DSP = yes
+CONFIG_HUFFMAN = yes
 CONFIG_LPC     = yes
 CONFIG_LSP     = yes
 CONFIG_MDCT    = yes
@@ -9381,6 +9382,7 @@ $def_yasm
 #define CONFIG_FFT 1
 #define CONFIG_GOLOMB 1
 #define CONFIG_H264DSP 1
+#define CONFIG_HUFFMAN 1
 #define CONFIG_LPC 1
 #define CONFIG_MDCT 1
 #define CONFIG_RDFT 1
