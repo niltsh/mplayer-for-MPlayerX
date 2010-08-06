@@ -128,7 +128,7 @@ Index: libmpeg2/cpu_state.c
  	mpeg2_cpu_state_restore = state_restore_altivec;
 --- libmpeg2/header.c	2006-06-16 20:12:26.000000000 +0200
 +++ libmpeg2/header.c	2006-06-16 20:12:50.000000000 +0200
-@@ -872,6 +879,7 @@
+@@ -872,6 +876,7 @@
  	mpeg2dec->scaled[idx] = decoder->q_scale_type;
  	for (i = 0; i < 32; i++) {
  	    k = decoder->q_scale_type ? non_linear_scale[i] : (i << 1);
@@ -355,7 +355,7 @@ Index: libmpeg2/motion_comp_vis.c
  };
 
  typedef struct {
-@@ -226,7 +238,7 @@
+@@ -226,7 +235,7 @@
  };
 
  typedef struct {
@@ -399,3 +399,19 @@ Index: libmpeg2/motion_comp_vis.c
      decoder->offset += 16;						\
      if (decoder->offset == decoder->width) {				\
  	do { /* just so we can use the break statement */		\
+--- libmpeg2/decode.c	(revision 31938)
++++ libmpeg2/decode.c	(working copy)
+@@ -345,6 +345,13 @@
+     fbuf->buf[1] = buf[1];
+     fbuf->buf[2] = buf[2];
+     fbuf->id = id;
++    // HACK! FIXME! At first I frame, copy pointers to prediction frame too!
++    if (mpeg2dec->custom_fbuf && !mpeg2dec->fbuf[1]->buf[0]) {
++	mpeg2dec->fbuf[1]->buf[0] = buf[0];
++	mpeg2dec->fbuf[1]->buf[1] = buf[1];
++	mpeg2dec->fbuf[1]->buf[2] = buf[2];
++	mpeg2dec->fbuf[1]->id     = NULL;
++    }
+ }
+ 
+ void mpeg2_custom_fbuf (mpeg2dec_t * mpeg2dec, int custom_fbuf)
