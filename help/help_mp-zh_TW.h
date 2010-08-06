@@ -1380,7 +1380,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_ASF_UnknownASFStreamType "未知的 ASF 流類型\n"
 #define MSGTR_MPDEMUX_ASF_Failed2ParseHTTPResponse "解析 HTTP 響應失敗。\n"
 #define MSGTR_MPDEMUX_ASF_ServerReturn "服務器返回 %d:%s\n"
-#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF HTTP 解析警告 : Pragma %s 被從 %d 字節切到 %d\n"
+#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF HTTP 解析警告 : Pragma %s 被從 %zd 字節切到 %d\n"
 #define MSGTR_MPDEMUX_ASF_SocketWriteError "Socket 寫錯誤: %s\n"
 #define MSGTR_MPDEMUX_ASF_HeaderParseFailed "解析頭部失敗。\n"
 #define MSGTR_MPDEMUX_ASF_NoStreamFound "找不到流。\n"

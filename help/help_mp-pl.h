@@ -1311,7 +1311,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_ASF_UnknownASFStreamType "nieznany typ strumienia ASF\n"
 #define MSGTR_MPDEMUX_ASF_Failed2ParseHTTPResponse "Błąd interpretacji odpowiedzi HTTP.\n"
 #define MSGTR_MPDEMUX_ASF_ServerReturn "Serwer zwrócił %d:%s\n"
-#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "Ostrzeżenie intepretacji ASF HTTP : Pragma %s obcięte z %d bajtów do %d\n"
+#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "Ostrzeżenie intepretacji ASF HTTP : Pragma %s obcięte z %zd bajtów do %d\n"
 #define MSGTR_MPDEMUX_ASF_SocketWriteError "błąd zapisu gniazda: %s\n"
 #define MSGTR_MPDEMUX_ASF_HeaderParseFailed "Błąd interpretacji nagłówka.\n"
 #define MSGTR_MPDEMUX_ASF_NoStreamFound "Nie odnaleziono strumienia.\n"

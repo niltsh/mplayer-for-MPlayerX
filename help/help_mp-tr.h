@@ -1412,7 +1412,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_ASF_UnknownASFStreamType "Bilinmeyen asf yayın türü\n"
 #define MSGTR_MPDEMUX_ASF_Failed2ParseHTTPResponse "HTTP yanıtı ayrıştırılamadı\n"
 #define MSGTR_MPDEMUX_ASF_ServerReturn "Sunucu dönüşü %d:%s\n"
-#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF HTTP AYRIŞTIMA UYARISI : Pragma %s cuted from %d bytes to %d\n"
+#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF HTTP AYRIŞTIMA UYARISI : Pragma %s cuted from %zd bytes to %d\n"
 #define MSGTR_MPDEMUX_ASF_SocketWriteError "Soket yazma hatası: %s\n"
 #define MSGTR_MPDEMUX_ASF_HeaderParseFailed "Başlık ayrıştırılamadı\n"
 #define MSGTR_MPDEMUX_ASF_NoStreamFound "Yayın(stream) bulunamadı\n"

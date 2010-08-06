@@ -1703,7 +1703,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_ASF_UnknownASFStreamType "Tipo de ASF stream desconocido.\n"
 #define MSGTR_MPDEMUX_ASF_Failed2ParseHTTPResponse "No pude procesar la respuesta HTTP\n"
 #define MSGTR_MPDEMUX_ASF_ServerReturn "El servidor retornó %d:%s\n"
-#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF HTTP PARSE WARNING : Pragma %s cortado desde %d bytes a %d\n"
+#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF HTTP PARSE WARNING : Pragma %s cortado desde %zd bytes a %d\n"
 #define MSGTR_MPDEMUX_ASF_SocketWriteError "Error escribiendo en el socket : %s\n"
 #define MSGTR_MPDEMUX_ASF_HeaderParseFailed "Imposible procesar la cabecera.\n"
 #define MSGTR_MPDEMUX_ASF_NoStreamFound "No encontre ningún stream.\n"

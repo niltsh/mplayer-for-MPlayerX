@@ -1875,7 +1875,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_ASF_UnknownASFStreamType "неизвестный тип потока ASF\n"
 #define MSGTR_MPDEMUX_ASF_Failed2ParseHTTPResponse "Не могу проанализировать ответ HTTP.\n"
 #define MSGTR_MPDEMUX_ASF_ServerReturn "Сервер вернул %d:%s\n"
-#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ПРЕДУПРЕЖДЕНИЕ АНАЛИЗАТОРА HTTP ASF : Pragma %s урезана от %d байт до %d\n"
+#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ПРЕДУПРЕЖДЕНИЕ АНАЛИЗАТОРА HTTP ASF : Pragma %s урезана от %zd байт до %d\n"
 #define MSGTR_MPDEMUX_ASF_SocketWriteError "ошибка записи сокета: %s\n"
 #define MSGTR_MPDEMUX_ASF_HeaderParseFailed "Не могу разобрать заголовок.\n"
 #define MSGTR_MPDEMUX_ASF_NoStreamFound "Поток не найден.\n"

@@ -1834,7 +1834,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_ASF_UnknownASFStreamType "neznámý typ ASF proudu\n"
 #define MSGTR_MPDEMUX_ASF_Failed2ParseHTTPResponse "Selhalo parsování HTTP odpovědi.\n"
 #define MSGTR_MPDEMUX_ASF_ServerReturn "Server vrátil %d:%s\n"
-#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF HTTP PARSE VAROVÁNÍ: Pragma %s zkrácena z %d bajtů na %d\n"
+#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF HTTP PARSE VAROVÁNÍ: Pragma %s zkrácena z %zd bajtů na %d\n"
 #define MSGTR_MPDEMUX_ASF_SocketWriteError "Chyba zápisu soketu: %s\n"
 #define MSGTR_MPDEMUX_ASF_HeaderParseFailed "Selhalo parsování hlavičky\n"
 #define MSGTR_MPDEMUX_ASF_NoStreamFound "Nenalezen datový proud\n"
