@@ -38,6 +38,8 @@
 #include "ass_utils.h"
 #include "ass_library.h"
 
+#define ass_atof(STR) (ass_strtod((STR),NULL))
+
 typedef enum {
     PST_UNKNOWN = 0,
     PST_INFO,
@@ -250,7 +252,7 @@ static int numpad2align(int val)
 		ass_msg(track->library, MSGL_DBG2, "%s = %s", #name, token);
 
 #define INTVAL(name) ANYVAL(name,atoi)
-#define FPVAL(name) ANYVAL(name,atof)
+#define FPVAL(name) ANYVAL(name,ass_atof)
 #define TIMEVAL(name) \
 	} else if (strcasecmp(tname, #name) == 0) { \
 		target->name = string2timecode(track->library, token); \
@@ -384,7 +386,7 @@ void ass_process_force_style(ASS_Track *track)
         else if (!strcasecmp(*fs, "PlayResY"))
             track->PlayResY = atoi(token);
         else if (!strcasecmp(*fs, "Timer"))
-            track->Timer = atof(token);
+            track->Timer = ass_atof(token);
         else if (!strcasecmp(*fs, "WrapStyle"))
             track->WrapStyle = atoi(token);
         else if (!strcasecmp(*fs, "ScaledBorderAndShadow"))
@@ -534,12 +536,6 @@ static int process_style(ASS_Track *track, char *str)
         style->Name = strdup("Default");
     if (!style->FontName)
         style->FontName = strdup("Arial");
-    // skip '@' at the start of the font name
-    if (*style->FontName == '@') {
-        p = style->FontName;
-        style->FontName = strdup(p + 1);
-        free(p);
-    }
     free(format);
     return 0;
 
@@ -568,7 +564,7 @@ static int process_info_line(ASS_Track *track, char *str)
     } else if (!strncmp(str, "PlayResY:", 9)) {
         track->PlayResY = atoi(str + 9);
     } else if (!strncmp(str, "Timer:", 6)) {
-        track->Timer = atof(str + 6);
+        track->Timer = ass_atof(str + 6);
     } else if (!strncmp(str, "WrapStyle:", 10)) {
         track->WrapStyle = atoi(str + 10);
     } else if (!strncmp(str, "ScaledBorderAndShadow:", 22)) {
@@ -618,7 +614,7 @@ static int process_events_line(ASS_Track *track, char *str)
 
         process_event_tail(track, event, str, 0);
     } else {
-        ass_msg(track->library, MSGL_V, "Not understood: '%s'", str);
+        ass_msg(track->library, MSGL_V, "Not understood: '%.30s'", str);
     }
     return 0;
 }
@@ -1032,14 +1028,6 @@ static char *read_file(ASS_Library *library, char *fname, size_t *bufsize)
 
     sz = ftell(fp);
     rewind(fp);
-
-    if (sz > 10 * 1024 * 1024) {
-        ass_msg(library, MSGL_INFO,
-               "ass_read_file(%s): Refusing to load subtitles "
-               "larger than 10MiB", fname);
-        fclose(fp);
-        return 0;
-    }
 
     ass_msg(library, MSGL_V, "File size: %ld", sz);
 

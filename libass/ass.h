@@ -75,11 +75,13 @@ ASS_Library *ass_library_init(void);
 void ass_library_done(ASS_Library *priv);
 
 /**
- * \brief Set private font directory.
- * It is used for saving embedded fonts and also in font lookup.
+ * \brief Set additional fonts directory.
+ * Optional directory that will be scanned for fonts recursively.  The fonts
+ * found are used for font lookup.
+ * NOTE: A valid font directory is not needed to support embedded fonts.
  *
  * \param priv library handle
- * \param fonts_dir private directory for font extraction
+ * \param fonts_dir directory with additional fonts
  */
 void ass_set_fonts_dir(ASS_Library *priv, const char *fonts_dir);
 
@@ -203,6 +205,8 @@ void ass_set_line_spacing(ASS_Renderer *priv, double line_spacing);
  * if fontconfig is used.
  * \param update whether fontconfig cache should be built/updated now.  Only
  * relevant if fontconfig is used.
+ *
+ * NOTE: font lookup must be configured before an ASS_Renderer can be used.
  */
 void ass_set_fonts(ASS_Renderer *priv, const char *default_font,
                    const char *default_family, int fc, const char *config,
@@ -297,7 +301,8 @@ void ass_free_event(ASS_Track *track, int eid);
 void ass_process_data(ASS_Track *track, char *data, int size);
 
 /**
- * \brief Parse Codec Private section of subtitle stream.
+ * \brief Parse Codec Private section of the subtitle stream, in Matroska
+ * format.  See the Matroska specification for details.
  * \param track target track
  * \param data string to parse
  * \param size length of data
@@ -305,8 +310,8 @@ void ass_process_data(ASS_Track *track, char *data, int size);
 void ass_process_codec_private(ASS_Track *track, char *data, int size);
 
 /**
- * \brief Parse a chunk of subtitle stream data. In Matroska,
- * this contains exactly 1 event (or a commentary).
+ * \brief Parse a chunk of subtitle stream data. A chunk contains exactly one
+ * event in Matroska format.  See the Matroska specification for details.
  * \param track track
  * \param data string to parse
  * \param size length of data
