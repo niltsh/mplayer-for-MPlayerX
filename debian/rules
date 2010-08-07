@@ -83,9 +83,9 @@ ifeq (linux,$(DEB_HOST_ARCH_OS))
     CONFIGURE_FLAGS += --enable-mga --enable-3dfx --enable-tdfxfb
 endif
 
-# See http://wiki.debian.org/Teams/Dpkg/DebianRules; #465282  and
-# https://wiki.ubuntu.com/DistCompilerFlags
-CLEAN_ENV=env -u CFLAGS -u CPPFLAGS -u LDFLAGS -u FFLAGS -u CXXFLAGS
+ifneq (,$(DEB_EXTRA_CONFIGURE_FLAGS))
+    CONFIGURE_FLAGS += $(DEB_EXTRA_CONFIGURE_FLAGS)
+endif
 
 build: build-arch build-indep
 

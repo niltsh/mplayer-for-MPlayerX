@@ -135,8 +135,12 @@ NOTE: If you run Debian you can configure, compile and build a proper Debian
 
   debian/daily-build.sh -b
 
-If you want to modify options to configure, please adjust the file
-debian/rules to your needs.
+You can also pass some variables to the Makefile. For example, if you
+want to compile with gcc 3.4 even if it's not the default compiler, or
+pass extra configure options you would use:
+
+  CC=gcc-3.4 DEB_EXTRA_CONFIGURE_FLAGS="--disable-libdvdcss-internal" debian/daily-build.sh -b
+
 
 To clean up the source tree run the following command:
 
