@@ -39,6 +39,7 @@
 #include "aac_hdr.h"
 #include "mpeg_hdr.h"
 #include "mp3_hdr.h"
+#include "parse_es.h"
 
 
 #define PACK_HEADER_START_CODE 0x01ba
