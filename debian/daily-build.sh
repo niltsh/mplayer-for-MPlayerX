@@ -13,4 +13,4 @@ test -r debian/control || exit 1
 rm debian/changelog
 dch --create --empty --package mplayer -v 2:1.0~svn${version} "Daily build"
 
-dpkg-buildpackage -us -uc "$@"
+dpkg-buildpackage -us -uc -i -I.svn "$@"
