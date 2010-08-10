@@ -31,8 +31,8 @@
 #include "stream.h"
 
 static const int   BD_UNIT_SIZE = 6144;
-static const char BD_UKF_PATH[]  = "/%s/AACS/Unit_Key_RO.inf";
-static const char BD_M2TS_PATH[] = "/%s/BDMV/STREAM/%05d.m2ts";
+static const char BD_UKF_PATH[]  = "%s/AACS/Unit_Key_RO.inf";
+static const char BD_M2TS_PATH[] = "%s/BDMV/STREAM/%05d.m2ts";
 
 static const char DEFAULT_BD_DEVICE[] = "/mnt/bd";
 
