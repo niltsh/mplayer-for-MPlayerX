@@ -84,7 +84,7 @@ struct bd_priv {
     key           iv;
     int           title;
     const char   *device;
-    FILE         *title_file;
+    stream_t     *title_file;
     struct AVAES *aescbc;
     struct AVAES *aeseed;
     off_t         pos;
@@ -94,7 +94,7 @@ struct bd_priv {
 static void bd_stream_close(stream_t *s)
 {
     struct bd_priv *bd = s->priv;
-    fclose(bd->title_file);
+    free_stream(bd->title_file);
     av_free(bd->aescbc);
     av_free(bd->aeseed);
     free(bd->uks.keys);
@@ -107,7 +107,7 @@ static int bd_stream_seek(stream_t *s, off_t pos)
 
     // must seek to start of unit
     pos -= pos % BD_UNIT_SIZE;
-    if (fseek(bd->title_file, pos, SEEK_SET) < 0) {
+    if (!stream_seek(bd->title_file, pos)) {
         s->eof = 1;
         return 0;
     }
@@ -126,30 +126,28 @@ static int bd_get_uks(struct bd_priv *bd)
     int i, j;
     struct AVAES *a;
     struct AVSHA *asha;
-    FILE *file;
+    stream_t *file;
     char filename[PATH_MAX];
     uint8_t discid[20];
     char *home;
     int vukfound = 0;
 
     snprintf(filename, sizeof(filename), BD_UKF_PATH, bd->device);
-    file = fopen(filename, "rb");
+    file = open_stream(filename, NULL, NULL);
     if (!file) {
         mp_msg(MSGT_OPEN, MSGL_ERR,
                "Cannot open file %s to get UK and DiscID\n", filename);
         return 0;
     }
-    fseek(file, 0, SEEK_END);
-    file_size = ftell(file);
-    if (file_size > 10 * 1024* 1024) {
+    file_size = file->end_pos;
+    if (file_size <= 0 || file_size > 10 * 1024* 1024) {
         mp_msg(MSGT_OPEN, MSGL_ERR, "File %s too large\n", filename);
-        fclose(file);
+        free_stream(file);
         return 0;
     }
-    rewind(file);
     buf = av_malloc(file_size);
-    fread(buf, 1, file_size, file);
-    fclose(file);
+    stream_read(file, buf, file_size);
+    free_stream(file);
 
     // get discid from file
     asha = av_malloc(av_sha_size);
@@ -161,21 +159,21 @@ static int bd_get_uks(struct bd_priv *bd)
     // look up discid in KEYDB.cfg to get VUK
     home = getenv("HOME");
     snprintf(filename, sizeof(filename), "%s/.dvdcss/KEYDB.cfg", home);
-    file = fopen(filename, "r");
+    file = open_stream(filename, NULL, NULL);
     if (!file) {
         mp_msg(MSGT_OPEN,MSGL_ERR,
                "Cannot open VUK database file %s\n", filename);
         av_free(buf);
         return 0;
     }
-    while (!feof(file)) {
+    while (!stream_eof(file)) {
         char line[1024];
         uint8_t id[20];
         char d[200];
         char *vst;
         unsigned int byte;
 
-        fgets(line, sizeof(line), file);
+        stream_read_line(file, line, sizeof(line), 0);
         // file is built up this way:
         // DISCID = title | V | VUK
         // or
@@ -208,7 +206,7 @@ static int bd_get_uks(struct bd_priv *bd)
         }
         vukfound = 1;
     }
-    fclose(file);
+    free_stream(file);
     if (!vukfound) {
         mp_msg(MSGT_OPEN, MSGL_ERR,
                "No Volume Unique Key (VUK) found for this Disc: ");
@@ -262,7 +260,7 @@ static off_t bd_read(struct bd_priv *bd, uint8_t *buf, int len)
     if (!len)
         return 0;
 
-    read_len = fread(buf, 1, len, bd->title_file);
+    read_len = stream_read(bd->title_file, buf, len);
     if (read_len != len)
         return -1;
 
@@ -345,12 +343,10 @@ static int bd_stream_open(stream_t *s, int mode, void* opts, int* file_format)
 
     snprintf(filename, sizeof(filename), BD_M2TS_PATH, bd->device, bd->title);
     mp_msg(MSGT_OPEN, MSGL_STATUS, "Opening %s\n", filename);
-    bd->title_file = fopen(filename, "rb");
+    bd->title_file = open_stream(filename, NULL, NULL);
     if (!bd->title_file)
         return STREAM_ERROR;
-    fseek(bd->title_file, 0, SEEK_END);
-    s->end_pos = ftell(bd->title_file);
-    rewind(bd->title_file);
+    s->end_pos = bd->title_file->end_pos;
 
     return STREAM_OK;
 }
