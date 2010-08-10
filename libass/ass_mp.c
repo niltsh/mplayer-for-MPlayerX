@@ -219,14 +219,13 @@ ASS_Track* ass_read_subdata(ASS_Library* library, sub_data* subdata, double fps)
 }
 
 ASS_Track* ass_read_stream(ASS_Library* library, const char *fname, char *charset) {
-	int i;
 	char *buf = NULL;
 	ASS_Track *track;
 	size_t sz = 0;
 	size_t buf_alloc = 0;
 	stream_t *fd;
 
-	fd = open_stream(fname, NULL, &i);
+	fd = open_stream(fname, NULL, NULL);
 	if (!fd) {
 		mp_msg(MSGT_ASS, MSGL_WARN, MSGTR_LIBASS_FopenFailed, fname);
 		return NULL;
@@ -235,6 +234,7 @@ ASS_Track* ass_read_stream(ASS_Library* library, const char *fname, char *charse
 		/* read entire file if size is known */
 		buf_alloc = fd->end_pos;
 	for (;;) {
+		int i;
 		if (buf_alloc >= 100*1024*1024) {
 			mp_msg(MSGT_ASS, MSGL_INFO, MSGTR_LIBASS_RefusingToLoadSubtitlesLargerThan100M, fname);
 			sz = 0;

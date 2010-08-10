@@ -48,6 +48,8 @@ int dvd_title=0;
 // Open a new stream  (stdin/file/vcd/url)
 
 stream_t* open_stream(const char* filename,char** options, int* file_format){
+  int dummy = DEMUXER_TYPE_UNKNOWN;
+  if (!file_format) file_format = &dummy;
   // Check if playlist or unknown
   if (*file_format != DEMUXER_TYPE_PLAYLIST){
     *file_format=DEMUXER_TYPE_UNKNOWN;
