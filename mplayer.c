@@ -92,6 +92,7 @@
 #include "libvo/video_out.h"
 #include "stream/cache2.h"
 #include "stream/stream.h"
+#include "stream/stream_bd.h"
 #include "stream/stream_dvdnav.h"
 #include "stream/stream_radio.h"
 #include "stream/tv.h"
@@ -3341,6 +3342,11 @@ if(stream_dump_type==5){
   }
   mp_msg(MSGT_CPLAYER,MSGL_INFO,MSGTR_CoreDumped);
   exit_player_with_rc(EXIT_EOF, 0);
+}
+
+if(mpctx->stream->type==STREAMTYPE_BD){
+  if(audio_id==-1) audio_id=bd_aid_from_lang(mpctx->stream,audio_lang);
+  if(dvdsub_lang && dvdsub_id==-1) dvdsub_id=bd_sid_from_lang(mpctx->stream,dvdsub_lang);
 }
 
 #ifdef CONFIG_DVDREAD

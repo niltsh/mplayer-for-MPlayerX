@@ -53,6 +53,7 @@
 #ifdef CONFIG_DVBIN
 #include "stream/dvbin.h"
 #endif
+#include "stream/stream_bd.h"
 #ifdef CONFIG_DVDREAD
 #include "stream/stream_dvd.h"
 #endif
@@ -899,6 +900,12 @@ static int mp_property_audio(m_option_t *prop, int action, void *arg,
             sh_audio_t* sh = mpctx->sh_audio;
             if (sh && sh->lang)
                 av_strlcpy(lang, sh->lang, 40);
+            // TODO: use a proper STREAM_CTRL instead of this mess
+            else if (sh && mpctx->stream->type == STREAMTYPE_BD) {
+                const char *l = bd_lang_from_id(mpctx->stream, sh->aid);
+                if (l)
+                    av_strlcpy(lang, l, sizeof(lang));
+            }
 #ifdef CONFIG_DVDREAD
             else if (mpctx->stream->type == STREAMTYPE_DVD) {
                 int code = dvd_lang_from_aid(mpctx->stream, current_id);
@@ -1439,6 +1446,14 @@ static int mp_property_sub(m_option_t *prop, int action, void *arg,
             }
         }
 #endif
+
+        if (mpctx->stream->type == STREAMTYPE_BD
+            && d_sub && d_sub->sh && dvdsub_id >= 0) {
+            const char *lang = bd_lang_from_id(mpctx->stream, ((sh_sub_t*)d_sub->sh)->sid);
+            if (!lang) lang = MSGTR_Unknown;
+            snprintf(*(char **) arg, 63, "(%d) %s", dvdsub_id, lang);
+            return M_PROPERTY_OK;
+        }
 
         if ((mpctx->demuxer->type == DEMUXER_TYPE_MATROSKA
              || mpctx->demuxer->type == DEMUXER_TYPE_LAVF

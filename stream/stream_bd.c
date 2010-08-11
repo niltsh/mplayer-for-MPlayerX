@@ -29,10 +29,12 @@
 #include "m_struct.h"
 #include "m_option.h"
 #include "stream.h"
+#include "stream_bd.h"
 
 static const int   BD_UNIT_SIZE = 6144;
 static const char BD_UKF_PATH[]  = "%s/AACS/Unit_Key_RO.inf";
 static const char BD_M2TS_PATH[] = "%s/BDMV/STREAM/%05d.m2ts";
+static const char BD_CLIPINF_PATH[] = "%s/BDMV/CLIPINF/%05d.clpi";
 
 static const char DEFAULT_BD_DEVICE[] = "/mnt/bd";
 
@@ -79,6 +81,15 @@ struct uks {
     key *keys;
 };
 
+// This is just a guess
+#define LANG_NAME_LEN 20
+
+struct lang_map {
+    int id;
+    int type;
+    char lang_name[LANG_NAME_LEN + 1];
+};
+
 struct bd_priv {
     key           vuk;
     key           iv;
@@ -89,6 +100,8 @@ struct bd_priv {
     struct AVAES *aeseed;
     off_t         pos;
     struct uks    uks;
+    int           nr_lang_maps;
+    struct lang_map *lang_maps;
 };
 
 static void bd_stream_close(stream_t *s)
@@ -304,6 +317,125 @@ static int bd_stream_fill_buffer(stream_t *s, char *buf, int len)
     return read_len;
 }
 
+static int is_video_type(int type)
+{
+    switch (type) {
+    case 1:
+    case 2:
+    case 0x10:
+    case 0x1b:
+    case 0xD1:
+    case 0xEA:
+        return 1;
+    }
+    return 0;
+}
+
+static int is_audio_type(int type)
+{
+    switch (type) {
+    case 3:
+    case 4:
+    case 0x0f:
+    case 0x11:
+    case 0x81:
+    case 0x8A:
+    case 0x82:
+    case 0x85:
+    case 0x86:
+        return 1;
+    }
+    return 0;
+}
+
+static int is_sub_type(int type)
+{
+    switch (type) {
+    case 0x90:
+        return 1;
+    }
+    return 0;
+}
+
+const char *bd_lang_from_id(stream_t *s, int id)
+{
+    struct bd_priv *bd = s->priv;
+    int i;
+    for (i = 0; i < bd->nr_lang_maps; i++) {
+        if (bd->lang_maps[i].id == id)
+            return bd->lang_maps[i].lang_name;
+    }
+    return NULL;
+}
+
+int bd_aid_from_lang(stream_t *s, const char *lang)
+{
+    struct bd_priv *bd = s->priv;
+    int i;
+    for (i = 0; i < bd->nr_lang_maps; i++) {
+        if (is_audio_type(bd->lang_maps[i].type) &&
+            strstr(bd->lang_maps[i].lang_name, lang))
+            return bd->lang_maps[i].id;
+    }
+    return -1;
+}
+
+int bd_sid_from_lang(stream_t *s, const char *lang)
+{
+    struct bd_priv *bd = s->priv;
+    int i;
+    for (i = 0; i < bd->nr_lang_maps; i++) {
+        if (is_sub_type(bd->lang_maps[i].type) &&
+            strstr(bd->lang_maps[i].lang_name, lang))
+            return bd->lang_maps[i].id;
+    }
+    return -1;
+}
+
+static void get_clipinf(struct bd_priv *bd)
+{
+    int i;
+    int langmap_offset, index_offset, end_offset;
+    char filename[PATH_MAX];
+    stream_t *file;
+
+    snprintf(filename, sizeof(filename), BD_CLIPINF_PATH, bd->device, bd->title);
+    file = open_stream(filename, NULL, NULL);
+    if (!file) {
+        mp_msg(MSGT_OPEN, MSGL_ERR, "Cannot open clipinf %s\n", filename);
+        return;
+    }
+    if (stream_read_qword(file) != AV_RB64("HDMV0200")) {
+        mp_msg(MSGT_OPEN, MSGL_ERR, "Unknown clipinf format\n");
+        return;
+    }
+    stream_read_dword(file); // unknown offset
+    langmap_offset = stream_read_dword(file);
+    index_offset = stream_read_dword(file);
+    end_offset = stream_read_dword(file);
+
+    // read language <-> stream id mappings
+    stream_seek(file, langmap_offset);
+    stream_read_dword(file); // size
+    stream_skip(file, 8); // unknown
+    bd->nr_lang_maps = stream_read_char(file); // number of entries
+    stream_read_char(file); // unknown
+
+    bd->lang_maps = calloc(bd->nr_lang_maps, sizeof(*bd->lang_maps));
+    for (i = 0; i < bd->nr_lang_maps; i++) {
+        int type;
+        bd->lang_maps[i].id = stream_read_word(file);
+        stream_read_char(file); // unknown
+        type = stream_read_char(file);
+        if (!is_video_type(type) && !is_audio_type(type) && !is_sub_type(type))
+            mp_msg(MSGT_OPEN, MSGL_WARN, "Unknown type %x in clipinf\n", type);
+        bd->lang_maps[i].type = type;
+        stream_read(file, bd->lang_maps[i].lang_name, LANG_NAME_LEN);
+    }
+
+    free_stream(file);
+}
+
 static int bd_stream_open(stream_t *s, int mode, void* opts, int* file_format)
 {
     char filename[PATH_MAX];
@@ -347,6 +479,8 @@ static int bd_stream_open(stream_t *s, int mode, void* opts, int* file_format)
     if (!bd->title_file)
         return STREAM_ERROR;
     s->end_pos = bd->title_file->end_pos;
+
+    get_clipinf(bd);
 
     return STREAM_OK;
 }

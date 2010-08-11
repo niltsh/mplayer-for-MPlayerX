@@ -79,6 +79,7 @@
 #include "osdep/priority.h"
 #include "osdep/timer.h"
 #include "stream/stream.h"
+#include "stream/stream_bd.h"
 #ifdef CONFIG_DVDREAD
 #include "stream/stream_dvd.h"
 #endif
@@ -707,6 +708,11 @@ play_next_file:
   }
 
   mp_msg(MSGT_CPLAYER, MSGL_INFO, MSGTR_OpenedStream, file_format, (int)(stream->start_pos), (int)(stream->end_pos));
+
+if(stream->type==STREAMTYPE_BD){
+  if(audio_id==-1) audio_id=bd_aid_from_lang(stream,audio_lang);
+  if(dvdsub_lang && dvdsub_id==-1) dvdsub_id=bd_sid_from_lang(stream,dvdsub_lang);
+}
 
 #ifdef CONFIG_DVDREAD
 if(stream->type==STREAMTYPE_DVD){
