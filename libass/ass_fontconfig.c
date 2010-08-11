@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+#include <strings.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <inttypes.h>
@@ -520,14 +521,13 @@ int fontconfig_update(FCInstance *priv)
 
 void fontconfig_done(FCInstance *priv)
 {
+
+    if (priv) {
 #ifdef CONFIG_FONTCONFIG
-    if (priv && priv->config)
         FcConfigDestroy(priv->config);
 #endif
-    if (priv && priv->path_default)
         free(priv->path_default);
-    if (priv && priv->family_default)
         free(priv->family_default);
-    if (priv)
-        free(priv);
+    }
+    free(priv);
 }

@@ -27,6 +27,7 @@
 #include FT_GLYPH_H
 #include FT_TRUETYPE_TABLES_H
 #include FT_OUTLINE_H
+#include <strings.h>
 
 #include "ass.h"
 #include "ass_library.h"
@@ -561,8 +562,7 @@ void ass_font_free(ASS_Font *font)
     for (i = 0; i < font->n_faces; ++i)
         if (font->faces[i])
             FT_Done_Face(font->faces[i]);
-    if (font->desc.family)
-        free(font->desc.family);
+    free(font->desc.family);
     free(font);
 }
 
