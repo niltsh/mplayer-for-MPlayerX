@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 31752 (MSGTR_LIBMENU_ListMenuEntryDefinitionsNeedAName)
+// Synced with help_mp-en.h rev. 31938 (MSGTR_MissingDLLcodec)
 // Reminder of hard terms which need better/final solution later:
 //   (file links to be updated later if available!);
 //   NAV; section/subsection;  XScreenSaver; keycolor;
@@ -1525,51 +1525,51 @@ static const char help_text[]=
 #define MSGTR_LIBMENU_UnsupportedOutformat "[MENU] 不支持该输出格式！\n"
 
 // libmenu/menu_cmdlist.c
-#define MSGTR_LIBMENU_ListMenuEntryDefinitionsNeedAName "[MENU] 列表菜单条目的定义需要名称 (行 %d)。\n"
-#define MSGTR_LIBMENU_ListMenuNeedsAnArgument "[MENU] 列表菜单需要参数。\n"
+#define MSGTR_LIBMENU_ListMenuEntryDefinitionsNeedAName "[MENU] 定义列表菜单项需要给出名称（行 %d）。\n"
+#define MSGTR_LIBMENU_ListMenuNeedsAnArgument "[MENU] 列表菜单需要给出参数。\n"
 
 // libmenu/menu_console.c
-#define MSGTR_LIBMENU_WaitPidError "[MENU] Waitpid 错误: %s。\n"
+#define MSGTR_LIBMENU_WaitPidError "[MENU] Waitpid 错误：%s。\n"
 #define MSGTR_LIBMENU_SelectError "[MENU] Select 错误。\n"
-#define MSGTR_LIBMENU_ReadErrorOnChildFD "[MENU] 子进程的文件描述符读取错误: %s。\n"
-#define MSGTR_LIBMENU_ConsoleRun "[MENU] 终端运行: %s ...\n"
+#define MSGTR_LIBMENU_ReadErrorOnChildFD "[MENU] 子进程的文件描述符读取错误：%s。\n"
+#define MSGTR_LIBMENU_ConsoleRun "[MENU] 终端运行：%s ...\n"
 #define MSGTR_LIBMENU_AChildIsAlreadyRunning "[MENU] 子进程已经运行。\n"
-#define MSGTR_LIBMENU_ForkFailed "[MENU] Fork 失败!!!\n"
+#define MSGTR_LIBMENU_ForkFailed "[MENU] Fork 失败！！！\n"
 #define MSGTR_LIBMENU_WriteError "[MENU] write 错误\n"
 
 // libmenu/menu_filesel.c
-#define MSGTR_LIBMENU_OpendirError "[MENU] opendir 错误: %s\n"
-#define MSGTR_LIBMENU_ReallocError "[MENU] realloc 错误: %s\n"
-#define MSGTR_LIBMENU_MallocError "[MENU] 内存分配错误: %s\n"
-#define MSGTR_LIBMENU_ReaddirError "[MENU] readdir 错误: %s\n"
-#define MSGTR_LIBMENU_CantOpenDirectory "[MENU] 打不开目录 %s。\n"
+#define MSGTR_LIBMENU_OpendirError "[MENU] opendir 错误：%s\n"
+#define MSGTR_LIBMENU_ReallocError "[MENU] realloc 错误：%s\n"
+#define MSGTR_LIBMENU_MallocError "[MENU] 内存分配错误：%s\n"
+#define MSGTR_LIBMENU_ReaddirError "[MENU] readdir 错误：%s\n"
+#define MSGTR_LIBMENU_CantOpenDirectory "[MENU] 无法打开目录 %s。\n"
 
 // libmenu/menu_param.c
-#define MSGTR_LIBMENU_SubmenuDefinitionNeedAMenuAttribut "[MENU] 子菜单定义需要 'menu' 属性。\n"
-#define MSGTR_LIBMENU_InvalidProperty "[MENU] 首选项菜单中存在无效的属性值'%s'。（行%d）。\n"
-#define MSGTR_LIBMENU_PrefMenuEntryDefinitionsNeed "[MENU] 首选项菜单条目的定义需一个有效的'property'或'txt'属性（行%d）。\n"
-#define MSGTR_LIBMENU_PrefMenuNeedsAnArgument "[MENU] 首选项菜单需要参数。\n"
+#define MSGTR_LIBMENU_SubmenuDefinitionNeedAMenuAttribut "[MENU] 定义子菜单需给出‘menu’属性。\n"
+#define MSGTR_LIBMENU_InvalidProperty "[MENU] 首选项菜单中存在无效的属性值‘%s’。（行 %d）。\n"
+#define MSGTR_LIBMENU_PrefMenuEntryDefinitionsNeed "[MENU] 定义首选项菜单条目需给出一个有效的‘property’或‘txt’属性（行 %d）。\n"
+#define MSGTR_LIBMENU_PrefMenuNeedsAnArgument "[MENU] 首选项菜单需要给出参数。\n"
 
 // libmenu/menu_pt.c
-#define MSGTR_LIBMENU_CantfindTheTargetItem "[MENU] 找不到目标项 ????\n"
-#define MSGTR_LIBMENU_FailedToBuildCommand "[MENU] 生成命令失败: %s。\n"
+#define MSGTR_LIBMENU_CantfindTheTargetItem "[MENU] 无法找到目标项目？？\n"
+#define MSGTR_LIBMENU_FailedToBuildCommand "[MENU] 未能生成菜单命令：%s。\n"
 
 // libmenu/menu_txt.c
-#define MSGTR_LIBMENU_MenuTxtNeedATxtFileName "[MENU] 文本菜单需要文本文件名(参数文件)。\n"
-#define MSGTR_LIBMENU_MenuTxtCantOpen "[MENU] 打不开 %s。\n"
-#define MSGTR_LIBMENU_WarningTooLongLineSplitting "[MENU] 警告, 行过长. 分割之。\n"
-#define MSGTR_LIBMENU_ParsedLines "[MENU] 解析了行 %d。\n"
+#define MSGTR_LIBMENU_MenuTxtNeedATxtFileName "[MENU] 文本菜单需要给出文本文件名（参数文件）。\n"
+#define MSGTR_LIBMENU_MenuTxtCantOpen "[MENU] 无法打开 %s。\n"
+#define MSGTR_LIBMENU_WarningTooLongLineSplitting "[MENU] 警告，行过长。将其分割。\n"
+#define MSGTR_LIBMENU_ParsedLines "[MENU] 已解析行 %d。\n"
 
 // libmenu/vf_menu.c
-#define MSGTR_LIBMENU_UnknownMenuCommand "[MENU] 未知命令: '%s'。\n"
-#define MSGTR_LIBMENU_FailedToOpenMenu "[MENU] 打开菜单失败: '%s'。\n"
+#define MSGTR_LIBMENU_UnknownMenuCommand "[MENU] 未知命令：‘%s’。\n"
+#define MSGTR_LIBMENU_FailedToOpenMenu "[MENU] 未能打开菜单：‘%s’。\n"
 
 
 // ========================== LIBMPCODECS ===================================
 
 // dec_video.c & dec_audio.c:
-#define MSGTR_CantOpenCodec "打不开解码器。\n"
-#define MSGTR_CantCloseCodec "不能关闭解码器。\n"
+#define MSGTR_CantOpenCodec "无法打开解码器。\n"
+#define MSGTR_CantCloseCodec "无法关闭解码器。\n"
 
 #define MSGTR_MissingDLLcodec "错误: 打不开所需的 DirectShow 编解码器: %s\n"
 #define MSGTR_ACMiniterror "不能加载/初始化 Win32/ACM 音频解码器(缺少 DLL 文件?)。\n"
@@ -1757,7 +1757,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_AIALSA_UnavailableAccessType "访问类型不可用。\n"
 #define MSGTR_MPDEMUX_AIALSA_UnavailableSampleFmt "采样文件不可用。\n"
 #define MSGTR_MPDEMUX_AIALSA_UnavailableChanCount "通道记数不可用 - 使用默认: %d\n"
-#define MSGTR_MPDEMUX_AIALSA_CannotInstallHWParams "无法安装硬件参数: %s"
+#define MSGTR_MPDEMUX_AIALSA_CannotInstallHWParams "无法设置硬件参数: %s"
 #define MSGTR_MPDEMUX_AIALSA_PeriodEqualsBufferSize "不能使用等于缓冲大小的间隔 (%u == %lu)\n"
 #define MSGTR_MPDEMUX_AIALSA_CannotInstallSWParams "无法安装软件参数:\n"
 #define MSGTR_MPDEMUX_AIALSA_ErrorOpeningAudio "打开音频错误: %s\n"
