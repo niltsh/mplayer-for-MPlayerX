@@ -710,7 +710,7 @@ play_next_file:
   mp_msg(MSGT_CPLAYER, MSGL_INFO, MSGTR_OpenedStream, file_format, (int)(stream->start_pos), (int)(stream->end_pos));
 
 if(stream->type==STREAMTYPE_BD){
-  if(audio_id==-1) audio_id=bd_aid_from_lang(stream,audio_lang);
+  if(audio_lang && audio_id==-1) audio_id=bd_aid_from_lang(stream,audio_lang);
   if(dvdsub_lang && dvdsub_id==-1) dvdsub_id=bd_sid_from_lang(stream,dvdsub_lang);
 }
 
