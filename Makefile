@@ -844,9 +844,6 @@ all: $(ALL_PRG-yes)
 
 checkheaders: $(ALLHEADERS:.h=.ho)
 
-dep depend: $(DEPS)
-	for part in $(FFMPEGPARTS); do $(MAKE) -C $$part depend; done
-
 $(FFMPEGLIBS): $(FFMPEGFILES) config.h
 	$(MAKE) -C $(@D)
 	touch $@
@@ -1163,7 +1160,7 @@ ifneq ($(MAKECMDGOALS),distclean)
 endif
 
 .PHONY: all doxygen *install* *tools drivers dhahelper*
-.PHONY: checkheaders *clean dep depend tests
+.PHONY: checkheaders *clean tests
 
 # Disable suffix rules.  Most of the builtin rules are suffix rules,
 # so this saves some time on slow systems.
