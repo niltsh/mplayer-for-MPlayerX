@@ -210,9 +210,6 @@ To list all available country codes use
 Here is an example for Russian:
 <screen>tv=tdevice=/dev/vbi0:tlang=<replaceable>33</replaceable></screen>
 </para>
-
-<para>
-</para>
 </sect1>
 
 </chapter>

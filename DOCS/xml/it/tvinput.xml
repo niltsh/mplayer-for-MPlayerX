@@ -239,9 +239,6 @@ Per elencare tutti i codici di zona disponibili usa
 Qui c'è un esempio per il russo:
 <screen>tv=tdevice=/dev/vbi0:tlang=<replaceable>33</replaceable></screen>
 </para>
-
-<para>
-</para>
 </sect2>
 
 </sect1>

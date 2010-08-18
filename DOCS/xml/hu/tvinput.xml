@@ -228,9 +228,6 @@ A teljes országlista megtekinthető az alábbi paranccsal:
 Egy példa az orosz nyelv kiválasztására:
 <screen>tv=tdevice=/dev/vbi0:tlang=<replaceable>33</replaceable></screen>
 </para>
-
-<para>
-</para>
 </sect1>
 
 </chapter>

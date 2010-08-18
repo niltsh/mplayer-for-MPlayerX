@@ -241,9 +241,6 @@ mencoder -tv driver=v4l:width=768:height=576 \
 Вот пример для Русского:
 <screen>tv=tdevice=/dev/vbi0:tlang=<replaceable>33</replaceable></screen>
 </para>
-
-<para>
-</para>
 </sect2>
 
 </sect1>
