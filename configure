@@ -355,6 +355,7 @@ Codecs:
   --disable-libavformat_so  disable shared libavformat [autodetect]
   --disable-libpostproc_so  disable shared libpostproc [autodetect]
   --disable-libswscale_so   disable shared libswscale [autodetect]
+  --enable-system-ffmpeg    use system ffmpeg libraries [no]
   --disable-libavcodec_mpegaudio_hp disable high precision audio decoding
                                     in libavcodec [enabled]
   --disable-tremor-internal disable internal Tremor [enabled]
@@ -588,6 +589,7 @@ _libavutil_so=auto
 _libavcodec_a=auto
 _libavcore_a=auto
 _libavcore_so=auto
+_system_ffmpeg=no
 _libopencore_amrnb=auto
 _libopencore_amrwb=auto
 libopenjpeg=auto
@@ -1246,6 +1248,12 @@ for ac_option do
   --disable-libswscale_a)       _libswscale_a=no        ;;
   --enable-libswscale_so)       _libswscale_so=yes      ;;
   --disable-libswscale_so)      _libswscale_so=no       ;;
+  --enable-system-ffmpeg)       _libavcore_a=no   ; _libavcore_so=yes
+                                _libavutil_a=no   ; _libavutil_so=yes
+                                _libavcodec_a=no  ; _libavcodec_so=yes
+                                _libswscale_a=no  ; _libswscale_so=yes
+                                _libavformat_a=no ; _libavformat_so=yes
+                                _libpostproc_a=no ; _libpostproc_so=yes ;;
   --enable-libavcodec_mpegaudio_hp)     _libavcodec_mpegaudio_hp=yes    ;;
   --disable-libavcodec_mpegaudio_hp)    _libavcodec_mpegaudio_hp=no     ;;
 
