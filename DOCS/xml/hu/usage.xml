@@ -1320,6 +1320,23 @@ megakadályozza a hangkártyád elfogadható tartományán kívül eső adatok k
 ez zavart audiót eredményez.
 </para>
 </sect1>
+</chapter>
+
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+
+<chapter id="tv-input" xreflabel="TV input">
+<title>TV bemenet</title>
+
+<para>
+Ez a rész arról szól, hogy hogyan lehet <emphasis role="bold">adást nézni/lementeni
+V4L kompatibilis TV tunerrel</emphasis>. Lásd a man oldalt a TV-s kapcsolók és
+a vezérlő billentyűk listájáért.
+</para>
+
+<!-- ********** -->
+
 
 <sect1 id="tv-compilation">
 <title>Fordítás</title>
