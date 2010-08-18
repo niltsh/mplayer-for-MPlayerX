@@ -19,6 +19,8 @@
 #ifndef MPLAYER_DEMUX_TS_H
 #define MPLAYER_DEMUX_TS_H
 
+#include <sys/types.h>
+
 #define TS_MAX_PROBE_SIZE 2000000
 
 extern off_t ts_probe;

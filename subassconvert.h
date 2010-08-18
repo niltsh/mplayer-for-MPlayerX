@@ -21,6 +21,8 @@
 #ifndef MPLAYER_SUBASSCONVERT_H
 #define MPLAYER_SUBASSCONVERT_H
 
+#include <sys/types.h>
+
 void subassconvert_subrip(const char *orig, char *dest, size_t dest_buffer_size);
 void subassconvert_microdvd(const char *orig, char *dest, size_t dest_buffer_size);
 

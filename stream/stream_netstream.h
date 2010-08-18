@@ -33,8 +33,10 @@
 #if !HAVE_WINSOCK2_H
 #include <sys/socket.h>
 #endif
+
 #include "mp_msg.h"
 #include "mpbswap.h"
+#include "network.h"
 
 typedef struct mp_net_stream_packet_st {
   uint16_t len;

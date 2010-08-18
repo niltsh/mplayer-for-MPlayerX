@@ -22,6 +22,7 @@
 #define MPLAYER_SDL_COMMON_H
 
 #include "config.h"
+#include <stdint.h>
 #ifdef CONFIG_SDL_SDL_H
 #include <SDL/SDL.h>
 #else

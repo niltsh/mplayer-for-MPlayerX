@@ -19,6 +19,8 @@
 #ifndef MPLAYER_DEMUX_MPG_H
 #define MPLAYER_DEMUX_MPG_H
 
+#include <sys/types.h>
+
 extern off_t ps_probe;
 
 #endif /* MPLAYER_DEMUX_MPG_H */
