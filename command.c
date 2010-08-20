@@ -1543,7 +1543,7 @@ static int mp_property_sub(m_option_t *prop, int action, void *arg,
 #endif
 
     if (source == SUB_SOURCE_VOBSUB) {
-        vobsub_id = source_pos;
+        vobsub_id = vobsub_get_id_by_index(vo_vobsub, source_pos);
     } else if (source == SUB_SOURCE_SUBS) {
         mpctx->set_of_sub_pos = source_pos;
 #ifdef CONFIG_ASS
