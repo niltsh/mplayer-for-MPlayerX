@@ -1530,8 +1530,12 @@ case VCODEC_FRAMENO:
     break;
 default:
     // decode_video will callback down to ve_*.c encoders, through the video filters
-    {void *decoded_frame = decode_video(sh_video,frame_data.start,frame_data.in_size,
-      skip_flag>0 && (!sh_video->vfilter || ((vf_instance_t *)sh_video->vfilter)->control(sh_video->vfilter, VFCTRL_SKIP_NEXT_FRAME, 0) != CONTROL_TRUE), MP_NOPTS_VALUE);
+    {
+    int drop_frame = skip_flag > 0 &&
+                     (!sh_video->vfilter ||
+                      ((vf_instance_t *)sh_video->vfilter)->control(sh_video->vfilter, VFCTRL_SKIP_NEXT_FRAME, 0) != CONTROL_TRUE);
+    void *decoded_frame = decode_video(sh_video,frame_data.start,frame_data.in_size,
+                                       drop_frame, MP_NOPTS_VALUE);
     blit_frame = decoded_frame && filter_video(sh_video, decoded_frame, MP_NOPTS_VALUE);}
 
     if (sh_video->vf_initialized < 0) mencoder_exit(1, NULL);
