@@ -2285,7 +2285,7 @@ int reinit_video_chain(void) {
   current_module="init_video_filters";
   {
     char* vf_arg[] = { "_oldargs_", (char*)mpctx->video_out , NULL };
-    sh_video->vfilter=(void*)vf_open_filter(NULL,"vo",vf_arg);
+    sh_video->vfilter=vf_open_filter(NULL,"vo",vf_arg);
   }
 #ifdef CONFIG_MENU
   if(use_menu) {
@@ -2297,7 +2297,7 @@ int reinit_video_chain(void) {
     }
   }
   if(vf_menu)
-    sh_video->vfilter=(void*)vf_menu;
+    sh_video->vfilter=vf_menu;
 #endif
 
 #ifdef CONFIG_ASS
@@ -2314,14 +2314,14 @@ int reinit_video_chain(void) {
       char* vf_arg[] = {"auto", "1", NULL};
       vf_instance_t* vf_ass = vf_open_filter(sh_video->vfilter,"ass",vf_arg);
       if (vf_ass)
-        sh_video->vfilter=(void*)vf_ass;
+        sh_video->vfilter=vf_ass;
       else
         mp_msg(MSGT_CPLAYER,MSGL_ERR, "ASS: cannot add video filter\n");
     }
   }
 #endif
 
-  sh_video->vfilter=(void*)append_filters(sh_video->vfilter);
+  sh_video->vfilter=append_filters(sh_video->vfilter);
 
 #ifdef CONFIG_ASS
   if (ass_enabled)

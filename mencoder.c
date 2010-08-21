@@ -1033,7 +1033,7 @@ default: {
       char* vf_arg[] = {"auto", "1", NULL};
       vf_instance_t* vf_ass = vf_open_filter(sh_video->vfilter,"ass",vf_arg);
       if (vf_ass)
-        sh_video->vfilter=(void*)vf_ass;
+        sh_video->vfilter=vf_ass;
       else
         mp_msg(MSGT_CPLAYER,MSGL_ERR, "ASS: cannot add video filter\n");
     }
