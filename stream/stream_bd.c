@@ -137,7 +137,7 @@ static void id2str(const uint8_t *id, int idlen, char dst[ID_STR_LEN])
     int i;
     idlen = FFMIN(idlen, 20);
     for (i = 0; i < idlen; i++)
-        snprintf(dst + 2*i, 3, "%02"PRIx8, id[i]);
+        snprintf(dst + 2*i, 3, "%02"PRIX8, id[i]);
 }
 
 static int find_vuk(struct bd_priv *bd, const uint8_t discid[20])
