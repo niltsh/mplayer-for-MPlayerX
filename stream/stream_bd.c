@@ -131,6 +131,15 @@ static int bd_stream_seek(stream_t *s, off_t pos)
     return 1;
 }
 
+#define ID_STR_LEN 41
+static void id2str(const uint8_t *id, int idlen, char dst[ID_STR_LEN])
+{
+    int i;
+    idlen = FFMIN(idlen, 20);
+    for (i = 0; i < idlen; i++)
+        snprintf(dst + 2*i, 3, "%02"PRIx8, id[i]);
+}
+
 static int find_vuk(struct bd_priv *bd, const uint8_t discid[20])
 {
     char filename[PATH_MAX];
@@ -197,12 +206,13 @@ static int bd_get_uks(struct bd_priv *bd)
     unsigned char *buf;
     size_t file_size;
     int pos;
-    int i, j;
+    int i;
     struct AVAES *a;
     struct AVSHA *asha;
     stream_t *file;
     char filename[PATH_MAX];
     uint8_t discid[20];
+    char idstr[ID_STR_LEN];
 
     snprintf(filename, sizeof(filename), BD_UKF_PATH, bd->device);
     file = open_stream(filename, NULL, NULL);
@@ -229,10 +239,9 @@ static int bd_get_uks(struct bd_priv *bd)
     av_free(asha);
 
     if (!find_vuk(bd, discid)) {
+        id2str(discid, 20, idstr);
         mp_msg(MSGT_OPEN, MSGL_ERR,
-               "No Volume Unique Key (VUK) found for this Disc: ");
-        for (j = 0; j < 20; j++) mp_msg(MSGT_OPEN, MSGL_ERR, "%02x", discid[j]);
-        mp_msg(MSGT_OPEN, MSGL_ERR, "\n");
+               "No Volume Unique Key (VUK) found for this Disc: %s\n", idstr);
         av_free(buf);
         return 0;
     }
@@ -253,14 +262,10 @@ static int bd_get_uks(struct bd_priv *bd)
         a = av_malloc(av_aes_size);
         av_aes_init(a, bd->vuk.u8, 128, 1);
 
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_BD_DISCID=");
-        for (j = 0; j < 20; j++)
-            mp_msg(MSGT_IDENTIFY, MSGL_INFO, "%02x", discid[j]);
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "\n");
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_BD_VUK=");
-        for (j = 0; j < 20; j++)
-            mp_msg(MSGT_IDENTIFY, MSGL_INFO, "%02x", discid[j]);
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "\n");
+        id2str(discid, 20, idstr);
+        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_BD_DISCID=%s\n", idstr);
+        id2str(bd->vuk.u8, 16, idstr);
+        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_BD_VUK=%s\n", idstr);
 
         for (i = 0; i < bd->uks.count; i++) {
             av_aes_crypt(a, bd->uks.keys[i].u8, &buf[key_pos], 1, NULL, 1); // decrypt unit key
