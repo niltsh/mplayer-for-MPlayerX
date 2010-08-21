@@ -251,7 +251,7 @@ static int bd_get_uks(struct bd_priv *bd)
         bd->uks.keys  = calloc(bd->uks.count, sizeof(key));
 
         a = av_malloc(av_aes_size);
-        j = av_aes_init(a, bd->vuk.u8, 128, 1);
+        av_aes_init(a, bd->vuk.u8, 128, 1);
 
         mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_BD_DISCID=");
         for (j = 0; j < 20; j++)
