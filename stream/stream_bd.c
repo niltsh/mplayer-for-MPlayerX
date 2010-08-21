@@ -160,7 +160,6 @@ static int find_vuk(struct bd_priv *bd, const uint8_t discid[20])
     }
     id2str(discid, 20, idstr);
     while (!stream_eof(file)) {
-        int i;
         char line[1024];
         char *vst;
 
@@ -184,12 +183,12 @@ static int find_vuk(struct bd_priv *bd, const uint8_t discid[20])
             break;
         vst += 6;
         while (isspace(*vst)) vst++;
-        if (strlen(vst) < 32)
+        if (sscanf(vst,      "%16"SCNx64, &bd->vuk.u64[0]) != 1)
             continue;
-        for (i = 0; i < 16; i++) {
-            if (sscanf(&vst[i*2], "%2"SCNx8, &bd->vuk.u8[i]) != 1)
-                break;
-        }
+        if (sscanf(vst + 16, "%16"SCNx64, &bd->vuk.u64[1]) != 1)
+            continue;
+        bd->vuk.u64[0] = av_be2ne64(bd->vuk.u64[0]);
+        bd->vuk.u64[1] = av_be2ne64(bd->vuk.u64[1]);
         vukfound = 1;
     }
     free_stream(file);
