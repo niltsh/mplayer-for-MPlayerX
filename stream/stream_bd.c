@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 #include <limits.h>
+#include <ctype.h>
 #include "libavutil/common.h"
 #include "libavutil/aes.h"
 #include "libavutil/sha.h"
@@ -161,7 +162,6 @@ static int find_vuk(struct bd_priv *bd, const uint8_t discid[20])
     while (!stream_eof(file)) {
         int i;
         char line[1024];
-        char d[200];
         char *vst;
         unsigned int byte;
 
@@ -183,9 +183,12 @@ static int find_vuk(struct bd_priv *bd, const uint8_t discid[20])
         vst = strstr(line, "| V |");
         if (!vst)
             break;
-        sscanf(&vst[6], "%32s", d);
+        vst += 6;
+        while (isspace(*vst)) vst++;
+        if (strlen(vst) < 32)
+            continue;
         for (i = 0; i < 16; i++) {
-            if (sscanf(&d[i*2], "%2x", &byte) != 1)
+            if (sscanf(&vst[i*2], "%2x", &byte) != 1)
                 break;
             bd->vuk.u8[i] = byte;
         }
