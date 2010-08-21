@@ -143,6 +143,7 @@ static void id2str(const uint8_t *id, int idlen, char dst[ID_STR_LEN])
 
 static int find_vuk(struct bd_priv *bd, const uint8_t discid[20])
 {
+    char line[1024];
     char filename[PATH_MAX];
     const char *home;
     int vukfound = 0;
@@ -159,11 +160,9 @@ static int find_vuk(struct bd_priv *bd, const uint8_t discid[20])
         return 0;
     }
     id2str(discid, 20, idstr);
-    while (!stream_eof(file)) {
-        char line[1024];
+    while (stream_read_line(file, line, sizeof(line), 0)) {
         char *vst;
 
-        stream_read_line(file, line, sizeof(line), 0);
         // file is built up this way:
         // DISCID = title | V | VUK
         // or
