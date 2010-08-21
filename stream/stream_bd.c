@@ -163,7 +163,6 @@ static int find_vuk(struct bd_priv *bd, const uint8_t discid[20])
         int i;
         char line[1024];
         char *vst;
-        unsigned int byte;
 
         stream_read_line(file, line, sizeof(line), 0);
         // file is built up this way:
@@ -188,9 +187,8 @@ static int find_vuk(struct bd_priv *bd, const uint8_t discid[20])
         if (strlen(vst) < 32)
             continue;
         for (i = 0; i < 16; i++) {
-            if (sscanf(&vst[i*2], "%2x", &byte) != 1)
+            if (sscanf(&vst[i*2], "%2"SCNx8, &bd->vuk.u8[i]) != 1)
                 break;
-            bd->vuk.u8[i] = byte;
         }
         vukfound = 1;
     }
