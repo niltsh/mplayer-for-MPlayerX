@@ -233,6 +233,7 @@ static int bd_get_uks(struct bd_priv *bd)
                "No Volume Unique Key (VUK) found for this Disc: ");
         for (j = 0; j < 20; j++) mp_msg(MSGT_OPEN, MSGL_ERR, "%02x", discid[j]);
         mp_msg(MSGT_OPEN, MSGL_ERR, "\n");
+        av_free(buf);
         return 0;
     }
 
