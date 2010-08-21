@@ -146,6 +146,7 @@ static int find_vuk(struct bd_priv *bd, const uint8_t discid[20])
     const char *home;
     int vukfound = 0;
     stream_t *file;
+    char idstr[ID_STR_LEN];
 
     // look up discid in KEYDB.cfg to get VUK
     home = getenv("HOME");
@@ -156,10 +157,10 @@ static int find_vuk(struct bd_priv *bd, const uint8_t discid[20])
                "Cannot open VUK database file %s\n", filename);
         return 0;
     }
+    id2str(discid, 20, idstr);
     while (!stream_eof(file)) {
         int i;
         char line[1024];
-        uint8_t id[20];
         char d[200];
         char *vst;
         unsigned int byte;
@@ -175,14 +176,7 @@ static int find_vuk(struct bd_priv *bd, const uint8_t discid[20])
         // or         I | I-Key
         // can be followed by ; and comment
 
-        //This means: first string up to whitespace is discid
-        sscanf(line, "%40s", d);
-        for (i = 0; i < 20; ++i) {
-            if (sscanf(&d[i*2], "%2x", &byte) != 1)
-                break;
-            id[i] = byte;
-        }
-        if (memcmp(id, discid, 20) != 0)
+        if (strncasecmp(line, idstr, 40))
             continue;
         mp_msg(MSGT_OPEN, MSGL_V, "KeyDB found Entry for DiscID:\n%s\n", line);
 
