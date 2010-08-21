@@ -131,7 +131,7 @@ static int bd_stream_seek(stream_t *s, off_t pos)
     return 1;
 }
 
-static int find_vuk(struct bd_priv *bd, uint8_t discid[20])
+static int find_vuk(struct bd_priv *bd, const uint8_t discid[20])
 {
     char filename[PATH_MAX];
     const char *home;
