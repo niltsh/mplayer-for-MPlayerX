@@ -131,43 +131,12 @@ static int bd_stream_seek(stream_t *s, off_t pos)
     return 1;
 }
 
-static int bd_get_uks(struct bd_priv *bd)
+static int find_vuk(struct bd_priv *bd, uint8_t discid[20])
 {
-    unsigned char *buf;
-    size_t file_size;
-    int pos;
-    int i, j;
-    struct AVAES *a;
-    struct AVSHA *asha;
-    stream_t *file;
     char filename[PATH_MAX];
-    uint8_t discid[20];
-    char *home;
+    const char *home;
     int vukfound = 0;
-
-    snprintf(filename, sizeof(filename), BD_UKF_PATH, bd->device);
-    file = open_stream(filename, NULL, NULL);
-    if (!file) {
-        mp_msg(MSGT_OPEN, MSGL_ERR,
-               "Cannot open file %s to get UK and DiscID\n", filename);
-        return 0;
-    }
-    file_size = file->end_pos;
-    if (file_size <= 0 || file_size > 10 * 1024* 1024) {
-        mp_msg(MSGT_OPEN, MSGL_ERR, "File %s too large\n", filename);
-        free_stream(file);
-        return 0;
-    }
-    buf = av_malloc(file_size);
-    stream_read(file, buf, file_size);
-    free_stream(file);
-
-    // get discid from file
-    asha = av_malloc(av_sha_size);
-    av_sha_init(asha, 160);
-    av_sha_update(asha, buf, file_size);
-    av_sha_final(asha, discid);
-    av_free(asha);
+    stream_t *file;
 
     // look up discid in KEYDB.cfg to get VUK
     home = getenv("HOME");
@@ -176,10 +145,10 @@ static int bd_get_uks(struct bd_priv *bd)
     if (!file) {
         mp_msg(MSGT_OPEN,MSGL_ERR,
                "Cannot open VUK database file %s\n", filename);
-        av_free(buf);
         return 0;
     }
     while (!stream_eof(file)) {
+        int i;
         char line[1024];
         uint8_t id[20];
         char d[200];
@@ -220,7 +189,46 @@ static int bd_get_uks(struct bd_priv *bd)
         vukfound = 1;
     }
     free_stream(file);
-    if (!vukfound) {
+    return vukfound;
+}
+
+static int bd_get_uks(struct bd_priv *bd)
+{
+    unsigned char *buf;
+    size_t file_size;
+    int pos;
+    int i, j;
+    struct AVAES *a;
+    struct AVSHA *asha;
+    stream_t *file;
+    char filename[PATH_MAX];
+    uint8_t discid[20];
+
+    snprintf(filename, sizeof(filename), BD_UKF_PATH, bd->device);
+    file = open_stream(filename, NULL, NULL);
+    if (!file) {
+        mp_msg(MSGT_OPEN, MSGL_ERR,
+               "Cannot open file %s to get UK and DiscID\n", filename);
+        return 0;
+    }
+    file_size = file->end_pos;
+    if (file_size <= 0 || file_size > 10 * 1024* 1024) {
+        mp_msg(MSGT_OPEN, MSGL_ERR, "File %s too large\n", filename);
+        free_stream(file);
+        return 0;
+    }
+    buf = av_malloc(file_size);
+    stream_read(file, buf, file_size);
+    free_stream(file);
+
+    // get discid from file
+    asha = av_malloc(av_sha_size);
+    av_sha_init(asha, 160);
+    av_sha_update(asha, buf, file_size);
+    av_sha_final(asha, discid);
+    av_free(asha);
+
+    if (!find_vuk(bd, discid)) {
         mp_msg(MSGT_OPEN, MSGL_ERR,
                "No Volume Unique Key (VUK) found for this Disc: ");
         for (j = 0; j < 20; j++) mp_msg(MSGT_OPEN, MSGL_ERR, "%02x", discid[j]);
