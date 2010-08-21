@@ -181,7 +181,7 @@ static int find_vuk(struct bd_priv *bd, const uint8_t discid[20])
         mp_msg(MSGT_OPEN, MSGL_V, "KeyDB found Entry for DiscID:\n%s\n", line);
 
         vst = strstr(line, "| V |");
-        if (vst == 0)
+        if (!vst)
             break;
         sscanf(&vst[6], "%32s", d);
         for (i = 0; i < 16; i++) {
