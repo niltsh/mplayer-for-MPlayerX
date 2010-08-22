@@ -264,7 +264,7 @@ static int init(sh_video_t *sh){
         return 0;
     memset(ctx, 0, sizeof(vd_ffmpeg_ctx));
 
-    lavc_codec = (AVCodec *)avcodec_find_decoder_by_name(sh->codec->dll);
+    lavc_codec = avcodec_find_decoder_by_name(sh->codec->dll);
     if(!lavc_codec){
         mp_msg(MSGT_DECVIDEO, MSGL_ERR, MSGTR_MissingLAVCcodec, sh->codec->dll);
         uninit(sh);
