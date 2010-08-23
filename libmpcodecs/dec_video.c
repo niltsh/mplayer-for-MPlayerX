@@ -39,6 +39,7 @@
 #include "libmpdemux/stheader.h"
 #include "vd.h"
 #include "vf.h"
+#include "eosd.h"
 
 #include "dec_video.h"
 
@@ -185,6 +186,7 @@ void uninit_video(sh_video_t *sh_video)
         dlclose(sh_video->dec_handle);
 #endif
     vf_uninit_filter_chain(sh_video->vfilter);
+    eosd_uninit();
     sh_video->initialized = 0;
 }
 

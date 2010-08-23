@@ -336,6 +336,7 @@ SRCS_COMMON = asxparser.c \
               codec-cfg.c \
               cpudetect.c \
               edl.c \
+              eosd.c \
               find_sub.c \
               fmt-conversion.c \
               m_config.c \

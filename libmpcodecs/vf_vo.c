@@ -38,10 +38,6 @@
 struct vf_priv_s {
     double pts;
     const vo_functions_t *vo;
-#ifdef CONFIG_ASS
-    ASS_Renderer* ass_priv;
-    int prev_visibility;
-#endif
 };
 #define video_out (vf->priv->vo)
 
@@ -80,11 +76,6 @@ static int config(struct vf_instance *vf,
 
     if(config_video_out(video_out,width,height,d_width,d_height,flags,"MPlayer",outfmt))
 	return 0;
-
-#ifdef CONFIG_ASS
-    if (vf->priv->ass_priv)
-	ass_configure(vf->priv->ass_priv, width, height, !!(vf->default_caps & VFCAP_EOSD_UNSCALED));
-#endif
 
     ++vo_config_count;
     return 1;
@@ -130,34 +121,17 @@ static int control(struct vf_instance *vf, int request, void* data)
 #ifdef CONFIG_ASS
     case VFCTRL_INIT_EOSD:
     {
-        vf->priv->ass_priv = ass_renderer_init((ASS_Library*)data);
-        if (!vf->priv->ass_priv) return CONTROL_FALSE;
-        ass_configure_fonts(vf->priv->ass_priv);
-        vf->priv->prev_visibility = 0;
         return CONTROL_TRUE;
     }
     case VFCTRL_DRAW_EOSD:
     {
         EOSD_ImageList images = {NULL, 2};
+        mp_eosd_res_t res = {0};
         double pts = vf->priv->pts;
-        if (!vo_config_count || !vf->priv->ass_priv) return CONTROL_FALSE;
-        if (sub_visibility && vf->priv->ass_priv && ass_track && (pts != MP_NOPTS_VALUE)) {
-            mp_eosd_res_t res;
-            memset(&res, 0, sizeof(res));
-            if (video_out->control(VOCTRL_GET_EOSD_RES, &res) == VO_TRUE) {
-                double dar = (double) (res.w - res.ml - res.mr) / (res.h - res.mt - res.mb);
-                ass_set_frame_size(vf->priv->ass_priv, res.w, res.h);
-                ass_set_margins(vf->priv->ass_priv, res.mt, res.mb, res.ml, res.mr);
-                ass_set_aspect_ratio(vf->priv->ass_priv, dar, (double)res.srcw/res.srch);
-            }
-
-            images.imgs = ass_mp_render_frame(vf->priv->ass_priv, ass_track, (pts+sub_delay) * 1000 + .5, &images.changed);
-            if (!vf->priv->prev_visibility)
-                images.changed = 2;
-            vf->priv->prev_visibility = 1;
-        } else
-            vf->priv->prev_visibility = 0;
-        vf->priv->prev_visibility = sub_visibility;
+        if (!vo_config_count) return CONTROL_FALSE;
+        if (video_out->control(VOCTRL_GET_EOSD_RES, &res) == VO_TRUE)
+            eosd_configure(&res, !!(vf->default_caps & VFCAP_EOSD_UNSCALED));
+        images.imgs = eosd_render_frame(pts, &images.changed);
         return (video_out->control(VOCTRL_DRAW_EOSD, &images) == VO_TRUE) ? CONTROL_TRUE : CONTROL_FALSE;
     }
 #endif
@@ -222,13 +196,7 @@ static void draw_slice(struct vf_instance *vf,
 
 static void uninit(struct vf_instance *vf)
 {
-    if (vf->priv) {
-#ifdef CONFIG_ASS
-        if (vf->priv->ass_priv)
-            ass_renderer_done(vf->priv->ass_priv);
-#endif
         free(vf->priv);
-    }
 }
 //===========================================================================//
 

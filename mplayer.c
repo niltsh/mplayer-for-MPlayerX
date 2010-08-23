@@ -124,6 +124,7 @@
 #include "spudec.h"
 #include "subreader.h"
 #include "vobsub.h"
+#include "eosd.h"
 
 #ifdef CONFIG_X11
 #include "libvo/x11_common.h"
@@ -2322,10 +2323,11 @@ int reinit_video_chain(void) {
 #endif
 
   sh_video->vfilter=append_filters(sh_video->vfilter);
+  eosd_init(sh_video->vfilter);
 
 #ifdef CONFIG_ASS
   if (ass_enabled)
-    ((vf_instance_t *)sh_video->vfilter)->control(sh_video->vfilter, VFCTRL_INIT_EOSD, ass_library);
+    eosd_ass_init(ass_library);
 #endif
 
   current_module="init_video_codec";

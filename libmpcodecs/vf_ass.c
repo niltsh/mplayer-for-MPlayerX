@@ -39,10 +39,12 @@
 
 #include "libvo/fastmemcpy.h"
 #include "libvo/sub.h"
+#include "libvo/video_out.h"
 #include "m_option.h"
 #include "m_struct.h"
 
 #include "libass/ass_mp.h"
+#include "eosd.h"
 
 #define _r(c)  ((c)>>24)
 #define _g(c)  (((c)>>16)&0xFF)
@@ -62,8 +64,6 @@ static const struct vf_priv_s {
 	// 0 = insert always
 	int auto_insert;
 
-	ASS_Renderer* ass_priv;
-
 	unsigned char* planes[3];
 	unsigned char* dirty_rows;
 } vf_priv_dflt;
@@ -73,6 +73,8 @@ static int config(struct vf_instance *vf,
 	int width, int height, int d_width, int d_height,
 	unsigned int flags, unsigned int outfmt)
 {
+	mp_eosd_res_t res = {0};
+
 	if (outfmt == IMGFMT_IF09) return 0;
 
 	vf->priv->outh = height + ass_top_margin + ass_bottom_margin;
@@ -87,10 +89,13 @@ static int config(struct vf_instance *vf,
 	vf->priv->planes[2] = malloc(vf->priv->outw * vf->priv->outh);
 	vf->priv->dirty_rows = malloc(vf->priv->outh);
 
-	if (vf->priv->ass_priv) {
-		ass_configure(vf->priv->ass_priv, vf->priv->outw, vf->priv->outh, 0);
-		ass_set_aspect_ratio(vf->priv->ass_priv, 1, 1);
-	}
+	res.w    = vf->priv->outw;
+	res.h    = vf->priv->outh;
+	res.srcw = width;
+	res.srch = height;
+	res.mt   = ass_top_margin;
+	res.mb   = ass_bottom_margin;
+	eosd_configure(&res, 0);
 
 	return vf_next_config(vf, vf->priv->outw, vf->priv->outh, d_width, d_height, flags, outfmt);
 }
@@ -324,10 +329,7 @@ static int render_frame(struct vf_instance *vf, mp_image_t *mpi, const ASS_Image
 
 static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts)
 {
-	ASS_Image* images = 0;
-	if (sub_visibility && vf->priv->ass_priv && ass_track && (pts != MP_NOPTS_VALUE))
-		images = ass_mp_render_frame(vf->priv->ass_priv, ass_track, (pts+sub_delay) * 1000 + .5, NULL);
-
+	ASS_Image* images = eosd_render_frame(pts, NULL);
 	prepare_image(vf, mpi);
 	if (images) render_frame(vf, mpi, images);
 
@@ -349,21 +351,15 @@ static int control(vf_instance_t *vf, int request, void *data)
 {
 	switch (request) {
 	case VFCTRL_INIT_EOSD:
-		vf->priv->ass_priv = ass_renderer_init((ASS_Library*)data);
-		if (!vf->priv->ass_priv) return CONTROL_FALSE;
-		ass_configure_fonts(vf->priv->ass_priv);
 		return CONTROL_TRUE;
 	case VFCTRL_DRAW_EOSD:
-		if (vf->priv->ass_priv) return CONTROL_TRUE;
-		break;
+		return CONTROL_TRUE;
 	}
 	return vf_next_control(vf, request, data);
 }
 
 static void uninit(struct vf_instance *vf)
 {
-	if (vf->priv->ass_priv)
-		ass_renderer_done(vf->priv->ass_priv);
 	if (vf->priv->planes[1])
 		free(vf->priv->planes[1]);
 	if (vf->priv->planes[2])

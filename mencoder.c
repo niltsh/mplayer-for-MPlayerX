@@ -97,6 +97,7 @@
 #include "path.h"
 #include "spudec.h"
 #include "vobsub.h"
+#include "eosd.h"
 
 
 int vo_doublebuffering=0;
@@ -1052,10 +1053,11 @@ default: {
 #endif
 
     sh_video->vfilter=append_filters(sh_video->vfilter);
+  eosd_init(sh_video->vfilter);
 
 #ifdef CONFIG_ASS
   if (ass_enabled)
-    ((vf_instance_t *)sh_video->vfilter)->control(sh_video->vfilter, VFCTRL_INIT_EOSD, ass_library);
+    eosd_ass_init(ass_library);
 #endif
 
 // after reading video params we should load subtitles because
