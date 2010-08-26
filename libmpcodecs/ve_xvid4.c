@@ -1004,10 +1004,9 @@ static int set_create_struct(xvid_mplayer_module_t *mod)
 	if( ((float)mod->mux->h.dwRate/(float)mod->mux->h.dwScale > (float)selected_profile->fps) &&
 		(selected_profile->fps != 0))
 	{
-		mp_msg(MSGT_MENCODER,MSGL_ERR,
-			"xvid:[ERROR] frame rate must be <= %d for the chosen profile\n",
+		mp_msg(MSGT_MENCODER,MSGL_WARN,
+			"xvid:[WARNING] frame rate should be <= %d for the chosen profile\n",
 			selected_profile->fps);
-		return BAD;
 	}
 
 	/* Encodings zones */
