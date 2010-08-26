@@ -25,9 +25,9 @@
 void eosd_init(vf_instance_t *);
 
 void eosd_configure(mp_eosd_res_t *, int);
-ASS_Image *eosd_render_frame(double, int *);
+struct ass_image *eosd_render_frame(double, int *);
 void eosd_uninit(void);
 
-void eosd_ass_init(ASS_Library *);
+void eosd_ass_init(struct ass_library *);
 
 #endif /* MPLAYER_EOSD_H */

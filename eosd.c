@@ -26,6 +26,7 @@
 #include "libass/ass_mp.h"
 #include "eosd.h"
 
+#ifdef CONFIG_ASS
 static ASS_Renderer *ass_renderer;
 int prev_visibility;
 
@@ -35,6 +36,7 @@ void eosd_ass_init(ASS_Library *ass_library)
     if (!ass_renderer) return;
     ass_configure_fonts(ass_renderer);
 }
+#endif
 
 void eosd_init(vf_instance_t *vf)
 {
@@ -43,28 +45,34 @@ void eosd_init(vf_instance_t *vf)
 
 void eosd_configure(mp_eosd_res_t *res, int hinting)
 {
+#ifdef CONFIG_ASS
     double dar = (double) (res->w - res->ml - res->mr) / (res->h - res->mt - res->mb);
     if (ass_renderer) {
         ass_configure(ass_renderer, res->w, res->h, hinting);
         ass_set_margins(ass_renderer, res->mt, res->mb, res->ml, res->mr);
         ass_set_aspect_ratio(ass_renderer, dar, (double)res->srcw/res->srch);
     }
+#endif
 }
 
 ASS_Image *eosd_render_frame(double ts, int *changed)
 {
     ASS_Image *r = NULL;
+#ifdef CONFIG_ASS
     if (sub_visibility && ass_renderer && ass_track && ts != MP_NOPTS_VALUE) {
         r = ass_mp_render_frame(ass_renderer, ass_track, (ts+sub_delay) * 1000 + .5, changed);
         if (!prev_visibility && changed)
             *changed = 2;
     }
     prev_visibility = sub_visibility;
+#endif
     return r;
 }
 
 void eosd_uninit(void)
 {
+#ifdef CONFIG_ASS
     if (ass_renderer)
         ass_renderer_done(ass_renderer);
+#endif
 }
