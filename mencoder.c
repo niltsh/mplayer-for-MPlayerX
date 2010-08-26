@@ -1052,7 +1052,7 @@ default: {
   }
 #endif
 
-    sh_video->vfilter=append_filters(sh_video->vfilter);
+  sh_video->vfilter=append_filters(sh_video->vfilter);
   eosd_init(sh_video->vfilter);
 
 #ifdef CONFIG_ASS
