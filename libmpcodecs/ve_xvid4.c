@@ -113,6 +113,11 @@ static const profile_t profiles[] =
 	{ "sp1",           0x01,  176, 144, 15,  4,  198,   99,   1485, 100,  10*16368,  2048,   64000,        0, -1, PROFILE_S|PROFILE_ADAPTQUANT },
 	{ "sp2",           0x02,  352, 288, 15,  4,  792,  396,   5940, 100,  40*16368,  4096,  128000,        0, -1, PROFILE_S|PROFILE_ADAPTQUANT },
 	{ "sp3",           0x03,  352, 288, 15,  4,  792,  396,  11880, 100,  40*16368,  8192,  384000,        0, -1, PROFILE_S|PROFILE_ADAPTQUANT },
+	/* From ISO/IEC 14496-2:2004/FPDAM 2: New Levels for Simple Profile */
+	{ "sp4a",          0x04,  640, 480, 30,  4, 2400, 1200,  36000, 100,  80*16368, 16384, 4000000,        0, -1, PROFILE_S|PROFILE_ADAPTQUANT },
+	{ "sp5",           0x05,  720, 576, 30,  4, 3240, 1620,  40500, 100, 112*16368, 16384, 8000000,        0, -1, PROFILE_S|PROFILE_ADAPTQUANT },
+	/* From ISO/IEC 14496-2:2004/FPDAM 4: Simple profile level 6 */
+	{ "sp6",           0x06, 1280, 720, 30,  4, 7200, 3600, 108000, 100, 248*16368, 16384,12000000,        0, -1, PROFILE_S|PROFILE_ADAPTQUANT },
 
 	{ "asp0",          0xf0,  176, 144, 30,  1,  297,   99,   2970, 100,  10*16368,  2048,  128000,        0, -1, PROFILE_AS },
 	{ "asp1",          0xf1,  176, 144, 30,  4,  297,   99,   2970, 100,  10*16368,  2048,  128000,        0, -1, PROFILE_AS },
