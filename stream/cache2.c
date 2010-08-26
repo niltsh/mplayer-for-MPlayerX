@@ -366,7 +366,8 @@ static void dummy_sighandler(int x) {
 static void cache_mainloop(cache_vars_t *s) {
     int sleep_count = 0;
 #if FORKED_CACHE
-    struct sigaction sa = { .sa_handler = SIG_IGN };
+    struct sigaction sa = { 0 };
+    sa.sa_handler = SIG_IGN;
     sigaction(SIGUSR1, &sa, NULL);
 #endif
     do {
