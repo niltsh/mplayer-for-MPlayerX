@@ -33,7 +33,8 @@ int prev_visibility;
 void eosd_ass_init(ASS_Library *ass_library)
 {
     ass_renderer = ass_renderer_init(ass_library);
-    if (!ass_renderer) return;
+    if (!ass_renderer)
+        return;
     ass_configure_fonts(ass_renderer);
 }
 #endif
