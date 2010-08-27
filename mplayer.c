@@ -2771,7 +2771,7 @@ int gui_no_filename=0;
 		BOOL WINAPI (*setDllDir)(LPCTSTR) = NULL;
 		if (kernel32) {
 			setDEP = GetProcAddress(kernel32, "SetProcessDEPPolicy");
-			setDllDir = GetProcAddress(kernel32, "SetDllDirectory");
+			setDllDir = GetProcAddress(kernel32, "SetDllDirectoryA");
 		}
 		if (setDEP) setDEP(3);
 		if (setDllDir) setDllDir("");
