@@ -228,9 +228,9 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
                     if (len > 10 && memcmp(packet, "Dialogue: ", 10) == 0)
                         ass_process_data(ass_track, packet, len);
                     else
-                    ass_process_chunk(ass_track, packet, len,
-                                      (long long)(subpts*1000 + 0.5),
-                                      (long long)((endpts-subpts)*1000 + 0.5));
+                        ass_process_chunk(ass_track, packet, len,
+                                          (long long)(subpts*1000 + 0.5),
+                                          (long long)((endpts-subpts)*1000 + 0.5));
                 } else { // plaintext subs with libass
                     if (subpts != MP_NOPTS_VALUE) {
                         subtitle tmp_subs = {0};
