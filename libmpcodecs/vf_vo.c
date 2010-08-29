@@ -29,9 +29,7 @@
 #include "libvo/sub.h"
 #include "libvo/video_out.h"
 
-#ifdef CONFIG_ASS
-#include "libass/ass_mp.h"
-#endif
+#include "eosd.h"
 
 //===========================================================================//
 
