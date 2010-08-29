@@ -1306,6 +1306,7 @@ int demux_seek(demuxer_t *demuxer, float rel_seek_secs, float audio_delay,
     demuxer->stream->eof = 0;
     demuxer->video->eof = 0;
     demuxer->audio->eof = 0;
+    demuxer->sub->eof = 0;
 
     if (flags & SEEK_ABSOLUTE)
         pts = 0.0f;
