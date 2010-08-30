@@ -394,8 +394,21 @@ void *decode_video(sh_video_t *sh_video, unsigned char *start, int in_size,
     unsigned int t = GetTimer();
     unsigned int t2;
     double tt;
+    int delay;
+    int got_picture = 1;
 
-    if (correct_pts && pts != MP_NOPTS_VALUE) {
+    mpi = mpvdec->decode(sh_video, start, in_size, drop_frame);
+
+    //------------------------ frame decoded. --------------------
+
+    if (mpi && mpi->type == MP_IMGTYPE_INCOMPLETE) {
+	got_picture = 0;
+	mpi = NULL;
+    }
+
+    delay = get_current_video_decoder_lag(sh_video);
+    if (correct_pts && pts != MP_NOPTS_VALUE
+        && (got_picture || sh_video->num_buffered_pts < delay)) {
         if (sh_video->num_buffered_pts ==
             sizeof(sh_video->buffered_pts) / sizeof(double))
             mp_msg(MSGT_DECVIDEO, MSGL_ERR, "Too many buffered pts\n");
@@ -410,10 +423,6 @@ void *decode_video(sh_video_t *sh_video, unsigned char *start, int in_size,
             sh_video->num_buffered_pts++;
         }
     }
-
-    mpi = mpvdec->decode(sh_video, start, in_size, drop_frame);
-
-    //------------------------ frame decoded. --------------------
 
 #if HAVE_MMX
     // some codecs are broken, and doesn't restore MMX state :(
@@ -439,7 +448,6 @@ void *decode_video(sh_video_t *sh_video, unsigned char *start, int in_size,
         mpi->fields &= ~MP_IMGFIELD_TOP_FIRST;
 
     if (correct_pts) {
-        int delay = get_current_video_decoder_lag(sh_video);
         if (sh_video->num_buffered_pts) {
             sh_video->num_buffered_pts--;
             sh_video->pts = sh_video->buffered_pts[sh_video->num_buffered_pts];

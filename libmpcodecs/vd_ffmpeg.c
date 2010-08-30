@@ -103,6 +103,11 @@ static int lavc_param_threads=1;
 static int lavc_param_bitexact=0;
 static char *lavc_avopt = NULL;
 
+static const mp_image_t mpi_no_picture =
+{
+	.type = MP_IMGTYPE_INCOMPLETE
+};
+
 const m_option_t lavc_decode_opts_conf[]={
     {"bug", &lavc_param_workaround_bugs, CONF_TYPE_INT, CONF_RANGE, -1, 999999, NULL},
     {"er", &lavc_param_error_resilience, CONF_TYPE_INT, CONF_RANGE, 0, 99, NULL},
@@ -901,7 +906,12 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
     }
 //--
 
-    if(!got_picture) return NULL;        // skipped image
+    if(!got_picture) {
+	if (avctx->codec->id == CODEC_ID_H264)
+	    return &mpi_no_picture; // H.264 first field only
+	else
+	    return NULL;    // skipped image
+    }
 
     if(init_vo(sh, avctx->pix_fmt) < 0) return NULL;
 
