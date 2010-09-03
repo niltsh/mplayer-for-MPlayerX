@@ -105,6 +105,9 @@ dvdnav <button_name>
         prev
         mouse
 
+edl_loadfile <filename>
+    Load new EDL file
+
 edl_mark
     Write the current position into the EDL file.
 

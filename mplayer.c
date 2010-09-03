@@ -2533,6 +2533,17 @@ static void pause_loop(void)
 #endif
 }
 
+static void edl_loadfile(void)
+{
+    if (edl_filename) {
+        if (edl_records) {
+            free_edl(edl_records);
+            edl_needs_reset = 1;
+        }
+        next_edl_record = edl_records = edl_parse_file();
+    }
+}
+
 // Execute EDL command for the current position if one exists
 static void edl_update(MPContext *mpctx)
 {
@@ -3211,10 +3222,7 @@ while (player_idle_mode && !filename) {
             vo_wintitle = strdup ( mp_basename2 (filename));
     }
 
-if (edl_filename) {
-    if (edl_records) free_edl(edl_records);
-    next_edl_record = edl_records = edl_parse_file();
-}
+    edl_loadfile();
 if (edl_output_filename) {
     if (edl_fd) fclose(edl_fd);
     if ((edl_fd = fopen(edl_output_filename, "w")) == NULL)
@@ -3975,6 +3983,15 @@ if(step_sec>0) {
   int brk_cmd = 0;
   while( !brk_cmd && (cmd = mp_input_get_cmd(0,0,0)) != NULL) {
       brk_cmd = run_command(mpctx, cmd);
+      if (cmd->id == MP_CMD_EDL_LOADFILE) {
+          if (edl_filename) free(edl_filename);
+          edl_filename = strdup(cmd->args[0].v.s);
+          if (edl_filename)
+              edl_loadfile();
+          else
+              mp_msg(MSGT_CPLAYER, MSGL_ERR, MSGTR_EdlOutOfMemFile,
+                    cmd->args[0].v.s);
+      }
       mp_cmd_free(cmd);
       if (brk_cmd == 2)
 	  goto goto_enable_cache;

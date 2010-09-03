@@ -44,7 +44,7 @@ extern char * filename;
 
 extern int stream_cache_size;
 extern int autosync;
-
+extern double start_pts;
 extern int frame_dropping;
 
 extern int auto_quality;
