@@ -890,6 +890,22 @@ This parameter allows you to specify that time interval in seconds
 (default: 2 seconds).
 .
 .TP
+.B \-edl-start-pts
+Adjust positions in EDL records according to file's start time.
+Some formats, especially MPEG TS usually start with non-zero PTS
+values and when producing EDL file with \-edlout option, EDL records
+contain absolute values that are correct only to this particular file.
+If re-encoded into different format, this EDL file no longer applies.
+Specifying \-edl-start-pts will automatically adjust EDL positions according
+to start time: when producing EDL file, it will substract start time from every
+EDL record, when playing with EDL file, it will add file's start time to every
+EDL position.
+.
+.TP
+.B \-noedl-start-pts
+Disable adjusting EDL positions.
+.
+.TP
 .B \-enqueue (GUI only)
 Enqueue files given on the command line in the playlist instead of playing them
 immediately.

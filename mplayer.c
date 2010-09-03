@@ -142,7 +142,7 @@ int player_idle_mode=0;
 int quiet=0;
 int enable_mouse_movements=0;
 float start_volume = -1;
-
+double start_pts = MP_NOPTS_VALUE;
 char *heartbeat_cmd;
 
 #define ROUND(x) ((int)((x)<0 ? (x)-0.5 : (x)+0.5))
@@ -339,6 +339,7 @@ FILE* edl_fd = NULL; ///< fd to write to when in -edlout mode.
 // (next seek, pause,...), otherwise after the seek it will
 // enter the same scene again and skip forward immediately
 float edl_backward_delay = 2;
+int edl_start_pts = 0; ///< Automatically add/sub this from EDL start/stop pos
 int use_filedir_conf;
 int use_filename_title;
 
@@ -555,7 +556,6 @@ char *get_metadata (metadata_t type) {
 
 static void print_file_properties(const MPContext *mpctx, const char *filename)
 {
-  double start_pts = MP_NOPTS_VALUE;
   double video_start_pts = MP_NOPTS_VALUE;
   mp_msg(MSGT_IDENTIFY,MSGL_INFO,"ID_FILENAME=%s\n",
 	  filename_recode(filename));
@@ -3639,6 +3639,16 @@ if (select_subtitle(mpctx)) {
 }
 
   print_file_properties(mpctx, filename);
+
+  // Adjust EDL positions with start_pts
+  if (edl_start_pts && start_pts) {
+      edl_record_ptr edl = edl_records;
+      while (edl) {
+          edl->start_sec += start_pts;
+          edl->stop_sec += start_pts;
+          edl = edl->next;
+      }
+  }
 
 if(!mpctx->sh_video) goto main; // audio-only
 

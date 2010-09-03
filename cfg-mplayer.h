@@ -103,6 +103,8 @@ const m_option_t mplayer_opts[]={
      CONF_TYPE_PRINT, 0, 0, 0, NULL},
     {"edlout", &edl_output_filename,  CONF_TYPE_STRING, 0, 0, 0, NULL},
     {"edl-backward-delay", &edl_backward_delay,  CONF_TYPE_INT, CONF_MIN, 0, 0, NULL},
+    {"edl-start-pts", &edl_start_pts,  CONF_TYPE_FLAG, 0, 0, 1, NULL},
+    {"noedl-start-pts", &edl_start_pts,  CONF_TYPE_FLAG, 0, 1, 0, NULL},
 
 #ifdef CONFIG_X11
     {"display", &mDisplayName, CONF_TYPE_STRING, 0, 0, 0, NULL},
