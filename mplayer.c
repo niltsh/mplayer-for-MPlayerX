@@ -3645,7 +3645,7 @@ if (select_subtitle(mpctx)) {
       edl_record_ptr edl = edl_records;
       while (edl) {
           edl->start_sec += start_pts;
-          edl->stop_sec += start_pts;
+          edl->stop_sec  += start_pts;
           edl = edl->next;
       }
   }
