@@ -825,9 +825,6 @@ FFMPEGFILES = $(foreach part, $(FFMPEGPARTS), $(wildcard $(part)/*.[chS] $(part)
 
 all: $(ALL_PRG-yes)
 
-%.ho: %.h
-	$(CC) $(CFLAGS) -Wno-unused -c -o $@ -x c $<
-
 %.o: %.S
 	$(CC) $(ASFLAGS) -c -o $@ $<
 
@@ -842,8 +839,6 @@ all: $(ALL_PRG-yes)
 
 %-rc.o: %.rc
 	$(WINDRES) -I. $< $@
-
-checkheaders: $(ALLHEADERS:.h=.ho)
 
 $(FFMPEGLIBS): $(FFMPEGFILES) config.h
 	$(MAKE) -C $(@D)
@@ -880,6 +875,11 @@ version.h: version.sh
 
 %$(EXESUF): %.c
 	$(CC) $(CFLAGS) -o $@ $^
+
+%.ho: %.h
+	$(CC) $(CFLAGS) -Wno-unused -c -o $@ -x c $<
+
+checkheaders: $(ALLHEADERS:.h=.ho)
 
 
 
