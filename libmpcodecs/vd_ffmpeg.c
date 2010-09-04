@@ -32,6 +32,7 @@
 #include "fmt-conversion.h"
 
 #include "vd_internal.h"
+#include "vd_ffmpeg.h"
 
 static const vd_info_t info = {
     "FFmpeg's libavcodec codec family",
@@ -249,6 +250,16 @@ static void set_format_params(struct AVCodecContext *avctx, enum PixelFormat fmt
     }
 }
 
+void init_avcodec(void)
+{
+    if (!avcodec_initialized) {
+        avcodec_init();
+        avcodec_register_all();
+        avcodec_initialized = 1;
+        av_log_set_callback(mp_msp_av_log_callback);
+    }
+}
+
 // init driver
 static int init(sh_video_t *sh){
     AVCodecContext *avctx;
@@ -257,12 +268,7 @@ static int init(sh_video_t *sh){
     int lowres_w=0;
     int do_vis_debug= lavc_param_vismv || (lavc_param_debug&(FF_DEBUG_VIS_MB_TYPE|FF_DEBUG_VIS_QP));
 
-    if(!avcodec_initialized){
-        avcodec_init();
-        avcodec_register_all();
-        avcodec_initialized=1;
-        av_log_set_callback(mp_msp_av_log_callback);
-    }
+    init_avcodec();
 
     ctx = sh->context = malloc(sizeof(vd_ffmpeg_ctx));
     if (!ctx)

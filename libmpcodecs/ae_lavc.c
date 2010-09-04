@@ -30,6 +30,7 @@
 #include "stream/stream.h"
 #include "libmpdemux/muxer.h"
 #include "ae_lavc.h"
+#include "vd_ffmpeg.h"
 #include "help_mp.h"
 #include "av_opts.h"
 #include "libaf/af_format.h"
@@ -44,7 +45,6 @@ extern int  lavc_param_abitrate;
 extern int  lavc_param_atag;
 extern int  lavc_param_audio_global_header;
 extern char *lavc_param_audio_avopt;
-extern int  avcodec_initialized;
 static int compressed_frame_size = 0;
 #ifdef CONFIG_LIBAVFORMAT
 #include "libavformat/avformat.h"
@@ -190,11 +190,7 @@ int mpae_init_lavc(audio_encoder_t *encoder)
 		return 0;
 	}
 
-	if(!avcodec_initialized){
-		avcodec_init();
-		avcodec_register_all();
-		avcodec_initialized=1;
-	}
+	init_avcodec();
 
 	lavc_acodec = avcodec_find_encoder_by_name(lavc_param_acodec);
 	if (!lavc_acodec)
