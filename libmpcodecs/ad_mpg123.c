@@ -25,6 +25,7 @@
 #include "config.h"
 
 #include "ad_internal.h"
+#include "dec_audio.h"
 
 static const ad_info_t info = {
     "MPEG 1.0/2.0/2.5 layers I, II, III",
@@ -71,10 +72,6 @@ LIBAD_EXTERN(mpg123)
 
 /* Switch for updating bitrate info of VBR files. Not essential. */
 #define AD_MPG123_MEAN_BITRATE
-
-/* Funny thing, that. I assume I shall use it for selecting mpg123 channels.
- * Please correct me if I guessed wrong. */
-extern int fakemono;
 
 struct ad_mpg123_context {
     mpg123_handle *handle;

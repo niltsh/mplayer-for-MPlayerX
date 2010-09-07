@@ -23,6 +23,7 @@
 #include "config.h"
 
 #include "ad_internal.h"
+#include "dec_audio.h"
 #include "ad_mp3lib.h"
 
 static const ad_info_t info =
@@ -37,8 +38,6 @@ static const ad_info_t info =
 LIBAD_EXTERN(mp3lib)
 
 #include "mp3lib/mp3.h"
-
-extern int fakemono;
 
 static sh_audio_t* dec_audio_sh=NULL;
 
