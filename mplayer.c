@@ -3227,10 +3227,9 @@ while (player_idle_mode && !filename) {
     if (edl_output_filename) {
         if (edl_fd)
             fclose(edl_fd);
-        if ((edl_fd = fopen(edl_output_filename, "w")) == NULL)
-        {
+        if ((edl_fd = fopen(edl_output_filename, "w")) == NULL) {
             mp_msg(MSGT_CPLAYER, MSGL_ERR, MSGTR_EdlCantOpenForWrite,
-                    filename_recode(edl_output_filename));
+                   filename_recode(edl_output_filename));
         }
     }
 
@@ -4003,7 +4002,7 @@ if(step_sec>0) {
               edl_loadfile();
           else
               mp_msg(MSGT_CPLAYER, MSGL_ERR, MSGTR_EdlOutOfMemFile,
-                      cmd->args[0].v.s);
+                     cmd->args[0].v.s);
       }
       mp_cmd_free(cmd);
       if (brk_cmd == 2)
