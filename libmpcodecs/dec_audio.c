@@ -428,7 +428,7 @@ static int filter_n_bytes(sh_audio_t *sh, int len)
  * In the former case sh_audio->a_out_buffer_len is always >= minlen
  * on return. In case of EOF/error it might or might not be.
  * Can reallocate sh_audio->a_out_buffer if needed to fit all filter output. */
-int decode_audio(sh_audio_t *sh_audio, int minlen)
+int mp_decode_audio(sh_audio_t *sh_audio, int minlen)
 {
     // Indicates that a filter seems to be buffering large amounts of data
     int huge_filter_buffer = 0;

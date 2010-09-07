@@ -2160,7 +2160,7 @@ static int fill_audio_out_buffers(void)
 	current_module="decode_audio";
 	t = GetTimer();
 	if (!format_change) {
-	    res = decode_audio(sh_audio, playsize);
+	    res = mp_decode_audio(sh_audio, playsize);
 	    format_change = res == -2;
 	}
 	if (!format_change && res < 0) // EOF or error

@@ -301,7 +301,8 @@ static int dec_audio(sh_audio_t *sh_audio,unsigned char* buffer,int total){
     while(size<total && !at_eof){
 	int len=total-size;
 		if(len>MAX_OUTBURST) len=MAX_OUTBURST;
-		if (decode_audio(sh_audio, len) < 0) at_eof=1;
+		if (mp_decode_audio(sh_audio, len) < 0)
+                    at_eof = 1;
 		if(len>sh_audio->a_out_buffer_len) len=sh_audio->a_out_buffer_len;
 		fast_memcpy(buffer+size,sh_audio->a_out_buffer,len);
 		sh_audio->a_out_buffer_len-=len; size+=len;
