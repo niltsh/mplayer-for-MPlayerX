@@ -2452,6 +2452,28 @@ static double update_video(int *blit_frame)
 	frame_time = sh_video->pts - sh_video->last_pts;
 	sh_video->last_pts = sh_video->pts;
 	sh_video->timer += frame_time;
+	// Time-based PTS recalculation.
+	// The key to maintaining A-V sync is to not touch PTS until the proper frame is reached
+	if (sh_video->pts != MP_NOPTS_VALUE) {
+	    if (sh_video->last_pts != MP_NOPTS_VALUE) {
+		double pts = sh_video->last_pts + frame_time;
+		double ptsdiff = fabs(pts - sh_video->pts);
+
+		// Allow starting PTS recalculation at the appropriate frame only
+		mpctx->framestep_found |= (ptsdiff <= frame_time * 1.5);
+
+		// replace PTS only if we're not too close and not too far
+		// and a correctly timed frame has been found, otherwise
+		// keep pts to eliminate rounding errors or catch up with stream
+		if (ptsdiff > frame_time * 20)
+		    mpctx->framestep_found = 0;
+		if (ptsdiff * 10 > frame_time && mpctx->framestep_found)
+		    sh_video->pts = pts;
+		else
+		    mp_dbg(MSGT_AVSYNC,MSGL_DBG2,"Keeping PTS at %6.2f\n", sh_video->pts);
+	    }
+	    sh_video->last_pts = sh_video->pts;
+	}
 	if(mpctx->sh_audio)
 	    mpctx->delay -= frame_time;
 	*blit_frame = res > 0;
