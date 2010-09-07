@@ -31,6 +31,7 @@
 #include "img_format.h"
 #include "mp_image.h"
 #include "vf.h"
+#include "libmpdemux/demuxer.h"
 #include "libvo/fastmemcpy.h"
 #include "libavutil/common.h"
 
@@ -382,7 +383,6 @@ static int config(struct vf_instance *vf,
 }
 
 static int continue_buffered_image(struct vf_instance *vf);
-extern int correct_pts;
 
 static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
     int tff;
