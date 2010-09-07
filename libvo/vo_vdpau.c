@@ -521,16 +521,12 @@ static int create_vdp_mixer(VdpChromaType vdp_chroma_type)
     return 0;
 }
 
-// Free everything specific to a certain video file
-static void free_video_specific(void)
+static void mark_invalid(void)
 {
     int i;
-    VdpStatus vdp_st;
 
-    if (decoder != VDP_INVALID_HANDLE)
-        vdp_decoder_destroy(decoder);
     decoder = VDP_INVALID_HANDLE;
-    decoder_max_refs = -1;
+    video_mixer = VDP_INVALID_HANDLE;
 
     for (i = 0; i < 3; i++)
         deint_surfaces[i] = VDP_INVALID_HANDLE;
@@ -540,6 +536,17 @@ static void free_video_specific(void)
             deint_mpi[i]->usage_count--;
             deint_mpi[i] = NULL;
         }
+}
+
+// Free everything specific to a certain video file
+static void free_video_specific(void)
+{
+    int i;
+    VdpStatus vdp_st;
+
+    if (decoder != VDP_INVALID_HANDLE)
+        vdp_decoder_destroy(decoder);
+    decoder_max_refs = -1;
 
     for (i = 0; i < MAX_VIDEO_SURFACES; i++) {
         if (surface_render[i].surface != VDP_INVALID_HANDLE) {
@@ -553,7 +560,7 @@ static void free_video_specific(void)
         vdp_st = vdp_video_mixer_destroy(video_mixer);
         CHECK_ST_WARNING("Error when calling vdp_video_mixer_destroy")
     }
-    video_mixer = VDP_INVALID_HANDLE;
+    mark_invalid();
 }
 
 static int create_vdp_decoder(uint32_t format, uint32_t width, uint32_t height,
@@ -603,16 +610,8 @@ static void mark_vdpau_objects_uninitialized(void)
 {
     int i;
 
-    decoder = VDP_INVALID_HANDLE;
     for (i = 0; i < MAX_VIDEO_SURFACES; i++)
         surface_render[i].surface = VDP_INVALID_HANDLE;
-    for (i = 0; i < 3; i++) {
-        deint_surfaces[i] = VDP_INVALID_HANDLE;
-        if (i < 2 && deint_mpi[i])
-            deint_mpi[i]->usage_count--;
-        deint_mpi[i] = NULL;
-    }
-    video_mixer     = VDP_INVALID_HANDLE;
     vdp_flip_queue  = VDP_INVALID_HANDLE;
     vdp_flip_target = VDP_INVALID_HANDLE;
     for (i = 0; i <= NUM_OUTPUT_SURFACES; i++)
@@ -623,6 +622,7 @@ static void mark_vdpau_objects_uninitialized(void)
     output_surface_width = output_surface_height = -1;
     eosd_render_count = 0;
     visible_buf = 0;
+    mark_invalid();
 }
 
 static int handle_preemption(void)
