@@ -184,6 +184,7 @@ libvo drivers:
     * vo_svga.c - Ivan Kalvachev
     * vo_tdfxfb.c - Alban Bedel
     * vo_tga.c - Daniele Forghieri
+    * vo_vdpau.c - Carl Eugen Hoyos
     * vo_vesa.c - Aurelien Jacobs
     * vo_wii.c - Benjamin Zores
     * vo_winvidix.c - Sascha Sommer
