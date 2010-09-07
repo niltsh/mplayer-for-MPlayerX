@@ -388,7 +388,7 @@ int init_best_video_codec(sh_video_t *sh_video, char **video_codec_list,
 }
 
 void *decode_video(sh_video_t *sh_video, unsigned char *start, int in_size,
-                   int drop_frame, double pts)
+                   int drop_frame, double pts, int *full_frame)
 {
     mp_image_t *mpi = NULL;
     unsigned int t = GetTimer();
@@ -405,6 +405,9 @@ void *decode_video(sh_video_t *sh_video, unsigned char *start, int in_size,
 	got_picture = 0;
 	mpi = NULL;
     }
+
+    if (full_frame)
+	*full_frame = got_picture;
 
     delay = get_current_video_decoder_lag(sh_video);
     if (correct_pts && pts != MP_NOPTS_VALUE

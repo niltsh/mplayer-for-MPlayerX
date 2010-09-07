@@ -1827,7 +1827,7 @@ static int generate_video_frame(sh_video_t *sh_video, demux_stream_t *d_video)
 	if (in_size > max_framesize)
 	    max_framesize = in_size;
 	current_module = "decode video";
-	decoded_frame = decode_video(sh_video, start, in_size, drop_frame, pts);
+	decoded_frame = decode_video(sh_video, start, in_size, drop_frame, pts, NULL);
 	if (decoded_frame) {
 	    update_subtitles(sh_video, sh_video->pts, mpctx->d_sub, 0);
 	    update_teletext(sh_video, mpctx->demuxer, 0);
@@ -2381,7 +2381,9 @@ static double update_video(int *blit_frame)
 	void *decoded_frame = NULL;
 	int drop_frame=0;
 	int in_size;
+	int full_frame;
 
+    do {
 	current_module = "video_read_frame";
 	frame_time = sh_video->next_frame_time;
 	in_size = video_read_frame(sh_video, &sh_video->next_frame_time,
@@ -2402,27 +2404,56 @@ static double update_video(int *blit_frame)
 	    return -1;
 	if (in_size > max_framesize)
 	    max_framesize = in_size; // stats
-	sh_video->timer += frame_time;
-	if (mpctx->sh_audio)
-	    mpctx->delay -= frame_time;
-	// video_read_frame can change fps (e.g. for ASF video)
-	vo_fps = sh_video->fps;
 	drop_frame = check_framedrop(frame_time);
-	update_subtitles(sh_video, sh_video->pts, mpctx->d_sub, 0);
-	update_teletext(sh_video, mpctx->demuxer, 0);
-	update_osd_msg();
 	current_module = "decode_video";
 #ifdef CONFIG_DVDNAV
+	full_frame = 1;
 	decoded_frame = mp_dvdnav_restore_smpi(&in_size,&start,decoded_frame);
 	/// still frame has been reached, no need to decode
 	if (in_size > 0 && !decoded_frame)
 #endif
 	decoded_frame = decode_video(sh_video, start, in_size, drop_frame,
-				     sh_video->pts);
+				     sh_video->pts, &full_frame);
+
+    if (full_frame) {
+	sh_video->timer += frame_time;
+
+	// Time-based PTS recalculation.
+	// The key to maintaining A-V sync is to not touch PTS until the proper frame is reached
+	if (sh_video->pts != MP_NOPTS_VALUE) {
+	    if (sh_video->last_pts != MP_NOPTS_VALUE) {
+		double pts = sh_video->last_pts + frame_time;
+		double ptsdiff = fabs(pts - sh_video->pts);
+
+		// Allow starting PTS recalculation at the appropriate frame only
+		mpctx->framestep_found |= (ptsdiff <= frame_time * 1.5);
+
+		// replace PTS only if we're not too close and not too far
+		// and a correctly timed frame has been found, otherwise
+		// keep pts to eliminate rounding errors or catch up with stream
+		if (ptsdiff > frame_time * 20)
+		    mpctx->framestep_found = 0;
+		if (ptsdiff * 10 > frame_time && mpctx->framestep_found)
+		    sh_video->pts = pts;
+		else
+		    mp_dbg(MSGT_AVSYNC,MSGL_DBG2,"Keeping PTS at %6.2f\n", sh_video->pts);
+	    }
+	    sh_video->last_pts = sh_video->pts;
+	}
+	if (mpctx->sh_audio)
+	    mpctx->delay -= frame_time;
+	// video_read_frame can change fps (e.g. for ASF video)
+	vo_fps = sh_video->fps;
+	update_subtitles(sh_video, sh_video->pts, mpctx->d_sub, 0);
+	update_teletext(sh_video, mpctx->demuxer, 0);
+	update_osd_msg();
+    }
 #ifdef CONFIG_DVDNAV
 	/// save back last still frame for future display
 	mp_dvdnav_save_smpi(in_size,start,decoded_frame);
 #endif
+    } while (!full_frame);
+
 	current_module = "filter_video";
 	*blit_frame = (decoded_frame && filter_video(sh_video, decoded_frame,
 						    sh_video->pts));
@@ -2452,28 +2483,6 @@ static double update_video(int *blit_frame)
 	frame_time = sh_video->pts - sh_video->last_pts;
 	sh_video->last_pts = sh_video->pts;
 	sh_video->timer += frame_time;
-	// Time-based PTS recalculation.
-	// The key to maintaining A-V sync is to not touch PTS until the proper frame is reached
-	if (sh_video->pts != MP_NOPTS_VALUE) {
-	    if (sh_video->last_pts != MP_NOPTS_VALUE) {
-		double pts = sh_video->last_pts + frame_time;
-		double ptsdiff = fabs(pts - sh_video->pts);
-
-		// Allow starting PTS recalculation at the appropriate frame only
-		mpctx->framestep_found |= (ptsdiff <= frame_time * 1.5);
-
-		// replace PTS only if we're not too close and not too far
-		// and a correctly timed frame has been found, otherwise
-		// keep pts to eliminate rounding errors or catch up with stream
-		if (ptsdiff > frame_time * 20)
-		    mpctx->framestep_found = 0;
-		if (ptsdiff * 10 > frame_time && mpctx->framestep_found)
-		    sh_video->pts = pts;
-		else
-		    mp_dbg(MSGT_AVSYNC,MSGL_DBG2,"Keeping PTS at %6.2f\n", sh_video->pts);
-	    }
-	    sh_video->last_pts = sh_video->pts;
-	}
 	if(mpctx->sh_audio)
 	    mpctx->delay -= frame_time;
 	*blit_frame = res > 0;
@@ -2662,6 +2671,7 @@ static int seek(MPContext *mpctx, double amount, int style)
 	mpctx->num_buffered_frames = 0;
 	mpctx->delay = 0;
 	mpctx->time_frame = 0;
+	mpctx->framestep_found = 0;
 	// Not all demuxers set d_video->pts during seek, so this value
 	// (which is used by at least vobsub and edl code below) may
 	// be completely wrong (probably 0).
@@ -3711,6 +3721,7 @@ if(verbose) term_osd = 0;
 int frame_time_remaining=0; // flag
 int blit_frame=0;
 mpctx->num_buffered_frames=0;
+mpctx->framestep_found=0;
 
 // Make sure old OSD does not stay around,
 // e.g. with -fixed-vo and same-resolution files

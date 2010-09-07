@@ -29,7 +29,7 @@ void vfm_help(void);
 int init_best_video_codec(sh_video_t *sh_video, char** video_codec_list, char** video_fm_list);
 void uninit_video(sh_video_t *sh_video);
 
-void *decode_video(sh_video_t *sh_video, unsigned char *start, int in_size, int drop_frame, double pts);
+void *decode_video(sh_video_t *sh_video, unsigned char *start, int in_size, int drop_frame, double pts, int *full_frame);
 int filter_video(sh_video_t *sh_video, void *frame, double pts);
 
 int get_video_quality_max(sh_video_t *sh_video);
