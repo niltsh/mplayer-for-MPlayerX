@@ -30,8 +30,6 @@
 
 //#include "dvdauth.h"
 
-extern int sub_justify;
-
 #define TY_TEXT_MODE        ( 1 << 0 )
 #define TY_OSD_MODE         ( 1 << 1 )
 

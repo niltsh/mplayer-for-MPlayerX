@@ -39,6 +39,7 @@
 #include "mp_msg.h"
 #include "help_mp.h"
 
+#include "libvo/sub.h"
 #include "stream/stream.h"
 #include "demuxer.h"
 #include "demux_ty_osd.h"
@@ -49,7 +50,6 @@
 #include "libavutil/intreadwrite.h"
 
 void skip_audio_frame( sh_audio_t *sh_audio );
-extern int sub_justify;
 
 // 2/c0: audio data
 // 3/c0: audio packet header (PES header)
