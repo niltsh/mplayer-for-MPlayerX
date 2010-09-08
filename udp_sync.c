@@ -40,18 +40,18 @@
 
 #include "mplayer.h"
 #include "mp_core.h"
-#include "udp_sync.h"
 #include "mp_msg.h"
 #include "help_mp.h"
+#include "udp_sync.h"
 
 
 // config options for UDP sync
 int udp_master = 0;
-int udp_slave = 0;
-int udp_port = 23867;
+int udp_slave  = 0;
+int udp_port   = 23867;
 const char *udp_ip = "127.0.0.1"; // where the master sends datagrams
                                   // (can be a broadcast address)
-float udp_seek_threshold = 1.0; // how far off before we seek
+float udp_seek_threshold = 1.0;   // how far off before we seek
 
 // remember where the master is in the file
 static float udp_master_position = -1.0;
@@ -83,9 +83,9 @@ int get_udp(int blocking, float *master_position)
         sockfd = socket(AF_INET, SOCK_DGRAM, 0);
 
         memset(&servaddr, sizeof(servaddr), 0);
-        servaddr.sin_family =      AF_INET;
+        servaddr.sin_family      = AF_INET;
         servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-        servaddr.sin_port =        htons(udp_port);
+        servaddr.sin_port        = htons(udp_port);
         bind(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
 
         tv.tv_sec = 30;
@@ -104,10 +104,11 @@ int get_udp(int blocking, float *master_position)
 
     len = sizeof(cliaddr);
 
-    chars_received = recvfrom(sockfd, mesg, sizeof(mesg)-1, 0, (struct sockaddr *)&cliaddr, &len);
+    chars_received = recvfrom(sockfd, mesg, sizeof(mesg)-1, 0,
+                              (struct sockaddr *)&cliaddr, &len);
 
     if (chars_received == -1) {
-      return 0;
+        return 0;
     }
 
 #if HAVE_WINSOCK2_H
@@ -118,11 +119,12 @@ int get_udp(int blocking, float *master_position)
 #endif
 
     // flush out any further messages so we don't get behind
-    while (-1 != (n = recvfrom(sockfd, mesg, sizeof(mesg)-1, 0, (struct sockaddr *)&cliaddr, &len))) {
+    while (-1 != (n = recvfrom(sockfd, mesg, sizeof(mesg)-1, 0,
+                               (struct sockaddr *)&cliaddr, &len))) {
         chars_received = n;
         mesg[chars_received] = 0;
         if (strcmp(mesg, "bye") == 0) {
-          return 1;
+            return 1;
         }
     }
 
@@ -155,7 +157,7 @@ void send_udp(const char *send_to_ip, int port, char *mesg)
 
         done_init_yet = 1;
 
-        sockfd=socket(AF_INET, SOCK_DGRAM, 0);
+        sockfd = socket(AF_INET, SOCK_DGRAM, 0);
 
         // Enable broadcast
         setsockopt(sockfd, SOL_SOCKET, SO_BROADCAST, &one, sizeof(one));
@@ -172,10 +174,11 @@ void send_udp(const char *send_to_ip, int port, char *mesg)
         }
 
         socketinfo.sin_family = AF_INET;
-        socketinfo.sin_port = htons(port);
+        socketinfo.sin_port   = htons(port);
     }
 
-    sendto(sockfd, mesg, strlen(mesg), 0, (struct sockaddr *) &socketinfo, sizeof(socketinfo));
+    sendto(sockfd, mesg, strlen(mesg), 0, (struct sockaddr *) &socketinfo,
+           sizeof(socketinfo));
 }
 
 // this function makes sure we stay as close as possible to the master's
@@ -190,7 +193,7 @@ int udp_slave_sync(MPContext *mpctx)
 
         // if we're way off, seek to catch up
         if (FFABS(my_position - udp_master_position) > udp_seek_threshold) {
-            abs_seek_pos = SEEK_ABSOLUTE;
+            abs_seek_pos  = SEEK_ABSOLUTE;
             rel_seek_secs = udp_master_position;
             break;
         }
