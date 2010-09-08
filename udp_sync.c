@@ -76,13 +76,12 @@ int get_udp(int blocking, float *master_position)
     static int sockfd;
     if (!done_init_yet) {
         struct timeval tv;
-        struct sockaddr_in servaddr;
+        struct sockaddr_in servaddr = { 0 };
 
         done_init_yet = 1;
 
         sockfd = socket(AF_INET, SOCK_DGRAM, 0);
 
-        memset(&servaddr, sizeof(servaddr), 0);
         servaddr.sin_family      = AF_INET;
         servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
         servaddr.sin_port        = htons(udp_port);
