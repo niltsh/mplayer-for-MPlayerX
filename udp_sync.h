@@ -22,8 +22,6 @@
 #ifndef MPLAYER_UDP_SYNC_H
 #define MPLAYER_UDP_SYNC_H
 
-#include "mp_core.h"
-
 // config options for UDP sync
 extern int udp_master;
 extern int udp_slave;
