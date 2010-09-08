@@ -106,6 +106,7 @@ int get_udp(int blocking, float *master_position)
     chars_received = recvfrom(sockfd, mesg, sizeof(mesg)-1, 0,
                               (struct sockaddr *)&cliaddr, &len);
 
+    // UDP wait error, probably a timeout.  Safe to ignore.
     if (chars_received == -1)
         return 0;
 
@@ -125,7 +126,6 @@ int get_udp(int blocking, float *master_position)
             return 1;
     }
 
-    if (chars_received > -1) {
         mesg[chars_received] = 0;
 
         if (strcmp(mesg, "bye") == 0) {
@@ -134,9 +134,6 @@ int get_udp(int blocking, float *master_position)
             sscanf(mesg, "%f", master_position);
             return 0;
         }
-    } else {
-        // UDP wait error, probably a timeout.  Safe to ignore.
-    }
 
     return 0;
 }
