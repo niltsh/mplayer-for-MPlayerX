@@ -34,6 +34,7 @@
 #include "audio_out_internal.h"
 #include "libaf/af_format.h"
 #include "libmpdemux/mpeg_packetizer.h"
+#include "libvo/video_out.h"
 
 
 static const ao_info_t info =
@@ -164,7 +165,6 @@ static void audio_resume(void)
 {
 }
 
-extern int vo_pts;
 // return: how many bytes can be played without blocking
 static int get_space(void){
     float x=(float)(vo_pts-ao_data.pts)/90000.0;

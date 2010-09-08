@@ -29,6 +29,7 @@
 #include "subopt-helper.h"
 #include "libaf/af_format.h"
 #include "libaf/reorder_ch.h"
+#include "libvo/video_out.h"
 #include "audio_out.h"
 #include "audio_out_internal.h"
 #include "mp_msg.h"
@@ -48,8 +49,6 @@ static const ao_info_t info =
 };
 
 LIBAO_EXTERN(pcm)
-
-extern int vo_pts;
 
 static char *ao_outputfilename = NULL;
 static int ao_pcm_waveheader = 1;

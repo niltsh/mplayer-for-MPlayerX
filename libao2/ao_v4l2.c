@@ -33,6 +33,7 @@
 #include "audio_out_internal.h"
 #include "libaf/af_format.h"
 #include "libmpdemux/mpeg_packetizer.h"
+#include "libvo/video_out.h"
 #include "libvo/vo_v4l2.h"
 
 #define MPEG_AUDIO_ID 0x1C0
@@ -123,7 +124,6 @@ audio_resume (void)
 static int
 get_space (void)
 {
-  extern int vo_pts;
   float x;
   int y;
 
