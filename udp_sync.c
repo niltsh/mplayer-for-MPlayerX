@@ -106,9 +106,8 @@ int get_udp(int blocking, float *master_position)
     chars_received = recvfrom(sockfd, mesg, sizeof(mesg)-1, 0,
                               (struct sockaddr *)&cliaddr, &len);
 
-    if (chars_received == -1) {
+    if (chars_received == -1)
         return 0;
-    }
 
 #if HAVE_WINSOCK2_H
     sock_flags = 0;
@@ -122,9 +121,8 @@ int get_udp(int blocking, float *master_position)
                                (struct sockaddr *)&cliaddr, &len))) {
         chars_received = n;
         mesg[chars_received] = 0;
-        if (strcmp(mesg, "bye") == 0) {
+        if (strcmp(mesg, "bye") == 0)
             return 1;
-        }
     }
 
     if (chars_received > -1) {
@@ -205,9 +203,8 @@ int udp_slave_sync(MPContext *mpctx)
         // without waiting.
         // UDP_TIMING_TOLERANCE is a small value that lets us consider
         // the master equal to us even if it's very slightly ahead.
-        if (udp_master_position + UDP_TIMING_TOLERANCE > my_position) {
+        if (udp_master_position + UDP_TIMING_TOLERANCE > my_position)
           break;
-        }
 
         // the remaining case is that we're slightly ahead of the master.
         // usually, it just means we called get_udp() before the datagram
