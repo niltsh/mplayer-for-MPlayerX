@@ -128,9 +128,7 @@
 #include "osdep/getch2.h"
 #include "osdep/timer.h"
 
-#ifdef CONFIG_NETWORKING
 #include "udp_sync.h"
-#endif /* CONFIG_NETWORKING */
 
 #ifdef CONFIG_X11
 #include "libvo/x11_common.h"
