@@ -87,7 +87,7 @@ int get_udp(int blocking, float *master_position)
     static int done_init_yet = 0;
     static int sockfd;
     if (!done_init_yet) {
-        struct timeval tv;
+        struct timeval tv = { .tv_sec = 30 };
         struct sockaddr_in servaddr = { 0 };
 
         done_init_yet = 1;
@@ -99,7 +99,6 @@ int get_udp(int blocking, float *master_position)
         servaddr.sin_port        = htons(udp_port);
         bind(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
 
-        tv.tv_sec = 30;
         setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
 
     }
