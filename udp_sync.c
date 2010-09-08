@@ -59,12 +59,24 @@ static float udp_master_position = -1.0;
 // how far off is still considered equal
 #define UDP_TIMING_TOLERANCE 0.02
 
+static void set_blocking(int fd, int blocking)
+{
+    long sock_flags;
+#if HAVE_WINSOCK2_H
+    sock_flags = blocking;
+    ioctlsocket(fd, FIONBIO, &sock_flags);
+#else
+    sock_flags = fcntl(fd, F_GETFL, 0);
+    sock_flags = blocking ? sock_flags & ~O_NONBLOCK : sock_flags | O_NONBLOCK;
+    fcntl(fd, F_SETFL, sock_flags);
+#endif /* HAVE_WINSOCK2_H */
+}
+
 // gets a datagram from the master with or without blocking.  updates
 // master_position if successful.  if the master has exited, returns 1.
 // otherwise, returns 0.
 int get_udp(int blocking, float *master_position)
 {
-    long sock_flags;
     struct sockaddr_in cliaddr;
     char mesg[100];
     socklen_t len;
@@ -92,28 +104,16 @@ int get_udp(int blocking, float *master_position)
 
     }
 
-#if HAVE_WINSOCK2_H
-    sock_flags = blocking;
-    ioctlsocket(sockfd, FIONBIO, &sock_flags);
-#else
-    sock_flags = fcntl(sockfd, F_GETFL, 0);
-    sock_flags = blocking ? sock_flags & ~O_NONBLOCK : sock_flags | O_NONBLOCK;
-    fcntl(sockfd, F_SETFL, sock_flags);
-#endif /* HAVE_WINSOCK2_H */
+    set_blocking(sockfd, blocking);
 
     len = sizeof(cliaddr);
 
     while (-1 != (n = recvfrom(sockfd, mesg, sizeof(mesg)-1, 0,
                                (struct sockaddr *)&cliaddr, &len))) {
         // flush out any further messages so we don't get behind
-        if (chars_received == -1) {
-#if HAVE_WINSOCK2_H
-            sock_flags = 0;
-            ioctlsocket(sockfd, FIONBIO, &sock_flags);
-#else
-            fcntl(sockfd, F_SETFL, sock_flags | O_NONBLOCK);
-#endif
-        }
+        if (chars_received == -1)
+            set_blocking(sockfd, 0);
+
         chars_received = n;
         mesg[chars_received] = 0;
         if (strcmp(mesg, "bye") == 0)
