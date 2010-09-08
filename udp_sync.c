@@ -204,7 +204,7 @@ int udp_slave_sync(MPContext *mpctx)
         // UDP_TIMING_TOLERANCE is a small value that lets us consider
         // the master equal to us even if it's very slightly ahead.
         if (udp_master_position + UDP_TIMING_TOLERANCE > my_position)
-          break;
+            break;
 
         // the remaining case is that we're slightly ahead of the master.
         // usually, it just means we called get_udp() before the datagram
