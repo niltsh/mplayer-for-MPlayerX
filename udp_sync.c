@@ -113,17 +113,9 @@ static int get_udp(int blocking, float *master_position)
         mesg[chars_received] = 0;
         if (strcmp(mesg, "bye") == 0)
             return 1;
+        sscanf(mesg, "%f", master_position);
     }
 
-    // UDP wait error, probably a timeout.  Safe to ignore.
-    if (chars_received == -1)
-        return 0;
-
-    // make sure we at least do not crash in case a
-    // failed recvfrom has corrupted the buffer
-    mesg[chars_received] = 0;
-
-    sscanf(mesg, "%f", master_position);
     return 0;
 }
 
