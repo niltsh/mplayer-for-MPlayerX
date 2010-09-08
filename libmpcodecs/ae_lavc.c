@@ -31,6 +31,7 @@
 #include "libmpdemux/muxer.h"
 #include "ae_lavc.h"
 #include "vd_ffmpeg.h"
+#include "ve.h"
 #include "help_mp.h"
 #include "av_opts.h"
 #include "libaf/af_format.h"
@@ -40,11 +41,6 @@
 
 static AVCodec        *lavc_acodec;
 static AVCodecContext *lavc_actx;
-extern char *lavc_param_acodec;
-extern int  lavc_param_abitrate;
-extern int  lavc_param_atag;
-extern int  lavc_param_audio_global_header;
-extern char *lavc_param_audio_avopt;
 static int compressed_frame_size = 0;
 #ifdef CONFIG_LIBAVFORMAT
 #include "libavformat/avformat.h"
