@@ -26,6 +26,7 @@
 
 #include "config.h"
 #include "ad_internal.h"
+#include "dec_audio.h"
 #include "libaf/reorder_ch.h"
 
 static const ad_info_t info =

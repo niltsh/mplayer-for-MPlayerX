@@ -30,6 +30,7 @@
 #include "mpbswap.h"
 
 #include "ad_internal.h"
+#include "dec_audio.h"
 
 #include "cpudetect.h"
 
