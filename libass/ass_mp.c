@@ -65,7 +65,7 @@ extern float text_font_scale_factor;
 extern int subtitle_autoscale;
 
 #ifdef CONFIG_ICONV
-extern char* sub_cp;
+#include "subreader.h"
 #else
 static char* sub_cp = 0;
 #endif
