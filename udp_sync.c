@@ -69,7 +69,7 @@ int get_udp(int blocking, float *master_position)
     char mesg[100];
     socklen_t len;
 
-    int chars_received;
+    int chars_received = -1;
     int n;
 
     static int done_init_yet = 0;
@@ -103,33 +103,31 @@ int get_udp(int blocking, float *master_position)
 
     len = sizeof(cliaddr);
 
-    chars_received = recvfrom(sockfd, mesg, sizeof(mesg)-1, 0,
-                              (struct sockaddr *)&cliaddr, &len);
-
-    // UDP wait error, probably a timeout.  Safe to ignore.
-    if (chars_received == -1)
-        return 0;
-
+    while (-1 != (n = recvfrom(sockfd, mesg, sizeof(mesg)-1, 0,
+                               (struct sockaddr *)&cliaddr, &len))) {
+        // flush out any further messages so we don't get behind
+        if (chars_received == -1) {
 #if HAVE_WINSOCK2_H
     sock_flags = 0;
     ioctlsocket(sockfd, FIONBIO, &sock_flags);
 #else
     fcntl(sockfd, F_SETFL, sock_flags | O_NONBLOCK);
 #endif
-
-    // flush out any further messages so we don't get behind
-    while (-1 != (n = recvfrom(sockfd, mesg, sizeof(mesg)-1, 0,
-                               (struct sockaddr *)&cliaddr, &len))) {
+        }
         chars_received = n;
         mesg[chars_received] = 0;
         if (strcmp(mesg, "bye") == 0)
             return 1;
     }
 
+    // UDP wait error, probably a timeout.  Safe to ignore.
+    if (chars_received == -1)
+        return 0;
+
+    // make sure we at least do not crash in case a
+    // failed recvfrom has corrupted the buffer
     mesg[chars_received] = 0;
 
-    if (strcmp(mesg, "bye") == 0)
-        return 1;
     sscanf(mesg, "%f", master_position);
     return 0;
 }
