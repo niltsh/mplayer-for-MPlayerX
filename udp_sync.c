@@ -126,11 +126,11 @@ int get_udp(int blocking, float *master_position)
             return 1;
     }
 
-        mesg[chars_received] = 0;
+    mesg[chars_received] = 0;
 
-        if (strcmp(mesg, "bye") == 0)
-            return 1;
-            sscanf(mesg, "%f", master_position);
+    if (strcmp(mesg, "bye") == 0)
+        return 1;
+    sscanf(mesg, "%f", master_position);
     return 0;
 }
 
