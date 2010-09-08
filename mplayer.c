@@ -309,7 +309,6 @@ char* current_module=NULL; // for debugging
 
 
 #ifdef CONFIG_MENU
-extern vf_info_t vf_info_menu;
 static vf_info_t* libmenu_vfs[] = {
   &vf_info_menu,
   NULL

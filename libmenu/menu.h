@@ -32,6 +32,7 @@ extern int menu_startup;
 extern double menu_mouse_x;
 extern double menu_mouse_y;
 extern int menu_mouse_pos_updated;
+extern vf_info_t vf_info_menu;
 
 struct menu_priv_s;
 typedef struct  menu_s menu_t;
