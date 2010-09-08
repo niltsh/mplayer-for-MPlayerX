@@ -78,9 +78,7 @@ static void set_blocking(int fd, int blocking)
 // otherwise, returns 0.
 static int get_udp(int blocking, float *master_position)
 {
-    struct sockaddr_in cliaddr;
     char mesg[100];
-    socklen_t len;
 
     int chars_received = -1;
     int n;
@@ -105,10 +103,8 @@ static int get_udp(int blocking, float *master_position)
 
     set_blocking(sockfd, blocking);
 
-    len = sizeof(cliaddr);
-
     while (-1 != (n = recvfrom(sockfd, mesg, sizeof(mesg)-1, 0,
-                               (struct sockaddr *)&cliaddr, &len))) {
+                               NULL, NULL))) {
         // flush out any further messages so we don't get behind
         if (chars_received == -1)
             set_blocking(sockfd, 0);
