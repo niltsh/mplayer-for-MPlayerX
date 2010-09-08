@@ -48,7 +48,7 @@ extern char *lavc_param_audio_avopt;
 static int compressed_frame_size = 0;
 #ifdef CONFIG_LIBAVFORMAT
 #include "libavformat/avformat.h"
-extern const struct AVCodecTag *mp_wav_taglists[];
+#include "libmpdemux/mp_taglists.h"
 #endif
 
 static int bind_lavc(audio_encoder_t *encoder, muxer_stream_t *mux_a)
