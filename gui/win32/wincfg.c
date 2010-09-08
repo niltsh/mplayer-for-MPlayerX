@@ -30,6 +30,7 @@
 #include "help_mp.h"
 #include "m_config.h"
 #include "m_option.h"
+#include "parser-cfg.h"
 #include "libvo/video_out.h"
 #include "mixer.h"
 #include "gui/mplayer/gmplayer.h"
@@ -56,7 +57,6 @@ int gui_sub_pos_y = -1;
 
 /* External functions */
 extern char *proc_priority;
-int m_config_parse_config_file(m_config_t *config, char *conffile);
 
 static m_config_t *gui_conf;
 static const m_option_t gui_opts[] =

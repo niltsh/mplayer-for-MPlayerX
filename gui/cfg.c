@@ -27,6 +27,7 @@
 #include "mplayer.h"
 #include "m_config.h"
 #include "m_option.h"
+#include "parser-cfg.h"
 #include "path.h"
 #include "libmpcodecs/vd.h"
 #include "libvo/sub.h"
@@ -101,7 +102,6 @@ gtkASS_t gtkASS;
 // ---
 
 extern int    disable_gui_conf;
-int m_config_parse_config_file(m_config_t* config, char *conffile);
 
 static m_config_t * gui_conf;
 static const m_option_t gui_opts[] =
