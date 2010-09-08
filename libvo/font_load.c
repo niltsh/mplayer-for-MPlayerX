@@ -26,6 +26,7 @@
 #include <unistd.h>
 
 #include "font_load.h"
+#include "sub.h"
 #include "mp_msg.h"
 
 raw_file* load_raw(char *name,int verbose){
@@ -62,8 +63,6 @@ err_out:
     free(raw);
     return NULL;
 }
-
-extern int sub_unicode;
 
 font_desc_t* read_font_desc(const char* fname,float factor,int verbose){
 unsigned char sor[1024];
