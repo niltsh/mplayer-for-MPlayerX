@@ -35,6 +35,8 @@
 
 #include "m_struct.h"
 #include "m_option.h"
+#include "mp_core.h"
+#include "mplayer.h"
 
 #include "libmpcodecs/img_format.h"
 #include "libmpcodecs/mp_image.h"
@@ -48,7 +50,6 @@
 
 int menu_keepdir = 0;
 char *menu_chroot = NULL;
-extern char *filename;
 
 struct list_entry_s {
   struct list_entry p;
@@ -235,7 +236,6 @@ static int open_dir(menu_t* menu,char* args) {
   char* p = NULL;
   list_entry_t* e;
   DIR* dirp;
-  extern int file_filter;
   char **extensions, **elem, *ext;
 
   menu_list_init(menu);
