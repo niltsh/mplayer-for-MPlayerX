@@ -149,7 +149,8 @@ void send_udp(const char *send_to_ip, int port, char *mesg)
         setsockopt(sockfd, SOL_SOCKET, SO_BROADCAST, &one, sizeof(one));
 
 #if HAVE_WINSOCK2_H
-        ip_valid = (inet_addr(send_to_ip) != INADDR_NONE);
+        socketinfo.sin_addr.s_addr = inet_addr(send_to_ip);
+        ip_valid = socketinfo.sin_addr.s_addr != INADDR_NONE;
 #else
         ip_valid = inet_aton(send_to_ip, &socketinfo.sin_addr);
 #endif
