@@ -94,6 +94,7 @@ extern int subtitle_autoscale;
 extern int vo_image_width;
 extern int vo_image_height;
 
+extern int font_fontconfig;
 extern int force_load_font;
 
 int init_freetype(void);
