@@ -108,10 +108,10 @@ int get_udp(int blocking, float *master_position)
         // flush out any further messages so we don't get behind
         if (chars_received == -1) {
 #if HAVE_WINSOCK2_H
-    sock_flags = 0;
-    ioctlsocket(sockfd, FIONBIO, &sock_flags);
+            sock_flags = 0;
+            ioctlsocket(sockfd, FIONBIO, &sock_flags);
 #else
-    fcntl(sockfd, F_SETFL, sock_flags | O_NONBLOCK);
+            fcntl(sockfd, F_SETFL, sock_flags | O_NONBLOCK);
 #endif
         }
         chars_received = n;
