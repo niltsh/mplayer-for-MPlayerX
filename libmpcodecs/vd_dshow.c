@@ -26,6 +26,7 @@
 #include "help_mp.h"
 
 #include "vd_internal.h"
+#include "dec_video.h"
 
 #include "loader/dshow/DS_VideoDecoder.h"
 

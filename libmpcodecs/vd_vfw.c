@@ -24,6 +24,7 @@
 #include "help_mp.h"
 
 #include "vd_internal.h"
+#include "dec_video.h"
 #include "libmpdemux/aviprint.h"
 #include "loader/wine/driver.h"
 #include "loader/wine/vfw.h"
