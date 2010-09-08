@@ -137,9 +137,8 @@ void send_udp(const char *send_to_ip, int port, char *mesg)
     static int sockfd;
     static struct sockaddr_in socketinfo;
 
-    int one = 1;
-
     if (!done_init_yet) {
+        static const int one = 1;
         int ip_valid = 0;
 
         done_init_yet = 1;
