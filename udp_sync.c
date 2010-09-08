@@ -85,13 +85,10 @@ int get_udp(int blocking, float *master_position)
     int chars_received = -1;
     int n;
 
-    static int done_init_yet = 0;
-    static int sockfd;
-    if (!done_init_yet) {
+    static int sockfd = -1;
+    if (sockfd == -1) {
         struct timeval tv = { .tv_sec = 30 };
         struct sockaddr_in servaddr = { 0 };
-
-        done_init_yet = 1;
 
         sockfd = socket(AF_INET, SOCK_DGRAM, 0);
         if (sockfd == -1)
@@ -136,15 +133,12 @@ int get_udp(int blocking, float *master_position)
 
 void send_udp(const char *send_to_ip, int port, char *mesg)
 {
-    static int done_init_yet = 0;
-    static int sockfd;
+    static int sockfd = -1;
     static struct sockaddr_in socketinfo;
 
-    if (!done_init_yet) {
+    if (sockfd == -1) {
         static const int one = 1;
         int ip_valid = 0;
-
-        done_init_yet = 1;
 
         sockfd = socket(AF_INET, SOCK_DGRAM, 0);
         if (sockfd == -1)
