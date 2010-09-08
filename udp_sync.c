@@ -74,6 +74,7 @@ static void set_blocking(int fd, int blocking)
 
 // gets a datagram from the master with or without blocking.  updates
 // master_position if successful.  if the master has exited, returns 1.
+// returns -1 on error.
 // otherwise, returns 0.
 int get_udp(int blocking, float *master_position)
 {
@@ -93,6 +94,8 @@ int get_udp(int blocking, float *master_position)
         done_init_yet = 1;
 
         sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+        if (sockfd == -1)
+            return -1;
 
         servaddr.sin_family      = AF_INET;
         servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -144,6 +147,8 @@ void send_udp(const char *send_to_ip, int port, char *mesg)
         done_init_yet = 1;
 
         sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+        if (sockfd == -1)
+            exit_player(EXIT_ERROR);
 
         // Enable broadcast
         setsockopt(sockfd, SOL_SOCKET, SO_BROADCAST, &one, sizeof(one));
