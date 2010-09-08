@@ -76,7 +76,7 @@ static void set_blocking(int fd, int blocking)
 // master_position if successful.  if the master has exited, returns 1.
 // returns -1 on error.
 // otherwise, returns 0.
-int get_udp(int blocking, float *master_position)
+static int get_udp(int blocking, float *master_position)
 {
     struct sockaddr_in cliaddr;
     char mesg[100];
