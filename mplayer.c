@@ -240,11 +240,6 @@ char **video_codec_list=NULL; // override video codec
 char **audio_fm_list=NULL;    // override audio codec family
 char **video_fm_list=NULL;    // override video codec family
 
-// demuxer:
-extern char *demuxer_name; // override demuxer
-extern char *audio_demuxer_name; // override audio demuxer
-extern char *sub_demuxer_name; // override sub demuxer
-
 // streaming:
 int audio_id=-1;
 int video_id=-1;
