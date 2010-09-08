@@ -125,6 +125,12 @@
 #include "subreader.h"
 #include "vobsub.h"
 #include "eosd.h"
+#include "osdep/getch2.h"
+#include "osdep/timer.h"
+
+#ifdef CONFIG_NETWORKING
+#include "udp_sync.h"
+#endif /* CONFIG_NETWORKING */
 
 #ifdef CONFIG_X11
 #include "libvo/x11_common.h"
@@ -720,6 +726,11 @@ void uninit_player(unsigned int mask){
 
 void exit_player_with_rc(enum exit_reason how, int rc)
 {
+
+#ifdef CONFIG_NETWORKING
+  if (udp_master)
+    send_udp(udp_ip, udp_port, "bye");
+#endif /* CONFIG_NETWORKING */
 
   if (mpctx->user_muted && !mpctx->edl_muted) mixer_mute(&mpctx->mixer);
   uninit_player(INITIALIZED_ALL);
@@ -2213,6 +2224,17 @@ static int sleep_until_update(float *time_frame, float *aq_sleep_time)
     int frame_time_remaining = 0;
     current_module="calc_sleep_time";
 
+#ifdef CONFIG_NETWORKING
+    if (udp_slave) {
+        int udp_master_exited = udp_slave_sync(mpctx);
+        if (udp_master_exited) {
+            mp_msg(MSGT_CPLAYER, MSGL_INFO, MSGTR_MasterQuit);
+            exit_player(EXIT_QUIT);
+        }
+        return 0;
+    }
+#endif /* CONFIG_NETWORKING */
+
     *time_frame -= GetRelativeTime(); // reset timer
 
     if (mpctx->sh_audio && !mpctx->d_audio->eof) {
@@ -2261,6 +2283,15 @@ static int sleep_until_update(float *time_frame, float *aq_sleep_time)
     // flag 256 means: libvo driver does its timing (dvb card)
     if (*time_frame > 0.001 && !(vo_flags&256))
 	*time_frame = timing_sleep(*time_frame);
+
+#ifdef CONFIG_NETWORKING
+    if (udp_master) {
+      char current_time[256];
+      sprintf(current_time, "%f", mpctx->sh_video->pts);
+      send_udp(udp_ip, udp_port, current_time);
+    }
+#endif /* CONFIG_NETWORKING */
+
     return frame_time_remaining;
 }
 

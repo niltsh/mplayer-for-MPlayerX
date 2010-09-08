@@ -1195,6 +1195,34 @@ Skip <sec> seconds after every frame.
 The normal framerate of the movie is kept, so playback is accelerated.
 Since MPlayer can only seek to the next keyframe this may be inexact.
 .
+.TP
+.B \-udp\-ip <ip>
+Sets the destination address for datagrams sent by the \-udp\-master.
+Setting it to a broadcast address allows multiple slaves having the same
+broadcast address to sync to the master (default: 127.0.0.1).
+.
+.TP
+.B \-udp\-master
+Send a datagram to \-udp\-ip on \-udp\-port just before playing each frame.
+The datagram indicates the master's position in the file.
+.
+.TP
+.B \-udp\-port <port>
+Sets the destination port for datagrams sent by the \-udp\-master, and the
+port a \-udp\-slave listens on (default: 23867).
+.
+.TP
+.B \-udp\-seek\-threshold <sec>
+When the master seeks, the slave has to decide whether to seek as
+well, or to catch up by decoding frames without pausing between frames.
+If the master is more than <sec> seconds away from the
+slave, the slave seeks.
+Otherwise, it "runs" to catch up or waits for the master.
+This should almost always be left at its default setting of 1 second.
+.
+.TP
+.B \-udp\-slave
+Listen on \-udp\-port and match the master's position.
 .
 .
 .SH "DEMUXER/STREAM OPTIONS"

@@ -368,6 +368,9 @@ Hoffman, Marc <mmh@pleasantst.com>
 Holm, David (dholm, mswitch) <dholm@telia.com>
     * DXR3 support
 
+Holt, Jason <jholt [at] google.com>
+    * UDP network synchronization
+
 Horst, Bohdan (Nexus) <nexus@irc.pl>
     * FreeBSD support
 

@@ -686,9 +686,69 @@ change the default operation which is to skip the block described by each line.
 </sect2>
 </sect1>
 
-
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
+<sect1 id="networksync" xreflabel="Network Synchronized Playback">
+<title>Synchronized playback over a network</title>
+
+<para>
+Multiple instances of <application>MPlayer</application> can synchronize
+playback over a network. This is useful for creating "video walls" with
+multiple screens controlled by different computers. Each
+<application>MPlayer</application> instance can
+play a different video, but they all will try to stay at the same time offset
+in the file. It is recommended but not necessary to encode the video files
+using the same codec and parameters.
+</para>
+
+<para>The relevant options are <option>-udp-master</option>,
+  <option>-udp-slave</option>, <option>-udp-ip</option>,
+  <option>-udp-port</option>, and <option>-udp-seek-threshold</option>.
+</para>
+
+<para>
+If <option>-udp-master</option> is given, <application>MPlayer</application>
+sends a datagram to <option>-udp-ip</option> (default: 127.0.0.1)
+on <option>-udp-port</option> (default: 23867) just before playing each frame.
+The datagram indicates the master's position in the file. If
+<option>-udp-slave</option> is given, <application>MPlayer</application> listens on
+<option>-udp-ip</option>/<option>-udp-port</option>
+and matches the master's position. Setting <option>-udp-ip</option> to the
+master's broadcast address allows multiple slaves having the same broadcast
+address to sync to the master.  Note that this feature assumes an
+ethernet-like low-latency network connection.  Your mileage may vary on high
+latency networks.
+</para>
+
+<para>
+For example, assume 8 computers are on a network, with IP addresses 192.168.0.1
+through 192.168.0.8. Assume the first computer is to be the master. Running
+ifconfig on all the machines lists "Bcast:192.168.0.255". On the master, run:
+</para>
+
+<screen>
+mplayer -udp-master -udp-ip 192.168.0.255 video1.mpg
+</screen>
+
+<para>
+On each slave, run:
+</para>
+
+<screen>
+mplayer -udp-slave videoN.mpg
+</screen>
+
+<para>
+Seeking, pausing and even playback speed adjustment (see the
+<option>-input</option> option) can be done on the master, and all the slaves
+will follow. When the master exits, it sends out a "bye" message which causes
+the slaves to exit as well.
+</para>
+
+</sect1>
+</chapter>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 <sect1 id="advaudio-surround">
 <title>Surround/Multichannel playback</title>

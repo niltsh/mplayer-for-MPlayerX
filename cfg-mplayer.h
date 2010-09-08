@@ -275,6 +275,14 @@ const m_option_t mplayer_opts[]={
 
     {"benchmark", &benchmark, CONF_TYPE_FLAG, 0, 0, 1, NULL},
 
+#ifdef CONFIG_NETWORKING
+    {"udp-slave", &udp_slave, CONF_TYPE_FLAG, 0, 0, 1, NULL},
+    {"udp-master", &udp_master, CONF_TYPE_FLAG, 0, 0, 1, NULL},
+    {"udp-ip", &udp_ip, CONF_TYPE_STRING, 0, 0, 1, NULL},
+    {"udp-port", &udp_port, CONF_TYPE_INT, 0, 1, 65535, NULL},
+    {"udp-seek-threshold", &udp_seek_threshold, CONF_TYPE_FLOAT, CONF_RANGE, 0.1, 100, NULL},
+#endif /* CONFIG_NETWORKING */
+
     // dump some stream out instead of playing the file
     // this really should be in MEncoder instead of MPlayer... -> TODO
     {"dumpfile", &stream_dump_name, CONF_TYPE_STRING, 0, 0, 0, NULL},

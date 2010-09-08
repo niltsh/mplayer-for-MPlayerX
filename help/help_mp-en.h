@@ -180,6 +180,8 @@ static const char help_text[]=
 #define MSGTR_DvdnavNavSpuClutChange "DVDNAV Event: Nav SPU CLUT Change\n"
 #define MSGTR_DvdnavNavSeekDone "DVDNAV Event: Nav Seek Done\n"
 #define MSGTR_MenuCall "Menu call\n"
+#define MSGTR_MasterQuit "Option -udp_slave: exiting because master exited\n"
+#define MSGTR_InvalidIP "Option -udp-ip: invalid IP address\n"
 
 // --- edit decision lists
 #define MSGTR_EdlOutOfMem "Can't allocate enough memory to hold EDL data.\n"
