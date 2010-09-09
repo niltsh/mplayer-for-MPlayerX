@@ -26,6 +26,7 @@
 
 #include "config.h"
 #include "help_mp.h"
+#include "mp_core.h"
 #include "libmpcodecs/vd.h"
 #include "libvo/x11_common.h"
 #include "libvo/video_out.h"
@@ -46,9 +47,6 @@
 #include "gui/skin/font.h"
 
 #include "stream/stream.h"
-
-extern float rel_seek_secs;
-extern int abs_seek_pos;
 
 int mplGotoTheNext = 1;
 
