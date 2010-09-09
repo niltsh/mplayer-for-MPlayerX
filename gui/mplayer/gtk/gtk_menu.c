@@ -24,6 +24,7 @@
 #include "help_mp.h"
 #include "access_mpcontext.h"
 #include "mixer.h"
+#include "mpcommon.h"
 
 #include "gtk_menu.h"
 #include "gui/mplayer/widgets.h"

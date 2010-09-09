@@ -29,12 +29,22 @@ extern double sub_last_pts;
 extern ASS_Track *ass_track;
 extern subtitle *vo_sub_last;
 
+extern int sub_auto;
 extern float sub_delay;
 extern float sub_fps;
 extern char **sub_name;
+extern char  *font_name;
+extern char  *sub_font_name;
+extern float  font_factor;
+extern double force_fps;
 
 extern int disable_system_conf;
 extern int disable_user_conf;
+extern int stream_cache_size;
+extern int audio_id;
+extern int video_id;
+extern int dvdsub_id;
+extern int vobsub_id;
 
 extern const char *mencoder_version;
 extern const char *mplayer_version;

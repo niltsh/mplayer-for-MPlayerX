@@ -47,7 +47,7 @@
 #include "font_load.h"
 #include "mp_msg.h"
 #include "help_mp.h"
-#include "mplayer.h"
+#include "mpcommon.h"
 #include "path.h"
 #include "osd_font.h"
 

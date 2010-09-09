@@ -49,6 +49,7 @@
 #include "m_option.h"
 #include "m_property.h"
 #include "mp_core.h"
+#include "mpcommon.h"
 
 #define GUI_REDRAW_WAIT 375
 

@@ -30,7 +30,7 @@
 #include "mp_msg.h"
 #include "help_mp.h"
 #include "m_config.h"
-#include "mplayer.h"
+#include "mpcommon.h"
 
 #include "libvo/fastmemcpy.h"
 

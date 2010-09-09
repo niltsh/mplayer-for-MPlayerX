@@ -32,7 +32,7 @@
 #include "libmpcodecs/dec_teletext.h"
 #include "osdep/timer.h"
 
-#include "mplayer.h"
+#include "mpcommon.h"
 #include "mp_msg.h"
 #include "help_mp.h"
 #include "video_out.h"

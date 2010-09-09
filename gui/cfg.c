@@ -24,6 +24,7 @@
 #include "mp_msg.h"
 #include "help_mp.h"
 #include "mixer.h"
+#include "mpcommon.h"
 #include "mplayer.h"
 #include "m_config.h"
 #include "m_option.h"

@@ -30,16 +30,8 @@ extern float  audio_delay;
 extern int osd_level;
 extern unsigned int osd_visible;
 
-extern char * font_name;
-extern char * sub_font_name;
-extern float  font_factor;
-extern double force_fps;
-
-extern int    sub_auto;
-
 extern char * filename;
 
-extern int stream_cache_size;
 extern int use_menu;
 extern int autosync;
 extern double start_pts;
@@ -48,11 +40,6 @@ extern int frame_dropping;
 /* for the GUI */
 extern int auto_quality;
 extern int stream_dump_type;
-
-extern int audio_id;
-extern int video_id;
-extern int dvdsub_id;
-extern int vobsub_id;
 
 void update_set_of_subtitles(void);
 

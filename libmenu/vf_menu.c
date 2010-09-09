@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "mplayer.h"
+#include "mpcommon.h"
 #include "mp_msg.h"
 
 #include "libmpcodecs/img_format.h"
