@@ -31,6 +31,7 @@ extern subtitle *vo_sub_last;
 
 extern float sub_delay;
 extern float sub_fps;
+extern char **sub_name;
 
 extern int disable_system_conf;
 extern int disable_user_conf;

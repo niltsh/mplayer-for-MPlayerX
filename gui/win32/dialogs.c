@@ -27,7 +27,7 @@
 #include "gui/interface.h"
 #include "mp_msg.h"
 #include "help_mp.h"
-#include "mplayer.h"
+#include "mpcommon.h"
 #include "stream/stream.h"
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"

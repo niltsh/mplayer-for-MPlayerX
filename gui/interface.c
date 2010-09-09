@@ -38,6 +38,7 @@
 #include "help_mp.h"
 #include "path.h"
 #include "mp_core.h"
+#include "mpcommon.h"
 #include "mplayer.h"
 #include "libmpcodecs/vd.h"
 #include "libmpcodecs/vf.h"

@@ -48,7 +48,6 @@ extern double start_pts;
 extern int frame_dropping;
 
 /* for the GUI */
-extern char **sub_name;
 extern int auto_quality;
 
 extern int audio_id;
