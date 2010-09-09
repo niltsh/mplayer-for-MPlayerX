@@ -38,7 +38,7 @@
 #include "libvo/video_out.h"
 #include "cpudetect.h"
 #include "libswscale/swscale.h"
-#include "libswscale/rgb2rgb.h"
+#include "libavcore/imgutils.h"
 #include "libmpcodecs/vf_scale.h"
 #include "mp_msg.h"
 #include "help_mp.h"
@@ -130,11 +130,8 @@ static int wsSearch( Window win )
                                 pixel<<=5;\
 	                        pixel|=(r>>3)
 
-typedef void(*wsTConvFunc)( const unsigned char * in_pixels, unsigned char * out_pixels, unsigned num_pixels );
-wsTConvFunc wsConvFunc = NULL;
-
-static void rgb32torgb32( const unsigned char * src, unsigned char * dst,unsigned int src_size )
-{ memcpy( dst,src,src_size ); }
+struct SwsContext *sws_ctx = NULL;
+enum PixelFormat out_pix_fmt = PIX_FMT_NONE;
 
 // ---
 
@@ -301,41 +298,31 @@ wsXDNDInitialize();
   }
 #endif
  wsOutMask=wsGetOutMask();
- mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[ws] Initialized converter: " );
- sws_rgb2rgb_init(get_sws_cpuflags());
  switch ( wsOutMask )
   {
    case wsRGB32:
-     mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"rgb32 to rgb32\n" );
-     wsConvFunc=rgb32torgb32;
+     out_pix_fmt = PIX_FMT_RGB32;
      break;
    case wsBGR32:
-     mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"rgb32 to bgr32\n" );
-     wsConvFunc=rgb32tobgr32;
+     out_pix_fmt = PIX_FMT_BGR32;
      break;
    case wsRGB24:
-     mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"rgb32 to rgb24\n" );
-     wsConvFunc=rgb32to24;
+     out_pix_fmt = PIX_FMT_RGB24;
      break;
    case wsBGR24:
-     mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"rgb32 to bgr24\n" );
-     wsConvFunc=rgb32tobgr24;
+     out_pix_fmt = PIX_FMT_BGR24;
      break;
    case wsRGB16:
-     mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"rgb32 to rgb16\n" );
-     wsConvFunc=rgb32to16;
+     out_pix_fmt = PIX_FMT_RGB565;
      break;
    case wsBGR16:
-     mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"rgb32 to bgr16\n" );
-     wsConvFunc=rgb32tobgr16;
+     out_pix_fmt = PIX_FMT_BGR565;
      break;
    case wsRGB15:
-     mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"rgb32 to rgb15\n" );
-     wsConvFunc=rgb32to15;
+     out_pix_fmt = PIX_FMT_RGB555;
      break;
    case wsBGR15:
-     mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"rgb32 to bgr15\n" );
-     wsConvFunc=rgb32tobgr15;
+     out_pix_fmt = PIX_FMT_BGR555;
      break;
   }
 }
@@ -838,9 +825,16 @@ void wsDoExit( void )
 // ----------------------------------------------------------------------------------------------
 void wsConvert( wsTWindow * win,unsigned char * Image,unsigned int Size )
 {
+  const uint8_t *src[4] = { Image, NULL, NULL, NULL };
+  int src_stride[4] = { 4 * win->xImage->width, 0, 0, 0 };
+  uint8_t *dst[4] = { win->ImageData, NULL, NULL, NULL };
+  int dst_stride[4];
   int i;
-  if ( wsConvFunc )
-    wsConvFunc( Image,win->ImageData,win->xImage->width * win->xImage->height * 4 );
+  sws_ctx = sws_getCachedContext(sws_ctx, win->xImage->width, win->xImage->height, PIX_FMT_RGB32,
+                                          win->xImage->width, win->xImage->height, out_pix_fmt,
+                                          SWS_POINT, NULL, NULL, NULL);
+  av_image_fill_linesizes(dst_stride, out_pix_fmt, win->xImage->width);
+  sws_scale(sws_ctx, src, src_stride, 0, win->xImage->height, dst, dst_stride);
   if (!wsNonNativeOrder) return;
   switch (win->xImage->bits_per_pixel) {
     case 32:
