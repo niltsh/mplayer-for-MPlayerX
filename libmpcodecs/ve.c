@@ -40,7 +40,7 @@ extern const vf_info_t ve_info_x264;
  * encoder, add it to libavcodec, except for wrappers around external
  * libraries and encoders requiring binary support. */
 
-static vf_info_t* encoder_list[]={
+static const vf_info_t * const encoder_list[] = {
 #ifdef CONFIG_LIBAVCODEC
     &ve_info_lavc,
 #endif
