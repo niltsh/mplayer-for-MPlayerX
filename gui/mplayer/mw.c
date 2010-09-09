@@ -369,7 +369,6 @@ set_volume:
    case evRedraw:
         {
           unsigned now = GetTimerMS();
-          extern int mplPBFade;
           if ((now > last_redraw_time) &&
               (now < last_redraw_time + GUI_REDRAW_WAIT) &&
               !mplPBFade)

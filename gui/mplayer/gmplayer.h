@@ -28,6 +28,7 @@ extern int             mainVisible;
 
 extern int             mplMainAutoPlay;
 extern int             mplMiddleMenu;
+extern int             mplPBFade;
 
 void mplInit( void * disp );
 
