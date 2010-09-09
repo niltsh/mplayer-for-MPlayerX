@@ -31,6 +31,6 @@ extern const char *udp_ip; // where the master sends datagrams
 extern float udp_seek_threshold; // how far off before we seek
 
 void send_udp(const char *send_to_ip, int port, char *mesg);
-int udp_slave_sync(MPContext *mpctx);
+int udp_slave_sync(struct MPContext *mpctx);
 
 #endif /* MPLAYER_UDP_SYNC_H */
