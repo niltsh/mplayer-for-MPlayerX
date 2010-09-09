@@ -355,8 +355,6 @@ void guiDone( void )
  wsXDone();
 }
 
-extern int              stream_dump_type;
-
 void guiLoadFont( void )
 {
 #ifdef CONFIG_FREETYPE

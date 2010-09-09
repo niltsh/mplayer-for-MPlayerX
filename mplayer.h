@@ -49,6 +49,7 @@ extern int frame_dropping;
 
 /* for the GUI */
 extern int auto_quality;
+extern int stream_dump_type;
 
 extern int audio_id;
 extern int video_id;
