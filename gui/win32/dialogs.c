@@ -34,13 +34,10 @@
 #include "gui.h"
 #include "dialogs.h"
 #include "libvo/sub.h"
+#include "libvo/video_out.h"
 
 WNDPROC OldUrlWndProc;
 LRESULT CALLBACK SubUrlWndProc(HWND, UINT, WPARAM, LPARAM);
-extern int vo_gamma_brightness;
-extern int vo_gamma_saturation;
-extern int vo_gamma_contrast;
-extern int vo_gamma_hue;
 int set_video_colors(sh_video_t *sh_video, const char *item, int value);
 int get_video_colors(sh_video_t *sh_video, const char *item, int *value);
 
