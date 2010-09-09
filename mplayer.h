@@ -19,23 +19,21 @@
 #ifndef MPLAYER_MPLAYER_H
 #define MPLAYER_MPLAYER_H
 
-extern char* current_module;
-
-extern char ** audio_fm_list;
-extern char ** video_fm_list;
-extern char ** video_driver_list;
-extern char ** audio_driver_list;
-extern float  audio_delay;
+extern char  *filename;
+extern char  *current_module;
+extern char **audio_fm_list;
+extern char **video_fm_list;
+extern char **video_driver_list;
+extern char **audio_driver_list;
 
 extern int osd_level;
 extern unsigned int osd_visible;
-
-extern char * filename;
-
-extern int use_menu;
 extern int autosync;
-extern double start_pts;
 extern int frame_dropping;
+extern int use_menu;
+
+extern float  audio_delay;
+extern double start_pts;
 
 /* for the GUI */
 extern int auto_quality;
