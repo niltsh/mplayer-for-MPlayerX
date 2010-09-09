@@ -308,7 +308,7 @@ char* current_module=NULL; // for debugging
 
 
 #ifdef CONFIG_MENU
-static vf_info_t* libmenu_vfs[] = {
+static const vf_info_t* const libmenu_vfs[] = {
   &vf_info_menu,
   NULL
 };
