@@ -304,7 +304,7 @@ static int vf_open(vf_instance_t *vf, char *args) {
     return 1;
 }
 
-vf_info_t ve_info_x264 = {
+const vf_info_t ve_info_x264 = {
     "H.264 encoder",
     "x264",
     "Bernhard Rosenkraenzer <bero@arklinux.org>",

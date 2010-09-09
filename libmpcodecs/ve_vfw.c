@@ -367,7 +367,7 @@ static int vf_open(vf_instance_t *vf, char* args){
     return 1;
 }
 
-vf_info_t ve_info_vfw = {
+const vf_info_t ve_info_vfw = {
     "Win32/VfW encoders",
     "vfw",
     "A'rpi",

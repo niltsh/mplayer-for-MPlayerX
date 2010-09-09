@@ -27,14 +27,14 @@
 #include "mp_image.h"
 #include "vf.h"
 
-extern vf_info_t ve_info_lavc;
-extern vf_info_t ve_info_vfw;
-extern vf_info_t ve_info_raw;
-extern vf_info_t ve_info_libdv;
-extern vf_info_t ve_info_xvid;
-extern vf_info_t ve_info_qtvideo;
-extern vf_info_t ve_info_nuv;
-extern vf_info_t ve_info_x264;
+extern const vf_info_t ve_info_lavc;
+extern const vf_info_t ve_info_vfw;
+extern const vf_info_t ve_info_raw;
+extern const vf_info_t ve_info_libdv;
+extern const vf_info_t ve_info_xvid;
+extern const vf_info_t ve_info_qtvideo;
+extern const vf_info_t ve_info_nuv;
+extern const vf_info_t ve_info_x264;
 
 /* Please do not add any new encoders here. If you want to implement a new
  * encoder, add it to libavcodec, except for wrappers around external

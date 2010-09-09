@@ -244,7 +244,7 @@ static int vf_open(vf_instance_t *vf, char* args){
   return 1;
 }
 
-vf_info_t ve_info_nuv = {
+const vf_info_t ve_info_nuv = {
   "nuv encoder",
   "nuv",
   "Albeu",

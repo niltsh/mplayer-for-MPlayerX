@@ -1049,7 +1049,7 @@ static int vf_open(vf_instance_t *vf, char* args){
     return 1;
 }
 
-vf_info_t ve_info_lavc = {
+const vf_info_t ve_info_lavc = {
     "libavcodec encoder",
     "lavc",
     "A'rpi, Alex, Michael",

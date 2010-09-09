@@ -167,7 +167,7 @@ static int vf_open(vf_instance_t *vf, char* args){
     return 1;
 }
 
-vf_info_t ve_info_raw = {
+const vf_info_t ve_info_raw = {
     "raw encoder",
     "raw",
     "jwe21@cam.ac.uk",

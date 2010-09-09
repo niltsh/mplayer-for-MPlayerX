@@ -124,7 +124,7 @@ static int vf_open(vf_instance_t *vf, char* args){
     return 1;
 }
 
-vf_info_t ve_info_libdv = {
+const vf_info_t ve_info_libdv = {
     "DV encoder using libdv",
     "libdv",
     "A'rpi",

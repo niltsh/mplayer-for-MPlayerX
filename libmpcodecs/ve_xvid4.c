@@ -1518,7 +1518,7 @@ static const char *errorstring(int err)
  * Module structure definition
  ****************************************************************************/
 
-vf_info_t ve_info_xvid = {
+const vf_info_t ve_info_xvid = {
 	"XviD 1.0 encoder",
 	"xvid",
 	"Marco Belli <elcabesa@inwind.it>, Edouard Gomez <ed.gomez@free.fr>",
