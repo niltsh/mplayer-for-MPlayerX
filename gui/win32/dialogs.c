@@ -27,6 +27,7 @@
 #include "gui/interface.h"
 #include "mp_msg.h"
 #include "help_mp.h"
+#include "mplayer.h"
 #include "stream/stream.h"
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"
@@ -45,8 +46,6 @@ int get_video_colors(sh_video_t *sh_video, const char *item, int *value);
 
 guiInterface_t guiIntfStruct;
 int addurl = 0;
-
-extern char **sub_name;
 
 void guiLoadSubtitle(char *name)
 {

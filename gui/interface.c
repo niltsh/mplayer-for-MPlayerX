@@ -398,8 +398,6 @@ void guiLoadFont( void )
 #endif
 }
 
-extern char **sub_name;
-
 void guiLoadSubtitle( char * name )
 {
  if ( guiIntfStruct.Playing == 0 )

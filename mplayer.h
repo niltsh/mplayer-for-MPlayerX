@@ -37,7 +37,6 @@ extern char * sub_font_name;
 extern float  font_factor;
 extern double force_fps;
 
-//extern char **sub_name;
 extern int    sub_auto;
 
 extern char * filename;
@@ -47,6 +46,8 @@ extern int autosync;
 extern double start_pts;
 extern int frame_dropping;
 
+/* for the GUI */
+extern char **sub_name;
 extern int auto_quality;
 
 extern int audio_id;
