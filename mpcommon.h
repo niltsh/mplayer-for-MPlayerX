@@ -32,6 +32,9 @@ extern subtitle *vo_sub_last;
 extern float sub_delay;
 extern float sub_fps;
 
+extern int disable_system_conf;
+extern int disable_user_conf;
+
 extern const char *mencoder_version;
 extern const char *mplayer_version;
 
@@ -42,8 +45,5 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
 void update_teletext(sh_video_t *sh_video, demuxer_t *demuxer, int reset);
 int select_audio(demuxer_t* demuxer, int audio_id, char* audio_lang);
 void set_osd_subtitle(subtitle *subs);
-
-extern int disable_system_conf;
-extern int disable_user_conf;
 
 #endif /* MPLAYER_MPCOMMON_H */
