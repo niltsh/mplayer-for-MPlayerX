@@ -42,6 +42,7 @@ extern int    sub_auto;
 extern char * filename;
 
 extern int stream_cache_size;
+extern int use_menu;
 extern int autosync;
 extern double start_pts;
 extern int frame_dropping;
