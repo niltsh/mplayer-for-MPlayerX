@@ -29,10 +29,9 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#include "mplayer.h"
 #include "input.h"
 #include "ar.h"
-
-extern int slave_mode;
 
 extern const double NSAppKitVersionNumber;
 

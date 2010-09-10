@@ -30,6 +30,7 @@ extern int osd_level;
 extern unsigned int osd_visible;
 extern int autosync;
 extern int frame_dropping;
+extern int slave_mode;
 extern int use_menu;
 
 extern float  audio_delay;
