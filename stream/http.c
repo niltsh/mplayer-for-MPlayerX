@@ -43,8 +43,6 @@
 #include "help_mp.h"
 
 
-extern int stream_cache_size;
-
 typedef struct {
   unsigned metaint;
   unsigned metapos;
