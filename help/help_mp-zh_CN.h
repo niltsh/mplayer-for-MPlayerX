@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 31938 (MSGTR_MissingDLLcodec)
+// Synced with help_mp-en.h rev. 32066 (MSGTR_UsingExternalPP)
 // Reminder of hard terms which need better/final solution later:
 //   (file links to be updated later if available!);
 //   NAV; section/subsection;  XScreenSaver; keycolor;
@@ -177,9 +177,12 @@ static const char help_text[]=
 #define MSGTR_DvdnavNavSpuClutChange "DVDNAV 事件：Nav SPU CLUT 切换\n"
 #define MSGTR_DvdnavNavSeekDone "DVDNAV 事件：Nav 定位完成\n"
 #define MSGTR_MenuCall "菜单调用\n"
+#define MSGTR_MasterQuit "选项 -udp_slave：因主动方中止而中止\n"
+#define MSGTR_InvalidIP "选项 -udp-ip：无效的 IP 地址\n"
 
 // --- edit decision lists
-#define MSGTR_EdlOutOfMem "不能分配足够的内存来保持 EDL 数据。\n"
+#define MSGTR_EdlOutOfMem "无法分配足够的内存以存放 EDL 数据。\n"
+#define MSGTR_EdlOutOfMemFile "无法分配足够的内存以存放 EDL 文件名 [%s]。\n"
 #define MSGTR_EdlRecordsNo "读取 %d 个 EDL 行为。\n"
 #define MSGTR_EdlQueueEmpty "没有 EDL 行为要处理。\n"
 #define MSGTR_EdlCantOpenForWrite "无法打开并写入 EDL 文件 [%s]。\n"
@@ -1571,20 +1574,20 @@ static const char help_text[]=
 #define MSGTR_CantOpenCodec "无法打开解码器。\n"
 #define MSGTR_CantCloseCodec "无法关闭解码器。\n"
 
-#define MSGTR_MissingDLLcodec "错误: 打不开所需的 DirectShow 编解码器: %s\n"
-#define MSGTR_ACMiniterror "不能加载/初始化 Win32/ACM 音频解码器(缺少 DLL 文件?)。\n"
-#define MSGTR_MissingLAVCcodec "在 libavcodec 中找不到解码器 '%s'...\n"
+#define MSGTR_MissingDLLcodec "错误：无法打开所需的 DirectShow 编解码器：%s\n"
+#define MSGTR_ACMiniterror "无法加载/初始化 Win32/ACM 音频解码器（缺少 DLL 文件？）。\n"
+#define MSGTR_MissingLAVCcodec "无法在 libavcodec 中找到解码器‘%s’...\n"
 
-#define MSGTR_MpegNoSequHdr "MPEG: 致命错误: 搜索序列头时遇到 EOF。\n"
-#define MSGTR_CannotReadMpegSequHdr "致命错误: 不能读取序列头。\n"
-#define MSGTR_CannotReadMpegSequHdrEx "致命错误: 不能读取序列头扩展。\n"
-#define MSGTR_BadMpegSequHdr "MPEG: 糟糕的序列头。\n"
-#define MSGTR_BadMpegSequHdrEx "MPEG: 糟糕的序列头扩展。\n"
+#define MSGTR_MpegNoSequHdr "MPEG：致命错误：搜索 MPEG 序列头部时遇到文件结尾符。\n"
+#define MSGTR_CannotReadMpegSequHdr "致命错误：无法读取 MPEG 序列头部。\n"
+#define MSGTR_CannotReadMpegSequHdrEx "致命错误：无法读取 MPEG 序列头部扩展数据。\n"
+#define MSGTR_BadMpegSequHdr "MPEG：无效的 MPEG 序列头部。\n"
+#define MSGTR_BadMpegSequHdrEx "MPEG：无效的 MPEG 序列头部扩展数据。\n"
 
-#define MSGTR_ShMemAllocFail "不能分配共享内存。\n"
-#define MSGTR_CantAllocAudioBuf "不能分配音频输出缓冲。\n"
+#define MSGTR_ShMemAllocFail "无法分配共享内存。\n"
+#define MSGTR_CantAllocAudioBuf "无法分配音频输出缓冲。\n"
 
-#define MSGTR_UnknownAudio "未知或缺少音频格式 -> 没有声音\n"
+#define MSGTR_UnknownAudio "音频格式未知或缺失 -> 无声音输出\n"
 
 #define MSGTR_UsingExternalPP "[PP] 使用外部的后处理过滤器, max q = %d。\n"
 #define MSGTR_UsingCodecPP "[PP] 使用编解码器的后处理过滤器, max q = %d。\n"
