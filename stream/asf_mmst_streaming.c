@@ -38,6 +38,7 @@
 
 #include "mp_msg.h"
 #include "help_mp.h"
+#include "mpcommon.h"
 
 #if HAVE_WINSOCK2_H
 #include <winsock2.h>
@@ -54,9 +55,6 @@
 #include "asf_mmst_streaming.h"
 #include "network.h"
 #include "tcp.h"
-
-extern int audio_id;
-extern int video_id;
 
 #define BUF_SIZE 102400
 #define HDR_BUF_SIZE 8192

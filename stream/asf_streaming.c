@@ -26,6 +26,7 @@
 #include "config.h"
 #include "mp_msg.h"
 #include "help_mp.h"
+#include "mpcommon.h"
 
 #if HAVE_WINSOCK2_H
 #include <winsock2.h>
@@ -159,9 +160,6 @@ printf("0x%02X\n", stream_chunck->type );
 	}
 	return stream_chunck->size+4;
 }
-
-extern int audio_id;
-extern int video_id;
 
 static void close_s(stream_t *stream) {
 	closesocket(stream->fd);
