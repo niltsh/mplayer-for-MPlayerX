@@ -23,6 +23,7 @@
 #ifndef LIBASS_MP_H
 #define LIBASS_MP_H
 
+#include "config.h"
 #include <stdint.h>
 
 #include "subreader.h"
