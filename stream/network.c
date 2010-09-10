@@ -50,8 +50,6 @@
 #include "cookies.h"
 #include "url.h"
 
-extern int stream_cache_size;
-
 /* Variables for the command line option -user, -passwd, -bandwidth,
    -user-agent and -nocookies */
 
