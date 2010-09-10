@@ -52,6 +52,7 @@
 #include "libaf/af_format.h"
 #include "mp_msg.h"
 #include "help_mp.h"
+#include "mplayer.h"
 
 
 #define ESD_RESAMPLES 0
@@ -84,7 +85,6 @@ static int esd_latency;
 static int esd_bytes_per_sample;
 static unsigned long esd_samples_written;
 static struct timeval esd_play_start;
-extern float audio_delay;
 
 /*
  * to set/get/query special features/parameters
