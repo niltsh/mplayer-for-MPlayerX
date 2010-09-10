@@ -25,6 +25,7 @@
 #include <stdlib.h>
 
 #include "mp_msg.h"
+#include "mpcommon.h"
 #include "path.h"
 
 #include "ass_mp.h"
@@ -59,10 +60,6 @@ int ass_hinting = ASS_HINTING_NATIVE + 4; // native hinting for unscaled osd
 #else
 static int font_fontconfig = -1;
 #endif
-extern char* font_name;
-extern char* sub_font_name;
-extern float text_font_scale_factor;
-extern int subtitle_autoscale;
 
 #ifdef CONFIG_ICONV
 #include "subreader.h"
