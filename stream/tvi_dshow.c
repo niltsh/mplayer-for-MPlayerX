@@ -3078,12 +3078,12 @@ static tvi_handle_t *tvi_init_dshow(tv_param_t* tv_param)
 	    priv->dev_index = a;
 	} else {
 	    mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TVI_DS_WrongDeviceParam, tv_param->device);
-	    free_handle(h);
+	    tv_free_handle(h);
 	    return NULL;
 	}
 	if (priv->dev_index < 0) {
 	    mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TVI_DS_WrongDeviceIndex, a);
-	    free_handle(h);
+	    tv_free_handle(h);
 	    return NULL;
 	}
     }
@@ -3092,12 +3092,12 @@ static tvi_handle_t *tvi_init_dshow(tv_param_t* tv_param)
 	    priv->adev_index = a;
 	} else {
 	    mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TVI_DS_WrongADeviceParam, tv_param->adevice);
-	    free_handle(h);
+	    tv_free_handle(h);
 	    return NULL;
 	}
 	if (priv->dev_index < 0) {
 	    mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TVI_DS_WrongADeviceIndex, a);
-	    free_handle(h);
+	    tv_free_handle(h);
 	    return NULL;
 	}
     }
