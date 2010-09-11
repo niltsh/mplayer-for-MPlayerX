@@ -31,8 +31,7 @@
 #include "asxparser.h"
 #include "mp_msg.h"
 #include "m_config.h"
-
-extern m_config_t* mconfig;
+#include "mpcommon.h"
 
 ////// List utils
 

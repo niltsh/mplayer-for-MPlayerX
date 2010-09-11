@@ -19,6 +19,7 @@
 #ifndef MPLAYER_MPCOMMON_H
 #define MPLAYER_MPCOMMON_H
 
+#include "m_config.h"
 #include "m_option.h"
 #include "subreader.h"
 #include "libmpdemux/demuxer.h"
@@ -57,6 +58,7 @@ extern float stream_cache_seek_min_percent;
 extern const char *mencoder_version;
 extern const char *mplayer_version;
 
+extern m_config_t *mconfig;
 extern const m_option_t noconfig_opts[];
 
 void print_version(const char* name);
