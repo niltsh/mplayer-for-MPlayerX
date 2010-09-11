@@ -35,7 +35,7 @@
 #include "libaf/af_format.h"
 #include "libmpdemux/mpeg_packetizer.h"
 #include "libvo/vo_dxr2.h"
-#include "libvo/video_out.h"
+#include "libvo/video_out.h" /* only for vo_pts */
 
 
 static const ao_info_t info =

@@ -37,7 +37,7 @@
 #include "libaf/af_format.h"
 #include "libmpdemux/mpeg_packetizer.h"
 #include "libvo/vo_ivtv.h"
-#include "libvo/video_out.h"
+#include "libvo/video_out.h" /* only for vo_pts */
 
 #define MPEG_AUDIO_ID 0x1C0
 

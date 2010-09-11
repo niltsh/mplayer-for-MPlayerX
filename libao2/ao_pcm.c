@@ -29,7 +29,7 @@
 #include "subopt-helper.h"
 #include "libaf/af_format.h"
 #include "libaf/reorder_ch.h"
-#include "libvo/video_out.h"
+#include "libvo/video_out.h" /* only for vo_pts */
 #include "audio_out.h"
 #include "audio_out_internal.h"
 #include "mp_msg.h"
