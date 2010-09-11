@@ -21,6 +21,8 @@
 
 #include "m_option.h"
 
+extern int dxr2_fd;
+
 extern const m_option_t dxr2_opts[];
 
 #endif /* MPLAYER_VO_DXR2_H */

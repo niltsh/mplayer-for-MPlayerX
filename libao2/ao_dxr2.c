@@ -34,6 +34,7 @@
 #include "audio_out_internal.h"
 #include "libaf/af_format.h"
 #include "libmpdemux/mpeg_packetizer.h"
+#include "libvo/vo_dxr2.h"
 #include "libvo/video_out.h"
 
 
@@ -49,7 +50,6 @@ LIBAO_EXTERN(dxr2)
 
 static int volume=19;
 static int last_freq_id = -1;
-extern int dxr2_fd;
 
 // to set/get/query special features/parameters
 static int control(int cmd,void *arg){
