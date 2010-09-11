@@ -164,8 +164,6 @@ typedef struct ogg_demuxer {
 #define PACKET_LEN_BITS2    0x02
 #define PACKET_IS_SYNCPOINT 0x08
 
-extern char *dvdsub_lang, *audio_lang;
-
 //-------- subtitle support - should be moved to decoder layer, and queue
 //                          - subtitles up in demuxer buffer...
 

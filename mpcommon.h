@@ -35,6 +35,9 @@ extern float sub_fps;
 extern char **sub_name;
 extern char  *font_name;
 extern char  *sub_font_name;
+extern char  *audio_lang;
+extern char  *dvdsub_lang;
+
 extern float  font_factor;
 extern double force_fps;
 

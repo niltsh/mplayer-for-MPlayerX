@@ -28,6 +28,7 @@
 
 #include "config.h"
 #include "mp_msg.h"
+#include "mpcommon.h"
 #include "help_mp.h"
 
 #include "stream/stream.h"
@@ -60,7 +61,6 @@ int ts_prog;
 int ts_keep_broken=0;
 off_t ts_probe = 0;
 int audio_substream_id = -1;
-extern char *audio_lang;	//for -alang
 
 typedef enum
 {
