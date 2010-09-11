@@ -29,7 +29,7 @@
 #endif
 
 #include "config.h"
-
+#include "mencoder.h"
 #include "mp_msg.h"
 #include "help_mp.h"
 #include "av_opts.h"
@@ -47,8 +47,6 @@
 #include "mp_image.h"
 #include "vf.h"
 #include "vd_ffmpeg.h"
-
-extern char* passtmpfile;
 
 //===========================================================================//
 

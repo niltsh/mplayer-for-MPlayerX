@@ -24,6 +24,7 @@
 #include <limits.h>
 
 #include "config.h"
+#include "mencoder.h"
 #include "mpcommon.h"
 #include "stream/stream.h"
 #include "demuxer.h"
@@ -34,14 +35,6 @@
 #include "ms_hdr.h"
 #include "mp_msg.h"
 #include "help_mp.h"
-
-extern char *info_name;
-extern char *info_artist;
-extern char *info_genre;
-extern char *info_subject;
-extern char *info_copyright;
-extern char *info_sourceform;
-extern char *info_comment;
 
 /* #define ODML_CHUNKLEN    0x02000000 */ /* for testing purposes */
 #define ODML_CHUNKLEN    0x40000000

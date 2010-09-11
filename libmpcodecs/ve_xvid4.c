@@ -35,7 +35,7 @@
 
 #include "config.h"
 #include "mp_msg.h"
-
+#include "mencoder.h"
 #include "codec-cfg.h"
 #include "stream/stream.h"
 #include "libmpdemux/demuxer.h"
@@ -155,8 +155,6 @@ static const profile_t *profileFromName(const char *str)
 /*****************************************************************************
  * Configuration options
  ****************************************************************************/
-
-extern char* passtmpfile;
 
 static int xvidenc_bitrate = 0;
 static int xvidenc_pass = 0;

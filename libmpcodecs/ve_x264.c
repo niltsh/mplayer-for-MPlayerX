@@ -32,7 +32,7 @@
 
 #include "config.h"
 #include "mp_msg.h"
-
+#include "mencoder.h"
 #include "m_option.h"
 #include "codec-cfg.h"
 #include "stream/stream.h"
@@ -55,7 +55,6 @@ typedef struct h264_module_t {
     x264_picture_t  pic;
 } h264_module_t;
 
-extern char* passtmpfile;
 static x264_param_t param;
 static int parse_error = 0;
 

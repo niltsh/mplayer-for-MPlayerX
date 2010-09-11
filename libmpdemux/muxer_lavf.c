@@ -25,7 +25,7 @@
 #include "config.h"
 #include "mp_msg.h"
 #include "help_mp.h"
-
+#include "mencoder.h"
 #include "aviheader.h"
 #include "ms_hdr.h"
 #include "av_opts.h"
@@ -41,14 +41,6 @@
 #include "mp_taglists.h"
 
 enum PixelFormat imgfmt2pixfmt(int fmt);
-
-extern char *info_name;
-extern char *info_artist;
-extern char *info_genre;
-extern char *info_subject;
-extern char *info_copyright;
-extern char *info_sourceform;
-extern char *info_comment;
 
 #define BIO_BUFFER_SIZE 32768
 
@@ -320,7 +312,6 @@ static void list_formats(void) {
 		mp_msg(MSGT_DEMUX, MSGL_INFO, "%15s : %s\n", fmt->name, fmt->long_name);
 }
 
-extern char *out_filename;
 int muxer_init_muxer_lavf(muxer_t *muxer)
 {
 	muxer_priv_t *priv;

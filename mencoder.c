@@ -98,6 +98,7 @@
 #include "spudec.h"
 #include "vobsub.h"
 #include "eosd.h"
+#include "mencoder.h"
 
 
 int vo_doublebuffering=0;
