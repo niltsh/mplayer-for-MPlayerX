@@ -29,6 +29,7 @@
 
 #include "libvo/video_out.h"
 #include "libao2/audio_out.h"
+#include "osdep/priority.h"
 #include "mixer.h"
 #include "gui/mplayer/gmplayer.h"
 #include "gui/interface.h"
@@ -36,8 +37,6 @@
 #include "mp_msg.h"
 #include "help_mp.h"
 #include "dialogs.h"
-
-extern char  *proc_priority;
 
 static void set_defaults(void);
 

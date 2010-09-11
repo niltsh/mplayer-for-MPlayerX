@@ -32,6 +32,7 @@
 #include "m_option.h"
 #include "parser-cfg.h"
 #include "libvo/video_out.h"
+#include "osdep/priority.h"
 #include "mixer.h"
 #include "gui/mplayer/gmplayer.h"
 #include "gui/interface.h"
@@ -54,9 +55,6 @@ int gui_main_pos_x = -2;
 int gui_main_pos_y = -2;
 int gui_sub_pos_x = -1;
 int gui_sub_pos_y = -1;
-
-/* External functions */
-extern char *proc_priority;
 
 static m_config_t *gui_conf;
 static const m_option_t gui_opts[] =
