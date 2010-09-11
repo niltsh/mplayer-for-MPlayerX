@@ -27,6 +27,7 @@
 
 #include "mp_msg.h"
 #include "help_mp.h"
+#include "mpcommon.h"
 #include "stream/stream.h"
 #include "demuxer.h"
 #include "stheader.h"
@@ -164,7 +165,6 @@ typedef struct ogg_demuxer {
 #define PACKET_IS_SYNCPOINT 0x08
 
 extern char *dvdsub_lang, *audio_lang;
-extern int dvdsub_id;
 
 //-------- subtitle support - should be moved to decoder layer, and queue
 //                          - subtitles up in demuxer buffer...
