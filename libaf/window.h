@@ -25,12 +25,10 @@
    coefficients will be stored.
 */
 
-#if !defined MPLAYER_DSP_H
-# error Never use window.h directly; include dsp.h instead.
-#endif
-
 #ifndef MPLAYER_WINDOW_H
 #define MPLAYER_WINDOW_H
+
+#include "dsp.h"
 
 void af_window_boxcar(int n, FLOAT_TYPE* w);
 void af_window_triang(int n, FLOAT_TYPE* w);

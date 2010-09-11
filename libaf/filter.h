@@ -18,12 +18,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#if !defined MPLAYER_DSP_H
-# error Never use filter.h directly; include dsp.h instead.
-#endif
-
 #ifndef MPLAYER_FILTER_H
 #define MPLAYER_FILTER_H
+
+#include "dsp.h"
 
 
 // Design and implementation of different types of digital filters
