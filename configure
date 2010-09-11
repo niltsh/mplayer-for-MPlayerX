@@ -2565,11 +2565,13 @@ fi # if darwin && test "$cc_vendor" = "gnu" ; then
 # Checking for CFLAGS
 _install_strip="-s"
 if test "$_profile" != "" || test "$_debug" != "" ; then
-  CFLAGS="-W -Wall -O2 $_march $_mcpu $_pipe $_debug $_profile"
+  CFLAGS="-O2 $_march $_mcpu $_pipe $_debug $_profile"
+  WARNFLAGS="-W -Wall"
   _install_strip=
 elif test -z "$CFLAGS" ; then
   if test "$cc_vendor" = "intel" ; then
-    CFLAGS="-O2 $_march $_mcpu $_pipe -fomit-frame-pointer -wd167 -wd556 -wd144"
+    CFLAGS="-O2 $_march $_mcpu $_pipe -fomit-frame-pointer"
+    WARNFLAGS="-wd167 -wd556 -wd144"
   elif test "$cc_vendor" = "sun" ; then
     CFLAGS="-O2 $_march $_mcpu $_pipe -xc99 -xregs=frameptr"
   elif test "$cc_vendor" = "clang"; then
@@ -2577,7 +2579,8 @@ elif test -z "$CFLAGS" ; then
   elif test "$cc_vendor" != "gnu" ; then
     CFLAGS="-O2 $_march $_mcpu $_pipe"
   else
-    CFLAGS="-Wall -Wno-switch -Wno-parentheses -Wpointer-arith -Wredundant-decls -O4 $_march $_mcpu $_pipe -ffast-math -fomit-frame-pointer"
+    CFLAGS="-O4 $_march $_mcpu $_pipe -ffast-math -fomit-frame-pointer"
+    WARNFLAGS="-Wall -Wno-switch -Wno-parentheses -Wpointer-arith -Wredundant-decls"
     extra_ldflags="$extra_ldflags -ffast-math"
   fi
 else
@@ -2585,13 +2588,13 @@ else
 fi
 
 if test "$cc_vendor" = "gnu" ; then
-  cflag_check -std=gnu99 && CFLAGS="-std=gnu99 $CFLAGS"
-  cflag_check -Wdeclaration-after-statement && CFLAGS="-Wdeclaration-after-statement $CFLAGS"
-  cflag_check -Wno-pointer-sign && CFLAGS="-Wno-pointer-sign $CFLAGS"
-  cflag_check -Wdisabled-optimization && CFLAGS="-Wdisabled-optimization $CFLAGS"
-  cflag_check -Wundef && CFLAGS="-Wundef $CFLAGS"
-  cflag_check -Wmissing-prototypes && CFLAGS="-Wmissing-prototypes $CFLAGS"
-  cflag_check -Wstrict-prototypes && CFLAGS="-Wstrict-prototypes $CFLAGS"
+  cflag_check -Wundef && WARNFLAGS="-Wundef $WARNFLAGS"
+  cflag_check -std=gnu99 && WARN_CFLAGS="-std=gnu99 $WARN_CFLAGS"
+  cflag_check -Wdeclaration-after-statement && WARN_CFLAGS="-Wdeclaration-after-statement $WARN_CFLAGS"
+  cflag_check -Wno-pointer-sign && WARN_CFLAGS="-Wno-pointer-sign $WARN_CFLAGS"
+  cflag_check -Wdisabled-optimization && WARN_CFLAGS="-Wdisabled-optimization $WARN_CFLAGS"
+  cflag_check -Wmissing-prototypes && WARN_CFLAGS="-Wmissing-prototypes $WARN_CFLAGS"
+  cflag_check -Wstrict-prototypes && WARN_CFLAGS="-Wstrict-prototypes $WARN_CFLAGS"
 else
   CFLAGS="-D_ISOC99_SOURCE -D_BSD_SOURCE $CFLAGS"
 fi
@@ -8620,9 +8623,9 @@ INSTALL = $_install
 INSTALLSTRIP = $_install_strip
 WINDRES = $_windres
 
-CFLAGS   = $CFLAGS $extra_cflags
+CFLAGS   = $WARNFLAGS $WARN_CFLAGS $CFLAGS $extra_cflags
 ASFLAGS  = \$(CFLAGS)
-CXXFLAGS = $CXXFLAGS $extra_cflags $extra_cxxflags
+CXXFLAGS = $WARNFLAGS $CXXFLAGS $extra_cflags $extra_cxxflags
 CC_DEPFLAGS = $DEPFLAGS
 AS_DEPFLAGS = $DEPFLAGS
 
