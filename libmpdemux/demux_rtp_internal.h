@@ -21,6 +21,8 @@
 
 #include <stdlib.h>
 
+#include "config.h"
+
 extern "C" {
 #include "demuxer.h"
 #ifdef CONFIG_LIBAVCODEC

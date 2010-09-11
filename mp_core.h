@@ -19,6 +19,7 @@
 #ifndef MPLAYER_MP_CORE_H
 #define MPLAYER_MP_CORE_H
 
+#include "config.h"
 #include "mp_osd.h"
 #include "libao2/audio_out.h"
 #include "playtree.h"
