@@ -24,6 +24,7 @@
 
 #include "mp_msg.h"
 #include "help_mp.h"
+#include "mpcommon.h"
 
 #include "osdep/timer.h"
 #include "osdep/shmem.h"
@@ -46,11 +47,6 @@
 #ifdef CONFIG_DYNAMIC_PLUGINS
 #include <dlfcn.h>
 #endif
-
-// ===================================================================
-
-extern double video_time_usage;
-extern double vout_time_usage;
 
 #include "cpudetect.h"
 
