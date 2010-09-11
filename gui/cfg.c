@@ -102,8 +102,6 @@ gtkASS_t gtkASS;
 #endif
 // ---
 
-extern int    disable_gui_conf;
-
 static m_config_t * gui_conf;
 static const m_option_t gui_opts[] =
 {
