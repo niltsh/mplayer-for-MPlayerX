@@ -30,6 +30,8 @@ extern int             mplMainAutoPlay;
 extern int             mplMiddleMenu;
 extern int             mplPBFade;
 
+extern int             sx, sy;
+
 void mplInit( void * disp );
 
 void mplMainDraw( void );

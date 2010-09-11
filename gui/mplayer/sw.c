@@ -34,8 +34,6 @@
 int             mplSubRender = 0;
 int             SubVisible = 0;
 
-extern int             sx,sy;
-
 void mplSubDraw( void )
 {
  if ( appMPlayer.subWindow.State == wsWindowClosed ) exit_player( EXIT_QUIT );
