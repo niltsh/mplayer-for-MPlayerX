@@ -28,7 +28,6 @@
 #include "gui/interface.h"
 #include "gui.h"
 
-extern char *codecname;
 #define MAX_LABELSIZE 250
 
 static void render(int bitsperpixel, image *dst, image *src, int x, int y, int sx, int sy, int sw, int sh, int transparent)
