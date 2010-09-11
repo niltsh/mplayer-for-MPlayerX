@@ -45,11 +45,14 @@ extern double vout_time_usage;
 
 extern int disable_system_conf;
 extern int disable_user_conf;
-extern int stream_cache_size;
 extern int audio_id;
 extern int video_id;
 extern int dvdsub_id;
 extern int vobsub_id;
+
+extern int stream_cache_size;
+extern float stream_cache_min_percent;
+extern float stream_cache_seek_min_percent;
 
 extern const char *mencoder_version;
 extern const char *mplayer_version;

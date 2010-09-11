@@ -1139,9 +1139,6 @@ char *demuxer_name = NULL;       // parameter from -demuxer
 char *audio_demuxer_name = NULL; // parameter from -audio-demuxer
 char *sub_demuxer_name = NULL;   // parameter from -sub-demuxer
 
-extern float stream_cache_min_percent;
-extern float stream_cache_seek_min_percent;
-
 demuxer_t *demux_open(stream_t *vs, int file_format, int audio_id,
                       int video_id, int dvdsub_id, char *filename)
 {
