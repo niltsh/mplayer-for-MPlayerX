@@ -22,6 +22,10 @@
 #ifndef MPLAYER_EOSD_H
 #define MPLAYER_EOSD_H
 
+#include "libass/ass_mp.h"
+#include "libmpcodecs/vf.h"
+#include "libvo/video_out.h"
+
 /**
  * Initialize the EOSD subsystem.
  *
