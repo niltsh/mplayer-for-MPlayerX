@@ -60,6 +60,6 @@ void eosd_uninit(void);
 /**
  * Initialize the use of EOSD for ASS subtitles rendering.
  */
-void eosd_ass_init(struct ass_library *);
+void eosd_ass_init(ASS_Library *ass_library);
 
 #endif /* MPLAYER_EOSD_H */
