@@ -2344,7 +2344,7 @@ static void handle_realaudio(demuxer_t *demuxer, mkv_track_t *track,
             track->audio_filepos = demuxer->filepos;
         if (++(track->sub_packet_cnt) == sph) {
             int apk_usize =
-                ((WAVEFORMATEX *) ((sh_audio_t *) demuxer->audio->sh)->wf)->nBlockAlign;
+                ((sh_audio_t *) demuxer->audio->sh)->wf->nBlockAlign;
             track->sub_packet_cnt = 0;
             // Release all the audio packets
             for (x = 0; x < sph * w / apk_usize; x++) {
