@@ -337,11 +337,10 @@ typedef struct {
 static int mov_check_file(demuxer_t* demuxer){
     int flags=0;
     int no=0;
-    mov_priv_t* priv=malloc(sizeof(mov_priv_t));
+    mov_priv_t* priv=calloc(1, sizeof(mov_priv_t));
 
     mp_msg(MSGT_DEMUX,MSGL_V,"Checking for MOV\n");
 
-    memset(priv,0,sizeof(mov_priv_t));
     priv->current_sub = -1;
 
     while(1){
@@ -917,8 +916,7 @@ quit_vorbis_block:
 		  fclose(f); }
 #endif
 		// Emulate WAVEFORMATEX struct:
-		sh->wf=malloc(sizeof(WAVEFORMATEX) + (is_vorbis ? sh->codecdata_len : 0));
-		memset(sh->wf,0,sizeof(WAVEFORMATEX));
+		sh->wf=calloc(1, sizeof(WAVEFORMATEX) + (is_vorbis ? sh->codecdata_len : 0));
 		sh->wf->nChannels=sh->channels;
 		sh->wf->wBitsPerSample=(trak->stdata[18]<<8)+trak->stdata[19];
 		// sh->wf->nSamplesPerSec=trak->timescale;
@@ -1162,8 +1160,7 @@ static int gen_sh_video(sh_video_t* sh, mov_track_t* trak, int timescale) {
 		// emulate BITMAPINFOHEADER:
 		if (palette_count)
 		{
-		  sh->bih=malloc(sizeof(BITMAPINFOHEADER) + palette_count * 4);
-		  memset(sh->bih,0,sizeof(BITMAPINFOHEADER) + palette_count * 4);
+		  sh->bih=calloc(1, sizeof(BITMAPINFOHEADER) + palette_count * 4);
 		  sh->bih->biSize=40 + palette_count * 4;
 		  // fetch the relevant fields
 		  flag = AV_RB16(&trak->stdata[hdr_ptr]);
@@ -1251,16 +1248,14 @@ static int gen_sh_video(sh_video_t* sh, mov_track_t* trak, int timescale) {
 		    mp_msg(MSGT_DEMUXER, MSGL_ERR, "Invalid extradata size %d, skipping\n",trak->stream_header_len);
 		    trak->stream_header_len = 0;
 		  }
-		  sh->bih=malloc(sizeof(BITMAPINFOHEADER) + trak->stream_header_len);
-		  memset(sh->bih,0,sizeof(BITMAPINFOHEADER) + trak->stream_header_len);
+		  sh->bih=calloc(1, sizeof(BITMAPINFOHEADER) + trak->stream_header_len);
 		  sh->bih->biSize=40  + trak->stream_header_len;
 		  memcpy(((unsigned char *)sh->bih)+40,  trak->stream_header, trak->stream_header_len);
 		  free (trak->stream_header);
 		  trak->stream_header_len = 0;
 		  trak->stream_header = NULL;
 		 } else {
-		  sh->bih=malloc(sizeof(BITMAPINFOHEADER));
-		  memset(sh->bih,0,sizeof(BITMAPINFOHEADER));
+		  sh->bih=calloc(1, sizeof(BITMAPINFOHEADER));
 		  sh->bih->biSize=40;
 		 }
 		}
@@ -1329,8 +1324,7 @@ static void lschunks(demuxer_t* demuxer,int level,off_t endpos,mov_track_t* trak
 		return;
 	    }
 	    if(!priv->track_db) mp_msg(MSGT_DEMUX, MSGL_V, "--------------\n");
-	    trak=malloc(sizeof(mov_track_t));
-	    memset(trak,0,sizeof(mov_track_t));
+	    trak=calloc(1, sizeof(mov_track_t));
 	    mp_msg(MSGT_DEMUX,MSGL_V,"MOV: Track #%d:\n",priv->track_db);
 	    trak->id=priv->track_db;
 	    priv->tracks[priv->track_db]=trak;
