@@ -475,8 +475,7 @@ static int real_check_file(demuxer_t* demuxer)
     if (c != MKTAG('.', 'R', 'M', 'F'))
 	return 0; /* bad magic */
 
-    priv = malloc(sizeof(real_priv_t));
-    memset(priv, 0, sizeof(real_priv_t));
+    priv = calloc(1, sizeof(real_priv_t));
     demuxer->priv = priv;
 
     return DEMUXER_TYPE_REAL;
@@ -1374,8 +1373,7 @@ static demuxer_t* demux_open_real(demuxer_t* demuxer)
                    }
 
 		    /* Emulate WAVEFORMATEX struct: */
-		    sh->wf = malloc(sizeof(WAVEFORMATEX));
-		    memset(sh->wf, 0, sizeof(WAVEFORMATEX));
+		    sh->wf = calloc(1, sizeof(WAVEFORMATEX));
 		    sh->wf->nChannels = sh->channels;
 		    sh->wf->wBitsPerSample = sh->samplesize*8;
 		    sh->wf->nSamplesPerSec = sh->samplerate;
@@ -1480,8 +1478,7 @@ static demuxer_t* demux_open_real(demuxer_t* demuxer)
     		    mp_msg(MSGT_DEMUX, MSGL_INFO, MSGTR_AudioID, "real", stream_id);
 
 		    /* Emulate WAVEFORMATEX struct: */
-		    sh->wf = malloc(sizeof(WAVEFORMATEX));
-		    memset(sh->wf, 0, sizeof(WAVEFORMATEX));
+		    sh->wf = calloc(1, sizeof(WAVEFORMATEX));
 		    sh->wf->nChannels = 0;//sh->channels;
 		    sh->wf->wBitsPerSample = 16;
 		    sh->wf->nSamplesPerSec = 0;//sh->samplerate;
@@ -1519,8 +1516,7 @@ static demuxer_t* demux_open_real(demuxer_t* demuxer)
 		    mp_msg(MSGT_DEMUX,MSGL_V,"video fourcc: %.4s (%x)\n", (char *)&sh->format, sh->format);
 
 		    /* emulate BITMAPINFOHEADER */
-		    sh->bih = malloc(sizeof(BITMAPINFOHEADER));
-		    memset(sh->bih, 0, sizeof(BITMAPINFOHEADER));
+		    sh->bih = calloc(1, sizeof(BITMAPINFOHEADER));
 	    	    sh->bih->biSize = sizeof(BITMAPINFOHEADER);
 		    sh->disp_w = sh->bih->biWidth = stream_read_word(demuxer->stream);
 		    sh->disp_h = sh->bih->biHeight = stream_read_word(demuxer->stream);
