@@ -293,8 +293,7 @@ static int vf_open(vf_instance_t *vf, char *args) {
 
     mod=(h264_module_t*)vf->priv;
     mod->mux = (muxer_stream_t*)args;
-    mod->mux->bih = malloc(sizeof(BITMAPINFOHEADER));
-    memset(mod->mux->bih, 0, sizeof(BITMAPINFOHEADER));
+    mod->mux->bih = calloc(1, sizeof(BITMAPINFOHEADER));
     mod->mux->bih->biSize = sizeof(BITMAPINFOHEADER);
     mod->mux->bih->biPlanes = 1;
     mod->mux->bih->biBitCount = 24;
