@@ -927,8 +927,8 @@ case VCODEC_COPY:
 		}
     else
     {
-	mux_v->bih=calloc(1,sizeof(BITMAPINFOHEADER));
-	mux_v->bih->biSize=sizeof(BITMAPINFOHEADER);
+	mux_v->bih=calloc(1,sizeof(*mux_v->bih));
+	mux_v->bih->biSize=sizeof(*mux_v->bih);
 	mux_v->bih->biWidth=sh_video->disp_w;
 	mux_v->bih->biHeight=sh_video->disp_h;
 	mux_v->bih->biCompression=sh_video->format;
@@ -967,8 +967,8 @@ case VCODEC_COPY:
     break;
 case VCODEC_FRAMENO:
 	if (!curfile) {
-    mux_v->bih=calloc(1,sizeof(BITMAPINFOHEADER));
-    mux_v->bih->biSize=sizeof(BITMAPINFOHEADER);
+    mux_v->bih=calloc(1,sizeof(*mux_v->bih));
+    mux_v->bih->biSize=sizeof(*mux_v->bih);
     mux_v->bih->biWidth=sh_video->disp_w;
     mux_v->bih->biHeight=sh_video->disp_h;
     mux_v->bih->biPlanes=1;
@@ -1154,11 +1154,11 @@ case ACODEC_COPY:
 	mencoder_exit(1,NULL);
     }
     if (sh_audio->wf){
-	mux_a->wf=malloc(sizeof(WAVEFORMATEX) + sh_audio->wf->cbSize);
-	memcpy(mux_a->wf, sh_audio->wf, sizeof(WAVEFORMATEX) + sh_audio->wf->cbSize);
+	mux_a->wf=malloc(sizeof(*mux_a->wf) + sh_audio->wf->cbSize);
+	memcpy(mux_a->wf, sh_audio->wf, sizeof(*mux_a->wf) + sh_audio->wf->cbSize);
 	if(!sh_audio->i_bps) sh_audio->i_bps=mux_a->wf->nAvgBytesPerSec;
     } else {
-	mux_a->wf = malloc(sizeof(WAVEFORMATEX));
+	mux_a->wf = malloc(sizeof(*mux_a->wf));
 	mux_a->wf->nBlockAlign = 1; //mux_a->h.dwSampleSize;
 	mux_a->wf->wFormatTag = sh_audio->format;
 	mux_a->wf->nChannels = sh_audio->channels;
