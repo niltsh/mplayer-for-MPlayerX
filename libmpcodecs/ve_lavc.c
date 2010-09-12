@@ -704,9 +704,9 @@ static int config(struct vf_instance *vf,
     if(lavc_venc_context->bits_per_coded_sample)
         mux_v->bih->biBitCount= lavc_venc_context->bits_per_coded_sample;
     if(lavc_venc_context->extradata_size){
-        mux_v->bih= realloc(mux_v->bih, sizeof(BITMAPINFOHEADER) + lavc_venc_context->extradata_size);
+        mux_v->bih= realloc(mux_v->bih, sizeof(*mux_v->bih) + lavc_venc_context->extradata_size);
         memcpy(mux_v->bih + 1, lavc_venc_context->extradata, lavc_venc_context->extradata_size);
-        mux_v->bih->biSize= sizeof(BITMAPINFOHEADER) + lavc_venc_context->extradata_size;
+        mux_v->bih->biSize= sizeof(*mux_v->bih) + lavc_venc_context->extradata_size;
     }
 
     mux_v->decoder_delay = lavc_venc_context->max_b_frames ? 1 : 0;
@@ -936,35 +936,35 @@ static int vf_open(vf_instance_t *vf, char* args){
        huffman tables into the stream, so no problem */
     if (lavc_param_vcodec && !strcasecmp(lavc_param_vcodec, "mjpeg"))
     {
-	mux_v->bih=calloc(1, sizeof(BITMAPINFOHEADER)+28);
-	mux_v->bih->biSize=sizeof(BITMAPINFOHEADER)+28;
+	mux_v->bih=calloc(1, sizeof(*mux_v->bih)+28);
+	mux_v->bih->biSize=sizeof(*mux_v->bih)+28;
     }
     else if (lavc_param_vcodec && (!strcasecmp(lavc_param_vcodec, "huffyuv")
                                 || !strcasecmp(lavc_param_vcodec, "ffvhuff")))
     {
     /* XXX: hack: huffyuv needs to store huffman tables (allthough we dunno the size yet ...) */
-	mux_v->bih=calloc(1, sizeof(BITMAPINFOHEADER)+1000);
-	mux_v->bih->biSize=sizeof(BITMAPINFOHEADER)+1000;
+	mux_v->bih=calloc(1, sizeof(*mux_v->bih)+1000);
+	mux_v->bih->biSize=sizeof(*mux_v->bih)+1000;
     }
     else if (lavc_param_vcodec && !strcasecmp(lavc_param_vcodec, "asv1"))
     {
-	mux_v->bih=calloc(1, sizeof(BITMAPINFOHEADER)+8);
-	mux_v->bih->biSize=sizeof(BITMAPINFOHEADER)+8;
+	mux_v->bih=calloc(1, sizeof(*mux_v->bih)+8);
+	mux_v->bih->biSize=sizeof(*mux_v->bih)+8;
     }
     else if (lavc_param_vcodec && !strcasecmp(lavc_param_vcodec, "asv2"))
     {
-	mux_v->bih=calloc(1, sizeof(BITMAPINFOHEADER)+8);
-	mux_v->bih->biSize=sizeof(BITMAPINFOHEADER)+8;
+	mux_v->bih=calloc(1, sizeof(*mux_v->bih)+8);
+	mux_v->bih->biSize=sizeof(*mux_v->bih)+8;
     }
     else if (lavc_param_vcodec && !strcasecmp(lavc_param_vcodec, "wmv2"))
     {
-	mux_v->bih=calloc(1, sizeof(BITMAPINFOHEADER)+4);
-	mux_v->bih->biSize=sizeof(BITMAPINFOHEADER)+4;
+	mux_v->bih=calloc(1, sizeof(*mux_v->bih)+4);
+	mux_v->bih->biSize=sizeof(*mux_v->bih)+4;
     }
     else
     {
-	mux_v->bih=calloc(1, sizeof(BITMAPINFOHEADER));
-	mux_v->bih->biSize=sizeof(BITMAPINFOHEADER);
+	mux_v->bih=calloc(1, sizeof(*mux_v->bih));
+	mux_v->bih->biSize=sizeof(*mux_v->bih);
     }
     mux_v->bih->biWidth=0;
     mux_v->bih->biHeight=0;

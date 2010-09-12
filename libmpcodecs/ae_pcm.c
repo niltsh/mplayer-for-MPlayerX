@@ -37,7 +37,7 @@ static int bind_pcm(audio_encoder_t *encoder, muxer_stream_t *mux_a)
 {
 	mux_a->h.dwScale=1;
 	mux_a->h.dwRate=encoder->params.sample_rate;
-	mux_a->wf=malloc(sizeof(WAVEFORMATEX));
+	mux_a->wf=malloc(sizeof(*mux_a->wf));
 	mux_a->wf->wFormatTag=0x1; // PCM
 	mux_a->wf->nChannels=encoder->params.channels;
 	mux_a->h.dwSampleSize=2*mux_a->wf->nChannels;
