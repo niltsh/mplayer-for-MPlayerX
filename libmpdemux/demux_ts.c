@@ -358,7 +358,7 @@ static void ts_add_stream(demuxer_t * demuxer, ES_stream_t *es)
 
 		if(es->extradata && es->extradata_len)
 		{
-			sh->wf = malloc(sizeof (MPWAVEFORMATEX) + es->extradata_len);
+			sh->wf = malloc(sizeof(*sh->wf) + es->extradata_len);
 			sh->wf->cbSize = es->extradata_len;
 			memcpy(sh->wf + 1, es->extradata, es->extradata_len);
 		}
