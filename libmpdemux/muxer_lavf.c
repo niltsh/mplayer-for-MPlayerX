@@ -229,7 +229,7 @@ static void fix_parameters(muxer_stream_t *stream)
 		ctx->bit_rate = 800000;
 		ctx->time_base.den = stream->h.dwRate;
 		ctx->time_base.num = stream->h.dwScale;
-		if(stream->bih+1 && (stream->bih->biSize > sizeof(*stream->bih)))
+		if(stream->bih && (stream->bih->biSize > sizeof(*stream->bih)))
 		{
 			ctx->extradata_size = stream->bih->biSize - sizeof(*stream->bih);
 			ctx->extradata = av_malloc(ctx->extradata_size);
