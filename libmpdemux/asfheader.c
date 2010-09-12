@@ -345,7 +345,7 @@ static int asf_init_audio_stream(demuxer_t *demuxer,struct asf_priv* asf, sh_aud
   uint8_t *buffer = *buf;
   int pos = *ppos;
 
-  sh_audio->wf=calloc((streamh->type_size<sizeof(WAVEFORMATEX))?sizeof(WAVEFORMATEX):streamh->type_size,1);
+  sh_audio->wf=calloc((streamh->type_size<sizeof(*sh_audio->wf))?sizeof(*sh_audio->wf):streamh->type_size,1);
   memcpy(sh_audio->wf,buffer,streamh->type_size);
   le2me_WAVEFORMATEX(sh_audio->wf);
   if( mp_msg_test(MSGT_HEADER,MSGL_V) ) print_wave_header(sh_audio->wf,MSGL_V);
@@ -494,10 +494,10 @@ int read_asf_header(demuxer_t *demuxer,struct asf_priv* asf){
         len=streamh->type_size-(4+4+1+2);
 	++video_streams;
 //        sh_video->bih=malloc(chunksize); memset(sh_video->bih,0,chunksize);
-        sh_video->bih=calloc((len<sizeof(BITMAPINFOHEADER))?sizeof(BITMAPINFOHEADER):len,1);
+        sh_video->bih=calloc((len<sizeof(*sh_video->bih))?sizeof(*sh_video->bih):len,1);
         memcpy(sh_video->bih,&buffer[4+4+1+2],len);
 	le2me_BITMAPINFOHEADER(sh_video->bih);
-	if (sh_video->bih->biSize > len && sh_video->bih->biSize > sizeof(BITMAPINFOHEADER))
+	if (sh_video->bih->biSize > len && sh_video->bih->biSize > sizeof(*sh_video->bih))
 		sh_video->bih->biSize = len;
         if (sh_video->bih->biCompression == mmioFOURCC('D', 'V', 'R', ' ')) {
           //mp_msg(MSGT_DEMUXER, MSGL_WARN, MSGTR_MPDEMUX_ASFHDR_DVRWantsLibavformat);

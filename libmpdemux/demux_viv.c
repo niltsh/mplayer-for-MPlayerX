@@ -614,7 +614,7 @@ static demuxer_t* demux_open_vivo(demuxer_t* demuxer){
 		    sh->disp_h = height;
 
 		// emulate BITMAPINFOHEADER:
-		sh->bih=calloc(1, sizeof(BITMAPINFOHEADER));
+		sh->bih=calloc(1, sizeof(*sh->bih));
 		sh->bih->biSize=40;
 		if (priv->width)
 		    sh->bih->biWidth = priv->width;
@@ -678,7 +678,7 @@ if (demuxer->audio->id >= -1){
 		}
 
 		// Emulate WAVEFORMATEX struct:
-		sh->wf=calloc(1, sizeof(WAVEFORMATEX));
+		sh->wf=calloc(1, sizeof(*sh->wf));
 		sh->wf->wFormatTag=sh->format;
 		sh->wf->nChannels=1; /* 1 channels for both Siren and G.723 */
 
