@@ -49,9 +49,7 @@
 int    gtkEnableAudioEqualizer = 0;
 
 int    gtkVfPP = 0;
-#ifdef CONFIG_LIBAVCODEC
- int    gtkVfLAVC = 0;
-#endif
+int    gtkVfLAVC = 0;
 
 int    gtkAONorm = 0;
 int    gtkAOSurround = 0;
@@ -124,9 +122,7 @@ static const m_option_t gui_opts[] =
 
  { "vf_pp",&gtkVfPP,CONF_TYPE_FLAG,0,0,1,NULL },
  { "vf_autoq",&auto_quality,CONF_TYPE_INT,CONF_RANGE,0,100,NULL },
-#ifdef CONFIG_LIBAVCODEC
  { "vf_lavc",&gtkVfLAVC,CONF_TYPE_FLAG,0,0,1,NULL },
-#endif
 
  { "ao_driver",&audio_driver_list,CONF_TYPE_STRING_LIST,0,0,0,NULL },
  { "ao_volnorm",&gtkAONorm,CONF_TYPE_FLAG,0,0,1,NULL },

@@ -1718,9 +1718,7 @@ static GtkWidget * DXR3Config;
 static GtkWidget * CBDevice;
 static GtkWidget * CEDXR3Device;
 static GtkWidget * RBVNone;
-#ifdef CONFIG_LIBAVCODEC
- static GtkWidget * RBVLavc;
-#endif
+static GtkWidget * RBVLavc;
 static GtkWidget * dxr3BOk;
 static GtkWidget * dxr3BCancel;
 
@@ -1734,9 +1732,7 @@ void ShowDXR3Config( void )
  gtk_entry_set_text( GTK_ENTRY( CEDXR3Device ),gtkDXR3Device );
 
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( RBVNone ),TRUE );
-#ifdef CONFIG_LIBAVCODEC
  if ( gtkVfLAVC ) gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( RBVLavc ),TRUE );
-#endif
 
  gtk_widget_show( DXR3Config );
  gtkSetLayer( DXR3Config );
@@ -1756,9 +1752,7 @@ static void dxr3Button( GtkButton * button,gpointer user_data )
  {
   case 0: // Ok
        gfree( (void **)&gtkDXR3Device ); gtkDXR3Device=strdup( gtk_entry_get_text( GTK_ENTRY( CEDXR3Device ) ) );
-#ifdef CONFIG_LIBAVCODEC
        gtkVfLAVC=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( RBVLavc ) );
-#endif
   case 1: // Cancel
        HideDXR3Config();
        break;
@@ -1811,13 +1805,11 @@ GtkWidget * create_DXR3Config( void )
  gtk_widget_show( CEDXR3Device );
  gtk_entry_set_text( GTK_ENTRY( CEDXR3Device ),"/dev/em8300" );
 
-#ifdef CONFIG_LIBAVCODEC
  AddHSeparator( vbox2 );
  vbox3=AddVBox( vbox2,0 );
  AddLabel( MSGTR_PREFERENCES_DXR3_VENC,vbox3 );
  RBVNone=AddRadioButton( MSGTR_PREFERENCES_None,&VEncoder_group,vbox3 );
  RBVLavc=AddRadioButton( MSGTR_PREFERENCES_DXR3_LAVC,&VEncoder_group,vbox3 );
-#endif
 
  AddHSeparator( vbox1 );
 

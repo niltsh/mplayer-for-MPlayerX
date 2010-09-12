@@ -659,11 +659,7 @@ int guiGetEvent( int type,void * arg )
 	 }
 // -- subtitle
 #ifdef CONFIG_DXR3
-	if ( video_driver_list && !gstrcmp( video_driver_list[0],"dxr3" ) && guiIntfStruct.FileFormat != DEMUXER_TYPE_MPEG_PS
-#ifdef CONFIG_LIBAVCODEC
-	 && !gtkVfLAVC
-#endif
-	 )
+	if ( video_driver_list && !gstrcmp( video_driver_list[0],"dxr3" ) && guiIntfStruct.FileFormat != DEMUXER_TYPE_MPEG_PS && !gtkVfLAVC )
 	 {
 	  gtkMessageBox( GTK_MB_FATAL,MSGTR_NEEDLAVC );
 	  guiIntfStruct.Playing=0;
@@ -748,16 +744,12 @@ int guiGetEvent( int type,void * arg )
 	}
 
 #ifdef CONFIG_DXR3
-#ifdef CONFIG_LIBAVCODEC
 	remove_vf( "lavc" );
-#endif
 	if ( video_driver_list && !gstrcmp( video_driver_list[0],"dxr3" ) )
 	 {
 	  if ( ( guiIntfStruct.StreamType != STREAMTYPE_DVD)&&( guiIntfStruct.StreamType != STREAMTYPE_VCD ) )
 	   {
-#ifdef CONFIG_LIBAVCODEC
 	    if ( gtkVfLAVC ) add_vf( "lavc" );
-#endif
 	   }
 	 }
 #endif
