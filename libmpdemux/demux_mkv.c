@@ -1469,7 +1469,7 @@ static int demux_mkv_open_video(demuxer_t *demuxer, mkv_track_t *track,
         BITMAPINFOHEADER *src;
 
         if (track->private_data == NULL
-            || track->private_size < sizeof(BITMAPINFOHEADER))
+            || track->private_size < sizeof(*bih))
             return 1;
 
         src = (BITMAPINFOHEADER *) track->private_data;
@@ -1485,17 +1485,17 @@ static int demux_mkv_open_video(demuxer_t *demuxer, mkv_track_t *track,
         bih->biYPelsPerMeter = le2me_32(src->biYPelsPerMeter);
         bih->biClrUsed = le2me_32(src->biClrUsed);
         bih->biClrImportant = le2me_32(src->biClrImportant);
-        memcpy((char *) bih + sizeof(BITMAPINFOHEADER),
-               (char *) src + sizeof(BITMAPINFOHEADER),
-               track->private_size - sizeof(BITMAPINFOHEADER));
+        memcpy(bih + 1,
+               src + 1,
+               track->private_size - sizeof(*bih));
 
         if (track->v_width == 0)
             track->v_width = bih->biWidth;
         if (track->v_height == 0)
             track->v_height = bih->biHeight;
     } else {
-        bih = calloc(1, sizeof(BITMAPINFOHEADER));
-        bih->biSize = sizeof(BITMAPINFOHEADER);
+        bih = calloc(1, sizeof(*bih));
+        bih->biSize = sizeof(*bih);
         bih->biWidth = track->v_width;
         bih->biHeight = track->v_height;
         bih->biBitCount = 24;
@@ -1513,7 +1513,7 @@ static int demux_mkv_open_video(demuxer_t *demuxer, mkv_track_t *track,
             src = (uint8_t *) track->private_data + RVPROPERTIES_SIZE;
 
             cnt = track->private_size - RVPROPERTIES_SIZE;
-            bih = realloc(bih, sizeof(BITMAPINFOHEADER) + 8 + cnt);
+            bih = realloc(bih, sizeof(*bih) + 8 + cnt);
             bih->biSize = 48 + cnt;
             bih->biPlanes = 1;
             type2 = AV_RB32(src - 4);
@@ -1617,7 +1617,7 @@ static int demux_mkv_open_audio(demuxer_t *demuxer, mkv_track_t *track,
 
     sh_a->default_track = track->default_track;
     sh_a->ds = demuxer->audio;
-    sh_a->wf = malloc(sizeof(WAVEFORMATEX));
+    sh_a->wf = malloc(sizeof(*sh_a->wf));
     if (track->ms_compat && (track->private_size >= sizeof(WAVEFORMATEX))) {
         WAVEFORMATEX *wf = (WAVEFORMATEX *) track->private_data;
         sh_a->wf = realloc(sh_a->wf, track->private_size);

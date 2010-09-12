@@ -49,7 +49,7 @@ static demuxer_t* demux_open_vqf(demuxer_t* demuxer) {
   s = demuxer->stream;
 
   sh_audio = new_sh_audio(demuxer,0, NULL);
-  sh_audio->wf = w = calloc(1, sizeof(WAVEFORMATEX)+sizeof(headerInfo));
+  sh_audio->wf = w = calloc(1, sizeof(*sh_audio->wf)+sizeof(headerInfo));
   hi = (headerInfo *)&w[1];
   w->wFormatTag = 0x1;
   sh_audio->format = mmioFOURCC('T','W','I','N'); /* TWinVQ */

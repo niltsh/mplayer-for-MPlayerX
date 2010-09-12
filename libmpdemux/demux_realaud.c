@@ -287,7 +287,7 @@ static demuxer_t* demux_open_ra(demuxer_t* demuxer)
 	}
 
 	/* Fill WAVEFORMATEX */
-	sh->wf = calloc(1, sizeof(WAVEFORMATEX));
+	sh->wf = calloc(1, sizeof(*sh->wf));
 	sh->wf->nChannels = sh->channels;
 	sh->wf->wBitsPerSample = sh->samplesize;
 	sh->wf->nSamplesPerSec = sh->samplerate;
