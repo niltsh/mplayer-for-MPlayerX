@@ -784,7 +784,7 @@ got_audio:
             if (++(priv->sub_packet_cnt) < sph)
                 audioreorder_getnextpk = 1;
             else {
-                int apk_usize = ((WAVEFORMATEX*)((sh_audio_t*)ds->sh)->wf)->nBlockAlign;
+                int apk_usize = ((sh_audio_t*)ds->sh)->wf->nBlockAlign;
                 audioreorder_getnextpk = 0;
                 priv->sub_packet_cnt = 0;
                 // Release all the audio packets
