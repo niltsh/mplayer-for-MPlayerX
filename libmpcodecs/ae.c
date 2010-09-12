@@ -28,29 +28,14 @@
 #include "libmpdemux/ms_hdr.h"
 #include "stream/stream.h"
 #include "libmpdemux/muxer.h"
+#include "ae_faac.h"
+#include "ae_lame.h"
+#include "ae_lavc.h"
+#include "ae_pcm.h"
+#include "ae_toolame.h"
+#include "ae_twolame.h"
 #include "ae.h"
 
-#include "ae_pcm.h"
-
-#ifdef CONFIG_TOOLAME
-#include "ae_toolame.h"
-#endif
-
-#ifdef CONFIG_MP3LAME
-#include "ae_lame.h"
-#endif
-
-#ifdef CONFIG_LIBAVCODEC
-#include "ae_lavc.h"
-#endif
-
-#ifdef CONFIG_FAAC
-#include "ae_faac.h"
-#endif
-
-#ifdef CONFIG_TWOLAME
-#include "ae_twolame.h"
-#endif
 
 audio_encoder_t *new_audio_encoder(muxer_stream_t *stream, audio_encoding_params_t *params)
 {
