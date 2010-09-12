@@ -43,6 +43,7 @@
 
 #include "img_format.h"
 #include "mp_image.h"
+#include "vd_ffmpeg.h"
 #include "vf.h"
 
 /* We need this #define because we need ../libavcodec/common.h to #define
