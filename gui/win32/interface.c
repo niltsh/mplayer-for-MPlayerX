@@ -43,6 +43,7 @@
 #include "libmpcodecs/dec_audio.h"
 #include "gui/mplayer/gmplayer.h"
 #include "mp_core.h"
+#include "mpcommon.h"
 #include "gui.h"
 #include "dialogs.h"
 #ifdef CONFIG_LIBCDIO
