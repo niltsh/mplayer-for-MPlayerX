@@ -1618,7 +1618,7 @@ static int demux_mkv_open_audio(demuxer_t *demuxer, mkv_track_t *track,
     sh_a->default_track = track->default_track;
     sh_a->ds = demuxer->audio;
     sh_a->wf = malloc(sizeof(*sh_a->wf));
-    if (track->ms_compat && (track->private_size >= sizeof(WAVEFORMATEX))) {
+    if (track->ms_compat && (track->private_size >= sizeof(*sh_a->wf))) {
         WAVEFORMATEX *wf = (WAVEFORMATEX *) track->private_data;
         sh_a->wf = realloc(sh_a->wf, track->private_size);
         sh_a->wf->wFormatTag = le2me_16(wf->wFormatTag);
@@ -1627,9 +1627,9 @@ static int demux_mkv_open_audio(demuxer_t *demuxer, mkv_track_t *track,
         sh_a->wf->nAvgBytesPerSec = le2me_32(wf->nAvgBytesPerSec);
         sh_a->wf->nBlockAlign = le2me_16(wf->nBlockAlign);
         sh_a->wf->wBitsPerSample = le2me_16(wf->wBitsPerSample);
-        sh_a->wf->cbSize = track->private_size - sizeof(WAVEFORMATEX);
+        sh_a->wf->cbSize = track->private_size - sizeof(*sh_a->wf);
         memcpy(sh_a->wf + 1, wf + 1,
-               track->private_size - sizeof(WAVEFORMATEX));
+               track->private_size - sizeof(*sh_a->wf));
         if (track->a_sfreq == 0.0)
             track->a_sfreq = sh_a->wf->nSamplesPerSec;
         if (track->a_channels == 0)
@@ -1638,7 +1638,7 @@ static int demux_mkv_open_audio(demuxer_t *demuxer, mkv_track_t *track,
             track->a_bps = sh_a->wf->wBitsPerSample;
         track->a_formattag = sh_a->wf->wFormatTag;
     } else {
-        memset(sh_a->wf, 0, sizeof(WAVEFORMATEX));
+        memset(sh_a->wf, 0, sizeof(*sh_a->wf));
         if (!strcmp(track->codec_id, MKV_A_MP3)
             || !strcmp(track->codec_id, MKV_A_MP2))
             track->a_formattag = 0x0055;
@@ -1781,7 +1781,7 @@ static int demux_mkv_open_audio(demuxer_t *demuxer, mkv_track_t *track,
         }
     } else if (track->a_formattag == mmioFOURCC('v', 'r', 'b', 's')) {  /* VORBIS */
         sh_a->wf->cbSize = track->private_size;
-        sh_a->wf = realloc(sh_a->wf, sizeof(WAVEFORMATEX) + sh_a->wf->cbSize);
+        sh_a->wf = realloc(sh_a->wf, sizeof(*sh_a->wf) + sh_a->wf->cbSize);
         memcpy((unsigned char *) (sh_a->wf + 1), track->private_data,
                sh_a->wf->cbSize);
     } else if (track->private_size >= RAPROPERTIES4_SIZE
@@ -1812,7 +1812,7 @@ static int demux_mkv_open_audio(demuxer_t *demuxer, mkv_track_t *track,
         codecdata_length = AV_RB32(src);
         src += 4;
         sh_a->wf->cbSize = codecdata_length;
-        sh_a->wf = realloc(sh_a->wf, sizeof(WAVEFORMATEX) + sh_a->wf->cbSize);
+        sh_a->wf = realloc(sh_a->wf, sizeof(*sh_a->wf) + sh_a->wf->cbSize);
         memcpy(((char *) (sh_a->wf + 1)), src, codecdata_length);
 
         switch (track->a_formattag) {
@@ -1863,8 +1863,8 @@ static int demux_mkv_open_audio(demuxer_t *demuxer, mkv_track_t *track,
             size = track->private_size;
         } else {
             sh_a->format = mmioFOURCC('f', 'L', 'a', 'C');
-            ptr  = (unsigned char *) track->private_data + sizeof(WAVEFORMATEX);
-            size = track->private_size - sizeof(WAVEFORMATEX);
+            ptr  = (unsigned char *) track->private_data + sizeof(*sh_a->wf);
+            size = track->private_size - sizeof(*sh_a->wf);
         }
         if (size < 4 || ptr[0] != 'f' || ptr[1] != 'L' || ptr[2] != 'a'
             || ptr[3] != 'C') {
@@ -1881,7 +1881,7 @@ static int demux_mkv_open_audio(demuxer_t *demuxer, mkv_track_t *track,
                track->a_formattag == mmioFOURCC('T', 'R', 'H', 'D')) {
         /* do nothing, still works */
     } else if (!track->ms_compat
-               || (track->private_size < sizeof(WAVEFORMATEX))) {
+               || (track->private_size < sizeof(*sh_a->wf))) {
         free_sh_audio(demuxer, track->tnum);
         return 1;
     }
