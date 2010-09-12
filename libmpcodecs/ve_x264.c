@@ -185,9 +185,9 @@ static int config(struct vf_instance *vf, int width, int height, int d_width, in
 
         extradata_size = x264_encoder_headers(mod->x264, &nal, &nnal);
 
-        mod->mux->bih= realloc(mod->mux->bih, sizeof(BITMAPINFOHEADER) + extradata_size);
+        mod->mux->bih= realloc(mod->mux->bih, sizeof(*mod->mux->bih) + extradata_size);
         memcpy(mod->mux->bih + 1, nal->p_payload, extradata_size);
-        mod->mux->bih->biSize= sizeof(BITMAPINFOHEADER) + extradata_size;
+        mod->mux->bih->biSize= sizeof(*mod->mux->bih) + extradata_size;
     }
 
     if (param.i_bframe > 1 && param.i_bframe_pyramid)
@@ -293,8 +293,8 @@ static int vf_open(vf_instance_t *vf, char *args) {
 
     mod=(h264_module_t*)vf->priv;
     mod->mux = (muxer_stream_t*)args;
-    mod->mux->bih = calloc(1, sizeof(BITMAPINFOHEADER));
-    mod->mux->bih->biSize = sizeof(BITMAPINFOHEADER);
+    mod->mux->bih = calloc(1, sizeof(*mod->mux->bih));
+    mod->mux->bih->biSize = sizeof(*mod->mux->bih);
     mod->mux->bih->biPlanes = 1;
     mod->mux->bih->biBitCount = 24;
     mod->mux->bih->biCompression = mmioFOURCC('h', '2', '6', '4');

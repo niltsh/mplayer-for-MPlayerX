@@ -147,7 +147,7 @@ static demuxer_t * demux_open_nut(demuxer_t * demuxer) {
 		}
 		case NUT_VIDEO_CLASS: {
 			BITMAPINFOHEADER * bih =
-				calloc(sizeof(BITMAPINFOHEADER) +
+				calloc(sizeof(*bih) +
 				              s[i].codec_specific_len, 1);
 			sh_video_t * sh_video = new_sh_video(demuxer, i);
 			int j;
@@ -171,7 +171,7 @@ static demuxer_t * demux_open_nut(demuxer_t * demuxer) {
 				s[i].sample_width / (float)s[i].sample_height;
 			sh_video->i_bps = 0; // FIXME
 
-			bih->biSize = sizeof(BITMAPINFOHEADER) +
+			bih->biSize = sizeof(*bih) +
 			                     s[i].codec_specific_len;
 			bih->biWidth = s[i].width;
 			bih->biHeight = s[i].height;

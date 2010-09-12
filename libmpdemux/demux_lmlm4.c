@@ -310,7 +310,7 @@ static demuxer_t* demux_open_lmlm4(demuxer_t* demuxer){
     sh_video->disp_h = 480;
     sh_video->format = mmioFOURCC('D','I','V','X');
 
-    sh_video->bih = calloc(1, sizeof(BITMAPINFOHEADER));
+    sh_video->bih = calloc(1, sizeof(*sh_video->bih));
 
     /* these are false values */
     sh_video->bih->biSize = 40;

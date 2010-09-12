@@ -906,8 +906,8 @@ int demux_ogg_open(demuxer_t *demuxer)
             } else {
                 sh_v = new_sh_video_vid(demuxer, ogg_d->num_sub, n_video);
 
-                sh_v->bih = calloc(1, sizeof(BITMAPINFOHEADER));
-                sh_v->bih->biSize        = sizeof(BITMAPINFOHEADER);
+                sh_v->bih = calloc(1, sizeof(*sh_v->bih));
+                sh_v->bih->biSize        = sizeof(*sh_v->bih);
                 sh_v->bih->biCompression = sh_v->format = FOURCC_THEORA;
                 sh_v->fps = ((double)inf.fps_numerator) / (double)inf.fps_denominator;
                 sh_v->frametime = ((double)inf.fps_denominator) / (double)inf.fps_numerator;
