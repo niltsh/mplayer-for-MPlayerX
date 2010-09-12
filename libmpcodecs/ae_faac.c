@@ -68,7 +68,7 @@ const m_option_t faacopts_conf[] = {
 
 static int bind_faac(audio_encoder_t *encoder, muxer_stream_t *mux_a)
 {
-	mux_a->wf = calloc(1, sizeof(WAVEFORMATEX) + decoder_specific_len + 256);
+	mux_a->wf = calloc(1, sizeof(*mux_a->wf) + decoder_specific_len + 256);
 	mux_a->wf->wFormatTag = 0x706D;
 	mux_a->wf->nChannels = encoder->params.channels;
 	mux_a->h.dwSampleSize=0; // VBR
@@ -90,7 +90,7 @@ static int bind_faac(audio_encoder_t *encoder, muxer_stream_t *mux_a)
 	((MPEGLAYER3WAVEFORMAT *) (mux_a->wf))->nCodecDelay = 0;
 
 	// Fix allocation
-	mux_a->wf = realloc(mux_a->wf, sizeof(WAVEFORMATEX)+mux_a->wf->cbSize);
+	mux_a->wf = realloc(mux_a->wf, sizeof(*mux_a->wf)+mux_a->wf->cbSize);
 
 	if(config->inputFormat == FAAC_INPUT_FLOAT)
 		encoder->input_format = AF_FORMAT_FLOAT_NE;

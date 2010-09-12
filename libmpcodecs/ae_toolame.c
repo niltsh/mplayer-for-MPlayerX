@@ -68,7 +68,7 @@ static int bind_toolame(audio_encoder_t *encoder, muxer_stream_t *mux_a)
 {
 	mpae_toolame_ctx *ctx = (mpae_toolame_ctx *) encoder->priv;
 
-	mux_a->wf = malloc(sizeof(WAVEFORMATEX)+256);
+	mux_a->wf = malloc(sizeof(*mux_a->wf)+256);
 	mux_a->wf->wFormatTag = 0x50;
 	mux_a->wf->nChannels = encoder->params.channels;
 	mux_a->wf->nSamplesPerSec = encoder->params.sample_rate;
@@ -99,7 +99,7 @@ static int bind_toolame(audio_encoder_t *encoder, muxer_stream_t *mux_a)
 	((MPEGLAYER3WAVEFORMAT *) (mux_a->wf))->nCodecDelay = 0;
 
 	// Fix allocation
-	mux_a->wf = realloc(mux_a->wf, sizeof(WAVEFORMATEX)+mux_a->wf->cbSize);
+	mux_a->wf = realloc(mux_a->wf, sizeof(*mux_a->wf)+mux_a->wf->cbSize);
 
 	encoder->input_format = AF_FORMAT_S16_NE;
 	encoder->min_buffer_size = mux_a->h.dwSuggestedBufferSize;

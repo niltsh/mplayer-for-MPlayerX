@@ -325,7 +325,7 @@ static demuxer_t* demux_open_lmlm4(demuxer_t* demuxer){
     demuxer->audio->sh = sh_audio;
     sh_audio->ds = demuxer->audio;
 
-    sh_audio->wf = calloc(1, sizeof(WAVEFORMATEX));
+    sh_audio->wf = calloc(1, sizeof(*sh_audio->wf));
 
     sh_audio->samplerate = 48000;
     sh_audio->wf->wBitsPerSample = 16;
