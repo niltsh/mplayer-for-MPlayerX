@@ -25,34 +25,34 @@
 #include "af.h"
 
 // Static list of filters
-extern af_info_t af_info_dummy;
-extern af_info_t af_info_delay;
-extern af_info_t af_info_channels;
-extern af_info_t af_info_format;
-extern af_info_t af_info_resample;
-extern af_info_t af_info_volume;
-extern af_info_t af_info_equalizer;
-extern af_info_t af_info_gate;
-extern af_info_t af_info_comp;
-extern af_info_t af_info_pan;
-extern af_info_t af_info_surround;
-extern af_info_t af_info_sub;
-extern af_info_t af_info_export;
-extern af_info_t af_info_volnorm;
-extern af_info_t af_info_extrastereo;
-extern af_info_t af_info_lavcac3enc;
-extern af_info_t af_info_lavcresample;
-extern af_info_t af_info_sweep;
-extern af_info_t af_info_hrtf;
-extern af_info_t af_info_ladspa;
-extern af_info_t af_info_center;
-extern af_info_t af_info_sinesuppress;
-extern af_info_t af_info_karaoke;
-extern af_info_t af_info_scaletempo;
-extern af_info_t af_info_stats;
-extern af_info_t af_info_bs2b;
+extern const af_info_t af_info_dummy;
+extern const af_info_t af_info_delay;
+extern const af_info_t af_info_channels;
+extern const af_info_t af_info_format;
+extern const af_info_t af_info_resample;
+extern const af_info_t af_info_volume;
+extern const af_info_t af_info_equalizer;
+extern const af_info_t af_info_gate;
+extern const af_info_t af_info_comp;
+extern const af_info_t af_info_pan;
+extern const af_info_t af_info_surround;
+extern const af_info_t af_info_sub;
+extern const af_info_t af_info_export;
+extern const af_info_t af_info_volnorm;
+extern const af_info_t af_info_extrastereo;
+extern const af_info_t af_info_lavcac3enc;
+extern const af_info_t af_info_lavcresample;
+extern const af_info_t af_info_sweep;
+extern const af_info_t af_info_hrtf;
+extern const af_info_t af_info_ladspa;
+extern const af_info_t af_info_center;
+extern const af_info_t af_info_sinesuppress;
+extern const af_info_t af_info_karaoke;
+extern const af_info_t af_info_scaletempo;
+extern const af_info_t af_info_stats;
+extern const af_info_t af_info_bs2b;
 
-static af_info_t* filter_list[]={
+static const af_info_t * const filter_list[] = {
    &af_info_dummy,
    &af_info_delay,
    &af_info_channels,
@@ -97,7 +97,7 @@ int* af_cpu_speed = NULL;
 
 /* Find a filter in the static list of filters using it's name. This
    function is used internally */
-static af_info_t* af_find(char*name)
+static const af_info_t* af_find(char*name)
 {
   int i=0;
   while(filter_list[i]){

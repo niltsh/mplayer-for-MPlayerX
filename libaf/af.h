@@ -66,7 +66,7 @@ typedef struct af_info_s
 // Linked list of audio filters
 typedef struct af_instance_s
 {
-  af_info_t* info;
+  const af_info_t* info;
   int (*control)(struct af_instance_s* af, int cmd, void* arg);
   void (*uninit)(struct af_instance_s* af);
   af_data_t* (*play)(struct af_instance_s* af, af_data_t* data);
