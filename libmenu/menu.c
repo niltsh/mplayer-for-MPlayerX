@@ -40,17 +40,17 @@
 #include "m_struct.h"
 #include "menu.h"
 
-extern menu_info_t menu_info_cmdlist;
-extern menu_info_t menu_info_chapsel;
-extern menu_info_t menu_info_pt;
-extern menu_info_t menu_info_filesel;
-extern menu_info_t menu_info_txt;
-extern menu_info_t menu_info_console;
-extern menu_info_t menu_info_pref;
-extern menu_info_t menu_info_dvbsel;
+extern const menu_info_t menu_info_cmdlist;
+extern const menu_info_t menu_info_chapsel;
+extern const menu_info_t menu_info_pt;
+extern const menu_info_t menu_info_filesel;
+extern const menu_info_t menu_info_txt;
+extern const menu_info_t menu_info_console;
+extern const menu_info_t menu_info_pref;
+extern const menu_info_t menu_info_dvbsel;
 
 
-menu_info_t* menu_info_list[] = {
+const menu_info_t * const menu_info_list[] = {
   &menu_info_pt,
   &menu_info_cmdlist,
   &menu_info_chapsel,
@@ -105,7 +105,7 @@ static menu_cmd_bindings_t *get_cmd_bindings(const char *name)
 
 static int menu_parse_config(char* buffer) {
   char *element,*body, **attribs, *name;
-  menu_info_t* minfo = NULL;
+  const menu_info_t* minfo = NULL;
   int r,i;
   ASX_Parser_t* parser = asx_parser_new();
 
