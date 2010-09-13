@@ -344,19 +344,8 @@ Codecs:
                                    decoder) [autodetect]
   --disable-libvpx-lavc     disable libvpx in libavcodec [autodetect]
   --disable-libnut          disable libnut [autodetect]
-  --disable-libavutil_a     disable static libavutil [autodetect]
-  --disable-libavcodec_a    disable static libavcodec [autodetect]
-  --disable-libavcore_a     disable static libavcore [autodetect]
-  --disable-libavformat_a   disable static libavformat [autodetect]
-  --disable-libpostproc_a   disable static libpostproc [autodetect]
-  --disable-libswscale_a    disable static libswscale [autodetect]
-  --disable-libavutil_so    disable shared libavutil [autodetect]
-  --disable-libavcodec_so   disable shared libavcodec [autodetect]
-  --disable-libavcore_so    disable shared libavcore [autodetect]
-  --disable-libavformat_so  disable shared libavformat [autodetect]
-  --disable-libpostproc_so  disable shared libpostproc [autodetect]
-  --disable-libswscale_so   disable shared libswscale [autodetect]
-  --enable-system-ffmpeg    use system ffmpeg libraries [no]
+  --disable-ffmpeg_a        disable static FFmpeg [autodetect]
+  --disable-ffmpeg_so       disable shared FFmpeg [autodetect]
   --disable-libavcodec_mpegaudio_hp disable high precision audio decoding
                                     in libavcodec [enabled]
   --disable-tremor-internal disable internal Tremor [enabled]
@@ -585,20 +574,9 @@ _yasm=yasm
 _runtime_cpudetection=no
 _cross_compile=auto
 _prefix="/usr/local"
-_libavutil_a=auto
-_libavutil_so=auto
-_libavcodec_a=auto
-_libavcodec_so=auto
+ffmpeg_a=auto
+ffmpeg_so=auto
 _libavcodec_mpegaudio_hp=yes
-_libavformat_a=auto
-_libavformat_so=auto
-_libpostproc_a=auto
-_libpostproc_so=auto
-_libswscale_a=auto
-_libswscale_so=auto
-_libavcore_a=auto
-_libavcore_so=auto
-_system_ffmpeg=no
 _libopencore_amrnb=auto
 _libopencore_amrwb=auto
 libopenjpeg=auto
@@ -1209,18 +1187,6 @@ for ac_option do
   --disable-libvpx-lavc)  _libvpx_lavc=no   ;;
   --enable-libnut)      _libnut=yes     ;;
   --disable-libnut)     _libnut=no      ;;
-  --enable-libavutil_a)         _libavutil_a=yes        ;;
-  --disable-libavutil_a)        _libavutil_a=no         ;;
-  --enable-libavutil_so)        _libavutil_so=yes       ;;
-  --disable-libavutil_so)       _libavutil_so=no        ;;
-  --enable-libavcodec_a)        _libavcodec_a=yes       ;;
-  --disable-libavcodec_a)       _libavcodec_a=no        ;;
-  --enable-libavcodec_so)       _libavcodec_so=yes      ;;
-  --disable-libavcodec_so)      _libavcodec_so=no       ;;
-  --enable-libavcore_a)         _libavcore_a=yes        ;;
-  --disable-libavcore_a)        _libavcore_a=no         ;;
-  --enable-libavcore_so)        _libavcore_so=yes       ;;
-  --disable-libavcore_so)       _libavcore_so=no        ;;
   --enable-libopencore_amrnb)   _libopencore_amrnb=yes  ;;
   --disable-libopencore_amrnb)  _libopencore_amrnb=no   ;;
   --enable-libopencore_amrwb)   _libopencore_amrwb=yes  ;;
@@ -1237,24 +1203,10 @@ for ac_option do
   --disable-demuxer=*) libavdemuxers=$(echo $libavdemuxers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
   --enable-muxer=*)    libavmuxers="$libavmuxers $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
   --disable-muxer=*)    libavmuxers=$(echo $libavmuxers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
-  --enable-libavformat_a)       _libavformat_a=yes      ;;
-  --disable-libavformat_a)      _libavformat_a=no       ;;
-  --enable-libavformat_so)      _libavformat_so=yes     ;;
-  --disable-libavformat_so)     _libavformat_so=no      ;;
-  --enable-libpostproc_a)       _libpostproc_a=yes      ;;
-  --disable-libpostproc_a)      _libpostproc_a=no       ;;
-  --enable-libpostproc_so)      _libpostproc_so=yes     ;;
-  --disable-libpostproc_so)     _libpostproc_so=no      ;;
-  --enable-libswscale_a)        _libswscale_a=yes       ;;
-  --disable-libswscale_a)       _libswscale_a=no        ;;
-  --enable-libswscale_so)       _libswscale_so=yes      ;;
-  --disable-libswscale_so)      _libswscale_so=no       ;;
-  --enable-system-ffmpeg)       _libavcore_a=no   ; _libavcore_so=yes
-                                _libavutil_a=no   ; _libavutil_so=yes
-                                _libavcodec_a=no  ; _libavcodec_so=yes
-                                _libswscale_a=no  ; _libswscale_so=yes
-                                _libavformat_a=no ; _libavformat_so=yes
-                                _libpostproc_a=no ; _libpostproc_so=yes ;;
+  --enable-ffmpeg_a)    ffmpeg_a=yes    ;;
+  --disable-ffmpeg_a)   ffmpeg_a=no     ;;
+  --enable-ffmpeg_so)   ffmpeg_so=yes   ;;
+  --disable-ffmpeg_so)  ffmpeg_so=no    ;;
   --enable-libavcodec_mpegaudio_hp)     _libavcodec_mpegaudio_hp=yes    ;;
   --disable-libavcodec_mpegaudio_hp)    _libavcodec_mpegaudio_hp=no     ;;
 
@@ -7007,7 +6959,7 @@ else
   def_faac_lavc="#define CONFIG_LIBFAAC 0"
   nocodecmodules="faac $nocodecmodules"
 fi
-res_comment="in libavcodec: $_faac_lavc"
+res_comment="in FFmpeg: $_faac_lavc"
 echores "$_faac"
 
 
@@ -7321,226 +7273,48 @@ else
 fi
 echores "$_librtmp"
 
-echocheck "FFmpeg libavutil"
-if test "$_libavutil_a" = auto ; then
-  if test -d libavutil ; then
-    _libavutil_a=yes
-    res_comment="static"
-  else
-    die "MPlayer will not compile without libavutil in the source tree."
-  fi
-elif test "$_libavutil_so" = auto ; then
-  _libavutil_so=no
-  cat > $TMPC << EOF
-#include <libavutil/common.h>
-int main(void) { av_clip(1, 1, 1); return 0; }
-EOF
-  if $_pkg_config --exists libavutil ; then
-    _inc_libavutil=$($_pkg_config --cflags libavutil)
-    _ld_tmp=$($_pkg_config --libs libavutil)
-    cc_check $_inc_libavutil $_ld_tmp && extra_ldflags="$extra_ldflags $_ld_tmp" \
-      && _libavutil_so=yes
-  elif cc_check -lavutil $_ld_lm ; then
-    extra_ldflags="$extra_ldflags -lavutil"
-    _libavutil_so=yes
-    res_comment="using libavutil.so, but static libavutil is recommended"
-  fi
-fi
-_libavutil=no
-def_libavutil='#undef CONFIG_LIBAVUTIL'
-def_libavutil_a='#undef CONFIG_LIBAVUTIL_A'
-def_libavutil_so='#undef CONFIG_LIBAVUTIL_SO'
-test "$_libavutil_a" = yes || test "$_libavutil_so" = yes && _libavutil=yes
-test "$_libavutil"    = yes && def_libavutil='#define CONFIG_LIBAVUTIL 1'
-test "$_libavutil_a"  = yes && def_libavutil_a='#define CONFIG_LIBAVUTIL_A 1'
-test "$_libavutil_so" = yes && def_libavutil_so='#define CONFIG_LIBAVUTIL_SO 1'
-# neither static nor shared libavutil is available, but it is mandatory ...
-if test "$_libavutil" = no ; then
-  die "You need static or shared libavutil, MPlayer will not compile without!"
-fi
-echores "$_libavutil"
 
-echocheck "FFmpeg libavcore"
-if test "$_libavcore_a" = auto ; then
-  if test -d libavcore ; then
-    _libavcore_a=yes
-    res_comment="static"
-  fi
-elif test "$_libavcore_so" = auto ; then
-  _libavcore_so=no
-  cat > $TMPC << EOF
-#include <libavcore/avcore.h>
-int main(void) { return 0; }
-EOF
+echocheck "FFmpeg"
+test -d libavutil ||
+  die "MPlayer will not compile without libavutil in the source tree."
+ffmpeg=no
+if test "$ffmpeg_a" = auto ; then
+  test -d libavcore && ffmpeg_a=yes && ffmpeg=yes
+elif test "$ffmpeg_so" = auto ; then
+  ffmpeg_so=no
   if $_pkg_config --exists libavcore ; then
-    _inc_libavcore=$($_pkg_config --cflags libavcore)
+    inc_ffmpeg=$($_pkg_config --cflags libavcore)
     _ld_tmp=$($_pkg_config --libs libavcore)
-    cc_check $_inc_libavcore $_ld_tmp && extra_ldflags="$extra_ldflags $_ld_tmp" \
-      && _libavcore_so=yes
-  elif cc_check -lavcore $_ld_lm ; then
-    extra_ldflags="$extra_ldflags -lavcore"
-    _libavcore_so=yes
-    res_comment="using libavcore.so, but static libavcore is recommended"
+    header_check libavcore/avcore.h $inc_ffmpeg $_ld_tmp &&
+      extra_ldflags="$extra_ldflags $_ld_tmp" && ffmpeg_so=yes && ffmpeg=yes
+  elif header_check libavcore/avcore.h -lpostproc -lswscale -lavformat -lavcodec -lavutil -lavcore $_ld_lm ; then
+    extra_ldflags="$extra_ldflags -lpostproc -lswscale -lavformat -lavcodec -lavutil -lavcore"
+    ffmpeg_so=yes
+    ffmpeg=yes
   fi
 fi
-_libavcore=no
-def_libavcore='#undef CONFIG_LIBAVCORE'
-def_libavcore_a='#undef CONFIG_LIBAVCORE_A'
-def_libavcore_so='#undef CONFIG_LIBAVCORE_SO'
-test "$_libavcore_a" = yes || test "$_libavcore_so" = yes && _libavcore=yes
-test "$_libavcore"    = yes && def_libavcore='#define CONFIG_LIBAVCORE 1'
-test "$_libavcore_a"  = yes && def_libavcore_a='#define CONFIG_LIBAVCORE_A 1'
-test "$_libavcore_so" = yes && def_libavcore_so='#define CONFIG_LIBAVCORE_SO 1'
-# neither static nor shared libavcore is available, but it is mandatory ...
-if test "$_libavcore" = no ; then
-  die "You need static or shared libavcore, MPlayer will not compile without!"
-fi
-echores "$_libavcore"
 
-echocheck "FFmpeg libavcodec"
-if test "$_libavcodec_a" = auto ; then
-  _libavcodec_a=no
-  if test -d libavcodec && test -f libavcodec/utils.c ; then
-    _libavcodec_a="yes"
-    res_comment="static"
+if test "$ffmpeg" = yes; then
+  def_ffmpeg='#define CONFIG_FFMPEG 1'
+  if test "$ffmpeg_a" = yes ; then
+    codecmodules="ffmpeg(internal) $codecmodules"
+    def_ffmpeg_a='#define CONFIG_FFMPEG_A 1'
+  elif test "$ffmpeg_so" = yes ; then
+    codecmodules="ffmpeg $codecmodules"
+    def_ffmpeg_so='#define CONFIG_FFMPEG_SO 1'
+    res_comment="using shared FFmpeg, but static FFmpeg is recommended"
   fi
-elif test "$_libavcodec_so" = auto ; then
-  _libavcodec_so=no
-  res_comment="libavcodec.so is discouraged over static libavcodec"
-  cat > $TMPC << EOF
-#include <libavcodec/avcodec.h>
-int main(void) { avcodec_find_encoder_by_name(""); return 0; }
-EOF
-  if $_pkg_config --exists libavcodec ; then
-    _inc_libavcodec=$($_pkg_config --cflags libavcodec)
-    _ld_tmp=$($_pkg_config --libs libavcodec)
-    cc_check $_inc_libavcodec $_ld_tmp && extra_ldflags="$extra_ldflags $_ld_tmp" \
-      && _libavcodec_so=yes
-  elif cc_check -lavcodec $_ld_lm ; then
-    extra_ldflags="$extra_ldflags -lavcodec"
-    _libavcodec_so=yes
-    res_comment="using libavcodec.so, but static libavcodec is recommended"
-  fi
+else
+  def_ffmpeg='#undef CONFIG_FFMPEG'
+  def_ffmpeg_a='#undef CONFIG_FFMPEG_A'
+  def_ffmpeg_so='#undef CONFIG_FFMPEG_SO'
+  nocodecmodules="ffmpeg $nocodecmodules"
 fi
-_libavcodec=no
-def_libavcodec='#undef CONFIG_LIBAVCODEC'
-def_libavcodec_a='#undef CONFIG_LIBAVCODEC_A'
-def_libavcodec_so='#undef CONFIG_LIBAVCODEC_SO'
-test "$_libavcodec_a" = yes || test "$_libavcodec_so" = yes && _libavcodec=yes
-test "$_libavcodec"    = yes && def_libavcodec='#define CONFIG_LIBAVCODEC 1'
-test "$_libavcodec_a"  = yes && def_libavcodec_a='#define CONFIG_LIBAVCODEC_A 1'
-test "$_libavcodec_so" = yes && def_libavcodec_so='#define CONFIG_LIBAVCODEC_SO 1'
 test "$_libavcodec_mpegaudio_hp" = yes \
   && def_libavcodec_mpegaudio_hp='#define CONFIG_MPEGAUDIO_HP 1' \
   && mak_libavcodec_mpegaudio_hp='CONFIG_MPEGAUDIO_HP = yes'
-if test "$_libavcodec_a" = yes ; then
-  codecmodules="libavcodec(internal) $codecmodules"
-elif test "$_libavcodec_so" = yes ; then
-  codecmodules="libavcodec.so $codecmodules"
-else
-  nocodecmodules="libavcodec $nocodecmodules"
-fi
-echores "$_libavcodec"
+echores "$ffmpeg"
 
-echocheck "FFmpeg libavformat"
-if test "$_libavformat_a" = auto ; then
-  _libavformat_a=no
-  if test -d libavformat && test -f libavformat/utils.c ; then
-    _libavformat_a=yes
-    res_comment="static"
-  fi
-elif test "$_libavformat_so" = auto ; then
-  _libavformat_so=no
-  cat > $TMPC <<EOF
-  #include <libavformat/avformat.h>
-  int main(void) { av_alloc_format_context(); return 0; }
-EOF
-  if $_pkg_config --exists libavformat ; then
-    _inc_libavformat=$($_pkg_config --cflags libavformat)
-    _ld_tmp=$($_pkg_config --libs libavformat)
-    cc_check $_inc_libavformat $_ld_tmp && extra_ldflags="$extra_ldflags $_ld_tmp" \
-      && _libavformat_so=yes
-  elif cc_check $_ld_lm -lavformat ; then
-    extra_ldflags="$extra_ldflags -lavformat"
-    _libavformat_so=yes
-    res_comment="using libavformat.so, but static libavformat is recommended"
-  fi
-fi
-_libavformat=no
-def_libavformat='#undef CONFIG_LIBAVFORMAT'
-def_libavformat_a='#undef CONFIG_LIBAVFORMAT_A'
-def_libavformat_so='#undef CONFIG_LIBAVFORMAT_SO'
-test "$_libavformat_a" = yes || test "$_libavformat_so" = yes && _libavformat=yes
-test "$_libavformat"    = yes && def_libavformat='#define CONFIG_LIBAVFORMAT 1'
-test "$_libavformat_a"  = yes && def_libavformat_a='#define CONFIG_LIBAVFORMAT_A 1'
-test "$_libavformat_so" = yes \
-  && def_libavformat_so='#define CONFIG_LIBAVFORMAT_SO 1'
-echores "$_libavformat"
-
-echocheck "FFmpeg libpostproc"
-if test "$_libpostproc_a" = auto ; then
-  _libpostproc_a=no
-  if test -d libpostproc && test -f libpostproc/postprocess.h ; then
-    _libpostproc_a='yes'
-    res_comment="static"
-  fi
-elif test "$_libpostproc_so" = auto ; then
-  _libpostproc_so=no
-  cat > $TMPC << EOF
-  #include <libpostproc/postprocess.h>
-  int main(void) { pp_get_mode_by_name_and_quality("de", 0); return 0; }
-EOF
-  if cc_check -lpostproc $_ld_lm ; then
-    extra_ldflags="$extra_ldflags -lpostproc"
-    _libpostproc_so=yes
-    res_comment="using libpostproc.so, but static libpostproc is recommended"
-  fi
-fi
-_libpostproc=no
-def_libpostproc='#undef CONFIG_LIBPOSTPROC'
-def_libpostproc_a='#undef CONFIG_LIBPOSTPROC_A'
-def_libpostproc_so='#undef CONFIG_LIBPOSTPROC_SO'
-test "$_libpostproc_a" = yes || test "$_libpostproc_so" = yes && _libpostproc=yes
-test "$_libpostproc"    = yes && def_libpostproc='#define CONFIG_LIBPOSTPROC 1'
-test "$_libpostproc_a"  = yes && def_libpostproc_a='#define CONFIG_LIBPOSTPROC_A 1'
-test "$_libpostproc_so" = yes \
-  && def_libpostproc_so='#define CONFIG_LIBPOSTPROC_SO 1'
-echores "$_libpostproc"
-
-echocheck "FFmpeg libswscale"
-if test "$_libswscale_a" = auto ; then
-  _libswscale_a=no
-  if test -d libswscale && test -f libswscale/swscale.h ; then
-    _libswscale_a='yes'
-    res_comment="static"
-  fi
-elif test "$_libswscale_so" = auto ; then
-  _libswscale_so=no
-  res_comment="using libswscale.so, but static libswscale is recommended"
-  cat > $TMPC << EOF
-  #include <libswscale/swscale.h>
-  int main(void) { sws_scale(0, 0, 0, 0, 0, 0, 0); return 0; }
-EOF
-  if $_pkg_config --exists libswscale ; then
-    _inc_libswscale=$($_pkg_config --cflags libswscale)
-    _ld_tmp=$($_pkg_config --libs libswscale)
-    cc_check $_inc_libswscale $_ld_tmp && extra_ldflags="$extra_ldflags $_ld_tmp" \
-      && _libswscale_so=yes
-  elif cc_check -lswscale ; then
-    extra_ldflags="$extra_ldflags -lswscale"
-    _libswscale_so=yes
-  fi
-fi
-_libswscale=no
-def_libswscale='#undef CONFIG_LIBSWSCALE'
-def_libswscale_a='#undef CONFIG_LIBSWSCALE_A'
-def_libswscale_so='#undef CONFIG_LIBSWSCALE_SO'
-test "$_libswscale_a" = yes || test "$_libswscale_so" = yes && _libswscale=yes
-test "$_libswscale"    = yes && def_libswscale='#define CONFIG_LIBSWSCALE 1'
-test "$_libswscale_a"  = yes && def_libswscale_a='#define CONFIG_LIBSWSCALE_A 1'
-test "$_libswscale_so" = yes \
-  && def_libswscale_so='#define CONFIG_LIBSWSCALE_SO 1'
-echores "$_libswscale"
 
 
 echocheck "libopencore_amr narrowband"
@@ -7551,9 +7325,9 @@ if test "$_libopencore_amrnb" = auto ; then
 int main(void) { Decoder_Interface_init(); return 0; }
 EOF
   cc_check -lopencore-amrnb && _libopencore_amrnb=yes
-  if test "$_libavcodec_a" != yes ; then
+  if test "$ffmpeg_a" != yes ; then
     _libopencore_amrnb=no
-    res_comment="libavcodec (static) is required by libopencore_amrnb, sorry"
+    res_comment="ffmpeg (static) is required by libopencore_amrnb, sorry"
   fi
 fi
 if test "$_libopencore_amrnb" = yes ; then
@@ -7578,9 +7352,9 @@ if test "$_libopencore_amrwb" = auto ; then
 int main(void) { D_IF_init(); return 0; }
 EOF
   cc_check -lopencore-amrwb && _libopencore_amrwb=yes
-  if test "$_libavcodec_a" != yes ; then
+  if test "$ffmpeg_a" != yes ; then
     _libopencore_amrwb=no
-    res_comment="libavcodec (static) is required by libopencore_amrwb, sorry"
+    res_comment="ffmpeg (static) is required by libopencore_amrwb, sorry"
   fi
 fi
 if test "$_libopencore_amrwb" = yes ; then
@@ -7685,15 +7459,15 @@ else
   def_x264_lavc='#define CONFIG_LIBX264 0'
   nocodecmodules="x264 $nocodecmodules"
 fi
-res_comment="in libavcodec: $_x264_lavc"
+res_comment="in FFmpeg: $_x264_lavc"
 echores "$_x264"
 
 
 echocheck "libdirac"
 if test "$_libdirac_lavc" = auto; then
   _libdirac_lavc=no
-  if test "$_libavcodec_a" != yes; then
-    res_comment="libavcodec (static) is required by libdirac, sorry"
+  if test "$ffmpeg_a" != yes; then
+    res_comment="ffmpeg (static) is required by libdirac, sorry"
   else
     cat > $TMPC << EOF
 #include <libdirac_encoder/dirac_encoder.h>
@@ -7734,8 +7508,8 @@ echores "$_libdirac_lavc"
 echocheck "libschroedinger"
 if test "$_libschroedinger_lavc" = auto ; then
   _libschroedinger_lavc=no
-  if test "$_libavcodec_a" != yes; then
-    res_comment="libavcodec (static) is required by libschroedinger, sorry"
+  if test "$ffmpeg_a" != yes; then
+    res_comment="ffmpeg (static) is required by libschroedinger, sorry"
   else
     cat > $TMPC << EOF
 #include <schroedinger/schro.h>
@@ -7765,8 +7539,8 @@ echores "$_libschroedinger_lavc"
 echocheck "libvpx"
 if test "$_libvpx_lavc" = auto; then
   _libvpx_lavc=no
-  if test "$_libavcodec_a" != yes; then
-    res_comment="dynamic linking to libvpx is irrelevant when using dynamic libavcodec"
+  if test "$ffmpeg_a" != yes; then
+    res_comment="dynamic linking to libvpx is irrelevant when using dynamic FFmpeg"
   else
     cat > $TMPC << EOF
 #include <vpx/vpx_encoder.h>
@@ -7813,7 +7587,7 @@ else
 fi
 echores "$_libnut"
 
-#check must be done after libavcodec one
+#check must be done after FFmpeg one
 echocheck "zr"
 if test "$_zr" = auto ; then
   #36067's seem to identify themselves as 36057PQC's, so the line
@@ -7825,11 +7599,11 @@ if test "$_zr" = auto ; then
   fi
 fi
 if test "$_zr" = yes ; then
-  if test "$_libavcodec_a" = yes ; then
+  if test "$ffmpeg_a" = yes ; then
     def_zr='#define CONFIG_ZR 1'
     vomodules="zr zr2 $vomodules"
   else
-    res_comment="libavcodec (static) is required by zr, sorry"
+    res_comment="ffmpeg (static) is required by zr, sorry"
     novomodules="zr $novomodules"
     def_zr='#undef CONFIG_ZR'
   fi
@@ -7880,7 +7654,7 @@ else
   def_mp3lame='#undef CONFIG_MP3LAME'
   def_mp3lame_lavc="#define CONFIG_LIBMP3LAME 0"
 fi
-res_comment="in libavcodec: $_mp3lame_lavc"
+res_comment="in FFmpeg: $_mp3lame_lavc"
 echores "$_mp3lame"
 
 fi # test "$_mencoder" != no
@@ -8252,7 +8026,7 @@ echo "$_gui"
 if test "$_gui" = yes ; then
 
   # Required libraries
-  if test "$_libavcodec" != yes ||
+  if test "$ffmpeg" != yes ||
       ! echo $libavdecoders | grep -q PNG_DECODER ; then
     die "The GUI requires libavcodec with PNG support (needs zlib)."
   fi
@@ -8833,24 +8607,8 @@ YUV4MPEG = $_yuv4mpeg
 ZR = $_zr
 
 # FFmpeg
-LIBAVUTIL      = $_libavutil
-LIBAVUTIL_A    = $_libavutil_a
-LIBAVUTIL_SO   = $_libavutil_so
-LIBAVCODEC     = $_libavcodec
-LIBAVCODEC_A   = $_libavcodec_a
-LIBAVCODEC_SO  = $_libavcodec_so
-LIBAVCORE      = $_libavcore
-LIBAVCORE_A    = $_libavcore_a
-LIBAVCORE_SO   = $_libavcore_so
-LIBAVFORMAT    = $_libavformat
-LIBAVFORMAT_A  = $_libavformat_a
-LIBAVFORMAT_SO = $_libavformat_so
-LIBPOSTPROC    = $_libpostproc
-LIBPOSTPROC_A  = $_libpostproc_a
-LIBPOSTPROC_SO = $_libpostproc_so
-LIBSWSCALE     = $_libswscale
-LIBSWSCALE_A   = $_libswscale_a
-LIBSWSCALE_SO  = $_libswscale_so
+FFMPEG     = $ffmpeg
+FFMPEG_A   = $ffmpeg_a
 
 HOSTCC     = \$(HOST_CC)
 HOSTCFLAGS = -D_ISOC99_SOURCE -D_POSIX_C_SOURCE=200112 -O3
@@ -9310,24 +9068,9 @@ $def_zr
 
 
 /* FFmpeg */
-$def_libavcodec
-$def_libavcodec_a
-$def_libavcodec_so
-$def_libavcore
-$def_libavcore_a
-$def_libavcore_so
-$def_libavformat
-$def_libavformat_a
-$def_libavformat_so
-$def_libavutil
-$def_libavutil_a
-$def_libavutil_so
-$def_libpostproc
-$def_libpostproc_a
-$def_libpostproc_so
-$def_libswscale
-$def_libswscale_a
-$def_libswscale_so
+$def_ffmpeg
+$def_ffmpeg_a
+$def_ffmpeg_so
 
 #define CONFIG_DECODERS 1
 #define CONFIG_ENCODERS 1
@@ -9420,7 +9163,7 @@ $def_yasm
 #define FFMPEG_CONFIGURATION "--enable-gpl --enable-postproc"
 #define FFMPEG_LICENSE "GPL version 2 or later"
 
-/* External libraries used through libavcodec. */
+/* External libraries used through FFmpeg. */
 $def_faac_lavc
 $def_libdirac_lavc
 $def_libgsm

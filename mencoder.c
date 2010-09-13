@@ -899,7 +899,7 @@ mux_v->buffer=malloc(mux_v->buffer_size);
 mux_v->source=sh_video;
 
 mux_v->h.dwSampleSize=0; // VBR
-#ifdef CONFIG_LIBAVCODEC
+#ifdef CONFIG_FFMPEG
 {
     double fps = force_ofps?force_ofps:sh_video->fps*playback_speed;
     AVRational q= av_d2q(fps, fps*1001+2);

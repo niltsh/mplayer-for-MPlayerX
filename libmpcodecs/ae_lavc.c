@@ -38,14 +38,12 @@
 #include "libaf/reorder_ch.h"
 #include "libavcodec/avcodec.h"
 #include "libavutil/intreadwrite.h"
+#include "libavformat/avformat.h"
+#include "libmpdemux/mp_taglists.h"
 
 static AVCodec        *lavc_acodec;
 static AVCodecContext *lavc_actx;
 static int compressed_frame_size = 0;
-#ifdef CONFIG_LIBAVFORMAT
-#include "libavformat/avformat.h"
-#include "libmpdemux/mp_taglists.h"
-#endif
 
 static int bind_lavc(audio_encoder_t *encoder, muxer_stream_t *mux_a)
 {
@@ -149,31 +147,6 @@ static int get_frame_size(audio_encoder_t *encoder)
         return sz;
 }
 
-#ifndef CONFIG_LIBAVFORMAT
-static uint32_t lavc_find_atag(char *codec)
-{
-	if(codec == NULL)
-	        return 0;
-
-	if(! strcasecmp(codec, "mp2"))
-		return 0x50;
-
-	if(! strcasecmp(codec, "mp3"))
-		return 0x55;
-
-	if(! strcasecmp(codec, "ac3"))
-		return 0x2000;
-
-	if(! strcasecmp(codec, "adpcm_ima_wav"))
-		return 0x11;
-
-	if(! strncasecmp(codec, "bonk", 4))
-		return 0x2048;
-
-	return 0;
-}
-#endif
-
 
 int mpae_init_lavc(audio_encoder_t *encoder)
 {
@@ -196,11 +169,7 @@ int mpae_init_lavc(audio_encoder_t *encoder)
 	}
 	if(lavc_param_atag == 0)
 	{
-#ifdef CONFIG_LIBAVFORMAT
 		lavc_param_atag = av_codec_get_tag(mp_wav_taglists, lavc_acodec->id);
-#else
-		lavc_param_atag = lavc_find_atag(lavc_param_acodec);
-#endif
 		if(!lavc_param_atag)
 		{
 			mp_msg(MSGT_MENCODER, MSGL_FATAL, "Couldn't find wav tag for specified codec, exit\n");

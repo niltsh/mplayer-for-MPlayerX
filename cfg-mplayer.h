@@ -23,6 +23,7 @@
  * config for cfgparser
  */
 
+#include <stddef.h>
 #include "cfg-common.h"
 #include "gui/interface.h"
 #include "input/lirc.h"

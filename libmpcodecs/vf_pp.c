@@ -37,7 +37,7 @@
 #include "libavutil/internal.h"
 #include "libpostproc/postprocess.h"
 
-#ifdef CONFIG_LIBPOSTPROC_A
+#ifdef CONFIG_FFMPEG_A
 #define EMU_OLD
 #include "libpostproc/postprocess_internal.h"
 #endif

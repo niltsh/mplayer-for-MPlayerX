@@ -58,7 +58,7 @@ audio_encoder_t *new_audio_encoder(muxer_stream_t *stream, audio_encoding_params
 			ris = mpae_init_toolame(encoder);
 			break;
 #endif
-#ifdef CONFIG_LIBAVCODEC
+#ifdef CONFIG_FFMPEG
 		case ACODEC_LAVC:
 			ris = mpae_init_lavc(encoder);
 			break;

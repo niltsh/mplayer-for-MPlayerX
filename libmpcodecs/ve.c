@@ -41,7 +41,7 @@ extern const vf_info_t ve_info_x264;
  * libraries and encoders requiring binary support. */
 
 static const vf_info_t * const encoder_list[] = {
-#ifdef CONFIG_LIBAVCODEC
+#ifdef CONFIG_FFMPEG
     &ve_info_lavc,
 #endif
 #ifdef CONFIG_WIN32DLL

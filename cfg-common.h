@@ -524,10 +524,8 @@ const m_option_t common_opts[] = {
     {"vc", &video_codec_list, CONF_TYPE_STRING_LIST, 0, 0, 0, NULL},
 
     // postprocessing:
-#ifdef CONFIG_LIBAVCODEC
+#ifdef CONFIG_FFMPEG
     {"pp", &divx_quality, CONF_TYPE_INT, 0, 0, 0, NULL},
-#endif
-#ifdef CONFIG_LIBPOSTPROC
     {"pphelp", &pp_help, CONF_TYPE_PRINT_INDIRECT, CONF_NOCFG, 0, 0, NULL},
 #endif
 
@@ -554,10 +552,8 @@ const m_option_t common_opts[] = {
     {"noslices", &vd_use_slices, CONF_TYPE_FLAG, 0, 1, 0, NULL},
     {"field-dominance", &field_dominance, CONF_TYPE_INT, CONF_RANGE, -1, 1, NULL},
 
-#ifdef CONFIG_LIBAVCODEC
+#ifdef CONFIG_FFMPEG
     {"lavdopts", lavc_decode_opts_conf, CONF_TYPE_SUBCONFIG, 0, 0, 0, NULL},
-#endif
-#ifdef CONFIG_LIBAVFORMAT
     {"lavfdopts",  lavfdopts_conf, CONF_TYPE_SUBCONFIG, CONF_GLOBAL, 0, 0, NULL},
 #endif
 #ifdef CONFIG_XVID4

@@ -51,7 +51,7 @@ muxer_t *muxer_new_muxer(int type,stream_t *stream){
         if(! muxer_init_muxer_rawaudio(muxer))
 	  goto fail;
         break;
-#ifdef CONFIG_LIBAVFORMAT
+#ifdef CONFIG_FFMPEG
       case MUXER_TYPE_LAVF:
         if(! muxer_init_muxer_lavf(muxer))
 	  goto fail;
