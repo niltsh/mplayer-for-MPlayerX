@@ -3546,13 +3546,8 @@ echores "$hardcoded_tables"
 
 
 echocheck "mman.h"
-cat > $TMPC << EOF
-#include <sys/types.h>
-#include <sys/mman.h>
-int main(void) { (void) mmap(0, 0, 0, 0, 0, 0); return 0; }
-EOF
 _mman=no
-cc_check && _mman=yes
+function_check sys/mman.h "mmap(0, 0, 0, 0, 0, 0)" && _mman=yes
 if test "$_mman" = yes ; then
   def_mman_h='#define HAVE_SYS_MMAN_H 1'
 else
@@ -3562,7 +3557,6 @@ fi
 echores "$_mman"
 
 cat > $TMPC << EOF
-#include <sys/types.h>
 #include <sys/mman.h>
 int main(void) { void *p = MAP_FAILED; return 0; }
 EOF
