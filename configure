@@ -3932,7 +3932,7 @@ echocheck "swab()"
 cat > $TMPC << EOF
 #define _XOPEN_SOURCE 600
 #include <unistd.h>
-int main(void) { swab(0, 0, 0); return 0; }
+int main(void) { swab(NULL, NULL, 0); return 0; }
 EOF
 _swab=no
 cc_check && _swab=yes
