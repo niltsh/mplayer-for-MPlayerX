@@ -6310,8 +6310,7 @@ if test "$_freetype" = auto ; then
 #endif
 int main(void) {
     FT_Library library;
-    FT_Int major=-1,minor=-1,patch=-1;
-    int err=FT_Init_FreeType(&library);
+    FT_Init_FreeType(&library);
     return 0;
 }
 EOF
