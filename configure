@@ -4730,11 +4730,10 @@ echocheck "GGI extension: libggiwmh"
 if test "$_ggiwmh" = auto ; then
   _ggiwmh=no
   cat > $TMPC << EOF
-#include <ggi/ggi.h>
 #include <ggi/wmh.h>
-int main(void) { ggiInit(); ggiWmhInit(); return 0; }
+int main(void) { ggiWmhInit(); return 0; }
 EOF
-  cc_check -lggi -lggiwmh && _ggiwmh=yes
+  function_check ggi/wmh.h 'ggiWmhInit()' -lggi -lggiwmh && _ggiwmh=yes
 fi
 # needed to get right output on obscure combination
 # like --disable-ggi --enable-ggiwmh
