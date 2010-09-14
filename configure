@@ -3036,12 +3036,8 @@ echores "$_builtin_expect"
 
 
 echocheck "kstat"
-cat > $TMPC << EOF
-#include <kstat.h>
-int main(void) { kstat_open(); kstat_close(0); return 0; }
-EOF
 _kstat=no
-cc_check -lkstat && _kstat=yes
+function_check kstat.h 'kstat_open()' -lkstat && _kstat=yes
 if test "$_kstat" = yes ; then
   def_kstat="#define HAVE_LIBKSTAT 1"
   extra_ldflags="$extra_ldflags -lkstat"
