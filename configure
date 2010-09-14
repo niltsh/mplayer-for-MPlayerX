@@ -5208,7 +5208,7 @@ case "$_gif" in yes*)
 #include <stdio.h>
 #include <gif_lib.h>
 int main(void) {
-  GifFileType gif;
+  GifFileType gif = {.UserData = NULL};
   printf("UserData is at address %p\n", gif.UserData);
   return 0;
 }
