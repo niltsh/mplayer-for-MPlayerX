@@ -3579,14 +3579,9 @@ else
 fi
 
 echocheck "dynamic loader"
-cat > $TMPC << EOF
-#include <stddef.h>
-#include <dlfcn.h>
-int main(void) { dlopen("", 0); dlclose(NULL); dlsym(NULL, ""); return 0; }
-EOF
 _dl=no
-for _ld_tmp in "" "-ldl" ; do
-  cc_check $_ld_tmp && _ld_dl="$_ld_tmp" && _dl=yes && break
+for _ld_dl in "" -ldl; do
+  function_check dlfcn.h 'dlopen("", 0)' $_ld_dl && _ld_dl="$_ld_tmp" && _dl=yes && break
 done
 if test "$_dl" = yes ; then
   def_dl='#define HAVE_LIBDL 1'
