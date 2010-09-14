@@ -107,6 +107,14 @@ EOF
   compile_check $TMPC $@
 }
 
+inline_asm_check() {
+  cat > $TMPC << EOF
+int main(void) { __asm__ volatile ($1); return 0; }
+EOF
+  shift
+  compile_check $TMPC $@
+}
+
 # this is a special check only to be
 # used for broken headers that do not
 # include all dependencies
