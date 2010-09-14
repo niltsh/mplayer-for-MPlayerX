@@ -7353,11 +7353,7 @@ echores "$_libopencore_amrwb"
 echocheck "libdv-0.9.5+"
 if test "$_libdv" = auto ; then
   _libdv=no
-  cat > $TMPC <<EOF
-#include <libdv/dv.h>
-int main(void) { dv_encoder_t* enc=dv_encoder_new(1,1,1); return 0; }
-EOF
-  cc_check -ldv $_ld_pthread $_ld_lm && _libdv=yes
+  function_check libdv/dv.h "dv_encoder_new(1, 1, 1)" -ldv $_ld_pthread $_ld_lm && _libdv=yes
 fi
 if test "$_libdv" = yes ; then
   def_libdv='#define CONFIG_LIBDV095 1'
