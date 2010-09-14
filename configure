@@ -3692,7 +3692,7 @@ int main(void) {
       char *optr=outbuffer;
       size_t inleft=numread;
       size_t outleft=OUTBUFSIZE;
-      if (iconv(icdsc, (const char **)&iptr, &inleft, &optr, &outleft)
+      if (iconv(icdsc, &iptr, &inleft, &optr, &outleft)
           != (size_t)(-1)) {
         write(1, outbuffer, OUTBUFSIZE - outleft);
       }
