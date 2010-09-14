@@ -4339,14 +4339,9 @@ echores "$_bl"
 echocheck "DirectFB"
 if test "$_directfb" = auto ; then
   _directfb=no
-  cat > $TMPC <<EOF
-#include <directfb.h>
-int main(void) { DirectFBInit(0, 0); return 0; }
-EOF
-  for _inc_tmp in "" -I/usr/local/include/directfb \
-      -I/usr/include/directfb -I/usr/local/include; do
-    cc_check $_inc_tmp -ldirectfb && _directfb=yes && \
-      extra_cflags="$extra_cflags $_inc_tmp" && break
+  for _inc_tmp in "" -I/usr/local/include/directfb -I/usr/include/directfb -I/usr/local/include; do
+    function_check directfb.h "DirectFBInit(0, 0)" $_inc_tmp -ldirectfb &&
+      _directfb=yes && extra_cflags="$extra_cflags $_inc_tmp" && break
   done
 fi
 
