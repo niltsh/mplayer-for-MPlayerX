@@ -6677,8 +6677,9 @@ echocheck "libspeex (version >= 1.1 required)"
 if test "$_speex" = auto ; then
   _speex=no
   cat > $TMPC << EOF
+#include <stddef.h>
 #include <speex/speex.h>
-int main(void) { SpeexBits bits; void *dec; speex_decode_int(dec, &bits, dec); return 0; }
+int main(void) { SpeexBits bits; void *dec = NULL; speex_decode_int(dec, &bits, dec); return 0; }
 EOF
   cc_check -lspeex $_ld_lm && _speex=yes
 fi
