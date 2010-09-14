@@ -1747,7 +1747,7 @@ if x86 && test "$_runtime_cpudetection" = no ; then
       cat > $TMPC <<EOF
 #include <stdlib.h>
 #include <signal.h>
-void catch(int sig) { exit(1); }
+static void catch(int sig) { exit(1); }
 int main(void) {
   signal(SIGILL, catch);
   __asm__ volatile ("$3":::"memory"); return 0;
@@ -3045,7 +3045,7 @@ fi
 echocheck "__builtin_expect"
 # GCC branch prediction hint
 cat > $TMPC << EOF
-int foo(int a) {
+static int foo(int a) {
     a = __builtin_expect(a, 10);
     return a == 10 ? 0 : 1;
 }
@@ -3619,7 +3619,7 @@ fi
 if test "$_pthreads" = auto ; then
 cat > $TMPC << EOF
 #include <pthread.h>
-void* func(void *arg) { return arg; }
+static void *func(void *arg) { return arg; }
 int main(void) { pthread_t tid; return pthread_create(&tid, 0, func, 0) == 0 ? 0 : 1; }
 EOF
 _pthreads=no
@@ -5199,7 +5199,7 @@ if test "$_gif" = yes ; then
   cat > $TMPC << EOF
 #include <signal.h>
 #include <gif_lib.h>
-void catch(int sig) { exit(1); }
+static void catch(int sig) { exit(1); }
 int main(void) {
   signal(SIGSEGV, catch);  // catch segfault
   printf("EGifPutExtensionFirst is at address %p\n", EGifPutExtensionFirst);
