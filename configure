@@ -3092,12 +3092,8 @@ echores "$_posix4"
 
 for func in exp2 exp2f llrint llrintf log2 log2f lrint lrintf round roundf truncf; do
 echocheck $func
-cat > $TMPC << EOF
-#include <math.h>
-int main(void) { long (*foo)(float); foo = $func; (void)(*foo)(0.0); return 0; }
-EOF
 eval _$func=no
-cc_check -D_ISOC99_SOURCE $_ld_lm && eval _$func=yes
+function_check math.h "${func}(2.0)" -D_ISOC99_SOURCE $_ld_lm && eval _$func=yes
 if eval test "x\$_$func" = "xyes"; then
   eval def_$func="\"#define HAVE_$(echo $func | tr '[a-z]' '[A-Z]') 1\""
   echores yes
