@@ -4847,8 +4847,6 @@ echocheck "AA"
 if test "$_aa" = auto ; then
   cat > $TMPC << EOF
 #include <aalib.h>
-extern struct aa_hardware_params aa_defparams;
-extern struct aa_renderparams aa_defrenderparams;
 int main(void) {
 aa_context *c;
 aa_renderparams *p;
