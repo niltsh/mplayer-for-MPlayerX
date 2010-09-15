@@ -4261,7 +4261,7 @@ if test "$_directfb" = auto ; then
   cat > $TMPC << EOF
 #include <directfb.h>
 #include <directfb_version.h>
-#if (DIRECTFB_MAJOR_VERSION << 16 | DIRECTFB_MINOR_VERSION << 8 | DIRECTFB_MICRO_VERSION) < (0 << 16 | 9 << 8 | 15)
+#if (DIRECTFB_MAJOR_VERSION << 16 | DIRECTFB_MINOR_VERSION << 8 | DIRECTFB_MICRO_VERSION) < (0 << 16 | 9 << 8 | 22)
 #error "DirectFB version too old."
 #endif
 int main(void) { DirectFBInit(0, 0); return 0; }

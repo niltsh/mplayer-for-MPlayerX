@@ -66,7 +66,7 @@ answers.
   required for the optional PNG video output driver
 </para></listitem>
 <listitem><para>
-  <emphasis role="bold">directfb</emphasis> - optional, 0.9.15 or later
+  <emphasis role="bold">directfb</emphasis> - optional, 0.9.22 or later
   required for the directfb/dfbmga video output drivers
 </para></listitem>
 <listitem><para>

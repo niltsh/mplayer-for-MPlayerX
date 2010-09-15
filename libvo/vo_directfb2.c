@@ -22,16 +22,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-// directfb includes
-
 #include <directfb.h>
 #include <directfb_version.h>
-
-#define DFB_VERSION(a,b,c) (((a)<<16)|((b)<<8)|(c))
-#define DIRECTFBVERSION DFB_VERSION(DIRECTFB_MAJOR_VERSION, DIRECTFB_MINOR_VERSION, DIRECTFB_MICRO_VERSION)
-
-// other things
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -50,16 +42,14 @@
 #define min(x,y) (((x)<(y))?(x):(y))
 #endif
 
-#if DIRECTFBVERSION > DFB_VERSION(0,9,17)
 // triple buffering
 #define TRIPLE 1
-#endif
 
 static const vo_info_t info = {
 	"Direct Framebuffer Device",
 	"directfb",
 	"Jiri Svoboda Jiri.Svoboda@seznam.cz",
-	"v 2.0 (for DirectFB version >=0.9.15)"
+	"v 2.0 (for DirectFB version >=0.9.22)"
 };
 
 const LIBVO_EXTERN(directfb)
@@ -272,12 +262,6 @@ static int preinit(const char *arg)
 
         DFBCHECK (DirectFBCreate (&dfb));
 
-#if DIRECTFBVERSION < DFB_VERSION(0,9,17)
-        if (DFB_OK != dfb->SetCooperativeLevel (dfb, DFSCL_FULLSCREEN)) {
-            mp_msg(MSGT_VO, MSGL_WARN,"DirectFB: Warning - cannot switch to fullscreen mode");
-        };
-#endif
-
   /*
    * (Get keyboard)
    */
@@ -317,17 +301,10 @@ static DFBSurfacePixelFormat convformat(uint32_t format)
 	    case IMGFMT_BGR24: return  DSPF_RGB24; break;
             case IMGFMT_RGB16: return  DSPF_RGB16; break;
             case IMGFMT_BGR16: return  DSPF_RGB16; break;
-#if DIRECTFBVERSION > DFB_VERSION(0,9,15)
             case IMGFMT_RGB15: return  DSPF_ARGB1555; break;
             case IMGFMT_BGR15: return  DSPF_ARGB1555; break;
             case IMGFMT_RGB12: return  DSPF_ARGB4444; break;
             case IMGFMT_BGR12: return  DSPF_ARGB4444; break;
-#else
-            case IMGFMT_RGB15: return  DSPF_RGB15; break;
-            case IMGFMT_BGR15: return  DSPF_RGB15; break;
-            case IMGFMT_RGB12: return  DSPF_RGB12; break;
-            case IMGFMT_BGR12: return  DSPF_RGB12; break;
-#endif
             case IMGFMT_YUY2:  return  DSPF_YUY2; break;
             case IMGFMT_UYVY:  return  DSPF_UYVY; break;
     	    case IMGFMT_YV12:  return  DSPF_YV12; break;
@@ -611,7 +588,6 @@ static int config(uint32_t s_width, uint32_t s_height, uint32_t d_width,
 
         DFBCHECK (dfb->GetDisplayLayer( dfb, params.id, &layer));
 
-#if DIRECTFBVERSION > DFB_VERSION(0,9,16)
         mp_msg(MSGT_VO, MSGL_DBG2,"DirectFB: Config - switching layer to exclusive mode\n");
 	ret = layer->SetCooperativeLevel (layer, DLSCL_EXCLUSIVE);
 
@@ -619,7 +595,6 @@ static int config(uint32_t s_width, uint32_t s_height, uint32_t d_width,
 	    mp_msg(MSGT_VO, MSGL_WARN,"DirectFB: Warning - cannot switch layer to exclusive mode. This could cause\nproblems. You may need to select correct pixel format manually!\n");
 	    DirectFBError("MPlayer - Switch layer to exlusive mode.",ret);
 	};
-#endif
 	if (params.scale) {
             mp_msg(MSGT_VO, MSGL_DBG2,"DirectFB: Config - changing layer configuration (size)\n");
             dlc.flags       = DLCONF_WIDTH | DLCONF_HEIGHT;
@@ -669,13 +644,8 @@ static int config(uint32_t s_width, uint32_t s_height, uint32_t d_width,
 		    case DSPF_RGB32: bpp=32;break;
     		    case DSPF_RGB24: bpp=24;break;
 	            case DSPF_RGB16: bpp=16;break;
-#if DIRECTFBVERSION > DFB_VERSION(0,9,15)
     		    case DSPF_ARGB1555: bpp=15;break;
                     case DSPF_ARGB4444: bpp=12; break;
-#else
-        	    case DSPF_RGB15: bpp=15;break;
-                    case DSPF_RGB12: bpp=12; break;
-#endif
 		    case DSPF_RGB332 : bpp=8;break;
 		}
 
@@ -684,13 +654,8 @@ static int config(uint32_t s_width, uint32_t s_height, uint32_t d_width,
 		    case DSPF_RGB32:
     		    case DSPF_RGB24:
 	            case DSPF_RGB16:
-#if DIRECTFBVERSION > DFB_VERSION(0,9,15)
     		    case DSPF_ARGB1555:
                     case DSPF_ARGB4444:
-#else
-        	    case DSPF_RGB15:
-                    case DSPF_RGB12:
-#endif
 		    case DSPF_RGB332:
 				    mp_msg(MSGT_VO, MSGL_V,"DirectFB: Trying to recover via videomode change (VM).\n");
 				    // get size
@@ -757,7 +722,6 @@ static int config(uint32_t s_width, uint32_t s_height, uint32_t d_width,
 	}
 #endif
 
-#if DIRECTFBVERSION > DFB_VERSION(0,9,16)
         if (field_parity != -1) {
 	    dlc.flags = DLCONF_OPTIONS;
 	    ret = layer->GetConfiguration( layer, &dlc );
@@ -781,9 +745,6 @@ static int config(uint32_t s_width, uint32_t s_height, uint32_t d_width,
                 mp_msg( MSGT_VO, MSGL_DBG2, "Bottom field first\n");
                 break;
           }
-
-#endif
-
 
 // get layer surface
 
@@ -1486,18 +1447,10 @@ static void draw_alpha(int x0, int y0, int w, int h, unsigned char *src,
                 case DSPF_RGB16:
                         vo_draw_alpha_rgb16(w,h,src,srca,stride,((uint8_t *) dst)+pitch*y0 + 2*x0,pitch);
                         break;
-#if DIRECTFBVERSION > DFB_VERSION(0,9,15)
                 case DSPF_ARGB1555:
-#else
-                case DSPF_RGB15:
-#endif
                         vo_draw_alpha_rgb15(w,h,src,srca,stride,((uint8_t *) dst)+pitch*y0 + 2*x0,pitch);
                         break;
-#if DIRECTFBVERSION > DFB_VERSION(0,9,15)
                 case DSPF_ARGB4444:
-#else
-                case DSPF_RGB12:
-#endif
                     vo_draw_alpha_rgb12(w, h, src, srca, stride,
                                         ((uint8_t *) dst) + pitch * y0 + 2 * x0,
                                         pitch);
