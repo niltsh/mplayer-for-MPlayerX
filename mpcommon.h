@@ -23,8 +23,9 @@
 #include "m_option.h"
 #include "subreader.h"
 #include "libmpdemux/demuxer.h"
-#include "libmpdemux/stheader.h"
 #include "libass/ass_mp.h"
+
+struct sh_video;
 
 extern double sub_last_pts;
 extern ASS_Track *ass_track;
