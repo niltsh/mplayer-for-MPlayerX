@@ -57,7 +57,7 @@ static const vo_info_t info = {
 	"Direct Framebuffer Device",
 	"directfb",
 	"Jiri Svoboda Jiri.Svoboda@seznam.cz",
-	"v 2.0 (for DirectFB version >=0.9.13)"
+	"v 2.0 (for DirectFB version >=0.9.15)"
 };
 
 const LIBVO_EXTERN(directfb)
@@ -242,7 +242,7 @@ static int preinit(const char *arg)
 
 	if (((directfb_major_version <= 0) &&
 	    (directfb_minor_version <= 9) &&
-	    (directfb_micro_version < 13)))
+	    (directfb_micro_version < 15)))
 	{
 	    mp_msg(MSGT_VO, MSGL_ERR,"DirectFB: Unsupported DirectFB version\n");
 	    return 1;
@@ -570,7 +570,6 @@ static int config(uint32_t s_width, uint32_t s_height, uint32_t d_width,
 	} // vm end
 
 // just to be sure clear primary layer
-#if DIRECTFBVERSION > DFB_VERSION(0,9,13)
         ret = dfb->GetDisplayLayer( dfb, DLID_PRIMARY, &layer);
 	if (ret==DFB_OK) {
 	    ret = layer->GetSurface(layer,&primary);
@@ -586,7 +585,6 @@ static int config(uint32_t s_width, uint32_t s_height, uint32_t d_width,
         layer->Release(layer);
 	}
 	layer=NULL;
-#endif
 
 // find best layer
 
@@ -796,9 +794,7 @@ static int config(uint32_t s_width, uint32_t s_height, uint32_t d_width,
 
 // test surface for flipping
 	DFBCHECK(primary->GetCapabilities(primary,&caps));
-#if DIRECTFBVERSION > DFB_VERSION(0,9,13)
 	primary->Clear(primary,0,0,0,0xff);
-#endif
         flipping = 0;
 	if (caps & (DSCAPS_FLIPPING
 #ifdef TRIPLE
@@ -808,7 +804,6 @@ static int config(uint32_t s_width, uint32_t s_height, uint32_t d_width,
 	    ret = primary->Flip(primary,NULL,0);
 	    if (ret==DFB_OK) {
 		flipping = 1;
-#if DIRECTFBVERSION > DFB_VERSION(0,9,13)
 		primary->Clear(primary,0,0,0,0xff);
 #ifdef TRIPLE
 // if we have 3 buffers clean once more
@@ -817,7 +812,6 @@ static int config(uint32_t s_width, uint32_t s_height, uint32_t d_width,
 		primary->Clear(primary,0,0,0,0xff);
 		flipping = 2;
 	}
-#endif
 #endif
 	    }
 	};

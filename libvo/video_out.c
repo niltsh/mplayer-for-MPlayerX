@@ -250,8 +250,6 @@ const vo_functions_t* const video_out_drivers[] =
 #endif
 #ifdef CONFIG_DIRECTFB
         &video_out_directfb,
-#endif
-#ifdef CONFIG_DFBMGA
         &video_out_dfbmga,
 #endif
 #ifdef CONFIG_VIDIX

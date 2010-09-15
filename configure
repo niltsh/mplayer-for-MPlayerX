@@ -4281,14 +4281,13 @@ EOF
     _dfb_minor=$(echo $_directfb_version | cut -d . -f 2)
     _dfb_micro=$(echo $_directfb_version | cut -d . -f 3)
     _dfb_version=$(dfb_version $_dfb_major $_dfb_minor $_dfb_micro)
-    if test "$_dfb_version" -ge $(dfb_version 0 9 13); then
+    if test "$_dfb_version" -ge $(dfb_version 0 9 15); then
       def_directfb_version="#define DIRECTFBVERSION $_dfb_version"
       res_comment="$_directfb_version"
-      test "$_dfb_version" -ge $(dfb_version 0 9 15) && _dfbmga=yes
     else
       def_directfb_version='#undef DIRECTFBVERSION'
       _directfb=no
-      res_comment="version >=0.9.13 required"
+      res_comment="version >=0.9.15 required"
     fi
   else
     _directfb=no
@@ -4299,18 +4298,11 @@ echores "$_directfb"
 
 if test "$_directfb" = yes ; then
   def_directfb='#define CONFIG_DIRECTFB 1'
-  vomodules="directfb $vomodules"
+  vomodules="directfb dfbmga $vomodules"
   libs_mplayer="$libs_mplayer -ldirectfb"
 else
   def_directfb='#undef CONFIG_DIRECTFB'
-  novomodules="directfb $novomodules"
-fi
-if test "$_dfbmga" = yes; then
-  vomodules="dfbmga $vomodules"
-  def_dfbmga='#define CONFIG_DFBMGA 1'
-else
-  novomodules="dfbmga $novomodules"
-  def_dfbmga='#undef CONFIG_DFBMGA'
+  novomodules="directfb dfbmga $novomodules"
 fi
 
 
@@ -8280,7 +8272,6 @@ CDDB = $_cddb
 COREAUDIO = $_coreaudio
 COREVIDEO = $_corevideo
 DART = $_dart
-DFBMGA = $_dfbmga
 DGA = $_dga
 DIRECT3D = $_direct3d
 DIRECTFB = $_directfb
@@ -8814,7 +8805,6 @@ $def_aa
 $def_bl
 $def_caca
 $def_corevideo
-$def_dfbmga
 $def_dga
 $def_dga1
 $def_dga2
