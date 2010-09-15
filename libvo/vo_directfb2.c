@@ -25,8 +25,10 @@
 // directfb includes
 
 #include <directfb.h>
+#include <directfb_version.h>
 
 #define DFB_VERSION(a,b,c) (((a)<<16)|((b)<<8)|(c))
+#define DIRECTFBVERSION DFB_VERSION(DIRECTFB_MAJOR_VERSION, DIRECTFB_MINOR_VERSION, DIRECTFB_MICRO_VERSION)
 
 // other things
 
