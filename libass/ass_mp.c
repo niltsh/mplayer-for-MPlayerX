@@ -25,6 +25,7 @@
 #include "mp_msg.h"
 #include "mpcommon.h"
 #include "path.h"
+#include "subreader.h"
 
 #include "ass_mp.h"
 #include "help_mp.h"
@@ -49,12 +50,6 @@ char* ass_color = NULL;
 char* ass_border_color = NULL;
 char* ass_styles_file = NULL;
 int ass_hinting = ASS_HINTING_NATIVE + 4; // native hinting for unscaled osd
-
-#ifdef CONFIG_ICONV
-#include "subreader.h"
-#else
-static char* sub_cp = 0;
-#endif
 
 ASS_Track* ass_default_track(ASS_Library* library) {
 	ASS_Track* track = ass_new_track(library);
