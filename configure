@@ -3916,13 +3916,8 @@ echores "$_gettimeofday"
 
 
 echocheck "glob()"
-cat > $TMPC << EOF
-#include <stdio.h>
-#include <glob.h>
-int main(void) { glob_t gg; glob("filename",0,NULL,&gg); return 0; }
-EOF
 _glob=no
-cc_check && _glob=yes
+function_check glob.h 'glob("filename", 0, 0, 0)' && _glob=yes
 if test "$_glob" = yes ; then
   def_glob='#define HAVE_GLOB 1'
   _need_glob=no
