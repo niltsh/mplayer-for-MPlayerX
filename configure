@@ -3762,15 +3762,10 @@ fi #if sunos
 
 echocheck "termcap"
 if test "$_termcap" = auto ; then
-  cat > $TMPC <<EOF
-#include <stddef.h>
-#include <term.h>
-int main(void) { tgetent(NULL, NULL); return 0; }
-EOF
   _termcap=no
   for _ld_tmp in "-lncurses" "-ltinfo" "-ltermcap"; do
-    cc_check $_ld_tmp && extra_ldflags="$extra_ldflags $_ld_tmp" \
-      && _termcap=yes && break
+    function_check term.h 'tgetent(0, 0)' $_ld_tmp &&
+      extra_ldflags="$extra_ldflags $_ld_tmp" && _termcap=yes && break
   done
 fi
 if test "$_termcap" = yes ; then
