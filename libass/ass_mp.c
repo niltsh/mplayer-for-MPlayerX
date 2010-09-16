@@ -42,11 +42,7 @@ float ass_font_scale = 1.;
 float ass_line_spacing = 0.;
 int ass_top_margin = 0;
 int ass_bottom_margin = 0;
-#if defined(FC_VERSION) && (FC_VERSION >= 20402)
 int extract_embedded_fonts = 1;
-#else
-int extract_embedded_fonts = 0;
-#endif
 char **ass_force_style_list = NULL;
 int ass_use_margins = 0;
 char* ass_color = NULL;
