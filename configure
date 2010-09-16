@@ -3072,7 +3072,7 @@ done
 
 echocheck "mkstemp"
 cat > $TMPC << EOF
-#define _XOPEN_SOURCE >= 500
+#define _XOPEN_SOURCE 500
 #include <stdlib.h>
 int main(void) { mkstemp(""); return 0; }
 EOF
