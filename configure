@@ -3074,7 +3074,7 @@ echocheck "mkstemp"
 cat > $TMPC << EOF
 #define _XOPEN_SOURCE >= 500
 #include <stdlib.h>
-int main(void) { char a;  mkstemp(&a); return 0; }
+int main(void) { mkstemp(""); return 0; }
 EOF
 _mkstemp=no
 cc_check && _mkstemp=yes
