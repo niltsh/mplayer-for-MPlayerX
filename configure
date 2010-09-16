@@ -6664,12 +6664,8 @@ if test "$_libmpeg2_internal" = auto ; then
 fi
 if test "$_libmpeg2" = auto ; then
   _libmpeg2=no
-  cat > $TMPC << EOF
-#include <stdint.h>
-#include <mpeg2dec/mpeg2.h>
-int main(void) { return 0; }
-EOF
-  cc_check -lmpeg2 && _libmpeg2=yes && extra_ldflags="$extra_ldflags -lmpeg2"
+  header_check_broken stdint.h mpeg2dec/mpeg2.h -lmpeg2 &&
+    _libmpeg2=yes && extra_ldflags="$extra_ldflags -lmpeg2"
 fi
 
 def_libmpeg2='#undef CONFIG_LIBMPEG2'
