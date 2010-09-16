@@ -5484,7 +5484,7 @@ echocheck "OSS Audio"
 if test "$_ossaudio" = auto ; then
   cat > $TMPC << EOF
 #include <$_soundcard_header>
-int main(void) { int arg = SNDCTL_DSP_SETFRAGMENT; return 0; }
+int main(void) { return SNDCTL_DSP_SETFRAGMENT; }
 EOF
   _ossaudio=no
   cc_check && _ossaudio=yes
