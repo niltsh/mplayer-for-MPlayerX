@@ -5307,13 +5307,8 @@ echores "$matrixview"
 if os2 ; then
 echocheck "KVA (SNAP/WarpOverlay!/DIVE)"
 if test "$_kva" = auto; then
-  cat > $TMPC << EOF
-#include <os2.h>
-#include <kva.h>
-int main(void) { return 0; }
-EOF
   _kva=no;
-  cc_check -lkva && _kva=yes
+  header_check_broken os2.h kva.h -lkva && _kva=yes
 fi
 if test "$_kva" = yes ; then
   def_kva='#define CONFIG_KVA 1'
@@ -5852,13 +5847,8 @@ fi #if irix
 if os2 ; then
 echocheck "KAI (UNIAUD/DART)"
 if test "$_kai" = auto; then
-  cat > $TMPC << EOF
-#include <os2.h>
-#include <kai.h>
-int main(void) { return 0; }
-EOF
   _kai=no;
-  cc_check -lkai && _kai=yes
+  header_check_broken os2.h kai.h -lkai && _kai=yes
 fi
 if test "$_kai" = yes ; then
   def_kai='#define CONFIG_KAI 1'
@@ -5872,13 +5862,8 @@ echores "$_kai"
 
 echocheck "DART"
 if test "$_dart" = auto; then
-  cat > $TMPC << EOF
-#include <os2.h>
-#include <dart.h>
-int main(void) { return 0; }
-EOF
   _dart=no;
-  cc_check -ldart && _dart=yes
+  header_check_broken os2.h dart.h -ldart && _dart=yes
 fi
 if test "$_dart" = yes ; then
   def_dart='#define CONFIG_DART 1'
