@@ -5954,18 +5954,9 @@ if test "$_dvdread_internal" = auto ; then
 elif test "$_dvdread" = auto ; then
   _dvdread=no
   if test "$_dl" = yes; then
-    cat > $TMPC << EOF
-#include <inttypes.h>
-#include <dvdread/dvd_reader.h>
-#include <dvdread/ifo_types.h>
-#include <dvdread/ifo_read.h>
-#include <dvdread/nav_read.h>
-int main(void) { return 0; }
-EOF
     _dvdreadcflags=$($_dvdreadconfig --cflags)
     _dvdreadlibs=$($_dvdreadconfig --libs)
-    if cc_check -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE \
-      $_dvdreadcflags $_dvdreadlibs $_ld_dl ; then
+    if header_check dvdread/dvd_reader.h $_dvdreadcflags $_dvdreadlibs $_ld_dl ; then
       _dvdread=yes
       extra_cflags="$extra_cflags $_dvdreadcflags"
       extra_ldflags="$extra_ldflags $_dvdreadlibs"
