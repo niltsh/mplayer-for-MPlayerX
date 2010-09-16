@@ -5483,7 +5483,6 @@ echores "$_v4l2"
 echocheck "OSS Audio"
 if test "$_ossaudio" = auto ; then
   cat > $TMPC << EOF
-#include <sys/ioctl.h>
 #include <$_soundcard_header>
 int main(void) { int arg = SNDCTL_DSP_SETFRAGMENT; return 0; }
 EOF
@@ -5494,7 +5493,6 @@ if test "$_ossaudio" = yes ; then
   def_ossaudio='#define CONFIG_OSS_AUDIO 1'
   aomodules="oss $aomodules"
   cat > $TMPC << EOF
-#include <sys/ioctl.h>
 #include <$_soundcard_header>
 #ifdef OPEN_SOUND_SYSTEM
 int main(void) { return 0; }
