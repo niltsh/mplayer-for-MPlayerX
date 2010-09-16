@@ -28,6 +28,7 @@
 
 #include "ass_mp.h"
 #include "help_mp.h"
+#include "libvo/font_load.h"
 #include "stream/stream.h"
 
 #ifdef CONFIG_FONTCONFIG
