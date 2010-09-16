@@ -5563,13 +5563,7 @@ echocheck "EsounD"
 if test "$_esd" = auto ; then
   _esd=no
   if ( esd-config --version ) >> "$TMPLOG" 2>&1 ; then
-
-cat > $TMPC << EOF
-#include <esd.h>
-int main(void) { int fd = esd_open_sound("test"); return fd; }
-EOF
-cc_check $(esd-config --libs) $(esd-config --cflags) && _esd=yes
-
+    function_check esd.h 'esd_open_sound("test")' $(esd-config --libs) $(esd-config --cflags) && _esd=yes
   fi
 fi
 echores "$_esd"
@@ -5581,11 +5575,8 @@ if test "$_esd" = yes ; then
   extra_cflags="$extra_cflags $(esd-config --cflags)"
 
   echocheck "esd_get_latency()"
-  cat > $TMPC << EOF
-#include <esd.h>
-int main(void) { return esd_get_latency(0); }
-EOF
-  cc_check $(esd-config --libs) $(esd-config --cflags) && _esd_latency=yes && def_esd_latency='#define CONFIG_ESD_LATENCY 1'
+  function_check esd.h 'esd_get_latency(0)' $(esd-config --libs) $(esd-config --cflags) &&
+    _esd_latency=yes && def_esd_latency='#define CONFIG_ESD_LATENCY 1'
   echores "$_esd_latency"
 else
   def_esd='#undef CONFIG_ESD'
