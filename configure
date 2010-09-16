@@ -4903,8 +4903,9 @@ if test "$_png" = auto ; then
     res_comment="disabled on irix (not GNU libpng)"
   else
 cat > $TMPC << EOF
-#include <png.h>
+#include <stdio.h>
 #include <string.h>
+#include <png.h>
 int main(void) {
   printf("png.h : %s\n", PNG_LIBPNG_VER_STRING);
   printf("libpng: %s\n", png_libpng_ver);
