@@ -50,12 +50,6 @@ char* ass_border_color = NULL;
 char* ass_styles_file = NULL;
 int ass_hinting = ASS_HINTING_NATIVE + 4; // native hinting for unscaled osd
 
-#ifdef CONFIG_FONTCONFIG
-#include "libvo/font_load.h"
-#else
-static int font_fontconfig = -1;
-#endif
-
 #ifdef CONFIG_ICONV
 #include "subreader.h"
 #else
