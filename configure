@@ -4697,10 +4697,6 @@ echores "$_ggi"
 echocheck "GGI extension: libggiwmh"
 if test "$_ggiwmh" = auto ; then
   _ggiwmh=no
-  cat > $TMPC << EOF
-#include <ggi/wmh.h>
-int main(void) { ggiWmhInit(); return 0; }
-EOF
   function_check ggi/wmh.h 'ggiWmhInit()' -lggi -lggiwmh && _ggiwmh=yes
 fi
 # needed to get right output on obscure combination
