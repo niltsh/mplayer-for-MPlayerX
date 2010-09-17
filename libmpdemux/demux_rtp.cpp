@@ -119,7 +119,7 @@ int rtsp_transport_tcp = 0;
 int rtsp_transport_http = 0;
 #endif
 
-#ifdef CONFIG_LIBAVCODEC
+#ifdef CONFIG_FFMPEG
 extern AVCodecContext *avcctx;
 #endif
 
@@ -397,7 +397,7 @@ extern "C" void demux_close_rtp(demuxer_t* demuxer) {
   delete rtpState->videoBufferQueue;
   delete[] rtpState->sdpDescription;
   delete rtpState;
-#ifdef CONFIG_LIBAVCODEC
+#ifdef CONFIG_FFMPEG
   av_freep(&avcctx);
 #endif
 
@@ -535,7 +535,7 @@ static demux_packet_t* getBuffer(demuxer_t* demuxer, demux_stream_t* ds,
   if (dp == NULL) return NULL;
     }
 
-#ifdef CONFIG_LIBAVCODEC
+#ifdef CONFIG_FFMPEG
   extern AVCodecParserContext * h264parserctx;
   int consumed, poutbuf_size = 1;
   const uint8_t *poutbuf = NULL;
@@ -566,7 +566,7 @@ static demux_packet_t* getBuffer(demuxer_t* demuxer, demux_stream_t* ds,
   if (headersize == 1) // amr
     dp->buffer[0] =
         ((AMRAudioSource*)bufferQueue->readSource())->lastFrameHeader();
-#ifdef CONFIG_LIBAVCODEC
+#ifdef CONFIG_FFMPEG
     } else {
       bufferQueue->dp = dp = bufferQueue->nextpacket;
       bufferQueue->nextpacket = NULL;
