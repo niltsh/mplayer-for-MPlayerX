@@ -60,7 +60,7 @@ uint32_t vlvo_control(uint32_t request, void *data, ...);
 #define SCREEN_LINE_SIZE(pixel_size) (video_mode_info.XResolution*(pixel_size) )
 #define IMAGE_LINE_SIZE(pixel_size) (image_width*(pixel_size))
 
-extern const vo_functions_t video_out_vesa;
+extern vo_functions_t video_out_vesa;
 
 int vlvo_preinit(const char *drvname)
 {

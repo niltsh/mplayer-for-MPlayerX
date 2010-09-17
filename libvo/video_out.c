@@ -129,7 +129,7 @@ extern const vo_functions_t video_out_ivtv;
 extern const vo_functions_t video_out_v4l2;
 extern const vo_functions_t video_out_jpeg;
 extern const vo_functions_t video_out_gif89a;
-extern const vo_functions_t video_out_vesa;
+extern vo_functions_t video_out_vesa;
 extern const vo_functions_t video_out_directfb;
 extern const vo_functions_t video_out_dfbmga;
 extern const vo_functions_t video_out_xvidix;
