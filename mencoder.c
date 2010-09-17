@@ -58,7 +58,6 @@
 #include "input/input.h"
 #include "libaf/af_format.h"
 #include "libao2/audio_out.h"
-#include "libass/ass_mp.h"
 #include "libavcodec/avcodec.h"
 #include "libmpcodecs/ae.h"
 #include "libmpcodecs/dec_audio.h"
@@ -84,6 +83,7 @@
 #include "stream/stream_dvd.h"
 #endif
 #include "stream/stream_dvdnav.h"
+#include "ass_mp.h"
 #include "codec-cfg.h"
 #include "edl.h"
 #include "help_mp.h"

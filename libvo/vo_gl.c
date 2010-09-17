@@ -27,6 +27,7 @@
 #include <math.h>
 
 #include "config.h"
+#include "ass_mp.h"
 #include "mp_msg.h"
 #include "subopt-helper.h"
 #include "video_out.h"
@@ -37,7 +38,6 @@
 #include "gl_common.h"
 #include "aspect.h"
 #include "fastmemcpy.h"
-#include "libass/ass_mp.h"
 
 #ifdef CONFIG_GL_SDL
 #ifdef CONFIG_SDL_SDL_H

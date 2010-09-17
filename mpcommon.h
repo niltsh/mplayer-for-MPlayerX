@@ -23,7 +23,7 @@
 #include "m_option.h"
 #include "subreader.h"
 #include "libmpdemux/demuxer.h"
-#include "libass/ass_mp.h"
+#include "ass_mp.h"
 
 struct sh_video;
 

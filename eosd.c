@@ -23,7 +23,7 @@
 #include "libmpcodecs/vf.h"
 #include "libvo/video_out.h"
 #include "libvo/sub.h"
-#include "libass/ass_mp.h"
+#include "ass_mp.h"
 #include "eosd.h"
 
 #ifdef CONFIG_ASS

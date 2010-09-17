@@ -58,7 +58,7 @@
 #include "stream/stream_dvd.h"
 #endif
 #include "stream/stream_dvdnav.h"
-#include "libass/ass_mp.h"
+#include "ass_mp.h"
 #include "m_struct.h"
 #include "libmenu/menu.h"
 #include "gui/interface.h"

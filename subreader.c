@@ -29,6 +29,7 @@
 #include <sys/types.h>
 #include <dirent.h>
 
+#include "ass_mp.h"
 #include "config.h"
 #include "mp_msg.h"
 #include "mpcommon.h"
@@ -38,7 +39,6 @@
 #include "stream/stream.h"
 #include "libavutil/common.h"
 #include "libavutil/avstring.h"
-#include "libass/ass_mp.h"
 
 #ifdef CONFIG_ENCA
 #include <enca.h>

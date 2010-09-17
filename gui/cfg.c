@@ -21,6 +21,7 @@
 #include <string.h>
 
 #include "config.h"
+#include "ass_mp.h"
 #include "mp_msg.h"
 #include "help_mp.h"
 #include "mixer.h"
@@ -36,7 +37,6 @@
 #include "libvo/x11_common.h"
 #include "stream/stream.h"
 #include "libmpdemux/demuxer.h"
-#include "libass/ass_mp.h"
 
 #include "cfg.h"
 #include "app.h"

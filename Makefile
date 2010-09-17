@@ -128,7 +128,7 @@ SRCS_COMMON-$(JPEG)                  += libmpcodecs/vd_ijpg.c
 SRCS_COMMON-$(LADSPA)                += libaf/af_ladspa.c
 SRCS_COMMON-$(LIBA52)                += libmpcodecs/ad_liba52.c
 SRCS_COMMON-$(LIBASS)                += libmpcodecs/vf_ass.c \
-                                        libass/ass_mp.c \
+                                        ass_mp.c \
                                         subassconvert.c \
 
 SRCS_COMMON-$(LIBASS_INTERNAL)       += libass/ass.c \

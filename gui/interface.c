@@ -33,6 +33,7 @@
 #include "mplayer/play.h"
 
 #include "access_mpcontext.h"
+#include "ass_mp.h"
 #include "app.h"
 #include "cfg.h"
 #include "help_mp.h"
@@ -51,7 +52,6 @@
 #include "mixer.h"
 #include "libaf/af.h"
 #include "libaf/equalizer.h"
-#include "libass/ass_mp.h"
 
 #ifdef CONFIG_ICONV
 #include <iconv.h>

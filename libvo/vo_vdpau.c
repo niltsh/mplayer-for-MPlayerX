@@ -35,6 +35,7 @@
 #include <stdio.h>
 
 #include "config.h"
+#include "ass_mp.h"
 #include "mp_msg.h"
 #include "video_out.h"
 #include "video_out_internal.h"
@@ -49,7 +50,6 @@
 #include "libavutil/common.h"
 #include "libavutil/mathematics.h"
 
-#include "libass/ass_mp.h"
 
 static vo_info_t info = {
     "VDPAU with X11",

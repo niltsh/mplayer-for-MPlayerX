@@ -26,7 +26,7 @@
 
 #include "stream/stream.h"
 #ifdef CONFIG_ASS
-#include "libass/ass_mp.h"
+#include "ass_mp.h"
 #endif
 #include "m_option.h"
 

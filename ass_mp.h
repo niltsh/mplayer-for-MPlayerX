@@ -1,32 +1,32 @@
 /*
  * Copyright (C) 2006 Evgeniy Stepanov <eugeni.stepanov@gmail.com>
  *
- * This file is part of libass.
+ * This file is part of MPlayer.
  *
- * libass is free software; you can redistribute it and/or modify
+ * MPlayer is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * libass is distributed in the hope that it will be useful,
+ * MPlayer is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License along
- * with libass; if not, write to the Free Software Foundation, Inc.,
+ * with MPlayer; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef LIBASS_MP_H
-#define LIBASS_MP_H
+#ifndef MPLAYER_ASS_MP_H
+#define MPLAYER_ASS_MP_H
 
 #include "config.h"
 #include <stdint.h>
 
 #include "subreader.h"
 #if defined(CONFIG_ASS_INTERNAL) || !defined(CONFIG_ASS)
-#include "ass.h"
+#include "libass/ass.h"
 #else
 #include <ass/ass.h>
 #endif
@@ -62,4 +62,4 @@ typedef struct {
 extern int ass_force_reload;
 ASS_Image* ass_mp_render_frame(ASS_Renderer *priv, ASS_Track* track, long long now, int* detect_change);
 
-#endif /* LIBASS_MP_H */
+#endif /* MPLAYER_ASS_MP_H */

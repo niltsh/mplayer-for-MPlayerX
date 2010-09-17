@@ -38,7 +38,7 @@
 double sub_last_pts = -303;
 
 #ifdef CONFIG_ASS
-#include "libass/ass_mp.h"
+#include "ass_mp.h"
 ASS_Track* ass_track = 0; // current track to render
 #endif
 
