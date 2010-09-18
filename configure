@@ -7002,11 +7002,8 @@ echores "$_live"
 
 echocheck "RTMPDump Streaming Media library"
 if test "$_librtmp" = auto  && test "$networking" = yes ; then
-  cat > $TMPC << EOF
-#include <librtmp/rtmp.h>
-int main(void) { RTMP r; RTMP_Socket(&r); return 0; }
-EOF
-  cc_check -lrtmp && _librtmp=yes && extra_ldflags="$extra_ldflags -lrtmp"
+  function_check librtmp/rtmp.h 'RTMP_Socket(NULL)' -lrtmp &&
+    _librtmp=yes && extra_ldflags="$extra_ldflags -lrtmp"
   if test "$_librtmp" != yes && $_pkg_config --exists librtmp ; then
     _inc_tmp=$($_pkg_config --cflags librtmp)
 	_ld_tmp=$($_pkg_config --libs librtmp)
