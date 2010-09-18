@@ -344,6 +344,7 @@ zlib_fail:
 #endif
         if (track->encodings[i].comp_algo == 2) {
             /* lzo encoded track */
+            int out_avail;
             int dstlen = *size > SIZE_MAX/3 ? *size : *size * 3;
 
             *dest = NULL;
@@ -352,7 +353,8 @@ zlib_fail:
                 if (dstlen > SIZE_MAX - AV_LZO_OUTPUT_PADDING)
                     goto lzo_fail;
                 *dest = realloc(*dest, dstlen + AV_LZO_OUTPUT_PADDING);
-                result = av_lzo1x_decode(*dest, &dstlen, src, &srclen);
+                out_avail = dstlen;
+                result = av_lzo1x_decode(*dest, &out_avail, src, &srclen);
                 if (result == 0)
                     break;
                 if (!(result & AV_LZO_OUTPUT_FULL)) {
@@ -369,7 +371,7 @@ zlib_fail:
                     goto lzo_fail;
                 dstlen *= 2;
             }
-            *size = dstlen;
+            *size = dstlen - out_avail;
         }
     }
 
