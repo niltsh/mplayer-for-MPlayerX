@@ -323,6 +323,8 @@ static int demux_mkv_decode(mkv_track_t *track, uint8_t *src,
 
                 *size += 4000;
                 *dest = realloc(*dest, *size + AV_LZO_INPUT_PADDING);
+                if (!*dest)
+                    goto zlib_fail;
                 zstream.next_out = (Bytef *) (*dest + zstream.total_out);
                 result = inflate(&zstream, Z_NO_FLUSH);
                 if (result != Z_OK && result != Z_STREAM_END) {
@@ -356,6 +358,8 @@ zlib_fail:
                 if (dstlen > SIZE_MAX - padding)
                     goto lzo_fail;
                 *dest = realloc(*dest, dstlen + padding);
+                if (!*dest)
+                    goto lzo_fail;
                 out_avail = dstlen;
                 result = av_lzo1x_decode(*dest, &out_avail, src, &srclen);
                 if (result == 0)
