@@ -842,7 +842,7 @@ static int demux_mkv_read_trackentry(demuxer_t *demuxer)
                 goto err_out;
             track->private_size = num;
             mp_msg(MSGT_DEMUX, MSGL_V,
-                   "[mkv] |  + CodecPrivate, length " "%u\n",
+                   "[mkv] |  + CodecPrivate, length " "%zu\n",
                    track->private_size);
             break;
         }
