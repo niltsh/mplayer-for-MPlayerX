@@ -318,11 +318,11 @@ static int demux_mkv_decode(mkv_track_t *track, uint8_t *src,
             *dest = NULL;
             zstream.avail_out = *size;
             do {
-                if (*size > SIZE_MAX - 4000)
+                if (*size > SIZE_MAX - 4000 - AV_LZO_INPUT_PADDING)
                     goto zlib_fail;
 
                 *size += 4000;
-                *dest = realloc(*dest, *size);
+                *dest = realloc(*dest, *size + AV_LZO_INPUT_PADDING);
                 zstream.next_out = (Bytef *) (*dest + zstream.total_out);
                 result = inflate(&zstream, Z_NO_FLUSH);
                 if (result != Z_OK && result != Z_STREAM_END) {
@@ -349,10 +349,13 @@ zlib_fail:
 
             *dest = NULL;
             while (1) {
+                // Max of both because we might decompress the input multiple
+                // times. Makes no sense but is possible.
+                int padding = FFMAX(AV_LZO_OUTPUT_PADDING, AV_LZO_INPUT_PADDING);
                 int srclen = *size;
-                if (dstlen > SIZE_MAX - AV_LZO_OUTPUT_PADDING)
+                if (dstlen > SIZE_MAX - padding)
                     goto lzo_fail;
-                *dest = realloc(*dest, dstlen + AV_LZO_OUTPUT_PADDING);
+                *dest = realloc(*dest, dstlen + padding);
                 out_avail = dstlen;
                 result = av_lzo1x_decode(*dest, &out_avail, src, &srclen);
                 if (result == 0)
@@ -367,7 +370,7 @@ lzo_fail:
                 }
                 mp_msg(MSGT_DEMUX, MSGL_DBG2,
                        "[mkv] lzo decompression buffer too small.\n");
-                if (dstlen > (SIZE_MAX - AV_LZO_OUTPUT_PADDING)/2)
+                if (dstlen > (SIZE_MAX - padding)/2)
                     goto lzo_fail;
                 dstlen *= 2;
             }
