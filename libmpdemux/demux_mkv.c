@@ -83,7 +83,7 @@ typedef struct {
     uint32_t order, type, scope;
     uint32_t comp_algo;
     uint8_t *comp_settings;
-    int comp_settings_len;
+    size_t comp_settings_len;
 } mkv_content_encoding_t;
 
 typedef struct mkv_track {
@@ -108,7 +108,7 @@ typedef struct mkv_track {
     int default_track;
 
     void *private_data;
-    unsigned int private_size;
+    size_t private_size;
 
     /* stuff for realmedia */
     int realmedia;
@@ -285,7 +285,7 @@ static void free_cached_dps(demuxer_t *demuxer)
 }
 
 static int demux_mkv_decode(mkv_track_t *track, uint8_t *src,
-                            uint8_t **dest, uint32_t *size, uint32_t type)
+                            uint8_t **dest, size_t *size, uint32_t type)
 {
     int i, result;
     int modified = 0;
@@ -318,11 +318,15 @@ static int demux_mkv_decode(mkv_track_t *track, uint8_t *src,
             *dest = NULL;
             zstream.avail_out = *size;
             do {
+                if (*size > SIZE_MAX - 4000)
+                    goto zlib_fail;
+
                 *size += 4000;
                 *dest = realloc(*dest, *size);
                 zstream.next_out = (Bytef *) (*dest + zstream.total_out);
                 result = inflate(&zstream, Z_NO_FLUSH);
                 if (result != Z_OK && result != Z_STREAM_END) {
+zlib_fail:
                     mp_msg(MSGT_DEMUX, MSGL_WARN,
                            MSGTR_MPDEMUX_MKV_ZlibDecompressionFailed);
                     free(*dest);
@@ -340,7 +344,7 @@ static int demux_mkv_decode(mkv_track_t *track, uint8_t *src,
 #endif
         if (track->encodings[i].comp_algo == 2) {
             /* lzo encoded track */
-            int dstlen = *size * 3;
+            int dstlen = *size > SIZE_MAX/3 ? *size : *size * 3;
 
             *dest = NULL;
             while (1) {
@@ -361,6 +365,8 @@ static int demux_mkv_decode(mkv_track_t *track, uint8_t *src,
                 }
                 mp_msg(MSGT_DEMUX, MSGL_DBG2,
                        "[mkv] lzo decompression buffer too small.\n");
+                if (dstlen > (SIZE_MAX - AV_LZO_OUTPUT_PADDING)/2)
+                    goto lzo_fail;
                 dstlen *= 2;
             }
             *size = dstlen;
@@ -502,6 +508,8 @@ static int demux_mkv_read_trackencodings(demuxer_t *demuxer,
 
                         case MATROSKA_ID_CONTENTCOMPSETTINGS:
                             l = ebml_read_length(s, &i);
+                            if (l > SIZE_MAX)
+                                goto err_out;
                             e.comp_settings = malloc(l);
                             stream_read(s, e.comp_settings, l);
                             e.comp_settings_len = l;
@@ -1227,6 +1235,8 @@ static int demux_mkv_read_attachments(demuxer_t *demuxer)
                     uint64_t num = ebml_read_length(s, &x);
                     l = x + num;
                     free(data);
+                    if (num > SIZE_MAX)
+                        return 0;
                     data = malloc(num);
                     if (stream_read(s, data, num) != (int) num) {
                         free(data);
@@ -1280,6 +1290,9 @@ static int demux_mkv_read_seekhead(demuxer_t *demuxer)
             ebml_read_skip(s, NULL);
             return 0;
         }
+    if (mkv_d->parsed_seekhead_num >= INT_MAX ||
+        mkv_d->parsed_seekhead_num > SIZE_MAX/sizeof(off_t))
+        return 0;
     mkv_d->parsed_seekhead = realloc(mkv_d->parsed_seekhead,
                                      (mkv_d->parsed_seekhead_num + 1)
                                      * sizeof(off_t));
@@ -1468,6 +1481,7 @@ static int demux_mkv_open_video(demuxer_t *demuxer, mkv_track_t *track,
         BITMAPINFOHEADER *src;
 
         if (track->private_data == NULL
+            || track->private_size >= INT_MAX - 1000
             || track->private_size < sizeof(*bih))
             return 1;
 
@@ -1507,11 +1521,15 @@ static int demux_mkv_open_video(demuxer_t *demuxer, mkv_track_t *track,
                 || !strcmp(track->codec_id, MKV_V_REALV40))) {
             unsigned char *dst, *src;
             uint32_t type2;
-            unsigned int cnt;
+            size_t cnt;
 
             src = (uint8_t *) track->private_data + RVPROPERTIES_SIZE;
 
             cnt = track->private_size - RVPROPERTIES_SIZE;
+            if (cnt > INT_MAX - sizeof(*bih) - 8) {
+                mp_msg(MSGT_DEMUX, MSGL_ERR, "[mkv] Integer overflow!\n");
+                return 1;
+            }
             bih = realloc(bih, sizeof(*bih) + 8 + cnt);
             bih->biSize = 48 + cnt;
             bih->biPlanes = 1;
@@ -1619,6 +1637,11 @@ static int demux_mkv_open_audio(demuxer_t *demuxer, mkv_track_t *track,
     sh_a->wf = malloc(sizeof(*sh_a->wf));
     if (track->ms_compat && (track->private_size >= sizeof(*sh_a->wf))) {
         WAVEFORMATEX *wf = (WAVEFORMATEX *) track->private_data;
+        if (track->private_size > USHRT_MAX + sizeof(WAVEFORMATEX)) {
+            mp_msg(MSGT_DEMUX, MSGL_ERR, "[mkv] Integer overflow!\n");
+            free_sh_audio(demuxer, track->tnum);
+            return 1;
+        }
         sh_a->wf = realloc(sh_a->wf, track->private_size);
         sh_a->wf->wFormatTag = le2me_16(wf->wFormatTag);
         sh_a->wf->nChannels = le2me_16(wf->nChannels);
@@ -1729,6 +1752,11 @@ static int demux_mkv_open_audio(demuxer_t *demuxer, mkv_track_t *track,
         track->fix_i_bps = 1;
         track->qt_last_a_pts = 0.0;
         if (track->private_data != NULL) {
+            if (track->private_size > INT_MAX) {
+                mp_msg(MSGT_DEMUX, MSGL_ERR, "[mkv] Integer overflow!\n");
+                free_sh_audio(demuxer, track->tnum);
+                return 1;
+            }
             sh_a->codecdata = malloc(track->private_size);
             memcpy(sh_a->codecdata, track->private_data, track->private_size);
             sh_a->codecdata_len = track->private_size;
@@ -1741,6 +1769,11 @@ static int demux_mkv_open_audio(demuxer_t *demuxer, mkv_track_t *track,
 
         if (!strcmp(track->codec_id, MKV_A_AAC)
             && (NULL != track->private_data)) {
+            if (track->private_size > INT_MAX) {
+                mp_msg(MSGT_DEMUX, MSGL_ERR, "[mkv] Integer overflow!\n");
+                free_sh_audio(demuxer, track->tnum);
+                return 1;
+            }
             sh_a->codecdata = malloc(track->private_size);
             memcpy(sh_a->codecdata, track->private_data, track->private_size);
             sh_a->codecdata_len = track->private_size;
@@ -1779,6 +1812,11 @@ static int demux_mkv_open_audio(demuxer_t *demuxer, mkv_track_t *track,
             track->default_duration = 1024.0 / (float) sh_a->samplerate;
         }
     } else if (track->a_formattag == mmioFOURCC('v', 'r', 'b', 's')) {  /* VORBIS */
+        if (track->private_size > USHRT_MAX) {
+            mp_msg(MSGT_DEMUX, MSGL_ERR, "[mkv] Integer overflow!\n");
+            free_sh_audio(demuxer, track->tnum);
+            return 1;
+        }
         sh_a->wf->cbSize = track->private_size;
         sh_a->wf = realloc(sh_a->wf, sizeof(*sh_a->wf) + sh_a->wf->cbSize);
         memcpy((unsigned char *) (sh_a->wf + 1), track->private_data,
@@ -1853,7 +1891,7 @@ static int demux_mkv_open_audio(demuxer_t *demuxer, mkv_track_t *track,
     } else if (!strcmp(track->codec_id, MKV_A_FLAC)
                || (track->a_formattag == 0xf1ac)) {
         unsigned char *ptr;
-        int size;
+        size_t size;
         free(sh_a->wf);
         sh_a->wf = NULL;
 
@@ -1892,7 +1930,8 @@ static int demux_mkv_open_sub(demuxer_t *demuxer, mkv_track_t *track,
                               int sid)
 {
     if (track->subtitle_type != MATROSKA_SUBTYPE_UNKNOWN) {
-        int size, m;
+        size_t size;
+        int m;
         uint8_t *buffer;
         sh_sub_t *sh = new_sh_sub_sid(demuxer, track->tnum, sid, track->language);
         track->sh_sub = sh;
@@ -1907,6 +1946,10 @@ static int demux_mkv_open_sub(demuxer_t *demuxer, mkv_track_t *track,
             free(track->private_data);
             track->private_data = buffer;
             track->private_size = size;
+        }
+        if (track->private_size > INT_MAX) {
+            mp_msg(MSGT_DEMUX, MSGL_ERR, "[mkv] Integer overflow!\n");
+            return 1;
         }
         sh->extradata = malloc(track->private_size);
         memcpy(sh->extradata, track->private_data, track->private_size);
@@ -2573,7 +2616,8 @@ static int handle_block(demuxer_t *demuxer, uint8_t *block, uint64_t length,
                 handle_video_bframes(demuxer, track, block, lace_size[i],
                                      block_bref, block_fref);
             else {
-                int modified, size = lace_size[i];
+                int modified;
+                size_t size = lace_size[i];
                 demux_packet_t *dp;
                 uint8_t *buffer;
                 modified = demux_mkv_decode(track, block, &buffer, &size, 1);
@@ -2710,6 +2754,8 @@ static int demux_mkv_fill_buffer(demuxer_t *demuxer, demux_stream_t *ds)
                 {
                     int res;
                     block_length = ebml_read_length(s, &tmp);
+                    if (block_length > SIZE_MAX)
+                        return 0;
                     block = malloc(block_length);
                     demuxer->filepos = stream_tell(s);
                     if (stream_read(s, block, block_length) !=
