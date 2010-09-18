@@ -115,9 +115,8 @@ EOF
   compile_check $TMPC $@
 }
 
-# this is a special check only to be
-# used for broken headers that do not
-# include all dependencies
+# This is a special check only to be used for broken headers that do not
+# include all dependencies.
 header_check_broken() {
   cat > $TMPC << EOF
 #include <$1>
