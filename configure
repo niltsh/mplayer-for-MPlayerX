@@ -2459,9 +2459,8 @@ echocheck "byte order"
 if test "$_big_endian" = auto ; then
   cat > $TMPC <<EOF
 short ascii_name[] = {
-  (('M' << 8) | 'P'), (('l' << 8) | 'a'), (('y' << 8) | 'e'),
-  (('r' << 8) | 'B'), (('i' << 8) | 'g'), (('E' << 8) | 'n'),
-  (('d' << 8) | 'i'), (('a' << 8) | 'n'), 0 };
+  'M' << 8 | 'P', 'l' << 8 | 'a', 'y' << 8 | 'e', 'r' << 8 | 'B',
+  'i' << 8 | 'g', 'E' << 8 | 'n', 'd' << 8 | 'i', 'a' << 8 | 'n', 0 };
 int main(void) { return (long)ascii_name; }
 EOF
   if cc_check ; then
