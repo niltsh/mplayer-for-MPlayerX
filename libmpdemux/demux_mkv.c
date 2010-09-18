@@ -358,7 +358,7 @@ zlib_fail:
                 if (result == 0)
                     break;
                 if (!(result & AV_LZO_OUTPUT_FULL)) {
-                lzo_fail:
+lzo_fail:
                     mp_msg(MSGT_DEMUX, MSGL_WARN,
                            MSGTR_MPDEMUX_MKV_LzoDecompressionFailed);
                     free(*dest);
