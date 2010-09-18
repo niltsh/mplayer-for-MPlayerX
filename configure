@@ -7356,6 +7356,8 @@ echores "$_zr"
 if test "$_mencoder" != no ; then
 
 echocheck "libmp3lame"
+def_mp3lame='#undef CONFIG_MP3LAME'
+def_mp3lame_lavc="#define CONFIG_LIBMP3LAME 0"
 def_mp3lame_preset='#undef CONFIG_MP3LAME_PRESET'
 def_mp3lame_preset_medium='#undef CONFIG_MP3LAME_PRESET_MEDIUM'
 if test "$_mp3lame" = auto ; then
@@ -7385,8 +7387,6 @@ if test "$_mp3lame" = yes ; then
   fi
 else
   _mp3lame_lavc=no
-  def_mp3lame='#undef CONFIG_MP3LAME'
-  def_mp3lame_lavc="#define CONFIG_LIBMP3LAME 0"
 fi
 res_comment="in FFmpeg: $_mp3lame_lavc"
 echores "$_mp3lame"
