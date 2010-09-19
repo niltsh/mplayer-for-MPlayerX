@@ -135,8 +135,7 @@ function_check_broken() {
 #include <$2>
 int main(void) { $3; return 0; }
 EOF
-  shift
-  shift
+  shift 3
   compile_check $TMPC $@
 }
 
