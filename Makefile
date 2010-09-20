@@ -733,7 +733,7 @@ OBJS_MPLAYER   += $(OBJS_MPLAYER-yes)
 
 MENCODER_DEPS = $(OBJS_MENCODER) $(OBJS_COMMON) $(COMMON_LIBS)
 MPLAYER_DEPS  = $(OBJS_MPLAYER)  $(OBJS_COMMON) $(COMMON_LIBS)
-DEPS = $(filter-out %.S,$(patsubst %.cpp,%.d,$(patsubst %.c,%.d,$(SRCS_COMMON) $(SRCS_MPLAYER:.m=.d) $(SRCS_MENCODER))))
+DEP_FILES = $(filter-out %.S,$(patsubst %.cpp,%.d,$(patsubst %.c,%.d,$(SRCS_COMMON) $(SRCS_MPLAYER:.m=.d) $(SRCS_MENCODER))))
 
 ALL_PRG-$(MPLAYER)  += mplayer$(EXESUF)
 ALL_PRG-$(MENCODER) += mencoder$(EXESUF)
@@ -887,7 +887,7 @@ checkheaders: $(ALLHEADERS:.h=.ho)
 
 # Make sure all generated header files are created.
 codec-cfg.d codec-cfg.o: codecs.conf.h
-$(DEPS) $(MENCODER_DEPS) $(MPLAYER_DEPS): help_mp.h
+$(DEP_FILES) $(MENCODER_DEPS) $(MPLAYER_DEPS): help_mp.h
 $(call ADDSUFFIXES,.d .o,mpcommon osdep/mplayer.rc): version.h
 
 osdep/mplayer-rc.o: osdep/mplayer.exe.manifest
@@ -1155,7 +1155,7 @@ dhahelperwinclean:
 
 
 
--include $(DEPS)
+-include $(DEP_FILES)
 
 .PHONY: all doxygen *install* *tools drivers dhahelper*
 .PHONY: checkheaders *clean tests
