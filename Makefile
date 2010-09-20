@@ -889,7 +889,7 @@ checkheaders: $(ALLHEADERS:.h=.ho)
 # Make sure all generated header files are created.
 codec-cfg.d codec-cfg.o: codecs.conf.h
 $(DEP_FILES) $(MENCODER_DEPS) $(MPLAYER_DEPS): help_mp.h
-$(call ADDSUFFIXES,.d .o,mpcommon osdep/mplayer-rc): version.h
+mpcommon.o osdep/mplayer-rc.o: version.h
 
 osdep/mplayer-rc.o: osdep/mplayer.exe.manifest
 
@@ -918,10 +918,9 @@ VIDIX_PCI_FILES = vidix/pci_dev_ids.c vidix/pci_ids.h vidix/pci_names.c \
 $(VIDIX_PCI_FILES): vidix/pci_db2c.awk vidix/pci.db
 	awk -f $^ $(VIDIX_PCIDB)
 
-VIDIX_DEPS = $(filter vidix/%,$(SRCS_MPLAYER:.c=.d))
 VIDIX_OBJS = $(filter vidix/%,$(SRCS_MPLAYER:.c=.o))
 
-$(VIDIX_DEPS) $(VIDIX_OBJS): $(VIDIX_PCI_FILES)
+$(VIDIX_OBJS): $(VIDIX_PCI_FILES)
 
 
 
