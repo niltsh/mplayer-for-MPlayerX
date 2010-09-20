@@ -1108,10 +1108,10 @@ install-drivers: $(DRIVER_OBJS)
 driversclean:
 	-rm -f $(DRIVER_OBJS) drivers/*~
 
+DHAHELPER_DEPS_FILES = vidix/dhahelper/dhahelper.d vidix/dhahelper/test.d vidix/dhahelperwin/dhahelper.d vidix/dhahelperwin/dhasetup.d
 dhahelper: vidix/dhahelper/dhahelper.o vidix/dhahelper/test
 
 vidix/dhahelper/dhahelper.o vidix/dhahelper/test: CFLAGS = $(KERNEL_CFLAGS)
-vidix/dhahelper/dhahelper.o: vidix/dhahelper/dhahelper.c vidix/dhahelper/dhahelper.h
 
 install-dhahelper: vidix/dhahelper/dhahelper.o
 	-mkdir -p $(MODULES_DIR)
@@ -1153,7 +1153,7 @@ dhahelperclean:
 
 
 
--include $(DEP_FILES) $(DRIVER_DEP_FILES) $(TESTS_DEP_FILES) $(TOOLS_DEP_FILES)
+-include $(DEP_FILES) $(DRIVER_DEP_FILES) $(TESTS_DEP_FILES) $(TOOLS_DEP_FILES) $(DHAHELPER_DEPS_FILES)
 
 .PHONY: all doxygen *install* *tools drivers dhahelper*
 .PHONY: checkheaders *clean tests
