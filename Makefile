@@ -1095,7 +1095,6 @@ drivers/tdfx_vid.o: drivers/tdfx_vid.c drivers/3dfx.h
 drivers/radeon_vid.o drivers/rage128_vid.o: CFLAGS += -fomit-frame-pointer -fno-strict-aliasing -fno-common -ffast-math
 drivers/radeon_vid.o: drivers/radeon_vid.c drivers/radeon.h drivers/radeon_vid.h
 drivers/rage128_vid.o: drivers/radeon_vid.c drivers/radeon.h drivers/radeon_vid.h
-	$(CC) $(CFLAGS) -DRAGE128 -c $< -o $@
 
 install-drivers: $(DRIVER_OBJS)
 	-mkdir -p $(MODULES_DIR)
