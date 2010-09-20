@@ -55,9 +55,7 @@ TODO:
 #include "video_out_internal.h"
 #include "fastmemcpy.h"
 #include "osdep/getch2.h"
-#ifdef CONFIG_VIDIX
 #include "vosub_vidix.h"
-#endif
 
 #include "sub.h"
 

@@ -41,9 +41,7 @@
 #include "fastmemcpy.h"
 #include "sub.h"
 #include "geometry.h"
-#ifdef CONFIG_VIDIX
 #include "vosub_vidix.h"
-#endif
 #include "aspect.h"
 #include "mp_msg.h"
 #include "libavutil/common.h"
