@@ -889,7 +889,7 @@ checkheaders: $(ALLHEADERS:.h=.ho)
 # Make sure all generated header files are created.
 codec-cfg.d codec-cfg.o: codecs.conf.h
 $(DEP_FILES) $(MENCODER_DEPS) $(MPLAYER_DEPS): help_mp.h
-$(call ADDSUFFIXES,.d .o,mpcommon osdep/mplayer.rc): version.h
+$(call ADDSUFFIXES,.d .o,mpcommon osdep/mplayer-rc): version.h
 
 osdep/mplayer-rc.o: osdep/mplayer.exe.manifest
 
