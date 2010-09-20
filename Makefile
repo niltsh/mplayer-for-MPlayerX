@@ -875,7 +875,7 @@ version.h: version.sh
 	./$< `$(CC) -dumpversion`
 
 %$(EXESUF): %.c
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CC_DEPFLAGS) $(CFLAGS) -o $@ $^
 
 %.ho: %.h
 	$(CC) $(CFLAGS) -Wno-unused -c -o $@ -x c $<
