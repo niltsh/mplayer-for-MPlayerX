@@ -1031,6 +1031,8 @@ ifdef ARCH_X86
 TESTS += loader/qtx/list loader/qtx/qtxload
 endif
 
+TESTS_DEP_FILES = $(addsuffix .d,$(TESTS))
+
 tests: $(addsuffix $(EXESUF),$(TESTS))
 
 testsclean:
@@ -1043,6 +1045,8 @@ TOOLS += TOOLS/fastmemcpybench TOOLS/modify_reg
 endif
 
 ALLTOOLS = $(TOOLS) TOOLS/bmovl-test TOOLS/vfw2menc
+
+TOOLS_DEP_FILES = $(addsuffix .d,$(ALLTOOLS))
 
 tools: $(addsuffix $(EXESUF),$(TOOLS))
 alltools: $(addsuffix $(EXESUF),$(ALLTOOLS))
@@ -1151,7 +1155,7 @@ dhahelperwinclean:
 
 
 
--include $(DEP_FILES) $(DRIVER_DEP_FILES)
+-include $(DEP_FILES) $(DRIVER_DEP_FILES) $(TESTS_DEP_FILES) $(TOOLS_DEP_FILES)
 
 .PHONY: all doxygen *install* *tools drivers dhahelper*
 .PHONY: checkheaders *clean tests
