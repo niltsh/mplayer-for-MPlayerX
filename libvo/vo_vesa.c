@@ -54,9 +54,7 @@
 #include "mpbswap.h"
 #include "aspect.h"
 #include "vesa_lvo.h"
-#ifdef CONFIG_VIDIX
 #include "vosub_vidix.h"
-#endif
 #include "mp_msg.h"
 
 #include "libswscale/swscale.h"
