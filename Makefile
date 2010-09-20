@@ -826,7 +826,7 @@ FFMPEGFILES = $(foreach part, $(FFMPEGPARTS), $(wildcard $(part)/*.[chS] $(part)
 all: $(ALL_PRG-yes)
 
 %.o: %.S
-	$(CC) $(CC_DEPFLAGS) $(ASFLAGS) -c -o $@ $<
+	$(CC) $(CC_DEPFLAGS) $(CFLAGS) -c -o $@ $<
 
 %.o: %.c
 	$(CC) $(CC_DEPFLAGS) $(CFLAGS) -c -o $@ $<
