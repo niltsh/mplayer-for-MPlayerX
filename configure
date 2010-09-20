@@ -8120,10 +8120,8 @@ INSTALLSTRIP = $_install_strip
 WINDRES = $_windres
 
 CFLAGS   = $WARNFLAGS $WARN_CFLAGS $CFLAGS $extra_cflags
-ASFLAGS  = \$(CFLAGS)
 CXXFLAGS = $WARNFLAGS $CXXFLAGS $extra_cflags $extra_cxxflags
 CC_DEPFLAGS = $DEPFLAGS
-AS_DEPFLAGS = $DEPFLAGS
 
 CFLAGS_DHAHELPER         = $cflags_dhahelper
 CFLAGS_FAAD_FIXED        = $cflags_faad_fixed
@@ -8329,6 +8327,8 @@ ZR = $_zr
 FFMPEG     = $ffmpeg
 FFMPEG_A   = $ffmpeg_a
 
+ASFLAGS    = \$(CFLAGS)
+AS_DEPFLAGS= $DEPFLAGS
 HOSTCC     = \$(HOST_CC)
 HOSTCFLAGS = -D_ISOC99_SOURCE -D_POSIX_C_SOURCE=200112 -O3
 HOSTLIBS   = -lm
