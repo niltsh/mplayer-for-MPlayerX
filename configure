@@ -3344,7 +3344,6 @@ else
   noinputmodules="networking $noinputmodules"
   def_network='#undef CONFIG_NETWORK'
   def_networking='#undef CONFIG_NETWORKING'
-  _ftp=no
   libavprotocols=$(echo $libavprotocols | sed -e s/GOPHER_PROTOCOL// -e s/HTTP_PROTOCOL// -e s/RTMP_PROTOCOL// -e s/RTP_PROTOCOL// -e s/TCP_PROTOCOL// -e s/UDP_PROTOCOL// -e s/MMSH_PROTOCOL// -e s/MMST_PROTOCOL//)
   libavdemuxers=$(echo $libavdemuxers | sed -e s/RTSP_DEMUXER// -e s/SDP_DEMUXER//)
 fi
@@ -7674,7 +7673,7 @@ echores "$_pvr"
 
 
 echocheck "ftp"
-if ! beos && test "$_ftp" = yes ; then
+if ! beos && test "$networking" = yes && test "$_ftp" = yes ; then
   def_ftp='#define CONFIG_FTP 1'
   inputmodules="ftp $inputmodules"
 else
