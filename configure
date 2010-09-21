@@ -8495,7 +8495,6 @@ $def_gethostbyname2
 $def_gettimeofday
 $def_glob
 $def_langinfo
-$def_lrintf
 $def_map_memalign
 $def_memalign
 $def_nanosleep
@@ -8813,6 +8812,7 @@ $def_local_aligned_16
 $def_log2
 $def_log2f
 $def_lrint
+$def_lrintf
 $def_mlib
 $def_mkstemp
 $def_network
