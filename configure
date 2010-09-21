@@ -8839,12 +8839,6 @@ $def_yasm
 #define CONFIG_SMALL 0
 #define CONFIG_SWSCALE_ALPHA 1
 
-#if defined(HAVE_AF_INET6) && (!defined(_WIN32) || defined(__CYGWIN__))
-#define CONFIG_IPV6 1
-#else
-#define CONFIG_IPV6 0
-#endif
-
 #define HAVE_ATTRIBUTE_PACKED 1
 #define HAVE_GETHRTIME 0
 #define HAVE_INLINE_ASM 1
