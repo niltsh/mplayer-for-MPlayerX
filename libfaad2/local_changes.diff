@@ -71,6 +71,15 @@
  #define ARCH_IS_BIG_ENDIAN
  #endif
  
+@@ -317,7 +317,7 @@
+         }
+         return i;
+     }
+-  #elif (defined(__i386__) && defined(__GNUC__))
++  #elif (defined(__i386__) && defined(__GNUC__)) && !defined(__STDC_VERSION__)
+     #define HAS_LRINTF
+     // from http://www.stereopsis.com/FPU.html
+     static INLINE int lrintf(float f)
 @@ -330,5 +346,7 @@
  
    #else
