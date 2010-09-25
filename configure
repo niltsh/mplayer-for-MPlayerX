@@ -6298,6 +6298,8 @@ function_check zlib.h 'inflate(0, Z_NO_FLUSH)' -lz && _zlib=yes
 if test "$_zlib" = yes ; then
   def_zlib='#define CONFIG_ZLIB 1'
   extra_ldflags="$extra_ldflags -lz"
+  # necessary for vf_screenshot
+  mplayer_encoders="$mplayer_encoders PNG_ENCODER"
 else
   def_zlib='#define CONFIG_ZLIB 0'
   libavdecoders=$(echo $libavdecoders | sed -e s/FLASHSV_DECODER// -e s/PNG_DECODER// -e s/ZMBV_DECODER// -e s/ZLIB_DECODER// -e s/DXA_DECODER// -e s/TSCC_DECODER//)
@@ -7332,6 +7334,7 @@ if test "$_zr" = yes ; then
   if test "$ffmpeg_a" = yes ; then
     def_zr='#define CONFIG_ZR 1'
     vomodules="zr zr2 $vomodules"
+    mplayer_encoders="$mplayer_encoders MJPEG_ENCODER"
   else
     res_comment="ffmpeg (static) is required by zr, sorry"
     novomodules="zr $novomodules"
@@ -7389,10 +7392,7 @@ if test "$_mencoder" = yes ; then
   def_muxers='#define CONFIG_MUXERS 1'
 else
   # mpeg1video for vf_lavc, snow for vf_uspp / vf_mcdeint,
-  # png for vf_screenshot, mjpeg for zr
-  libavencoders="MPEG1VIDEO_ENCODER SNOW_ENCODER"
-  test "$_zlib" = yes && libavencoders="$libavencoders PNG_ENCODER"
-  test "$_zr" = yes && libavencoders="$libavencoders MJPEG_ENCODER"
+  libavencoders="$mplayer_encoders MPEG1VIDEO_ENCODER SNOW_ENCODER"
   libavmuxers=""
   def_muxers='#define CONFIG_MUXERS 0'
 fi
