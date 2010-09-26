@@ -3786,7 +3786,6 @@ echores "$_termios"
 echocheck "shm"
 if test "$_shm" = auto ; then
   cat > $TMPC << EOF
-#include <sys/types.h>
 #include <sys/shm.h>
 int main(void) { shmget(0, 0, 0); shmat(0, 0, 0); shmctl(0, 0, 0); return 0; }
 EOF
