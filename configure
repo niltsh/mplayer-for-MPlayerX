@@ -781,7 +781,7 @@ _fribidi=auto
 _enca=auto
 _inet6=auto
 _gethostbyname2=auto
-_ftp=yes
+_ftp=auto
 _musepack=auto
 _vstream=auto
 _pthreads=auto
@@ -7617,7 +7617,10 @@ echores "$_pvr"
 
 
 echocheck "ftp"
-if ! beos && test "$networking" = yes && test "$_ftp" = yes ; then
+if test "$_ftp" = "auto" ; then
+test "$networking" = "yes" && ! beos && _ftp=yes
+fi
+if test "$_ftp" = yes ; then
   def_ftp='#define CONFIG_FTP 1'
   inputmodules="ftp $inputmodules"
 else
