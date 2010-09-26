@@ -5337,7 +5337,6 @@ echores "$_win32waveout"
 echocheck "Direct3D"
 if test "$_direct3d" = auto ; then
   cat > $TMPC << EOF
-#include <windows.h>
 #include <d3d9.h>
 int main(void) { return 0; }
 EOF
@@ -5356,7 +5355,6 @@ echores "$_direct3d"
 echocheck "Directx"
 if test "$_directx" = auto ; then
   cat > $TMPC << EOF
-#include <windows.h>
 #include <ddraw.h>
 #include <dsound.h>
 int main(void) { return 0; }
