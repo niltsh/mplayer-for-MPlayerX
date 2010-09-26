@@ -3526,8 +3526,8 @@ fi
 
 echocheck "dynamic loader"
 _dl=no
-for _ld_dl in "" -ldl; do
-  function_check dlfcn.h 'dlopen("", 0)' $_ld_dl && _ld_dl="$_ld_tmp" && _dl=yes && break
+for _ld_tmp in "" -ldl; do
+  function_check dlfcn.h 'dlopen("", 0)' $_ld_tmp && _ld_dl="$_ld_tmp" && _dl=yes && break
 done
 if test "$_dl" = yes ; then
   def_dl='#define HAVE_LIBDL 1'
