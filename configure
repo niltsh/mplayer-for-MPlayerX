@@ -3254,14 +3254,8 @@ echores "$arpa_inet_h"
 echocheck "inet_pton()"
 def_inet_pton='#define HAVE_INET_PTON 0'
 inet_pton=no
-cat > $TMPC << EOF
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-int main(void) { inet_pton(0, 0, 0); return 0; }
-EOF
 for _ld_tmp in "$_ld_sock" "$_ld_sock -lresolv" ; do
-  cc_check $_ld_tmp && inet_pton=yes && break
+  function_check arpa/inet.h 'inet_pton(0, 0, 0)' $_ld_tmp && inet_pton=yes && break
 done
 if test $inet_pton = yes ; then
   test "$_ld_tmp" && res_comment="using $_ld_tmp"
@@ -3273,14 +3267,8 @@ echores "$inet_pton"
 echocheck "inet_aton()"
 def_inet_aton='#define HAVE_INET_ATON 0'
 inet_aton=no
-cat > $TMPC << EOF
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-int main(void) { inet_aton(0, 0); return 0; }
-EOF
 for _ld_tmp in "$_ld_sock" "$_ld_sock -lresolv" ; do
-  cc_check $_ld_tmp && inet_aton=yes && break
+  function_check arpa/inet.h 'inet_aton(0, 0)' $_ld_tmp && inet_aton=yes && break
 done
 if test $inet_aton = yes ; then
   test "$_ld_tmp" && res_comment="using $_ld_tmp"
