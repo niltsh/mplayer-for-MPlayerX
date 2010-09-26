@@ -5316,13 +5316,8 @@ if win32; then
 
 echocheck "Windows waveout"
 if test "$_win32waveout" = auto ; then
-  cat > $TMPC << EOF
-#include <windows.h>
-#include <mmsystem.h>
-int main(void) { return 0; }
-EOF
   _win32waveout=no
-  cc_check -lwinmm && _win32waveout=yes
+  header_check_broken windows.h mmsystem.h -lwinmm && _win32waveout=yes
 fi
 if test "$_win32waveout" = yes ; then
   def_win32waveout='#define CONFIG_WIN32WAVEOUT 1'
