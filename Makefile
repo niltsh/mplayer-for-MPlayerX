@@ -887,7 +887,7 @@ checkheaders: $(ALLHEADERS:.h=.ho)
 ###### dependency declarations / specific CFLAGS ######
 
 # Make sure all generated header files are created.
-codec-cfg.d codec-cfg.o: codecs.conf.h
+codec-cfg.o: codecs.conf.h
 $(DEP_FILES) $(MENCODER_DEPS) $(MPLAYER_DEPS): help_mp.h
 mpcommon.o osdep/mplayer-rc.o: version.h
 
