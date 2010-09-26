@@ -5336,12 +5336,8 @@ echores "$_win32waveout"
 
 echocheck "Direct3D"
 if test "$_direct3d" = auto ; then
-  cat > $TMPC << EOF
-#include <d3d9.h>
-int main(void) { return 0; }
-EOF
   _direct3d=no
-  cc_check && _direct3d=yes
+  header_check d3d9.h && _direct3d=yes
 fi
 if test "$_direct3d" = yes ; then
   def_direct3d='#define CONFIG_DIRECT3D 1'
