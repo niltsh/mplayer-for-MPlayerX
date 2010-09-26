@@ -4935,15 +4935,7 @@ fi
 echocheck "JPEG support"
 if test "$_jpeg" = auto ; then
   _jpeg=no
-cat > $TMPC << EOF
-#include <stdio.h>
-#include <stdlib.h>
-#include <setjmp.h>
-#include <string.h>
-#include <jpeglib.h>
-int main(void) { return 0; }
-EOF
-  cc_check -ljpeg $_ld_lm && _jpeg=yes
+  header_check_broken stdio.h jpeglib.h -ljpeg $_ld_lm && _jpeg=yes
 fi
 echores "$_jpeg"
 
