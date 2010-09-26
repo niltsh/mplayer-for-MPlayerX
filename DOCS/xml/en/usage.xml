@@ -715,8 +715,8 @@ The datagram indicates the master's position in the file. If
 <option>-udp-ip</option>/<option>-udp-port</option>
 and matches the master's position. Setting <option>-udp-ip</option> to the
 master's broadcast address allows multiple slaves having the same broadcast
-address to sync to the master.  Note that this feature assumes an
-ethernet-like low-latency network connection.  Your mileage may vary on high
+address to sync to the master. Note that this feature assumes an
+ethernet-like low-latency network connection. Your mileage may vary on high
 latency networks.
 </para>
 
