@@ -2556,7 +2556,7 @@ else
 fi
 
 cflag_check -mno-omit-leaf-frame-pointer && cflags_no_omit_leaf_frame_pointer="-mno-omit-leaf-frame-pointer"
-cflag_check -MMD -MF "$mplayer_tmpdir/test.d" -MT test.o && DEPFLAGS='-MMD -MF $(@:.o=.d) -MT $@'
+cflag_check -MD -MP && DEPFLAGS="-MD -MP $CFLAGS"
 
 
 if test -n "$LDFLAGS" ; then
