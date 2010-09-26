@@ -3,7 +3,7 @@
 //... Okay enough of the hw, now send the other two!
 //
 // Updated by: Gabrov <gabrov@freemail.hu>
-// Sync'ed with help_mp-en.h r31752 (2010. 07. 27.)
+// Sync'ed with help_mp-en.h r32066 (2010. 09. 26.)
 
 
 // ========================= MPlayer help ===========================
@@ -179,9 +179,13 @@ static const char help_text[]=
 #define MSGTR_DvdnavNavSpuClutChange "DVDNAV esemény: Nav SPU CLUT váltás\n"
 #define MSGTR_DvdnavNavSeekDone "DVDNAV esemény: Nav keresés kész\n"
 #define MSGTR_MenuCall "Menü hívás\n"
+#define MSGTR_MasterQuit "-udp_slave kapcsoló: kilépés, mivel a mester kilépett\n"
+#define MSGTR_InvalidIP "-udp-ip kapcsoló: helytelen IP cím\n"
+
 
 // --- edit decision lists
 #define MSGTR_EdlOutOfMem "Nem lehet elegendő memóriát foglalni az EDL adatoknak.\n"
+#define MSGTR_EdlOutOfMemFile "Nem foglalható le elegendő memória az EDL fájl nevének [%s].\n"
 #define MSGTR_EdlRecordsNo "%d EDL akciók olvasása.\n"
 #define MSGTR_EdlQueueEmpty "Nincs olyan EDL akció, amivel foglalkozni kellene.\n"
 #define MSGTR_EdlCantOpenForWrite "Az EDL fájlba [%s] nem lehet írni.\n"
@@ -1839,7 +1843,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_ASF_UnknownASFStreamType "Ismeretlen ASF folyam típus\n"
 #define MSGTR_MPDEMUX_ASF_Failed2ParseHTTPResponse "Sikertelen a HTTP válasz értelmezése.\n"
 #define MSGTR_MPDEMUX_ASF_ServerReturn "Szerver válasz %d:%s\n"
-#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF HTTP ÉRTELMEZÉSI HIBA : %s pragma levágva %d bájtról %d bájtra\n"
+#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF HTTP ÉRTELMEZÉSI FIGYELMEZTETÉS : %s pragma levágva %zd bájtról %d bájtra\n"
 #define MSGTR_MPDEMUX_ASF_SocketWriteError "socket írási hiba : %s\n"
 #define MSGTR_MPDEMUX_ASF_HeaderParseFailed "Sikertelen a fájléc értelmezése.\n"
 #define MSGTR_MPDEMUX_ASF_NoStreamFound "Nem található folyam.\n"
