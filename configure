@@ -4040,7 +4040,6 @@ echocheck "Apple IR"
 if test "$_apple_ir" = auto ; then
   _apple_ir=no
   cat > $TMPC <<EOF
-#include <linux/types.h>
 #include <linux/input.h>
 int main(void) { struct input_event ev; struct input_id id; return 0; }
 EOF
