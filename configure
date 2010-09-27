@@ -3202,11 +3202,7 @@ echocheck "struct ipv6_mreq"
 _struct_ipv6_mreq=no
 def_struct_ipv6_mreq="#define HAVE_STRUCT_IPV6_MREQ 0"
 for header in "netinet/in.h" "ws2tcpip.h" ; do
-  cat > $TMPC << EOF
-#include <$header>
-int main(void) { struct ipv6_mreq mreq6; return 0; }
-EOF
-  cc_check && _struct_ipv6_mreq=yes && \
+  statement_check $header 'struct ipv6_mreq mreq6' && _struct_ipv6_mreq=yes &&
     def_struct_ipv6_mreq="#define HAVE_STRUCT_IPV6_MREQ 1" && break
 done
 echores "$_struct_ipv6_mreq"
@@ -3216,11 +3212,7 @@ echocheck "struct sockaddr_in6"
 _struct_sockaddr_in6=no
 def_struct_sockaddr_in6="#define HAVE_STRUCT_SOCKADDR_IN6 0"
 for header in "netinet/in.h" "ws2tcpip.h" ; do
-  cat > $TMPC << EOF
-#include <$header>
-int main(void) { struct sockaddr_in6 addr; return 0; }
-EOF
-  cc_check && _struct_sockaddr_in6=yes && \
+  statement_check $header 'struct sockaddr_in6 addr' && _struct_sockaddr_in6=yes &&
     def_struct_sockaddr_in6="#define HAVE_STRUCT_SOCKADDR_IN6 1" && break
 done
 echores "$_struct_sockaddr_in6"
@@ -3280,11 +3272,7 @@ echores "$inet_aton"
 echocheck "socklen_t"
 _socklen_t=no
 for header in "sys/socket.h" "ws2tcpip.h" "sys/types.h" ; do
-  cat > $TMPC << EOF
-#include <$header>
-int main(void) { socklen_t v = 0; return v; }
-EOF
-  cc_check && _socklen_t=yes && break
+  statement_check $header 'socklen_t v = 0' && _socklen_t=yes && break
 done
 if test "$_socklen_t" = yes ; then
   def_socklen_t='#define HAVE_SOCKLEN_T 1'
@@ -3485,12 +3473,8 @@ else
 fi
 echores "$_mman"
 
-cat > $TMPC << EOF
-#include <sys/mman.h>
-int main(void) { void *p = MAP_FAILED; return 0; }
-EOF
 _mman_has_map_failed=no
-cc_check && _mman_has_map_failed=yes
+statement_check sys/mman.h 'void *p = MAP_FAILED' && _mman_has_map_failed=yes
 if test "$_mman_has_map_failed" = yes ; then
   def_mman_has_map_failed=''
 else
@@ -6720,12 +6704,8 @@ echores "$_faad"
 
 echocheck "LADSPA plugin support"
 if test "$_ladspa" = auto ; then
-  cat > $TMPC <<EOF
-#include <ladspa.h>
-int main(void) { LADSPA_Descriptor ld = {0}; return 0; }
-EOF
   _ladspa=no
-  cc_check && _ladspa=yes
+  statement_check ladspa.h 'LADSPA_Descriptor ld = {0}' && _ladspa=yes
 fi
 if test "$_ladspa" = yes; then
   def_ladspa="#define CONFIG_LADSPA 1"
@@ -7993,15 +7973,10 @@ if test "$_dvdnav" = auto ; then
   fi
 fi
 if test "$_dvdnav" = auto ; then
-  cat > $TMPC <<EOF
-#include <inttypes.h>
-#include <dvdnav/dvdnav.h>
-int main(void) { dvdnav_t *dvd=0; return 0; }
-EOF
   _dvdnav=no
   _dvdnavdir=$($_dvdnavconfig --cflags)
   _dvdnavlibs=$($_dvdnavconfig --libs)
-  cc_check $_dvdnavdir $_dvdnavlibs $_ld_dl $_ld_pthread && _dvdnav=yes
+  statement_check_broken stdint.h dvdnav/dvdnav.h 'dvdnav_t *dvd = 0' $_dvdnavdir $_dvdnavlibs $_ld_dl $_ld_pthread && _dvdnav=yes
 fi
 if test "$_dvdnav" = yes ; then
   _largefiles=yes
