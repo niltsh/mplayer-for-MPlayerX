@@ -8,7 +8,8 @@
 #include "libavutil/mem.h"
 #include "mpg123.h"
 
-extern float __attribute__((aligned(16))) costab_mmx[];
+extern const unsigned int __attribute__((aligned(16))) costab_mmx[];
+//extern float __attribute__((aligned(16))) costab_mmx[];
 
 static const int ppnn[4] __attribute__((aligned(16))) =
 { 0, 0, 1 << 31, 1 << 31 };

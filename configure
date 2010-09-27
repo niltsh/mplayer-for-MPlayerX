@@ -4242,11 +4242,6 @@ echores "$_x11_headers"
 
 echocheck "X11"
 if test "$_x11" = auto && test "$_x11_headers" = yes ; then
-  cat > $TMPC <<EOF
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-int main(void) { XCreateWindow(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0); return 0; }
-EOF
   for I in "" -L/usr/X11R7/lib -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib/X11R6 \
            -L/usr/X11/lib -L/usr/lib32 -L/usr/openwin/lib -L/usr/local/lib64 -L/usr/X11R6/lib64 \
            -L/usr/lib ; do
@@ -4255,8 +4250,8 @@ EOF
     else
       _ld_tmp="$I -lXext -lX11 $_ld_pthread"
     fi
-    cc_check $_ld_tmp && libs_mplayer="$libs_mplayer $_ld_tmp" \
-                      && _x11=yes && break
+    statement_check X11/Xutil.h 'XCreateWindow(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)' $_ld_tmp &&
+      libs_mplayer="$libs_mplayer $_ld_tmp" && _x11=yes && break
   done
 fi
 if test "$_x11" = yes ; then
@@ -4406,13 +4401,8 @@ echores "$_vdpau"
 
 echocheck "Xinerama"
 if test "$_xinerama" = auto ; then
-  cat > $TMPC <<EOF
-#include <X11/Xlib.h>
-#include <X11/extensions/Xinerama.h>
-int main(void) { XineramaIsActive(0); return 0; }
-EOF
   _xinerama=no
-  cc_check -lXinerama && _xinerama=yes
+  statement_check X11/extensions/Xinerama.h 'XineramaIsActive(0)' -lXinerama && _xinerama=yes
 fi
 
 if test "$_xinerama" = yes ; then
