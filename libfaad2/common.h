@@ -317,7 +317,7 @@ char *strchr(), *strrchr();
         }
         return i;
     }
-  #elif (defined(__i386__) && defined(__GNUC__)) && !defined(__STDC_VERSION__)
+  #elif (defined(__i386__) && defined(__GNUC__)) && __STDC_VERSION__ >= 199901L
     #define HAS_LRINTF
     // from http://www.stereopsis.com/FPU.html
     static INLINE int lrintf(float f)
