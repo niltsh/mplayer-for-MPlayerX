@@ -8841,6 +8841,18 @@ EOF
 # Do not overwrite an unchanged avconfig.h to avoid superfluous rebuilds.
 cmp -s "$TMPH" libavutil/avconfig.h || mv -f "$TMPH" libavutil/avconfig.h
 
+
+if x86; then
+# Create a skeleton config.asm with just the ARCH_ definitions for FFmpeg.
+> "$TMPS"
+for part in $arch $subarch; do
+  part=$(echo $part | tr '[a-z]' '[A-Z]')
+  echo "%define ARCH_${part}" >> "$TMPS"
+done
+
+cmp -s "$TMPS" config.asm || mv -f "$TMPS" config.asm
+fi
+
 #############################################################################
 
 cat << EOF
