@@ -4445,7 +4445,6 @@ echocheck "XF86keysym"
 if test "$_xf86keysym" = auto; then
   _xf86keysym=no
   cat > $TMPC <<EOF
-#include <X11/Xlib.h>
 #include <X11/XF86keysym.h>
 int main(void) { return XF86XK_AudioPause; }
 EOF
