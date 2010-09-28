@@ -583,22 +583,22 @@ _libavcodec_mpegaudio_hp=yes
 _libopencore_amrnb=auto
 _libopencore_amrwb=auto
 libopenjpeg=auto
-libavdecoders_all=$(sed -n 's/^[^#]*DEC.*(.*, *\(.*\)).*/\1_decoder/p' libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
+libavdecoders_all=$(sed -n 's/^[^#]*DEC.*(.*, *\(.*\)).*/\1_decoder/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
 libavdecoders=$(echo $libavdecoders_all | sed -e 's/ LIB[A-Z0-9_]*_DECODER//g')
-libavencoders_all=$(sed -n 's/^[^#]*ENC.*(.*, *\(.*\)).*/\1_encoder/p' libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
+libavencoders_all=$(sed -n 's/^[^#]*ENC.*(.*, *\(.*\)).*/\1_encoder/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
 libavencoders=$(echo $libavencoders_all | sed -e 's/ LIB[A-Z0-9_]*_ENCODER//g' -e s/AAC_ENCODER//)
-libavparsers_all=$(sed -n 's/^[^#]*PARSER.*(.*, *\(.*\)).*/\1_parser/p' libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
+libavparsers_all=$(sed -n 's/^[^#]*PARSER.*(.*, *\(.*\)).*/\1_parser/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
 libavparsers=$libavparsers_all
-libavbsfs_all=$(sed -n 's/^[^#]*BSF.*(.*, *\(.*\)).*/\1_bsf/p' libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
+libavbsfs_all=$(sed -n 's/^[^#]*BSF.*(.*, *\(.*\)).*/\1_bsf/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
 libavbsfs=$libavbsfs_all
-libavhwaccels_all=$(sed -n 's/^[^#]*HWACCEL.*(.*, *\(.*\)).*/\1_hwaccel/p' libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
+libavhwaccels_all=$(sed -n 's/^[^#]*HWACCEL.*(.*, *\(.*\)).*/\1_hwaccel/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
 # Disable all hardware accelerators for now.
 libavhwaccels=
-libavdemuxers_all=$(sed -n 's/^[^#]*DEMUX.*(.*, *\(.*\)).*/\1_demuxer/p' libavformat/allformats.c | tr '[a-z]' '[A-Z]')
+libavdemuxers_all=$(sed -n 's/^[^#]*DEMUX.*(.*, *\(.*\)).*/\1_demuxer/p' ffmpeg/libavformat/allformats.c | tr '[a-z]' '[A-Z]')
 libavdemuxers=$(echo $libavdemuxers_all | sed -e 's/ LIB[A-Z0-9_]*_DEMUXER//g' -e s/REDIR_DEMUXER// -e s/AVISYNTH_DEMUXER//)
-libavmuxers_all=$(sed -n 's/^[^#]*_MUX.*(.*, *\(.*\)).*/\1_muxer/p' libavformat/allformats.c | tr '[a-z]' '[A-Z]')
+libavmuxers_all=$(sed -n 's/^[^#]*_MUX.*(.*, *\(.*\)).*/\1_muxer/p' ffmpeg/libavformat/allformats.c | tr '[a-z]' '[A-Z]')
 libavmuxers=$(echo $libavmuxers_all | sed -e 's/ LIB[A-Z0-9_]*_MUXER//g' -e s/RTP_MUXER// -e s/RTSP_MUXER//)
-libavprotocols_all=$(sed -n 's/^[^#]*PROTOCOL.*(.*, *\(.*\)).*/\1_protocol/p' libavformat/allformats.c | tr '[a-z]' '[A-Z]')
+libavprotocols_all=$(sed -n 's/^[^#]*PROTOCOL.*(.*, *\(.*\)).*/\1_protocol/p' ffmpeg/libavformat/allformats.c | tr '[a-z]' '[A-Z]')
 libavprotocols=$libavprotocols_all
 _mencoder=yes
 _mplayer=yes
@@ -1476,7 +1476,7 @@ else # if test -z "$_target"
   fi
 fi
 
-extra_cflags="-I. $extra_cflags"
+extra_cflags="-I. -Iffmpeg $extra_cflags"
 _timer=timer-linux.c
 _getch=getch2.c
 if freebsd ; then
@@ -6934,11 +6934,11 @@ echores "$_librtmp"
 
 
 echocheck "FFmpeg"
-test -d libavutil ||
+test -d ffmpeg/libavutil ||
   die "MPlayer will not compile without libavutil in the source tree."
 ffmpeg=no
 if test "$ffmpeg_a" = auto ; then
-  test -d libavcore && ffmpeg_a=yes && ffmpeg=yes
+  test -d ffmpeg/libavcore && ffmpeg_a=yes && ffmpeg=yes
 elif test "$ffmpeg_so" = auto ; then
   ffmpeg_so=no
   if $_pkg_config --exists libavcore ; then
@@ -8251,7 +8251,7 @@ YASMDEP    = $_yasm
 YASMFLAGS  = $YASMFLAGS
 
 CONFIG_STATIC = yes
-SRC_PATH      = ..
+SRC_PATH      = ../..
 BUILD_ROOT    = ..
 LIBPREF       = lib
 LIBSUF        = .a
@@ -8828,7 +8828,7 @@ $def_av_fast_unaligned
 EOF
 
 # Do not overwrite an unchanged avconfig.h to avoid superfluous rebuilds.
-cmp -s "$TMPH" libavutil/avconfig.h || mv -f "$TMPH" libavutil/avconfig.h
+cmp -s "$TMPH" ffmpeg/libavutil/avconfig.h || mv -f "$TMPH" ffmpeg/libavutil/avconfig.h
 
 
 if x86; then
@@ -8841,6 +8841,12 @@ done
 
 cmp -s "$TMPS" config.asm || mv -f "$TMPS" config.asm
 fi
+
+
+# Create a config.mak for FFmpeg that includes MPlayer's config.mak.
+cat > ffmpeg/config.mak << EOF
+include ../../config.mak
+EOF
 
 #############################################################################
 
