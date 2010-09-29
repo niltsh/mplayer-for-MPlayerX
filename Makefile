@@ -993,7 +993,7 @@ distclean: clean testsclean toolsclean driversclean dhahelperclean
 	-rm -f config.* codecs.conf.h help_mp.h version.h TAGS tags
 	-rm -f $(VIDIX_PCI_FILES)
 	-rm -f $(call ADD_ALL_EXESUFS,codec-cfg cpuinfo)
-	-rm -f ffmpeg/libavutil/avconfig.h ffmpeg/config.mak
+	-rm -f ffmpeg/libavutil/avconfig.h ffmpeg/config.*
 
 doxygen:
 	doxygen DOCS/tech/Doxyfile

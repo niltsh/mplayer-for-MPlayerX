@@ -8839,7 +8839,7 @@ for part in $arch $subarch; do
   echo "%define ARCH_${part}" >> "$TMPS"
 done
 
-cmp -s "$TMPS" config.asm || mv -f "$TMPS" config.asm
+cmp -s "$TMPS" ffmpeg/config.asm || mv -f "$TMPS" ffmpeg/config.asm
 fi
 
 
