@@ -8262,7 +8262,7 @@ YASMDEP    = $_yasm
 YASMFLAGS  = $YASMFLAGS
 
 CONFIG_STATIC = yes
-SRC_PATH      = ../..
+SRC_PATH      = ../../
 BUILD_ROOT    = ..
 LIBPREF       = lib
 LIBSUF        = .a
@@ -8850,7 +8850,7 @@ for part in $arch $subarch; do
   echo "%define ARCH_${part}" >> "$TMPS"
 done
 
-cmp -s "$TMPS" ffmpeg/config.asm || mv -f "$TMPS" ffmpeg/config.asm
+cmp -s "$TMPS" config.asm || mv -f "$TMPS" config.asm
 fi
 
 
