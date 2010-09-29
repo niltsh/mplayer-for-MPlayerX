@@ -1367,6 +1367,7 @@ void spudec_set_paletted(void *this, const uint8_t *pal_img, int pal_stride,
   packet->start_col = x;
   packet->start_row = y;
   packet->data_len = 2 * stride * h;
+  if (packet->data_len) { // size 0 is a special "clear" packet
   packet->packet = malloc(packet->data_len);
   img  = packet->packet;
   aimg = packet->packet + stride * h;
@@ -1381,6 +1382,7 @@ void spudec_set_paletted(void *this, const uint8_t *pal_img, int pal_stride,
   }
   pal2gray_alpha(g8a8_pal, pal_img, pal_stride,
                  img, aimg, stride, w, h);
+  }
   packet->start_pts = 0;
   packet->end_pts = 0x7fffffff;
   if (pts != MP_NOPTS_VALUE)
