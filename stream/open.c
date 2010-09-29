@@ -44,6 +44,7 @@ int dvd_chapter=1;
 int dvd_last_chapter=0;
 char* dvd_device=NULL;
 int dvd_title=0;
+char *bluray_device=NULL;
 
 // Open a new stream  (stdin/file/vcd/url)
 

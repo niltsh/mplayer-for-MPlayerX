@@ -452,8 +452,8 @@ static int bd_stream_open(stream_t *s, int mode, void* opts, int* file_format)
 
     if (p->device)
         bd->device = p->device;
-    else if (dvd_device)
-        bd->device = dvd_device;
+    else if (bluray_device)
+        bd->device = bluray_device;
     else
         bd->device = DEFAULT_BD_DEVICE;
 

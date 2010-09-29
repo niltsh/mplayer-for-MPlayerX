@@ -46,7 +46,6 @@
 #define BLURAY_DEFAULT_CHAPTER    0
 #define BLURAY_DEFAULT_TITLE      0
 
-char *bluray_device  = NULL;
 int   bluray_angle   = 0;
 int   bluray_chapter = 0;
 
