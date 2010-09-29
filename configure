@@ -2701,13 +2701,15 @@ if test -z "$YASMFLAGS" ; then
   else
     objformat="elf"
   fi
+  yasmdefines=""
   # currently tested for Linux x86, x86_64
+  test "$pic" = "yes"      && yasmdefines="$yasmdefines -DPIC"
+  test -n "$extern_prefix" && yasmdefines="$yasmdefines -DPREFIX"
+
   YASMFLAGS="-f $objformat"
   x86_64 && YASMFLAGS="$YASMFLAGS -m amd64"
-  test "$pic" = "yes" && YASMFLAGS="$YASMFLAGS -DPIC"
   case "$objformat" in
     elf) test $_debug && YASMFLAGS="$YASMFLAGS -g dwarf2" ;;
-    *)                   YASMFLAGS="$YASMFLAGS -DPREFIX"  ;;
   esac
 else
   warn_cflags=yes
@@ -2715,7 +2717,16 @@ fi
 
 echo "pabsw xmm0, xmm0" > $TMPS
 if test "$_yasm" ; then
-  yasm_check || die "yasm not found, use --yasm='' if you really want to compile without"
+  if ! yasm_check ; then
+    if x86_64 ; then
+      case "$objformat" in
+        elf)   objformat=elf64 ;;
+        win32) objformat=win64 ;;
+      esac
+    fi
+    YASMFLAGS="-f $objformat $yasmdefines"
+    yasm_check || die "yasm not found, use --yasm='' if you really want to compile without"
+  fi
 fi
 if test $_yasm ; then
   def_yasm='#define HAVE_YASM 1'
