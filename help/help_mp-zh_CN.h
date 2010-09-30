@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 32066 (MSGTR_UsingExternalPP)
+// Synced with help_mp-en.h rev. 32066 (MSGTR_DownloadCodecPackage)
 // Reminder of hard terms which need better/final solution later:
 //   (file links to be updated later if available!);
 //   NAV; section/subsection;  XScreenSaver; keycolor;
@@ -72,8 +72,8 @@ static const char help_text[]=
 #define MSGTR_CantFindAudioCodec "找不到音频格式 0x%X 的编解码器。\n"
 #define MSGTR_TryForceVideoFmtStr "尝试强制使用视频编解码器驱动族 %s...\n"
 #define MSGTR_CantFindVideoCodec "找不到匹配所选 -vo 参数和视频格式 0x%X 的编解码器。\n"
-#define MSGTR_CannotInitVO "致命错误：无法初始化视频驱动！\n"
-#define MSGTR_CannotInitAO "不能打开/初始化音频设备 -> 禁用声音。\n"
+#define MSGTR_CannotInitVO "致命错误：无法初始设置视频驱动！\n"
+#define MSGTR_CannotInitAO "不能打开/初始设置音频设备 -> 禁用声音。\n"
 #define MSGTR_StartPlaying "开始播放...\n"
 
 #define MSGTR_SystemTooSlow "\n\n"\
@@ -115,11 +115,11 @@ static const char help_text[]=
 #define MSGTR_UsingRTCTiming "使用 Linux 的硬件 RTC 计时（%ldHz）。\n"
 #define MSGTR_CannotReadVideoProperties "视频：无法读取视频属性\n"
 #define MSGTR_NoStreamFound "未找到媒体流。\n"
-#define MSGTR_ErrorInitializingVODevice "打开/初始化所选的（-vo）视频输出设备出错。\n"
+#define MSGTR_ErrorInitializingVODevice "打开/初始设置所选的（-vo）视频输出设备出错。\n"
 #define MSGTR_ForcedVideoCodec "强制使用视频编解码器：%s\n"
 #define MSGTR_ForcedAudioCodec "强制使用音频编解码器：%s\n"
 #define MSGTR_Video_NoVideo "视频：没有视频流\n"
-#define MSGTR_NotInitializeVOPorVO "\n致命错误：无法初始化视频过滤器（-vf）或视频输出（-vf）。\n"
+#define MSGTR_NotInitializeVOPorVO "\n致命错误：无法初始设置视频过滤器（-vf）或视频输出（-vf）。\n"
 #define MSGTR_Paused "\n  =====  暂停  =====\r" // no more than 23 characters (status line for audio files)
 #define MSGTR_PlaylistLoadUnable "\n无法装载播放列表 %s\n"
 #define MSGTR_Exit_SIGILL_RTCpuSel \
@@ -149,17 +149,17 @@ static const char help_text[]=
 #define MSGTR_ErrorOpeningOutputFile "未能以写入方式打开文件 [%s]！\n"
 #define MSGTR_CommandLine "命令行："
 #define MSGTR_RTCDeviceNotOpenable "未能打开 %s：%s（用户应当有权限读取该设备。）\n"
-#define MSGTR_LinuxRTCInitErrorIrqpSet "ioctl (rtc_irqp_set %lu) 中出现 Linux RTC 初始化错误：%s\n"
+#define MSGTR_LinuxRTCInitErrorIrqpSet "ioctl (rtc_irqp_set %lu) 中出现 Linux RTC 初始设置错误：%s\n"
 #define MSGTR_IncreaseRTCMaxUserFreq "尝试添加 \"echo %lu > /proc/sys/dev/rtc/max-user-freq\" 到你的系统启动脚本中。\n"
-#define MSGTR_LinuxRTCInitErrorPieOn "ioctl (rtc_pie_on) 中出现 Linux RTC 初始化错误：%s\n"
+#define MSGTR_LinuxRTCInitErrorPieOn "ioctl (rtc_pie_on) 中出现 Linux RTC 初始置错误：%s\n"
 #define MSGTR_UsingTimingType "正在使用 %s 计时。\n"
 #define MSGTR_NoIdleAndGui "GMPLayer 不能使用选项 -idle。\n"
-#define MSGTR_MenuInitialized "菜单已初始化：%s\n"
-#define MSGTR_MenuInitFailed "菜单初始化失败。\n"
+#define MSGTR_MenuInitialized "菜单已初始设置：%s\n"
+#define MSGTR_MenuInitFailed "菜单初始设置失败。\n"
 #define MSGTR_Getch2InitializedTwice "警告：getch2_init 被两次调用！\n"
 #define MSGTR_DumpstreamFdUnavailable "无法导出该数据流 - 没有可用的文件描述符。\n"
 #define MSGTR_CantOpenLibmenuFilterWithThisRootMenu "不能用根菜单 %s 打开 libmenu 视频过滤器。\n"
-#define MSGTR_AudioFilterChainPreinitError "音频过滤器链预初始化错误！\n"
+#define MSGTR_AudioFilterChainPreinitError "音频过滤器链预初始设置错误！\n"
 #define MSGTR_LinuxRTCReadError "Linux RTC 读取错误：%s\n"
 #define MSGTR_SoftsleepUnderflow "警告！Softsleep 数值下溢！\n"
 #define MSGTR_DvdnavNullEvent "DVDNAV 事件为空？！\n"
@@ -177,7 +177,7 @@ static const char help_text[]=
 #define MSGTR_DvdnavNavSpuClutChange "DVDNAV 事件：Nav SPU CLUT 切换\n"
 #define MSGTR_DvdnavNavSeekDone "DVDNAV 事件：Nav 定位完成\n"
 #define MSGTR_MenuCall "菜单调用\n"
-#define MSGTR_MasterQuit "选项 -udp_slave：因主动方中止而中止\n"
+#define MSGTR_MasterQuit "选项 -udp-slave：因主动方中止而中止\n"
 #define MSGTR_InvalidIP "选项 -udp-ip：无效的 IP 地址\n"
 
 // --- edit decision lists
@@ -861,7 +861,7 @@ static const char help_text[]=
 #define MSGTR_LIBVO_3DFX_UnableToOpenDevice "[VO_3DFX] 无法打开 /dev/3dfx。\n"
 #define MSGTR_LIBVO_3DFX_Error "[VO_3DFX] 错误：%d。\n"
 #define MSGTR_LIBVO_3DFX_CouldntMapMemoryArea "[VO_3DFX] 未能映射 3dfx 内存区域：%p,%p,%d。\n"
-#define MSGTR_LIBVO_3DFX_DisplayInitialized "[VO_3DFX] 初始化完毕：%p。\n"
+#define MSGTR_LIBVO_3DFX_DisplayInitialized "[VO_3DFX] 初始设置完毕：%p。\n"
 #define MSGTR_LIBVO_3DFX_UnknownSubdevice "[VO_3DFX] 未知子设备：%s。\n"
 
 // vo_aa.c
@@ -906,7 +906,7 @@ static const char help_text[]=
 #define MSGTR_LIBVO_DXR3_ErrorOpeningForWritingTryingSP "[VO_DXR3] 打开 %s 写入错误，尝试 /dev/em8300_sp。\n"
 #define MSGTR_LIBVO_DXR3_ErrorOpeningForWritingAsWellSP "[VO_DXR3] 打开 /dev/em8300_sp 以写入同样错误！\n跳出。\n"
 #define MSGTR_LIBVO_DXR3_UnableToOpenDisplayDuringHackSetup "[VO_DXR3] 设置覆盖模式破解方式时无法打开显示设备！\n"
-#define MSGTR_LIBVO_DXR3_UnableToInitX11 "[VO_DXR3] 无法初始化 X11！\n"
+#define MSGTR_LIBVO_DXR3_UnableToInitX11 "[VO_DXR3] 无法初始设置 X11！\n"
 #define MSGTR_LIBVO_DXR3_FailedSettingOverlayAttribute "[VO_DXR3] 未能设置覆盖模式属性。\n"
 #define MSGTR_LIBVO_DXR3_FailedSettingOverlayScreen "[VO_DXR3] 未能设置覆盖屏幕！\n退出。\n"
 #define MSGTR_LIBVO_DXR3_FailedEnablingOverlay "[VO_DXR3] 未能启用覆盖模式！\n退出。\n"
@@ -971,7 +971,7 @@ static const char help_text[]=
 #define MSGTR_LIBVO_SDL_UsingDepthColorspaceConversion "[VO_SDL] 使用深度/颜色空间转换，这会减慢速度（%ibpp -> %ibpp）。\n"
 #define MSGTR_LIBVO_SDL_UnsupportedImageFormatInDrawslice "[VO_SDL] draw_slice 不支持的图像格式，请联系 MPlayer 的开发者！\n"
 #define MSGTR_LIBVO_SDL_BlitFailed "[VO_SDL] 位块传输失败：%s。\n"
-#define MSGTR_LIBVO_SDL_InitializationFailed "[VO_SDL] 初始化 SDL 模式失败: %s。\n"
+#define MSGTR_LIBVO_SDL_InitializationFailed "[VO_SDL] 初始设置 SDL 模式失败: %s。\n"
 #define MSGTR_LIBVO_SDL_UsingDriver "[VO_SDL] 使用驱动：%s。\n"
 
 // vo_svga.c
@@ -1043,9 +1043,9 @@ static const char help_text[]=
 #define MSGTR_LIBVO_VESA_OemProductName "[VO_VESA] OEM 产品名：%s。\n"
 #define MSGTR_LIBVO_VESA_OemProductRev "[VO_VESA] OEM 产品版本：%s。\n"
 #define MSGTR_LIBVO_VESA_Hint "[VO_VESA] 提示：为使用电视输出你应当在启动前插入电视接头。\n"\
-"[VO_VESA] 因为 VESA BIOS 只在自检的时候执行初始化。\n"
+"[VO_VESA] 因为 VESA BIOS 只在自检的时候执行初始设置。\n"
 #define MSGTR_LIBVO_VESA_UsingVesaMode "[VO_VESA] 使用 VESA 模式 (%u) = %x [%ux%u@%u]\n"
-#define MSGTR_LIBVO_VESA_CantInitializeSwscaler "[VO_VESA] 无法初始化软件缩放功能。\n"
+#define MSGTR_LIBVO_VESA_CantInitializeSwscaler "[VO_VESA] 无法初始设置软件缩放功能。\n"
 #define MSGTR_LIBVO_VESA_CantUseDga "[VO_VESA] 无法使用 DGA。强制使用组交换模式。 :(\n"
 #define MSGTR_LIBVO_VESA_UsingDga "[VO_VESA] 使用 DGA（物理资源: %08lXh, %08lXh）"
 #define MSGTR_LIBVO_VESA_CantUseDoubleBuffering "[VO_VESA] 无法使用双重缓冲：显存不足。\n"
@@ -1056,12 +1056,12 @@ static const char help_text[]=
 #define MSGTR_LIBVO_VESA_CantAllocateTemporaryBuffer "[VO_VESA] 无法分配临时缓冲。\n"
 #define MSGTR_LIBVO_VESA_SorryUnsupportedMode "[VO_VESA] 抱歉，不支持该模式——请尝试 -x 640 -zoom。\n"
 #define MSGTR_LIBVO_VESA_OhYouReallyHavePictureOnTv "[VO_VESA] 噢，你的电视上有图像了！\n"
-#define MSGTR_LIBVO_VESA_CantInitialozeLinuxVideoOverlay "[VO_VESA] 无法初始化 Linux 视频覆盖模式。\n"
+#define MSGTR_LIBVO_VESA_CantInitialozeLinuxVideoOverlay "[VO_VESA] 无法初始设置 Linux 视频覆盖模式。\n"
 #define MSGTR_LIBVO_VESA_UsingVideoOverlay "[VO_VESA] 使用视频覆盖模式：%s。\n"
-#define MSGTR_LIBVO_VESA_CantInitializeVidixDriver "[VO_VESA] 无法初始化 VIDIX 驱动。\n"
+#define MSGTR_LIBVO_VESA_CantInitializeVidixDriver "[VO_VESA] 无法初始设置 VIDIX 驱动。\n"
 #define MSGTR_LIBVO_VESA_UsingVidix "[VO_VESA] 正在使用 VIDIX。\n"
 #define MSGTR_LIBVO_VESA_CantFindModeFor "[VO_VESA] 无法找到适合的模式用于：%ux%u@%u。\n"
-#define MSGTR_LIBVO_VESA_InitializationComplete "[VO_VESA] VESA 初始化完成。\n"
+#define MSGTR_LIBVO_VESA_InitializationComplete "[VO_VESA] VESA 初始设置完成。\n"
 
 // vesa_lvo.c
 #define MSGTR_LIBVO_VESA_ThisBranchIsNoLongerSupported "[VESA_LVO] 这个分支版本已经不再维护。\n[VESA_LVO] 请使用 -vo vesa:vidix。\n"
@@ -1135,7 +1135,7 @@ static const char help_text[]=
 #define MSGTR_AO_ALSA9_1x_Removed "音频输出：alsa9 和 alsa1x 模块已不支持，请用 -ao alsa 代替。\n"
 #define MSGTR_AO_TryingPreferredAudioDriver "尝试使用偏好的音频驱动‘%.*s’，选项设为‘%s’\n"
 #define MSGTR_AO_NoSuchDriver "无此音频驱动‘%.*s’\n"
-#define MSGTR_AO_FailedInit "未能初始化音频驱动‘%s’\n"
+#define MSGTR_AO_FailedInit "未能初始设置音频驱动‘%s’\n"
 #define MSGTR_AO_TryingEveryKnown "尝试每个已知的音频驱动...\n"
 
 // ao_oss.c
@@ -1179,19 +1179,19 @@ static const char help_text[]=
 #define MSGTR_AO_SDL_INFO "[AO SDL] 采样率：%iHz 声道：%s 格式 %s\n"
 #define MSGTR_AO_SDL_DriverInfo "[AO SDL] 使用 %s 音频驱动。\n"
 #define MSGTR_AO_SDL_UnsupportedAudioFmt "[AO SDL] 不支持的音频格式：0x%x。\n"
-#define MSGTR_AO_SDL_CantInit "[AO SDL] SDL 音频初始化失败：%s\n"
+#define MSGTR_AO_SDL_CantInit "[AO SDL] SDL 音频初始设置失败：%s\n"
 #define MSGTR_AO_SDL_CantOpenAudio "[AO SDL] 无法打开音频：%s\n"
 
 // ao_sgi.c
 #define MSGTR_AO_SGI_INFO "[AO SGI] 控制。\n"
-#define MSGTR_AO_SGI_InitInfo "[AO SGI] 初始化：采样率：%iHz 声道：%s 格式 %s\n"
+#define MSGTR_AO_SGI_InitInfo "[AO SGI] 初始设置：采样率：%iHz 声道：%s 格式 %s\n"
 #define MSGTR_AO_SGI_InvalidDevice "[AO SGI] 播放：无效的设备。\n"
-#define MSGTR_AO_SGI_CantSetParms_Samplerate "[AO SGI] 初始化：setparams 失败：%s\n无法设置为所需的采样率。\n"
-#define MSGTR_AO_SGI_CantSetAlRate "[AO SGI] 初始化：AL_RATE 不适用于给定的音频来源。\n"
-#define MSGTR_AO_SGI_CantGetParms "[AO SGI] 初始化：getparams 失败：%s\n"
-#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] 初始化：当前的采样率为 %lf（所需的速率为 %lf）\n"
-#define MSGTR_AO_SGI_InitConfigError "[AO SGI] 初始化：%s\n"
-#define MSGTR_AO_SGI_InitOpenAudioFailed "[AO SGI] 初始化：无法打开音频声道：%s\n"
+#define MSGTR_AO_SGI_CantSetParms_Samplerate "[AO SGI] 初始设置：setparams 失败：%s\n无法设置为所需的采样率。\n"
+#define MSGTR_AO_SGI_CantSetAlRate "[AO SGI] 初始设置：AL_RATE 不适用于给定的音频来源。\n"
+#define MSGTR_AO_SGI_CantGetParms "[AO SGI] 初始设置：getparams 失败：%s\n"
+#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] 初始设置：当前的采样率为 %lf（所需的速率为 %lf）\n"
+#define MSGTR_AO_SGI_InitConfigError "[AO SGI] 初始设置：%s\n"
+#define MSGTR_AO_SGI_InitOpenAudioFailed "[AO SGI] 初始设置：无法打开音频声道：%s\n"
 #define MSGTR_AO_SGI_Uninit "[AO SGI] 卸载：...\n"
 #define MSGTR_AO_SGI_Reset "[AO SGI] 重启：...\n"
 #define MSGTR_AO_SGI_PauseInfo "[AO SGI] audio_pause：...\n"
@@ -1316,11 +1316,11 @@ static const char help_text[]=
 #define MSGTR_INPUT_JOYSTICK_CantOpen "无法打开操纵杆设备 %s：%s\n"
 #define MSGTR_INPUT_JOYSTICK_ErrReading "读取操纵杆设备时出错：%s\n"
 #define MSGTR_INPUT_JOYSTICK_LoosingBytes "操纵杆：丢失了 %d 字节的数据\n"
-#define MSGTR_INPUT_JOYSTICK_WarnLostSync "操纵杆：初始化警告事件，与驱动程序失去同步。\n"
+#define MSGTR_INPUT_JOYSTICK_WarnLostSync "操纵杆：初始设置警告事件，与驱动程序失去同步。\n"
 #define MSGTR_INPUT_JOYSTICK_WarnUnknownEvent "操作杆未知警告事件类型 %d\n"
 
 // appleir.c
-#define MSGTR_INPUT_APPLE_IR_Init "在设备 %s 上初始化 Apple IR\n"
+#define MSGTR_INPUT_APPLE_IR_Init "在设备 %s 上初始设置 Apple IR\n"
 #define MSGTR_INPUT_APPLE_IR_Detect "在设备 %s 上侦测到 Apple IR\n"
 #define MSGTR_INPUT_APPLE_IR_CantOpen "无法打开 Apple IR 设备：%s\n"
 
@@ -1347,10 +1347,10 @@ static const char help_text[]=
 #define MSGTR_INPUT_INPUT_ErrNoCmdForKey "找不到按键 %s 的命令"
 #define MSGTR_INPUT_INPUT_ErrBuffer2SmallForCmd "命令 %s 的缓冲过小\n"
 #define MSGTR_INPUT_INPUT_ErrWhyHere "怎么会执行到这里了？\n"
-#define MSGTR_INPUT_INPUT_ErrCantInitJoystick "无法初始化输入操纵杆\n"
+#define MSGTR_INPUT_INPUT_ErrCantInitJoystick "无法初始设置输入操纵杆\n"
 #define MSGTR_INPUT_INPUT_ErrCantStatFile "无法统计 %s：%s\n"
 #define MSGTR_INPUT_INPUT_ErrCantOpenFile "无法打开 %s：%s\n"
-#define MSGTR_INPUT_INPUT_ErrCantInitAppleRemote "无法初始化 Apple Remote 遥控器。\n"
+#define MSGTR_INPUT_INPUT_ErrCantInitAppleRemote "无法初始设置 Apple Remote 遥控器。\n"
 
 // lirc.c
 #define MSGTR_SettingUpLIRC "设置 LIRC 支持\n"
@@ -1392,7 +1392,7 @@ static const char help_text[]=
                                   "===     如果此文件是 AVI、ASF 或 MPEG 媒体流，请联系开发者！   ===\n"
 #define MSGTR_SettingProcessPriority "设置进程优先级：%s\n"
 #define MSGTR_FilefmtFourccSizeFpsFtime "[V] 文件格式:%d  fourcc代码:0x%X  大小:%dx%d  帧速:%5.3f  每帧时长:=%6.4f\n"
-#define MSGTR_CannotInitializeMuxer "不能初始化流合并器。"
+#define MSGTR_CannotInitializeMuxer "无法初始设置流合并器。"
 #define MSGTR_MissingVideoStream "未找到视频流。\n"
 #define MSGTR_MissingAudioStream "未找到音频流...  -> 没有声音。\n"
 #define MSGTR_MissingVideoStreamBug "没有视频流！？请联系开发者，这可能是软件的缺陷 :(\n"
@@ -1479,9 +1479,9 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_DEMUXERS_FillBufferError "fill_buffer 错误：流分解器错误：非 vd、ad 或 sd。\n"
 
 // demux_mkv.c
-#define MSGTR_MPDEMUX_MKV_ZlibInitializationFailed "[mkv] zlib 初始化失败。\n"
+#define MSGTR_MPDEMUX_MKV_ZlibInitializationFailed "[mkv] zlib 初始设置失败。\n"
 #define MSGTR_MPDEMUX_MKV_ZlibDecompressionFailed "[mkv] zlib 解压失败。\n"
-#define MSGTR_MPDEMUX_MKV_LzoInitializationFailed "[mkv] lzo 初始化失败。\n"
+#define MSGTR_MPDEMUX_MKV_LzoInitializationFailed "[mkv] lzo 初始设置失败。\n"
 #define MSGTR_MPDEMUX_MKV_LzoDecompressionFailed "[mkv] lzo 解压失败。\n"
 #define MSGTR_MPDEMUX_MKV_TrackEncrypted "[mkv] 轨道 %u 已加密，但解密还未实现。跳过该轨道。\n"
 #define MSGTR_MPDEMUX_MKV_UnknownContentEncoding "[mkv] 轨道 %u 内容的编码类型未知。跳过该轨道。\n"
@@ -1524,7 +1524,7 @@ static const char help_text[]=
 #define MSGTR_LIBMENU_ConfigFileIsTooBig "[MENU] 配置文件过大（> %d KB）\n"
 #define MSGTR_LIBMENU_ConfigFileIsEmpty "[MENU] 配置文件为空。\n"
 #define MSGTR_LIBMENU_MenuNotFound "[MENU] 未找到菜单 %s。\n"
-#define MSGTR_LIBMENU_MenuInitFailed "[MENU] 菜单‘%s’：初始化失败。\n"
+#define MSGTR_LIBMENU_MenuInitFailed "[MENU] 菜单‘%s’：初始设置失败。\n"
 #define MSGTR_LIBMENU_UnsupportedOutformat "[MENU] 不支持该输出格式！\n"
 
 // libmenu/menu_cmdlist.c
@@ -1575,7 +1575,7 @@ static const char help_text[]=
 #define MSGTR_CantCloseCodec "无法关闭解码器。\n"
 
 #define MSGTR_MissingDLLcodec "错误：无法打开所需的 DirectShow 编解码器：%s\n"
-#define MSGTR_ACMiniterror "无法加载/初始化 Win32/ACM 音频解码器（缺少 DLL 文件？）。\n"
+#define MSGTR_ACMiniterror "无法加载/初始设置 Win32/ACM 音频解码器（缺少 DLL 文件？）。\n"
 #define MSGTR_MissingLAVCcodec "无法在 libavcodec 中找到解码器‘%s’...\n"
 
 #define MSGTR_MpegNoSequHdr "MPEG：致命错误：搜索 MPEG 序列头部时遇到文件结尾符。\n"
@@ -1589,35 +1589,35 @@ static const char help_text[]=
 
 #define MSGTR_UnknownAudio "音频格式未知或缺失 -> 无声音输出\n"
 
-#define MSGTR_UsingExternalPP "[PP] 使用外部的后处理过滤器, max q = %d。\n"
-#define MSGTR_UsingCodecPP "[PP] 使用编解码器的后处理过滤器, max q = %d。\n"
-#define MSGTR_VideoAttributeNotSupportedByVO_VD "所选的 vo & vd 不支持视频属性 '%s'。\n"
-#define MSGTR_VideoCodecFamilyNotAvailableStr "请求的视频编解码器族 [%s] (vfm=%s) 不可用。\n请在编译时启用它。\n"
-#define MSGTR_AudioCodecFamilyNotAvailableStr "请求的音频编解码器族 [%s] (afm=%s) 不可用。\n请在编译时启用它。\n"
-#define MSGTR_OpeningVideoDecoder "打开视频解码器: [%s] %s\n"
-#define MSGTR_SelectedVideoCodec "已选视频编解码器: [%s] vfm: %s (%s)\n"
-#define MSGTR_OpeningAudioDecoder "打开音频解码器: [%s] %s\n"
-#define MSGTR_SelectedAudioCodec "已选音频编解码器: [%s] afm: %s (%s)\n"
-#define MSGTR_BuildingAudioFilterChain "为 %dHz/%dch/%s -> %dHz/%dch/%s 建造音频过滤链...\n"
-#define MSGTR_UninitVideoStr "反初始视频: %s\n"
-#define MSGTR_UninitAudioStr "反初始音频: %s\n"
-#define MSGTR_VDecoderInitFailed "VDecoder 初始化失败 :(\n"
-#define MSGTR_ADecoderInitFailed "ADecoder 初始化失败 :(\n"
-#define MSGTR_ADecoderPreinitFailed "ADecoder 预初始化失败 :(\n"
-#define MSGTR_AllocatingBytesForInputBuffer "dec_audio: 为输入缓冲分配 %d 字节。\n"
-#define MSGTR_AllocatingBytesForOutputBuffer "dec_audio: 为输出缓冲分配 %d + %d = %d 字节。\n"
+#define MSGTR_UsingExternalPP "[PP] 使用外部的后期处理过滤器，max q = %d。\n"
+#define MSGTR_UsingCodecPP "[PP] 使用编解码器的后期处理过滤器，max q = %d。\n"
+#define MSGTR_VideoAttributeNotSupportedByVO_VD "所选的 vo & vd 不支持视频属性‘%s’。\n"
+#define MSGTR_VideoCodecFamilyNotAvailableStr "所请求使用的视频编解码器族 [%s] (vfm=%s) 不可用。\n需在编译时启用该模块。\n"
+#define MSGTR_AudioCodecFamilyNotAvailableStr "所请求使用的音频编解码器族 [%s] (afm=%s) 不可用。\n需在编译时启用该模块。\n"
+#define MSGTR_OpeningVideoDecoder "正打开视频解码器：[%s] %s\n"
+#define MSGTR_SelectedVideoCodec "所选视频编解码器为：[%s] vfm: %s (%s)\n"
+#define MSGTR_OpeningAudioDecoder "正打开音频解码器：[%s] %s\n"
+#define MSGTR_SelectedAudioCodec "所选音频编解码器为：[%s] afm: %s (%s)\n"
+#define MSGTR_BuildingAudioFilterChain "构造音频过滤器链用于 %dHz/%dch/%s -> %dHz/%dch/%s 转换...\n"
+#define MSGTR_UninitVideoStr "解除视频初始设置：%s\n"
+#define MSGTR_UninitAudioStr "解除音频初始设置：%s\n"
+#define MSGTR_VDecoderInitFailed "VDecoder 初始设置失败 :(\n"
+#define MSGTR_ADecoderInitFailed "ADecoder 初始设置失败 :(\n"
+#define MSGTR_ADecoderPreinitFailed "ADecoder 预先初始设置失败 :(\n"
+#define MSGTR_AllocatingBytesForInputBuffer "dec_audio：输入缓冲分配了 %d 字节。\n"
+#define MSGTR_AllocatingBytesForOutputBuffer "dec_audio：输出缓冲分配了 %d + %d = %d 字节。\n"
 
 // libmpcodecs/ad_dvdpcm.c:
-#define MSGTR_SamplesWanted "该格式需要编码样本以优化相关技术支持。请联系开发者。\n"
+#define MSGTR_SamplesWanted "需要该格式的编码样本以优化相关技术支持。有意请联系开发者。\n"
 
 // libmpcodecs/ad_libdv.c
-#define MSGTR_MPCODECS_AudioFramesizeDiffers "[AD_LIBDV] 警告! 音频帧大小不一致! read=%d  hdr=%d。\n"
+#define MSGTR_MPCODECS_AudioFramesizeDiffers "[AD_LIBDV] 警告！音频帧大小不一致！read=%d  hdr=%d。\n"
 
 // vd.c
-#define MSGTR_CodecDidNotSet "VDec: 编解码器无法设置 sh->disp_w 和 sh->disp_h, 尝试绕过。\n"
-#define MSGTR_CouldNotFindColorspace "找不到匹配的色彩空间 - 重新尝试 -vf scale...\n"
-#define MSGTR_MovieAspectIsSet "电影宽高比为 %.2f:1 - 预放大到正确的电影宽高比。\n"
-#define MSGTR_MovieAspectUndefined "电影宽高比未定义 - 没使用预放大。\n"
+#define MSGTR_CodecDidNotSet "VDec：编解码器无法设置 sh->disp_w 和 sh->disp_h，尝试使用替代方法。\n"
+#define MSGTR_CouldNotFindColorspace "无法找到匹配的色彩空间 - 使用 -vf scale 重试...\n"
+#define MSGTR_MovieAspectIsSet "电影宽高比为 %.2f:1 - 预先放大到正确的电影宽高比。\n"
+#define MSGTR_MovieAspectUndefined "电影宽高比未定义 - 没有使用预先放大功能。\n"
 
 // vd_dshow.c, vd_dmo.c
 #define MSGTR_DownloadCodecPackage "你需要升级/安装二进制编解码器包。\n请访问 http:\/\/www.mplayerhq.hu/dload.html\n"
