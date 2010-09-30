@@ -2706,7 +2706,7 @@ if test -z "$YASMFLAGS" ; then
   test "$pic" = "yes"      && yasmdefines="$yasmdefines -DPIC"
   test -n "$extern_prefix" && yasmdefines="$yasmdefines -DPREFIX"
 
-  YASMFLAGS="-f $objformat"
+  YASMFLAGS="-f $objformat $yasmdefines"
   x86_64 && YASMFLAGS="$YASMFLAGS -m amd64"
   case "$objformat" in
     elf) test $_debug && YASMFLAGS="$YASMFLAGS -g dwarf2" ;;
