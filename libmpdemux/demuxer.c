@@ -826,11 +826,14 @@ int ds_get_packet_pts(demux_stream_t *ds, unsigned char **start, double *pts)
 int ds_get_packet_sub(demux_stream_t *ds, unsigned char **start,
                       double *pts, double *endpts)
 {
+    double max_pts = MP_NOPTS_VALUE;
     int len;
     *start = NULL;
     // initialize pts
-    if (pts)
+    if (pts) {
+        max_pts = *pts;
         *pts    = MP_NOPTS_VALUE;
+    }
     if (endpts)
         *endpts = MP_NOPTS_VALUE;
     if (ds->buffer_pos >= ds->buffer_size) {
@@ -846,8 +849,8 @@ int ds_get_packet_sub(demux_stream_t *ds, unsigned char **start,
         if (pts) {
             *pts    = ds->current->pts;
             // check if we are too early
-            if (*pts != MP_NOPTS_VALUE && ds->current->pts != MP_NOPTS_VALUE &&
-                ds->current->pts > *pts)
+            if (*pts != MP_NOPTS_VALUE && max_pts != MP_NOPTS_VALUE &&
+                *pts > max_pts)
                 return -1;
         }
     }
