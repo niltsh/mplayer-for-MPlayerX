@@ -744,16 +744,6 @@ INSTALL_TARGETS-$(MENCODER) += install-mencoder install-mencoder-man
 INSTALL_TARGETS-$(MPLAYER)  += install-mplayer  install-mplayer-man
 
 DIRS =  . \
-        gui \
-        gui/mplayer \
-        gui/mplayer/gtk \
-        gui/skin \
-        gui/wm \
-        gui/win32 \
-        input \
-        libaf \
-        libao2 \
-        libass \
         ffmpeg/libavcodec \
         ffmpeg/libavcodec/alpha \
         ffmpeg/libavcodec/arm \
@@ -772,6 +762,23 @@ DIRS =  . \
         ffmpeg/libavutil/sh4 \
         ffmpeg/libavutil/tomi \
         ffmpeg/libavutil/x86 \
+        ffmpeg/libpostproc \
+        ffmpeg/libswscale \
+        ffmpeg/libswscale/bfin \
+        ffmpeg/libswscale/mlib \
+        ffmpeg/libswscale/ppc \
+        ffmpeg/libswscale/sparc \
+        ffmpeg/libswscale/x86 \
+        gui \
+        gui/mplayer \
+        gui/mplayer/gtk \
+        gui/skin \
+        gui/wm \
+        gui/win32 \
+        input \
+        libaf \
+        libao2 \
+        libass \
         libdvdcss \
         libdvdnav \
         libdvdnav/vm \
@@ -782,13 +789,6 @@ DIRS =  . \
         libmpcodecs/native \
         libmpdemux \
         libmpeg2 \
-        ffmpeg/libpostproc \
-        ffmpeg/libswscale \
-        ffmpeg/libswscale/bfin \
-        ffmpeg/libswscale/mlib \
-        ffmpeg/libswscale/ppc \
-        ffmpeg/libswscale/sparc \
-        ffmpeg/libswscale/x86 \
         libvo \
         loader \
         loader/dshow \
