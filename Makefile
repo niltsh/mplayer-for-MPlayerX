@@ -782,7 +782,7 @@ DIRS =  . \
         libmpcodecs/native \
         libmpdemux \
         libmpeg2 \
-        libpostproc \
+        ffmpeg/libpostproc \
         ffmpeg/libswscale \
         ffmpeg/libswscale/bfin \
         ffmpeg/libswscale/mlib \
