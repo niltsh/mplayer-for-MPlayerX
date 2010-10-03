@@ -39,6 +39,7 @@
 #include "mp_msg.h"
 #include "help_mp.h"
 
+#include "libmpcodecs/dec_audio.h"
 #include "libvo/sub.h"
 #include "stream/stream.h"
 #include "demuxer.h"
@@ -48,8 +49,6 @@
 #include "sub_cc.h"
 #include "libavutil/avstring.h"
 #include "libavutil/intreadwrite.h"
-
-void skip_audio_frame( sh_audio_t *sh_audio );
 
 // 2/c0: audio data
 // 3/c0: audio packet header (PES header)
