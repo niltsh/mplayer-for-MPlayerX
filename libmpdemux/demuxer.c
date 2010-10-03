@@ -41,6 +41,8 @@
 #include "demux_audio.h"
 
 #include "libaf/af_format.h"
+#include "libmpcodecs/dec_audio.h"
+#include "libmpcodecs/dec_video.h"
 #include "libmpcodecs/dec_teletext.h"
 #include "libmpcodecs/vd_ffmpeg.h"
 
@@ -64,8 +66,6 @@
 #define PARSE_ON_ADD 0
 
 static void clear_parser(sh_common_t *sh);
-void resync_video_stream(sh_video_t *sh_video);
-void resync_audio_stream(sh_audio_t *sh_audio);
 
 // Demuxer list
 extern const demuxer_desc_t demuxer_desc_rawaudio;
