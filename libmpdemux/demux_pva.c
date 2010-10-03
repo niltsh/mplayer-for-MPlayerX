@@ -195,7 +195,7 @@ static demuxer_t * demux_open_pva (demuxer_t * demuxer)
 	return demuxer;
 }
 
-int pva_get_payload(demuxer_t * d,pva_payload_t * payload);
+static int pva_get_payload(demuxer_t *d, pva_payload_t *payload);
 
 // 0 = EOF or no stream found
 // 1 = successfully read a packet
@@ -284,7 +284,7 @@ static int demux_pva_fill_buffer (demuxer_t * demux, demux_stream_t *ds)
 	return 1;
 }
 
-int pva_get_payload(demuxer_t * d,pva_payload_t * payload)
+static int pva_get_payload(demuxer_t *d, pva_payload_t *payload)
 {
 	uint8_t flags,pes_head_len;
 	uint16_t pack_size;
