@@ -1199,7 +1199,7 @@ static const char help_text[]=
 #define MSGTR_AO_SGI_CantSetParms_Samplerate "[AO SGI] инициализация: ошибка установки параметров: %s\nНе могу установить требуемую частоту дискретизации.\n"
 #define MSGTR_AO_SGI_CantSetAlRate "[AO SGI] инициализация: AL_RATE не доступен на заданном ресурсе.\n"
 #define MSGTR_AO_SGI_CantGetParms "[AO SGI] инициализация: ошибка получения параметров: %s\n"
-#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] инициализация: частота дискретизации теперь %lf (требуемая частота %lf)\n"
+#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] инициализация: частота дискретизации теперь %f (требуемая частота %f)\n"
 #define MSGTR_AO_SGI_InitConfigError "[AO SGI] инициализация: %s\n"
 #define MSGTR_AO_SGI_InitOpenAudioFailed "[AO SGI] инициализация: Не могу открыть канал аудио: %s\n"
 #define MSGTR_AO_SGI_Uninit "[AO SGI] деинициализация: ...\n"

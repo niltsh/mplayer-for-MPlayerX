@@ -884,7 +884,7 @@ static const char help_text[]=
 #define MSGTR_AO_SGI_CantSetParms_Samplerate "[AO SGI] init: setparams gefaald: %s\nKon de gewenste samplerate niet instellen.\n"
 #define MSGTR_AO_SGI_CantSetAlRate "[AO SGI] init: de AL_RATE werd niet geaccepteerd.\n"
 #define MSGTR_AO_SGI_CantGetParms "[AO SGI] init: getparams gefaald: %s\n"
-#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] init: de samplerate is nu %lf (de gewenste bitrate is %lf)\n"
+#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] init: de samplerate is nu %f (de gewenste bitrate is %f)\n"
 #define MSGTR_AO_SGI_InitConfigError "[AO SGI] init: %s\n"
 #define MSGTR_AO_SGI_InitOpenAudioFailed "[AO SGI] init: Kan het audio kanaal niet openen: %s\n"
 #define MSGTR_AO_SGI_Uninit "[AO SGI] uninit: ...\n"

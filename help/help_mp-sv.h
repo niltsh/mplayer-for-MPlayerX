@@ -904,7 +904,7 @@ static const char help_text[]=
 #define MSGTR_AO_SGI_CantSetParms_Samplerate "[AO SGI] init: setparams misslyckades: %s\nKunde inte sätta önskad samplerate.\n" // -''-
 #define MSGTR_AO_SGI_CantSetAlRate "[AO SGI] init: AL_RATE var inte accepterad på given resurs.\n"
 #define MSGTR_AO_SGI_CantGetParms "[AO SGI] init: getparams misslyckades: %s\n"
-#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] init: samplerate är nu %lf (önskad rate var %lf)\n" // -''- also rate?
+#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] init: samplerate är nu %f (önskad rate var %f)\n" // -''- also rate?
 #define MSGTR_AO_SGI_InitConfigError "[AO SGI] init: %s\n"
 #define MSGTR_AO_SGI_InitOpenAudioFailed "[AO SGI] init: Oförmögen att öppna audiokanal: %s\n"
 #define MSGTR_AO_SGI_Uninit "[AO SGI] uninit: ...\n" // FIXME translate?

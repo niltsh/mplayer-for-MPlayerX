@@ -1103,7 +1103,7 @@ static const char help_text[]=
 #define MSGTR_AO_SGI_CantSetParms_Samplerate "[AO SGI] init: setparms nie powiodło się %s\nNie udało sie ustawić wybranej częstotliwości próbkowania.\n"
 #define MSGTR_AO_SGI_CantSetAlRate "[AO SGI] init: AL_RATE nie został zakceptowany przy podanym źródle.\n"
 #define MSGTR_AO_SGI_CantGetParms "[AO SGI] init: getparams nie powiodło się: %s\n"
-#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] init: częstotliwość próbkowania: %lf (wymagana skala %lf)\n"
+#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] init: częstotliwość próbkowania: %f (wymagana skala %f)\n"
 #define MSGTR_AO_SGI_InitConfigError "[AO SGI] init: %s\n"
 #define MSGTR_AO_SGI_InitOpenAudioFailed "[AO SGI] init: Nie udało się otworzyć kanału dźwięku: %s\n"
 #define MSGTR_AO_SGI_Uninit "[AO SGI] uninit: ...\n"

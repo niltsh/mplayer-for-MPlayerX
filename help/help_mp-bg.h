@@ -960,7 +960,7 @@ static const char help_text[]=
 #define MSGTR_AO_SGI_CantSetParms_Samplerate "[AO SGI] init: setparams се провали: %s\nНе може да се зададе разчитаната честота.\n"
 #define MSGTR_AO_SGI_CantSetAlRate "[AO SGI] init: AL_RATE не се възприема от посоченото устройство.\n"
 #define MSGTR_AO_SGI_CantGetParms "[AO SGI] init: getparams се провали: %s\n"
-#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] init: честотата на дискретизация е %lf (разчитаната честота е %lf)\n"
+#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] init: честотата на дискретизация е %f (разчитаната честота е %f)\n"
 #define MSGTR_AO_SGI_InitConfigError "[AO SGI] init: %s\n"
 #define MSGTR_AO_SGI_InitOpenAudioFailed "[AO SGI] init: Не може да бъде отворен аудио канал: %s\n"
 #define MSGTR_AO_SGI_Uninit "[AO SGI] uninit: ...\n"

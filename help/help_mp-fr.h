@@ -1137,7 +1137,7 @@ static const char help_text[]=
 #define MSGTR_AO_SGI_CantSetParms_Samplerate "[AO SGI] Init : échec setparams: %s\nImpossible régler échantillonnage désiré.\n"
 #define MSGTR_AO_SGI_CantSetAlRate "[AO SGI] Init : AL_RATE non acceptée sur la ressource donnée.\n"
 #define MSGTR_AO_SGI_CantGetParms "[AO SGI] Init : échec getparams : %s\n"
-#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] Init : échantillonnage maintenant %lf (taux désiré : %lf)\n"
+#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] Init : échantillonnage maintenant %f (taux désiré : %f)\n"
 #define MSGTR_AO_SGI_InitConfigError "[AO SGI] Init : %s\n"
 #define MSGTR_AO_SGI_InitOpenAudioFailed "[AO SGI] Init : Impossible d'ouvrir canal audio : %s\n"
 #define MSGTR_AO_SGI_Uninit "[AO SGI] Desinit : ...\n"

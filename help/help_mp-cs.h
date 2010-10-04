@@ -1198,7 +1198,7 @@ static const char help_text[]=
 #define MSGTR_AO_SGI_CantSetParms_Samplerate "[AO SGI] init: selhalo setparams: %s\nNelze nastavit požadované vzorkování.\n"
 #define MSGTR_AO_SGI_CantSetAlRate "[AO SGI] init: AL_RATE nebyl přijat daným zdrojem.\n"
 #define MSGTR_AO_SGI_CantGetParms "[AO SGI] init: selhalo getparams: %s\n"
-#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] init: vzorkování je nyní %lf (požadovaný kmitočet je %lf)\n"
+#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] init: vzorkování je nyní %f (požadovaný kmitočet je %f)\n"
 #define MSGTR_AO_SGI_InitConfigError "[AO SGI] init: %s\n"
 #define MSGTR_AO_SGI_InitOpenAudioFailed "[AO SGI] init: Nelze otevřít zvukový kanál: %s\n"
 #define MSGTR_AO_SGI_Uninit "[AO SGI] uninit: ...\n"

@@ -1151,7 +1151,7 @@ static const char help_text[]=
 #define MSGTR_AO_SGI_CantSetParms_Samplerate "[AO SGI] açılış: setparams başarısız: %s\nİstenen örnekleme oranı ayarlanamadı.\n"
 #define MSGTR_AO_SGI_CantSetAlRate "[AO SGI] açılış: Verilen kaynakta AL_RATE onaylanmadı.\n"
 #define MSGTR_AO_SGI_CantGetParms "[AO SGI] açılış: getparams başarısız: %s\n"
-#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] açılış: örnekleme oranı şu anda %lf  (istenen oran %lf)\n"
+#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] açılış: örnekleme oranı şu anda %f  (istenen oran %f)\n"
 #define MSGTR_AO_SGI_InitConfigError "[AO SGI] açılış: %s\n"
 #define MSGTR_AO_SGI_InitOpenAudioFailed "[AO SGI] açılış: Ses kanalı açılamıyor: %s\n"
 #define MSGTR_AO_SGI_Uninit "[AO SGI] kapanış: ...\n"

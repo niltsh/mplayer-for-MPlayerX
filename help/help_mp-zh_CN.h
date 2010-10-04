@@ -1189,7 +1189,7 @@ static const char help_text[]=
 #define MSGTR_AO_SGI_CantSetParms_Samplerate "[AO SGI] 初始设置：setparams 失败：%s\n无法设置为所需的采样率。\n"
 #define MSGTR_AO_SGI_CantSetAlRate "[AO SGI] 初始设置：AL_RATE 不适用于给定的音频来源。\n"
 #define MSGTR_AO_SGI_CantGetParms "[AO SGI] 初始设置：getparams 失败：%s\n"
-#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] 初始设置：当前的采样率为 %lf（所需的速率为 %lf）\n"
+#define MSGTR_AO_SGI_SampleRateInfo "[AO SGI] 初始设置：当前的采样率为 %f（所需的速率为 %f）\n"
 #define MSGTR_AO_SGI_InitConfigError "[AO SGI] 初始设置：%s\n"
 #define MSGTR_AO_SGI_InitOpenAudioFailed "[AO SGI] 初始设置：无法打开音频声道：%s\n"
 #define MSGTR_AO_SGI_Uninit "[AO SGI] 卸载：...\n"
