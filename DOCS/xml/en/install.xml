@@ -70,8 +70,8 @@ answers.
   required for the directfb/dfbmga video output drivers
 </para></listitem>
 <listitem><para>
-  <emphasis role="bold">lame</emphasis> - 3.90 or later is recommended,
-  necessary for encoding MP3 audio with <application>MEncoder</application>.
+  <emphasis role="bold">lame</emphasis> - 3.98.3 or later,
+  necessary for encoding MP3 audio with <application>MEncoder</application>
 </para></listitem>
 <listitem><para>
   <emphasis role="bold">zlib</emphasis> - recommended, many codecs use it.

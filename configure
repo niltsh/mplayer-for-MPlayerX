@@ -7245,13 +7245,8 @@ def_mp3lame_preset='#undef CONFIG_MP3LAME_PRESET'
 def_mp3lame_preset_medium='#undef CONFIG_MP3LAME_PRESET_MEDIUM'
 if test "$_mp3lame" = auto ; then
   _mp3lame=no
-  cat > $TMPC <<EOF
-#include <lame/lame.h>
-int main(void) { lame_version_t lv; lame_init();
-    get_lame_version_numerical(&lv);
-    return 0; }
-EOF
-  cc_check -lmp3lame $_ld_lm && _mp3lame=yes
+  statement_check lame/lame.h 'hip_decode_init()' -lmp3lame $_ld_lm &&
+    _mp3lame=yes && _mp3lame_lavc=yes
 fi
 if test "$_mp3lame" = yes ; then
   def_mp3lame="#define CONFIG_MP3LAME 1"
@@ -7259,10 +7254,6 @@ if test "$_mp3lame" = yes ; then
   libs_mencoder="$libs_mencoder $_ld_mp3lame"
   statement_check lame/lame.h 'lame_set_preset(NULL, STANDARD_FAST)' $_ld_mp3lame $_ld_lm && def_mp3lame_preset="#define CONFIG_MP3LAME_PRESET 1"
   statement_check lame/lame.h 'lame_set_preset(NULL,   MEDIUM_FAST)' $_ld_mp3lame $_ld_lm && def_mp3lame_preset_medium="#define CONFIG_MP3LAME_PRESET_MEDIUM 1"
-  if test "$_mp3lame_lavc" = auto; then
-    _mp3lame_lavc=no
-    statement_check lame/lame.h 'hip_decode_init()' -lmp3lame $_ld_lm && _mp3lame_lavc=yes
-  fi
   if test "$_mp3lame_lavc" = yes ; then
     def_mp3lame_lavc="#define CONFIG_LIBMP3LAME 1"
     libavencoders="$libavencoders LIBMP3LAME_ENCODER"
