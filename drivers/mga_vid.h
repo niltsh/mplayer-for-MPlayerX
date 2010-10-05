@@ -24,6 +24,8 @@
 #ifndef MGA_VID_H
 #define MGA_VID_H
 
+#include <linux/types.h>
+
 typedef struct mga_vid_config_s
 {
 uint16_t version;

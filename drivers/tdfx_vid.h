@@ -21,6 +21,8 @@
 #ifndef MPLAYER_TDFX_VID_H
 #define MPLAYER_TDFX_VID_H
 
+#include <linux/types.h>
+
 #define TDFX_VID_VERSION 1
 
 #define TDFX_VID_MOVE_2_PACKED  0

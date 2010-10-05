@@ -22,6 +22,8 @@
 #ifndef MPLAYER_3DFX_H
 #define MPLAYER_3DFX_H
 
+#include <linux/types.h>
+
 #define VOODOO_IO_REG_OFFSET     ((unsigned long int)0x0000000)
 #define VOODOO_YUV_REG_OFFSET    ((unsigned long int)0x0080100)
 #define VOODOO_AGP_REG_OFFSET    ((unsigned long int)0x0080000)
