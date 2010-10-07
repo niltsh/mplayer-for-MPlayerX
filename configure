@@ -2743,6 +2743,15 @@ def_bswap='#define HAVE_BSWAP 0'
 echo 'bswap %eax' > $TMPS
 $_as $TMPS -o $TMPEXE > /dev/null 2>&1 && def_bswap='#define HAVE_BSWAP 1' && bswap=yes || bswap=no
 echores "$bswap"
+
+
+echocheck "xmm clobbers"
+def_xmm_clobbers='#define HAVE_XMM_CLOBBERS 0'
+inline_asm_check '"":::"%xxxmm0"' &&
+  def_xmm_clobbers='#define HAVE_XMM_CLOBBERS 1' &&
+  xmm_clobbers=yes || xmm_clobbers=no
+echores "$xmm_clobbers"
+
 fi #if x86
 
 
@@ -8705,6 +8714,7 @@ $def_ten_operands
 $def_threads
 $def_truncf
 $def_xform_asm
+$def_xmm_clobbers
 $def_yasm
 
 #define CONFIG_FASTDIV 0
