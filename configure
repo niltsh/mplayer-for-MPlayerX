@@ -2640,6 +2640,11 @@ cc_check && pic=yes && extra_cflags="$extra_cflags -DPIC" &&
 echores $pic
 
 
+def_bswap='#define HAVE_BSWAP 0'
+def_ebx_available='#define HAVE_EBX_AVAILABLE 0'
+def_ten_operands='#define HAVE_TEN_OPERANDS 0'
+def_xmm_clobbers='#define HAVE_XMM_CLOBBERS 0'
+
 if x86 ; then
 
 echocheck ".align is a power of two"
@@ -2657,7 +2662,6 @@ echores $_asmalign_pot
 
 echocheck "10 assembler operands"
 ten_operands=no
-def_ten_operands='#define HAVE_TEN_OPERANDS 0'
 cat > $TMPC << EOF
 int main(void) {
     int x=0;
@@ -2673,7 +2677,6 @@ echores $ten_operands
 
 echocheck "ebx availability"
 ebx_available=no
-def_ebx_available='#define HAVE_EBX_AVAILABLE 0'
 cat > $TMPC << EOF
 int main(void) {
     int x;
@@ -2739,14 +2742,12 @@ else
 fi
 
 echocheck "bswap"
-def_bswap='#define HAVE_BSWAP 0'
 echo 'bswap %eax' > $TMPS
 $_as $TMPS -o $TMPEXE > /dev/null 2>&1 && def_bswap='#define HAVE_BSWAP 1' && bswap=yes || bswap=no
 echores "$bswap"
 
 
 echocheck "xmm clobbers"
-def_xmm_clobbers='#define HAVE_XMM_CLOBBERS 0'
 inline_asm_check '"":::"%xxxmm0"' &&
   def_xmm_clobbers='#define HAVE_XMM_CLOBBERS 1' &&
   xmm_clobbers=yes || xmm_clobbers=no
