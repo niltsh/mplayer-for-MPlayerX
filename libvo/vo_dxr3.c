@@ -708,13 +708,9 @@ static void uninit(void)
 		overlay_release(overlay_data);
 
 #ifdef CONFIG_GUI
-		if (!use_gui) {
+		if (!use_gui)
 #endif
 			vo_x11_uninit();
-
-#ifdef CONFIG_GUI
-		}
-#endif
 	}
 #endif
 	if (old_vmode != -1) {
@@ -890,15 +886,12 @@ static int preinit(const char *arg)
 		/* Initialize overlay and X11 */
 		overlay_data = overlay_init(fd_control);
 #ifdef CONFIG_GUI
-		if (!use_gui) {
+		if (!use_gui)
 #endif
 			if (!vo_init()) {
 				mp_msg(MSGT_VO,MSGL_ERR, MSGTR_LIBVO_DXR3_UnableToInitX11);
 				return -1;
 			}
-#ifdef CONFIG_GUI
-		}
-#endif
 	}
 #endif
 
