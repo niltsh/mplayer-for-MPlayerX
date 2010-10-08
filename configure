@@ -7255,7 +7255,7 @@ def_mp3lame_preset='#undef CONFIG_MP3LAME_PRESET'
 def_mp3lame_preset_medium='#undef CONFIG_MP3LAME_PRESET_MEDIUM'
 if test "$_mp3lame" = auto ; then
   _mp3lame=no
-  statement_check lame/lame.h 'hip_decode_init()' -lmp3lame $_ld_lm &&
+  statement_check lame/lame.h 'lame_set_VBR_quality(NULL, 0)' -lmp3lame $_ld_lm &&
     _mp3lame=yes && _mp3lame_lavc=yes
 fi
 if test "$_mp3lame" = yes ; then
