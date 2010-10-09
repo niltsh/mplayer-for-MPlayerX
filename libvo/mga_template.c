@@ -98,7 +98,7 @@ draw_slice_g400(uint8_t *image[], int stride[], int w,int h,int x,int y)
     dest2= dest + bespitch2*mga_vid_config.src_height / 2;
 
   if(mga_vid_config.format==MGA_VID_FORMAT_YV12){
-    // mga_vid's YV12 assumes Y,U,V order (insteda of Y,V,U) :(
+    // mga_vid's YV12 assumes Y,U,V order (instead of Y,V,U) :(
     mem2agpcpy_pic(dest, image[1], w, h, bespitch2, stride[1]);
     mem2agpcpy_pic(dest2,image[2], w, h, bespitch2, stride[2]);
   } else {
