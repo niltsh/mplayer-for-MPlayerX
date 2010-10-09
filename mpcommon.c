@@ -366,6 +366,29 @@ void common_preinit(void)
 }
 
 /**
+ * Code to fix any kind of insane defaults some OS might have.
+ * Currently mostly fixes for insecure-by-default Windows.
+ */
+static void sanitize_os(void)
+{
+#if defined(__MINGW32__) || defined(__CYGWIN__)
+    HMODULE kernel32 = GetModuleHandle("Kernel32.dll");
+    BOOL WINAPI (*setDEP)(DWORD) = NULL;
+    BOOL WINAPI (*setDllDir)(LPCTSTR) = NULL;
+    if (kernel32) {
+        setDEP = GetProcAddress(kernel32, "SetProcessDEPPolicy");
+        setDllDir = GetProcAddress(kernel32, "SetDllDirectoryA");
+    }
+    if (setDEP) setDEP(3);
+    if (setDllDir) setDllDir("");
+    // stop Windows from showing all kinds of annoying error dialogs
+    SetErrorMode(0x8003);
+    // request 1ms timer resolution
+    timeBeginPeriod(1);
+#endif
+}
+
+/**
  * Initialization code to be run after command-line parsing.
  */
 int common_init(void)
@@ -388,23 +411,8 @@ int common_init(void)
         }
     }
 #endif
-
-    {
-    HMODULE kernel32 = GetModuleHandle("Kernel32.dll");
-    BOOL WINAPI (*setDEP)(DWORD) = NULL;
-    BOOL WINAPI (*setDllDir)(LPCTSTR) = NULL;
-    if (kernel32) {
-        setDEP = GetProcAddress(kernel32, "SetProcessDEPPolicy");
-        setDllDir = GetProcAddress(kernel32, "SetDllDirectoryA");
-    }
-    if (setDEP) setDEP(3);
-    if (setDllDir) setDllDir("");
-    }
-    // stop Windows from showing all kinds of annoying error dialogs
-    SetErrorMode(0x8003);
-    // request 1ms timer resolution
-    timeBeginPeriod(1);
 #endif
+    sanitize_os();
 
 #ifdef CONFIG_PRIORITY
     set_priority();
