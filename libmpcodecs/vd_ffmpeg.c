@@ -185,7 +185,6 @@ static void mp_msp_av_log_callback(void *ptr, int level, const char *fmt,
     AVClass *avc= ptr ? *(AVClass **)ptr : NULL;
     int type= MSGT_FIXME;
     int mp_level;
-    char buf[256];
 
     switch(level){
     case AV_LOG_VERBOSE: mp_level = MSGL_V ; break;
@@ -226,8 +225,7 @@ static void mp_msp_av_log_callback(void *ptr, int level, const char *fmt,
     }
 
     print_prefix= strchr(fmt, '\n') != NULL;
-    vsnprintf(buf, sizeof(buf), fmt, vl);
-    mp_msg(type, mp_level, buf);
+    mp_msg_va(type, mp_level, fmt, vl);
 }
 
 static void set_format_params(struct AVCodecContext *avctx, enum PixelFormat fmt){

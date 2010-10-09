@@ -19,6 +19,8 @@
 #ifndef MPLAYER_MP_MSG_H
 #define MPLAYER_MP_MSG_H
 
+#include <stdarg.h>
+
 // defined in mplayer.c and mencoder.c
 extern int verbose;
 
@@ -140,6 +142,7 @@ int mp_msg_test(int mod, int lev);
 
 #include "config.h"
 
+void mp_msg_va(int mod, int lev, const char *format, va_list va);
 #ifdef __GNUC__
 void mp_msg(int mod, int lev, const char *format, ... ) __attribute__ ((format (printf, 3, 4)));
 #   ifdef MP_DEBUG
