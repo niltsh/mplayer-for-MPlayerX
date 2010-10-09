@@ -359,10 +359,10 @@ const m_option_t noconfig_opts[] = {
  */
 void common_preinit(void)
 {
-  InitTimer();
-  srand(GetTimerMS());
+    InitTimer();
+    srand(GetTimerMS());
 
-  mp_msg_init();
+    mp_msg_init();
 }
 
 /**
@@ -371,7 +371,7 @@ void common_preinit(void)
 int common_init(void)
 {
 #if (defined(__MINGW32__) || defined(__CYGWIN__)) && defined(CONFIG_WIN32DLL)
-  set_path_env();
+    set_path_env();
 #endif
 #if defined(__MINGW32__) || defined(__CYGWIN__)
 #ifdef CONFIG_GUI
@@ -389,78 +389,79 @@ int common_init(void)
     }
 #endif
 
-	{
-		HMODULE kernel32 = GetModuleHandle("Kernel32.dll");
-		BOOL WINAPI (*setDEP)(DWORD) = NULL;
-		BOOL WINAPI (*setDllDir)(LPCTSTR) = NULL;
-		if (kernel32) {
-			setDEP = GetProcAddress(kernel32, "SetProcessDEPPolicy");
-			setDllDir = GetProcAddress(kernel32, "SetDllDirectoryA");
-		}
-		if (setDEP) setDEP(3);
-		if (setDllDir) setDllDir("");
-	}
-	// stop Windows from showing all kinds of annoying error dialogs
-	SetErrorMode(0x8003);
-	// request 1ms timer resolution
-	timeBeginPeriod(1);
+    {
+    HMODULE kernel32 = GetModuleHandle("Kernel32.dll");
+    BOOL WINAPI (*setDEP)(DWORD) = NULL;
+    BOOL WINAPI (*setDllDir)(LPCTSTR) = NULL;
+    if (kernel32) {
+        setDEP = GetProcAddress(kernel32, "SetProcessDEPPolicy");
+        setDllDir = GetProcAddress(kernel32, "SetDllDirectoryA");
+    }
+    if (setDEP) setDEP(3);
+    if (setDllDir) setDllDir("");
+    }
+    // stop Windows from showing all kinds of annoying error dialogs
+    SetErrorMode(0x8003);
+    // request 1ms timer resolution
+    timeBeginPeriod(1);
 #endif
 
 #ifdef CONFIG_PRIORITY
     set_priority();
 #endif
 
-  if (codec_path)
-    set_codec_path(codec_path);
+    if (codec_path)
+        set_codec_path(codec_path);
 
-/* Check codecs.conf. */
-if(!codecs_file || !parse_codec_cfg(codecs_file)){
-  char *mem_ptr;
-  if(!parse_codec_cfg(mem_ptr=get_path("codecs.conf"))){
-    if(!parse_codec_cfg(MPLAYER_CONFDIR "/codecs.conf")){
-      if(!parse_codec_cfg(NULL)){
-        return 0;
-      }
-      mp_msg(MSGT_CPLAYER,MSGL_V,MSGTR_BuiltinCodecsConf);
+    /* Check codecs.conf. */
+    if(!codecs_file || !parse_codec_cfg(codecs_file)){
+        char *mem_ptr;
+        if(!parse_codec_cfg(mem_ptr=get_path("codecs.conf"))){
+            if(!parse_codec_cfg(MPLAYER_CONFDIR "/codecs.conf")){
+                if(!parse_codec_cfg(NULL)){
+                    return 0;
+                }
+                mp_msg(MSGT_CPLAYER,MSGL_V,MSGTR_BuiltinCodecsConf);
+            }
+        }
+        free( mem_ptr ); // release the buffer created by get_path()
     }
-  }
-  free( mem_ptr ); // release the buffer created by get_path()
-}
 
-// check font
+    // check font
 #ifdef CONFIG_FREETYPE
-  init_freetype();
+    init_freetype();
 #endif
 #ifdef CONFIG_FONTCONFIG
-  if(font_fontconfig <= 0)
-  {
+    if(font_fontconfig <= 0)
+    {
 #endif
 #ifdef CONFIG_BITMAP_FONT
-  if(font_name){
-       vo_font=read_font_desc(font_name,font_factor,verbose>1);
-       if(!vo_font) mp_msg(MSGT_CPLAYER,MSGL_ERR,MSGTR_CantLoadFont,
-		filename_recode(font_name));
-  } else {
-       char *mem_ptr;
-      // try default:
-       vo_font=read_font_desc( mem_ptr=get_path("font/font.desc"),font_factor,verbose>1);
-       free(mem_ptr); // release the buffer created by get_path()
-       if(!vo_font)
-       vo_font=read_font_desc(MPLAYER_DATADIR "/font/font.desc",font_factor,verbose>1);
-  }
-  if (sub_font_name)
-    sub_font = read_font_desc(sub_font_name, font_factor, verbose>1);
-  else
-    sub_font = vo_font;
+        if(font_name){
+            vo_font=read_font_desc(font_name,font_factor,verbose>1);
+            if(!vo_font)
+                mp_msg(MSGT_CPLAYER,MSGL_ERR,MSGTR_CantLoadFont,
+                       filename_recode(font_name));
+        } else {
+            char *mem_ptr;
+            // try default:
+            vo_font=read_font_desc( mem_ptr=get_path("font/font.desc"),font_factor,verbose>1);
+            free(mem_ptr); // release the buffer created by get_path()
+            if(!vo_font)
+                vo_font=read_font_desc(MPLAYER_DATADIR "/font/font.desc",font_factor,verbose>1);
+        }
+        if (sub_font_name)
+            sub_font = read_font_desc(sub_font_name, font_factor, verbose>1);
+        else
+            sub_font = vo_font;
 #endif
 #ifdef CONFIG_FONTCONFIG
-  }
+    }
 #endif
 
-  vo_init_osd();
+    vo_init_osd();
 
 #ifdef CONFIG_ASS
-  ass_library = ass_init();
+    ass_library = ass_init();
 #endif
-  return 1;
+    return 1;
 }
