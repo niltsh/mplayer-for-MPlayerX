@@ -41,7 +41,7 @@ int	mtrr_set_type(unsigned base,unsigned size,int type)
 {
 #ifdef __linux__
     FILE * mtrr_fd;
-    char * stype;
+    const char *stype;
     switch(type)
     {
 	case MTRR_TYPE_UNCACHABLE: stype = "uncachable"; break;
