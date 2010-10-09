@@ -423,16 +423,17 @@ int common_init(void)
 
     /* Check codecs.conf. */
     if (!codecs_file || !parse_codec_cfg(codecs_file)) {
-        char *mem_ptr;
-        if (!parse_codec_cfg(mem_ptr = get_path("codecs.conf"))) {
+        char *conf_path = get_path("codecs.conf");
+        if (!parse_codec_cfg(conf_path)) {
             if (!parse_codec_cfg(MPLAYER_CONFDIR "/codecs.conf")) {
                 if (!parse_codec_cfg(NULL)) {
+                    free(conf_path);
                     return 0;
                 }
                 mp_msg(MSGT_CPLAYER,MSGL_V,MSGTR_BuiltinCodecsConf);
             }
         }
-        free(mem_ptr); // release the buffer created by get_path()
+        free(conf_path);
     }
 
     // check font
@@ -450,10 +451,10 @@ int common_init(void)
                 mp_msg(MSGT_CPLAYER,MSGL_ERR,MSGTR_CantLoadFont,
                        filename_recode(font_name));
         } else {
-            char *mem_ptr;
             // try default:
-            vo_font = read_font_desc(mem_ptr = get_path("font/font.desc"), font_factor, verbose>1);
-            free(mem_ptr); // release the buffer created by get_path()
+            char *desc_path = get_path("font/font.desc");
+            vo_font = read_font_desc(desc_path, font_factor, verbose>1);
+            free(desc_path);
             if (!vo_font)
                 vo_font = read_font_desc(MPLAYER_DATADIR "/font/font.desc", font_factor, verbose>1);
         }
