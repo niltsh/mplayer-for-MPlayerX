@@ -393,10 +393,10 @@ static void sanitize_os(void)
  */
 int common_init(void)
 {
-#if (defined(__MINGW32__) || defined(__CYGWIN__)) && defined(CONFIG_WIN32DLL)
+#if defined(__MINGW32__) || defined(__CYGWIN__)
+#ifdef CONFIG_WIN32DLL
     set_path_env();
 #endif
-#if defined(__MINGW32__) || defined(__CYGWIN__)
 #ifdef CONFIG_GUI
     void *runningmplayer = FindWindow("MPlayer GUI for Windows", "MPlayer for Windows");
     if(runningmplayer && filename && use_gui){
@@ -441,8 +441,8 @@ int common_init(void)
 #endif
 #ifdef CONFIG_FONTCONFIG
     if(font_fontconfig <= 0)
-    {
 #endif
+    {
 #ifdef CONFIG_BITMAP_FONT
         if(font_name){
             vo_font=read_font_desc(font_name,font_factor,verbose>1);
@@ -462,9 +462,7 @@ int common_init(void)
         else
             sub_font = vo_font;
 #endif
-#ifdef CONFIG_FONTCONFIG
     }
-#endif
 
     vo_init_osd();
 
