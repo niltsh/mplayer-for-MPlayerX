@@ -338,7 +338,7 @@ static int control(uint32_t request, void *data, ...)
   case VOCTRL_FULLSCREEN:
       vo_x11_fullscreen();
       vo_panscan_amount=0;
-    /* indended, fallthrough to update panscan on fullscreen/windowed switch */
+    /* intended, fallthrough to update panscan on fullscreen/windowed switch */
 #endif
   case VOCTRL_SET_PANSCAN:
       if ( vo_fs && ( vo_panscan != vo_panscan_amount ) ) // || ( !vo_fs && vo_panscan_amount ) )
