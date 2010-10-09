@@ -72,7 +72,7 @@ static int setup_format(sh_audio_t *sh_audio, const AVCodecContext *lavc_context
         if (lavc_context->codec_id == CODEC_ID_AAC &&
             samplerate == 2*sh_audio->wf->nSamplesPerSec) {
             mp_msg(MSGT_DECAUDIO, MSGL_WARN,
-                   "Ignoring broken container sample rate for ACC with SBR\n");
+                   "Ignoring broken container sample rate for AAC with SBR\n");
         } else if (sh_audio->wf->nSamplesPerSec)
             samplerate=sh_audio->wf->nSamplesPerSec;
     }
