@@ -71,6 +71,13 @@ void aspect_save_screenres(int scrw, int scrh){
 #ifdef ASPECT_DEBUG
   printf("aspect_save_screenres %dx%d \n",scrw,scrh);
 #endif
+  if (!scrw && !scrh) {
+    scrw = 1024;
+    scrh = 768;
+  } else if (scrw) {
+    scrh = (scrw * 3 + 3) / 4;
+  } else
+    scrw = (scrh * 4 + 2) / 3;
   aspdat.scrw = scrw;
   aspdat.scrh = scrh;
   if (force_monitor_aspect)
