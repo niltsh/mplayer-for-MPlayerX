@@ -502,19 +502,19 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_
 		if (use_gui)
 			guiGetEvent(guiSetShVideo, 0);
 #endif
-			XGetWindowAttributes(mDisplay, DefaultRootWindow(mDisplay), &xwin_attribs);
-			depth = xwin_attribs.depth;
-			if (depth != 15 && depth != 16 && depth != 24 && depth != 32) {
-				depth = 24;
-			}
-			XMatchVisualInfo(mDisplay, mScreen, depth, TrueColor, &vinfo);
-			vo_x11_create_vo_window(&vinfo, vo_dx, vo_dy,
-				d_width, d_height, flags,
-				CopyFromParent, "Viewing Window", title);
-			xswa.background_pixel = KEY_COLOR;
-			xswa.border_pixel = 0;
-			xswamask = CWBackPixel | CWBorderPixel;
-			XChangeWindowAttributes(mDisplay, vo_window, xswamask, &xswa);
+		XGetWindowAttributes(mDisplay, DefaultRootWindow(mDisplay), &xwin_attribs);
+		depth = xwin_attribs.depth;
+		if (depth != 15 && depth != 16 && depth != 24 && depth != 32) {
+			depth = 24;
+		}
+		XMatchVisualInfo(mDisplay, mScreen, depth, TrueColor, &vinfo);
+		vo_x11_create_vo_window(&vinfo, vo_dx, vo_dy,
+			d_width, d_height, flags,
+			CopyFromParent, "Viewing Window", title);
+		xswa.background_pixel = KEY_COLOR;
+		xswa.border_pixel = 0;
+		xswamask = CWBackPixel | CWBorderPixel;
+		XChangeWindowAttributes(mDisplay, vo_window, xswamask, &xswa);
 
 		/* Start setting up overlay */
 		XGetWindowAttributes(mDisplay, mRootWin, &xwin_attribs);
@@ -696,7 +696,7 @@ static void uninit(void)
 		overlay_set_mode(overlay_data, EM8300_OVERLAY_MODE_OFF);
 		overlay_release(overlay_data);
 
-			vo_x11_uninit();
+		vo_x11_uninit();
 	}
 #endif
 	if (old_vmode != -1) {
@@ -871,10 +871,10 @@ static int preinit(const char *arg)
 
 		/* Initialize overlay and X11 */
 		overlay_data = overlay_init(fd_control);
-			if (!vo_init()) {
-				mp_msg(MSGT_VO,MSGL_ERR, MSGTR_LIBVO_DXR3_UnableToInitX11);
-				return -1;
-			}
+		if (!vo_init()) {
+			mp_msg(MSGT_VO,MSGL_ERR, MSGTR_LIBVO_DXR3_UnableToInitX11);
+			return -1;
+		}
 	}
 #endif
 
