@@ -75,7 +75,6 @@
 #include "libvo/font_load.h"
 #include "libvo/sub.h"
 #include "libvo/video_out.h"
-#include "osdep/priority.h"
 #include "osdep/timer.h"
 #include "stream/stream.h"
 #include "stream/stream_bd.h"
@@ -575,7 +574,7 @@ audio_encoder_t *aencoder = NULL;
 
 user_correct_pts = 0;
 
-  mp_msg_init();
+  common_preinit();
 
   // Create the config context and register the options
   mconfig = m_config_new();
@@ -587,27 +586,11 @@ user_correct_pts = 0;
 
   print_version("MEncoder");
 
-#if (defined(__MINGW32__) || defined(__CYGWIN__)) && defined(CONFIG_WIN32DLL)
-  set_path_env();
-#endif
-
-  InitTimer();
-
-// check codec.conf
-if(!codecs_file || !parse_codec_cfg(codecs_file)){
-  if(!parse_codec_cfg(get_path("codecs.conf"))){
-    if(!parse_codec_cfg(MPLAYER_CONFDIR "/codecs.conf")){
-      if(!parse_codec_cfg(NULL)){
-	mencoder_exit(1,NULL);
-      }
-      mp_msg(MSGT_MENCODER,MSGL_V,MSGTR_BuiltinCodecsConf);
-    }
-  }
-}
-
  parse_cfgfiles(mconfig);
  filelist = m_config_parse_me_command_line(mconfig, argc, argv);
  if(!filelist) mencoder_exit(1, MSGTR_ErrorParsingCommandLine);
+ if (!common_init())
+   mencoder_exit(1,NULL);
 
 {
 	char *extension;
@@ -647,38 +630,6 @@ if (frameno_filename) {
   }
 }
 
-#ifdef CONFIG_PRIORITY
-  set_priority();
-#endif
-
-  if (codec_path)
-    set_codec_path(codec_path);
-
-// check font
-#ifdef CONFIG_FREETYPE
-  init_freetype();
-#endif
-#ifdef CONFIG_FONTCONFIG
-  if(font_fontconfig <= 0)
-  {
-#endif
-#ifdef CONFIG_BITMAP_FONT
-  if(font_name){
-       vo_font=read_font_desc(font_name,font_factor,verbose>1);
-       if(!vo_font) mp_msg(MSGT_CPLAYER,MSGL_ERR,MSGTR_CantLoadFont,font_name);
-  } else {
-      // try default:
-       vo_font=read_font_desc(get_path("font/font.desc"),font_factor,verbose>1);
-       if(!vo_font)
-         vo_font=read_font_desc(MPLAYER_DATADIR "/font/font.desc",font_factor,verbose>1);
-  }
-#endif
-#ifdef CONFIG_FONTCONFIG
-  }
-#endif
-
-  vo_init_osd();
-
   /* HACK, for some weird reason, push() has to be called twice,
      otherwise options are not saved correctly */
   m_config_push(mconfig);
@@ -686,10 +637,6 @@ play_next_file:
   m_config_push(mconfig);
   m_entry_set_options(mconfig,&filelist[curfile]);
   filename = filelist[curfile].name;
-
-#ifdef CONFIG_ASS
-  ass_library = ass_init();
-#endif
 
   if(!filename){
 	mp_msg(MSGT_CPLAYER, MSGL_FATAL, MSGTR_MissingFilename);

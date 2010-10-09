@@ -68,4 +68,7 @@ void update_teletext(struct sh_video *sh_video, demuxer_t *demuxer, int reset);
 int select_audio(demuxer_t* demuxer, int audio_id, char* audio_lang);
 void set_osd_subtitle(subtitle *subs);
 
+void common_preinit(void);
+int common_init(void);
+
 #endif /* MPLAYER_MPCOMMON_H */
