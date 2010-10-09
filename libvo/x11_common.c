@@ -797,10 +797,14 @@ static int mouse_waiting_hide;
 static int check_resize(void)
 {
     int old_w = vo_dwidth, old_h = vo_dheight;
+    int old_x = vo_dx, old_y = vo_dy;
+    int rc = 0;
     vo_x11_update_geometry();
     if (vo_dwidth != old_w || vo_dheight != old_h)
-        return VO_EVENT_RESIZE;
-    return 0;
+        rc |= VO_EVENT_RESIZE;
+    if (vo_dx     != old_x || vo_dy      != old_y)
+        rc |= VO_EVENT_MOVE;
+    return rc;
 }
 
 int vo_x11_check_events(Display * mydisplay)
