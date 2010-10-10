@@ -472,6 +472,13 @@ vo_rootwin [value]
 volume <value> [abs]
     Increase/decrease volume or set it to <value> if [abs] is nonzero.
 
+overlay_add <file> <id> <x> <y> <color>
+    Add an overlay bitmap. <file> must be a PGM file without comments.
+    <id> is an arbitrary integer used to identify the overlay.
+
+overlay_remove <id>
+    Remove all overlays identified by <id>.
+
 
 The following commands are really only useful for OSD menu console mode:
 
