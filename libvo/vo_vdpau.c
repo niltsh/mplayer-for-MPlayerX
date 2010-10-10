@@ -43,6 +43,7 @@
 #include "aspect.h"
 #include "font_load.h"
 #include "sub.h"
+#include "eosd.h"
 #include "subopt-helper.h"
 
 #include "libavcodec/vdpau.h"
@@ -854,13 +855,13 @@ static void draw_eosd(void)
     }
 }
 
-static void generate_eosd(EOSD_ImageList *imgs)
+static void generate_eosd(struct mp_eosd_image_list *imgs)
 {
     VdpStatus vdp_st;
     VdpRect destRect;
     int j, found;
-    ASS_Image *img = imgs->imgs;
-    ASS_Image *i;
+    struct mp_eosd_image *img = eosd_image_first(imgs);
+    struct mp_eosd_image *i;
 
     // Nothing changed, no need to redraw
     if (imgs->changed == 0)
@@ -876,7 +877,7 @@ static void generate_eosd(EOSD_ImageList *imgs)
     for (j = 0; j < eosd_surface_count; j++)
         eosd_surfaces[j].in_use = 0;
 
-    for (i = img; i; i = i->next) {
+    for (i = img; i; i = eosd_image_next(imgs)) {
         // Try to reuse a suitable surface
         found = -1;
         for (j = 0; j < eosd_surface_count; j++) {
@@ -927,7 +928,7 @@ static void generate_eosd(EOSD_ImageList *imgs)
 
 eosd_skip_upload:
     eosd_render_count = 0;
-    for (i = img; i; i = i->next) {
+    for (i = eosd_image_first(imgs); i; i = eosd_image_next(imgs)) {
         // Render dest, color, etc.
         eosd_targets[eosd_render_count].color.alpha = 1.0 - ((i->color >>  0) & 0xff) / 255.0;
         eosd_targets[eosd_render_count].color.blue  =       ((i->color >>  8) & 0xff) / 255.0;
@@ -1400,7 +1401,7 @@ static int control(uint32_t request, void *data, ...)
         draw_eosd();
         return VO_TRUE;
     case VOCTRL_GET_EOSD_RES: {
-        mp_eosd_res_t *r = data;
+        struct mp_eosd_settings *r = data;
         r->mt = r->mb = r->ml = r->mr = 0;
         r->srcw = vid_width; r->srch = vid_height;
         if (vo_fs) {

@@ -37,7 +37,6 @@
 
 #include "libvo/fastmemcpy.h"
 #include "libvo/sub.h"
-#include "libvo/video_out.h"
 #include "m_option.h"
 #include "m_struct.h"
 
@@ -71,7 +70,7 @@ static int config(struct vf_instance *vf,
                   int width, int height, int d_width, int d_height,
                   unsigned int flags, unsigned int outfmt)
 {
-    mp_eosd_res_t res = { 0 };
+    struct mp_eosd_settings res = {0};
 
     if (outfmt == IMGFMT_IF09)
         return 0;
@@ -94,7 +93,7 @@ static int config(struct vf_instance *vf,
     res.srch = height;
     res.mt   = ass_top_margin;
     res.mb   = ass_bottom_margin;
-    eosd_configure(&res, 0);
+    eosd_configure(&res);
 
     return vf_next_config(vf, vf->priv->outw, vf->priv->outh, d_width,
                           d_height, flags, outfmt);
@@ -334,29 +333,29 @@ static void my_draw_bitmap(struct vf_instance *vf, unsigned char *bitmap,
     }
 }
 
-static int render_frame(struct vf_instance *vf, mp_image_t *mpi,
-                        const ASS_Image *img)
+static void render_frame(struct vf_instance *vf, mp_image_t *mpi,
+                         struct mp_eosd_image_list *images)
 {
-    if (img) {
+    struct mp_eosd_image *img;
+    img = eosd_image_first(images);
+    if (!img)
+        return;
         memset(vf->priv->dirty_rows, 0, vf->priv->outh);        // reset dirty rows
         while (img) {
             copy_from_image(vf, img->dst_y, img->dst_y + img->h);
             my_draw_bitmap(vf, img->bitmap, img->w, img->h, img->stride,
                            img->dst_x, img->dst_y, img->color);
-            img = img->next;
+            img = eosd_image_next(images);
         }
         copy_to_image(vf);
-    }
-    return 0;
 }
 
 static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts)
 {
-    ASS_Image *images = eosd_render_frame(pts, NULL);
+    struct mp_eosd_image_list images;
+    eosd_render_frame(pts, &images);
     prepare_image(vf, mpi);
-    if (images)
-        render_frame(vf, mpi, images);
-
+    render_frame(vf, mpi, &images);
     return vf_next_put_image(vf, vf->dmpi, pts);
 }
 

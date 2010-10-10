@@ -22,9 +22,84 @@
 #ifndef MPLAYER_EOSD_H
 #define MPLAYER_EOSD_H
 
+#include <stdint.h>
 #include "libmpcodecs/vf.h"
-#include "libvo/video_out.h"
-#include "ass_mp.h"
+
+enum {
+    EOSD_CHANGED_LAYOUT = 0x1,
+    EOSD_CHANGED_BITMAP = 0x2,
+};
+
+struct mp_eosd_settings {
+    int w, h;           ///< screen dimensions, including black borders
+    int srcw, srch;     ///< unscaled source dimensions
+    int mt, mb, ml, mr; ///< borders (top, bottom, left, right)
+    int unscaled;       ///< EOSD objects are rendered at native resolution
+    int changed;        ///< settings have changed since last update
+};
+
+struct mp_eosd_image {
+    struct mp_eosd_image *next; ///< Next image, or NULL
+    uint8_t *bitmap;            ///< 1bpp stride*h alpha buffer
+    void *opaque;               ///< Arbitrary value for the client's use
+    int w, h;                   ///< Bitmap width, height
+    int stride;                 ///< Bitmap stride
+    uint32_t color;             ///< Bitmap color and transparency, RGBT
+                                ///  T is the complement of A (alpha=opacity).
+    int dst_x, dst_y;           ///< Bitmap placement inside the video frame
+};
+
+struct mp_eosd_source {
+
+    /**
+     * Linked list of images element.
+     * The client is responsible for initializing and maintaining this list.
+     * It can alter it at any time in the main MPlayer thread.
+     */
+    struct mp_eosd_image *images;
+
+    /**
+     * Pointer to the next field of the last image, or to images if the list
+     * is empty.
+     * The client is not required to handle this field, but list
+     * manipulation functions (see below) use it.
+     */
+    struct mp_eosd_image **images_tail;
+
+    /**
+     * Callback to update the images. Can be NULL.
+     */
+    void (*update)(struct mp_eosd_source *, const struct mp_eosd_settings *,
+                   double);
+
+    /**
+     * Callback to uninit the source. Can be NULL.
+     */
+    void (*uninit)(struct mp_eosd_source *);
+
+    /**
+     * Changed flags of the images.
+     * The client must set it to a combination of EOSD_CHANGED_* whenever
+     * the images are altered.
+     * The core EOSD system resets it.
+     */
+    int changed;
+
+    /**
+     * Z-index of the images.
+     * Images with a higher Z-index are rendered on top.
+     */
+    int z_index;
+
+    struct mp_eosd_source *priv_next;
+};
+
+struct mp_eosd_image_list {
+    struct mp_eosd_source *first_source;
+    struct mp_eosd_source *source;
+    struct mp_eosd_image *image;
+    int changed;
+};
 
 /**
  * Initialize the EOSD subsystem.
@@ -39,22 +114,22 @@ void eosd_init(vf_instance_t *vf);
  * settings change.
  *
  * @param res      resolution and margins of the rendering area.
- * @param hinting  nonzero if hinting is useful.
  */
-void eosd_configure(mp_eosd_res_t *res, int hinting);
+void eosd_configure(struct mp_eosd_settings *res);
 
 /**
  * Renders the EOSD elements for the current frame.
  * Should be called by the rendering engine when it is about to do or
  * prepare the rendering.
  *
- * @param ts       presentation timestamp of the frame.
- * @param changed  if not NULL, will be set to 0 if the elements are
- *                 identical since the last call, 1 if they have changed
- *                 only in coordinates, and 2 if they have really changed.
- * @return         a linked list of EOSD elements.
+ * @param[in]  ts      presentation timestamp of the frame.
+ * @param[out] images  list of images to render.
+ *                     The list and list elements are only valid until any
+ *                     client alter them.
+ *                     The renderer should therefore not call anything that
+ *                     may alter the EOSD elements.
  */
-struct ass_image *eosd_render_frame(double ts, int *changed);
+void eosd_render_frame(double ts, struct mp_eosd_image_list *images);
 
 /**
  * Shut down the EOSD subsystem and free the associated resources.
@@ -62,8 +137,56 @@ struct ass_image *eosd_render_frame(double ts, int *changed);
 void eosd_uninit(void);
 
 /**
- * Initialize the use of EOSD for ASS subtitles rendering.
+ * Register a source of EOSD images.
  */
-void eosd_ass_init(ASS_Library *ass_library);
+void eosd_register(struct mp_eosd_source *source);
+
+/**
+ * Allocate a structure for an EOSD image.
+ */
+struct mp_eosd_image *eosd_image_alloc(void);
+
+/**
+ * Free a previously allocated structure.
+ */
+void eosd_image_free(struct mp_eosd_image *image);
+
+/**
+ * Append an image to the list of images associated to a source.
+ * This function requires that the images_tail pointer is correctly set.
+ */
+void eosd_image_append(struct mp_eosd_source *source,
+                       struct mp_eosd_image *image);
+
+/**
+ * Remove an image from the list of images associated to a source.
+ * The image structure is freed using eosd_image_free.
+ *
+ * @param source  source where the image is.
+ * @param image   image to remove.
+ * @param prev    pointeur to the prev field of the previous image,
+ *                or to source->images if this is the first image.
+ */
+void eosd_image_remove(struct mp_eosd_source *source,
+                       struct mp_eosd_image *image,
+                       struct mp_eosd_image **prev);
+
+/**
+ * Remove all images associated to a source and free the corresponding
+ * structures.
+ * This function also resets the images_tail pointer.
+ */
+void eosd_image_remove_all(struct mp_eosd_source *source);
+
+/**
+ * Reset the cursor of an image list and get the first image.
+ */
+struct mp_eosd_image *eosd_image_first(struct mp_eosd_image_list *images);
+
+/**
+ * Get the next image in an image list.
+ * The renderer must NOT use the next field in the image structure.
+ */
+struct mp_eosd_image *eosd_image_next(struct mp_eosd_image_list *images);
 
 #endif /* MPLAYER_EOSD_H */

@@ -62,4 +62,9 @@ typedef struct {
 extern int ass_force_reload;
 ASS_Image* ass_mp_render_frame(ASS_Renderer *priv, ASS_Track* track, long long now, int* detect_change);
 
+/**
+ * Initialize the use of EOSD for ASS subtitles rendering.
+ */
+void eosd_ass_init(ASS_Library *library);
+
 #endif /* MPLAYER_ASS_MP_H */

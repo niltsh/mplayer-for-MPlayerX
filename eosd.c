@@ -26,54 +26,134 @@
 #include "ass_mp.h"
 #include "eosd.h"
 
-#ifdef CONFIG_ASS
-static ASS_Renderer *ass_renderer;
-int prev_visibility;
-
-void eosd_ass_init(ASS_Library *ass_library)
-{
-    ass_renderer = ass_renderer_init(ass_library);
-    if (!ass_renderer)
-        return;
-    ass_configure_fonts(ass_renderer);
-}
-#endif
+static struct mp_eosd_source *sources;
+static struct mp_eosd_settings settings;
+static struct mp_eosd_image *image_pool;
 
 void eosd_init(vf_instance_t *vf)
 {
     vf->control(vf, VFCTRL_INIT_EOSD, NULL);
 }
 
-void eosd_configure(mp_eosd_res_t *res, int hinting)
+void eosd_register(struct mp_eosd_source *src)
 {
-#ifdef CONFIG_ASS
-    double dar = (double) (res->w - res->ml - res->mr) / (res->h - res->mt - res->mb);
-    if (ass_renderer) {
-        ass_configure(ass_renderer, res->w, res->h, hinting);
-        ass_set_margins(ass_renderer, res->mt, res->mb, res->ml, res->mr);
-        ass_set_aspect_ratio(ass_renderer, dar, (double)res->srcw/res->srch);
-    }
-#endif
+    struct mp_eosd_source *p, **prev = &sources;
+    for (p = sources; p && p->z_index < src->z_index; p = p->priv_next)
+        prev = &p->priv_next;
+    src->priv_next = p;
+    *prev          = src;
 }
 
-ASS_Image *eosd_render_frame(double ts, int *changed)
+void eosd_configure(struct mp_eosd_settings *res)
 {
-    ASS_Image *r = NULL;
-#ifdef CONFIG_ASS
-    if (sub_visibility && ass_renderer && ass_track && ts != MP_NOPTS_VALUE) {
-        r = ass_mp_render_frame(ass_renderer, ass_track, (ts+sub_delay) * 1000 + .5, changed);
-        if (!prev_visibility && changed)
-            *changed = 2;
+    if (res->w        != settings.w        ||
+        res->h        != settings.h        ||
+        res->srcw     != settings.srcw     ||
+        res->srch     != settings.srch     ||
+        res->mt       != settings.mt       ||
+        res->mt       != settings.mb       ||
+        res->mt       != settings.ml       ||
+        res->mt       != settings.mr       ||
+        res->unscaled != settings.unscaled) {
+        settings         = *res;
+        settings.changed = 1;
     }
-    prev_visibility = sub_visibility;
-#endif
-    return r;
+}
+
+void eosd_render_frame(double ts, struct mp_eosd_image_list *images)
+{
+    struct mp_eosd_source *src;
+    int changed = 0;
+    for (src = sources; src; src = src->priv_next) {
+        if (src->update)
+            src->update(src, &settings, ts);
+        changed |= src->changed;
+        src->changed = 0;
+    }
+    settings.changed = 0;
+    images->first_source = sources;
+    images->changed      = changed;
 }
 
 void eosd_uninit(void)
 {
-#ifdef CONFIG_ASS
-    if (ass_renderer)
-        ass_renderer_done(ass_renderer);
-#endif
+    struct mp_eosd_source *src;
+    for (src = sources; src; src = src->priv_next)
+        if (src->uninit)
+            src->uninit(src);
+}
+
+struct mp_eosd_image *eosd_image_alloc(void)
+{
+    struct mp_eosd_image *r;
+    if (!image_pool) {
+        const unsigned n_alloc = 127; /* arbitrary */
+        unsigned i;
+        image_pool = calloc(n_alloc, sizeof(*image_pool));
+        for (i = 0; i < n_alloc - 1; i++)
+            image_pool[i].next = image_pool + i + 1;
+        image_pool[i].next = NULL;
+    }
+    r          = image_pool;
+    image_pool = image_pool->next;
+    return r;
+}
+
+void eosd_image_free(struct mp_eosd_image *image)
+{
+    image->next = image_pool;
+    image_pool  = image;
+}
+
+void eosd_image_append(struct mp_eosd_source *source,
+                       struct mp_eosd_image *image)
+{
+    image->next          = NULL;
+    *source->images_tail = image;
+    source->images_tail  = &image->next;
+}
+
+void eosd_image_remove(struct mp_eosd_source *source,
+                       struct mp_eosd_image *image,
+                       struct mp_eosd_image **prev)
+{
+    *prev = image->next;
+    if (!*prev)
+        source->images_tail = prev;
+    eosd_image_free(image);
+}
+
+void eosd_image_remove_all(struct mp_eosd_source *source)
+{
+    struct mp_eosd_image *image;
+
+    while (source->images) {
+        image          = source->images;
+        source->images = source->images->next;
+        eosd_image_free(image);
+    }
+    source->images_tail = &source->images;
+}
+
+static void next_image_in_sources(struct mp_eosd_image_list *images,
+                                  struct mp_eosd_source *src)
+{
+    images->source = src;
+    while (images->source && !images->source->images)
+        images->source = images->source->priv_next;
+    images->image = images->source ? images->source->images : NULL;
+}
+
+struct mp_eosd_image *eosd_image_first(struct mp_eosd_image_list *images)
+{
+    next_image_in_sources(images, images->first_source);
+    return images->image;
+}
+
+struct mp_eosd_image *eosd_image_next(struct mp_eosd_image_list *images)
+{
+    images->image = images->image->next;
+    if (!images->image)
+        next_image_in_sources(images, images->source->priv_next);
+    return images->image;
 }

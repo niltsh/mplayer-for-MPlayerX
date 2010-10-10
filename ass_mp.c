@@ -28,6 +28,9 @@
 #include "subreader.h"
 
 #include "ass_mp.h"
+#include "eosd.h"
+#include "mpcommon.h"
+#include "libvo/sub.h"
 #include "help_mp.h"
 #include "libvo/font_load.h"
 #include "stream/stream.h"
@@ -312,4 +315,64 @@ ASS_Image* ass_mp_render_frame(ASS_Renderer *priv, ASS_Track* track, long long n
 		ass_force_reload = 0;
 	}
 	return ass_render_frame(priv, track, now, detect_change);
+}
+
+/* EOSD source for ASS subtitles. */
+
+static ASS_Renderer *ass_renderer;
+static int prev_visibility;
+
+static void eosd_ass_update(struct mp_eosd_source *src, const struct mp_eosd_settings *res, double ts)
+{
+	long long ts_ms = (ts + sub_delay) * 1000 + .5;
+	ASS_Image *aimg;
+	struct mp_eosd_image *img;
+	if (res->changed) {
+		double dar = (double) (res->w - res->ml - res->mr) / (res->h - res->mt - res->mb);
+		ass_configure(ass_renderer, res->w, res->h, res->unscaled);
+		ass_set_margins(ass_renderer, res->mt, res->mb, res->ml, res->mr);
+		ass_set_aspect_ratio(ass_renderer, dar, (double)res->srcw / res->srch);
+	}
+	aimg = sub_visibility && ass_track && ts != MP_NOPTS_VALUE ?
+		ass_mp_render_frame(ass_renderer, ass_track, ts_ms, &src->changed) :
+		NULL;
+	if (!aimg != !src->images)
+		src->changed = 2;
+	if (src->changed) {
+		eosd_image_remove_all(src);
+		while (aimg) {
+			img = eosd_image_alloc();
+			img->w      = aimg->w;
+			img->h      = aimg->h;
+			img->bitmap = aimg->bitmap;
+			img->stride = aimg->stride;
+			img->color  = aimg->color;
+			img->dst_x  = aimg->dst_x;
+			img->dst_y  = aimg->dst_y;
+			eosd_image_append(src, img);
+			aimg = aimg->next;
+		}
+	}
+	prev_visibility = sub_visibility;
+}
+
+static void eosd_ass_uninit(struct mp_eosd_source *src)
+{
+	eosd_image_remove_all(src);
+	ass_renderer_done(ass_renderer);
+}
+
+static struct mp_eosd_source eosd_ass = {
+	.uninit  = eosd_ass_uninit,
+	.update  = eosd_ass_update,
+	.z_index = 10,
+};
+
+void eosd_ass_init(ASS_Library *ass_library)
+{
+	ass_renderer = ass_renderer_init(ass_library);
+	if (!ass_renderer)
+		return;
+	ass_configure_fonts(ass_renderer);
+	eosd_register(&eosd_ass);
 }

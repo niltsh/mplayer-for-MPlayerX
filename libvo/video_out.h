@@ -74,11 +74,6 @@
 #define VOCTRL_BORDER 27
 #define VOCTRL_DRAW_EOSD 28
 #define VOCTRL_GET_EOSD_RES 29
-typedef struct {
-  int w, h; // screen dimensions, including black borders
-  int srcw, srch; // unscaled source dimensions
-  int mt, mb, ml, mr; // borders (top, bottom, left, right)
-} mp_eosd_res_t;
 
 #define VOCTRL_SET_DEINTERLACE 30
 #define VOCTRL_GET_DEINTERLACE 31

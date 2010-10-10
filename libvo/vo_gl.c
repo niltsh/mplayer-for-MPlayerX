@@ -38,6 +38,7 @@
 #include "gl_common.h"
 #include "aspect.h"
 #include "fastmemcpy.h"
+#include "eosd.h"
 
 #ifdef CONFIG_GL_SDL
 #ifdef CONFIG_SDL_SDL_H
@@ -313,11 +314,11 @@ static void clearEOSD(void) {
   eosdtex = NULL;
 }
 
-static inline int is_tinytex(ASS_Image *i, int tinytexcur) {
+static inline int is_tinytex(struct mp_eosd_image *i, int tinytexcur) {
   return i->w < TINYTEX_SIZE && i->h < TINYTEX_SIZE && tinytexcur < TINYTEX_MAX;
 }
 
-static inline int is_smalltex(ASS_Image *i, int smalltexcur) {
+static inline int is_smalltex(struct mp_eosd_image *i, int smalltexcur) {
   return i->w < SMALLTEX_SIZE && i->h < SMALLTEX_SIZE && smalltexcur < SMALLTEX_MAX;
 }
 
@@ -336,14 +337,14 @@ static inline void smalltex_pos(int smalltexcur, int *x, int *y) {
  * \param img image list to create OSD from.
  *            A value of NULL has the same effect as clearEOSD()
  */
-static void genEOSD(EOSD_ImageList *imgs) {
+static void genEOSD(struct mp_eosd_image_list *imgs) {
   int sx, sy;
   int tinytexcur = 0;
   int smalltexcur = 0;
   GLuint *curtex;
   GLint scale_type = scaled_osd ? GL_LINEAR : GL_NEAREST;
-  ASS_Image *img = imgs->imgs;
-  ASS_Image *i;
+  struct mp_eosd_image *img = eosd_image_first(imgs);
+  struct mp_eosd_image *i;
 
   if (imgs->changed == 0) // there are elements, but they are unchanged
       return;
@@ -360,7 +361,7 @@ static void genEOSD(EOSD_ImageList *imgs) {
     mpglBindTexture(gl_target, largeeosdtex[1]);
     glCreateClearTex(gl_target, GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, scale_type, LARGE_EOSD_TEX_SIZE, LARGE_EOSD_TEX_SIZE, 0);
   }
-  for (i = img; i; i = i->next)
+  for (i = img; i; i = eosd_image_next(imgs))
   {
     if (i->w <= 0 || i->h <= 0 || i->stride < i->w)
       continue;
@@ -378,7 +379,7 @@ static void genEOSD(EOSD_ImageList *imgs) {
     mpglGenTextures(eosdtexCnt, eosdtex);
   }
   tinytexcur = smalltexcur = 0;
-  for (i = img, curtex = eosdtex; i; i = i->next) {
+  for (i = eosd_image_first(imgs), curtex = eosdtex; i; i = eosd_image_next(imgs)) {
     int x = 0, y = 0;
     if (i->w <= 0 || i->h <= 0 || i->stride < i->w) {
       mp_msg(MSGT_VO, MSGL_V, "Invalid dimensions OSD for part!\n");
@@ -404,7 +405,7 @@ static void genEOSD(EOSD_ImageList *imgs) {
 skip_upload:
   mpglNewList(eosdDispList, GL_COMPILE);
   tinytexcur = smalltexcur = 0;
-  for (i = img, curtex = eosdtex; i; i = i->next) {
+  for (i = eosd_image_first(imgs), curtex = eosdtex; i; i = eosd_image_next(imgs)) {
     int x = 0, y = 0;
     if (i->w <= 0 || i->h <= 0 || i->stride < i->w)
       continue;
@@ -1323,7 +1324,7 @@ static int control(uint32_t request, void *data, ...)
     return VO_TRUE;
   case VOCTRL_GET_EOSD_RES:
     {
-      mp_eosd_res_t *r = data;
+      struct mp_eosd_settings *r = data;
       r->w = vo_dwidth; r->h = vo_dheight;
       r->srcw = image_width; r->srch = image_height;
       r->mt = r->mb = r->ml = r->mr = 0;
