@@ -44,6 +44,15 @@ void eosd_register(struct mp_eosd_source *src)
     *prev          = src;
 }
 
+int eosd_registered(struct mp_eosd_source *source)
+{
+    struct mp_eosd_source *p;
+    for (p = sources; p; p = p->priv_next)
+        if (p == source)
+            return 1;
+    return 0;
+}
+
 void eosd_configure(struct mp_eosd_settings *res)
 {
     if (res->w        != settings.w        ||

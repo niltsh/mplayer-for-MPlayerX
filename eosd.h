@@ -142,6 +142,11 @@ void eosd_uninit(void);
 void eosd_register(struct mp_eosd_source *source);
 
 /**
+ * Test whether a source has already been registered.
+ */
+int eosd_registered(struct mp_eosd_source *source);
+
+/**
  * Allocate a structure for an EOSD image.
  */
 struct mp_eosd_image *eosd_image_alloc(void);

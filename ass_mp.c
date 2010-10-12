@@ -374,5 +374,6 @@ void eosd_ass_init(ASS_Library *ass_library)
 	if (!ass_renderer)
 		return;
 	ass_configure_fonts(ass_renderer);
-	eosd_register(&eosd_ass);
+	if (!eosd_registered(&eosd_ass))
+		eosd_register(&eosd_ass);
 }
