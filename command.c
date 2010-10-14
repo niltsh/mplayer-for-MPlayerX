@@ -1952,18 +1952,18 @@ static int mp_property_tv_color(m_option_t *prop, int action, void *arg,
         if (!arg)
             return M_PROPERTY_ERROR;
         M_PROPERTY_CLAMP(prop, *(int *) arg);
-        return tv_set_color_options(tvh, (int) prop->priv, *(int *) arg);
+        return tv_set_color_options(tvh, (intptr_t) prop->priv, *(int *) arg);
     case M_PROPERTY_GET:
-        return tv_get_color_options(tvh, (int) prop->priv, arg);
+        return tv_get_color_options(tvh, (intptr_t) prop->priv, arg);
     case M_PROPERTY_STEP_UP:
     case M_PROPERTY_STEP_DOWN:
-        if ((r = tv_get_color_options(tvh, (int) prop->priv, &val)) >= 0) {
+        if ((r = tv_get_color_options(tvh, (intptr_t) prop->priv, &val)) >= 0) {
             if (!r)
                 return M_PROPERTY_ERROR;
             val += (arg ? *(int *) arg : 1) *
                 (action == M_PROPERTY_STEP_DOWN ? -1 : 1);
             M_PROPERTY_CLAMP(prop, val);
-            return tv_set_color_options(tvh, (int) prop->priv, val);
+            return tv_set_color_options(tvh, (intptr_t) prop->priv, val);
         }
         return M_PROPERTY_ERROR;
     }
@@ -1976,7 +1976,7 @@ static int mp_property_teletext_common(m_option_t *prop, int action, void *arg,
                   MPContext *mpctx)
 {
     int val,result;
-    int base_ioctl=(int)prop->priv;
+    int base_ioctl=(intptr_t)prop->priv;
     /*
       for teletext's GET,SET,STEP ioctls this is not 0
       SET is GET+1
@@ -2024,7 +2024,7 @@ static int mp_property_teletext_mode(m_option_t *prop, int action, void *arg,
         return result;
 
     if(teletext_control(mpctx->demuxer->teletext,
-                        (int)prop->priv, &val)==VBI_CONTROL_TRUE && val)
+                        (intptr_t)prop->priv, &val)==VBI_CONTROL_TRUE && val)
         mp_input_set_section("teletext");
     else
         mp_input_set_section("tv");
@@ -2534,7 +2534,7 @@ static void overlay_add(char *file, int id, int x, int y, unsigned col)
     img->color  = col ^ 0xFF; /* col is RGBA, img->color is RGBT */
     img->dst_x  = x;
     img->dst_y  = y;
-    img->opaque = (void *)id;
+    img->opaque = (void *)(intptr_t)id;
     eosd_image_append(&overlay_source, img);
     overlay_source.changed = EOSD_CHANGED_BITMAP;
 }
@@ -2546,7 +2546,7 @@ static void overlay_remove(int id)
     img  = overlay_source.images;
     while (img) {
         next = img->next;
-        if ((int)img->opaque == id) {
+        if ((intptr_t)img->opaque == id) {
             free(img->bitmap);
             eosd_image_remove(&overlay_source, img, prev);
             overlay_source.changed = EOSD_CHANGED_BITMAP;
