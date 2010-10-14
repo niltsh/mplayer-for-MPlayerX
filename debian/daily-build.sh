@@ -3,6 +3,9 @@
 # wrapper around dpkg-buildpackage to generate correct changelog
 # use "debian/daily-build.sh -b" to create binary packages
 # and "debian/daily-build.sh -S" to create a source package only
+#
+# use this invocation to load system libdvdcss at runtime
+# env DEB_EXTRA_CONFIGURE_FLAGS=--disable-libdvdcss-internal debian/daily-build.sh -Ilibdvdcss
 
 LC_ALL=C svn info 2> /dev/null | grep Revision | cut -d' ' -f2
 version=$(LC_ALL=C svn info 2> /dev/null | grep Revision | cut -d' ' -f2)
