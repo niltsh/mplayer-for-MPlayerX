@@ -152,7 +152,7 @@ install-indep: build-indep
 clean:
 	dh_testdir
 	dh_testroot
-	[ ! -f config.mak ] || $(MAKE) -C DOCS/xml releaseclean && $(MAKE) distclean
+	test ! -f config.mak || ( $(MAKE) -C DOCS/xml releaseclean ; $(MAKE) distclean )
 	dh_clean snapshot_version
 
 # Build architecture-independent packages
