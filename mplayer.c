@@ -2795,6 +2795,20 @@ int gui_no_filename=0;
     }
 
   print_version("MPlayer");
+#if (defined(__MINGW32__) || defined(__CYGWIN__)) && defined(CONFIG_GUI)
+    void *runningmplayer = FindWindow("MPlayer GUI for Windows", "MPlayer for Windows");
+    if (runningmplayer && filename && use_gui) {
+        COPYDATASTRUCT csData;
+        char file[MAX_PATH];
+        char *filepart = filename;
+        if (GetFullPathName(filename, MAX_PATH, file, &filepart)) {
+            csData.dwData = 0;
+            csData.cbData = strlen(file)*2;
+            csData.lpData = file;
+            SendMessage(runningmplayer, WM_COPYDATA, (WPARAM)runningmplayer, (LPARAM)&csData);
+        }
+    }
+#endif
     if (!common_init())
         exit_player_with_rc(EXIT_NONE, 0);
 
