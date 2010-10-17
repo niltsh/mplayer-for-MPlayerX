@@ -1786,15 +1786,17 @@ mp_input_init(void) {
 
   if(in_file) {
     struct stat st;
-    if(stat(in_file,&st))
-      mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrCantStatFile,in_file,strerror(errno));
-    else {
-      in_file_fd = open(in_file,S_ISFIFO(st.st_mode) ? O_RDWR : O_RDONLY);
+    // use RDWR for FIFOs to ensure they stay open over multiple accesses
+    int mode = O_RDWR;
+    // e.g. on Windows stat may fail for named pipes, trying to open read-only
+    // is a safe choice.
+    if (stat(in_file,&st) || !S_ISFIFO(st.st_mode))
+      mode = O_RDONLY;
+    in_file_fd = open(in_file, mode);
       if(in_file_fd >= 0)
 	mp_input_add_cmd_fd(in_file_fd,1,NULL,(mp_close_func_t)close);
       else
 	mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrCantOpenFile,in_file,strerror(errno));
-    }
   }
 
 }
