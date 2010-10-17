@@ -126,8 +126,9 @@ void subassconvert_subrip(const char *orig, char *dest, size_t dest_buffer_size)
     font_stack[0] = (struct font_tag){}; // type with all defaults
     while (*line && new_line.len < new_line.bufsize - 1) {
         char *orig_line = line;
+        int i;
 
-        for (int i = 0; i < FF_ARRAY_ELEMS(subrip_basic_tags); i++) {
+        for (i = 0; i < FF_ARRAY_ELEMS(subrip_basic_tags); i++) {
             const struct tag_conv *tag = &subrip_basic_tags[i];
             int from_len = strlen(tag->from);
             if (strncmp(line, tag->from, from_len) == 0) {
@@ -411,13 +412,14 @@ static char *microdvd_load_tags(struct microdvd_tag *tags, char *s)
 
 static void microdvd_open_tags(struct line *new_line, struct microdvd_tag *tags)
 {
-    for (int i = 0; i < sizeof(MICRODVD_TAGS) - 1; i++) {
+    int i, sidx;
+    for (i = 0; i < sizeof(MICRODVD_TAGS) - 1; i++) {
         if (tags[i].persistent == MICRODVD_PERSISTENT_OPENED)
             continue;
         switch (tags[i].key) {
         case 'Y':
         case 'y':
-            for (int sidx = 0; sidx < sizeof(MICRODVD_STYLES) - 1; sidx++)
+            for (sidx = 0; sidx < sizeof(MICRODVD_STYLES) - 1; sidx++)
                 if (tags[i].data1 & (1 << sidx))
                     append_text(new_line, "{\\%c1}", MICRODVD_STYLES[sidx]);
             break;
@@ -452,7 +454,7 @@ static void microdvd_open_tags(struct line *new_line, struct microdvd_tag *tags)
 static void microdvd_close_no_persistent_tags(struct line *new_line,
                                               struct microdvd_tag *tags)
 {
-    int i;
+    int i, sidx;
 
     for (i = sizeof(MICRODVD_TAGS) - 2; i; i--) {
         if (tags[i].persistent != MICRODVD_PERSISTENT_OFF)
@@ -460,7 +462,7 @@ static void microdvd_close_no_persistent_tags(struct line *new_line,
         switch (tags[i].key) {
 
         case 'y':
-            for (int sidx = sizeof(MICRODVD_STYLES) - 2; sidx >= 0; sidx--)
+            for (sidx = sizeof(MICRODVD_STYLES) - 2; sidx >= 0; sidx--)
                 if (tags[i].data1 & (1 << sidx))
                     append_text(new_line, "{\\%c0}", MICRODVD_STYLES[sidx]);
             break;
