@@ -666,8 +666,8 @@ static int get_space(void){
 // return: number of bytes played
 static int play(void* data,int len,int flags){
     if (!(flags & AOPLAY_FINAL_CHUNK)) {
-    len /= ao_data.outburst;
-    len *= ao_data.outburst;
+	len /= ao_data.outburst;
+	len *= ao_data.outburst;
     }
     if (len <= 0) return 0;
 
