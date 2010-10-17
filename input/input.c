@@ -1793,10 +1793,10 @@ mp_input_init(void) {
     if (stat(in_file,&st) || !S_ISFIFO(st.st_mode))
       mode = O_RDONLY;
     in_file_fd = open(in_file, mode);
-      if(in_file_fd >= 0)
-	mp_input_add_cmd_fd(in_file_fd,1,NULL,(mp_close_func_t)close);
-      else
-	mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrCantOpenFile,in_file,strerror(errno));
+    if(in_file_fd >= 0)
+      mp_input_add_cmd_fd(in_file_fd,1,NULL,(mp_close_func_t)close);
+    else
+      mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrCantOpenFile,in_file,strerror(errno));
   }
 
 }
