@@ -6,6 +6,7 @@ MPlayer (1.0)
 
     Other:
     * experimental support for PGS (BluRay-compatible), DVB and XSUB subtitles.
+    * experimental af_cmdline slave command to change e.g. audio equalizer options at runtime.
 
   rc4: "Yes We Can"
 
