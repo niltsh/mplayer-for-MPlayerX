@@ -3432,6 +3432,19 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
         af_init(mpctx->mixer.afilter);
         build_afilter_chain(sh_audio, &ao_data);
         break;
+    case MP_CMD_AF_CMDLINE:
+        if (sh_audio) {
+            af_instance_t *af = af_get(sh_audio->afilter, cmd->args[0].v.s);
+            if (!af) {
+                mp_msg(MSGT_CPLAYER, MSGL_WARN,
+                       "Filter '%s' not found in chain.\n", cmd->args[0].v.s);
+                break;
+            }
+            af->control(af, AF_CONTROL_COMMAND_LINE, cmd->args[1].v.s);
+            af_reinit(sh_audio->afilter, af);
+        }
+        break;
+
         default:
                 mp_msg(MSGT_CPLAYER, MSGL_V,
                        "Received unknown cmd %s\n", cmd->name);
