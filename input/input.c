@@ -1786,12 +1786,12 @@ mp_input_init(void) {
 
   if(in_file) {
     struct stat st;
-    // use RDWR for FIFOs to ensure they stay open over multiple accesses
-    int mode = O_RDWR;
-    // e.g. on Windows stat may fail for named pipes, trying to open read-only
-    // is a safe choice.
-    if (stat(in_file,&st) || !S_ISFIFO(st.st_mode))
-      mode = O_RDONLY;
+    int mode = O_RDONLY;
+    // Use RDWR for FIFOs to ensure they stay open over multiple accesses.
+    // Note that on Windows stat may fail for named pipes, but due to how the
+    // API works, using RDONLY should be ok.
+    if (stat(in_file,&st) == 0 && S_ISFIFO(st.st_mode))
+      mode = O_RDWR;
     in_file_fd = open(in_file, mode);
     if(in_file_fd >= 0)
       mp_input_add_cmd_fd(in_file_fd,1,NULL,(mp_close_func_t)close);
