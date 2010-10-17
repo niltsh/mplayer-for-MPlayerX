@@ -34,6 +34,7 @@
 #include "stream/stream.h"
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"
+#include "libavutil/avstring.h"
 
 #include "gui/mplayer/pixmaps/ab.xpm"
 #include "gui/mplayer/pixmaps/half.xpm"
