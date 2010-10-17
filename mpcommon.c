@@ -25,6 +25,7 @@
 #include "libmpdemux/stheader.h"
 #include "codec-cfg.h"
 #include "osdep/timer.h"
+#include "osdep/priority.h"
 #include "path.h"
 #include "mplayer.h"
 #include "libvo/font_load.h"
