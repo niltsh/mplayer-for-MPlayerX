@@ -42,6 +42,7 @@ void eosd_register(struct mp_eosd_source *src)
         prev = &p->priv_next;
     src->priv_next = p;
     *prev          = src;
+    src->initialized = 0;
 }
 
 int eosd_registered(struct mp_eosd_source *source)
@@ -87,9 +88,12 @@ void eosd_render_frame(double ts, struct mp_eosd_image_list *images)
 void eosd_uninit(void)
 {
     struct mp_eosd_source *src;
-    for (src = sources; src; src = src->priv_next)
+    for (src = sources; src; src = src->priv_next) {
+        // TODO: maybe only call if src->initialized is set.
         if (src->uninit)
             src->uninit(src);
+        src->initialized = 0;
+    }
 }
 
 struct mp_eosd_image *eosd_image_alloc(void)

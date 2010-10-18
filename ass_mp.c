@@ -327,11 +327,12 @@ static void eosd_ass_update(struct mp_eosd_source *src, const struct mp_eosd_set
 	long long ts_ms = (ts + sub_delay) * 1000 + .5;
 	ASS_Image *aimg;
 	struct mp_eosd_image *img;
-	if (res->changed) {
+	if (res->changed || !src->initialized) {
 		double dar = (double) (res->w - res->ml - res->mr) / (res->h - res->mt - res->mb);
 		ass_configure(ass_renderer, res->w, res->h, res->unscaled);
 		ass_set_margins(ass_renderer, res->mt, res->mb, res->ml, res->mr);
 		ass_set_aspect_ratio(ass_renderer, dar, (double)res->srcw / res->srch);
+		src->initialized = 1;
 	}
 	aimg = sub_visibility && ass_track && ts != MP_NOPTS_VALUE ?
 		ass_mp_render_frame(ass_renderer, ass_track, ts_ms, &src->changed) :

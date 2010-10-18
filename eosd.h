@@ -91,6 +91,13 @@ struct mp_eosd_source {
      */
     int z_index;
 
+    /**
+     * Initialized flag of the source.
+     * Set by the source, automatically cleared when a source is added,
+     * removed or reinitialized.
+     */
+    int initialized;
+
     struct mp_eosd_source *priv_next;
 };
 
