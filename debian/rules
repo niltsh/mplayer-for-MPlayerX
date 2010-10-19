@@ -138,7 +138,7 @@ DOCS/HTML/en/index.html:
 build-indep:
 	dh_testdir
 	dh_prep -i
-	test ! -f DOCS/HTML/en/index.html || $(MAKE) -f debian/rules DOCS/HTML/en/index.html
+	test -f DOCS/HTML/en/index.html || $(MAKE) -f debian/rules DOCS/HTML/en/index.html
 
 # commands to compile the documentation
 install-indep: build-indep
