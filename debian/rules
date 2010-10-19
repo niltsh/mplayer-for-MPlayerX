@@ -152,7 +152,9 @@ install-indep: build-indep
 clean:
 	dh_testdir
 	dh_testroot
-	test ! -f config.mak || ( $(MAKE) -C DOCS/xml releaseclean ; $(MAKE) distclean )
+	-test ! -f config.mak || ( $(MAKE) -C DOCS/xml releaseclean ; $(MAKE) distclean )
+	# in case the previous command fails for some reason, remove 'svn ignored' files
+	rm -rf DOCS/HTML DOCS/HTML-single DOCS/codecs-status.html
 	dh_clean snapshot_version
 
 # Build architecture-independent packages
