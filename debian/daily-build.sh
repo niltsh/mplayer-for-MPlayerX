@@ -14,6 +14,8 @@ version=$(LC_ALL=C svn info 2> /dev/null | grep Revision | cut -d' ' -f2)
 test -r debian/control || exit 1
 
 rm debian/changelog
+echo $version > snapshot_version
 dch --create --empty --package mplayer -v 2:1.0~svn${version} "Daily build"
 
 dpkg-buildpackage -us -uc -i -I.svn "$@"
+rm -f snapshot_version

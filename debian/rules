@@ -155,7 +155,6 @@ clean:
 	-test ! -f config.mak || ( $(MAKE) -C DOCS/xml releaseclean ; $(MAKE) distclean )
 	# in case the previous command fails for some reason, remove 'svn ignored' files
 	rm -rf DOCS/HTML DOCS/HTML-single DOCS/codecs-status.html
-	dh_clean snapshot_version
 
 # Build architecture-independent packages
 binary-indep: install-indep
