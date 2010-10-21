@@ -8249,6 +8249,7 @@ CONFIG_LPC     = yes
 CONFIG_LSP     = yes
 CONFIG_MDCT    = yes
 CONFIG_RDFT    = yes
+CONFIG_RTPDEC  = yes
 
 $mak_hardcoded_tables
 $mak_libavcodec_mpegaudio_hp
@@ -8755,6 +8756,7 @@ $def_yasm
 #define CONFIG_LPC 1
 #define CONFIG_MDCT 1
 #define CONFIG_RDFT 1
+#define CONFIG_RTPDEC 1
 
 /* Use these registers in FFmpeg x86 inline asm. No proper detection yet. */
 #ifndef MP_DEBUG
