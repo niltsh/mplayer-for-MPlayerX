@@ -372,8 +372,10 @@ static double adjusted_muxer_time(muxer_stream_t *mux)
 static float stop_time(demuxer_t* demuxer, muxer_stream_t* mux_v)
 {
 	float timeleft = -1;
-	if (play_n_frames >= 0) timeleft = adjusted_muxer_time(mux_v) + play_n_frames * (double)(mux_v->h.dwScale) / mux_v->h.dwRate;
-	if (end_at.type == END_AT_TIME && (timeleft > end_at.pos || timeleft == -1)) timeleft = end_at.pos;
+	if (play_n_frames >= 0)
+		timeleft = adjusted_muxer_time(mux_v) + play_n_frames * (double)(mux_v->h.dwScale) / mux_v->h.dwRate;
+	if (end_at.type == END_AT_TIME && (timeleft > end_at.pos || timeleft == -1))
+		timeleft = end_at.pos;
 	if (next_edl_record && demuxer && demuxer->video) { // everything is OK to be checked
 		float tmp = adjusted_muxer_time(mux_v) + next_edl_record->start_sec - demuxer->video->pts;
 		if (timeleft == -1 || timeleft > tmp) {
