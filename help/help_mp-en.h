@@ -213,6 +213,8 @@ static const char help_text[]=
 #define MSGTR_OSDChapter "Chapter: (%d) %s"
 #define MSGTR_OSDAngle "Angle: %d/%d"
 #define MSGTR_OSDDeinterlace "Deinterlace: %s"
+#define MSGTR_OSDCapturing "Capturing: %s"
+#define MSGTR_OSDCapturingFailure "Capturing failed"
 
 // property values
 #define MSGTR_Enabled "enabled"

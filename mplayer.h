@@ -39,7 +39,10 @@ extern double start_pts;
 /* for the GUI */
 extern int auto_quality;
 extern int disable_gui_conf;
+
+extern int capture_dump;
 extern int stream_dump_type;
+extern char *stream_dump_name;
 
 void update_set_of_subtitles(void);
 

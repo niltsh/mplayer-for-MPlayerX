@@ -213,6 +213,8 @@ static const char help_text[]=
 #define MSGTR_OSDChapter "Fejezet: (%d) %s"
 #define MSGTR_OSDAngle "Szög: %d/%d"
 #define MSGTR_OSDDeinterlace "Deinterlace: %s"
+#define MSGTR_OSDCapturing "Mentés: %s"
+#define MSGTR_OSDCapturingFailure "Mentés sikertelen"
 
 // property values
 #define MSGTR_Enabled "bekapcsolva"

@@ -263,8 +263,9 @@ float stream_cache_seek_min_percent=50.0;
 #endif
 
 // dump:
-static char *stream_dump_name="stream.dump";
-       int stream_dump_type=0;
+char *stream_dump_name = "stream.dump";
+int stream_dump_type = 0;
+int capture_dump = 0;
 
 // A-V sync:
 static float default_max_pts_correction=-1;

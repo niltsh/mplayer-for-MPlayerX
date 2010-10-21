@@ -23,6 +23,7 @@
 #include "m_option.h"
 #include "mp_msg.h"
 #include "url.h"
+#include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
 #include <sys/types.h>
@@ -165,6 +166,7 @@ typedef struct stream {
   streaming_ctrl_t *streaming_ctrl;
 #endif
   unsigned char buffer[STREAM_BUFFER_SIZE>STREAM_MAX_SECTOR_SIZE?STREAM_BUFFER_SIZE:STREAM_MAX_SECTOR_SIZE];
+  FILE *capture_file;
 } stream_t;
 
 #ifdef CONFIG_NETWORKING
@@ -173,6 +175,7 @@ typedef struct stream {
 
 int stream_fill_buffer(stream_t *s);
 int stream_seek_long(stream_t *s, off_t pos);
+void stream_capture_do(stream_t *s);
 
 #ifdef CONFIG_STREAM_CACHE
 int stream_enable_cache(stream_t *stream,int size,int min,int prefill);
