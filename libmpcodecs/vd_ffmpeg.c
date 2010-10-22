@@ -559,9 +559,13 @@ static int init_vo(sh_video_t *sh, enum PixelFormat pix_fmt){
         // sets the value correctly in avcodec_open.
         set_format_params(avctx, avctx->pix_fmt);
         mp_msg(MSGT_DECVIDEO, MSGL_V, "[ffmpeg] aspect_ratio: %f\n", aspect);
-        if (sh->aspect == 0 ||
-            av_cmp_q(avctx->sample_aspect_ratio,
-                     ctx->last_sample_aspect_ratio))
+
+        // Do not overwrite s->aspect on the first call, so that a container
+        // aspect if available is preferred.
+        // But set it even if the sample aspect did not change, since a
+        // resolution change can cause an aspect change even if the
+        // _sample_ aspect is unchanged.
+        if (sh->aspect == 0 || ctx->last_sample_aspect_ratio.den)
             sh->aspect = aspect;
         ctx->last_sample_aspect_ratio = avctx->sample_aspect_ratio;
         sh->disp_w = width;
