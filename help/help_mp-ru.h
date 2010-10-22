@@ -1359,7 +1359,6 @@ static const char help_text[]=
 #define MSGTR_INPUT_INPUT_ErrBuffer2SmallForCmd "Буфер слишком мал для команды %s\n"
 #define MSGTR_INPUT_INPUT_ErrWhyHere "Что мы здесь делаем?\n"
 #define MSGTR_INPUT_INPUT_ErrCantInitJoystick "Не могу инициализировать джойстик ввода\n"
-#define MSGTR_INPUT_INPUT_ErrCantStatFile "Не могу выполнить stat %s: %s\n"
 #define MSGTR_INPUT_INPUT_ErrCantOpenFile "Не могу выполнить open %s: %s\n"
 #define MSGTR_INPUT_INPUT_ErrCantInitAppleRemote "Не могу инициализировать Пульт ДУ Apple Remote.\n"
 

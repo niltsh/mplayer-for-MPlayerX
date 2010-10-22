@@ -1358,7 +1358,6 @@ static const char help_text[]=
 #define MSGTR_INPUT_INPUT_ErrBuffer2SmallForCmd "Příliš malá vyrovnávací paměť pro příkaz %s\n"
 #define MSGTR_INPUT_INPUT_ErrWhyHere "Co tady děláme?\n"
 #define MSGTR_INPUT_INPUT_ErrCantInitJoystick "Nelze inicializovat vstupní joystick\n"
-#define MSGTR_INPUT_INPUT_ErrCantStatFile "Nelze stat %s: %s\n"
 #define MSGTR_INPUT_INPUT_ErrCantOpenFile "Nelze otevřít %s: %s\n"
 #define MSGTR_INPUT_INPUT_ErrCantInitAppleRemote "Nelze inicializovat vstupní Apple Remote.\n"
 

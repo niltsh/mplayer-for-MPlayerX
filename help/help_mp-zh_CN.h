@@ -1348,7 +1348,6 @@ static const char help_text[]=
 #define MSGTR_INPUT_INPUT_ErrBuffer2SmallForCmd "命令 %s 的缓冲过小\n"
 #define MSGTR_INPUT_INPUT_ErrWhyHere "怎么会执行到这里了？\n"
 #define MSGTR_INPUT_INPUT_ErrCantInitJoystick "无法初始设置输入操纵杆\n"
-#define MSGTR_INPUT_INPUT_ErrCantStatFile "无法统计 %s：%s\n"
 #define MSGTR_INPUT_INPUT_ErrCantOpenFile "无法打开 %s：%s\n"
 #define MSGTR_INPUT_INPUT_ErrCantInitAppleRemote "无法初始设置 Apple Remote 遥控器。\n"
 
