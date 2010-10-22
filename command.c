@@ -63,6 +63,7 @@
 #include "libmenu/menu.h"
 #include "gui/interface.h"
 #include "eosd.h"
+#include "pnm_loader.h"
 
 #include "mp_core.h"
 #include "mp_fifo.h"
@@ -2546,23 +2547,24 @@ static struct mp_eosd_source overlay_source = {
 static void overlay_add(char *file, int id, int x, int y, unsigned col)
 {
     FILE *f;
-    unsigned w, h, nc;
-    unsigned char *data;
+    unsigned w, h, bpp, maxval;
+    uint8_t *data;
     struct mp_eosd_image *img;
 
-    if (!(f = fopen(file, "r"))) {
+    f = fopen(file, "rb");
+    if (!f) {
         mp_msg(MSGT_CPLAYER, MSGL_ERR, "overlay_add: unable to open file.\n");
         return;
     }
-    if (fscanf(f, "P5\n%d %d\n%d\n", &w, &h, &nc) != 3 || nc != 255) {
-        mp_msg(MSGT_CPLAYER, MSGL_ERR, "overlay_add: unable to parse file.\n");
-        fclose(f);
+    data = read_pnm(f, &w, &h, &bpp, &maxval);
+    fclose(f);
+    if (!data) {
+        mp_msg(MSGT_CPLAYER, MSGL_ERR, "overlay_add: unable to load file.\n");
         return;
     }
-    data = malloc(w * h);
-    if (fread(data, 1, w * h, f) != w * h) {
-        mp_msg(MSGT_CPLAYER, MSGL_ERR, "overlay_add: unable to read file.\n");
-        fclose(f);
+    if (bpp != 1 || maxval != 255) {
+        mp_msg(MSGT_CPLAYER, MSGL_ERR,
+               "overlay_add: file format not supported.\n");
         return;
     }
     if (!overlay_source_registered) {
@@ -2570,7 +2572,6 @@ static void overlay_add(char *file, int id, int x, int y, unsigned col)
         eosd_image_remove_all(&overlay_source);
         overlay_source_registered = 1;
     }
-    fclose(f);
     img = eosd_image_alloc();
     img->w      = w;
     img->h      = h;
