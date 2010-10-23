@@ -212,7 +212,7 @@ static const char help_text[]=
 #define MSGTR_OSDAngle "Angolazione: %d/%d"
 #define MSGTR_OSDDeinterlace "Deinterlacciamento: %s"
 #define MSGTR_OSDCapturing "Registrazione: %s"
-#define MSGTR_OSDCapturingFailure "Registrazione fallito"
+#define MSGTR_OSDCapturingFailure "Registrazione fallita"
 
 // property values
 #define MSGTR_Enabled "abilitat"
