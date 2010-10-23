@@ -29,6 +29,7 @@
 
 #include "img_format.h"
 #include "mp_image.h"
+#include "vd.h"
 #include "vf.h"
 #include "m_struct.h"
 
@@ -112,9 +113,6 @@ struct vf_priv_s {
   {SIDE_BY_SIDE_LR},
   {ANAGLYPH_RC_DUBOIS}
 };
-
-extern int opt_screen_size_x;
-extern int opt_screen_size_y;
 
 //==functions==//
 static inline uint8_t ana_convert(int coeff[6], uint8_t left[3], uint8_t right[3])
