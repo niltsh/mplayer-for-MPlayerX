@@ -1127,7 +1127,7 @@ static int mp_property_capture(m_option_t *prop, int action,
     ret = m_property_flag(prop, action, arg, &capturing);
     if (ret == M_PROPERTY_OK && capturing != !!mpctx->stream->capture_file) {
         if (capturing) {
-            mpctx->stream->capture_file = fopen(stream_dump_name, "wb");
+            mpctx->stream->capture_file = fopen(stream_dump_name, "ab");
             if (!mpctx->stream->capture_file) {
                 mp_msg(MSGT_GLOBAL, MSGL_ERR,
                        "Error opening capture file: %s\n", strerror(errno));
