@@ -1118,17 +1118,19 @@ static int mp_property_capture(m_option_t *prop, int action,
 
     if (!mpctx->stream)
         return M_PROPERTY_UNAVAILABLE;
+    if (!capture_dump) {
+        mp_msg(MSGT_GLOBAL, MSGL_ERR,
+               "Capturing not enabled (forgot -capture parameter?)\n");
+        return M_PROPERTY_ERROR;
+    }
 
     ret = m_property_flag(prop, action, arg, &capturing);
     if (ret == M_PROPERTY_OK && capturing != !!mpctx->stream->capture_file) {
         if (capturing) {
-            if (capture_dump && !(mpctx->stream->capture_file = fopen(stream_dump_name, "wb"))) {
+            mpctx->stream->capture_file = fopen(stream_dump_name, "wb");
+            if (!mpctx->stream->capture_file) {
                 mp_msg(MSGT_GLOBAL, MSGL_ERR,
                        "Error opening capture file: %s\n", strerror(errno));
-                ret = M_PROPERTY_ERROR;
-            } else {
-                mp_msg(MSGT_GLOBAL, MSGL_ERR,
-                       "Capturing not enabled (forgot -capture parameter?)\n");
                 ret = M_PROPERTY_ERROR;
             }
         } else {
