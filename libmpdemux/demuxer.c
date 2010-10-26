@@ -288,10 +288,10 @@ sh_sub_t *new_sh_sub_sid(demuxer_t *demuxer, int id, int sid, const char *lang)
             sh->lang = strdup(lang);
             mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_SID_%d_LANG=%s\n", sid, lang);
         }
-    }
-    if (sid == dvdsub_id) {
-        demuxer->sub->id = id;
-        demuxer->sub->sh = demuxer->s_streams[id];
+        if (sid == dvdsub_id) {
+            demuxer->sub->id = id;
+            demuxer->sub->sh = demuxer->s_streams[id];
+        }
     }
     return demuxer->s_streams[id];
 }
@@ -337,6 +337,10 @@ sh_audio_t *new_sh_audio_aid(demuxer_t *demuxer, int id, int aid, const char *la
             sh->lang = strdup(lang);
             mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_AID_%d_LANG=%s\n", aid, lang);
         }
+        if (aid == audio_id) {
+            demuxer->audio->id = id;
+            demuxer->audio->sh = demuxer->a_streams[id];
+        }
     }
     return demuxer->a_streams[id];
 }
@@ -372,6 +376,10 @@ sh_video_t *new_sh_video_vid(demuxer_t *demuxer, int id, int vid)
         sh->vid = vid;
         sh->ds = demuxer->video;
         mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_VIDEO_ID=%d\n", vid);
+        if (vid == video_id) {
+            demuxer->video->id = id;
+            demuxer->video->sh = demuxer->v_streams[id];
+        }
     }
     return demuxer->v_streams[id];
 }
