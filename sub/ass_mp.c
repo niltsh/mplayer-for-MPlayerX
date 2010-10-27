@@ -27,7 +27,7 @@
 #include "path.h"
 #include "sub/subreader.h"
 
-#include "ass_mp.h"
+#include "sub/ass_mp.h"
 #include "sub/eosd.h"
 #include "mpcommon.h"
 #include "libvo/sub.h"

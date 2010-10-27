@@ -33,7 +33,7 @@
 #include "mplayer/play.h"
 
 #include "access_mpcontext.h"
-#include "ass_mp.h"
+#include "sub/ass_mp.h"
 #include "app.h"
 #include "cfg.h"
 #include "help_mp.h"

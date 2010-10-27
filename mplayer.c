@@ -96,7 +96,7 @@
 #include "stream/stream_radio.h"
 #include "stream/tv.h"
 #include "access_mpcontext.h"
-#include "ass_mp.h"
+#include "sub/ass_mp.h"
 #include "cfg-mplayer-def.h"
 #include "codec-cfg.h"
 #include "command.h"

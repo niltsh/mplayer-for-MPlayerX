@@ -46,7 +46,7 @@
 double sub_last_pts = -303;
 
 #ifdef CONFIG_ASS
-#include "ass_mp.h"
+#include "sub/ass_mp.h"
 ASS_Track* ass_track = 0; // current track to render
 #endif
 

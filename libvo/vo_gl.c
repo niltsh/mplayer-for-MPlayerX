@@ -27,7 +27,7 @@
 #include <math.h>
 
 #include "config.h"
-#include "ass_mp.h"
+#include "sub/ass_mp.h"
 #include "mp_msg.h"
 #include "subopt-helper.h"
 #include "video_out.h"

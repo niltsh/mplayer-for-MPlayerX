@@ -35,7 +35,7 @@
 #include <stdio.h>
 
 #include "config.h"
-#include "ass_mp.h"
+#include "sub/ass_mp.h"
 #include "mp_msg.h"
 #include "video_out.h"
 #include "video_out_internal.h"

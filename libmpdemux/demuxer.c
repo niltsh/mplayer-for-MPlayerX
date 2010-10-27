@@ -48,7 +48,7 @@
 
 #ifdef CONFIG_ASS
 #include "libass/ass.h"
-#include "ass_mp.h"
+#include "sub/ass_mp.h"
 #endif
 
 #ifdef CONFIG_FFMPEG

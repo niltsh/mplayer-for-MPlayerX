@@ -35,7 +35,7 @@
 #include "matroska.h"
 #include "demux_real.h"
 
-#include "ass_mp.h"
+#include "sub/ass_mp.h"
 #include "mp_msg.h"
 #include "help_mp.h"
 
