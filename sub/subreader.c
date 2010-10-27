@@ -29,12 +29,12 @@
 #include <sys/types.h>
 #include <dirent.h>
 
-#include "sub/ass_mp.h"
+#include "ass_mp.h"
 #include "config.h"
 #include "mp_msg.h"
 #include "mpcommon.h"
-#include "sub/subreader.h"
-#include "sub/subassconvert.h"
+#include "subreader.h"
+#include "subassconvert.h"
 #include "libvo/sub.h"
 #include "stream/stream.h"
 #include "libavutil/common.h"

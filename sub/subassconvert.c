@@ -27,7 +27,7 @@
 #include "mp_msg.h"
 #include "help_mp.h"
 #include "bstr.h"
-#include "sub/subassconvert.h"
+#include "subassconvert.h"
 #include "libavutil/common.h"
 
 struct line {

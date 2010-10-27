@@ -25,10 +25,10 @@
 #include "mp_msg.h"
 #include "mpcommon.h"
 #include "path.h"
-#include "sub/subreader.h"
+#include "subreader.h"
 
-#include "sub/ass_mp.h"
-#include "sub/eosd.h"
+#include "ass_mp.h"
+#include "eosd.h"
 #include "mpcommon.h"
 #include "libvo/sub.h"
 #include "help_mp.h"

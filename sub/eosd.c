@@ -23,8 +23,8 @@
 #include "libmpcodecs/vf.h"
 #include "libvo/video_out.h"
 #include "libvo/sub.h"
-#include "sub/ass_mp.h"
-#include "sub/eosd.h"
+#include "ass_mp.h"
+#include "eosd.h"
 
 static struct mp_eosd_source *sources;
 static struct mp_eosd_settings settings;
