@@ -96,7 +96,7 @@
 #include "path.h"
 #include "sub/spudec.h"
 #include "sub/vobsub.h"
-#include "eosd.h"
+#include "sub/eosd.h"
 #include "mencoder.h"
 
 

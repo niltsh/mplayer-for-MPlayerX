@@ -28,7 +28,7 @@
 #include "sub/subreader.h"
 
 #include "ass_mp.h"
-#include "eosd.h"
+#include "sub/eosd.h"
 #include "mpcommon.h"
 #include "libvo/sub.h"
 #include "help_mp.h"

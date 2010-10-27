@@ -62,7 +62,7 @@
 #include "m_struct.h"
 #include "libmenu/menu.h"
 #include "gui/interface.h"
-#include "eosd.h"
+#include "sub/eosd.h"
 #include "pnm_loader.h"
 
 #include "mp_core.h"

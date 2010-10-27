@@ -335,7 +335,6 @@ SRCS_COMMON = asxparser.c \
               codec-cfg.c \
               cpudetect.c \
               edl.c \
-              eosd.c \
               fmt-conversion.c \
               m_config.c \
               m_option.c \
@@ -517,6 +516,7 @@ SRCS_COMMON = asxparser.c \
               stream/stream_mf.c \
               stream/stream_null.c \
               stream/url.c \
+              sub/eosd.c \
               sub/find_sub.c \
               sub/spudec.c \
               sub/sub_cc.c \

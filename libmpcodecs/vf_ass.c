@@ -41,7 +41,7 @@
 #include "m_struct.h"
 
 #include "ass_mp.h"
-#include "eosd.h"
+#include "sub/eosd.h"
 
 #define _r(c)  ((c)>>24)
 #define _g(c)  (((c)>>16)&0xFF)

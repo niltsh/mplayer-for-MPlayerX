@@ -40,7 +40,7 @@
 #include "libmpdemux/stheader.h"
 #include "vd.h"
 #include "vf.h"
-#include "eosd.h"
+#include "sub/eosd.h"
 
 #include "dec_video.h"
 

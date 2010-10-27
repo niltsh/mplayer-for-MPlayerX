@@ -28,9 +28,7 @@
 
 #include "libvo/sub.h"
 #include "libvo/video_out.h"
-#include "eosd.h"
-
-#include "eosd.h"
+#include "sub/eosd.h"
 
 //===========================================================================//
 

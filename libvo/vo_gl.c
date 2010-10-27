@@ -38,7 +38,7 @@
 #include "gl_common.h"
 #include "aspect.h"
 #include "fastmemcpy.h"
-#include "eosd.h"
+#include "sub/eosd.h"
 
 #ifdef CONFIG_GL_SDL
 #ifdef CONFIG_SDL_SDL_H

@@ -43,7 +43,7 @@
 #include "aspect.h"
 #include "font_load.h"
 #include "sub.h"
-#include "eosd.h"
+#include "sub/eosd.h"
 #include "subopt-helper.h"
 
 #include "libavcodec/vdpau.h"
