@@ -350,7 +350,6 @@ SRCS_COMMON = asxparser.c \
               spudec.c \
               sub_cc.c \
               subopt-helper.c \
-              subreader.c \
               vobsub.c \
               libaf/af.c \
               libaf/af_center.c \
@@ -522,6 +521,7 @@ SRCS_COMMON = asxparser.c \
               stream/stream_mf.c \
               stream/stream_null.c \
               stream/url.c \
+              sub/subreader.c \
               $(SRCS_COMMON-yes)
 
 

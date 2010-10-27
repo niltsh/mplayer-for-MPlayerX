@@ -25,7 +25,7 @@
 #include "mp_msg.h"
 #include "mpcommon.h"
 #include "path.h"
-#include "subreader.h"
+#include "sub/subreader.h"
 
 #include "ass_mp.h"
 #include "eosd.h"

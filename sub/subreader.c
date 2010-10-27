@@ -33,7 +33,7 @@
 #include "config.h"
 #include "mp_msg.h"
 #include "mpcommon.h"
-#include "subreader.h"
+#include "sub/subreader.h"
 #include "subassconvert.h"
 #include "libvo/sub.h"
 #include "stream/stream.h"

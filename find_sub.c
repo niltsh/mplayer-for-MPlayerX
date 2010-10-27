@@ -24,7 +24,7 @@
 
 #include "libvo/video_out.h"
 #include "libvo/sub.h"
-#include "subreader.h"
+#include "sub/subreader.h"
 
 #include "mp_msg.h"
 #include "help_mp.h"

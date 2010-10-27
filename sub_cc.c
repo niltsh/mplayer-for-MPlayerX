@@ -35,7 +35,7 @@
 #include "config.h"
 #include "sub_cc.h"
 
-#include "subreader.h"
+#include "sub/subreader.h"
 
 #include "libvo/video_out.h"
 #include "libvo/sub.h"

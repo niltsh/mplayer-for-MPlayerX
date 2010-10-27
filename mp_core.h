@@ -28,7 +28,7 @@
 #include "libmpdemux/stheader.h"
 #include "mixer.h"
 #include "libvo/video_out.h"
-#include "subreader.h"
+#include "sub/subreader.h"
 
 // definitions used internally by the core player code
 

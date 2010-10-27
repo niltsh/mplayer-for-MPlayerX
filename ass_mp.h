@@ -24,7 +24,7 @@
 #include "config.h"
 #include <stdint.h>
 
-#include "subreader.h"
+#include "sub/subreader.h"
 #if defined(CONFIG_ASS_INTERNAL) || !defined(CONFIG_ASS)
 #include "libass/ass.h"
 #else

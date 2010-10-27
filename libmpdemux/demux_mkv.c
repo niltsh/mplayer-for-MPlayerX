@@ -40,7 +40,7 @@
 #include "help_mp.h"
 
 #include "vobsub.h"
-#include "subreader.h"
+#include "sub/subreader.h"
 #include "libvo/sub.h"
 
 #include "libavutil/common.h"
