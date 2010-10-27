@@ -40,7 +40,7 @@
 
 #include "vidix/vidix.h"
 #include "fastmemcpy.h"
-#include "osd.h"
+#include "sub/osd.h"
 #include "video_out.h"
 #include "sub/sub.h"
 #include "vosub_vidix.h"

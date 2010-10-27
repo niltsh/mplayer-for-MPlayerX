@@ -38,7 +38,7 @@
 #include "libmpcodecs/img_format.h"
 #include "drivers/mga_vid.h" /* <- should be changed to "linux/'something'.h" */
 #include "fastmemcpy.h"
-#include "osd.h"
+#include "sub/osd.h"
 #include "video_out.h"
 #include "sub/sub.h"
 #include "libmpcodecs/vfcap.h"

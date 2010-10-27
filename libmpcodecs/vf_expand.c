@@ -36,7 +36,7 @@
 
 #ifdef OSD_SUPPORT
 #include "sub/sub.h"
-#include "libvo/osd.h"
+#include "sub/osd.h"
 #endif
 
 #include "m_option.h"

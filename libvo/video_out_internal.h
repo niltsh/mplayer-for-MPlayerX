@@ -55,6 +55,6 @@ static int preinit(const char *);
 	uninit\
 };
 
-#include "osd.h"
+#include "sub/osd.h"
 
 #endif /* MPLAYER_VIDEO_OUT_INTERNAL_H */
