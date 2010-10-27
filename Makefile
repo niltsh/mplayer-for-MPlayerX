@@ -336,7 +336,6 @@ SRCS_COMMON = asxparser.c \
               cpudetect.c \
               edl.c \
               eosd.c \
-              find_sub.c \
               fmt-conversion.c \
               m_config.c \
               m_option.c \
@@ -521,6 +520,7 @@ SRCS_COMMON = asxparser.c \
               stream/stream_mf.c \
               stream/stream_null.c \
               stream/url.c \
+              sub/find_sub.c \
               sub/subreader.c \
               $(SRCS_COMMON-yes)
 
