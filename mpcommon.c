@@ -37,7 +37,7 @@
 #include "sub/spudec.h"
 #include "version.h"
 #include "vobsub.h"
-#include "av_sub.h"
+#include "sub/av_sub.h"
 #include "libmpcodecs/dec_teletext.h"
 #include "libavutil/intreadwrite.h"
 #include "m_option.h"
