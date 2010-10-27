@@ -802,6 +802,7 @@ DIRS =  . \
         stream/freesdp \
         stream/librtsp \
         stream/realrtsp \
+        sub \
         tremor \
         TOOLS \
         vidix \
