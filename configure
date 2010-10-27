@@ -3320,14 +3320,16 @@ test $_winsock2_h = no && test $inet_pton = no &&
 if test "$networking" = yes ; then
   def_network='#define CONFIG_NETWORK 1'
   def_networking='#define CONFIG_NETWORKING 1'
+  def_rtpdec='#define CONFIG_RTPDEC 1'
   extra_ldflags="$extra_ldflags $_ld_sock"
   inputmodules="networking $inputmodules"
 else
   noinputmodules="networking $noinputmodules"
   def_network='#define CONFIG_NETWORK 0'
   def_networking='#undef CONFIG_NETWORKING'
+  def_rtpdec='#define CONFIG_RTPDEC 0'
   libavprotocols=$(echo $libavprotocols | sed -e s/GOPHER_PROTOCOL// -e s/HTTP_PROTOCOL// -e s/RTMP_PROTOCOL// -e s/RTP_PROTOCOL// -e s/TCP_PROTOCOL// -e s/UDP_PROTOCOL// -e s/MMSH_PROTOCOL// -e s/MMST_PROTOCOL//)
-  libavdemuxers=$(echo $libavdemuxers | sed -e s/RTSP_DEMUXER// -e s/SDP_DEMUXER//)
+  libavdemuxers=$(echo $libavdemuxers | sed -e s/RTSP_DEMUXER// -e s/SDP_DEMUXER// -e s/RTP_DEMUXER//)
 fi
 echores "$networking"
 
@@ -8249,7 +8251,6 @@ CONFIG_LPC     = yes
 CONFIG_LSP     = yes
 CONFIG_MDCT    = yes
 CONFIG_RDFT    = yes
-CONFIG_RTPDEC  = yes
 
 $mak_hardcoded_tables
 $mak_libavcodec_mpegaudio_hp
@@ -8262,6 +8263,7 @@ CONFIG_GPL      = yes
 CONFIG_MLIB     = $_mlib
 CONFIG_MUXERS   = $_mencoder
 CONFIG_POSTPROC = yes
+CONFIG_RTPDEC   = $networking
 CONFIG_VDPAU    = $_vdpau
 CONFIG_XVMC     = $_xvmc
 CONFIG_ZLIB     = $_zlib
@@ -8683,6 +8685,7 @@ $def_ffmpeg_so
 #define CONFIG_ENCODERS 1
 #define CONFIG_DEMUXERS 1
 $def_muxers
+$def_rtpdec
 
 $def_arpa_inet_h
 $def_bswap
@@ -8756,7 +8759,6 @@ $def_yasm
 #define CONFIG_LPC 1
 #define CONFIG_MDCT 1
 #define CONFIG_RDFT 1
-#define CONFIG_RTPDEC 1
 
 /* Use these registers in FFmpeg x86 inline asm. No proper detection yet. */
 #ifndef MP_DEBUG
