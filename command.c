@@ -45,7 +45,7 @@
 #include "libmpcodecs/dec_video.h"
 #include "libmpcodecs/dec_teletext.h"
 #include "vobsub.h"
-#include "spudec.h"
+#include "sub/spudec.h"
 #include "path.h"
 #include "stream/tv.h"
 #include "stream/stream_radio.h"

@@ -346,7 +346,6 @@ SRCS_COMMON = asxparser.c \
               path.c \
               playtree.c \
               playtreeparser.c \
-              spudec.c \
               sub_cc.c \
               subopt-helper.c \
               vobsub.c \
@@ -521,6 +520,7 @@ SRCS_COMMON = asxparser.c \
               stream/stream_null.c \
               stream/url.c \
               sub/find_sub.c \
+              sub/spudec.c \
               sub/subreader.c \
               $(SRCS_COMMON-yes)
 
@@ -1059,7 +1059,7 @@ toolsclean:
 
 TOOLS/bmovl-test$(EXESUF): -lSDL_image
 
-TOOLS/subrip$(EXESUF): vobsub.o spudec.o unrar_exec.o libvo/aclib.o \
+TOOLS/subrip$(EXESUF): vobsub.o sub/spudec.o unrar_exec.o libvo/aclib.o \
     ffmpeg/libswscale/libswscale.a ffmpeg/libavutil/libavutil.a $(TEST_OBJS)
 
 TOOLS/vfw2menc$(EXESUF): -lwinmm -lole32

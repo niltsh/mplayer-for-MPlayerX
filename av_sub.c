@@ -19,7 +19,7 @@
 #include "libavcodec/avcodec.h"
 #include "libmpdemux/stheader.h"
 #include "libvo/sub.h"
-#include "spudec.h"
+#include "sub/spudec.h"
 #include "av_sub.h"
 
 void reset_avsub(struct sh_sub *sh)

@@ -34,7 +34,7 @@
 #include "cpudetect.h"
 #include "help_mp.h"
 #include "mp_msg.h"
-#include "spudec.h"
+#include "sub/spudec.h"
 #include "version.h"
 #include "vobsub.h"
 #include "av_sub.h"

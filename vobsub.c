@@ -34,7 +34,7 @@
 #include "config.h"
 #include "mpcommon.h"
 #include "vobsub.h"
-#include "spudec.h"
+#include "sub/spudec.h"
 #include "mp_msg.h"
 #include "unrar_exec.h"
 #include "libavutil/common.h"

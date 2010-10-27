@@ -32,7 +32,7 @@
 #include <sys/wait.h>
 #include "libvo/video_out.h"
 #include "vobsub.h"
-#include "spudec.h"
+#include "sub/spudec.h"
 
 /* linking hacks */
 char *mplayer_version;

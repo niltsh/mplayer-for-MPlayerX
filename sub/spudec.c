@@ -39,7 +39,7 @@
 #include <math.h>
 #include "libvo/sub.h"
 #include "libvo/video_out.h"
-#include "spudec.h"
+#include "sub/spudec.h"
 #include "vobsub.h"
 #include "libavutil/avutil.h"
 #include "libavutil/intreadwrite.h"

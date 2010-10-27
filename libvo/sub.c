@@ -38,7 +38,7 @@
 #include "video_out.h"
 #include "font_load.h"
 #include "sub.h"
-#include "spudec.h"
+#include "sub/spudec.h"
 #include "libavutil/common.h"
 
 #define NEW_SPLITTING

@@ -120,7 +120,7 @@
 #include "path.h"
 #include "playtree.h"
 #include "playtreeparser.h"
-#include "spudec.h"
+#include "sub/spudec.h"
 #include "sub/subreader.h"
 #include "vobsub.h"
 #include "eosd.h"

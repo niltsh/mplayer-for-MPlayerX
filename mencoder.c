@@ -94,7 +94,7 @@
 #include "parser-cfg.h"
 #include "parser-mecmd.h"
 #include "path.h"
-#include "spudec.h"
+#include "sub/spudec.h"
 #include "vobsub.h"
 #include "eosd.h"
 #include "mencoder.h"
