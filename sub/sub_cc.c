@@ -33,7 +33,7 @@
 #include <string.h>
 
 #include "config.h"
-#include "sub_cc.h"
+#include "sub/sub_cc.h"
 
 #include "sub/subreader.h"
 

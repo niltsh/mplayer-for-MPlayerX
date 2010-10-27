@@ -346,7 +346,6 @@ SRCS_COMMON = asxparser.c \
               path.c \
               playtree.c \
               playtreeparser.c \
-              sub_cc.c \
               subopt-helper.c \
               vobsub.c \
               libaf/af.c \
@@ -521,6 +520,7 @@ SRCS_COMMON = asxparser.c \
               stream/url.c \
               sub/find_sub.c \
               sub/spudec.c \
+              sub/sub_cc.c \
               sub/subreader.c \
               $(SRCS_COMMON-yes)
 
