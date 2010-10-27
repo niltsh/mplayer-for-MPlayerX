@@ -32,7 +32,7 @@
 #include "subopt-helper.h"
 #include "video_out.h"
 #include "video_out_internal.h"
-#include "font_load.h"
+#include "sub/font_load.h"
 #include "sub.h"
 
 #include "gl_common.h"

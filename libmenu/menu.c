@@ -27,7 +27,7 @@
 #include <unistd.h>
 
 #include "libvo/osd.h"
-#include "libvo/font_load.h"
+#include "sub/font_load.h"
 #include "libvo/sub.h"
 #include "osdep/keycodes.h"
 #include "asxparser.h"

@@ -33,7 +33,7 @@
 
 #include "libvo/fastmemcpy.h"
 #include "libvo/video_out.h"
-#include "libvo/font_load.h"
+#include "sub/font_load.h"
 #include "libvo/sub.h"
 #include "input/input.h"
 #include "m_struct.h"

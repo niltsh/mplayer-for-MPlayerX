@@ -837,7 +837,7 @@ static const char help_text[]=
 #define MSGTR_LIBVO_ASPECT_NoSuitableNewResFound "[ASPECT] Предупреждение: Не найдено подходящего разрешения!\n"
 #define MSGTR_LIBVO_ASPECT_NoNewSizeFoundThatFitsIntoRes "[ASPECT] Ошибка: Не найден размер, умещающийся в это разрешение!\n"
 
-// libvo/font_load_ft.c
+// font_load_ft.c
 #define MSGTR_LIBVO_FONT_LOAD_FT_NewFaceFailed "Сбой New_Face. Возможно неверен путь к шрифту.\nУкажите, пожалуйста, файл шрифта для текста (~/.mplayer/subfont.ttf).\n"
 #define MSGTR_LIBVO_FONT_LOAD_FT_NewMemoryFaceFailed "Сбой New_Memory_Face.\n"
 #define MSGTR_LIBVO_FONT_LOAD_FT_SubFaceFailed "шрифт субтитров: сбой load_sub_face.\n"

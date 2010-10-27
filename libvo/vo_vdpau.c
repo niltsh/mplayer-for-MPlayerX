@@ -41,7 +41,7 @@
 #include "video_out_internal.h"
 #include "x11_common.h"
 #include "aspect.h"
-#include "font_load.h"
+#include "sub/font_load.h"
 #include "sub.h"
 #include "sub/eosd.h"
 #include "subopt-helper.h"

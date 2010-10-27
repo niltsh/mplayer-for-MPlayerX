@@ -28,7 +28,7 @@
 #include "osdep/priority.h"
 #include "path.h"
 #include "mplayer.h"
-#include "libvo/font_load.h"
+#include "sub/font_load.h"
 #include "libvo/sub.h"
 #include "libvo/video_out.h"
 #include "cpudetect.h"

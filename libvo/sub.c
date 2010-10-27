@@ -36,7 +36,7 @@
 #include "mp_msg.h"
 #include "help_mp.h"
 #include "video_out.h"
-#include "font_load.h"
+#include "sub/font_load.h"
 #include "sub.h"
 #include "sub/spudec.h"
 #include "libavutil/common.h"

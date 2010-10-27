@@ -37,7 +37,7 @@
 #include "libmpcodecs/vf.h"
 #include "libmpcodecs/vd.h"
 #include "libvo/video_out.h"
-#include "libvo/font_load.h"
+#include "sub/font_load.h"
 #include "playtree.h"
 #include "libao2/audio_out.h"
 #include "mpcommon.h"

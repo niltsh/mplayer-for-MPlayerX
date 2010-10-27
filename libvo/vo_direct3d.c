@@ -30,7 +30,7 @@
 #include "aspect.h"
 #include "w32_common.h"
 #include "libavutil/common.h"
-#include "font_load.h"
+#include "sub/font_load.h"
 #include "sub.h"
 
 static const vo_info_t info =

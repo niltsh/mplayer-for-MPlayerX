@@ -72,7 +72,7 @@
 #include "libmpdemux/muxer.h"
 #include "libmpdemux/stheader.h"
 #include "libvo/fastmemcpy.h"
-#include "libvo/font_load.h"
+#include "sub/font_load.h"
 #include "libvo/sub.h"
 #include "libvo/video_out.h"
 #include "osdep/timer.h"

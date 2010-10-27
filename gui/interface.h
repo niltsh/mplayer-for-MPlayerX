@@ -23,7 +23,7 @@
 #include "m_config.h"
 #include "playtree.h"
 #include "mplayer/play.h"
-#include "libvo/font_load.h"
+#include "sub/font_load.h"
 #include "cfg.h"
 #include "stream/stream.h"
 

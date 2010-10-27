@@ -27,7 +27,7 @@ SRCS_AUDIO_INPUT-$(ALSA1X)           += stream/ai_alsa1x.c
 SRCS_AUDIO_INPUT-$(ALSA9)            += stream/ai_alsa.c
 SRCS_AUDIO_INPUT-$(OSS)              += stream/ai_oss.c
 SRCS_COMMON-$(AUDIO_INPUT)           += $(SRCS_AUDIO_INPUT-yes)
-SRCS_COMMON-$(BITMAP_FONT)           += libvo/font_load.c
+SRCS_COMMON-$(BITMAP_FONT)           += sub/font_load.c
 SRCS_COMMON-$(CDDA)                  += stream/stream_cdda.c \
                                         stream/cdinfo.c
 SRCS_COMMON-$(CDDB)                  += stream/stream_cddb.c
@@ -119,7 +119,7 @@ SRCS_COMMON-$(FFMPEG_A)              += libaf/af_lavcac3enc.c    \
                                         libmpcodecs/vf_spp.c     \
                                         libmpcodecs/vf_uspp.c    \
 
-SRCS_COMMON-$(FREETYPE)              += libvo/font_load_ft.c
+SRCS_COMMON-$(FREETYPE)              += sub/font_load_ft.c
 SRCS_COMMON-$(FTP)                   += stream/stream_ftp.c
 SRCS_COMMON-$(GIF)                   += libmpdemux/demux_gif.c
 SRCS_COMMON-$(HAVE_POSIX_SELECT)     += libmpcodecs/vf_bmovl.c

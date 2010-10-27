@@ -39,7 +39,7 @@
 #include "aspect.h"
 #include "libswscale/swscale.h"
 #include "libmpcodecs/vf_scale.h"
-#include "font_load.h"
+#include "sub/font_load.h"
 #include "sub.h"
 
 #include "osdep/keycodes.h"
