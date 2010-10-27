@@ -40,7 +40,7 @@
 #include "libswscale/swscale.h"
 #include "libmpcodecs/vf_scale.h"
 #include "sub/font_load.h"
-#include "sub.h"
+#include "sub/sub.h"
 
 #include "osdep/keycodes.h"
 #include <aalib.h>

@@ -33,7 +33,7 @@
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/mf.h"
 #include "libpostproc/postprocess.h"
-#include "libvo/sub.h"
+#include "sub/sub.h"
 #include "osdep/priority.h"
 #include "stream/cdd.h"
 #include "stream/network.h"

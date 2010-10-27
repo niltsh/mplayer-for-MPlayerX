@@ -33,7 +33,7 @@
 #include "libmpdemux/stheader.h"
 #include "gui.h"
 #include "dialogs.h"
-#include "libvo/sub.h"
+#include "sub/sub.h"
 #include "libvo/video_out.h"
 
 WNDPROC OldUrlWndProc;

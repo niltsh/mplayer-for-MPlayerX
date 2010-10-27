@@ -39,7 +39,7 @@
 #include "stream/stream.h"
 #include "stream/url.h"
 #include "mixer.h"
-#include "libvo/sub.h"
+#include "sub/sub.h"
 #include "access_mpcontext.h"
 
 #include "libmpcodecs/vd.h"

@@ -30,7 +30,7 @@
 #include "mixer.h"
 #include "mpcommon.h"
 #include "libao2/audio_out.h"
-#include "libvo/sub.h"
+#include "sub/sub.h"
 #include "libvo/video_out.h"
 #include "libvo/x11_common.h"
 #include "stream/stream.h"

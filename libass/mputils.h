@@ -25,7 +25,7 @@
 #include "help_mp.h"
 #include "sub/font_load.h" // for blur()
 #include "sub/subreader.h" // for guess_buffer_cp
-#include "libvo/sub.h" // for utf8_get_char
+#include "sub/sub.h" // for utf8_get_char
 #include "libavutil/common.h"
 
 #endif /* LIBASS_MPUTILS_H */

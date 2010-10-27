@@ -46,7 +46,7 @@
 #include "libvo/x11_common.h"
 #include "libvo/video_out.h"
 #include "sub/font_load.h"
-#include "libvo/sub.h"
+#include "sub/sub.h"
 #include "input/input.h"
 #include "libao2/audio_out.h"
 #include "mixer.h"

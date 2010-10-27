@@ -168,7 +168,7 @@ typedef struct ogg_demuxer {
 //                          - subtitles up in demuxer buffer...
 
 #include "sub/subreader.h"
-#include "libvo/sub.h"
+#include "sub/sub.h"
 #define OGG_SUB_MAX_LINE 128
 
 static subtitle ogg_sub;

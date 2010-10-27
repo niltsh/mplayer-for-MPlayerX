@@ -29,7 +29,7 @@
 #include "libmpdemux/stheader.h"
 #include "codec-cfg.h"
 #include "mplayer.h"
-#include "libvo/sub.h"
+#include "sub/sub.h"
 #include "m_option.h"
 #include "m_property.h"
 #include "help_mp.h"

@@ -57,7 +57,7 @@ TODO:
 #include "osdep/getch2.h"
 #include "vosub_vidix.h"
 
-#include "sub.h"
+#include "sub/sub.h"
 
 #include "mp_msg.h"
 #include "help_mp.h"

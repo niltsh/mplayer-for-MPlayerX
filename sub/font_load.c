@@ -26,7 +26,7 @@
 #include <unistd.h>
 
 #include "font_load.h"
-#include "libvo/sub.h"
+#include "sub.h"
 #include "mp_msg.h"
 
 raw_file* load_raw(char *name,int verbose){

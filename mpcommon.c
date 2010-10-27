@@ -29,7 +29,7 @@
 #include "path.h"
 #include "mplayer.h"
 #include "sub/font_load.h"
-#include "libvo/sub.h"
+#include "sub/sub.h"
 #include "libvo/video_out.h"
 #include "cpudetect.h"
 #include "help_mp.h"

@@ -33,7 +33,7 @@
 #include "video_out.h"
 #include "video_out_internal.h"
 #include "sub/font_load.h"
-#include "sub.h"
+#include "sub/sub.h"
 
 #include "gl_common.h"
 #include "aspect.h"

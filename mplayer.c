@@ -87,7 +87,7 @@
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"
 #include "sub/font_load.h"
-#include "libvo/sub.h"
+#include "sub/sub.h"
 #include "libvo/video_out.h"
 #include "stream/cache2.h"
 #include "stream/stream.h"

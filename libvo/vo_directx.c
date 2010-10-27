@@ -38,7 +38,7 @@
 #include "aspect.h"
 #include "geometry.h"
 #include "mp_fifo.h"
-#include "sub.h"
+#include "sub/sub.h"
 
 #ifdef CONFIG_GUI
 #include "gui/interface.h"

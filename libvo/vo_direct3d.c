@@ -31,7 +31,7 @@
 #include "w32_common.h"
 #include "libavutil/common.h"
 #include "sub/font_load.h"
-#include "sub.h"
+#include "sub/sub.h"
 
 static const vo_info_t info =
 {

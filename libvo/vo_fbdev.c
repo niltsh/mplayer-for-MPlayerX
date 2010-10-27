@@ -39,7 +39,7 @@
 #include "video_out.h"
 #include "video_out_internal.h"
 #include "fastmemcpy.h"
-#include "sub.h"
+#include "sub/sub.h"
 #include "geometry.h"
 #include "vosub_vidix.h"
 #include "aspect.h"

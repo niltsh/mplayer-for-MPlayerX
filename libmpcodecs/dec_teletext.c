@@ -62,7 +62,7 @@
  * 4. libmpcodecs/dec_teletext.c: prepare_visible_page(...)
  *      processing page. adding number of just received by background process
  *      teletext page, adding current time,etc.
- * 5. libvo/sub.c: vo_update_text_teletext(...)
+ * 5. sub/sub.c: vo_update_text_teletext(...)
  *      rendering displayable osd with text and graphics
  *
  * TODO:

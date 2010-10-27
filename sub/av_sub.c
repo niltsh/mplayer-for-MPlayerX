@@ -18,7 +18,7 @@
 
 #include "libavcodec/avcodec.h"
 #include "libmpdemux/stheader.h"
-#include "libvo/sub.h"
+#include "sub.h"
 #include "spudec.h"
 #include "av_sub.h"
 

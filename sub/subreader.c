@@ -35,7 +35,7 @@
 #include "mpcommon.h"
 #include "subreader.h"
 #include "subassconvert.h"
-#include "libvo/sub.h"
+#include "sub.h"
 #include "stream/stream.h"
 #include "libavutil/common.h"
 #include "libavutil/avstring.h"

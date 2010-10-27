@@ -43,7 +43,7 @@
 #include "video_out_internal.h"
 #include "aspect.h"
 #include "spuenc.h"
-#include "sub.h"
+#include "sub/sub.h"
 #ifdef CONFIG_GUI
 #include "gui/interface.h"
 #endif

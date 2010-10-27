@@ -30,7 +30,7 @@
 #include "ass_mp.h"
 #include "eosd.h"
 #include "mpcommon.h"
-#include "libvo/sub.h"
+#include "sub.h"
 #include "help_mp.h"
 #include "font_load.h"
 #include "stream/stream.h"

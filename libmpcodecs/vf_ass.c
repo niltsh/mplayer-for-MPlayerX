@@ -36,7 +36,7 @@
 #include "vf.h"
 
 #include "libvo/fastmemcpy.h"
-#include "libvo/sub.h"
+#include "sub/sub.h"
 #include "m_option.h"
 #include "m_struct.h"
 

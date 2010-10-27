@@ -40,7 +40,7 @@
 #include "help_mp.h"
 
 #include "libmpcodecs/dec_audio.h"
-#include "libvo/sub.h"
+#include "sub/sub.h"
 #include "stream/stream.h"
 #include "demuxer.h"
 #include "demux_ty_osd.h"

@@ -42,7 +42,7 @@
 #include "x11_common.h"
 #include "aspect.h"
 #include "sub/font_load.h"
-#include "sub.h"
+#include "sub/sub.h"
 #include "sub/eosd.h"
 #include "subopt-helper.h"
 

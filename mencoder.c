@@ -73,7 +73,7 @@
 #include "libmpdemux/stheader.h"
 #include "libvo/fastmemcpy.h"
 #include "sub/font_load.h"
-#include "libvo/sub.h"
+#include "sub/sub.h"
 #include "libvo/video_out.h"
 #include "osdep/timer.h"
 #include "stream/stream.h"

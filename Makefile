@@ -505,7 +505,6 @@ SRCS_COMMON = asxparser.c \
               libmpdemux/yuv4mpeg.c \
               libmpdemux/yuv4mpeg_ratio.c \
               libvo/osd.c \
-              libvo/sub.c \
               osdep/$(GETCH) \
               osdep/$(TIMER) \
               stream/open.c \
@@ -519,6 +518,7 @@ SRCS_COMMON = asxparser.c \
               sub/eosd.c \
               sub/find_sub.c \
               sub/spudec.c \
+              sub/sub.c \
               sub/sub_cc.c \
               sub/subreader.c \
               sub/vobsub.c \

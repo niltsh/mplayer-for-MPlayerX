@@ -37,7 +37,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
-#include "libvo/sub.h"
+#include "sub.h"
 #include "libvo/video_out.h"
 #include "spudec.h"
 #include "vobsub.h"

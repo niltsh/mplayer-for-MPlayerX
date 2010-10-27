@@ -67,7 +67,7 @@ typedef struct mp_osd_obj_s {
 } mp_osd_obj_t;
 
 
-#include "sub/subreader.h"
+#include "subreader.h"
 
 extern sub_data* subdata; //currently used subtitles
 extern subtitle* vo_sub;

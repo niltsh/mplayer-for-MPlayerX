@@ -41,7 +41,7 @@
 
 #include "sub/vobsub.h"
 #include "sub/subreader.h"
-#include "libvo/sub.h"
+#include "sub/sub.h"
 
 #include "libavutil/common.h"
 
