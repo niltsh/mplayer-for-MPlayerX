@@ -278,7 +278,7 @@ SRCS_COMMON-$(TV_DSHOW)              += stream/tvi_dshow.c \
 
 SRCS_COMMON-$(TV_V4L1)               += stream/tvi_v4l.c  stream/audio_in.c
 SRCS_COMMON-$(TV_V4L2)               += stream/tvi_v4l2.c stream/audio_in.c
-SRCS_COMMON-$(UNRAR_EXEC)            += unrar_exec.c
+SRCS_COMMON-$(UNRAR_EXEC)            += sub/unrar_exec.c
 SRCS_COMMON-$(VCD)                   += stream/stream_vcd.c
 SRCS_COMMON-$(VORBIS)                += libmpcodecs/ad_libvorbis.c \
                                         libmpdemux/demux_ogg.c
@@ -347,7 +347,6 @@ SRCS_COMMON = asxparser.c \
               playtree.c \
               playtreeparser.c \
               subopt-helper.c \
-              vobsub.c \
               libaf/af.c \
               libaf/af_center.c \
               libaf/af_channels.c \
@@ -522,6 +521,7 @@ SRCS_COMMON = asxparser.c \
               sub/spudec.c \
               sub/sub_cc.c \
               sub/subreader.c \
+              sub/vobsub.c \
               $(SRCS_COMMON-yes)
 
 
@@ -1059,8 +1059,9 @@ toolsclean:
 
 TOOLS/bmovl-test$(EXESUF): -lSDL_image
 
-TOOLS/subrip$(EXESUF): vobsub.o sub/spudec.o unrar_exec.o libvo/aclib.o \
-    ffmpeg/libswscale/libswscale.a ffmpeg/libavutil/libavutil.a $(TEST_OBJS)
+TOOLS/subrip$(EXESUF): sub/vobsub.o sub/spudec.o sub/unrar_exec.o \
+    libvo/aclib.o ffmpeg/libswscale/libswscale.a ffmpeg/libavutil/libavutil.a \
+    $(TEST_OBJS)
 
 TOOLS/vfw2menc$(EXESUF): -lwinmm -lole32
 

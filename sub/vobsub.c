@@ -33,10 +33,10 @@
 
 #include "config.h"
 #include "mpcommon.h"
-#include "vobsub.h"
+#include "sub/vobsub.h"
 #include "sub/spudec.h"
 #include "mp_msg.h"
-#include "unrar_exec.h"
+#include "sub/unrar_exec.h"
 #include "libavutil/common.h"
 
 // Record the original -vobsubid set by commandline, since vobsub_id will be

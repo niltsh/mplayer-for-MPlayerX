@@ -40,7 +40,7 @@
 #include "libvo/sub.h"
 #include "libvo/video_out.h"
 #include "sub/spudec.h"
-#include "vobsub.h"
+#include "sub/vobsub.h"
 #include "libavutil/avutil.h"
 #include "libavutil/intreadwrite.h"
 #include "libswscale/swscale.h"

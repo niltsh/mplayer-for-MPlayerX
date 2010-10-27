@@ -122,7 +122,7 @@
 #include "playtreeparser.h"
 #include "sub/spudec.h"
 #include "sub/subreader.h"
-#include "vobsub.h"
+#include "sub/vobsub.h"
 #include "eosd.h"
 #include "osdep/getch2.h"
 #include "osdep/timer.h"

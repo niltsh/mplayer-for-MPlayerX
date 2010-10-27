@@ -39,7 +39,7 @@
 #include "mp_msg.h"
 #include "help_mp.h"
 
-#include "vobsub.h"
+#include "sub/vobsub.h"
 #include "sub/subreader.h"
 #include "libvo/sub.h"
 

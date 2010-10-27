@@ -29,7 +29,7 @@
 #include <string.h>
 #include <errno.h>
 #include <locale.h>
-#include "unrar_exec.h"
+#include "sub/unrar_exec.h"
 
 #include "mp_msg.h"
 
