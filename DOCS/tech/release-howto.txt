@@ -2,15 +2,11 @@ How to make an MPlayer release
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 preparations:
-- Announce release target date on dev-eng and #mplayerdev
-- Ask the DOCS maintainers to commit their final changes, check if
-  all docs are up to date, etc.
-- Verify man page, remove obsolete options, mention new ones.
-- Ask translation maintainers to update their help_mp*.h file.
-- Update the ChangeLog file (according to Subversion log), ask other developers
-  to verify their parts, etc. Ask Diego to spellcheck it.
-- Consult at -dev-eng about unstable parts of the code which should be
-  disabled for the release.
+- Announce the intent to create a release branch on mailing lists and IRC.
+- Ask translators to get their languages synchronized.
+- Update the Changelog.
+- Identify regressions or other serious issues, fix or revert (on the branch)
+  as needed so the release is of good quality.
 - Find a codename for the release
 
 create the release tree:
@@ -39,21 +35,17 @@ test it (download to your local machine, extract, compile, run)
 
 copy to FTP:
     cp MPlayer-0.90rc5.tar.bz2 /home/ftp/MPlayer/releases/
-    cp ChangeLog-0.90rc5 and update ChangeLog symlink
+    cp Changelog-0.90rc5 and update Changelog symlink
     md5sum MPlayer-0.90rc5.tar.bz2 > MPlayer-0.90rc5.tar.bz2.md5
 
-move the older (pre)release(s) (except the last one before the current one)
-to ../OLD_stuff/ dir
+Write a news entry for the release, update the links in dload.html. Test it,
+sometimes links are broken. Do not forget the translations.
 
-Somehow get Diego to write a news entry for the release, and update the
-source file of dload.html and commit it. Test it, it's sometimes buggy
-(broken links etc). Also, update translated versions of dload.html.
-
-Send a message to mplayer-announce mailing list.
+Send the release notes as a mail to the mplayer-announce mailing list.
 
 Add the new release version to bugzilla page.
 
-Update release version in #mplayer topic
+Update release version in #mplayer and #mplayerdev topics.
 
 Update project page on Freshmeat
 
