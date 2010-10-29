@@ -220,6 +220,8 @@ const m_option_t mencoder_opts[]={
     // info header strings
     {"info", info_conf, CONF_TYPE_SUBCONFIG, CONF_GLOBAL, 0, 0, NULL},
 
+    {"force-key-frames", parse_forced_key_frames, CONF_TYPE_FUNC_PARAM, CONF_GLOBAL, 0, 0, NULL},
+
 #ifdef CONFIG_MP3LAME
     {"lameopts", lameopts_conf, CONF_TYPE_SUBCONFIG, CONF_GLOBAL, 0, 0, NULL},
 #endif

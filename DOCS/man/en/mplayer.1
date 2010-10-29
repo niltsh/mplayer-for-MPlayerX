@@ -8000,6 +8000,21 @@ This overrides what is read from the DVD or the .ifo file.
 .B \-vobsuboutindex <index>
 Specify the index of the subtitles in the output files (default: 0).
 .
+.TP
+.B \-force\-key\-frames <time>,<time>,...
+Force key frames at the specified timestamps, more precisely at the first
+frame after each specified time.
+.sp 1
+This option can be used to ensure that a seek point is present at a chapter
+mark or any other designated place in the output file.
+.sp 1
+The timestamps must be specified in ascending order.
+.sp 1
+Since MEncoder does not send timestamps along the filter chain, you probably
+need to use the fixpts filter for this option to work.
+.sp 1
+Not all codecs support forced key frames.
+.
 .
 .
 .SH "CODEC SPECIFIC ENCODING OPTIONS (MENCODER ONLY)"

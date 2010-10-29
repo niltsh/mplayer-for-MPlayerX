@@ -31,4 +31,7 @@ extern int   lavc_param_abitrate;
 extern int   lavc_param_atag;
 extern int   lavc_param_audio_global_header;
 
+int parse_forced_key_frames(const m_option_t *opt, const char *arg);
+int is_forced_key_frame(double pts);
+
 #endif /* MPLAYER_VE_H */
