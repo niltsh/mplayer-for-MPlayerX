@@ -46,6 +46,7 @@
 
 #include "img_format.h"
 #include "mp_image.h"
+#include "ve.h"
 #include "vf.h"
 
 #include <xvid.h>
@@ -535,6 +536,9 @@ put_image(struct vf_instance *vf, mp_image_t *mpi, double pts)
 
 	if(set_frame_struct(mod, mpi) == BAD)
 		return BAD;
+
+	mod->frame.type = is_forced_key_frame(pts) || xvidenc_motion == 0 ?
+		XVID_TYPE_IVOP : XVID_TYPE_AUTO;
 
 	/* -------------------------------------------------------------------
 	 * Encode the frame
