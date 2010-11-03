@@ -64,6 +64,12 @@ static int set_format(struct vf_instance *vf, unsigned int fmt) {
 	return 1;
     }
     switch (fmt) {
+    case IMGFMT_NV12:
+    case IMGFMT_NV21:
+    case IMGFMT_HM12:
+	mux_v->bih->biPlanes = 2;
+	mux_v->bih->biBitCount = 12;
+	break;
     case IMGFMT_I420:
     case IMGFMT_IYUV:
     case IMGFMT_YV12:
