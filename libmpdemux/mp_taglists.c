@@ -62,7 +62,7 @@ const struct AVCodecTag * const mp_wav_taglists[] = {ff_codec_wav_tags, mp_wav_t
 
 static const AVCodecTag mp_codecid_override_tags[] = {
     { CODEC_ID_AAC,               MKTAG('M', 'P', '4', 'A')},
-    { CODEC_ID_AAC_LATM,          MKTAG('L', 'A', 'T', 'M')},
+    { CODEC_ID_AAC_LATM,          MKTAG('M', 'P', '4', 'L')},
     { CODEC_ID_AC3,               0x2000},
     { CODEC_ID_ADPCM_IMA_AMV,     MKTAG('A', 'M', 'V', 'A')},
     { CODEC_ID_DTS,               0x2001},
