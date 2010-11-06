@@ -276,6 +276,9 @@ static int bd_get_uks(struct bd_priv *bd)
 static off_t bd_read(struct bd_priv *bd, uint8_t *buf, int len)
 {
     int read_len;
+    // TODO: would be nicer if this function also worked for larger reads
+    int max_len = BD_UNIT_SIZE - (bd->pos % BD_UNIT_SIZE);
+    len = FFMIN(len, max_len);
     len &= ~15;
     if (!len)
         return 0;
