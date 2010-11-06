@@ -158,8 +158,8 @@ static int control(sh_video_t *sh, int cmd, void *arg, ...){
         case IMGFMT_IYUV:
         case IMGFMT_I420:
             // "converted" using pointer/stride modification
-            if(avctx->pix_fmt==PIX_FMT_YUV420P) return CONTROL_TRUE;// u/v swap
-            if(avctx->pix_fmt==PIX_FMT_YUV422P && !ctx->do_dr1) return CONTROL_TRUE;// half stride
+            if(ctx->best_csp == IMGFMT_YV12) return CONTROL_TRUE;// u/v swap
+            if(ctx->best_csp == IMGFMT_422P && !ctx->do_dr1) return CONTROL_TRUE;// half stride
             break;
 #if CONFIG_XVMC
         case IMGFMT_XVMC_IDCT_MPEG2:
@@ -948,7 +948,7 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
     if (!mpi->planes[0])
         return NULL;
 
-    if(avctx->pix_fmt==PIX_FMT_YUV422P && mpi->chroma_y_shift==1){
+    if(ctx->best_csp == IMGFMT_422P && mpi->chroma_y_shift==1){
         // we have 422p but user wants 420p
         mpi->stride[1]*=2;
         mpi->stride[2]*=2;
