@@ -417,6 +417,7 @@ static int fill_buffer(stream_t *s, char *but, int len)
 {
     off_t pos=dvd_read_sector(s->priv,s->buffer);
   if (pos < 0)
+    return -1;
   s->pos = 2048*(pos - 1);
   return 2048; // full sector
 }
