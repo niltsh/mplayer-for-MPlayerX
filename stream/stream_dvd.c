@@ -415,7 +415,10 @@ static void dvd_close(dvd_priv_t *d)
 
 static int fill_buffer(stream_t *s, char *buf, int len)
 {
-    off_t pos=dvd_read_sector(s->priv,s->buffer);
+  off_t pos;
+  if (len < 2048)
+    return -1;
+  pos = dvd_read_sector(s->priv, buf);
   if (pos < 0)
     return -1;
   s->pos = 2048*(pos - 1);
