@@ -413,7 +413,7 @@ static void dvd_close(dvd_priv_t *d)
   dvd_set_speed(dvd_device_current, -1); /* -1 => restore default */
 }
 
-static int fill_buffer(stream_t *s, char *but, int len)
+static int fill_buffer(stream_t *s, char *buf, int len)
 {
     off_t pos=dvd_read_sector(s->priv,s->buffer);
   if (pos < 0)
