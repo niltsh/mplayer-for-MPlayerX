@@ -333,11 +333,12 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
             if (st->disposition & AV_DISPOSITION_DEFAULT)
               sh_audio->default_track = 1;
             if(mp_msg_test(MSGT_HEADER,MSGL_V) ) print_wave_header(sh_audio->wf, MSGL_V);
-            // select the first audio stream
-            if (!demuxer->audio->sh) {
+            // select the first audio stream if auto-selection is requested
+            if (demuxer->audio->id == -1) {
                 demuxer->audio->id = i;
                 demuxer->audio->sh= demuxer->a_streams[i];
-            } else
+            }
+            if (demuxer->audio->id != i)
                 st->discard= AVDISCARD_ALL;
             stream_id = priv->audio_streams++;
             break;
@@ -402,12 +403,13 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
                 int biClrUsed;
                 int biClrImportant;
             */
-            if(demuxer->video->id != i && demuxer->video->id != -1)
-                st->discard= AVDISCARD_ALL;
-            else{
+            // select the first video stream if auto-selection is requested
+            if(demuxer->video->id == -1) {
                 demuxer->video->id = i;
                 demuxer->video->sh= demuxer->v_streams[i];
             }
+            if(demuxer->video->id != i)
+                st->discard= AVDISCARD_ALL;
             stream_id = priv->video_streams++;
             break;
         }
