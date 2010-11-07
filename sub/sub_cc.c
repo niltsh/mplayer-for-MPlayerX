@@ -100,7 +100,7 @@ static void scroll_buffer(subtitle* buf)
 	{
 		free(buf->text[0]);
 
-		for(i = 0; i < (buf->lines - 1); i++) buf->text[i] = buf->text[i+1];
+		for(i = 0; i < buf->lines - 1; i++) buf->text[i] = buf->text[i+1];
 
 		buf->text[buf->lines-1] = NULL;
 		buf->lines--;
@@ -286,7 +286,7 @@ static void subcc_decode(unsigned char *inputbuffer, unsigned int inputlength)
   while (curbytes < inputlength) {
     int skip = 2;
 
-    cc_code = *(current);
+    cc_code = current[0];
 
     if (inputlength - curbytes < 2) {
 #ifdef LOG_DEBUG
@@ -295,8 +295,8 @@ static void subcc_decode(unsigned char *inputbuffer, unsigned int inputlength)
       break;
     }
 
-    data1 = *(current+1);
-    data2 = *(current + 2);
+    data1 = current[1];
+    data2 = current[2];
     current++; curbytes++;
 
     switch (cc_code) {
