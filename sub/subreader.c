@@ -1513,7 +1513,7 @@ sub_data* sub_read_file (char *filename, float fps) {
 #ifdef CONFIG_ICONV
           subcp_close();
 #endif
-    	  if ( first ) free(first);
+	  free(first);
 	  free(alloced_sub);
 	  return NULL;
 	 }
@@ -2043,7 +2043,7 @@ char** sub_filenames(const char* path, char *fname)
 
     }
 
-    if (tmp_sub_id) free(tmp_sub_id);
+    free(tmp_sub_id);
 
     free(f_dir);
     free(f_fname);

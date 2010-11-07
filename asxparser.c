@@ -87,7 +87,7 @@ asx_parser_new(void) {
 void
 asx_parser_free(ASX_Parser_t* parser) {
   if(!parser) return;
-  if(parser->ret_stack) free(parser->ret_stack);
+  free(parser->ret_stack);
   free(parser);
 
 }
@@ -289,7 +289,7 @@ asx_get_element(ASX_Parser_t* parser,char** _buffer,
       if(*ptr3 == '\0') {
         mp_msg(MSGT_PLAYTREE,MSGL_ERR,"At line %d : EOB reached while parsing %s element body",parser->line,element);
         free(element);
-        if(attribs) free(attribs);
+        free(attribs);
         return -1;
       }
       if(ptr3[0] == '\n') parser->line++;
@@ -317,7 +317,7 @@ asx_get_element(ASX_Parser_t* parser,char** _buffer,
       if(ptr4 == NULL || ptr4[1] == '\0') {
         mp_msg(MSGT_PLAYTREE,MSGL_ERR,"At line %d : EOB reached while parsing %s element body",parser->line,element);
         free(element);
-        if(attribs) free(attribs);
+        free(attribs);
         return -1;
       }
       if(ptr4[1] != '/' && strncasecmp(element,ptr4+1,strlen(element)) == 0) {
@@ -406,7 +406,7 @@ asx_parse_param(ASX_Parser_t* parser, char** attribs, play_tree_t* pt) {
   }
   play_tree_set_param(pt,name,val);
   free(name);
-  if(val) free(val);
+  free(val);
 }
 
 static void
@@ -498,7 +498,7 @@ asx_parse_entry(ASX_Parser_t* parser,char* buffer,char** _attribs) {
       nref++;
     } else
       mp_msg(MSGT_PLAYTREE,MSGL_DBG2,"Ignoring element %s\n",element);
-    if(body) free(body);
+    free(body);
     asx_free_attribs(attribs);
   }
 
@@ -564,7 +564,7 @@ asx_parse_repeat(ASX_Parser_t* parser,char* buffer,char** _attribs) {
        asx_parse_param(parser,attribs,repeat);
      } else
        mp_msg(MSGT_PLAYTREE,MSGL_DBG2,"Ignoring element %s\n",element);
-    if(body) free(body);
+     free(body);
      asx_free_attribs(attribs);
   }
 
@@ -649,7 +649,7 @@ asx_parser_build_tree(char* buffer,int deep) {
        }
      } else
        mp_msg(MSGT_PLAYTREE,MSGL_DBG2,"Ignoring element %s\n",element);
-     if(body) free(body);
+     free(body);
      asx_free_attribs(attribs);
   }
 

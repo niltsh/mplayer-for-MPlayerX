@@ -188,15 +188,9 @@ pvr_uninit (struct pvr_t *pvr)
   if (pvr->dev_fd)
     close (pvr->dev_fd);
 
-  if (pvr->video_dev)
-    free (pvr->video_dev);
-
-  if (pvr->stationlist.list)
-    free (pvr->stationlist.list);
-
-  if (pvr->param_channel)
-    free (pvr->param_channel);
-
+  free (pvr->video_dev);
+  free (pvr->stationlist.list);
+  free (pvr->param_channel);
   free (pvr);
 }
 
@@ -215,11 +209,8 @@ copycreate_stationlist (stationlist_t *stationlist, int num)
 
   num = FFMAX (num, chanlists[chantab].count);
 
-  if (stationlist->list)
-  {
-    free (stationlist->list);
-    stationlist->list = NULL;
-  }
+  free (stationlist->list);
+  stationlist->list = NULL;
 
   stationlist->total = 0;
   stationlist->enabled = 0;
@@ -1151,8 +1142,7 @@ parse_v4l2_tv_options (struct pvr_t *pvr)
 
   if (stream_tv_defaults.device)
   {
-    if (pvr->video_dev)
-      free (pvr->video_dev);
+    free (pvr->video_dev);
     pvr->video_dev = strdup (stream_tv_defaults.device);
   }
 

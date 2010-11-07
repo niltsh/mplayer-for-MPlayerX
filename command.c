@@ -512,8 +512,7 @@ static int mp_property_chapter(m_option_t *prop, int action, void *arg,
     else
         set_osd_msg(OSD_MSG_TEXT, 1, osd_duration,
                     MSGTR_OSDChapter, 0, MSGTR_Unknown);
-    if (chapter_name)
-        free(chapter_name);
+    free(chapter_name);
     return M_PROPERTY_OK;
 }
 
@@ -585,8 +584,7 @@ static int mp_property_angle(m_option_t *prop, int action, void *arg,
     angle = demuxer_set_angle(mpctx->demuxer, angle);
     set_osd_msg(OSD_MSG_TEXT, 1, osd_duration,
                         MSGTR_OSDAngle, angle, angles);
-    if (angle_name)
-        free(angle_name);
+    free(angle_name);
     return M_PROPERTY_OK;
 }
 

@@ -1580,8 +1580,7 @@ static int vbr_finish_2pass2(void *sstate)
 		return(-1);
 
 	/* Free the memory */
-	if(state->keyframe_locations)
-		free(state->keyframe_locations);
+	free(state->keyframe_locations);
 
 	return(0);
 

@@ -208,10 +208,10 @@ m_config_free(m_config_t* config) {
   for(p = config->profiles ; p ; p = pn) {
     pn = p->next;
     free(p->name);
-    if(p->desc) free(p->desc);
+    free(p->desc);
     for(j = 0 ; j < p->num_opts ; j++) {
       free(p->opts[2*j]);
-      if(p->opts[2*j+1]) free(p->opts[2*j+1]);
+      free(p->opts[2*j + 1]);
     }
     free(p->opts);
     free(p);
@@ -459,7 +459,7 @@ m_config_parse_option(const m_config_t *config, char *arg, char *param, int set)
       free(lst[2*i]);
       free(lst[2*i+1]);
     }
-    if(lst) free(lst);
+    free(lst);
   } else
     r = m_option_parse(co->opt,arg,param,set ? co->slots->data : NULL,config->mode);
 
@@ -566,7 +566,7 @@ m_config_add_profile(m_config_t* config, char* name) {
 
 void
 m_profile_set_desc(m_profile_t* p, char* desc) {
-  if(p->desc) free(p->desc);
+  free(p->desc);
   p->desc = desc ? strdup(desc) : NULL;
 }
 

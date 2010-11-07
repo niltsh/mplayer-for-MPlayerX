@@ -599,7 +599,7 @@ static void print_file_properties(const MPContext *mpctx, const char *filename)
 static void mp_dvdnav_context_free(MPContext *ctx){
     if (ctx->nav_smpi) free_mp_image(ctx->nav_smpi);
     ctx->nav_smpi = NULL;
-    if (ctx->nav_buffer) free(ctx->nav_buffer);
+    free(ctx->nav_buffer);
     ctx->nav_buffer = NULL;
     ctx->nav_start = NULL;
     ctx->nav_in_size = 0;
@@ -760,7 +760,7 @@ void exit_player_with_rc(enum exit_reason how, int rc)
   mpctx->playtree = NULL;
 
 
-  if(edl_records != NULL) free(edl_records); // free mem allocated for EDL
+  free(edl_records); // free mem allocated for EDL
   edl_records = NULL;
   switch(how) {
   case EXIT_QUIT:
@@ -2037,8 +2037,7 @@ static void mp_dvdnav_save_smpi(int in_size,
     if (mpctx->stream->type != STREAMTYPE_DVDNAV)
         return;
 
-    if (mpctx->nav_buffer)
-        free(mpctx->nav_buffer);
+    free(mpctx->nav_buffer);
 
     mpctx->nav_buffer = malloc(in_size);
     mpctx->nav_start = start;
@@ -3947,8 +3946,7 @@ if(step_sec>0) {
   while( !brk_cmd && (cmd = mp_input_get_cmd(0,0,0)) != NULL) {
       brk_cmd = run_command(mpctx, cmd);
       if (cmd->id == MP_CMD_EDL_LOADFILE) {
-          if (edl_filename)
-              free(edl_filename);
+          free(edl_filename);
           edl_filename = strdup(cmd->args[0].v.s);
           if (edl_filename)
               edl_loadfile();
