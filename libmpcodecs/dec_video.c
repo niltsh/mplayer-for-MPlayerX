@@ -447,7 +447,7 @@ void *decode_video(sh_video_t *sh_video, unsigned char *start, int in_size,
             sh_video->pts = sh_video->buffered_pts[sh_video->num_buffered_pts];
         } else {
             mp_msg(MSGT_CPLAYER, MSGL_ERR,
-                   "No pts value from demuxer to " "use for frame!\n");
+                   "No pts value from demuxer to use for frame!\n");
             sh_video->pts = MP_NOPTS_VALUE;
         }
         if (delay >= 0) {
