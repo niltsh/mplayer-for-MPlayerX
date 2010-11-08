@@ -1,6 +1,10 @@
 MPlayer (1.0)
 
   rc5:
+
+    Decoders:
+    * FFmpeg AAC decoder is now preferred over libfaad2
+
     Demuxers:
     * experimental support for using binary Quicktime codecs with -demuxer lavf.
 
