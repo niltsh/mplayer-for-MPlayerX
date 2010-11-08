@@ -1,5 +1,5 @@
 /*
- * Bluray stream playback
+ * Blu-ray stream playback
  * by cRTrn13 <crtrn13-at-gmail.com> 2009
  *
  * This file is part of MPlayer.
@@ -496,7 +496,7 @@ static int bd_stream_open(stream_t *s, int mode, void* opts, int* file_format)
 }
 
 const stream_info_t stream_info_bd = {
-    "Bluray",
+    "Blu-ray",
     "bd",
     "cRTrn13",
     "",
