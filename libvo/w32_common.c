@@ -327,9 +327,11 @@ static void resetMode(void) {
 static int createRenderingContext(void) {
     HWND layer = HWND_NOTOPMOST;
     RECT r;
-  if (WinID < 0) {
     int style = (vo_border && !vo_fs) ?
                 (WS_OVERLAPPEDWINDOW | WS_SIZEBOX) : WS_POPUP;
+
+    if (WinID >= 0)
+        return 1;
 
     if (vo_fs || vo_ontop) layer = HWND_TOPMOST;
     if (vo_fs) {
@@ -371,7 +373,6 @@ static int createRenderingContext(void) {
     r.bottom = r.top + vo_dheight;
     AdjustWindowRect(&r, style, 0);
     SetWindowPos(vo_window, layer, r.left, r.top, r.right - r.left, r.bottom - r.top, SWP_SHOWWINDOW);
-  }
     return 1;
 }
 
