@@ -236,7 +236,7 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts)
     h264_module_t *mod=(h264_module_t*)vf->priv;
     int i;
 
-    memset(&mod->pic, 0, sizeof(x264_picture_t));
+    x264_picture_init(&mod->pic);
     mod->pic.img.i_csp=param.i_csp;
     mod->pic.img.i_plane=3;
     for(i=0; i<4; i++) {
