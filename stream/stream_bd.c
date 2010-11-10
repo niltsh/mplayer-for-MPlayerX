@@ -286,7 +286,7 @@ static off_t bd_read(struct bd_priv *bd, uint8_t *buf, int len)
         return -1;
 
     if (unit_offset) {
-        int decrypt_len = BD_UNIT_SIZE - unit_offset;
+        int decrypt_len = FFMIN(len, BD_UNIT_SIZE - unit_offset);
         av_aes_crypt(bd->aescbc, buf, buf, decrypt_len / 16, bd->iv.u8, 1);
         buf += decrypt_len;
         len -= decrypt_len;
