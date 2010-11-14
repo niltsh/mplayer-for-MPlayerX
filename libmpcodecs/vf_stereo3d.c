@@ -247,7 +247,8 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts)
         int in_off_right = vf->priv->in.row_right  * mpi->stride[0]  +
                            vf->priv->in.off_right;
 
-        dmpi = vf_get_image(vf->next, IMGFMT_RGB24, MP_IMGTYPE_TEMP, 0,
+        dmpi = vf_get_image(vf->next, IMGFMT_RGB24, MP_IMGTYPE_TEMP,
+                            MP_IMGFLAG_ACCEPT_STRIDE,
                             vf->priv->out.width, vf->priv->out.height);
         out_off_left   = vf->priv->out.row_left  * dmpi->stride[0] +
                          vf->priv->out.off_left;
@@ -349,7 +350,6 @@ static int vf_open(vf_instance_t *vf, char *args)
     vf->uninit          = uninit;
     vf->put_image       = put_image;
     vf->query_format    = query_format;
-    vf->default_reqs    = VFCAP_ACCEPT_STRIDE;
 
     return 1;
 }
