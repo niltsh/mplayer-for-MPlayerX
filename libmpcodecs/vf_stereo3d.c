@@ -67,7 +67,6 @@ typedef struct component {
     unsigned int off_right;
     unsigned int row_left;
     unsigned int row_right;
-    unsigned int stride;
 } component;
 
 //==global variables==//
@@ -142,19 +141,16 @@ static int config(struct vf_instance *vf, int width, int height, int d_width,
     vf->priv->in.off_right      = 0;
     vf->priv->in.row_left       = 0;
     vf->priv->in.row_right      = 0;
-    vf->priv->in.stride         = vf->priv->width * 3;
 
     //check input format
     switch (vf->priv->in.fmt) {
     case SIDE_BY_SIDE_LR:
         vf->priv->width         = width / 2;
         vf->priv->in.off_right  = vf->priv->width * 3;
-        vf->priv->in.stride     = vf->priv->width * 6;
         break;
     case SIDE_BY_SIDE_RL:
         vf->priv->width         = width / 2;
         vf->priv->in.off_left   = vf->priv->width * 3;
-        vf->priv->in.stride     = vf->priv->width * 6;
         break;
     case ABOVE_BELOW_2_LR:
         d_height               *= 2;
@@ -181,7 +177,6 @@ static int config(struct vf_instance *vf, int width, int height, int d_width,
     vf->priv->out.off_right     = 0;
     vf->priv->out.row_left      = 0;
     vf->priv->out.row_right     = 0;
-    vf->priv->out.stride        = vf->priv->width * 3;
 
     //check output format
     switch (vf->priv->out.fmt) {
@@ -201,12 +196,10 @@ static int config(struct vf_instance *vf, int width, int height, int d_width,
     case SIDE_BY_SIDE_LR:
         vf->priv->out.width     = vf->priv->width * 2;
         vf->priv->out.off_right = vf->priv->width * 3;
-        vf->priv->out.stride    = vf->priv->width * 6;
         break;
     case SIDE_BY_SIDE_RL:
         vf->priv->out.width     = vf->priv->width * 2;
         vf->priv->out.off_left  = vf->priv->width * 3;
-        vf->priv->out.stride    = vf->priv->width * 6;
         break;
     case ABOVE_BELOW_2_LR:
         d_height               /= 2;
