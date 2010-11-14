@@ -88,9 +88,9 @@ static void remove_track(playlist_t *playlist, int number)
         }
         else
         {
-            if(tmp[i]->filename) free(tmp[i]->filename);
-            if(tmp[i]->artist) free(tmp[i]->artist);
-            if(tmp[i]->title) free(tmp[i]->title);
+            free(tmp[i]->filename);
+            free(tmp[i]->artist);
+            free(tmp[i]->title);
             free(tmp[i]);
         }
     }

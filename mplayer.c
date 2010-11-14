@@ -1152,8 +1152,7 @@ void update_set_of_subtitles(void)
 }
 
 void init_vo_spudec(void) {
-  if (vo_spudec)
-    spudec_free(vo_spudec);
+  spudec_free(vo_spudec);
   vo_spudec = NULL;
 
   // we currently can't work without video stream

@@ -709,7 +709,7 @@ static LRESULT CALLBACK SkinBrowserWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, 
                     if (len)
                     {
                         if (guiIntfStruct.Playing) guiGetEvent(guiCEvent, (void *) guiSetStop);
-                        if (skinName) free(skinName);
+                        free(skinName);
                         skinName = malloc(len + 1);
                         SendMessage(listbox, LB_GETTEXT, (WPARAM) index, (LPARAM) skinName);
                         /* fill out the full pathname to the skin */

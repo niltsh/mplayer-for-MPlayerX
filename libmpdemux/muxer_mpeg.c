@@ -496,14 +496,11 @@ init_fail:
     if(s->priv)
     {
       spriv = s->priv;
-      if(spriv->pack)
-        free(spriv->pack);
-      if(spriv->buffer_track)
-        free(spriv->buffer_track);
+      free(spriv->pack);
+      free(spriv->buffer_track);
       free(s->priv);
     }
-    if(s->b_buffer)
-      free(s->b_buffer);
+    free(s->b_buffer);
     free(s);
   }
   return NULL;

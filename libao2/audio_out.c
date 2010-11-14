@@ -149,10 +149,8 @@ const ao_functions_t* init_best_audio_out(char** ao_list,int use_plugin,int rate
             mp_msg(MSGT_AO, MSGL_FATAL, MSGTR_AO_ALSA9_1x_Removed);
             exit_player(EXIT_NONE);
         }
-        if (ao_subdevice) {
-            free(ao_subdevice);
-            ao_subdevice = NULL;
-        }
+        free(ao_subdevice);
+        ao_subdevice = NULL;
         ao_subdevice=strchr(ao,':');
         if(ao_subdevice){
             ao_len = ao_subdevice - ao;
@@ -181,10 +179,8 @@ const ao_functions_t* init_best_audio_out(char** ao_list,int use_plugin,int rate
         ++ao_list;
         if(!(ao_list[0])) return NULL; // do NOT fallback to others
       }
-    if (ao_subdevice) {
-        free(ao_subdevice);
-        ao_subdevice = NULL;
-    }
+    free(ao_subdevice);
+    ao_subdevice = NULL;
 
     mp_msg(MSGT_AO, MSGL_V, MSGTR_AO_TryingEveryKnown);
 

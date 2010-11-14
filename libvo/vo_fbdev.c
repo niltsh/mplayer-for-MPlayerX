@@ -365,10 +365,8 @@ err_out_parse_error:
 err_out_print_linenum:
     mp_msg(MSGT_VO, MSGL_V, " at line %d\n", line_num);
 err_out:
-    if (fb_modes) {
-        free(fb_modes);
-        fb_modes = NULL;
-    }
+    free(fb_modes);
+    fb_modes = NULL;
     nr_modes = 0;
     free(line);
     free(fp);
@@ -1119,8 +1117,7 @@ static int preinit(const char *vo_subdevice)
         else
 #endif
         {
-            if (fb_dev_name)
-                free(fb_dev_name);
+            free(fb_dev_name);
             fb_dev_name = strdup(vo_subdevice);
         }
     }

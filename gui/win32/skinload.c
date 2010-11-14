@@ -185,8 +185,8 @@ static void freeimages(skin_t *skin)
     {
         if(skin->images && skin->images[i])
         {
-            if(skin->images[i]->data) free(skin->images[i]->data);
-            if(skin->images[i]->name) free(skin->images[i]->name);
+            free(skin->images[i]->data);
+            free(skin->images[i]->name);
             free(skin->images[i]);
         }
     }
@@ -223,29 +223,21 @@ static char *findnextstring(char *temp, const char *desc, int *base)
 static void freeskin(skin_t *skin)
 {
     unsigned int i;
-    if(skin->skindir)
-    {
-        free(skin->skindir);
-        skin->skindir = NULL;
-    }
+
+    free(skin->skindir);
+    skin->skindir = NULL;
 
     for (i=1; i<=skin->lastusedid; i++)
         skin->removewidget(skin, i);
 
-    if(skin->widgets)
-    {
-        free(skin->widgets);
-        skin->widgets = NULL;
-    }
+    free(skin->widgets);
+    skin->widgets = NULL;
 
     freeimages(skin);
     for(i=0; i<skin->windowcount; i++)
     {
-        if(skin->windows[i]->name)
-        {
-            free(skin->windows[i]->name);
-            skin->windows[i]->name = NULL;
-        }
+        free(skin->windows[i]->name);
+        skin->windows[i]->name = NULL;
         free(skin->windows[i]);
     }
 
@@ -255,17 +247,12 @@ static void freeskin(skin_t *skin)
     for (i=0; i<skin->fontcount; i++)
     {
         unsigned int x;
-        if(skin->fonts[i]->name)
-        {
-            free(skin->fonts[i]->name);
-            skin->fonts[i]->name = NULL;
-        }
 
-        if(skin->fonts[i]->id)
-        {
-            free(skin->fonts[i]->id);
-            skin->fonts[i]->id = NULL;
-        }
+        free(skin->fonts[i]->name);
+        skin->fonts[i]->name = NULL;
+
+        free(skin->fonts[i]->id);
+        skin->fonts[i]->id = NULL;
 
         for (x=0; x<skin->fonts[i]->charcount; x++)
         {
@@ -273,11 +260,8 @@ static void freeskin(skin_t *skin)
             skin->fonts[i]->chars[x] = NULL;
         }
 
-        if(skin->fonts[i]->chars)
-        {
-            free(skin->fonts[i]->chars);
-            skin->fonts[i]->chars = NULL;
-        }
+        free(skin->fonts[i]->chars);
+        skin->fonts[i]->chars = NULL;
 
         free(skin->fonts[i]);
         skin->fonts[i] = NULL;
@@ -301,8 +285,7 @@ static void removewidget(skin_t *skin, int id)
     {
         if(skin->widgets[i]->id == id)
         {
-            if(skin->widgets[i]->label)
-                free(skin->widgets[i]->label);
+            free(skin->widgets[i]->label);
             free(skin->widgets[i]);
             skin->widgets[i] = NULL;
         }

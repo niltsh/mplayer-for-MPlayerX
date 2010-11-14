@@ -1143,8 +1143,7 @@ static void create_conv_textures(gl_conversion_params_t *params, int *texu, char
     default:
       mp_msg(MSGT_VO, MSGL_ERR, "[gl] unknown conversion type %i\n", conv);
   }
-  if (lookup_data)
-    free(lookup_data);
+  free(lookup_data);
 }
 
 /**

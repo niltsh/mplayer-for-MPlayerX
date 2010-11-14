@@ -203,12 +203,9 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
 
 static void uninit(struct vf_instance *vf) {
 
-  if(vf->priv->buffer)
-    free(vf->priv->buffer);
-  if(vf->priv->zbuffer)
-    free(vf->priv->zbuffer);
-  if(vf->priv->zmem)
-    free(vf->priv->zmem);
+  free(vf->priv->buffer);
+  free(vf->priv->zbuffer);
+  free(vf->priv->zmem);
 
 }
 

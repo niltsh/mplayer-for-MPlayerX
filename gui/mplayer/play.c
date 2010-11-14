@@ -206,7 +206,7 @@ void ChangeSkin( char * name )
 
  if ( prev && appMPlayer.menuIsPresent )
   {
-   if ( mplMenuDrawBuffer ) free( mplMenuDrawBuffer );
+   free( mplMenuDrawBuffer );
    if ( ( mplMenuDrawBuffer = calloc( 1,appMPlayer.menuBase.Bitmap.ImageSize ) ) == NULL )
     { mp_msg( MSGT_GPLAYER,MSGL_STATUS,MSGTR_NEMDB ); return; }
    wsResizeWindow( &appMPlayer.menuWindow,appMPlayer.menuBase.width,appMPlayer.menuBase.height );
@@ -236,7 +236,7 @@ void ChangeSkin( char * name )
  mplPBInit();
 
 // --- reload main window
- if ( mplDrawBuffer ) free( mplDrawBuffer );
+ free( mplDrawBuffer );
  if ( ( mplDrawBuffer = calloc( 1,appMPlayer.main.Bitmap.ImageSize ) ) == NULL )
   { mp_msg( MSGT_GPLAYER,MSGL_STATUS,MSGTR_NEMDB ); return; }
 

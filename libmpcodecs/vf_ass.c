@@ -383,12 +383,9 @@ static int control(vf_instance_t *vf, int request, void *data)
 
 static void uninit(struct vf_instance *vf)
 {
-    if (vf->priv->planes[1])
-        free(vf->priv->planes[1]);
-    if (vf->priv->planes[2])
-        free(vf->priv->planes[2]);
-    if (vf->priv->dirty_rows)
-        free(vf->priv->dirty_rows);
+    free(vf->priv->planes[1]);
+    free(vf->priv->planes[2]);
+    free(vf->priv->dirty_rows);
 }
 
 static const unsigned int fmt_list[] = {

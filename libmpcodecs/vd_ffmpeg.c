@@ -480,8 +480,7 @@ static void uninit(sh_video_t *sh){
 
     av_freep(&avctx);
     av_freep(&ctx->pic);
-    if (ctx)
-        free(ctx);
+    free(ctx);
 }
 
 static void draw_slice(struct AVCodecContext *s,

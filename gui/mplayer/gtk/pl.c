@@ -160,7 +160,8 @@ void ShowPlayList( void )
 	DirNode=gtk_ctree_node_get_row_data( GTK_CTREE( CTDirTree ),node );
 	current_path=DirNode->path;
         scan_dir( DirNode->path );
-        if ( CLFileSelected ) free( CLFileSelected ); CLFileSelected=calloc( 1,NrOfEntrys * sizeof( int ) );
+	free( CLFileSelected );
+	CLFileSelected=calloc( 1,NrOfEntrys * sizeof( int ) );
 	break;
        }
     } while( pos );
@@ -195,7 +196,8 @@ void HidePlayList( void )
  if ( !PlayList ) return;
  NrOfSelected=NrOfEntrys=0;
  gfree( (void **)&CLListSelected ); gfree( (void **)&CLFileSelected );
- if ( old_path ) free( old_path ); old_path=strdup( current_path );
+ free( old_path );
+ old_path=strdup( current_path );
  gtk_widget_hide( PlayList );
  gtk_widget_destroy( PlayList );
  PlayList=NULL;
@@ -406,7 +408,8 @@ static void plCTRow(GtkWidget * widget, gint row, gint column, GdkEventButton * 
  current_path=DirNode->path;
  gtk_ctree_expand( GTK_CTREE( widget ),node );
  scan_dir( DirNode->path );
- if ( CLFileSelected ) free( CLFileSelected ); CLFileSelected=calloc( 1,NrOfEntrys * sizeof( int ) );
+ free( CLFileSelected );
+ CLFileSelected=calloc( 1,NrOfEntrys * sizeof( int ) );
 }
 
 GtkWidget * create_PlayList( void )

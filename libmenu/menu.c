@@ -124,7 +124,7 @@ static int menu_parse_config(char* buffer) {
     if(!name) {
       mp_msg(MSGT_GLOBAL,MSGL_WARN,MSGTR_LIBMENU_MenuDefinitionsNeedANameAttrib,parser->line);
       free(element);
-      if(body) free(body);
+      free(body);
       asx_free_attribs(attribs);
       continue;
     }
@@ -215,7 +215,7 @@ static int menu_parse_config(char* buffer) {
     } else {
       mp_msg(MSGT_GLOBAL,MSGL_WARN,MSGTR_LIBMENU_UnknownMenuType,element,parser->line);
       free(name);
-      if(body) free(body);
+      free(body);
     }
 
     free(element);
@@ -279,7 +279,7 @@ void menu_uninit(void) {
   for(i = 0 ; menu_list && menu_list[i].name ; i++) {
     free(menu_list[i].name);
     m_struct_free(&menu_list[i].type->priv_st,menu_list[i].cfg);
-    if(menu_list[i].args) free(menu_list[i].args);
+    free(menu_list[i].args);
   }
   free(menu_list);
   menu_count = 0;

@@ -1080,8 +1080,8 @@ void free_osd_list(void){
     mp_osd_obj_t* obj=vo_osd_list;
     while(obj){
 	mp_osd_obj_t* next=obj->next;
-	if (obj->alpha_buffer) free(obj->alpha_buffer);
-	if (obj->bitmap_buffer) free(obj->bitmap_buffer);
+	free(obj->alpha_buffer);
+	free(obj->bitmap_buffer);
 	free(obj);
 	obj=next;
     }

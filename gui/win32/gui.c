@@ -1007,7 +1007,7 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                             if(GetFileAttributes(searchpath) != INVALID_FILE_ATTRIBUTES)
                             {
 #ifdef CONFIG_DVDREAD
-                                if (dvd_device) free(dvd_device);
+                                free(dvd_device);
                                 dvd_device = strdup(device + pos);
                                 dvd_title = dvd_chapter = dvd_angle = 1;
                                 handlemsg(hWnd, evPlayDVD);
@@ -1017,7 +1017,7 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                             if(GetFileAttributes(searchpath) != INVALID_FILE_ATTRIBUTES)
                             {
 #ifdef CONFIG_LIBCDIO
-                                if (cdrom_device) free(cdrom_device);
+                                free(cdrom_device);
                                 cdrom_device = strdup(device + pos);
                                 /* mplayer doesn't seem to like the trailing \ after the device name */
                                 cdrom_device[2]=0;
@@ -1422,7 +1422,7 @@ int create_window(gui_t *gui, char *skindir)
     {
         mp_msg(MSGT_GPLAYER, MSGL_FATAL, "[GUI] fatal error during skinload\n");
         /* Set default Skin */
-        if (skinName) free(skinName);
+        free(skinName);
         skinName = strdup("Blue");
         /* then force write conf */
         cfg_write();

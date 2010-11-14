@@ -710,7 +710,7 @@ return 1;
 len_err_out:
   mp_msg(MSGT_HEADER, MSGL_FATAL, MSGTR_MPDEMUX_ASFHDR_InvalidLengthInASFHeader);
 err_out:
-  if (hdr) free(hdr);
-  if (streams) free(streams);
+  free(hdr);
+  free(streams);
   return 0;
 }

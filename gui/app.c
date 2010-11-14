@@ -108,11 +108,12 @@ void appClearItem( wItem * item )
  item->tmp=0;
  item->key=0; item->key2=0;
  item->Bitmap.Width=0; item->Bitmap.Height=0; item->Bitmap.BPP=0; item->Bitmap.ImageSize=0;
- if ( item->Bitmap.Image ) free( item->Bitmap.Image );
+ free(item->Bitmap.Image);
  item->Bitmap.Image=NULL;
 // ---
  item->fontid=0;
- if ( item->label ) free( item->label ); item->label=NULL;
+ free(item->label);
+ item->label=NULL;
  item->event=0;
 }
 

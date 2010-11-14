@@ -102,7 +102,7 @@ static void prButton( GtkObject * object,gpointer user_data )
 	break;
    case 1: // ok
 	ChangeSkin( sbSelectedSkin );
-	if ( skinName ) free( skinName );
+	free( skinName );
 	skinName=strdup( sbSelectedSkin );
 	break;
   }
@@ -122,7 +122,7 @@ static void on_SkinList_select_row( GtkCList * clist,gint row,gint column,GdkEve
  if( !bevent ) return;
  if( bevent->type == GDK_2BUTTON_PRESS )
   {
-   if ( skinName ) free( skinName );
+   free( skinName );
    skinName=strdup( sbSelectedSkin );
    HideSkinBrowser();
   }

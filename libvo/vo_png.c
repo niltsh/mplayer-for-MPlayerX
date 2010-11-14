@@ -199,10 +199,8 @@ static void uninit(void){
     av_freep(&avctx);
     av_freep(&outbuffer);
     outbuffer_size = 0;
-    if (png_outdir) {
-        free(png_outdir);
-        png_outdir = NULL;
-    }
+    free(png_outdir);
+    png_outdir = NULL;
 }
 
 static void check_events(void){}

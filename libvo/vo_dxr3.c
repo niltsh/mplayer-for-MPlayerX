@@ -715,12 +715,8 @@ static void uninit(void)
 		close(fd_control);
 	}
 #ifdef SPU_SUPPORT
-	if(osdpicbuf) {
-		free(osdpicbuf);
-	}
-	if(spued) {
-		free(spued);
-	}
+	free(osdpicbuf);
+	free(spued);
 #endif
 }
 
@@ -935,9 +931,7 @@ static overlay_t *overlay_init(int dev)
 
 static int overlay_release(overlay_t *o)
 {
-    if(o)
-	free(o);
-
+    free(o);
     return 0;
 }
 #define TYPE_INT 1

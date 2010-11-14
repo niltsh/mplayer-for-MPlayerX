@@ -104,7 +104,6 @@ char * gstrchr( char * str,int c )
 
 void gfree( void ** p )
 {
- if ( *p == NULL ) return;
  free( *p ); *p=NULL;
 }
 
@@ -363,19 +362,19 @@ void guiLoadFont( void )
  if ( vo_font )
   {
    int i;
-   if ( vo_font->name ) free( vo_font->name );
-   if ( vo_font->fpath ) free( vo_font->fpath );
+   free( vo_font->name );
+   free( vo_font->fpath );
    for ( i=0;i<16;i++ )
     if ( vo_font->pic_a[i] )
      {
-      if ( vo_font->pic_a[i]->bmp ) free( vo_font->pic_a[i]->bmp );
-      if ( vo_font->pic_a[i]->pal ) free( vo_font->pic_a[i]->pal );
+      free( vo_font->pic_a[i]->bmp );
+      free( vo_font->pic_a[i]->pal );
      }
    for ( i=0;i<16;i++ )
     if ( vo_font->pic_b[i] )
      {
-      if ( vo_font->pic_b[i]->bmp ) free( vo_font->pic_b[i]->bmp );
-      if ( vo_font->pic_b[i]->pal ) free( vo_font->pic_b[i]->pal );
+      free( vo_font->pic_b[i]->bmp );
+      free( vo_font->pic_b[i]->pal );
      }
    free( vo_font ); vo_font=NULL;
   }
@@ -968,8 +967,8 @@ void * gtkSet( int cmd,float fparam, void * vparam )
 	   plList=curr->next;
 	 plCurrent=curr->next;
 	 // Free it
-	 if ( curr->path ) free( curr->path );
-	 if ( curr->name ) free( curr->name );
+	 free( curr->path );
+	 free( curr->name );
 	 free( curr );
         }
 	mplCurr(); // Instead of using mplNext && mplPrev
@@ -982,8 +981,8 @@ void * gtkSet( int cmd,float fparam, void * vparam )
 	 if ( !plList ) return NULL;
 	 if ( !curr->next )
 	  {
-	   if ( curr->path ) free( curr->path );
-	   if ( curr->name ) free( curr->name );
+	   free( curr->path );
+	   free( curr->name );
 	   free( curr );
 	  }
 	  else
@@ -991,8 +990,8 @@ void * gtkSet( int cmd,float fparam, void * vparam )
 	    while ( curr->next )
 	     {
 	      next=curr->next;
-	      if ( curr->path ) free( curr->path );
-	      if ( curr->name ) free( curr->name );
+	      free( curr->path );
+	      free( curr->name );
 	      free( curr );
 	      curr=next;
 	     }

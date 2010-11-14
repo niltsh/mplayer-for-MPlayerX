@@ -59,7 +59,7 @@ void fntFreeFont( void )
   {
    if ( Fonts[i] )
     {
-     if ( Fonts[i]->Bitmap.Image ) free( Fonts[i]->Bitmap.Image );
+     free( Fonts[i]->Bitmap.Image );
      free( Fonts[i] );
      Fonts[i]=NULL;
     }
