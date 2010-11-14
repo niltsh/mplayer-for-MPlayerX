@@ -65,6 +65,8 @@ typedef struct component {
     unsigned int height;
     unsigned int off_left;
     unsigned int off_right;
+    unsigned int row_left;
+    unsigned int row_right;
     unsigned int stride;
 } component;
 
@@ -138,6 +140,8 @@ static int config(struct vf_instance *vf, int width, int height, int d_width,
     vf->priv->in.height         = height;
     vf->priv->in.off_left       = 0;
     vf->priv->in.off_right      = 0;
+    vf->priv->in.row_left       = 0;
+    vf->priv->in.row_right      = 0;
     vf->priv->in.stride         = vf->priv->width * 3;
 
     //check input format
@@ -156,13 +160,13 @@ static int config(struct vf_instance *vf, int width, int height, int d_width,
         d_height               *= 2;
     case ABOVE_BELOW_LR:
         vf->priv->height        = height / 2;
-        vf->priv->in.off_right  = vf->priv->width * vf->priv->height * 3;
+        vf->priv->in.row_right  = vf->priv->height;
         break;
     case ABOVE_BELOW_2_RL:
         d_height               *= 2;
     case ABOVE_BELOW_RL:
         vf->priv->height        = height / 2;
-        vf->priv->in.off_left   = vf->priv->width * vf->priv->height * 3;
+        vf->priv->in.row_left   = vf->priv->height;
         break;
     default:
         mp_msg(MSGT_VFILTER, MSGL_WARN,
@@ -175,6 +179,8 @@ static int config(struct vf_instance *vf, int width, int height, int d_width,
     vf->priv->out.height        = vf->priv->height;
     vf->priv->out.off_left      = 0;
     vf->priv->out.off_right     = 0;
+    vf->priv->out.row_left      = 0;
+    vf->priv->out.row_right     = 0;
     vf->priv->out.stride        = vf->priv->width * 3;
 
     //check output format
@@ -206,17 +212,18 @@ static int config(struct vf_instance *vf, int width, int height, int d_width,
         d_height               /= 2;
     case ABOVE_BELOW_LR:
         vf->priv->out.height    = vf->priv->height * 2;
-        vf->priv->out.off_right = vf->priv->width * vf->priv->height * 3;
+        vf->priv->out.row_right = vf->priv->height;
         break;
     case ABOVE_BELOW_2_RL:
         d_height               /= 2;
     case ABOVE_BELOW_RL:
         vf->priv->out.height    = vf->priv->height * 2;
-        vf->priv->out.off_left  = vf->priv->width * vf->priv->height * 3;
+        vf->priv->out.row_left  = vf->priv->height;
         break;
     case MONO_R:
         //same as MONO_L only needs switching of input offsets
         vf->priv->in.off_left   = vf->priv->in.off_right;
+        vf->priv->in.row_left   = vf->priv->in.row_right;
         //nobreak;
     case MONO_L:
         //use default settings
@@ -241,10 +248,19 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts)
     if (vf->priv->in.fmt == vf->priv->out.fmt) { //nothing to do
         dmpi = mpi;
     } else {
+        int out_off_left, out_off_right;
+        int in_off_left  = vf->priv->in.row_left   * mpi->stride[0]  +
+                           vf->priv->in.off_left;
+        int in_off_right = vf->priv->in.row_right  * mpi->stride[0]  +
+                           vf->priv->in.off_right;
+
         dmpi = vf_get_image(vf->next, IMGFMT_RGB24, MP_IMGTYPE_TEMP, 0,
                             vf->priv->out.width, vf->priv->out.height);
-        dmpi->h = vf->priv->out.height;
-        dmpi->width = vf->priv->out.width;
+        out_off_left   = vf->priv->out.row_left  * dmpi->stride[0] +
+                         vf->priv->out.off_left;
+        out_off_right  = vf->priv->out.row_right * dmpi->stride[0] +
+                         vf->priv->out.off_right;
+
         switch (vf->priv->out.fmt) {
         case SIDE_BY_SIDE_LR:
         case SIDE_BY_SIDE_RL:
@@ -252,27 +268,27 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts)
         case ABOVE_BELOW_RL:
         case ABOVE_BELOW_2_LR:
         case ABOVE_BELOW_2_RL:
-            memcpy_pic(dmpi->planes[0] + vf->priv->out.off_left,
-                       mpi->planes[0] + vf->priv->in.off_left,
+            memcpy_pic(dmpi->planes[0] + out_off_left,
+                       mpi->planes[0] + in_off_left,
                        3 * vf->priv->width,
                        vf->priv->height,
-                       vf->priv->out.stride,
-                       vf->priv->in.stride);
-            memcpy_pic(dmpi->planes[0] + vf->priv->out.off_right,
-                       mpi->planes[0] + vf->priv->in.off_right,
+                       dmpi->stride[0],
+                       mpi->stride[0]);
+            memcpy_pic(dmpi->planes[0] + out_off_right,
+                       mpi->planes[0] + in_off_right,
                        3 * vf->priv->width,
                        vf->priv->height,
-                       vf->priv->out.stride,
-                       vf->priv->in.stride);
+                       dmpi->stride[0],
+                       mpi->stride[0]);
             break;
         case MONO_L:
         case MONO_R:
             memcpy_pic(dmpi->planes[0],
-                       mpi->planes[0] + vf->priv->in.off_left,
+                       mpi->planes[0] + in_off_left,
                        3 * vf->priv->width,
                        vf->priv->height,
-                       vf->priv->out.stride,
-                       vf->priv->in.stride);
+                       dmpi->stride[0],
+                       mpi->stride[0]);
             break;
         case ANAGLYPH_RC_GRAY:
         case ANAGLYPH_RC_HALF:
@@ -294,11 +310,9 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts)
                 ana_matrix[i] = vf->priv->ana_matrix[i];
 
             for (y = 0; y < vf->priv->out.height; y++) {
-                o   = vf->priv->out.stride * y;
-                il  = vf->priv->in.off_left  + y *
-                      vf->priv->in.stride;
-                ir  = vf->priv->in.off_right + y *
-                      vf->priv->in.stride;
+                o   = dmpi->stride[0] * y;
+                il  = in_off_left  + y * mpi->stride[0];
+                ir  = in_off_right + y * mpi->stride[0];
                 for (x = 0; x < out_width; x++) {
                     dest[o    ]  = ana_convert(
                                    ana_matrix[0], source + il, source + ir); //red out
