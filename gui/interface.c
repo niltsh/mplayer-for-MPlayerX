@@ -1134,8 +1134,6 @@ void * gtkSet( int cmd,float fparam, void * vparam )
  return NULL;
 }
 
-#define mp_basename(s) (strrchr(s,'/')==NULL?(char*)s:(strrchr(s,'/')+1))
-
 #include "playtree.h"
 
 //This function adds/inserts one file into the gui playlist

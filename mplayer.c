@@ -349,8 +349,6 @@ static int crash_debug = 0;
 #include "cfg-mplayer.h"
 
 
-#define mp_basename2(s) (strrchr(s,'/')==NULL?(char*)s:(strrchr(s,'/')+1))
-
 const void *mpctx_get_video_out(MPContext *mpctx)
 {
     return mpctx->video_out;
@@ -456,7 +454,7 @@ char *get_metadata (metadata_t type) {
   {
   case META_NAME:
   {
-    return strdup (mp_basename2 (filename));
+    return strdup(mp_basename(filename));
   }
 
   case META_VIDEO_CODEC:
@@ -1045,8 +1043,6 @@ static int libmpdemux_was_interrupted(int eof) {
   }
   return eof;
 }
-
-#define mp_basename(s) (strrchr(s,'\\')==NULL?(mp_basename2(s)):(strrchr(s,'\\')+1))
 
 static int playtree_add_playlist(play_tree_t* entry)
 {
@@ -3174,7 +3170,7 @@ while (player_idle_mode && !filename) {
 	mp_msg(MSGT_CPLAYER,MSGL_INFO,MSGTR_Playing,
 		filename_recode(filename));
         if(use_filename_title && vo_wintitle == NULL)
-            vo_wintitle = strdup ( mp_basename2 (filename));
+            vo_wintitle = strdup(mp_basename(filename));
     }
 
     edl_loadfile();
@@ -3368,7 +3364,8 @@ if (mpctx->demuxer && mpctx->demuxer->type==DEMUXER_TYPE_PLAYLIST)
   current_module="handle_demux_playlist";
   while (ds_get_packet(mpctx->demuxer->video,&playlist_entry)>0)
   {
-    char *temp, *bname;
+    char *temp;
+    const char *bname;
 
     mp_msg(MSGT_CPLAYER,MSGL_V,"Adding file %s to element entry.\n",
 	    filename_recode(playlist_entry));

@@ -193,3 +193,16 @@ void set_codec_path(const char *path)
     strcpy(codec_path, path);
     needs_free = 1;
 }
+
+const char *mp_basename(const char *path)
+{
+    char *s;
+
+#if HAVE_DOS_PATHS
+    s = strrchr(path, '\\');
+    if (s)
+        return s + 1;
+#endif
+    s = strrchr(path, '/');
+    return s ? s + 1 : s;
+}
