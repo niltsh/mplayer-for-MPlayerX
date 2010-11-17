@@ -201,7 +201,7 @@ const char *mp_basename(const char *path)
 #if HAVE_DOS_PATHS
     s = strrchr(path, '\\');
     if (s)
-        return s + 1;
+        path = s + 1;
 #endif
     s = strrchr(path, '/');
     return s ? s + 1 : path;
