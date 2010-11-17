@@ -204,5 +204,5 @@ const char *mp_basename(const char *path)
         return s + 1;
 #endif
     s = strrchr(path, '/');
-    return s ? s + 1 : s;
+    return s ? s + 1 : path;
 }
