@@ -111,13 +111,11 @@ const mime_struct_t mime_type_table[] = {
 
 streaming_ctrl_t *
 streaming_ctrl_new(void) {
-	streaming_ctrl_t *streaming_ctrl;
-	streaming_ctrl = malloc(sizeof(streaming_ctrl_t));
+	streaming_ctrl_t *streaming_ctrl = calloc(1, sizeof(*streaming_ctrl));
 	if( streaming_ctrl==NULL ) {
 		mp_msg(MSGT_NETWORK,MSGL_FATAL,MSGTR_MemAllocFailed);
 		return NULL;
 	}
-	memset( streaming_ctrl, 0, sizeof(streaming_ctrl_t) );
 	return streaming_ctrl;
 }
 
