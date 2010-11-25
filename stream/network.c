@@ -466,10 +466,6 @@ nop_streaming_read( int fd, char *buffer, int size, streaming_ctrl_t *stream_ctr
 int
 nop_streaming_seek( int fd, off_t pos, streaming_ctrl_t *stream_ctrl ) {
 	return -1;
-	// To shut up gcc warning
-	fd++;
-	pos++;
-	stream_ctrl=NULL;
 }
 
 
