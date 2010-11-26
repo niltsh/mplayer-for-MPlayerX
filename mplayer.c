@@ -1334,7 +1334,7 @@ static void print_status(float a_pos, float a_v, float corr)
  * \param sh_audio describes the requested input format of the chain.
  * \param ao_data describes the requested output format of the chain.
  */
-int build_afilter_chain(sh_audio_t *sh_audio, ao_data_t *ao_data)
+static int build_afilter_chain(sh_audio_t *sh_audio, ao_data_t *ao_data)
 {
   int new_srate;
   int result;

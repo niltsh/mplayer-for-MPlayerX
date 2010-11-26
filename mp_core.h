@@ -150,7 +150,6 @@ extern int fixed_vo;
 extern int forced_subs_only;
 
 
-int build_afilter_chain(sh_audio_t *sh_audio, ao_data_t *ao_data);
 void uninit_player(unsigned int mask);
 void reinit_audio_chain(void);
 void init_vo_spudec(void);
