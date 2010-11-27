@@ -10276,7 +10276,7 @@ file.)
 .
 .PP
 .sp 1
-The following option is only available in Xvid 1.1.x.
+The following options are only available in Xvid 1.1.x and later.
 .
 .TP
 .B bvhq=<0|1>
@@ -10286,9 +10286,32 @@ which is what is done for P-frames by the vhq option.
 This produces nicer-looking B-frames while incurring almost no
 performance penalty (default: 1).
 .
+.TP
+.B vbv_bufsize=<0...> (two pass mode only)
+Specify the video buffering verifier (VBV) buffer size in bits
+(default: 0 \- VBV check disabled).
+VBV allows restricting peak bitrate to make the video play properly
+on hardware players.
+For example, the Home profile uses vbv_bufsize=3145728.
+If you set vbv_bufsize you should set also vbv_maxrate.
+Note that there is no vbv_peakrate because Xvid does not actually
+use it for bitrate controlling; the other VBV options are enough
+to restrict the peak bitrate.
+.
+.TP
+.B vbv_initial=<0...vbv_bufsize> (two pass mode only)
+Specify the initial fill of the VBV buffer in bits
+(default: 75% of vbv_bufsize).
+The default is probably what you want.
+.
+.TP
+.B vbv_maxrate=<0...> (two pass mode only)
+Specify the maximum processing rate in bits/s (default: 0).
+For example, the Home profile uses vbv_maxrate=4854000.
+.
 .PP
 .sp 1
-The following option is only available in the 1.2.x version of Xvid.
+The following option is only available in Xvid 1.2.x and later.
 .
 .TP
 .B threads=<0\-n>

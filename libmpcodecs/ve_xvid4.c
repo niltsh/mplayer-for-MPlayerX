@@ -209,6 +209,10 @@ static int xvidenc_vbr_kfreduction = 0;
 static int xvidenc_vbr_kfthreshold = 0;
 static int xvidenc_vbr_container_frame_overhead = 24; /* mencoder uses AVI container */
 
+static int xvidenc_vbv_size = 0;
+static int xvidenc_vbv_initial = 0;
+static int xvidenc_vbv_maxrate = 0;
+
 // commandline profile option string - default to unrestricted
 static char *xvidenc_profile = "unrestricted";
 
@@ -295,6 +299,11 @@ const m_option_t xvidencopts_conf[] =
 	{"kfreduction", &xvidenc_vbr_kfreduction, CONF_TYPE_INT, CONF_RANGE, 0, 100, NULL},
 	{"kfthreshold", &xvidenc_vbr_kfthreshold, CONF_TYPE_INT, CONF_MIN, 0, 0, NULL},
 	{"container_frame_overhead", &xvidenc_vbr_container_frame_overhead, CONF_TYPE_INT, CONF_MIN, 0, 0, NULL},
+
+	/* section [vbv] */
+	{"vbv_bufsize", &xvidenc_vbv_size, CONF_TYPE_INT, CONF_MIN, 0, 0, NULL},
+	{"vbv_initial", &xvidenc_vbv_initial, CONF_TYPE_INT, CONF_MIN, 0, 0, NULL},
+	{"vbv_maxrate", &xvidenc_vbv_maxrate, CONF_TYPE_INT, CONF_MIN, 0, 0, NULL},
 
 	/* Section Aspect Ratio */
 	{"par", &xvidenc_par, CONF_TYPE_STRING, 0, 0, 0, NULL},
@@ -775,13 +784,44 @@ static int dispatch_settings(xvid_mplayer_module_t *mod)
 	/* VBV */
 
 #if XVID_API >= XVID_MAKE_API(4,1)
-	pass2->vbv_size = selected_profile->max_vbv_size;
-	pass2->vbv_initial = (selected_profile->max_vbv_size*3)>>2; /* 75% */
-	pass2->vbv_maxrate = selected_profile->max_bitrate;
-	pass2->vbv_peakrate = selected_profile->vbv_peakrate*3;
+	if(xvidenc_vbv_size > 0) {
+		if(selected_profile->max_vbv_size > 0 && xvidenc_vbv_size > selected_profile->max_vbv_size) {
+			mp_msg(MSGT_MENCODER,MSGL_ERR,
+				"xvid:[ERROR] Selected profile limits vbv_bufsize <= %d\n", selected_profile->max_vbv_size);
+			return BAD;
+		}
+
+		pass2->vbv_size = xvidenc_vbv_size;
+	} else {
+		pass2->vbv_size = selected_profile->max_vbv_size;
+	}
+
+	if(xvidenc_vbv_initial > 0) {
+		if(xvidenc_vbv_initial > pass2->vbv_size) {
+			mp_msg(MSGT_MENCODER,MSGL_ERR,
+				"xvid:[ERROR] vbv_initial must be <= vbv_bufsize\n");
+			return BAD;
+		}
+
+		pass2->vbv_initial = xvidenc_vbv_initial;
+	} else {
+		pass2->vbv_initial = (pass2->vbv_size*3)>>2; /* 75% */
+	}
+
+	if(xvidenc_vbv_maxrate > 0) {
+		if(selected_profile->max_bitrate > 0 && xvidenc_vbv_maxrate > selected_profile->max_bitrate) {
+			mp_msg(MSGT_MENCODER,MSGL_ERR,
+				"xvid:[ERROR] Selected profile limits vbv_maxrate <= %d\n", selected_profile->max_bitrate);
+			return BAD;
+		}
+
+		pass2->vbv_maxrate = xvidenc_vbv_maxrate;
+	} else {
+		pass2->vbv_maxrate = selected_profile->max_bitrate;
+	}
+
+	pass2->vbv_peakrate = selected_profile->vbv_peakrate; /* Useless */
 #endif
-// XXX: xvidcore currently provides a "peak bits over 3 seconds" constraint.
-// according to the latest dxn literature, a 1 second constraint is now used
 
 	create->profile = selected_profile->id;
 
