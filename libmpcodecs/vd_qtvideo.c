@@ -175,6 +175,7 @@ static int init(sh_video_t *sh){
         idesc->width  = sh->disp_w;
         idesc->height = sh->disp_h;
     }
+    if (mp_msg_test(MSGT_DECVIDEO, MSGL_V))
     dump_ImageDescription(*framedescHandle);
 
     (**framedescHandle).cType = bswap_32(sh->format);

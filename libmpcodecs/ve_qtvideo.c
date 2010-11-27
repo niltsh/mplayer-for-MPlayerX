@@ -258,6 +258,7 @@ if(!codec_initialized){
     mp_msg(MSGT_MENCODER,MSGL_DBG2,"CompressSequenceBegin returned:%i\n",cres&0xFFFF);
     mp_msg(MSGT_MENCODER,MSGL_DBG2,"Sequence ID:%i\n",seq);
 
+    if (mp_msg_test(MSGT_MENCODER, MSGL_DBG2))
     dump_ImageDescription(*desc);
     codec_initialized++;
 }
