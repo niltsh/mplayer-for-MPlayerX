@@ -254,7 +254,7 @@ static void cc_decode_EIA608(unsigned short int data)
   lastcode=data;
 }
 
-static void subcc_decode(unsigned char *inputbuffer, unsigned int inputlength)
+static void subcc_decode(const unsigned char *inputbuffer, unsigned int inputlength)
 {
   /* The first number may denote a channel number. I don't have the
    * EIA-708 standard, so it is hard to say.
@@ -287,7 +287,7 @@ static void subcc_decode(unsigned char *inputbuffer, unsigned int inputlength)
    *
    * until end of packet
    */
-  unsigned char *current = inputbuffer;
+  const unsigned char *current = inputbuffer;
   unsigned int curbytes = 0;
   unsigned char data1, data2;
   unsigned char cc_code;
@@ -338,7 +338,7 @@ static void subcc_decode(unsigned char *inputbuffer, unsigned int inputlength)
 }
 
 
-void subcc_process_data(unsigned char *inputdata,unsigned int len)
+void subcc_process_data(const unsigned char *inputdata,unsigned int len)
 {
 	if(!subcc_enabled) return;
 	if(!initialized) subcc_init();
