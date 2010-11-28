@@ -1268,6 +1268,7 @@ typedef struct saved_regs_s
     uint32_t ov0_graphics_key_msk;
     uint32_t ov0_key_cntl;
     uint32_t disp_merge_cntl;
+    uint32_t config_cntl;
 }saved_regs_t;
 static saved_regs_t savreg;
 
@@ -1280,6 +1281,13 @@ static void save_regs( void )
     savreg.ov0_graphics_key_msk = INREG(OV0_GRAPHICS_KEY_MSK);
     savreg.ov0_key_cntl		= INREG(OV0_KEY_CNTL);
     savreg.disp_merge_cntl	= INREG(DISP_MERGE_CNTL);
+#if HAVE_BIGENDIAN
+#ifdef RAGE128
+    savereg.config_cntl         = INREG(CONFIG_CNTL);
+#else
+    savereg.config_cntl         = INREG(RADEON_SURFACE_CNTL);
+#endif
+#endif
 }
 
 static void restore_regs( void )
@@ -1291,6 +1299,13 @@ static void restore_regs( void )
     OUTREG(OV0_GRAPHICS_KEY_MSK,savreg.ov0_graphics_key_msk);
     OUTREG(OV0_KEY_CNTL,savreg.ov0_key_cntl);
     OUTREG(DISP_MERGE_CNTL,savreg.disp_merge_cntl);
+#if HAVE_BIGENDIAN
+#ifdef RAGE128
+    OUTREG(CONFIG_CNTL, savereg.config_cntl);
+#else
+    OUTREG(RADEON_SURFACE_CNTL, savereg.config_cntl);
+#endif
+#endif
 }
 
 static int radeon_init(void)
@@ -1352,6 +1367,18 @@ static int radeon_init(void)
   }
 #endif
   save_regs();
+  /* XXX: hack, but it works for me (tm) */
+#if HAVE_BIGENDIAN
+#ifdef RAGE128
+   OUTREG(CONFIG_CNTL,
+          savereg.config_cntl &
+          ~(APER_0_BIG_ENDIAN_16BPP_SWAP | APER_0_BIG_ENDIAN_32BPP_SWAP));
+#else
+   OUTREG(RADEON_SURFACE_CNTL,
+          savereg.config_cntl &
+          ~(RADEON_NONSURF_AP0_SWP_32BPP | RADEON_NONSURF_AP0_SWP_16BPP));
+#endif
+#endif
   return 0;
 }
 
