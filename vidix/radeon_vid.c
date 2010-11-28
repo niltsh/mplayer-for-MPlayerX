@@ -1308,6 +1308,24 @@ static void restore_regs( void )
 #endif
 }
 
+/**
+ * Clear swap bits of surface data control regs for bigendian
+ */
+static void clear_swap(void)
+{
+#if HAVE_BIGENDIAN
+#ifdef RAGE128
+   OUTREG(CONFIG_CNTL,
+          savreg.config_cntl &
+          ~(APER_0_BIG_ENDIAN_16BPP_SWAP | APER_0_BIG_ENDIAN_32BPP_SWAP));
+#else
+   OUTREG(SURFACE_CNTL,
+          savreg.config_cntl &
+          ~(NONSURF_AP0_SWP_32BPP | NONSURF_AP0_SWP_16BPP));
+#endif
+#endif
+}
+
 static int radeon_init(void)
 {
   int err;
@@ -1367,18 +1385,7 @@ static int radeon_init(void)
   }
 #endif
   save_regs();
-  /* XXX: hack, but it works for me (tm) */
-#if HAVE_BIGENDIAN
-#ifdef RAGE128
-   OUTREG(CONFIG_CNTL,
-          savreg.config_cntl &
-          ~(APER_0_BIG_ENDIAN_16BPP_SWAP | APER_0_BIG_ENDIAN_32BPP_SWAP));
-#else
-   OUTREG(SURFACE_CNTL,
-          savreg.config_cntl &
-          ~(NONSURF_AP0_SWP_32BPP | NONSURF_AP0_SWP_16BPP));
-#endif
-#endif
+  clear_swap();
   return 0;
 }
 
@@ -3178,6 +3185,11 @@ static int radeon_frame_select(unsigned frame)
 {
     uint32_t off[6];
     int prev_frame= (frame-1+besr.vid_nbufs) % besr.vid_nbufs;
+    // This really only needs to be set during data writes,
+    // however we don't have a hook there.
+    // The setup at startup is not enough since X11 regularly
+    // resets this to values to the wrong values for us.
+    clear_swap();
     /*
     buf3-5 always should point onto second buffer for better
     deinterlacing and TV-in
