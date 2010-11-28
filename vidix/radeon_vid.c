@@ -1283,9 +1283,9 @@ static void save_regs( void )
     savreg.disp_merge_cntl	= INREG(DISP_MERGE_CNTL);
 #if HAVE_BIGENDIAN
 #ifdef RAGE128
-    savereg.config_cntl         = INREG(CONFIG_CNTL);
+    savreg.config_cntl          = INREG(CONFIG_CNTL);
 #else
-    savereg.config_cntl         = INREG(RADEON_SURFACE_CNTL);
+    savreg.config_cntl          = INREG(SURFACE_CNTL);
 #endif
 #endif
 }
@@ -1301,9 +1301,9 @@ static void restore_regs( void )
     OUTREG(DISP_MERGE_CNTL,savreg.disp_merge_cntl);
 #if HAVE_BIGENDIAN
 #ifdef RAGE128
-    OUTREG(CONFIG_CNTL, savereg.config_cntl);
+    OUTREG(CONFIG_CNTL, savreg.config_cntl);
 #else
-    OUTREG(RADEON_SURFACE_CNTL, savereg.config_cntl);
+    OUTREG(SURFACE_CNTL, savreg.config_cntl);
 #endif
 #endif
 }
@@ -1371,12 +1371,12 @@ static int radeon_init(void)
 #if HAVE_BIGENDIAN
 #ifdef RAGE128
    OUTREG(CONFIG_CNTL,
-          savereg.config_cntl &
+          savreg.config_cntl &
           ~(APER_0_BIG_ENDIAN_16BPP_SWAP | APER_0_BIG_ENDIAN_32BPP_SWAP));
 #else
-   OUTREG(RADEON_SURFACE_CNTL,
-          savereg.config_cntl &
-          ~(RADEON_NONSURF_AP0_SWP_32BPP | RADEON_NONSURF_AP0_SWP_16BPP));
+   OUTREG(SURFACE_CNTL,
+          savreg.config_cntl &
+          ~(NONSURF_AP0_SWP_32BPP | NONSURF_AP0_SWP_16BPP));
 #endif
 #endif
   return 0;
