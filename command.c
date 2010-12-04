@@ -284,9 +284,8 @@ static int mp_property_filename(m_option_t *prop, int action, void *arg,
     char *f;
     if (!filename)
         return M_PROPERTY_UNAVAILABLE;
-    if (((f = strrchr(filename, '/')) || (f = strrchr(filename, '\\'))) && f[1])
-        f++;
-    else
+    f = (char *)mp_basename(filename);
+    if (!*f)
         f = filename;
     return m_property_string_ro(prop, action, arg, f);
 }
@@ -1467,10 +1466,7 @@ static int mp_property_sub(m_option_t *prop, int action, void *arg,
             sub_name = ass_track->name;
 #endif
         if (sub_name) {
-            char *tmp, *tmp2;
-            tmp = sub_name;
-            if ((tmp2 = strrchr(tmp, '/')))
-                tmp = tmp2 + 1;
+            const char *tmp = mp_basename(sub_name);
 
             snprintf(*(char **) arg, 63, "(%d) %s%s",
                      mpctx->set_of_sub_pos + 1,

@@ -978,7 +978,7 @@ static void load_per_file_config (m_config_t* conf, const char *const file)
 {
     char *confpath;
     char cfg[PATH_MAX];
-    char *name;
+    const char *name;
 
     if (strlen(file) > PATH_MAX - 14) {
         mp_msg(MSGT_CPLAYER, MSGL_WARN, "Filename is too long, can not load file or directory specific config files\n");
@@ -986,20 +986,7 @@ static void load_per_file_config (m_config_t* conf, const char *const file)
     }
     sprintf (cfg, "%s.conf", file);
 
-    name = strrchr(cfg, '/');
-    if (HAVE_DOS_PATHS) {
-        char *tmp = strrchr(cfg, '\\');
-        if (!name || tmp > name)
-            name = tmp;
-        tmp = strrchr(cfg, ':');
-        if (!name || tmp > name)
-            name = tmp;
-    }
-    if (!name)
-	name = cfg;
-    else
-	name++;
-
+    name = mp_basename(cfg);
     if (use_filedir_conf) {
         char dircfg[PATH_MAX];
         strcpy(dircfg, cfg);
@@ -2755,14 +2742,7 @@ int gui_no_filename=0;
       (!strcmp(argv[1], "-gui") || !strcmp(argv[1], "-nogui"))) {
     use_gui = !strcmp(argv[1], "-gui");
   } else
-  if ( argv[0] )
-  {
-    char *base = strrchr(argv[0], '/');
-    if (!base)
-      base = strrchr(argv[0], '\\');
-    if (!base)
-      base = argv[0];
-    if(strstr(base, "gmplayer"))
+  if (argv[0] && strstr(mp_basename(argv[0]), "gmplayer")) {
           use_gui=1;
   }
 
@@ -3205,14 +3185,8 @@ while (player_idle_mode && !filename) {
       vo_vobsub=vobsub_open(buf,spudec_ifo,0,&vo_spudec);
       /* try from ~/.mplayer/sub */
       if(!vo_vobsub && (psub = get_path( "sub/" ))) {
-          char *bname;
+          const char *bname = mp_basename(buf);
           int l;
-          bname = strrchr(buf,'/');
-#if defined(__MINGW32__) || defined(__CYGWIN__)
-          if(!bname) bname = strrchr(buf,'\\');
-#endif
-          if(bname) bname++;
-          else bname = buf;
           l = strlen(psub) + strlen(bname) + 1;
           psub = realloc(psub,l);
           strcat(psub,bname);
