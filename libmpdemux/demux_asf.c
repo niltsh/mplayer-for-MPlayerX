@@ -657,7 +657,6 @@ static demuxer_t* demux_open_asf(demuxer_t* demuxer)
             demuxer->audio->sh=NULL;
         } else {
             sh_audio=demuxer->audio->sh;sh_audio->ds=demuxer->audio;
-            sh_audio->format=sh_audio->wf->wFormatTag;
         }
     }
     if(!demuxer->stream->seek)
