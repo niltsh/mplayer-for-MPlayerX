@@ -358,7 +358,7 @@ const m_option_t noconfig_opts[] = {
 };
 
 /**
- * Initialization code to be run at the very start, most not depend
+ * Initialization code to be run at the very start, must not depend
  * on option values.
  */
 void common_preinit(void)
