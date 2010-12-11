@@ -622,7 +622,6 @@ static int demux_asf_control(demuxer_t *demuxer,int cmd, void *arg){
 static demuxer_t* demux_open_asf(demuxer_t* demuxer)
 {
     struct asf_priv* asf = demuxer->priv;
-    sh_audio_t *sh_audio=NULL;
     sh_video_t *sh_video=NULL;
 
     //---- ASF header:
@@ -655,8 +654,6 @@ static demuxer_t* demux_open_asf(demuxer_t* demuxer)
         if(!ds_fill_buffer(demuxer->audio)){
             mp_msg(MSGT_DEMUXER,MSGL_INFO,"ASF: " MSGTR_MissingAudioStream);
             demuxer->audio->sh=NULL;
-        } else {
-            sh_audio=demuxer->audio->sh;sh_audio->ds=demuxer->audio;
         }
     }
     if(!demuxer->stream->seek)
