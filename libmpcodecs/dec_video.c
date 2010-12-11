@@ -176,6 +176,7 @@ void uninit_video(sh_video_t *sh_video)
         return;
     mp_msg(MSGT_DECVIDEO, MSGL_V, MSGTR_UninitVideoStr, sh_video->codec->drv);
     mpvdec->uninit(sh_video);
+    mpvdec = NULL;
 #ifdef CONFIG_DYNAMIC_PLUGINS
     if (sh_video->dec_handle)
         dlclose(sh_video->dec_handle);
