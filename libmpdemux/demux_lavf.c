@@ -221,6 +221,7 @@ static const char * const preferred_list[] = {
     "vqf",
     "w64",
     "wv",
+    "yuv4mpegpipe",
     NULL
 };
 
