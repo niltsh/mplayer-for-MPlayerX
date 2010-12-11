@@ -639,7 +639,7 @@ static demuxer_t* demux_open_asf(demuxer_t* demuxer)
             demuxer->video->sh=NULL;
             //printf("ASF: missing video stream!? contact the author, it may be a bug :(\n");
         } else {
-            sh_video=demuxer->video->sh;sh_video->ds=demuxer->video;
+            sh_video=demuxer->video->sh;
             sh_video->fps=1000.0f; sh_video->frametime=0.001f;
 
             if (asf->asf_is_dvr_ms) {
