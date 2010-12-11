@@ -554,6 +554,7 @@ static int init_vo(sh_video_t *sh, enum PixelFormat pix_fmt){
         pix_fmt != ctx->pix_fmt ||
         !ctx->vo_initialized)
     {
+        ctx->vo_initialized = 0;
         // this is a special-case HACK for MPEG-1/2 VDPAU that uses neither get_format nor
         // sets the value correctly in avcodec_open.
         set_format_params(avctx, avctx->pix_fmt);
