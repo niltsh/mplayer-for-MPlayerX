@@ -345,7 +345,7 @@ static int asf_init_audio_stream(demuxer_t *demuxer,struct asf_priv* asf, sh_aud
   uint8_t *buffer = *buf;
   int pos = *ppos;
 
-  sh_audio->wf=calloc((streamh->type_size<sizeof(*sh_audio->wf))?sizeof(*sh_audio->wf):streamh->type_size,1);
+  sh_audio->wf=calloc(FFMAX(streamh->type_size, sizeof(*sh_audio->wf)), 1);
   memcpy(sh_audio->wf,buffer,streamh->type_size);
   le2me_WAVEFORMATEX(sh_audio->wf);
   sh_audio->format=sh_audio->wf->wFormatTag;
