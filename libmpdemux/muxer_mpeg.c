@@ -61,6 +61,7 @@
 #define AUDIO_AAC1 0x706D
 //#define AUDIO_AAC2 (short) mmioFOURCC('m','p','4','a')
 #define AUDIO_AAC2 0x504D
+#define AUDIO_AAC3 0xFF
 
 #define ASPECT_1_1 1
 #define ASPECT_4_3 2
@@ -324,7 +325,7 @@ static void add_to_psm(muxer_priv_t *priv, uint8_t id, uint32_t format)
 		priv->psm_info.streams[i].type = 0x10;
 	else if(format == AUDIO_MP2 || format == AUDIO_MP3)
 		priv->psm_info.streams[i].type = 0x03;
-	else if(format == AUDIO_AAC1 || format == AUDIO_AAC2)
+	else if(format == AUDIO_AAC1 || format == AUDIO_AAC2 || format == AUDIO_AAC3)
 		priv->psm_info.streams[i].type = 0x0f;
 	else
 		priv->psm_info.streams[i].type = 0x81;
@@ -2084,6 +2085,8 @@ static int parse_audio(muxer_stream_t *s, int finalize, unsigned int *nf, double
 		len = 0;
 		switch(s->wf->wFormatTag)
 		{
+		default:
+			mp_msg(MSGT_MUXER, MSGL_ERR, "Unknown audio format, assuming MP2/3, use -fafmttag!\n");
 		case AUDIO_MP2:
 		case AUDIO_MP3:
 			{
@@ -2133,6 +2136,7 @@ static int parse_audio(muxer_stream_t *s, int finalize, unsigned int *nf, double
 
 		case AUDIO_AAC1:
 		case AUDIO_AAC2:
+		case AUDIO_AAC3:
 			{
 				if(i + 7 >= s->b_buffer_len)
 				{
@@ -2239,7 +2243,8 @@ static void fix_parameters(muxer_stream_t *stream)
 			if(!conf_abuf_size)
 			spriv->max_buffer_size = 16*1024;
 		}
-		else if(stream->wf->wFormatTag == AUDIO_AAC1 || stream->wf->wFormatTag == AUDIO_AAC2)
+		else if(stream->wf->wFormatTag == AUDIO_AAC1 || stream->wf->wFormatTag == AUDIO_AAC2 ||
+		        stream->wf->wFormatTag == AUDIO_AAC3)
 			needs_psm = 1;
 		else if(stream->wf->wFormatTag == AUDIO_MP2 || stream->wf->wFormatTag == AUDIO_MP3)
 			spriv->is_ready = 0;
