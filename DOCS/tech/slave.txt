@@ -342,7 +342,7 @@ sub_select [value]
     Display subtitle with index [value]. Turn subtitle display off if
     [value] is -1 or greater than the highest available subtitle index.
     Cycle through the available subtitles if [value] is omitted or less
-    than -1 ((forward or backward respectively).
+    than -1 (forward or backward respectively).
     Supported subtitle sources are -sub options on the command
     line, VOBsubs, DVD subtitles, and Ogg and Matroska text streams.
     This command is mainly for cycling all subtitles, if you want to set
