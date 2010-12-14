@@ -717,7 +717,7 @@ static int decode_nsc_base64(char *in, char **buf) {
   }
   return 3 * n;
 err_out:
-  if (*buf) free(*buf);
+  free(*buf);
   *buf = NULL;
   return 0;
 }
@@ -785,8 +785,8 @@ static play_tree_t *parse_nsc(play_tree_parser_t* p) {
   play_tree_add_file(entry, url);
   free(url);
 out:
-  if (addr) free(addr);
-  if (unicast_url) free(unicast_url);
+  free(addr);
+  free(unicast_url);
   return entry;
 }
 
