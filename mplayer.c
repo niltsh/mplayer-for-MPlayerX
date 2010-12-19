@@ -453,12 +453,9 @@ char *get_metadata (metadata_t type) {
   switch (type)
   {
   case META_NAME:
-  {
     return strdup(mp_basename(filename));
-  }
 
   case META_VIDEO_CODEC:
-  {
     if (sh_video->format == 0x10000001)
       return strdup("mpeg1");
     else if (sh_video->format == 0x10000002)
@@ -478,38 +475,27 @@ char *get_metadata (metadata_t type) {
       return strdup(meta);
     }
     break;
-  }
 
   case META_VIDEO_BITRATE:
-  {
     snprintf(meta, sizeof(meta), "%d kbps", (int) (sh_video->i_bps * 8 / 1024));
     return strdup(meta);
-  }
 
   case META_VIDEO_RESOLUTION:
-  {
     snprintf(meta, sizeof(meta), "%d x %d", sh_video->disp_w, sh_video->disp_h);
     return strdup(meta);
-  }
 
   case META_AUDIO_CODEC:
-  {
     if (sh_audio->codec && sh_audio->codec->name)
       return strdup(sh_audio->codec->name);
     break;
-  }
 
   case META_AUDIO_BITRATE:
-  {
     snprintf(meta, sizeof(meta), "%d kbps", (int)(sh_audio->i_bps * 8 / 1000));
     return strdup(meta);
-  }
 
   case META_AUDIO_SAMPLES:
-  {
     snprintf(meta, sizeof(meta), "%d Hz, %d ch.", sh_audio->samplerate, sh_audio->channels);
     return strdup(meta);
-  }
 
   /* check for valid demuxer */
   case META_INFO_TITLE:
