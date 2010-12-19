@@ -443,7 +443,7 @@ static char *get_demuxer_info (char *tag) {
 }
 
 char *get_metadata (metadata_t type) {
-  char *meta = NULL;
+  char meta[128];
   sh_audio_t * const sh_audio = mpctx->sh_audio;
   sh_video_t * const sh_video = mpctx->sh_video;
 
@@ -460,59 +460,55 @@ char *get_metadata (metadata_t type) {
   case META_VIDEO_CODEC:
   {
     if (sh_video->format == 0x10000001)
-      meta = strdup ("mpeg1");
+      return strdup("mpeg1");
     else if (sh_video->format == 0x10000002)
-      meta = strdup ("mpeg2");
+      return strdup("mpeg2");
     else if (sh_video->format == 0x10000004)
-      meta = strdup ("mpeg4");
+      return strdup("mpeg4");
     else if (sh_video->format == 0x10000005)
-      meta = strdup ("h264");
+      return strdup("h264");
     else if (sh_video->format >= 0x20202020)
     {
-      meta = malloc (8);
-      sprintf (meta, "%.4s", (char *) &sh_video->format);
+      snprintf(meta, sizeof(meta), "%.4s", (char *) &sh_video->format);
+      return strdup(meta);
     }
     else
     {
-      meta = malloc (8);
-      sprintf (meta, "0x%08X", sh_video->format);
+      snprintf(meta, sizeof(meta), "0x%08X", sh_video->format);
+      return strdup(meta);
     }
-    return meta;
+    break;
   }
 
   case META_VIDEO_BITRATE:
   {
-    meta = malloc (16);
-    sprintf (meta, "%d kbps", (int) (sh_video->i_bps * 8 / 1024));
-    return meta;
+    snprintf(meta, sizeof(meta), "%d kbps", (int) (sh_video->i_bps * 8 / 1024));
+    return strdup(meta);
   }
 
   case META_VIDEO_RESOLUTION:
   {
-    meta = malloc (16);
-    sprintf (meta, "%d x %d", sh_video->disp_w, sh_video->disp_h);
-    return meta;
+    snprintf(meta, sizeof(meta), "%d x %d", sh_video->disp_w, sh_video->disp_h);
+    return strdup(meta);
   }
 
   case META_AUDIO_CODEC:
   {
     if (sh_audio->codec && sh_audio->codec->name)
-      meta = strdup (sh_audio->codec->name);
-    return meta;
+      return strdup(sh_audio->codec->name);
+    break;
   }
 
   case META_AUDIO_BITRATE:
   {
-    meta = malloc (16);
-    sprintf (meta, "%d kbps", (int) (sh_audio->i_bps * 8/1000));
-    return meta;
+    snprintf(meta, sizeof(meta), "%d kbps", (int)(sh_audio->i_bps * 8 / 1000));
+    return strdup(meta);
   }
 
   case META_AUDIO_SAMPLES:
   {
-    meta = malloc (16);
-    sprintf (meta, "%d Hz, %d ch.", sh_audio->samplerate, sh_audio->channels);
-    return meta;
+    snprintf(meta, sizeof(meta), "%d Hz, %d ch.", sh_audio->samplerate, sh_audio->channels);
+    return strdup(meta);
   }
 
   /* check for valid demuxer */
@@ -541,7 +537,7 @@ char *get_metadata (metadata_t type) {
     break;
   }
 
-  return meta;
+  return NULL;
 }
 
 static void print_file_properties(const MPContext *mpctx, const char *filename)
