@@ -465,16 +465,10 @@ char *get_metadata (metadata_t type) {
     else if (sh_video->format == 0x10000005)
       return strdup("h264");
     else if (sh_video->format >= 0x20202020)
-    {
       snprintf(meta, sizeof(meta), "%.4s", (char *) &sh_video->format);
-      return strdup(meta);
-    }
     else
-    {
       snprintf(meta, sizeof(meta), "0x%08X", sh_video->format);
-      return strdup(meta);
-    }
-    break;
+    return strdup(meta);
 
   case META_VIDEO_BITRATE:
     snprintf(meta, sizeof(meta), "%d kbps", (int) (sh_video->i_bps * 8 / 1024));
