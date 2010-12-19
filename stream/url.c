@@ -102,14 +102,11 @@ url_new(const char* url) {
         }
 
 	// Create the URL container
-	Curl = malloc(sizeof(URL_t));
+	Curl = calloc(1, sizeof(*Curl));
 	if( Curl==NULL ) {
 		mp_msg(MSGT_NETWORK,MSGL_FATAL,MSGTR_MemAllocFailed);
 		goto err_out;
 	}
-
-	// Initialisation of the URL container members
-	memset( Curl, 0, sizeof(URL_t) );
 
 	url_escape_string(escfilename,url);
 
