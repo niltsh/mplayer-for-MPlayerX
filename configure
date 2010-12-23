@@ -3495,8 +3495,10 @@ echocheck "mman.h"
 _mman=no
 statement_check sys/mman.h 'mmap(0, 0, 0, 0, 0, 0)' && _mman=yes
 if test "$_mman" = yes ; then
+  def_mmap='#define HAVE_MMAP 1'
   def_mman_h='#define HAVE_SYS_MMAN_H 1'
 else
+  def_mmap='#define HAVE_MMAP 0'
   def_mman_h='#undef HAVE_SYS_MMAN_H'
   os2 && _need_mmap=yes
 fi
@@ -8717,6 +8719,7 @@ $def_lrint
 $def_lrintf
 $def_mlib
 $def_mkstemp
+$def_mmap
 $def_network
 $def_pic
 $def_posix_memalign
