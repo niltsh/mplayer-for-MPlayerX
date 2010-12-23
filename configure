@@ -4562,6 +4562,7 @@ if test "$_vidix" = auto ; then
   _vidix=no
   x86 && (linux || freebsd || netbsd || openbsd || dragonfly || sunos || win32) \
     && _vidix=yes
+  win32 && ! header_check ddk/ntddk.h && _vidix=no
   x86_64 && ! linux && _vidix=no
   (ppc || alpha) && linux && _vidix=yes
 fi
