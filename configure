@@ -359,7 +359,7 @@ Codecs:
   --disable-libgsm          disable libgsm support [autodetect]
   --enable-theora           enable OggTheora libraries [autodetect]
   --enable-faad             enable external FAAD2 (AAC) [autodetect]
-  --disable-faad-internal   disable internal FAAD2 (AAC) [autodetect]
+  --enable-faad-internal    enable internal FAAD2 (AAC) [disabled]
   --enable-faad-fixed       enable fixed-point mode in internal FAAD2 [disabled]
   --disable-faac            disable support for FAAC (AAC encoder) [autodetect]
   --disable-faac-lavc       disable support for FAAC in libavcodec [autodetect]
@@ -669,7 +669,7 @@ _libdca=auto
 _libmpeg2=auto
 _libmpeg2_internal=auto
 _faad=auto
-_faad_internal=auto
+_faad_internal=no
 _faad_fixed=no
 _faac=auto
 _faac_lavc=auto
