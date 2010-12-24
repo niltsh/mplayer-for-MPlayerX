@@ -233,3 +233,15 @@ char *mp_dirname(const char *path)
     dirname[len] = '\0';
     return dirname;
 }
+
+/**
+ * @brief Indicates weither the path is absolute or not.
+ */
+int mp_path_is_absolute(const char *path)
+{
+#if HAVE_DOS_PATHS
+    return path[0] && path[1] == ':';
+#else
+    return path[0] == '/';
+#endif
+}
