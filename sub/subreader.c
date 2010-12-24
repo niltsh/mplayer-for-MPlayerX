@@ -2371,12 +2371,12 @@ void sub_free( sub_data * subd )
 
 #define MAX_SUBLINE 512
 /**
- * \brief parse text and append it to subtitle in sub
- * \param sub subtitle struct to add text to
- * \param txt text to parse
- * \param len length of text in txt
- * \param endpts pts at which this subtitle text should be removed again
- * \param strip_markup if strip markup is set (!= 0), markup tags like <b></b> are ignored
+ * @brief parse text and append it to subtitle in sub
+ * @param sub subtitle struct to add text to
+ * @param txt text to parse
+ * @param len length of text in txt
+ * @param endpts pts at which this subtitle text should be removed again
+ * @param strip_markup if strip markup is set (!= 0), markup tags like <b></b> are ignored
  *
  * <> and {} are interpreted as comment delimiters, "\n", "\N", '\n', '\r'
  * and '\0' are interpreted as newlines, duplicate, leading and trailing
@@ -2452,11 +2452,11 @@ void sub_add_text(subtitle *sub, const char *txt, int len, double endpts, int st
 
 #define MP_NOPTS_VALUE (-1LL<<63)
 /**
- * \brief remove outdated subtitle lines.
- * \param sub subtitle struct to modify
- * \param pts current pts. All lines with endpts <= this will be removed.
+ * @brief remove outdated subtitle lines.
+ * @param sub subtitle struct to modify
+ * @param pts current pts. All lines with endpts <= this will be removed.
  *            Use MP_NOPTS_VALUE to remove all lines
- * \return 1 if sub was modified, 0 otherwise.
+ * @return 1 if sub was modified, 0 otherwise.
  */
 int sub_clear_text(subtitle *sub, double pts) {
   int i = 0;
