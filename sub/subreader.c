@@ -33,6 +33,7 @@
 #include "config.h"
 #include "mp_msg.h"
 #include "mpcommon.h"
+#include "path.h"
 #include "subreader.h"
 #include "subassconvert.h"
 #include "sub.h"
@@ -1889,7 +1890,7 @@ static int compare_sub_priority(const void *a, const void *b)
     }
 }
 
-char** sub_filenames(const char* path, char *fname)
+static char **sub_filenames(const char *path, const char *fname)
 {
     char *f_dir, *f_fname, *f_fname_noext, *f_fname_trim, *tmp, *tmp_sub_id;
     char *tmp_fname_noext, *tmp_fname_trim, *tmp_fname_ext, *tmpresult;
@@ -2068,6 +2069,31 @@ char** sub_filenames(const char* path, char *fname)
     free(result);
 
     return result2;
+}
+
+/**
+ * @brief Load all subtitles matching the subtitle filename
+ *
+ * @param fname Path to subtitle filename
+ * @param fps FPS parameter for the add subtitle function
+ * @param add_f Add subtitle function to call for each sub
+ */
+void load_subtitles(const char *fname, int fps, void add_f(char *, float, int))
+{
+    int i;
+    if (sub_name)
+        for (i = 0; sub_name[i]; i++)
+            add_f(sub_name[i], fps, 0);
+    if (sub_auto && fname) {
+        char *psub = get_path("sub/");
+        char **tmp = sub_filenames((psub ? psub : ""), fname);
+        free(psub);
+        for (i = 0; tmp[i]; i++) {
+            add_f(tmp[i], fps, 1);
+            free(tmp[i]);
+        }
+        free(tmp);
+    }
 }
 
 void list_sub_file(sub_data* subd){

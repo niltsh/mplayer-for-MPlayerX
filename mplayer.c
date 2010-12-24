@@ -3508,21 +3508,7 @@ if(1 || mpctx->sh_video) {
 // check .sub
   double fps = mpctx->sh_video ? mpctx->sh_video->fps : 25;
   current_module="read_subtitles_file";
-  if(sub_name){
-    for (i = 0; sub_name[i] != NULL; ++i)
-        add_subtitles (sub_name[i], fps, 0);
-  }
-  if(sub_auto) { // auto load sub file ...
-    char *psub = get_path( "sub/" );
-    char **tmp = sub_filenames((psub ? psub : ""), filename);
-    int i = 0;
-    free(psub); // release the buffer created by get_path() above
-    while (tmp[i]) {
-        add_subtitles (tmp[i], fps, 1);
-        free(tmp[i++]);
-    }
-    free(tmp);
-  }
+  load_subtitles(filename, fps, add_subtitles);
   if (mpctx->set_of_sub_size > 0)
       mpctx->sub_counts[SUB_SOURCE_SUBS] = mpctx->set_of_sub_size;
 }

@@ -94,7 +94,7 @@ void subcp_close (void); /* for demux_ogg.c */
 const char* guess_buffer_cp(unsigned char* buffer, int buflen, const char *preferred_language, const char *fallback);
 const char* guess_cp(struct stream *st, const char *preferred_language, const char *fallback);
 #endif
-char ** sub_filenames(const char *path, char *fname);
+void load_subtitles(const char *fname, int fps, void add_f(char *, float, int));
 void list_sub_file(sub_data* subd);
 void dump_srt(sub_data* subd, float fps);
 void dump_mpsub(sub_data* subd, float fps);

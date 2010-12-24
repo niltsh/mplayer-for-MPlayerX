@@ -1019,23 +1019,7 @@ default: {
 // after reading video params we should load subtitles because
 // we know fps so now we can adjust subtitles time to ~6 seconds AST
 // check .sub
-  if(sub_name && sub_name[0]){
-    for (i = 0; sub_name[i] != NULL; ++i)
-        add_subtitles (sub_name[i], sh_video->fps, 0);
-  } else
-  if(sub_auto && filename) { // auto load sub file ...
-    char **tmp = NULL;
-    int i = 0;
-    char *psub = get_path( "sub/" );
-    tmp = sub_filenames((psub ? psub : ""), filename);
-    free(psub);
-    while (tmp[i])
-    {
-      add_subtitles (tmp[i], sh_video->fps, 0);
-      free(tmp[i++]);
-    }
-    free(tmp);
-  }
+    load_subtitles(filename, sh_video->fps, add_subtitles);
 
     mp_msg(MSGT_CPLAYER,MSGL_INFO,"==========================================================================\n");
     init_best_video_codec(sh_video,video_codec_list,video_fm_list);
