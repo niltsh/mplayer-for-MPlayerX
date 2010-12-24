@@ -194,6 +194,9 @@ void set_codec_path(const char *path)
     needs_free = 1;
 }
 
+/**
+ * @brief Returns the basename substring of a path.
+ */
 const char *mp_basename(const char *path)
 {
     char *s;
