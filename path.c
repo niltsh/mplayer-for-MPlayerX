@@ -211,12 +211,12 @@ const char *mp_basename(const char *path)
 }
 
 /**
- * \brief Allocates a new buffer containing the directory name
- * \param path Original path. Must be a valid string.
+ * @brief Allocates a new buffer containing the directory name
+ * @param path Original path. Must be a valid string.
  *
- * The path returned always contains a trailing slash '/'.
- * On systems supporting DOS paths, '\' is also considered as a directory
- * separator in addition to the '/'.
+ * @note The path returned always contains a trailing slash '/'.
+ *       On systems supporting DOS paths, '\' is also considered as a directory
+ *       separator in addition to the '/'.
  */
 char *mp_dirname(const char *path)
 {
