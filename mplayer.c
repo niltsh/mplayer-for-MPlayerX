@@ -391,21 +391,17 @@ static int is_valid_metadata_type (metadata_t type) {
   case META_VIDEO_CODEC:
   case META_VIDEO_BITRATE:
   case META_VIDEO_RESOLUTION:
-  {
     if (!mpctx->sh_video)
       return 0;
     break;
-  }
 
   /* check for valid audio stream */
   case META_AUDIO_CODEC:
   case META_AUDIO_BITRATE:
   case META_AUDIO_SAMPLES:
-  {
     if (!mpctx->sh_audio)
       return 0;
     break;
-  }
 
   /* check for valid demuxer */
   case META_INFO_TITLE:
@@ -415,11 +411,9 @@ static int is_valid_metadata_type (metadata_t type) {
   case META_INFO_COMMENT:
   case META_INFO_TRACK:
   case META_INFO_GENRE:
-  {
     if (!mpctx->demuxer)
       return 0;
     break;
-  }
 
   default:
     break;
@@ -991,16 +985,16 @@ static int libmpdemux_was_interrupted(int eof) {
        switch(cmd->id) {
        case MP_CMD_QUIT:
 	 exit_player_with_rc(EXIT_QUIT, (cmd->nargs > 0)? cmd->args[0].v.i : 0);
-       case MP_CMD_PLAY_TREE_STEP: {
+       case MP_CMD_PLAY_TREE_STEP:
 	 eof = (cmd->args[0].v.i > 0) ? PT_NEXT_ENTRY : PT_PREV_ENTRY;
 	 mpctx->play_tree_step = (cmd->args[0].v.i == 0) ? 1 : cmd->args[0].v.i;
-       } break;
-       case MP_CMD_PLAY_TREE_UP_STEP: {
+         break;
+       case MP_CMD_PLAY_TREE_UP_STEP:
 	 eof = (cmd->args[0].v.i > 0) ? PT_UP_NEXT : PT_UP_PREV;
-       } break;
-       case MP_CMD_PLAY_ALT_SRC_STEP: {
+         break;
+       case MP_CMD_PLAY_ALT_SRC_STEP:
 	 eof = (cmd->args[0].v.i > 0) ?  PT_NEXT_SRC : PT_PREV_SRC;
-       } break;
+         break;
        }
        mp_cmd_free(cmd);
   }
