@@ -8829,6 +8829,7 @@ cmp -s "$TMPH" ffmpeg/libavutil/avconfig.h || mv -f "$TMPH" ffmpeg/libavutil/avc
 if x86; then
 # Create a skeleton config.asm with just the ARCH_ definitions for FFmpeg.
 > "$TMPS"
+echo "%define CONFIG_GPL" >> "$TMPS"
 for part in $arch $subarch; do
   part=$(echo $part | tr '[a-z]' '[A-Z]')
   echo "%define ARCH_${part}" >> "$TMPS"
