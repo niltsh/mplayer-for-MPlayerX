@@ -648,32 +648,6 @@ tengan el mismo origen.
 </procedure>
 </sect2>
 
-<!-- ********** -->
-
-<sect2 id="aac">
-<title>AAC</title>
-<para>
-Un decodificador AAC open source está disponible en
-<ulink url="http://www.audiocoding.com/downloads.html"/>.
-No hay binarios FAAD2 disponibles en audiocoding.com, pero puede apetegetear paquetes Debian
-de <ulink url="http://www.debian-multimedia.org/">Christian Marillat</ulink>,
-paquetes RPM para Mandrake desde la <ulink url="http://plf.zarb.org">P.L.F.</ulink> y RPMs
-para Fedora/CentOS/RHEL en <ulink url="http://rpmfusion.org/">RPMFusion</ulink>.
-</para>
-<para>
-Si decide compilar las fuentes, no necesita todoFAAD2 para decodificar archivos AAC,
-libfaad es suficiente. Constrúyalo como sigue:
-<screen>
-cd faad2/
-sh bootstrap
-./configure
-cd libfaad
-make
-make install
-</screen>
-</para>
-</sect2>
-
 </sect1>
 
 
