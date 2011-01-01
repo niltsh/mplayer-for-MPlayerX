@@ -187,6 +187,7 @@ int mpae_init_lavc(audio_encoder_t *encoder)
 	lavc_actx->codec_type = CODEC_TYPE_AUDIO;
 	lavc_actx->codec_id = lavc_acodec->id;
 	// put sample parameters
+	lavc_actx->sample_fmt = AV_SAMPLE_FMT_S16;
 	lavc_actx->channels = encoder->params.channels;
 	lavc_actx->sample_rate = encoder->params.sample_rate;
 	lavc_actx->time_base.num = 1;
