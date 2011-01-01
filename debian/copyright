@@ -69,57 +69,6 @@ Directory:  libfaad2
 Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
 License:    GNU General Public License
 
-Name:       GSM 06.10 library
-Version:    patchlevel 10
-Homepage:   http://kbs.cs.tu-berlin.de/~jutta/toast.html
-Copyright 1992 by Jutta Degener and Carsten Bormann,  Technische Universitaet Berlin
-Directory:  libmpcodecs/native/
-License:
- Any use of this software is permitted provided that this notice is
- not removed and that neither the authors nor the Technische
- Universitaet Berlin are deemed to have made any representations as to
- the suitability of this software for any purpose nor are held
- responsible for any defects of this software.  THERE IS ABSOLUTELY NO
- WARRANTY FOR THIS SOFTWARE.
- As a matter of courtesy, the authors request to be informed about
- uses this software has found, about bugs in this software, and about
- any improvements that may be of general interest.
- .
- As of the libgsm debian package version 1.0.13-1, the following
- copyright addition has been made to the libgsm package:
- .
- Since the original terms of 15 years ago maybe do not make our
- intentions completely clear given today's refined usage of the legal
- terms, we append this additional permission:
- .
-      Permission to use, copy, modify, and distribute this software
-      for any purpose with or without fee is hereby granted,
-      provided that this notice is not removed and that neither
-      the authors nor the Technische Universitaet Berlin are
-      deemed to have made any representations as to the suitability
-      of this software for any purpose nor are held responsible
-      for any defects of this software.  THERE IS ABSOLUTELY NO
-      WARRANTY FOR THIS SOFTWARE.
- .
- Berkeley/Bremen, 05.04.2009
- Jutta Degener
- Carsten Bormann
-
-Name:       miniLZO
-Version:    1.07
-Homepage:   http://www.oberhumer.com/opensource/lzo/#minilzo
-File:	    libmpcodecs/native/minilzo.c libmpcodecs/native/minilzo.h
-Copyright (C) 1996-2000 Markus Franz Xaver Johannes Oberhumer
-License:    GNU General Public License
-
-Name:       liba52
-Version:    0.7.4 + patches
-Homepage:   http://liba52.sourceforge.net/
-Directory:  liba52
-Copyright (C) 2000-2001 Michel Lespinasse <walken@zoy.org>
-Copyright (C) 1999-2000 Aaron Holtzman <aholtzma@ess.engr.uvic.ca>
-License:    GNU General Public License
-
 Name:       libmpeg2
 Version:    0.4.0b + patches
 Homepage:   http://libmpeg2.sourceforge.net/
@@ -207,12 +156,6 @@ Version:    1.9 + patches
 Homepage:   http://id3edit.sourceforge.net/
 Directory:  libmpdemux/genres.h
 Copyright (C) 2001  Jason Carter
-License:    GNU General Public License
-
-Name:       matroxset
-Version:    0.3
-Homepage:   ftp://platan.vc.cvut.cz/pub/linux/matrox-latest/
-Directory:  TOOLS/TVout/matroxset/
 License:    GNU General Public License
 
 Name:       unrarlib
