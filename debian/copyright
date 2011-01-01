@@ -62,13 +62,6 @@ Copyright (c)  The ffmpeg Project
 License:    GNU Lesser General Public License, some parts GNU General Public
             License, GNU General Public License when combined
 
-Name:       FAAD2
-Version:    2.1 beta (20040915 CVS snapshot) + fixes and portability patches
-Homepage:   http://www.audiocoding.com
-Directory:  libfaad2
-Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
-License:    GNU General Public License
-
 Name:       libmpeg2
 Version:    0.4.0b + patches
 Homepage:   http://libmpeg2.sourceforge.net/

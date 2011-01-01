@@ -90,4 +90,3 @@ remove externals:
 - remove tremor when ffvorbis has integer-only decoder.
 - remove libmpeg2 when ffmpeg12 is faster
 - remove mp3lib when ffmp3 is faster
-- remove libfaad2 after soc aac is 100%

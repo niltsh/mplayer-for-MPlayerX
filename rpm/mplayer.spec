@@ -149,7 +149,6 @@ mv DOCS/man/zh DOCS/man/zh_CN
     --disable-libdvdcss-internal \
     --enable-menu \
     \
-    --disable-faad-internal \
     --disable-tremor-internal \
     %{!?_with_amr:--disable-libamr_nb --disable-libamr_wb} \
     %{!?_with_libmad:--disable-mad} \
@@ -198,7 +197,6 @@ mv -f mplayer gmplayer
     --disable-libdvdcss-internal \
     --enable-menu \
     \
-    --disable-faad-internal \
     --disable-tremor-internal \
     %{!?_with_amr:--disable-libamr_nb --disable-libamr_wb} \
     %{!?_with_libmad:--disable-mad} \

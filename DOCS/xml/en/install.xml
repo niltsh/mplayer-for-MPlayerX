@@ -437,12 +437,6 @@ Now rerun <filename>./configure</filename> for
 <para>
 An open source AAC decoder called FAAD2 is available from
 <ulink url="http://www.audiocoding.com/downloads.html"/>.
-<application>MPlayer</application> includes a copy of it in its source tree.
-If you want to use the external library instead, install it and pass
-<option>--enable-faad-external</option> to <filename>./configure</filename>.
-</para>
-
-<para>
 FAAD2 binaries are not available from audiocoding.com, but you can (apt-)get
 Debian packages from
 <ulink url="http://www.debian-multimedia.org/">Christian Marillat</ulink>,

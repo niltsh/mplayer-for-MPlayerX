@@ -43,7 +43,6 @@ the following features MUST be included in any official binary package:
   - X11/Xvideo
 
 * codecs
-  - FAAD(internal)
   - libavcodec(internal)
   - native codecs (libmpeg2/mp3lib)
   - Vorbis Tremor codec(internal)
