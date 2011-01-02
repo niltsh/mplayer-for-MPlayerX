@@ -5325,6 +5325,7 @@ echores "$_dxr3"
 echocheck "IVTV TV-Out (pre linux-2.6.24)"
 if test "$_ivtv" = auto ; then
   cat > $TMPC << EOF
+#include <sys/time.h>
 #include <linux/videodev2.h>
 #include <linux/ivtv.h>
 #include <sys/ioctl.h>
@@ -5353,6 +5354,7 @@ echores "$_ivtv"
 echocheck "V4L2 MPEG Decoder"
 if test "$_v4l2" = auto ; then
   cat > $TMPC << EOF
+#include <sys/time.h>
 #include <linux/videodev2.h>
 #include <linux/version.h>
 int main(void) {
@@ -7373,7 +7375,7 @@ echocheck "Video 4 Linux TV interface"
 if test "$_tv_v4l1" = auto ; then
   _tv_v4l1=no
   if test "$_tv" = yes && linux ; then
-    header_check linux/videodev.h && _tv_v4l1=yes
+    header_check_broken sys/time.h linux/videodev.h && _tv_v4l1=yes
   fi
 fi
 if test "$_tv_v4l1" = yes ; then
@@ -7393,7 +7395,7 @@ echocheck "Video 4 Linux 2 TV interface"
 if test "$_tv_v4l2" = auto ; then
   _tv_v4l2=no
   if test "$_tv" = yes && linux ; then
-    header_check linux/videodev2.h && _tv_v4l2=yes
+    header_check_broken sys/time.h linux/videodev2.h && _tv_v4l2=yes
   fi
 fi
 if test "$_tv_v4l2" = yes ; then
@@ -7492,6 +7494,7 @@ if test "$_pvr" = auto ; then
  _pvr=no
  if test "$_tv_v4l2" = yes && linux ; then
   cat > $TMPC <<EOF
+#include <sys/time.h>
 #include <linux/videodev2.h>
 int main(void) { struct v4l2_ext_controls ext; return ext.controls->value; }
 EOF
