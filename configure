@@ -2778,11 +2778,8 @@ if ppc && ( test "$_altivec" = yes || test "$_runtime_cpudetection" = yes ) ; th
     echores "$_altivec_gcc_flags"
 
     # check if the compiler supports braces for vector declarations
-    cat > $TMPC << EOF
-$inc_altivec_h
-int main(void) { (vector int) {1}; return 0; }
-EOF
-    cc_check $_altivec_gcc_flags || die "You need a compiler that supports {} in AltiVec vector declarations."
+    statement_check "$inc_altivec_h" '(vector int) {1}' $_altivec_gcc_flags ||
+        die "You need a compiler that supports {} in AltiVec vector declarations."
 
     # Disable runtime cpudetection if we cannot generate AltiVec code or
     # AltiVec is disabled by the user.
@@ -3395,12 +3392,8 @@ fi
 
 
 echocheck "int_fastXY_t in inttypes.h"
-cat > $TMPC << EOF
-#include <inttypes.h>
-int main(void) { volatile int_fast16_t v = 0; return v; }
-EOF
 _fast_inttypes=no
-cc_check && _fast_inttypes=yes
+statement_check "inttypes.h" 'volatile int_fast16_t v = 0' && _fast_inttypes=yes
 if test "$_fast_inttypes" = no ; then
   def_fast_inttypes='
     typedef signed char int_fast8_t;
