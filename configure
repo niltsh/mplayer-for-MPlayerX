@@ -2778,8 +2778,11 @@ if ppc && ( test "$_altivec" = yes || test "$_runtime_cpudetection" = yes ) ; th
     echores "$_altivec_gcc_flags"
 
     # check if the compiler supports braces for vector declarations
-    statement_check "$inc_altivec_h" '(vector int) {1}' $_altivec_gcc_flags ||
-        die "You need a compiler that supports {} in AltiVec vector declarations."
+    cat > $TMPC << EOF
+$inc_altivec_h
+int main(void) { (vector int) {1}; return 0; }
+EOF
+    cc_check $_altivec_gcc_flags || die "You need a compiler that supports {} in AltiVec vector declarations."
 
     # Disable runtime cpudetection if we cannot generate AltiVec code or
     # AltiVec is disabled by the user.
