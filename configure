@@ -4284,13 +4284,8 @@ echores "$_x11"
 
 echocheck "Xss screensaver extensions"
 if test "$_xss" = auto ; then
-  cat > $TMPC << EOF
-#include <X11/Xlib.h>
-#include <X11/extensions/scrnsaver.h>
-int main(void) { XScreenSaverSuspend(NULL, True); return 0; }
-EOF
   _xss=no
-  cc_check -lXss && _xss=yes
+  statement_check "X11/extensions/scrnsaver.h" 'XScreenSaverSuspend(NULL, True)' -lXss && _xss=yes
 fi
 if test "$_xss" = yes ; then
   def_xss='#define CONFIG_XSS 1'
