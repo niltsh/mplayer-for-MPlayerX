@@ -28,6 +28,6 @@ void set_path_env(void);
 void set_codec_path(const char *path);
 const char *mp_basename(const char *path);
 char *mp_dirname(const char *path);
-int mp_path_is_absolute(const char *path);
+char *mp_path_join(const char *base, const char *new_path);
 
 #endif /* MPLAYER_PATH_H */

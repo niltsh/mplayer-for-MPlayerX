@@ -238,13 +238,37 @@ char *mp_dirname(const char *path)
 }
 
 /**
- * @brief Indicates weither the path is absolute or not.
+ * @brief Join two paths if path is not absolute.
+ * @param base File or directory base path.
+ * @param path Path to concatenate with the base.
+ * @return New allocated string with the path, or NULL in case of error.
+ * @warning Do not forget the trailing path separator at the end of the base
+ *          path if it is a directory: since file paths are also supported,
+ *          this separator will make the distinction.
+ * @note Paths of the form c:foo, /foo or \foo will still depends on the
+ *       current directory on Windows systems, even though they are considered
+ *       as absolute paths in this function.
  */
-int mp_path_is_absolute(const char *path)
+char *mp_path_join(const char *base, const char *path)
 {
+    char *ret, *tmp;
+
 #if HAVE_DOS_PATHS
-    return path[0] && path[1] == ':';
+    if ((path[0] && path[1] == ':') || path[0] == '\\' || path[0] == '/')
 #else
-    return path[0] == '/';
+    if (path[0] == '/')
 #endif
+        return strdup(path);
+
+    ret = mp_dirname(base);
+    if (!ret)
+        return NULL;
+    tmp = realloc(ret, strlen(ret) + strlen(path) + 1);
+    if (!tmp) {
+        free(ret);
+        return NULL;
+    }
+    ret = tmp;
+    strcat(ret, path);
+    return ret;
 }
