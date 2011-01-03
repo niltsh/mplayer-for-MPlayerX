@@ -70,8 +70,6 @@
 #include "libavutil/avstring.h"
 #include "edl.h"
 
-#define ROUND(x) ((int)((x)<0 ? (x)-0.5 : (x)+0.5))
-
 static void rescale_input_coordinates(int ix, int iy, double *dx, double *dy)
 {
     //remove the borders, if any, and rescale to the range [0,1],[0,1]

@@ -148,9 +148,6 @@ float start_volume = -1;
 double start_pts = MP_NOPTS_VALUE;
 char *heartbeat_cmd;
 
-#define ROUND(x) ((int)((x)<0 ? (x)-0.5 : (x)+0.5))
-
-
 m_config_t* mconfig;
 
 //**************************************************************************//

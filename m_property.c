@@ -30,9 +30,8 @@
 #include "m_option.h"
 #include "m_property.h"
 #include "mp_msg.h"
+#include "mpcommon.h"
 #include "help_mp.h"
-
-#define ROUND(x) ((int)((x)<0 ? (x)-0.5 : (x)+0.5))
 
 static int do_action(const m_option_t* prop_list, const char* name,
                      int action, void* arg, void *ctx) {

@@ -25,6 +25,8 @@
 #include "libmpdemux/demuxer.h"
 #include "sub/ass_mp.h"
 
+#define ROUND(x) ((int)((x) < 0 ? (x) - 0.5 : (x) + 0.5))
+
 struct sh_video;
 
 extern double sub_last_pts;
