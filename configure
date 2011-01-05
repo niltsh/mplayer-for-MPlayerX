@@ -83,6 +83,16 @@ EOF
   compile_check $TMPC $@
 }
 
+define_statement_check() {
+  cat > $TMPC << EOF
+#define $1
+#include <$2>
+int main(void) { $3; return 0; }
+EOF
+  shift 3
+  compile_check $TMPC $@
+}
+
 header_check() {
   cat > $TMPC << EOF
 #include <$1>
@@ -3088,13 +3098,8 @@ done
 
 
 echocheck "mkstemp"
-cat > $TMPC << EOF
-#define _XOPEN_SOURCE 500
-#include <stdlib.h>
-int main(void) { mkstemp(""); return 0; }
-EOF
 _mkstemp=no
-cc_check && _mkstemp=yes
+define_statement_check "_XOPEN_SOURCE 500" "stdlib.h" 'mkstemp("")' && _mkstemp=yes
 if test "$_mkstemp" = yes ; then
   def_mkstemp='#define HAVE_MKSTEMP 1'
 else
@@ -3440,12 +3445,8 @@ echores "$_memalign"
 echocheck "posix_memalign()"
 posix_memalign=no
 def_posix_memalign='#define HAVE_POSIX_MEMALIGN 0'
-cat > $TMPC << EOF
-#define _XOPEN_SOURCE 600
-#include <stdlib.h>
-int main(void) { posix_memalign(NULL, 0, 0); }
-EOF
-cc_check && posix_memalign=yes && def_posix_memalign='#define HAVE_POSIX_MEMALIGN 1'
+define_statement_check "_XOPEN_SOURCE 600" "stdlib.h" 'posix_memalign(NULL, 0, 0)' &&
+    posix_memalign=yes && def_posix_memalign='#define HAVE_POSIX_MEMALIGN 1'
 echores "$posix_memalign"
 
 
@@ -3839,13 +3840,8 @@ echores "$_vsscanf"
 
 
 echocheck "swab()"
-cat > $TMPC << EOF
-#define _XOPEN_SOURCE 600
-#include <unistd.h>
-int main(void) { int a, b; swab(&a, &b, 0); return 0; }
-EOF
 _swab=no
-cc_check && _swab=yes
+define_statement_check "_XOPEN_SOURCE 600" "unistd.h" 'int a, b; swab(&a, &b, 0)' && _swab=yes
 if test "$_swab" = yes ; then
   def_swab='#define HAVE_SWAB 1'
   _need_swab=no
