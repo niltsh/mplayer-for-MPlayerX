@@ -3249,7 +3249,7 @@ cat > $TMPC << EOF
 #endif
 int main(void) { const void *p = &((struct sockaddr *)0)->sa_len; return 0; }
 EOF
-cc_check $cc_check_winsock2_h && _struct_sockaddr_sa_len=yes && \
+cc_check $cc_check_winsock2_h && _struct_sockaddr_sa_len=yes &&
   def_struct_sockaddr_sa_len="#define HAVE_STRUCT_SOCKADDR_SA_LEN 1"
 echores "$_struct_sockaddr_sa_len"
 
@@ -3626,7 +3626,7 @@ int main(void) {
 EOF
   _iconv=no
   for _ld_tmp in "" "-liconv" "-liconv $_ld_dl" ; do
-    cc_check $_ld_lm $_ld_tmp && extra_ldflags="$extra_ldflags $_ld_tmp" && \
+    cc_check $_ld_lm $_ld_tmp && extra_ldflags="$extra_ldflags $_ld_tmp" &&
       _iconv=yes && break
   done
 fi
@@ -4740,7 +4740,7 @@ cat >$TMPC << EOF
 int main(void) {return 0;}
 EOF
   for _inc_tmp in "" "-I/usr/src/DVB/include" ; do
-    cc_check $_inc_tmp && _dvb=yes && \
+    cc_check $_inc_tmp && _dvb=yes &&
       extra_cflags="$extra_cflags $_inc_tmp" && break
   done
 fi
@@ -5926,7 +5926,7 @@ int main(void) { void *test = cdda_verbose_set; return test == (void *)1; }
 EOF
     _cdparanoia=no
     for _inc_tmp in "" "-I/usr/include/cdda" "-I/usr/local/include/cdda" ; do
-      cc_check $_inc_tmp -lcdda_interface -lcdda_paranoia $_ld_lm && \
+      cc_check $_inc_tmp -lcdda_interface -lcdda_paranoia $_ld_lm &&
         _cdparanoia=yes && extra_cflags="$extra_cflags $_inc_tmp" && break
     done
 fi
@@ -6827,7 +6827,7 @@ EOF
       extra_cxxflags="-I$_livelibdir/liveMedia/include \
                   -I$_livelibdir/UsageEnvironment/include \
                   -I$_livelibdir/BasicUsageEnvironment/include \
-                  -I$_livelibdir/groupsock/include" && \
+                  -I$_livelibdir/groupsock/include" &&
       _live=yes && break
   done
   if test "$_live" != yes ; then
@@ -6863,8 +6863,8 @@ if test "$_librtmp" = auto  && test "$networking" = yes ; then
   if test "$_librtmp" != yes && $_pkg_config --exists librtmp ; then
     _inc_tmp=$($_pkg_config --cflags librtmp)
 	_ld_tmp=$($_pkg_config --libs librtmp)
-	cc_check $_inc_tmp $_ld_tmp && _librtmp=yes && \
-	  extra_ldflags="$extra_ldflags $_ld_tmp" && \
+	cc_check $_inc_tmp $_ld_tmp && _librtmp=yes &&
+	  extra_ldflags="$extra_ldflags $_ld_tmp" &&
 	  extra_cflags="$extra_cflags $_inc_tmp"
   fi
 fi
@@ -7487,7 +7487,7 @@ else
   def_radio_bsdbt848='#undef CONFIG_RADIO_BSDBT848'
 fi
 
-if test "$_radio_v4l" = no && test "$_radio_v4l2" = no && \
+if test "$_radio_v4l" = no && test "$_radio_v4l2" = no &&
    test "$_radio_bsdbt848" = no && test "$_radio" = yes ; then
     die "Radio driver requires BSD BT848,  V4L or V4L2!"
 fi
@@ -7600,7 +7600,7 @@ if test "$_gui" = yes ; then
       ! echo $libavdecoders | grep -q PNG_DECODER ; then
     die "The GUI requires libavcodec with PNG support (needs zlib)."
   fi
-  test "$_freetype" = no && test "$_bitmap_font" = no && \
+  test "$_freetype" = no && test "$_bitmap_font" = no &&
     die "The GUI requires either FreeType or bitmap font support."
 if ! win32 ; then
   _gui_gtk=yes
