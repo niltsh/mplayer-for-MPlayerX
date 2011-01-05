@@ -2510,8 +2510,8 @@ __attribute__((noinline)) static int foo3(int i1, int i2, int i3) { return i3; }
 int main(void) { return foo3(1, 2, 3) == 3 ? 0 : 1; }
 EOF
   cc_check -O4 -mstackrealign && tmp_run && cflags_stackrealign=-mstackrealign
-  test -z "$cflags_stackrealign" && cc_check -O4 -mstackrealign -fno-unit-at-a-time \
-    && tmp_run && cflags_stackrealign="-mstackrealign -fno-unit-at-a-time"
+  test -z "$cflags_stackrealign" && cc_check -O4 -mstackrealign -fno-unit-at-a-time &&
+    tmp_run && cflags_stackrealign="-mstackrealign -fno-unit-at-a-time"
   test -n "$cflags_stackrealign" && echores "yes" || echores "no"
 fi # if darwin && test "$cc_vendor" = "gnu" ; then
 
@@ -3868,8 +3868,8 @@ EOF
 _posix_select=no
 def_posix_select='#undef HAVE_POSIX_SELECT'
 #select() of kLIBC (OS/2) supports socket only
-! os2 && cc_check && _posix_select=yes \
-  && def_posix_select='#define HAVE_POSIX_SELECT 1'
+! os2 && cc_check && _posix_select=yes &&
+    def_posix_select='#define HAVE_POSIX_SELECT 1'
 echores "$_posix_select"
 
 
@@ -4543,8 +4543,7 @@ def_vidix_drv_unichrome='#undef CONFIG_VIDIX_DRV_UNICHROME'
 _vidix_drv_unichrome=no
 if test "$_vidix" = auto ; then
   _vidix=no
-  x86 && (linux || freebsd || netbsd || openbsd || dragonfly || sunos || win32) \
-    && _vidix=yes
+  x86 && (linux || freebsd || netbsd || openbsd || dragonfly || sunos || win32) && _vidix=yes
   win32 && ! header_check ddk/ntddk.h && _vidix=no
   x86_64 && ! linux && _vidix=no
   (ppc || alpha) && linux && _vidix=yes
@@ -5844,10 +5843,10 @@ echocheck "dvdread"
 if test "$_dvdread_internal" = auto ; then
   _dvdread_internal=no
   _dvdread=no
-  if (linux || freebsd || netbsd || openbsd || dragonfly || sunos || hpux) \
-     && (test "$_dvd" = yes || test "$_cdrom" = yes || test "$_cdio" = yes || \
-         test "$_dvdio" = yes || test "$_bsdi_dvd" = yes) \
-     || darwin || win32 || os2; then
+  if (linux || freebsd || netbsd || openbsd || dragonfly || sunos || hpux) &&
+     (test "$_dvd" = yes || test "$_cdrom" = yes || test "$_cdio" = yes ||
+      test "$_dvdio" = yes || test "$_bsdi_dvd" = yes) ||
+     darwin || win32 || os2; then
     _dvdread_internal=yes
     _dvdread=yes
     extra_cflags="-Ilibdvdread4 $extra_cflags"
@@ -5954,14 +5953,14 @@ EOF
         _libcdio=no
     for _ld_tmp in "" "-lwinmm" ; do
         _ld_tmp="-lcdio_cdda -lcdio -lcdio_paranoia $_ld_tmp"
-        cc_check $_ld_tmp $_ld_lm \
-          && _libcdio=yes && extra_ldflags="$extra_ldflags $_ld_tmp" && break
+        cc_check $_ld_tmp $_ld_lm && _libcdio=yes &&
+            extra_ldflags="$extra_ldflags $_ld_tmp" && break
     done
     if test "$_libcdio" = no && $_pkg_config --exists libcdio_paranoia ; then
       _inc_tmp=$($_pkg_config --cflags libcdio_paranoia)
       _ld_tmp=$($_pkg_config --libs libcdio_paranoia)
-      cc_check $_inc_tmp $_ld_tmp $_ld_lm && _libcdio=yes \
-        && extra_ldflags="$extra_ldflags $_ld_tmp" && extra_cflags="$extra_cflags $_inc_tmp"
+      cc_check $_inc_tmp $_ld_tmp $_ld_lm && _libcdio=yes &&
+        extra_ldflags="$extra_ldflags $_ld_tmp" && extra_cflags="$extra_cflags $_inc_tmp"
     fi
 fi
 if test "$_libcdio" = yes && test "$_cdparanoia" = no ; then
@@ -6072,8 +6071,8 @@ EOF
   if test "$_fontconfig" = no && $_pkg_config --exists fontconfig ; then
     _inc_tmp=$($_pkg_config --cflags fontconfig)
     _ld_tmp=$($_pkg_config --libs fontconfig)
-    cc_check $_inc_tmp $_ld_tmp && _fontconfig=yes \
-      && extra_ldflags="$extra_ldflags $_ld_tmp" && extra_cflags="$extra_cflags $_inc_tmp"
+    cc_check $_inc_tmp $_ld_tmp && _fontconfig=yes &&
+      extra_ldflags="$extra_ldflags $_ld_tmp" && extra_cflags="$extra_cflags $_inc_tmp"
   fi
 fi
 if test "$_fontconfig" = yes ; then
@@ -6817,8 +6816,8 @@ EOF
 
   _live=no
   for I in $extra_cflags "-I$_libdir/live" "-I/usr/lib/live" "-I/usr/lib64/live" "-I/usr/local/live" "-I/usr/local/lib/live" ; do
-    cxx_check $I/liveMedia/include $I/UsageEnvironment/include \
-      $I/groupsock/include && _livelibdir=$(echo $I| sed s/-I//) && \
+    cxx_check $I/liveMedia/include $I/UsageEnvironment/include $I/groupsock/include &&
+        _livelibdir=$(echo $I| sed s/-I//) &&
       extra_ldflags="$_livelibdir/liveMedia/libliveMedia.a \
                  $_livelibdir/groupsock/libgroupsock.a \
                  $_livelibdir/UsageEnvironment/libUsageEnvironment.a \
@@ -6846,8 +6845,7 @@ elif test "$_live_dist" = yes && test "$networking" = yes; then
   _live="yes"
   def_live='#define CONFIG_LIVE555 1'
   extra_ldflags="$extra_ldflags $ld_tmp"
-  extra_cxxflags="-I/usr/include/liveMedia -I/usr/include/UsageEnvironment \
-             -I/usr/include/BasicUsageEnvironment -I/usr/include/groupsock"
+  extra_cxxflags="-I/usr/include/liveMedia -I/usr/include/UsageEnvironment -I/usr/include/BasicUsageEnvironment -I/usr/include/groupsock"
  inputmodules="live555 $inputmodules"
 else
   _live=no
@@ -6917,9 +6915,9 @@ else
   def_ffmpeg_so='#undef CONFIG_FFMPEG_SO'
   nocodecmodules="ffmpeg $nocodecmodules"
 fi
-test "$_libavcodec_mpegaudio_hp" = yes \
-  && def_libavcodec_mpegaudio_hp='#define CONFIG_MPEGAUDIO_HP 1' \
-  && mak_libavcodec_mpegaudio_hp='CONFIG_MPEGAUDIO_HP = yes'
+test "$_libavcodec_mpegaudio_hp" = yes &&
+  def_libavcodec_mpegaudio_hp='#define CONFIG_MPEGAUDIO_HP 1' &&
+  mak_libavcodec_mpegaudio_hp='CONFIG_MPEGAUDIO_HP = yes'
 echores "$ffmpeg"
 
 
@@ -7465,8 +7463,8 @@ else
 fi
 echores "$_radio_v4l"
 
-if freebsd || netbsd || openbsd || dragonfly || bsdos \
-  && test "$_radio" = yes && test "$_radio_bsdbt848" = auto ; then
+if freebsd || netbsd || openbsd || dragonfly || bsdos &&
+  test "$_radio" = yes && test "$_radio_bsdbt848" = auto ; then
 echocheck "*BSD BrookTree 848 Radio interface"
    _radio_bsdbt848=no
     cat > $TMPC <<EOF
