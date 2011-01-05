@@ -147,6 +147,7 @@ void muxer_write_chunk(muxer_stream_t *s, size_t len, unsigned int flags, double
         }
 
         free(s->muxer->muxbuf);
+        s->muxer->muxbuf = NULL;
         s->muxer->muxbuf_num = 0;
       }
     }
