@@ -1521,12 +1521,6 @@ if win32 ; then
   def_priority="#define CONFIG_PRIORITY 1"
 fi
 
-if cygwin ; then
-  # e.g. priority.c needs _WIN32 define, but
-  # latest cygwin no longer defines it
-  extra_cflags="-D_WIN32 $extra_cflags"
-fi
-
 if mingw32 ; then
   _getch=getch2-win.c
   _need_shmem=no
@@ -3341,7 +3335,7 @@ echocheck "inet6"
 if test "$_inet6" = auto ; then
   cat > $TMPC << EOF
 #include <sys/types.h>
-#if !defined(_WIN32) || defined(__CYGWIN__)
+#if !defined(_WIN32)
 #include <sys/socket.h>
 #include <netinet/in.h>
 #else
