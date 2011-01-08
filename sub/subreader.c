@@ -1890,17 +1890,26 @@ static int compare_sub_priority(const void *a, const void *b)
     }
 }
 
-static char **sub_filenames(const char *path, const char *fname)
+struct sub_list {
+    struct subfn *subs;
+    int sid;
+};
+
+/**
+ * @brief Append all the subtitles in the given path matching fname
+ *
+ * @param path Look for subtitles in this directory
+ * @param fname Subtitle filename (pattern)
+ * @param limit_fuzziness Ignore flag when sub_fuziness == 2
+ */
+static void append_dir_subtitles(struct sub_list *slist, const char *path,
+                                 const char *fname, int limit_fuzziness)
 {
-    char *f_dir, *f_fname, *f_fname_noext, *f_fname_trim, *tmp, *tmp_sub_id;
+    char *f_fname, *f_fname_noext, *f_fname_trim, *tmp, *tmp_sub_id;
     char *tmp_fname_noext, *tmp_fname_trim, *tmp_fname_ext, *tmpresult;
 
-    int len, pos, found, i, j;
+    int len, found, i;
     char * sub_exts[] = {  "utf", "utf8", "utf-8", "sub", "srt", "smi", "rt", "txt", "ssa", "aqt", "jss", "js", "ass", NULL};
-    subfn *result;
-    char **result2;
-
-    int subcnt;
 
     FILE *f;
 
@@ -1910,8 +1919,7 @@ static char **sub_filenames(const char *path, const char *fname)
     len = (strlen(fname) > 256 ? strlen(fname) : 256)
 	+(strlen(path) > 256 ? strlen(path) : 256)+2;
 
-    f_dir = malloc(len);
-    f_fname = malloc(len);
+    f_fname = strdup(mp_basename(fname));
     f_fname_noext = malloc(len);
     f_fname_trim = malloc(len);
 
@@ -1920,27 +1928,6 @@ static char **sub_filenames(const char *path, const char *fname)
     tmp_fname_ext = malloc(len);
 
     tmpresult = malloc(len);
-
-    result = calloc(MAX_SUBTITLE_FILES, sizeof(*result));
-
-    subcnt = 0;
-
-    tmp = strrchr(fname,'/');
-#if HAVE_DOS_PATHS
-    if(!tmp)tmp = strrchr(fname,'\\');
-    if(!tmp)tmp = strrchr(fname,':');
-#endif
-
-    // extract filename & dirname from fname
-    if (tmp) {
-	strcpy(f_fname, tmp+1);
-	pos = tmp - fname;
-	strncpy(f_dir, fname, pos+1);
-	f_dir[pos+1] = 0;
-    } else {
-	strcpy(f_fname, fname);
-	strcpy(f_dir, "./");
-    }
 
     strcpy_strip_ext(f_fname_noext, f_fname);
     strcpy_trim(f_fname_trim, f_fname_noext);
@@ -1955,9 +1942,9 @@ static char **sub_filenames(const char *path, const char *fname)
     // 1 = any subtitle file
     // 2 = any sub file containing movie name
     // 3 = sub file containing movie name and the lang extension
-    for (j = 0; j <= 1; j++) {
-	d = opendir(j == 0 ? f_dir : path);
+	d = opendir(path);
 	if (d) {
+	    mp_msg(MSGT_SUBREADER, MSGL_INFO, "Load subtitles in %s\n", path);
 	    while ((de = readdir(d))) {
 		// retrieve various parts of the filename
 		strcpy_strip_ext(tmp_fname_noext, de->d_name);
@@ -2013,8 +2000,7 @@ static char **sub_filenames(const char *path, const char *fname)
 		    }
 		    if (!prio) {
 			// doesn't contain the movie name
-			// don't try in the mplayer subtitle directory
-			if ((j == 0) && (sub_match_fuzziness >= 2)) {
+			if (!limit_fuzziness && sub_match_fuzziness >= 2) {
 			    prio = 1;
 			}
 		    }
@@ -2026,27 +2012,25 @@ static char **sub_filenames(const char *path, const char *fname)
 			    prio++;
 			}
 #endif
-			sprintf(tmpresult, "%s%s", j == 0 ? f_dir : path, de->d_name);
+			sprintf(tmpresult, "%s/%s", path, de->d_name);
 //			fprintf(stderr, "%s priority %d\n", tmpresult, prio);
 			if ((f = fopen(tmpresult, "rt"))) {
-			    fclose(f);
-			    result[subcnt].priority = prio;
-			    result[subcnt].fname = strdup(tmpresult);
-			    subcnt++;
+                            struct subfn *sub = &slist->subs[slist->sid++];
+
+                            fclose(f);
+                            sub->priority = prio;
+                            sub->fname    = strdup(tmpresult);
 			}
 		    }
 
 		}
-		if (subcnt >= MAX_SUBTITLE_FILES) break;
+		if (slist->sid >= MAX_SUBTITLE_FILES) break;
 	    }
 	    closedir(d);
 	}
 
-    }
-
     free(tmp_sub_id);
 
-    free(f_dir);
     free(f_fname);
     free(f_fname_noext);
     free(f_fname_trim);
@@ -2056,19 +2040,6 @@ static char **sub_filenames(const char *path, const char *fname)
     free(tmp_fname_ext);
 
     free(tmpresult);
-
-    qsort(result, subcnt, sizeof(subfn), compare_sub_priority);
-
-    result2 = calloc(subcnt + 1, sizeof(*result2));
-
-    for (i = 0; i < subcnt; i++) {
-	result2[i] = result[i].fname;
-    }
-    result2[subcnt] = NULL;
-
-    free(result);
-
-    return result2;
 }
 
 /**
@@ -2077,23 +2048,51 @@ static char **sub_filenames(const char *path, const char *fname)
  * @param fname Path to subtitle filename
  * @param fps FPS parameter for the add subtitle function
  * @param add_f Add subtitle function to call for each sub
+ * @note Subtitles are tracked and scored in various places according to the
+ *       user options, sorted, and then added by calling the add_f function.
  */
 void load_subtitles(const char *fname, int fps, void add_f(char *, float, int))
 {
     int i;
+    char *mp_subdir, *path = NULL;
+    struct sub_list slist;
+
+    // Load subtitles specified by sub option first
     if (sub_name)
         for (i = 0; sub_name[i]; i++)
             add_f(sub_name[i], fps, 0);
-    if (sub_auto && fname) {
-        char *psub = get_path("sub/");
-        char **tmp = sub_filenames((psub ? psub : ""), fname);
-        free(psub);
-        for (i = 0; tmp[i]; i++) {
-            add_f(tmp[i], fps, 1);
-            free(tmp[i]);
-        }
-        free(tmp);
+
+    // Stop here if automatic detection disabled
+    if (!sub_auto || !fname)
+        return;
+
+    slist.sid  = 0;
+    slist.subs = calloc(MAX_SUBTITLE_FILES, sizeof(*slist.subs));
+    if (!slist.subs)
+        return;
+
+    // Load subtitles from current media directory
+    if (!(path = mp_dirname(fname))) {
+        free(slist.subs);
+        return;
     }
+    append_dir_subtitles(&slist, path, fname, 0);
+    free(path);
+
+    // Load subtitles in ~/.mplayer/sub limiting sub fuzziness
+    mp_subdir = get_path("sub/");
+    if (mp_subdir)
+        append_dir_subtitles(&slist, mp_subdir, fname, 1);
+    free(mp_subdir);
+
+    // Sort subs by priority and append them
+    qsort(slist.subs, slist.sid, sizeof(*slist.subs), compare_sub_priority);
+    for (i = 0; i < slist.sid; i++) {
+        struct subfn *sub = &slist.subs[i];
+        add_f(sub->fname, fps, 1);
+        free(sub->fname);
+    }
+    free(slist.subs);
 }
 
 void list_sub_file(sub_data* subd){
