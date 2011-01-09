@@ -284,5 +284,6 @@ int main(int argc, char* argv[]){
     fseek(f, pos + objh.size - sizeof(objh), SEEK_SET);
   }
 
+  fclose(f);
   return 0;
 }
