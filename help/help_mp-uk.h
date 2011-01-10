@@ -185,7 +185,6 @@ static const char help_text[]=
 #define MSGTR_EdloutBadStop "Ігнорування EDL відмінено, останній start > stop\n"
 #define MSGTR_EdloutStartSkip "Старт EDL пропуску, натисніть 'i' знов, щоб завершити блок.\n"
 #define MSGTR_EdloutEndSkip "Кінець EDL пропуску, рядок записано.\n"
-#define MSGTR_MPEndposNoSizeBased "Опція -endpos у MPlayer ще не підтримує одиниці ромзіру.\n"
 
 // mplayer.c OSD
 #define MSGTR_OSDenabled "увімкнено"

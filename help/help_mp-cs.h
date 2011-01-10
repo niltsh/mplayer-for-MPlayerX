@@ -190,7 +190,6 @@ static const char help_text[]=
 #define MSGTR_EdloutBadStop "EDL: Vynechání zrušeno, poslední start > stop\n"
 #define MSGTR_EdloutStartSkip "EDL: Začátek vynechaného bloku, stiskněte znovu 'i' pro ukončení bloku.\n"
 #define MSGTR_EdloutEndSkip "EDL: Konec vynechaného bloku, řádek zapsán.\n"
-#define MSGTR_MPEndposNoSizeBased "Volba -endpos v MPlayeru zatím nepodporuje rozměrové jednotky.\n"
 
 // mplayer.c OSD
 #define MSGTR_OSDenabled "zapnuto"

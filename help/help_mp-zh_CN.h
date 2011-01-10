@@ -196,7 +196,6 @@ static const char help_text[]=
 #define MSGTR_EdloutBadStop "取消 EDL 跳跃，上一个开始位置 > 停止位置\n"
 #define MSGTR_EdloutStartSkip "开始 EDL 跳跃，再按键‘i’以指定跳过内容的结尾。\n"
 #define MSGTR_EdloutEndSkip "结束 EDL 跳跃，文本行已写入。\n"
-#define MSGTR_MPEndposNoSizeBased "MPlayer 的选项 -endpos 还不支持指定尺寸大小的单位。\n"
 
 // mplayer.c OSD
 #define MSGTR_OSDenabled "已启用"

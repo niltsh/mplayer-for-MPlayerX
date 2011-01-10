@@ -3654,11 +3654,6 @@ if (seek_to_sec) {
     end_at.pos += seek_to_sec;
 }
 
-if (end_at.type == END_AT_SIZE) {
-    mp_msg(MSGT_CPLAYER, MSGL_WARN, MSGTR_MPEndposNoSizeBased);
-    end_at.type = END_AT_NONE;
-}
-
 #ifdef CONFIG_DVDNAV
 mp_dvdnav_context_free(mpctx);
 if (mpctx->stream->type == STREAMTYPE_DVDNAV) {
@@ -3702,7 +3697,8 @@ if(!mpctx->sh_video) {
   if(!quiet)
     print_status(a_pos, 0, 0);
 
-  if(end_at.type == END_AT_TIME && end_at.pos < a_pos)
+  if(end_at.type == END_AT_TIME && end_at.pos < a_pos ||
+     end_at.type == END_AT_SIZE && end_at.pos < stream_tell(mpctx->stream))
     mpctx->eof = PT_NEXT_ENTRY;
   update_subtitles(NULL, a_pos, mpctx->d_sub, 0);
   update_osd_msg();
@@ -3810,10 +3806,9 @@ if(auto_quality>0){
      if (play_n_frames <= 0) mpctx->eof = PT_NEXT_ENTRY;
  }
 
-
-// FIXME: add size based support for -endpos
- if (end_at.type == END_AT_TIME &&
-         !frame_time_remaining && end_at.pos <= mpctx->sh_video->pts)
+ if (!frame_time_remaining &&
+     ((end_at.type == END_AT_TIME &&       mpctx->sh_video->pts >= end_at.pos) ||
+      (end_at.type == END_AT_SIZE && stream_tell(mpctx->stream) >= end_at.pos)))
      mpctx->eof = PT_NEXT_ENTRY;
 
 } // end if(mpctx->sh_video)

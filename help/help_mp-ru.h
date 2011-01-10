@@ -191,7 +191,6 @@ static const char help_text[]=
 #define MSGTR_EdloutBadStop "EDL пропуск отменён, последний start > stop\n"
 #define MSGTR_EdloutStartSkip "Начало EDL пропуска, нажмите 'i' ещё раз для завершения блока.\n"
 #define MSGTR_EdloutEndSkip "Конец EDL пропуска, строка записана.\n"
-#define MSGTR_MPEndposNoSizeBased "В MPlayer опция -endpos пока не поддерживает единицы размера.\n"
 
 // mplayer.c OSD
 #define MSGTR_OSDenabled "включено"

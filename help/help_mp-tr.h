@@ -194,7 +194,6 @@ static const char help_text[]=
 #define MSGTR_EdloutStartSkip "EDL atlaması başlangıcı, bloğu bitirmek için\n"\
 "'i' tuşuna tekrar basın.\n"
 #define MSGTR_EdloutEndSkip "EDL atlaması sonu, satır yazıldı.\n"
-#define MSGTR_MPEndposNoSizeBased "MPlayer'da -endpos seçeneği henüz boyut birimlerini desteklemiyor.\n"
 
 // mplayer.c OSD
 

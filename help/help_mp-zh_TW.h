@@ -193,7 +193,6 @@ static const char help_text[]=
 #define MSGTR_EdloutBadStop "EDL 跳躍已取消, 上次開始位置 > 停止位置\n"
 #define MSGTR_EdloutStartSkip "EDL 跳躍開始, 再按鍵 'i' 以停止。\n"
 #define MSGTR_EdloutEndSkip "EDL 跳躍結束, 綫已寫入。\n"
-#define MSGTR_MPEndposNoSizeBased "MPlayer 的選項 -endpos 還不支持大小單位。\n"
 
 // mplayer.c OSD
 

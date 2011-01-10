@@ -189,7 +189,6 @@ static const char help_text[]=
 #define MSGTR_EdloutBadStop "Pominięcie EDL odwołane, ostatni start > stop\n"
 #define MSGTR_EdloutStartSkip "Pominięcie EDL rozpoczęte, wciśnij ponownie 'i' by zakończyć blok.\n"
 #define MSGTR_EdloutEndSkip "Pominięcie EDL zakończone, wiersz zapisany.\n"
-#define MSGTR_MPEndposNoSizeBased "Opcja MPlayer -endpos nie obsługuje jeszcze jednostek rozmiaru.\n"
 
 // mplayer.c OSD
 

@@ -197,7 +197,6 @@ static const char help_text[]=
 #define MSGTR_EdloutBadStop "Salto EDL ingnorato, ultimo start > stop\n"
 #define MSGTR_EdloutStartSkip "Tempo di start EDL impostato, ripremere 'i' per impostare lo stop.\n"
 #define MSGTR_EdloutEndSkip "Fine del blocco EDL, riga scritta.\n"
-#define MSGTR_MPEndposNoSizeBased "L'opzione -endpos in MPlayer non supporta ancora unità di mis. di dimensione.\n"
 
 // mplayer.c OSD
 #define MSGTR_OSDenabled "abilitat"

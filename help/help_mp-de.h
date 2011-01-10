@@ -207,7 +207,6 @@ static const char help_text[]=
 #define MSGTR_EdloutBadStop "EDL-Sprung abgebrochen, letzter Start > Stop\n"
 #define MSGTR_EdloutStartSkip "EDL-Sprung begonnen, drücke 'i' erneut, um den Block zu beenden.\n"
 #define MSGTR_EdloutEndSkip "EDL-Sprung beendet, Zeile geschrieben.\n"
-#define MSGTR_MPEndposNoSizeBased "Die Option -endpos unterstützt für MPlayer noch keine Größenangaben.\n"
 
 // mplayer.c OSD
 #define MSGTR_OSDenabled "aktiviert"

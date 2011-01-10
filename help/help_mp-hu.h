@@ -199,7 +199,6 @@ static const char help_text[]=
 #define MSGTR_EdloutBadStop "EDL skip visszavonva, az utolsó start > stop\n"
 #define MSGTR_EdloutStartSkip "EDL skip eleje, nyomd meg az 'i'-t a blokk befejezéséhez.\n"
 #define MSGTR_EdloutEndSkip "EDL skip vége, a sor kiírva.\n"
-#define MSGTR_MPEndposNoSizeBased "Az MPlayer -endpos opciója jelenleg még nem támogatja a méretbeli megadást.\n"
 
 // mplayer.c OSD
 #define MSGTR_OSDenabled "bekapcsolva"
