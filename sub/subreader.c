@@ -1814,7 +1814,7 @@ char * strreplace( char * in,char * what,char * whereof )
 #endif
 
 
-static void strcpy_trim(char *d, char *s)
+static void strcpy_trim(char *d, const char *s)
 {
     // skip leading whitespace
     while (*s && isspace(*s)) {
@@ -1837,7 +1837,7 @@ static void strcpy_trim(char *d, char *s)
     *d = 0;
 }
 
-static void strcpy_strip_ext(char *d, char *s)
+static void strcpy_strip_ext(char *d, const char *s)
 {
     char *tmp = strrchr(s,'.');
     if (!tmp) {
@@ -1853,7 +1853,7 @@ static void strcpy_strip_ext(char *d, char *s)
     }
 }
 
-static void strcpy_get_ext(char *d, char *s)
+static void strcpy_get_ext(char *d, const char *s)
 {
     char *tmp = strrchr(s,'.');
     if (!tmp) {
@@ -1864,7 +1864,7 @@ static void strcpy_get_ext(char *d, char *s)
    }
 }
 
-static int whiteonly(char *s)
+static int whiteonly(const char *s)
 {
     while (*s) {
 	if (!isspace(*s)) return 0;
