@@ -56,7 +56,7 @@ static uint8_t* sub_img = NULL;
 static int sub_x,sub_y,sub_w,sub_h;
 static int sub_x_off,sub_y_off;
 static int sub_config_count;
-static int aspect;
+static int dxr2_aspect;
 static int sub_vo_win = 0;
 
 static int use_ol = 1;
@@ -488,10 +488,10 @@ static void dxr2_set_overlay_window(void) {
     int new_aspect = ((1<<16)*vo_dwidth + vo_dheight/2)/vo_dheight;
     sub_w = vo_dwidth;
     sub_h = vo_dheight;
-    if(new_aspect > aspect)
-      sub_w = (sub_h*aspect + (1<<15))>>16;
+    if(new_aspect > dxr2_aspect)
+      sub_w = (sub_h*dxr2_aspect + (1<<15))>>16;
     else
-      sub_h = ((sub_w<<16) + (aspect>>1)) /aspect;
+      sub_h = ((sub_w<<16) + (dxr2_aspect>>1)) /dxr2_aspect;
     sub_w += olw_cor;
     sub_h += olh_cor;
     sub_x_off = (vo_dwidth-sub_w) / 2;
@@ -699,7 +699,7 @@ static int config(uint32_t s_width, uint32_t s_height, uint32_t width, uint32_t 
 	sub_img[i+1] = ck_g;
 	sub_img[i+2] = ck_r;
       }
-      aspect = ((1<<16)*width + height/2)/height;
+      dxr2_aspect = ((1<<16)*width + height/2)/height;
       sub_w = sub_h = 0;
       dxr2_set_overlay_window();
       break;
