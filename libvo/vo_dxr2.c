@@ -897,6 +897,7 @@ static int preinit(const char *arg) {
   if (read(uCodeFD, uCode+4, uCodeSize) != uCodeSize) {
 
     mp_msg(MSGT_VO,MSGL_ERR,"VO: [dxr2] Could not read uCode uCode: %s\n", strerror(errno));
+    free(uCode);
     return VO_ERROR;
   }
   close(uCodeFD);
@@ -916,6 +917,8 @@ static int preinit(const char *arg) {
     crop.arg4=0;
     ioctl(dxr2_fd, DXR2_IOC_SET_OVERLAY_CROPPING, &crop);
   }
+
+  free(uCode);
   return 0;
 }
 
