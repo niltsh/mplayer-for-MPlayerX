@@ -166,6 +166,9 @@ static char *ucodesearchpath[] = {
 static unsigned char dxr2buf[BUF_SIZE];
 static unsigned int  dxr2bufpos = 0;
 
+int write_dxr2(const unsigned char *data, int len);
+void dxr2_send_sub_packet(unsigned char* data,int len,int id,unsigned int timestamp);
+
 int write_dxr2(const unsigned char *data, int len)
 {
   int w = 0;
@@ -460,7 +463,6 @@ static void dxr2_set_overlay_window(void) {
   uint8_t* src[] = { sub_img, NULL, NULL };
   int stride[] = { movie_w * 3 , 0, 0 };
   dxr2_twoArg_t win;
-  int redisp = 0;
   int cc = vo_config_count;
   vo_config_count = sub_config_count;
   sub_vo->draw_slice(src,stride,movie_w,movie_h,0,0);
