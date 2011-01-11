@@ -274,9 +274,9 @@ static int af_open(af_instance_t* af){
 
     init_avcodec();
 
-    s->lavc_acodec = avcodec_find_encoder_by_name("ac3");
+    s->lavc_acodec = avcodec_find_encoder_by_name("ac3_fixed");
     if (!s->lavc_acodec) {
-        mp_msg(MSGT_AFILTER, MSGL_ERR, MSGTR_LavcAudioCodecNotFound, "ac3");
+        mp_msg(MSGT_AFILTER, MSGL_ERR, MSGTR_LavcAudioCodecNotFound, "ac3_fixed");
         return AF_ERROR;
     }
 
