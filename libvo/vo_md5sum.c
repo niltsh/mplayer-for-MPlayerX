@@ -46,13 +46,6 @@
 
 /* ------------------------------------------------------------------------- */
 
-/* Defines */
-
-/* Used for temporary buffers to store file- and pathnames */
-#define BUFLENGTH 512
-
-/* ------------------------------------------------------------------------- */
-
 /* Info */
 
 static const vo_info_t info=
@@ -303,11 +296,3 @@ static void draw_osd(void)
 static void flip_page (void)
 {
 }
-
-/* ------------------------------------------------------------------------- */
-
-#undef BUFLENGTH
-#undef MD5SUM_RGB_MODE
-#undef MD5SUM_YUV_MODE
-
-/* ------------------------------------------------------------------------- */
