@@ -40,6 +40,7 @@
 #include "libmpcodecs/vd.h"
 #include "libmpdemux/mpeg_packetizer.h"
 #include "x11_common.h"
+#include "libvo/vo_dxr2.h"
 
 #include <dxr2ioctl.h>
 
@@ -166,9 +167,6 @@ static char *ucodesearchpath[] = {
 static unsigned char dxr2buf[BUF_SIZE];
 static unsigned int  dxr2bufpos = 0;
 
-int write_dxr2(const unsigned char *data, int len);
-void dxr2_send_sub_packet(unsigned char* data,int len,int id,unsigned int timestamp);
-
 int write_dxr2(const unsigned char *data, int len)
 {
   int w = 0;
@@ -232,7 +230,7 @@ static void dxr2_send_eof(void)
   write_dxr2(mpg_eof, sizeof(mpg_eof));
 }
 
-void dxr2_send_sub_packet(unsigned char* data,int len,int id,unsigned int timestamp) {
+static void dxr2_send_sub_packet(unsigned char* data,int len,int id,unsigned int timestamp) {
   int ptslen=5;
 
   if(dxr2_fd < 0) {

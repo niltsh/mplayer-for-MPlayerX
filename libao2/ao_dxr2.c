@@ -175,9 +175,6 @@ static int get_space(void){
     return y;
 }
 
-/* write_dxr2 from libvo/dxr2.c */
-int write_dxr2(const unsigned char *data, int len);
-
 static void dxr2_send_lpcm_packet(unsigned char* data,int len,int id,unsigned int timestamp,int freq_id)
 {
 

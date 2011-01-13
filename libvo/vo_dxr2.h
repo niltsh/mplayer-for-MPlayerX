@@ -25,4 +25,7 @@ extern int dxr2_fd;
 
 extern const m_option_t dxr2_opts[];
 
+/* exported for ao_dxr2.c */
+int write_dxr2(const unsigned char *data, int len);
+
 #endif /* MPLAYER_VO_DXR2_H */
