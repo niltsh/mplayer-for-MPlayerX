@@ -36,19 +36,19 @@
 
 
 struct vf_priv_s {
-	char eq[200];
-	int8_t *qp;
-	int8_t lut[257];
-	int qp_stride;
+        char eq[200];
+        int8_t *qp;
+        int8_t lut[257];
+        int qp_stride;
 };
 
 static int config(struct vf_instance *vf,
         int width, int height, int d_width, int d_height,
-	unsigned int flags, unsigned int outfmt){
-	int h= (height+15)>>4;
+        unsigned int flags, unsigned int outfmt){
+        int h= (height+15)>>4;
         int i;
 
-	vf->priv->qp_stride= (width+15)>>4;
+        vf->priv->qp_stride= (width+15)>>4;
         vf->priv->qp= av_malloc(vf->priv->qp_stride*h*sizeof(int8_t));
 
         for(i=-129; i<128; i++){
@@ -67,7 +67,7 @@ static int config(struct vf_instance *vf,
                 NULL
             };
             double temp_val;
-	    int res;
+            int res;
 
             res= av_parse_and_eval_expr(&temp_val, vf->priv->eq, const_names, const_values, NULL, NULL, NULL, NULL, NULL, 0, NULL);
 
@@ -78,7 +78,7 @@ static int config(struct vf_instance *vf,
             vf->priv->lut[i+129]= lrintf(temp_val);
         }
 
-	return vf_next_config(vf,width,height,d_width,d_height,flags,outfmt);
+        return vf_next_config(vf,width,height,d_width,d_height,flags,outfmt);
 }
 
 static void get_image(struct vf_instance *vf, mp_image_t *mpi){
@@ -92,32 +92,32 @@ static void get_image(struct vf_instance *vf, mp_image_t *mpi){
     if(mpi->flags&MP_IMGFLAG_PLANAR){
         mpi->planes[1]=vf->dmpi->planes[1];
         mpi->planes[2]=vf->dmpi->planes[2];
-	mpi->stride[1]=vf->dmpi->stride[1];
-	mpi->stride[2]=vf->dmpi->stride[2];
+        mpi->stride[1]=vf->dmpi->stride[1];
+        mpi->stride[2]=vf->dmpi->stride[2];
     }
     mpi->flags|=MP_IMGFLAG_DIRECT;
 }
 
 static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
-	mp_image_t *dmpi;
+        mp_image_t *dmpi;
         int x,y;
 
-	if(!(mpi->flags&MP_IMGFLAG_DIRECT)){
-		// no DR, so get a new image! hope we'll get DR buffer:
-		vf->dmpi=vf_get_image(vf->next,mpi->imgfmt,
-		MP_IMGTYPE_TEMP, MP_IMGFLAG_ACCEPT_STRIDE|MP_IMGFLAG_PREFER_ALIGNED_STRIDE,
-		mpi->w,mpi->h);
-	}
+        if(!(mpi->flags&MP_IMGFLAG_DIRECT)){
+                // no DR, so get a new image! hope we'll get DR buffer:
+                vf->dmpi=vf_get_image(vf->next,mpi->imgfmt,
+                MP_IMGTYPE_TEMP, MP_IMGFLAG_ACCEPT_STRIDE|MP_IMGFLAG_PREFER_ALIGNED_STRIDE,
+                mpi->w,mpi->h);
+        }
 
-	dmpi= vf->dmpi;
+        dmpi= vf->dmpi;
 
-	if(!(mpi->flags&MP_IMGFLAG_DIRECT)){
-		memcpy_pic(dmpi->planes[0], mpi->planes[0], mpi->w, mpi->h, dmpi->stride[0], mpi->stride[0]);
-    		if(mpi->flags&MP_IMGFLAG_PLANAR){
-		    memcpy_pic(dmpi->planes[1], mpi->planes[1], mpi->w>>mpi->chroma_x_shift, mpi->h>>mpi->chroma_y_shift, dmpi->stride[1], mpi->stride[1]);
-		    memcpy_pic(dmpi->planes[2], mpi->planes[2], mpi->w>>mpi->chroma_x_shift, mpi->h>>mpi->chroma_y_shift, dmpi->stride[2], mpi->stride[2]);
-		}
-	}
+        if(!(mpi->flags&MP_IMGFLAG_DIRECT)){
+                memcpy_pic(dmpi->planes[0], mpi->planes[0], mpi->w, mpi->h, dmpi->stride[0], mpi->stride[0]);
+                    if(mpi->flags&MP_IMGFLAG_PLANAR){
+                    memcpy_pic(dmpi->planes[1], mpi->planes[1], mpi->w>>mpi->chroma_x_shift, mpi->h>>mpi->chroma_y_shift, dmpi->stride[1], mpi->stride[1]);
+                    memcpy_pic(dmpi->planes[2], mpi->planes[2], mpi->w>>mpi->chroma_x_shift, mpi->h>>mpi->chroma_y_shift, dmpi->stride[2], mpi->stride[2]);
+                }
+        }
         vf_clone_mpi_attributes(dmpi, mpi);
 
         dmpi->qscale = vf->priv->qp;
@@ -138,17 +138,17 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
             }
         }
 
-	return vf_next_put_image(vf,dmpi, pts);
+        return vf_next_put_image(vf,dmpi, pts);
 }
 
 static void uninit(struct vf_instance *vf){
-	if(!vf->priv) return;
+        if(!vf->priv) return;
 
-	av_free(vf->priv->qp);
-	vf->priv->qp= NULL;
+        av_free(vf->priv->qp);
+        vf->priv->qp= NULL;
 
-	av_free(vf->priv);
-	vf->priv=NULL;
+        av_free(vf->priv);
+        vf->priv=NULL;
 }
 
 //===========================================================================//

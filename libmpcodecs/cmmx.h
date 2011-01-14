@@ -141,7 +141,7 @@ p31avgb(cmmx_t a, cmmx_t b)
     cmmx_t ao = a & (3*ONE_BYTES);
     cmmx_t bo = b & (3*ONE_BYTES);
     return 3*((a^ao)>>2) + ((b^bo)>>2) +
-	(((3*ao+bo+2*ONE_BYTES)>>2) & (3*ONE_BYTES));
+        (((3*ao+bo+2*ONE_BYTES)>>2) & (3*ONE_BYTES));
 }
 
 static inline cmmx_t
@@ -156,9 +156,9 @@ psumbw(cmmx_t a)
 {
     cmmx_t t = (a & LOWBW_MASK) + ((a>>8) & LOWBW_MASK);
     unsigned long ret =
-	(unsigned long)t + (unsigned long)(t >> (4*sizeof(cmmx_t)));
+        (unsigned long)t + (unsigned long)(t >> (4*sizeof(cmmx_t)));
     if (sizeof(cmmx_t) > 4)
-	ret += ret >> 16;
+        ret += ret >> 16;
     return ret & 0xffff;
 }
 
@@ -166,9 +166,9 @@ static inline unsigned long
 psumbw_s(cmmx_t a)
 {
     unsigned long ret =
-	(unsigned long)a + (unsigned long)(a >> (4*sizeof(cmmx_t)));
+        (unsigned long)a + (unsigned long)(a >> (4*sizeof(cmmx_t)));
     if (sizeof(cmmx_t) <= 4)
-	return (ret & 0xff) + ((ret>>8) & 0xff);
+        return (ret & 0xff) + ((ret>>8) & 0xff);
     ret = (ret & 0xff00ff) + ((ret>>8) & 0xff00ff);
     ret += ret >> 16;
     return ret & 0xffff;

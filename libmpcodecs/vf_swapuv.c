@@ -34,7 +34,7 @@
 
 static void get_image(struct vf_instance *vf, mp_image_t *mpi){
     mp_image_t *dmpi= vf_get_image(vf->next, mpi->imgfmt,
-	mpi->type, mpi->flags, mpi->w, mpi->h);
+        mpi->type, mpi->flags, mpi->w, mpi->h);
 
     mpi->planes[0]=dmpi->planes[0];
     mpi->planes[1]=dmpi->planes[2];
@@ -52,17 +52,17 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
     mp_image_t *dmpi;
 
     if(mpi->flags&MP_IMGFLAG_DIRECT){
-	dmpi=(mp_image_t*)mpi->priv;
+        dmpi=(mp_image_t*)mpi->priv;
     } else {
-	dmpi=vf_get_image(vf->next, mpi->imgfmt, MP_IMGTYPE_EXPORT, 0, mpi->w, mpi->h);
-	assert(mpi->flags&MP_IMGFLAG_PLANAR);
-	dmpi->planes[0]=mpi->planes[0];
-	dmpi->planes[1]=mpi->planes[2];
-	dmpi->planes[2]=mpi->planes[1];
-	dmpi->stride[0]=mpi->stride[0];
-	dmpi->stride[1]=mpi->stride[2];
-	dmpi->stride[2]=mpi->stride[1];
-	dmpi->width=mpi->width;
+        dmpi=vf_get_image(vf->next, mpi->imgfmt, MP_IMGTYPE_EXPORT, 0, mpi->w, mpi->h);
+        assert(mpi->flags&MP_IMGFLAG_PLANAR);
+        dmpi->planes[0]=mpi->planes[0];
+        dmpi->planes[1]=mpi->planes[2];
+        dmpi->planes[2]=mpi->planes[1];
+        dmpi->stride[0]=mpi->stride[0];
+        dmpi->stride[1]=mpi->stride[2];
+        dmpi->stride[2]=mpi->stride[1];
+        dmpi->width=mpi->width;
     }
 
     vf_clone_mpi_attributes(dmpi, mpi);
@@ -73,18 +73,18 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
 //===========================================================================//
 
 static int query_format(struct vf_instance *vf, unsigned int fmt){
-	switch(fmt)
-	{
-	case IMGFMT_YV12:
-	case IMGFMT_I420:
-	case IMGFMT_IYUV:
-	case IMGFMT_YVU9:
-	case IMGFMT_444P:
-	case IMGFMT_422P:
-	case IMGFMT_411P:
-		return vf_next_query_format(vf, fmt);
-	}
-	return 0;
+        switch(fmt)
+        {
+        case IMGFMT_YV12:
+        case IMGFMT_I420:
+        case IMGFMT_IYUV:
+        case IMGFMT_YVU9:
+        case IMGFMT_444P:
+        case IMGFMT_422P:
+        case IMGFMT_411P:
+                return vf_next_query_format(vf, fmt);
+        }
+        return 0;
 }
 
 static int vf_open(vf_instance_t *vf, char *args){

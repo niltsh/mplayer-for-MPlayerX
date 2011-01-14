@@ -458,10 +458,10 @@ static int vf_open(vf_instance_t *vf, char *args){
     init_thres2();
 
     switch(vf->priv->mode){
-	case 0: requantize= hardthresh_c; break;
-	case 1: requantize= softthresh_c; break;
+        case 0: requantize= hardthresh_c; break;
+        case 1: requantize= softthresh_c; break;
         default:
-	case 2: requantize= mediumthresh_c; break;
+        case 2: requantize= mediumthresh_c; break;
     }
 
 #if HAVE_MMX
@@ -471,10 +471,10 @@ static int vf_open(vf_instance_t *vf, char *args){
 #endif
 #if 0
     if(gCpuCaps.hasMMX){
-	switch(vf->priv->mode){
-	    case 0: requantize= hardthresh_mmx; break;
-	    case 1: requantize= softthresh_mmx; break;
-	}
+        switch(vf->priv->mode){
+            case 0: requantize= hardthresh_mmx; break;
+            case 1: requantize= softthresh_mmx; break;
+        }
     }
 #endif
 

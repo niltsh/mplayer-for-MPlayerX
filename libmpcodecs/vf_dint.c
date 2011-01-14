@@ -44,16 +44,16 @@ struct vf_priv_s {
 
 static int config (struct vf_instance *vf,
         int width, int height, int d_width, int d_height,
-	unsigned int flags, unsigned int outfmt)
+        unsigned int flags, unsigned int outfmt)
 {
     int rowsize;
 
     vf->priv->pmpi = vf_get_image (vf->next, outfmt, MP_IMGTYPE_TEMP,
-				   0, width, height);
+                                   0, width, height);
     if (!(vf->priv->pmpi->flags & MP_IMGFLAG_PLANAR) &&
-	outfmt != IMGFMT_RGB32 && outfmt != IMGFMT_BGR32 &&
-	outfmt != IMGFMT_RGB24 && outfmt != IMGFMT_BGR24 &&
-	outfmt != IMGFMT_RGB16 && outfmt != IMGFMT_BGR16)
+        outfmt != IMGFMT_RGB32 && outfmt != IMGFMT_BGR32 &&
+        outfmt != IMGFMT_RGB24 && outfmt != IMGFMT_BGR24 &&
+        outfmt != IMGFMT_RGB16 && outfmt != IMGFMT_BGR16)
     {
       mp_msg (MSGT_VFILTER, MSGL_WARN, "Drop-interlaced filter doesn't support this outfmt :(\n");
       return 0;
@@ -69,11 +69,11 @@ static int config (struct vf_instance *vf,
       vf->priv->diff = vf->priv->sense * (1 << (vf->priv->pmpi->bpp/3));
     if (vf->priv->diff < 0) vf->priv->diff = 0;
     if (!(vf->priv->pmpi->flags & MP_IMGFLAG_PLANAR) &&
-	vf->priv->pmpi->bpp < 24 && vf->priv->diff > 31)
+        vf->priv->pmpi->bpp < 24 && vf->priv->diff > 31)
       vf->priv->diff = 31;
     mp_msg (MSGT_VFILTER, MSGL_INFO, "Drop-interlaced: %dx%d diff %d / level %u\n",
-	   vf->priv->pmpi->width, vf->priv->pmpi->height,
-	   (int)vf->priv->diff, (unsigned int)vf->priv->max);
+           vf->priv->pmpi->width, vf->priv->pmpi->height,
+           (int)vf->priv->diff, (unsigned int)vf->priv->max);
 //    vf->priv->rdfr = vf->priv->dfr = 0;
     vf->priv->was_dint = 0;
     return vf_next_config(vf,width,height,d_width,d_height,flags,outfmt);
@@ -101,89 +101,89 @@ static int put_image (struct vf_instance *vf, mp_image_t *mpi, double pts)
       prv0 = mpi->planes[0];
       for (j = 1; j < mpi->height && nok <= max; j++)
       {
-	cur = cur0;
-	prv = prv0;
-	// analyse row (row0)
-	if (mpi->flags & MP_IMGFLAG_PLANAR) // planar YUV - check luminance
-	  for (i = 0; i < rowsize; i++)
-	  {
-	    if (cur[0] - prv[0] > diff)
-	      row0[i] = 1;
-	    else if (cur[0] - prv[0] < -diff)
-	      row0[i] = -1;
-	    else
-	      row0[i] = 0;
-	    cur++;
-	    prv++;
-	    // check if row0 is 1 but row1 is 0, and row2 is 1 or row2 is 0
-	    // but row3 is 1 so it's interlaced ptr (nok++)
-	    if (j > 2 && row0[i] > 0 && (row1[i] < 0 || (!row1[i] && row2[i] < 0)) &&
-		(++nok) > max)
-	      break;
-	  }
-	else if (mpi->bpp < 24) // RGB/BGR 16 - check all colors
-	  for (i = 0; i < rowsize; i++)
-	  {
-	    n1 = cur[0] + (cur[1]<<8);
-	    n2 = prv[0] + (prv[1]<<8);
-	    if ((n1&0x1f) - (n2&0x1f) > diff ||
-		((n1>>5)&0x3f) - ((n2>>5)&0x3f) > diff ||
-		((n1>>11)&0x1f) - ((n2>>11)&0x1f) > diff)
-	      row0[i] = 1;
-	    else if ((n1&0x1f) - (n2&0x1f) < -diff ||
-		     ((n1>>5)&0x3f) - ((n2>>5)&0x3f) < -diff ||
-		     ((n1>>11)&0x1f) - ((n2>>11)&0x1f) < -diff)
-	      row0[i] = -1;
-	    else
-	      row0[i] = 0;
-	    cur += 2;
-	    prv += 2;
-	    // check if row0 is 1 but row1 is 0, and row2 is 1 or row2 is 0
-	    // but row3 is 1 so it's interlaced ptr (nok++)
-	    if (j > 2 && row0[i] > 0 && (row1[i] < 0 || (!row1[i] && row2[i] < 0)) &&
-		(++nok) > max)
-	      break;
-	  }
-	else // RGB/BGR 24/32
-	  for (i = 0; i < rowsize; i++)
-	  {
-	    if (cur[0] - prv[0] > diff ||
-		cur[1] - prv[1] > diff ||
-		cur[2] - prv[2] > diff)
-	      row0[i] = 1;
-	    else if (prv[0] - cur[0] > diff ||
-		     prv[1] - cur[1] > diff ||
-		     prv[2] - cur[2] > diff)
-	      row0[i] = -1;
-	    else
-	      row0[i] = 0;
-	    cur += mpi->bpp/8;
-	    prv += mpi->bpp/8;
-	    // check if row0 is 1 but row1 is 0, and row2 is 1 or row2 is 0
-	    // but row3 is 1 so it's interlaced ptr (nok++)
-	    if (j > 2 && row0[i] > 0 && (row1[i] < 0 || (!row1[i] && row2[i] < 0)) &&
-		(++nok) > max)
-	      break;
-	  }
-	cur0 += mpi->stride[0];
-	prv0 += mpi->stride[0];
-	// rotate rows
-	cur = row2;
-	row2 = row1;
-	row1 = row0;
-	row0 = cur;
+        cur = cur0;
+        prv = prv0;
+        // analyse row (row0)
+        if (mpi->flags & MP_IMGFLAG_PLANAR) // planar YUV - check luminance
+          for (i = 0; i < rowsize; i++)
+          {
+            if (cur[0] - prv[0] > diff)
+              row0[i] = 1;
+            else if (cur[0] - prv[0] < -diff)
+              row0[i] = -1;
+            else
+              row0[i] = 0;
+            cur++;
+            prv++;
+            // check if row0 is 1 but row1 is 0, and row2 is 1 or row2 is 0
+            // but row3 is 1 so it's interlaced ptr (nok++)
+            if (j > 2 && row0[i] > 0 && (row1[i] < 0 || (!row1[i] && row2[i] < 0)) &&
+                (++nok) > max)
+              break;
+          }
+        else if (mpi->bpp < 24) // RGB/BGR 16 - check all colors
+          for (i = 0; i < rowsize; i++)
+          {
+            n1 = cur[0] + (cur[1]<<8);
+            n2 = prv[0] + (prv[1]<<8);
+            if ((n1&0x1f) - (n2&0x1f) > diff ||
+                ((n1>>5)&0x3f) - ((n2>>5)&0x3f) > diff ||
+                ((n1>>11)&0x1f) - ((n2>>11)&0x1f) > diff)
+              row0[i] = 1;
+            else if ((n1&0x1f) - (n2&0x1f) < -diff ||
+                     ((n1>>5)&0x3f) - ((n2>>5)&0x3f) < -diff ||
+                     ((n1>>11)&0x1f) - ((n2>>11)&0x1f) < -diff)
+              row0[i] = -1;
+            else
+              row0[i] = 0;
+            cur += 2;
+            prv += 2;
+            // check if row0 is 1 but row1 is 0, and row2 is 1 or row2 is 0
+            // but row3 is 1 so it's interlaced ptr (nok++)
+            if (j > 2 && row0[i] > 0 && (row1[i] < 0 || (!row1[i] && row2[i] < 0)) &&
+                (++nok) > max)
+              break;
+          }
+        else // RGB/BGR 24/32
+          for (i = 0; i < rowsize; i++)
+          {
+            if (cur[0] - prv[0] > diff ||
+                cur[1] - prv[1] > diff ||
+                cur[2] - prv[2] > diff)
+              row0[i] = 1;
+            else if (prv[0] - cur[0] > diff ||
+                     prv[1] - cur[1] > diff ||
+                     prv[2] - cur[2] > diff)
+              row0[i] = -1;
+            else
+              row0[i] = 0;
+            cur += mpi->bpp/8;
+            prv += mpi->bpp/8;
+            // check if row0 is 1 but row1 is 0, and row2 is 1 or row2 is 0
+            // but row3 is 1 so it's interlaced ptr (nok++)
+            if (j > 2 && row0[i] > 0 && (row1[i] < 0 || (!row1[i] && row2[i] < 0)) &&
+                (++nok) > max)
+              break;
+          }
+        cur0 += mpi->stride[0];
+        prv0 += mpi->stride[0];
+        // rotate rows
+        cur = row2;
+        row2 = row1;
+        row1 = row0;
+        row0 = cur;
       }
     }
     // check if number of interlaced is above of max
     if (nok > max)
     {
-//      vf->priv->dfr++;
+//    vf->priv->dfr++;
       if (vf->priv->was_dint < 1) // can skip at most one frame!
       {
-	vf->priv->was_dint++;
-//	vf->priv->rdfr++;
-//	mp_msg (MSGT_VFILTER, MSGL_INFO, "DI:%d/%d ", vf->priv->rdfr, vf->priv->dfr);
-	return 0;
+        vf->priv->was_dint++;
+//      vf->priv->rdfr++;
+//      mp_msg (MSGT_VFILTER, MSGL_INFO, "DI:%d/%d ", vf->priv->rdfr, vf->priv->dfr);
+        return 0;
       }
     }
     vf->priv->was_dint = 0;
@@ -194,7 +194,7 @@ static int put_image (struct vf_instance *vf, mp_image_t *mpi, double pts)
 static int vf_open(vf_instance_t *vf, char *args){
     vf->config = config;
     vf->put_image = put_image;
-//    vf->default_reqs=VFCAP_ACCEPT_STRIDE;
+//  vf->default_reqs=VFCAP_ACCEPT_STRIDE;
     vf->priv = malloc (sizeof(struct vf_priv_s));
     vf->priv->sense = 0.1;
     vf->priv->level = 0.15;

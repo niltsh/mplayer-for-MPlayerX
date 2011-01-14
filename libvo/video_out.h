@@ -95,19 +95,19 @@ typedef struct {
   int w,h;
 } mp_win_t;
 
-#define VO_TRUE		1
-#define VO_FALSE	0
-#define VO_ERROR	-1
-#define VO_NOTAVAIL	-2
-#define VO_NOTIMPL	-3
+#define VO_TRUE      1
+#define VO_FALSE     0
+#define VO_ERROR    -1
+#define VO_NOTAVAIL -2
+#define VO_NOTIMPL  -3
 
-#define VOFLAG_FULLSCREEN	0x01
-#define VOFLAG_MODESWITCHING	0x02
-#define VOFLAG_SWSCALE		0x04
-#define VOFLAG_FLIPPING		0x08
-#define VOFLAG_HIDDEN		0x10  //< Use to create a hidden window
-#define VOFLAG_STEREO		0x20  //< Use to create a stereo-capable window
-#define VOFLAG_XOVERLAY_SUB_VO  0x10000
+#define VOFLAG_FULLSCREEN         0x01
+#define VOFLAG_MODESWITCHING      0x02
+#define VOFLAG_SWSCALE            0x04
+#define VOFLAG_FLIPPING           0x08
+#define VOFLAG_HIDDEN             0x10  //< Use to create a hidden window
+#define VOFLAG_STEREO             0x20  //< Use to create a stereo-capable window
+#define VOFLAG_XOVERLAY_SUB_VO 0x10000
 
 typedef struct vo_info_s
 {
@@ -257,8 +257,8 @@ extern int64_t WinID;
 
 typedef struct {
         float min;
-	float max;
-	} range_t;
+        float max;
+        } range_t;
 
 float range_max(range_t *r);
 int in_range(range_t *r, float f);

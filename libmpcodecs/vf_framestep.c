@@ -122,10 +122,10 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts)
     ++priv->frame_cur;
 
     if (skip == 0) {
-	/* Get image, export type (we don't modify tghe image) */
-	dmpi=vf_get_image(vf->next, mpi->imgfmt,
+        /* Get image, export type (we don't modify tghe image) */
+        dmpi=vf_get_image(vf->next, mpi->imgfmt,
                       MP_IMGTYPE_EXPORT, 0,
-	              mpi->w, mpi->h);
+                      mpi->w, mpi->h);
         /* Copy only the pointer ( MP_IMGTYPE_EXPORT ! ) */
         dmpi->planes[0] = mpi->planes[0];
         dmpi->planes[1] = mpi->planes[1];
@@ -155,12 +155,12 @@ static void uninit(struct vf_instance *vf)
 /* Main entry funct for the filter */
 static int vf_open(vf_instance_t *vf, char *args)
 {
-	struct vf_priv_s *p;
+        struct vf_priv_s *p;
 
         vf->put_image = put_image;
-	vf->uninit = uninit;
-	vf->default_reqs = VFCAP_ACCEPT_STRIDE;
-	vf->priv = p = calloc(1, sizeof(struct vf_priv_s));
+        vf->uninit = uninit;
+        vf->default_reqs = VFCAP_ACCEPT_STRIDE;
+        vf->priv = p = calloc(1, sizeof(struct vf_priv_s));
         if (p == NULL) {
             return 0;
         }
@@ -192,7 +192,7 @@ static int vf_open(vf_instance_t *vf, char *args)
                 }
             }
         }
-	return 1;
+        return 1;
 }
 
 const vf_info_t vf_info_framestep = {

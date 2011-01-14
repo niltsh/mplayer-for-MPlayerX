@@ -91,7 +91,7 @@
 // all other cases
 #define MP_IMGTYPE_INCOMPLETE 6
 
-#define MP_MAX_PLANES	4
+#define MP_MAX_PLANES 4
 
 #define MP_IMGFIELD_ORDERED 0x01
 #define MP_IMGFIELD_TOP_FIRST 0x02

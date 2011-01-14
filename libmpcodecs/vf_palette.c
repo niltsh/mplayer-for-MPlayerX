@@ -80,11 +80,11 @@ static unsigned int find_best(struct vf_instance *vf, unsigned int fmt){
     else if(fmt==IMGFMT_RGB8) p=rgb_list;
     else return 0;
     while(*p){
-	ret=vf->next->query_format(vf->next,*p);
-	mp_msg(MSGT_VFILTER,MSGL_DBG2,"[%s] query(%s) -> %d\n",vf->info->name,vo_format_name(*p),ret&3);
-	if(ret&VFCAP_CSP_SUPPORTED_BY_HW){ best=*p; break;} // no conversion -> bingo!
-	if(ret&VFCAP_CSP_SUPPORTED && !best) best=*p; // best with conversion
-	++p;
+        ret=vf->next->query_format(vf->next,*p);
+        mp_msg(MSGT_VFILTER,MSGL_DBG2,"[%s] query(%s) -> %d\n",vf->info->name,vo_format_name(*p),ret&3);
+        if(ret&VFCAP_CSP_SUPPORTED_BY_HW){ best=*p; break;} // no conversion -> bingo!
+        if(ret&VFCAP_CSP_SUPPORTED && !best) best=*p; // best with conversion
+        ++p;
     }
     return best;
 }
@@ -98,14 +98,14 @@ struct vf_priv_s {
 
 static int config(struct vf_instance *vf,
         int width, int height, int d_width, int d_height,
-	unsigned int flags, unsigned int outfmt){
+        unsigned int flags, unsigned int outfmt){
     if (!vf->priv->fmt)
-	vf->priv->fmt=find_best(vf,outfmt);
+        vf->priv->fmt=find_best(vf,outfmt);
     if(!vf->priv->fmt){
-	// no matching fmt, so force one...
-	if(outfmt==IMGFMT_RGB8) vf->priv->fmt=IMGFMT_RGB32;
-	else if(outfmt==IMGFMT_BGR8) vf->priv->fmt=IMGFMT_BGR32;
-	else return 0;
+        // no matching fmt, so force one...
+        if(outfmt==IMGFMT_RGB8) vf->priv->fmt=IMGFMT_RGB32;
+        else if(outfmt==IMGFMT_BGR8) vf->priv->fmt=IMGFMT_BGR32;
+        else return 0;
     }
     return vf_next_config(vf,width,height,d_width,d_height,flags,vf->priv->fmt);
 }
@@ -116,68 +116,68 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
 
     // hope we'll get DR buffer:
     dmpi=vf_get_image(vf->next,vf->priv->fmt,
-	MP_IMGTYPE_TEMP, MP_IMGFLAG_ACCEPT_STRIDE,
-	mpi->w, mpi->h);
+        MP_IMGTYPE_TEMP, MP_IMGFLAG_ACCEPT_STRIDE,
+        mpi->w, mpi->h);
 
     if (!mpi->planes[1])
     {
-	if(!vf->priv->pal_msg){
-	    mp_msg(MSGT_VFILTER,MSGL_V,"[%s] no palette given, assuming builtin grayscale one\n",vf->info->name);
-	    vf->priv->pal_msg=1;
-	}
-	mpi->planes[1] = (unsigned char*)gray_pal;
+        if(!vf->priv->pal_msg){
+            mp_msg(MSGT_VFILTER,MSGL_V,"[%s] no palette given, assuming builtin grayscale one\n",vf->info->name);
+            vf->priv->pal_msg=1;
+        }
+        mpi->planes[1] = (unsigned char*)gray_pal;
     }
 
     if(mpi->w==mpi->stride[0] && dmpi->w*(dmpi->bpp>>3)==dmpi->stride[0]){
-	// no stride conversion needed
-	switch(IMGFMT_RGB_DEPTH(dmpi->imgfmt)){
-	case 15:
-	case 16:
-	    if (IMGFMT_IS_BGR(dmpi->imgfmt))
-		palette8tobgr16(mpi->planes[0],dmpi->planes[0],mpi->h*mpi->w,mpi->planes[1]);
-	    else
-		palette8torgb16(mpi->planes[0],dmpi->planes[0],mpi->h*mpi->w,mpi->planes[1]);
-	    break;
-	case 24:
-	    if (IMGFMT_IS_BGR(dmpi->imgfmt))
-		sws_convertPalette8ToPacked24(mpi->planes[0],dmpi->planes[0],mpi->h*mpi->w,mpi->planes[1]);
-	    else
-		sws_convertPalette8ToPacked24(mpi->planes[0],dmpi->planes[0],mpi->h*mpi->w,mpi->planes[1]);
-	    break;
-	case 32:
-	    if (IMGFMT_IS_BGR(dmpi->imgfmt))
-		sws_convertPalette8ToPacked32(mpi->planes[0],dmpi->planes[0],mpi->h*mpi->w,mpi->planes[1]);
-	    else
-		sws_convertPalette8ToPacked32(mpi->planes[0],dmpi->planes[0],mpi->h*mpi->w,mpi->planes[1]);
-	    break;
-	}
+        // no stride conversion needed
+        switch(IMGFMT_RGB_DEPTH(dmpi->imgfmt)){
+        case 15:
+        case 16:
+            if (IMGFMT_IS_BGR(dmpi->imgfmt))
+                palette8tobgr16(mpi->planes[0],dmpi->planes[0],mpi->h*mpi->w,mpi->planes[1]);
+            else
+                palette8torgb16(mpi->planes[0],dmpi->planes[0],mpi->h*mpi->w,mpi->planes[1]);
+            break;
+        case 24:
+            if (IMGFMT_IS_BGR(dmpi->imgfmt))
+                sws_convertPalette8ToPacked24(mpi->planes[0],dmpi->planes[0],mpi->h*mpi->w,mpi->planes[1]);
+            else
+                sws_convertPalette8ToPacked24(mpi->planes[0],dmpi->planes[0],mpi->h*mpi->w,mpi->planes[1]);
+            break;
+        case 32:
+            if (IMGFMT_IS_BGR(dmpi->imgfmt))
+                sws_convertPalette8ToPacked32(mpi->planes[0],dmpi->planes[0],mpi->h*mpi->w,mpi->planes[1]);
+            else
+                sws_convertPalette8ToPacked32(mpi->planes[0],dmpi->planes[0],mpi->h*mpi->w,mpi->planes[1]);
+            break;
+        }
     } else {
-	int y;
-	for(y=0;y<mpi->h;y++){
-	    unsigned char* src=mpi->planes[0]+y*mpi->stride[0];
-	    unsigned char* dst=dmpi->planes[0]+y*dmpi->stride[0];
-	    switch(IMGFMT_RGB_DEPTH(dmpi->imgfmt)){
-	    case 15:
-	    case 16:
-		if (IMGFMT_IS_BGR(dmpi->imgfmt))
-		    palette8tobgr16(src,dst,mpi->w,mpi->planes[1]);
-		else
-		    palette8torgb16(src,dst,mpi->w,mpi->planes[1]);
-		break;
-	    case 24:
-		if (IMGFMT_IS_BGR(dmpi->imgfmt))
-		    sws_convertPalette8ToPacked24(src,dst,mpi->w,mpi->planes[1]);
-		else
-		    sws_convertPalette8ToPacked24(src,dst,mpi->w,mpi->planes[1]);
-		break;
-	    case 32:
-		if (IMGFMT_IS_BGR(dmpi->imgfmt))
-		    sws_convertPalette8ToPacked32(src,dst,mpi->w,mpi->planes[1]);
-		else
-		    sws_convertPalette8ToPacked32(src,dst,mpi->w,mpi->planes[1]);
-		break;
-	    }
-	}
+        int y;
+        for(y=0;y<mpi->h;y++){
+            unsigned char* src=mpi->planes[0]+y*mpi->stride[0];
+            unsigned char* dst=dmpi->planes[0]+y*dmpi->stride[0];
+            switch(IMGFMT_RGB_DEPTH(dmpi->imgfmt)){
+            case 15:
+            case 16:
+                if (IMGFMT_IS_BGR(dmpi->imgfmt))
+                    palette8tobgr16(src,dst,mpi->w,mpi->planes[1]);
+                else
+                    palette8torgb16(src,dst,mpi->w,mpi->planes[1]);
+                break;
+            case 24:
+                if (IMGFMT_IS_BGR(dmpi->imgfmt))
+                    sws_convertPalette8ToPacked24(src,dst,mpi->w,mpi->planes[1]);
+                else
+                    sws_convertPalette8ToPacked24(src,dst,mpi->w,mpi->planes[1]);
+                break;
+            case 32:
+                if (IMGFMT_IS_BGR(dmpi->imgfmt))
+                    sws_convertPalette8ToPacked32(src,dst,mpi->w,mpi->planes[1]);
+                else
+                    sws_convertPalette8ToPacked32(src,dst,mpi->w,mpi->planes[1]);
+                break;
+            }
+        }
     }
     mpi->planes[1] = old_palette;
 
@@ -207,18 +207,18 @@ static int vf_open(vf_instance_t *vf, char *args){
     for(i=0;i<256;i++) gray_pal[i]=0x01010101*i;
     if (args)
     {
-	if (!strcasecmp(args,"rgb15")) vf->priv->fmt=IMGFMT_RGB15; else
-	if (!strcasecmp(args,"rgb16")) vf->priv->fmt=IMGFMT_RGB16; else
-	if (!strcasecmp(args,"rgb24")) vf->priv->fmt=IMGFMT_RGB24; else
-	if (!strcasecmp(args,"rgb32")) vf->priv->fmt=IMGFMT_RGB32; else
-	if (!strcasecmp(args,"bgr15")) vf->priv->fmt=IMGFMT_BGR15; else
-	if (!strcasecmp(args,"bgr16")) vf->priv->fmt=IMGFMT_BGR16; else
-	if (!strcasecmp(args,"bgr24")) vf->priv->fmt=IMGFMT_BGR24; else
-	if (!strcasecmp(args,"bgr32")) vf->priv->fmt=IMGFMT_BGR32; else
-	{
-	    mp_msg(MSGT_VFILTER, MSGL_WARN, MSGTR_MPCODECS_UnknownFormatName, args);
-	    return 0;
-	}
+        if (!strcasecmp(args,"rgb15")) vf->priv->fmt=IMGFMT_RGB15; else
+        if (!strcasecmp(args,"rgb16")) vf->priv->fmt=IMGFMT_RGB16; else
+        if (!strcasecmp(args,"rgb24")) vf->priv->fmt=IMGFMT_RGB24; else
+        if (!strcasecmp(args,"rgb32")) vf->priv->fmt=IMGFMT_RGB32; else
+        if (!strcasecmp(args,"bgr15")) vf->priv->fmt=IMGFMT_BGR15; else
+        if (!strcasecmp(args,"bgr16")) vf->priv->fmt=IMGFMT_BGR16; else
+        if (!strcasecmp(args,"bgr24")) vf->priv->fmt=IMGFMT_BGR24; else
+        if (!strcasecmp(args,"bgr32")) vf->priv->fmt=IMGFMT_BGR32; else
+        {
+            mp_msg(MSGT_VFILTER, MSGL_WARN, MSGTR_MPCODECS_UnknownFormatName, args);
+            return 0;
+        }
     }
     return 1;
 }

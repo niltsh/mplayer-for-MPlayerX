@@ -49,7 +49,7 @@ static unsigned int getfmt(unsigned int outfmt){
     case IMGFMT_BGR24:
     case IMGFMT_BGRA:
     case IMGFMT_ABGR:
-	return outfmt;
+        return outfmt;
     }
     return 0;
 }
@@ -105,7 +105,7 @@ static void put_pixel(uint8_t *buf, int x, int y, int stride, int r, int g, int 
 
 static int config(struct vf_instance *vf,
         int width, int height, int d_width, int d_height,
-	unsigned int flags, unsigned int outfmt){
+        unsigned int flags, unsigned int outfmt){
     if (vf->priv->w > 0) { d_width  = width  = vf->priv->w; }
     if (vf->priv->h > 0) { d_height = height = vf->priv->h; }
     vf->priv->fmt=getfmt(outfmt);
@@ -121,8 +121,8 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
 
     // hope we'll get DR buffer:
     dmpi=vf_get_image(vf->next,vf->priv->fmt,
-	MP_IMGTYPE_TEMP, MP_IMGFLAG_ACCEPT_STRIDE,
-	w, h);
+        MP_IMGTYPE_TEMP, MP_IMGFLAG_ACCEPT_STRIDE,
+        w, h);
 
      for(y=0; y<h; y++){
          for(x=0; x<w; x++){

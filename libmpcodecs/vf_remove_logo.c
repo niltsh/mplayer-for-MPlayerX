@@ -768,8 +768,8 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
     mp_image_t *dmpi;
 
     dmpi=vf_get_image(vf->next,vf->priv->fmt,
-	MP_IMGTYPE_TEMP, MP_IMGFLAG_ACCEPT_STRIDE,
-	mpi->w, mpi->h);
+        MP_IMGTYPE_TEMP, MP_IMGFLAG_ACCEPT_STRIDE,
+        mpi->w, mpi->h);
 
     /* Check to make sure that the filter image and the video stream are the same size. */
     if (vf->priv->filter->width != mpi->w || vf->priv->filter->height != mpi->h)
@@ -799,8 +799,8 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
           break;
 
     default:
-	mp_msg(MSGT_VFILTER,MSGL_ERR,"Unhandled format: 0x%X\n",dmpi->imgfmt);
-	return 0;
+        mp_msg(MSGT_VFILTER,MSGL_ERR,"Unhandled format: 0x%X\n",dmpi->imgfmt);
+        return 0;
     }
 
     return vf_next_put_image(vf,dmpi, pts);

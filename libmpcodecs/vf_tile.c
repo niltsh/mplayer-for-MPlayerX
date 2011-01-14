@@ -86,7 +86,7 @@ struct vf_priv_s {
 
 static int config(struct vf_instance *vf,
                   int width, int height, int d_width, int d_height,
-	          unsigned int flags, unsigned int outfmt){
+              unsigned int flags, unsigned int outfmt){
 
     struct vf_priv_s  *priv;
     int               xw;
@@ -201,18 +201,18 @@ static void uninit(struct vf_instance *vf)
 /* rgb/bgr 12...32 supported & some Yxxx */
 static int query_format(struct vf_instance *vf, unsigned int fmt)
 {
-	switch (fmt) {
+    switch (fmt) {
         /* rgb 12...32 bit */
         case IMGFMT_RGB12:
         case IMGFMT_RGB15:
-	case IMGFMT_RGB16:
-	case IMGFMT_RGB24:
+        case IMGFMT_RGB16:
+        case IMGFMT_RGB24:
         case IMGFMT_RGB32:
         /* bgr 12...32 bit */
         case IMGFMT_BGR12:
-	case IMGFMT_BGR15:
-	case IMGFMT_BGR16:
-	case IMGFMT_BGR24:
+        case IMGFMT_BGR15:
+        case IMGFMT_BGR16:
+        case IMGFMT_BGR24:
         case IMGFMT_BGR32:
         /* Various Yxxx Formats */
         case IMGFMT_444P:
@@ -224,9 +224,9 @@ static int query_format(struct vf_instance *vf, unsigned int fmt)
         case IMGFMT_YVU9:
         case IMGFMT_IF09:
         case IMGFMT_IYUV:
-		return vf_next_query_format(vf, fmt);
-	}
-	return 0;
+        return vf_next_query_format(vf, fmt);
+    }
+    return 0;
 }
 
 /* Get an integer from the string pointed by s, adjusting s.

@@ -42,17 +42,17 @@ static int checkline(unsigned char* src,int stride,int len,int bpp){
     int div=len;
     switch(bpp){
     case 1:
-	while(--len>=0){
-	    total+=src[0]; src+=stride;
-	}
-	break;
+        while(--len>=0){
+            total+=src[0]; src+=stride;
+        }
+        break;
     case 3:
     case 4:
-	while(--len>=0){
-	    total+=src[0]+src[1]+src[2]; src+=stride;
-	}
-	div*=3;
-	break;
+        while(--len>=0){
+            total+=src[0]+src[1]+src[2]; src+=stride;
+        }
+        div*=3;
+        break;
     }
     total/=div;
 //    printf("total=%d\n",total);
@@ -63,7 +63,7 @@ static int checkline(unsigned char* src,int stride,int len,int bpp){
 
 static int config(struct vf_instance *vf,
         int width, int height, int d_width, int d_height,
-	unsigned int flags, unsigned int outfmt){
+        unsigned int flags, unsigned int outfmt){
     vf->priv->x1=width - 1;
     vf->priv->y1=height - 1;
     vf->priv->x2=0;
@@ -79,8 +79,8 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
 
     // hope we'll get DR buffer:
     dmpi=vf_get_image(vf->next,mpi->imgfmt,
-	MP_IMGTYPE_EXPORT, 0,
-	mpi->w, mpi->h);
+        MP_IMGTYPE_EXPORT, 0,
+        mpi->w, mpi->h);
 
     dmpi->planes[0]=mpi->planes[0];
     dmpi->planes[1]=mpi->planes[1];
@@ -91,43 +91,43 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
     dmpi->width=mpi->width;
     dmpi->height=mpi->height;
 
-if(++vf->priv->fno>0){	// ignore first 2 frames - they may be empty
+if(++vf->priv->fno>0){        // ignore first 2 frames - they may be empty
 
     // Reset the crop area every reset_count frames, if reset_count is > 0
     if(vf->priv->reset_count > 0 && vf->priv->fno > vf->priv->reset_count){
-	vf->priv->x1=mpi->w-1;
-	vf->priv->y1=mpi->h-1;
-	vf->priv->x2=0;
-	vf->priv->y2=0;
-	vf->priv->fno=1;
+        vf->priv->x1=mpi->w-1;
+        vf->priv->y1=mpi->h-1;
+        vf->priv->x2=0;
+        vf->priv->y2=0;
+        vf->priv->fno=1;
     }
 
     for(y=0;y<vf->priv->y1;y++){
-	if(checkline(mpi->planes[0]+mpi->stride[0]*y,bpp,mpi->w,bpp)>vf->priv->limit){
-	    vf->priv->y1=y;
-	    break;
-	}
+        if(checkline(mpi->planes[0]+mpi->stride[0]*y,bpp,mpi->w,bpp)>vf->priv->limit){
+            vf->priv->y1=y;
+            break;
+        }
     }
 
     for(y=mpi->h-1;y>vf->priv->y2;y--){
-	if(checkline(mpi->planes[0]+mpi->stride[0]*y,bpp,mpi->w,bpp)>vf->priv->limit){
-	    vf->priv->y2=y;
-	    break;
-	}
+        if(checkline(mpi->planes[0]+mpi->stride[0]*y,bpp,mpi->w,bpp)>vf->priv->limit){
+            vf->priv->y2=y;
+            break;
+        }
     }
 
     for(y=0;y<vf->priv->x1;y++){
-	if(checkline(mpi->planes[0]+bpp*y,mpi->stride[0],mpi->h,bpp)>vf->priv->limit){
-	    vf->priv->x1=y;
-	    break;
-	}
+        if(checkline(mpi->planes[0]+bpp*y,mpi->stride[0],mpi->h,bpp)>vf->priv->limit){
+            vf->priv->x1=y;
+            break;
+        }
     }
 
     for(y=mpi->w-1;y>vf->priv->x2;y--){
-	if(checkline(mpi->planes[0]+bpp*y,mpi->stride[0],mpi->h,bpp)>vf->priv->limit){
-	    vf->priv->x2=y;
-	    break;
-	}
+        if(checkline(mpi->planes[0]+bpp*y,mpi->stride[0],mpi->h,bpp)>vf->priv->limit){
+            vf->priv->x2=y;
+            break;
+        }
     }
 
     // round x and y (up), important for yuv colorspaces
@@ -154,9 +154,9 @@ if(++vf->priv->fno>0){	// ignore first 2 frames - they may be empty
     y += (shrink_by / 2 + 1) & ~1;
 
     mp_msg(MSGT_VFILTER, MSGL_INFO, MSGTR_MPCODECS_CropArea,
-	vf->priv->x1,vf->priv->x2,
-	vf->priv->y1,vf->priv->y2,
-	w,h,x,y);
+        vf->priv->x1,vf->priv->x2,
+        vf->priv->y1,vf->priv->y2,
+        w,h,x,y);
 
 
 }

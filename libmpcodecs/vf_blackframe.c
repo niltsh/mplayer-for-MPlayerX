@@ -79,10 +79,10 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
     static const char *const picttypes[4] = { "unknown", "I", "P", "B" };
 
     for (y=1; y<=h; y++) {
-	    for (x=0; x<w; x++)
+        for (x=0; x<w; x++)
             nblack += yplane[x] < bthresh;
-	    pblack = nblack*100/(w*y);
-	    if (pblack < bamount) break;
+        pblack = nblack*100/(w*y);
+        if (pblack < bamount) break;
         yplane += ystride;
     }
 
@@ -90,7 +90,7 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
     if (pict_type == 1) vf->priv->lastkeyframe = vf->priv->frame;
 
     if (pblack >= bamount)
-	    mp_msg(MSGT_VFILTER, MSGL_INFO,"vf_blackframe: %u, %i%%, %s (I:%u)\n",
+        mp_msg(MSGT_VFILTER, MSGL_INFO,"vf_blackframe: %u, %i%%, %s (I:%u)\n",
                                 vf->priv->frame, pblack, picttypes[pict_type],
                                 vf->priv->lastkeyframe);
 
@@ -134,7 +134,7 @@ static int vf_open(vf_instance_t *vf, char *args){
     vf->priv->lastkeyframe = 0;
 
     if (args)
-	    sscanf(args, "%u:%u", &vf->priv->bamount, &vf->priv->bthresh);
+        sscanf(args, "%u:%u", &vf->priv->bamount, &vf->priv->bthresh);
     return 1;
 }
 

@@ -36,7 +36,7 @@ struct vf_priv_s {
 
 static int config(struct vf_instance *vf,
         int width, int height, int d_width, int d_height,
-	unsigned int flags, unsigned int outfmt){
+        unsigned int flags, unsigned int outfmt){
     return vf_next_config(vf, width, height, d_width, d_height, flags, outfmt);
 }
 
@@ -54,8 +54,8 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
     uint8_t *y_out, *cb_out, *cr_out;
 
     vf->dmpi=vf_get_image(vf->next,mpi->imgfmt,
-	MP_IMGTYPE_TEMP, MP_IMGFLAG_ACCEPT_STRIDE,
-	mpi->width, mpi->height);
+        MP_IMGTYPE_TEMP, MP_IMGFLAG_ACCEPT_STRIDE,
+        mpi->width, mpi->height);
 
     y_in = mpi->planes[0];
     cb_in = mpi->planes[1];
@@ -66,15 +66,15 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
     cr_out = vf->dmpi->planes[2];
 
     for (i = 0; i < mpi->height; i++)
-	for (j = 0; j < mpi->width; j++)
-	    y_out[i*vf->dmpi->stride[0]+j] = clamp_y(y_in[i*mpi->stride[0]+j]);
+        for (j = 0; j < mpi->width; j++)
+            y_out[i*vf->dmpi->stride[0]+j] = clamp_y(y_in[i*mpi->stride[0]+j]);
 
     for (i = 0; i < mpi->chroma_height; i++)
-	for (j = 0; j < mpi->chroma_width; j++)
-	{
-	    cb_out[i*vf->dmpi->stride[1]+j] = clamp_c(cb_in[i*mpi->stride[1]+j]);
-	    cr_out[i*vf->dmpi->stride[2]+j] = clamp_c(cr_in[i*mpi->stride[2]+j]);
-	}
+        for (j = 0; j < mpi->chroma_width; j++)
+        {
+            cb_out[i*vf->dmpi->stride[1]+j] = clamp_c(cb_in[i*mpi->stride[1]+j]);
+            cr_out[i*vf->dmpi->stride[2]+j] = clamp_c(cr_in[i*mpi->stride[2]+j]);
+        }
 
     return vf_next_put_image(vf,vf->dmpi, pts);
 }
@@ -83,16 +83,16 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
 
 /*
 static void uninit(struct vf_instance *vf){
-	free(vf->priv);
+        free(vf->priv);
 }
 */
 
 static int query_format(struct vf_instance *vf, unsigned int fmt){
     switch(fmt){
-	case IMGFMT_YV12:
-	case IMGFMT_I420:
-	case IMGFMT_IYUV:
-	    return 1;
+        case IMGFMT_YV12:
+        case IMGFMT_I420:
+        case IMGFMT_IYUV:
+            return 1;
     }
     return 0;
 }
@@ -104,7 +104,7 @@ static int vf_open(vf_instance_t *vf, char *args){
     vf->query_format=query_format;
 //    vf->priv=calloc(1, sizeof(struct vf_priv_s));
 //    if (args)
-//	vf->priv->csp = atoi(args);
+//        vf->priv->csp = atoi(args);
     return 1;
 }
 

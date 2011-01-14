@@ -37,7 +37,7 @@ struct vf_priv_s {
 
 static int config(struct vf_instance *vf,
         int width, int height, int d_width, int d_height,
-	unsigned int flags, unsigned int outfmt){
+        unsigned int flags, unsigned int outfmt){
         int pixel_stride= (width+15)&~15; //FIXME this is ust a guess ... especially for non planar its somewhat bad one
 
 #if 0
@@ -65,24 +65,24 @@ static int config(struct vf_instance *vf,
 
 static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
     if(mpi->flags&MP_IMGFLAG_DIRECT){
-	// we've used DR, so we're ready...
-	return vf_next_put_image(vf,(mp_image_t*)mpi->priv, pts);
+        // we've used DR, so we're ready...
+        return vf_next_put_image(vf,(mp_image_t*)mpi->priv, pts);
     }
 
     vf->dmpi=vf_get_image(vf->next,mpi->imgfmt,
-	MP_IMGTYPE_EXPORT, MP_IMGFLAG_ACCEPT_STRIDE,
-	vf->priv->width, vf->priv->height);
+        MP_IMGTYPE_EXPORT, MP_IMGFLAG_ACCEPT_STRIDE,
+        vf->priv->width, vf->priv->height);
 
     // set up mpi as a double-stride image of dmpi:
     vf->dmpi->planes[0]=mpi->planes[0];
     vf->dmpi->stride[0]=(mpi->stride[0]*vf->priv->stridefactor)>>1;
     if(vf->dmpi->flags&MP_IMGFLAG_PLANAR){
         vf->dmpi->planes[1]=mpi->planes[1];
-	vf->dmpi->stride[1]=(mpi->stride[1]*vf->priv->stridefactor)>>1;
+        vf->dmpi->stride[1]=(mpi->stride[1]*vf->priv->stridefactor)>>1;
         vf->dmpi->planes[2]=mpi->planes[2];
-	vf->dmpi->stride[2]=(mpi->stride[2]*vf->priv->stridefactor)>>1;
+        vf->dmpi->stride[2]=(mpi->stride[2]*vf->priv->stridefactor)>>1;
     } else
-	vf->dmpi->planes[1]=mpi->planes[1]; // passthru bgr8 palette!!!
+        vf->dmpi->planes[1]=mpi->planes[1]; // passthru bgr8 palette!!!
 
     return vf_next_put_image(vf,vf->dmpi, pts);
 }
@@ -91,7 +91,7 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
 
 static void uninit(struct vf_instance *vf)
 {
-	free(vf->priv);
+        free(vf->priv);
 }
 
 static int vf_open(vf_instance_t *vf, char *args){

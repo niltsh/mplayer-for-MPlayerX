@@ -181,7 +181,7 @@ static void filter(struct vf_priv_s *p, uint8_t *dst[3], uint8_t *src[3], int ds
 
 static int config(struct vf_instance *vf,
         int width, int height, int d_width, int d_height,
-	unsigned int flags, unsigned int outfmt){
+        unsigned int flags, unsigned int outfmt){
         int i;
         AVCodec *enc= avcodec_find_encoder(CODEC_ID_SNOW);
 
@@ -233,7 +233,7 @@ static int config(struct vf_instance *vf,
         vf->priv->outbuf_size= width*height*10;
         vf->priv->outbuf= malloc(vf->priv->outbuf_size);
 
-	return vf_next_config(vf,width,height,d_width,d_height,flags,outfmt);
+        return vf_next_config(vf,width,height,d_width,d_height,flags,outfmt);
 }
 
 static void get_image(struct vf_instance *vf, mp_image_t *mpi){
@@ -248,8 +248,8 @@ return; //caused problems, dunno why
     if(mpi->flags&MP_IMGFLAG_PLANAR){
         mpi->planes[1]=vf->dmpi->planes[1];
         mpi->planes[2]=vf->dmpi->planes[2];
-	mpi->stride[1]=vf->dmpi->stride[1];
-	mpi->stride[2]=vf->dmpi->stride[2];
+        mpi->stride[1]=vf->dmpi->stride[1];
+        mpi->stride[2]=vf->dmpi->stride[2];
     }
     mpi->flags|=MP_IMGFLAG_DIRECT;
 }
@@ -297,12 +297,12 @@ static void uninit(struct vf_instance *vf){
 //===========================================================================//
 static int query_format(struct vf_instance *vf, unsigned int fmt){
     switch(fmt){
-	case IMGFMT_YV12:
-	case IMGFMT_I420:
-	case IMGFMT_IYUV:
-	case IMGFMT_Y800:
-	case IMGFMT_Y8:
-	    return vf_next_query_format(vf,fmt);
+        case IMGFMT_YV12:
+        case IMGFMT_I420:
+        case IMGFMT_IYUV:
+        case IMGFMT_Y800:
+        case IMGFMT_Y8:
+            return vf_next_query_format(vf,fmt);
     }
     return 0;
 }

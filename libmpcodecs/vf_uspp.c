@@ -113,27 +113,27 @@ struct vf_priv_s {
 };
 
 static void store_slice_c(uint8_t *dst, int16_t *src, int dst_stride, int src_stride, int width, int height, int log2_scale){
-	int y, x;
+        int y, x;
 
 #define STORE(pos) \
-	temp= ((src[x + y*src_stride + pos]<<log2_scale) + d[pos])>>8;\
-	if(temp & 0x100) temp= ~(temp>>31);\
-	dst[x + y*dst_stride + pos]= temp;
+        temp= ((src[x + y*src_stride + pos]<<log2_scale) + d[pos])>>8;\
+        if(temp & 0x100) temp= ~(temp>>31);\
+        dst[x + y*dst_stride + pos]= temp;
 
-	for(y=0; y<height; y++){
-		const uint8_t *d= dither[y&7];
-		for(x=0; x<width; x+=8){
-			int temp;
-			STORE(0);
-			STORE(1);
-			STORE(2);
-			STORE(3);
-			STORE(4);
-			STORE(5);
-			STORE(6);
-			STORE(7);
-		}
-	}
+        for(y=0; y<height; y++){
+                const uint8_t *d= dither[y&7];
+                for(x=0; x<width; x+=8){
+                        int temp;
+                        STORE(0);
+                        STORE(1);
+                        STORE(2);
+                        STORE(3);
+                        STORE(4);
+                        STORE(5);
+                        STORE(6);
+                        STORE(7);
+                }
+        }
 }
 
 static void filter(struct vf_priv_s *p, uint8_t *dst[3], uint8_t *src[3], int dst_stride[3], int src_stride[3], int width, int height, uint8_t *qp_store, int qp_stride){
@@ -207,7 +207,7 @@ static void filter(struct vf_priv_s *p, uint8_t *dst[3], uint8_t *src[3], int ds
 
 static int config(struct vf_instance *vf,
         int width, int height, int d_width, int d_height,
-	unsigned int flags, unsigned int outfmt){
+        unsigned int flags, unsigned int outfmt){
         int i;
         AVCodec *enc= avcodec_find_encoder(CODEC_ID_SNOW);
 
@@ -243,7 +243,7 @@ static int config(struct vf_instance *vf,
         vf->priv->outbuf_size= (width + BLOCK)*(height + BLOCK)*10;
         vf->priv->outbuf= malloc(vf->priv->outbuf_size);
 
-	return vf_next_config(vf,width,height,d_width,d_height,flags,outfmt);
+        return vf_next_config(vf,width,height,d_width,d_height,flags,outfmt);
 }
 
 static void get_image(struct vf_instance *vf, mp_image_t *mpi){
@@ -257,8 +257,8 @@ static void get_image(struct vf_instance *vf, mp_image_t *mpi){
     if(mpi->flags&MP_IMGFLAG_PLANAR){
         mpi->planes[1]=vf->dmpi->planes[1];
         mpi->planes[2]=vf->dmpi->planes[2];
-	mpi->stride[1]=vf->dmpi->stride[1];
-	mpi->stride[2]=vf->dmpi->stride[2];
+        mpi->stride[1]=vf->dmpi->stride[1];
+        mpi->stride[2]=vf->dmpi->stride[2];
     }
     mpi->flags|=MP_IMGFLAG_DIRECT;
 }
@@ -319,12 +319,12 @@ static void uninit(struct vf_instance *vf){
 //===========================================================================//
 static int query_format(struct vf_instance *vf, unsigned int fmt){
     switch(fmt){
-	case IMGFMT_YV12:
-	case IMGFMT_I420:
-	case IMGFMT_IYUV:
-	case IMGFMT_Y800:
-	case IMGFMT_Y8:
-	    return vf_next_query_format(vf,fmt);
+        case IMGFMT_YV12:
+        case IMGFMT_I420:
+        case IMGFMT_IYUV:
+        case IMGFMT_Y800:
+        case IMGFMT_Y8:
+            return vf_next_query_format(vf,fmt);
     }
     return 0;
 }
@@ -332,11 +332,11 @@ static int query_format(struct vf_instance *vf, unsigned int fmt){
 static int control(struct vf_instance *vf, int request, void* data){
     switch(request){
     case VFCTRL_QUERY_MAX_PP_LEVEL:
-	return 8;
+        return 8;
     case VFCTRL_SET_PP_LEVEL:
-	vf->priv->log2_count= *((unsigned int*)data);
+        vf->priv->log2_count= *((unsigned int*)data);
         //FIXME we have to realloc a few things here
-	return CONTROL_TRUE;
+        return CONTROL_TRUE;
     }
     return vf_next_control(vf,request,data);
 }
@@ -368,7 +368,7 @@ static int vf_open(vf_instance_t *vf, char *args){
 
 // #if HAVE_MMX
 //     if(gCpuCaps.hasMMX){
-// 	store_slice= store_slice_mmx;
+//         store_slice= store_slice_mmx;
 //     }
 // #endif
 
