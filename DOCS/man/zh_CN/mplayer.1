@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 32735
+.\" sync with en/mplayer.1 rev. 32777
 .\" Encoding: UTF-8
 .\"
 .\" MPlayer (C) 2000-2010 MPlayer 团队
@@ -1450,10 +1450,10 @@ MPlayer在关闭时将驱动器的速度重置至默认值。
 .
 .TP
 .B \-endpos <[[hh:]mm:]ss[.ms]|size[b|kb|mb]> (也请参见 \-ss 和 \-sb)
-停止在给定的时间或字节位置。
+停止在给定的时间或以字节计的位置。
 .br
-.I 注意:
-字节位置仅为了 MEncoder 而启用但不精确, 因为它只会停在帧的边缘。
+.I 注意：
+以字节计的位置可能不精确，因为只能暂停在帧数据块的边界上。
 当与 \-ss 选项组合使用时, \-endpos 的时间会向前移动 \-ss 指定的秒数。
 .sp 1
 .I 示例:
