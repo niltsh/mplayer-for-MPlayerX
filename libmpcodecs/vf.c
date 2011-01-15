@@ -228,28 +228,28 @@ const m_obj_list_t vf_obj_list = {
 void vf_mpi_clear(mp_image_t* mpi,int x0,int y0,int w,int h){
     int y;
     if(mpi->flags&MP_IMGFLAG_PLANAR){
-	y0&=~1;h+=h&1;
-	if(x0==0 && w==mpi->width){
-	    // full width clear:
-	    memset(mpi->planes[0]+mpi->stride[0]*y0,0,mpi->stride[0]*h);
-	    memset(mpi->planes[1]+mpi->stride[1]*(y0>>mpi->chroma_y_shift),128,mpi->stride[1]*(h>>mpi->chroma_y_shift));
-	    memset(mpi->planes[2]+mpi->stride[2]*(y0>>mpi->chroma_y_shift),128,mpi->stride[2]*(h>>mpi->chroma_y_shift));
-	} else
-	for(y=y0;y<y0+h;y+=2){
-	    memset(mpi->planes[0]+x0+mpi->stride[0]*y,0,w);
-	    memset(mpi->planes[0]+x0+mpi->stride[0]*(y+1),0,w);
-	    memset(mpi->planes[1]+(x0>>mpi->chroma_x_shift)+mpi->stride[1]*(y>>mpi->chroma_y_shift),128,(w>>mpi->chroma_x_shift));
-	    memset(mpi->planes[2]+(x0>>mpi->chroma_x_shift)+mpi->stride[2]*(y>>mpi->chroma_y_shift),128,(w>>mpi->chroma_x_shift));
-	}
-	return;
+        y0&=~1;h+=h&1;
+        if(x0==0 && w==mpi->width){
+            // full width clear:
+            memset(mpi->planes[0]+mpi->stride[0]*y0,0,mpi->stride[0]*h);
+            memset(mpi->planes[1]+mpi->stride[1]*(y0>>mpi->chroma_y_shift),128,mpi->stride[1]*(h>>mpi->chroma_y_shift));
+            memset(mpi->planes[2]+mpi->stride[2]*(y0>>mpi->chroma_y_shift),128,mpi->stride[2]*(h>>mpi->chroma_y_shift));
+        } else
+        for(y=y0;y<y0+h;y+=2){
+            memset(mpi->planes[0]+x0+mpi->stride[0]*y,0,w);
+            memset(mpi->planes[0]+x0+mpi->stride[0]*(y+1),0,w);
+            memset(mpi->planes[1]+(x0>>mpi->chroma_x_shift)+mpi->stride[1]*(y>>mpi->chroma_y_shift),128,(w>>mpi->chroma_x_shift));
+            memset(mpi->planes[2]+(x0>>mpi->chroma_x_shift)+mpi->stride[2]*(y>>mpi->chroma_y_shift),128,(w>>mpi->chroma_x_shift));
+        }
+        return;
     }
     // packed:
     for(y=y0;y<y0+h;y++){
-	unsigned char* dst=mpi->planes[0]+mpi->stride[0]*y+(mpi->bpp>>3)*x0;
-	if(mpi->flags&MP_IMGFLAG_YUV){
-	    unsigned int* p=(unsigned int*) dst;
-	    int size=(mpi->bpp>>3)*w/4;
-	    int i;
+        unsigned char* dst=mpi->planes[0]+mpi->stride[0]*y+(mpi->bpp>>3)*x0;
+        if(mpi->flags&MP_IMGFLAG_YUV){
+            unsigned int* p=(unsigned int*) dst;
+            int size=(mpi->bpp>>3)*w/4;
+            int i;
 #if HAVE_BIGENDIAN
 #define CLEAR_PACKEDYUV_PATTERN 0x00800080
 #define CLEAR_PACKEDYUV_PATTERN_SWAPPED 0x80008000
@@ -257,15 +257,15 @@ void vf_mpi_clear(mp_image_t* mpi,int x0,int y0,int w,int h){
 #define CLEAR_PACKEDYUV_PATTERN 0x80008000
 #define CLEAR_PACKEDYUV_PATTERN_SWAPPED 0x00800080
 #endif
-	    if(mpi->flags&MP_IMGFLAG_SWAPPED){
-	        for(i=0;i<size-3;i+=4) p[i]=p[i+1]=p[i+2]=p[i+3]=CLEAR_PACKEDYUV_PATTERN_SWAPPED;
-		for(;i<size;i++) p[i]=CLEAR_PACKEDYUV_PATTERN_SWAPPED;
-	    } else {
-	        for(i=0;i<size-3;i+=4) p[i]=p[i+1]=p[i+2]=p[i+3]=CLEAR_PACKEDYUV_PATTERN;
-		for(;i<size;i++) p[i]=CLEAR_PACKEDYUV_PATTERN;
-	    }
-	} else
-	    memset(dst,0,(mpi->bpp>>3)*w);
+            if(mpi->flags&MP_IMGFLAG_SWAPPED){
+                for(i=0;i<size-3;i+=4) p[i]=p[i+1]=p[i+2]=p[i+3]=CLEAR_PACKEDYUV_PATTERN_SWAPPED;
+                for(;i<size;i++) p[i]=CLEAR_PACKEDYUV_PATTERN_SWAPPED;
+            } else {
+                for(i=0;i<size-3;i+=4) p[i]=p[i+1]=p[i+2]=p[i+3]=CLEAR_PACKEDYUV_PATTERN;
+                for(;i<size;i++) p[i]=CLEAR_PACKEDYUV_PATTERN;
+            }
+        } else
+            memset(dst,0,(mpi->bpp>>3)*w);
     }
 }
 
@@ -337,31 +337,31 @@ mp_image_t* vf_get_image(vf_instance_t* vf, unsigned int outfmt, int mp_imgtype,
     mpi->type=mp_imgtype;
     mpi->w=vf->w; mpi->h=vf->h;
     // keep buffer allocation status & color flags only:
-//    mpi->flags&=~(MP_IMGFLAG_PRESERVE|MP_IMGFLAG_READABLE|MP_IMGFLAG_DIRECT);
+//  mpi->flags&=~(MP_IMGFLAG_PRESERVE|MP_IMGFLAG_READABLE|MP_IMGFLAG_DIRECT);
     mpi->flags&=MP_IMGFLAG_ALLOCATED|MP_IMGFLAG_TYPE_DISPLAYED|MP_IMGFLAGMASK_COLORS;
     // accept restrictions, draw_slice and palette flags only:
     mpi->flags|=mp_imgflag&(MP_IMGFLAGMASK_RESTRICTIONS|MP_IMGFLAG_DRAW_CALLBACK|MP_IMGFLAG_RGB_PALETTE);
     if(!vf->draw_slice) mpi->flags&=~MP_IMGFLAG_DRAW_CALLBACK;
     if(mpi->width!=w2 || mpi->height!=h){
-//	printf("vf.c: MPI parameters changed!  %dx%d -> %dx%d   \n", mpi->width,mpi->height,w2,h);
-	if(mpi->flags&MP_IMGFLAG_ALLOCATED){
-	    if(mpi->width<w2 || mpi->height<h){
-		// need to re-allocate buffer memory:
-		av_free(mpi->planes[0]);
-		mpi->flags&=~MP_IMGFLAG_ALLOCATED;
-		mp_msg(MSGT_VFILTER,MSGL_V,"vf.c: have to REALLOCATE buffer memory :(\n");
-	    }
-//	} else {
-	} {
-	    mpi->width=w2; mpi->chroma_width=(w2 + (1<<mpi->chroma_x_shift) - 1)>>mpi->chroma_x_shift;
-	    mpi->height=h; mpi->chroma_height=(h + (1<<mpi->chroma_y_shift) - 1)>>mpi->chroma_y_shift;
-	}
+//      printf("vf.c: MPI parameters changed!  %dx%d -> %dx%d   \n", mpi->width,mpi->height,w2,h);
+        if(mpi->flags&MP_IMGFLAG_ALLOCATED){
+            if(mpi->width<w2 || mpi->height<h){
+                // need to re-allocate buffer memory:
+                av_free(mpi->planes[0]);
+                mpi->flags&=~MP_IMGFLAG_ALLOCATED;
+                mp_msg(MSGT_VFILTER,MSGL_V,"vf.c: have to REALLOCATE buffer memory :(\n");
+            }
+//      } else {
+        } {
+            mpi->width=w2; mpi->chroma_width=(w2 + (1<<mpi->chroma_x_shift) - 1)>>mpi->chroma_x_shift;
+            mpi->height=h; mpi->chroma_height=(h + (1<<mpi->chroma_y_shift) - 1)>>mpi->chroma_y_shift;
+        }
     }
     if(!mpi->bpp) mp_image_setfmt(mpi,outfmt);
     if(!(mpi->flags&MP_IMGFLAG_ALLOCATED) && mpi->type>MP_IMGTYPE_EXPORT){
 
-	// check libvo first!
-	if(vf->get_image) vf->get_image(vf,mpi);
+        // check libvo first!
+        if(vf->get_image) vf->get_image(vf,mpi);
 
         if(!(mpi->flags&MP_IMGFLAG_DIRECT)){
           // non-direct and not yet allocated image. allocate it!
@@ -371,54 +371,54 @@ mp_image_t* vf_get_image(vf_instance_t* vf, unsigned int outfmt, int mp_imgtype,
               return NULL;
           }
 
-	  // check if codec prefer aligned stride:
-	  if(mp_imgflag&MP_IMGFLAG_PREFER_ALIGNED_STRIDE){
-	      int align=(mpi->flags&MP_IMGFLAG_PLANAR &&
-	                 mpi->flags&MP_IMGFLAG_YUV) ?
-			 (8<<mpi->chroma_x_shift)-1 : 15; // -- maybe FIXME
-	      w2=((w+align)&(~align));
-	      if(mpi->width!=w2){
-	          // we have to change width... check if we CAN co it:
-		  int flags=vf->query_format(vf,outfmt); // should not fail
-		  if(!(flags&3)) mp_msg(MSGT_DECVIDEO,MSGL_WARN,"??? vf_get_image{vf->query_format(outfmt)} failed!\n");
-//		  printf("query -> 0x%X    \n",flags);
-		  if(flags&VFCAP_ACCEPT_STRIDE){
-	              mpi->width=w2;
-		      mpi->chroma_width=(w2 + (1<<mpi->chroma_x_shift) - 1)>>mpi->chroma_x_shift;
-		  }
-	      }
-	  }
+          // check if codec prefer aligned stride:
+          if(mp_imgflag&MP_IMGFLAG_PREFER_ALIGNED_STRIDE){
+              int align=(mpi->flags&MP_IMGFLAG_PLANAR &&
+                         mpi->flags&MP_IMGFLAG_YUV) ?
+                         (8<<mpi->chroma_x_shift)-1 : 15; // -- maybe FIXME
+              w2=((w+align)&(~align));
+              if(mpi->width!=w2){
+                  // we have to change width... check if we CAN co it:
+                  int flags=vf->query_format(vf,outfmt); // should not fail
+                  if(!(flags&3)) mp_msg(MSGT_DECVIDEO,MSGL_WARN,"??? vf_get_image{vf->query_format(outfmt)} failed!\n");
+//                  printf("query -> 0x%X    \n",flags);
+                  if(flags&VFCAP_ACCEPT_STRIDE){
+                      mpi->width=w2;
+                      mpi->chroma_width=(w2 + (1<<mpi->chroma_x_shift) - 1)>>mpi->chroma_x_shift;
+                  }
+              }
+          }
 
-	  mp_image_alloc_planes(mpi);
-//	  printf("clearing img!\n");
-	  vf_mpi_clear(mpi,0,0,mpi->width,mpi->height);
+          mp_image_alloc_planes(mpi);
+//        printf("clearing img!\n");
+          vf_mpi_clear(mpi,0,0,mpi->width,mpi->height);
         }
     }
     if(mpi->flags&MP_IMGFLAG_DRAW_CALLBACK)
-	if(vf->start_slice) vf->start_slice(vf,mpi);
+        if(vf->start_slice) vf->start_slice(vf,mpi);
     if(!(mpi->flags&MP_IMGFLAG_TYPE_DISPLAYED)){
-	    mp_msg(MSGT_DECVIDEO,MSGL_V,"*** [%s] %s%s mp_image_t, %dx%dx%dbpp %s %s, %d bytes\n",
-		  vf->info->name,
-		  (mpi->type==MP_IMGTYPE_EXPORT)?"Exporting":
-	          ((mpi->flags&MP_IMGFLAG_DIRECT)?"Direct Rendering":"Allocating"),
-	          (mpi->flags&MP_IMGFLAG_DRAW_CALLBACK)?" (slices)":"",
-	          mpi->width,mpi->height,mpi->bpp,
-		  (mpi->flags&MP_IMGFLAG_YUV)?"YUV":((mpi->flags&MP_IMGFLAG_SWAPPED)?"BGR":"RGB"),
-		  (mpi->flags&MP_IMGFLAG_PLANAR)?"planar":"packed",
-	          mpi->bpp*mpi->width*mpi->height/8);
-	    mp_msg(MSGT_DECVIDEO,MSGL_DBG2,"(imgfmt: %x, planes: %p,%p,%p strides: %d,%d,%d, chroma: %dx%d, shift: h:%d,v:%d)\n",
-		mpi->imgfmt, mpi->planes[0], mpi->planes[1], mpi->planes[2],
-		mpi->stride[0], mpi->stride[1], mpi->stride[2],
-		mpi->chroma_width, mpi->chroma_height, mpi->chroma_x_shift, mpi->chroma_y_shift);
-	    mpi->flags|=MP_IMGFLAG_TYPE_DISPLAYED;
+            mp_msg(MSGT_DECVIDEO,MSGL_V,"*** [%s] %s%s mp_image_t, %dx%dx%dbpp %s %s, %d bytes\n",
+                  vf->info->name,
+                  (mpi->type==MP_IMGTYPE_EXPORT)?"Exporting":
+                  ((mpi->flags&MP_IMGFLAG_DIRECT)?"Direct Rendering":"Allocating"),
+                  (mpi->flags&MP_IMGFLAG_DRAW_CALLBACK)?" (slices)":"",
+                  mpi->width,mpi->height,mpi->bpp,
+                  (mpi->flags&MP_IMGFLAG_YUV)?"YUV":((mpi->flags&MP_IMGFLAG_SWAPPED)?"BGR":"RGB"),
+                  (mpi->flags&MP_IMGFLAG_PLANAR)?"planar":"packed",
+                  mpi->bpp*mpi->width*mpi->height/8);
+            mp_msg(MSGT_DECVIDEO,MSGL_DBG2,"(imgfmt: %x, planes: %p,%p,%p strides: %d,%d,%d, chroma: %dx%d, shift: h:%d,v:%d)\n",
+                mpi->imgfmt, mpi->planes[0], mpi->planes[1], mpi->planes[2],
+                mpi->stride[0], mpi->stride[1], mpi->stride[2],
+                mpi->chroma_width, mpi->chroma_height, mpi->chroma_x_shift, mpi->chroma_y_shift);
+            mpi->flags|=MP_IMGFLAG_TYPE_DISPLAYED;
     }
 
   mpi->qscale = NULL;
   }
   mpi->usage_count++;
-//    printf("\rVF_MPI: %p %p %p %d %d %d    \n",
-//	mpi->planes[0],mpi->planes[1],mpi->planes[2],
-//	mpi->stride[0],mpi->stride[1],mpi->stride[2]);
+//  printf("\rVF_MPI: %p %p %p %d %d %d    \n",
+//      mpi->planes[0],mpi->planes[1],mpi->planes[2],
+//      mpi->stride[0],mpi->stride[1],mpi->stride[2]);
   return mpi;
 }
 
@@ -434,11 +434,11 @@ vf_instance_t* vf_open_plugin(const vf_info_t* const* filter_list, vf_instance_t
     vf_instance_t* vf;
     int i;
     for(i=0;;i++){
-	if(!filter_list[i]){
-	    mp_msg(MSGT_VFILTER,MSGL_ERR,MSGTR_CouldNotFindVideoFilter,name);
-	    return NULL; // no such filter!
-	}
-	if(!strcmp(filter_list[i]->name,name)) break;
+        if(!filter_list[i]){
+            mp_msg(MSGT_VFILTER,MSGL_ERR,MSGTR_CouldNotFindVideoFilter,name);
+            return NULL; // no such filter!
+        }
+        if(!strcmp(filter_list[i]->name,name)) break;
     }
     vf=malloc(sizeof(vf_instance_t));
     memset(vf,0,sizeof(vf_instance_t));
@@ -455,14 +455,14 @@ vf_instance_t* vf_open_plugin(const vf_info_t* const* filter_list, vf_instance_t
       void* vf_priv = m_struct_alloc(st);
       int n;
       for(n = 0 ; args && args[2*n] ; n++)
-	m_struct_set(st,vf_priv,args[2*n],args[2*n+1]);
+        m_struct_set(st,vf_priv,args[2*n],args[2*n+1]);
       vf->priv = vf_priv;
       args = NULL;
     } else // Otherwise we should have the '_oldargs_'
       if(args && !strcmp(args[0],"_oldargs_"))
-	args = (char**)args[1];
+        args = (char**)args[1];
       else
-	args = NULL;
+        args = NULL;
     if(vf->info->vf_open(vf,(char*)args)>0) return vf; // Success!
     free(vf);
     mp_msg(MSGT_VFILTER,MSGL_ERR,MSGTR_CouldNotOpenVideoFilter,name);
@@ -480,16 +480,16 @@ vf_instance_t* vf_open_filter(vf_instance_t* next, const char *name, char **args
       char* p = str;
       p += sprintf(str,"%s",name);
       for(i = 0 ; args && args[2*i] ; i++)
-	p += sprintf(p," %s=%s",args[2*i],args[2*i+1]);
+        p += sprintf(p," %s=%s",args[2*i],args[2*i+1]);
       mp_msg(MSGT_VFILTER,MSGL_INFO,MSGTR_OpeningVideoFilter "[%s]\n",str);
     }
   } else if(strcmp(name,"vo")) {
     if(args && strcmp(args[0],"_oldargs_") == 0)
       mp_msg(MSGT_VFILTER,MSGL_INFO,MSGTR_OpeningVideoFilter
-	     "[%s=%s]\n", name,args[1]);
+             "[%s=%s]\n", name,args[1]);
     else
       mp_msg(MSGT_VFILTER,MSGL_INFO,MSGTR_OpeningVideoFilter
-	     "[%s]\n", name);
+             "[%s]\n", name);
   }
   return vf_open_plugin(filter_list,next,name,args);
 }
@@ -522,11 +522,11 @@ unsigned int vf_match_csp(vf_instance_t** vfp,const unsigned int* list,unsigned 
     unsigned int best=0;
     int ret;
     if((p=list)) while(*p){
-	ret=vf->query_format(vf,*p);
-	mp_msg(MSGT_VFILTER,MSGL_V,"[%s] query(%s) -> %d\n",vf->info->name,vo_format_name(*p),ret&3);
-	if(ret&2){ best=*p; break;} // no conversion -> bingo!
-	if(ret&1 && !best) best=*p; // best with conversion
-	++p;
+        ret=vf->query_format(vf,*p);
+        mp_msg(MSGT_VFILTER,MSGL_V,"[%s] query(%s) -> %d\n",vf->info->name,vo_format_name(*p),ret&3);
+        if(ret&2){ best=*p; break;} // no conversion -> bingo!
+        if(ret&1 && !best) best=*p; // best with conversion
+        ++p;
     }
     if(best) return best; // bingo, they have common csp!
     // ok, then try with scale:
@@ -537,11 +537,11 @@ unsigned int vf_match_csp(vf_instance_t** vfp,const unsigned int* list,unsigned 
     if(preferred && vf->query_format(vf,preferred)) best=preferred; else
     // try the list again, now with "scaler" :
     if((p=list)) while(*p){
-	ret=vf->query_format(vf,*p);
-	mp_msg(MSGT_VFILTER,MSGL_V,"[%s] query(%s) -> %d\n",vf->info->name,vo_format_name(*p),ret&3);
-	if(ret&2){ best=*p; break;} // no conversion -> bingo!
-	if(ret&1 && !best) best=*p; // best with conversion
-	++p;
+        ret=vf->query_format(vf,*p);
+        mp_msg(MSGT_VFILTER,MSGL_V,"[%s] query(%s) -> %d\n",vf->info->name,vo_format_name(*p),ret&3);
+        if(ret&2){ best=*p; break;} // no conversion -> bingo!
+        if(ret&1 && !best) best=*p; // best with conversion
+        ++p;
     }
     if(best) *vfp=vf; // else uninit vf  !FIXME!
     return best;
@@ -552,8 +552,8 @@ void vf_clone_mpi_attributes(mp_image_t* dst, mp_image_t* src){
     dst->fields = src->fields;
     dst->qscale_type= src->qscale_type;
     if(dst->width == src->width && dst->height == src->height){
-	dst->qstride= src->qstride;
-	dst->qscale= src->qscale;
+        dst->qstride= src->qstride;
+        dst->qscale= src->qscale;
     }
 }
 
@@ -570,26 +570,26 @@ void vf_queue_frame(vf_instance_t *vf, int (*func)(vf_instance_t *))
 int vf_output_queued_frame(vf_instance_t *vf)
 {
     while (1) {
-	int ret;
-	vf_instance_t *current;
-	vf_instance_t *last=NULL;
-	int (*tmp)(vf_instance_t *);
-	for (current = vf; current; current = current->next)
-	    if (current->continue_buffered_image)
-		last = current;
-	if (!last)
-	    return 0;
-	tmp = last->continue_buffered_image;
-	last->continue_buffered_image = NULL;
-	ret = tmp(last);
-	if (ret > 0) {
-	    vf->control(vf, VFCTRL_DRAW_OSD, NULL);
+        int ret;
+        vf_instance_t *current;
+        vf_instance_t *last=NULL;
+        int (*tmp)(vf_instance_t *);
+        for (current = vf; current; current = current->next)
+            if (current->continue_buffered_image)
+                last = current;
+        if (!last)
+            return 0;
+        tmp = last->continue_buffered_image;
+        last->continue_buffered_image = NULL;
+        ret = tmp(last);
+        if (ret > 0) {
+            vf->control(vf, VFCTRL_DRAW_OSD, NULL);
 #ifdef CONFIG_ASS
-	    vf->control(vf, VFCTRL_DRAW_EOSD, NULL);
+            vf->control(vf, VFCTRL_DRAW_EOSD, NULL);
 #endif
-	}
-	if (ret)
-	    return ret;
+        }
+        if (ret)
+            return ret;
     }
 }
 
@@ -607,14 +607,14 @@ int vf_output_queued_frame(vf_instance_t *vf)
  *
 */
 int vf_config_wrapper(struct vf_instance *vf,
-		    int width, int height, int d_width, int d_height,
-		    unsigned int flags, unsigned int outfmt)
+                    int width, int height, int d_width, int d_height,
+                    unsigned int flags, unsigned int outfmt)
 {
     int r;
     if ((vf->default_caps&VFCAP_CONSTANT) && vf->fmt.have_configured) {
         if ((vf->fmt.orig_width != width)
-	    || (vf->fmt.orig_height != height)
-	    || (vf->fmt.orig_fmt != outfmt)) {
+            || (vf->fmt.orig_height != height)
+            || (vf->fmt.orig_fmt != outfmt)) {
             mp_msg(MSGT_VFILTER,MSGL_ERR,MSGTR_ResolutionDoesntMatch);
             return 0;
         }
@@ -631,31 +631,31 @@ int vf_config_wrapper(struct vf_instance *vf,
 
 int vf_next_config(struct vf_instance *vf,
         int width, int height, int d_width, int d_height,
-	unsigned int voflags, unsigned int outfmt){
+        unsigned int voflags, unsigned int outfmt){
     int miss;
     int flags=vf->next->query_format(vf->next,outfmt);
     if(!flags){
-	// hmm. colorspace mismatch!!!
-	// let's insert the 'scale' filter, it does the job for us:
-	vf_instance_t* vf2;
-	if(vf->next->info==&vf_info_scale) return 0; // scale->scale
-	vf2=vf_open_filter(vf->next,"scale",NULL);
-	if(!vf2) return 0; // shouldn't happen!
-	vf->next=vf2;
-	flags=vf->next->query_format(vf->next,outfmt);
-	if(!flags){
-	    mp_msg(MSGT_VFILTER,MSGL_ERR,MSGTR_CannotFindColorspace);
-	    return 0; // FAIL
-	}
+        // hmm. colorspace mismatch!!!
+        // let's insert the 'scale' filter, it does the job for us:
+        vf_instance_t* vf2;
+        if(vf->next->info==&vf_info_scale) return 0; // scale->scale
+        vf2=vf_open_filter(vf->next,"scale",NULL);
+        if(!vf2) return 0; // shouldn't happen!
+        vf->next=vf2;
+        flags=vf->next->query_format(vf->next,outfmt);
+        if(!flags){
+            mp_msg(MSGT_VFILTER,MSGL_ERR,MSGTR_CannotFindColorspace);
+            return 0; // FAIL
+        }
     }
     mp_msg(MSGT_VFILTER,MSGL_V,"REQ: flags=0x%X  req=0x%X  \n",flags,vf->default_reqs);
     miss=vf->default_reqs - (flags&vf->default_reqs);
     if(miss&VFCAP_ACCEPT_STRIDE){
-	// vf requires stride support but vf->next doesn't support it!
-	// let's insert the 'expand' filter, it does the job for us:
-	vf_instance_t* vf2=vf_open_filter(vf->next,"expand",NULL);
-	if(!vf2) return 0; // shouldn't happen!
-	vf->next=vf2;
+        // vf requires stride support but vf->next doesn't support it!
+        // let's insert the 'expand' filter, it does the job for us:
+        vf_instance_t* vf2=vf_open_filter(vf->next,"expand",NULL);
+        if(!vf2) return 0; // shouldn't happen!
+        vf->next=vf2;
     }
     vf->next->w = width; vf->next->h = height;
     return vf_config_wrapper(vf->next,width,height,d_width,d_height,voflags,outfmt);
@@ -685,24 +685,24 @@ int vf_next_put_image(struct vf_instance *vf,mp_image_t *mpi, double pts){
 
 void vf_next_draw_slice(struct vf_instance *vf,unsigned char** src, int * stride,int w, int h, int x, int y){
     if (vf->next->draw_slice) {
-	vf->next->draw_slice(vf->next,src,stride,w,h,x,y);
-	return;
+        vf->next->draw_slice(vf->next,src,stride,w,h,x,y);
+        return;
     }
     if (!vf->dmpi) {
-	mp_msg(MSGT_VFILTER,MSGL_ERR,"draw_slice: dmpi not stored by vf_%s\n", vf->info->name);
-	return;
+        mp_msg(MSGT_VFILTER,MSGL_ERR,"draw_slice: dmpi not stored by vf_%s\n", vf->info->name);
+        return;
     }
     if (!(vf->dmpi->flags & MP_IMGFLAG_PLANAR)) {
-	memcpy_pic(vf->dmpi->planes[0]+y*vf->dmpi->stride[0]+vf->dmpi->bpp/8*x,
-	    src[0], vf->dmpi->bpp/8*w, h, vf->dmpi->stride[0], stride[0]);
-	return;
+        memcpy_pic(vf->dmpi->planes[0]+y*vf->dmpi->stride[0]+vf->dmpi->bpp/8*x,
+            src[0], vf->dmpi->bpp/8*w, h, vf->dmpi->stride[0], stride[0]);
+        return;
     }
     memcpy_pic(vf->dmpi->planes[0]+y*vf->dmpi->stride[0]+x, src[0],
-	w, h, vf->dmpi->stride[0], stride[0]);
+        w, h, vf->dmpi->stride[0], stride[0]);
     memcpy_pic(vf->dmpi->planes[1]+(y>>vf->dmpi->chroma_y_shift)*vf->dmpi->stride[1]+(x>>vf->dmpi->chroma_x_shift),
-	src[1], w>>vf->dmpi->chroma_x_shift, h>>vf->dmpi->chroma_y_shift, vf->dmpi->stride[1], stride[1]);
+        src[1], w>>vf->dmpi->chroma_x_shift, h>>vf->dmpi->chroma_y_shift, vf->dmpi->stride[1], stride[1]);
     memcpy_pic(vf->dmpi->planes[2]+(y>>vf->dmpi->chroma_y_shift)*vf->dmpi->stride[2]+(x>>vf->dmpi->chroma_x_shift),
-	src[2], w>>vf->dmpi->chroma_x_shift, h>>vf->dmpi->chroma_y_shift, vf->dmpi->stride[2], stride[2]);
+        src[2], w>>vf->dmpi->chroma_x_shift, h>>vf->dmpi->chroma_y_shift, vf->dmpi->stride[2], stride[2]);
 }
 
 //============================================================================
@@ -737,8 +737,8 @@ void vf_uninit_filter(vf_instance_t* vf){
 
 void vf_uninit_filter_chain(vf_instance_t* vf){
     while(vf){
-	vf_instance_t* next=vf->next;
-	vf_uninit_filter(vf);
-	vf=next;
+        vf_instance_t* next=vf->next;
+        vf_uninit_filter(vf);
+        vf=next;
     }
 }
