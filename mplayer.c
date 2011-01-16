@@ -3531,15 +3531,15 @@ if (select_subtitle(mpctx)) {
   if (mpctx->sh_video)
       reinit_video_chain();
 
-  if (mpctx->sh_video) {
-   if(vo_flags & 0x08 && vo_spudec)
-      spudec_set_hw_spu(vo_spudec,mpctx->video_out);
+      if (mpctx->sh_video) {
+          if (vo_flags & 0x08 && vo_spudec)
+              spudec_set_hw_spu(vo_spudec, mpctx->video_out);
 
 #ifdef CONFIG_FREETYPE
-   force_load_font = 1;
+          force_load_font = 1;
 #endif
-  } else if (!mpctx->sh_audio)
-      goto goto_next_file;
+      } else if (!mpctx->sh_audio)
+          goto goto_next_file;
 
 //================== MAIN: ==========================
 current_module="main";
