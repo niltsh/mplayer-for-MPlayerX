@@ -1847,6 +1847,11 @@ static void strcpy_strip_ext(char *d, const char *s)
 	strncpy(d, s, tmp-s);
 	d[tmp-s] = 0;
     }
+}
+
+static void strcpy_strip_ext_lower(char *d, const char *s)
+{
+    strcpy_strip_ext(d, s);
     while (*d) {
 	*d = tolower(*d);
 	d++;
@@ -1929,7 +1934,7 @@ static void append_dir_subtitles(struct sub_list *slist, const char *path,
 
     tmpresult = malloc(len);
 
-    strcpy_strip_ext(f_fname_noext, f_fname);
+    strcpy_strip_ext_lower(f_fname_noext, f_fname);
     strcpy_trim(f_fname_trim, f_fname_noext);
 
     tmp_sub_id = NULL;
@@ -1947,7 +1952,7 @@ static void append_dir_subtitles(struct sub_list *slist, const char *path,
 	    mp_msg(MSGT_SUBREADER, MSGL_INFO, "Load subtitles in %s\n", path);
 	    while ((de = readdir(d))) {
 		// retrieve various parts of the filename
-		strcpy_strip_ext(tmp_fname_noext, de->d_name);
+		strcpy_strip_ext_lower(tmp_fname_noext, de->d_name);
 		strcpy_get_ext(tmp_fname_ext, de->d_name);
 		strcpy_trim(tmp_fname_trim, tmp_fname_noext);
 
