@@ -101,7 +101,8 @@ int fntRead( char * path,char * fname )
     {
      int i;
      cutItem( command,command,'"',1 );
-     i=(int)command[0];
+     if ( !command[0] ) i=(int)'"';
+     else i=(int)command[0];
      cutItem( param,tmp,',',0 ); Fonts[id]->Fnt[i].x=atoi( tmp );
      cutItem( param,tmp,',',1 ); Fonts[id]->Fnt[i].y=atoi( tmp );
      cutItem( param,tmp,',',2 ); Fonts[id]->Fnt[i].sx=atoi( tmp );
