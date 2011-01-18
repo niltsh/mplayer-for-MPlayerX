@@ -48,6 +48,7 @@ char * get_current_dir_name( void );
 #endif
 
 gchar         * fsSelectedFile = NULL;
+gchar         * fsSelectedFileUtf8 = NULL;
 gchar         * fsSelectedDirectory = NULL;
 unsigned char * fsThatDir = ".";
 const gchar   * fsFilter = "*";
@@ -155,6 +156,15 @@ GdkPixmap   * fpixmap;
 GdkBitmap   * dmask;
 GdkBitmap   * fmask;
 
+static char * get_current_dir_name_utf8( void )
+{
+ char * dir, * utf8dir;
+ dir = get_current_dir_name();
+ utf8dir = g_filename_to_utf8( dir, -1, NULL, NULL, NULL );
+ free( dir );
+ return utf8dir;
+}
+
 static char * Filter( const char * name )
 {
  static char tmp[32];
@@ -171,11 +181,13 @@ static char * Filter( const char * name )
 static void clist_append_fname(GtkWidget * list, char *fname,
                                GdkPixmap *pixmap, GdkPixmap *mask) {
   gint pos;
-  gchar *str[2];
+  gchar *filename, *str[2];
+  filename = g_filename_to_utf8(fname, -1, NULL, NULL, NULL);
   str[0] = NULL;
-  str[1] = fname;
+  str[1] = filename;
   pos = gtk_clist_append(GTK_CLIST(list), str);
   gtk_clist_set_pixmap(GTK_CLIST(list), pos, 0, pixmap, mask);
+  g_free(filename);
 }
 
 static void CheckDir( GtkWidget * list,char * directory )
@@ -414,18 +426,24 @@ static void fs_fsPathCombo_activate( GtkEditable * editable,
                                      gpointer user_data )
 {
  const unsigned char * str;
+ gchar * dirname;
 
  str=gtk_entry_get_text( GTK_ENTRY( user_data ) );
- if ( chdir( str ) != -1 ) CheckDir( fsFNameList,get_current_dir_name() );
+ dirname = g_filename_from_utf8( str, -1, NULL, NULL, NULL );
+ if ( chdir( dirname ) != -1 ) CheckDir( fsFNameList,get_current_dir_name() );
+ g_free( dirname );
 }
 
 static void fs_fsPathCombo_changed( GtkEditable * editable,
                                     gpointer user_data )
 {
  const unsigned char * str;
+ gchar * dirname;
 
  str=gtk_entry_get_text( GTK_ENTRY( user_data ) );
- if ( chdir( str ) != -1 ) CheckDir( fsFNameList,get_current_dir_name() );
+ dirname = g_filename_from_utf8( str, -1, NULL, NULL, NULL );
+ if ( chdir( dirname ) != -1 ) CheckDir( fsFNameList,get_current_dir_name() );
+ g_free( dirname );
 }
 
 static void fs_Up_released( GtkButton * button, gpointer user_data )
@@ -433,7 +451,7 @@ static void fs_Up_released( GtkButton * button, gpointer user_data )
  chdir( ".." );
  fsSelectedFile=fsThatDir;
  CheckDir( fsFNameList,get_current_dir_name() );
- gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),(unsigned char *)get_current_dir_name() );
+ gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),(unsigned char *)get_current_dir_name_utf8() );
  return;
 }
 
@@ -449,7 +467,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
    chdir( fsSelectedFile );
    fsSelectedFile=fsThatDir;
    CheckDir( fsFNameList,get_current_dir_name() );
-   gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),(unsigned char *)get_current_dir_name() );
+   gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),(unsigned char *)get_current_dir_name_utf8() );
    return;
   }
 
@@ -462,7 +480,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
           guiIntfStruct.FilenameChanged=1; sub_fps=0;
 	  gfree( (void **)&guiIntfStruct.AudioFile );
 	  gfree( (void **)&guiIntfStruct.Subtitlename );
-          fs_PersistantHistory( fsSelectedDirectory );      //totem, write into history
+          fs_PersistantHistory( get_current_dir_name_utf8() );      //totem, write into history
           break;
    case fsSubtitleSelector:
           guiSetDF( guiIntfStruct.Subtitlename,fsSelectedDirectory,fsSelectedFile );
@@ -497,13 +515,16 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
 static void fs_Cancel_released( GtkButton * button,gpointer user_data )
 {
  HideFileSelect();
- fs_PersistantHistory( get_current_dir_name() );      //totem, write into history file
+ fs_PersistantHistory( get_current_dir_name_utf8() );      //totem, write into history file
 }
 
 static void fs_fsFNameList_select_row( GtkWidget * widget, gint row, gint column,
                                        GdkEventButton *bevent, gpointer user_data)
 {
  gtk_clist_get_text( GTK_CLIST(widget ),row,1,&fsSelectedFile );
+ g_free( fsSelectedFileUtf8 );
+ fsSelectedFileUtf8 = g_filename_from_utf8( fsSelectedFile, -1, NULL, NULL, NULL );
+ fsSelectedFile = fsSelectedFileUtf8;
  if( bevent && bevent->type == GDK_BUTTON_PRESS )  gtk_button_released( GTK_BUTTON( fsOk ) );
 }
 
@@ -524,6 +545,13 @@ static gboolean on_FileSelect_key_release_event( GtkWidget * widget,
         break;
   }
  return FALSE;
+}
+
+static void fs_Destroy( void )
+{
+ g_free( fsSelectedFileUtf8 );
+ fsSelectedFileUtf8 = NULL;
+ WidgetDestroy( fsFileSelect, &fsFileSelect );
 }
 
 GtkWidget * create_FileSelect( void )
@@ -635,7 +663,7 @@ GtkWidget * create_FileSelect( void )
  fsOk=AddButton( MSGTR_Ok,hbuttonbox3 );
  fsCancel=AddButton( MSGTR_Cancel,hbuttonbox3 );
 
- gtk_signal_connect( GTK_OBJECT( fsFileSelect ),"destroy",GTK_SIGNAL_FUNC( WidgetDestroy ),&fsFileSelect );
+ gtk_signal_connect( GTK_OBJECT( fsFileSelect ),"destroy",GTK_SIGNAL_FUNC( fs_Destroy ), NULL );
  gtk_signal_connect( GTK_OBJECT( fsFileSelect ),"key_release_event",GTK_SIGNAL_FUNC( on_FileSelect_key_release_event ),NULL );
 
  gtk_signal_connect( GTK_OBJECT( fsFilterCombo ),"changed",GTK_SIGNAL_FUNC( fs_fsFilterCombo_changed ),fsFilterCombo );
