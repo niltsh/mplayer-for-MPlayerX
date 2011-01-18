@@ -54,6 +54,7 @@ static inline void TranslateFilename( int c,char * tmp,size_t tmplen )
 {
  int i;
  char * p;
+ size_t len;
 
  switch ( guiIntfStruct.StreamType )
   {
@@ -67,8 +68,10 @@ static inline void TranslateFilename( int c,char * tmp,size_t tmplen )
               av_strlcpy(tmp, p + 1, tmplen);
             else
               av_strlcpy(tmp, guiIntfStruct.Filename, tmplen);
-            if ( tmp[strlen( tmp ) - 4] == '.' ) tmp[strlen( tmp ) - 4]=0;
-            if ( tmp[strlen( tmp ) - 5] == '.' ) tmp[strlen( tmp ) - 5]=0;
+            len=strlen( tmp );
+            if ( ( len > 3 )&&( tmp[len - 3] == '.' ) ) tmp[len - 3]=0;
+            else if ( ( len > 4 )&&( tmp[len - 4] == '.' ) ) tmp[len - 4]=0;
+            else if ( ( len > 5 )&&( tmp[len - 5] == '.' ) ) tmp[len - 5]=0;
            } else av_strlcpy( tmp,MSGTR_NoFileLoaded,tmplen );
           break;
 #ifdef CONFIG_DVDREAD
