@@ -115,11 +115,16 @@ int fntRead( char * path,char * fname )
        {
         av_strlcpy( tmp,path,sizeof( tmp )  ); av_strlcat( tmp,param,sizeof( tmp ) );
         mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[font] font imagefile: %s\n",tmp );
-        if ( skinBPRead( tmp,&Fonts[id]->Bitmap ) ) return -4;
+        if ( skinBPRead( tmp,&Fonts[id]->Bitmap ) )
+         {
+          fclose(f);
+          return -4;
+         }
        }
      }
    }
 
+ fclose(f);
  return 0;
 }
 

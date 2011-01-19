@@ -441,14 +441,24 @@ void guiLoadSubtitle( char * name )
 
 static void add_vf( char * str )
 {
- mp_msg( MSGT_GPLAYER,MSGL_STATUS,MSGTR_AddingVideoFilter,str );
+ void *p;
+
  if ( vf_settings )
   {
    int i = 0;
    while ( vf_settings[i].name ) if ( !gstrcmp( vf_settings[i++].name,str ) ) { i=-1; break; }
    if ( i != -1 )
-     { vf_settings=realloc( vf_settings,( i + 2 ) * sizeof( m_obj_settings_t ) ); vf_settings[i].name=strdup( str );vf_settings[i].attribs = NULL; vf_settings[i+1].name=NULL; }
-  } else { vf_settings=malloc( 2 * sizeof(  m_obj_settings_t ) ); vf_settings[0].name=strdup( str );vf_settings[0].attribs = NULL; vf_settings[1].name=NULL; }
+    {
+     if ( !( p=realloc( vf_settings,( i + 2 ) * sizeof( m_obj_settings_t ) ) ) ) return;
+     vf_settings=p;
+     vf_settings[i].name=strdup( str );
+     vf_settings[i].attribs = NULL;
+     vf_settings[i+1].name=NULL;
+    }
+  }
+ else { vf_settings=malloc( 2 * sizeof(  m_obj_settings_t ) ); vf_settings[0].name=strdup( str );vf_settings[0].attribs = NULL; vf_settings[1].name=NULL; }
+
+ mp_msg( MSGT_GPLAYER,MSGL_STATUS,MSGTR_AddingVideoFilter,str );
 }
 
 static void remove_vf( char * str )

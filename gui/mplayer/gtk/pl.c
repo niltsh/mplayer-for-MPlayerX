@@ -283,6 +283,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
   case 3: // add
        {
         int i;
+        void *p;
         char * itext[1][2];
         gchar * cpath;
         char * text[1][3]; text[0][2]="";
@@ -291,14 +292,19 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
          {
           if ( CLFileSelected[i] )
            {
-	    gtk_clist_get_text( GTK_CLIST( CLFiles ),i,0,(char **)&itext );
-	    cpath=g_filename_to_utf8( current_path, -1, NULL, NULL, NULL );
-	    text[0][0]=itext[0][0]; text[0][1]=cpath;
-	    gtk_clist_append( GTK_CLIST( CLSelected ),text[0] );
-	    g_free( cpath );
 	    NrOfSelected++;
-	    CLListSelected=realloc( CLListSelected,NrOfSelected * sizeof( int ) );
-	    CLListSelected[NrOfSelected - 1]=0;
+	    p=realloc( CLListSelected,NrOfSelected * sizeof( int ) );
+	    if ( !p ) NrOfSelected--;
+	    else
+	     {
+	      CLListSelected=p;
+	      CLListSelected[NrOfSelected - 1]=0;
+	      gtk_clist_get_text( GTK_CLIST( CLFiles ),i,0,(char **)&itext );
+	      cpath=g_filename_to_utf8( current_path, -1, NULL, NULL, NULL );
+	      text[0][0]=itext[0][0]; text[0][1]=cpath;
+	      gtk_clist_append( GTK_CLIST( CLSelected ),text[0] );
+	      g_free( cpath );
+	     }
 	   }
 	 }
 	gtk_clist_thaw( GTK_CLIST( CLSelected ) );

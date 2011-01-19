@@ -45,7 +45,11 @@ static int pngRead( unsigned char * fname,txSample * bf )
 
  fseek(fp, 0, SEEK_END);
  len = ftell(fp);
- if (len > 50 * 1024 * 1024) return 2;
+ if (len > 50 * 1024 * 1024)
+  {
+   fclose(fp);
+   return 2;
+  }
  data = av_malloc(len + FF_INPUT_BUFFER_PADDING_SIZE);
  fseek(fp, 0, SEEK_SET);
  fread(data, len, 1, fp);
