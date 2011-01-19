@@ -2174,7 +2174,7 @@ static const char help_text[]=
 #define MSGTR_TVI_DS_UnableTerminateVPPin "tvi_dshow: Kann VideoPort-Pin mit keinem Filter des Graphen terminieren. Fehler:0x%x\n"
 #define MSGTR_TVI_DS_UnableBuildVideoSubGraph "tvi_dshow: Kann Videokette des Capture-Graphen nicht erstellen. Fehler:0x%x\n"
 #define MSGTR_TVI_DS_UnableBuildAudioSubGraph "tvi_dshow: Kann Audiokette des Capture-Graphen nicht erstellen. Fehler:0x%x\n"
-#define MSGTR_TVI_DS_UnableBuildVBISubGraph "tvi_dshow: Kann VBI-Kette des Capture-Graphen nicht erstellen. Fehler:0x%x\n""
+#define MSGTR_TVI_DS_UnableBuildVBISubGraph "tvi_dshow: Kann VBI-Kette des Capture-Graphen nicht erstellen. Fehler:0x%x\n"
 #define MSGTR_TVI_DS_GraphInitFailure "tvi_dshow: Initialisierung des Directshow-Graph fehlgeschlagen.\n"
 #define MSGTR_TVI_DS_NoVideoCaptureDevice "tvi_dshow: Kein Gerät für Videoerfassung gefunden\n"
 #define MSGTR_TVI_DS_NoAudioCaptureDevice "tvi_dshow: Kein Gerät für Audioerfassung gefunden\n"
