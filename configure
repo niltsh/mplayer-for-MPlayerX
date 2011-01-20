@@ -4854,12 +4854,7 @@ fi
 echocheck "OpenJPEG (JPEG2000) support"
 if test "$libopenjpeg" = auto ; then
   libopenjpeg=no
-cat > $TMPC << EOF
-#define  OPJ_STATIC
-#include <openjpeg.h>
-int main(void) { opj_dparameters_t dec_params; opj_set_default_decoder_parameters(&dec_params); return 0; }
-EOF
-  cc_check -lopenjpeg $_ld_lm && libopenjpeg=yes
+  define_statement_check OPJ_STATIC openjpeg.h 'opj_dparameters_t dec_params; opj_set_default_decoder_parameters(&dec_params)' -lopenjpeg $_ld_lm && libopenjpeg=yes
 fi
 echores "$libopenjpeg"
 if test "$libopenjpeg" = yes ; then
