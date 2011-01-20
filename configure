@@ -82,6 +82,15 @@ EOF
   compile_check $TMPC $@
 }
 
+return_check() {
+  cat > $TMPC << EOF
+#include <$1>
+int main(void) { return $2; }
+EOF
+  shift 2
+  compile_check $TMPC $@
+}
+
 statement_check() {
   cat > $TMPC << EOF
 #include <$1>
@@ -4405,11 +4414,7 @@ echores "$_vm"
 echocheck "XF86keysym"
 if test "$_xf86keysym" = auto; then
   _xf86keysym=no
-  cat > $TMPC <<EOF
-#include <X11/XF86keysym.h>
-int main(void) { return XF86XK_AudioPause; }
-EOF
-  cc_check && _xf86keysym=yes
+  return_check X11/XF86keysym.h XF86XK_AudioPause && _xf86keysym=yes
 fi
 if test "$_xf86keysym" = yes ; then
   def_xf86keysym='#define CONFIG_XF86XK 1'
@@ -5343,12 +5348,8 @@ echores "$_v4l2"
 
 echocheck "OSS Audio"
 if test "$_ossaudio" = auto ; then
-  cat > $TMPC << EOF
-#include <$_soundcard_header>
-int main(void) { return SNDCTL_DSP_SETFRAGMENT; }
-EOF
   _ossaudio=no
-  cc_check && _ossaudio=yes
+  return_check $_soundcard_header SNDCTL_DSP_SETFRAGMENT && _ossaudio=yes
 fi
 if test "$_ossaudio" = yes ; then
   def_ossaudio='#define CONFIG_OSS_AUDIO 1'
