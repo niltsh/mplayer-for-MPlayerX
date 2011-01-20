@@ -73,6 +73,15 @@ EOF
   compile_check $TMPC $@
 }
 
+header_check() {
+  cat > $TMPC << EOF
+#include <$1>
+int main(void) { return 0; }
+EOF
+  shift
+  compile_check $TMPC $@
+}
+
 statement_check() {
   cat > $TMPC << EOF
 #include <$1>
@@ -90,15 +99,6 @@ define_statement_check() {
 int main(void) { $3; return 0; }
 EOF
   shift 3
-  compile_check $TMPC $@
-}
-
-header_check() {
-  cat > $TMPC << EOF
-#include <$1>
-int main(void) { return 0; }
-EOF
-  shift
   compile_check $TMPC $@
 }
 
