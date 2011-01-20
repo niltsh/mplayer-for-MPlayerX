@@ -77,7 +77,7 @@ static inline void TranslateFilename( int c,char * tmp,size_t tmplen )
           else
            {
             msg = g_filename_from_utf8( MSGTR_NoFileLoaded, -1, NULL, NULL, NULL );
-            av_strlcpy( tmp, msg, tmplen );
+            av_strlcpy( tmp, ( msg ? msg : MSGTR_NoFileLoaded ), tmplen );
            }
           break;
 #ifdef CONFIG_DVDREAD
@@ -85,24 +85,24 @@ static inline void TranslateFilename( int c,char * tmp,size_t tmplen )
           if ( guiIntfStruct.DVD.current_chapter )
            {
             msg = g_filename_from_utf8( MSGTR_Chapter, -1, NULL, NULL, NULL );
-            snprintf( tmp, tmplen, msg, guiIntfStruct.DVD.current_chapter );
+            snprintf( tmp, tmplen, ( msg ? msg : MSGTR_Chapter ), guiIntfStruct.DVD.current_chapter );
            }
           else
            {
             msg = g_filename_from_utf8( MSGTR_NoChapter, -1, NULL, NULL, NULL );
-            av_strlcat( tmp, msg, tmplen );
+            av_strlcat( tmp, ( msg ? msg : MSGTR_NoChapter ), tmplen );
            }
           break;
 #endif
 #ifdef CONFIG_VCD
    case STREAMTYPE_VCD:
         msg = g_filename_from_utf8( MSGTR_VCDTrack, -1, NULL, NULL, NULL );
-        snprintf( tmp, tmplen, msg, guiIntfStruct.Track );
+        snprintf( tmp, tmplen, ( msg ? msg : MSGTR_VCDTrack ), guiIntfStruct.Track );
 	break;
 #endif
    default:
      msg = g_filename_from_utf8( MSGTR_NoMediaOpened, -1, NULL, NULL, NULL );
-     av_strlcpy( tmp, msg, tmplen );
+     av_strlcpy( tmp, ( msg ? msg : MSGTR_NoMediaOpened ), tmplen );
   }
  g_free(msg);
  if ( c )
