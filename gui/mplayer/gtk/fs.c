@@ -190,7 +190,7 @@ static void clist_append_fname(GtkWidget * list, char *fname,
   g_free(filename);
 }
 
-static void CheckDir( GtkWidget * list,char * directory )
+static void CheckDir( GtkWidget * list )
 {
  struct stat     fs;
  int             i;
@@ -379,7 +379,7 @@ static void fs_fsFilterCombo_activate( GtkEditable * editable,
                                        gpointer user_data )
 {
  fsFilter=gtk_entry_get_text( GTK_ENTRY( user_data ) );
- CheckDir( fsFNameList,get_current_dir_name() );
+ CheckDir( fsFNameList );
 }
 
 static void fs_fsFilterCombo_changed( GtkEditable * editable,
@@ -419,7 +419,7 @@ static void fs_fsFilterCombo_changed( GtkEditable * editable,
 	  break;
    default: return;
   }
- CheckDir( fsFNameList,get_current_dir_name() );
+ CheckDir( fsFNameList );
 }
 
 static void fs_fsPathCombo_activate( GtkEditable * editable,
@@ -430,7 +430,7 @@ static void fs_fsPathCombo_activate( GtkEditable * editable,
 
  str=gtk_entry_get_text( GTK_ENTRY( user_data ) );
  dirname = g_filename_from_utf8( str, -1, NULL, NULL, NULL );
- if ( chdir( dirname ) != -1 ) CheckDir( fsFNameList,get_current_dir_name() );
+ if ( chdir( dirname ) != -1 ) CheckDir( fsFNameList );
  g_free( dirname );
 }
 
@@ -442,7 +442,7 @@ static void fs_fsPathCombo_changed( GtkEditable * editable,
 
  str=gtk_entry_get_text( GTK_ENTRY( user_data ) );
  dirname = g_filename_from_utf8( str, -1, NULL, NULL, NULL );
- if ( chdir( dirname ) != -1 ) CheckDir( fsFNameList,get_current_dir_name() );
+ if ( chdir( dirname ) != -1 ) CheckDir( fsFNameList );
  g_free( dirname );
 }
 
@@ -450,7 +450,7 @@ static void fs_Up_released( GtkButton * button, gpointer user_data )
 {
  chdir( ".." );
  fsSelectedFile=fsThatDir;
- CheckDir( fsFNameList,get_current_dir_name() );
+ CheckDir( fsFNameList );
  gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),(unsigned char *)get_current_dir_name_utf8() );
  return;
 }
@@ -466,7 +466,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
   {
    chdir( fsSelectedFile );
    fsSelectedFile=fsThatDir;
-   CheckDir( fsFNameList,get_current_dir_name() );
+   CheckDir( fsFNameList );
    gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),(unsigned char *)get_current_dir_name_utf8() );
    return;
   }
