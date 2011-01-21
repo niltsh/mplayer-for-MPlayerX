@@ -336,7 +336,7 @@ void ShowFileSelect( int type,int modal )
     for ( i=0;i < fsPersistant_MaxPos;i++ )
      if ( fsHistory[i] ) { fsTopList_items=g_list_append( fsTopList_items,fsHistory[i] ); c=0; }
    }
-  if ( c ) fsTopList_items=g_list_append( fsTopList_items,(gchar *)get_current_dir_name() );
+  if ( c ) fsTopList_items=g_list_append( fsTopList_items,(gchar *)get_current_dir_name_utf8() );
  }
  if ( getenv( "HOME" ) ) fsTopList_items=g_list_append( fsTopList_items,getenv( "HOME" ) );
  fsTopList_items=g_list_append( fsTopList_items,"/home" );
@@ -507,7 +507,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
    if ( !strcmp( item->data,fsSelectedDirectory ) ) i=0;
    item=item->next;
   }
- if ( i ) fsTopList_items=g_list_prepend( fsTopList_items,(gchar *)get_current_dir_name() );
+ if ( i ) fsTopList_items=g_list_prepend( fsTopList_items,(gchar *)get_current_dir_name_utf8() );
  if ( mplMainAutoPlay ) { mplMainAutoPlay=0; mplEventHandling( evPlay,0 ); }
   else guiGetEvent( guiCEvent,guiSetStop );
 }
