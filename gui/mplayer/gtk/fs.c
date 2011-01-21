@@ -161,6 +161,7 @@ static char * get_current_dir_name_utf8( void )
  char * dir, * utf8dir;
  dir = get_current_dir_name();
  utf8dir = g_filename_to_utf8( dir, -1, NULL, NULL, NULL );
+ if ( !utf8dir ) utf8dir = g_strdup( dir );
  free( dir );
  return utf8dir;
 }
@@ -184,7 +185,7 @@ static void clist_append_fname(GtkWidget * list, char *fname,
   gchar *filename, *str[2];
   filename = g_filename_to_utf8(fname, -1, NULL, NULL, NULL);
   str[0] = NULL;
-  str[1] = filename;
+  str[1] = filename ? filename : fname;
   pos = gtk_clist_append(GTK_CLIST(list), str);
   gtk_clist_set_pixmap(GTK_CLIST(list), pos, 0, pixmap, mask);
   g_free(filename);
@@ -430,7 +431,7 @@ static void fs_fsPathCombo_activate( GtkEditable * editable,
 
  str=gtk_entry_get_text( GTK_ENTRY( user_data ) );
  dirname = g_filename_from_utf8( str, -1, NULL, NULL, NULL );
- if ( chdir( dirname ) != -1 ) CheckDir( fsFNameList );
+ if ( chdir( dirname ? (const unsigned char *)dirname : str ) != -1 ) CheckDir( fsFNameList );
  g_free( dirname );
 }
 
@@ -442,7 +443,7 @@ static void fs_fsPathCombo_changed( GtkEditable * editable,
 
  str=gtk_entry_get_text( GTK_ENTRY( user_data ) );
  dirname = g_filename_from_utf8( str, -1, NULL, NULL, NULL );
- if ( chdir( dirname ) != -1 ) CheckDir( fsFNameList );
+ if ( chdir( dirname ? (const unsigned char *)dirname : str ) != -1 ) CheckDir( fsFNameList );
  g_free( dirname );
 }
 
@@ -524,7 +525,7 @@ static void fs_fsFNameList_select_row( GtkWidget * widget, gint row, gint column
  gtk_clist_get_text( GTK_CLIST(widget ),row,1,&fsSelectedFile );
  g_free( fsSelectedFileUtf8 );
  fsSelectedFileUtf8 = g_filename_from_utf8( fsSelectedFile, -1, NULL, NULL, NULL );
- fsSelectedFile = fsSelectedFileUtf8;
+ if ( fsSelectedFileUtf8 ) fsSelectedFile = fsSelectedFileUtf8;
  if( bevent && bevent->type == GDK_BUTTON_PRESS )  gtk_button_released( GTK_BUTTON( fsOk ) );
 }
 

@@ -181,8 +181,8 @@ void ShowPlayList( void )
      char * text[1][3]; text[0][2]="";
      name = g_filename_to_utf8( next->name, -1, NULL, NULL, NULL );
      path = g_filename_to_utf8( next->path, -1, NULL, NULL, NULL );
-     text[0][0]=name;
-     text[0][1]=path;
+     text[0][0]=name ? name : next->name;
+     text[0][1]=path ? path : next->path;
      gtk_clist_append( GTK_CLIST( CLSelected ),text[0] );
      g_free( path );
      g_free( name );
@@ -242,7 +242,9 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	  gtk_clist_get_text( GTK_CLIST( CLSelected ),i,0,&text[0] );
 	  gtk_clist_get_text( GTK_CLIST( CLSelected ),i,1,&text[1] );
 	  item->name=g_filename_from_utf8( text[0], -1, NULL, NULL, NULL );
+	  if ( !item->name ) item->name = strdup( text[0] );
 	  item->path=g_filename_from_utf8( text[1], -1, NULL, NULL, NULL );
+	  if ( !item->path ) item->path = strdup( text[1] );
 	  gtkSet( gtkAddPlItem,0,(void*)item );
 	 }
 	if ( plCurrent )
@@ -301,7 +303,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	      CLListSelected[NrOfSelected - 1]=0;
 	      gtk_clist_get_text( GTK_CLIST( CLFiles ),i,0,(char **)&itext );
 	      cpath=g_filename_to_utf8( current_path, -1, NULL, NULL, NULL );
-	      text[0][0]=itext[0][0]; text[0][1]=cpath;
+	      text[0][0]=itext[0][0]; text[0][1]=cpath ? cpath : current_path;
 	      gtk_clist_append( GTK_CLIST( CLSelected ),text[0] );
 	      g_free( cpath );
 	     }
@@ -373,7 +375,7 @@ static void plCTree( GtkCTree * ctree,GtkCTreeNode * parent_node,gpointer user_d
 	{
 	 DirNode=malloc( sizeof( DirNodeType ) ); DirNode->scaned=0; DirNode->path=strdup( path );
 	 subdir=check_for_subdir( path );
-	 node=gtk_ctree_insert_node( ctree,parent_node,NULL,&name,4,pxOpenedBook,msOpenedBook,pxClosedBook,msClosedBook,!subdir,FALSE );
+	 node=gtk_ctree_insert_node( ctree,parent_node,NULL,(name ? &name : &text ),4,pxOpenedBook,msOpenedBook,pxClosedBook,msClosedBook,!subdir,FALSE );
 	 gtk_ctree_node_set_row_data_full( ctree,node,DirNode,NULL );
 	 if ( subdir ) node=gtk_ctree_insert_node( ctree,node,NULL,&dummy,4,NULL,NULL,NULL,NULL,FALSE,FALSE );
 	}
@@ -408,7 +410,7 @@ static void scan_dir( char * path )
 	 if ( stat( curr,&statbuf ) != -1 && ( S_ISREG( statbuf.st_mode ) || S_ISLNK( statbuf.st_mode ) ) )
 	  {
 	   name=g_filename_to_utf8( dirent->d_name, -1, NULL, NULL, NULL );
-	   text[0][0]=name;
+	   text[0][0]=name ? name : dirent->d_name;
 	   gtk_clist_append( GTK_CLIST( CLFiles ), text[0] );
 	   g_free( name );
 	   NrOfEntrys++;
