@@ -182,6 +182,7 @@ char **sub_name=NULL;
 float sub_delay=0;
 float sub_fps=0;
 int   sub_auto = 0;
+char *vobsub_name = NULL;
 int   subcc_enabled=0;
 int   suboverlap_enabled = 1;
 

@@ -86,6 +86,7 @@ extern mp_osd_obj_t *vo_osd_list;
 
 extern void* vo_spudec;
 extern void* vo_vobsub;
+extern char *vobsub_name;
 
 #define OSD_PLAY 0x01
 #define OSD_PAUSE 0x02

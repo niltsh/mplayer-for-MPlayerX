@@ -37,6 +37,7 @@
 #include "subreader.h"
 #include "subassconvert.h"
 #include "sub.h"
+#include "vobsub.h"
 #include "stream/stream.h"
 #include "libavutil/common.h"
 #include "libavutil/avstring.h"
@@ -2098,6 +2099,50 @@ void load_subtitles(const char *fname, int fps, void add_f(char *, float, int))
         free(sub->fname);
     }
     free(slist.subs);
+}
+
+/**
+ * @brief Load VOB subtitle matching the subtitle filename.
+ *
+ * @param fname Path to subtitle filename.
+ * @param ifo Path to .ifo file.
+ * @spu SPU decoder instance.
+ * @add_f Function called when adding a vobsub.
+ */
+void load_vob_subtitle(const char *fname, const char * const ifo, void **spu,
+                       open_vob_func add_f)
+{
+    char *name, *mp_subdir;
+
+    // Load subtitles specified by vobsub option
+    if (vobsub_name) {
+        add_f(vobsub_name, ifo, 1, spu);
+        return;
+    }
+
+    // Stop here if automatic detection disabled
+    if (!sub_auto || !fname)
+        return;
+
+    // Get only the name of the subtitle file and try to open it
+    name = malloc(strlen(fname) + 1);
+    if (!name)
+        return;
+    strcpy_strip_ext(name, fname);
+    if (add_f(name, ifo, 0, spu)) {
+        free(name);
+        return;
+    }
+
+    // If still no VOB found, try loading it from ~/.mplayer/sub
+    mp_subdir = get_path("sub/");
+    if (mp_subdir) {
+        char *psub = mp_path_join(mp_subdir, mp_basename(name));
+        add_f(psub, ifo, 0, spu);
+        free(psub);
+    }
+    free(mp_subdir);
+    free(name);
 }
 
 void list_sub_file(sub_data* subd){

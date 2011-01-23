@@ -83,6 +83,8 @@ extern char *fribidi_charset;
 extern int flip_hebrew;
 extern int fribidi_flip_commas;
 
+typedef int (*open_vob_func)(const char *, const char * const, int, void *);
+
 sub_data* sub_read_file (char *filename, float pts);
 subtitle* subcp_recode (subtitle *sub);
 // enca_fd is the file enca uses to determine the codepage.
@@ -95,6 +97,7 @@ const char* guess_buffer_cp(unsigned char* buffer, int buflen, const char *prefe
 const char* guess_cp(struct stream *st, const char *preferred_language, const char *fallback);
 #endif
 void load_subtitles(const char *fname, int fps, void add_f(char *, float, int));
+void load_vob_subtitle(const char *fname, const char * const spudec_ifo, void **spu, open_vob_func add_f);
 void list_sub_file(sub_data* subd);
 void dump_srt(sub_data* subd, float fps);
 void dump_mpsub(sub_data* subd, float fps);

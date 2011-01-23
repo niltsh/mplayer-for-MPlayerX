@@ -30,6 +30,7 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#include <assert.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/types.h>
@@ -1077,6 +1078,22 @@ void add_subtitles(char *filename, float fps, int noerr)
     ++mpctx->set_of_sub_size;
     mp_msg(MSGT_CPLAYER, MSGL_INFO, MSGTR_AddedSubtitleFile, mpctx->set_of_sub_size,
 	    filename_recode(filename));
+}
+
+static int add_vob_subtitle(const char *vobname, const char * const ifo, int force, void *spu)
+{
+    if (!vobname)
+        return 0;
+
+    assert(!vo_vobsub);
+
+    vo_vobsub = vobsub_open(vobname, ifo, force, spu);
+
+    if (!vo_vobsub && force)
+        mp_msg(MSGT_CPLAYER, MSGL_ERR, MSGTR_CantLoadSub,
+               filename_recode(vobname));
+
+    return !!vo_vobsub;
 }
 
 // FIXME: if/when the GUI calls this, global sub numbering gets (potentially) broken.
@@ -3134,34 +3151,7 @@ while (player_idle_mode && !filename) {
 //==================== Open VOB-Sub ============================
 
     current_module="vobsub";
-    if (vobsub_name){
-      vo_vobsub=vobsub_open(vobsub_name,spudec_ifo,1,&vo_spudec);
-      if(vo_vobsub==NULL)
-        mp_msg(MSGT_CPLAYER,MSGL_ERR,MSGTR_CantLoadSub,
-		filename_recode(vobsub_name));
-    } else if (sub_auto && filename){
-      /* try to autodetect vobsub from movie filename ::atmos */
-      char *buf = strdup(filename), *psub;
-      char *pdot = strrchr(buf, '.');
-      char *pslash = strrchr(buf, '/');
-#if defined(__MINGW32__) || defined(__CYGWIN__)
-      if (!pslash) pslash = strrchr(buf, '\\');
-#endif
-      if (pdot && (!pslash || pdot > pslash))
-        *pdot = '\0';
-      vo_vobsub=vobsub_open(buf,spudec_ifo,0,&vo_spudec);
-      /* try from ~/.mplayer/sub */
-      if(!vo_vobsub && (psub = get_path( "sub/" ))) {
-          const char *bname = mp_basename(buf);
-          int l;
-          l = strlen(psub) + strlen(bname) + 1;
-          psub = realloc(psub,l);
-          strcat(psub,bname);
-          vo_vobsub=vobsub_open(psub,spudec_ifo,0,&vo_spudec);
-          free(psub);
-      }
-      free(buf);
-    }
+    load_vob_subtitle(filename, spudec_ifo, &vo_spudec, add_vob_subtitle);
     if(vo_vobsub){
       initialized_flags|=INITIALIZED_VOBSUB;
       vobsub_set_from_lang(vo_vobsub, dvdsub_lang);
