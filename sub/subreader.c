@@ -2057,7 +2057,7 @@ static void append_dir_subtitles(struct sub_list *slist, const char *path,
  * @note Subtitles are tracked and scored in various places according to the
  *       user options, sorted, and then added by calling the add_f function.
  */
-void load_subtitles(const char *fname, int fps, void add_f(char *, float, int))
+void load_subtitles(const char *fname, int fps, open_sub_func add_f)
 {
     int i;
     char *mp_subdir, *path = NULL;

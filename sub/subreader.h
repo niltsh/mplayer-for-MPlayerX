@@ -83,6 +83,7 @@ extern char *fribidi_charset;
 extern int flip_hebrew;
 extern int fribidi_flip_commas;
 
+typedef void (*open_sub_func)(char *, float, int);
 typedef int (*open_vob_func)(const char *, const char * const, int, void *);
 
 sub_data* sub_read_file (char *filename, float pts);
@@ -96,7 +97,7 @@ void subcp_close (void); /* for demux_ogg.c */
 const char* guess_buffer_cp(unsigned char* buffer, int buflen, const char *preferred_language, const char *fallback);
 const char* guess_cp(struct stream *st, const char *preferred_language, const char *fallback);
 #endif
-void load_subtitles(const char *fname, int fps, void add_f(char *, float, int));
+void load_subtitles(const char *fname, int fps, open_sub_func add_f);
 void load_vob_subtitle(const char *fname, const char * const spudec_ifo, void **spu, open_vob_func add_f);
 void list_sub_file(sub_data* subd);
 void dump_srt(sub_data* subd, float fps);
