@@ -361,7 +361,9 @@ int init_audio_filters(sh_audio_t *sh_audio, int in_samplerate,
     *out_channels = afs->output.nch;
     *out_format = afs->output.format;
 
-    sh_audio->a_out_buffer_len = 0;
+    // Do not reset a_out_buffer_len. This may cause some
+    // glitches/slow adaption of changes but it is better than
+    // losing audio even for minor adjustments and avoids sync issues.
 
     // ok!
     sh_audio->afilter = (void *) afs;
