@@ -1280,7 +1280,7 @@ static void print_status(float a_pos, float a_v, float corr)
 #ifdef CONFIG_STREAM_CACHE
   // cache stats
   if (stream_cache_size > 0)
-    saddf(line, &pos, width, "%d%% ", cache_fill_status);
+    saddf(line, &pos, width, "%d%% ", cache_fill_status(mpctx->stream));
 #endif
 
   // other
