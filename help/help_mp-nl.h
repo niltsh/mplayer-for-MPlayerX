@@ -116,7 +116,7 @@ static const char help_text[]=
 #define MSGTR_ForcedAudioCodec "Gedwongen audio codec: %s\n"
 #define MSGTR_Video_NoVideo "Video: geen video!!!\n"
 #define MSGTR_NotInitializeVOPorVO "\nFATAAL: Kon de video filters (-vf) of de video uitvoer (-vo) niet initialiseren!\n"
-#define MSGTR_Paused "\n------ GEPAUZEERD -------\r"
+#define MSGTR_Paused "------ GEPAUZEERD -------"
 #define MSGTR_PlaylistLoadUnable "\nKon de playlist %s niet laden\n"
 #define MSGTR_Exit_SIGILL_RTCpuSel \
 "- MPlayer crashte door een 'Illegale Instructie'.\n"\

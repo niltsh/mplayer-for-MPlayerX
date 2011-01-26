@@ -123,7 +123,7 @@ static const char help_text[]=
 #define MSGTR_ForcedAudioCodec "Forced audio codec: %s\n"
 #define MSGTR_Video_NoVideo "Video: no video\n"
 #define MSGTR_NotInitializeVOPorVO "\nFATAL: Could not initialize video filters (-vf) or video output (-vo).\n"
-#define MSGTR_Paused "\n  =====  PAUSE  =====\r" // no more than 23 characters (status line for audio files)
+#define MSGTR_Paused "  =====  PAUSE  =====" // no more than 23 characters (status line for audio files)
 #define MSGTR_PlaylistLoadUnable "\nUnable to load playlist %s.\n"
 #define MSGTR_Exit_SIGILL_RTCpuSel \
 "- MPlayer crashed by an 'Illegal Instruction'.\n"\

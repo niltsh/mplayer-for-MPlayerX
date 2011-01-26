@@ -118,7 +118,7 @@ static const char help_text[]=
 #define MSGTR_ForcedAudioCodec "Forcerad audiocodec: %s\n"
 #define MSGTR_Video_NoVideo "Video: ingen video\n"
 #define MSGTR_NotInitializeVOPorVO "\nFATALT: Kunde inte initiera videofilter (-vf) eller video-ut (-vo).\n"
-#define MSGTR_Paused "\n  =====  PAUSE  =====\r" // no more than 23 characters (status line for audio files)
+#define MSGTR_Paused "  =====  PAUSE  =====" // no more than 23 characters (status line for audio files)
 #define MSGTR_PlaylistLoadUnable "\nOförmögen att ladda spellista %s.\n"
 #define MSGTR_Exit_SIGILL_RTCpuSel \
 "- MPlayer krachade av en 'Illegal Instruction'.\n"\

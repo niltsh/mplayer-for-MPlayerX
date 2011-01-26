@@ -116,7 +116,7 @@ static const char help_text[]=
 #define MSGTR_ForcedAudioCodec "Присилен аудио кодек: %s\n"
 #define MSGTR_Video_NoVideo "Видео: нема слика\n"
 #define MSGTR_NotInitializeVOPorVO "\nФАТАЛНО: Не може да ги иницијализира видео филтерите (-vf) или видео излезот (-vo).\n"
-#define MSGTR_Paused "\n  =====  ПАУЗА =====\r" // не повеќе од 23 карактери (статус линија за аудио датотеките)
+#define MSGTR_Paused "  =====  ПАУЗА =====" // не повеќе од 23 карактери (статус линија за аудио датотеките)
 #define MSGTR_PlaylistLoadUnable "\nНе може да ја вчита плејлистата %s.\n"
 #define MSGTR_Exit_SIGILL_RTCpuSel \
 "- MPlayer падна од 'Нелегална Инструкција'.\n"\

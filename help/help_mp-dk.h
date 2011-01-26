@@ -118,7 +118,7 @@ static const char help_text[]=
 #define MSGTR_ForcedAudioCodec "Gennemtvunget lyd-codec: %s\n"
 #define MSGTR_Video_NoVideo "Video: ingen video\n"
 #define MSGTR_NotInitializeVOPorVO "\nFATALT: Kunne ikke initialisere videofiltre (-vf) eller videodriver (-vo)!\n"
-#define MSGTR_Paused "\n  =====  PAUSE  =====\r"
+#define MSGTR_Paused "  =====  PAUSE  ====="
 #define MSGTR_PlaylistLoadUnable "\nKunne ikke indlæse afspilningslisten %s\n"
 #define MSGTR_Exit_SIGILL_RTCpuSel \
 "- MPlayer fik en alvorlig fejl af typen 'ulovlig instruktion'.\n"\

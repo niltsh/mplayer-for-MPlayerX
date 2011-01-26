@@ -131,7 +131,7 @@ static const char help_text[]=
 #define MSGTR_ForcedAudioCodec "Erzwungener Audiocodec: %s\n"
 #define MSGTR_Video_NoVideo "Video: kein Video\n"
 #define MSGTR_NotInitializeVOPorVO "\nFATAL: Konnte Videofilter (-vf) oder -ausgabetreiber (-vo) nicht initialisieren.\n"
-#define MSGTR_Paused "\n  =====  PAUSE  =====\r"
+#define MSGTR_Paused "  =====  PAUSE  ====="
 #define MSGTR_PlaylistLoadUnable "\nKann Playlist %s nicht laden.\n"
 #define MSGTR_Exit_SIGILL_RTCpuSel \
 "- MPlayer stürzte aufgrund einer 'ungültigen Anweisung' ab.\n"\

@@ -119,7 +119,7 @@ static const char help_text[]=
 #define MSGTR_ForcedAudioCodec "Наложен аудио кодек: %s\n"
 #define MSGTR_Video_NoVideo "Видео: няма видео\n"
 #define MSGTR_NotInitializeVOPorVO "\nФАТАЛНО: Видео филтъра (-vf) или изхода (-vo) не могат да бъдат инициализирани.\n"
-#define MSGTR_Paused "\n  =====  ПАУЗА  =====\r" // no more than 23 characters (status line for audio files)
+#define MSGTR_Paused "  =====  ПАУЗА  =====" // no more than 23 characters (status line for audio files)
 #define MSGTR_PlaylistLoadUnable "\nPlaylist-ът не може да бъде зареден %s.\n"
 #define MSGTR_Exit_SIGILL_RTCpuSel \
 "- MPlayer катастрофира заради 'Невалидна инструкция'.\n"\

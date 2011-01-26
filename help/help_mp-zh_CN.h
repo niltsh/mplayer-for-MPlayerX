@@ -120,7 +120,7 @@ static const char help_text[]=
 #define MSGTR_ForcedAudioCodec "强制使用音频编解码器：%s\n"
 #define MSGTR_Video_NoVideo "视频：没有视频流\n"
 #define MSGTR_NotInitializeVOPorVO "\n致命错误：无法初始设置视频过滤器（-vf）或视频输出（-vf）。\n"
-#define MSGTR_Paused "\n  =====  暂停  =====\r" // no more than 23 characters (status line for audio files)
+#define MSGTR_Paused "  =====  暂停  =====" // no more than 23 characters (status line for audio files)
 #define MSGTR_PlaylistLoadUnable "\n无法装载播放列表 %s\n"
 #define MSGTR_Exit_SIGILL_RTCpuSel \
 "- “非法指令”导致 MPlayer 崩溃。\n"\

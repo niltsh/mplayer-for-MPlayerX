@@ -116,7 +116,7 @@ static const char help_text[]=
 #define MSGTR_ForcedAudioCodec "Εξαναγκασμός χρήσης του codec ήχου: %s\n"
 #define MSGTR_Video_NoVideo "Βίντεο: δεν υπάρχει βίντεο!!!\n"
 #define MSGTR_NotInitializeVOPorVO "\n Σφάλμα: Αδύνατη η αρχικοποίηση του φίλτρου βίντεο (-vf) ή της εξόδου βίντεο (-vo)!\n"
-#define MSGTR_Paused "\n  =====  ΠΑΥΣΗ  =====\r"
+#define MSGTR_Paused "  =====  ΠΑΥΣΗ  ====="
 #define MSGTR_PlaylistLoadUnable "\n Αδύνατη η φόρτωση  της λίστας αναπαραγωγής %s\n"
 #define MSGTR_Exit_SIGILL_RTCpuSel \
 "- Το MPlayer κατέρρευσε από ένα 'Illegal Instruction'.\n"\

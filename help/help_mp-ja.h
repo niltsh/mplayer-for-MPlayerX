@@ -113,7 +113,7 @@ static const char help_text[]=
 #define MSGTR_ForcedAudioCodec "指定された音声コーデック: %s\n"
 #define MSGTR_Video_NoVideo "Video: 映像がありません\n"
 #define MSGTR_NotInitializeVOPorVO "\nFATAL: 画像フィルター(-vf)か画像出力(-vo)の初期化に失敗しました.\n"
-#define MSGTR_Paused "\n  =====  停止  =====\r" // no more than 23 characters (status line for audio files)
+#define MSGTR_Paused "  =====  停止  =====" // no more than 23 characters (status line for audio files)
 #define MSGTR_PlaylistLoadUnable "\nプレイリストの読み込みが出来ません %s.\n"
 #define MSGTR_Exit_SIGILL_RTCpuSel \
 "- MPlayerは不正な命令(Illegal Instruction)によりクラッシュしました\n"\

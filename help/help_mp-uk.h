@@ -113,7 +113,7 @@ static const char help_text[]=
 #define MSGTR_ForcedAudioCodec "Примусовий аудіо кодек: %s\n"
 #define MSGTR_Video_NoVideo "Відео: без відео\n"
 #define MSGTR_NotInitializeVOPorVO "\nFATAL: Неможливо ініціалізувати відео фільтри (-vf) або відео вивід (-vo).\n"
-#define MSGTR_Paused "\n  =====  ПАУЗА  =====\r"
+#define MSGTR_Paused "  =====  ПАУЗА  ====="
 #define MSGTR_PlaylistLoadUnable "\nНеможливо завантажити playlist %s.\n"
 #define MSGTR_Exit_SIGILL_RTCpuSel \
 "- MPlayer зламався через 'Невірні інструкції'.\n"\

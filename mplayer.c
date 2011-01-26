@@ -2476,17 +2476,11 @@ static void pause_loop(void)
 {
     mp_cmd_t* cmd;
     if (!quiet) {
-        // Small hack to display the pause message on the OSD line.
-        // The pause string is: "\n == PAUSE == \r" so we need to
-        // take the first and the last char out
         if (term_osd && !mpctx->sh_video) {
-            char msg[128] = MSGTR_Paused;
-            int mlen = strlen(msg);
-            msg[mlen-1] = '\0';
-            set_osd_msg(OSD_MSG_PAUSE, 1, 0, "%s", msg+1);
+            set_osd_msg(OSD_MSG_PAUSE, 1, 0, MSGTR_Paused);
             update_osd_msg();
         } else
-            mp_msg(MSGT_CPLAYER,MSGL_STATUS,MSGTR_Paused);
+            mp_msg(MSGT_CPLAYER,MSGL_STATUS,"\n"MSGTR_Paused"\r");
         mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_PAUSED\n");
     }
 #ifdef CONFIG_GUI

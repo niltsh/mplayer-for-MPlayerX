@@ -120,7 +120,7 @@ static const char help_text[]=
 #define MSGTR_ForcedAudioCodec "Codec audio forþat: %s\n"
 #define MSGTR_Video_NoVideo "Video: nu existã video\n"
 #define MSGTR_NotInitializeVOPorVO "\nFATAL: Nu pot iniþializa filtrele video (-vf) sau ieºirea video (-vo).\n"
-#define MSGTR_Paused "\n  =====  PAUZÃ  =====\r" // no more than 23 characters (status line for audio files)
+#define MSGTR_Paused "  =====  PAUZÃ  =====" // no more than 23 characters (status line for audio files)
 #define MSGTR_PlaylistLoadUnable "\nNu pot sã încarc playlistul %s.\n"
 #define MSGTR_Exit_SIGCRASH \
 "- MPlayer a murit. Nu ar trebui sã se întâmple asta.\n"\

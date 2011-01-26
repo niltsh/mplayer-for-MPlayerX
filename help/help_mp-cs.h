@@ -118,7 +118,7 @@ static const char help_text[]=
 #define MSGTR_ForcedAudioCodec "Vynucen audio kodek: %s\n"
 #define MSGTR_Video_NoVideo "Video: Žádné video\n"
 #define MSGTR_NotInitializeVOPorVO "\nKritická chyba: Nemohu inicializovat video filtry (-vf) nebo video výstup (-vo)!\n"
-#define MSGTR_Paused "\n===== POZASTAVENO =====\r"
+#define MSGTR_Paused "===== POZASTAVENO ====="
 #define MSGTR_PlaylistLoadUnable "\nNemohu načíst playlist %s.\n"
 #define MSGTR_Exit_SIGILL_RTCpuSel \
 "- MPlayer havaroval kvůli 'Illegal Instruction'.\n"\
