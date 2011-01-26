@@ -2475,6 +2475,9 @@ static double update_video(int *blit_frame)
 static void pause_loop(void)
 {
     mp_cmd_t* cmd;
+#ifdef CONFIG_STREAM_CACHE
+    int old_cache_fill = stream_cache_size > 0 ? cache_fill_status(mpctx->stream) : 0;
+#endif
     if (!quiet) {
         if (term_osd && !mpctx->sh_video) {
             set_osd_msg(OSD_MSG_PAUSE, 1, 0, MSGTR_Paused);
@@ -2513,6 +2516,22 @@ static void pause_loop(void)
 #ifdef CONFIG_MENU
         if (vf_menu)
             vf_menu_pause_update(vf_menu);
+#endif
+#ifdef CONFIG_STREAM_CACHE
+        if (!quiet && stream_cache_size > 0)
+        {
+            int new_cache_fill = cache_fill_status(mpctx->stream);
+            if (new_cache_fill != old_cache_fill) {
+                if (term_osd && !mpctx->sh_video) {
+                    set_osd_msg(OSD_MSG_PAUSE, 1, 0, MSGTR_Paused" %d%%",
+                                new_cache_fill);
+                    update_osd_msg();
+                } else
+                    mp_msg(MSGT_CPLAYER, MSGL_STATUS, MSGTR_Paused" %d%%\r",
+                           new_cache_fill);
+                old_cache_fill = new_cache_fill;
+            }
+        }
 #endif
         usec_sleep(20000);
     }
