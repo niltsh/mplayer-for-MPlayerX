@@ -2518,8 +2518,7 @@ static void pause_loop(void)
             vf_menu_pause_update(vf_menu);
 #endif
 #ifdef CONFIG_STREAM_CACHE
-        if (!quiet && stream_cache_size > 0)
-        {
+        if (!quiet && stream_cache_size > 0) {
             int new_cache_fill = cache_fill_status(mpctx->stream);
             if (new_cache_fill != old_cache_fill) {
                 if (term_osd && !mpctx->sh_video) {
