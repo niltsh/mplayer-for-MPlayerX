@@ -882,7 +882,7 @@ end
       <literal>char</literal>-Zeichens innerhalb der Grafik fest
       (<literal>0,0</literal> steht für die obere linke Ecke).
       <literal>width</literal> und <literal>height</literal> sind die Maße der
-      Zeichen in Pixel.
+      Zeichen in Pixel. Das Zeichen kann in UTF-8-Kodierung angegeben werden.
     </para>
 
     <para>
