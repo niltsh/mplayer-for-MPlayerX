@@ -3660,7 +3660,7 @@ if (mpctx->stream->type == STREAMTYPE_DVDNAV) {
 }
 #endif
 
-while(!mpctx->eof){
+while(!mpctx->eof || (mpctx->sh_audio && !mpctx->d_audio->eof)){
     float aq_sleep_time=0;
 
 if(dvd_last_chapter>0) {
