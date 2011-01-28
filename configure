@@ -404,7 +404,7 @@ Codecs:
   --disable-liba52          disable liba52 [autodetect]
   --disable-libmpeg2        disable libmpeg2 [autodetect]
   --disable-libmpeg2-internal disable builtin libmpeg2 [autodetect]
-  --disable-musepack        disable musepack support [autodetect]
+  --enable-musepack         enable libmpcdec support (deprecated in favour of libavcodec) [disabled]
   --disable-libopencore_amrnb disable libopencore_amr narrowband [autodetect]
   --disable-libopencore_amrwb disable libopencore_amr wideband [autodetect]
   --disable-libopenjpeg     disable OpenJPEG (JPEG2000) input/output support [autodetect]
@@ -806,7 +806,7 @@ _enca=auto
 _inet6=auto
 _gethostbyname2=auto
 _ftp=auto
-_musepack=auto
+_musepack=no
 _vstream=auto
 _pthreads=auto
 _w32threads=auto
@@ -6503,7 +6503,7 @@ fi
 echores "$_libdca"
 
 echocheck "libmpcdec (musepack, version >= 1.2.1 required)"
-if test "$_musepack" = auto ; then
+if test "$_musepack" = yes ; then
   _musepack=no
   cat > $TMPC << EOF
 #include <stddef.h>
