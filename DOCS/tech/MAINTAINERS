@@ -84,8 +84,8 @@ MPlayer code:
     * playtree, input layer: Alban Bedel
     * libswscale: Michael Niedermayer, Luca Abeni
     * DVB support: Nico Sabbi
-    * GUI: None
-    * GUI skins: Diego Biurrun
+    * GUI: Ingo Brückl
+    * GUI skins: Ingo Brückl
     * EDL code: Oded Shimon
 
 Imported libs/projects:
