@@ -547,15 +547,15 @@ end
         <varlistentry>
           <term>
             <literal>
-              <anchor id="skin-font"/>font = fontfile, fontid
+              <anchor id="skin-font"/>font = fontfile
             </literal>
           </term>
           <listitem>
             <para>
               Definiert eine Schrift. <literal>fontfile</literal> ist der Name der
               Schrift-Beschreibungsdatei mit der Erweiterung <filename>.fnt</filename>
-              (gieb hier keine Erweiterung an).
-              <literal>fontid</literal> wird verwendet, um auf die Schrift zu verweisen
+              (gib hier keine Erweiterung an) und
+              wird verwendet, um auf die Schrift zu verweisen
               (siehe <link linkend="skin-dlabel">dlabel</link>
               und <link linkend="skin-slabel">slabel</link>). Bis zu 25 Schriften können
               definiert werden.
@@ -566,18 +566,18 @@ end
         <varlistentry>
           <term>
             <literal>
-              <anchor id="skin-slabel"/>slabel = X, Y, fontid, "text"
+              <anchor id="skin-slabel"/>slabel = X, Y, fontfile, "text"
             </literal>
           </term>
           <listitem>
             <para>
               Platziere ein statisches Label an Position <literal>X,Y</literal>.
               <literal>text</literal> wird mittels der identifizierten
-              <literal>fontid</literal> angezeigt. Der Text ist einfach ein
+              <literal>fontfile</literal> angezeigt. Der Text ist einfach ein
               eine Ausgangszeichenkette (<literal>$x</literal>-Variablen funktionieren nicht),
               eingeschlossen von doppelten Anführungszeichen (das "-Zeichen kann jedoch
               nicht Teil des Textes sein).
-              Das Label wird mittels der über die <literal>fontid</literal> identifizierten
+              Das Label wird mittels der über die <literal>fontfile</literal> identifizierten
               Schrift angezeigt.
             </para>
           </listitem>
@@ -586,7 +586,7 @@ end
         <varlistentry>
           <term>
             <literal>
-              <anchor id="skin-dlabel"/>dlabel = X, Y, length, align, fontid, "text"
+              <anchor id="skin-dlabel"/>dlabel = X, Y, length, align, fontfile, "text"
             </literal>
           </term>
           <listitem>
@@ -607,7 +607,7 @@ end
               Der anzuzeigende Text wird mit <literal>text</literal> festgelegt:
               Er muss zwischen doppelten Anführungszeichen stehen (das "-Zeichen kann jedoch
               nicht Teil des Textes sein).
-              Das Label wird mittels der über die <literal>fontid</literal> identifizierten
+              Das Label wird mittels der über die <literal>fontfile</literal> identifizierten
               Schrift angezeigt.
               Du kannst folgende Variablen im Text verwenden:
             </para>

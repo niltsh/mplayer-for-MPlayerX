@@ -446,12 +446,12 @@ blocks.
 
 <varlistentry>
   <term><literal>
-  <anchor id="skin-font"/>font = fontfile, fontid
+  <anchor id="skin-font"/>font = fontfile
   </literal></term>
   <listitem><para>
   Defines a font. <literal>fontfile</literal> is the name of a font description
   file with a <filename>.fnt</filename> extension (do not specify the extension
-  here).  <literal>fontid</literal> is used to refer to the font
+  here) and is used to refer to the font
   (see <link linkend="skin-dlabel">dlabel</link>
   and <link linkend="skin-slabel">slabel</link>). Up to 25 fonts can be defined.
   </para></listitem>
@@ -459,21 +459,21 @@ blocks.
 
 <varlistentry>
   <term><literal>
-  <anchor id="skin-slabel"/>slabel = X, Y, fontid, "text"
+  <anchor id="skin-slabel"/>slabel = X, Y, fontfile, "text"
   </literal></term>
   <listitem><para>
   Place a static label at the position <literal>X,Y</literal>.
   <literal>text</literal> is displayed using the font identified by
-  <literal>fontid</literal>. The text is just a raw string
+  <literal>fontfile</literal>. The text is just a raw string
   (<literal>$x</literal> variables do not work) that must be enclosed between
   double quotes (but the " character cannot be part of the text). The
-  label is displayed using the font identified by <literal>fontid</literal>.
+  label is displayed using the font identified by <literal>fontfile</literal>.
   </para></listitem>
 </varlistentry>
 
 <varlistentry>
   <term><literal>
-  <anchor id="skin-dlabel"/>dlabel = X, Y, length, align, fontid, "text"
+  <anchor id="skin-dlabel"/>dlabel = X, Y, length, align, fontfile, "text"
   </literal></term>
   <listitem>
   <para>
@@ -490,7 +490,7 @@ blocks.
   The text to be displayed is given by <literal>text</literal>: It must be
   written between double quotes (but the " character cannot be part of the
   text). The label is displayed using the font identified by
-  <literal>fontid</literal>. You can use the following variables in the text:
+  <literal>fontfile</literal>. You can use the following variables in the text:
   </para>
 
   <informaltable>

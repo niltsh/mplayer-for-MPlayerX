@@ -471,9 +471,8 @@ static int cmd_potmeter( char * in )
 }
 
 static int cmd_font( char * in )
-{ // font=fontname,fontid
+{ // font=fontname
  char    name[512];
- char    id[512];
  wItem * item;
 
  CHECKDEFLIST( "font" );
@@ -483,7 +482,6 @@ static int cmd_font( char * in )
  CHECK( "menu" );
 
  cutItem( in,name,',',0 );
- cutItem( in,id,',',1 );
 
  mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"\n[skin] font\n" );
  mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[skin]  name: %s\n",name );
@@ -542,7 +540,7 @@ static int cmd_slabel( char * in )
 }
 
 static int cmd_dlabel( char * in )
-{ // dlabel=x,y,sx,align,fontid,string ...
+{ // dlabel=x,y,sx,align,fontfile,string ...
  char    tmp[512];
  char    sid[63];
  int     x,y,sx,id,a;
