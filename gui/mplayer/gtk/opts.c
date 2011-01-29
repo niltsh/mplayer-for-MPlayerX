@@ -1557,33 +1557,33 @@ static void audioButton(GtkButton *button, gpointer user_data) {
     case 1:
 #ifdef CONFIG_OSS_AUDIO
       if (strncmp(ao_driver[0], "oss", 3) == 0) {
-        gfree(&gtkAOOSSDevice);
+        gfree((void **) &gtkAOOSSDevice);
         gtkAOOSSDevice = gstrdup(getGtkEntryText(CEAudioDevice));
-        gfree(&gtkAOOSSMixer);
+        gfree((void **) &gtkAOOSSMixer);
         gtkAOOSSMixer = gstrdup(getGtkEntryText(CEAudioMixer));
-        gfree(&gtkAOOSSMixerChannel);
+        gfree((void **) &gtkAOOSSMixerChannel);
         gtkAOOSSMixerChannel = gstrdup(getGtkEntryText(CEAudioMixerChannel));
       }
 #endif
 #ifdef CONFIG_ALSA
       if (strncmp(ao_driver[0], "alsa", 4) == 0) {
-        gfree(&gtkAOALSADevice);
+        gfree((void **) &gtkAOALSADevice);
         gtkAOALSADevice = gstrdup(getGtkEntryText(CEAudioDevice));
-        gfree(&gtkAOALSAMixer);
+        gfree((void **) &gtkAOALSAMixer);
         gtkAOALSAMixer = gstrdup(getGtkEntryText(CEAudioMixer));
-        gfree(&gtkAOALSAMixerChannel);
+        gfree((void **) &gtkAOALSAMixerChannel);
         gtkAOALSAMixerChannel = gstrdup(getGtkEntryText(CEAudioMixerChannel));
       }
 #endif
 #ifdef CONFIG_SDL
       if (strncmp(ao_driver[0], "sdl", 3) == 0) {
-        gfree(&gtkAOSDLDriver);
+        gfree((void **) &gtkAOSDLDriver);
         gtkAOSDLDriver = gstrdup(getGtkEntryText(CEAudioDevice));
       }
 #endif
 #ifdef CONFIG_ESD
       if (strncmp(ao_driver[0], "esd", 3) == 0) {
-        gfree(&gtkAOESDDevice);
+        gfree((void **) &gtkAOESDDevice);
         gtkAOESDDevice = gstrdup(getGtkEntryText(CEAudioDevice));
       }
 #endif

@@ -86,7 +86,7 @@ void gtkInit( void )
   win=gtk_window_new( GTK_WINDOW_TOPLEVEL );
 
   if ( !gtkIcon )
-    gtkIcon=gdk_pixmap_colormap_create_from_xpm_d( win->window,gdk_colormap_get_system(),&gtkIconMask,&win->style->bg[GTK_STATE_NORMAL],MPlayer_mini_xpm );
+    gtkIcon=gdk_pixmap_colormap_create_from_xpm_d( win->window,gdk_colormap_get_system(),&gtkIconMask,&win->style->bg[GTK_STATE_NORMAL],(gchar **) MPlayer_mini_xpm );
 
   guiIcon=GDK_WINDOW_XWINDOW( gtkIcon );
   guiIconMask=GDK_WINDOW_XWINDOW( gtkIconMask );
