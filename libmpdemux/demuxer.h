@@ -294,8 +294,11 @@ static inline demux_packet_t* new_demux_packet(int len){
   dp->buffer=NULL;
   if (len > 0 && (dp->buffer = (unsigned char *)malloc(len + MP_INPUT_BUFFER_PADDING_SIZE)))
     memset(dp->buffer + len, 0, MP_INPUT_BUFFER_PADDING_SIZE);
-  else
-    dp->len = 0;
+  else if (len) {
+    // do not even return a valid packet if allocation failed
+    free(dp);
+    return NULL;
+  }
   return dp;
 }
 
