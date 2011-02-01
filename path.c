@@ -272,3 +272,34 @@ char *mp_path_join(const char *base, const char *path)
     strcat(ret, path);
     return ret;
 }
+
+/**
+ * @brief Same as mp_path_join but always treat the first parameter as a
+ *        directory.
+ * @param dir Directory base path.
+ * @param append Right part to append to dir.
+ * @return New allocated string with the path, or NULL in case of error.
+ */
+char *mp_dir_join(const char *dir, const char *append)
+{
+    char *tmp, *ret;
+    size_t dirlen = strlen(dir);
+    size_t i      = dirlen - 1;
+
+#if HAVE_DOS_PATHS
+    if ((dirlen == 2 && dir[0] && dir[1] == ':') // "X:" only
+        || dirlen == 0 || dir[i] == '\\' || dir[i] == '/')
+#else
+    if (dirlen == 0 || dir[i] == '/')
+#endif
+        return mp_path_join(dir, append);
+
+    tmp = malloc(dirlen + 2);
+    if (!tmp)
+        return NULL;
+    strcpy(tmp, dir);
+    strcpy(tmp + dirlen, "/");
+    ret = mp_path_join(tmp, append);
+    free(tmp);
+    return ret;
+}
