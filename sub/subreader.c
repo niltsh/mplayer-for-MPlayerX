@@ -2012,21 +2012,23 @@ static void append_dir_subtitles(struct sub_list *slist, const char *path,
                 }
 
                 if (prio) {
+                    char *subpath;
                     prio += prio;
 #ifdef CONFIG_ICONV
                     if (i < 3){ // prefer UTF-8 coded
                         prio++;
                     }
 #endif
-                    sprintf(tmpresult, "%s/%s", path, de->d_name);
-                    // fprintf(stderr, "%s priority %d\n", tmpresult, prio);
-                    if ((f = fopen(tmpresult, "rt"))) {
+                    subpath = mp_dir_join(path, de->d_name);
+                    // fprintf(stderr, "%s priority %d\n", subpath, prio);
+                    if ((f = fopen(subpath, "rt"))) {
                         struct subfn *sub = &slist->subs[slist->sid++];
 
                         fclose(f);
                         sub->priority = prio;
-                        sub->fname    = strdup(tmpresult);
-                    }
+                        sub->fname    = subpath;
+                    } else
+                        free(subpath);
                 }
 
             }
