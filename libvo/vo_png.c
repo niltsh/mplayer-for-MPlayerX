@@ -54,6 +54,7 @@ const LIBVO_EXTERN (png)
 
 static int z_compression;
 static char *png_outdir;
+static char *png_outfile_prefix;
 static int framenum;
 static int use_alpha;
 static AVCodecContext *avctx;
@@ -135,7 +136,7 @@ static uint32_t draw_image(mp_image_t* mpi){
     // if -dr or -slices then do nothing:
     if(mpi->flags&(MP_IMGFLAG_DIRECT|MP_IMGFLAG_DRAW_CALLBACK)) return VO_TRUE;
 
-    snprintf (buf, 100, "%s/%08d.png", png_outdir, ++framenum);
+    snprintf (buf, 100, "%s/%s%08d.png", png_outdir, png_outfile_prefix, ++framenum);
     outfile = fopen(buf, "wb");
     if (!outfile) {
         mp_msg(MSGT_VO,MSGL_WARN, MSGTR_LIBVO_PNG_ErrorOpeningForWriting, strerror(errno));
@@ -201,6 +202,8 @@ static void uninit(void){
     outbuffer_size = 0;
     free(png_outdir);
     png_outdir = NULL;
+    free(png_outfile_prefix);
+    png_outfile_prefix = NULL;
 }
 
 static void check_events(void){}
@@ -215,6 +218,7 @@ static const opt_t subopts[] = {
     {"alpha", OPT_ARG_BOOL, &use_alpha, NULL},
     {"z",   OPT_ARG_INT, &z_compression, int_zero_to_nine},
     {"outdir",      OPT_ARG_MSTRZ,  &png_outdir,           NULL},
+    {"prefix", OPT_ARG_MSTRZ, &png_outfile_prefix, NULL },
     {NULL}
 };
 
@@ -222,6 +226,7 @@ static int preinit(const char *arg)
 {
     z_compression = 0;
     png_outdir = strdup(".");
+    png_outfile_prefix = strdup("");
     use_alpha = 0;
     if (subopt_parse(arg, subopts) != 0) {
         return -1;
