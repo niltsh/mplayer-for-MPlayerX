@@ -29,6 +29,8 @@
 #include "gui/bitmap.h"
 #include "gui/wm/ws.h"
 
+#define DELAYTIME 2500   // in milliseconds
+
 char * Translate( char * str );
 void PutImage( txSample * bf,int x, int y, int max, int ofs );
 void SimplePotmeterPutImage( txSample * bf, int x, int y, float frac );

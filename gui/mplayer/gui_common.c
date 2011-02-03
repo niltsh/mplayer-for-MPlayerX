@@ -298,10 +298,34 @@ void Render( wsTWindow * window,wItem * Items,int nrItems,char * db,int size )
           if ( image ) PutImage( image,item->x,item->y,1,0 );
      case itDLabel:
           {
+           int x;
+           unsigned int d;
            char * t = Translate( item->label );
-           int    l = fntTextWidth( item->fontid,t );
-           l=(l?l:item->width);
-           image=fntRender( item,l-(GetTimerMS() / 20)%l,t );
+           if ( g_strcmp0( item->text, t ) != 0 )
+            {
+             g_free( item->text );
+             item->text = g_strdup( t );
+             item->textwidth = fntTextWidth( item->fontid, t );
+             item->starttime = GetTimerMS();
+             item->last_x = 0;
+            }
+           d = GetTimerMS() - item->starttime;
+           if ( d < DELAYTIME ) x = item->last_x;   // don't scroll yet
+           else
+            {
+             int l;
+             char c[2];
+             l = (item->textwidth ? item->textwidth : item->width);
+             x = l - ((d - DELAYTIME) / 20) % l - 1;
+             c[0] = *item->text;
+             c[1] = '\0';
+             if ( x < (fntTextWidth( item->fontid, c ) + 1) >> 1)
+              {
+               item->starttime = GetTimerMS();   // stop again
+               item->last_x = x;                 // at current x pos
+              }
+            }
+           image = fntRender( item, x, t );
 	  }
           if ( image ) PutImage( image,item->x,item->y,1,0 );
           break;

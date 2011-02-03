@@ -148,6 +148,10 @@ typedef struct
  int            fontid;
  int            align;
  char         * label;
+ char         * text;
+ int            textwidth;
+ unsigned int   starttime;
+ int            last_x;
 // ---
  int            event;
 // ---

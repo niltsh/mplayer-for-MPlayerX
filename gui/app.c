@@ -114,6 +114,11 @@ void appClearItem( wItem * item )
  item->fontid=0;
  free(item->label);
  item->label=NULL;
+ free(item->text);
+ item->text=NULL;
+ item->textwidth=0;
+ item->starttime=0;
+ item->last_x=0;
  item->event=0;
 }
 
