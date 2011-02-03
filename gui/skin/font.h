@@ -55,6 +55,6 @@ int  fntTextHeight( int id, char * str );
 int  fntTextWidth( int id, char * str );
 
 int        fntRead( char * path, char * fname );
-txSample * fntRender( wItem * item, int px, const char * fmt, ... );
+txSample * fntRender( wItem * item, int px, char * txt );
 
 #endif /* MPLAYER_GUI_FONT_H */

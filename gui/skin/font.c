@@ -232,34 +232,29 @@ int fntTextHeight( int id,char * str )
  return max;
 }
 
-txSample * fntRender( wItem * item,int px,const char * fmt,... )
+txSample * fntRender( wItem * item,int px,char * txt )
 {
- va_list         ap;
- unsigned char * u, p[512];
+ unsigned char * u;
  int 	         c, i, dx = 0, tw, fbw, iw, id, ofs;
  int 		 x,y,fh,fw,fyc,yc;
  uint32_t      * ibuf;
  uint32_t      * obuf;
  gboolean        utf8;
 
- va_start( ap,fmt );
- vsnprintf( p,512,fmt,ap );
- va_end( ap );
-
  iw=item->width;
  id=item->fontid;
 
  if ( ( !item )||
       ( !Fonts[id] )||
-      ( !p[0] )||
-      ( !fntTextWidth( id,p ) ) ) return NULL;
+      ( !txt[0] )||
+      ( !fntTextWidth( id,txt ) ) ) return NULL;
 
- tw=fntTextWidth( id,p );
+ tw=fntTextWidth( id,txt );
  fbw=Fonts[id]->Bitmap.Width;
 
  if ( item->Bitmap.Image == NULL )
   {
-   item->Bitmap.Height=item->height=fntTextHeight( id,p );
+   item->Bitmap.Height=item->height=fntTextHeight( id,txt );
    item->Bitmap.Width=item->width=iw;
    item->Bitmap.ImageSize=item->height * iw * 4;
    if ( !item->Bitmap.ImageSize ) return NULL;
@@ -278,16 +273,16 @@ txSample * fntRender( wItem * item,int px,const char * fmt,... )
     {
      default:
      case fntAlignLeft:   dx=0; break;
-     case fntAlignCenter: dx=( iw - fntTextWidth( id,p ) ) / 2; break;
-     case fntAlignRight:  dx=iw - fntTextWidth( id,p ); break;
+     case fntAlignCenter: dx=( iw - fntTextWidth( id,txt ) ) / 2; break;
+     case fntAlignRight:  dx=iw - fntTextWidth( id,txt ); break;
     }
 
   } else dx+=px;
 
  ofs=dx;
 
- utf8 = g_utf8_validate( p, -1, NULL);
- u = p;
+ utf8 = g_utf8_validate( txt, -1, NULL);
+ u = txt;
 
  while ( *u )
   {
@@ -315,9 +310,9 @@ txSample * fntRender( wItem * item,int px,const char * fmt,... )
  if ( ofs > 0 && tw > item->width )
   {
    dx=ofs;
-   u = p + strlen( p );
+   u = txt + strlen( txt );
 
-   while ( u > p )
+   while ( u > (unsigned char *) txt )
     {
      c = fntGetCharIndex( id, &u, utf8, -1 );
 
