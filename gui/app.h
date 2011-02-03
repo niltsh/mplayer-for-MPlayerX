@@ -130,28 +130,28 @@ typedef struct
 // ---
 typedef struct
 {
- int        type;
+ int            type;
 // ---
- int        x,y;
- int        width,height;
+ int            x,y;
+ int            width,height;
 // ---
- int        px,py,psx,psy;
+ int            px,py,psx,psy;
 // ---
- int        msg,msg2;
- int        pressed,tmp;
- int        key,key2;
- int        phases;
- float      value;
- txSample   Bitmap;
- txSample   Mask;
+ int            msg,msg2;
+ int            pressed,tmp;
+ int            key,key2;
+ int            phases;
+ float          value;
+ txSample       Bitmap;
+ txSample       Mask;
 // ---
- int        fontid;
- int        align;
- char     * label;
+ int            fontid;
+ int            align;
+ char         * label;
 // ---
- int        event;
+ int            event;
 // ---
- int        R,G,B;
+ int            R,G,B;
 } wItem;
 
 typedef struct
