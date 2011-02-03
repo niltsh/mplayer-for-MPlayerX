@@ -194,7 +194,7 @@ make</screen>
       Du wirst wahrscheinlich Logdateien, Konfigurationsinformationen und Beispieldateien
       in deinen Fehlerbericht aufnehmen müssen. Werden einige von ihnen ziemlich groß,
       ist es besser, wenn du sie auf unseren
-      <ulink url="ftp://upload.mplayerhq.hu/MPlayer/incoming/">FTP-Server</ulink>
+      <ulink url="ftp://upload.mplayerhq.hu/incoming/">FTP-Server</ulink>
       hochlädst, und zwar in komprimierter Form (gzip und bzip2 bevorzugt). Gib dann in deinem
       Fehlerbericht nur den Pfad- und den Dateinamen an. Unsere Mailinglisten haben ein
       Nachrichten-Größenlimit von 80k, wenn du etwas größeres hast, musst du es
@@ -363,7 +363,7 @@ ld -v</screen>
 
       <para>
         Wenn dein Problem speziell mit einer oder mehreren Dateien zu tun hat, lade diese bitte hoch nach:
-        <ulink url="ftp://upload.mplayerhq.hu/MPlayer/incoming/"/>
+        <ulink url="ftp://upload.mplayerhq.hu/incoming/"/>
       </para>
 
       <para>

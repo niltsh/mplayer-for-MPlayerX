@@ -248,7 +248,7 @@ et que c'est donc une bonne idée de souscrire pour recevoir votre réponse.
 <para>
 Vous pouvez avoir besoin d'inclure des fichiers de log, de configuration
 ou d'échantillon. Si certains sont très gros alors il vaut mieux les uploader
-sur notre <ulink url="ftp://upload.mplayerhq.hu/MPlayer/incoming/">serveur FTP</ulink>
+sur notre <ulink url="ftp://upload.mplayerhq.hu/incoming/">serveur FTP</ulink>
 en format compressé (gzip et bzip2 préférés) et indiquer uniquement leur
 chemin et nom dans le rapport de bogue.
 Nos listes de diffusion ont une taille de message limite de 80k, si vous
@@ -398,7 +398,7 @@ dans un fichier comme ceci&nbsp;:
 <para>
 Si votre problème est spécifique à un ou plusieurs fichiers, alors merci d'uploader
 le(s) fautif(s) sur&nbsp;:
-<ulink url="ftp://upload.mplayerhq.hu/MPlayer/incoming/"/>
+<ulink url="ftp://upload.mplayerhq.hu/incoming/"/>
 </para>
 
 <para>

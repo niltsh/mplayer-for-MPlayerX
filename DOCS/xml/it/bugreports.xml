@@ -242,7 +242,7 @@ una buona idea iscriversi per poter effettivamente ricevere la risposta.
 Potrebbe servire che tu includa nel tuo rapporto sul bug registrazioni,
 configurazioni o file di esempio. Se alcune di queste cose sono abbastanza
 grandi, è meglio caricarle sul nostro
-<ulink url="ftp://upload.mplayerhq.hu/MPlayer/incoming/">server FTP</ulink> in
+<ulink url="ftp://upload.mplayerhq.hu/incoming/">server FTP</ulink> in
 un formato compresso (si preferiscono gzip e bzip2) e inserisci nel rapporto
 solo il nome e il percorso del file. Le nostre mailing list hanno un limite
 sulla dimensione di 80k, se hai qualcosa di più grande devi comprimerlo o
@@ -398,7 +398,7 @@ mplayer -v <replaceable>options</replaceable> <replaceable>filename</replaceable
 <para>
 Se il tuo problema è specifico per uno o più file,
 allora per favore carica quello/i incriminato/i in:
-<ulink url="ftp://upload.mplayerhq.hu/MPlayer/incoming/"/>
+<ulink url="ftp://upload.mplayerhq.hu/incoming/"/>
 </para>
 
 <para>

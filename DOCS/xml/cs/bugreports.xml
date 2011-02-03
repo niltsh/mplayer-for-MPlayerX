@@ -232,7 +232,7 @@ obdrželi svou odpověď.
 <para>
 Bude potřeba připojit log, konfiguraci nebo vzorky souborů ke svému hlášení chyb.
 Pokud jsou některé z nich opravdu velké, pak je raději nahrajte na náš
-<ulink url="ftp://upload.mplayerhq.hu/MPlayer/incoming/">FTP server</ulink>
+<ulink url="ftp://upload.mplayerhq.hu/incoming/">FTP server</ulink>
 v komprimovaném formátu (preferujeme gzip a bzip2) a do zprávy zahrňte pouze
 cestu a název souboru. Naše konference mají limit velikosti zprávy 80k, pokud
 máte něco většího, musíte to zkomprimovat a nahrát na FTP.
@@ -386,7 +386,7 @@ mplayer -v <replaceable>volby</replaceable> <replaceable>film</replaceable> &gt;
 <para>
 Pokud se problém vztahuje k jednomu nebo více souborům, pak prosím nahrajte
 potížisty na:
-<ulink url="ftp://upload.mplayerhq.hu/MPlayer/incoming/"/>
+<ulink url="ftp://upload.mplayerhq.hu/incoming/"/>
 </para>
 
 <para>

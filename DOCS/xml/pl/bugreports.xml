@@ -252,7 +252,7 @@ odpowiedzi.
 Może zajść potrzeba dołączenia logu, konfiguracji lub przykładowego
 pliku w Twoim
 zgłoszeniu błędu. Jeżeli któryś z nich ma duży rozmiar, lepiej załadować go na
-nasz <ulink url="ftp://upload.mplayerhq.hu/MPlayer/incoming/">serwer FTP</ulink>
+nasz <ulink url="ftp://upload.mplayerhq.hu/incoming/">serwer FTP</ulink>
 w skompresowanej postaci (gzip i bzip2 są preferowanymi formatami) i załączyć
 tylko ścieżkę i nazwę pliku do zgłoszenia błędu. Nasza lista ma ustawiony limit
 rozmiaru każdej wiadomości na 80k. Jeżeli potrzebujesz wysłać coś większego,
@@ -411,7 +411,7 @@ do pliku w ten sposób:
 <para>
 Jeżeli Twój problem jest specyficzny dla jednego albo wielu plików, załaduj
 winowajcę(ów) na:
-<ulink url="ftp://upload.mplayerhq.hu/MPlayer/incoming/"/>
+<ulink url="ftp://upload.mplayerhq.hu/incoming/"/>
 </para>
 
 <para>

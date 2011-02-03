@@ -210,7 +210,7 @@ README文件中。如果这未能提供帮助，请查询 已知错误
 <para>
 你可能要在你的错误报告中包含日志，配置或例子文件。如果他们中一些非常大，
 最好把它压缩（请尽量使用gzip或bzip2）并提交到我们的
-<ulink url="ftp://upload.mplayerhq.hu/MPlayer/incoming/">FTP服务器</ulink>
+<ulink url="ftp://upload.mplayerhq.hu/incoming/">FTP服务器</ulink>
 上并且在你的错误报告中只包含路径及文件名称。我们的邮件列表有80k的信息限制，
 如果你有更大的附件，你不得不压缩后提交。
 </para>
@@ -359,7 +359,7 @@ mplayer -v <replaceable>options</replaceable> <replaceable>filename</replaceable
 
 <para>
 如果你的问题只针对一个或更多文件，请把他们上传到：
-<ulink url="ftp://upload.mplayerhq.hu/MPlayer/incoming/"/>
+<ulink url="ftp://upload.mplayerhq.hu/incoming/"/>
 </para>
 
 <para>
