@@ -130,7 +130,7 @@ switch(video_codec){
    }
    mp_msg(MSGT_DECVIDEO,MSGL_V,"OK!\n");
    if(!videobuffer) {
-     videobuffer=(char*)memalign(8,VIDEOBUFFER_SIZE + MP_INPUT_BUFFER_PADDING_SIZE);
+     videobuffer = memalign(8, VIDEOBUFFER_SIZE + MP_INPUT_BUFFER_PADDING_SIZE);
      if (videobuffer) memset(videobuffer+VIDEOBUFFER_SIZE, 0, MP_INPUT_BUFFER_PADDING_SIZE);
      else {
        mp_msg(MSGT_DECVIDEO,MSGL_ERR,MSGTR_ShMemAllocFail);
@@ -225,7 +225,7 @@ switch(video_codec){
    }
    mp_msg(MSGT_DECVIDEO,MSGL_V,"OK!\n");
    if(!videobuffer) {
-     videobuffer=(char*)memalign(8,VIDEOBUFFER_SIZE + MP_INPUT_BUFFER_PADDING_SIZE);
+     videobuffer = memalign(8, VIDEOBUFFER_SIZE + MP_INPUT_BUFFER_PADDING_SIZE);
      if (videobuffer) memset(videobuffer+VIDEOBUFFER_SIZE, 0, MP_INPUT_BUFFER_PADDING_SIZE);
      else {
        mp_msg(MSGT_DECVIDEO,MSGL_ERR,MSGTR_ShMemAllocFail);
@@ -290,7 +290,7 @@ mpeg_header_parser:
    mp_msg(MSGT_DECVIDEO,MSGL_V,"OK!\n");
    // ========= Read & process sequence header & extension ============
    if(!videobuffer) {
-     videobuffer=(char*)memalign(8,VIDEOBUFFER_SIZE + MP_INPUT_BUFFER_PADDING_SIZE);
+     videobuffer = memalign(8, VIDEOBUFFER_SIZE + MP_INPUT_BUFFER_PADDING_SIZE);
      if (videobuffer) memset(videobuffer+VIDEOBUFFER_SIZE, 0, MP_INPUT_BUFFER_PADDING_SIZE);
      else {
        mp_msg(MSGT_DECVIDEO,MSGL_ERR,MSGTR_ShMemAllocFail);
@@ -358,7 +358,7 @@ mpeg_header_parser:
    }
    mp_msg(MSGT_DECVIDEO,MSGL_INFO,"found\n");
    if(!videobuffer) {
-     videobuffer=(char*)memalign(8,VIDEOBUFFER_SIZE + MP_INPUT_BUFFER_PADDING_SIZE);
+     videobuffer = memalign(8, VIDEOBUFFER_SIZE + MP_INPUT_BUFFER_PADDING_SIZE);
      if (videobuffer) memset(videobuffer+VIDEOBUFFER_SIZE, 0, MP_INPUT_BUFFER_PADDING_SIZE);
      else {
        mp_msg(MSGT_DECVIDEO,MSGL_ERR,MSGTR_ShMemAllocFail);
