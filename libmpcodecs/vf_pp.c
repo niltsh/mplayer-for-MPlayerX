@@ -210,7 +210,7 @@ static int vf_open(vf_instance_t *vf, char *args){
         for(i=0; i<=PP_QUALITY_MAX; i++){
 	    PPMode *ppMode;
 
-	    ppMode= (PPMode*)memalign(8, sizeof(PPMode));
+            ppMode = av_malloc(sizeof(PPMode));
 
 	    ppMode->lumMode= hex_mode;
 	    ppMode->chromMode= ((hex_mode&0xFF)>>4) | (hex_mode&0xFFFFFF00);
