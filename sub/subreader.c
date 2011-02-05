@@ -1957,6 +1957,22 @@ static void append_dir_subtitles(struct sub_list *slist, const char *path,
             strcpy_get_ext(tmp_fname_ext, de->d_name);
             strcpy_trim(tmp_fname_trim, tmp_fname_noext);
 
+            // If it's a .sub, check if there is a .idx with the same name. If
+            // there is one, it's certainly a vobsub so we skip it.
+            if (strcasecmp(tmp_fname_ext, "sub") == 0) {
+                char *idx, *idxname = strdup(de->d_name);
+
+                strcpy(idxname + strlen(de->d_name) - sizeof("idx") + 1, "idx");
+                idx = mp_dir_join(path, idxname);
+                free(idxname);
+                f = fopen(idx, "rt");
+                free(idx);
+                if (f) {
+                    fclose(f);
+                    continue;
+                }
+            }
+
             // does it end with a subtitle extension?
             found = 0;
 #ifdef CONFIG_ICONV
