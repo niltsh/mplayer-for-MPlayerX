@@ -3499,7 +3499,7 @@ if(1 || mpctx->sh_video) {
 // after reading video params we should load subtitles because
 // we know fps so now we can adjust subtitle time to ~6 seconds AST
 // check .sub
-  float fps = mpctx->sh_video ? mpctx->sh_video->fps : 25;
+  double fps = mpctx->sh_video ? mpctx->sh_video->fps : 25;
   current_module="read_subtitles_file";
   load_subtitles(filename, fps, add_subtitles);
   if (mpctx->set_of_sub_size > 0)
