@@ -242,7 +242,7 @@ static int decode_audio(sh_audio_t *sh_audio,unsigned char *buf,int minlen,int m
 	    sh_audio->ds->buffer_pos+=y-x;  // put back data (HACK!)
 	if(len2>0){
 	  if (((AVCodecContext *)sh_audio->context)->channels >= 5) {
-            int samplesize = av_get_bits_per_sample_format(((AVCodecContext *)
+            int samplesize = av_get_bits_per_sample_fmt(((AVCodecContext *)
                                     sh_audio->context)->sample_fmt) / 8;
             reorder_channel_nch(buf, AF_CHANNEL_LAYOUT_LAVC_DEFAULT,
                                 AF_CHANNEL_LAYOUT_MPLAYER_DEFAULT,
