@@ -159,10 +159,10 @@ static muxer_stream_t* lavf_new_stream(muxer_t *muxer, int type)
 	switch(type)
 	{
 		case MUXER_TYPE_VIDEO:
-			ctx->codec_type = CODEC_TYPE_VIDEO;
+			ctx->codec_type = AVMEDIA_TYPE_VIDEO;
 			break;
 		case MUXER_TYPE_AUDIO:
-			ctx->codec_type = CODEC_TYPE_AUDIO;
+			ctx->codec_type = AVMEDIA_TYPE_AUDIO;
 			break;
 	}
 
@@ -260,7 +260,7 @@ static void write_chunk(muxer_stream_t *stream, size_t len, unsigned int flags, 
 	pkt.data = stream->buffer;
 
 	if(flags & AVIIF_KEYFRAME)
-		pkt.flags |= PKT_FLAG_KEY;
+		pkt.flags |= AV_PKT_FLAG_KEY;
 	else
 		pkt.flags = 0;
 

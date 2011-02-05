@@ -184,7 +184,7 @@ int mpae_init_lavc(audio_encoder_t *encoder)
 		return 0;
 	}
 
-	lavc_actx->codec_type = CODEC_TYPE_AUDIO;
+	lavc_actx->codec_type = AVMEDIA_TYPE_AUDIO;
 	lavc_actx->codec_id = lavc_acodec->id;
 	// put sample parameters
 	lavc_actx->sample_fmt = AV_SAMPLE_FMT_S16;

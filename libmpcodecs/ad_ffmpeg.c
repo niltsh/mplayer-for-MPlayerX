@@ -59,10 +59,10 @@ static int setup_format(sh_audio_t *sh_audio, const AVCodecContext *lavc_context
     int samplerate    = lavc_context->sample_rate;
     int sample_format = sh_audio->sample_format;
     switch (lavc_context->sample_fmt) {
-        case SAMPLE_FMT_U8:  sample_format = AF_FORMAT_U8;       break;
-        case SAMPLE_FMT_S16: sample_format = AF_FORMAT_S16_NE;   break;
-        case SAMPLE_FMT_S32: sample_format = AF_FORMAT_S32_NE;   break;
-        case SAMPLE_FMT_FLT: sample_format = AF_FORMAT_FLOAT_NE; break;
+        case AV_SAMPLE_FMT_U8:  sample_format = AF_FORMAT_U8;       break;
+        case AV_SAMPLE_FMT_S16: sample_format = AF_FORMAT_S16_NE;   break;
+        case AV_SAMPLE_FMT_S32: sample_format = AF_FORMAT_S32_NE;   break;
+        case AV_SAMPLE_FMT_FLT: sample_format = AF_FORMAT_FLOAT_NE; break;
         default:
             mp_msg(MSGT_DECAUDIO, MSGL_FATAL, "Unsupported sample format\n");
     }
@@ -122,7 +122,7 @@ static int init(sh_audio_t *sh_audio)
     }
     lavc_context->request_channels = audio_output_channels;
     lavc_context->codec_tag = sh_audio->format; //FOURCC
-    lavc_context->codec_type = CODEC_TYPE_AUDIO;
+    lavc_context->codec_type = AVMEDIA_TYPE_AUDIO;
     lavc_context->codec_id = lavc_codec->id; // not sure if required, imho not --A'rpi
 
     /* alloc extra data */
@@ -172,10 +172,10 @@ static int init(sh_audio_t *sh_audio)
       sh_audio->i_bps=sh_audio->wf->nAvgBytesPerSec;
 
   switch (lavc_context->sample_fmt) {
-      case SAMPLE_FMT_U8:
-      case SAMPLE_FMT_S16:
-      case SAMPLE_FMT_S32:
-      case SAMPLE_FMT_FLT:
+      case AV_SAMPLE_FMT_U8:
+      case AV_SAMPLE_FMT_S16:
+      case AV_SAMPLE_FMT_S32:
+      case AV_SAMPLE_FMT_FLT:
           break;
       default:
           return 0;
