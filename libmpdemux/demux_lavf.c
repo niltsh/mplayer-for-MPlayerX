@@ -138,7 +138,7 @@ static int64_t mp_read_seek(void *opaque, int stream_idx, int64_t ts, int flags)
 static void list_formats(void) {
     AVInputFormat *fmt;
     mp_msg(MSGT_DEMUX, MSGL_INFO, "Available lavf input formats:\n");
-    for (fmt = first_iformat; fmt; fmt = fmt->next)
+    for (fmt = av_iformat_next(NULL); fmt; av_iformat_next(fmt))
         mp_msg(MSGT_DEMUX, MSGL_INFO, "%15s : %s\n", fmt->name, fmt->long_name);
 }
 
