@@ -544,7 +544,6 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
     }
 
     /* Add metadata. */
-    av_metadata_conv(avfc, NULL, avfc->iformat->metadata_conv);
     while((t = av_metadata_get(avfc->metadata, "", t, AV_METADATA_IGNORE_SUFFIX)))
         demux_info_add(demuxer, t->key, t->value);
 
