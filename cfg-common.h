@@ -562,6 +562,7 @@ const m_option_t common_opts[] = {
 // ------------------------- subtitles options --------------------
 
     {"sub", &sub_name, CONF_TYPE_STRING_LIST, 0, 0, 0, NULL},
+    {"sub-paths", &sub_paths, CONF_TYPE_STRING_LIST, 0, 0, 0, NULL},
 #ifdef CONFIG_FRIBIDI
     {"fribidi-charset", &fribidi_charset, CONF_TYPE_STRING, 0, 0, 0, NULL},
     {"flip-hebrew", &flip_hebrew, CONF_TYPE_FLAG, 0, 0, 1, NULL},

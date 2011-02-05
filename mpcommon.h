@@ -37,6 +37,7 @@ extern int sub_auto;
 extern float sub_delay;
 extern float sub_fps;
 extern char **sub_name;
+extern char **sub_paths;
 extern char  *font_name;
 extern char  *sub_font_name;
 extern char  *audio_lang;

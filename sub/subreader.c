@@ -2088,6 +2088,19 @@ void load_subtitles(const char *fname, float fps, open_sub_func add_f)
     append_dir_subtitles(&slist, path, fname, 0);
     free(path);
 
+    // Load subtitles in dirs specified by sub-paths option
+    if (sub_paths) {
+        for (i = 0; sub_paths[i]; i++) {
+            path = mp_path_join(fname, sub_paths[i]);
+            if (!path) {
+                free(slist.subs);
+                return;
+            }
+            append_dir_subtitles(&slist, path, fname, 0);
+            free(path);
+        }
+    }
+
     // Load subtitles in ~/.mplayer/sub limiting sub fuzziness
     mp_subdir = get_path("sub/");
     if (mp_subdir)
@@ -2115,7 +2128,7 @@ void load_subtitles(const char *fname, float fps, open_sub_func add_f)
 void load_vob_subtitle(const char *fname, const char * const ifo, void **spu,
                        open_vob_func add_f)
 {
-    char *name, *mp_subdir;
+    char *name = NULL, *mp_subdir = NULL;
 
     // Load subtitles specified by vobsub option
     if (vobsub_name) {
@@ -2137,6 +2150,30 @@ void load_vob_subtitle(const char *fname, const char * const ifo, void **spu,
         return;
     }
 
+    // Try looking at the dirs specified by sub-paths option
+    if (sub_paths) {
+        int i;
+
+        for (i = 0; sub_paths[i]; i++) {
+            char *path, *psub;
+
+            path = mp_path_join(fname, sub_paths[i]);
+            if (!path)
+                goto out;
+
+            psub = mp_dir_join(path, mp_basename(name));
+            free(path);
+            if (!psub)
+                goto out;
+
+            if (add_f(psub, ifo, 0, spu)) {
+                free(psub);
+                goto out;
+            }
+            free(psub);
+        }
+    }
+
     // If still no VOB found, try loading it from ~/.mplayer/sub
     mp_subdir = get_path("sub/");
     if (mp_subdir) {
@@ -2144,6 +2181,8 @@ void load_vob_subtitle(const char *fname, const char * const ifo, void **spu,
         add_f(psub, ifo, 0, spu);
         free(psub);
     }
+
+out:
     free(mp_subdir);
     free(name);
 }

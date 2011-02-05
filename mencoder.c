@@ -179,6 +179,7 @@ char *font_name=NULL;
 char *sub_font_name=NULL;
 float font_factor=0.75;
 char **sub_name=NULL;
+char **sub_paths = NULL;
 float sub_delay=0;
 float sub_fps=0;
 int   sub_auto = 0;
