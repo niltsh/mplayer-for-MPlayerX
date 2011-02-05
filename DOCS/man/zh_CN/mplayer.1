@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 32777
+.\" sync with en/mplayer.1 rev. 32842
 .\" Encoding: UTF-8
 .\"
 .\" MPlayer (C) 2000-2010 MPlayer 团队
@@ -4286,6 +4286,9 @@ PGMYUV 像 PGM, 但也包含 U 和 V 平面, 添加在图像的底部。
 0 没压缩, 9 最强压缩。
 .IPs outdir=<目录名>
 指定保存 PNG 文件的目录（默认值：./）。
+.IPs prefix=<前缀字符串>
+指定用于 PNG 文件名的前缀。（默认：无前缀）。
+Specify the prefix to be used for the PNG filenames (default: no prefix).
 .IPs alpha（默认值：noalpha）
 创建使用 alpha 通道的 PNG 文件。
 注意 MPlayer 通常不支持 alpha 通道，所以该选项只在极少数情况下才有用。
