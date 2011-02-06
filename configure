@@ -3418,6 +3418,14 @@ fi
 echores "$_gethostbyname2"
 
 
+echocheck "sys/poll.h"
+poll_h=no
+def_poll_h='#define HAVE_POLL_H 0'
+header_check sys/poll.h && poll_h=yes &&
+  def_poll_h='#define HAVE_POLL_H 1'
+echores "$poll_h"
+
+
 echocheck "inttypes.h (required)"
 _inttypes=no
 header_check inttypes.h && _inttypes=yes
@@ -8604,6 +8612,7 @@ $def_mkstemp
 $def_mmap
 $def_network
 $def_pic
+$def_poll_h
 $def_posix_memalign
 $def_pthreads
 $def_round
@@ -8631,7 +8640,6 @@ $def_yasm
 #define HAVE_INLINE_ASM 1
 #define HAVE_ISATTY 0
 #define HAVE_LDBRX 0
-#define HAVE_POLL_H 1
 #define HAVE_PPC4XX 0
 #define HAVE_STRERROR_R 0
 #define HAVE_SYMVER_ASM_LABEL 0
