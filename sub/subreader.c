@@ -2161,10 +2161,8 @@ void load_vob_subtitle(const char *fname, const char * const ifo, void **spu,
     if (!name)
         return;
     strcpy_strip_ext(name, fname);
-    if (add_f(name, ifo, 0, spu)) {
-        free(name);
-        return;
-    }
+    if (add_f(name, ifo, 0, spu))
+        goto out;
 
     // Try looking at the dirs specified by sub-paths option
     if (sub_paths) {
@@ -2172,6 +2170,7 @@ void load_vob_subtitle(const char *fname, const char * const ifo, void **spu,
 
         for (i = 0; sub_paths[i]; i++) {
             char *path, *psub;
+            int sub_found;
 
             path = mp_path_join(fname, sub_paths[i]);
             if (!path)
@@ -2182,11 +2181,10 @@ void load_vob_subtitle(const char *fname, const char * const ifo, void **spu,
             if (!psub)
                 goto out;
 
-            if (add_f(psub, ifo, 0, spu)) {
-                free(psub);
-                goto out;
-            }
+            sub_found = add_f(psub, ifo, 0, spu);
             free(psub);
+            if (sub_found)
+                goto out;
         }
     }
 
