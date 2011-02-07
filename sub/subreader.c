@@ -2194,6 +2194,8 @@ void load_vob_subtitle(const char *fname, const char * const ifo, void **spu,
     mp_subdir = get_path("sub/");
     if (mp_subdir) {
         char *psub = mp_path_join(mp_subdir, mp_basename(name));
+        if (!psub)
+            goto out;
         add_f(psub, ifo, 0, spu);
         free(psub);
     }
