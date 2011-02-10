@@ -26,14 +26,14 @@
 #include "mp_msg.h"
 #include "libavutil/avstring.h"
 
-bmpFont * Fonts[MAX_FONTS + 1] = { NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL };
+bmpFont * Fonts[MAX_FONTS] = { NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL };
 
 int fntAddNewFont( char * name )
 {
  int id;
  int i;
 
- for( id=0;id<MAX_FONTS + 1;id++ )
+ for( id=0;id<MAX_FONTS;id++ )
    if ( !Fonts[id] ) break;
 
  if ( id == MAX_FONTS ) return -2;
