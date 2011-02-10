@@ -69,6 +69,57 @@ fail:
     return NULL;
 }
 
+/* Flush the internal muxer buffer.
+ * This is normally called from muxer_write_chunk() once all streams
+ * have seen frames. */
+void muxer_flush(muxer_t *m) {
+    int num;
+
+    if (!m->muxbuf)
+        return;
+
+    mp_msg(MSGT_MUXER, MSGL_V, MSGTR_MuxbufSending, m->muxbuf_num);
+
+    /* fix parameters for all streams */
+    for (num = 0; m->streams[num]; ++num) {
+      muxer_stream_t *str = m->streams[num];
+      if(str->muxer->fix_stream_parameters)
+        muxer_stream_fix_parameters(str->muxer, str);
+    }
+
+    /* write header */
+    if (m->cont_write_header)
+      muxer_write_header(m);
+
+    /* send all buffered frames to muxer */
+    for (num = 0; num < m->muxbuf_num; ++num) {
+      muxbuf_t tmp_buf;
+      muxbuf_t *buf;
+      muxer_stream_t *s;
+      buf = m->muxbuf + num;
+      s = buf->stream;
+
+      /* 1. save timer and buffer (might have changed by now) */
+      tmp_buf.dts = s->timer;
+      tmp_buf.buffer = s->buffer;
+
+      /* 2. move stored timer and buffer into stream and mux it */
+      s->timer = buf->dts;
+      s->buffer = buf->buffer;
+      m->cont_write_chunk(s, buf->len, buf->flags, buf->dts, buf->pts);
+      free(buf->buffer);
+      buf->buffer = NULL;
+
+      /* 3. restore saved timer and buffer */
+      s->timer = tmp_buf.dts;
+      s->buffer = tmp_buf.buffer;
+    }
+
+    free(m->muxbuf);
+    m->muxbuf = NULL;
+    m->muxbuf_num = 0;
+}
+
 /* buffer frames until we either:
  * (a) have at least one frame from each stream
  * (b) run out of memory */
@@ -112,44 +163,8 @@ void muxer_write_chunk(muxer_stream_t *s, size_t len, unsigned int flags, double
           s->muxer->muxbuf_skip_buffer = 0;
 
       /* see if we can flush buffer now */
-      if (s->muxer->muxbuf_skip_buffer) {
-        mp_msg(MSGT_MUXER, MSGL_V, MSGTR_MuxbufSending, s->muxer->muxbuf_num);
-
-        /* fix parameters for all streams */
-        for (num = 0; s->muxer->streams[num]; ++num) {
-          muxer_stream_t *str = s->muxer->streams[num];
-          if(str->muxer->fix_stream_parameters)
-            muxer_stream_fix_parameters(str->muxer, str);
-        }
-
-        /* write header */
-        if (s->muxer->cont_write_header)
-          muxer_write_header(s->muxer);
-
-        /* send all buffered frames to muxer */
-        for (num = 0; num < s->muxer->muxbuf_num; ++num) {
-          muxbuf_t tmp_buf;
-          buf = s->muxer->muxbuf + num;
-          s = buf->stream;
-
-          /* 1. save timer and buffer (might have changed by now) */
-          tmp_buf.dts = s->timer;
-          tmp_buf.buffer = s->buffer;
-
-          /* 2. move stored timer and buffer into stream and mux it */
-          s->timer = buf->dts;
-          s->buffer = buf->buffer;
-          s->muxer->cont_write_chunk(s, buf->len, buf->flags, buf->dts, buf->pts);
-
-          /* 3. restore saved timer and buffer */
-          s->timer = tmp_buf.dts;
-          s->buffer = tmp_buf.buffer;
-        }
-
-        free(s->muxer->muxbuf);
-        s->muxer->muxbuf = NULL;
-        s->muxer->muxbuf_num = 0;
-      }
+      if (s->muxer->muxbuf_skip_buffer)
+          muxer_flush(s->muxer);
     }
 
     /* this code moved directly from muxer_avi.c */

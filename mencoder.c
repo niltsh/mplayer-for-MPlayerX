@@ -1670,6 +1670,9 @@ if(aencoder)
     if(aencoder->fixup)
         aencoder->fixup(aencoder);
 
+/* flush muxer just in case, this is a no-op unless
+ * we created a stream but never wrote frames to it... */
+muxer_flush(muxer);
 if (muxer->cont_write_index) muxer_write_index(muxer);
 muxer_f_size=stream_tell(muxer->stream);
 stream_seek(muxer->stream,0);
