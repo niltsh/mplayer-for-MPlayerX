@@ -26,6 +26,9 @@
 #define ASCII_CHRS 128   // number of ASCII characters
 #define EXTRA_CHRS 128   // (arbitrary) number of non-ASCII characters
 
+#define MAX_FONT_NAME 128
+#define MAX_FONTS 25
+
 #define fntAlignLeft   0
 #define fntAlignCenter 1
 #define fntAlignRight  2
@@ -41,10 +44,10 @@ typedef struct
  fntChar         Fnt[ASCII_CHRS + EXTRA_CHRS];
  unsigned char   nonASCIIidx[EXTRA_CHRS][4];
  txSample        Bitmap;
- char            name[128];
+ char            name[MAX_FONT_NAME];
 } bmpFont;
 
-extern bmpFont  * Fonts[26];
+extern bmpFont  * Fonts[MAX_FONTS + 1];
 
 int  fntAddNewFont( char * name );
 void fntFreeFont( void );

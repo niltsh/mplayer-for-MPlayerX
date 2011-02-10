@@ -26,21 +26,21 @@
 #include "mp_msg.h"
 #include "libavutil/avstring.h"
 
-bmpFont * Fonts[26] = { NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL };
+bmpFont * Fonts[MAX_FONTS + 1] = { NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL };
 
 int fntAddNewFont( char * name )
 {
  int id;
  int i;
 
- for( id=0;id<26;id++ )
+ for( id=0;id<MAX_FONTS + 1;id++ )
    if ( !Fonts[id] ) break;
 
- if ( id == 25 ) return -2;
+ if ( id == MAX_FONTS ) return -2;
 
  if ( ( Fonts[id]=calloc( 1,sizeof( bmpFont ) ) ) == NULL ) return -1;
 
- av_strlcpy( Fonts[id]->name,name,128 ); // FIXME: as defined in font.h
+ av_strlcpy( Fonts[id]->name,name,MAX_FONT_NAME );
  for ( i=0;i<ASCII_CHRS+EXTRA_CHRS;i++ )
    Fonts[id]->Fnt[i].x=Fonts[id]->Fnt[i].y=Fonts[id]->Fnt[i].sx=Fonts[id]->Fnt[i].sy=-1;
 
@@ -50,7 +50,7 @@ int fntAddNewFont( char * name )
 void fntFreeFont( void )
 {
  int i;
- for( i=0;i < 25;i++ )
+ for( i=0;i < MAX_FONTS;i++ )
   {
    if ( Fonts[i] )
     {
@@ -137,7 +137,7 @@ int fntRead( char * path,char * fname )
 int fntFindID( char * name )
 {
  int i;
- for ( i=0;i < 25;i++ )
+ for ( i=0;i < MAX_FONTS;i++ )
    if ( Fonts[i] )
      if ( !strcmp( name,Fonts[i]->name ) ) return i;
  return -1;
