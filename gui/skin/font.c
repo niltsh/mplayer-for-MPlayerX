@@ -259,8 +259,8 @@ txSample * fntRender( wItem * item,int px,char * txt )
     {
      default:
      case fntAlignLeft:   dx=0; break;
-     case fntAlignCenter: dx=( iw - fntTextWidth( id,txt ) ) / 2; break;
-     case fntAlignRight:  dx=iw - fntTextWidth( id,txt ); break;
+     case fntAlignCenter: dx=( iw - tw ) / 2; break;
+     case fntAlignRight:  dx=iw - tw; break;
     }
 
   } else dx+=px;
