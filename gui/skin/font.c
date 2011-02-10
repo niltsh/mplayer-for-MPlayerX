@@ -196,7 +196,7 @@ int fntTextWidth( int id,char * str )
   {
    int c = fntGetCharIndex( id, &p, utf8, 1 );
    if ( c == -1 || Fonts[id]->Fnt[c].sx == -1 ) c = ' ';
-   size+= Fonts[id]->Fnt[ c ].sx;
+   if ( Fonts[id]->Fnt[c].sx != -1 ) size += Fonts[id]->Fnt[c].sx;
   }
  return size;
 }
@@ -278,6 +278,8 @@ txSample * fntRender( wItem * item,int px,char * txt )
 
    if ( c == -1 || fw == -1 ) { c=' '; fw=Fonts[id]->Fnt[c].sx; }
 
+   if ( fw == -1 ) continue;
+
    fh=Fonts[id]->Fnt[c].sy;
    fyc=Fonts[id]->Fnt[c].y * fbw + Fonts[id]->Fnt[c].x;
    yc=dx;
@@ -305,6 +307,8 @@ txSample * fntRender( wItem * item,int px,char * txt )
      if ( c != -1) fw=Fonts[id]->Fnt[c].sx;
 
      if ( c == -1 || fw == -1 ) { c=' '; fw=Fonts[id]->Fnt[c].sx; }
+
+     if ( fw == -1 ) continue;
 
      fh=Fonts[id]->Fnt[c].sy;
      fyc=Fonts[id]->Fnt[c].y * fbw + Fonts[id]->Fnt[c].x;
