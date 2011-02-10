@@ -189,8 +189,6 @@ int fntTextWidth( int id,char * str )
  gboolean utf8;
  unsigned char *p;
 
- if ( ( !Fonts[id] )||( !str[0] ) ) return 0;
-
  utf8 = g_utf8_validate( str, -1, NULL);
  p = (unsigned char *) str;
 
@@ -208,8 +206,6 @@ int fntTextHeight( int id,char * str )
  int max = 0;
  gboolean utf8;
  unsigned char *p;
-
- if ( ( !Fonts[id] )||( !str[0] ) ) return 0;
 
  utf8 = g_utf8_validate( str, -1, NULL);
  p = (unsigned char *) str;
@@ -234,15 +230,12 @@ txSample * fntRender( wItem * item,int px,char * txt )
  uint32_t      * obuf;
  gboolean        utf8;
 
- iw=item->width;
  id=item->fontid;
-
- if ( ( !item )||
-      ( !Fonts[id] )||
-      ( !txt[0] )||
-      ( !fntTextWidth( id,txt ) ) ) return NULL;
-
  tw=fntTextWidth( id,txt );
+
+ if ( !tw ) return NULL;
+
+ iw=item->width;
  fbw=Fonts[id]->Bitmap.Width;
 
  if ( item->Bitmap.Image == NULL )
