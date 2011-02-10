@@ -212,6 +212,8 @@ int osd_level=1;
 // if nonzero, hide current OSD contents when GetTimerMS() reaches this
 unsigned int osd_visible;
 int osd_duration = 1000;
+int osd_fractions = 0; // determines how fractions of seconds are displayed
+                       // on OSD
 
 int term_osd = 1;
 static char* term_osd_esc = "\x1b[A\r\x1b[K";
@@ -1570,6 +1572,7 @@ static void update_osd_msg(void) {
             int len = demuxer_get_time_length(mpctx->demuxer);
             int percentage = -1;
             char percentage_text[10];
+            char fractions_text[4];
             int pts = demuxer_get_current_time(mpctx->demuxer);
 
             if (mpctx->osd_show_percentage)
@@ -1580,15 +1583,38 @@ static void update_osd_msg(void) {
             else
                 percentage_text[0] = 0;
 
+            if (osd_fractions==1) {
+                //print fractions as sub-second timestamp
+                snprintf(fractions_text, sizeof(fractions_text), ".%02d",
+                         (int)( (mpctx->sh_video->pts - pts)* 100 + 0.5)
+                         % 100);
+            } else if (osd_fractions==2) {
+                //print fractions by estimating the frame count within the
+                //second
+
+                //rounding or cutting off numbers after the decimal point
+                //causes problems because of float's precision and movies,
+                //whose first frame is not exactly at timestamp 0. Therefore,
+                //we add 0.2 and cut off at the decimal point, which proved
+                //as good heuristic
+                snprintf(fractions_text, sizeof(fractions_text), ".%02d",
+                         (int) ( ( mpctx->sh_video->pts - pts ) *
+                         mpctx->sh_video->fps + 0.2 ) );
+            } else {
+                //do not print fractions
+                fractions_text[0] = 0;
+            }
+
             if (osd_level == 3)
                 snprintf(osd_text_timer, 63,
-                         "%c %02d:%02d:%02d / %02d:%02d:%02d%s",
+                         "%c %02d:%02d:%02d%s / %02d:%02d:%02d%s",
                          mpctx->osd_function,pts/3600,(pts/60)%60,pts%60,
-                         len/3600,(len/60)%60,len%60,percentage_text);
+                         fractions_text,len/3600,(len/60)%60,len%60,
+                         percentage_text);
             else
-                snprintf(osd_text_timer, 63, "%c %02d:%02d:%02d%s",
+                snprintf(osd_text_timer, 63, "%c %02d:%02d:%02d%s%s",
                          mpctx->osd_function,pts/3600,(pts/60)%60,
-                         pts%60,percentage_text);
+                         pts%60,fractions_text,percentage_text);
         } else
             osd_text_timer[0]=0;
 
