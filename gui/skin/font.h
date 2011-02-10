@@ -44,7 +44,6 @@ typedef struct
  char            name[128];
 } bmpFont;
 
-extern txSample   Bitmap;
 extern bmpFont  * Fonts[26];
 
 int  fntAddNewFont( char * name );
