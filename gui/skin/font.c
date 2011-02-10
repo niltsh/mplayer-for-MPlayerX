@@ -17,19 +17,14 @@
  */
 
 #include <stdlib.h>
-#include <stdio.h>
-#include <stdarg.h>
 #include <string.h>
 #include <inttypes.h>
 
-#include "gui/app.h"
 #include "skin.h"
 #include "font.h"
 #include "cut.h"
 #include "mp_msg.h"
 #include "libavutil/avstring.h"
-
-int items;
 
 bmpFont * Fonts[26] = { NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL };
 
@@ -73,7 +68,7 @@ int fntRead( char * path,char * fname )
  unsigned char * ptmp;
  unsigned char   command[32];
  unsigned char   param[256];
- int             c,linenumber = 0;
+ int             c;
  int             id = fntAddNewFont( fname );
 
  if ( id < 0 ) return id;
@@ -85,8 +80,6 @@ int fntRead( char * path,char * fname )
 
  while ( fgets( tmp,255,f ) )
   {
-   linenumber++;
-
    // remove any kind of newline, if any
    tmp[strcspn(tmp, "\n\r")] = 0;
    for ( c=0;c < (int)strlen( tmp );c++ )
