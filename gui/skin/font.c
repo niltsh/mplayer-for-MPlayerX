@@ -94,7 +94,7 @@ int fntRead( char * path,char * fname )
     {
      int i;
      cutItem( command,command,'"',1 );
-     if ( !command[0] ) i=(int)'"';
+     if ( !command[0] ) i='"';
      else if ( command[0] & 0x80 )
       {
        for ( i = 0; i < EXTRA_CHRS; i++ )
@@ -108,7 +108,7 @@ int fntRead( char * path,char * fname )
        if ( i == EXTRA_CHRS ) continue;
        i += ASCII_CHRS;
       }
-     else i=(int)command[0];
+     else i=command[0];
      cutItem( param,tmp,',',0 ); Fonts[id]->Fnt[i].x=atoi( tmp );
      cutItem( param,tmp,',',1 ); Fonts[id]->Fnt[i].y=atoi( tmp );
      cutItem( param,tmp,',',2 ); Fonts[id]->Fnt[i].sx=atoi( tmp );
@@ -283,7 +283,7 @@ txSample * fntRender( wItem * item,int px,char * txt )
 
    if ( c != -1 ) fw=Fonts[id]->Fnt[c].sx;
 
-   if ( c == -1 || fw == -1 ) { c=32; fw=Fonts[id]->Fnt[c].sx; }
+   if ( c == -1 || fw == -1 ) { c=' '; fw=Fonts[id]->Fnt[c].sx; }
 
    fh=Fonts[id]->Fnt[c].sy;
    fyc=Fonts[id]->Fnt[c].y * fbw + Fonts[id]->Fnt[c].x;
@@ -311,7 +311,7 @@ txSample * fntRender( wItem * item,int px,char * txt )
 
      if ( c != -1) fw=Fonts[id]->Fnt[c].sx;
 
-     if ( c == -1 || fw == -1 ) { c=32; fw=Fonts[id]->Fnt[c].sx; }
+     if ( c == -1 || fw == -1 ) { c=' '; fw=Fonts[id]->Fnt[c].sx; }
 
      fh=Fonts[id]->Fnt[c].sy;
      fyc=Fonts[id]->Fnt[c].y * fbw + Fonts[id]->Fnt[c].x;
