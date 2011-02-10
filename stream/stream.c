@@ -28,6 +28,7 @@
 #endif
 #include <fcntl.h>
 #include <strings.h>
+#include <assert.h>
 
 #include "config.h"
 
@@ -331,6 +332,7 @@ int stream_write_buffer(stream_t *s, unsigned char *buf, int len) {
   if(rd < 0)
     return -1;
   s->pos += rd;
+  assert(rd == len && "stream_write_buffer(): unexpected short write");
   return rd;
 }
 
