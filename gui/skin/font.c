@@ -55,6 +55,7 @@ void fntFreeFont( void )
    if ( Fonts[i] )
     {
      free( Fonts[i]->Bitmap.Image );
+     Fonts[i]->Bitmap.Image=NULL;
      free( Fonts[i] );
      Fonts[i]=NULL;
     }
@@ -128,6 +129,13 @@ int fntRead( char * path,char * fname )
         mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[font] image file: %s\n",tmp );
         if ( skinBPRead( tmp,&Fonts[id]->Bitmap ) )
          {
+          if (Fonts[id]->Bitmap.Image)
+          {
+            free(Fonts[id]->Bitmap.Image);
+            Fonts[id]->Bitmap.Image = NULL;
+          }
+          free(Fonts[id]);
+          Fonts[id] = NULL;
           fclose(f);
           return -4;
          }
