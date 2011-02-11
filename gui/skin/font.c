@@ -90,7 +90,7 @@ int fntRead( char * path,char * fname )
      if ( tmp[c] == ';' ) { tmp[c]=0; break; }
    if ( !tmp[0] ) continue;
    ptmp=trimleft( tmp );
-   if ( !tmp[0] ) continue;
+   if ( !ptmp[0] ) continue;
    ptmp=strswap( ptmp,'\t',' ' );
    ptmp=trim( ptmp );
    cutItem( ptmp,command,'=',0 ); cutItem( ptmp,param,'=',1 );
