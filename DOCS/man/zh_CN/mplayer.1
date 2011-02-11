@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 32842
+.\" sync with en/mplayer.1 rev. 32880
 .\" Encoding: UTF-8
 .\"
 .\" MPlayer (C) 2000-2010 MPlayer 团队
@@ -2255,6 +2255,22 @@ SSA/ASS 提供器能在那里放置字幕 (与 \-ass\-use\-margins 组合用)。
 设置 OSD 信息的停留时间(以毫秒 ms 为单位) (默认是: 1000)。
 .
 .TP
+.B \-osd\-fractions <0\-2>
+设置 OSD 中当前时间的秒数的小数部分如何显示：
+.PD 0
+.RSs
+.IPs 0
+不显示小数部分（默认行为）。
+.IPs 1
+显示头两位十进制数字。
+.IPs 2
+显示当前秒钟内大致的帧计数值。
+该帧计数值并不精确而只是一个近似值。
+在可变帧数编码的情况下，发现这个近似值远远偏离实际的帧计数值。
+.RE
+.PD 1
+.
+.TP
 .B \-osdlevel <0\-3> (仅用于 MPlayer)
 指定 OSD 的启始模式。
 .PD 0
@@ -2378,7 +2394,7 @@ MPlayer 在 verbose (\-v) 模式下会打印可用的语言。
 .IPs 1
 装载所有包含电影名称的字幕。
 .IPs 2
-装载当前目录的所有字幕。
+装载当前目录以及 \-sub\-paths 目录中的所有字幕。
 .RE
 .PD 1
 .
@@ -2440,8 +2456,28 @@ CC 字幕到目前为止还没有在其它地区码的 DVD 中发现。
 .PD 1
 .
 .TP
-.B \-subdelay <数>
-字幕延迟 <数> 秒。可以是负数。
+.B \-sub\-paths <路径1,路径2,...>
+指定媒体文件的目录额外需要追踪的字幕路径。
+.sp 1
+.I 示例：
+假设播放 /path/\:to/\:movie/\:movie.avi，并且指定了 \-sub\-paths
+sub,subtitles,/tmp/subs，那么 MPlayer 将在这些目录下搜索字幕文件：
+.RSs
+/path/\:to/\:movie/
+.br
+/path/\:to/\:movie/\:sub/
+.br
+/path/\:to/\:movie/\:subtitles/
+.br
+/tmp/\:subs/
+.br
+~/.mplayer/\:sub/
+.RE
+.PD 1
+.
+.TP
+.B \-subdelay <秒数>
+字幕延迟 <秒数> 秒。可以是负数。
 .
 .TP
 .B \-subfile <文件名> (BETA 代码)
@@ -10963,13 +10999,6 @@ GUI 播放列表
 .TP
 ~/.mplayer/\:DVDkeys/
 缓存的 CSS 钥匙
-.
-.TP
-假如播放文件是 /path/\:to/\:movie.avi, MPlayer 按以下顺序搜索字幕文件:
-.RS
-/path/\:to/\:movie.sub
-.br
-~/.mplayer/\:sub/\:movie.sub
 .RE
 .PD 1
 .
