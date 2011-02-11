@@ -8196,13 +8196,14 @@ EOF
 ff_config_enable () {
 list=$(echo $1 | tr '[a-z]' '[A-Z]')
 item=$(echo $2 | tr '[a-z]' '[A-Z]')
-_nprefix=$3;
+_nprefix=$4;
+_defineprefix=$3;
 test -z "$_nprefix" && _nprefix='CONFIG'
 for part in $list; do
   if $(echo $item | grep -q -E "(^| )$part($| )"); then
-    echo "#define ${_nprefix}_$part 1"
+    echo "${_defineprefix}define ${_nprefix}_$part 1"
   else
-    echo "#define ${_nprefix}_$part 0"
+    echo "${_defineprefix}define ${_nprefix}_$part 0"
   fi
 done
 }
@@ -8346,9 +8347,9 @@ $def_pthread_cache
 $def_ebx_available
 $def_words_endian
 $def_bigendian
-$(ff_config_enable "$arch_all" "$arch" "ARCH")
-$(ff_config_enable "$subarch_all" "$subarch" "ARCH")
-$(ff_config_enable "$cpuexts_all" "$cpuexts" "HAVE")
+$(ff_config_enable "$arch_all" "$arch" "#" "ARCH")
+$(ff_config_enable "$subarch_all" "$subarch" "#" "ARCH")
+$(ff_config_enable "$cpuexts_all" "$cpuexts" "#" "HAVE")
 
 
 /* Blu-ray/DVD/VCD/CD */
@@ -8684,14 +8685,14 @@ $def_mp3lame_lavc
 $def_x264_lavc
 $def_xvid_lavc
 
-$(ff_config_enable "$libavdecoders_all"  "$libavdecoders")
-$(ff_config_enable "$libavencoders_all"  "$libavencoders")
-$(ff_config_enable "$libavparsers_all"   "$libavparsers")
-$(ff_config_enable "$libavdemuxers_all"  "$libavdemuxers")
-$(ff_config_enable "$libavmuxers_all"    "$libavmuxers")
-$(ff_config_enable "$libavprotocols_all" "$libavprotocols")
-$(ff_config_enable "$libavbsfs_all"      "$libavbsfs")
-$(ff_config_enable "$libavhwaccels_all"  "$libavhwaccels")
+$(ff_config_enable "$libavdecoders_all"  "$libavdecoders" "#")
+$(ff_config_enable "$libavencoders_all"  "$libavencoders" "#")
+$(ff_config_enable "$libavparsers_all"   "$libavparsers" "#")
+$(ff_config_enable "$libavdemuxers_all"  "$libavdemuxers" "#")
+$(ff_config_enable "$libavmuxers_all"    "$libavmuxers" "#")
+$(ff_config_enable "$libavprotocols_all" "$libavprotocols" "#")
+$(ff_config_enable "$libavbsfs_all"      "$libavbsfs" "#")
+$(ff_config_enable "$libavhwaccels_all"  "$libavhwaccels" "#")
 
 #endif /* MPLAYER_CONFIG_H */
 EOF
@@ -8723,6 +8724,7 @@ for part in $arch $subarch; do
   part=$(echo $part | tr '[a-z]' '[A-Z]')
   echo "%define ARCH_${part}" >> "$TMPS"
 done
+echo "$(ff_config_enable "$cpuexts_all" "$cpuexts" "%" "HAVE")" >> "$TMPS"
 
 cmp -s "$TMPS" config.asm || mv -f "$TMPS" config.asm
 fi
