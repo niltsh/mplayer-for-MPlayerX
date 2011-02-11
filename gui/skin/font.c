@@ -68,7 +68,6 @@ int fntRead( char * path,char * fname )
  unsigned char * ptmp;
  unsigned char   command[32];
  unsigned char   param[256];
- int             c;
  int             id = fntAddNewFont( fname );
 
  if ( id < 0 ) return id;
@@ -86,14 +85,14 @@ int fntRead( char * path,char * fname )
   {
    // remove any kind of newline, if any
    tmp[strcspn(tmp, "\n\r")] = 0;
-   for ( c=0;c < (int)strlen( tmp );c++ )
-     if ( tmp[c] == ';' ) { tmp[c]=0; break; }
-   if ( !tmp[0] ) continue;
-   ptmp=trimleft( tmp );
-   if ( !ptmp[0] ) continue;
-   ptmp=strswap( ptmp,'\t',' ' );
-   ptmp=trim( ptmp );
-   cutItem( ptmp,command,'=',0 ); cutItem( ptmp,param,'=',1 );
+   strswap( tmp,'\t',' ' );
+   trim( tmp );
+   if ((ptmp = strchr(tmp, ';')))
+   {
+     if (ptmp != tmp + 1 || tmp[0] != '"' || tmp[2] != '"') *ptmp = '\0';
+   }
+   if (!*tmp) continue;
+   cutItem( tmp,command,'=',0 ); cutItem( tmp,param,'=',1 );
    if ( command[0] == '"' )
     {
      int i;
