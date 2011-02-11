@@ -118,14 +118,14 @@ int fntRead( char * path,char * fname )
      cutItem( param,tmp,',',1 ); Fonts[id]->Fnt[i].y=atoi( tmp );
      cutItem( param,tmp,',',2 ); Fonts[id]->Fnt[i].sx=atoi( tmp );
      cutItem( param,tmp,',',3 ); Fonts[id]->Fnt[i].sy=atoi( tmp );
-     mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[font]  char: '%s' params: %d,%d %dx%d\n",command,Fonts[id]->Fnt[i].x,Fonts[id]->Fnt[i].y,Fonts[id]->Fnt[i].sx,Fonts[id]->Fnt[i].sy );
+     mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[font] char: '%s' params: %d,%d %dx%d\n",command,Fonts[id]->Fnt[i].x,Fonts[id]->Fnt[i].y,Fonts[id]->Fnt[i].sx,Fonts[id]->Fnt[i].sy );
     }
     else
      {
       if ( !strcmp( command,"image" ) )
        {
         av_strlcpy( tmp,path,sizeof( tmp )  ); av_strlcat( tmp,param,sizeof( tmp ) );
-        mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[font] font imagefile: %s\n",tmp );
+        mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[font] image file: %s\n",tmp );
         if ( skinBPRead( tmp,&Fonts[id]->Bitmap ) )
          {
           fclose(f);
