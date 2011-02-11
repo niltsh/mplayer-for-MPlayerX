@@ -76,7 +76,11 @@ int fntRead( char * path,char * fname )
  av_strlcpy( tmp,path,sizeof( tmp ) );
  av_strlcat( tmp,fname,sizeof( tmp ) ); av_strlcat( tmp,".fnt",sizeof( tmp ) );
  if ( ( f=fopen( tmp,"rt" ) ) == NULL )
-   { free( Fonts[id] ); return -3; }
+  {
+   free( Fonts[id] );
+   Fonts[id] = NULL;
+   return -3;
+  }
 
  while ( fgets( tmp,255,f ) )
   {
