@@ -68,7 +68,7 @@ int fntRead( char * path,char * fname )
  unsigned char * ptmp;
  unsigned char   command[32];
  unsigned char   param[256];
- int             id = fntAddNewFont( fname );
+ int             id = fntAddNewFont( fname ), n;
 
  if ( id < 0 ) return id;
 
@@ -92,13 +92,15 @@ int fntRead( char * path,char * fname )
      if (ptmp != tmp + 1 || tmp[0] != '"' || tmp[2] != '"') *ptmp = '\0';
    }
    if (!*tmp) continue;
-   cutItem( tmp,command,'=',0 ); cutItem( tmp,param,'=',1 );
+   n = (strncmp(tmp, "\"=", 2) == 0 ? 1 : 0);
+   cutItem( tmp,command,'=',n ); cutItem( tmp,param,'=',n+1 );
    if ( command[0] == '"' )
     {
      int i;
-     cutItem( command,command,'"',1 );
-     if ( !command[0] ) i='"';
-     else if ( command[0] & 0x80 )
+     if (!command[1]) command[0] = '=';
+     else if (command[1] == '"') command[1] = '\0';
+     else cutItem(command, command, '"', 1);
+     if ( command[0] & 0x80 )
       {
        for ( i = 0; i < EXTRA_CHRS; i++ )
         {
