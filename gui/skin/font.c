@@ -237,7 +237,7 @@ int fntTextHeight( int id,char * str )
 txSample * fntRender( wItem * item,int px,char * txt )
 {
  unsigned char * u;
- int 	         c, i, dx = 0, tw, fbw, iw, id, ofs;
+ int 	         c, i, dx = 0, tw, th, fbw, iw, id, ofs;
  int 		 x,y,fh,fw,fyc,yc;
  uint32_t      * ibuf;
  uint32_t      * obuf;
@@ -250,10 +250,17 @@ txSample * fntRender( wItem * item,int px,char * txt )
 
  iw=item->width;
  fbw=Fonts[id]->Bitmap.Width;
+ th=fntTextHeight(id, txt);
+
+ if (item->Bitmap.Image && (item->height != th))
+ {
+   free(item->Bitmap.Image);
+   item->Bitmap.Image = NULL;
+ }
 
  if ( item->Bitmap.Image == NULL )
   {
-   item->Bitmap.Height=item->height=fntTextHeight( id,txt );
+   item->Bitmap.Height=item->height=th;
    item->Bitmap.Width=item->width=iw;
    item->Bitmap.ImageSize=item->height * iw * 4;
    if ( !item->Bitmap.ImageSize ) return NULL;
