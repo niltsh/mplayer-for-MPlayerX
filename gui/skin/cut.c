@@ -21,16 +21,19 @@
 
 #include "cut.h"
 
-void cutItem( char * in,char * out,char sep,int num )
+void cutItemString( char * in,char * out,char sep,int num,size_t maxout )
 {
  int i,n,c;
  for ( c=0,n=0,i=0;i<strlen( in );i++ )
   {
    if ( in[i] == sep ) n++;
-   if ( n >= num && in[i] != sep ) out[c++]=in[i];
-   if ( n >= num && in[i+1] == sep ) { out[c]=0; return; }
+   if ( n >= num && in[i] != sep )
+   {
+     if ( c + 1 < maxout ) out[c++] = in[i];
+   }
+   if ( n >= num && in[i+1] == sep ) break;
   }
- out[c]=0;
+  if ( c < maxout ) out[c] = '\0';
 }
 
 int cutItemToInt( char * in,char sep,int num )
