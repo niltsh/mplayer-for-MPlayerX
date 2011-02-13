@@ -38,7 +38,7 @@ void cutItemString( char * in,char * out,char sep,int num,size_t maxout )
 
 int cutItemToInt( char * in,char sep,int num )
 {
- char tmp[512];
+ char tmp[64];
  cutItem( in,tmp,sep,num );
  return atoi( tmp );
 }
