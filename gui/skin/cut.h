@@ -25,7 +25,5 @@
 
 void  cutItemString( char * in, char * out, char sep, int num, size_t maxout );
 int   cutItemToInt( char * in, char sep, int num );
-float cutItemToFloat( char * in, char sep, int num );
-void  cutChunk( char * in, char * s1 );
 
 #endif /* MPLAYER_GUI_CUT_H */
