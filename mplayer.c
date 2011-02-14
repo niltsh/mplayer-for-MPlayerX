@@ -4063,7 +4063,7 @@ while(mpctx->playtree_iter != NULL) {
         if(play_tree_iter_step(mpctx->playtree_iter,mpctx->eof,0) != PLAY_TREE_ITER_ENTRY) {
             play_tree_iter_free(mpctx->playtree_iter);
             mpctx->playtree_iter = NULL;
-        };
+        }
     } else
         break;
 }
