@@ -24,6 +24,7 @@
 #include "font.h"
 #include "cut.h"
 #include "mp_msg.h"
+#include "../interface.h"
 #include "libavutil/avstring.h"
 
 bmpFont * Fonts[MAX_FONTS] = { NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL };
@@ -53,10 +54,8 @@ void fntFreeFont( void )
   {
    if ( Fonts[i] )
     {
-     free( Fonts[i]->Bitmap.Image );
-     Fonts[i]->Bitmap.Image=NULL;
-     free( Fonts[i] );
-     Fonts[i]=NULL;
+     gfree( (void **) &Fonts[i]->Bitmap.Image );
+     gfree( (void **) &Fonts[i] );
     }
   }
 }
@@ -78,8 +77,7 @@ int fntRead( char * path,char * fname )
  av_strlcat( tmp,fname,sizeof( tmp ) ); av_strlcat( tmp,".fnt",sizeof( tmp ) );
  if ( ( f=fopen( tmp,"rt" ) ) == NULL )
   {
-   free( Fonts[id] );
-   Fonts[id] = NULL;
+   gfree( (void **) &Fonts[id] );
    return -3;
   }
 
@@ -131,12 +129,8 @@ int fntRead( char * path,char * fname )
         if ( skinBPRead( tmp,&Fonts[id]->Bitmap ) )
          {
           if (Fonts[id]->Bitmap.Image)
-          {
-            free(Fonts[id]->Bitmap.Image);
-            Fonts[id]->Bitmap.Image = NULL;
-          }
-          free(Fonts[id]);
-          Fonts[id] = NULL;
+            gfree((void **) &Fonts[id]->Bitmap.Image);
+          gfree((void **) &Fonts[id]);
           fclose(f);
           return -4;
          }
@@ -255,10 +249,7 @@ txSample * fntRender( wItem * item,int px,char * txt )
  th=fntTextHeight(id, txt);
 
  if (item->Bitmap.Image && (item->height != th))
- {
-   free(item->Bitmap.Image);
-   item->Bitmap.Image = NULL;
- }
+   gfree((void **) &item->Bitmap.Image);
 
  if ( item->Bitmap.Image == NULL )
   {
