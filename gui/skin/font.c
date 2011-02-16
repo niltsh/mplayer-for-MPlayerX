@@ -87,10 +87,7 @@ int fntRead( char * path,char * fname )
    tmp[strcspn(tmp, "\n\r")] = 0;
    strswap( tmp,'\t',' ' );
    trim( tmp );
-   if ((ptmp = strchr(tmp, ';')))
-   {
-     if (ptmp != tmp + 1 || tmp[0] != '"' || tmp[2] != '"') *ptmp = '\0';
-   }
+   if ((ptmp = strchr(tmp, ';')) && !(ptmp == tmp + 1 && tmp[0] == '"' && tmp[2] == '"')) *ptmp = '\0';
    if (!*tmp) continue;
    n = (strncmp(tmp, "\"=", 2) == 0 ? 1 : 0);
    cutItem( tmp,command,'=',n ); cutItem( tmp,param,'=',n+1 );
