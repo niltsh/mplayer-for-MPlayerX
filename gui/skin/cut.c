@@ -23,7 +23,8 @@
 
 void cutItemString( char * in,char * out,char sep,int num,size_t maxout )
 {
- int i,n,c;
+ int n;
+ unsigned int i,c;
  for ( c=0,n=0,i=0;i<strlen( in );i++ )
   {
    if ( in[i] == sep ) n++;
