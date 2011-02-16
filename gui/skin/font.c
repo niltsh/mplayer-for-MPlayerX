@@ -125,8 +125,7 @@ int fntRead( char * path,char * fname )
         mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[font] image file: %s\n",tmp );
         if ( skinBPRead( tmp,&Fonts[id]->Bitmap ) )
          {
-          if (Fonts[id]->Bitmap.Image)
-            gfree((void **) &Fonts[id]->Bitmap.Image);
+          gfree((void **) &Fonts[id]->Bitmap.Image);
           gfree((void **) &Fonts[id]);
           fclose(f);
           return -4;
@@ -245,7 +244,7 @@ txSample * fntRender( wItem * item,int px,char * txt )
  fbw=Fonts[id]->Bitmap.Width;
  th=fntTextHeight(id, txt);
 
- if (item->Bitmap.Image && (item->height != th))
+ if (item->height != th)
    gfree((void **) &item->Bitmap.Image);
 
  if ( item->Bitmap.Image == NULL )
