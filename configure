@@ -50,7 +50,7 @@ fi
 if ! test -e ffmpeg ; then
   echo "No FFmpeg checkout, press enter to download one with git or CTRL+C to abort"
   read tmp
-  if ! git --depth 1 clone git://git.videolan.org/ffmpeg.git ffmpeg ; then
+  if ! git clone --depth 1 git://git.videolan.org/ffmpeg.git ffmpeg ; then
     rm -rf ffmpeg
     echo "Failed to get a FFmpeg checkout"
     exit 1
