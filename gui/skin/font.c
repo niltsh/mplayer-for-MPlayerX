@@ -255,6 +255,7 @@ txSample * fntRender( wItem * item,int px,char * txt )
    if ( !item->Bitmap.ImageSize ) return NULL;
    item->Bitmap.BPP=32;
    item->Bitmap.Image=malloc( item->Bitmap.ImageSize );
+   if ( !item->Bitmap.Image ) return NULL;
   }
 
  obuf=(uint32_t *)item->Bitmap.Image;
