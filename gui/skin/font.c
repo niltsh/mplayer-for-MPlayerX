@@ -24,7 +24,7 @@
 #include "font.h"
 #include "cut.h"
 #include "mp_msg.h"
-#include "interface.h"
+#include "../interface.h"
 #include "libavutil/avstring.h"
 
 bmpFont * Fonts[MAX_FONTS] = {};
