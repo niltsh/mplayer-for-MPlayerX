@@ -295,6 +295,7 @@ txSample * fntRender( wItem * item,int px,char * txt )
    yc=dx;
 
    if ( dx >= 0 )
+   {
     for ( y=0;y < fh;y++ )
      {
       for ( x=0; x < fw;x++ )
@@ -302,6 +303,7 @@ txSample * fntRender( wItem * item,int px,char * txt )
       fyc+=fbw;
       yc+=iw;
      }
+   }
    dx+=fw;
   }
 
@@ -325,6 +327,7 @@ txSample * fntRender( wItem * item,int px,char * txt )
 
      dx-=fw; yc=dx;
      if ( dx >= 0 )
+     {
       for ( y=0;y < fh;y++ )
        {
         for ( x=fw - 1;x >= 0;x-- )
@@ -332,6 +335,7 @@ txSample * fntRender( wItem * item,int px,char * txt )
         fyc+=fbw;
 	yc+=iw;
        }
+     }
     }
   }
 
