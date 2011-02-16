@@ -27,10 +27,7 @@ void cutItemString( char * in,char * out,char sep,int num,size_t maxout )
  for ( c=0,n=0,i=0;i<strlen( in );i++ )
   {
    if ( in[i] == sep ) n++;
-   if ( n >= num && in[i] != sep )
-   {
-     if ( c + 1 < maxout ) out[c++] = in[i];
-   }
+   if ( n >= num && in[i] != sep && c + 1 < maxout ) out[c++] = in[i];
    if ( n >= num && in[i+1] == sep ) break;
   }
   if ( c < maxout ) out[c] = '\0';
