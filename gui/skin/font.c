@@ -81,7 +81,7 @@ int fntRead( char * path,char * fname )
    return -3;
   }
 
- while ( fgets( tmp,255,f ) )
+ while ( fgets( tmp,sizeof(tmp),f ) )
   {
    // remove any kind of newline, if any
    tmp[strcspn(tmp, "\n\r")] = 0;
