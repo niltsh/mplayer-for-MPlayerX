@@ -856,7 +856,7 @@ mpcommon.o osdep/mplayer-rc.o: version.h
 
 osdep/mplayer-rc.o: osdep/mplayer.exe.manifest
 
-gui/%: CFLAGS += -Wno-strict-prototypes
+gui/%: CFLAGS += -Igui -Wno-strict-prototypes
 
 libdvdcss/%:   CFLAGS := -Ilibdvdcss -D_GNU_SOURCE -DVERSION=\"1.2.10\" $(CFLAGS_LIBDVDCSS) $(CFLAGS)
 libdvdnav/%:   CFLAGS := -Ilibdvdnav -D_GNU_SOURCE -DHAVE_CONFIG_H -DVERSION=\"MPlayer-custom\" $(CFLAGS)
