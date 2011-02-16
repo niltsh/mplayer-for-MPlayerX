@@ -30,8 +30,7 @@ bmpFont * Fonts[MAX_FONTS] = { NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
 
 int fntAddNewFont( char * name )
 {
- int id;
- int i;
+ int id, i;
 
  for( id=0;id<MAX_FONTS;id++ )
    if ( !Fonts[id] ) break;
@@ -69,7 +68,9 @@ int fntRead( char * path,char * fname )
  unsigned char * ptmp;
  unsigned char   command[32];
  unsigned char   param[256];
- int             id = fntAddNewFont( fname ), n;
+ int             id, n;
+
+ id = fntAddNewFont( fname );
 
  if ( id < 0 ) return id;
 
@@ -237,7 +238,8 @@ int fntTextHeight( int id,char * str )
 txSample * fntRender( wItem * item,int px,char * txt )
 {
  unsigned char * u;
- int 	         c, i, dx = 0, tw, th, fbw, iw, id, ofs;
+ unsigned int    i;
+ int 	         c, dx, tw, th, fbw, iw, id, ofs;
  int 		 x,y,fh,fw,fyc,yc;
  uint32_t      * ibuf;
  uint32_t      * obuf;
@@ -283,7 +285,7 @@ txSample * fntRender( wItem * item,int px,char * txt )
      case fntAlignRight:  dx=iw - tw; break;
     }
 
-  } else dx+=px;
+  } else dx=px;
 
  ofs=dx;
 
