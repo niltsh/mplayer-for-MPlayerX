@@ -195,7 +195,7 @@ int fntTextWidth( int id,char * str )
  unsigned char *p;
 
  utf8 = g_utf8_validate( str, -1, NULL);
- p = (unsigned char *) str;
+ p = str;
 
  while ( *p )
   {
@@ -213,7 +213,7 @@ int fntTextHeight( int id,char * str )
  unsigned char *p;
 
  utf8 = g_utf8_validate( str, -1, NULL);
- p = (unsigned char *) str;
+ p = str;
 
  while ( *p )
   {
