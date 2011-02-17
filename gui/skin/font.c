@@ -103,7 +103,7 @@ int fntRead( char * path,char * fname )
         {
          if ( !Fonts[id]->nonASCIIidx[i][0] )
           {
-           strncpy( Fonts[id]->nonASCIIidx[i], command, 4 );
+           strncpy( Fonts[id]->nonASCIIidx[i], command, UTF8LENGTH );
            break;
           }
         }
@@ -151,7 +151,7 @@ int fntFindID( char * name )
 // then move pointer to next/previous character
 int fntGetCharIndex( int id, unsigned char **str, gboolean utf8, int direction )
 {
- unsigned char *p, uchar[4] = {'\0'};
+ unsigned char *p, uchar[6] = "";   // glib implements 31-bit UTF-8
  int i, c = -1;
 
  if ( **str & 0x80 )
@@ -172,7 +172,7 @@ int fntGetCharIndex( int id, unsigned char **str, gboolean utf8, int direction )
 
    for ( i = 0; ( i < EXTRA_CHRS ) && Fonts[id]->nonASCIIidx[i][0]; i++ )
     {
-     if ( strncmp( Fonts[id]->nonASCIIidx[i], uchar, 4 ) == 0 ) return i + ASCII_CHRS;
+     if ( strncmp( Fonts[id]->nonASCIIidx[i], uchar, UTF8LENGTH ) == 0 ) return i + ASCII_CHRS;
      if ( !utf8 && ( Fonts[id]->nonASCIIidx[i][0] == (*uchar >> 6 | 0xc0) && Fonts[id]->nonASCIIidx[i][1] == (*uchar & 0x3f | 0x80) && Fonts[id]->nonASCIIidx[i][2] == 0 ) ) c = i + ASCII_CHRS;
     }
   }
