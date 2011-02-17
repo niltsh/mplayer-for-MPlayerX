@@ -6862,16 +6862,16 @@ test -d ffmpeg/libavutil ||
   die "MPlayer will not compile without libavutil in the source tree."
 ffmpeg=no
 if test "$ffmpeg_a" = auto ; then
-  test -d ffmpeg/libavcore && ffmpeg_a=yes && ffmpeg=yes && extra_cflags="$extra_cflags -DFF_API_MAX_STREAMS=0"
+  test -d ffmpeg/libavutil && ffmpeg_a=yes && ffmpeg=yes && extra_cflags="$extra_cflags -DFF_API_MAX_STREAMS=0"
 elif test "$ffmpeg_so" = auto ; then
   ffmpeg_so=no
-  if $_pkg_config --exists libavcore ; then
-    inc_ffmpeg=$($_pkg_config --cflags libpostproc libswscale libavformat libavcodec libavutil libavcore)
-    _ld_tmp=$($_pkg_config --libs libpostproc libswscale libavformat libavcodec libavutil libavcore)
-    header_check libavcore/avcore.h $inc_ffmpeg $_ld_tmp &&
+  if $_pkg_config --exists libavutil ; then
+    inc_ffmpeg=$($_pkg_config --cflags libpostproc libswscale libavformat libavcodec libavutil)
+    _ld_tmp=$($_pkg_config --libs libpostproc libswscale libavformat libavcodec libavutil)
+    header_check libavutil/avutil.h $inc_ffmpeg $_ld_tmp &&
       extra_ldflags="$extra_ldflags $_ld_tmp" && ffmpeg_so=yes && ffmpeg=yes
-  elif header_check libavcore/avcore.h -lpostproc -lswscale -lavformat -lavcodec -lavutil -lavcore $_ld_lm ; then
-    extra_ldflags="$extra_ldflags -lpostproc -lswscale -lavformat -lavcodec -lavutil -lavcore"
+  elif header_check libavutil/avutil.h -lpostproc -lswscale -lavformat -lavcodec -lavutil $_ld_lm ; then
+    extra_ldflags="$extra_ldflags -lpostproc -lswscale -lavformat -lavcodec -lavutil"
     ffmpeg_so=yes
     ffmpeg=yes
   fi
