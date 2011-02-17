@@ -151,7 +151,7 @@ int fntFindID( char * name )
 // then move pointer to next/previous character
 int fntGetCharIndex( int id, unsigned char **str, gboolean utf8, int direction )
 {
- unsigned char *p, uchar[4] = { 0, 0, 0, 0 };
+ unsigned char *p, uchar[4] = {'\0'};
  int i, c = -1;
 
  if ( **str & 0x80 )
