@@ -29,7 +29,7 @@
 #include "mp_msg.h"
 #include "cpudetect.h"
 #include "libswscale/swscale.h"
-#include "libavcore/imgutils.h"
+#include "libavutil/imgutils.h"
 #include "gui.h"
 #include "gui/bitmap.h"
 

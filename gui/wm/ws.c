@@ -38,7 +38,7 @@
 #include "libvo/video_out.h"
 #include "cpudetect.h"
 #include "libswscale/swscale.h"
-#include "libavcore/imgutils.h"
+#include "libavutil/imgutils.h"
 #include "libmpcodecs/vf_scale.h"
 #include "mp_msg.h"
 #include "help_mp.h"
