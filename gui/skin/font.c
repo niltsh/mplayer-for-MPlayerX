@@ -32,16 +32,14 @@ bmpFont * Fonts[MAX_FONTS] = {0};
 int fntAddNewFont( char * name )
 {
  int id, i;
- bmpFont init = {0};
 
  for( id=0;id<MAX_FONTS;id++ )
    if ( !Fonts[id] ) break;
 
  if ( id == MAX_FONTS ) return -2;
 
- if ( ( Fonts[id]=malloc( sizeof( bmpFont ) ) ) == NULL ) return -1;
+ if ( ( Fonts[id]=calloc( 1,sizeof( *Fonts[id] ) ) ) == NULL ) return -1;
 
- *Fonts[id] = init;
  av_strlcpy( Fonts[id]->name,name,MAX_FONT_NAME );
  for ( i=0;i<ASCII_CHRS+EXTRA_CHRS;i++ )
    Fonts[id]->Fnt[i].x=Fonts[id]->Fnt[i].y=Fonts[id]->Fnt[i].sx=Fonts[id]->Fnt[i].sy=-1;
