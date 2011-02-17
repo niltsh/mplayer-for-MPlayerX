@@ -261,7 +261,7 @@ txSample * fntRender( wItem * item,int px,char * txt )
  obuf=(uint32_t *)item->Bitmap.Image;
  ibuf=(uint32_t *)Fonts[id]->Bitmap.Image;
 
- for ( i=0;i < item->Bitmap.ImageSize / 4;i++ ) obuf[i]=0xff00ff;
+ for ( i=0;i < item->Bitmap.ImageSize / 4;i++ ) obuf[i]=0x00ff00ff;
 
  if ( tw <= iw )
   {
