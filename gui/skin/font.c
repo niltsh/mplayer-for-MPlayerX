@@ -93,7 +93,7 @@ int fntRead( char * path,char * fname )
    strswap( tmp,'\t',' ' );
    trim( tmp );
    ptmp = strchr(tmp, ';');
-   if (ptmp && !(ptmp == tmp + 1 && tmp[0] == '"' && tmp[2] == '"')) *ptmp = '\0';
+   if (ptmp && !(ptmp == tmp + 1 && tmp[0] == '"' && tmp[2] == '"')) *ptmp = 0;
    if (!*tmp) continue;
    n = (strncmp(tmp, "\"=", 2) == 0 ? 1 : 0);
    cutItem( tmp,command,'=',n ); cutItem( tmp,param,'=',n+1 );
@@ -101,7 +101,7 @@ int fntRead( char * path,char * fname )
     {
      int i;
      if (!command[1]) command[0] = '=';
-     else if (command[1] == '"') command[1] = '\0';
+     else if (command[1] == '"') command[1] = 0;
      else cutItem(command, command, '"', 1);
      if ( command[0] & 0x80 )
       {

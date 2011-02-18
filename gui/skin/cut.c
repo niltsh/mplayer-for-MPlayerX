@@ -31,7 +31,7 @@ void cutItemString( char * in,char * out,char sep,int num,size_t maxout )
    if ( n >= num && in[i] != sep && c + 1 < maxout ) out[c++] = in[i];
    if ( n >= num && in[i+1] == sep ) break;
   }
-  if ( c < maxout ) out[c] = '\0';
+  if ( c < maxout ) out[c] = 0;
 }
 
 int cutItemToInt( char * in,char sep,int num )
