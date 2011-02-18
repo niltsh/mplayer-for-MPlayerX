@@ -38,7 +38,7 @@ int fntAddNewFont( char * name )
 
  if ( id == MAX_FONTS ) return -2;
 
- if ( ( Fonts[id]=calloc( 1,sizeof( *Fonts[id] ) ) ) == NULL ) return -1;
+ if ( !( Fonts[id]=calloc( 1,sizeof( *Fonts[id] ) ) ) ) return -1;
 
  av_strlcpy( Fonts[id]->name,name,MAX_FONT_NAME );
  for ( i=0;i<ASCII_CHRS+EXTRA_CHRS;i++ )
@@ -69,13 +69,11 @@ int fntRead( char * path,char * fname )
  unsigned char   param[256];
  int             id, n;
 
- id = fntAddNewFont( fname );
-
- if ( id < 0 ) return id;
+ if ( ( id = fntAddNewFont( fname ) ) < 0 ) return id;
 
  av_strlcpy( tmp,path,sizeof( tmp ) );
  av_strlcat( tmp,fname,sizeof( tmp ) ); av_strlcat( tmp,".fnt",sizeof( tmp ) );
- if ( ( f=fopen( tmp,"rt" ) ) == NULL )
+ if ( !( f=fopen( tmp,"rt" ) ) )
   {
    gfree( (void **) &Fonts[id] );
    return -3;
@@ -123,7 +121,7 @@ int fntRead( char * path,char * fname )
        {
         av_strlcpy( tmp,path,sizeof( tmp )  ); av_strlcat( tmp,param,sizeof( tmp ) );
         mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[font] image file: %s\n",tmp );
-        if ( skinBPRead( tmp,&Fonts[id]->Bitmap ) )
+        if ( skinBPRead( tmp,&Fonts[id]->Bitmap ) != 0)
          {
           gfree((void **) &Fonts[id]->Bitmap.Image);
           gfree((void **) &Fonts[id]);
@@ -247,7 +245,7 @@ txSample * fntRender( wItem * item,int px,char * txt )
  if (item->height != th)
    gfree((void **) &item->Bitmap.Image);
 
- if ( item->Bitmap.Image == NULL )
+ if ( !item->Bitmap.Image )
   {
    item->Bitmap.Height=item->height=th;
    item->Bitmap.Width=item->width=iw;
