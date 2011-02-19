@@ -52,8 +52,6 @@ extern int             gtkPopupMenuParam;
 
 extern char          * sbMPlayerDirInHome;
 extern char          * sbMPlayerPrefixDir;
-extern char          * sbMPlayerDirInHome_obsolete;
-extern char          * sbMPlayerPrefixDir_obsolete;
 
 extern GdkPixmap * gtkIcon;
 extern GdkBitmap * gtkIconMask;

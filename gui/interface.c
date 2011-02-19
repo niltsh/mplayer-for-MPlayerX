@@ -179,13 +179,9 @@ void guiInit( void )
  wsXInit( (void *)mDisplay );
 // --- load skin
  skinDirInHome=get_path("skins");
- skinDirInHome_obsolete=get_path("Skin");
  skinMPlayerDir=MPLAYER_DATADIR "/skins";
- skinMPlayerDir_obsolete=MPLAYER_DATADIR "/Skin";
  mp_msg( MSGT_GPLAYER,MSGL_V,"SKIN dir 1: '%s'\n",skinDirInHome);
- mp_msg( MSGT_GPLAYER,MSGL_V,"SKIN dir 1 (obsolete): '%s'\n",skinDirInHome_obsolete);
  mp_msg( MSGT_GPLAYER,MSGL_V,"SKIN dir 2: '%s'\n",skinMPlayerDir);
- mp_msg( MSGT_GPLAYER,MSGL_V,"SKIN dir 2 (obsolete): '%s'\n",skinMPlayerDir_obsolete);
  if ( !skinName ) skinName=strdup( "default" );
  i = skinRead( skinName );
  if ((i == -1) && strcmp(skinName,"default"))

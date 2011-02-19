@@ -34,11 +34,8 @@
 
 GtkWidget * SkinList = NULL;
 char      * sbSelectedSkin=NULL;
-/* FIXME: Eventually remove the obsolete directory names. */
 char      * sbMPlayerDirInHome=NULL;
-char      * sbMPlayerDirInHome_obsolete=NULL;
 char      * sbMPlayerPrefixDir=NULL;
-char      * sbMPlayerPrefixDir_obsolete=NULL;
 
 char * gtkOldSkin=NULL;
 static char * prev=NULL;
@@ -195,12 +192,8 @@ GtkWidget * create_SkinBrowser( void )
  gtk_signal_connect( GTK_OBJECT( Ok ),"clicked",GTK_SIGNAL_FUNC( prButton ),(void *)1 );
  gtk_signal_connect( GTK_OBJECT( Cancel ),"clicked",GTK_SIGNAL_FUNC( prButton ),(void *)0 );
 
- if ( ( sbMPlayerDirInHome_obsolete=calloc( 1,strlen( skinDirInHome_obsolete ) + 4 ) ) != NULL )
-  { strcpy( sbMPlayerDirInHome_obsolete,skinDirInHome_obsolete ); strcat( sbMPlayerDirInHome_obsolete,"/*" ); }
  if ( ( sbMPlayerDirInHome=calloc( 1,strlen( skinDirInHome ) + 4 ) ) != NULL )
   { strcpy( sbMPlayerDirInHome,skinDirInHome ); strcat( sbMPlayerDirInHome,"/*" ); }
- if ( ( sbMPlayerPrefixDir_obsolete=calloc( 1,strlen( skinMPlayerDir ) + 4 ) ) != NULL )
-  { strcpy( sbMPlayerPrefixDir_obsolete,skinMPlayerDir ); strcat( sbMPlayerPrefixDir_obsolete,"/*" ); }
  if ( ( sbMPlayerPrefixDir=calloc( 1,strlen( skinMPlayerDir ) + 4 ) ) != NULL )
   { strcpy( sbMPlayerPrefixDir,skinMPlayerDir ); strcat( sbMPlayerPrefixDir,"/*" ); }
 

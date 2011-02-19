@@ -190,9 +190,7 @@ typedef struct
 extern listItems   appMPlayer;
 
 extern char      * skinDirInHome;
-extern char      * skinDirInHome_obsolete;
 extern char      * skinMPlayerDir;
-extern char      * skinMPlayerDir_obsolete;
 
 void appInitStruct( listItems * item );
 void appClearItem( wItem * item );
