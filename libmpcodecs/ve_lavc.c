@@ -812,6 +812,10 @@ static int encode_frame(struct vf_instance *vf, AVFrame *pic, double pts){
 	out_size = avcodec_encode_video(lavc_venc_context, mux_v->buffer, mux_v->buffer_size,
 	    pic);
 
+    /* store stats if there are any */
+    if(lavc_venc_context->stats_out && stats_file)
+        fprintf(stats_file, "%s", lavc_venc_context->stats_out);
+
     if(pts != MP_NOPTS_VALUE)
         dts= pts - lavc_venc_context->delay * av_q2d(lavc_venc_context->time_base);
     else
@@ -889,9 +893,6 @@ static int encode_frame(struct vf_instance *vf, AVFrame *pic, double pts){
             pict_type_char[lavc_venc_context->coded_frame->pict_type]
             );
     }
-    /* store stats if there are any */
-    if(lavc_venc_context->stats_out && stats_file)
-        fprintf(stats_file, "%s", lavc_venc_context->stats_out);
     return out_size;
 }
 
