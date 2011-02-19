@@ -685,7 +685,7 @@ int skinRead( char * dname )
  unsigned char * ptmp;
  unsigned char   command[32];
  unsigned char   param[256];
- int             c,i;
+ int             i;
 
  setname( skinDirInHome,dname );
  if ( ( skinFile = fopen( fn,"rt" ) ) == NULL )
@@ -718,19 +718,12 @@ int skinRead( char * dname )
 
    // remove any kind of newline, if any
    tmp[strcspn(tmp, "\n\r")] = 0;
-   for ( c=0;c<(int)strlen( tmp );c++ )
-    if ( tmp[c] == ';' )
-     {
-      tmp[c]=0;
-      break;
-     }
-   if ( strlen( tmp ) == 0 ) continue;
-   ptmp=trimleft( tmp );
-   if ( strlen( ptmp ) == 0 ) continue;
-   ptmp=strswap( ptmp,'\t',' ' );
-   ptmp=trim( ptmp );
-
-   cutItem( ptmp,command,'=',0 ); cutItem( ptmp,param,'=',1 );
+   strswap( tmp,'\t',' ' );
+   trim( tmp );
+   ptmp = strchr(tmp, ';');
+   if (ptmp) *ptmp = 0;
+   if (!*tmp) continue;
+   cutItem( tmp,command,'=',0 ); cutItem( tmp,param,'=',1 );
    strlower( command );
    for( i=0;i<ITEMS;i++ )
     if ( !strcmp( command,skinItem[i].name ) )
