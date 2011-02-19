@@ -19,7 +19,6 @@
 #ifndef MPLAYER_GUI_FONT_H
 #define MPLAYER_GUI_FONT_H
 
-#include <gtk/gtk.h>
 #include "gui/bitmap.h"
 #include "gui/app.h"
 
@@ -50,11 +49,8 @@ typedef struct
 
 extern bmpFont  * Fonts[MAX_FONTS];
 
-int  fntAddNewFont( char * name );
 void fntFreeFont( void );
 int  fntFindID( char * name );
-int  fntGetCharIndex( int id, unsigned char **str, gboolean utf8, int direction );
-int  fntTextHeight( int id, char * str );
 int  fntTextWidth( int id, char * str );
 
 int        fntRead( char * path, char * fname );

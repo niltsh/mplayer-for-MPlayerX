@@ -29,7 +29,7 @@
 
 bmpFont * Fonts[MAX_FONTS] = {0};
 
-int fntAddNewFont( char * name )
+static int fntAddNewFont( char * name )
 {
  int id, i;
 
@@ -155,7 +155,7 @@ int fntFindID( char * name )
 
 // get Fnt index of character (utf8 or normal one) *str points to,
 // then move pointer to next/previous character
-int fntGetCharIndex( int id, unsigned char **str, gboolean utf8, int direction )
+static int fntGetCharIndex( int id, unsigned char **str, gboolean utf8, int direction )
 {
  unsigned char *p, uchar[6] = "";   // glib implements 31-bit UTF-8
  int i, c = -1;
@@ -211,7 +211,7 @@ int fntTextWidth( int id,char * str )
  return size;
 }
 
-int fntTextHeight( int id,char * str )
+static int fntTextHeight( int id,char * str )
 {
  int max = 0;
  gboolean utf8;
