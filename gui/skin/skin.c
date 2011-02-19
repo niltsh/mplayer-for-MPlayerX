@@ -504,7 +504,7 @@ static int cmd_font( char * in )
 static int cmd_slabel( char * in )
 {
  char    tmp[512];
- char    sid[63];
+ char    sid[64];
  int     x,y,id;
  wItem * item;
 
@@ -542,7 +542,7 @@ static int cmd_slabel( char * in )
 static int cmd_dlabel( char * in )
 { // dlabel=x,y,sx,align,fontfile,string ...
  char    tmp[512];
- char    sid[63];
+ char    sid[64];
  int     x,y,sx,id,a;
  wItem * item;
 
@@ -666,7 +666,7 @@ static void setname( char * item1, char * item2 )
 
 int skinRead( char * dname )
 {
- unsigned char   tmp[255];
+ unsigned char   tmp[256];
  unsigned char * ptmp;
  unsigned char   command[32];
  unsigned char   param[256];
