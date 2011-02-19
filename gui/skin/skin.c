@@ -39,7 +39,7 @@ listItems     * skinAppMPlayer = &appMPlayer;
 
 static int             linenumber;
 
-static unsigned char   path[512],fn[512];
+static unsigned char   path[512];
 
 static listItems     * defList = NULL;
 static unsigned char   window_name[32] = "";
@@ -656,26 +656,31 @@ char * trim( char * in )
 
 FILE * skinFile;
 
-static void setname( char * item1, char * item2 )
+static char *setname( char * item1, char * item2 )
 {
+  static char fn[512];
+
   av_strlcpy(fn, item1, sizeof( fn ));
   av_strlcat(fn, "/", sizeof( fn )); av_strlcat(fn, item2, sizeof( fn ));
   av_strlcpy(path, fn, sizeof( path )); av_strlcat(path, "/", sizeof( path ));
   av_strlcat(fn, "/skin", sizeof( fn ));
+
+  return fn;
 }
 
 int skinRead( char * dname )
 {
+ char          * fn;
  unsigned char   tmp[256];
  unsigned char * ptmp;
  unsigned char   command[32];
  unsigned char   param[256];
  int             i;
 
- setname( skinDirInHome,dname );
+ fn = setname( skinDirInHome,dname );
  if ( ( skinFile = fopen( fn,"rt" ) ) == NULL )
   {
-   setname( skinMPlayerDir,dname );
+   fn = setname( skinMPlayerDir,dname );
    if ( ( skinFile = fopen( fn,"rt" ) ) == NULL )
     {
      mp_msg( MSGT_GPLAYER,MSGL_STATUS,MSGTR_SKIN_SkinFileNotFound,fn );
