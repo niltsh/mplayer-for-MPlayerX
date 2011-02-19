@@ -56,10 +56,10 @@ static void ERRORMESSAGE( const char * format, ... )
  char      tmp[512];
  va_list   ap;
  va_start( ap,format );
- vsnprintf( p,512,format,ap );
+ vsnprintf( p,sizeof(p),format,ap );
  va_end( ap );
  mp_msg( MSGT_GPLAYER,MSGL_STATUS,MSGTR_SKIN_ERRORMESSAGE,linenumber,p );
- snprintf( tmp,512,MSGTR_SKIN_ERRORMESSAGE,linenumber,p );
+ snprintf( tmp,sizeof(tmp),MSGTR_SKIN_ERRORMESSAGE,linenumber,p );
  gtkMessageBox( GTK_MB_FATAL,tmp );
 }
 
@@ -697,7 +697,7 @@ int skinRead( char * dname )
  appInitStruct( skinAppMPlayer );
 
  linenumber=0;
- while (fgets(tmp, 255, skinFile))
+ while (fgets(tmp, sizeof(tmp), skinFile))
   {
    linenumber++;
 
