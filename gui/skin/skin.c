@@ -628,21 +628,6 @@ _item skinItem[] =
 
 #define ITEMS (int)( sizeof( skinItem )/sizeof( _item ) )
 
-char * trimleft( char * in )
-{
- int    c = 0;
- char * out;
- if ( strlen( in ) == 0 ) return NULL;
- while ( in[c] == ' ' ) c++;
- if ( c != 0 )
-  {
-   out=malloc( strlen( in ) - c  + 1 );
-   memcpy( out,&in[c],strlen( in ) - c + 1 );
-  }
-  else out=in;
- return out;
-}
-
 char * strswap( char * in,char what,char whereof )
 {
  int    i;

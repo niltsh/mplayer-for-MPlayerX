@@ -28,7 +28,6 @@ int skinBPRead( char * fname, txSample * bf );
 
 // ---
 
-char * trimleft( char * in );
 char * strswap( char * in, char what, char whereof );
 char * trim( char * in );
 
