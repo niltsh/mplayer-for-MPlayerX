@@ -171,7 +171,7 @@ static int cmd_base( char * in )
    defList->main.y=y;
    defList->main.type=itBase;
    av_strlcpy(tmp, path, sizeof( tmp )); av_strlcat(tmp, fname, sizeof( tmp ));
-   if ( skinBPRead( tmp,&defList->main.Bitmap ) ) return 1;
+   if ( skinBPRead( tmp,&defList->main.Bitmap ) != 0 ) return 1;
    defList->main.width=defList->main.Bitmap.Width;
    defList->main.height=defList->main.Bitmap.Height;
 #ifdef CONFIG_XSHAPE
@@ -186,7 +186,7 @@ static int cmd_base( char * in )
   {
    defList->sub.type=itBase;
    av_strlcpy(tmp, path, sizeof( tmp )); av_strlcat(tmp, fname, sizeof( tmp ));
-   if ( skinBPRead( tmp,&defList->sub.Bitmap ) ) return 1;
+   if ( skinBPRead( tmp,&defList->sub.Bitmap ) != 0 ) return 1;
    defList->sub.x=x;
    defList->sub.y=y;
    defList->sub.width=defList->sub.Bitmap.Width;
@@ -203,7 +203,7 @@ static int cmd_base( char * in )
    defList->menuIsPresent=1;
    defList->menuBase.type=itBase;
    av_strlcpy(tmp, path, sizeof( tmp )); av_strlcat(tmp, fname, sizeof( tmp ));
-   if ( skinBPRead( tmp,&defList->menuBase.Bitmap ) ) return 1;
+   if ( skinBPRead( tmp,&defList->menuBase.Bitmap ) != 0 ) return 1;
    defList->menuBase.width=defList->menuBase.Bitmap.Width;
    defList->menuBase.height=defList->menuBase.Bitmap.Height;
 #ifdef CONFIG_XSHAPE
@@ -221,7 +221,7 @@ static int cmd_base( char * in )
    defList->bar.y=y;
    defList->bar.type=itBase;
    av_strlcpy(tmp, path, sizeof( tmp )); av_strlcat(tmp, fname, sizeof( tmp ));
-   if ( skinBPRead( tmp,&defList->bar.Bitmap ) ) return 1;
+   if ( skinBPRead( tmp,&defList->bar.Bitmap ) != 0 ) return 1;
    defList->bar.width=defList->bar.Bitmap.Width;
    defList->bar.height=defList->bar.Bitmap.Height;
 #ifdef CONFIG_XSHAPE
@@ -289,10 +289,10 @@ static int cmd_button( char * in )
  mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[skin]  message: %d\n",currSubItems[ *currSubItem ].msg );
 
  currSubItems[ *currSubItem ].Bitmap.Image=NULL;
- if ( strcmp( fname,"NULL" ) )
+ if ( strcmp( fname,"NULL" ) != 0 )
   {
    av_strlcpy(tmp, path, sizeof( tmp )); av_strlcat(tmp, fname, sizeof( tmp ));
-   if ( skinBPRead( tmp,&currSubItems[ *currSubItem ].Bitmap ) ) return 1;
+   if ( skinBPRead( tmp,&currSubItems[ *currSubItem ].Bitmap ) != 0 ) return 1;
   }
 
  return 0;
@@ -314,7 +314,7 @@ static int cmd_selected( char * in )
  defList->menuSelected.type=itBase;
  av_strlcpy(tmp, path, sizeof( tmp )); av_strlcat(tmp, fname, sizeof( tmp ));
  mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"\n[skin] selected: %s\n",fname );
- if ( skinBPRead( tmp,&defList->menuSelected.Bitmap ) ) return 1;
+ if ( skinBPRead( tmp,&defList->menuSelected.Bitmap ) != 0 ) return 1;
  defList->menuSelected.width=defList->menuSelected.Bitmap.Width;
  defList->menuSelected.height=defList->menuSelected.Bitmap.Height;
  mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[skin]  width: %d height: %d\n",defList->menuSelected.width,defList->menuSelected.height );
@@ -402,17 +402,17 @@ static int cmd_hpotmeter( char * in )
  item->pressed=btnReleased;
 
  item->Bitmap.Image=NULL;
- if ( strcmp( phfname,"NULL" ) )
+ if ( strcmp( phfname,"NULL" ) != 0 )
   {
    av_strlcpy(tmp, path, sizeof( tmp )); av_strlcat(tmp, phfname, sizeof( tmp ));
-   if ( skinBPRead( tmp,&item->Bitmap ) ) return 1;
+   if ( skinBPRead( tmp,&item->Bitmap ) != 0 ) return 1;
   }
 
  item->Mask.Image=NULL;
- if ( strcmp( pfname,"NULL" ) )
+ if ( strcmp( pfname,"NULL" ) != 0 )
   {
    av_strlcpy(tmp, path, sizeof( tmp )); av_strlcat(tmp, pfname, sizeof( tmp ));
-   if ( skinBPRead( tmp,&item->Mask ) ) return 1;
+   if ( skinBPRead( tmp,&item->Mask ) != 0 ) return 1;
   }
  return 0;
 }
@@ -466,10 +466,10 @@ static int cmd_potmeter( char * in )
  item->value=(float)d;
 
  item->Bitmap.Image=NULL;
- if ( strcmp( phfname,"NULL" ) )
+ if ( strcmp( phfname,"NULL" ) != 0 )
   {
    av_strlcpy(tmp, path, sizeof( tmp )); av_strlcat(tmp, phfname, sizeof( tmp ));
-   if ( skinBPRead( tmp,&item->Bitmap ) ) return 1;
+   if ( skinBPRead( tmp,&item->Bitmap ) != 0 ) return 1;
   }
  return 0;
 }
@@ -597,8 +597,8 @@ static int cmd_decoration( char * in )
  mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"\n[skin] window decoration is %s\n",in );
  strlower( in );
  cutItem( in,tmp,',',0 );
- if ( strcmp( tmp,"enable" )&&strcmp( tmp,"disable" ) ) { ERRORMESSAGE( MSGTR_SKIN_UnknownParameter,tmp ); return 1; }
- if ( strcmp( tmp,"enable" ) ) defList->mainDecoration=0;
+ if ( strcmp( tmp,"enable" ) != 0&&strcmp( tmp,"disable" ) != 0 ) { ERRORMESSAGE( MSGTR_SKIN_UnknownParameter,tmp ); return 1; }
+ if ( strcmp( tmp,"enable" ) != 0 ) defList->mainDecoration=0;
   else defList->mainDecoration=1;
 
  mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"\n[skin] window decoration is %s\n",(defList->mainDecoration?"enabled":"disabled") );
@@ -711,7 +711,7 @@ int skinRead( char * dname )
    strlower( command );
    for( i=0;i<ITEMS;i++ )
     if ( !strcmp( command,skinItem[i].name ) )
-     if ( skinItem[i].func( param ) ) return -2;
+     if ( skinItem[i].func( param ) != 0 ) return -2;
   }
  if (linenumber == 0) {
    mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_SKIN_SkinFileNotReadable, fn);
