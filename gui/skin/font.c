@@ -28,7 +28,7 @@
 #include "../interface.h"
 #include "libavutil/avstring.h"
 
-static bmpFont * Fonts[MAX_FONTS] = {0};
+static bmpFont * Fonts[MAX_FONTS];
 
 static int fntAddNewFont( char * name )
 {
