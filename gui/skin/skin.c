@@ -92,8 +92,12 @@ static void ERRORMESSAGE( const char * format, ... )
 
 static char * strlower( char * in )
 {
- int i;
- for( i=0;i<(int)strlen( in );i++ ) in[i]=( in[i] >= 'A' ? ( in[i] <= 'Z' ?  in[i]+='A' : in[i] ) : in[i] );
+ char *p = in;
+ while (*p)
+  {
+   if (*p >= 'A' && *p <= 'Z') *p += ' ';
+   p++;
+  }
  return in;
 }
 
