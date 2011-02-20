@@ -47,8 +47,6 @@ typedef struct
  char            name[MAX_FONT_NAME];
 } bmpFont;
 
-extern bmpFont  * Fonts[MAX_FONTS];
-
 void fntFreeFont( void );
 int  fntFindID( char * name );
 int  fntTextWidth( int id, char * str );
