@@ -658,8 +658,6 @@ char * trim( char * in )
  return in;
 }
 
-FILE * skinFile;
-
 static char *setname( char * item1, char * item2 )
 {
   static char fn[512];
@@ -675,6 +673,7 @@ static char *setname( char * item1, char * item2 )
 int skinRead( char * dname )
 {
  char          * fn;
+ FILE          * skinFile;
  unsigned char   tmp[256];
  unsigned char * ptmp;
  unsigned char   command[32];
