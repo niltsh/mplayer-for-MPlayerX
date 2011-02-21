@@ -813,8 +813,11 @@ static int encode_frame(struct vf_instance *vf, AVFrame *pic, double pts){
 	    pic);
 
     /* store stats if there are any */
-    if(lavc_venc_context->stats_out && stats_file)
+    if(lavc_venc_context->stats_out && stats_file) {
         fprintf(stats_file, "%s", lavc_venc_context->stats_out);
+        /* make sure we can't accidentally store the same stats twice */
+        lavc_venc_context->stats_out[0] = 0;
+    }
 
     if(pts != MP_NOPTS_VALUE)
         dts= pts - lavc_venc_context->delay * av_q2d(lavc_venc_context->time_base);
