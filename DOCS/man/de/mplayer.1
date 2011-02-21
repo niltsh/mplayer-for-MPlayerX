@@ -377,30 +377,6 @@ Im Minutenschritt zurück-/\:vorwärts spulen.
 .PD 1
 .PP
 .RS
-(Die folgenden Tasten sind nur gültig, falls MPlayer mit GUI-Unterstützung
-übersetzt wurde und haben Vorrang vor den oben definierten Tasten.)
-.RE
-.PP
-.PD 0
-.RSs
-.IPs ENTER
-Startet Wiedergabe.
-.IPs "ESC\ \ "
-Beendet die Wiedergabe.
-.IPs "l\ \ \ \ "
-Datei laden.
-.IPs "t\ \ \ \ "
-Untertitel laden.
-.IPs "c\ \ \ \ "
-Skinbrowser öffnen.
-.IPs "p\ \ \ \ "
-Playlist öffnen.
-.IPs "r\ \ \ \ "
-Konfigurationsdialog öffnen.
-.RE
-.PD 1
-.PP
-.RS
 (Die folgenden Tasten sind nur gültig, falls MPlayer mit Unterstützung
 für TV-Karten oder DVB-Input übersetzt wurde und haben Vorrang vor den oben
 definierten Tasten.)
@@ -11283,8 +11259,20 @@ Eingabebelegungen (siehe '\-input keylist' für eine vollständige Auflistung
 aller Tastennamen)
 .
 .TP
+~/.mplayer/\:gui.conf
+Konfigurationsdatei für die GUI
+.
+.TP
+~/.mplayer/\:gui.history
+Verzeichnis-Verlaufsdatei für die GUI
+.
+.TP
 ~/.mplayer/\:gui.pl
 Playlist für die GUI
+.
+.TP
+~/.mplayer/\:gui.url
+URL-Liste für die GUI
 .
 .TP
 ~/.mplayer/\:font/
