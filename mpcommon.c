@@ -471,6 +471,12 @@ double calc_a_pts(sh_audio_t *sh_audio, demux_stream_t *d_audio)
         return MP_NOPTS_VALUE;
     // first calculate the end pts of audio that has been output by decoder
     a_pts = sh_audio->pts;
+    // If we cannot get any useful information at all from the demuxer layer
+    // just count the decoded bytes. This is still better than constantly
+    // resetting to 0.
+    if (sh_audio->pts_bytes && a_pts == MP_NOPTS_VALUE &&
+        !d_audio->pts && !sh_audio->i_bps)
+        a_pts = 0;
     if (a_pts != MP_NOPTS_VALUE)
         // Good, decoder supports new way of calculating audio pts.
         // sh_audio->pts is the timestamp of the latest input packet with
