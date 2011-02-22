@@ -466,10 +466,11 @@ int common_init(void)
 /// Returns a_pts
 double calc_a_pts(sh_audio_t *sh_audio, demux_stream_t *d_audio)
 {
+    double a_pts;
     if(!sh_audio || !d_audio)
         return MP_NOPTS_VALUE;
     // first calculate the end pts of audio that has been output by decoder
-    double a_pts = sh_audio->pts;
+    a_pts = sh_audio->pts;
     if (a_pts != MP_NOPTS_VALUE)
         // Good, decoder supports new way of calculating audio pts.
         // sh_audio->pts is the timestamp of the latest input packet with
