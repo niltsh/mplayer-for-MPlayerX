@@ -304,7 +304,19 @@ int stream_read_internal(stream_t *s, void *buf, int len)
   default:
     len= s->fill_buffer ? s->fill_buffer(s, buf, len) : 0;
   }
-  if(len<=0){ s->eof=1; return 0; }
+  if(len<=0){
+    if (!s->eof) {
+      // just in case this is an error e.g. due to network
+      // timeout reset and retry
+      off_t pos = s->pos;
+      stream_reset(s);
+      stream_seek_internal(s, pos);
+      s->eof=1;
+      return stream_read_internal(s, buf, len);
+    }
+    s->eof=1;
+    return 0;
+  }
   // When reading succeeded we are obviously not at eof.
   // This e.g. avoids issues with eof getting stuck when lavf seeks in MPEG-TS
   s->eof=0;
