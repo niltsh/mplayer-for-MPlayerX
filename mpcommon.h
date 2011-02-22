@@ -27,6 +27,7 @@
 
 #define ROUND(x) ((int)((x) < 0 ? (x) - 0.5 : (x) + 0.5))
 
+struct sh_audio;
 struct sh_video;
 
 extern double sub_last_pts;
@@ -73,5 +74,7 @@ void set_osd_subtitle(subtitle *subs);
 
 void common_preinit(void);
 int common_init(void);
+
+double calc_a_pts(struct sh_audio *sh_audio, demux_stream_t *d_audio);
 
 #endif /* MPLAYER_MPCOMMON_H */
