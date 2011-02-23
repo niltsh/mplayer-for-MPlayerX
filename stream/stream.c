@@ -283,6 +283,7 @@ void stream_capture_do(stream_t *s)
 
 int stream_read_internal(stream_t *s, void *buf, int len)
 {
+  int orig_len = len;
   // we will retry even if we already reached EOF previously.
   switch(s->type){
   case STREAMTYPE_STREAM:
@@ -312,7 +313,7 @@ int stream_read_internal(stream_t *s, void *buf, int len)
       stream_reset(s);
       stream_seek_internal(s, pos);
       s->eof=1;
-      return stream_read_internal(s, buf, len);
+      return stream_read_internal(s, buf, orig_len);
     }
     s->eof=1;
     return 0;
