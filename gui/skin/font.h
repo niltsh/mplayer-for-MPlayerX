@@ -19,8 +19,8 @@
 #ifndef MPLAYER_GUI_FONT_H
 #define MPLAYER_GUI_FONT_H
 
-#include "gui/bitmap.h"
 #include "gui/app.h"
+#include "gui/bitmap.h"
 
 #define ASCII_CHRS 128   // number of ASCII characters
 #define EXTRA_CHRS 128   // (arbitrary) number of non-ASCII characters
@@ -33,25 +33,22 @@
 #define fntAlignCenter 1
 #define fntAlignRight  2
 
-typedef struct
-{
- int x,y;   // location
- int sx,sy; // size
+typedef struct {
+    int x, y;     // location
+    int sx, sy;   // size
 } fntChar;
 
-typedef struct
-{
- fntChar         Fnt[ASCII_CHRS + EXTRA_CHRS];
- unsigned char   nonASCIIidx[EXTRA_CHRS][UTF8LENGTH];
- txSample        Bitmap;
- char            name[MAX_FONT_NAME];
+typedef struct {
+    fntChar Fnt[ASCII_CHRS + EXTRA_CHRS];
+    unsigned char nonASCIIidx[EXTRA_CHRS][UTF8LENGTH];
+    txSample Bitmap;
+    char name[MAX_FONT_NAME];
 } bmpFont;
 
-void fntFreeFont( void );
-int  fntFindID( char * name );
-int  fntTextWidth( int id, char * str );
-
-int        fntRead( char * path, char * fname );
-txSample * fntRender( wItem * item, int px, char * txt );
+int fntFindID(char *);
+void fntFreeFont(void);
+int fntRead(char *, char *);
+txSample *fntRender(wItem *, int, char *);
+int fntTextWidth(int, char *);
 
 #endif /* MPLAYER_GUI_FONT_H */
