@@ -22,15 +22,15 @@ Currently there are four windows to be decorated: the
 <link linkend="skin-file-main">main window</link>, the
 <link linkend="skin-file-subwindow">subwindow</link>, the
 <link linkend="skin-file-main">playbar</link>, and the
-<link linkend="skin-file-menu">skin menu</link> (which can be activated
-by a right click).
+<link linkend="skin-file-menu">skin menu</link>.
 
 <itemizedlist>
 <listitem>
   <para>
-  The <emphasis role="bold">main window</emphasis> and/or the
-  <emphasis role="bold">playbar</emphasis> is where you can control
-  <application>MPlayer</application>. The background of the window is an image.
+  The <emphasis role="bold">main window</emphasis> is where you can control
+  <application>MPlayer</application>. The <emphasis role="bold">playbar</emphasis>
+  shows up in fullscreen mode when moving the mouse to the bottom of
+  the screen. The background of the windows is an image.
   Various items can (and must) be placed in the window:
   <emphasis>buttons</emphasis>, <emphasis>potmeters</emphasis> (sliders) and
   <emphasis>labels</emphasis>.
@@ -82,7 +82,8 @@ by a right click).
 <listitem>
   <para>
   The <emphasis role="bold">skin menu</emphasis> is just a way to control
-  <application>MPlayer</application> by means of menu entries. Two images
+  <application>MPlayer</application> by means of menu entries (which can be
+  activated by a middle mouse button click). Two images
   are required for the menu: one of them is the base image that shows the
   menu in its normal state, the other one is used to display the selected
   entries. When you pop up the menu, the first image is shown. If you move
@@ -206,17 +207,18 @@ where <replaceable>window name</replaceable> can be one of these strings:
   <emphasis role="bold">sub</emphasis> - for the subwindow
 </para></listitem>
 <listitem><para>
-  <emphasis role="bold">menu</emphasis> - for the skin menu
+  <emphasis role="bold">playbar</emphasis> - for the playbar
 </para></listitem>
 <listitem><para>
-  <emphasis role="bold">playbar</emphasis> - playbar
+  <emphasis role="bold">menu</emphasis> - for the skin menu
 </para></listitem>
 </itemizedlist>
 </para>
 
 <para>
-(The sub and menu blocks are optional - you do not need to create a menu or
-decorate the subwindow.)
+(The sub, playbar and menu blocks are optional - you do not need to decorate
+the subwindow, have a playbar or create a menu. A default menu is always
+available by a right mouse button click.)
 </para>
 
 <para>

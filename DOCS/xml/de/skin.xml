@@ -77,17 +77,17 @@
         Zur Zeit sind vier Fenster zu dekorieren: das
         <link linkend="skin-file-main">Hauptfenster</link>, das
         <link linkend="skin-file-subwindow">Unterfenster</link>, die
-        <link linkend="skin-file-main">Abspielleitse</link> und das
-        <link linkend="skin-file-menu">Skin-Menü</link> (das durch einen
-        Rechtsklick aktiviert werden kann).
+        <link linkend="skin-file-main">Abspielleiste</link> und das
+        <link linkend="skin-file-menu">Skin-Menü</link>.
 
         <itemizedlist>
           <listitem>
             <para>
-              Das <emphasis role="bold">Hauptfenster</emphasis> und/oder die
-              <emphasis role="bold">Abspielleiste</emphasis> befindet sich dort, wo du
-              <application>MPlayer</application> kontrollieren kannst. Der Hintergrund
-              des Fensters ist eine Grafik.
+              Mit dem <emphasis role="bold">Hauptfenster</emphasis> kontrolliert
+              man den <application>MPlayer</application>.
+              Die <emphasis role="bold">Abspielleiste</emphasis> erscheint im
+              Vollbild-Modus, sobald man die Maus unten an den Bildschirm bewegt.
+              Der Hintergrund der Fenster ist eine Grafik.
               Ins Fenster können (und müssen) diverse Elemente platziert werden:
               <emphasis>Buttons</emphasis>, <emphasis>Potentiometer</emphasis> (Schieberegler)
               und <emphasis>Labels</emphasis>.
@@ -145,8 +145,9 @@
           <listitem>
             <para>
               Das <emphasis role="bold">Skin-Menü</emphasis> ist ganz einfach ein
-              Weg, <application>MPlayer</application> mittels der Menüeinträge zu
-              kontrollieren. Zwei Grafiken sind für das Menü erforderlich:
+              Weg, <application>MPlayer</application> mittels Menüeinträgen zu
+              kontrollieren. Es wird durch die mittlere Maustaste aktiviert.
+              Zwei Grafiken sind für das Menü erforderlich:
               eine davon ist die Basisgrafik, die den Normalzustand des Menüs darstellt,
               die andere wird zur Anzeige der gewählten Einträge verwendet.
               Wenn du das Menü aufklappst, wird die erste Grafik angezeigt. Bewegst du
@@ -259,14 +260,16 @@ end
       <itemizedlist>
         <listitem><para><emphasis role="bold">main</emphasis> - für das Hauptfenster</para></listitem>
         <listitem><para><emphasis role="bold">sub</emphasis> - für das Unterfenster</para></listitem>
+        <listitem><para><emphasis role="bold">playbar</emphasis> - für die Abspielleiste</para></listitem>
         <listitem><para><emphasis role="bold">menu</emphasis> - für das Skin-Menü</para></listitem>
-        <listitem><para><emphasis role="bold">playbar</emphasis> - Abspielleiste</para></listitem>
       </itemizedlist>
     </para>
 
     <para>
-      (Die sub- und menu-Blöcke sind optional - du musst kein Menü erzeugen oder
-      das Unterfenster dekorieren.)
+      (Die sub-, playbar- und menu-Blöcke sind optional - es ist nicht
+      nötig, das Unterfenster zu dekorieren, eine Abspielleiste zu haben
+      oder ein Menü zu erzeugen. Ein Standard-Menü steht immer über die
+      rechte Maustaste zur Verfügung.)
     </para>
 
     <para>
