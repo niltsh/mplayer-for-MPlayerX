@@ -35,15 +35,15 @@ typedef struct {
 } _item;
 
 listItems *skinAppMPlayer = &appMPlayer;
-static listItems *defList = NULL;
+static listItems *defList;
 
 static int linenumber;
 static unsigned char path[512];
-static unsigned char window_name[32] = "";
+static unsigned char window_name[32];
 
-static wItem *currSection  = NULL;
-static int *currSubItem    = NULL;
-static wItem *currSubItems = NULL;
+static wItem *currSection;
+static int *currSubItem;
+static wItem *currSubItems;
 
 static void ERRORMESSAGE(const char *format, ...)
 {
