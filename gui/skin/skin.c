@@ -56,8 +56,11 @@ static void ERRORMESSAGE(const char *format, ...)
     va_end(ap);
 
     mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_ERRORMESSAGE, linenumber, p);
+
+    if (mp_msg_test(MSGT_GPLAYER, MSGL_ERR)) {
     snprintf(tmp, sizeof(tmp), MSGTR_SKIN_ERRORMESSAGE, linenumber, p);
     gtkMessageBox(GTK_MB_FATAL, tmp);
+    }
 }
 
 #define CHECKDEFLIST(str) \
