@@ -238,7 +238,7 @@ static int cmd_base(char *in)
 
 #ifdef CONFIG_XSHAPE
         Convert32to1(&defList->main.Bitmap, &defList->main.Mask, 0x00ff00ff);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  mask: %dx%d\n", defList->main.Mask.Width, defList->main.Mask.Height);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  mask: %lux%lu\n", defList->main.Mask.Width, defList->main.Mask.Height);
 #else
         defList->main.Mask.Image = NULL;
 #endif
@@ -283,7 +283,7 @@ static int cmd_base(char *in)
 
 #ifdef CONFIG_XSHAPE
         Convert32to1(&defList->menuBase.Bitmap, &defList->menuBase.Mask, 0x00ff00ff);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  mask: %dx%d\n", defList->menuBase.Mask.Width, defList->menuBase.Mask.Height);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  mask: %lux%lu\n", defList->menuBase.Mask.Width, defList->menuBase.Mask.Height);
 #else
         defList->menuBase.Mask.Image = NULL;
 #endif
@@ -308,7 +308,7 @@ static int cmd_base(char *in)
 
 #ifdef CONFIG_XSHAPE
         Convert32to1(&defList->bar.Bitmap, &defList->bar.Mask, 0x00ff00ff);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  mask: %dx%d\n", defList->bar.Mask.Width, defList->bar.Mask.Height);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  mask: %lux%lu\n", defList->bar.Mask.Width, defList->bar.Mask.Height);
 #else
         defList->bar.Mask.Image = NULL;
 #endif
