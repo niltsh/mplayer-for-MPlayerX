@@ -788,7 +788,7 @@ static int cmd_decoration(char *in)
     return 0;
 }
 
-_item skinItem[] = {
+static _item skinItem[] = {
     { "section",    cmd_section    },
     { "end",        cmd_end        },
     { "window",     cmd_window     },
