@@ -93,7 +93,7 @@ static char *strlower(char *in)
 
     while (*p) {
         if (*p >= 'A' && *p <= 'Z')
-            *p += ' ';
+            *p += 'a' - 'A';
 
         p++;
     }
