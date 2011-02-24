@@ -21,14 +21,11 @@
 
 #include "gui/app.h"
 
-extern listItems     * skinAppMPlayer;
+extern listItems *skinAppMPlayer;
 
-int skinRead( char * dname  );
-int skinBPRead( char * fname, txSample * bf );
-
-// ---
-
-char * strswap( char * in, char what, char whereof );
-char * trim( char * in );
+int skinBPRead(char *, txSample *);
+int skinRead(char *);
+char *strswap(char *, char, char);
+char *trim(char *);
 
 #endif /* MPLAYER_GUI_SKIN_H */
