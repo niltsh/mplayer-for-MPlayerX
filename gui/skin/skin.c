@@ -55,7 +55,7 @@ static void ERRORMESSAGE(const char *format, ...)
     vsnprintf(p, sizeof(p), format, ap);
     va_end(ap);
 
-    mp_msg(MSGT_GPLAYER, MSGL_STATUS, MSGTR_SKIN_ERRORMESSAGE, linenumber, p);
+    mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_ERRORMESSAGE, linenumber, p);
     snprintf(tmp, sizeof(tmp), MSGTR_SKIN_ERRORMESSAGE, linenumber, p);
     gtkMessageBox(GTK_MB_FATAL, tmp);
 }
@@ -64,7 +64,7 @@ static void ERRORMESSAGE(const char *format, ...)
     { \
         if (defList == NULL) \
         { \
-            mp_msg(MSGT_GPLAYER, MSGL_STATUS, MSGTR_SKIN_WARNING1, linenumber, str); \
+            ERRORMESSAGE(MSGTR_SKIN_ERROR_SECTION, str); \
             return 1; \
         } \
     }
@@ -73,7 +73,7 @@ static void ERRORMESSAGE(const char *format, ...)
     { \
         if (!window_name[0]) \
         { \
-            mp_msg(MSGT_GPLAYER, MSGL_STATUS, MSGTR_SKIN_WARNING2, linenumber, str); \
+            ERRORMESSAGE(MSGTR_SKIN_ERROR_WINDOW, str); \
             return 1; \
         } \
     }
@@ -82,7 +82,7 @@ static void ERRORMESSAGE(const char *format, ...)
     { \
         if (!strcmp(window_name, name)) \
         { \
-            mp_msg(MSGT_GPLAYER, MSGL_STATUS, MSGTR_SKIN_WARNING3, linenumber, name); \
+            ERRORMESSAGE(MSGTR_SKIN_ERROR_IN_WINDOW, name); \
             return 1; \
         } \
     }
@@ -875,7 +875,7 @@ int skinRead(char *dname)
         fn = setname(skinMPlayerDir, dname);
 
         if ((skinFile = fopen(fn, "rt")) == NULL) {
-            mp_msg(MSGT_GPLAYER, MSGL_STATUS, MSGTR_SKIN_SkinFileNotFound, fn);
+            mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_SkinFileNotFound, fn);
             return -1;
         }
     }
@@ -911,7 +911,7 @@ int skinRead(char *dname)
     }
 
     if (linenumber == 0) {
-        mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_SKIN_SkinFileNotReadable, fn);
+        mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_SkinFileNotReadable, fn);
         return -1;
     }
 

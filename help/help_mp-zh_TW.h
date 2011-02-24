@@ -729,9 +729,6 @@ static const char help_text[]=
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[skin] 皮膚配置文件的 %d: %s行出錯"
-#define MSGTR_SKIN_WARNING1 "[skin] 警告: 在配置文件的 %d行:\n找到組件 (%s) 但在這之前没有找到 \"section\""
-#define MSGTR_SKIN_WARNING2 "[skin] 警告: 在配置文件的 %d行:\n找到組件 (%s) 但在這之前没有找到 \"subsection\""
-#define MSGTR_SKIN_WARNING3 "[skin] 警告: 在配置文件的 %d行:\n組件 (%s) 不支持此 subsection"
 #define MSGTR_SKIN_SkinFileNotFound "[skin] 文件 (%s) 没找到。\n"
 #define MSGTR_SKIN_SkinFileNotReadable "[skin] 文件 (%s) 不可讀。\n"
 #define MSGTR_SKIN_BITMAP_16bit  "不支持少于 16 比特色深的位圖 (%s)。\n"

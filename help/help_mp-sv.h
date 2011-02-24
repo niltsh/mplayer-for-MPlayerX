@@ -600,9 +600,6 @@ static const char help_text[]=
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[skin] fel i skinkonfigureringsfil på rad %d: %s"
-#define MSGTR_SKIN_WARNING1 "[skin] varning i konfigurationsfil på rad %d:\nwidget (%s) funnen, men ingen \"section\" funnen före"
-#define MSGTR_SKIN_WARNING2 "[skin] varning i konfigurationsfil på rad %d:\nwidget (%s) funnen, men ingen \"subsection\" funnen före"
-#define MSGTR_SKIN_WARNING3 "[skin] varning i konfigurationsfil på rad %d:\ndenna undersektion stödjs inte av widget (%s)"
 #define MSGTR_SKIN_BITMAP_16bit  "16-bitar eller lägre bitmappar stödjs inte (%s).\n"
 #define MSGTR_SKIN_BITMAP_FileNotFound  "fil ej funnen (%s)\n"
 #define MSGTR_SKIN_BITMAP_BMPReadError "BMP läsfel (%s)\n"

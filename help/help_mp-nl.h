@@ -585,9 +585,6 @@ static const char help_text[]=
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[skin] fout in skin configuratie bestand op regel %d: %s"
-#define MSGTR_SKIN_WARNING1 "[skin] waarschuwing in skin configuratie bestand op regel %d: widget gevonden maar voordien \"section\" niet gevonden (%s)"
-#define MSGTR_SKIN_WARNING2 "[skin] waarschuwing in skin configuratie bestand op regel %d: widget gevonden maar voordien \"subsection\" niet gevonden (%s)"
-#define MSGTR_SKIN_WARNING3 "[skin] waarschuwing in skin configuratie bestand op regel %d: deze onderverdeling is niet ondersteund door deze widget (%s)"
 #define MSGTR_SKIN_BITMAP_16bit  "16 bits of minder kleurendiepte bitmap niet ondersteund (%s).\n"
 #define MSGTR_SKIN_BITMAP_FileNotFound  "bestand niet gevonden (%s)\n"
 #define MSGTR_SKIN_BITMAP_BMPReadError "BMP lees fout (%s)\n"

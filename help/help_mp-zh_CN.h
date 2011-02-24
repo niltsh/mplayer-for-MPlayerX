@@ -558,9 +558,6 @@ static const char help_text[]=
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[界面外观] 界面外观配置文件错误，行 %d：%s"
-#define MSGTR_SKIN_WARNING1 "[界面外观] 警告：配置文件行 %d：\n找到组件（%s），但在其之前没有找到“section”的内容"
-#define MSGTR_SKIN_WARNING2 "[界面外观] 警告: 配置文件行 %d：\n找到组件（%s），但在其之前没有找到“subsection”的内容"
-#define MSGTR_SKIN_WARNING3 "[界面外观] 警告: 配置文件行 %d：\n组件（%s）不支持该 subsection"
 #define MSGTR_SKIN_SkinFileNotFound "[界面外观] 未找到文件（%s）。\n"
 #define MSGTR_SKIN_SkinFileNotReadable "[界面外观] 无法读取文件（%s）。\n"
 #define MSGTR_SKIN_BITMAP_16bit  "不支持少于或等于 16 比特颜色精度的位图（%s）。\n"

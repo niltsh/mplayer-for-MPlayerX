@@ -582,9 +582,6 @@ static const char help_text[]=
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[skin] error en configuración de skin en la línea %d: %s"
-#define MSGTR_SKIN_WARNING1 "[skin] advertencia en archivo de configuración en la línea %d:\n control (%s) encontrado pero no se encontro \"section\" antes"
-#define MSGTR_SKIN_WARNING2 "[skin] advertencia en archivo de configuración en la línea %d:\n control (%s) encontrado pero no se encontro \"subsection\" antes"
-#define MSGTR_SKIN_WARNING3 "[skin] advertencia en archivo de configuración en la linea %d:\nesta subsección no esta soportada por control (%s)"
 #define MSGTR_SKIN_SkinFileNotFound "[skin] no se encontró archivo ( %s ).\n"
 #define MSGTR_SKIN_SkinFileNotReadable "[skin] file no leible ( %s ).\n"
 #define MSGTR_SKIN_BITMAP_16bit  "Mapa de bits de 16 bits o menos no soportado (%s).\n"

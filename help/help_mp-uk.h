@@ -559,9 +559,6 @@ static const char help_text[]=
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[скін] помилка у налаштунках скіна у рядку %d: %s"
-#define MSGTR_SKIN_WARNING1 "[скін] попередження: у налаштунках у рядку %d:\nвіджет (%s) знайдено але \"секцію\" не знайдено"
-#define MSGTR_SKIN_WARNING2 "[скін] попередження: у налаштунках у рядку %d:\nвіджет (%s) знайдено але \"підсекцію\" не знайдено"
-#define MSGTR_SKIN_WARNING3 "[скін] попередження: у налаштунках у рядку %d:\nця підсекція не підтримується віджетом (%s)"
 #define MSGTR_SKIN_SkinFileNotFound "[skin] файл ( %s ) не знайдено.\n"
 #define MSGTR_SKIN_SkinFileNotReadable "[skin] файл ( %s ) не прочитати.\n"
 #define MSGTR_SKIN_BITMAP_16bit  "Глибина матриці у 16 біт і менше не підтримується (%s).\n"

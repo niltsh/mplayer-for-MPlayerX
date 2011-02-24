@@ -367,9 +367,6 @@ static const char help_text[]=
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[tema] fejl i konfigurationsfilen til temaet på linje %d: %s"
-#define MSGTR_SKIN_WARNING1 "[tema] advarsel i konfigurationsfilen til temaet på linje %d: widget fundet men før \"section\" ikke fundet (%s)"
-#define MSGTR_SKIN_WARNING2 "[tema] advarsel i konfigurationsfilen til temaet på linje %d: widget fundet men før \"subsection\" ikke fundet (%s)"
-#define MSGTR_SKIN_WARNING3 "[tema] advarsel i konfigurationsfilen til temaet på linje %d: denne undersektion er ikke understøttet af dette widget (%s)"
 #define MSGTR_SKIN_BITMAP_16bit  "16 bits eller mindre ikke understøttet (%s).\n"
 #define MSGTR_SKIN_BITMAP_FileNotFound  "filen ikke fundet (%s)\n"
 #define MSGTR_SKIN_BITMAP_BMPReadError "BMP læse fejl (%s)\n"

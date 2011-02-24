@@ -745,9 +745,6 @@ static const char help_text[]=
 
 // --- messages d'erreurs du chargement de peau ---
 #define MSGTR_SKIN_ERRORMESSAGE "[Peau] erreur à la ligne %d du fichier de config de peau : %s"
-#define MSGTR_SKIN_WARNING1 "[Peau] attention à la ligne %d du fichier de config de peau : Widget (%s) trouvé mais aucune \"section\" trouvé avant lui."
-#define MSGTR_SKIN_WARNING2 "[Peau] attention à la ligne %d du fichier de config de peau : Widget (%s) trouvé mais aucune \"subsection\" trouvé avant lui."
-#define MSGTR_SKIN_WARNING3 "[Peau] attention à la ligne %d du fichier de config de peau : cette sous-section n'est pas supporté par le widget (%s)"
 #define MSGTR_SKIN_SkinFileNotFound "[peau] fichier ( %s ) non trouvé.\n"
 #define MSGTR_SKIN_SkinFileNotReadable "[peau] fichier ( %s ) non lisible.\n"
 #define MSGTR_SKIN_BITMAP_16bit  "les images bitmaps 16 bits ou moins ne sont pas supportées ( %s ).\n"

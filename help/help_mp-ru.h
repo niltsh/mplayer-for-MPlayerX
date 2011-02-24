@@ -565,9 +565,6 @@ static const char help_text[]=
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[скин] ошибка в файле конфигурации шкуры на строке %d: %s"
-#define MSGTR_SKIN_WARNING1 "[скин] предупреждение: в файле конфигурации шкуры на строке %d:\nэлемент GUI найден, но до этого не найдено \"section\" (%s)"
-#define MSGTR_SKIN_WARNING2 "[скин] предупреждение: в файле конфигурации шкуры на строке %d:\nэлемент GUI найден, но до этого не найдено \"subsection\" (%s)"
-#define MSGTR_SKIN_WARNING3 "[скин] предупреждение: в файле конфигурации шкуры на строке %d:\nэта подсекция не поддерживается этим элементом GUI (%s)"
 #define MSGTR_SKIN_SkinFileNotFound "[скин] файл '%s' не найден.\n"
 #define MSGTR_SKIN_SkinFileNotReadable "[скин] файл ( %s ) не читаем.\n"
 #define MSGTR_SKIN_BITMAP_16bit  "Глубина битовой матрицы в 16 бит и меньше не поддерживается (%s).\n"

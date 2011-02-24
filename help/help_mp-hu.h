@@ -576,9 +576,6 @@ static const char help_text[]=
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[skin] hiba a skin konfigurációs fájljának %d. sorában: %s"
-#define MSGTR_SKIN_WARNING1 "[skin] figyelmeztetés: a skin konfigurációs fájljának %d. sorában: widget (%s) megvan, de nincs előtte \"section\""
-#define MSGTR_SKIN_WARNING2 "[skin] figyelmeztetés: a skin konfigurációs fájljának %d. sorában: widget (%s) megvan, de nincs előtte \"subsection\""
-#define MSGTR_SKIN_WARNING3 "[skin] figyelmeztetés: a skin konfigurációs fájljának %d. sorában: ez az elem nem használható ebben az alrészben (%s)"
 #define MSGTR_SKIN_SkinFileNotFound "[skin] a fájl ( %s ) nem található.\n"
 #define MSGTR_SKIN_SkinFileNotReadable "[skin] fájl ( %s ) nem olvasható.\n"
 #define MSGTR_SKIN_BITMAP_16bit  "16 vagy kevesebb bites bitmap nem támogatott (%s).\n"
