@@ -179,11 +179,6 @@ void mplState(void)
     }
 }
 
-float mplGetPosition(void)
-{
-    return guiIntfStruct.Position;   // 0.0..100.0
-}
-
 void mplRelSeek(float s)
 {
     rel_seek_secs = s;   // -+s
