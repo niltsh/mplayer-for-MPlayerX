@@ -21,29 +21,17 @@
 
 extern int mplGotoTheNext;
 
-void mplEnd( void );
-void mplFullScreen( void );
-void mplPlay( void );
-void mplPause( void );
-void mplState( void );
-void mplPrev( void );
-void mplNext( void );
-void mplCurr( void );
-
-void mplIncAudioBufDelay( void );
-void mplDecAudioBufDelay( void );
-
-void  mplRelSeek( float s );
-void  mplAbsSeek( float s );
-float mplGetPosition( void );
-
-void mplPlayFork( void );
-void mplSigHandler( int s );
-void mplPlayerThread( void );
-
-void ChangeSkin( char * name );
-void EventHandling( void );
-
-void mplSetFileName( char * dir, char * name, int type );
+void ChangeSkin(char *);
+void mplAbsSeek(float);
+void mplCurr(void);
+void mplEnd(void);
+void mplFullScreen(void);
+void mplNext(void);
+void mplPause(void);
+void mplPlay(void);
+void mplPrev(void);
+void mplRelSeek(float);
+void mplSetFileName(char *, char *, int);
+void mplState(void);
 
 #endif /* MPLAYER_GUI_PLAY_H */
