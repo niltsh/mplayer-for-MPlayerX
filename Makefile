@@ -301,6 +301,7 @@ SRCS_COMMON = asxparser.c \
               m_option.c \
               m_struct.c \
               mp_msg.c \
+              mp_strings.c \
               mpcommon.c \
               parser-cfg.c \
               path.c \
