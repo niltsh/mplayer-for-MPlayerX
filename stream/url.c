@@ -59,7 +59,7 @@ URL_t *url_redirect(URL_t **url, const char *redir) {
   return res;
 }
 
-static char *get_noauth_url(URL_t *url)
+static char *get_noauth_url(const URL_t *url)
 {
     if (url->port)
         return mp_asprintf("%s://%s:%d%s",
@@ -69,7 +69,7 @@ static char *get_noauth_url(URL_t *url)
                            url->protocol, url->hostname, url->file);
 }
 
-char *get_http_proxy_url(URL_t *proxy, const char *host_url)
+char *get_http_proxy_url(const URL_t *proxy, const char *host_url)
 {
     if (proxy->username)
         return mp_asprintf("http_proxy://%s:%s@%s:%d/%s",
