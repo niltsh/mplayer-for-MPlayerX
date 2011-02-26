@@ -20,7 +20,7 @@
         <orderedlist>
           <listitem>
             <para>
-              <filename class="directory">$(DATADIR)/skins/</filename>
+              <filename class="directory">~/.mplayer/skins/</filename>
             </para>
           </listitem>
           <listitem>
@@ -28,16 +28,11 @@
               <filename class="directory">$(PREFIX)/share/mplayer/skins/</filename>
             </para>
           </listitem>
-          <listitem>
-            <para>
-              <filename class="directory">~/.mplayer/skins/</filename>
-            </para>
-          </listitem>
         </orderedlist>
       </para>
 
       <para>
-        Beachte, dass der erste Pfad je nach Art der
+        Beachte, dass der zweite Pfad je nach Art der
         <application>MPlayer</application>-Konfiguration variieren kann
         (siehe Argumente <option>--prefix</option> und <option>--datadir</option>
         des <command>configure</command>-Scripts).
