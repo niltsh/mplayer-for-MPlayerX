@@ -438,7 +438,6 @@ static char *get_demuxer_info (char *tag) {
 }
 
 char *get_metadata (metadata_t type) {
-  char meta[128];
   sh_audio_t * const sh_audio = mpctx->sh_audio;
   sh_video_t * const sh_video = mpctx->sh_video;
 
@@ -460,18 +459,14 @@ char *get_metadata (metadata_t type) {
     else if (sh_video->format == 0x10000005)
       return strdup("h264");
     else if (sh_video->format >= 0x20202020)
-      snprintf(meta, sizeof(meta), "%.4s", (char *) &sh_video->format);
-    else
-      snprintf(meta, sizeof(meta), "0x%08X", sh_video->format);
-    return strdup(meta);
+      return mp_asprintf("%.4s", (char *)&sh_video->format);
+    return mp_asprintf("0x%08X", sh_video->format);
 
   case META_VIDEO_BITRATE:
-    snprintf(meta, sizeof(meta), "%d kbps", (int) (sh_video->i_bps * 8 / 1024));
-    return strdup(meta);
+    return mp_asprintf("%d kbps", (int)(sh_video->i_bps * 8 / 1024));
 
   case META_VIDEO_RESOLUTION:
-    snprintf(meta, sizeof(meta), "%d x %d", sh_video->disp_w, sh_video->disp_h);
-    return strdup(meta);
+    return mp_asprintf("%d x %d", sh_video->disp_w, sh_video->disp_h);
 
   case META_AUDIO_CODEC:
     if (sh_audio->codec && sh_audio->codec->name)
@@ -479,12 +474,10 @@ char *get_metadata (metadata_t type) {
     break;
 
   case META_AUDIO_BITRATE:
-    snprintf(meta, sizeof(meta), "%d kbps", (int)(sh_audio->i_bps * 8 / 1000));
-    return strdup(meta);
+    return mp_asprintf("%d kbps", (int)(sh_audio->i_bps * 8 / 1000));
 
   case META_AUDIO_SAMPLES:
-    snprintf(meta, sizeof(meta), "%d Hz, %d ch.", sh_audio->samplerate, sh_audio->channels);
-    return strdup(meta);
+    return mp_asprintf("%d Hz, %d ch.", sh_audio->samplerate, sh_audio->channels);
 
   /* check for valid demuxer */
   case META_INFO_TITLE:
