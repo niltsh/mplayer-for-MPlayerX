@@ -28,6 +28,7 @@
 
 #include "url.h"
 #include "mp_msg.h"
+#include "mp_strings.h"
 #include "help_mp.h"
 
 #ifndef SIZE_MAX
@@ -58,32 +59,31 @@ URL_t *url_redirect(URL_t **url, const char *redir) {
   return res;
 }
 
-static int make_noauth_url(URL_t *url, char *dst, int dst_size)
+static char *get_noauth_url(URL_t *url)
 {
     if (url->port)
-        return snprintf(dst, dst_size, "%s://%s:%d%s", url->protocol,
-                        url->hostname, url->port, url->file);
+        return mp_asprintf("%s://%s:%d%s",
+                           url->protocol, url->hostname, url->port, url->file);
     else
-        return snprintf(dst, dst_size, "%s://%s%s", url->protocol,
-                        url->hostname, url->file);
+        return mp_asprintf("%s://%s%s",
+                           url->protocol, url->hostname, url->file);
 }
 
-int make_http_proxy_url(URL_t *proxy, const char *host_url, char *dst,
-                        int dst_size)
+char *get_http_proxy_url(URL_t *proxy, const char *host_url)
 {
     if (proxy->username)
-        return snprintf(dst, dst_size, "http_proxy://%s:%s@%s:%d/%s",
-                        proxy->username,
-                        proxy->password ? proxy->password : "",
-                        proxy->hostname, proxy->port, host_url);
+        return mp_asprintf("http_proxy://%s:%s@%s:%d/%s",
+                           proxy->username,
+                           proxy->password ? proxy->password : "",
+                           proxy->hostname, proxy->port, host_url);
     else
-        return snprintf(dst, dst_size, "http_proxy://%s:%d/%s",
-                        proxy->hostname, proxy->port, host_url);
+        return mp_asprintf("http_proxy://%s:%d/%s",
+                           proxy->hostname, proxy->port, host_url);
 }
 
 URL_t*
 url_new(const char* url) {
-	int pos1, pos2,v6addr = 0, noauth_len;
+	int pos1, pos2,v6addr = 0;
 	URL_t* Curl = NULL;
         char *escfilename=NULL;
 	char *ptr1=NULL, *ptr2=NULL, *ptr3=NULL, *ptr4=NULL;
@@ -252,16 +252,11 @@ url_new(const char* url) {
 		strcpy(Curl->file, "/");
 	}
 
-	noauth_len = make_noauth_url(Curl, NULL, 0);
-	if (noauth_len > 0) {
-		noauth_len++;
-		Curl->noauth_url = malloc(noauth_len);
+	Curl->noauth_url = get_noauth_url(Curl);
 		if (!Curl->noauth_url) {
 			mp_msg(MSGT_NETWORK, MSGL_FATAL, MSGTR_MemAllocFailed);
 			goto err_out;
 		}
-		make_noauth_url(Curl, Curl->noauth_url, noauth_len);
-	}
 
         free(escfilename);
 	return Curl;
