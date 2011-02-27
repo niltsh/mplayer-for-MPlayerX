@@ -6295,7 +6295,9 @@ elif test "$_tremor" = auto; then
 fi
 if test "$_libvorbis" = auto; then
   _libvorbis=no
-  statement_check vorbis/codec.h 'vorbis_packet_blocksize(0, 0)' -lvorbis -logg $_ld_lm && _libvorbis=yes
+  for vorbislibs in '-lvorbis -logg' '-lvorbis -lvorbisenc -logg' ; do
+    statement_check vorbis/vorbisenc.h 'vorbis_encode_ctl(0, 0, 0)' $vorbislibs $_ld_lm && _libvorbis=yes && break
+  done
 fi
 if test "$_tremor_internal" = yes ; then
   _vorbis=yes
@@ -6319,7 +6321,7 @@ elif test "$_libvorbis" = yes ; then
   def_vorbis='#define CONFIG_OGGVORBIS 1'
   codecmodules="libvorbis $codecmodules"
   res_comment="libvorbis"
-  extra_ldflags="$extra_ldflags -lvorbis -logg"
+  extra_ldflags="$extra_ldflags $vorbislibs"
   libavencoders="$libavencoders LIBVORBIS_ENCODER"
 else
   _vorbis=no
