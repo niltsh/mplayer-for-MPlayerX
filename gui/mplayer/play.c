@@ -205,8 +205,8 @@ void ChangeSkin(char *name)
 
     if (skinRead(name) != 0) {
         if (skinRead(skinName) != 0) {
-        mainVisible = 1;
-        return;
+            mainVisible = 1;
+            return;
         }
     }
 
