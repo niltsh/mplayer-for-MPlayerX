@@ -194,32 +194,20 @@ void mplAbsSeek(float s)
     abs_seek_pos  = 3;
 }
 
-listItems tmpList;
-
 void ChangeSkin(char *name)
 {
-    int prev, bprev, ret;
+    int prev, bprev;
 
     prev  = appMPlayer.menuIsPresent;
     bprev = appMPlayer.barIsPresent;
 
     mainVisible = 0;
 
-    appInitStruct(&tmpList);
-    skinAppMPlayer = &tmpList;
-    fntFreeFont();
-    ret = skinRead(name);
-
-    appInitStruct(&tmpList);
-    skinAppMPlayer = &appMPlayer;
-    appInitStruct(&appMPlayer);
-
-    if (ret)
-        name = skinName;
-
-    if (skinRead(name)) {
+    if (skinRead(name) != 0) {
+        if (skinRead(skinName) != 0) {
         mainVisible = 1;
         return;
+        }
     }
 
     // reload menu window

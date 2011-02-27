@@ -19,9 +19,7 @@
 #ifndef MPLAYER_GUI_SKIN_H
 #define MPLAYER_GUI_SKIN_H
 
-#include "gui/app.h"
-
-extern listItems *skinAppMPlayer;
+#include "gui/bitmap.h"
 
 int skinBPRead(char *, txSample *);
 int skinRead(char *);

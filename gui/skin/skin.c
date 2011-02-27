@@ -22,6 +22,7 @@
 #include "skin.h"
 #include "cut.h"
 #include "font.h"
+#include "gui/app.h"
 #include "gui/mplayer/widgets.h"
 
 #include "config.h"
@@ -34,7 +35,6 @@ typedef struct {
     int (*func)(char *in);
 } _item;
 
-listItems *skinAppMPlayer = &appMPlayer;
 static listItems *defList;
 
 static int linenumber;
@@ -152,7 +152,7 @@ static int cmd_section(char *in)
     defList = NULL;
 
     if (!strcmp(in, "movieplayer"))
-        defList = skinAppMPlayer;
+        defList = &appMPlayer;
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] sectionname: %s\n", in);
 
@@ -185,19 +185,19 @@ static int cmd_window(char *in)
     av_strlcpy(window_name, strlower(in), sizeof(window_name));
 
     if (!strncmp(in, "main", 4)) {
-        currSection  = &skinAppMPlayer->main;
-        currSubItem  = &skinAppMPlayer->NumberOfItems;
-        currSubItems = skinAppMPlayer->Items;
+        currSection  = &appMPlayer.main;
+        currSubItem  = &appMPlayer.NumberOfItems;
+        currSubItems = appMPlayer.Items;
     } else if (!strncmp(in, "sub", 3))
-        currSection = &skinAppMPlayer->sub;
+        currSection = &appMPlayer.sub;
     else if (!strncmp(in, "playbar", 7)) {
-        currSection  = &skinAppMPlayer->bar;
-        currSubItem  = &skinAppMPlayer->NumberOfBarItems;
-        currSubItems = skinAppMPlayer->barItems;
+        currSection  = &appMPlayer.bar;
+        currSubItem  = &appMPlayer.NumberOfBarItems;
+        currSubItems = appMPlayer.barItems;
     } else if (!strncmp(in, "menu", 4)) {
-        currSection  = &skinAppMPlayer->menuBase;
-        currSubItem  = &skinAppMPlayer->NumberOfMenuItems;
-        currSubItems = skinAppMPlayer->MenuItems;
+        currSection  = &appMPlayer.menuBase;
+        currSubItem  = &appMPlayer.NumberOfMenuItems;
+        currSubItems = appMPlayer.MenuItems;
     } else
         ERRORMESSAGE(MSGTR_UNKNOWNWINDOWTYPE);
 
@@ -885,7 +885,8 @@ int skinRead(char *dname)
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin] file: %s\n", fn);
 
-    appInitStruct(skinAppMPlayer);
+    appInitStruct(&appMPlayer);
+    fntFreeFont();
 
     linenumber = 0;
 

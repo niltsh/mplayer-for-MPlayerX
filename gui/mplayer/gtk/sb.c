@@ -98,7 +98,7 @@ static void prButton( GtkObject * object,gpointer user_data )
 	if ( strcmp( sbSelectedSkin,gtkOldSkin ) ) ChangeSkin( gtkOldSkin );
 	break;
    case 1: // ok
-	ChangeSkin( sbSelectedSkin );
+	ChangeSkin( sbSelectedSkin );   // NOTE TO MYSELF: skin already changed!
 	free( skinName );
 	skinName=strdup( sbSelectedSkin );
 	break;
