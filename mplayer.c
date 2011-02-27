@@ -112,6 +112,7 @@
 #include "mp_core.h"
 #include "mp_fifo.h"
 #include "mp_msg.h"
+#include "mp_strings.h"
 #include "mpcommon.h"
 #include "mplayer.h"
 #include "osdep/getch2.h"
