@@ -309,9 +309,14 @@ int stream_read_internal(stream_t *s, void *buf, int len)
     if (!s->eof) {
       // just in case this is an error e.g. due to network
       // timeout reset and retry
+      // Seeking is used as a hack to make network streams
+      // reopen the connection, ideally they would implement
+      // e.g. a STREAM_CTRL_RECONNECT to do this
       off_t pos = s->pos;
+      s->eof=1;
       stream_reset(s);
       stream_seek_internal(s, pos);
+      // make sure EOF is set to ensure no endless loops
       s->eof=1;
       return stream_read_internal(s, buf, orig_len);
     }
