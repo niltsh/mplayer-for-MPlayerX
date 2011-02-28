@@ -81,7 +81,7 @@ static const evName evNames[] = {
 
 static const int evBoxs = sizeof(evNames) / sizeof(evName);
 
-void appClearItem(wItem *item)
+static void appClearItem(wItem *item)
 {
     item->type             = 0;
     item->x                = 0;
