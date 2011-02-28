@@ -129,6 +129,9 @@ static int query_format(struct vf_instance *vf, unsigned int fmt) {
     if (IMGFMT_IS_RGB(fmt) || IMGFMT_IS_BGR(fmt))
 	return VFCAP_CSP_SUPPORTED | VFCAP_CSP_SUPPORTED_BY_HW;
     switch (fmt) {
+    case IMGFMT_NV12:
+    case IMGFMT_NV21:
+    case IMGFMT_HM12:
     case IMGFMT_I420:
     case IMGFMT_IYUV:
     case IMGFMT_YV12:
