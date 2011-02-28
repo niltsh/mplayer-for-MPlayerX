@@ -20,7 +20,6 @@
 #include <string.h>
 
 #include "app.h"
-#include "wm/wskeys.h"
 
 listItems appMPlayer;
 
@@ -115,20 +114,6 @@ static void appClearItem(wItem *item)
     item->event     = 0;
 }
 
-void appCopy(listItems *dest, listItems *source)
-{
-    dest->NumberOfItems = source->NumberOfItems;
-    memcpy(&dest->Items, &source->Items, 128 * sizeof(wItem));
-
-    dest->NumberOfMenuItems = source->NumberOfMenuItems;
-    memcpy(&dest->MenuItems, &source->MenuItems, 32 * sizeof(wItem));
-
-    memcpy(&dest->main, &source->main, sizeof(wItem));
-    memcpy(&dest->sub, &source->sub, sizeof(wItem));
-    memcpy(&dest->menuBase, &source->menuBase, sizeof(wItem));
-    memcpy(&dest->menuSelected, &source->menuSelected, sizeof(wItem));
-}
-
 void appInitStruct(listItems *item)
 {
     int i;
@@ -166,17 +151,6 @@ void appInitStruct(listItems *item)
     item->main.R        = item->main.G = item->main.B = 0;
     item->barIsPresent  = 0;
     item->menuIsPresent = 0;
-}
-
-int appFindKey(unsigned char *name)
-{
-    int i;
-
-    for (i = 0; i < wsKeyNumber; i++)
-        if (!strcmp(wsKeyNames[i].name, name))
-            return wsKeyNames[i].code;
-
-    return -1;
 }
 
 int appFindMessage(unsigned char *str)
@@ -235,17 +209,6 @@ void btnModify(int event, float state)
             }
         }
     }
-}
-
-float btnGetValue(int event)
-{
-    int i;
-
-    for (i = 0; i < appMPlayer.NumberOfItems + 1; i++)
-        if (appMPlayer.Items[i].msg == event)
-            return appMPlayer.Items[i].value;
-
-    return 0;
 }
 
 void btnSet(int event, int set)
