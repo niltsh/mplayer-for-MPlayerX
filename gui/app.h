@@ -187,9 +187,6 @@ typedef struct {
 
 extern listItems appMPlayer;
 
-extern char *skinDirInHome;
-extern char *skinMPlayerDir;
-
 int appFindMessage(unsigned char *);
 void appInitStruct(listItems *);
 void btnModify(int, float);

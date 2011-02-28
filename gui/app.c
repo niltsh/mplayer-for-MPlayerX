@@ -23,10 +23,6 @@
 
 listItems appMPlayer;
 
-char *skinDirInHome  = NULL;
-char *skinMPlayerDir = NULL;
-char *skinName       = NULL;
-
 static const evName evNames[] = {
     { evNone,              "evNone"              },
     { evPlay,              "evPlay"              },

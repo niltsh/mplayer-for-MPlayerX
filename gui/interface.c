@@ -76,6 +76,10 @@ int vcd_seek_to_track(void *vcd, int track);
 guiInterface_t guiIntfStruct;
 int guiWinID=-1;
 
+char *skinName;
+char *skinDirInHome;
+char *skinMPlayerDir;
+
 int gstrcmp( const char * a,const char * b )
 {
  if ( !a && !b ) return 0;

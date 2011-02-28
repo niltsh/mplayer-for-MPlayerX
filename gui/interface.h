@@ -185,6 +185,9 @@ typedef struct urlItem
 } URLItem;
 
 extern char   * skinName;
+extern char   * skinDirInHome;
+extern char   * skinMPlayerDir;
+
 extern plItem * plList;
 extern plItem * plCurrent;
 extern plItem * plLastPlayed;
