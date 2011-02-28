@@ -21,9 +21,8 @@
 
 #include "bitmap.h"
 #include "wm/ws.h"
-#include "wm/wskeys.h"
 
-// --- User events ------
+// User events
 
 #define evNone              0
 #define evPlay              1
@@ -61,8 +60,8 @@
 
 #define evIncVolume         31
 #define evDecVolume         32
-#define evIncAudioBufDelay  33
-#define evDecAudioBufDelay  34
+#define evIncAudioBufDelay  33   // NOTE TO MYSELF: not all of these events
+#define evDecAudioBufDelay  34   // are actually implemented, and update doc
 #define evIncBalance        35
 #define evDecBalance        36
 
@@ -71,18 +70,17 @@
 #define evLoadSubtitle      38
 #define evDropSubtitle      43
 #define evPlayDVD           39
-#define evPlayVCD	    40
+#define evPlayVCD           40
 #define evPlayNetwork       41
-#define evLoadAudioFile	    42
+#define evLoadAudioFile     42
 #define evSetAspect         44
-#define evSetAudio	    45
-#define evSetVideo	    46
+#define evSetAudio          45
+#define evSetVideo          46
 #define evSetSubtitle       47
-// 48 ...
 
 #define evExit              1000
 
-// --- General events ---
+// General events
 
 #define evFileLoaded      5000
 #define evHideMouseCursor 5001
@@ -106,100 +104,95 @@
 #define evShowWindow      7004
 #define evFirstLoad       7005
 
-// ----------------------
-
-typedef struct
-{
- int    msg;
- const char * name;
+typedef struct {
+    int msg;
+    const char *name;
 } evName;
 
+// Skin items
+
 #define itNULL      0
-#define itButton    101 // button
-#define itHPotmeter 102 // horizontal potmeter
-#define itVPotmeter 103 // vertical potmeter
-#define itSLabel    104 // static label
-#define itDLabel    105 // dynamic label
+#define itButton    101
+#define itHPotmeter 102
+#define itVPotmeter 103
+#define itSLabel    104
+#define itDLabel    105
 #define itBase      106
 #define itPotmeter  107
 #define itFont      108
-// ---
+
+// Button states
+
 #define btnPressed  0
 #define btnReleased 1
 #define btnDisabled 2
-// ---
-typedef struct
-{
- int            type;
-// ---
- int            x,y;
- int            width,height;
-// ---
- int            px,py,psx,psy;
-// ---
- int            msg,msg2;
- int            pressed,tmp;
- int            key,key2;
- int            phases;
- float          value;
- txSample       Bitmap;
- txSample       Mask;
-// ---
- int            fontid;
- int            align;
- char         * label;
- char         * text;
- int            textwidth;
- unsigned int   starttime;
- int            last_x;
-// ---
- int            event;
-// ---
- int            R,G,B;
+
+typedef struct {
+    int type;
+
+    int x, y;
+    int width, height;
+
+    int px, py, psx, psy;
+
+    int msg, msg2;
+    int pressed, tmp;
+    int key, key2;
+    int phases;
+    float value;
+
+    txSample Bitmap;
+    txSample Mask;
+
+    int fontid;
+    int align;
+    char *label;
+
+    char *text;
+    int textwidth;
+    unsigned int starttime;
+    int last_x;
+
+    int event;
+
+    int R, G, B;
 } wItem;
 
-typedef struct
-{
- wItem           main;
- wsTWindow       mainWindow;
- int             mainDecoration;
+typedef struct {
+    wItem main;
+    wsTWindow mainWindow;
+    int mainDecoration;
 
- wItem           sub;
- wsTWindow       subWindow;
+    wItem sub;
+    wsTWindow subWindow;
 
- wItem           bar;
- wsTWindow       barWindow;
- int             barIsPresent;
+    wItem bar;
+    wsTWindow barWindow;
+    int barIsPresent;
 
- wItem           menuBase;
- wItem           menuSelected;
- wsTWindow       menuWindow;
- int		 menuIsPresent;
+    wItem menuBase;
+    wItem menuSelected;
+    wsTWindow menuWindow;
+    int menuIsPresent;
 
-// ---
- int             NumberOfItems;
- wItem           Items[256];
-// ---
- int             NumberOfMenuItems;
- wItem           MenuItems[64];
-// ---
- int		 NumberOfBarItems;
- wItem		 barItems[256];
+    int NumberOfItems;
+    wItem Items[256];
+
+    int NumberOfMenuItems;
+    wItem MenuItems[64];
+
+    int NumberOfBarItems;
+    wItem barItems[256];
 } listItems;
 
-extern listItems   appMPlayer;
+extern listItems appMPlayer;
 
-extern char      * skinDirInHome;
-extern char      * skinMPlayerDir;
+extern char *skinDirInHome;
+extern char *skinMPlayerDir;
 
-void appInitStruct( listItems * item );
-void appClearItem( wItem * item );
-void appCopy( listItems * item1, listItems * item2 );
-int appFindMessage( unsigned char * str );
-int appFindKey( unsigned char * name );
-
-void btnModify( int event, float state );
-float btnGetValue( int event );
-void btnSet( int event, int set );
+int appFindMessage(unsigned char *);
+void appInitStruct(listItems *);
+void btnModify(int, float);
+void btnSet(int, int);
 
 #endif /* MPLAYER_GUI_APP_H */
