@@ -40,6 +40,7 @@
 #include "libavutil/intreadwrite.h"
 #include "libavformat/avformat.h"
 #include "libmpdemux/mp_taglists.h"
+#include "fmt-conversion.h"
 
 static AVCodec        *lavc_acodec;
 static AVCodecContext *lavc_actx;
@@ -108,7 +109,6 @@ static int bind_lavc(audio_encoder_t *encoder, muxer_stream_t *mux_a)
 	// Fix allocation
 	mux_a->wf = realloc(mux_a->wf, sizeof(WAVEFORMATEX)+mux_a->wf->cbSize);
 
-	encoder->input_format = AF_FORMAT_S16_NE;
 	encoder->min_buffer_size = mux_a->h.dwSuggestedBufferSize;
 	encoder->max_buffer_size = mux_a->h.dwSuggestedBufferSize*2;
 
@@ -187,7 +187,8 @@ int mpae_init_lavc(audio_encoder_t *encoder)
 	lavc_actx->codec_type = AVMEDIA_TYPE_AUDIO;
 	lavc_actx->codec_id = lavc_acodec->id;
 	// put sample parameters
-	lavc_actx->sample_fmt = AV_SAMPLE_FMT_S16;
+	lavc_actx->sample_fmt = lavc_acodec->sample_fmts ? lavc_acodec->sample_fmts[0] : AV_SAMPLE_FMT_S16;
+	encoder->input_format = samplefmt2affmt(lavc_actx->sample_fmt);
 	lavc_actx->channels = encoder->params.channels;
 	lavc_actx->sample_rate = encoder->params.sample_rate;
 	lavc_actx->time_base.num = 1;
