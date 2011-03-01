@@ -19,6 +19,8 @@
 #include "mp_msg.h"
 #include "libavutil/avutil.h"
 #include "libmpcodecs/img_format.h"
+#include "libavutil/samplefmt.h"
+#include "libaf/af_format.h"
 #include "fmt-conversion.h"
 
 static const struct {
@@ -121,5 +123,44 @@ int pixfmt2imgfmt(enum PixelFormat pix_fmt)
     fmt = conversion_map[i].fmt;
     if (!fmt)
         mp_msg(MSGT_GLOBAL, MSGL_ERR, "Unsupported PixelFormat %i\n", pix_fmt);
+    return fmt;
+}
+
+static const struct {
+    int fmt;
+    enum AVSampleFormat sample_fmt;
+} samplefmt_conversion_map[] = {
+    {AF_FORMAT_U8, AV_SAMPLE_FMT_U8},
+    {AF_FORMAT_S16_NE, AV_SAMPLE_FMT_S16},
+    {AF_FORMAT_S32_NE, AV_SAMPLE_FMT_S32},
+    {AF_FORMAT_FLOAT_NE, AV_SAMPLE_FMT_FLT},
+    {0, AV_SAMPLE_FMT_NONE}
+};
+
+enum AVSampleFormat affmt2samplefmt(int fmt)
+{
+    char str[50];
+    int i;
+    enum AVSampleFormat sample_fmt;
+    for (i = 0; samplefmt_conversion_map[i].fmt; i++)
+        if (samplefmt_conversion_map[i].fmt == fmt)
+            break;
+    sample_fmt = samplefmt_conversion_map[i].sample_fmt;
+    if (sample_fmt == PIX_FMT_NONE)
+        mp_msg(MSGT_GLOBAL, MSGL_ERR, "Unsupported format %s\n",
+               af_fmt2str(fmt, str, sizeof(str)));
+    return sample_fmt;
+}
+
+int samplefmt2affmt(enum AVSampleFormat sample_fmt)
+{
+    int i;
+    int fmt;
+    for (i = 0; samplefmt_conversion_map[i].sample_fmt != AV_SAMPLE_FMT_NONE; i++)
+        if (samplefmt_conversion_map[i].sample_fmt == sample_fmt)
+            break;
+    fmt = samplefmt_conversion_map[i].fmt;
+    if (!fmt)
+        mp_msg(MSGT_GLOBAL, MSGL_ERR, "Unsupported AVSampleFormat %i\n", sample_fmt);
     return fmt;
 }
