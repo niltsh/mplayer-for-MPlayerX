@@ -28,6 +28,7 @@
 #include "dec_audio.h"
 #include "vd_ffmpeg.h"
 #include "libaf/reorder_ch.h"
+#include "fmt-conversion.h"
 
 #include "mpbswap.h"
 
@@ -57,15 +58,9 @@ static int setup_format(sh_audio_t *sh_audio, const AVCodecContext *lavc_context
 {
     int broken_srate = 0;
     int samplerate    = lavc_context->sample_rate;
-    int sample_format = sh_audio->sample_format;
-    switch (lavc_context->sample_fmt) {
-        case AV_SAMPLE_FMT_U8:  sample_format = AF_FORMAT_U8;       break;
-        case AV_SAMPLE_FMT_S16: sample_format = AF_FORMAT_S16_NE;   break;
-        case AV_SAMPLE_FMT_S32: sample_format = AF_FORMAT_S32_NE;   break;
-        case AV_SAMPLE_FMT_FLT: sample_format = AF_FORMAT_FLOAT_NE; break;
-        default:
-            mp_msg(MSGT_DECAUDIO, MSGL_FATAL, "Unsupported sample format\n");
-    }
+    int sample_format = samplefmt2affmt(lavc_context->sample_fmt);
+    if (!sample_format)
+        sample_format = sh_audio->sample_format;
     if(sh_audio->wf){
         // If the decoder uses the wrong number of channels all is lost anyway.
         // sh_audio->channels=sh_audio->wf->nChannels;
