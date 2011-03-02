@@ -78,18 +78,18 @@ static const int evBoxs = sizeof(evNames) / sizeof(evName);
 
 static void appClearItem(wItem *item)
 {
-    item->type             = 0;
-    item->x                = 0;
-    item->y                = 0;
-    item->width            = 0;
-    item->height           = 0;
-    item->pwidth           = 0;
-    item->pheight          = 0;
-    item->message          = 0;
-    item->pressed          = btnReleased;
-    item->tmp              = 0;
+    item->type    = 0;
+    item->x       = 0;
+    item->y       = 0;
+    item->width   = 0;
+    item->height  = 0;
+    item->pwidth  = 0;
+    item->pheight = 0;
+    item->message = 0;
+    item->pressed = btnReleased;
+    item->tmp     = 0;
     bpFree(&item->Bitmap);
-    item->fontid       = 0;
+    item->fontid = 0;
     free(item->label);
     item->label = NULL;
     free(item->text);
