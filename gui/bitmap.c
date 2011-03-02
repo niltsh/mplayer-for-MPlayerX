@@ -120,7 +120,7 @@ static int pngRead(unsigned char *fname, txSample *bf)
 static int conv24to32(txSample *bf)
 {
     unsigned char *tmpImage;
-    int i, c;
+    unsigned int i, c;
 
     if (bf->BPP == 24) {
         tmpImage      = bf->Image;
