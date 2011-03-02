@@ -155,10 +155,9 @@ static void Normalize(txSample *bf)
 #endif
 }
 
-static unsigned char tmp[512];
-
 static unsigned char *fExist(unsigned char *fname)
 {
+    static unsigned char tmp[512];
     FILE *fl;
     unsigned char ext[][6] = { ".png\0", ".PNG\0" };
     int i;
@@ -171,7 +170,7 @@ static unsigned char *fExist(unsigned char *fname)
     }
 
     for (i = 0; i < 2; i++) {
-        snprintf(tmp, 511, "%s%s", fname, ext[i]);
+        snprintf(tmp, sizeof(tmp), "%s%s", fname, ext[i]);
         fl = fopen(tmp, "rb");
 
         if (fl != NULL) {
