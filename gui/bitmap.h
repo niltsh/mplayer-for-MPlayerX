@@ -27,6 +27,7 @@ typedef struct {
     char *Image;
 } txSample;
 
+void bpFree(txSample *);
 int bpRead(char *, txSample *);
 void Convert32to1(txSample *, txSample *, int);
 

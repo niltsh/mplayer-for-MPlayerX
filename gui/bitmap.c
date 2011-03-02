@@ -206,6 +206,12 @@ int bpRead(char *fname, txSample *bf)
     return 0;
 }
 
+void bpFree(txSample *bf)
+{
+    free(bf->Image);
+    memset(bf, 0, sizeof(*bf));
+}
+
 void Convert32to1(txSample *in, txSample *out, int adaptivlimit)
 {
     out->Width     = in->Width;

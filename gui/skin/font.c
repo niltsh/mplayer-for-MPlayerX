@@ -65,7 +65,7 @@ void fntFreeFont(void)
 
     for (i = 0; i < MAX_FONTS; i++) {
         if (Fonts[i]) {
-            gfree((void **)&Fonts[i]->Bitmap.Image);
+            bpFree(&Fonts[i]->Bitmap);
             gfree((void **)&Fonts[i]);
         }
     }
@@ -154,7 +154,7 @@ int fntRead(char *path, char *fname)
             mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[font] image file: %s\n", tmp);
 
             if (skinBPRead(tmp, &Fonts[id]->Bitmap) != 0) {
-                gfree((void **)&Fonts[id]->Bitmap.Image);
+                bpFree(&Fonts[id]->Bitmap);
                 gfree((void **)&Fonts[id]);
                 fclose(f);
                 return -4;
@@ -287,7 +287,7 @@ txSample *fntRender(wItem *item, int px, char *txt)
     th  = fntTextHeight(id, txt);
 
     if (item->height != th)
-        gfree((void **)&item->Bitmap.Image);
+        bpFree(&item->Bitmap);
 
     if (!item->Bitmap.Image) {
         item->Bitmap.Height    = item->height = th;

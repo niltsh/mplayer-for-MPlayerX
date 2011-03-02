@@ -88,12 +88,7 @@ static void appClearItem(wItem *item)
     item->message          = 0;
     item->pressed          = btnReleased;
     item->tmp              = 0;
-    item->Bitmap.Width     = 0;
-    item->Bitmap.Height    = 0;
-    item->Bitmap.BPP       = 0;
-    item->Bitmap.ImageSize = 0;
-    free(item->Bitmap.Image);
-    item->Bitmap.Image = NULL;
+    bpFree(&item->Bitmap);
     item->fontid       = 0;
     free(item->label);
     item->label = NULL;
