@@ -146,7 +146,7 @@ enum AVSampleFormat affmt2samplefmt(int fmt)
         if (samplefmt_conversion_map[i].fmt == fmt)
             break;
     sample_fmt = samplefmt_conversion_map[i].sample_fmt;
-    if (sample_fmt == PIX_FMT_NONE)
+    if (sample_fmt == AV_SAMPLE_FMT_NONE)
         mp_msg(MSGT_GLOBAL, MSGL_ERR, "Unsupported format %s\n",
                af_fmt2str(fmt, str, sizeof(str)));
     return sample_fmt;
