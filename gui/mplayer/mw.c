@@ -435,8 +435,8 @@ void mplMainMouseHandle( int Button,int X,int Y,int RX,int RY )
            {
             case itButton:
                  if ( ( SelectedItem > -1 ) &&
-                    ( ( ( item->msg == evPlaySwitchToPause && item->msg == evPauseSwitchToPlay ) ) ||
-                      ( ( item->msg == evPauseSwitchToPlay && item->msg == evPlaySwitchToPause ) ) ) )
+                    ( ( ( item->message == evPlaySwitchToPause && item->message == evPauseSwitchToPlay ) ) ||
+                      ( ( item->message == evPauseSwitchToPlay && item->message == evPlaySwitchToPause ) ) ) )
                   { item->pressed=btnDisabled; }
                  break;
            }
@@ -452,17 +452,17 @@ void mplMainMouseHandle( int Button,int X,int Y,int RX,int RY )
            {
             case itPotmeter:
             case itHPotmeter:
-                 btnModify( item->msg,(float)( X - item->x ) / item->width * 100.0f );
-		 mplEventHandling( item->msg,item->value );
+                 btnModify( item->message,(float)( X - item->x ) / item->width * 100.0f );
+		 mplEventHandling( item->message,item->value );
                  value=item->value;
                  break;
 	    case itVPotmeter:
-                 btnModify( item->msg, ( 1. - (float)( Y - item->y ) / item->height) * 100.0f );
-		 mplEventHandling( item->msg,item->value );
+                 btnModify( item->message, ( 1. - (float)( Y - item->y ) / item->height) * 100.0f );
+		 mplEventHandling( item->message,item->value );
                  value=item->value;
                  break;
            }
-          mplEventHandling( item->msg,value );
+          mplEventHandling( item->message,value );
           itemtype=0;
           break;
 
@@ -478,8 +478,8 @@ rollerhandled:
           if ( ( item->type == itHPotmeter )||( item->type == itVPotmeter )||( item->type == itPotmeter ) )
            {
             item->value+=value;
-            btnModify( item->msg,item->value );
-            mplEventHandling( item->msg,item->value );
+            btnModify( item->message,item->value );
+            mplEventHandling( item->message,item->value );
            }
           break;
 
@@ -506,7 +506,7 @@ rollerhandled:
 potihandled:
                  if ( item->value > 100.0f ) item->value=100.0f;
                  if ( item->value < 0.0f ) item->value=0.0f;
-                 mplEventHandling( item->msg,item->value );
+                 mplEventHandling( item->message,item->value );
                  break;
            }
           break;

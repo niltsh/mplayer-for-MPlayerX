@@ -136,7 +136,7 @@ void mplHideMenu( int mx,int my,int w )
         appMPlayer.MenuItems[i].x+appMPlayer.MenuItems[i].width,
         appMPlayer.MenuItems[i].y+appMPlayer.MenuItems[i].height ) )
    {
-    mplEventHandling( appMPlayer.MenuItems[i].msg,(float)w );
+    mplEventHandling( appMPlayer.MenuItems[i].message,(float)w );
    }
 }
 

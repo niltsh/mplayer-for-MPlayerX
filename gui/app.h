@@ -105,7 +105,7 @@
 #define evFirstLoad       7005
 
 typedef struct {
-    int msg;
+    int message;
     const char *name;
 } evName;
 
@@ -133,14 +133,6 @@ typedef struct {
     int x, y;
     int width, height;
 
-    int px, py, psx, psy;
-
-    int msg, msg2;
-    int pressed, tmp;
-    int key, key2;
-    int phases;
-    float value;
-
     txSample Bitmap;
     txSample Mask;
 
@@ -148,14 +140,20 @@ typedef struct {
     int align;
     char *label;
 
+    int pwidth, pheight;
+    int numphases;
+    float value;
+
+    int message;
+
+    int R, G, B;
+
     char *text;
     int textwidth;
     unsigned int starttime;
     int last_x;
 
-    int event;
-
-    int R, G, B;
+    int pressed, tmp;
 } wItem;
 
 typedef struct {

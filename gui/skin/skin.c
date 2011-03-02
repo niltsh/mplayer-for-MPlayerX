@@ -371,19 +371,19 @@ static int cmd_button(char *in)
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] button: fname: %s\n", fname);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  x: %d y: %d sx: %d sy: %d\n", x, y, sx, sy);
 
-    if ((currSubItems[*currSubItem].msg = appFindMessage(msg)) == -1) {
+    if ((currSubItems[*currSubItem].message = appFindMessage(msg)) == -1) {
         ERRORMESSAGE(MSGTR_SKIN_BITMAP_UnknownMessage, msg);
         return 0;
     }
 
     currSubItems[*currSubItem].pressed = btnReleased;
 
-    if (currSubItems[*currSubItem].msg == evPauseSwitchToPlay)
+    if (currSubItems[*currSubItem].message == evPauseSwitchToPlay)
         currSubItems[*currSubItem].pressed = btnDisabled;
 
     currSubItems[*currSubItem].tmp = 1;
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", currSubItems[*currSubItem].msg);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", currSubItems[*currSubItem].message);
 
     currSubItems[*currSubItem].Bitmap.Image = NULL;
 
@@ -434,7 +434,7 @@ static int cmd_selected(char *in)
 // menu=x,y,width,height,message
 static int cmd_menu(char *in)
 {
-    int x, y, sx, sy, msg;
+    int x, y, sx, sy, message;
     unsigned char tmp[64];
 
     CHECKDEFLIST("menu");
@@ -450,7 +450,7 @@ static int cmd_menu(char *in)
     sy = cutItemToInt(in, ',', 3);
     cutItem(in, tmp, ',', 4);
 
-    msg = appFindMessage(tmp);
+    message = appFindMessage(tmp);
 
     defList->NumberOfMenuItems++;
     defList->MenuItems[defList->NumberOfMenuItems].x      = x;
@@ -461,10 +461,10 @@ static int cmd_menu(char *in)
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] menuitem: %d\n", defList->NumberOfMenuItems);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  x: %d y: %d sx: %d sy: %d\n", x, y, sx, sy);
 
-    if ((defList->MenuItems[defList->NumberOfMenuItems].msg = msg) == -1)
+    if ((defList->MenuItems[defList->NumberOfMenuItems].message = message) == -1)
         ERRORMESSAGE(MSGTR_SKIN_BITMAP_UnknownMessage, tmp);
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", defList->Items[defList->NumberOfItems].msg);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", defList->Items[defList->NumberOfItems].message);
 
     defList->MenuItems[defList->NumberOfMenuItems].Bitmap.Image = NULL;
     return 0;
@@ -473,7 +473,7 @@ static int cmd_menu(char *in)
 // hpotmeter=button,bwidth,bheight,phases,numphases,default,x,y,width,height,message
 static int cmd_hpotmeter(char *in)
 {
-    int x, y, psx, psy, ph, sx, sy, msg, d;
+    int x, y, pwidth, pheight, ph, sx, sy, message, d;
     unsigned char tmp[512];
     unsigned char pfname[512];
     unsigned char phfname[512];
@@ -486,8 +486,8 @@ static int cmd_hpotmeter(char *in)
     CHECK("menu");
 
     cutItem(in, pfname, ',', 0);
-    psx = cutItemToInt(in, ',', 1);
-    psy = cutItemToInt(in, ',', 2);
+    pwidth  = cutItemToInt(in, ',', 1);
+    pheight = cutItemToInt(in, ',', 2);
     cutItem(in, phfname, ',', 3);
     ph = cutItemToInt(in, ',', 4);
     d  = cutItemToInt(in, ',', 5);
@@ -497,14 +497,14 @@ static int cmd_hpotmeter(char *in)
     sy = cutItemToInt(in, ',', 9);
     cutItem(in, tmp, ',', 10);
 
-    msg = appFindMessage(tmp);
+    message = appFindMessage(tmp);
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] h/v potmeter: pointer filename: '%s'\n", pfname);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  pointer size is %dx%d\n", psx, psy);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  pointer size is %dx%d\n", pwidth, pheight);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  phasebitmaps filename: '%s'\n", phfname);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]   position: %d,%d %dx%d\n", x, y, sx, sy);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]   default value: %d\n", d);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", msg);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", message);
 
     (*currSubItem)++;
     item               = &currSubItems[*currSubItem];
@@ -513,10 +513,10 @@ static int cmd_hpotmeter(char *in)
     item->y            = y;
     item->width        = sx;
     item->height       = sy;
-    item->phases       = ph;
-    item->psx          = psx;
-    item->psy          = psy;
-    item->msg          = msg;
+    item->numphases    = ph;
+    item->pwidth       = pwidth;
+    item->pheight      = pheight;
+    item->message      = message;
     item->value        = (float)d;
     item->pressed      = btnReleased;
     item->Bitmap.Image = NULL;
@@ -556,7 +556,7 @@ static int cmd_vpotmeter(char *in)
 // potmeter=phases,numphases,default,x,y,width,height,message
 static int cmd_potmeter(char *in)
 {
-    int x, y, ph, sx, sy, msg, d;
+    int x, y, ph, sx, sy, message, d;
     unsigned char tmp[512];
     unsigned char phfname[512];
     wItem *item;
@@ -576,13 +576,13 @@ static int cmd_potmeter(char *in)
     sy = cutItemToInt(in, ',', 6);
     cutItem(in, tmp, ',', 7);
 
-    msg = appFindMessage(tmp);
+    message = appFindMessage(tmp);
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] potmeter: phases filename: '%s'\n", phfname);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  position: %d,%d %dx%d\n", x, y, sx, sy);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  phases: %d\n", ph);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  numphases: %d\n", ph);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  default value: %d\n", d);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", msg);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", message);
 
     (*currSubItem)++;
     item               = &currSubItems[*currSubItem];
@@ -591,8 +591,8 @@ static int cmd_potmeter(char *in)
     item->y            = y;
     item->width        = sx;
     item->height       = sy;
-    item->phases       = ph;
-    item->msg          = msg;
+    item->numphases    = ph;
+    item->message      = message;
     item->value        = (float)d;
     item->Bitmap.Image = NULL;
 
