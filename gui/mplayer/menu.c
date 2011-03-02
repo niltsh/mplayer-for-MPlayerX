@@ -52,8 +52,8 @@ static void mplMenuDraw( void )
     {
      buf=(uint32_t *)mplMenuDrawBuffer;
      drw=(uint32_t *)appMPlayer.menuSelected.Bitmap.Image;
-     for ( y=appMPlayer.MenuItems[ mplMenuItem ].y; y < appMPlayer.MenuItems[ mplMenuItem ].y + appMPlayer.MenuItems[ mplMenuItem ].height; y++ )
-       for ( x=appMPlayer.MenuItems[ mplMenuItem ].x; x < appMPlayer.MenuItems[ mplMenuItem ].x + appMPlayer.MenuItems[ mplMenuItem ].width; x++ )
+     for ( y=appMPlayer.menuItems[ mplMenuItem ].y; y < appMPlayer.menuItems[ mplMenuItem ].y + appMPlayer.menuItems[ mplMenuItem ].height; y++ )
+       for ( x=appMPlayer.menuItems[ mplMenuItem ].x; x < appMPlayer.menuItems[ mplMenuItem ].x + appMPlayer.menuItems[ mplMenuItem ].width; x++ )
          {
           tmp=drw[ y * appMPlayer.menuSelected.width + x ];
           if ( tmp != 0x00ff00ff ) buf[ y * appMPlayer.menuBase.width + x ]=tmp;
@@ -85,8 +85,8 @@ void mplMenuMouseHandle( int X,int Y,int RX,int RY )
  for( i=0;i<=appMPlayer.NumberOfMenuItems;i++ )
   {
    if ( wgIsRect( x,y,
-         appMPlayer.MenuItems[i].x,appMPlayer.MenuItems[i].y,
-         appMPlayer.MenuItems[i].x+appMPlayer.MenuItems[i].width,appMPlayer.MenuItems[i].y+appMPlayer.MenuItems[i].height ) ) { mplMenuItem=i; break; }
+         appMPlayer.menuItems[i].x,appMPlayer.menuItems[i].y,
+         appMPlayer.menuItems[i].x+appMPlayer.menuItems[i].width,appMPlayer.menuItems[i].y+appMPlayer.menuItems[i].height ) ) { mplMenuItem=i; break; }
   }
  wsPostRedisplay( &appMPlayer.menuWindow );
 }
@@ -130,13 +130,13 @@ void mplHideMenu( int mx,int my,int w )
  if ( ( x < 0 ) || ( y < 0 ) ) return;
 
 // printf( "---------> %d %d,%d\n",i,x,y );
-// printf( "--------> mi: %d,%d %dx%d\n",appMPlayer.MenuItems[i].x,appMPlayer.MenuItems[i].y,appMPlayer.MenuItems[i].width,appMPlayer.MenuItems[i].height );
+// printf( "--------> mi: %d,%d %dx%d\n",appMPlayer.menuItems[i].x,appMPlayer.menuItems[i].y,appMPlayer.menuItems[i].width,appMPlayer.menuItems[i].height );
  if ( wgIsRect( x,y,
-        appMPlayer.MenuItems[i].x,appMPlayer.MenuItems[i].y,
-        appMPlayer.MenuItems[i].x+appMPlayer.MenuItems[i].width,
-        appMPlayer.MenuItems[i].y+appMPlayer.MenuItems[i].height ) )
+        appMPlayer.menuItems[i].x,appMPlayer.menuItems[i].y,
+        appMPlayer.menuItems[i].x+appMPlayer.menuItems[i].width,
+        appMPlayer.menuItems[i].y+appMPlayer.menuItems[i].height ) )
    {
-    mplEventHandling( appMPlayer.MenuItems[i].message,(float)w );
+    mplEventHandling( appMPlayer.menuItems[i].message,(float)w );
    }
 }
 

@@ -186,8 +186,8 @@ static int cmd_window(char *in)
 
     if (!strncmp(in, "main", 4)) {
         currSection  = &appMPlayer.main;
-        currSubItem  = &appMPlayer.NumberOfItems;
-        currSubItems = appMPlayer.Items;
+        currSubItem  = &appMPlayer.NumberOfMainItems;
+        currSubItems = appMPlayer.mainItems;
     } else if (!strncmp(in, "sub", 3))
         currSection = &appMPlayer.sub;
     else if (!strncmp(in, "playbar", 7)) {
@@ -197,7 +197,7 @@ static int cmd_window(char *in)
     } else if (!strncmp(in, "menu", 4)) {
         currSection  = &appMPlayer.menuBase;
         currSubItem  = &appMPlayer.NumberOfMenuItems;
-        currSubItems = appMPlayer.MenuItems;
+        currSubItems = appMPlayer.menuItems;
     } else
         ERRORMESSAGE(MSGTR_UNKNOWNWINDOWTYPE);
 
@@ -453,20 +453,20 @@ static int cmd_menu(char *in)
     message = appFindMessage(tmp);
 
     defList->NumberOfMenuItems++;
-    defList->MenuItems[defList->NumberOfMenuItems].x      = x;
-    defList->MenuItems[defList->NumberOfMenuItems].y      = y;
-    defList->MenuItems[defList->NumberOfMenuItems].width  = sx;
-    defList->MenuItems[defList->NumberOfMenuItems].height = sy;
+    defList->menuItems[defList->NumberOfMenuItems].x      = x;
+    defList->menuItems[defList->NumberOfMenuItems].y      = y;
+    defList->menuItems[defList->NumberOfMenuItems].width  = sx;
+    defList->menuItems[defList->NumberOfMenuItems].height = sy;
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] menuitem: %d\n", defList->NumberOfMenuItems);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  x: %d y: %d sx: %d sy: %d\n", x, y, sx, sy);
 
-    if ((defList->MenuItems[defList->NumberOfMenuItems].message = message) == -1)
+    if ((defList->menuItems[defList->NumberOfMenuItems].message = message) == -1)
         ERRORMESSAGE(MSGTR_SKIN_BITMAP_UnknownMessage, tmp);
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", defList->Items[defList->NumberOfItems].message);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", defList->mainItems[defList->NumberOfMainItems].message);
 
-    defList->MenuItems[defList->NumberOfMenuItems].Bitmap.Image = NULL;
+    defList->menuItems[defList->NumberOfMenuItems].Bitmap.Image = NULL;
     return 0;
 }
 

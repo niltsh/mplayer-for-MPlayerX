@@ -88,7 +88,7 @@ void mplMainDraw( void )
    btnModify( evSetVolume,guiIntfStruct.Volume );
 
    fast_memcpy( mplDrawBuffer,appMPlayer.main.Bitmap.Image,appMPlayer.main.Bitmap.ImageSize );
-   Render( &appMPlayer.mainWindow,appMPlayer.Items,appMPlayer.NumberOfItems,mplDrawBuffer,appMPlayer.main.Bitmap.ImageSize );
+   Render( &appMPlayer.mainWindow,appMPlayer.mainItems,appMPlayer.NumberOfMainItems,mplDrawBuffer,appMPlayer.main.Bitmap.ImageSize );
    mplMainRender=0;
   }
  wsPutImage( &appMPlayer.mainWindow );
@@ -406,9 +406,9 @@ void mplMainMouseHandle( int Button,int X,int Y,int RX,int RY )
  static int     SelectedItem = -1;
         int     currentselected = -1;
 
- for ( i=0;i < appMPlayer.NumberOfItems + 1;i++ )
-  if ( ( appMPlayer.Items[i].pressed != btnDisabled )&&
-       ( wgIsRect( X,Y,appMPlayer.Items[i].x,appMPlayer.Items[i].y,appMPlayer.Items[i].x+appMPlayer.Items[i].width,appMPlayer.Items[i].y+appMPlayer.Items[i].height ) ) )
+ for ( i=0;i < appMPlayer.NumberOfMainItems + 1;i++ )
+  if ( ( appMPlayer.mainItems[i].pressed != btnDisabled )&&
+       ( wgIsRect( X,Y,appMPlayer.mainItems[i].x,appMPlayer.mainItems[i].y,appMPlayer.mainItems[i].x+appMPlayer.mainItems[i].width,appMPlayer.mainItems[i].y+appMPlayer.mainItems[i].height ) ) )
    { currentselected=i; break; }
 
  switch ( Button )
@@ -428,7 +428,7 @@ void mplMainMouseHandle( int Button,int X,int Y,int RX,int RY )
           SelectedItem=currentselected;
           if ( SelectedItem == -1 ) break;
           boxMoved=0;
-          item=&appMPlayer.Items[SelectedItem];
+          item=&appMPlayer.mainItems[SelectedItem];
           itemtype=item->type;
           item->pressed=btnPressed;
           switch( item->type )
@@ -443,7 +443,7 @@ void mplMainMouseHandle( int Button,int X,int Y,int RX,int RY )
           break;
    case wsRLMouseButton:
           boxMoved=0;
-          item=&appMPlayer.Items[SelectedItem];
+          item=&appMPlayer.mainItems[SelectedItem];
           item->pressed=btnReleased;
           SelectedItem=-1;
           if ( currentselected == - 1 ) { itemtype=0; break; }
@@ -474,7 +474,7 @@ void mplMainMouseHandle( int Button,int X,int Y,int RX,int RY )
    case wsP5MouseButton: value=-2.5f; goto rollerhandled;
    case wsP4MouseButton: value= 2.5f;
 rollerhandled:
-          item=&appMPlayer.Items[currentselected];
+          item=&appMPlayer.mainItems[currentselected];
           if ( ( item->type == itHPotmeter )||( item->type == itVPotmeter )||( item->type == itPotmeter ) )
            {
             item->value+=value;
@@ -485,7 +485,7 @@ rollerhandled:
 
 // --- moving
    case wsMoveMouse:
-          item=&appMPlayer.Items[SelectedItem];
+          item=&appMPlayer.mainItems[SelectedItem];
           switch ( itemtype )
            {
             case itPLMButton:

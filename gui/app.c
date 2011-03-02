@@ -108,18 +108,18 @@ void appInitStruct(listItems *item)
 {
     int i;
 
-    for (i = 0; i < item->NumberOfItems; i++)
-        appClearItem(&item->Items[i]);
-    for (i = 0; i < item->NumberOfMenuItems; i++)
-        appClearItem(&item->MenuItems[i]);
+    for (i = 0; i < item->NumberOfMainItems; i++)
+        appClearItem(&item->mainItems[i]);
     for (i = 0; i < item->NumberOfBarItems; i++)
         appClearItem(&item->barItems[i]);
+    for (i = 0; i < item->NumberOfMenuItems; i++)
+        appClearItem(&item->menuItems[i]);
 
-    item->NumberOfItems = -1;
-    memset(item->Items, 0, 256 * sizeof(wItem));
+    item->NumberOfMainItems = -1;
+    memset(item->mainItems, 0, 256 * sizeof(wItem));
 
     item->NumberOfMenuItems = -1;
-    memset(item->MenuItems, 0, 64 * sizeof(wItem));
+    memset(item->menuItems, 0, 64 * sizeof(wItem));
 
     item->NumberOfBarItems = -1;
     memset(item->barItems, 0, 256 * sizeof(wItem));
@@ -158,12 +158,12 @@ void btnModify(int event, float state)
 {
     int i;
 
-    for (i = 0; i < appMPlayer.NumberOfItems + 1; i++) {
-        if (appMPlayer.Items[i].message == event) {
-            switch (appMPlayer.Items[i].type) {
+    for (i = 0; i < appMPlayer.NumberOfMainItems + 1; i++) {
+        if (appMPlayer.mainItems[i].message == event) {
+            switch (appMPlayer.mainItems[i].type) {
             case itButton:
-                appMPlayer.Items[i].pressed = (int)state;
-                appMPlayer.Items[i].tmp     = (int)state;
+                appMPlayer.mainItems[i].pressed = (int)state;
+                appMPlayer.mainItems[i].tmp     = (int)state;
                 break;
 
             case itPotmeter:
@@ -173,7 +173,7 @@ void btnModify(int event, float state)
                     state = 0.0;
                 if (state > 100.0)
                     state = 100.0;
-                appMPlayer.Items[i].value = state;
+                appMPlayer.mainItems[i].value = state;
                 break;
             }
         }
@@ -205,10 +205,10 @@ void btnSet(int event, int set)
 {
     int i;
 
-    for (i = 0; i < appMPlayer.NumberOfItems + 1; i++) {
-        if (appMPlayer.Items[i].message == event) {
-            appMPlayer.Items[i].pressed = set;
-            appMPlayer.barItems[i].tmp  = 0;
+    for (i = 0; i < appMPlayer.NumberOfMainItems + 1; i++) {
+        if (appMPlayer.mainItems[i].message == event) {
+            appMPlayer.mainItems[i].pressed = set;
+            appMPlayer.barItems[i].tmp      = 0;
         }
     }
 

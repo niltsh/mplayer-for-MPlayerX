@@ -173,14 +173,14 @@ typedef struct {
     wsTWindow menuWindow;
     int menuIsPresent;
 
-    int NumberOfItems;
-    wItem Items[256];
-
-    int NumberOfMenuItems;
-    wItem MenuItems[64];
+    int NumberOfMainItems;
+    wItem mainItems[256];
 
     int NumberOfBarItems;
     wItem barItems[256];
+
+    int NumberOfMenuItems;
+    wItem menuItems[64];
 } listItems;
 
 extern listItems appMPlayer;
