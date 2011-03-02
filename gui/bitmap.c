@@ -111,7 +111,7 @@ static int pngRead(unsigned char *fname, txSample *bf)
     av_freep(&data);
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[png] filename: %s.\n", fname);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[png]  size: %dx%d bits: %d\n", bf->Width, bf->Height, bf->BPP);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[png]  size: %lux%lu bits: %u\n", bf->Width, bf->Height, bf->BPP);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[png]  imagesize: %lu\n", bf->ImageSize);
 
     return !(decode_ok && bf->BPP);
@@ -213,7 +213,7 @@ void Convert32to1(txSample *in, txSample *out, int adaptivlimit)
     out->BPP       = 1;
     out->ImageSize = (out->Width * out->Height + 7) / 8;
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[c32to1] imagesize: %d\n", out->ImageSize);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[c32to1] imagesize: %lu\n", out->ImageSize);
 
     out->Image = calloc(1, out->ImageSize);
 
