@@ -703,7 +703,7 @@ static int cmd_slabel(char *in)
     return 0;
 }
 
-// dlabel=x,y,length,align,fontfile,"text"
+// dlabel=x,y,width,align,fontfile,"text"
 static int cmd_dlabel(char *in)
 {
     char tmp[512];

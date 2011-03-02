@@ -473,13 +473,13 @@ blokkokban.
 
 <varlistentry>
   <term><literal>
-  <anchor id="skin-dlabel"/>dlabel = X, Y, length, align, fontid, "text"
+  <anchor id="skin-dlabel"/>dlabel = X, Y, width, align, fontid, "text"
   </literal></term>
   <listitem>
   <para>
   Egy dinamikus címkét tesz ki az <literal>X, Y</literal> pozícióba. A
   címke azért dinamikus, mert a szövege periódikusan frissül. A címke
-  maximum hosszát a <literal>length</literal> szabályozza (a magassága
+  maximum hosszát a <literal>width</literal> szabályozza (a magassága
   egy karakter magasságával egyezik meg). Ha a megjelenítendő szöveg
   szélesebb ennél, scrollozva lesz,
   különben az <literal>align</literal> paraméter által megadott módon

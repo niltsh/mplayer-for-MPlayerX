@@ -475,13 +475,13 @@ blocks.
 
 <varlistentry>
   <term><literal>
-  <anchor id="skin-dlabel"/>dlabel = X, Y, length, align, fontfile, "text"
+  <anchor id="skin-dlabel"/>dlabel = X, Y, width, align, fontfile, "text"
   </literal></term>
   <listitem>
   <para>
   Place a dynamic label at the position <literal>X,Y</literal>. The label is
-  called dynamic because its text is refreshed periodically. The maximum length
-  of the label is given by <literal>length</literal> (its height is the height
+  called dynamic because its text is refreshed periodically. The maximum width
+  of the label is given by <literal>width</literal> (its height is the height
   of a character). If the text to be displayed is wider than that, it will be
   scrolled,
   otherwise it is aligned within the specified space by the value of the

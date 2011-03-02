@@ -505,13 +505,13 @@ end
 
 <varlistentry>
   <term><literal>
-  <anchor id="skin-dlabel"/>dlabel = X, Y, length, align, fontid, "text"
+  <anchor id="skin-dlabel"/>dlabel = X, Y, width, align, fontid, "text"
   </literal></term>
   <listitem>
   <para>
   Размещает динамическую метку на позиции <literal>X,Y</literal>. Метка зовется
   динамической, потому что ее текст периодически обновляется. Максимальная длина
-  метки задается параметром <literal>length</literal> (ее высота равна высоте символа).
+  метки задается параметром <literal>width</literal> (ее высота равна высоте символа).
   Если отображаемый текст шире этого значения, он будет скроллироваться,
   иначе он выравнивается в пределах указанного пространства в соответствии со
   значением параметра

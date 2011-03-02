@@ -484,13 +484,13 @@ La etiqueta es mostrada usando la tipografía identificada por <literal>fontid</
 
 <varlistentry>
   <term><literal>
-  <anchor id="skin-dlabel"/>dlabel = X, Y, length, align, fontid, &quot;text&quot;
+  <anchor id="skin-dlabel"/>dlabel = X, Y, width, align, fontid, &quot;text&quot;
   </literal></term>
   <listitem>
 <para>
 Coloca una etiqueta dinámica en la posición <literal>X,Y</literal>. La etiqueta se
 llama dinámica porque su texto es refrescado periódicamente. La longitud máxima de la
-etiqueta viene dada por <literal>length</literal> (su altura es la altura de un caracter).
+etiqueta viene dada por <literal>width</literal> (su altura es la altura de un caracter).
 Si el texto que ha de ser mostrado es más ancho que esta, será desplazado,
 si no será alineado dentro del espacio especificado por el valor del parámetro
 <literal>align</literal>: <literal>0</literal> es para derecha,

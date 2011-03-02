@@ -584,19 +584,19 @@ end
         <varlistentry>
           <term>
             <literal>
-              <anchor id="skin-dlabel"/>dlabel = X, Y, length, align, fontfile, "text"
+              <anchor id="skin-dlabel"/>dlabel = X, Y, width, align, fontfile, "text"
             </literal>
           </term>
           <listitem>
             <para>
               Platziere ein dynamisches Label an Position <literal>X,Y</literal>.
               Das Label wird als dynamisch bezeichnet, weil sein Text periodisch
-              aktualisiert wird. Die Maximallänge des Labels wird mit dem
-              Wert <literal>length</literal> vorgegeben (seine Höhe ist die der
+              aktualisiert wird. Die maximale Breite des Labels wird mit dem
+              Wert <literal>width</literal> vorgegeben (seine Höhe ist die der
               Zeichen).
               Wird der anzuzeigende Text breiter als dieser Wert, wird er gescrollt,
-              andernfalls wird er innerhalb des Mittels des Wertes des vom
-              <literal>align</literal>-Parameter festgelegten Zwischenraums ausgerichtet:
+              andernfalls wird er innerhalb des angegebenen Bereichs gemäß des
+              <literal>align</literal>-Parameters ausgerichtet:
               <literal>0</literal> steht für rechts,
               <literal>1</literal> steht für zentriert,
               <literal>2</literal> steht für links.
