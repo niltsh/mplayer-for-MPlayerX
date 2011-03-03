@@ -114,7 +114,7 @@ void appResetStruct(void)
     appMPlayer.sub.y = -1;   // NOTE TO MYSELF: is this really necessary?
 }
 
-void appInitStruct(void)
+void appFreeStruct(void)
 {
     int i;
 

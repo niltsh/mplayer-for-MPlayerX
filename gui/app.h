@@ -189,7 +189,7 @@ typedef struct {
 extern listItems appMPlayer;
 
 int appFindMessage(unsigned char *);
-void appInitStruct(void);
+void appFreeStruct(void);
 void appResetStruct(void);
 void btnModify(int, float);
 void btnSet(int, int);
