@@ -126,9 +126,9 @@ typedef struct {
 
 // Button states
 
-#define btnPressed  0
+#define btnDisabled 0
 #define btnReleased 1
-#define btnDisabled 2
+#define btnPressed  2
 
 typedef struct {
     int type;

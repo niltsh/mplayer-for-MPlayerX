@@ -262,7 +262,7 @@ void Render( wsTWindow * window,wItem * Items,int nrItems,char * db,int size )
 {
  wItem    * item;
  txSample * image = NULL;
- int        i;
+ int        i, ofs;
 
  image_buffer=db;
  image_width=window->Width;
@@ -270,10 +270,11 @@ void Render( wsTWindow * window,wItem * Items,int nrItems,char * db,int size )
  for( i=0;i < nrItems + 1;i++ )
   {
    item=&Items[i];
+   ofs = (item->pressed == btnPressed ? 0 : (item->pressed == btnReleased ? 1 : 2));
    switch( item->type )
     {
      case itButton:
-          PutImage( &item->Bitmap,item->x,item->y,3,item->pressed );
+          PutImage( &item->Bitmap,item->x,item->y,3,ofs );
           break;
      case itPotmeter:
           if (item->numphases == 1)SimplePotmeterPutImage( &item->Bitmap,item->x,item->y, item->value / 100.0f );
@@ -282,7 +283,7 @@ void Render( wsTWindow * window,wItem * Items,int nrItems,char * db,int size )
      case itHPotmeter:
           if (item->numphases == 1)SimplePotmeterPutImage( &item->Bitmap,item->x,item->y, item->value / 100.0f );
           else PutImage( &item->Bitmap,item->x,item->y,item->numphases,( item->numphases - 1 ) * ( item->value / 100.0f ) );
-          PutImage( &item->Mask,item->x + (int)( ( item->width - item->pwidth ) * item->value / 100.0f ),item->y,3,item->pressed );
+          PutImage( &item->Mask,item->x + (int)( ( item->width - item->pwidth ) * item->value / 100.0f ),item->y,3,ofs );
           break;
      case itVPotmeter:
           PutImage( &item->Bitmap,
@@ -291,7 +292,7 @@ void Render( wsTWindow * window,wItem * Items,int nrItems,char * db,int size )
 	    item->numphases * ( 1. - item->value / 100.0f ) );
           PutImage( &item->Mask,
 	    item->x,item->y + (int)( ( item->height - item->pheight ) * ( 1. - item->value / 100.0f ) ),
-	    3,item->pressed );
+	    3,ofs );
           break;
      case itSLabel:
           image=fntRender( item,0,item->label );
