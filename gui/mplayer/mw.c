@@ -88,7 +88,7 @@ void mplMainDraw( void )
    btnModify( evSetVolume,guiIntfStruct.Volume );
 
    fast_memcpy( mplDrawBuffer,appMPlayer.main.Bitmap.Image,appMPlayer.main.Bitmap.ImageSize );
-   Render( &appMPlayer.mainWindow,appMPlayer.mainItems,appMPlayer.NumberOfMainItems,mplDrawBuffer,appMPlayer.main.Bitmap.ImageSize );
+   Render( &appMPlayer.mainWindow,appMPlayer.mainItems,appMPlayer.IndexOfMainItems,mplDrawBuffer,appMPlayer.main.Bitmap.ImageSize );
    mplMainRender=0;
   }
  wsPutImage( &appMPlayer.mainWindow );
@@ -403,7 +403,7 @@ void mplMainMouseHandle( int Button,int X,int Y,int RX,int RY )
  static int     SelectedItem = -1;
         int     currentselected = -1;
 
- for ( i=0;i < appMPlayer.NumberOfMainItems + 1;i++ )
+ for ( i=0;i <= appMPlayer.IndexOfMainItems;i++ )
   if ( ( appMPlayer.mainItems[i].pressed != btnDisabled )&&
        ( wgIsRect( X,Y,appMPlayer.mainItems[i].x,appMPlayer.mainItems[i].y,appMPlayer.mainItems[i].x+appMPlayer.mainItems[i].width,appMPlayer.mainItems[i].y+appMPlayer.mainItems[i].height ) ) )
    { currentselected=i; break; }

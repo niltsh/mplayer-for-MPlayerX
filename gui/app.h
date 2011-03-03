@@ -176,13 +176,13 @@ typedef struct {
     wsTWindow menuWindow;
     int menuIsPresent;
 
-    int NumberOfMainItems;
+    int IndexOfMainItems;
     wItem mainItems[256];
 
-    int NumberOfBarItems;
+    int IndexOfBarItems;
     wItem barItems[256];
 
-    int NumberOfMenuItems;
+    int IndexOfMenuItems;
     wItem menuItems[64];
 } listItems;
 

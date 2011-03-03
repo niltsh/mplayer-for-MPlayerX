@@ -186,17 +186,17 @@ static int cmd_window(char *in)
 
     if (!strncmp(in, "main", 4)) {
         currSection  = &appMPlayer.main;
-        currSubItem  = &appMPlayer.NumberOfMainItems;
+        currSubItem  = &appMPlayer.IndexOfMainItems;
         currSubItems = appMPlayer.mainItems;
     } else if (!strncmp(in, "sub", 3))
         currSection = &appMPlayer.sub;
     else if (!strncmp(in, "playbar", 7)) {
         currSection  = &appMPlayer.bar;
-        currSubItem  = &appMPlayer.NumberOfBarItems;
+        currSubItem  = &appMPlayer.IndexOfBarItems;
         currSubItems = appMPlayer.barItems;
     } else if (!strncmp(in, "menu", 4)) {
         currSection  = &appMPlayer.menuBase;
-        currSubItem  = &appMPlayer.NumberOfMenuItems;
+        currSubItem  = &appMPlayer.IndexOfMenuItems;
         currSubItems = appMPlayer.menuItems;
     } else
         ERRORMESSAGE(MSGTR_UNKNOWNWINDOWTYPE);
@@ -452,21 +452,21 @@ static int cmd_menu(char *in)
 
     message = appFindMessage(tmp);
 
-    defList->NumberOfMenuItems++;
-    defList->menuItems[defList->NumberOfMenuItems].x      = x;
-    defList->menuItems[defList->NumberOfMenuItems].y      = y;
-    defList->menuItems[defList->NumberOfMenuItems].width  = sx;
-    defList->menuItems[defList->NumberOfMenuItems].height = sy;
+    defList->IndexOfMenuItems++;
+    defList->menuItems[defList->IndexOfMenuItems].x      = x;
+    defList->menuItems[defList->IndexOfMenuItems].y      = y;
+    defList->menuItems[defList->IndexOfMenuItems].width  = sx;
+    defList->menuItems[defList->IndexOfMenuItems].height = sy;
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] menuitem: %d\n", defList->NumberOfMenuItems);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] menuitem: %d\n", defList->IndexOfMenuItems);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  x: %d y: %d sx: %d sy: %d\n", x, y, sx, sy);
 
-    if ((defList->menuItems[defList->NumberOfMenuItems].message = message) == -1)
+    if ((defList->menuItems[defList->IndexOfMenuItems].message = message) == -1)
         ERRORMESSAGE(MSGTR_SKIN_BITMAP_UnknownMessage, tmp);
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", defList->mainItems[defList->NumberOfMainItems].message);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", defList->mainItems[defList->IndexOfMainItems].message);
 
-    defList->menuItems[defList->NumberOfMenuItems].Bitmap.Image = NULL;
+    defList->menuItems[defList->IndexOfMenuItems].Bitmap.Image = NULL;
     return 0;
 }
 

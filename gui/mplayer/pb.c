@@ -106,7 +106,7 @@ static void mplPBDraw( void )
    vo_mouse_autohide=0;
 
    fast_memcpy( mplPBDrawBuffer,appMPlayer.bar.Bitmap.Image,appMPlayer.bar.Bitmap.ImageSize );
-   Render( &appMPlayer.barWindow,appMPlayer.barItems,appMPlayer.NumberOfBarItems,mplPBDrawBuffer,appMPlayer.bar.Bitmap.ImageSize );
+   Render( &appMPlayer.barWindow,appMPlayer.barItems,appMPlayer.IndexOfBarItems,mplPBDrawBuffer,appMPlayer.bar.Bitmap.ImageSize );
    wsConvert( &appMPlayer.barWindow,mplPBDrawBuffer,appMPlayer.bar.Bitmap.ImageSize );
   }
  wsPutImage( &appMPlayer.barWindow );
@@ -122,7 +122,7 @@ static void mplPBMouseHandle( int Button, int X, int Y, int RX, int RY )
  static int     SelectedItem = -1;
 	int     currentselected = -1;
 
- for ( i=0;i < appMPlayer.NumberOfBarItems + 1;i++ )
+ for ( i=0;i <= appMPlayer.IndexOfBarItems;i++ )
    if ( ( appMPlayer.barItems[i].pressed != btnDisabled )&&
       ( wgIsRect( X,Y,appMPlayer.barItems[i].x,appMPlayer.barItems[i].y,appMPlayer.barItems[i].x+appMPlayer.barItems[i].width,appMPlayer.barItems[i].y+appMPlayer.barItems[i].height ) ) )
     { currentselected=i; break; }

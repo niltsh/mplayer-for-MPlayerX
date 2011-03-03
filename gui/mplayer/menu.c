@@ -82,7 +82,7 @@ void mplMenuMouseHandle( int X,int Y,int RX,int RY )
    return;
   }
 
- for( i=0;i<=appMPlayer.NumberOfMenuItems;i++ )
+ for( i=0;i<=appMPlayer.IndexOfMenuItems;i++ )
   {
    if ( wgIsRect( x,y,
          appMPlayer.menuItems[i].x,appMPlayer.menuItems[i].y,
