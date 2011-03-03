@@ -886,7 +886,6 @@ int skinRead(char *dname)
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin] file: %s\n", fn);
 
     appFreeStruct();
-    fntFreeFont();
 
     linenumber = 0;
 

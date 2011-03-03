@@ -138,6 +138,7 @@ void appFreeStruct(void)
         appClearItem(&appMPlayer.menuItems[i]);
 
     appResetStruct();
+    fntFreeFont();
 }
 
 int appFindMessage(unsigned char *str)
