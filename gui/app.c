@@ -120,35 +120,24 @@ void appInitStruct(void)
 {
     int i;
 
+    appClearItem(&appMPlayer.main);
+    appMPlayer.mainDecoration = 0;
+
+    appClearItem(&appMPlayer.sub);
+
+    appClearItem(&appMPlayer.bar);
+    appMPlayer.barIsPresent = 0;
+
+    appClearItem(&appMPlayer.menuBase);
+    appClearItem(&appMPlayer.menuSelected);
+    appMPlayer.menuIsPresent = 0;
+
     for (i = 0; i < appMPlayer.NumberOfMainItems + 1; i++)
         appClearItem(&appMPlayer.mainItems[i]);
     for (i = 0; i < appMPlayer.NumberOfBarItems + 1; i++)
         appClearItem(&appMPlayer.barItems[i]);
     for (i = 0; i < appMPlayer.NumberOfMenuItems + 1; i++)
         appClearItem(&appMPlayer.menuItems[i]);
-
-    memset(appMPlayer.mainItems, 0, 256 * sizeof(wItem));
-
-    memset(appMPlayer.menuItems, 0, 64 * sizeof(wItem));
-
-    memset(appMPlayer.barItems, 0, 256 * sizeof(wItem));
-
-    appClearItem(&appMPlayer.main);
-    appMPlayer.mainDecoration = 0;
-
-    appClearItem(&appMPlayer.sub);
-    appMPlayer.sub.width  = 0;
-    appMPlayer.sub.height = 0;
-
-    appClearItem(&appMPlayer.bar);
-    appClearItem(&appMPlayer.menuBase);
-    appClearItem(&appMPlayer.menuSelected);
-
-    appMPlayer.sub.R         = appMPlayer.sub.G = appMPlayer.sub.B = 0;
-    appMPlayer.bar.R         = appMPlayer.bar.G = appMPlayer.bar.B = 0;
-    appMPlayer.main.R        = appMPlayer.main.G = appMPlayer.main.B = 0;
-    appMPlayer.barIsPresent  = 0;
-    appMPlayer.menuIsPresent = 0;
 
     appResetStruct();
 }
