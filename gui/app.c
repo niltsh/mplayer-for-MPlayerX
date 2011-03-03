@@ -77,7 +77,7 @@ static const evName evNames[] = {
     { evSetAspect,         "evSetAspect"         }
 };
 
-static const int evBoxs = sizeof(evNames) / sizeof(evName);
+static const int EVENTS = sizeof(evNames) / sizeof(evName);
 
 static void appClearItem(wItem *item)
 {
@@ -150,7 +150,7 @@ int appFindMessage(unsigned char *str)
 {
     int i;
 
-    for (i = 0; i < evBoxs; i++)
+    for (i = 0; i < EVENTS; i++)
         if (!strcmp(evNames[i].name, str))
             return evNames[i].message;
 
