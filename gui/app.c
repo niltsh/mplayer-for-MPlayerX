@@ -106,24 +106,31 @@ static void appClearItem(wItem *item)
     item->tmp       = 0;
 }
 
+void appResetStruct(void)
+{
+    appMPlayer.NumberOfMainItems = -1;
+    appMPlayer.NumberOfBarItems  = -1;
+    appMPlayer.NumberOfMenuItems = -1;
+
+    appMPlayer.sub.x = -1;   // NOTE TO MYSELF: is this really necessary?
+    appMPlayer.sub.y = -1;   // NOTE TO MYSELF: is this really necessary?
+}
+
 void appInitStruct(void)
 {
     int i;
 
-    for (i = 0; i < appMPlayer.NumberOfMainItems; i++)
+    for (i = 0; i < appMPlayer.NumberOfMainItems + 1; i++)
         appClearItem(&appMPlayer.mainItems[i]);
-    for (i = 0; i < appMPlayer.NumberOfBarItems; i++)
+    for (i = 0; i < appMPlayer.NumberOfBarItems + 1; i++)
         appClearItem(&appMPlayer.barItems[i]);
-    for (i = 0; i < appMPlayer.NumberOfMenuItems; i++)
+    for (i = 0; i < appMPlayer.NumberOfMenuItems + 1; i++)
         appClearItem(&appMPlayer.menuItems[i]);
 
-    appMPlayer.NumberOfMainItems = -1;
     memset(appMPlayer.mainItems, 0, 256 * sizeof(wItem));
 
-    appMPlayer.NumberOfMenuItems = -1;
     memset(appMPlayer.menuItems, 0, 64 * sizeof(wItem));
 
-    appMPlayer.NumberOfBarItems = -1;
     memset(appMPlayer.barItems, 0, 256 * sizeof(wItem));
 
     appClearItem(&appMPlayer.main);
@@ -132,8 +139,6 @@ void appInitStruct(void)
     appClearItem(&appMPlayer.sub);
     appMPlayer.sub.width  = 0;
     appMPlayer.sub.height = 0;
-    appMPlayer.sub.x      = -1;
-    appMPlayer.sub.y      = -1;
 
     appClearItem(&appMPlayer.menuBase);
     appClearItem(&appMPlayer.menuSelected);
@@ -143,6 +148,8 @@ void appInitStruct(void)
     appMPlayer.main.R        = appMPlayer.main.G = appMPlayer.main.B = 0;
     appMPlayer.barIsPresent  = 0;
     appMPlayer.menuIsPresent = 0;
+
+    appResetStruct();
 }
 
 int appFindMessage(unsigned char *str)

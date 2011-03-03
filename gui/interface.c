@@ -163,6 +163,8 @@ void guiInit( void )
  guiIntfStruct.Balance=50.0f;
  guiIntfStruct.StreamType=-1;
 
+ appResetStruct();
+
  memset( &gtkEquChannels,0,sizeof( gtkEquChannels ) );
 #ifdef CONFIG_DXR3
  if ( !gtkDXR3Device ) gtkDXR3Device=strdup( "/dev/em8300-0" );
