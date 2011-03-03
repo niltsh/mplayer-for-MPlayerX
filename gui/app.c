@@ -140,6 +140,7 @@ void appInitStruct(void)
     appMPlayer.sub.width  = 0;
     appMPlayer.sub.height = 0;
 
+    appClearItem(&appMPlayer.bar);
     appClearItem(&appMPlayer.menuBase);
     appClearItem(&appMPlayer.menuSelected);
 
