@@ -106,43 +106,43 @@ static void appClearItem(wItem *item)
     item->tmp       = 0;
 }
 
-void appInitStruct(listItems *item)
+void appInitStruct(void)
 {
     int i;
 
-    for (i = 0; i < item->NumberOfMainItems; i++)
-        appClearItem(&item->mainItems[i]);
-    for (i = 0; i < item->NumberOfBarItems; i++)
-        appClearItem(&item->barItems[i]);
-    for (i = 0; i < item->NumberOfMenuItems; i++)
-        appClearItem(&item->menuItems[i]);
+    for (i = 0; i < appMPlayer.NumberOfMainItems; i++)
+        appClearItem(&appMPlayer.mainItems[i]);
+    for (i = 0; i < appMPlayer.NumberOfBarItems; i++)
+        appClearItem(&appMPlayer.barItems[i]);
+    for (i = 0; i < appMPlayer.NumberOfMenuItems; i++)
+        appClearItem(&appMPlayer.menuItems[i]);
 
-    item->NumberOfMainItems = -1;
-    memset(item->mainItems, 0, 256 * sizeof(wItem));
+    appMPlayer.NumberOfMainItems = -1;
+    memset(appMPlayer.mainItems, 0, 256 * sizeof(wItem));
 
-    item->NumberOfMenuItems = -1;
-    memset(item->menuItems, 0, 64 * sizeof(wItem));
+    appMPlayer.NumberOfMenuItems = -1;
+    memset(appMPlayer.menuItems, 0, 64 * sizeof(wItem));
 
-    item->NumberOfBarItems = -1;
-    memset(item->barItems, 0, 256 * sizeof(wItem));
+    appMPlayer.NumberOfBarItems = -1;
+    memset(appMPlayer.barItems, 0, 256 * sizeof(wItem));
 
-    appClearItem(&item->main);
-    item->mainDecoration = 0;
+    appClearItem(&appMPlayer.main);
+    appMPlayer.mainDecoration = 0;
 
-    appClearItem(&item->sub);
-    item->sub.width  = 0;
-    item->sub.height = 0;
-    item->sub.x      = -1;
-    item->sub.y      = -1;
+    appClearItem(&appMPlayer.sub);
+    appMPlayer.sub.width  = 0;
+    appMPlayer.sub.height = 0;
+    appMPlayer.sub.x      = -1;
+    appMPlayer.sub.y      = -1;
 
-    appClearItem(&item->menuBase);
-    appClearItem(&item->menuSelected);
+    appClearItem(&appMPlayer.menuBase);
+    appClearItem(&appMPlayer.menuSelected);
 
-    item->sub.R         = item->sub.G = item->sub.B = 0;
-    item->bar.R         = item->bar.G = item->bar.B = 0;
-    item->main.R        = item->main.G = item->main.B = 0;
-    item->barIsPresent  = 0;
-    item->menuIsPresent = 0;
+    appMPlayer.sub.R         = appMPlayer.sub.G = appMPlayer.sub.B = 0;
+    appMPlayer.bar.R         = appMPlayer.bar.G = appMPlayer.bar.B = 0;
+    appMPlayer.main.R        = appMPlayer.main.G = appMPlayer.main.B = 0;
+    appMPlayer.barIsPresent  = 0;
+    appMPlayer.menuIsPresent = 0;
 }
 
 int appFindMessage(unsigned char *str)
