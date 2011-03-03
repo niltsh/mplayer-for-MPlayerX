@@ -111,7 +111,7 @@ typedef struct {
 
 // Skin items
 
-#define itNULL      0
+#define itNone      0
 #define itButton    101
 #define itHPotmeter 102
 #define itVPotmeter 103
@@ -120,6 +120,9 @@ typedef struct {
 #define itBase      106
 #define itPotmeter  107
 #define itFont      108
+
+#define itPLMButton (itNone - 1)
+#define itPRMButton (itNone - 2)
 
 // Button states
 

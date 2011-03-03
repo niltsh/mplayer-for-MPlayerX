@@ -112,9 +112,6 @@ static void mplPBDraw( void )
  wsPutImage( &appMPlayer.barWindow );
 }
 
-#define itPLMButton (itNULL - 1)
-#define itPRMButton (itNULL - 2)
-
 static void mplPBMouseHandle( int Button, int X, int Y, int RX, int RY )
 {
  static int     itemtype = 0;

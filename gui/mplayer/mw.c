@@ -393,9 +393,6 @@ set_volume:
   }
 }
 
-#define itPLMButton (itNULL - 1)
-#define itPRMButton (itNULL - 2)
-
 void mplMainMouseHandle( int Button,int X,int Y,int RX,int RY )
 {
  static int     itemtype = 0;
