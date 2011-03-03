@@ -809,7 +809,7 @@ static _item skinItem[] = {
     { "menu",       cmd_menu       }
 };
 
-#define ITEMS (int)(sizeof(skinItem) / sizeof(_item))
+static const int ITEMS = sizeof(skinItem) / sizeof(_item);
 
 char *strswap(char *in, char what, char whereof)
 {
