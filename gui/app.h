@@ -130,6 +130,10 @@ typedef struct {
 #define btnReleased 1
 #define btnPressed  2
 
+// Item definition
+
+#define MAX_ITEMS 64
+
 typedef struct {
     int type;
 
@@ -177,13 +181,13 @@ typedef struct {
     int menuIsPresent;
 
     int IndexOfMainItems;
-    wItem mainItems[256];
+    wItem mainItems[MAX_ITEMS];
 
     int IndexOfBarItems;
-    wItem barItems[256];
+    wItem barItems[MAX_ITEMS];
 
     int IndexOfMenuItems;
-    wItem menuItems[64];
+    wItem menuItems[MAX_ITEMS];
 } guiItems;
 
 extern guiItems appMPlayer;
