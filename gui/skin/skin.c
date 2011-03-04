@@ -35,7 +35,7 @@ typedef struct {
     int (*func)(char *in);
 } _item;
 
-static listItems *defList;
+static guiItems *skin;
 
 static int linenumber;
 static unsigned char path[512];
@@ -65,7 +65,7 @@ static void ERRORMESSAGE(const char *format, ...)
 
 #define CHECKDEFLIST(str) \
     { \
-        if (defList == NULL) \
+        if (skin == NULL) \
         { \
             ERRORMESSAGE(MSGTR_SKIN_ERROR_SECTION, str); \
             return 1; \
@@ -149,10 +149,10 @@ int skinBPRead(char *fname, txSample *bf)
 static int cmd_section(char *in)
 {
     strlower(in);
-    defList = NULL;
+    skin = NULL;
 
     if (!strcmp(in, "movieplayer"))
-        defList = &appMPlayer;
+        skin = &appMPlayer;
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] sectionname: %s\n", in);
 
@@ -170,7 +170,7 @@ static int cmd_end(char *in)
         currSubItem    = NULL;
         currSubItems   = NULL;
     } else
-        defList = NULL;
+        skin = NULL;
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] end section\n");
 
@@ -226,97 +226,97 @@ static int cmd_base(char *in)
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] base: %s x: %d y: %d ( %dx%d )\n", fname, x, y, sx, sy);
 
     if (!strcmp(window_name, "main")) {
-        defList->main.x    = x;
-        defList->main.y    = y;
-        defList->main.type = itBase;
+        skin->main.x    = x;
+        skin->main.y    = y;
+        skin->main.type = itBase;
 
         av_strlcpy(tmp, path, sizeof(tmp));
         av_strlcat(tmp, fname, sizeof(tmp));
 
-        if (skinBPRead(tmp, &defList->main.Bitmap) != 0)
+        if (skinBPRead(tmp, &skin->main.Bitmap) != 0)
             return 1;
 
-        defList->main.width  = defList->main.Bitmap.Width;
-        defList->main.height = defList->main.Bitmap.Height;
+        skin->main.width  = skin->main.Bitmap.Width;
+        skin->main.height = skin->main.Bitmap.Height;
 
 #ifdef CONFIG_XSHAPE
-        Convert32to1(&defList->main.Bitmap, &defList->main.Mask, 0x00ff00ff);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  mask: %lux%lu\n", defList->main.Mask.Width, defList->main.Mask.Height);
+        Convert32to1(&skin->main.Bitmap, &skin->main.Mask, 0x00ff00ff);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  mask: %lux%lu\n", skin->main.Mask.Width, skin->main.Mask.Height);
 #else
-        defList->main.Mask.Image = NULL;
+        skin->main.Mask.Image = NULL;
 #endif
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  width: %d height: %d\n", defList->main.width, defList->main.height);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  width: %d height: %d\n", skin->main.width, skin->main.height);
     }
 
     if (!strcmp(window_name, "sub")) {
-        defList->sub.type = itBase;
+        skin->sub.type = itBase;
 
         av_strlcpy(tmp, path, sizeof(tmp));
         av_strlcat(tmp, fname, sizeof(tmp));
 
-        if (skinBPRead(tmp, &defList->sub.Bitmap) != 0)
+        if (skinBPRead(tmp, &skin->sub.Bitmap) != 0)
             return 1;
 
-        defList->sub.x      = x;
-        defList->sub.y      = y;
-        defList->sub.width  = defList->sub.Bitmap.Width;
-        defList->sub.height = defList->sub.Bitmap.Height;
+        skin->sub.x      = x;
+        skin->sub.y      = y;
+        skin->sub.width  = skin->sub.Bitmap.Width;
+        skin->sub.height = skin->sub.Bitmap.Height;
 
         if (sx && sy) {
-            defList->sub.width  = sx;
-            defList->sub.height = sy;
+            skin->sub.width  = sx;
+            skin->sub.height = sy;
         }
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  %d,%d %dx%d\n", defList->sub.x, defList->sub.y, defList->sub.width, defList->sub.height);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  %d,%d %dx%d\n", skin->sub.x, skin->sub.y, skin->sub.width, skin->sub.height);
     }
 
     if (!strcmp(window_name, "menu")) {
-        defList->menuIsPresent = 1;
-        defList->menuBase.type = itBase;
+        skin->menuIsPresent = 1;
+        skin->menuBase.type = itBase;
 
         av_strlcpy(tmp, path, sizeof(tmp));
         av_strlcat(tmp, fname, sizeof(tmp));
 
-        if (skinBPRead(tmp, &defList->menuBase.Bitmap) != 0)
+        if (skinBPRead(tmp, &skin->menuBase.Bitmap) != 0)
             return 1;
 
-        defList->menuBase.width  = defList->menuBase.Bitmap.Width;
-        defList->menuBase.height = defList->menuBase.Bitmap.Height;
+        skin->menuBase.width  = skin->menuBase.Bitmap.Width;
+        skin->menuBase.height = skin->menuBase.Bitmap.Height;
 
 #ifdef CONFIG_XSHAPE
-        Convert32to1(&defList->menuBase.Bitmap, &defList->menuBase.Mask, 0x00ff00ff);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  mask: %lux%lu\n", defList->menuBase.Mask.Width, defList->menuBase.Mask.Height);
+        Convert32to1(&skin->menuBase.Bitmap, &skin->menuBase.Mask, 0x00ff00ff);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  mask: %lux%lu\n", skin->menuBase.Mask.Width, skin->menuBase.Mask.Height);
 #else
-        defList->menuBase.Mask.Image = NULL;
+        skin->menuBase.Mask.Image = NULL;
 #endif
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  width: %d height: %d\n", defList->menuBase.width, defList->menuBase.height);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  width: %d height: %d\n", skin->menuBase.width, skin->menuBase.height);
     }
 
     if (!strcmp(window_name, "playbar")) {
-        defList->barIsPresent = 1;
-        defList->bar.x    = x;
-        defList->bar.y    = y;
-        defList->bar.type = itBase;
+        skin->barIsPresent = 1;
+        skin->bar.x    = x;
+        skin->bar.y    = y;
+        skin->bar.type = itBase;
 
         av_strlcpy(tmp, path, sizeof(tmp));
         av_strlcat(tmp, fname, sizeof(tmp));
 
-        if (skinBPRead(tmp, &defList->bar.Bitmap) != 0)
+        if (skinBPRead(tmp, &skin->bar.Bitmap) != 0)
             return 1;
 
-        defList->bar.width  = defList->bar.Bitmap.Width;
-        defList->bar.height = defList->bar.Bitmap.Height;
+        skin->bar.width  = skin->bar.Bitmap.Width;
+        skin->bar.height = skin->bar.Bitmap.Height;
 
 #ifdef CONFIG_XSHAPE
-        Convert32to1(&defList->bar.Bitmap, &defList->bar.Mask, 0x00ff00ff);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  mask: %lux%lu\n", defList->bar.Mask.Width, defList->bar.Mask.Height);
+        Convert32to1(&skin->bar.Bitmap, &skin->bar.Mask, 0x00ff00ff);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  mask: %lux%lu\n", skin->bar.Mask.Width, skin->bar.Mask.Height);
 #else
-        defList->bar.Mask.Image = NULL;
+        skin->bar.Mask.Image = NULL;
 #endif
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  width: %d height: %d\n", defList->bar.width, defList->bar.height);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  width: %d height: %d\n", skin->bar.width, skin->bar.height);
     }
 
     return 0;
@@ -413,20 +413,20 @@ static int cmd_selected(char *in)
 
     cutItem(in, fname, ',', 0);
 
-    defList->menuSelected.type = itBase;
+    skin->menuSelected.type = itBase;
 
     av_strlcpy(tmp, path, sizeof(tmp));
     av_strlcat(tmp, fname, sizeof(tmp));
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] selected: %s\n", fname);
 
-    if (skinBPRead(tmp, &defList->menuSelected.Bitmap) != 0)
+    if (skinBPRead(tmp, &skin->menuSelected.Bitmap) != 0)
         return 1;
 
-    defList->menuSelected.width  = defList->menuSelected.Bitmap.Width;
-    defList->menuSelected.height = defList->menuSelected.Bitmap.Height;
+    skin->menuSelected.width  = skin->menuSelected.Bitmap.Width;
+    skin->menuSelected.height = skin->menuSelected.Bitmap.Height;
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  width: %d height: %d\n", defList->menuSelected.width, defList->menuSelected.height);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  width: %d height: %d\n", skin->menuSelected.width, skin->menuSelected.height);
 
     return 0;
 }
@@ -452,21 +452,21 @@ static int cmd_menu(char *in)
 
     message = appFindMessage(tmp);
 
-    defList->IndexOfMenuItems++;
-    defList->menuItems[defList->IndexOfMenuItems].x      = x;
-    defList->menuItems[defList->IndexOfMenuItems].y      = y;
-    defList->menuItems[defList->IndexOfMenuItems].width  = sx;
-    defList->menuItems[defList->IndexOfMenuItems].height = sy;
+    skin->IndexOfMenuItems++;
+    skin->menuItems[skin->IndexOfMenuItems].x      = x;
+    skin->menuItems[skin->IndexOfMenuItems].y      = y;
+    skin->menuItems[skin->IndexOfMenuItems].width  = sx;
+    skin->menuItems[skin->IndexOfMenuItems].height = sy;
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] menuitem: %d\n", defList->IndexOfMenuItems);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] menuitem: %d\n", skin->IndexOfMenuItems);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  x: %d y: %d sx: %d sy: %d\n", x, y, sx, sy);
 
-    if ((defList->menuItems[defList->IndexOfMenuItems].message = message) == -1)
+    if ((skin->menuItems[skin->IndexOfMenuItems].message = message) == -1)
         ERRORMESSAGE(MSGTR_SKIN_BITMAP_UnknownMessage, tmp);
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", defList->mainItems[defList->IndexOfMainItems].message);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", skin->mainItems[skin->IndexOfMainItems].message);
 
-    defList->menuItems[defList->IndexOfMenuItems].Bitmap.Image = NULL;
+    skin->menuItems[skin->IndexOfMenuItems].Bitmap.Image = NULL;
     return 0;
 }
 
@@ -782,11 +782,11 @@ static int cmd_decoration(char *in)
     }
 
     if (strcmp(tmp, "enable") != 0)
-        defList->mainDecoration = 0;
+        skin->mainDecoration = 0;
     else
-        defList->mainDecoration = 1;
+        skin->mainDecoration = 1;
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] window decoration is %s\n", (defList->mainDecoration ? "enabled" : "disabled"));
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] window decoration is %s\n", (skin->mainDecoration ? "enabled" : "disabled"));
 
     return 0;
 }

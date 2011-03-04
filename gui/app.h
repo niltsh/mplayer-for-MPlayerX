@@ -184,9 +184,9 @@ typedef struct {
 
     int IndexOfMenuItems;
     wItem menuItems[64];
-} listItems;
+} guiItems;
 
-extern listItems appMPlayer;
+extern guiItems appMPlayer;
 
 int appFindMessage(unsigned char *);
 void appFreeStruct(void);

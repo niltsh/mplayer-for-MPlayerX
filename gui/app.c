@@ -21,7 +21,7 @@
 #include "gui/skin/font.h"
 #include "interface.h"
 
-listItems appMPlayer;
+guiItems appMPlayer;
 
 static const evName evNames[] = {
     { evNone,              "evNone"              },
