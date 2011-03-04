@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 32066 (MSGTR_DownloadCodecPackage)
+// Synced with help_mp-en.h rev. 32964 (MSGTR_MPCODECS_UnknownFormatName)
 // Reminder of hard terms which need better/final solution later:
 //   (file links to be updated later if available!);
 //   NAV; section/subsection;  XScreenSaver; keycolor;
@@ -209,6 +209,8 @@ static const char help_text[]=
 #define MSGTR_OSDChapter "章节：（%d）%s"
 #define MSGTR_OSDAngle "视角：%d/%d"
 #define MSGTR_OSDDeinterlace "解除隔行扫描：%s"
+#define MSGTR_OSDCapturing "抓取：%s"
+#define MSGTR_OSDCapturingFailure "抓取失败"
 
 // property values
 #define MSGTR_Enabled "已启用"
@@ -557,9 +559,12 @@ static const char help_text[]=
 #define MSGTR_UNKNOWNWINDOWTYPE "发现未知窗口类型..."
 
 // --- skin loader error messages
-#define MSGTR_SKIN_ERRORMESSAGE "[界面外观] 界面外观配置文件错误，行 %d：%s"
-#define MSGTR_SKIN_SkinFileNotFound "[界面外观] 未找到文件（%s）。\n"
-#define MSGTR_SKIN_SkinFileNotReadable "[界面外观] 无法读取文件（%s）。\n"
+#define MSGTR_SKIN_ERRORMESSAGE "界面外观配置文件错误，行 %d：%s"
+#define MSGTR_SKIN_ERROR_SECTION "没有指定‘%s’的区域。\n"
+#define MSGTR_SKIN_ERROR_WINDOW "没有指定‘%s’的窗口。\n"
+#define MSGTR_SKIN_ERROR_IN_WINDOW "该项目‘%s’不支持。\n"
+#define MSGTR_SKIN_SkinFileNotFound "未找到界面外观文件 %s。\n"
+#define MSGTR_SKIN_SkinFileNotReadable "无法读取界面外观文件 %s。\n"
 #define MSGTR_SKIN_BITMAP_16bit  "不支持少于或等于 16 比特颜色精度的位图（%s）。\n"
 #define MSGTR_SKIN_BITMAP_FileNotFound  "未找到文件（%s）\n"
 #define MSGTR_SKIN_BITMAP_BMPReadError "BMP 读取错误（%s）\n"
@@ -576,9 +581,9 @@ static const char help_text[]=
 #define MSGTR_SKIN_FONT_NonExistentFontID "不存在的字体标识符（%s）\n"
 #define MSGTR_SKIN_UnknownParameter "未知参数（%s）\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "找不到界面外观（%s）。\n"
-#define MSGTR_SKIN_SKINCFG_SelectedSkinNotFound "未找到选定的界面外观（%s），尝试使用‘default’参数...\n"
+#define MSGTR_SKIN_SKINCFG_SelectedSkinNotFound "未找到选定的界面外观‘%s’，尝试使用‘default’参数...\n"
 #define MSGTR_SKIN_SKINCFG_SkinCfgReadError "界面外观配置文件（%s）读取错误。\n"
-#define MSGTR_SKIN_LABEL "Skins:"
+#define MSGTR_SKIN_LABEL "界面外观："
 
 // --- GTK menus
 #define MSGTR_MENU_AboutMPlayer "关于 MPlayer"
@@ -1615,44 +1620,44 @@ static const char help_text[]=
 #define MSGTR_MovieAspectUndefined "电影宽高比未定义 - 没有使用预先放大功能。\n"
 
 // vd_dshow.c, vd_dmo.c
-#define MSGTR_DownloadCodecPackage "你需要升级/安装二进制编解码器包。\n请访问 http:\/\/www.mplayerhq.hu/dload.html\n"
-#define MSGTR_DShowInitOK "信息: Win32/DShow 视频编解码器初始化成功。\n"
-#define MSGTR_DMOInitOK "信息: Win32/DMO 视频编解码器初始化成功。\n"
+#define MSGTR_DownloadCodecPackage "你需要升级/安装编解码器可执行代码包。\n请访问 http:\/\/www.mplayerhq.hu/dload.html\n"
+#define MSGTR_DShowInitOK "信息：Win32/DShow 视频编解码器初始化成功。\n"
+#define MSGTR_DMOInitOK "信息：Win32/DMO 视频编解码器初始化成功。\n"
 
 // libmpcodecs/vd_dmo.c vd_dshow.c vd_vfw.c
-#define MSGTR_MPCODECS_CouldntAllocateImageForCinepakCodec "[VD_DMO] 无法为 cinepak 编解码器分配图像。\n"
+#define MSGTR_MPCODECS_CouldntAllocateImageForCinepakCodec "[VD_DMO] 无法为 cinepak 编解码器分配进程映像。\n"
 
 // libmpcodecs/vd_ffmpeg.c
-#define MSGTR_MPCODECS_XVMCAcceleratedCodec "[VD_FFMPEG] XVMC 加速的编解码器。\n"
-#define MSGTR_MPCODECS_ArithmeticMeanOfQP "[VD_FFMPEG] QP 的算术平均值: %2.4f, QP 的调和平均值: %2.4f\n"
+#define MSGTR_MPCODECS_XVMCAcceleratedCodec "[VD_FFMPEG] 经 XVMC 加速的编解码器。\n"
+#define MSGTR_MPCODECS_ArithmeticMeanOfQP "[VD_FFMPEG] QP 的算术平均值：%2.4f，QP 的调和平均值：%2.4f\n"
 #define MSGTR_MPCODECS_DRIFailure "[VD_FFMPEG] DRI 失败。\n"
-#define MSGTR_MPCODECS_CouldntAllocateImageForCodec "[VD_FFMPEG] 无法为编解码器分配图像。\n"
-#define MSGTR_MPCODECS_XVMCAcceleratedMPEG2 "[VD_FFMPEG] XVMC-加速的 MPEG-2。\n"
+#define MSGTR_MPCODECS_CouldntAllocateImageForCodec "[VD_FFMPEG] 无法为编解码器分配进程镜像。\n"
+#define MSGTR_MPCODECS_XVMCAcceleratedMPEG2 "[VD_FFMPEG] 经 XVMC 加速的 MPEG-2。\n"
 #define MSGTR_MPCODECS_TryingPixfmt "[VD_FFMPEG] 尝试 pixfmt=%d。\n"
-#define MSGTR_MPCODECS_McGetBufferShouldWorkOnlyWithXVMC "[VD_FFMPEG] Mc_get_buffer 只能用于 XVMC 加速!!"
-#define MSGTR_MPCODECS_UnexpectedInitVoError "[VD_FFMPEG] Init_vo 意外错误。\n"
-#define MSGTR_MPCODECS_UnrecoverableErrorRenderBuffersNotTaken "[VD_FFMPEG] 无法恢复的错误, 渲染缓冲无法获得。\n"
+#define MSGTR_MPCODECS_McGetBufferShouldWorkOnlyWithXVMC "[VD_FFMPEG] Mc_get_buffer 只能用于 XVMC 加速！！"
+#define MSGTR_MPCODECS_UnexpectedInitVoError "[VD_FFMPEG] 预料外的 Init_vo 错误。\n"
+#define MSGTR_MPCODECS_UnrecoverableErrorRenderBuffersNotTaken "[VD_FFMPEG] 无法恢复的错误，未获得渲染缓冲。\n"
 #define MSGTR_MPCODECS_OnlyBuffersAllocatedByVoXvmcAllowed "[VD_FFMPEG] 只允许 vo_xvmc 分配的缓冲。\n"
 
 // libmpcodecs/ve_lavc.c
-#define MSGTR_MPCODECS_HighQualityEncodingSelected "[VE_LAVC] 已选高品质编码 (非实时)!\n"
-#define MSGTR_MPCODECS_UsingConstantQscale "[VE_LAVC] 使用常数的 qscale = %f (VBR)。\n"
+#define MSGTR_MPCODECS_HighQualityEncodingSelected "[VE_LAVC] 已选择高品质编码（非实时编码）！\n"
+#define MSGTR_MPCODECS_UsingConstantQscale "[VE_LAVC] 使用恒定的 qscale = %f（VBR）。\n"
 
 // libmpcodecs/ve_raw.c
-#define MSGTR_MPCODECS_OutputWithFourccNotSupported "[VE_RAW] 不支持 FourCC [%x] 的 raw 输出!\n"
-#define MSGTR_MPCODECS_NoVfwCodecSpecified "[VE_RAW] 未指定需要的 VfW 编解码器!!\n"
+#define MSGTR_MPCODECS_OutputWithFourccNotSupported "[VE_RAW] 不支持 FourCC [%x] 的原生输出！\n"
+#define MSGTR_MPCODECS_NoVfwCodecSpecified "[VE_RAW] 未指定必须的 VfW 编解码器！！\n"
 
 // vf.c
-#define MSGTR_CouldNotFindVideoFilter "找不到视频滤镜 '%s'。\n"
-#define MSGTR_CouldNotOpenVideoFilter "打不开视频滤镜 '%s'。\n"
-#define MSGTR_OpeningVideoFilter "打开视频滤镜: "
-#define MSGTR_CannotFindColorspace "找不到匹配的色彩空间, 甚至靠插入 'scale' 也不行 :(\n"
+#define MSGTR_CouldNotFindVideoFilter "无法找到视频滤镜‘%s’。\n"
+#define MSGTR_CouldNotOpenVideoFilter "无法打开视频滤镜‘%s’。\n"
+#define MSGTR_OpeningVideoFilter "打开视频滤镜："
+#define MSGTR_CannotFindColorspace "即使通过插值方式，也无法找到匹配的色彩空间 :(\n"
 
 // libmpcodecs/vf_crop.c
-#define MSGTR_MPCODECS_CropBadPositionWidthHeight "[CROP] 错误的位置/宽度/高度 - 切割区域在原始图像外!\n"
+#define MSGTR_MPCODECS_CropBadPositionWidthHeight "[CROP] 无效的位置/宽度/高度 - 裁剪区域在原始图像范围外！\n"
 
 // libmpcodecs/vf_cropdetect.c
-#define MSGTR_MPCODECS_CropArea "[CROP] 切割区域: X: %d..%d  Y: %d..%d  (-vf crop=%d:%d:%d:%d)。\n"
+#define MSGTR_MPCODECS_CropArea "[CROP] 裁剪区域：X: %d..%d  Y: %d..%d  (-vf crop=%d:%d:%d:%d)。\n"
 
 // libmpcodecs/vf_format.c, vf_palette.c, vf_noformat.c
 #define MSGTR_MPCODECS_UnknownFormatName "[VF_FORMAT] 未知格式名: '%s'。\n"
