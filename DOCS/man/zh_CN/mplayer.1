@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 32880
+.\" sync with en/mplayer.1 rev. 32946
 .\" Encoding: UTF-8
 .\"
 .\" MPlayer (C) 2000-2010 MPlayer 团队
@@ -361,29 +361,6 @@ MPlayer 有个完全可配置的, 命令驱动的控制层,
 停止并退出。
 .IPs "PREVIOUS 和 NEXT"
 后退/\:快进 1 分。
-.RE
-.PD 1
-.PP
-.RS
-(以下的按键仅适用于已编译支持 GUI 并优先于以前的定义。)
-.RE
-.PP
-.PD 0
-.RS
-.IPs ENTER
-开始播放。
-.IPs "ESC\ \ "
-停止播放。
-.IPs "l\ \ \ \ "
-加载文件。
-.IPs "t\ \ \ \ "
-加载字幕。
-.IPs "c\ \ \ \ "
-打开皮肤浏览器。
-.IPs "p\ \ \ \ "
-打开播放列表。
-.IPs "r\ \ \ \ "
-打开首选项。
 .RE
 .PD 1
 .PP
@@ -10986,11 +10963,19 @@ MEncoder 用户设置
 .
 .TP
 ~/.mplayer/\:gui.conf
-GUI 配置文件
+图形界面的配置文件
+.
+.TP
+~/.mplayer/\:gui.history
+图形界面的路径历史
 .
 .TP
 ~/.mplayer/\:gui.pl
-GUI 播放列表
+图形界面的播放列表
+.
+.TP
+~/.mplayer/\:gui.url
+图形界面的URL列表
 .
 .TP
 ~/.mplayer/\:font/
