@@ -16,6 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#define _XOPEN_SOURCE 600
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -220,6 +221,10 @@ static int decode_audio(sh_audio_t *sh_audio,unsigned char *buf,int minlen,int m
 	    int consumed = ds_parse(sh_audio->ds, &start, &x, pts, 0);
 	    sh_audio->ds->buffer_pos -= in_size - consumed;
 	}
+        if (((AVCodecContext *)sh_audio->context)->codec_id == CODEC_ID_AC3 &&
+            sh_audio->format == MKTAG('d', 'n', 'e', 't'))
+            swab(start, start, x & ~1);
+
 	av_init_packet(&pkt);
 	pkt.data = start;
 	pkt.size = x;
