@@ -1028,6 +1028,8 @@ static int vf_open(vf_instance_t *vf, char* args){
 	mux_v->bih->biCompression = mmioFOURCC('d', 'r', 'a', 'c');
     else if (!strcasecmp(lavc_param_vcodec, "libdirac"))
 	mux_v->bih->biCompression = mmioFOURCC('d', 'r', 'a', 'c');
+    else if (!strcasecmp(lavc_param_vcodec, "libvpx"))
+	mux_v->bih->biCompression = mmioFOURCC('V', 'P', '8', '0');
     else
 	mux_v->bih->biCompression = mmioFOURCC(lavc_param_vcodec[0],
 		lavc_param_vcodec[1], lavc_param_vcodec[2], lavc_param_vcodec[3]); /* FIXME!!! */
