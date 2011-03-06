@@ -28,6 +28,7 @@
 #include "config.h"
 #include "help_mp.h"
 #include "libavutil/avstring.h"
+#include "libavutil/common.h"
 #include "mp_msg.h"
 
 typedef struct {
@@ -809,8 +810,6 @@ static _item skinItem[] = {
     { "menu",       cmd_menu       }
 };
 
-static const int ITEMS = sizeof(skinItem) / sizeof(_item);
-
 char *strswap(char *in, char what, char whereof)
 {
     int i;
@@ -870,7 +869,7 @@ int skinRead(char *dname)
     unsigned char *ptmp;
     unsigned char command[32];
     unsigned char param[256];
-    int i;
+    unsigned int i;
 
     fn = setname(skinDirInHome, dname);
 
@@ -907,7 +906,7 @@ int skinRead(char *dname)
         cutItem(tmp, param, '=', 1);
         strlower(command);
 
-        for (i = 0; i < ITEMS; i++)
+        for (i = 0; i < FF_ARRAY_ELEMS(skinItem); i++)
             if (!strcmp(command, skinItem[i].name))
                 if (skinItem[i].func(param) != 0)
                     return -2;

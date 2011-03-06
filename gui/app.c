@@ -21,6 +21,8 @@
 #include "gui/skin/font.h"
 #include "interface.h"
 
+#include "libavutil/common.h"
+
 guiItems appMPlayer;
 
 static const evName evNames[] = {
@@ -73,8 +75,6 @@ static const evName evNames[] = {
     { evDropSubtitle,      "evDropSubtitle"      },
     { evSetAspect,         "evSetAspect"         }
 };
-
-static const int EVENTS = sizeof(evNames) / sizeof(evName);
 
 static void appClearItem(wItem *item)
 {
@@ -143,9 +143,9 @@ void appFreeStruct(void)
 
 int appFindMessage(unsigned char *str)
 {
-    int i;
+    unsigned int i;
 
-    for (i = 0; i < EVENTS; i++)
+    for (i = 0; i < FF_ARRAY_ELEMS(evNames); i++)
         if (!strcmp(evNames[i].name, str))
             return evNames[i].message;
 
