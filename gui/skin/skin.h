@@ -21,9 +21,9 @@
 
 #include "gui/bitmap.h"
 
-int skinBPRead(char *, txSample *);
-int skinRead(char *);
-char *strswap(char *, char, char);
-char *trim(char *);
+int skinBPRead(char *fname, txSample *bf);
+int skinRead(char *dname);
+char *strswap(char *in, char what, char whereof);
+char *trim(char *in);
 
 #endif /* MPLAYER_GUI_SKIN_H */

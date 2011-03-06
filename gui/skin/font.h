@@ -45,10 +45,10 @@ typedef struct {
     char name[MAX_FONT_NAME];
 } bmpFont;
 
-int fntFindID(char *);
+int fntFindID(char *name);
 void fntFreeFont(void);
-int fntRead(char *, char *);
-txSample *fntRender(wItem *, int, char *);
-int fntTextWidth(int, char *);
+int fntRead(char *path, char *fname);
+txSample *fntRender(wItem *item, int px, char *txt);
+int fntTextWidth(int id, char *str);
 
 #endif /* MPLAYER_GUI_FONT_H */

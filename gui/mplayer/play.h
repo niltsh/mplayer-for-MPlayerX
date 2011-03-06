@@ -21,8 +21,8 @@
 
 extern int mplGotoTheNext;
 
-void ChangeSkin(char *);
-void mplAbsSeek(float);
+void ChangeSkin(char *name);
+void mplAbsSeek(float s);
 void mplCurr(void);
 void mplEnd(void);
 void mplFullScreen(void);
@@ -30,8 +30,8 @@ void mplNext(void);
 void mplPause(void);
 void mplPlay(void);
 void mplPrev(void);
-void mplRelSeek(float);
-void mplSetFileName(char *, char *, int);
+void mplRelSeek(float s);
+void mplSetFileName(char *dir, char *name, int type);
 void mplState(void);
 
 #endif /* MPLAYER_GUI_PLAY_H */

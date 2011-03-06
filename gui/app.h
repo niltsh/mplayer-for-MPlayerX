@@ -192,10 +192,10 @@ typedef struct {
 
 extern guiItems appMPlayer;
 
-int appFindMessage(unsigned char *);
+int appFindMessage(unsigned char *str);
 void appFreeStruct(void);
 void appInitStruct(void);
-void btnModify(int, float);
-void btnSet(int, int);
+void btnModify(int event, float state);
+void btnSet(int event, int set);
 
 #endif /* MPLAYER_GUI_APP_H */
