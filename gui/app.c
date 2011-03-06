@@ -78,30 +78,11 @@ static const evName evNames[] = {
 
 static void appClearItem(wItem *item)
 {
-    item->type   = itNone;
-    item->x      = 0;
-    item->y      = 0;
-    item->width  = 0;
-    item->height = 0;
     bpFree(&item->Bitmap);
     bpFree(&item->Mask);
-    item->fontid = 0;
-    item->align  = fntAlignLeft;
     gfree((void **)&item->label);
-    item->pwidth    = 0;
-    item->pheight   = 0;
-    item->numphases = 0;
-    item->value     = 0;
-    item->message   = evNone;
-    item->R = 0;
-    item->G = 0;
-    item->B = 0;
     gfree((void **)&item->text);
-    item->textwidth = 0;
-    item->starttime = 0;
-    item->last_x    = 0;
-    item->pressed   = btnDisabled;
-    item->tmp       = 0;
+    memset(item, 0, sizeof(*item));
 }
 
 void appInitStruct(void)
