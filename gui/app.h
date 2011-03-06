@@ -194,7 +194,7 @@ extern guiItems appMPlayer;
 
 int appFindMessage(unsigned char *);
 void appFreeStruct(void);
-void appResetStruct(void);
+void appInitStruct(void);
 void btnModify(int, float);
 void btnSet(int, int);
 

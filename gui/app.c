@@ -104,7 +104,7 @@ static void appClearItem(wItem *item)
     item->tmp       = 0;
 }
 
-void appResetStruct(void)
+void appInitStruct(void)
 {
     appMPlayer.IndexOfMainItems = -1;
     appMPlayer.IndexOfBarItems  = -1;
@@ -137,7 +137,7 @@ void appFreeStruct(void)
     for (i = 0; i <= appMPlayer.IndexOfMenuItems; i++)
         appClearItem(&appMPlayer.menuItems[i]);
 
-    appResetStruct();
+    appInitStruct();
     fntFreeFont();
 }
 
