@@ -80,8 +80,8 @@ static void appClearItem(wItem *item)
 {
     bpFree(&item->Bitmap);
     bpFree(&item->Mask);
-    gfree((void **)&item->label);
-    gfree((void **)&item->text);
+    free(item->label);
+    free(item->text);
     memset(item, 0, sizeof(*item));
 }
 
