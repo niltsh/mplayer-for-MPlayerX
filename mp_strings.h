@@ -23,4 +23,4 @@
 
 char *mp_asprintf(const char *fmt, ...);
 
-#endif /* !MPLAYER_MP_STRINGS_H */
+#endif /* MPLAYER_MP_STRINGS_H */

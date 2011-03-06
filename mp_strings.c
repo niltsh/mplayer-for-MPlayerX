@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdio.h>
+
 #include "mp_strings.h"
 
 char *mp_asprintf(const char *fmt, ...)
