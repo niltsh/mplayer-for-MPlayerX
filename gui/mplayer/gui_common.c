@@ -38,6 +38,9 @@
 #include "access_mpcontext.h"
 #include "libavutil/avstring.h"
 
+static char * image_buffer;
+static int    image_width;
+
 static inline void TranslateFilename( int c,char * tmp,size_t tmplen )
 {
  int i;
@@ -183,9 +186,6 @@ calclengthmmmmss:
   }
  return trbuf;
 }
-
-static char * image_buffer = NULL;
-static int    image_width = 0;
 
 void PutImage( txSample * bf,int x,int y,int max,int ofs )
 {
