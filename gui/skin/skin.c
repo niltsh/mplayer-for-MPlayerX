@@ -155,7 +155,7 @@ static int cmd_section(char *in)
     if (!strcmp(in, "movieplayer"))
         skin = &appMPlayer;
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] sectionname: %s\n", in);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  section: %s\n", in);
 
     return 0;
 }
@@ -163,7 +163,19 @@ static int cmd_section(char *in)
 // end
 static int cmd_end(char *in)
 {
+    char *space, *name;
+
     (void)in;
+
+    if (window_name[0]) {
+        space = " ";
+        name  = window_name;
+    } else {
+        space = "";
+        name  = "section";
+    }
+
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  %send (%s)\n", space, name);
 
     if (strlen(window_name)) {
         window_name[0] = 0;
@@ -172,8 +184,6 @@ static int cmd_end(char *in)
         currSubItems   = NULL;
     } else
         skin = NULL;
-
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] end section\n");
 
     return 0;
 }
@@ -202,7 +212,7 @@ static int cmd_window(char *in)
     } else
         ERRORMESSAGE(MSGTR_UNKNOWNWINDOWTYPE);
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] window: %s\n", window_name);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]   window: %s\n", window_name);
 
     return 0;
 }
@@ -224,7 +234,10 @@ static int cmd_base(char *in)
     sx = cutItemToInt(in, ',', 3);
     sy = cutItemToInt(in, ',', 4);
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] base: %s x: %d y: %d ( %dx%d )\n", fname, x, y, sx, sy);
+    if (!strcmp(window_name, "menu"))
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s\n", fname);
+    else
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s %d,%d\n", fname, x, y);
 
     if (!strcmp(window_name, "main")) {
         skin->main.x    = x;
@@ -240,14 +253,14 @@ static int cmd_base(char *in)
         skin->main.width  = skin->main.Bitmap.Width;
         skin->main.height = skin->main.Bitmap.Height;
 
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", skin->main.width, skin->main.height);
+
 #ifdef CONFIG_XSHAPE
         Convert32to1(&skin->main.Bitmap, &skin->main.Mask, 0x00ff00ff);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  mask: %lux%lu\n", skin->main.Mask.Width, skin->main.Mask.Height);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", skin->main.Mask.Width, skin->main.Mask.Height);
 #else
         skin->main.Mask.Image = NULL;
 #endif
-
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  width: %d height: %d\n", skin->main.width, skin->main.height);
     }
 
     if (!strcmp(window_name, "sub")) {
@@ -269,7 +282,7 @@ static int cmd_base(char *in)
             skin->sub.height = sy;
         }
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  %d,%d %dx%d\n", skin->sub.x, skin->sub.y, skin->sub.width, skin->sub.height);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", skin->sub.width, skin->sub.height);
     }
 
     if (!strcmp(window_name, "menu")) {
@@ -285,14 +298,14 @@ static int cmd_base(char *in)
         skin->menuBase.width  = skin->menuBase.Bitmap.Width;
         skin->menuBase.height = skin->menuBase.Bitmap.Height;
 
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", skin->menuBase.width, skin->menuBase.height);
+
 #ifdef CONFIG_XSHAPE
         Convert32to1(&skin->menuBase.Bitmap, &skin->menuBase.Mask, 0x00ff00ff);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  mask: %lux%lu\n", skin->menuBase.Mask.Width, skin->menuBase.Mask.Height);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", skin->menuBase.Mask.Width, skin->menuBase.Mask.Height);
 #else
         skin->menuBase.Mask.Image = NULL;
 #endif
-
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  width: %d height: %d\n", skin->menuBase.width, skin->menuBase.height);
     }
 
     if (!strcmp(window_name, "playbar")) {
@@ -310,14 +323,14 @@ static int cmd_base(char *in)
         skin->bar.width  = skin->bar.Bitmap.Width;
         skin->bar.height = skin->bar.Bitmap.Height;
 
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", skin->bar.width, skin->bar.height);
+
 #ifdef CONFIG_XSHAPE
         Convert32to1(&skin->bar.Bitmap, &skin->bar.Mask, 0x00ff00ff);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  mask: %lux%lu\n", skin->bar.Mask.Width, skin->bar.Mask.Height);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", skin->bar.Mask.Width, skin->bar.Mask.Height);
 #else
         skin->bar.Mask.Image = NULL;
 #endif
-
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  width: %d height: %d\n", skin->bar.width, skin->bar.height);
     }
 
     return 0;
@@ -336,7 +349,7 @@ static int cmd_background(char *in)
     currSection->G = cutItemToInt(in, ',', 1);
     currSection->B = cutItemToInt(in, ',', 2);
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin]  background color is #%x%x%x.\n", currSection->R, currSection->G, currSection->B);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    background color: #%02x%02x%02x\n", currSection->R, currSection->G, currSection->B);
 
     return 0;
 }
@@ -369,13 +382,15 @@ static int cmd_button(char *in)
     currSubItems[*currSubItem].width  = sx;
     currSubItems[*currSubItem].height = sy;
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] button: fname: %s\n", fname);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  x: %d y: %d sx: %d sy: %d\n", x, y, sx, sy);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    button image: %s %d,%d\n", fname, x, y);
 
     if ((currSubItems[*currSubItem].message = appFindMessage(msg)) == -1) {
         ERRORMESSAGE(MSGTR_SKIN_BITMAP_UnknownMessage, msg);
         return 0;
     }
+
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", msg, currSubItems[*currSubItem].message);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     size: %dx%d\n", sx, sy);
 
     currSubItems[*currSubItem].pressed = btnReleased;
 
@@ -383,8 +398,6 @@ static int cmd_button(char *in)
         currSubItems[*currSubItem].pressed = btnDisabled;
 
     currSubItems[*currSubItem].tmp = 1;
-
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", currSubItems[*currSubItem].message);
 
     currSubItems[*currSubItem].Bitmap.Image = NULL;
 
@@ -394,6 +407,8 @@ static int cmd_button(char *in)
 
         if (skinBPRead(tmp, &currSubItems[*currSubItem].Bitmap) != 0)
             return 1;
+
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     (bitmap: %lux%lu)\n", currSubItems[*currSubItem].Bitmap.Width, currSubItems[*currSubItem].Bitmap.Height);
     }
 
     return 0;
@@ -419,7 +434,7 @@ static int cmd_selected(char *in)
     av_strlcpy(tmp, path, sizeof(tmp));
     av_strlcat(tmp, fname, sizeof(tmp));
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] selected: %s\n", fname);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image selected: %s\n", fname);
 
     if (skinBPRead(tmp, &skin->menuSelected.Bitmap) != 0)
         return 1;
@@ -427,7 +442,7 @@ static int cmd_selected(char *in)
     skin->menuSelected.width  = skin->menuSelected.Bitmap.Width;
     skin->menuSelected.height = skin->menuSelected.Bitmap.Height;
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  width: %d height: %d\n", skin->menuSelected.width, skin->menuSelected.height);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", skin->menuSelected.width, skin->menuSelected.height);
 
     return 0;
 }
@@ -459,13 +474,12 @@ static int cmd_menu(char *in)
     skin->menuItems[skin->IndexOfMenuItems].width  = sx;
     skin->menuItems[skin->IndexOfMenuItems].height = sy;
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] menuitem: %d\n", skin->IndexOfMenuItems);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  x: %d y: %d sx: %d sy: %d\n", x, y, sx, sy);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    item #%d: %d,%d %dx%d\n", skin->IndexOfMenuItems, x, y, sx, sy);
 
     if ((skin->menuItems[skin->IndexOfMenuItems].message = message) == -1)
         ERRORMESSAGE(MSGTR_SKIN_BITMAP_UnknownMessage, tmp);
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", skin->menuItems[skin->IndexOfMenuItems].message);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", tmp, skin->menuItems[skin->IndexOfMenuItems].message);
 
     skin->menuItems[skin->IndexOfMenuItems].Bitmap.Image = NULL;
     return 0;
@@ -500,12 +514,10 @@ static int cmd_hpotmeter(char *in)
 
     message = appFindMessage(tmp);
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] h/v potmeter: pointer filename: '%s'\n", pfname);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  pointer size is %dx%d\n", pwidth, pheight);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  phasebitmaps filename: '%s'\n", phfname);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]   position: %d,%d %dx%d\n", x, y, sx, sy);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]   default value: %d\n", d);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", message);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    h/v potmeter image: %s %d,%d %dx%d\n", phfname, x, y, sx, sy);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     button image: %s %dx%d\n", pfname, pwidth, pheight);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     numphases: %d, default: %d%%\n", ph, d);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", tmp, message);
 
     (*currSubItem)++;
     item               = &currSubItems[*currSubItem];
@@ -528,6 +540,8 @@ static int cmd_hpotmeter(char *in)
 
         if (skinBPRead(tmp, &item->Bitmap) != 0)
             return 1;
+
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     (potmeter bitmap: %lux%lu)\n", item->Bitmap.Width, item->Bitmap.Height);
     }
 
     item->Mask.Image = NULL;
@@ -538,6 +552,8 @@ static int cmd_hpotmeter(char *in)
 
         if (skinBPRead(tmp, &item->Mask) != 0)
             return 1;
+
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     (button bitmap: %lux%lu)\n", item->Mask.Width, item->Mask.Height);
     }
 
     return 0;
@@ -579,11 +595,9 @@ static int cmd_potmeter(char *in)
 
     message = appFindMessage(tmp);
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] potmeter: phases filename: '%s'\n", phfname);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  position: %d,%d %dx%d\n", x, y, sx, sy);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  numphases: %d\n", ph);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  default value: %d\n", d);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", message);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    potmeter image: %s %d,%d %dx%d\n", phfname, x, y, sx, sy);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     numphases: %d, default: %d%%\n", ph, d);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", tmp, message);
 
     (*currSubItem)++;
     item               = &currSubItems[*currSubItem];
@@ -603,6 +617,8 @@ static int cmd_potmeter(char *in)
 
         if (skinBPRead(tmp, &item->Bitmap) != 0)
             return 1;
+
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     (bitmap: %lux%lu)\n", item->Bitmap.Width, item->Bitmap.Height);
     }
 
     return 0;
@@ -621,9 +637,6 @@ static int cmd_font(char *in)
     CHECK("menu");
 
     cutItem(in, name, ',', 0);
-
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] font\n");
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  name: %s\n", name);
 
     (*currSubItem)++;
     item         = &currSubItems[*currSubItem];
@@ -648,6 +661,8 @@ static int cmd_font(char *in)
         return 1;
     }
 
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    font: %s (#%d)\n", name, fntFindID(name));
+
     return 0;
 }
 
@@ -665,11 +680,14 @@ static int cmd_slabel(char *in)
     CHECK("sub");
     CHECK("menu");
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] slabel\n");
-
     x = cutItemToInt(in, ',', 0);
     y = cutItemToInt(in, ',', 1);
     cutItem(in, sid, ',', 2);
+    cutItem(in, tmp, ',', 3);
+    cutItem(tmp, tmp, '"', 1);
+
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    slabel: \"%s\"\n", tmp);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     pos: %d,%d\n", x, y);
 
     id = fntFindID(sid);
 
@@ -678,12 +696,7 @@ static int cmd_slabel(char *in)
         return 1;
     }
 
-    cutItem(in, tmp, ',', 3);
-    cutItem(tmp, tmp, '"', 1);
-
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  pos: %d,%d\n", x, y);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  id: %s ( %d )\n", sid, id);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  str: '%s'\n", tmp);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     font: %s (#%d)\n", sid, id);
 
     (*currSubItem)++;
     item         = &currSubItems[*currSubItem];
@@ -718,13 +731,17 @@ static int cmd_dlabel(char *in)
     CHECK("sub");
     CHECK("menu");
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] dlabel\n");
-
     x  = cutItemToInt(in, ',', 0);
     y  = cutItemToInt(in, ',', 1);
     sx = cutItemToInt(in, ',', 2);
     a  = cutItemToInt(in, ',', 3);
     cutItem(in, sid, ',', 4);
+    cutItem(in, tmp, ',', 5);
+    cutItem(tmp, tmp, '"', 1);
+
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    dlabel: \"%s\"\n", tmp);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     pos: %d,%d\n", x, y);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     width: %d, align: %d\n", sx, a);
 
     id = fntFindID(sid);
 
@@ -733,12 +750,7 @@ static int cmd_dlabel(char *in)
         return 1;
     }
 
-    cutItem(in, tmp, ',', 5);
-    cutItem(tmp, tmp, '"', 1);
-
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  pos: %d,%d width: %d align: %d\n", x, y, sx, a);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  id: %s ( %d )\n", sid, id);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  str: '%s'\n", tmp);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     font: %s (#%d)\n", sid, id);
 
     (*currSubItem)++;
     item         = &currSubItems[*currSubItem];
@@ -772,8 +784,6 @@ static int cmd_decoration(char *in)
     CHECK("menu");
     CHECK("playbar");
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] window decoration is %s\n", in);
-
     strlower(in);
     cutItem(in, tmp, ',', 0);
 
@@ -787,7 +797,7 @@ static int cmd_decoration(char *in)
     else
         skin->mainDecoration = 1;
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n[skin] window decoration is %s\n", (skin->mainDecoration ? "enabled" : "disabled"));
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    decoration: %s\n", tmp);
 
     return 0;
 }
@@ -882,7 +892,7 @@ int skinRead(char *dname)
         }
     }
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin] file: %s\n", fn);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin] configuration file: %s\n", fn);
 
     appFreeStruct();
 
