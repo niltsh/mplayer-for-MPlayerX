@@ -465,7 +465,7 @@ static int cmd_menu(char *in)
     if ((skin->menuItems[skin->IndexOfMenuItems].message = message) == -1)
         ERRORMESSAGE(MSGTR_SKIN_BITMAP_UnknownMessage, tmp);
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", skin->mainItems[skin->IndexOfMainItems].message);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  message: %d\n", skin->menuItems[skin->IndexOfMenuItems].message);
 
     skin->menuItems[skin->IndexOfMenuItems].Bitmap.Image = NULL;
     return 0;
