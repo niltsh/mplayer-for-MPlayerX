@@ -33,13 +33,11 @@
 
 #include "stream/stream.h"
 #include "mixer.h"
-
+#include "osdep/timer.h"
 #include "libmpdemux/stheader.h"
 #include "codec-cfg.h"
 #include "access_mpcontext.h"
 #include "libavutil/avstring.h"
-
-unsigned int GetTimerMS( void );
 
 static inline void TranslateFilename( int c,char * tmp,size_t tmplen )
 {
