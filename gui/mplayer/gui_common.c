@@ -18,7 +18,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <gtk/gtk.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <inttypes.h>
@@ -291,10 +290,10 @@ void Render( wsTWindow * window,wItem * Items,int nrItems,char * db,int size )
            int x;
            unsigned int d;
            char * t = Translate( item->label );
-           if ( g_strcmp0( item->text, t ) != 0 )
+           if ( !item->text || ( strcmp( item->text, t ) != 0 ) )
             {
-             g_free( item->text );
-             item->text = g_strdup( t );
+             free( item->text );
+             item->text = strdup( t );
              item->textwidth = fntTextWidth( item->fontid, t );
              item->starttime = GetTimerMS();
              item->last_x = 0;
