@@ -321,13 +321,13 @@ void mplCurr(void)
 #ifdef CONFIG_DVDREAD
     case STREAMTYPE_DVD:
         break;
-
 #endif
+
 #ifdef CONFIG_VCD
     case STREAMTYPE_VCD:
         break;
-
 #endif
+
     default:
 
         curr = gtkSet(gtkGetCurrPlItem, 0, NULL);
@@ -371,8 +371,8 @@ void mplPrev(void)
 
         guiIntfStruct.Track = guiIntfStruct.DVD.current_title;
         break;
-
 #endif
+
 #ifdef CONFIG_VCD
     case STREAMTYPE_VCD:
         if (--guiIntfStruct.Track == 0) {
@@ -380,8 +380,8 @@ void mplPrev(void)
             stop = 1;
         }
         break;
-
 #endif
+
     default:
 
         prev = gtkSet(gtkGetPrevPlItem, 0, NULL);
@@ -425,8 +425,8 @@ void mplNext(void)
 
         guiIntfStruct.Track = guiIntfStruct.DVD.current_title;
         break;
-
 #endif
+
 #ifdef CONFIG_VCD
     case STREAMTYPE_VCD:
         if (++guiIntfStruct.Track > guiIntfStruct.VCDTracks) {
@@ -434,8 +434,8 @@ void mplNext(void)
             stop = 1;
         }
         break;
-
 #endif
+
     default:
 
         next = gtkSet(gtkGetNextPlItem, 0, NULL);
