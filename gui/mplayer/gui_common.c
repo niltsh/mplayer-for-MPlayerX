@@ -18,35 +18,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include <gtk/gtk.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <inttypes.h>
-#include <sys/stat.h>
-#include <unistd.h>
 #include <string.h>
 
-#include "gui/app.h"
+#include "gui_common.h"
+#include "gui/interface.h"
 #include "gui/skin/font.h"
-#include "gui/skin/skin.h"
-#include "gui/wm/ws.h"
 
 #include "config.h"
 #include "help_mp.h"
-#include "libvo/x11_common.h"
 
 #include "stream/stream.h"
 #include "mixer.h"
-#include "sub/sub.h"
 
-#include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"
 #include "codec-cfg.h"
 #include "access_mpcontext.h"
 #include "libavutil/avstring.h"
-
-#include "gui_common.h"
-#include "play.h"
-#include "widgets.h"
 
 unsigned int GetTimerMS( void );
 

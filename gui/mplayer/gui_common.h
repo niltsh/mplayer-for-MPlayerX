@@ -19,15 +19,7 @@
 #ifndef MPLAYER_GUI_GUI_COMMON_H
 #define MPLAYER_GUI_GUI_COMMON_H
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <inttypes.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
 #include "gui/app.h"
-#include "gui/bitmap.h"
-#include "gui/wm/ws.h"
 
 #define DELAYTIME 2500   // in milliseconds
 
