@@ -406,12 +406,12 @@ void Render(wsTWindow *window, wItem *Items, int nrItems, char *db, int size)
                 SimplePotmeterPutImage(&item->Bitmap, item->x, item->y, item->value / 100.0f);
             else
                 PutImage(&item->Bitmap, item->x, item->y, item->numphases, (item->numphases - 1) * (item->value / 100.0f));
-            PutImage(&item->Mask, item->x + (int)((item->width - item->pwidth) * (item->value / 100.0f)), item->y, 3, ofs);
+            PutImage(&item->Mask, item->x + (item->width - item->pwidth) * (item->value / 100.0f), item->y, 3, ofs);
             break;
 
         case itVPotmeter:
             PutImage(&item->Bitmap, item->x, item->y, item->numphases, item->numphases * (1.0f - item->value / 100.0f));
-            PutImage(&item->Mask, item->x, item->y + (int)((item->height - item->pheight) * (1.0f - item->value / 100.0f)), 3, ofs);
+            PutImage(&item->Mask, item->x, item->y + (item->height - item->pheight) * (1.0f - item->value / 100.0f), 3, ofs);
             break;
 
         case itSLabel:
