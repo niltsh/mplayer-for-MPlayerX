@@ -163,9 +163,8 @@ static int cmd_section(char *in)
 // end
 static int cmd_end(char *in)
 {
+#ifdef MP_DEBUG
     char *space, *name;
-
-    (void)in;
 
     if (window_name[0]) {
         space = " ";
@@ -174,6 +173,9 @@ static int cmd_end(char *in)
         space = "";
         name  = "section";
     }
+#endif
+
+    (void)in;
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  %send (%s)\n", space, name);
 
@@ -234,12 +236,9 @@ static int cmd_base(char *in)
     sx = cutItemToInt(in, ',', 3);
     sy = cutItemToInt(in, ',', 4);
 
-    if (!strcmp(window_name, "menu"))
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s\n", fname);
-    else
+    if (!strcmp(window_name, "main")) {
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s %d,%d\n", fname, x, y);
 
-    if (!strcmp(window_name, "main")) {
         skin->main.x    = x;
         skin->main.y    = y;
         skin->main.type = itBase;
@@ -264,6 +263,8 @@ static int cmd_base(char *in)
     }
 
     if (!strcmp(window_name, "sub")) {
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s %d,%d\n", fname, x, y);
+
         skin->sub.type = itBase;
 
         av_strlcpy(tmp, path, sizeof(tmp));
@@ -286,6 +287,8 @@ static int cmd_base(char *in)
     }
 
     if (!strcmp(window_name, "menu")) {
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s\n", fname);
+
         skin->menuIsPresent = 1;
         skin->menuBase.type = itBase;
 
@@ -309,6 +312,8 @@ static int cmd_base(char *in)
     }
 
     if (!strcmp(window_name, "playbar")) {
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s %d,%d\n", fname, x, y);
+
         skin->barIsPresent = 1;
         skin->bar.x    = x;
         skin->bar.y    = y;
