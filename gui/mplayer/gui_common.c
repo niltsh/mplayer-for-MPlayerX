@@ -109,12 +109,12 @@ static void TranslateFilename(int c, char *tmp, size_t tmplen)
 /* Unsafe!  Pass only null-terminated strings as (char *)str. */
 char *Translate(char *str)
 {
-    mixer_t *mixer = mpctx_get_mixer(guiIntfStruct.mpcontext);
     static char trbuf[512];
     char tmp[512];
     int i, c;
     int t;
     int strsize = 0;
+    mixer_t *mixer;
 
     memset(trbuf, 0, 512);
     memset(tmp, 0, 128);
@@ -244,6 +244,8 @@ calclengthmmmmss:
                 break;
 
             case 'a':
+
+                mixer = mpctx_get_mixer(guiIntfStruct.mpcontext);
 
                 if (mixer->muted) {
                     av_strlcat(trbuf, "n", sizeof(trbuf));
