@@ -87,6 +87,7 @@ static void TranslateFilename(int c, char *tmp, size_t tmplen)
 
     default:
         av_strlcpy(tmp, MSGTR_NoMediaOpened, tmplen);
+        break;
     }
 
     if (c) {
