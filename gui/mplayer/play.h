@@ -22,7 +22,7 @@
 extern int mplGotoTheNext;
 
 void ChangeSkin(char *name);
-void mplAbsSeek(float s);
+void mplAbsSeek(float sec);
 void mplCurr(void);
 void mplEnd(void);
 void mplFullScreen(void);
@@ -30,7 +30,7 @@ void mplNext(void);
 void mplPause(void);
 void mplPlay(void);
 void mplPrev(void);
-void mplRelSeek(float s);
+void mplRelSeek(float percent);
 void mplSetFileName(char *dir, char *name, int type);
 void mplState(void);
 

@@ -179,18 +179,18 @@ void mplState(void)
     }
 }
 
-void mplRelSeek(float s)
+void mplRelSeek(float sec)
 {
-    rel_seek_secs = s;   // -+s
+    rel_seek_secs = sec;
     abs_seek_pos  = 0;
 }
 
-void mplAbsSeek(float s)
+void mplAbsSeek(float percent)
 {
     if (guiIntfStruct.StreamType == STREAMTYPE_STREAM)
         return;
 
-    rel_seek_secs = s / 100.0;   // 0.0..100.0
+    rel_seek_secs = percent / 100.0;
     abs_seek_pos  = 3;
 }
 
