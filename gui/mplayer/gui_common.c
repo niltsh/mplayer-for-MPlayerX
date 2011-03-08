@@ -107,24 +107,22 @@ static void TranslateFilename(int c, char *tmp, size_t tmplen)
     }
 }
 
-/* Unsafe!  Pass only null-terminated strings as (char *)str. */
 char *Translate(char *str)
 {
     static char trbuf[512];
     char tmp[512];
-    int i, c;
+    unsigned int i, c;
     int t;
-    int strsize = 0;
     mixer_t *mixer;
 
-    memset(trbuf, 0, 512);
-    memset(tmp, 0, 128);
-    strsize = strlen(str);
+    *trbuf = 0;
 
-    for (c = 0, i = 0; i < strsize; i++) {
+    for (c = 0, i = 0; i < strlen(str); i++) {
         if (str[i] != '$') {
+            if (c + 1 < sizeof(trbuf)) {
             trbuf[c++] = str[i];
             trbuf[c]   = 0;
+            }
         } else {
             switch (str[++i]) {
             case 't':
