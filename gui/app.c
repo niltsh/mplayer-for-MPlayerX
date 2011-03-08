@@ -148,10 +148,10 @@ void btnModify(int event, float state)
             case itPotmeter:
             case itVPotmeter:
             case itHPotmeter:
-                if (state < 0.0)
-                    state = 0.0;
-                if (state > 100.0)
-                    state = 100.0;
+                if (state < 0.0f)
+                    state = 0.0f;
+                if (state > 100.0f)
+                    state = 100.0f;
                 appMPlayer.mainItems[i].value = state;
                 break;
             }
@@ -169,10 +169,10 @@ void btnModify(int event, float state)
             case itPotmeter:
             case itVPotmeter:
             case itHPotmeter:
-                if (state < 0.0)
-                    state = 0.0;
-                if (state > 100.0)
-                    state = 100.0;
+                if (state < 0.0f)
+                    state = 0.0f;
+                if (state > 100.0f)
+                    state = 100.0f;
                 appMPlayer.barItems[i].value = state;
                 break;
             }
