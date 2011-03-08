@@ -431,9 +431,12 @@ void Render(wsTWindow *window, wItem *Items, int nrItems, char *db, int size)
             break;
 
         case itSLabel:
+            if (item->width == -1)
+                item->width = fntTextWidth(item->fontid, item->label);
             image = fntRender(item, 0, item->label);
             if (image)
                 PutImage(image, item->x, item->y, 1, 0);
+            break;
 
         case itDLabel:
         {
