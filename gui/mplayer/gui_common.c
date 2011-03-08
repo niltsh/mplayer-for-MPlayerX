@@ -120,8 +120,8 @@ char *Translate(char *str)
     for (c = 0, i = 0; i < strlen(str); i++) {
         if (str[i] != '$') {
             if (c + 1 < sizeof(trbuf)) {
-            trbuf[c++] = str[i];
-            trbuf[c]   = 0;
+                trbuf[c++] = str[i];
+                trbuf[c]   = 0;
             }
         } else {
             switch (str[++i]) {
