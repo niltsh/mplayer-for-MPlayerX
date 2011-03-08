@@ -277,9 +277,9 @@ void Render( wsTWindow * window,wItem * Items,int nrItems,char * db,int size )
           PutImage( &item->Bitmap,
 	    item->x,item->y,
 	    item->numphases,
-	    item->numphases * ( 1. - item->value / 100.0f ) );
+	    item->numphases * ( 1.0f - item->value / 100.0f ) );
           PutImage( &item->Mask,
-	    item->x,item->y + (int)( ( item->height - item->pheight ) * ( 1. - item->value / 100.0f ) ),
+	    item->x,item->y + (int)( ( item->height - item->pheight ) * ( 1.0f - item->value / 100.0f ) ),
 	    3,ofs );
           break;
      case itSLabel:
