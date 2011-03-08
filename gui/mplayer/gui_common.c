@@ -412,22 +412,22 @@ void Render(wsTWindow *window, wItem *Items, int nrItems, char *db, int size)
 
         case itPotmeter:
             if (item->numphases == 1)
-                SimplePotmeterPutImage(&item->Bitmap, item->x, item->y, item->value / 100.0f);
+                SimplePotmeterPutImage(&item->Bitmap, item->x, item->y, item->value / 100.0);
             else
-                PutImage(&item->Bitmap, item->x, item->y, item->numphases, (item->numphases - 1) * (item->value / 100.0f));
+                PutImage(&item->Bitmap, item->x, item->y, item->numphases, (item->numphases - 1) * (item->value / 100.0));
             break;
 
         case itHPotmeter:
             if (item->numphases == 1)
-                SimplePotmeterPutImage(&item->Bitmap, item->x, item->y, item->value / 100.0f);
+                SimplePotmeterPutImage(&item->Bitmap, item->x, item->y, item->value / 100.0);
             else
-                PutImage(&item->Bitmap, item->x, item->y, item->numphases, (item->numphases - 1) * (item->value / 100.0f));
-            PutImage(&item->Mask, item->x + (item->width - item->pwidth) * (item->value / 100.0f), item->y, 3, ofs);
+                PutImage(&item->Bitmap, item->x, item->y, item->numphases, (item->numphases - 1) * (item->value / 100.0));
+            PutImage(&item->Mask, item->x + (item->width - item->pwidth) * (item->value / 100.0), item->y, 3, ofs);
             break;
 
         case itVPotmeter:
-            PutImage(&item->Bitmap, item->x, item->y, item->numphases, item->numphases * (1.0f - item->value / 100.0f));
-            PutImage(&item->Mask, item->x, item->y + (item->height - item->pheight) * (1.0f - item->value / 100.0f), 3, ofs);
+            PutImage(&item->Bitmap, item->x, item->y, item->numphases, item->numphases * (1.0 - item->value / 100.0));
+            PutImage(&item->Mask, item->x, item->y + (item->height - item->pheight) * (1.0 - item->value / 100.0), 3, ofs);
             break;
 
         case itSLabel:
