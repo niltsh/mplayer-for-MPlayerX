@@ -190,7 +190,7 @@ void mplAbsSeek(float s)
     if (guiIntfStruct.StreamType == STREAMTYPE_STREAM)
         return;
 
-    rel_seek_secs = 0.01 * s;   // 0.0..100.0
+    rel_seek_secs = 0.01f * s;   // 0.0..100.0
     abs_seek_pos  = 3;
 }
 
