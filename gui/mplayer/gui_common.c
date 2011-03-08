@@ -387,7 +387,20 @@ void Render(wsTWindow *window, wItem *Items, int nrItems, char *db, int size)
 
     for (i = 0; i < nrItems + 1; i++) {
         item = &Items[i];
-        ofs  = (item->pressed == btnPressed ? 0 : (item->pressed == btnReleased ? 1 : 2));
+
+        switch (item->pressed) {
+        case btnPressed:
+            ofs = 0;
+            break;
+
+        case btnReleased:
+            ofs = 1;
+            break;
+
+        default:
+            ofs = 2;
+            break;
+        }
 
         switch (item->type) {
         case itButton:
