@@ -41,7 +41,7 @@
 static char * image_buffer;
 static int    image_width;
 
-static inline void TranslateFilename( int c,char * tmp,size_t tmplen )
+static void TranslateFilename( int c,char * tmp,size_t tmplen )
 {
  int i;
  char * p;
