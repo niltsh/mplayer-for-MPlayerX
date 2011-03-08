@@ -435,14 +435,14 @@ void Render(wsTWindow *window, wItem *Items, int nrItems, char *db, int size)
 
             d = GetTimerMS() - item->starttime;
 
-            if (d < DELAYTIME)
+            if (d < DLABEL_DELAY)
                 x = item->last_x;                     // don't scroll yet
             else {
                 int l;
                 char c[2];
 
                 l    = (item->textwidth ? item->textwidth : item->width);
-                x    = l - ((d - DELAYTIME) / 20) % l - 1;
+                x    = l - ((d - DLABEL_DELAY) / 20) % l - 1;
                 c[0] = *item->text;
                 c[1] = '\0';
 
