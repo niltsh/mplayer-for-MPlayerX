@@ -23,9 +23,6 @@
 
 #define DLABEL_DELAY 2500   // in milliseconds
 
-void PutImage(txSample *bf, int x, int y, int max, int ofs);
 void Render(wsTWindow *window, wItem *Items, int nrItems, char *db, int size);
-void SimplePotmeterPutImage(txSample *bf, int x, int y, float frac);
-char *Translate(char *str);
 
 #endif /* MPLAYER_GUI_GUI_COMMON_H */
