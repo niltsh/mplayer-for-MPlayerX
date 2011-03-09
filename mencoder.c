@@ -300,7 +300,7 @@ static int dec_audio(sh_audio_t *sh_audio,unsigned char* buffer,int total){
 		fast_memcpy(buffer+size,sh_audio->a_out_buffer,len);
 		sh_audio->a_out_buffer_len-=len; size+=len;
 		if(sh_audio->a_out_buffer_len>0)
-		    fast_memcpy(sh_audio->a_out_buffer,&sh_audio->a_out_buffer[len],sh_audio->a_out_buffer_len);
+		    memmove(sh_audio->a_out_buffer,&sh_audio->a_out_buffer[len],sh_audio->a_out_buffer_len);
     }
     return size;
 }
@@ -1382,7 +1382,7 @@ if(sh_audio){
 	    mux_a->wf->nAvgBytesPerSec=0.5f+(double)mux_a->size/a_muxer_time; // avg bps (VBR)
 	if(mux_a->buffer_len>=len){
 	    mux_a->buffer_len-=len;
-	    fast_memcpy(mux_a->buffer,mux_a->buffer+len,mux_a->buffer_len);
+	    memmove(mux_a->buffer,mux_a->buffer+len,mux_a->buffer_len);
 	}
 
 
