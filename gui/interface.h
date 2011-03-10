@@ -168,7 +168,6 @@ int  guiGetEvent( int type,void * arg );
 void guiEventHandling( void );
 void guiLoadFont( void );
 void guiLoadSubtitle( char * name );
-void guiMessageBox(int level, char * str);
 
 typedef struct plItem
 {
