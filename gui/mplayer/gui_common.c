@@ -26,7 +26,7 @@
 #include "gui/skin/font.h"
 
 #include "access_mpcontext.h"
-#include "codec-cfg.h"             // this should be in libmpdemux/stheader.h
+#include "codec-cfg.h"
 #include "config.h"
 #include "help_mp.h"
 #include "libavutil/avstring.h"
