@@ -18,8 +18,8 @@
 
 #include "app.h"
 
-#include "gui/skin/font.h"
 #include "interface.h"
+#include "skin/font.h"
 
 #include "libavutil/common.h"
 
