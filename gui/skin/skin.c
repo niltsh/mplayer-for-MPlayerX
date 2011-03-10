@@ -179,7 +179,7 @@ static int cmd_end(char *in)
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  %send (%s)\n", space, name);
 
-    if (strlen(window_name)) {
+    if (window_name[0]) {
         window_name[0] = 0;
         currSection    = NULL;
         currSubItem    = NULL;
@@ -711,13 +711,12 @@ static int cmd_slabel(char *in)
     item->y      = y;
     item->width  = -1;
     item->height = -1;
+    item->label  = strdup(tmp);
 
-    if ((item->label = malloc(strlen(tmp) + 1)) == NULL) {
+    if (!item->label) {
         ERRORMESSAGE(MSGTR_SKIN_FONT_NotEnoughtMemory);
         return 1;
     }
-
-    strcpy(item->label, tmp);
 
     return 0;
 }
@@ -766,13 +765,12 @@ static int cmd_dlabel(char *in)
     item->y      = y;
     item->width  = sx;
     item->height = -1;
+    item->label  = strdup(tmp);
 
-    if ((item->label = malloc(strlen(tmp) + 1)) == NULL) {
+    if (!item->label) {
         ERRORMESSAGE(MSGTR_SKIN_FONT_NotEnoughtMemory);
         return 1;
     }
-
-    strcpy(item->label, tmp);
 
     return 0;
 }
@@ -829,10 +827,10 @@ char *strswap(char *in, char what, char whereof)
 {
     int i;
 
-    if (strlen(in) == 0)
+    if (!*in)
         return NULL;
 
-    for (i = 0; i < (int)strlen(in); i++)
+    for (i = 0; in[i]; i++)
         if (in[i] == what)
             in[i] = whereof;
 
@@ -843,7 +841,7 @@ char *trim(char *in)
 {
     int c = 0, id = 0, i;
 
-    if (strlen(in) == 0)
+    if (!*in)
         return NULL;
 
     while (c != (int)strlen(in)) {

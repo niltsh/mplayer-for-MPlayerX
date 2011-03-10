@@ -91,7 +91,7 @@ static void TranslateFilename(int c, char *tmp, size_t tmplen)
     }
 
     if (c) {
-        for (i = 0; i < (int)strlen(tmp); i++) {
+        for (i = 0; tmp[i]; i++) {
             int t = 0;
 
             if (c == 1)
