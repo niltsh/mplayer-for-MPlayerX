@@ -37,6 +37,7 @@
 #include "libvo/x11_common.h"
 #include "stream/stream.h"
 #include "libmpdemux/demuxer.h"
+#include "sub/font_load.h"
 
 #include "cfg.h"
 #include "app.h"

@@ -37,6 +37,7 @@
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"
 #include "libmpcodecs/dec_video.h"
+#include "sub/font_load.h"
 
 #include "gui/app.h"
 #include "gui/cfg.h"
