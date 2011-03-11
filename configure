@@ -4411,17 +4411,23 @@ else
 fi
 echores "$_vdpau"
 
+
 echocheck "CrystalHD"
 if test "$_crystalhd" = auto ; then
-  _crystalhd=yes
+  _crystalhd=no
+  statement_check_broken libcrystalhd/bc_dts_types.h libcrystalhd/libcrystalhd_if.h 'DtsGetVersion(0, 0, 0)' -lcrystalhd $_ld_lm && _crystalhd=yes
 fi
 if test "$_crystalhd" = yes ; then
+  extra_ldflags="$extra_ldflags -lcrystalhd"
   def_crystalhd='#define CONFIG_CRYSTALHD 1'
+  codecmodules="crystalhd $codecmodules"
 else
   def_crystalhd='#define CONFIG_CRYSTALHD 0'
+  nocodecmodules="crystalhd $nocodecmodules"
   libavdecoders=$(echo $libavdecoders | sed -e s/H264_CRYSTALHD_DECODER// -e s/MPEG4_CRYSTALHD_DECODER// -e s/MPEG2_CRYSTALHD_DECODER// -e s/MSMPEG4_CRYSTALHD_DECODER// -e s/VC1_CRYSTALHD_DECODER// -e s/WMV3_CRYSTALHD_DECODER//)
 fi
-echores "$_CrystalHD"
+echores "$_crystalhd"
+
 
 echocheck "Xinerama"
 if test "$_xinerama" = auto ; then
