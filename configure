@@ -476,7 +476,6 @@ Video output:
   --enable-xv              enable Xv video output [autodetect]
   --enable-xvmc            enable XvMC acceleration [disable]
   --enable-vdpau           enable VDPAU acceleration [autodetect]
-  --enable-crystalhd       enable CrystalHD acceleration (incomplete) [disable]
   --enable-vm              enable XF86VidMode support [autodetect]
   --enable-xinerama        enable Xinerama support [autodetect]
   --enable-x11             enable X11 video output [autodetect]
@@ -635,6 +634,8 @@ _libopencore_amrwb=auto
 libopenjpeg=auto
 libavdecoders_all=$(sed -n 's/^[^#]*DEC.*(.*, *\(.*\)).*/\1_decoder/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
 libavdecoders=$(echo $libavdecoders_all | sed -e 's/ LIB[A-Z0-9_]*_DECODER//g')
+# temporary hack until we have proper crystalhd support
+libavdecoders=$(echo $libavdecoders | sed -e s/H264_CRYSTALHD_DECODER// -e s/MPEG4_CRYSTALHD_DECODER// -e s/MPEG2_CRYSTALHD_DECODER// -e s/MSMPEG4_CRYSTALHD_DECODER// -e s/VC1_CRYSTALHD_DECODER// -e s/WMV3_CRYSTALHD_DECODER//)
 libavencoders_all=$(sed -n 's/^[^#]*ENC.*(.*, *\(.*\)).*/\1_encoder/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
 libavencoders=$(echo $libavencoders_all | sed -e 's/ LIB[A-Z0-9_]*_ENCODER//g')
 libavparsers_all=$(sed -n 's/^[^#]*PARSER.*(.*, *\(.*\)).*/\1_parser/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
@@ -660,7 +661,6 @@ _dga2=auto
 _xv=auto
 _xvmc=no  #auto when complete
 _vdpau=auto
-_crystalhd=no
 _sdl=auto
 _kva=auto
 _direct3d=auto
@@ -1001,8 +1001,6 @@ for ac_option do
   --disable-xvmc)       _xvmc=no        ;;
   --enable-vdpau)       _vdpau=yes      ;;
   --disable-vdpau)      _vdpau=no       ;;
-  --enable-crystalhd)   _crystalhd=yes  ;;
-  --disable-crystalhd)  _crystalhd=no   ;;
   --enable-sdl)         _sdl=yes        ;;
   --disable-sdl)        _sdl=no         ;;
   --enable-kva)         _kva=yes        ;;
@@ -4410,23 +4408,6 @@ else
   libavdecoders=$(echo $libavdecoders | sed -e s/MPEG_VDPAU_DECODER// -e s/MPEG1_VDPAU_DECODER// -e s/H264_VDPAU_DECODER// -e s/WMV3_VDPAU_DECODER// -e s/VC1_VDPAU_DECODER// -e s/MPEG4_VDPAU_DECODER//)
 fi
 echores "$_vdpau"
-
-
-echocheck "CrystalHD"
-if test "$_crystalhd" = auto ; then
-  _crystalhd=no
-  statement_check_broken libcrystalhd/bc_dts_types.h libcrystalhd/libcrystalhd_if.h 'DtsGetVersion(0, 0, 0)' -lcrystalhd $_ld_lm && _crystalhd=yes
-fi
-if test "$_crystalhd" = yes ; then
-  extra_ldflags="$extra_ldflags -lcrystalhd"
-  def_crystalhd='#define CONFIG_CRYSTALHD 1'
-  codecmodules="crystalhd $codecmodules"
-else
-  def_crystalhd='#define CONFIG_CRYSTALHD 0'
-  nocodecmodules="crystalhd $nocodecmodules"
-  libavdecoders=$(echo $libavdecoders | sed -e s/H264_CRYSTALHD_DECODER// -e s/MPEG4_CRYSTALHD_DECODER// -e s/MPEG2_CRYSTALHD_DECODER// -e s/MSMPEG4_CRYSTALHD_DECODER// -e s/VC1_CRYSTALHD_DECODER// -e s/WMV3_CRYSTALHD_DECODER//)
-fi
-echores "$_crystalhd"
 
 
 echocheck "Xinerama"
@@ -8188,7 +8169,6 @@ $mak_libavcodec_mpegaudio_hp
 CONFIG_LIBRTMP  = $_librtmp
 
 CONFIG_BZLIB    = $bzlib
-CONFIG_CRYSTALHD= $_crystalhd
 CONFIG_ENCODERS = yes
 CONFIG_GPL      = yes
 CONFIG_MLIB     = $_mlib
@@ -8531,7 +8511,6 @@ $def_aa
 $def_bl
 $def_caca
 $def_corevideo
-$def_crystalhd
 $def_dga
 $def_dga1
 $def_dga2
