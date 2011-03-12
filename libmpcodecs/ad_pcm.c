@@ -81,6 +81,7 @@ static int init(sh_audio_t * sh_audio)
         sh_audio->samplesize = 4;
         break;
     case 0x666c3332: // '23lf', little endian float32, MPlayer internal fourCC
+    case 0x6D63706C: // 'lpcm'
         sh_audio->sample_format = AF_FORMAT_FLOAT_LE;
         sh_audio->samplesize = 4;
         break;
