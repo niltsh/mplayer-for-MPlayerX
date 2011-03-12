@@ -8168,6 +8168,7 @@ $mak_libavcodec_mpegaudio_hp
 !CONFIG_LIBRTMP = $nolibrtmp
 CONFIG_LIBRTMP  = $_librtmp
 
+CONFIG_AC3DSP   = $_mencoder
 CONFIG_BZLIB    = $bzlib
 CONFIG_ENCODERS = yes
 CONFIG_GPL      = yes
