@@ -66,6 +66,7 @@ extern char *network_password;
 extern char *network_referrer;
 extern char *network_useragent;
 extern char *network_username;
+extern char **network_http_header_fields;
 
 extern int   network_bandwidth;
 extern int   network_cookies_enabled;
