@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 33064
+.\" sync with en/mplayer.1 rev. 33082
 .\" Encoding: UTF-8
 .\"
 .\" MPlayer (C) 2000-2010 MPlayer 团队
@@ -1472,6 +1472,35 @@ MPlayer在关闭时将驱动器的速度重置至默认值。
 播放外部 MP3 文件时启用,
 因为我们需要搜索到非常精确的位置来保持 A/V 同步。
 这种方法在后退搜索时尤其慢, 因为需要绕回到开头来寻找准确的帧位置。
+.
+.TP
+.B \-http-header-fields <字段1,字段2>
+设置连接 HTTP 媒体流时使用自定义的 HTTP 字段。
+.sp 1
+.I 示例：
+.PD 0
+.RSs
+.IPs
+mplayer \-http\-header\-fields 'Field1: value1','Field2: value2' http://localhost:1234
+.br
+将生成 HTTP 请求：
+.RSss
+.br
+GET / HTTP/1.0
+.br
+Host: localhost:1234
+.br
+User-Agent: MPlayer
+.br
+Icy-MetaData: 1
+.br
+Field1: value1
+.br
+Field2: value2
+.br
+Connection: close
+.REss
+.RE
 .
 .TP
 .B \-idx (也请参见 \-forceidx)
