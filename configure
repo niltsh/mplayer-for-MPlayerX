@@ -8677,6 +8677,9 @@ $def_yasm
 #define FFMPEG_CONFIGURATION "--enable-gpl --enable-postproc"
 #define FFMPEG_LICENSE "GPL version 2 or later"
 
+#define LIBAV_CONFIGURATION FFMPEG_CONFIGURATION
+#define LIBAV_LICENSE FFMPEG_LICENSE
+
 /* External libraries used through FFmpeg. */
 $def_faac_lavc
 $def_libdirac_lavc
