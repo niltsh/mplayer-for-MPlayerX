@@ -696,10 +696,8 @@ int guiGetEvent(int type, void *arg)
 
 #ifdef CONFIG_VCD
         case STREAMTYPE_VCD:
-            if (!stream->priv)
-                guiIntfStruct.VCDTracks = 0;
-            else
-                stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiIntfStruct.VCDTracks);
+            guiIntfStruct.VCDTracks = 0;
+            stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiIntfStruct.VCDTracks);
             break;
 #endif
 
