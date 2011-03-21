@@ -429,10 +429,16 @@ void mplNext(void)
 
 #ifdef CONFIG_VCD
     case STREAMTYPE_VCD:
-        if (++guiIntfStruct.Track > guiIntfStruct.VCDTracks) {
+
+        if (++guiIntfStruct.Track >= guiIntfStruct.VCDTracks) {
             guiIntfStruct.Track = guiIntfStruct.VCDTracks;
+
+            if (guiIntfStruct.VCDTracks > 1)
+                guiIntfStruct.Track--;
+
             stop = 1;
         }
+
         break;
 #endif
 
