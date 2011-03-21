@@ -456,11 +456,11 @@ GtkWidget * create_PopUpMenu( void )
     if ( guiIntfStruct.VCDTracks )
      {
       char tmp[32]; int i;
-      for ( i=0;i < guiIntfStruct.VCDTracks;i++ )
+      for ( i=1;i < guiIntfStruct.VCDTracks;i++ )
        {
-        snprintf( tmp,32,MSGTR_MENU_Title,i+1 );
-    //AddMenuItem( VCDTitleMenu,tmp,( (i+1) << 16 ) + evSetVCDTrack );
-        AddMenuItem(window1, (const char*)empty_xpm, VCDTitleMenu,tmp,( (i+1) << 16 ) + evSetVCDTrack );
+        snprintf( tmp,32,MSGTR_MENU_Title,i );
+    //AddMenuItem( VCDTitleMenu,tmp,( i << 16 ) + evSetVCDTrack );
+        AddMenuItem(window1, (const char*)empty_xpm, VCDTitleMenu,tmp,( i << 16 ) + evSetVCDTrack );
        }
      }
      else
