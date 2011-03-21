@@ -38,7 +38,6 @@
 
 
 /// We keep these 2 for the gui atm, but they will be removed.
-int vcd_track=0;
 char* cdrom_device=NULL;
 int dvd_chapter=1;
 int dvd_last_chapter=0;

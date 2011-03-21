@@ -352,7 +352,6 @@ extern int dvd_title;
 extern int dvd_chapter;
 extern int dvd_last_chapter;
 extern int dvd_angle;
-extern int vcd_track;
 
 extern char *bluray_device;
 extern char * audio_stream;
