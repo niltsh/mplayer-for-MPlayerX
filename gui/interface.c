@@ -52,8 +52,6 @@
 #include "stream/stream_dvd.h"
 #endif
 
-int vcd_seek_to_track(void *vcd, int track);
-
 guiInterface_t guiIntfStruct;
 
 int guiWinID = -1;
@@ -698,23 +696,11 @@ int guiGetEvent(int type, void *arg)
 
 #ifdef CONFIG_VCD
         case STREAMTYPE_VCD:
-        {
-            int i;
-
-            if (!stream->priv) {
+            if (!stream->priv)
                 guiIntfStruct.VCDTracks = 0;
-                break;
-            }
-
-            for (i = 1; i < 100; i++)
-                if (vcd_seek_to_track(stream->priv, i) < 0)
-                    break;
-
-            vcd_seek_to_track(stream->priv, vcd_track);
-            guiIntfStruct.VCDTracks = --i;
-
+            else
+                stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiIntfStruct.VCDTracks);
             break;
-        }
 #endif
 
         default:
