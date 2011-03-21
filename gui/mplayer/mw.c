@@ -177,10 +177,7 @@ play:
 	       if ( guiIntfStruct.Playing != 2 )
 	        {
 		 if ( !guiIntfStruct.Track )
-		  {
-		   if ( guiIntfStruct.VCDTracks > 1 ) guiIntfStruct.Track=2;
-		    else guiIntfStruct.Track=1;
-		  }
+                   guiIntfStruct.Track=1;
                  guiIntfStruct.DiskChanged=1;
 		}
 	       break;
