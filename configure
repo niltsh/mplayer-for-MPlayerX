@@ -8162,6 +8162,7 @@ CONFIG_LPC     = yes
 CONFIG_LSP     = yes
 CONFIG_MDCT    = yes
 CONFIG_RDFT    = yes
+CONFIG_SINEWIN = yes
 
 $mak_hardcoded_tables
 $mak_libavcodec_mpegaudio_hp
