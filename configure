@@ -431,6 +431,7 @@ Codecs:
   --disable-libopencore_amrnb disable libopencore_amr narrowband [autodetect]
   --disable-libopencore_amrwb disable libopencore_amr wideband [autodetect]
   --disable-libopenjpeg     disable OpenJPEG (JPEG2000) input/output support [autodetect]
+  --disable-crystalhd       disable CrystalHD support [autodetect]
   --disable-decoder=DECODER disable specified FFmpeg decoder
   --enable-decoder=DECODER  enable specified FFmpeg decoder
   --disable-encoder=ENCODER disable specified FFmpeg encoder
@@ -634,8 +635,6 @@ _libopencore_amrwb=auto
 libopenjpeg=auto
 libavdecoders_all=$(sed -n 's/^[^#]*DEC.*(.*, *\(.*\)).*/\1_decoder/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
 libavdecoders=$(echo $libavdecoders_all | sed -e 's/ LIB[A-Z0-9_]*_DECODER//g')
-# temporary hack until we have proper crystalhd support
-libavdecoders=$(echo $libavdecoders | sed -e 's/[A-Z0-9]*_CRYSTALHD_DECODER//g')
 libavencoders_all=$(sed -n 's/^[^#]*ENC.*(.*, *\(.*\)).*/\1_encoder/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
 libavencoders=$(echo $libavencoders_all | sed -e 's/ LIB[A-Z0-9_]*_ENCODER//g')
 libavparsers_all=$(sed -n 's/^[^#]*PARSER.*(.*, *\(.*\)).*/\1_parser/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
@@ -775,6 +774,7 @@ _vidix_pcidb=yes
 _dhahelper=no
 _svgalib_helper=no
 _joystick=no
+crystalhd=auto
 _xvid=auto
 _xvid_lavc=auto
 _x264=auto
@@ -1219,6 +1219,8 @@ for ac_option do
   --disable-svgalib_helper)     _svgalib_helper=no      ;;
   --enable-joystick)    _joystick=yes   ;;
   --disable-joystick)   _joystick=no    ;;
+  --enable-crystalhd)   crystalhd=yes  ;;
+  --disable-crystalhd)  crystalhd=no   ;;
   --enable-xvid)        _xvid=yes       ;;
   --disable-xvid)       _xvid=no        ;;
   --enable-xvid-lavc)   _xvid_lavc=yes  ;;
@@ -6963,6 +6965,22 @@ else
 fi
 echores "$_libdv"
 
+echocheck "CrystalHD"
+if test "$crystalhd" = auto ; then
+   crystalhd=no
+   statement_check_broken libcrystalhd/bc_dts_types.h libcrystalhd/libcrystalhd_if.h 'DtsGetVersion(0, 0, 0)' -lcrystalhd $_ld_lm && crystalhd=yes
+fi
+
+if test "$crystalhd" = yes ; then
+   extra_ldflags="$extra_ldflags -lcrystalhd"
+   def_crystalhd="#define CONFIG_CRYSTALHD 1"
+   codecmodules="crystalhd $codecmodules"
+else
+   def_crystalhd="#define CONFIG_CRYSTALHD 0"
+   nocodecmodules="crystalhd $nocodecmodules"
+   libavdecoders=$(echo $libavdecoders | sed -e 's/[A-Z0-9]*_CRYSTALHD_DECODER//g')
+fi
+echores "$crystalhd"
 
 echocheck "Xvid"
 if test "$_xvid" = auto ; then
@@ -8171,6 +8189,7 @@ CONFIG_LIBRTMP  = $_librtmp
 
 CONFIG_AC3DSP   = $_mencoder
 CONFIG_BZLIB    = $bzlib
+CONFIG_CRYSTALHD= $crystalhd
 CONFIG_ENCODERS = yes
 CONFIG_GPL      = yes
 CONFIG_MLIB     = $_mlib
@@ -8682,6 +8701,7 @@ $def_yasm
 #define LIBAV_LICENSE FFMPEG_LICENSE
 
 /* External libraries used through FFmpeg. */
+$def_crystalhd
 $def_faac_lavc
 $def_libdirac_lavc
 $def_libgsm

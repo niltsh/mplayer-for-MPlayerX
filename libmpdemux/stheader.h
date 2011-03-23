@@ -97,7 +97,7 @@ typedef struct sh_video {
   double i_pts;   // PTS for the _next_ I/P frame
   float next_frame_time;
   double last_pts;
-  double buffered_pts[20];
+  double buffered_pts[32];
   int num_buffered_pts;
   // output format: (set by demuxer)
   float fps;              // frames per second (set only if constant fps)
