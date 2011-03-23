@@ -1677,6 +1677,8 @@ static int demux_mkv_open_audio(demuxer_t *demuxer, mkv_track_t *track,
             track->a_formattag = 0x2000;
         else if (!strcmp(track->codec_id, MKV_A_DTS))
             track->a_formattag = 0x2001;
+        else if (!strcmp(track->codec_id, MKV_A_EAC3))
+            track->a_formattag = mmioFOURCC('E', 'A', 'C', '3');
         else if (!strcmp(track->codec_id, MKV_A_PCM)
                  || !strcmp(track->codec_id, MKV_A_PCM_BE))
             track->a_formattag = 0x0001;
@@ -1746,6 +1748,7 @@ static int demux_mkv_open_audio(demuxer_t *demuxer, mkv_track_t *track,
         sh_a->wf->nAvgBytesPerSec = 16000;
         sh_a->wf->nBlockAlign = 1152;
     } else if ((track->a_formattag == 0x2000) ||        /* AC3 */
+               (track->a_formattag == mmioFOURCC('E', 'A', 'C', '3')) ||
                (track->a_formattag == 0x2001)) {        /* DTS */
         free(sh_a->wf);
         sh_a->wf = NULL;
