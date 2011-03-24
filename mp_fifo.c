@@ -23,9 +23,9 @@
 #include "mp_fifo.h"
 
 int key_fifo_size = 7;
-static int *key_fifo_data = NULL;
-static unsigned key_fifo_read=0;
-static unsigned key_fifo_write=0;
+static int *key_fifo_data;
+static unsigned key_fifo_read;
+static unsigned key_fifo_write;
 
 static void mplayer_put_key_internal(int code){
   int fifo_free = key_fifo_read + key_fifo_size - key_fifo_write;
