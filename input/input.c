@@ -1100,6 +1100,13 @@ interpret_key(int code, int paused)
   unsigned int j;
   mp_cmd_t* ret;
 
+  if (code == MP_KEY_RELEASE_ALL) {
+      memset(key_down, 0, sizeof(key_down));
+      num_key_down = 0;
+      last_key_down = 0;
+      return NULL;
+  }
+
   if(mp_input_key_cb) {
       if (code & MP_KEY_DOWN)
 	  return NULL;

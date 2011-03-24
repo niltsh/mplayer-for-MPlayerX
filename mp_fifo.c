@@ -35,6 +35,9 @@ static void mplayer_put_key_internal(int code){
   // reserve some space for key release events to avoid stuck keys
   if((code & MP_KEY_DOWN) && fifo_free < (key_fifo_size >> 1))
     return;
+  // in the worst case, just reset key state
+  if (fifo_free == 1)
+    code = MP_KEY_RELEASE_ALL;
   key_fifo_data[key_fifo_write % key_fifo_size]=code;
   key_fifo_write++;
 }
