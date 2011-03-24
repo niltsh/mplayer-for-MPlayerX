@@ -26,6 +26,7 @@ int key_fifo_size = 7;
 static int *key_fifo_data;
 static unsigned key_fifo_read;
 static unsigned key_fifo_write;
+static int previous_down_key;
 
 static void mplayer_put_key_internal(int code){
   int fifo_free = key_fifo_read + key_fifo_size - key_fifo_write;
@@ -37,10 +38,21 @@ static void mplayer_put_key_internal(int code){
   if((code & MP_KEY_DOWN) && fifo_free <= (key_fifo_size >> 1))
     return;
   // in the worst case, just reset key state
-  if (fifo_free == 1)
-    code = MP_KEY_RELEASE_ALL;
+  if (fifo_free == 1) {
+    // HACK: this ensures that a fifo size of 2 does
+    // not queue any key presses while still allowing
+    // the mouse wheel to work (which sends down and up
+    // at nearly the same time
+    if (code != previous_down_key)
+      code = 0;
+    code |= MP_KEY_RELEASE_ALL;
+  }
   key_fifo_data[key_fifo_write % key_fifo_size]=code;
   key_fifo_write++;
+  if (code & MP_KEY_DOWN)
+    previous_down_key = code & ~MP_KEY_DOWN;
+  else
+    previous_down_key = 0;
 }
 
 int mplayer_get_key(int fd){
