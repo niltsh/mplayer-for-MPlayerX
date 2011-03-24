@@ -29,7 +29,6 @@ static unsigned key_fifo_write;
 
 static void mplayer_put_key_internal(int code){
   int fifo_free = key_fifo_read + key_fifo_size - key_fifo_write;
-//  printf("mplayer_put_key(%d)\n",code);
   if (key_fifo_data == NULL)
     key_fifo_data = malloc(key_fifo_size * sizeof(int));
   if(!fifo_free) return; // FIFO FULL!!
@@ -42,13 +41,11 @@ static void mplayer_put_key_internal(int code){
 
 int mplayer_get_key(int fd){
   int key;
-//  printf("mplayer_get_key(%d)\n",fd);
   if (key_fifo_data == NULL)
     return MP_INPUT_NOTHING;
   if(key_fifo_write==key_fifo_read) return MP_INPUT_NOTHING;
   key=key_fifo_data[key_fifo_read % key_fifo_size];
   key_fifo_read++;
-//  printf("mplayer_get_key => %d\n",key);
   return key;
 }
 
