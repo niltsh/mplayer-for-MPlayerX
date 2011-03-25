@@ -219,12 +219,12 @@ void guiInit(void)
 
     switch (i) {
     case -1:
-        mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_SKINCFG_SkinNotFound, skinName);
-        exit(0);
+        gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_SKIN_SKINCFG_SkinNotFound, skinName);
+        exit_player(EXIT_ERROR);
 
     case -2:
-        mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_SKINCFG_SkinCfgReadError, skinName);
-        exit(0);
+        gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_SKIN_SKINCFG_SkinCfgReadError, skinName);
+        exit_player(EXIT_ERROR);
     }
 
     // initialize windows
@@ -232,8 +232,8 @@ void guiInit(void)
     mplDrawBuffer = malloc(appMPlayer.main.Bitmap.ImageSize);
 
     if (!mplDrawBuffer) {
-        fprintf(stderr, MSGTR_NEMDB); // NOTE TO MYSELF: (g)mp_msg this
-        exit(0);
+        gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_NEMDB);
+        exit_player(EXIT_ERROR);
     }
 
     if (gui_save_pos) {
@@ -887,7 +887,7 @@ int guiGetEvent(int type, void *arg)
         }
 
         if (!video_driver_list && !video_driver_list[0]) {
-            gtkMessageBox(GTK_MB_FATAL, MSGTR_IDFGCVD);
+            gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_IDFGCVD);
             exit_player(EXIT_ERROR);
         }
 

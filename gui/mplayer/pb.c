@@ -32,6 +32,7 @@
 #include "gui/wm/ws.h"
 
 #include "help_mp.h"
+#include "mp_core.h"
 #include "libvo/x11_common.h"
 #include "libvo/fastmemcpy.h"
 
@@ -243,8 +244,8 @@ void mplPBInit( void )
 
  if ( ( mplPBDrawBuffer = malloc( appMPlayer.bar.Bitmap.ImageSize ) ) == NULL )
   {
-   mp_msg( MSGT_GPLAYER,MSGL_FATAL,MSGTR_NEMDB );
-   exit( 0 );
+   gmp_msg( MSGT_GPLAYER,MSGL_FATAL,MSGTR_NEMDB );
+   exit_player( EXIT_ERROR );
   }
 
  appMPlayer.barWindow.Parent=appMPlayer.subWindow.WindowID;
