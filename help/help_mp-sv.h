@@ -616,7 +616,6 @@ static const char help_text[]=
 #define MSGTR_SKIN_FONT_NonExistentFontID "icke-existerande fontidentifkator (%s)\n"
 #define MSGTR_SKIN_UnknownParameter "okänd parameter (%s)\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "Skin ej funnen (%s).\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "skinkonfigurationsfilsläsfel (%s)\n"
 #define MSGTR_SKIN_LABEL "Skin:"
 
 // --- gtk menus

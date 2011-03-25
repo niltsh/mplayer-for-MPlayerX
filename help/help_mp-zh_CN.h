@@ -582,7 +582,6 @@ static const char help_text[]=
 #define MSGTR_SKIN_UnknownParameter "未知参数（%s）\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "找不到界面外观（%s）。\n"
 #define MSGTR_SKIN_SKINCFG_SelectedSkinNotFound "未找到选定的界面外观‘%s’，尝试使用‘default’参数...\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "界面外观配置文件（%s）读取错误。\n"
 #define MSGTR_SKIN_LABEL "界面外观："
 
 // --- GTK menus

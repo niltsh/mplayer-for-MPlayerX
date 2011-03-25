@@ -383,7 +383,6 @@ static const char help_text[]=
 #define MSGTR_SKIN_FONT_NonExistentFontID "непостоечки фонт идентификувач ( %s )\n"
 #define MSGTR_SKIN_UnknownParameter "непознат параметар ( %s )\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "Не е пронајден скин ( %s ).\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "Грешка во читање на конфигурационата датотека за скинови ( %s ).\n"
 #define MSGTR_SKIN_LABEL "Скинови:"
 
 // --- gtk менија

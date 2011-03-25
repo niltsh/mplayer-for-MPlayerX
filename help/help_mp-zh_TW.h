@@ -748,7 +748,6 @@ static const char help_text[]=
 #define MSGTR_SKIN_UnknownParameter "未知參數 (%s)\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "找不到皮膚 (%s)。\n"
 #define MSGTR_SKIN_SKINCFG_SelectedSkinNotFound "没找到選定的皮膚 (%s), 試着使用默認的...\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "皮膚配置文件 (%s) 讀取錯誤。\n"
 #define MSGTR_SKIN_LABEL "Skins:"
 
 // --- gtk menus

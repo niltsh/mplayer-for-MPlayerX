@@ -223,7 +223,7 @@ void guiInit(void)
         exit_player(EXIT_ERROR);
 
     case -2:
-        gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_SKIN_SKINCFG_SkinCfgReadError, skinName);
+        gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_SKIN_SKINCFG_SkinCfgError, skinName);
         exit_player(EXIT_ERROR);
     }
 

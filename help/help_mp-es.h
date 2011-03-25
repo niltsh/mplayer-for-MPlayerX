@@ -601,7 +601,6 @@ static const char help_text[]=
 #define MSGTR_SKIN_UnknownParameter "parámetro desconocido (%s)\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "Skin no encontrado (%s).\n"
 #define MSGTR_SKIN_SKINCFG_SelectedSkinNotFound "Skin elegida ( %s ) no encontrada, probando 'default'...\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "Error de lectura del archivo de configuración del skin (%s).\n"
 #define MSGTR_SKIN_LABEL "Skins:"
 
 // --- GTK menus

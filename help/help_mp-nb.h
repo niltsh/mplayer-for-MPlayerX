@@ -200,7 +200,6 @@ static const char help_text[]=
 #define MSGTR_SKIN_FONT_NonExistentFontID "ikke-ekstisterende skrifttype identifikasjon (%s)\n"
 #define MSGTR_SKIN_UnknownParameter "ukjent parameter (%s)\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "Skin ikke funnet (%s).\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "Skin konfigurasjonfil lesefeil (%s).\n"
 #define MSGTR_SKIN_LABEL "Skins:"
 
 

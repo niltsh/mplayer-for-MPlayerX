@@ -317,7 +317,6 @@ static const char help_text[]=
 #define MSGTR_SKIN_FONT_FontImageNotFound "フォントイメージファイルが存在しません\n"
 #define MSGTR_SKIN_UnknownParameter "未知のパラメータ(%s)\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "スキンが存在しません( %s ).\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "スキン設定ファイルの読み込みエラー(%s).\n"
 #define MSGTR_SKIN_LABEL "スキン:"
 
 // --- gtk menus

@@ -392,7 +392,6 @@ static const char help_text[]=
 #define MSGTR_SKIN_FONT_NonExistentFontID "μη-υπαρκτή η ταυτότητα της γραμματοσειράς (%s)\n"
 #define MSGTR_SKIN_UnknownParameter "μη αναγνωρίσιμη παράμετρος (%s)\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "Δεν βρέθηκε skin (%s).\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "σφάλμα ανάγνωσης του skin configfile (%s).\n"
 #define MSGTR_SKIN_LABEL "Skins:"
 
 // --- gtk menus

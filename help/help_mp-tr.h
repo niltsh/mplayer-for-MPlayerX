@@ -775,7 +775,6 @@ static const char help_text[]=
 #define MSGTR_SKIN_UnknownParameter "bilinmeyen parametre (%s)\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "Arayüz bulunamadı (%s).\n"
 #define MSGTR_SKIN_SKINCFG_SelectedSkinNotFound "Seçili arayüz ( %s ) bulunamadı , 'varsayılan'ı deneyiniz...\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "Arayüz ayar dosyası okuma hatası (%s).\n"
 #define MSGTR_SKIN_LABEL "Arayüzler:"
 
 // --- gtk menus

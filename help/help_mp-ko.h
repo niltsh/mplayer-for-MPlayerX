@@ -385,7 +385,6 @@ static const char help_text[]=
 #define MSGTR_SKIN_FONT_NonExistentFontID "폰트 지정자가 존재하지 않습니다. (%s)\n"
 #define MSGTR_SKIN_UnknownParameter "알 수 없는 매개변수입니다. (%s)\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "스킨을 찾을 수 없습니다. (%s)\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "스킨 설정파일 읽기 오류입니다. (%s)\n"
 #define MSGTR_SKIN_LABEL "스킨:"
 
 // --- gtk menus

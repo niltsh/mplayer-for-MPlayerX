@@ -383,7 +383,6 @@ static const char help_text[]=
 #define MSGTR_SKIN_FONT_NonExistentFontID "ikke eksisterende font (%s)\n"
 #define MSGTR_SKIN_UnknownParameter "ukendt parameter (%s)\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "Tema blev ikke fundet (%s).\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "Tema config-fil læse fejl (%s).\n"
 #define MSGTR_SKIN_LABEL "Temaer:"
 
 // --- gtk menus

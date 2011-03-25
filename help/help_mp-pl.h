@@ -733,7 +733,6 @@ static const char help_text[]=
 #define MSGTR_SKIN_UnknownParameter "nieznany parametr (%s)\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "Skórka nie znaleziona (%s).\n"
 #define MSGTR_SKIN_SKINCFG_SelectedSkinNotFound "Wybrana skórka ( %s ) nie odnaleziona, próbuję 'default'...\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "błąd odczytu pliku konfiguracyjnego skórki (%s)\n"
 #define MSGTR_SKIN_LABEL "Skórki:"
 
 // --- gtk menus

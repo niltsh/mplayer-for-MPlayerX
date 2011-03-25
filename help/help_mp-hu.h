@@ -595,7 +595,6 @@ static const char help_text[]=
 #define MSGTR_SKIN_UnknownParameter "ismeretlen paraméter (%s)\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "Skin nem található (%s).\n"
 #define MSGTR_SKIN_SKINCFG_SelectedSkinNotFound "A kiválasztott skin ( %s ) nem található, a 'default'-ot próbálom meg...\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "Skin konfigurációs fájl olvasási hiba (%s).\n"
 #define MSGTR_SKIN_LABEL "Skin-ek:"
 
 // --- GTK menus

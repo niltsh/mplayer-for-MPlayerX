@@ -765,9 +765,9 @@ static const char help_text[]=
 #define MSGTR_Browse "Durchsuchen"
 
 // --- error messages ---
-#define MSGTR_NEMDB "Sorry, nicht genug Speicher zum Zeichnen des Puffers."
+#define MSGTR_NEMDB "Sorry, nicht genug Speicher zum Zeichnen des Puffers.\n"
 #define MSGTR_NEMFMR "Sorry, nicht genug Speicher für Menü-Rendering."
-#define MSGTR_IDFGCVD "Sorry, habe keinen GUI-kompatiblen Ausgabetreiber gefunden."
+#define MSGTR_IDFGCVD "Sorry, es wurde kein GUI-kompatibler Ausgabetreiber gefunden.\n"
 #define MSGTR_NEEDLAVC "Sorry, du versuchst, Nicht-MPEG Dateien ohne erneute Encodierung abzuspielen.\nBitte aktiviere lavc in der DXR3/H+-Konfigurationsbox."
 #define MSGTR_UNKNOWNWINDOWTYPE "Unbekannten Fenstertyp gefunden ..."
 
@@ -793,9 +793,9 @@ static const char help_text[]=
 #define MSGTR_SKIN_FONT_FontImageNotFound "Schriftbilddatei nicht gefunden.\n"
 #define MSGTR_SKIN_FONT_NonExistentFontID "nicht existierende Schriftbezeichnung (%s)\n"
 #define MSGTR_SKIN_UnknownParameter "unbekannter Parameter (%s)\n"
-#define MSGTR_SKIN_SKINCFG_SkinNotFound "Skin nicht gefunden (%s).\n"
+#define MSGTR_SKIN_SKINCFG_SkinNotFound "Skin '%s' nicht gefunden.\n"
 #define MSGTR_SKIN_SKINCFG_SelectedSkinNotFound "Ausgewähltes Skin '%s' nicht gefunden, Skin 'default' wird versucht ...\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "Skin-Konfigurationsdatei: Lesefehler (%s)\n"
+#define MSGTR_SKIN_SKINCFG_SkinCfgError "Verarbeitungsfehler in Konfigurationsdatei des Skins '%s'\n"
 #define MSGTR_SKIN_LABEL "Skins:"
 
 // --- GTK-Menüs

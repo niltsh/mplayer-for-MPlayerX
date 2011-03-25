@@ -568,9 +568,9 @@ static const char help_text[]=
 #define MSGTR_Browse "Browse"
 
 // --- error messages ---
-#define MSGTR_NEMDB "Sorry, not enough memory to draw buffer."
+#define MSGTR_NEMDB "Sorry, not enough memory to draw buffer.\n"
 #define MSGTR_NEMFMR "Sorry, not enough memory for menu rendering."
-#define MSGTR_IDFGCVD "Sorry, I did not find a GUI-compatible video output driver."
+#define MSGTR_IDFGCVD "Sorry, no GUI-compatible video output driver found.\n"
 #define MSGTR_NEEDLAVC "Sorry, you cannot play non-MPEG files with your DXR3/H+ device without reencoding.\nPlease enable lavc in the DXR3/H+ configuration box."
 #define MSGTR_UNKNOWNWINDOWTYPE "Unknown window type found ..."
 
@@ -596,9 +596,9 @@ static const char help_text[]=
 #define MSGTR_SKIN_FONT_FontImageNotFound "Font image file not found.\n"
 #define MSGTR_SKIN_FONT_NonExistentFontID "non-existent font identifier (%s)\n"
 #define MSGTR_SKIN_UnknownParameter "unknown parameter (%s)\n"
-#define MSGTR_SKIN_SKINCFG_SkinNotFound "Skin not found (%s).\n"
+#define MSGTR_SKIN_SKINCFG_SkinNotFound "Skin '%s' not found.\n"
 #define MSGTR_SKIN_SKINCFG_SelectedSkinNotFound "Selected skin '%s' not found, trying skin 'default'...\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "skin config file read error (%s)\n"
+#define MSGTR_SKIN_SKINCFG_SkinCfgError "Config file processing error with skin '%s'\n"
 #define MSGTR_SKIN_LABEL "Skins:"
 
 // --- GTK menus

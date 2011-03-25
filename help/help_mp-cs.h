@@ -582,7 +582,6 @@ static const char help_text[]=
 #define MSGTR_SKIN_UnknownParameter "neznámý parametr (%s)\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "Téma nenalezeno (%s).\n"
 #define MSGTR_SKIN_SKINCFG_SelectedSkinNotFound "Vybraný skin ( %s ) nenalezen, zkouším 'výchozí'...\n"
-#define MSGTR_SKIN_SKINCFG_SkinCfgReadError "chyba při čtení konfiguračního souboru témat (%s)\n"
 #define MSGTR_SKIN_LABEL "Témata:"
 
 // --- GTK menus
