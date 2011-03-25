@@ -1491,3 +1491,25 @@ int import_playtree_playlist_into_gui(play_tree_t *my_playtree, m_config_t *conf
 
     return result;
 }
+
+// NOTE TO MYSELF: This function is nonsense.
+// MPlayer should pass messages to the GUI
+// which must decide then which message has
+// to be shown (MSGL_FATAL, for example).
+// But with this function it is at least
+// possible to show GUI's very critical or
+// abort messages.
+void gmp_msg(int mod, int lev, const char *format, ...)
+{
+    char msg[512];
+    va_list va;
+
+    va_start(va, format);
+    vsnprintf(msg, sizeof(msg), format, va);
+    va_end(va);
+
+    mp_msg(mod, lev, msg);
+
+    if (mp_msg_test(mod, lev))
+        gtkMessageBox(GTK_MB_FATAL, msg);
+}

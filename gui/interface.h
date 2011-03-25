@@ -232,6 +232,7 @@ extern float gtkEquChannels[6][10];
 
 void gaddlist(char ***list, const char *entry);
 void gfree(void **p);
+void gmp_msg(int mod, int lev, const char *format, ...);
 char *gstrchr(char *str, int c);
 int gstrcmp(const char *a, const char *b);
 char *gstrdup(const char *str);

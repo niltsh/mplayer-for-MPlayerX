@@ -23,6 +23,7 @@
 #include "cut.h"
 #include "font.h"
 #include "gui/app.h"
+#include "gui/interface.h"
 #include "gui/mplayer/widgets.h"
 
 #include "config.h"
@@ -49,19 +50,13 @@ static wItem *currWinItems;
 static void skin_error(const char *format, ...)
 {
     char p[512];
-    char tmp[512];
     va_list ap;
 
     va_start(ap, format);
     vsnprintf(p, sizeof(p), format, ap);
     va_end(ap);
 
-    mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_ERRORMESSAGE, linenumber, p);
-
-    if (mp_msg_test(MSGT_GPLAYER, MSGL_ERR)) {
-        snprintf(tmp, sizeof(tmp), MSGTR_SKIN_ERRORMESSAGE, linenumber, p);
-        gtkMessageBox(GTK_MB_FATAL, tmp);
-    }
+    gmp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_ERRORMESSAGE, linenumber, p);
 }
 
 #define CHECKDEFLIST(str) \
