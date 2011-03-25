@@ -24,10 +24,14 @@
 #include "playtree.h"
 #include "stream/stream.h"
 
-// these are in support of the non-GUI files that interact with
-// the GUI and that only need to include interface.h for this
+// These are in support of the non-GUI files that interact with
+// the GUI and that only need to include interface.h for this.
+// ------------------------------------------------------------
 #include "cfg.h"
 #include "mplayer/play.h"
+
+extern int use_gui;             // this is defined in mplayer.c
+// ------------------------------------------------------------
 
 #define guiXEvent          0
 #define guiCEvent          1
@@ -210,7 +214,6 @@ typedef struct urlItem {
 
 extern guiInterface_t guiIntfStruct;
 
-extern int use_gui;   // this is defined in mplayer.c
 extern int guiWinID;
 
 extern char *skinName;
