@@ -46,7 +46,7 @@ static wItem *currWin;
 static int *currWinItemIdx;
 static wItem *currWinItems;
 
-static void ERRORMESSAGE(const char *format, ...)
+static void skin_error(const char *format, ...)
 {
     char p[512];
     char tmp[512];
@@ -68,7 +68,7 @@ static void ERRORMESSAGE(const char *format, ...)
     { \
         if (skin == NULL) \
         { \
-            ERRORMESSAGE(MSGTR_SKIN_ERROR_SECTION, str); \
+            skin_error(MSGTR_SKIN_ERROR_SECTION, str); \
             return 1; \
         } \
     }
@@ -77,7 +77,7 @@ static void ERRORMESSAGE(const char *format, ...)
     { \
         if (!currWinName[0]) \
         { \
-            ERRORMESSAGE(MSGTR_SKIN_ERROR_WINDOW, str); \
+            skin_error(MSGTR_SKIN_ERROR_WINDOW, str); \
             return 1; \
         } \
     }
@@ -86,7 +86,7 @@ static void ERRORMESSAGE(const char *format, ...)
     { \
         if (!strcmp(currWinName, name)) \
         { \
-            ERRORMESSAGE(MSGTR_SKIN_ERROR_IN_WINDOW, name); \
+            skin_error(MSGTR_SKIN_ERROR_IN_WINDOW, name); \
             return 1; \
         } \
     }
@@ -111,35 +111,35 @@ int skinBPRead(char *fname, txSample *bf)
 
     switch (i) {
     case -1:
-        ERRORMESSAGE(MSGTR_SKIN_BITMAP_16bit, fname);
+        skin_error(MSGTR_SKIN_BITMAP_16bit, fname);
         break;
 
     case -2:
-        ERRORMESSAGE(MSGTR_SKIN_BITMAP_FileNotFound, fname);
+        skin_error(MSGTR_SKIN_BITMAP_FileNotFound, fname);
         break;
 
     case -3:
-        ERRORMESSAGE(MSGTR_SKIN_BITMAP_BMPReadError, fname);
+        skin_error(MSGTR_SKIN_BITMAP_BMPReadError, fname);
         break;
 
     case -4:
-        ERRORMESSAGE(MSGTR_SKIN_BITMAP_TGAReadError, fname);
+        skin_error(MSGTR_SKIN_BITMAP_TGAReadError, fname);
         break;
 
     case -5:
-        ERRORMESSAGE(MSGTR_SKIN_BITMAP_PNGReadError, fname);
+        skin_error(MSGTR_SKIN_BITMAP_PNGReadError, fname);
         break;
 
     case -6:
-        ERRORMESSAGE(MSGTR_SKIN_BITMAP_RLENotSupported, fname);
+        skin_error(MSGTR_SKIN_BITMAP_RLENotSupported, fname);
         break;
 
     case -7:
-        ERRORMESSAGE(MSGTR_SKIN_BITMAP_UnknownFileType, fname);
+        skin_error(MSGTR_SKIN_BITMAP_UnknownFileType, fname);
         break;
 
     case -8:
-        ERRORMESSAGE(MSGTR_SKIN_BITMAP_ConversionError, fname);
+        skin_error(MSGTR_SKIN_BITMAP_ConversionError, fname);
         break;
     }
 
@@ -212,7 +212,7 @@ static int cmd_window(char *in)
         currWinItemIdx = &appMPlayer.IndexOfMenuItems;
         currWinItems   = appMPlayer.menuItems;
     } else
-        ERRORMESSAGE(MSGTR_UNKNOWNWINDOWTYPE);
+        skin_error(MSGTR_UNKNOWNWINDOWTYPE);
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]   window: %s\n", currWinName);
 
@@ -390,7 +390,7 @@ static int cmd_button(char *in)
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    button image: %s %d,%d\n", fname, x, y);
 
     if ((currWinItems[*currWinItemIdx].message = appFindMessage(msg)) == -1) {
-        ERRORMESSAGE(MSGTR_SKIN_BITMAP_UnknownMessage, msg);
+        skin_error(MSGTR_SKIN_BITMAP_UnknownMessage, msg);
         return 0;
     }
 
@@ -482,7 +482,7 @@ static int cmd_menu(char *in)
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    item #%d: %d,%d %dx%d\n", skin->IndexOfMenuItems, x, y, sx, sy);
 
     if ((skin->menuItems[skin->IndexOfMenuItems].message = message) == -1)
-        ERRORMESSAGE(MSGTR_SKIN_BITMAP_UnknownMessage, tmp);
+        skin_error(MSGTR_SKIN_BITMAP_UnknownMessage, tmp);
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", tmp, skin->menuItems[skin->IndexOfMenuItems].message);
 
@@ -650,19 +650,19 @@ static int cmd_font(char *in)
 
     switch (item->fontid) {
     case -1:
-        ERRORMESSAGE(MSGTR_SKIN_FONT_NotEnoughtMemory);
+        skin_error(MSGTR_SKIN_FONT_NotEnoughtMemory);
         return 1;
 
     case -2:
-        ERRORMESSAGE(MSGTR_SKIN_FONT_TooManyFontsDeclared);
+        skin_error(MSGTR_SKIN_FONT_TooManyFontsDeclared);
         return 1;
 
     case -3:
-        ERRORMESSAGE(MSGTR_SKIN_FONT_FontFileNotFound);
+        skin_error(MSGTR_SKIN_FONT_FontFileNotFound);
         return 1;
 
     case -4:
-        ERRORMESSAGE(MSGTR_SKIN_FONT_FontImageNotFound);
+        skin_error(MSGTR_SKIN_FONT_FontImageNotFound);
         return 1;
     }
 
@@ -697,7 +697,7 @@ static int cmd_slabel(char *in)
     id = fntFindID(sid);
 
     if (id < 0) {
-        ERRORMESSAGE(MSGTR_SKIN_FONT_NonExistentFontID, sid);
+        skin_error(MSGTR_SKIN_FONT_NonExistentFontID, sid);
         return 1;
     }
 
@@ -714,7 +714,7 @@ static int cmd_slabel(char *in)
     item->label  = strdup(tmp);
 
     if (!item->label) {
-        ERRORMESSAGE(MSGTR_SKIN_FONT_NotEnoughtMemory);
+        skin_error(MSGTR_SKIN_FONT_NotEnoughtMemory);
         return 1;
     }
 
@@ -750,7 +750,7 @@ static int cmd_dlabel(char *in)
     id = fntFindID(sid);
 
     if (id < 0) {
-        ERRORMESSAGE(MSGTR_SKIN_FONT_NonExistentFontID, sid);
+        skin_error(MSGTR_SKIN_FONT_NonExistentFontID, sid);
         return 1;
     }
 
@@ -768,7 +768,7 @@ static int cmd_dlabel(char *in)
     item->label  = strdup(tmp);
 
     if (!item->label) {
-        ERRORMESSAGE(MSGTR_SKIN_FONT_NotEnoughtMemory);
+        skin_error(MSGTR_SKIN_FONT_NotEnoughtMemory);
         return 1;
     }
 
@@ -791,7 +791,7 @@ static int cmd_decoration(char *in)
     cutItem(in, tmp, ',', 0);
 
     if (strcmp(tmp, "enable") != 0 && strcmp(tmp, "disable") != 0) {
-        ERRORMESSAGE(MSGTR_SKIN_UnknownParameter, tmp);
+        skin_error(MSGTR_SKIN_UnknownParameter, tmp);
         return 1;
     }
 
