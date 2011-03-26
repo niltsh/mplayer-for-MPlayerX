@@ -438,8 +438,7 @@ static int init(sh_video_t *sh){
     if(sh->bih)
         avctx->bits_per_coded_sample= sh->bih->biBitCount;
 
-    if(lavc_param_threads > 1)
-        avcodec_thread_init(avctx, lavc_param_threads);
+    avctx->thread_count = lavc_param_threads;
     /* open it */
     if (avcodec_open(avctx, lavc_codec) < 0) {
         mp_msg(MSGT_DECVIDEO, MSGL_ERR, MSGTR_CantOpenCodec);

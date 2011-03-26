@@ -689,8 +689,7 @@ static int config(struct vf_instance *vf,
 	vf->priv->pic->quality = (int)(FF_QP2LAMBDA * lavc_param_vqscale + 0.5);
     }
 
-    if(lavc_param_threads > 1)
-	avcodec_thread_init(lavc_venc_context, lavc_param_threads);
+    lavc_venc_context->thread_count = lavc_param_threads;
 
     if (avcodec_open(lavc_venc_context, vf->priv->codec) != 0) {
 	mp_msg(MSGT_MENCODER,MSGL_ERR,MSGTR_CantOpenCodec);
