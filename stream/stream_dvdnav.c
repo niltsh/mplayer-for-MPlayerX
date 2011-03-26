@@ -464,7 +464,7 @@ static int control(stream_t *stream, int cmd, void* arg) {
     }
     case STREAM_CTRL_SEEK_TO_TIME:
     {
-      uint64_t tm = (uint64_t) (*((double*)arg) * 90000);
+      uint64_t tm = *(double *)arg * 90000;
       if(dvdnav_time_search(priv->dvdnav, tm) == DVDNAV_STATUS_OK)
         return 1;
       break;
