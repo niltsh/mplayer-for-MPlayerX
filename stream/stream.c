@@ -306,7 +306,9 @@ int stream_read_internal(stream_t *s, void *buf, int len)
     len= s->fill_buffer ? s->fill_buffer(s, buf, len) : 0;
   }
   if(len<=0){
-    if (!s->eof) {
+    // dvdnav has some horrible hacks to "suspend" reads,
+    // we need to skip this code or seeks will hang.
+    if (!s->eof && s->type != STREAMTYPE_DVDNAV) {
       // just in case this is an error e.g. due to network
       // timeout reset and retry
       // Seeking is used as a hack to make network streams
