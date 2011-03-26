@@ -2042,6 +2042,9 @@ static void adjust_sync_and_print_status(int between_frames, float timing_error)
 	    static int drop_message=0;
 	    double AV_delay = a_pts - audio_delay - v_pts;
 	    double x;
+	    // not a good idea to do A-V correction with with bogus values
+	    if (a_pts == MP_NOPTS_VALUE || v_pts == MP_NOPTS_VALUE)
+		AV_delay = 0;
 	    if (AV_delay>0.5 && drop_frame_cnt>50 && drop_message==0){
 		++drop_message;
 		mp_msg(MSGT_AVSYNC,MSGL_WARN,MSGTR_SystemTooSlow);
