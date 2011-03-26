@@ -690,6 +690,7 @@ static int config(struct vf_instance *vf,
     }
 
     lavc_venc_context->thread_count = lavc_param_threads;
+    lavc_venc_context->thread_type = FF_THREAD_FRAME | FF_THREAD_SLICE;
 
     if (avcodec_open(lavc_venc_context, vf->priv->codec) != 0) {
 	mp_msg(MSGT_MENCODER,MSGL_ERR,MSGTR_CantOpenCodec);
