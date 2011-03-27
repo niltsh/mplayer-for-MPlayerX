@@ -298,19 +298,10 @@ static int init(sh_video_t *sh){
     avctx->codec_type = AVMEDIA_TYPE_VIDEO;
     avctx->codec_id = lavc_codec->id;
 
-#if CONFIG_VDPAU
-    if(lavc_codec->capabilities & CODEC_CAP_HWACCEL_VDPAU){
+#if CONFIG_VDPAU | CONFIG_XVMC
+    if(lavc_codec->capabilities & (CODEC_CAP_HWACCEL_VDPAU | CODEC_CAP_HWACCEL))
         avctx->get_format = get_format;
-    }
 #endif /* CONFIG_VDPAU */
-#if CONFIG_XVMC
-    if(lavc_codec->capabilities & CODEC_CAP_HWACCEL){
-        mp_msg(MSGT_DECVIDEO, MSGL_INFO, MSGTR_MPCODECS_XVMCAcceleratedCodec);
-        avctx->get_format= get_format;//for now only this decoder will use it
-        // HACK around badly placed checks in mpeg_mc_decode_init
-        set_format_params(avctx, PIX_FMT_XVMC_MPEG2_IDCT);
-    }
-#endif /* CONFIG_XVMC */
     if(ctx->do_dr1){
         avctx->flags|= CODEC_FLAG_EMU_EDGE;
         avctx->get_buffer= get_buffer;
@@ -443,6 +434,10 @@ static int init(sh_video_t *sh){
 
     avctx->thread_count = lavc_param_threads;
     avctx->thread_type = FF_THREAD_FRAME | FF_THREAD_SLICE;
+    if(lavc_codec->capabilities & CODEC_CAP_HWACCEL)
+        // HACK around badly placed checks in mpeg_mc_decode_init
+        set_format_params(avctx, PIX_FMT_XVMC_MPEG2_IDCT);
+
     /* open it */
     if (avcodec_open(avctx, lavc_codec) < 0) {
         mp_msg(MSGT_DECVIDEO, MSGL_ERR, MSGTR_CantOpenCodec);
