@@ -303,10 +303,7 @@ static int init(sh_video_t *sh){
     avctx->codec_type = AVMEDIA_TYPE_VIDEO;
     avctx->codec_id = lavc_codec->id;
 
-#if CONFIG_VDPAU || CONFIG_XVMC
-    if(lavc_codec->capabilities & (CODEC_CAP_HWACCEL_VDPAU | CODEC_CAP_HWACCEL))
-        avctx->get_format = get_format;
-#endif /* CONFIG_VDPAU */
+    avctx->get_format = get_format;
     if(ctx->do_dr1){
         avctx->flags|= CODEC_FLAG_EMU_EDGE;
         avctx->get_buffer= get_buffer;
@@ -975,7 +972,6 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
     return mpi;
 }
 
-#if CONFIG_XVMC || CONFIG_VDPAU
 static enum PixelFormat get_format(struct AVCodecContext *avctx,
                                     const enum PixelFormat *fmt){
     enum PixelFormat selected_format;
@@ -992,7 +988,8 @@ static enum PixelFormat get_format(struct AVCodecContext *avctx,
         }
     }
     selected_format = fmt[i];
+    if (selected_format == PIX_FMT_NONE)
+        selected_format = avcodec_default_get_format(avctx, fmt);
     set_format_params(avctx, selected_format);
     return selected_format;
 }
-#endif /* CONFIG_XVMC || CONFIG_VDPAU */
