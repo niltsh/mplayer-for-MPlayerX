@@ -238,7 +238,12 @@ static void set_format_params(struct AVCodecContext *avctx, enum PixelFormat fmt
         vd_ffmpeg_ctx *ctx = sh->context;
         ctx->do_dr1    = 1;
         ctx->do_slices = 1;
+        // HACK: FFmpeg thread handling is a major mess and
+        // hinders any attempt to decide on hwaccel after the
+        // codec is open. We really want this to change, so
+        // just beat it until it's dead
         avctx->thread_count    = 1;
+        avctx->active_thread_type = 0;
         avctx->get_buffer      = get_buffer;
         avctx->release_buffer  = release_buffer;
         avctx->reget_buffer    = get_buffer;
