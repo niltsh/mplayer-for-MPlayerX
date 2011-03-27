@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 33082
+.\" sync with en/mplayer.1 rev. 33107
 .\" Encoding: UTF-8
 .\"
 .\" MPlayer (C) 2000-2010 MPlayer 团队
@@ -946,13 +946,14 @@ mplayer \-heartbeat\-cmd "gnome\-screensaver\-command \-p" file
 .
 .TP
 .B \-key\-fifo\-size <2\-65000>
-指定 FIFO 大小供缓冲按键事件（默认值：7）。
-n 大小的 FIFO 能容纳 (n\-1) 缓冲事件。
-如果太小会丢失一些事件
-(导致 "鼠标键卡住" 或类似效果)。
-如果太大, MPlayer 处理缓冲的事件时可能看上去挂住了。
-为得到同以前一样的行为效果而引入此选项,
-对 Linux 设置为 2 或对 Windows 为 1024。
+指定先入先出队列的大小供缓冲按键事件（默认值：7）。
+大小为 n 的先入先出队列能容纳 (n\-1) 缓冲事件。
+如果设太小一些按键事件会丢失。
+如果设太大，MPlayer 在处理被缓冲的事件时可能显得像是卡住了。
+如果想得到同引入此选项前的版本一样的行为效果，则
+对于 Linux 应设置为 2，对于 Windows 应设为 1024。
+如果值设得小，则应当设置 \-doubleclick\-time 为 0 以禁用双击，这样
+双击事件就不会与其它常规的键盘事件争夺缓冲空间了。
 .
 .TP
 .B \-lircconf <文件名> (仅适用于 LIRC)
