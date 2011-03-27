@@ -250,6 +250,8 @@ static void set_format_params(struct AVCodecContext *avctx, enum PixelFormat fmt
         avctx->draw_horiz_band = draw_slice;
         mp_msg(MSGT_DECVIDEO, MSGL_INFO, MSGTR_MPCODECS_XVMCAcceleratedMPEG2);
         avctx->slice_flags = SLICE_FLAG_CODED_ORDER|SLICE_FLAG_ALLOW_FIELD;
+    } else {
+        avctx->slice_flags &= ~(SLICE_FLAG_CODED_ORDER|SLICE_FLAG_ALLOW_FIELD);
     }
 }
 
