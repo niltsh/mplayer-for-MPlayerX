@@ -303,7 +303,7 @@ static int init(sh_video_t *sh){
     avctx->codec_type = AVMEDIA_TYPE_VIDEO;
     avctx->codec_id = lavc_codec->id;
 
-#if CONFIG_VDPAU | CONFIG_XVMC
+#if CONFIG_VDPAU || CONFIG_XVMC
     if(lavc_codec->capabilities & (CODEC_CAP_HWACCEL_VDPAU | CODEC_CAP_HWACCEL))
         avctx->get_format = get_format;
 #endif /* CONFIG_VDPAU */
