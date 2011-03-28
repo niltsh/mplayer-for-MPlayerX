@@ -20,7 +20,7 @@
 #define MPLAYER_GUI_FONT_H
 
 #include "gui/app.h"
-#include "gui/bitmap.h"
+#include "gui/util/bitmap.h"
 
 #define ASCII_CHRS 128   // number of ASCII characters
 #define EXTRA_CHRS 128   // (arbitrary) number of non-ASCII characters

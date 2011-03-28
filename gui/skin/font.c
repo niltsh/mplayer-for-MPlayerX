@@ -22,8 +22,8 @@
 #include <string.h>
 
 #include "font.h"
-#include "cut.h"
 #include "gui/interface.h"
+#include "gui/util/cut.h"
 #include "skin.h"
 
 #include "libavutil/avstring.h"

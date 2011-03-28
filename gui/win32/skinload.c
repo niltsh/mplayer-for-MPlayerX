@@ -31,7 +31,7 @@
 #include "libswscale/swscale.h"
 #include "libavutil/imgutils.h"
 #include "gui.h"
-#include "gui/bitmap.h"
+#include "gui/util/bitmap.h"
 
 #define MAX_LINESIZE 256
 

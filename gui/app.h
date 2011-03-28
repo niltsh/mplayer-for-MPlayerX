@@ -19,7 +19,7 @@
 #ifndef MPLAYER_GUI_APP_H
 #define MPLAYER_GUI_APP_H
 
-#include "bitmap.h"
+#include "util/bitmap.h"
 #include "wm/ws.h"
 
 // User events
