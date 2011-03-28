@@ -34,7 +34,6 @@ static const evName evNames[] = {
     { evNext,              "evNext"              },
     { evLoad,              "evLoad"              },
     { evEqualizer,         "evEqualizer"         },
-    { evEqualizer,         "evEqualeaser"        }, // NOTE TO MYSELF: any skin using this?
     { evPlayList,          "evPlaylist"          },
     { evExit,              "evExit"              },
     { evIconify,           "evIconify"           },
