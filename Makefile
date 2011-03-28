@@ -541,6 +541,7 @@ SRCS_MPLAYER-$(GUI_GTK)      += gui/app.c \
                                 gui/skin/font.c \
                                 gui/skin/skin.c \
                                 gui/util/cut.c \
+                                gui/util/string.c \
                                 gui/wm/ws.c \
                                 gui/wm/wsxdnd.c \
 

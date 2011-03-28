@@ -16,12 +16,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef MPLAYER_GUI_SKIN_H
-#define MPLAYER_GUI_SKIN_H
+#ifndef MPLAYER_GUI_STRING_H
+#define MPLAYER_GUI_STRING_H
 
-#include "gui/util/bitmap.h"
+char *strswap(char *in, char from, char to);
+char *trim(char *in);
 
-int skinBPRead(char *fname, txSample *bf);
-int skinRead(char *dname);
-
-#endif /* MPLAYER_GUI_SKIN_H */
+#endif /* MPLAYER_GUI_STRING_H */

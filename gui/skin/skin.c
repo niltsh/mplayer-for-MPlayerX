@@ -25,6 +25,7 @@
 #include "gui/interface.h"
 #include "gui/mplayer/widgets.h"
 #include "gui/util/cut.h"
+#include "gui/util/string.h"
 
 #include "config.h"
 #include "help_mp.h"
@@ -817,43 +818,6 @@ static _item skinItem[] = {
     { "decoration", cmd_decoration },
     { "menu",       cmd_menu       }
 };
-
-char *strswap(char *in, char what, char whereof)
-{
-    int i;
-
-    if (!*in)
-        return NULL;
-
-    for (i = 0; in[i]; i++)
-        if (in[i] == what)
-            in[i] = whereof;
-
-    return in;
-}
-
-char *trim(char *in)
-{
-    int c = 0, id = 0, i;
-
-    if (!*in)
-        return NULL;
-
-    while (c != (int)strlen(in)) {
-        if (in[c] == '"')
-            id = !id;
-
-        if ((in[c] == ' ') && (!id)) {
-            for (i = 0; i < (int)strlen(in) - c; i++)
-                in[c + i] = in[c + i + 1];
-            continue;
-        }
-
-        c++;
-    }
-
-    return in;
-}
 
 static char *setname(char *item1, char *item2)
 {

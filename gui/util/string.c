@@ -16,12 +16,44 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef MPLAYER_GUI_SKIN_H
-#define MPLAYER_GUI_SKIN_H
+#include <stddef.h>
+#include <string.h>
 
-#include "gui/util/bitmap.h"
+#include "string.h"
 
-int skinBPRead(char *fname, txSample *bf);
-int skinRead(char *dname);
+char *strswap(char *in, char from, char to)
+{
+    int i;
 
-#endif /* MPLAYER_GUI_SKIN_H */
+    if (!*in)
+        return NULL;
+
+    for (i = 0; in[i]; i++)
+        if (in[i] == from)
+            in[i] = to;
+
+    return in;
+}
+
+char *trim(char *in)
+{
+    int c = 0, id = 0, i;
+
+    if (!*in)
+        return NULL;
+
+    while (c != (int)strlen(in)) {
+        if (in[c] == '"')
+            id = !id;
+
+        if ((in[c] == ' ') && (!id)) {
+            for (i = 0; i < (int)strlen(in) - c; i++)
+                in[c + i] = in[c + i + 1];
+            continue;
+        }
+
+        c++;
+    }
+
+    return in;
+}
