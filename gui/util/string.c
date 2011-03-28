@@ -23,14 +23,14 @@
 
 char *strswap(char *in, char from, char to)
 {
-    int i;
+    char *p = in;
 
-    if (!*in)
-        return NULL;
+    while (*p) {
+        if (*p == from)
+            *p = to;
 
-    for (i = 0; in[i]; i++)
-        if (in[i] == from)
-            in[i] = to;
+        p++;
+    }
 
     return in;
 }
