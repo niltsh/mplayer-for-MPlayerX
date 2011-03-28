@@ -6968,7 +6968,7 @@ echores "$_libdv"
 echocheck "CrystalHD"
 if test "$crystalhd" = auto ; then
    crystalhd=no
-   statement_check_broken libcrystalhd/bc_dts_types.h libcrystalhd/libcrystalhd_if.h 'DtsGetVersion(0, 0, 0)' -lcrystalhd $_ld_lm && crystalhd=yes
+   statement_check_broken libcrystalhd/bc_dts_types.h libcrystalhd/libcrystalhd_if.h 'DtsCrystalHDVersion(0, 0)' -lcrystalhd $_ld_lm && crystalhd=yes
 fi
 
 if test "$crystalhd" = yes ; then
