@@ -18,6 +18,20 @@
 
 #include "string.h"
 
+char *strlower(char *in)
+{
+    char *p = in;
+
+    while (*p) {
+        if (*p >= 'A' && *p <= 'Z')
+            *p += 'a' - 'A';
+
+        p++;
+    }
+
+    return in;
+}
+
 char *strswap(char *in, char from, char to)
 {
     char *p = in;

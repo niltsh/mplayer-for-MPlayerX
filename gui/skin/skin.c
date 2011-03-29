@@ -87,20 +87,6 @@ static void skin_error(const char *format, ...)
         } \
     }
 
-static char *strlower(char *in)
-{
-    char *p = in;
-
-    while (*p) {
-        if (*p >= 'A' && *p <= 'Z')
-            *p += 'a' - 'A';
-
-        p++;
-    }
-
-    return in;
-}
-
 int skinBPRead(char *fname, txSample *bf)
 {
     int i = bpRead(fname, bf);
