@@ -103,24 +103,8 @@ int skinBPRead(char *fname, txSample *bf)
         skin_error(MSGTR_SKIN_BITMAP_FileNotFound, fname);
         break;
 
-    case -3:
-        skin_error(MSGTR_SKIN_BITMAP_BMPReadError, fname);
-        break;
-
-    case -4:
-        skin_error(MSGTR_SKIN_BITMAP_TGAReadError, fname);
-        break;
-
     case -5:
         skin_error(MSGTR_SKIN_BITMAP_PNGReadError, fname);
-        break;
-
-    case -6:
-        skin_error(MSGTR_SKIN_BITMAP_RLENotSupported, fname);
-        break;
-
-    case -7:
-        skin_error(MSGTR_SKIN_BITMAP_UnknownFileType, fname);
         break;
 
     case -8:
