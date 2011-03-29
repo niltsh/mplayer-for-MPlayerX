@@ -16,9 +16,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <stddef.h>
-#include <string.h>
-
 #include "string.h"
 
 char *strswap(char *in, char from, char to)
@@ -37,23 +34,22 @@ char *strswap(char *in, char from, char to)
 
 char *trim(char *in)
 {
-    int c = 0, id = 0, i;
+    char *src, *dest;
+    int freeze = 0;
 
-    if (!*in)
-        return NULL;
+    src = dest = in;
 
-    while (c != (int)strlen(in)) {
-        if (in[c] == '"')
-            id = !id;
+    while (*src) {
+        if (*src == '"')
+            freeze = !freeze;
 
-        if ((in[c] == ' ') && (!id)) {
-            for (i = 0; i < (int)strlen(in) - c; i++)
-                in[c + i] = in[c + i + 1];
-            continue;
-        }
+        if (freeze || (*src != ' '))
+            *dest++ = *src;
 
-        c++;
+        src++;
     }
+
+    *dest = 0;
 
     return in;
 }
