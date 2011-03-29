@@ -560,11 +560,15 @@ static int cmd_hpotmeter(char *in)
 // vpotmeter=button,bwidth,bheight,phases,numphases,default,x,y,width,height,message
 static int cmd_vpotmeter(char *in)
 {
-    int r = cmd_hpotmeter(in);
+    int r;
     wItem *item;
 
+    r = cmd_hpotmeter(in);
+
+    if (r == 0) {
     item       = &currWinItems[*currWinItemIdx];
     item->type = itVPotmeter;
+    }
 
     return r;
 }
