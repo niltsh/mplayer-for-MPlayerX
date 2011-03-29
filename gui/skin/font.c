@@ -164,6 +164,7 @@ int fntRead(char *path, char *fname)
     }
 
     fclose(f);
+
     return 0;
 }
 

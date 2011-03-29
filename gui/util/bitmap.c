@@ -203,6 +203,7 @@ int bpRead(char *fname, txSample *bf)
         return -8;
 
     Normalize(bf);
+
     return 0;
 }
 

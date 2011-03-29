@@ -44,5 +44,6 @@ int cutItemToInt(char *in, char sep, int num)
     char tmp[64];
 
     cutItem(in, tmp, sep, num);
+
     return atoi(tmp);
 }

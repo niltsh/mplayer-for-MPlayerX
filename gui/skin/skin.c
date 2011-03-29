@@ -469,6 +469,7 @@ static int cmd_menu(char *in)
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", tmp, skin->menuItems[skin->IndexOfMenuItems].message);
 
     skin->menuItems[skin->IndexOfMenuItems].Bitmap.Image = NULL;
+
     return 0;
 }
 
@@ -554,6 +555,7 @@ static int cmd_vpotmeter(char *in)
 
     item       = &currWinItems[*currWinItemIdx];
     item->type = itVPotmeter;
+
     return r;
 }
 

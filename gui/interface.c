@@ -1112,6 +1112,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
         }
 
         list();
+
         return NULL;
 
     // add item into playlist after current
@@ -1150,6 +1151,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
 // }
             return plCurrent;
         }
+
         return NULL;
 
     case gtkGetPrevPlItem:
@@ -1158,6 +1160,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
 // if ( !plCurrent && plList ) plCurrent=plList;
             return plCurrent;
         }
+
         return NULL;
 
     // set current item
@@ -1193,6 +1196,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
     }
 
         mplCurr();   // instead of using mplNext && mplPrev
+
         return plCurrent;
 
     // delete list
@@ -1221,6 +1225,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
         plList    = NULL;
         plCurrent = NULL;
     }
+
         return NULL;
 
     // handle url
@@ -1244,6 +1249,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
             url_item->next = NULL;
             URLList = url_item;
         }
+
         return NULL;
 
         // subtitle
@@ -1333,6 +1339,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
         mp_cmd->args[1].v.i = 1;
         mp_input_queue_cmd(mp_cmd);
     }
+
         return NULL;
 
     case gtkSetAutoq:
