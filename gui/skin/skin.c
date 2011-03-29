@@ -60,23 +60,25 @@ static void skin_error(const char *format, ...)
     gmp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_ERRORMESSAGE, linenumber, p);
 }
 
-#define CHECKDEFLIST(str) \
-    { \
-        if (skin == NULL) \
-        { \
-            skin_error(MSGTR_SKIN_ERROR_SECTION, str); \
-            return 1; \
-        } \
+static int section_cmd(char *cmd)
+{
+    if (!skin) {
+        skin_error(MSGTR_SKIN_ERROR_SECTION, cmd);
+        return 0;
     }
 
-#define CHECKWINLIST(str) \
-    { \
-        if (!currWinName[0]) \
-        { \
-            skin_error(MSGTR_SKIN_ERROR_WINDOW, str); \
-            return 1; \
-        } \
+    return 1;
+}
+
+static int window_cmd(char *cmd)
+{
+    if (!currWinName[0]) {
+        skin_error(MSGTR_SKIN_ERROR_WINDOW, cmd);
+        return 0;
     }
+
+    return 1;
+}
 
 #define CHECK(name) \
     { \
@@ -159,6 +161,9 @@ static int cmd_end(char *in)
 
     (void)in;
 
+    if (!section_cmd("end"))
+        return 1;
+
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  %send (%s)\n", space, name);
 
     if (currWinName[0]) {
@@ -175,7 +180,13 @@ static int cmd_end(char *in)
 // window=main|sub|playbar|menu
 static int cmd_window(char *in)
 {
-    CHECKDEFLIST("window");
+    if (!section_cmd("window"))
+        return 1;
+
+    if (currWinName[0]) {
+        skin_error(MSGTR_SKIN_ERROR_IN_WINDOW, "window");
+        return 1;
+    }
 
     av_strlcpy(currWinName, strlower(in), sizeof(currWinName));
 
@@ -209,8 +220,8 @@ static int cmd_base(char *in)
     int x, y;
     int sx = 0, sy = 0;
 
-    CHECKDEFLIST("base");
-    CHECKWINLIST("base");
+    if (!window_cmd("base"))
+        return 1;
 
     cutItem(in, fname, ',', 0);
     x  = cutItemToInt(in, ',', 1);
@@ -326,8 +337,8 @@ static int cmd_base(char *in)
 // background=R,G,B
 static int cmd_background(char *in)
 {
-    CHECKDEFLIST("background");
-    CHECKWINLIST("background");
+    if (!window_cmd("background"))
+        return 1;
 
     CHECK("menu");
     CHECK("main");
@@ -349,8 +360,8 @@ static int cmd_button(char *in)
     int x, y, sx, sy;
     char msg[32];
 
-    CHECKDEFLIST("button");
-    CHECKWINLIST("button");
+    if (!window_cmd("button"))
+        return 1;
 
     CHECK("sub");
     CHECK("menu");
@@ -407,8 +418,8 @@ static int cmd_selected(char *in)
     unsigned char fname[512];
     unsigned char tmp[512];
 
-    CHECKDEFLIST("selected");
-    CHECKWINLIST("selected");
+    if (!window_cmd("selected"))
+        return 1;
 
     CHECK("main");
     CHECK("sub");
@@ -440,8 +451,8 @@ static int cmd_menu(char *in)
     int x, y, sx, sy, message;
     unsigned char tmp[64];
 
-    CHECKDEFLIST("menu");
-    CHECKWINLIST("menu");
+    if (!window_cmd("menu"))
+        return 1;
 
     CHECK("main");
     CHECK("sub");
@@ -482,8 +493,8 @@ static int cmd_hpotmeter(char *in)
     unsigned char phfname[512];
     wItem *item;
 
-    CHECKDEFLIST("hpotmeter");
-    CHECKWINLIST("hpotmeter");
+    if (!window_cmd("h/v potmeter"))
+        return 1;
 
     CHECK("sub");
     CHECK("menu");
@@ -567,8 +578,8 @@ static int cmd_potmeter(char *in)
     unsigned char phfname[512];
     wItem *item;
 
-    CHECKDEFLIST("potmeter");
-    CHECKWINLIST("potmeter");
+    if (!window_cmd("potmeter"))
+        return 1;
 
     CHECK("sub");
     CHECK("menu");
@@ -619,8 +630,8 @@ static int cmd_font(char *in)
     char name[512];
     wItem *item;
 
-    CHECKDEFLIST("font");
-    CHECKWINLIST("font");
+    if (!window_cmd("font"))
+        return 1;
 
     CHECK("sub");
     CHECK("menu");
@@ -663,8 +674,8 @@ static int cmd_slabel(char *in)
     int x, y, id;
     wItem *item;
 
-    CHECKDEFLIST("slabel");
-    CHECKWINLIST("slabel");
+    if (!window_cmd("slabel"))
+        return 1;
 
     CHECK("sub");
     CHECK("menu");
@@ -713,8 +724,8 @@ static int cmd_dlabel(char *in)
     int x, y, sx, id, a;
     wItem *item;
 
-    CHECKDEFLIST("dlabel");
-    CHECKWINLIST("dlabel");
+    if (!window_cmd("dlabel"))
+        return 1;
 
     CHECK("sub");
     CHECK("menu");
@@ -764,8 +775,8 @@ static int cmd_decoration(char *in)
 {
     char tmp[512];
 
-    CHECKDEFLIST("decoration");
-    CHECKWINLIST("decoration");
+    if (!window_cmd("decoration"))
+        return 1;
 
     CHECK("sub");
     CHECK("menu");
