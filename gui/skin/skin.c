@@ -80,14 +80,15 @@ static int window_cmd(char *cmd)
     return 1;
 }
 
-#define CHECK(name) \
-    { \
-        if (!strcmp(currWinName, name)) \
-        { \
-            skin_error(MSGTR_SKIN_ERROR_IN_WINDOW, name); \
-            return 1; \
-        } \
+static int in_window(char *name)
+{
+    if (strcmp(currWinName, name) == 0) {
+        skin_error(MSGTR_SKIN_ERROR_IN_WINDOW, name);
+        return 1;
     }
+
+    return 0;
+}
 
 int skinBPRead(char *fname, txSample *bf)
 {
@@ -339,8 +340,10 @@ static int cmd_background(char *in)
     if (!window_cmd("background"))
         return 1;
 
-    CHECK("menu");
-    CHECK("main");
+    if (in_window("main"))
+        return 1;
+    if (in_window("menu"))
+        return 1;
 
     currWin->R = cutItemToInt(in, ',', 0);
     currWin->G = cutItemToInt(in, ',', 1);
@@ -362,8 +365,10 @@ static int cmd_button(char *in)
     if (!window_cmd("button"))
         return 1;
 
-    CHECK("sub");
-    CHECK("menu");
+    if (in_window("sub"))
+        return 1;
+    if (in_window("menu"))
+        return 1;
 
     cutItem(in, fname, ',', 0);
     x  = cutItemToInt(in, ',', 1);
@@ -420,9 +425,12 @@ static int cmd_selected(char *in)
     if (!window_cmd("selected"))
         return 1;
 
-    CHECK("main");
-    CHECK("sub");
-    CHECK("playbar");
+    if (in_window("main"))
+        return 1;
+    if (in_window("sub"))
+        return 1;
+    if (in_window("playbar"))
+        return 1;
 
     cutItem(in, fname, ',', 0);
 
@@ -453,9 +461,12 @@ static int cmd_menu(char *in)
     if (!window_cmd("menu"))
         return 1;
 
-    CHECK("main");
-    CHECK("sub");
-    CHECK("playbar");
+    if (in_window("main"))
+        return 1;
+    if (in_window("sub"))
+        return 1;
+    if (in_window("playbar"))
+        return 1;
 
     x  = cutItemToInt(in, ',', 0);
     y  = cutItemToInt(in, ',', 1);
@@ -495,8 +506,10 @@ static int cmd_hpotmeter(char *in)
     if (!window_cmd("h/v potmeter"))
         return 1;
 
-    CHECK("sub");
-    CHECK("menu");
+    if (in_window("sub"))
+        return 1;
+    if (in_window("menu"))
+        return 1;
 
     cutItem(in, pfname, ',', 0);
     pwidth  = cutItemToInt(in, ',', 1);
@@ -584,8 +597,10 @@ static int cmd_potmeter(char *in)
     if (!window_cmd("potmeter"))
         return 1;
 
-    CHECK("sub");
-    CHECK("menu");
+    if (in_window("sub"))
+        return 1;
+    if (in_window("menu"))
+        return 1;
 
     cutItem(in, phfname, ',', 0);
     ph = cutItemToInt(in, ',', 1);
@@ -636,8 +651,10 @@ static int cmd_font(char *in)
     if (!window_cmd("font"))
         return 1;
 
-    CHECK("sub");
-    CHECK("menu");
+    if (in_window("sub"))
+        return 1;
+    if (in_window("menu"))
+        return 1;
 
     cutItem(in, name, ',', 0);
 
@@ -680,8 +697,10 @@ static int cmd_slabel(char *in)
     if (!window_cmd("slabel"))
         return 1;
 
-    CHECK("sub");
-    CHECK("menu");
+    if (in_window("sub"))
+        return 1;
+    if (in_window("menu"))
+        return 1;
 
     x = cutItemToInt(in, ',', 0);
     y = cutItemToInt(in, ',', 1);
@@ -730,8 +749,10 @@ static int cmd_dlabel(char *in)
     if (!window_cmd("dlabel"))
         return 1;
 
-    CHECK("sub");
-    CHECK("menu");
+    if (in_window("sub"))
+        return 1;
+    if (in_window("menu"))
+        return 1;
 
     x  = cutItemToInt(in, ',', 0);
     y  = cutItemToInt(in, ',', 1);
@@ -781,9 +802,12 @@ static int cmd_decoration(char *in)
     if (!window_cmd("decoration"))
         return 1;
 
-    CHECK("sub");
-    CHECK("menu");
-    CHECK("playbar");
+    if (in_window("sub"))
+        return 1;
+    if (in_window("playbar"))
+        return 1;
+    if (in_window("menu"))
+        return 1;
 
     cutItem(strlower(in), tmp, ',', 0);
 
