@@ -133,10 +133,9 @@ int skinBPRead(char *fname, txSample *bf)
 // section=movieplayer
 static int cmd_section(char *in)
 {
-    strlower(in);
     skin = NULL;
 
-    if (!strcmp(in, "movieplayer"))
+    if (!strcmp(strlower(in), "movieplayer"))
         skin = &appMPlayer;
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  section: %s\n", in);
@@ -782,8 +781,7 @@ static int cmd_decoration(char *in)
     CHECK("menu");
     CHECK("playbar");
 
-    strlower(in);
-    cutItem(in, tmp, ',', 0);
+    cutItem(strlower(in), tmp, ',', 0);
 
     if (strcmp(tmp, "enable") != 0 && strcmp(tmp, "disable") != 0) {
         skin_error(MSGTR_SKIN_UnknownParameter, tmp);
