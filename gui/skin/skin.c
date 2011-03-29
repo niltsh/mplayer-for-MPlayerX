@@ -566,8 +566,8 @@ static int cmd_vpotmeter(char *in)
     r = cmd_hpotmeter(in);
 
     if (r == 0) {
-    item       = &currWinItems[*currWinItemIdx];
-    item->type = itVPotmeter;
+        item       = &currWinItems[*currWinItemIdx];
+        item->type = itVPotmeter;
     }
 
     return r;
