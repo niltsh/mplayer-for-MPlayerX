@@ -125,6 +125,10 @@ static int cmd_section(char *in)
 
     if (!strcmp(strlower(in), "movieplayer"))
         skin = &appMPlayer;
+    else {
+        skin_error(MSGTR_SKIN_UNKNOWN_NAME, in);
+        return 1;
+    }
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  section: %s\n", in);
 
