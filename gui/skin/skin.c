@@ -191,8 +191,10 @@ static int cmd_window(char *in)
         currWin = &appMPlayer.menuBase;
         currWinItemIdx = &appMPlayer.IndexOfMenuItems;
         currWinItems   = appMPlayer.menuItems;
-    } else
+    } else {
         skin_error(MSGTR_SKIN_UNKNOWN_NAME, in);
+        return 1;
+    }
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]   window: %s\n", currWinName);
 
