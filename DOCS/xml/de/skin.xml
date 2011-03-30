@@ -163,8 +163,8 @@
         Eine wichtige Sache wurde noch nicht aufgeführt: Damit Buttons, Potentiometer und
         Menüeinträge funktionieren, muss <application>MPlayer</application> wissen, was
         er machen soll, wenn sie angeklickt werden.
-        Dies geschieht mittels <link linkend="skin-gui">Meldungen</link> (Ereignisse).
-        Für diese Elemente musst du die beim Klick auf sie zu generierenden Meldungen
+        Dies geschieht mittels <link linkend="skin-gui">Nachrichten</link> (Ereignisse).
+        Für diese Elemente musst du die beim Klick auf sie zu generierende Nachricht
         definieren.
       </para>
     </sect2>
@@ -513,7 +513,7 @@ end
               </listitem>
               <listitem>
                 <para>
-                  <literal>message</literal> - die Meldung, die erzeugt werden soll,
+                  <literal>message</literal> - die Nachricht, die erzeugt werden soll,
                   wenn der Wert des <literal>hpotmeter</literal> geändert wird
                 </para>
               </listitem>
@@ -763,7 +763,7 @@ end
       <variablelist>
         <varlistentry>
           <term>
-            <literal><anchor id="skin-sub-base"/>base = image, X, Y, Breite, Hoehe</literal>
+            <literal><anchor id="skin-sub-base"/>base = image, X, Y, width, height</literal>
           </term>
           <listitem>
             <para>
@@ -841,13 +841,13 @@ end
         <varlistentry>
           <term>
             <literal>
-              <anchor id="skin-menu"/>menu = X, Y, Breite, Höhe, Nachricht
+              <anchor id="skin-menu"/>menu = X, Y, width, height, message
             </literal>
           </term>
           <listitem>
             <para>
               Definiert die Position <literal>X,Y</literal> und die Größe eines Menüeintrags
-              innerhalb der Grafik. <literal>Nachricht</literal> ist die Meldung, die erzeugt
+              innerhalb der Grafik. <literal>message</literal> ist die Nachricht, die erzeugt
               werden soll, wenn die Maustaste über dem Eintrag losgelassen wird.
             </para>
           </listitem>
@@ -933,9 +933,9 @@ image = font.png
   </sect1>
 
   <sect1 id="skin-gui">
-    <title>GUI-Meldungen</title>
+    <title>GUI-Nachrichten</title>
     <para>
-      Dies sind die Meldungen, die von Buttons, Potentiometern und
+      Dies sind die Nachrichten, die von Buttons, Potentiometern und
       Menüeinträgen generiert werden können.
     </para>
 
@@ -953,9 +953,9 @@ image = font.png
         <listitem><para>
             Formt einen Schalter zusammen mit <literal>evPlaySwitchToPause</literal>.
             Sie können dazu benutzt werden, einen gebräuchlichen Play/Pause-Button
-            zu bekommen. Beide Meldungen sollten den Buttons zugewiesen werden, die
+            zu bekommen. Beide Nachrichten sollten den Buttons zugewiesen werden, die
             an genau derselben Position innerhalb des Fensters dargestellt werden.
-            Diese Meldung pausiert das Abspielen und die Grafik für den
+            Diese Nachricht pausiert das Abspielen und die Grafik für den
             <literal>evPlaySwitchToPause</literal>-Button wird gezeigt
             (um anzudeuten, dass der Button zum Fortsetzen des Abspielens gedrückt
             werden kann).
@@ -977,7 +977,7 @@ image = font.png
         <term><emphasis role="bold">evPlaySwitchToPause</emphasis></term>
         <listitem>
           <para>
-            Das Gegenteil von <literal>evPauseSwitchToPlay</literal>. Diese Meldung
+            Das Gegenteil von <literal>evPauseSwitchToPlay</literal>. Diese Nachricht
             startet das Abspielen und die Grafik für den
             <literal>evPauseSwitchToPlay</literal>-Button wird angezeigt
             (um anzudeuten, dass der Button zum Pausieren des Abspielvorgangs gedrückt
@@ -1277,7 +1277,7 @@ image = font.png
         <term><emphasis role="bold">evNone</emphasis></term>
         <listitem>
           <para>
-            Leere Meldung, besitzt keinen Effekt (außer vielleicht in Subversion-Versionen :-)).
+            Inhaltslose Nachricht, die nichts bewirkt.
           </para>
         </listitem>
       </varlistentry>

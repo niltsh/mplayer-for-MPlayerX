@@ -1082,7 +1082,7 @@ menu entries.
 <varlistentry>
   <term><emphasis role="bold">evNone</emphasis></term>
   <listitem><para>
-  Empty message, it has no effect (except maybe in Subversion versions :-)).
+  Empty message, it has no effect.
   </para></listitem>
 </varlistentry>
 
