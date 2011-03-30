@@ -752,7 +752,6 @@ static const char help_text[]=
 #define MSGTR_NEMFMR "Üzgünüm, menü oluşturmak için yeterli hafıza yok."
 #define MSGTR_IDFGCVD "Üzgünüm, KGA ile uyumlu video çıkış sürücüsü bulunamadı."
 #define MSGTR_NEEDLAVC "Üzgünüm, MPEG olmayan dosyaları DXR3/H+ aygıtınızla oynatamazsınız. \nLütfen DXR3/H+ ayarlarından lavc seçeneğini etkinleştirin."
-#define MSGTR_UNKNOWNWINDOWTYPE "Bilinmeyen pencere türü bulundu..."
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[arayüz] Hata : arayüz ayar dosyası %d satırı: %s"

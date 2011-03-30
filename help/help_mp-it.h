@@ -567,7 +567,6 @@ static const char help_text[]=
 #define MSGTR_NEMFMR "Mi dispiace, non c'è abbastanza memoria per visualizzare il menu."
 #define MSGTR_IDFGCVD "Mi dispiace, non ho trovato un driver di output video compatibile con la GUI."
 #define MSGTR_NEEDLAVC "Mi dispiace, non puoi riprodurre file non-MPEG con il tuo dispositivo DXR3/H+\nsenza ricodificarli.\nAbilita lavc nella finestra di configurazione DXR3/H+."
-#define MSGTR_UNKNOWNWINDOWTYPE "Trovato tipo finestra sconosciuto..."
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[skin] errore nel file di configurazione della skin alla riga %d: %s"

@@ -725,7 +725,6 @@ static const char help_text[]=
 #define MSGTR_NEMFMR "抱歉, 没有足够的内存用于菜單渲染。"
 #define MSGTR_IDFGCVD "抱歉, 未找到 GUI-兼容的視頻輸出驅動。"
 #define MSGTR_NEEDLAVC "抱歉, 不能用没有重編碼的 DXR3/H+ 設備播放 non-MPEG 文件\n請啟用 DXR3/H+ 配置盒中的 lavc。"
-#define MSGTR_UNKNOWNWINDOWTYPE "發現未知窗口類型 ..."
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[skin] 皮膚配置文件的 %d: %s行出錯"

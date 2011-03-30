@@ -769,13 +769,13 @@ static const char help_text[]=
 #define MSGTR_NEMFMR "Sorry, nicht genug Speicher für Menü-Rendering."
 #define MSGTR_IDFGCVD "Sorry, es wurde kein GUI-kompatibler Ausgabetreiber gefunden.\n"
 #define MSGTR_NEEDLAVC "Sorry, du versuchst, Nicht-MPEG Dateien ohne erneute Encodierung abzuspielen.\nBitte aktiviere lavc in der DXR3/H+-Konfigurationsbox."
-#define MSGTR_UNKNOWNWINDOWTYPE "Unbekannten Fenstertyp gefunden ..."
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "Fehler in Skin-Konfigurationsdatei in Zeile %d: %s"
 #define MSGTR_SKIN_ERROR_SECTION "Für '%s' wurde kein Abschnitt angegeben.\n"
 #define MSGTR_SKIN_ERROR_WINDOW "Für '%s' wurde kein Fenster angegeben.\n"
 #define MSGTR_SKIN_ERROR_ITEM "Dieses Element wird in '%s' nicht unterstützt.\n"
+#define MSGTR_SKIN_UNKNOWN_NAME "Unbekannter Name '%s'\n"
 #define MSGTR_SKIN_SkinFileNotFound "Skin-Datei %s nicht gefunden.\n"
 #define MSGTR_SKIN_SkinFileNotReadable "Skin-Datei %s nicht lesbar.\n"
 #define MSGTR_SKIN_BITMAP_16bit  "Die Farbtiefe von %s beträgt 16 bpp oder weniger, was nicht unterstützt wird.\n"

@@ -707,7 +707,6 @@ static const char help_text[]=
 #define MSGTR_NEMFMR "Za mało pamięci na renderowanie menu."
 #define MSGTR_IDFGCVD "Brak sterownika video zgodnego z GUI."
 #define MSGTR_NEEDLAVC "Niestety, nie można odtwarzać plików innych niż MPEG przy użyciu urządzenia DXR3/H+ bez kowersji.\nProszę włączyć lavc w polu sterowania DXR3/H+."
-#define MSGTR_UNKNOWNWINDOWTYPE "Okno nieznanego typu ..."
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[skórka] błąd w pliku konfiguracyjnym skórki, linia %d: %s"

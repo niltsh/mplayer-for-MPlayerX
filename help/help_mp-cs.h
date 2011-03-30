@@ -559,7 +559,6 @@ static const char help_text[]=
 #define MSGTR_NEMFMR "Bohužel není dostatek paměti pro vykreslení menu."
 #define MSGTR_IDFGCVD "Bohužel nebyl nalezen video ovladač kompatibilní s GUI."
 #define MSGTR_NEEDLAVC "Bohužel nelze přehrávat ne-MPEG s kartou DXR3/H+ bez přeenkódování.\nProsím, zapněte lavc v konfiguraci DXR3/H+."
-#define MSGTR_UNKNOWNWINDOWTYPE "Nalezen neznámý typ okna ..."
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[témata] chyba v konfiguračním souboru témat na řádce %d: %s"

@@ -741,7 +741,6 @@ static const char help_text[]=
 #define MSGTR_NEMFMR "Désolé, pas assez de mémoire pour le rendu des menus."
 #define MSGTR_IDFGCVD "Désolé, aucun pilote de sortie vidéo compatible avec la GUI."
 #define MSGTR_NEEDLAVC "Désolé, vous ne pouvez pas lire de fichiers non-MPEG avec le périphérique DXR3/H+ sans réencoder.\nActivez plutôt lavc dans la boîte de configuration DXR3/H+."
-#define MSGTR_UNKNOWNWINDOWTYPE "Genre de fenêtre inconnue trouvé ..."
 
 // --- messages d'erreurs du chargement de peau ---
 #define MSGTR_SKIN_ERRORMESSAGE "[Peau] erreur à la ligne %d du fichier de config de peau : %s"

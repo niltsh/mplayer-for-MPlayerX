@@ -572,7 +572,6 @@ static const char help_text[]=
 #define MSGTR_NEMFMR "Nincs elég memória a menü rendereléséhez."
 #define MSGTR_IDFGCVD "Nem találtam GUI-kompatibilis videó meghajtót."
 #define MSGTR_NEEDLAVC "Nem MPEG fájl lejátszása nem lehetséges a DXR3/H+ hardverrel újrakódolás nélkül.\nKapcsold be a lavc opciót a DXR3/H+ konfigurációs panelen."
-#define MSGTR_UNKNOWNWINDOWTYPE "Ismeretlen ablak típust találtam ..."
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[skin] hiba a skin konfigurációs fájljának %d. sorában: %s"

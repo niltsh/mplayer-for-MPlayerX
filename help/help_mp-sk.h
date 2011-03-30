@@ -691,7 +691,6 @@ static const char help_text[]=
 #define MSGTR_NEMFMR "Žiaľ, nedostatok pamäte pre vytváranie menu."
 #define MSGTR_IDFGCVD "Žiaľ, nemôžem nájsť gui kompatibilný ovládač video výstupu."
 #define MSGTR_NEEDLAVC "Žiaľ, nemôžete prehrávať nie mpeg súbory s DXR3/H+ zariadením bez prekódovania.\nProsím zapnite lavc v DXR3/H+ konfig. okne."
-#define MSGTR_UNKNOWNWINDOWTYPE "Neznámy typ okna nájdený ..."
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[témy] chyba v konfig. súbore tém %d: %s"
