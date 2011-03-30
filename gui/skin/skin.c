@@ -118,6 +118,11 @@ int skinBPRead(char *fname, txSample *bf)
 // section=movieplayer
 static int cmd_section(char *in)
 {
+    if (skin) {
+        skin_error(MSGTR_SKIN_ERROR_ITEM, "section");
+        return 1;
+    }
+
     if (!strcmp(strlower(in), "movieplayer"))
         skin = &appMPlayer;
 
