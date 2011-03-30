@@ -83,7 +83,7 @@ static int window_cmd(char *cmd)
 static int in_window(char *name)
 {
     if (strcmp(currWinName, name) == 0) {
-        skin_error(MSGTR_SKIN_ERROR_IN_WINDOW, name);
+        skin_error(MSGTR_SKIN_ERROR_ITEM, name);
         return 1;
     }
 
@@ -168,7 +168,7 @@ static int cmd_window(char *in)
         return 1;
 
     if (currWinName[0]) {
-        skin_error(MSGTR_SKIN_ERROR_IN_WINDOW, "window");
+        skin_error(MSGTR_SKIN_ERROR_ITEM, "window");
         return 1;
     }
 

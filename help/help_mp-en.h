@@ -578,7 +578,7 @@ static const char help_text[]=
 #define MSGTR_SKIN_ERRORMESSAGE "Error in skin config file on line %d: %s"
 #define MSGTR_SKIN_ERROR_SECTION "No section specified for '%s'.\n"
 #define MSGTR_SKIN_ERROR_WINDOW "No window specified for '%s'.\n"
-#define MSGTR_SKIN_ERROR_IN_WINDOW "This item is not supported by '%s'.\n"
+#define MSGTR_SKIN_ERROR_ITEM "This item is not supported by '%s'.\n"
 #define MSGTR_SKIN_SkinFileNotFound "Skin file %s not found.\n"
 #define MSGTR_SKIN_SkinFileNotReadable "Skin file %s not readable.\n"
 #define MSGTR_SKIN_BITMAP_16bit  "Color depth of bitmap %s is 16 bits or less which is not supported.\n"

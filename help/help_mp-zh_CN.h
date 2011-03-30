@@ -562,7 +562,7 @@ static const char help_text[]=
 #define MSGTR_SKIN_ERRORMESSAGE "界面外观配置文件错误，行 %d：%s"
 #define MSGTR_SKIN_ERROR_SECTION "没有指定‘%s’的区域。\n"
 #define MSGTR_SKIN_ERROR_WINDOW "没有指定‘%s’的窗口。\n"
-#define MSGTR_SKIN_ERROR_IN_WINDOW "该项目‘%s’不支持。\n"
+#define MSGTR_SKIN_ERROR_ITEM "该项目‘%s’不支持。\n"
 #define MSGTR_SKIN_SkinFileNotFound "未找到界面外观文件 %s。\n"
 #define MSGTR_SKIN_SkinFileNotReadable "无法读取界面外观文件 %s。\n"
 #define MSGTR_SKIN_BITMAP_16bit  "不支持少于或等于 16 比特颜色精度的位图（%s）。\n"
