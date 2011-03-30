@@ -581,7 +581,7 @@ static const char help_text[]=
 #define MSGTR_SKIN_BITMAP_FileNotFound  "A fájl nem található (%s)\n"
 #define MSGTR_SKIN_BITMAP_PNGReadError "PNG olvasási hiba (%s)\n"
 #define MSGTR_SKIN_BITMAP_ConversionError "hiba a 24-ről 32 bitre konvertálás közben (%s)\n"
-#define MSGTR_SKIN_BITMAP_UnknownMessage "ismeretlen üzenet: %s\n"
+#define MSGTR_SKIN_UnknownMessage "ismeretlen üzenet: %s\n"
 #define MSGTR_SKIN_FONT_NotEnoughtMemory "nincs elég memória\n"
 #define MSGTR_SKIN_FONT_TooManyFontsDeclared "Túl sok betűtipus van deklarálva.\n"
 #define MSGTR_SKIN_FONT_FontFileNotFound "Nem találom a betűtipus fájlt.\n"

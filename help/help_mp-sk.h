@@ -700,7 +700,7 @@ static const char help_text[]=
 #define MSGTR_SKIN_BITMAP_FileNotFound  "súbor nenájdený (%s)\n"
 #define MSGTR_SKIN_BITMAP_PNGReadError "chyba čítania PNG (%s)\n"
 #define MSGTR_SKIN_BITMAP_ConversionError "chyba konverzie z 24 bit do 32 bit (%s)\n"
-#define MSGTR_SKIN_BITMAP_UnknownMessage "neznáma správa: %s\n"
+#define MSGTR_SKIN_UnknownMessage "neznáma správa: %s\n"
 #define MSGTR_SKIN_FONT_NotEnoughtMemory "nedostatok pamäte\n"
 #define MSGTR_SKIN_FONT_TooManyFontsDeclared "príliš mnoho fontov deklarovaných\n"
 #define MSGTR_SKIN_FONT_FontFileNotFound "súbor fontov nenájdený\n"

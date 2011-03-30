@@ -373,7 +373,7 @@ static const char help_text[]=
 #define MSGTR_SKIN_BITMAP_FileNotFound  "파일을 찾을 수 없습니다. (%s)\n"
 #define MSGTR_SKIN_BITMAP_PNGReadError "PNG 읽기 오류입니다. (%s)\n"
 #define MSGTR_SKIN_BITMAP_ConversionError "24 비트에서 32 비트로 전환 오류 (%s)\n"
-#define MSGTR_SKIN_BITMAP_UnknownMessage "알 수 없는 메세지입니다.: %s\n"
+#define MSGTR_SKIN_UnknownMessage "알 수 없는 메세지입니다.: %s\n"
 #define MSGTR_SKIN_FONT_NotEnoughtMemory "메모리가 부족합니다.\n"
 #define MSGTR_SKIN_FONT_TooManyFontsDeclared "폰트가 너무 많이 선언되어 있습니다.\n"
 #define MSGTR_SKIN_FONT_FontFileNotFound "폰트파일을 찾을 수 없습니다.\n"

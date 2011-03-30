@@ -576,7 +576,7 @@ static const char help_text[]=
 #define MSGTR_SKIN_BITMAP_FileNotFound  "File non trovato (%s)\n"
 #define MSGTR_SKIN_BITMAP_PNGReadError "PNG, errore di lettura (%s)\n"
 #define MSGTR_SKIN_BITMAP_ConversionError "errore nella conversione da 24 bit a 32 bit (%s)\n"
-#define MSGTR_SKIN_BITMAP_UnknownMessage "messaggio sconosciuto: %s\n"
+#define MSGTR_SKIN_UnknownMessage "messaggio sconosciuto: %s\n"
 #define MSGTR_SKIN_FONT_NotEnoughtMemory "memoria insufficiente\n"
 #define MSGTR_SKIN_FONT_TooManyFontsDeclared "dichiarati troppi font\n"
 #define MSGTR_SKIN_FONT_FontFileNotFound "file dei font non trovato\n"

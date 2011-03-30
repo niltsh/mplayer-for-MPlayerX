@@ -761,7 +761,7 @@ static const char help_text[]=
 #define MSGTR_SKIN_BITMAP_FileNotFound  "( %s ) dosyası bulunamadı\n"
 #define MSGTR_SKIN_BITMAP_PNGReadError "PNG okuma hatası (%s)\n"
 #define MSGTR_SKIN_BITMAP_ConversionError "24 bit --> 32 bit dönüştürme hatası (%s)\n"
-#define MSGTR_SKIN_BITMAP_UnknownMessage "Bilinmeyen ileti: %s\n"
+#define MSGTR_SKIN_UnknownMessage "Bilinmeyen ileti: %s\n"
 #define MSGTR_SKIN_FONT_NotEnoughtMemory "yetersiz bellek\n"
 #define MSGTR_SKIN_FONT_TooManyFontsDeclared "Çok sayıda yazıtipi tanıtıldı\n"
 #define MSGTR_SKIN_FONT_FontFileNotFound "yazıtipi dosyası bulunamadı\n"

@@ -307,7 +307,7 @@ static const char help_text[]=
 #define MSGTR_SKIN_BITMAP_FileNotFound  "ファイルが存在しません (%s)\n"
 #define MSGTR_SKIN_BITMAP_PNGReadError "png 読み込みエラー (%s)\n"
 #define MSGTR_SKIN_BITMAP_ConversionError "24bitから32bitへの変換エラー (%s)\n"
-#define MSGTR_SKIN_BITMAP_UnknownMessage "未知のメッセージ: %s\n"
+#define MSGTR_SKIN_UnknownMessage "未知のメッセージ: %s\n"
 #define MSGTR_SKIN_FONT_NotEnoughtMemory "メモリが不足しています\n"
 #define MSGTR_SKIN_FONT_FontFileNotFound "フォントファイルが存在しません\n"
 #define MSGTR_SKIN_FONT_FontImageNotFound "フォントイメージファイルが存在しません\n"

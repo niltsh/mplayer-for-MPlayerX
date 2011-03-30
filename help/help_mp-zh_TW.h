@@ -734,7 +734,7 @@ static const char help_text[]=
 #define MSGTR_SKIN_BITMAP_FileNotFound  "找不到文件 (%s)\n"
 #define MSGTR_SKIN_BITMAP_PNGReadError "PNG 讀取錯誤 (%s)\n"
 #define MSGTR_SKIN_BITMAP_ConversionError "24 比特到 32 比特的轉換發生錯誤 (%s)\n"
-#define MSGTR_SKIN_BITMAP_UnknownMessage "未知信息: %s\n"
+#define MSGTR_SKIN_UnknownMessage "未知信息: %s\n"
 #define MSGTR_SKIN_FONT_NotEnoughtMemory "内存不够\n"
 #define MSGTR_SKIN_FONT_TooManyFontsDeclared "聲明字體太多。\n"
 #define MSGTR_SKIN_FONT_FontFileNotFound "找不到字體文件。\n"

@@ -371,7 +371,7 @@ static const char help_text[]=
 #define MSGTR_SKIN_BITMAP_FileNotFound  "датотеката не е пронајдена ( %s )\n"
 #define MSGTR_SKIN_BITMAP_PNGReadError "PNG грешка во читањето ( %s )\n"
 #define MSGTR_SKIN_BITMAP_ConversionError "грешка при конвертирање од 24 бита во 32 бита ( %s )\n"
-#define MSGTR_SKIN_BITMAP_UnknownMessage "непозната порака: %s\n"
+#define MSGTR_SKIN_UnknownMessage "непозната порака: %s\n"
 #define MSGTR_SKIN_FONT_NotEnoughtMemory "нема доволно меморија\n"
 #define MSGTR_SKIN_FONT_TooManyFontsDeclared "премногу означени фонтови\n"
 #define MSGTR_SKIN_FONT_FontFileNotFound "фонт датотеката не е пронајдена\n"

@@ -380,8 +380,8 @@ static int cmd_button(char *in)
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    button image: %s %d,%d\n", fname, x, y);
 
     if ((currWinItems[*currWinItemIdx].message = appFindMessage(msg)) == -1) {
-        skin_error(MSGTR_SKIN_BITMAP_UnknownMessage, msg);
-        return 0;
+        skin_error(MSGTR_SKIN_UnknownMessage, msg);
+        return 1;
     }
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", msg, currWinItems[*currWinItemIdx].message);
@@ -477,8 +477,10 @@ static int cmd_menu(char *in)
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    item #%d: %d,%d %dx%d\n", skin->IndexOfMenuItems, x, y, sx, sy);
 
-    if ((skin->menuItems[skin->IndexOfMenuItems].message = message) == -1)
-        skin_error(MSGTR_SKIN_BITMAP_UnknownMessage, tmp);
+    if ((skin->menuItems[skin->IndexOfMenuItems].message = message) == -1) {
+        skin_error(MSGTR_SKIN_UnknownMessage, tmp);
+        return 1;
+    }
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", tmp, skin->menuItems[skin->IndexOfMenuItems].message);
 
@@ -517,6 +519,11 @@ static int cmd_hpotmeter(char *in)
     cutItem(in, tmp, ',', 10);
 
     message = appFindMessage(tmp);
+
+    if (message == -1) {
+        skin_error(MSGTR_SKIN_UnknownMessage, tmp);
+        return 1;
+    }
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    h/v potmeter image: %s %d,%d %dx%d\n", phfname, x, y, sx, sy);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     button image: %s %dx%d\n", pfname, pwidth, pheight);
@@ -605,6 +612,11 @@ static int cmd_potmeter(char *in)
     cutItem(in, tmp, ',', 7);
 
     message = appFindMessage(tmp);
+
+    if (message == -1) {
+        skin_error(MSGTR_SKIN_UnknownMessage, tmp);
+        return 1;
+    }
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    potmeter image: %s %d,%d %dx%d\n", phfname, x, y, sx, sy);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     numphases: %d, default: %d%%\n", ph, d);

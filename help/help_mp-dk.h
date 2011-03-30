@@ -371,7 +371,7 @@ static const char help_text[]=
 #define MSGTR_SKIN_BITMAP_FileNotFound  "filen ikke fundet (%s)\n"
 #define MSGTR_SKIN_BITMAP_PNGReadError "PNG læse fejl (%s)\n"
 #define MSGTR_SKIN_BITMAP_ConversionError "Fejl i 24 bit to 32 bit convertering (%s)\n"
-#define MSGTR_SKIN_BITMAP_UnknownMessage "ukendt besked: %s\n"
+#define MSGTR_SKIN_UnknownMessage "ukendt besked: %s\n"
 #define MSGTR_SKIN_FONT_NotEnoughtMemory "ikke nok ram\n"
 #define MSGTR_SKIN_FONT_TooManyFontsDeclared "for mange skrifttyper specificeret\n"
 #define MSGTR_SKIN_FONT_FontFileNotFound "skriftypefilen ikke fundet\n"

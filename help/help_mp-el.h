@@ -380,7 +380,7 @@ static const char help_text[]=
 #define MSGTR_SKIN_BITMAP_FileNotFound  "το αρχείο (%s) δεν βρέθηκε\n"
 #define MSGTR_SKIN_BITMAP_PNGReadError "σφάλμα κατά την ανάγνωση του PNG (%s)\n"
 #define MSGTR_SKIN_BITMAP_ConversionError "σφάλμα κατά τη μετατροπή από 24 bit σε 32 bit (%s)\n"
-#define MSGTR_SKIN_BITMAP_UnknownMessage "μη αναγνωρίσιμο μήνυμα: %s\n"
+#define MSGTR_SKIN_UnknownMessage "μη αναγνωρίσιμο μήνυμα: %s\n"
 #define MSGTR_SKIN_FONT_NotEnoughtMemory "δεν υπάρχει αρκετή μνήμη διαθέσιμη\n"
 #define MSGTR_SKIN_FONT_TooManyFontsDeclared "πολλαπλές ορισμένες γραμματοσειρές\n"
 #define MSGTR_SKIN_FONT_FontFileNotFound "δεν βρέθηκε αρχείο γραμματοσειράς\n"
