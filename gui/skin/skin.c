@@ -118,8 +118,6 @@ int skinBPRead(char *fname, txSample *bf)
 // section=movieplayer
 static int cmd_section(char *in)
 {
-    skin = NULL;
-
     if (!strcmp(strlower(in), "movieplayer"))
         skin = &appMPlayer;
 
