@@ -378,11 +378,11 @@ static int cmd_button(char *in)
     }
 
     (*currWinItemIdx)++;
-    currWinItems[*currWinItemIdx].type   = itButton;
-    currWinItems[*currWinItemIdx].x      = x;
-    currWinItems[*currWinItemIdx].y      = y;
-    currWinItems[*currWinItemIdx].width  = sx;
-    currWinItems[*currWinItemIdx].height = sy;
+    currWinItems[*currWinItemIdx].type    = itButton;
+    currWinItems[*currWinItemIdx].x       = x;
+    currWinItems[*currWinItemIdx].y       = y;
+    currWinItems[*currWinItemIdx].width   = sx;
+    currWinItems[*currWinItemIdx].height  = sy;
     currWinItems[*currWinItemIdx].message = message;
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    button image: %s %d,%d\n", fname, x, y);
@@ -477,10 +477,10 @@ static int cmd_menu(char *in)
     }
 
     skin->IndexOfMenuItems++;
-    skin->menuItems[skin->IndexOfMenuItems].x      = x;
-    skin->menuItems[skin->IndexOfMenuItems].y      = y;
-    skin->menuItems[skin->IndexOfMenuItems].width  = sx;
-    skin->menuItems[skin->IndexOfMenuItems].height = sy;
+    skin->menuItems[skin->IndexOfMenuItems].x       = x;
+    skin->menuItems[skin->IndexOfMenuItems].y       = y;
+    skin->menuItems[skin->IndexOfMenuItems].width   = sx;
+    skin->menuItems[skin->IndexOfMenuItems].height  = sy;
     skin->menuItems[skin->IndexOfMenuItems].message = message;
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    item #%d: %d,%d %dx%d\n", skin->IndexOfMenuItems, x, y, sx, sy);
