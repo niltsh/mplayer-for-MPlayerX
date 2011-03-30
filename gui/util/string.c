@@ -67,3 +67,25 @@ char *trim(char *in)
 
     return in;
 }
+
+char *decomment(char *in)
+{
+    char *p;
+    int nap = 0;
+
+    p = in;
+
+    while (*p) {
+        if (*p == '"')
+            nap = !nap;
+
+        if ((*p == ';') && !nap) {
+            *p = 0;
+            break;
+        }
+
+        p++;
+    }
+
+    return in;
+}

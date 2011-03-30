@@ -870,7 +870,6 @@ int skinRead(char *dname)
     char *fn;
     FILE *skinFile;
     unsigned char tmp[256];
-    unsigned char *ptmp;
     unsigned char command[32];
     unsigned char param[256];
     unsigned int i;
@@ -898,10 +897,7 @@ int skinRead(char *dname)
         tmp[strcspn(tmp, "\n\r")] = 0; // remove any kind of newline, if any
         strswap(tmp, '\t', ' ');
         trim(tmp);
-        ptmp = strchr(tmp, ';');
-
-        if (ptmp)
-            *ptmp = 0;
+        decomment(tmp);
 
         if (!*tmp)
             continue;

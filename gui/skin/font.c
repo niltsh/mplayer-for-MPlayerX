@@ -76,7 +76,6 @@ int fntRead(char *path, char *fname)
 {
     FILE *f;
     unsigned char tmp[512];
-    unsigned char *ptmp;
     unsigned char command[32];
     unsigned char param[256];
     int id, n, i;
@@ -100,10 +99,7 @@ int fntRead(char *path, char *fname)
         tmp[strcspn(tmp, "\n\r")] = 0; // remove any kind of newline, if any
         strswap(tmp, '\t', ' ');
         trim(tmp);
-        ptmp = strchr(tmp, ';');
-
-        if (ptmp && !(ptmp == tmp + 1 && tmp[0] == '"' && tmp[2] == '"'))
-            *ptmp = 0;
+        decomment(tmp);
 
         if (!*tmp)
             continue;

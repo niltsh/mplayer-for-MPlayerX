@@ -19,6 +19,7 @@
 #ifndef MPLAYER_GUI_STRING_H
 #define MPLAYER_GUI_STRING_H
 
+char *decomment(char *in);
 char *strlower(char *in);
 char *strswap(char *in, char from, char to);
 char *trim(char *in);
