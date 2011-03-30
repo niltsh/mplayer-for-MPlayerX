@@ -352,7 +352,7 @@ static int cmd_button(char *in)
 {
     unsigned char fname[512];
     unsigned char tmp[512];
-    int x, y, sx, sy;
+    int x, y, sx, sy, message;
     char msg[32];
 
     if (!window_cmd("button"))
@@ -370,21 +370,23 @@ static int cmd_button(char *in)
     sy = cutItemToInt(in, ',', 4);
     cutItem(in, msg, ',', 5);
 
+    message = appFindMessage(msg);
+
+    if (message == -1) {
+        skin_error(MSGTR_SKIN_UnknownMessage, msg);
+        return 1;
+    }
+
     (*currWinItemIdx)++;
     currWinItems[*currWinItemIdx].type   = itButton;
     currWinItems[*currWinItemIdx].x      = x;
     currWinItems[*currWinItemIdx].y      = y;
     currWinItems[*currWinItemIdx].width  = sx;
     currWinItems[*currWinItemIdx].height = sy;
+    currWinItems[*currWinItemIdx].message = message;
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    button image: %s %d,%d\n", fname, x, y);
-
-    if ((currWinItems[*currWinItemIdx].message = appFindMessage(msg)) == -1) {
-        skin_error(MSGTR_SKIN_UnknownMessage, msg);
-        return 1;
-    }
-
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", msg, currWinItems[*currWinItemIdx].message);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", msg, message);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     size: %dx%d\n", sx, sy);
 
     currWinItems[*currWinItemIdx].pressed = btnReleased;
@@ -449,7 +451,7 @@ static int cmd_selected(char *in)
 static int cmd_menu(char *in)
 {
     int x, y, sx, sy, message;
-    unsigned char tmp[64];
+    char msg[32];
 
     if (!window_cmd("menu"))
         return 1;
@@ -465,24 +467,24 @@ static int cmd_menu(char *in)
     y  = cutItemToInt(in, ',', 1);
     sx = cutItemToInt(in, ',', 2);
     sy = cutItemToInt(in, ',', 3);
-    cutItem(in, tmp, ',', 4);
+    cutItem(in, msg, ',', 4);
 
-    message = appFindMessage(tmp);
+    message = appFindMessage(msg);
+
+    if (message == -1) {
+        skin_error(MSGTR_SKIN_UnknownMessage, msg);
+        return 1;
+    }
 
     skin->IndexOfMenuItems++;
     skin->menuItems[skin->IndexOfMenuItems].x      = x;
     skin->menuItems[skin->IndexOfMenuItems].y      = y;
     skin->menuItems[skin->IndexOfMenuItems].width  = sx;
     skin->menuItems[skin->IndexOfMenuItems].height = sy;
+    skin->menuItems[skin->IndexOfMenuItems].message = message;
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    item #%d: %d,%d %dx%d\n", skin->IndexOfMenuItems, x, y, sx, sy);
-
-    if ((skin->menuItems[skin->IndexOfMenuItems].message = message) == -1) {
-        skin_error(MSGTR_SKIN_UnknownMessage, tmp);
-        return 1;
-    }
-
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", tmp, skin->menuItems[skin->IndexOfMenuItems].message);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", msg, message);
 
     skin->menuItems[skin->IndexOfMenuItems].Bitmap.Image = NULL;
 
