@@ -166,7 +166,9 @@ You need the following files to build a skin:
 <para>
 As mentioned above, this is the skin configuration file. It is line oriented;
 comments start with a '<literal>;</literal>' character and continue until
-the end of the line.
+the end of the line, or start with a '<literal>#</literal>' character at the
+beginning of the line (in that case only spaces and tabs are allowed before the
+'<literal>#</literal>').
 </para>
 
 <para>
@@ -733,7 +735,8 @@ file exactly.
 
 <para>
 The font description file (with <filename>.fnt</filename> extension) can have
-comments starting with '<literal>;</literal>'. The file must have a line
+comments like the skin configuration file starting with '<literal>;</literal>'
+(or '<literal>#</literal>', but only at the beginning of the line). The file must have a line
 in the form
 <anchor id="skin-font-image"/>
 <programlisting>image = <replaceable>image</replaceable></programlisting>

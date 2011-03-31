@@ -217,7 +217,9 @@
       Wie oben erwähnt, ist dies die skin-Konfigurationsdatei. Sie ist
       zeilenorientiert;
       Kommentare beginnen mit einem Semikolon ('<literal>;</literal>')
-      und reichen bis zum Zeilenende.
+      und reichen bis zum Zeilenende oder beginnen mit einem '<literal>#</literal>'
+      am Zeilenanfang (dann sind nur Leerzeichen und Tabulatoren vor dem
+      '<literal>#</literal>' erlaubt).
     </para>
 
     <para>
@@ -867,7 +869,9 @@ end
 
     <para>
       Die Schrift-Beschreibungsdatei (mit Erweiterung <filename>.fnt</filename>)
-      darf mit '<literal>;</literal>' beginnende Kommentare enthalten.
+      darf wie die skin-Konfigurationsdatei mit '<literal>;</literal>' beginnende
+      Kommentare enthalten (oder Kommentare mit '<literal>#</literal>', aber
+      nur am Zeilenanfang).
       Die Datei muss eine Zeile in der Form
       <anchor id="skin-font-image"/>
       <programlisting>image = <replaceable>image</replaceable></programlisting>

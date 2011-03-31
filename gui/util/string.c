@@ -75,6 +75,9 @@ char *decomment(char *in)
 
     p = in;
 
+    if (*p == '#')
+        *p = 0;
+
     while (*p) {
         if (*p == '"')
             nap = !nap;
