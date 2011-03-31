@@ -175,7 +175,7 @@ typedef struct {
     wsTWindow barWindow;
     int barIsPresent;
 
-    wItem menuBase;
+    wItem menu;
     wItem menuSelected;
     wsTWindow menuWindow;
     int menuIsPresent;

@@ -106,7 +106,7 @@ void appFreeStruct(void)
     appClearItem(&appMPlayer.bar);
     appMPlayer.barIsPresent = 0;
 
-    appClearItem(&appMPlayer.menuBase);
+    appClearItem(&appMPlayer.menu);
     appClearItem(&appMPlayer.menuSelected);
     appMPlayer.menuIsPresent = 0;
 
