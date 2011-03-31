@@ -870,7 +870,7 @@ int skinRead(char *dname)
     char *fn;
     FILE *skinFile;
     unsigned char tmp[256];
-    unsigned char command[32];
+    unsigned char item[32];
     unsigned char param[256];
     unsigned int i;
 
@@ -902,12 +902,12 @@ int skinRead(char *dname)
         if (!*tmp)
             continue;
 
-        cutItem(tmp, command, '=', 0);
+        cutItem(tmp, item, '=', 0);
         cutItem(tmp, param, '=', 1);
-        strlower(command);
+        strlower(item);
 
         for (i = 0; i < FF_ARRAY_ELEMS(skinItem); i++)
-            if (!strcmp(command, skinItem[i].name))
+            if (!strcmp(item, skinItem[i].name))
                 if (skinItem[i].func(param) != 0)
                     return -2;
     }
