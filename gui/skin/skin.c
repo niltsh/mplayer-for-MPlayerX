@@ -914,6 +914,11 @@ int skinRead(char *dname)
                     break;
             }
         }
+
+        if (i == FF_ARRAY_ELEMS(skinItem)) {
+            skin_error(MSGTR_SKIN_UNKNOWN_ITEM, item);
+            return -2;
+        }
     }
 
     if (linenumber == 0) {

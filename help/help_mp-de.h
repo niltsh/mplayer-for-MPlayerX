@@ -775,6 +775,7 @@ static const char help_text[]=
 #define MSGTR_SKIN_ERROR_SECTION "Für '%s' wurde kein Abschnitt angegeben.\n"
 #define MSGTR_SKIN_ERROR_WINDOW "Für '%s' wurde kein Fenster angegeben.\n"
 #define MSGTR_SKIN_ERROR_ITEM "Dieses Element wird in '%s' nicht unterstützt.\n"
+#define MSGTR_SKIN_UNKNOWN_ITEM "Unbekanntes Element '%s'\n"
 #define MSGTR_SKIN_UNKNOWN_NAME "Unbekannter Name '%s'\n"
 #define MSGTR_SKIN_SkinFileNotFound "Skin-Datei %s nicht gefunden.\n"
 #define MSGTR_SKIN_SkinFileNotReadable "Skin-Datei %s nicht lesbar.\n"
