@@ -889,6 +889,8 @@ int skinRead(char *dname)
 
     appFreeStruct();
 
+    skin = NULL;
+    currWinName[0] = 0;
     linenumber = 0;
 
     while (fgets(tmp, sizeof(tmp), skinFile)) {
