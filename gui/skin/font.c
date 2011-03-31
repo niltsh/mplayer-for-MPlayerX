@@ -75,8 +75,8 @@ void fntFreeFont(void)
 int fntRead(char *path, char *fname)
 {
     FILE *f;
-    unsigned char tmp[512];
-    unsigned char command[32];
+    unsigned char buf[512];
+    unsigned char item[32];
     unsigned char param[256];
     int id, n, i;
 
@@ -85,41 +85,41 @@ int fntRead(char *path, char *fname)
     if (id < 0)
         return id;
 
-    av_strlcpy(tmp, path, sizeof(tmp));
-    av_strlcat(tmp, fname, sizeof(tmp));
-    av_strlcat(tmp, ".fnt", sizeof(tmp));
-    f = fopen(tmp, "rt");
+    av_strlcpy(buf, path, sizeof(buf));
+    av_strlcat(buf, fname, sizeof(buf));
+    av_strlcat(buf, ".fnt", sizeof(buf));
+    f = fopen(buf, "rt");
 
     if (!f) {
         gfree((void **)&Fonts[id]);
         return -3;
     }
 
-    while (fgets(tmp, sizeof(tmp), f)) {
-        tmp[strcspn(tmp, "\n\r")] = 0; // remove any kind of newline, if any
-        strswap(tmp, '\t', ' ');
-        trim(tmp);
-        decomment(tmp);
+    while (fgets(buf, sizeof(buf), f)) {
+        buf[strcspn(buf, "\n\r")] = 0; // remove any kind of newline, if any
+        strswap(buf, '\t', ' ');
+        trim(buf);
+        decomment(buf);
 
-        if (!*tmp)
+        if (!*buf)
             continue;
 
-        n = (strncmp(tmp, "\"=", 2) == 0 ? 1 : 0);
-        cutItem(tmp, command, '=', n);
-        cutItem(tmp, param, '=', n + 1);
+        n = (strncmp(buf, "\"=", 2) == 0 ? 1 : 0);
+        cutItem(buf, item, '=', n);
+        cutItem(buf, param, '=', n + 1);
 
-        if (command[0] == '"') {
-            if (!command[1])
-                command[0] = '=';
-            else if (command[1] == '"')
-                command[1] = 0;
+        if (item[0] == '"') {
+            if (!item[1])
+                item[0] = '=';
+            else if (item[1] == '"')
+                item[1] = 0;
             else
-                cutItem(command, command, '"', 1);
+                cutItem(item, item, '"', 1);
 
-            if (command[0] & 0x80) {
+            if (item[0] & 0x80) {
                 for (i = 0; i < EXTRA_CHRS; i++) {
                     if (!Fonts[id]->nonASCIIidx[i][0]) {
-                        strncpy(Fonts[id]->nonASCIIidx[i], command, UTF8LENGTH);
+                        strncpy(Fonts[id]->nonASCIIidx[i], item, UTF8LENGTH);
                         break;
                     }
                 }
@@ -129,28 +129,28 @@ int fntRead(char *path, char *fname)
 
                 i += ASCII_CHRS;
             } else
-                i = command[0];
+                i = item[0];
 
-            cutItem(param, tmp, ',', 0);
-            Fonts[id]->Fnt[i].x = atoi(tmp);
+            cutItem(param, buf, ',', 0);
+            Fonts[id]->Fnt[i].x = atoi(buf);
 
-            cutItem(param, tmp, ',', 1);
-            Fonts[id]->Fnt[i].y = atoi(tmp);
+            cutItem(param, buf, ',', 1);
+            Fonts[id]->Fnt[i].y = atoi(buf);
 
-            cutItem(param, tmp, ',', 2);
-            Fonts[id]->Fnt[i].sx = atoi(tmp);
+            cutItem(param, buf, ',', 2);
+            Fonts[id]->Fnt[i].sx = atoi(buf);
 
-            cutItem(param, tmp, ',', 3);
-            Fonts[id]->Fnt[i].sy = atoi(tmp);
+            cutItem(param, buf, ',', 3);
+            Fonts[id]->Fnt[i].sy = atoi(buf);
 
-            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[font]  char: '%s' params: %d,%d %dx%d\n", command, Fonts[id]->Fnt[i].x, Fonts[id]->Fnt[i].y, Fonts[id]->Fnt[i].sx, Fonts[id]->Fnt[i].sy);
-        } else if (!strcmp(command, "image")) {
-            av_strlcpy(tmp, path, sizeof(tmp));
-            av_strlcat(tmp, param, sizeof(tmp));
+            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[font]  char: '%s' params: %d,%d %dx%d\n", item, Fonts[id]->Fnt[i].x, Fonts[id]->Fnt[i].y, Fonts[id]->Fnt[i].sx, Fonts[id]->Fnt[i].sy);
+        } else if (!strcmp(item, "image")) {
+            av_strlcpy(buf, path, sizeof(buf));
+            av_strlcat(buf, param, sizeof(buf));
 
-            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[font] image file: %s\n", tmp);
+            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[font] image file: %s\n", buf);
 
-            if (skinBPRead(tmp, &Fonts[id]->Bitmap) != 0) {
+            if (skinBPRead(buf, &Fonts[id]->Bitmap) != 0) {
                 bpFree(&Fonts[id]->Bitmap);
                 gfree((void **)&Fonts[id]);
                 fclose(f);
