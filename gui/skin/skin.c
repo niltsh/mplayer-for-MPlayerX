@@ -179,19 +179,21 @@ static int cmd_window(char *in)
         return 1;
     }
 
-    av_strlcpy(currWinName, strlower(in), sizeof(currWinName));
+    strlower(in);
 
-    if (!strncmp(in, "main", 4)) {
+    if (strcmp(in, "main") == 0) {
         currWin = &appMPlayer.main;
         currWinItemIdx = &appMPlayer.IndexOfMainItems;
         currWinItems   = appMPlayer.mainItems;
-    } else if (!strncmp(in, "sub", 3))
+    } else if (strcmp(in, "sub") == 0) {
         currWin = &appMPlayer.sub;
-    else if (!strncmp(in, "playbar", 7)) {
+        currWinItemIdx = NULL;
+        currWinItems   = NULL;
+    } else if (strcmp(in, "playbar") == 0) {
         currWin = &appMPlayer.bar;
         currWinItemIdx = &appMPlayer.IndexOfBarItems;
         currWinItems   = appMPlayer.barItems;
-    } else if (!strncmp(in, "menu", 4)) {
+    } else if (strcmp(in, "menu") == 0) {
         currWin = &appMPlayer.menuBase;
         currWinItemIdx = &appMPlayer.IndexOfMenuItems;
         currWinItems   = appMPlayer.menuItems;
@@ -199,6 +201,8 @@ static int cmd_window(char *in)
         skin_error(MSGTR_SKIN_UNKNOWN_NAME, in);
         return 1;
     }
+
+    av_strlcpy(currWinName, in, sizeof(currWinName));
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]   window: %s\n", currWinName);
 
