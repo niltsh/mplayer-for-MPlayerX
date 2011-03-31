@@ -906,10 +906,14 @@ int skinRead(char *dname)
         cutItem(tmp, param, '=', 1);
         strlower(item);
 
-        for (i = 0; i < FF_ARRAY_ELEMS(skinItem); i++)
-            if (!strcmp(item, skinItem[i].name))
+        for (i = 0; i < FF_ARRAY_ELEMS(skinItem); i++) {
+            if (!strcmp(item, skinItem[i].name)) {
                 if (skinItem[i].func(param) != 0)
                     return -2;
+                else
+                    break;
+            }
+        }
     }
 
     if (linenumber == 0) {
