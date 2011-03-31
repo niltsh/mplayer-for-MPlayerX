@@ -851,41 +851,41 @@ static _item skinItem[] = {
     { "menu",       cmd_menu       }
 };
 
-static char *setname(char *item1, char *item2)
+static char *setname(char *dir, char *sname)
 {
-    static char fn[512];
+    static char skinfname[512];
 
-    av_strlcpy(fn, item1, sizeof(fn));
-    av_strlcat(fn, "/", sizeof(fn));
-    av_strlcat(fn, item2, sizeof(fn));
-    av_strlcpy(path, fn, sizeof(path));
-    av_strlcat(path, "/", sizeof(path));
-    av_strlcat(fn, "/skin", sizeof(fn));
+    av_strlcpy(skinfname, dir, sizeof(skinfname));
+    av_strlcat(skinfname, "/", sizeof(skinfname));
+    av_strlcat(skinfname, sname, sizeof(skinfname));
+    av_strlcat(skinfname, "/", sizeof(skinfname));
+    av_strlcpy(path, skinfname, sizeof(path));
+    av_strlcat(skinfname, "skin", sizeof(skinfname));
 
-    return fn;
+    return skinfname;
 }
 
-int skinRead(char *dname)
+int skinRead(char *sname)
 {
-    char *fn;
+    char *skinfname;
     FILE *skinFile;
-    unsigned char tmp[256];
+    unsigned char line[256];
     unsigned char item[32];
     unsigned char param[256];
     unsigned int i;
 
-    fn = setname(skinDirInHome, dname);
+    skinfname = setname(skinDirInHome, sname);
 
-    if ((skinFile = fopen(fn, "rt")) == NULL) {
-        fn = setname(skinMPlayerDir, dname);
+    if ((skinFile = fopen(skinfname, "rt")) == NULL) {
+        skinfname = setname(skinMPlayerDir, sname);
 
-        if ((skinFile = fopen(fn, "rt")) == NULL) {
-            mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_SkinFileNotFound, fn);
+        if ((skinFile = fopen(skinfname, "rt")) == NULL) {
+            mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_SkinFileNotFound, skinfname);
             return -1;
         }
     }
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin] configuration file: %s\n", fn);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin] configuration file: %s\n", skinfname);
 
     appFreeStruct();
 
@@ -893,19 +893,19 @@ int skinRead(char *dname)
     currWinName[0] = 0;
     linenumber     = 0;
 
-    while (fgets(tmp, sizeof(tmp), skinFile)) {
+    while (fgets(line, sizeof(line), skinFile)) {
         linenumber++;
 
-        tmp[strcspn(tmp, "\n\r")] = 0; // remove any kind of newline, if any
-        strswap(tmp, '\t', ' ');
-        trim(tmp);
-        decomment(tmp);
+        line[strcspn(line, "\n\r")] = 0; // remove any kind of newline, if any
+        strswap(line, '\t', ' ');
+        trim(line);
+        decomment(line);
 
-        if (!*tmp)
+        if (!*line)
             continue;
 
-        cutItem(tmp, item, '=', 0);
-        cutItem(tmp, param, '=', 1);
+        cutItem(line, item, '=', 0);
+        cutItem(line, param, '=', 1);
         strlower(item);
 
         for (i = 0; i < FF_ARRAY_ELEMS(skinItem); i++) {
@@ -924,7 +924,7 @@ int skinRead(char *dname)
     }
 
     if (linenumber == 0) {
-        mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_SkinFileNotReadable, fn);
+        mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_SkinFileNotReadable, skinfname);
         return -1;
     }
 
