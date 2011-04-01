@@ -592,7 +592,7 @@ static const char help_text[]=
 #define MSGTR_SKIN_FONT_FontFileNotFound "Font file not found.\n"
 #define MSGTR_SKIN_FONT_FontImageNotFound "Font image file not found.\n"
 #define MSGTR_SKIN_FONT_NonExistentFontID "non-existent font identifier (%s)\n"
-#define MSGTR_SKIN_UnknownParameter "unknown parameter (%s)\n"
+#define MSGTR_SKIN_UnknownParameter "Unknown parameter '%s'\n"
 #define MSGTR_SKIN_SKINCFG_SkinNotFound "Skin '%s' not found.\n"
 #define MSGTR_SKIN_SKINCFG_SelectedSkinNotFound "Selected skin '%s' not found, trying skin 'default'...\n"
 #define MSGTR_SKIN_SKINCFG_SkinCfgError "Config file processing error with skin '%s'\n"
