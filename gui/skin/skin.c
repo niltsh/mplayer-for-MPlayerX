@@ -212,7 +212,7 @@ static int cmd_window(char *in)
 // base=image,x,y[,width,height]
 static int cmd_base(char *in)
 {
-    unsigned char fname[512];
+    unsigned char fname[256];
     unsigned char file[512];
     int x, y;
     int w = 0, h = 0;
@@ -356,7 +356,7 @@ static int cmd_background(char *in)
 // button=image,x,y,width,height,message
 static int cmd_button(char *in)
 {
-    unsigned char fname[512];
+    unsigned char fname[256];
     unsigned char file[512];
     int x, y, w, h, message;
     char msg[32];
@@ -502,8 +502,8 @@ static int cmd_hpotmeter(char *in)
 {
     int x, y, pwidth, pheight, ph, w, h, message, d;
     unsigned char buf[512];
-    unsigned char pfname[512];
-    unsigned char phfname[512];
+    unsigned char pfname[256];
+    unsigned char phfname[256];
     wItem *item;
 
     if (!window_cmd("h/v potmeter"))
@@ -599,7 +599,7 @@ static int cmd_potmeter(char *in)
 {
     int x, y, ph, w, h, message, d;
     unsigned char buf[512];
-    unsigned char phfname[512];
+    unsigned char phfname[256];
     wItem *item;
 
     if (!window_cmd("potmeter"))
@@ -702,8 +702,8 @@ static int cmd_font(char *in)
 // slabel=x,y,fontfile,"text"
 static int cmd_slabel(char *in)
 {
-    char txt[512];
-    char fnt[64];
+    char txt[256];
+    char fnt[256];
     int x, y, id;
     wItem *item;
 
@@ -754,8 +754,8 @@ static int cmd_slabel(char *in)
 // dlabel=x,y,width,align,fontfile,"text"
 static int cmd_dlabel(char *in)
 {
-    char txt[512];
-    char fnt[64];
+    char txt[256];
+    char fnt[256];
     int x, y, w, id, a;
     wItem *item;
 
