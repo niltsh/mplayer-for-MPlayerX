@@ -825,10 +825,7 @@ static int cmd_decoration(char *in)
         return 1;
     }
 
-    if (strcmp(in, "enable") != 0)
-        skin->mainDecoration = 0;
-    else
-        skin->mainDecoration = 1;
+    skin->mainDecoration = (strcmp(in, "enable") == 0);
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    decoration: %s\n", in);
 
