@@ -808,8 +808,6 @@ static int cmd_dlabel(char *in)
 // decoration=enable|disable
 static int cmd_decoration(char *in)
 {
-    char tmp[512];
-
     if (!window_cmd("decoration"))
         return 1;
 
@@ -820,19 +818,19 @@ static int cmd_decoration(char *in)
     if (in_window("menu"))
         return 1;
 
-    cutItem(strlower(in), tmp, ',', 0);
+    strlower(in);
 
-    if (strcmp(tmp, "enable") != 0 && strcmp(tmp, "disable") != 0) {
-        skin_error(MSGTR_SKIN_UnknownParameter, tmp);
+    if (strcmp(in, "enable") != 0 && strcmp(in, "disable") != 0) {
+        skin_error(MSGTR_SKIN_UnknownParameter, in);
         return 1;
     }
 
-    if (strcmp(tmp, "enable") != 0)
+    if (strcmp(in, "enable") != 0)
         skin->mainDecoration = 0;
     else
         skin->mainDecoration = 1;
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    decoration: %s\n", tmp);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    decoration: %s\n", in);
 
     return 0;
 }
