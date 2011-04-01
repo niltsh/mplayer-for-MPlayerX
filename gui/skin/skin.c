@@ -420,7 +420,6 @@ static int cmd_button(char *in)
 // selected=image
 static int cmd_selected(char *in)
 {
-    unsigned char fname[512];
     unsigned char file[512];
 
     if (!window_cmd("selected"))
@@ -433,14 +432,12 @@ static int cmd_selected(char *in)
     if (in_window("playbar"))
         return 1;
 
-    cutItem(in, fname, ',', 0);
-
     skin->menuSelected.type = itBase;
 
     av_strlcpy(file, path, sizeof(file));
-    av_strlcat(file, fname, sizeof(file));
+    av_strlcat(file, in, sizeof(file));
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image selected: %s\n", fname);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image selected: %s\n", in);
 
     if (skinBPRead(file, &skin->menuSelected.Bitmap) != 0)
         return 1;
