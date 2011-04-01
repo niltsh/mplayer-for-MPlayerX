@@ -505,6 +505,7 @@ static int cmd_menu(char *in)
     if (!item)
         return 1;
 
+    item->type    = itMenu;
     item->x       = x;
     item->y       = y;
     item->width   = w;
