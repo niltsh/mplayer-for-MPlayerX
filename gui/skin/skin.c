@@ -679,7 +679,7 @@ static int cmd_font(char *in)
 
     switch (item->fontid) {
     case -1:
-        skin_error(MSGTR_SKIN_FONT_NotEnoughtMemory);
+        skin_error(MSGTR_SKIN_NotEnoughMemory);
         return 1;
 
     case -2:
@@ -728,7 +728,7 @@ static int cmd_slabel(char *in)
     id = fntFindID(fnt);
 
     if (id < 0) {
-        skin_error(MSGTR_SKIN_FONT_NonExistentFontID, fnt);
+        skin_error(MSGTR_SKIN_FONT_NonExistentFont, fnt);
         return 1;
     }
 
@@ -745,7 +745,7 @@ static int cmd_slabel(char *in)
     item->label  = strdup(txt);
 
     if (!item->label) {
-        skin_error(MSGTR_SKIN_FONT_NotEnoughtMemory);
+        skin_error(MSGTR_SKIN_NotEnoughMemory);
         return 1;
     }
 
@@ -783,7 +783,7 @@ static int cmd_dlabel(char *in)
     id = fntFindID(fnt);
 
     if (id < 0) {
-        skin_error(MSGTR_SKIN_FONT_NonExistentFontID, fnt);
+        skin_error(MSGTR_SKIN_FONT_NonExistentFont, fnt);
         return 1;
     }
 
@@ -801,7 +801,7 @@ static int cmd_dlabel(char *in)
     item->label  = strdup(txt);
 
     if (!item->label) {
-        skin_error(MSGTR_SKIN_FONT_NotEnoughtMemory);
+        skin_error(MSGTR_SKIN_NotEnoughMemory);
         return 1;
     }
 
