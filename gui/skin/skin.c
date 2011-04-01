@@ -699,9 +699,9 @@ static int cmd_font(char *in)
 // slabel=x,y,fontfile,"text"
 static int cmd_slabel(char *in)
 {
-    char txt[256];
-    char fnt[256];
     int x, y, id;
+    char fnt[256];
+    char txt[256];
     wItem *item;
 
     if (!window_cmd("slabel"))
@@ -751,9 +751,9 @@ static int cmd_slabel(char *in)
 // dlabel=x,y,width,align,fontfile,"text"
 static int cmd_dlabel(char *in)
 {
-    char txt[256];
+    int x, y, w, a, id;
     char fnt[256];
-    int x, y, w, id, a;
+    char txt[256];
     wItem *item;
 
     if (!window_cmd("dlabel"))
