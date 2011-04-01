@@ -229,75 +229,75 @@ static int cmd_base(char *in)
     if (!strcmp(currWinName, "main")) {
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s %d,%d\n", fname, x, y);
 
-        skin->main.x    = x;
-        skin->main.y    = y;
-        skin->main.type = itBase;
+        currWin->x    = x;
+        currWin->y    = y;
+        currWin->type = itBase;
 
         av_strlcpy(file, path, sizeof(file));
         av_strlcat(file, fname, sizeof(file));
 
-        if (skinBPRead(file, &skin->main.Bitmap) != 0)
+        if (skinBPRead(file, &currWin->Bitmap) != 0)
             return 1;
 
-        skin->main.width  = skin->main.Bitmap.Width;
-        skin->main.height = skin->main.Bitmap.Height;
+        currWin->width  = currWin->Bitmap.Width;
+        currWin->height = currWin->Bitmap.Height;
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", skin->main.width, skin->main.height);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", currWin->width, currWin->height);
 
 #ifdef CONFIG_XSHAPE
-        Convert32to1(&skin->main.Bitmap, &skin->main.Mask, 0x00ff00ff);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", skin->main.Mask.Width, skin->main.Mask.Height);
+        Convert32to1(&currWin->Bitmap, &currWin->Mask, 0x00ff00ff);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", currWin->Mask.Width, currWin->Mask.Height);
 #else
-        skin->main.Mask.Image = NULL;
+        currWin->Mask.Image = NULL;
 #endif
     }
 
     if (!strcmp(currWinName, "sub")) {
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s %d,%d\n", fname, x, y);
 
-        skin->sub.type = itBase;
+        currWin->type = itBase;
 
         av_strlcpy(file, path, sizeof(file));
         av_strlcat(file, fname, sizeof(file));
 
-        if (skinBPRead(file, &skin->sub.Bitmap) != 0)
+        if (skinBPRead(file, &currWin->Bitmap) != 0)
             return 1;
 
-        skin->sub.x      = x;
-        skin->sub.y      = y;
-        skin->sub.width  = skin->sub.Bitmap.Width;
-        skin->sub.height = skin->sub.Bitmap.Height;
+        currWin->x      = x;
+        currWin->y      = y;
+        currWin->width  = currWin->Bitmap.Width;
+        currWin->height = currWin->Bitmap.Height;
 
         if (w && h) {
-            skin->sub.width  = w;
-            skin->sub.height = h;
+            currWin->width  = w;
+            currWin->height = h;
         }
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", skin->sub.width, skin->sub.height);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", currWin->width, currWin->height);
     }
 
     if (!strcmp(currWinName, "menu")) {
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s\n", fname);
 
         skin->menuIsPresent = 1;
-        skin->menu.type     = itBase;
+        currWin->type       = itBase;
 
         av_strlcpy(file, path, sizeof(file));
         av_strlcat(file, fname, sizeof(file));
 
-        if (skinBPRead(file, &skin->menu.Bitmap) != 0)
+        if (skinBPRead(file, &currWin->Bitmap) != 0)
             return 1;
 
-        skin->menu.width  = skin->menu.Bitmap.Width;
-        skin->menu.height = skin->menu.Bitmap.Height;
+        currWin->width  = currWin->Bitmap.Width;
+        currWin->height = currWin->Bitmap.Height;
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", skin->menu.width, skin->menu.height);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", currWin->width, currWin->height);
 
 #ifdef CONFIG_XSHAPE
-        Convert32to1(&skin->menu.Bitmap, &skin->menu.Mask, 0x00ff00ff);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", skin->menu.Mask.Width, skin->menu.Mask.Height);
+        Convert32to1(&currWin->Bitmap, &currWin->Mask, 0x00ff00ff);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", currWin->Mask.Width, currWin->Mask.Height);
 #else
-        skin->menu.Mask.Image = NULL;
+        currWin->Mask.Image = NULL;
 #endif
     }
 
@@ -305,26 +305,26 @@ static int cmd_base(char *in)
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s %d,%d\n", fname, x, y);
 
         skin->barIsPresent = 1;
-        skin->bar.x    = x;
-        skin->bar.y    = y;
-        skin->bar.type = itBase;
+        currWin->x    = x;
+        currWin->y    = y;
+        currWin->type = itBase;
 
         av_strlcpy(file, path, sizeof(file));
         av_strlcat(file, fname, sizeof(file));
 
-        if (skinBPRead(file, &skin->bar.Bitmap) != 0)
+        if (skinBPRead(file, &currWin->Bitmap) != 0)
             return 1;
 
-        skin->bar.width  = skin->bar.Bitmap.Width;
-        skin->bar.height = skin->bar.Bitmap.Height;
+        currWin->width  = currWin->Bitmap.Width;
+        currWin->height = currWin->Bitmap.Height;
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", skin->bar.width, skin->bar.height);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", currWin->width, currWin->height);
 
 #ifdef CONFIG_XSHAPE
-        Convert32to1(&skin->bar.Bitmap, &skin->bar.Mask, 0x00ff00ff);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", skin->bar.Mask.Width, skin->bar.Mask.Height);
+        Convert32to1(&currWin->Bitmap, &currWin->Mask, 0x00ff00ff);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", currWin->Mask.Width, currWin->Mask.Height);
 #else
-        skin->bar.Mask.Image = NULL;
+        currWin->Mask.Image = NULL;
 #endif
     }
 
@@ -421,6 +421,7 @@ static int cmd_button(char *in)
 static int cmd_selected(char *in)
 {
     unsigned char file[512];
+    wItem *currItem;
 
     if (!window_cmd("selected"))
         return 1;
@@ -432,20 +433,21 @@ static int cmd_selected(char *in)
     if (in_window("playbar"))
         return 1;
 
-    skin->menuSelected.type = itBase;
+    currItem       = &skin->menuSelected;
+    currItem->type = itBase;
 
     av_strlcpy(file, path, sizeof(file));
     av_strlcat(file, in, sizeof(file));
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image selected: %s\n", in);
 
-    if (skinBPRead(file, &skin->menuSelected.Bitmap) != 0)
+    if (skinBPRead(file, &currItem->Bitmap) != 0)
         return 1;
 
-    skin->menuSelected.width  = skin->menuSelected.Bitmap.Width;
-    skin->menuSelected.height = skin->menuSelected.Bitmap.Height;
+    currItem->width  = currItem->Bitmap.Width;
+    currItem->height = currItem->Bitmap.Height;
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", skin->menuSelected.width, skin->menuSelected.height);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", currItem->width, currItem->height);
 
     return 0;
 }
@@ -455,6 +457,7 @@ static int cmd_menu(char *in)
 {
     int x, y, w, h, message;
     char msg[32];
+    wItem *item;
 
     if (!window_cmd("menu"))
         return 1;
@@ -479,17 +482,18 @@ static int cmd_menu(char *in)
         return 1;
     }
 
-    skin->IndexOfMenuItems++;
-    skin->menuItems[skin->IndexOfMenuItems].x       = x;
-    skin->menuItems[skin->IndexOfMenuItems].y       = y;
-    skin->menuItems[skin->IndexOfMenuItems].width   = w;
-    skin->menuItems[skin->IndexOfMenuItems].height  = h;
-    skin->menuItems[skin->IndexOfMenuItems].message = message;
+    (*currWinItemIdx)++;
+    item          = &currWinItems[*currWinItemIdx];
+    item->x       = x;
+    item->y       = y;
+    item->width   = w;
+    item->height  = h;
+    item->message = message;
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    item #%d: %d,%d %dx%d\n", skin->IndexOfMenuItems, x, y, w, h);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    item #%d: %d,%d %dx%d\n", *currWinItemIdx, x, y, w, h);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", msg, message);
 
-    skin->menuItems[skin->IndexOfMenuItems].Bitmap.Image = NULL;
+    item->Bitmap.Image = NULL;
 
     return 0;
 }
