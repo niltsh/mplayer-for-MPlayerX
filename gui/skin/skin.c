@@ -339,6 +339,8 @@ static int cmd_background(char *in)
 
     if (in_window("main"))
         return 1;
+    if (in_window("playbar"))
+        return 1;
     if (in_window("menu"))
         return 1;
 
