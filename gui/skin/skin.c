@@ -182,21 +182,21 @@ static int cmd_window(char *in)
     strlower(in);
 
     if (strcmp(in, "main") == 0) {
-        currWin = &appMPlayer.main;
-        currWinItemIdx = &appMPlayer.IndexOfMainItems;
-        currWinItems   = appMPlayer.mainItems;
+        currWin = &skin->main;
+        currWinItemIdx = &skin->IndexOfMainItems;
+        currWinItems   = skin->mainItems;
     } else if (strcmp(in, "sub") == 0) {
-        currWin = &appMPlayer.sub;
+        currWin = &skin->sub;
         currWinItemIdx = NULL;
         currWinItems   = NULL;
     } else if (strcmp(in, "playbar") == 0) {
-        currWin = &appMPlayer.bar;
-        currWinItemIdx = &appMPlayer.IndexOfBarItems;
-        currWinItems   = appMPlayer.barItems;
+        currWin = &skin->bar;
+        currWinItemIdx = &skin->IndexOfBarItems;
+        currWinItems   = skin->barItems;
     } else if (strcmp(in, "menu") == 0) {
-        currWin = &appMPlayer.menu;
-        currWinItemIdx = &appMPlayer.IndexOfMenuItems;
-        currWinItems   = appMPlayer.menuItems;
+        currWin = &skin->menu;
+        currWinItemIdx = &skin->IndexOfMenuItems;
+        currWinItems   = skin->menuItems;
     } else {
         skin_error(MSGTR_SKIN_UNKNOWN_NAME, in);
         return 1;
