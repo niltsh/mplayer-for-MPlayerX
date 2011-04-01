@@ -119,7 +119,6 @@ typedef struct {
 #define itDLabel    105
 #define itBase      106
 #define itPotmeter  107
-#define itFont      108
 
 #define itPLMButton (itNone - 1)
 #define itPRMButton (itNone - 2)

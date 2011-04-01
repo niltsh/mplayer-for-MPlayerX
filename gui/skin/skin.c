@@ -687,7 +687,6 @@ static int cmd_potmeter(char *in)
 static int cmd_font(char *in)
 {
     char fnt[256];
-    wItem *item;
 
     if (!window_cmd("font"))
         return 1;
@@ -699,15 +698,7 @@ static int cmd_font(char *in)
 
     cutItem(in, fnt, ',', 0);   // Note: This seems needless but isn't for compatibility
                                 // reasons with a meanwhile depreciated second parameter.
-    item = next_item();
-
-    if (!item)
-        return 1;
-
-    item->type   = itFont;
-    item->fontid = fntRead(path, fnt);
-
-    switch (item->fontid) {
+    switch (fntRead(path, fnt)) {
     case -1:
         skin_error(MSGTR_SKIN_NotEnoughMemory);
         return 1;
