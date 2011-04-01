@@ -655,7 +655,7 @@ static int cmd_potmeter(char *in)
 // font=fontfile
 static int cmd_font(char *in)
 {
-    char name[512];
+    char fnt[256];
     wItem *item;
 
     if (!window_cmd("font"))
@@ -666,12 +666,12 @@ static int cmd_font(char *in)
     if (in_window("menu"))
         return 1;
 
-    cutItem(in, name, ',', 0);
-
+    cutItem(in, fnt, ',', 0);   // Note: This seems needless but isn't for compatibility
+                                // reasons with a meanwhile depreciated second parameter.
     (*currWinItemIdx)++;
     item         = &currWinItems[*currWinItemIdx];
     item->type   = itFont;
-    item->fontid = fntRead(path, name);
+    item->fontid = fntRead(path, fnt);
 
     switch (item->fontid) {
     case -1:
@@ -691,7 +691,7 @@ static int cmd_font(char *in)
         return 1;
     }
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    font: %s (#%d)\n", name, fntFindID(name));
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    font: %s (#%d)\n", fnt, fntFindID(fnt));
 
     return 0;
 }
