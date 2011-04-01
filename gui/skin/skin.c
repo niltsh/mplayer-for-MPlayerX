@@ -497,10 +497,10 @@ static int cmd_menu(char *in)
 // hpotmeter=button,bwidth,bheight,phases,numphases,default,x,y,width,height,message
 static int cmd_hpotmeter(char *in)
 {
-    int x, y, pwidth, pheight, ph, w, h, message, d;
-    unsigned char buf[512];
     unsigned char pfname[256];
     unsigned char phfname[256];
+    unsigned char buf[512];
+    int pwidth, pheight, ph, d, x, y, w, h, message;
     wItem *item;
 
     if (!window_cmd("h/v potmeter"))
@@ -594,9 +594,9 @@ static int cmd_vpotmeter(char *in)
 // potmeter=phases,numphases,default,x,y,width,height,message
 static int cmd_potmeter(char *in)
 {
-    int x, y, ph, w, h, message, d;
-    unsigned char buf[512];
     unsigned char phfname[256];
+    unsigned char buf[512];
+    int ph, d, x, y, w, h, message;
     wItem *item;
 
     if (!window_cmd("potmeter"))
