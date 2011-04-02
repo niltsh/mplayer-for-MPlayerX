@@ -242,9 +242,9 @@ static int cmd_base(char *in)
     if (!strcmp(currWinName, "main")) {
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s %d,%d\n", fname, x, y);
 
+        currWin->type = itBase;
         currWin->x    = x;
         currWin->y    = y;
-        currWin->type = itBase;
 
         av_strlcpy(file, path, sizeof(file));
         av_strlcat(file, fname, sizeof(file));
@@ -269,6 +269,8 @@ static int cmd_base(char *in)
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s %d,%d\n", fname, x, y);
 
         currWin->type = itBase;
+        currWin->x    = x;
+        currWin->y    = y;
 
         av_strlcpy(file, path, sizeof(file));
         av_strlcat(file, fname, sizeof(file));
@@ -276,8 +278,6 @@ static int cmd_base(char *in)
         if (skinBPRead(file, &currWin->Bitmap) != 0)
             return 1;
 
-        currWin->x      = x;
-        currWin->y      = y;
         currWin->width  = currWin->Bitmap.Width;
         currWin->height = currWin->Bitmap.Height;
 
@@ -292,34 +292,6 @@ static int cmd_base(char *in)
     if (!strcmp(currWinName, "menu")) {
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s\n", fname);
 
-        skin->menuIsPresent = 1;
-        currWin->type       = itBase;
-
-        av_strlcpy(file, path, sizeof(file));
-        av_strlcat(file, fname, sizeof(file));
-
-        if (skinBPRead(file, &currWin->Bitmap) != 0)
-            return 1;
-
-        currWin->width  = currWin->Bitmap.Width;
-        currWin->height = currWin->Bitmap.Height;
-
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", currWin->width, currWin->height);
-
-#ifdef CONFIG_XSHAPE
-        Convert32to1(&currWin->Bitmap, &currWin->Mask, 0x00ff00ff);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", currWin->Mask.Width, currWin->Mask.Height);
-#else
-        currWin->Mask.Image = NULL;
-#endif
-    }
-
-    if (!strcmp(currWinName, "playbar")) {
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s %d,%d\n", fname, x, y);
-
-        skin->barIsPresent = 1;
-        currWin->x    = x;
-        currWin->y    = y;
         currWin->type = itBase;
 
         av_strlcpy(file, path, sizeof(file));
@@ -339,6 +311,36 @@ static int cmd_base(char *in)
 #else
         currWin->Mask.Image = NULL;
 #endif
+
+        skin->menuIsPresent = 1;
+    }
+
+    if (!strcmp(currWinName, "playbar")) {
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s %d,%d\n", fname, x, y);
+
+        currWin->type = itBase;
+        currWin->x    = x;
+        currWin->y    = y;
+
+        av_strlcpy(file, path, sizeof(file));
+        av_strlcat(file, fname, sizeof(file));
+
+        if (skinBPRead(file, &currWin->Bitmap) != 0)
+            return 1;
+
+        currWin->width  = currWin->Bitmap.Width;
+        currWin->height = currWin->Bitmap.Height;
+
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", currWin->width, currWin->height);
+
+#ifdef CONFIG_XSHAPE
+        Convert32to1(&currWin->Bitmap, &currWin->Mask, 0x00ff00ff);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", currWin->Mask.Width, currWin->Mask.Height);
+#else
+        currWin->Mask.Image = NULL;
+#endif
+
+        skin->barIsPresent = 1;
     }
 
     return 0;
@@ -408,17 +410,15 @@ static int cmd_button(char *in)
     item->width   = w;
     item->height  = h;
     item->message = message;
+    item->pressed = btnReleased;
+    item->tmp     = 1;
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    button image: %s %d,%d\n", fname, x, y);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", msg, message);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     size: %dx%d\n", w, h);
 
-    item->pressed = btnReleased;
-
     if (item->message == evPauseSwitchToPlay)
         item->pressed = btnDisabled;
-
-    item->tmp = 1;
 
     item->Bitmap.Image = NULL;
 
@@ -566,17 +566,18 @@ static int cmd_hpotmeter(char *in)
     if (!item)
         return 1;
 
-    item->type         = itHPotmeter;
-    item->x            = x;
-    item->y            = y;
-    item->width        = w;
-    item->height       = h;
-    item->numphases    = ph;
-    item->pwidth       = pwidth;
-    item->pheight      = pheight;
-    item->message      = message;
-    item->value        = (float)d;
-    item->pressed      = btnReleased;
+    item->type      = itHPotmeter;
+    item->x         = x;
+    item->y         = y;
+    item->width     = w;
+    item->height    = h;
+    item->pwidth    = pwidth;
+    item->pheight   = pheight;
+    item->numphases = ph;
+    item->value     = (float)d;
+    item->message   = message;
+    item->pressed   = btnReleased;
+
     item->Bitmap.Image = NULL;
 
     if (strcmp(phfname, "NULL") != 0) {
@@ -661,14 +662,15 @@ static int cmd_potmeter(char *in)
     if (!item)
         return 1;
 
-    item->type         = itPotmeter;
-    item->x            = x;
-    item->y            = y;
-    item->width        = w;
-    item->height       = h;
-    item->numphases    = ph;
-    item->message      = message;
-    item->value        = (float)d;
+    item->type      = itPotmeter;
+    item->x         = x;
+    item->y         = y;
+    item->width     = w;
+    item->height    = h;
+    item->numphases = ph;
+    item->value     = (float)d;
+    item->message   = message;
+
     item->Bitmap.Image = NULL;
 
     if (strcmp(phfname, "NULL") != 0) {
@@ -762,11 +764,11 @@ static int cmd_slabel(char *in)
         return 1;
 
     item->type   = itSLabel;
-    item->fontid = id;
     item->x      = x;
     item->y      = y;
     item->width  = -1;
     item->height = -1;
+    item->fontid = id;
     item->label  = strdup(txt);
 
     if (!item->label) {
@@ -820,12 +822,12 @@ static int cmd_dlabel(char *in)
         return 1;
 
     item->type   = itDLabel;
-    item->fontid = id;
-    item->align  = a;
     item->x      = x;
     item->y      = y;
     item->width  = w;
     item->height = -1;
+    item->fontid = id;
+    item->align  = a;
     item->label  = strdup(txt);
 
     if (!item->label) {
