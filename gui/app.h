@@ -160,7 +160,7 @@ typedef struct {
     unsigned int starttime;
     int last_x;
 
-    int pressed, tmp;
+    int pressed;
 } wItem;
 
 typedef struct {

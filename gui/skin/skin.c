@@ -415,7 +415,6 @@ static int cmd_button(char *in)
     item->height  = h;
     item->message = message;
     item->pressed = btnReleased;
-    item->tmp     = 1;
 
     if (item->message == evPauseSwitchToPlay)
         item->pressed = btnDisabled;
