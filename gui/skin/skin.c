@@ -399,6 +399,10 @@ static int cmd_button(char *in)
         return 1;
     }
 
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    button image: %s %d,%d\n", fname, x, y);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", msg, message);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     size: %dx%d\n", w, h);
+
     item = next_item();
 
     if (!item)
@@ -412,10 +416,6 @@ static int cmd_button(char *in)
     item->message = message;
     item->pressed = btnReleased;
     item->tmp     = 1;
-
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    button image: %s %d,%d\n", fname, x, y);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     message: %s (#%d)\n", msg, message);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     size: %dx%d\n", w, h);
 
     if (item->message == evPauseSwitchToPlay)
         item->pressed = btnDisabled;
@@ -451,13 +451,13 @@ static int cmd_selected(char *in)
     if (in_window("playbar"))
         return 1;
 
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image selected: %s\n", in);
+
     currItem       = &skin->menuSelected;
     currItem->type = itBase;
 
     av_strlcpy(file, path, sizeof(file));
     av_strlcat(file, in, sizeof(file));
-
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image selected: %s\n", in);
 
     if (skinBPRead(file, &currItem->Bitmap) != 0)
         return 1;
