@@ -60,20 +60,20 @@ static void skin_error(const char *format, ...)
     gmp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_ERRORMESSAGE, linenumber, p);
 }
 
-static int section_cmd(char *cmd)
+static int section_item(char *item)
 {
     if (!skin) {
-        skin_error(MSGTR_SKIN_ERROR_SECTION, cmd);
+        skin_error(MSGTR_SKIN_ERROR_SECTION, item);
         return 0;
     }
 
     return 1;
 }
 
-static int window_cmd(char *cmd)
+static int window_item(char *item)
 {
     if (!currWinName[0]) {
-        skin_error(MSGTR_SKIN_ERROR_WINDOW, cmd);
+        skin_error(MSGTR_SKIN_ERROR_WINDOW, item);
         return 0;
     }
 
@@ -129,7 +129,7 @@ static wItem *next_item(void)
 }
 
 // section=movieplayer
-static int cmd_section(char *in)
+static int item_section(char *in)
 {
     if (skin) {
         skin_error(MSGTR_SKIN_ERROR_ITEM, "section");
@@ -149,7 +149,7 @@ static int cmd_section(char *in)
 }
 
 // end
-static int cmd_end(char *in)
+static int item_end(char *in)
 {
 #ifdef MP_DEBUG
     char *space, *name;
@@ -165,7 +165,7 @@ static int cmd_end(char *in)
 
     (void)in;
 
-    if (!section_cmd("end"))
+    if (!section_item("end"))
         return 1;
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]  %send (%s)\n", space, name);
@@ -182,9 +182,9 @@ static int cmd_end(char *in)
 }
 
 // window=main|sub|playbar|menu
-static int cmd_window(char *in)
+static int item_window(char *in)
 {
-    if (!section_cmd("window"))
+    if (!section_item("window"))
         return 1;
 
     if (currWinName[0]) {
@@ -223,7 +223,7 @@ static int cmd_window(char *in)
 }
 
 // base=image,x,y[,width,height]
-static int cmd_base(char *in)
+static int item_base(char *in)
 {
     unsigned char fname[256];
     unsigned char file[512];
@@ -231,7 +231,7 @@ static int cmd_base(char *in)
     int w = 0, h = 0;
     int is_sub, is_bar, is_menu;
 
-    if (!window_cmd("base"))
+    if (!window_item("base"))
         return 1;
 
     is_sub  = (strcmp(currWinName, "sub") == 0);
@@ -293,9 +293,9 @@ static int cmd_base(char *in)
 }
 
 // background=R,G,B
-static int cmd_background(char *in)
+static int item_background(char *in)
 {
-    if (!window_cmd("background"))
+    if (!window_item("background"))
         return 1;
 
     if (in_window("main"))
@@ -315,7 +315,7 @@ static int cmd_background(char *in)
 }
 
 // button=image,x,y,width,height,message
-static int cmd_button(char *in)
+static int item_button(char *in)
 {
     unsigned char fname[256];
     unsigned char file[512];
@@ -323,7 +323,7 @@ static int cmd_button(char *in)
     char msg[32];
     wItem *item;
 
-    if (!window_cmd("button"))
+    if (!window_item("button"))
         return 1;
 
     if (in_window("sub"))
@@ -381,12 +381,12 @@ static int cmd_button(char *in)
 }
 
 // selected=image
-static int cmd_selected(char *in)
+static int item_selected(char *in)
 {
     unsigned char file[512];
     wItem *currItem;
 
-    if (!window_cmd("selected"))
+    if (!window_item("selected"))
         return 1;
 
     if (in_window("main"))
@@ -416,13 +416,13 @@ static int cmd_selected(char *in)
 }
 
 // menu=x,y,width,height,message
-static int cmd_menu(char *in)
+static int item_menu(char *in)
 {
     int x, y, w, h, message;
     char msg[32];
     wItem *item;
 
-    if (!window_cmd("menu"))
+    if (!window_item("menu"))
         return 1;
 
     if (in_window("main"))
@@ -466,7 +466,7 @@ static int cmd_menu(char *in)
 }
 
 // hpotmeter=button,bwidth,bheight,phases,numphases,default,x,y,width,height,message
-static int cmd_hpotmeter(char *in)
+static int item_hpotmeter(char *in)
 {
     unsigned char pfname[256];
     unsigned char phfname[256];
@@ -474,7 +474,7 @@ static int cmd_hpotmeter(char *in)
     int pwidth, pheight, ph, d, x, y, w, h, message;
     wItem *item;
 
-    if (!window_cmd("h/v potmeter"))
+    if (!window_item("h/v potmeter"))
         return 1;
 
     if (in_window("sub"))
@@ -551,12 +551,12 @@ static int cmd_hpotmeter(char *in)
 }
 
 // vpotmeter=button,bwidth,bheight,phases,numphases,default,x,y,width,height,message
-static int cmd_vpotmeter(char *in)
+static int item_vpotmeter(char *in)
 {
     int r;
     wItem *item;
 
-    r = cmd_hpotmeter(in);
+    r = item_hpotmeter(in);
 
     if (r == 0) {
         item       = &currWinItems[*currWinItemIdx];
@@ -567,14 +567,14 @@ static int cmd_vpotmeter(char *in)
 }
 
 // potmeter=phases,numphases,default,x,y,width,height,message
-static int cmd_potmeter(char *in)
+static int item_potmeter(char *in)
 {
     unsigned char phfname[256];
     unsigned char buf[512];
     int ph, d, x, y, w, h, message;
     wItem *item;
 
-    if (!window_cmd("potmeter"))
+    if (!window_item("potmeter"))
         return 1;
 
     if (in_window("sub"))
@@ -632,11 +632,11 @@ static int cmd_potmeter(char *in)
 }
 
 // font=fontfile
-static int cmd_font(char *in)
+static int item_font(char *in)
 {
     char fnt[256];
 
-    if (!window_cmd("font"))
+    if (!window_item("font"))
         return 1;
 
     if (in_window("sub"))
@@ -670,14 +670,14 @@ static int cmd_font(char *in)
 }
 
 // slabel=x,y,fontfile,"text"
-static int cmd_slabel(char *in)
+static int item_slabel(char *in)
 {
     int x, y, id;
     char fnt[256];
     char txt[256];
     wItem *item;
 
-    if (!window_cmd("slabel"))
+    if (!window_item("slabel"))
         return 1;
 
     if (in_window("sub"))
@@ -725,14 +725,14 @@ static int cmd_slabel(char *in)
 }
 
 // dlabel=x,y,width,align,fontfile,"text"
-static int cmd_dlabel(char *in)
+static int item_dlabel(char *in)
 {
     int x, y, w, a, id;
     char fnt[256];
     char txt[256];
     wItem *item;
 
-    if (!window_cmd("dlabel"))
+    if (!window_item("dlabel"))
         return 1;
 
     if (in_window("sub"))
@@ -784,9 +784,9 @@ static int cmd_dlabel(char *in)
 }
 
 // decoration=enable|disable
-static int cmd_decoration(char *in)
+static int item_decoration(char *in)
 {
-    if (!window_cmd("decoration"))
+    if (!window_item("decoration"))
         return 1;
 
     if (in_window("sub"))
@@ -811,21 +811,21 @@ static int cmd_decoration(char *in)
 }
 
 static _item skinItem[] = {
-    { "section",    cmd_section    },
-    { "end",        cmd_end        },
-    { "window",     cmd_window     },
-    { "base",       cmd_base       },
-    { "button",     cmd_button     },
-    { "selected",   cmd_selected   },
-    { "background", cmd_background },
-    { "vpotmeter",  cmd_vpotmeter  },
-    { "hpotmeter",  cmd_hpotmeter  },
-    { "potmeter",   cmd_potmeter   },
-    { "font",       cmd_font       },
-    { "slabel",     cmd_slabel     },
-    { "dlabel",     cmd_dlabel     },
-    { "decoration", cmd_decoration },
-    { "menu",       cmd_menu       }
+    { "background", item_background },
+    { "base",       item_base       },
+    { "button",     item_button     },
+    { "decoration", item_decoration },
+    { "dlabel",     item_dlabel     },
+    { "end",        item_end        },
+    { "font",       item_font       },
+    { "hpotmeter",  item_hpotmeter  },
+    { "menu",       item_menu       },
+    { "potmeter",   item_potmeter   },
+    { "section",    item_section    },
+    { "selected",   item_selected   },
+    { "slabel",     item_slabel     },
+    { "vpotmeter",  item_vpotmeter  },
+    { "window",     item_window     }
 };
 
 static char *setname(char *dir, char *sname)
