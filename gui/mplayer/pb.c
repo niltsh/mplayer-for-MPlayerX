@@ -163,8 +163,8 @@ static void mplPBMouseHandle( int Button, int X, int Y, int RX, int RY )
    case wsRLMouseButton:
         if ( SelectedItem != -1 )   // NOTE TO MYSELF: only if itButton, itHPotmeter or itVPotmeter
          {
-	item=&appMPlayer.barItems[SelectedItem];
-	item->pressed=btnReleased;
+          item=&appMPlayer.barItems[SelectedItem];
+          item->pressed=btnReleased;
          }
 	SelectedItem=-1;
 	if ( currentselected == - 1 ) { itemtype=0; break; }
