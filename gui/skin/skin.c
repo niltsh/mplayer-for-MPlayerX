@@ -229,9 +229,14 @@ static int cmd_base(char *in)
     unsigned char file[512];
     int x, y;
     int w = 0, h = 0;
+    int is_sub, is_bar, is_menu;
 
     if (!window_cmd("base"))
         return 1;
+
+    is_sub  = (strcmp(currWinName, "sub") == 0);
+    is_bar  = (strcmp(currWinName, "playbar") == 0);
+    is_menu = (strcmp(currWinName, "menu") == 0);
 
     cutItem(in, fname, ',', 0);
     x = cutItemToInt(in, ',', 1);
@@ -239,12 +244,19 @@ static int cmd_base(char *in)
     w = cutItemToInt(in, ',', 3);
     h = cutItemToInt(in, ',', 4);
 
-    if (!strcmp(currWinName, "main")) {
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s %d,%d\n", fname, x, y);
+    {
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s", fname);
 
         currWin->type = itBase;
+
+        if (!is_menu) {
         currWin->x    = x;
         currWin->y    = y;
+
+            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, " %d,%d", x, y);
+        }
+
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n");
 
         av_strlcpy(file, path, sizeof(file));
         av_strlcat(file, fname, sizeof(file));
@@ -255,92 +267,28 @@ static int cmd_base(char *in)
         currWin->width  = currWin->Bitmap.Width;
         currWin->height = currWin->Bitmap.Height;
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", currWin->width, currWin->height);
-
-#ifdef CONFIG_XSHAPE
-        Convert32to1(&currWin->Bitmap, &currWin->Mask, 0x00ff00ff);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", currWin->Mask.Width, currWin->Mask.Height);
-#else
-        currWin->Mask.Image = NULL;
-#endif
-    }
-
-    if (!strcmp(currWinName, "sub")) {
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s %d,%d\n", fname, x, y);
-
-        currWin->type = itBase;
-        currWin->x    = x;
-        currWin->y    = y;
-
-        av_strlcpy(file, path, sizeof(file));
-        av_strlcat(file, fname, sizeof(file));
-
-        if (skinBPRead(file, &currWin->Bitmap) != 0)
-            return 1;
-
-        currWin->width  = currWin->Bitmap.Width;
-        currWin->height = currWin->Bitmap.Height;
-
+        if (is_sub) {
         if (w && h) {
             currWin->width  = w;
             currWin->height = h;
         }
-
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", currWin->width, currWin->height);
-    }
-
-    if (!strcmp(currWinName, "menu")) {
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s\n", fname);
-
-        currWin->type = itBase;
-
-        av_strlcpy(file, path, sizeof(file));
-        av_strlcat(file, fname, sizeof(file));
-
-        if (skinBPRead(file, &currWin->Bitmap) != 0)
-            return 1;
-
-        currWin->width  = currWin->Bitmap.Width;
-        currWin->height = currWin->Bitmap.Height;
+        }
 
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", currWin->width, currWin->height);
 
+        if (!is_sub) {
 #ifdef CONFIG_XSHAPE
         Convert32to1(&currWin->Bitmap, &currWin->Mask, 0x00ff00ff);
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", currWin->Mask.Width, currWin->Mask.Height);
 #else
         currWin->Mask.Image = NULL;
 #endif
+        }
 
-        skin->menuIsPresent = 1;
-    }
-
-    if (!strcmp(currWinName, "playbar")) {
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s %d,%d\n", fname, x, y);
-
-        currWin->type = itBase;
-        currWin->x    = x;
-        currWin->y    = y;
-
-        av_strlcpy(file, path, sizeof(file));
-        av_strlcat(file, fname, sizeof(file));
-
-        if (skinBPRead(file, &currWin->Bitmap) != 0)
-            return 1;
-
-        currWin->width  = currWin->Bitmap.Width;
-        currWin->height = currWin->Bitmap.Height;
-
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", currWin->width, currWin->height);
-
-#ifdef CONFIG_XSHAPE
-        Convert32to1(&currWin->Bitmap, &currWin->Mask, 0x00ff00ff);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", currWin->Mask.Width, currWin->Mask.Height);
-#else
-        currWin->Mask.Image = NULL;
-#endif
-
-        skin->barIsPresent = 1;
+        if (is_bar)
+            skin->barIsPresent = 1;
+        if (is_menu)
+            skin->menuIsPresent = 1;
     }
 
     return 0;
