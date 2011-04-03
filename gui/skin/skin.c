@@ -244,52 +244,50 @@ static int cmd_base(char *in)
     w = cutItemToInt(in, ',', 3);
     h = cutItemToInt(in, ',', 4);
 
-    {
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s", fname);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    image: %s", fname);
 
-        currWin->type = itBase;
+    currWin->type = itBase;
 
-        if (!is_menu) {
-        currWin->x    = x;
-        currWin->y    = y;
+    if (!is_menu) {
+        currWin->x = x;
+        currWin->y = y;
 
-            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, " %d,%d", x, y);
-        }
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, " %d,%d", x, y);
+    }
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n");
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "\n");
 
-        av_strlcpy(file, path, sizeof(file));
-        av_strlcat(file, fname, sizeof(file));
+    av_strlcpy(file, path, sizeof(file));
+    av_strlcat(file, fname, sizeof(file));
 
-        if (skinBPRead(file, &currWin->Bitmap) != 0)
-            return 1;
+    if (skinBPRead(file, &currWin->Bitmap) != 0)
+        return 1;
 
-        currWin->width  = currWin->Bitmap.Width;
-        currWin->height = currWin->Bitmap.Height;
+    currWin->width  = currWin->Bitmap.Width;
+    currWin->height = currWin->Bitmap.Height;
 
-        if (is_sub) {
+    if (is_sub) {
         if (w && h) {
             currWin->width  = w;
             currWin->height = h;
         }
-        }
+    }
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", currWin->width, currWin->height);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", currWin->width, currWin->height);
 
-        if (!is_sub) {
+    if (!is_sub) {
 #ifdef CONFIG_XSHAPE
         Convert32to1(&currWin->Bitmap, &currWin->Mask, 0x00ff00ff);
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", currWin->Mask.Width, currWin->Mask.Height);
 #else
         currWin->Mask.Image = NULL;
 #endif
-        }
-
-        if (is_bar)
-            skin->barIsPresent = 1;
-        if (is_menu)
-            skin->menuIsPresent = 1;
     }
+
+    if (is_bar)
+        skin->barIsPresent = 1;
+    if (is_menu)
+        skin->menuIsPresent = 1;
 
     return 0;
 }
