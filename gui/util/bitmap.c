@@ -30,7 +30,7 @@
 
 static int pngRead(unsigned char *fname, txSample *bf)
 {
-    FILE *fp;
+    FILE *file;
     int decode_ok;
     void *data;
     int len;
@@ -38,27 +38,27 @@ static int pngRead(unsigned char *fname, txSample *bf)
     AVFrame *frame;
     AVPacket pkt;
 
-    fp = fopen(fname, "rb");
+    file = fopen(fname, "rb");
 
-    if (!fp) {
+    if (!file) {
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] open error: %s\n", fname);
         return 1;
     }
 
-    fseek(fp, 0, SEEK_END);
-    len = ftell(fp);
+    fseek(file, 0, SEEK_END);
+    len = ftell(file);
 
     if (len > 50 * 1024 * 1024) {
-        fclose(fp);
+        fclose(file);
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] file too big: %s\n", fname);
         return 2;
     }
 
     data = av_malloc(len + FF_INPUT_BUFFER_PADDING_SIZE);
 
-    fseek(fp, 0, SEEK_SET);
-    fread(data, len, 1, fp);
-    fclose(fp);
+    fseek(file, 0, SEEK_SET);
+    fread(data, len, 1, file);
+    fclose(file);
 
     avctx = avcodec_alloc_context();
     frame = avcodec_alloc_frame();
@@ -161,23 +161,23 @@ static void Normalize(txSample *bf)
 static unsigned char *fExist(unsigned char *fname)
 {
     static unsigned char tmp[512];
-    FILE *fl;
+    FILE *file;
     unsigned char ext[][6] = { ".png\0", ".PNG\0" };
     int i;
 
-    fl = fopen(fname, "rb");
+    file = fopen(fname, "rb");
 
-    if (fl != NULL) {
-        fclose(fl);
+    if (file) {
+        fclose(file);
         return fname;
     }
 
     for (i = 0; i < 2; i++) {
         snprintf(tmp, sizeof(tmp), "%s%s", fname, ext[i]);
-        fl = fopen(tmp, "rb");
+        file = fopen(tmp, "rb");
 
-        if (fl != NULL) {
-            fclose(fl);
+        if (file) {
+            fclose(file);
             return tmp;
         }
     }
@@ -189,10 +189,10 @@ int bpRead(char *fname, txSample *bf)
 {
     fname = fExist(fname);
 
-    if (fname == NULL)
+    if (!fname)
         return -2;
 
-    if (pngRead(fname, bf)) {
+    if (pngRead(fname, bf) != 0) {
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] read error: %s\n", fname);
         return -5;
     }
@@ -230,7 +230,7 @@ int Convert32to1(txSample *in, txSample *out, uint32_t transparent)
     out->ImageSize = (out->Width * out->Height + 7) / 8;
     out->Image     = calloc(1, out->ImageSize);
 
-    if (out->Image == NULL) {
+    if (!out->Image) {
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", out->ImageSize);
         return 0;
     } else {
