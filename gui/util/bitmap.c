@@ -233,7 +233,8 @@ int Convert32to1(txSample *in, txSample *out, uint32_t transparent)
     if (!out->Image) {
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", out->ImageSize);
         return 0;
-    } else {
+    }
+
         buf = (uint32_t *)in->Image;
 
         for (i = 0; i < out->Width * out->Height; i++) {
@@ -259,7 +260,6 @@ int Convert32to1(txSample *in, txSample *out, uint32_t transparent)
 
         if (!shaped)
             bpFree(out);
-    }
 
     return 1;
 }
