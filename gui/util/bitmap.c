@@ -242,10 +242,8 @@ int Convert32to1(txSample *in, txSample *out, uint32_t transparent)
 
         if (buf[i] != transparent)
             tmp |= 0x80;
-        else {
-            buf[i] = 0;
+        else
             shaped = 1;
-        }
 
         if (++b == 8) {
             out->Image[c++] = tmp;
