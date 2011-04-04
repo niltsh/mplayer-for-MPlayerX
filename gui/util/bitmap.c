@@ -227,7 +227,7 @@ void Convert32to1(txSample *in, txSample *out, int adaptivlimit)
 
     if (out->Image == NULL)
         mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_NotEnoughMemoryC32To1);
-    {
+    else {
         int i, b, c = 0;
         unsigned int *buf = NULL;
         unsigned char tmp = 0;
