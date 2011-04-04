@@ -218,27 +218,27 @@ void bpFree(txSample *bf)
 
 int Convert32to1(txSample *in, txSample *out, uint32_t transparent)
 {
+    uint32_t *buf;
+    unsigned long i;
+    int b = 0, c = 0;
+    unsigned char tmp = 0;
+    int shaped = 0;
+
     out->Width     = in->Width;
     out->Height    = in->Height;
     out->BPP       = 1;
     out->ImageSize = (out->Width * out->Height + 7) / 8;
-
-    out->Image = calloc(1, out->ImageSize);
+    out->Image     = calloc(1, out->ImageSize);
 
     if (out->Image == NULL) {
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", out->ImageSize);
         return 0;
     } else {
-        int i, b, c = 0;
-        uint32_t *buf     = NULL;
-        unsigned char tmp = 0;
-        int shaped = 0;
-
         buf = (uint32_t *)in->Image;
 
-        for (b = 0, i = 0; i < (int)(out->Width * out->Height); i++) {
+        for (i = 0; i < out->Width * out->Height; i++) {
             if (buf[i] != transparent)
-                tmp = (tmp >> 1) | 128;
+                tmp = (tmp >> 1) | 0x80;
             else {
                 tmp    = tmp >> 1;
                 buf[i] = 0;
