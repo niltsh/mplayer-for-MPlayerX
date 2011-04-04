@@ -216,7 +216,7 @@ void bpFree(txSample *bf)
     memset(bf, 0, sizeof(*bf));
 }
 
-void Convert32to1(txSample *in, txSample *out, int adaptivlimit)
+int Convert32to1(txSample *in, txSample *out, int adaptivlimit)
 {
     out->Width     = in->Width;
     out->Height    = in->Height;
@@ -225,9 +225,10 @@ void Convert32to1(txSample *in, txSample *out, int adaptivlimit)
 
     out->Image = calloc(1, out->ImageSize);
 
-    if (out->Image == NULL)
-        mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_NotEnoughMemoryC32To1);
-    else {
+    if (out->Image == NULL) {
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", out->ImageSize);
+        return 0;
+    } else {
         int i, b, c = 0;
         unsigned int *buf = NULL;
         unsigned char tmp = 0;
@@ -259,4 +260,6 @@ void Convert32to1(txSample *in, txSample *out, int adaptivlimit)
             out->Image = NULL;
         }
     }
+
+    return 1;
 }

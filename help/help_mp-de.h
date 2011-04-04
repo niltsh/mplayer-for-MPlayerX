@@ -989,9 +989,6 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_Error "Fehler!"
 #define MSGTR_MSGBOX_LABEL_Warning "Warnung!"
 
-// bitmap.c
-#define MSGTR_NotEnoughMemoryC32To1 "[c32to1] Für das Bild ist nicht genügend Speicher vorhanden.\n"
-
 // cfg.c
 #define MSGTR_ConfigFileReadError "[cfg] Fehler beim Lesen der Konfigurationsdatei ...\n"
 #define MSGTR_UnableToSaveOption "[cfg] Kann die Option '%s' nicht speichern.\n"
@@ -2176,3 +2173,4 @@ static const char help_text[]=
 #define MSGTR_TVI_DS_NoVideoCaptureDevice "tvi_dshow: Kein Gerät für Videoerfassung gefunden\n"
 #define MSGTR_TVI_DS_NoAudioCaptureDevice "tvi_dshow: Kein Gerät für Audioerfassung gefunden\n"
 #define MSGTR_TVI_DS_GetActualMediatypeFailed "tvi_dshow: Kann eigentlichen Medientyp nicht ermitteln (Fehler:0x%x).\nNehme an, dieser entspricht dem angeforderten.\n"
+

@@ -773,9 +773,6 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_Error "Ошибка!"
 #define MSGTR_MSGBOX_LABEL_Warning "Предупреждение!"
 
-// bitmap.c
-#define MSGTR_NotEnoughMemoryC32To1 "[c32to1] недостаточно памяти для изображения\n"
-
 // cfg.c
 #define MSGTR_ConfigFileReadError "[cfg] ошибка чтения конфигурационного файла...\n"
 #define MSGTR_UnableToSaveOption "[cfg] Не могу сохранить опцию '%s'.\n"

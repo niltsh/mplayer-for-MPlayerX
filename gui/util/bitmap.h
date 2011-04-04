@@ -29,6 +29,6 @@ typedef struct {
 
 void bpFree(txSample *bf);
 int bpRead(char *fname, txSample *bf);
-void Convert32to1(txSample *in, txSample *out, int adaptivlimit);
+int Convert32to1(txSample *in, txSample *out, int adaptivlimit);
 
 #endif /* MPLAYER_GUI_BITMAP_H */

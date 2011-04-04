@@ -766,9 +766,6 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_Error "Помилка!"
 #define MSGTR_MSGBOX_LABEL_Warning "Попередження!"
 
-// bitmap.c
-#define MSGTR_NotEnoughMemoryC32To1 "[c32to1] недостатньо пам'яті для картинки\n"
-
 // cfg.c
 #define MSGTR_ConfigFileReadError "[cfg] помилка читання файлу налаштунків ...\n"
 #define MSGTR_UnableToSaveOption "[cfg] Не можу зберегти '%s' опцію.\n"

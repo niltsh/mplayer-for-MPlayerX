@@ -964,10 +964,6 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_Error "Hata!"
 #define MSGTR_MSGBOX_LABEL_Warning "Uyarı!"
 
-// bitmap.c
-
-#define MSGTR_NotEnoughMemoryC32To1 "[c32to1] görüntü için yeterli bellek yok\n"
-
 // cfg.c
 
 #define MSGTR_ConfigFileReadError "[cfg] ayar dosyası okuma hatası...\n"

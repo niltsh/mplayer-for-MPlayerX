@@ -277,7 +277,10 @@ static int item_base(char *in)
 
     if (!is_sub) {
 #ifdef CONFIG_XSHAPE
-        Convert32to1(&currWin->Bitmap, &currWin->Mask, 0x00ff00ff);
+        if (!Convert32to1(&currWin->Bitmap, &currWin->Mask, 0x00ff00ff)) {
+            skin_error(MSGTR_SKIN_NotEnoughMemory);
+            return 1;
+        }
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", currWin->Mask.Width, currWin->Mask.Height);
 #else
         currWin->Mask.Image = NULL;

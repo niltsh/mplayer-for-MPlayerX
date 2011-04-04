@@ -784,9 +784,6 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_Error "Hiba!"
 #define MSGTR_MSGBOX_LABEL_Warning "Figyelmeztetés!"
 
-// bitmap.c
-#define MSGTR_NotEnoughMemoryC32To1 "[c32to1] nincs elég memória a képhez\n"
-
 // cfg.c
 #define MSGTR_ConfigFileReadError "[cfg] hiba a konfigurációs fájl olvasásakor ...\n"
 #define MSGTR_UnableToSaveOption "[cfg] A(z) '%s' opciót nem sikerült elmenteni.\n"

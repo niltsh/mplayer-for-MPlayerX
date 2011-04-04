@@ -771,9 +771,6 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_Error "Chyba!"
 #define MSGTR_MSGBOX_LABEL_Warning "Varování!"
 
-// bitmap.c
-#define MSGTR_NotEnoughMemoryC32To1 "[c32to1] nedostatek paměti pro obrázek\n"
-
 // cfg.c
 #define MSGTR_ConfigFileReadError "[cfg] chyba při čtení konfiguračního souboru...\n"
 #define MSGTR_UnableToSaveOption "[cfg] Nelze uložit volbu '%s'.\n"

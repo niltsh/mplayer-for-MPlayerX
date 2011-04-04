@@ -936,10 +936,6 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_Error "錯誤!"
 #define MSGTR_MSGBOX_LABEL_Warning "警告!"
 
-// bitmap.c
-
-#define MSGTR_NotEnoughMemoryC32To1 "[c32to1] 内存不够, 容不下圖片\n"
-
 // cfg.c
 
 #define MSGTR_ConfigFileReadError "[cfg] 配置文件讀取錯誤...\n"

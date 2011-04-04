@@ -921,10 +921,6 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_Error "Błąd!"
 #define MSGTR_MSGBOX_LABEL_Warning "Uwaga!"
 
-// bitmap.c
-
-#define MSGTR_NotEnoughMemoryC32To1 "[c32to1] za mało pamięci na obraz\n"
-
 // cfg.c
 
 #define MSGTR_ConfigFileReadError "[cfg] błąd wczytywania pliku konfiguracyjnego ...\n"
