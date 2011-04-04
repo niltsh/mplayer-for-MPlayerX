@@ -31,7 +31,7 @@
 #include <unistd.h>
 #include <errno.h>
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "config.h"
 #include "libvo/x11_common.h"

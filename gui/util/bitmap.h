@@ -19,7 +19,7 @@
 #ifndef MPLAYER_GUI_BITMAP_H
 #define MPLAYER_GUI_BITMAP_H
 
-#include <inttypes.h>
+#include <stdint.h>
 
 typedef struct {
     unsigned long Width;
