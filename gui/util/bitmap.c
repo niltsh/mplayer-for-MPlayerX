@@ -118,7 +118,7 @@ static int pngRead(unsigned char *fname, txSample *bf)
     return !(decode_ok && bf->BPP);
 }
 
-static int conv24to32(txSample *bf)
+static int Convert24to32(txSample *bf)
 {
     unsigned char *tmpImage;
     unsigned int i, c;
@@ -132,7 +132,7 @@ static int conv24to32(txSample *bf)
         if (!bf->Image) {
             free(tmpImage);
             mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", bf->ImageSize);
-            return 1;
+            return 0;
         }
 
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 32 bpp conversion size: %lu\n", bf->ImageSize);
@@ -143,7 +143,7 @@ static int conv24to32(txSample *bf)
         free(tmpImage);
     }
 
-    return 0;
+    return 1;
 }
 
 static void Normalize(txSample *bf)
@@ -202,7 +202,7 @@ int bpRead(char *fname, txSample *bf)
         return -1;
     }
 
-    if (conv24to32(bf))
+    if (!Convert24to32(bf))
         return -8;
 
     Normalize(bf);
