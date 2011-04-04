@@ -19,7 +19,7 @@
 #ifndef MPLAYER_GUI_BITMAP_H
 #define MPLAYER_GUI_BITMAP_H
 
-#include <stdint.h>
+#define TRANSPARENT 0x00ff00ff   // transparent color (fuchsia/magenta)
 
 typedef struct {
     unsigned long Width;
@@ -31,6 +31,6 @@ typedef struct {
 
 void bpFree(txSample *bf);
 int bpRead(char *fname, txSample *bf);
-int Convert32to1(txSample *in, txSample *out, uint32_t transparent);
+int Convert32to1(txSample *in, txSample *out);
 
 #endif /* MPLAYER_GUI_BITMAP_H */

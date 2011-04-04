@@ -216,7 +216,7 @@ void bpFree(txSample *bf)
     memset(bf, 0, sizeof(*bf));
 }
 
-int Convert32to1(txSample *in, txSample *out, uint32_t transparent)
+int Convert32to1(txSample *in, txSample *out)
 {
     uint32_t *buf;
     unsigned long i;
@@ -240,7 +240,7 @@ int Convert32to1(txSample *in, txSample *out, uint32_t transparent)
     for (i = 0; i < out->Width * out->Height; i++) {
         tmp >>= 1;
 
-        if (buf[i] != transparent)
+        if (buf[i] != TRANSPARENT)
             tmp |= 0x80;
         else {
             buf[i] = 0;

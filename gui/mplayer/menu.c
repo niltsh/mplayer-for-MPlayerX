@@ -56,7 +56,7 @@ static void mplMenuDraw( void )
        for ( x=appMPlayer.menuItems[ mplMenuItem ].x; x < appMPlayer.menuItems[ mplMenuItem ].x + appMPlayer.menuItems[ mplMenuItem ].width; x++ )
          {
           tmp=drw[ y * appMPlayer.menuSelected.width + x ];
-          if ( tmp != 0x00ff00ff ) buf[ y * appMPlayer.menu.width + x ]=tmp;
+          if ( tmp != TRANSPARENT ) buf[ y * appMPlayer.menu.width + x ]=tmp;
          }
     }
    mplOldMenuItem=mplMenuItem;

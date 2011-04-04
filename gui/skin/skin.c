@@ -277,7 +277,7 @@ static int item_base(char *in)
 
     if (!is_sub) {
 #ifdef CONFIG_XSHAPE
-        if (!Convert32to1(&currWin->Bitmap, &currWin->Mask, 0x00ff00ff)) {
+        if (!Convert32to1(&currWin->Bitmap, &currWin->Mask)) {
             skin_error(MSGTR_SKIN_NotEnoughMemory);
             return 1;
         }
