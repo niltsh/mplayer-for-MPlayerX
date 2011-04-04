@@ -776,7 +776,6 @@ static const char help_text[]=
 
 // bitmap.c
 #define MSGTR_NotEnoughMemoryC32To1 "[c32to1] 用于图像的内存不足\n"
-#define MSGTR_NotEnoughMemoryC1To32 "[c1to32] 用于图像的内存不足\n"
 
 // cfg.c
 #define MSGTR_ConfigFileReadError "[cfg] 配置文件读取错误...\n"

@@ -793,7 +793,6 @@ static const char help_text[]=
 
 // bitmap.c
 #define MSGTR_NotEnoughMemoryC32To1 "[c32to1] not enough memory for image\n"
-#define MSGTR_NotEnoughMemoryC1To32 "[c1to32] not enough memory for image\n"
 
 // cfg.c
 #define MSGTR_ConfigFileReadError "[cfg] config file read error ...\n"

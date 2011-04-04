@@ -967,7 +967,6 @@ static const char help_text[]=
 // bitmap.c
 
 #define MSGTR_NotEnoughMemoryC32To1 "[c32to1] görüntü için yeterli bellek yok\n"
-#define MSGTR_NotEnoughMemoryC1To32 "[c1to32] görüntü için yeterli bellek yok\n"
 
 // cfg.c
 

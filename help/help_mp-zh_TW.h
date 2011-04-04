@@ -939,7 +939,6 @@ static const char help_text[]=
 // bitmap.c
 
 #define MSGTR_NotEnoughMemoryC32To1 "[c32to1] 内存不够, 容不下圖片\n"
-#define MSGTR_NotEnoughMemoryC1To32 "[c1to32] 内存不够, 容不下圖片\n"
 
 // cfg.c
 
