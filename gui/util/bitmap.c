@@ -232,7 +232,7 @@ int Convert32to1(txSample *in, txSample *out, uint32_t transparent)
         int i, b, c = 0;
         uint32_t *buf     = NULL;
         unsigned char tmp = 0;
-        int nothaveshape  = 1;
+        int shaped = 0;
 
         buf = (uint32_t *)in->Image;
 
@@ -241,7 +241,8 @@ int Convert32to1(txSample *in, txSample *out, uint32_t transparent)
                 tmp = (tmp >> 1) | 128;
             else {
                 tmp    = tmp >> 1;
-                buf[i] = nothaveshape = 0;
+                buf[i] = 0;
+                shaped = 1;
             }
 
             if (b++ == 7) {
@@ -255,7 +256,7 @@ int Convert32to1(txSample *in, txSample *out, uint32_t transparent)
         if (b)
             out->Image[c] = tmp;
 
-        if (nothaveshape) {
+        if (!shaped) {
             free(out->Image);
             out->Image = NULL;
         }
