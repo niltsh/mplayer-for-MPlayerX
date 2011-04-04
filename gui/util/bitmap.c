@@ -237,10 +237,11 @@ int Convert32to1(txSample *in, txSample *out, uint32_t transparent)
         buf = (uint32_t *)in->Image;
 
         for (i = 0; i < out->Width * out->Height; i++) {
+            tmp >>= 1;
+
             if (buf[i] != transparent)
-                tmp = (tmp >> 1) | 0x80;
+                tmp |= 0x80;
             else {
-                tmp    = tmp >> 1;
                 buf[i] = 0;
                 shaped = 1;
             }
