@@ -246,7 +246,7 @@ int Convert32to1(txSample *in, txSample *out, uint32_t transparent)
                 shaped = 1;
             }
 
-            if (b++ == 7) {
+            if (++b == 8) {
                 out->Image[c++] = tmp;
                 tmp = b = 0;
             }
