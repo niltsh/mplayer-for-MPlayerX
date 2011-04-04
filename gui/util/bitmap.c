@@ -235,31 +235,31 @@ int Convert32to1(txSample *in, txSample *out, uint32_t transparent)
         return 0;
     }
 
-        buf = (uint32_t *)in->Image;
+    buf = (uint32_t *)in->Image;
 
-        for (i = 0; i < out->Width * out->Height; i++) {
-            tmp >>= 1;
+    for (i = 0; i < out->Width * out->Height; i++) {
+        tmp >>= 1;
 
-            if (buf[i] != transparent)
-                tmp |= 0x80;
-            else {
-                buf[i] = 0;
-                shaped = 1;
-            }
-
-            if (++b == 8) {
-                out->Image[c++] = tmp;
-                tmp = b = 0;
-            }
+        if (buf[i] != transparent)
+            tmp |= 0x80;
+        else {
+            buf[i] = 0;
+            shaped = 1;
         }
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 1 bpp conversion size: %lu\n", out->ImageSize);
+        if (++b == 8) {
+            out->Image[c++] = tmp;
+            tmp = b = 0;
+        }
+    }
 
-        if (b)
-            out->Image[c] = tmp;
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 1 bpp conversion size: %lu\n", out->ImageSize);
 
-        if (!shaped)
-            bpFree(out);
+    if (b)
+        out->Image[c] = tmp;
+
+    if (!shaped)
+        bpFree(out);
 
     return 1;
 }
