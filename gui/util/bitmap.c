@@ -256,10 +256,8 @@ int Convert32to1(txSample *in, txSample *out, uint32_t transparent)
         if (b)
             out->Image[c] = tmp;
 
-        if (!shaped) {
-            free(out->Image);
-            out->Image = NULL;
-        }
+        if (!shaped)
+            bpFree(out);
     }
 
     return 1;
