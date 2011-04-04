@@ -216,7 +216,7 @@ void bpFree(txSample *bf)
     memset(bf, 0, sizeof(*bf));
 }
 
-int Convert32to1(txSample *in, txSample *out, int adaptivlimit)
+int Convert32to1(txSample *in, txSample *out, uint32_t transparent)
 {
     out->Width     = in->Width;
     out->Height    = in->Height;
@@ -230,14 +230,14 @@ int Convert32to1(txSample *in, txSample *out, int adaptivlimit)
         return 0;
     } else {
         int i, b, c = 0;
-        unsigned int *buf = NULL;
+        uint32_t *buf     = NULL;
         unsigned char tmp = 0;
         int nothaveshape  = 1;
 
-        buf = (unsigned int *)in->Image;
+        buf = (uint32_t *)in->Image;
 
         for (b = 0, i = 0; i < (int)(out->Width * out->Height); i++) {
-            if ((int)buf[i] != adaptivlimit)
+            if (buf[i] != transparent)
                 tmp = (tmp >> 1) | 128;
             else {
                 tmp    = tmp >> 1;

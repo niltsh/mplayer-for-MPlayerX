@@ -19,6 +19,8 @@
 #ifndef MPLAYER_GUI_BITMAP_H
 #define MPLAYER_GUI_BITMAP_H
 
+#include <inttypes.h>
+
 typedef struct {
     unsigned long Width;
     unsigned long Height;
@@ -29,6 +31,6 @@ typedef struct {
 
 void bpFree(txSample *bf);
 int bpRead(char *fname, txSample *bf);
-int Convert32to1(txSample *in, txSample *out, int adaptivlimit);
+int Convert32to1(txSample *in, txSample *out, uint32_t transparent);
 
 #endif /* MPLAYER_GUI_BITMAP_H */
