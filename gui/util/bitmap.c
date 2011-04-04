@@ -41,7 +41,7 @@ static int pngRead(unsigned char *fname, txSample *bf)
     fp = fopen(fname, "rb");
 
     if (!fp) {
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[png] file read error ( %s )\n", fname);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] open error: %s\n", fname);
         return 1;
     }
 
@@ -50,6 +50,7 @@ static int pngRead(unsigned char *fname, txSample *bf)
 
     if (len > 50 * 1024 * 1024) {
         fclose(fp);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] file too big: %s\n", fname);
         return 2;
     }
 
@@ -110,9 +111,9 @@ static int pngRead(unsigned char *fname, txSample *bf)
     av_freep(&avctx);
     av_freep(&data);
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[png] filename: %s.\n", fname);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[png]  size: %lux%lu bits: %u\n", bf->Width, bf->Height, bf->BPP);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[png]  imagesize: %lu\n", bf->ImageSize);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] file: %s\n", fname);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap]  size: %lux%lu, color depth: %u\n", bf->Width, bf->Height, bf->BPP);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap]  image size: %lu\n", bf->ImageSize);
 
     return !(decode_ok && bf->BPP);
 }
@@ -130,9 +131,11 @@ static int conv24to32(txSample *bf)
 
         if (!bf->Image) {
             free(tmpImage);
-            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory for image\n");
+            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", bf->ImageSize);
             return 1;
         }
+
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 32 bpp conversion size: %lu\n", bf->ImageSize);
 
         for (c = 0, i = 0; c < bf->ImageSize; c += 4, i += 3)
             *(uint32_t *)&bf->Image[c] = AV_RB24(&tmpImage[i]);
@@ -190,12 +193,12 @@ int bpRead(char *fname, txSample *bf)
         return -2;
 
     if (pngRead(fname, bf)) {
-        mp_dbg(MSGT_GPLAYER, MSGL_FATAL, "[bitmap] unknown file type ( %s )\n", fname);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] read error: %s\n", fname);
         return -5;
     }
 
     if (bf->BPP < 24) {
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] Sorry, only 24 and 32 bpp bitmaps are supported.\n");
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] bpp too low: %u\n", bf->BPP);
         return -1;
     }
 
@@ -219,8 +222,6 @@ void Convert32to1(txSample *in, txSample *out, int adaptivlimit)
     out->Height    = in->Height;
     out->BPP       = 1;
     out->ImageSize = (out->Width * out->Height + 7) / 8;
-
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[c32to1] imagesize: %lu\n", out->ImageSize);
 
     out->Image = calloc(1, out->ImageSize);
 
@@ -247,6 +248,8 @@ void Convert32to1(txSample *in, txSample *out, int adaptivlimit)
                 tmp = b = 0;
             }
         }
+
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 1 bpp conversion size: %lu\n", out->ImageSize);
 
         if (b)
             out->Image[c] = tmp;
