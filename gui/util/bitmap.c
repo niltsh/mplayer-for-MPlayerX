@@ -65,13 +65,23 @@ static int pngRead(unsigned char *fname, txSample *bf)
 
     avctx = avcodec_alloc_context();
     frame = avcodec_alloc_frame();
+
+    if (!(avctx && frame)) {
+        av_free(frame);
+        av_free(avctx);
+        av_free(data);
+        return 5;
+    }
+
     avcodec_register_all();
     avcodec_open(avctx, avcodec_find_decoder(CODEC_ID_PNG));
+
     av_init_packet(&pkt);
     pkt.data = data;
     pkt.size = len;
     // HACK: make PNGs decode normally instead of as CorePNG delta frames
     pkt.flags = AV_PKT_FLAG_KEY;
+
     avcodec_decode_video2(avctx, frame, &decode_ok, &pkt);
 
     memset(bf, 0, sizeof(*bf));
