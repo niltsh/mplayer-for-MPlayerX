@@ -121,17 +121,18 @@ static int pngRead(unsigned char *fname, txSample *bf)
 
 static int Convert24to32(txSample *bf)
 {
-    unsigned char *tmpImage;
-    unsigned int i, c;
+    char *orgImage;
+    unsigned long i, c;
 
     if (bf->BPP == 24) {
-        tmpImage      = bf->Image;
+        orgImage = bf->Image;
+
         bf->BPP       = 32;
         bf->ImageSize = bf->Width * bf->Height * 4;
         bf->Image     = calloc(1, bf->ImageSize);
 
         if (!bf->Image) {
-            free(tmpImage);
+            free(orgImage);
             mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", bf->ImageSize);
             return 0;
         }
@@ -139,9 +140,9 @@ static int Convert24to32(txSample *bf)
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 32 bpp conversion size: %lu\n", bf->ImageSize);
 
         for (c = 0, i = 0; c < bf->ImageSize; c += 4, i += 3)
-            *(uint32_t *)&bf->Image[c] = AV_RB24(&tmpImage[i]);
+            *(uint32_t *)&bf->Image[c] = AV_RB24(&orgImage[i]);
 
-        free(tmpImage);
+        free(orgImage);
     }
 
     return 1;
