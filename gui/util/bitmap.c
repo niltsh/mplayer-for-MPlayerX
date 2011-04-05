@@ -34,7 +34,7 @@ static int pngRead(unsigned char *fname, txSample *bf)
     FILE *file;
     long len;
     void *data;
-    int decode_ok;
+    int decode_ok, bpl;
     AVCodecContext *avctx;
     AVFrame *frame;
     AVPacket pkt;
@@ -56,6 +56,12 @@ static int pngRead(unsigned char *fname, txSample *bf)
     }
 
     data = av_malloc(len + FF_INPUT_BUFFER_PADDING_SIZE);
+
+    if (!data) {
+        fclose(file);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", len + FF_INPUT_BUFFER_PADDING_SIZE);
+        return 3;
+    }
 
     fseek(file, 0, SEEK_SET);
     fread(data, len, 1, file);
@@ -98,20 +104,25 @@ static int pngRead(unsigned char *fname, txSample *bf)
     }
 
     if (decode_ok && bf->BPP) {
-        int bpl;
-
         bf->Width  = avctx->width;
         bf->Height = avctx->height;
         bpl = bf->Width * (bf->BPP / 8);
         bf->ImageSize = bpl * bf->Height;
         bf->Image     = malloc(bf->ImageSize);
-        memcpy_pic(bf->Image, frame->data[0], bpl, bf->Height, bpl, frame->linesize[0]);
+
+        if (bf->Image)
+            memcpy_pic(bf->Image, frame->data[0], bpl, bf->Height, bpl, frame->linesize[0]);
     }
 
     avcodec_close(avctx);
     av_freep(&frame);
     av_freep(&avctx);
     av_freep(&data);
+
+    if (decode_ok && bf->BPP && !bf->Image) {
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", bf->ImageSize);
+        return 4;
+    }
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] file: %s\n", fname);
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap]  size: %lux%lu, color depth: %u\n", bf->Width, bf->Height, bf->BPP);
