@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "bitmap.h"
 
@@ -160,26 +161,18 @@ static void Normalize(txSample *bf)
 
 static unsigned char *fExist(unsigned char *fname)
 {
-    static unsigned char tmp[512];
-    FILE *file;
-    unsigned char ext[][6] = { ".png\0", ".PNG\0" };
-    int i;
+    unsigned char *ext[] = { "png", "PNG" };
+    static unsigned char buf[512];
+    unsigned int i;
 
-    file = fopen(fname, "rb");
-
-    if (file) {
-        fclose(file);
+    if (access(fname, R_OK) == 0)
         return fname;
-    }
 
-    for (i = 0; i < 2; i++) {
-        snprintf(tmp, sizeof(tmp), "%s%s", fname, ext[i]);
-        file = fopen(tmp, "rb");
+    for (i = 0; i < FF_ARRAY_ELEMS(ext); i++) {
+        snprintf(buf, sizeof(buf), "%s.%s", fname, ext[i]);
 
-        if (file) {
-            fclose(file);
-            return tmp;
-        }
+        if (access(buf, R_OK) == 0)
+            return buf;
     }
 
     return NULL;
