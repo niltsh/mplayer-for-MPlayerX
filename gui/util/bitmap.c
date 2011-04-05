@@ -149,13 +149,13 @@ static int Convert24to32(txSample *bf)
 
 static void Normalize(txSample *bf)
 {
-    int i;
+    unsigned long i;
 
-    for (i = 0; i < (int)bf->ImageSize; i += 4)
-#if !HAVE_BIGENDIAN
-        bf->Image[i + 3] = 0;
-#else
+    for (i = 0; i < bf->ImageSize; i += 4)
+#if HAVE_BIGENDIAN
         bf->Image[i] = 0;
+#else
+        bf->Image[i + 3] = 0;
 #endif
 }
 
