@@ -118,9 +118,9 @@ static int pngRead(unsigned char *fname, txSample *bf)
     }
 
     avcodec_close(avctx);
-    av_freep(&frame);
-    av_freep(&avctx);
-    av_freep(&data);
+    av_free(frame);
+    av_free(avctx);
+    av_free(data);
 
     return !(decode_ok && bf->BPP);
 }
