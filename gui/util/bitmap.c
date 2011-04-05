@@ -108,7 +108,12 @@ static int pngRead(unsigned char *fname, txSample *bf)
         bf->Height = avctx->height;
         bpl = bf->Width * (bf->BPP / 8);
         bf->ImageSize = bpl * bf->Height;
-        bf->Image     = malloc(bf->ImageSize);
+
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] file: %s\n", fname);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap]  size: %lux%lu, color depth: %u\n", bf->Width, bf->Height, bf->BPP);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap]  image size: %lu\n", bf->ImageSize);
+
+        bf->Image = malloc(bf->ImageSize);
 
         if (bf->Image)
             memcpy_pic(bf->Image, frame->data[0], bpl, bf->Height, bpl, frame->linesize[0]);
@@ -123,10 +128,6 @@ static int pngRead(unsigned char *fname, txSample *bf)
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", bf->ImageSize);
         return 4;
     }
-
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] file: %s\n", fname);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap]  size: %lux%lu, color depth: %u\n", bf->Width, bf->Height, bf->BPP);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap]  image size: %lu\n", bf->ImageSize);
 
     return !(decode_ok && bf->BPP);
 }
