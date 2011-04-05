@@ -247,13 +247,13 @@ int Convert32to1(txSample *in, txSample *out)
         }
     }
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 1 bpp conversion size: %lu\n", out->ImageSize);
-
     if (b)
         out->Image[c] = tmp;
 
     if (!shaped)
         bpFree(out);
+
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 1 bpp conversion size: %lu\n", out->ImageSize);
 
     return 1;
 }
