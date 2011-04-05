@@ -41,26 +41,22 @@ static int pngRead(unsigned char *fname, txSample *bf)
 
     file = fopen(fname, "rb");
 
-    if (!file) {
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] open error: %s\n", fname);
-        return 1;
-    }
+    if (!file)
+        return 2;
 
     fseek(file, 0, SEEK_END);
     len = ftell(file);
 
     if (len > 50 * 1024 * 1024) {
         fclose(file);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] file too big: %s\n", fname);
-        return 2;
+        return 3;
     }
 
     data = av_malloc(len + FF_INPUT_BUFFER_PADDING_SIZE);
 
     if (!data) {
         fclose(file);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", len + FF_INPUT_BUFFER_PADDING_SIZE);
-        return 3;
+        return 4;
     }
 
     fseek(file, 0, SEEK_SET);
@@ -117,17 +113,14 @@ static int pngRead(unsigned char *fname, txSample *bf)
 
         if (bf->Image)
             memcpy_pic(bf->Image, frame->data[0], bpl, bf->Height, bpl, frame->linesize[0]);
+        else
+            decode_ok = 0;
     }
 
     avcodec_close(avctx);
     av_freep(&frame);
     av_freep(&avctx);
     av_freep(&data);
-
-    if (decode_ok && bf->BPP && !bf->Image) {
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", bf->ImageSize);
-        return 4;
-    }
 
     return !(decode_ok && bf->BPP);
 }
@@ -194,13 +187,17 @@ static unsigned char *fExist(unsigned char *fname)
 
 int bpRead(char *fname, txSample *bf)
 {
+    int r;
+
     fname = fExist(fname);
 
     if (!fname)
         return -2;
 
-    if (pngRead(fname, bf) != 0) {
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] read error: %s\n", fname);
+    r = pngRead(fname, bf);
+
+    if (r != 0) {
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] read error #%d: %s\n", r, fname);
         return -5;
     }
 
