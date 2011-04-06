@@ -178,7 +178,7 @@ static void Normalize(txSample *bf)
 
 static unsigned char *fExist(unsigned char *fname)
 {
-    unsigned char *ext[] = { "png", "PNG" };
+    static const char ext[][4] = { "png", "PNG" };
     static unsigned char buf[512];
     unsigned int i;
 
