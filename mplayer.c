@@ -3704,6 +3704,8 @@ if(!mpctx->sh_video) {
 } else {
   int frame_time_remaining = 0;
   int blit_frame = 1;
+  // skip timing after seek
+  int skip_timing = mpctx->startup_decode_retry > 0;
 
 /*========================== PLAY VIDEO ============================*/
 
@@ -3766,6 +3768,7 @@ if(!mpctx->sh_video) {
         }
     }
 
+    if (!skip_timing)
     frame_time_remaining = sleep_until_update(&mpctx->time_frame, &aq_sleep_time);
 
 //====================== FLIP PAGE (VIDEO BLT): =========================
