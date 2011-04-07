@@ -173,6 +173,8 @@ static int control(sh_video_t *sh, int cmd, void *arg, ...){
         avcodec_flush_buffers(avctx);
         return CONTROL_TRUE;
     case VDCTRL_QUERY_UNSEEN_FRAMES:
+        if (avctx->active_thread_type & FF_THREAD_FRAME)
+          return avctx->has_b_frames + avctx->thread_count + 10;
         return avctx->has_b_frames + 10;
     }
     return CONTROL_UNKNOWN;
