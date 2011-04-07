@@ -3559,8 +3559,6 @@ current_module="main";
 if(verbose) term_osd = 0;
 
 {
-int frame_time_remaining=0; // flag
-int blit_frame=0;
 mpctx->num_buffered_frames=0;
 mpctx->framestep_found=0;
 
@@ -3704,6 +3702,8 @@ if(!mpctx->sh_video) {
   update_osd_msg();
 
 } else {
+  int frame_time_remaining = 0;
+  int blit_frame = 1;
 
 /*========================== PLAY VIDEO ============================*/
 
