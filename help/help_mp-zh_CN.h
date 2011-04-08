@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 33185 (MSGTR_MPDEMUX_CACHE2_NonCacheableStream)
+// Synced with help_mp-en.h rev. 33227 (MSGTR_DVDspeedCantOpen)
 // Reminder of hard terms which need better/final solution later:
 //   (file links to be updated later if available!);
 //   NAV; section/subsection;  XScreenSaver; keycolor;
@@ -1166,7 +1166,7 @@ static const char help_text[]=
 
 // ao_pcm.c
 #define MSGTR_AO_PCM_FileInfo "[AO PCM] 文件: %s (%s)\nPCM：采样率：%iHz 声道：%s 格式 %s\n"
-#define MSGTR_AO_PCM_HintInfo "[AO PCM] 信息：使用 -vc null -vo null -ao pcm:fast 可以更快地转储数据\n[AO PCM] 信息：要写入 WAVE 文件，使用 -ao pcm:waveheader（默认模式）。\n"
+#define MSGTR_AO_PCM_HintInfo "[AO PCM] 信息：使用 -benchmark -vc null -vo null -ao pcm:fast 可以更快地转储数据\n[AO PCM] 信息：要写入 WAVE 文件，使用 -ao pcm:waveheader（默认模式）。\n"
 #define MSGTR_AO_PCM_CantOpenOutputFile "[AO PCM] 打开并写入 %s 失败！\n"
 
 // ao_sdl.c
@@ -1834,52 +1834,51 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_AUDIOIN_NotEnoughSamples "\n音频采样数据不足！\n"
 
 // cache2.c
-#define MSGTR_MPDEMUX_CACHE2_NonCacheableStream "\r此流不可缓存。\n"
-#define MSGTR_MPDEMUX_CACHE2_ReadFileposDiffers "!!! read_filepos 不同!!! 请报告此错误...\n"
+#define MSGTR_MPDEMUX_CACHE2_NonCacheableStream "\r该媒体流不可缓存。\n"
+#define MSGTR_MPDEMUX_CACHE2_ReadFileposDiffers "!!! read_filepos 有出入!!! 请报告该缺陷...\n"
 
 // network.c
-
-#define MSGTR_MPDEMUX_NW_UnknownAF "未知地址族 %d\n"
-#define MSGTR_MPDEMUX_NW_ResolvingHostForAF "正在解析 %s (为 %s)...\n"
-#define MSGTR_MPDEMUX_NW_CantResolv "不能为 %s 解析名字: %s\n"
-#define MSGTR_MPDEMUX_NW_ConnectingToServer "正在连接到服务器 %s[%s]: %d...\n"
-#define MSGTR_MPDEMUX_NW_CantConnect2Server "连接服务器失败: %s\n"
-#define MSGTR_MPDEMUX_NW_SelectFailed "选择失败。\n"
+#define MSGTR_MPDEMUX_NW_UnknownAF "未知网络地址族 %d\n"
+#define MSGTR_MPDEMUX_NW_ResolvingHostForAF "正在解析 %s 用于 %s...\n"
+#define MSGTR_MPDEMUX_NW_CantResolv "无解析网络名用于 %s：%s\n"
+#define MSGTR_MPDEMUX_NW_ConnectingToServer "正在连接到服务器 %s[%s]：%d...\n"
+#define MSGTR_MPDEMUX_NW_CantConnect2Server "使用 %s 连接服务器失败\n"
+#define MSGTR_MPDEMUX_NW_SelectFailed "select 调用失败。\n"
 #define MSGTR_MPDEMUX_NW_ConnTimeout "连接超时\n"
-#define MSGTR_MPDEMUX_NW_GetSockOptFailed "getsockopt 失败: %s\n"
-#define MSGTR_MPDEMUX_NW_ConnectError "连接错误: %s\n"
-#define MSGTR_MPDEMUX_NW_InvalidProxySettingTryingWithout "无效的代理设置... 试着不用代理。\n"
-#define MSGTR_MPDEMUX_NW_CantResolvTryingWithoutProxy "不能为 AF_INET 解析远程主机名。试着不用代理。\n"
-#define MSGTR_MPDEMUX_NW_ErrSendingHTTPRequest "发送 HTTP 请求时发生错误: 没有发出所有请求。\n"
-#define MSGTR_MPDEMUX_NW_ReadFailed "读失败。\n"
-#define MSGTR_MPDEMUX_NW_Read0CouldBeEOF "http_read_response 读进 0 (如: EOF)。\n"
-#define MSGTR_MPDEMUX_NW_AuthFailed "认证失败。请使用 -user 和 -passwd 选项来指定你的\n"\
-"用户名/密码, 以便提供给一组 URL, 或者使用 URL 格式:\n"\
+#define MSGTR_MPDEMUX_NW_GetSockOptFailed "getsockopt 失败：%s\n"
+#define MSGTR_MPDEMUX_NW_ConnectError "连接错误：%s\n"
+#define MSGTR_MPDEMUX_NW_InvalidProxySettingTryingWithout "代理设置无效... 尝试不使用代理。\n"
+#define MSGTR_MPDEMUX_NW_CantResolvTryingWithoutProxy "无法解析 AF_INET 的远程主机名。尝试不使用代理。\n"
+#define MSGTR_MPDEMUX_NW_ErrSendingHTTPRequest "发送 HTTP 请求时出错：未完全发出所有请求。\n"
+#define MSGTR_MPDEMUX_NW_ReadFailed "读取失败。\n"
+#define MSGTR_MPDEMUX_NW_Read0CouldBeEOF "http_read_response 读到 0（例如：文件末端）。\n"
+#define MSGTR_MPDEMUX_NW_AuthFailed "验证失败。请使用 -user 和 -passwd 选项来指定你的\n"\
+"用户名/密码，以提供给一组 URL 使用，或者使用如下的 URL 格式：\n"\
 "http://username:password@hostname/file\n"
-#define MSGTR_MPDEMUX_NW_AuthRequiredFor "%s 需要认证\n"
-#define MSGTR_MPDEMUX_NW_AuthRequired "需要认证。\n"
-#define MSGTR_MPDEMUX_NW_NoPasswdProvidedTryingBlank "没有给定密码, 试着使用空密码。\n"
-#define MSGTR_MPDEMUX_NW_ErrServerReturned "服务器返回 %d: %s\n"
-#define MSGTR_MPDEMUX_NW_CacheSizeSetTo "缓存大小设为 %d K字节\n"
+#define MSGTR_MPDEMUX_NW_AuthRequiredFor "%s 需要验证\n"
+#define MSGTR_MPDEMUX_NW_AuthRequired "需要验证。\n"
+#define MSGTR_MPDEMUX_NW_NoPasswdProvidedTryingBlank "未提供密码，尝试使用空密码。\n"
+#define MSGTR_MPDEMUX_NW_ErrServerReturned "服务器返回 %d：%s\n"
+#define MSGTR_MPDEMUX_NW_CacheSizeSetTo "缓存大小设为 %d 千字节\n"
 
 // open.c, stream.c:
-#define MSGTR_CdDevNotfound "找不到 CD-ROM 设备 '%s'。\n"
-#define MSGTR_ErrTrackSelect "选择 VCD 轨迹出错。"
-#define MSGTR_ReadSTDIN "从标准输入中读取...\n"
-#define MSGTR_UnableOpenURL "无法打开 URL: %s\n"
-#define MSGTR_ConnToServer "连接到服务器: %s\n"
-#define MSGTR_FileNotFound "找不到文件: '%s'\n"
+#define MSGTR_CdDevNotfound "未找到 CD-ROM 设备‘%s’。\n"
+#define MSGTR_ErrTrackSelect "选择 VCD 轨道出错。"
+#define MSGTR_ReadSTDIN "正在从标准输入中读取...\n"
+#define MSGTR_UnableOpenURL "无法打开 URL：%s\n"
+#define MSGTR_ConnToServer "已连接到服务器：%s\n"
+#define MSGTR_FileNotFound "未找到文件：‘%s’\n"
 
-#define MSGTR_SMBInitError "无法初始化 libsmbclient 库: %d\n"
-#define MSGTR_SMBFileNotFound "无法打开局域网内的: '%s'\n"
-#define MSGTR_SMBNotCompiled "MPlayer 没有编译成支持 SMB 的读取。\n"
+#define MSGTR_SMBInitError "无法初始化 libsmbclient 库：%d\n"
+#define MSGTR_SMBFileNotFound "无法通过局域网打开：‘%s’\n"
+#define MSGTR_SMBNotCompiled "MPlayer 编译时未包含 SMB 读取的支持。\n"
 
 #define MSGTR_CantOpenBluray "无法打开蓝光设备：%s\n"
 #define MSGTR_CantOpenDVD "无法打开 DVD 设备：%s（%s）\n"
 
 // stream_cdda.c
-#define MSGTR_MPDEMUX_CDDA_CantOpenCDDADevice "打不开 CDDA 设备。\n"
-#define MSGTR_MPDEMUX_CDDA_CantOpenDisc "打不开盘。\n"
+#define MSGTR_MPDEMUX_CDDA_CantOpenCDDADevice "无法打开 CDDA 设备。\n"
+#define MSGTR_MPDEMUX_CDDA_CantOpenDisc "无法打开光盘。\n"
 #define MSGTR_MPDEMUX_CDDA_AudioCDFoundWithNTracks "发现音频 CD，共 %d 音轨。\n"
 
 // stream_cddb.c
@@ -1888,36 +1887,36 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_CDDB_NotAValidURL "不是有效的 URL\n"
 #define MSGTR_MPDEMUX_CDDB_FailedToSendHTTPRequest "发送 HTTP 请求失败。\n"
 #define MSGTR_MPDEMUX_CDDB_FailedToReadHTTPResponse "读取 HTTP 响应失败。\n"
-#define MSGTR_MPDEMUX_CDDB_HTTPErrorNOTFOUND "没有发现。\n"
+#define MSGTR_MPDEMUX_CDDB_HTTPErrorNOTFOUND "未找到。\n"
 #define MSGTR_MPDEMUX_CDDB_HTTPErrorUnknown "未知错误代码\n"
-#define MSGTR_MPDEMUX_CDDB_NoCacheFound "找不到缓存。\n"
+#define MSGTR_MPDEMUX_CDDB_NoCacheFound "未找到缓存。\n"
 #define MSGTR_MPDEMUX_CDDB_NotAllXMCDFileHasBeenRead "没有读出所有的 xmcd 文件。\n"
 #define MSGTR_MPDEMUX_CDDB_FailedToCreateDirectory "创建目录 %s 失败。\n"
 #define MSGTR_MPDEMUX_CDDB_NotAllXMCDFileHasBeenWritten "没有写入所有的 xmcd 文件。\n"
-#define MSGTR_MPDEMUX_CDDB_InvalidXMCDDatabaseReturned "返回了无效的 xmcd 数据库文件。\n"
-#define MSGTR_MPDEMUX_CDDB_UnexpectedFIXME "意外。请修复\n"
+#define MSGTR_MPDEMUX_CDDB_InvalidXMCDDatabaseReturned "返回的 xmcd 数据库文件无效。\n"
+#define MSGTR_MPDEMUX_CDDB_UnexpectedFIXME "意常情况。请修复\n"
 #define MSGTR_MPDEMUX_CDDB_UnhandledCode "未处理的代码\n"
-#define MSGTR_MPDEMUX_CDDB_UnableToFindEOL "无法找到行结束。\n"
-#define MSGTR_MPDEMUX_CDDB_ParseOKFoundAlbumTitle "解析完成，找到: %s\n"
-#define MSGTR_MPDEMUX_CDDB_AlbumNotFound "没发现专辑。\n"
-#define MSGTR_MPDEMUX_CDDB_ServerReturnsCommandSyntaxErr "服务器返回: 命令语法错误\n"
-#define MSGTR_MPDEMUX_CDDB_NoSitesInfoAvailable "没有可用的站点信息。\n"
+#define MSGTR_MPDEMUX_CDDB_UnableToFindEOL "无法找到行末尾。\n"
+#define MSGTR_MPDEMUX_CDDB_ParseOKFoundAlbumTitle "解析成功，找到：%s\n"
+#define MSGTR_MPDEMUX_CDDB_AlbumNotFound "未找到专辑。\n"
+#define MSGTR_MPDEMUX_CDDB_ServerReturnsCommandSyntaxErr "服务器返回内容：命令语法错误\n"
+#define MSGTR_MPDEMUX_CDDB_NoSitesInfoAvailable "无可用的站点信息。\n"
 #define MSGTR_MPDEMUX_CDDB_FailedToGetProtocolLevel "获得协议级别失败。\n"
 #define MSGTR_MPDEMUX_CDDB_NoCDInDrive "驱动器里没有 CD。\n"
 
 // stream_cue.c
-#define MSGTR_MPDEMUX_CUEREAD_UnexpectedCuefileLine "[bincue] 意外的 cue 文件行: %s\n"
-#define MSGTR_MPDEMUX_CUEREAD_BinFilenameTested "[bincue] bin 文件名测试: %s\n"
-#define MSGTR_MPDEMUX_CUEREAD_CannotFindBinFile "[bincue] 找不到 bin 文件 - 正在放弃。\n"
+#define MSGTR_MPDEMUX_CUEREAD_UnexpectedCuefileLine "[bincue] cue 文件中不应出现的一行内容：%s\n"
+#define MSGTR_MPDEMUX_CUEREAD_BinFilenameTested "[bincue] 已测试 bin 文件名：%s\n"
+#define MSGTR_MPDEMUX_CUEREAD_CannotFindBinFile "[bincue] 无法找到 bin 文件 - 正在放弃尝试。\n"
 #define MSGTR_MPDEMUX_CUEREAD_UsingBinFile "[bincue] 正在使用 bin 文件 %s。\n"
-#define MSGTR_MPDEMUX_CUEREAD_UnknownModeForBinfile "[bincue] 未知的 bin 文件模式。不应该发生。正在停止。\n"
-#define MSGTR_MPDEMUX_CUEREAD_CannotOpenCueFile "[bincue] 打不开 %s。\n"
+#define MSGTR_MPDEMUX_CUEREAD_UnknownModeForBinfile "[bincue] 未知 bin 文件模式。不应出现该现象。正在中断操作。\n"
+#define MSGTR_MPDEMUX_CUEREAD_CannotOpenCueFile "[bincue] 无法打开 %s。\n"
 #define MSGTR_MPDEMUX_CUEREAD_ErrReadingFromCueFile "[bincue] 读取 %s 出错\n"
-#define MSGTR_MPDEMUX_CUEREAD_ErrGettingBinFileSize "[bincue] 得到 bin 文件大小时出错。\n"
-#define MSGTR_MPDEMUX_CUEREAD_InfoTrackFormat "音轨 %02d:  format=%d  %02d:%02d:%02d\n"
-#define MSGTR_MPDEMUX_CUEREAD_UnexpectedBinFileEOF "[bincue] 意外的 bin 文件结束\n"
-#define MSGTR_MPDEMUX_CUEREAD_CannotReadNBytesOfPayload "[bincue] 无法读取预载的 %d 字节。\n"
-#define MSGTR_MPDEMUX_CUEREAD_CueStreamInfo_FilenameTrackTracksavail "CUE stream_open, filename=%s, track=%d, 可用音轨: %d -> %d\n"
+#define MSGTR_MPDEMUX_CUEREAD_ErrGettingBinFileSize "[bincue] 获取 bin 文件大小时出错。\n"
+#define MSGTR_MPDEMUX_CUEREAD_InfoTrackFormat "音轨 %02d： 格式=%d  %02d:%02d:%02d\n"
+#define MSGTR_MPDEMUX_CUEREAD_UnexpectedBinFileEOF "[bincue] bin 文件遇到不应出现的结尾\n"
+#define MSGTR_MPDEMUX_CUEREAD_CannotReadNBytesOfPayload "[bincue] 无法读取 %d 字节的负载数据。\n"
+#define MSGTR_MPDEMUX_CUEREAD_CueStreamInfo_FilenameTrackTracksavail "CUE stream_open, 文件名=%s, 音轨=%d, 可用音轨：%d -> %d\n"
 
 // stream_dvd.c
 #define MSGTR_DVDspeedCantOpen "不能以写方式打开DVD设备, 改变DVD速度需要写方式。\n"
