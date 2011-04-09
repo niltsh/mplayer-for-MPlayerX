@@ -105,6 +105,7 @@ static int get_udp(int blocking, double *master_position)
 
     while (-1 != (n = recvfrom(sockfd, mesg, sizeof(mesg)-1, 0,
                                NULL, NULL))) {
+        char *end;
         // flush out any further messages so we don't get behind
         if (chars_received == -1)
             set_blocking(sockfd, 0);
@@ -113,7 +114,11 @@ static int get_udp(int blocking, double *master_position)
         mesg[chars_received] = 0;
         if (strcmp(mesg, "bye") == 0)
             return 1;
-        sscanf(mesg, "%lf", master_position);
+        *master_position = strtod(mesg, &end);
+        if (*end) {
+            mp_msg(MSGT_CPLAYER, MSGL_WARN, "Could not parse udp string!\n");
+            *master_position = MP_NOPTS_VALUE;
+        }
     }
 
     return 0;
