@@ -491,7 +491,7 @@ int af_init(af_stream_t* s)
       af = af_control_any_rev(s, AF_CONTROL_RESAMPLE_RATE | AF_CONTROL_SET,
                &(s->output.rate));
       if (!af) {
-        char *resampler = "resample";
+        const char *resampler = "resample";
 #ifdef CONFIG_FFMPEG
         if ((AF_INIT_TYPE_MASK & s->cfg.force) == AF_INIT_SLOW)
           resampler = "lavcresample";
