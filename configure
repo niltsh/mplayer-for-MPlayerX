@@ -36,28 +36,28 @@
 #############################################################################
 
 check_ffmpeg_git() {
-if test -e ffmpeg/.svn ; then
-  echo "You have an outdated FFmpeg SVN checkout in ffmpeg/, please (re)move or replace it"
-  exit 1
-fi
-
-if test -e ffmpeg/mp_auto_pull ; then
-  if ! (cd ffmpeg && git pull --rebase --ff-only) ; then
-    echo "git pull failed, (re)move ffmpeg/mp_auto_pull to disable pulling"
+  if test -e ffmpeg/.svn ; then
+    echo "You have an outdated FFmpeg SVN checkout in ffmpeg/, please (re)move or replace it"
     exit 1
   fi
-fi
 
-if ! test -e ffmpeg ; then
-  echo "No FFmpeg checkout, press enter to download one with git or CTRL+C to abort"
-  read tmp
-  if ! git clone --depth 1 git://git.videolan.org/ffmpeg.git ffmpeg ; then
-    rm -rf ffmpeg
-    echo "Failed to get a FFmpeg checkout"
-    exit 1
+  if test -e ffmpeg/mp_auto_pull ; then
+    if ! (cd ffmpeg && git pull --rebase --ff-only) ; then
+      echo "git pull failed, (re)move ffmpeg/mp_auto_pull to disable pulling"
+      exit 1
+    fi
   fi
-  touch ffmpeg/mp_auto_pull
-fi
+
+  if ! test -e ffmpeg ; then
+    echo "No FFmpeg checkout, press enter to download one with git or CTRL+C to abort"
+    read tmp
+    if ! git clone --depth 1 git://git.videolan.org/ffmpeg.git ffmpeg ; then
+      rm -rf ffmpeg
+      echo "Failed to get a FFmpeg checkout"
+      exit 1
+    fi
+    touch ffmpeg/mp_auto_pull
+  fi
 }
 
 # Prevent locale nonsense from breaking basic text processing utils
