@@ -1,9 +1,10 @@
-.\" sync with en/mplayer.1 rev. 33107
+.\" sync with en/mplayer.1 rev. 33107 (304: 以下的按键仅适用于硬件加速视频输出)
+.\" fix translation error in legacy parts: currently fixed up to line 304
 .\" Encoding: UTF-8
 .\"
 .\" MPlayer (C) 2000-2010 MPlayer 团队
 .\" 本(英文)手册页由 Gabucino, Diego Biurrun, Jonas Jermann 编写
-.\" 视频滤镜、通用编解码器选项、特定编解码器专用选项三个章节由
+.\" 视频滤镜、通用编解码器选项、各编解码器特有的编码选项三个章节由
 .\" JRaSH <jrash06 AT 163.com>重新翻译
 .
 .\" --------------------------------------------------------------------------
@@ -46,106 +47,106 @@ mencoder \- 影视编解码器
 .\" 概要
 .\" --------------------------------------------------------------------------
 .
-.SH 总览
+.SH 概要
 .na
 .nh
 .B mplayer
-[选项] [文件|URL|播放列表|\-]
+[若干选项] [文件|URL|播放列表|\-]
 .
 .br
 .B mplayer
-[选项] 文件1
-[分选项] [文件2] [分选项]
+[若干选项] 文件1
+[若干该文件专用的选项] [文件2] [若干该文件专用的选项]
 .
 .br
 .B mplayer
-[选项]
+[若干选项]
 {文件和选项组}
-[组专用的分选项]
+[该组专用的选项]
 .
 .br
 .B mplayer
 [br]://[标题][/设备]
-[选项组]
+[若干选项]
 .
 .br
 .B mplayer
 [dvd|dvdnav]://[标题|[开始标题]\-结束标题][/设备]
-[选项组]
+[若干选项]
 .
 .br
 .B mplayer
-vcd://曲目[/设备]
+vcd://轨道[/设备]
 .
 .br
 .B mplayer
-tv://[频道][/输入ID]
-[选项]
+tv://[频道][/输入源标识符]
+[若干选项]
 .
 .br
 .B mplayer
 radio://[频道|频率][/捕捉设备]
-[选项]
+[若干选项]
 .
 .br
 .B mplayer
 pvr://
-[选项]
+[若干选项]
 .
 .br
 .B mplayer
 dvb://[卡号@]频道
-[选项]
+[若干选项]
 .
 .br
 .B mplayer
-mf://[文件掩码|@列表文件]
-[\-mf 选项] [选项]
+mf://[文件过滤码|@列表文件]
+[\-mf 若干选项] [若干选项]
 .
 .br
 .B mplayer
-[cdda|cddb]://曲目[\-结束曲目][:速度][/设备]
-[选项]
+[cdda|cddb]://音轨[\-结束音轨][:速度][/设备]
+[若干选项]
 .
 .br
 .B mplayer
-cue://文件[:曲目]
-[选项]
+cue://文件[:音轨]
+[若干选项]
 .
 .br
 .B mplayer
 [file|mms[t]|http|http_proxy|rt[s]p|ftp|udp|unsv|icyx|noicyx|smb]://
-[用户名:密码@]URL[:端口] [选项]
+[用户名:密码@]URL[:端口] [若干选项]
 .
 .br
 .B mplayer
 sdp://文件
-[选项]
+[若干选项]
 .
 .br
 .B mplayer
 mpst://主机[:端口]/URL
-[选项]
+[若干选项]
 .
 .br
 .B mplayer
 tivo://主机/[list|llist|fsid]
-[选项]
+[若干选项]
 .
 .br
 .B gmplayer
-[选项]
-[\-skin\ 外观模板]
+[若干选项]
+[\-skin\ 界面外观]
 .
 .br
 .B mencoder
-[选项] 文件
+[若干选项] 文件
 [文件|URL|\-] [\-o 文件 | file://文件 | smb://[用户名:密码@]主机/文件路径]
 .
 .br
 .B mencoder
-[选项] 文件1
-[分选项] [文件2] [分选项]
+[若干选项] 文件1
+[该文件专用的选项] [文件2] [该文件专用的选项]
 .ad
 .hy
 .
@@ -155,44 +156,45 @@ tivo://主机/[list|llist|fsid]
 .
 .SH 描述
 .B mplayer
-是一个 LINUX 下的电影播放器 (也能运行在许多其它的平台和 CPU 架构, 请参阅文档)。
-通过许多原生的和可执行的编解码器的支持, 它能播放绝大部分的 MPEG/\:VOB, AVI,
-ASF/\:WMA/\:WMV, RM, QT/\:MOV/\:MP4, Ogg/\:OGM, MKV, VIVO, FLI, NuppelVideo,
-yuv4mpeg, FILM 和 RoQ 文件。
-你还能观看 VCD、SVCD、DVD、蓝光 DVD、3ivx、DivX 3/4/5、WMV 甚至 H.264 格式的电影。
+是一个 LINUX 下的电影播放器（也能运行在众多其它的平台和 CPU 架构上，参见开发文档）。
+通过众多原生的和已编译的编解码器的支持，其能播放绝大部分的 MPEG/\:VOB、AVI、
+ASF/\:WMA/\:WMV、RM、QT/\:MOV/\:MP4、Ogg/\:OGM、MKV、VIVO、FLI、NuppelVideo、
+yuv4mpeg、FILM 和 RoQ 文件。
+还能观看 VCD、SVCD、DVD、蓝光 DVD、3ivx、DivX 3/4/5、WMV 甚至 H.264 格式的影片。
 .PP
-MPlayer 广泛地支持音视频输出驱动。
-它不仅可以使用 X11, Xv, DGA, OpenGL, SVGAlib, fbdev, AAlib, libcaca,
-DirectFB, Quartz, Mac OS X CoreVideo, 也能使用 GGI, SDL (及它们的所有驱动),
-所有 VESA 兼容显卡上的 VESA (甚至不需要 X11), 某些低级的
-显卡相关的驱动 (如 Matrox, 3dfx 及 ATI) 和一些硬件 MPEG 解码器卡,
-比如 Siemens DVB, Hauppauge PVR (IVTV), DXR2 和 DXR3/\:Hollywood+。
-它们中绝大多数支持软件或硬件缩放, 所以你可以享受全屏电影。
+MPlayer 支持各种音视频输出驱动。
+其不仅可以使用 X11、Xv、DGA、OpenGL、SVGAlib、fbdev、AAlib、libcaca、
+DirectFB、Quartz、Mac OS X CoreVideo，也能使用 GGI、SDL（及其下的所有驱动）、
+VESA（在兼容 VESA 的显卡上甚至不需要 X11）、某些底层的专用于某些具体
+显卡的驱动（如 Matrox、3dfx 及 ATI）和一些硬件 MPEG 解码器卡，
+比如 Siemens DVB、Hauppauge PVR (IVTV)、DXR2 和 DXR3/\:Hollywood+。
+其中绝大多数支持软件或硬件方式的画面缩放，因而能够享受全屏播放影片的体验。
 .PP
-MPlayer 具有 OSD(屏上显示) 功能显示状态信息, 有
-抗锯齿带阴影的漂亮大字幕和键盘控制的可视反馈。
-支持的字体包括欧洲语种/\:ISO8859\-1,2 (匈牙利语, 英语, 捷克语等等),
-西里尔语和韩语, 可以播放 12 种格式的字幕文件 (MicroDVD, SubRip, OGM,
-SubViewer, Sami, VPlayer, RT, SSA, AQTitle, JACOsub, PJS
-及我们自己的: MPsub) 和 DVD 字幕 (SPU 流, VOBsub 及隐藏式 CC 字幕)。
+MPlayer 具有 OSD（屏上显示）功能用于显示状态信息，能显示采用
+抗锯齿及阴影效果的漂亮大字幕，并提供键盘控制操作的可视化反馈效果。
+支持欧洲语种/\:ISO8859\-1,2（匈牙利语、英语、捷克语等等）、斯拉夫语种和朝鲜语
+的字体，以及 12 种的字幕格式（MicroDVD、SubRip、OGM、
+SubViewer、Sami、VPlayer、RT、SSA、AQTitle、JACOsub、PJS
+以及我们自己开发的：MPsub）和 DVD 字幕（SPU 流、VOBsub 及可隐藏字幕）。
 .PP
 .B mencoder
-(MPlayer 的电影编解码器) 是一个简单的电影编解码器, 其设计为将
-MPlayer 可播放的电影(见上所述)编码成其他的 MPlayer 可播放格式(见下面)。
-其编码成的 MPEG-4 (DivX/Xvid), 是 libavcodec 编解码器的一种和
-使用 1, 2 或 3-passes(通) 的 PCM/\:MP3/\:VBRMP3 音频。
-此外还具有流复制的能力, 拥有强大的(过滤器)插件系统(裁剪,
-扩展, 反转, 后处理, 旋转, 缩放, 降噪声, RGB/\:YUV 转换)等。
+（MPlayer 的影视编解码器）是一个简单的影视编解码器，其设计为将
+MPlayer 可播放的影片（见上文）编码成其他的 MPlayer 可播放格式（见下文）。
+能以 1、2 或 3 阶段的方式编码为 MPEG-4（DivX/Xvid）、libavcodec 编解码器支持
+的任何一种格式或 PCM/\:MP3/\:VBRMP3 音频。
+此外还能够复制媒体流，具有强大的过滤器/滤镜系统（crop, expand, flip, postprocess, 
+rotate, scale, noise, RGB/\:YUV转换）以及更多的功能。
 .PP
 .B gmplayer
-其与 MPlayer 具有相同的选项，然而这些选项可能无法全部正常工作，因为与经由 GUI 所作
+是具有图形化用户界面的 MPlayer。
+其与 MPlayer 具有相同的选项，然而这些选项可能无法全部正常使用，因为与经由 GUI 所作
 的配置（保存在 gui.conf 中）有冲突。
 特别是有些选项的设置可能被 gui.conf 中的设置覆盖，而另一些可能最终永久保存在
 gui.conf 中。
 .PP
-本手册页最后有用法示例, 能让你迅速上手。
+本手册页末尾有用法示例，能让你迅速上手。
 .PP
-.B 也请参阅 HTML 文档!
+.B 请参阅 HTML 文档！
 .
 .
 .\" --------------------------------------------------------------------------
@@ -200,100 +202,100 @@ gui.conf 中。
 .\" --------------------------------------------------------------------------
 .
 .SH "交互式控制"
-MPlayer 有个完全可配置的, 命令驱动的控制层,
-让你通过键盘, 鼠标, 操纵杆或遥控器(需使用 LIRC)来控制 MPlayer。
-参见 \-input 选项定制控制层的方法。
+MPlayer 有一个完全可配置的，命令驱动的控制层面，
+让你可以通过键盘、鼠标、操纵杆或遥控器（需使用 LIRC）来控制 MPlayer。
+参见 \-input 选项中定制控制层面的方法。
 .
 .TP
 .B 键盘控制
 .PD 0
 .RS
 .IPs "<\- 和 \->"
-后退/\:快进 10 秒。
+后退/\:快进 10 秒钟。
 .IPs "up 和 down"
-快进/\:后退 1 分。
+快进/\:后退 1 分钟。
 .IPs "pgup 和 pgdown"
-快进/\:后退 10 分。
+快进/\:后退 10 分钟。
 .IPs "[ 和 ]"
-减少/增加当前回放速度 10%。
+将当前播放速度减少/增加 10%。
 .IPs "{ 和 }"
-减半/加倍当前回放速度。
+减半/加倍当前播放速度。
 .IPs "backspace"
-重置正常回放速度.
+将播放速度重置为正常水平。
 .IPs "< 和 >"
-在播放列表中后退/\:快进。
+在播放列表中后退/\:前进。
 .IPs "ENTER"
-在播放列表中快进, 甚至越过末尾。
+在播放列表中前进，甚至可以越过末尾。
 .IPs "HOME 和 END"
-下一个/\:前一个父列表中的播放树项。
-.IPs "INS 和 DEL (仅用于 ASX 播放列表)"
-下一个/\:前一个供选择的源。
+下一个/\:前一个父列表中的播放树入口。
+.IPs "INS 和 DEL（仅用于 ASX 播放列表）"
+下一个/\:前一个供切换的来源。
 .IPs "p / SPACE"
-暂停 (再按取消暂停)。
+暂停（再按下则取消暂停）。
 .IPs ".\ \ \ \ "
 步进。
-按一下暂停回放, 每按一下就播放一帧(直到按其它键取消步进)。
+按第一下暂停回放，每按一下则播放一帧（直到按其它键取消步进)）。
 .IPs "q / ESC"
-停止播放和退出。
+停止播放并退出。
 .IPs "U\ \ \ \ "
 暂停播放（并且当未使用 \-idle 时退出）。
 .IPs "+ 和 \-"
-调整音频延迟增加/减少 0.1 秒。
+调整音频延迟，增加/减少 0.1 秒。
 .IPs "/ 和 *"
 降低/\:提高音量。
 .IPs "9 和 0"
 降低/\:提高音量。
 .IPs "( 和 )"
-调整有利用于左/\:右声道的声音平衡。
+调整声音平衡，以偏向于左/\:右声道。
 .IPs "m\ \ \ \ "
 静音。
-.IPs "_ (仅用于 MPEG-TS、AVI 和 libav 库格式)"
-循环可用的像轨。
-.IPs "# (仅用于 DVD、蓝光 DVD、MPEG、Matroska、AVI 和 libav 库格式)"
-循环可用的音轨。
+.IPs "_（仅用于 MPEG-TS、AVI 和 libav 库的格式）"
+在可用的视频轨道间循环切换。
+.IPs "#（仅用于 DVD、蓝光 DVD、MPEG、Matroska、AVI 和 libav 库的格式）"
+在可用的音频轨道间循环切换。
 .IPs "TAB（仅用于 MPEG-TS 和 libav 库格式）"
-循环可用的节目。
+在可用的节目间循环切换。
 .IPs "f\ \ \ \ "
-切换全屏 (也请参见 \-fs)。
+切换全屏模式（也请参见 \-fs）。
 .IPs "T\ \ \ \ "
-切换顶置 (也请参见 \-ontop)。
+切换顶置模式（也请参见 \-ontop）。
 .IPs "w 和 e"
-降低/\:提高摇移范围。
+减小/\:增加全景显示模式的覆盖范围。
 .IPs "o\ \ \ \ "
-循环 OSD 状态: 无 / 搜索条 / 搜索条 + 计时器 / 搜索条 + 计时器 + 总时间。
+切换 OSD 状态：无 / 搜索条 / 搜索条 + 计时器 / 搜索条 + 计时器 + 总时间。
 .IPs "d\ \ \ \ "
-循环丢帧状态: 无 / 跳过显示 / 跳过解码。
-(请参见 \-framedrop 和 \-hardframedrop)。
+切换丢帧状态：无 / 跳过显示 / 跳过解码。
+（参见 \-framedrop 和 \-hardframedrop）。
 .IPs "v\ \ \ \ "
-切换显示字幕。
+切换字幕可见设置。
 .IPs "j 和 J"
-循环可用的字幕。
+在可用字幕间循环切换。
 .IPs "y 和 g"
-在字幕列表中步进/步退。
+在字幕列表中前进/后退。
 .IPs "F\ \ \ \ "
-切换显示 "锁定的字幕"。
+切换显示“强制使用的字幕”模式。
 .IPs "a\ \ \ \ "
-切换对齐字幕: 上 / 中 / 下。
+切换对齐字幕模式：上 / 中 / 下。
 .IPs "x 和 z"
-调整字幕延迟增加/减少 0.1 秒。
+调整字幕延迟，增加/减少 0.1 秒。
 .IPs "c（仅用于 \-capture）"
 开始/停止抓取主媒体流。
 .IPs "r 和 t"
-上/下调整字幕位置。
-.IPs "i (仅用于 \-edlout 模式)"
-设置 EDL 的开头或末尾并写入指定的文件。
-.IPs "s (仅用于 \-vf 截屏)"
+将字幕向上/下移动。
+.IPs "i（仅用于 \-edlout 模式）"
+设置 EDL 略过段落的开始点或末尾点，并写入指定的文件。
+.IPs "s（仅用于 \-vf screenshot）"
 截屏。
-.IPs "S (仅用于 \-vf 截屏)"
+.IPs "S（仅用于 \-vf screenshot）"
 开始/停止截屏。
 .IPs "I\ \ \ \ "
-用 OSD 显示文件名。
+在 OSD 上显示文件名。
 .IPs "P\ \ \ \ "
 在 OSD 上显示进度条、已播放时间以及总长度信息。
 .IPs "! 和 @"
-寻到前一章节/后一章节的开始处。
-.IPs "D（仅用于\-vo xvmc, \-vo vdpau，\-vf yadif, \-vf kerndeint）"
-激活/禁用解隔行扫描过滤器。
+定位到前一章节/后一章节的开始处。
+.IPs "D（仅用于\-vo xvmc、\-vo vdpau、\-vf yadif、\-vf kerndeint）"
+激活/禁用解除隔行扫描过滤器。
 .IPs "A"
 在可用的 DVD 视角间循环切换。
 .RE
@@ -7540,7 +7542,7 @@ lavc，x264，xvid。
 .
 .
 .
-.SH "特定编解码器专用的编码选项（仅用于MENCODER）"
+.SH "各编解码器特有的编码选项（仅用于MENCODER）"
 你可以使用以下的句法指定特定编解码器专用的参数：
 .
 .TP
