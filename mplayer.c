@@ -2170,6 +2170,17 @@ static int fill_audio_out_buffers(void)
     return 1;
 }
 
+static void handle_udp_master(double time)
+{
+#ifdef CONFIG_NETWORKING
+    if (udp_master) {
+      char current_time[256];
+      snprintf(current_time, sizeof(current_time), "%f", time);
+      send_udp(udp_ip, udp_port, current_time);
+    }
+#endif /* CONFIG_NETWORKING */
+}
+
 static int sleep_until_update(float *time_frame, float *aq_sleep_time)
 {
     int frame_time_remaining = 0;
@@ -2235,13 +2246,7 @@ static int sleep_until_update(float *time_frame, float *aq_sleep_time)
     if (*time_frame > 0.001 && !(vo_flags&256))
 	*time_frame = timing_sleep(*time_frame);
 
-#ifdef CONFIG_NETWORKING
-    if (udp_master) {
-      char current_time[256];
-      snprintf(current_time, sizeof(current_time), "%f", mpctx->sh_video->pts);
-      send_udp(udp_ip, udp_port, current_time);
-    }
-#endif /* CONFIG_NETWORKING */
+    handle_udp_master(mpctx->sh_video->pts);
 
     return frame_time_remaining;
 }
@@ -2534,6 +2539,7 @@ static void pause_loop(void)
             }
         }
 #endif
+        handle_udp_master(mpctx->sh_video->pts);
         usec_sleep(20000);
     }
     if (cmd && cmd->id == MP_CMD_PAUSE) {
