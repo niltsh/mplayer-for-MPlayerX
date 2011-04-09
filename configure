@@ -35,6 +35,7 @@
 #
 #############################################################################
 
+check_ffmpeg_git() {
 if test -e ffmpeg/.svn ; then
   echo "You have an outdated FFmpeg SVN checkout in ffmpeg/, please (re)move or replace it"
   exit 1
@@ -57,6 +58,7 @@ if ! test -e ffmpeg ; then
   fi
   touch ffmpeg/mp_auto_pull
 fi
+}
 
 # Prevent locale nonsense from breaking basic text processing utils
 export LC_ALL=C
@@ -1423,6 +1425,8 @@ for ac_option do
 
   esac
 done
+
+check_ffmpeg_git
 
 # Atmos: moved this here, to be correct, if --prefix is specified
 test -z "$_bindir"  && _bindir="$_prefix/bin"
