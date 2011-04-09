@@ -2238,7 +2238,7 @@ static int sleep_until_update(float *time_frame, float *aq_sleep_time)
 #ifdef CONFIG_NETWORKING
     if (udp_master) {
       char current_time[256];
-      sprintf(current_time, "%f", mpctx->sh_video->pts);
+      snprintf(current_time, sizeof(current_time), "%f", mpctx->sh_video->pts);
       send_udp(udp_ip, udp_port, current_time);
     }
 #endif /* CONFIG_NETWORKING */
