@@ -7393,7 +7393,7 @@ if test "$_tv_v4l2" = auto ; then
   _tv_v4l2=no
   if test "$_tv" = yes && linux ; then
     header_check_broken sys/time.h linux/videodev2.h && _tv_v4l2=yes
-  elif test "$_tv" = yes && sys_videoio_h=yes ; then
+  elif test "$_tv" = yes && test "$sys_videoio_h" = "yes" ; then
     _tv_v4l2=yes
   fi
 fi
