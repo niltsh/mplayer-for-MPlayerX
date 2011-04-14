@@ -139,8 +139,8 @@
 
           <listitem>
             <para>
-              Das <emphasis role="bold">Skin-Menü</emphasis> ist ganz einfach ein
-              Weg, <application>MPlayer</application> mittels Menüeinträgen zu
+              Das <emphasis role="bold">Skin-Menü</emphasis> bietet die Möglichkeit,
+              <application>MPlayer</application> mittels Menüeinträgen zu
               kontrollieren. Es wird durch die mittlere Maustaste aktiviert.
               Zwei Grafiken sind für das Menü erforderlich:
               eine davon ist die Basisgrafik, die den Normalzustand des Menüs darstellt,
