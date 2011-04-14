@@ -129,8 +129,8 @@
 
           <listitem>
             <para>
-              Das <emphasis role="bold">Unterfenster</emphasis> ist dort, wo der Film
-              erscheint. Es kann eine festgelegte Grafik anzeigen, wenn kein Film geladen
+              Im <emphasis role="bold">Unterfenster</emphasis> erscheint der Film.
+              Es kann eine festgelegte Grafik anzeigen, wenn kein Film geladen
               ist (es ist ziemlich langweilig, ein leeres Fenster vor sich zu haben :-))
               <emphasis role="bold">Beachte:</emphasis> Transparenz ist hier
               <emphasis role="bold">nicht erlaubt</emphasis>.
