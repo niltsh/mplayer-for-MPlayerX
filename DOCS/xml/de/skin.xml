@@ -368,7 +368,7 @@ end
             </para>
             <note>
               <para>
-                Diese Koordinaten funktionieren im Moment nicht beim Anzeigefenster.
+                Diese Koordinaten funktionieren im Moment nicht beim Unterfenster.
               </para>
             </note>
             <warning>
@@ -422,7 +422,7 @@ end
             </para>
             <note>
               <para>
-                Dies funktioniert nicht beim Anzeigefenster, dort braucht man es nicht.
+                Dies funktioniert nicht beim Unterfenster, dort braucht man es nicht.
               </para>
             </note>
           </listitem>

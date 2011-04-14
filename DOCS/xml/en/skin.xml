@@ -316,7 +316,7 @@ blocks.
   the screen The window will have the size of the image.
   </para>
   <note><para>
-  These coordinates do not currently work for the display window.
+  These coordinates do not currently work for the subwindow.
   </para></note>
   <warning><para>Transparent regions in the image (colored #FF00FF) appear black
   on X servers without the XShape extension. The image's width must be dividable
@@ -360,7 +360,7 @@ blocks.
   <emphasis role="bold">disable</emphasis>.
   </para>
   <note><para>
-  This doesn't work for the display window, there is no need to.
+  This doesn't work for the subwindow, there is no need to.
   </para></note>
   </listitem>
 </varlistentry>
