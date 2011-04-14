@@ -422,7 +422,7 @@ static int init(sh_video_t *sh){
     }
     /* Pass palette to codec */
     if (sh->bih && (sh->bih->biBitCount <= 8)) {
-        avctx->palctrl = calloc(1, sizeof(AVPaletteControl));
+        avctx->palctrl = av_mallocz(sizeof(AVPaletteControl));
         avctx->palctrl->palette_changed = 1;
         if (sh->bih->biSize-sizeof(*sh->bih))
             /* Palette size in biSize */
