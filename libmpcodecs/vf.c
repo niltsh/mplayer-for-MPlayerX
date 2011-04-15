@@ -143,6 +143,7 @@ static const vf_info_t* const filter_list[]={
     &vf_info_lavc,
     &vf_info_lavcdeint,
     &vf_info_screenshot,
+    &vf_info_geq,
 #endif
 #ifdef CONFIG_ZR
     &vf_info_zrmjpeg,
@@ -193,7 +194,6 @@ static const vf_info_t* const filter_list[]={
     &vf_info_fspp,
     &vf_info_qp,
     &vf_info_mcdeint,
-    &vf_info_geq,
 #endif
     &vf_info_yuvcsp,
     &vf_info_kerndeint,
