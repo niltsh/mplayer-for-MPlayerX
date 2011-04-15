@@ -2539,7 +2539,8 @@ static void pause_loop(void)
             }
         }
 #endif
-        handle_udp_master(mpctx->sh_video->pts);
+        if (mpctx->sh_video)
+            handle_udp_master(mpctx->sh_video->pts);
         usec_sleep(20000);
     }
     if (cmd && cmd->id == MP_CMD_PAUSE) {
