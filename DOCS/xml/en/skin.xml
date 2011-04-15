@@ -266,14 +266,6 @@ and <literal>PNG</literal> are tried for <filename>&lt;ext&gt;</filename>
 </para>
 
 <para>
-Here is an example to make this clear. Suppose that you have an image called
-<filename>main.png</filename> that you use for the main window:
-<programlisting>base = main, -1, -1</programlisting>
-<application>MPlayer</application> tries to load <filename>main</filename>,
-<filename>main.png</filename>, <filename>main.PNG</filename> files.
-</para>
-
-<para>
 Finally some words about positioning. The main window and the subwindow can be
 placed in the different corners of the screen by giving <literal>X</literal>
 and <literal>Y</literal> coordinates. <literal>0</literal> is top or left,
@@ -290,6 +282,14 @@ shown in this illustration:
 (0,-2)----(-1,-2)----(-2,-2)
 </screen>
 </informalfigure>
+</para>
+
+<para>
+Here is an example to make this clear. Suppose that you have an image called
+<filename>main.png</filename> that you use for the main window:
+<programlisting>base = main, -1, -1</programlisting>
+<application>MPlayer</application> tries to load <filename>main</filename>,
+<filename>main.png</filename>, <filename>main.PNG</filename> files and centers it.
 </para>
 
 <!-- ********** -->
