@@ -667,8 +667,8 @@ end
                   <row>
                     <entry>$a</entry>
                     <entry>
-                      ein dem Audio-Typ entsprechendes Zeichen (Nichts: <literal>n</literal>,
-                      Mono: <literal>m</literal>, Stereo: <literal>t</literal>)
+                      Buchstabe entsprechend dem Audio-Typ (Nichts: <keycap>n</keycap>,
+                      Mono: <keycap>m</keycap>, Stereo: <keycap>t</keycap>)
                     </entry>
                   </row>
                   <row>
@@ -690,29 +690,26 @@ end
                   <row>
                     <entry>$T</entry>
                     <entry>
-                      Ein dem Streamtyp entsprechendes Zeichen (Datei: <literal>f</literal>,
-                      Video-CD: <literal>v</literal>, DVD: <literal>d</literal>, URL: <literal>u</literal>)
+                      Buchstabe entsprechend dem Streamtyp (Datei: <keycap>f</keycap>,
+                      Video-CD: <keycap>v</keycap>, DVD: <keycap>d</keycap>, URL: <keycap>u</keycap>)
                     </entry>
                   </row>
                   <row>
-                    <entry>$p</entry>
+                    <entry>$l</entry>
                     <entry>
-                      Das <keycap>p</keycap>-Zeichen (wenn ein Film abgespielt wird und die Schrift
-                      das Zeichen <keycap>p</keycap> enthält)
+                      Buchstabe <keycap>p</keycap> (wenn ein Film abgespielt wird)
                     </entry>
                   </row>
                   <row>
                     <entry>$s</entry>
                     <entry>
-                      Das <keycap>s</keycap>-Zeichen (wenn ein Film angehalten wird und die Schrift
-                      das Zeichen <keycap>s</keycap> enthält)
+                      Buchstabe <keycap>s</keycap> (wenn ein Film angehalten wird)
                     </entry>
                   </row>
                   <row>
                     <entry>$e</entry>
                     <entry>
-                      Das <keycap>e</keycap>-Zeichen (wenn ein Film pausiert wird und die Schrift
-                      das Zeichen <keycap>e</keycap> enthält)
+                      Buchstabe <keycap>e</keycap> (wenn ein Film pausiert wird)
                     </entry>
                   </row>
                   <row>
@@ -738,11 +735,11 @@ end
 
       <note>
         <para>
-          Die Variablen <literal>$a, $T, $p, $s</literal> und <literal>$e</literal>
-          geben alle Zeichen zurück, die als spezielle Symbole angezeigt werden sollen
+          Die Variablen <literal>$a, $T, $l, $s</literal> und <literal>$e</literal>
+          geben Buchstaben zurück, die als spezielle Symbole angezeigt werden sollen
           (zum Beispiel steht <keycap>e</keycap> für das Pause-Symbol, welches gewöhnlich
           etwa so || aussieht).
-          Du solltest eine Schrift für normale Zeichen und eine weitere Schrift für
+          Du solltest eine Schrift für normale Buchstaben und eine weitere Schrift für
           Symbole haben. Schau in den Abschnitt über
           <link linkend="skin-fonts-symbols">Symbole</link>
           für mehr Informationen.
@@ -915,7 +912,7 @@ image = font.png
             <row><entry>Zeichen</entry><entry>Symbol</entry></row>
           </thead>
           <tbody>
-            <row><entry><keycap>p</keycap></entry><entry>Play</entry></row>
+            <row><entry><keycap>l</keycap></entry><entry>Play</entry></row>
             <row><entry><keycap>s</keycap></entry><entry>Stop</entry></row>
             <row><entry><keycap>e</keycap></entry><entry>Pause</entry></row>
             <row><entry><keycap>n</keycap></entry><entry>Kein Sound</entry></row>

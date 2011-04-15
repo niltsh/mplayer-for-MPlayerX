@@ -554,8 +554,8 @@ blocks.
   </row>
   <row>
     <entry>$a</entry>
-    <entry>a character according to the audio type (none: <literal>n</literal>,
-    mono: <literal>m</literal>, stereo: <literal>t</literal>)</entry>
+    <entry>a character according to the audio type (none: <keycap>n</keycap>,
+    mono: <keycap>m</keycap>, stereo: <keycap>t</keycap>)</entry>
   </row>
   <row>
     <entry>$t</entry>
@@ -576,25 +576,22 @@ blocks.
   <row>
     <entry>$T</entry>
     <entry>
-    a character according to the stream type (file: <literal>f</literal>,
-    Video CD: <literal>v</literal>, DVD: <literal>d</literal>,
-    URL: <literal>u</literal>)
+    a character according to the stream type (file: <keycap>f</keycap>,
+    Video CD: <keycap>v</keycap>, DVD: <keycap>d</keycap>,
+    URL: <keycap>u</keycap>)
     </entry>
   </row>
   <row>
-    <entry>$p</entry>
-    <entry>the <keycap>p</keycap> character (if a movie is playing and the font
-    has the <keycap>p</keycap> character)</entry>
+    <entry>$l</entry>
+    <entry>the <keycap>p</keycap> character (if a movie is playing)</entry>
   </row>
   <row>
     <entry>$s</entry>
-    <entry>the <keycap>s</keycap> character (if the movie is stopped and the
-    font has the <keycap>s</keycap> character)</entry>
+    <entry>the <keycap>s</keycap> character (if the movie is stopped)</entry>
   </row>
   <row>
     <entry>$e</entry>
-    <entry>the <keycap>e</keycap> character (if playback is paused and the font
-    has the <keycap>e</keycap> character)</entry>
+    <entry>the <keycap>e</keycap> character (if playback is paused)</entry>
   </row>
   <row>
     <entry>$x</entry>
@@ -613,7 +610,7 @@ blocks.
   </informaltable>
 
   <note><para>
-  The <literal>$a, $T, $p, $s</literal> and <literal>$e</literal>
+  The <literal>$a, $T, $l, $s</literal> and <literal>$e</literal>
   variables all return characters that should be displayed as special symbols
   (for example, <keycap>e</keycap> is for the pause symbol that usually looks
   something like ||). You should have a font for normal characters and
@@ -783,7 +780,7 @@ symbols (and thus require a different font).
   <row><entry>Character</entry><entry>Symbol</entry></row>
 </thead>
 <tbody>
-  <row><entry><keycap>p</keycap></entry><entry>play</entry></row>
+  <row><entry><keycap>l</keycap></entry><entry>play</entry></row>
   <row><entry><keycap>s</keycap></entry><entry>stop</entry></row>
   <row><entry><keycap>e</keycap></entry><entry>pause</entry></row>
   <row><entry><keycap>n</keycap></entry><entry>no sound</entry></row>
