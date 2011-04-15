@@ -315,9 +315,6 @@ blocks.
   The window will appear at the given <literal>X,Y</literal> position on
   the screen The window will have the size of the image.
   </para>
-  <note><para>
-  These coordinates do not currently work for the subwindow.
-  </para></note>
   <warning><para>Transparent regions in the image (colored #FF00FF) appear black
   on X servers without the XShape extension. The image's width must be dividable
   by 8.</para></warning>
@@ -644,15 +641,14 @@ The following entries can be used in the
   <anchor id="skin-sub-base"/>base = image, X, Y, width, height
   </literal></term>
   <listitem><para>
-  The image to be displayed in the window. The window will appear at the given
-  <literal>X,Y</literal> position on the screen (<literal>0,0</literal> is the
-  top left corner). You can specify <literal>-1</literal> for center and
-  <literal>-2</literal> for right (<literal>X</literal>) and bottom
-  (<literal>Y</literal>). The window will be as large as the image.
+  The image to be displayed in the window. The window will be as large as the image.
   <literal>width</literal> and <literal>height</literal>
   denote the size of the window; they are optional (if they are missing, the
   window is the same size as the image).
   </para></listitem>
+  <note><para>
+  The <literal>X,Y</literal> coordinates do not currently work for the subwindow.
+  </para></note>
 </varlistentry>
 
 <varlistentry>

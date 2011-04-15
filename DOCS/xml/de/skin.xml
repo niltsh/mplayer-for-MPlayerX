@@ -366,11 +366,6 @@ end
               Das Fenster wird an der angegebenen Position <literal>X,Y</literal> auf
               dem Bildschirm erscheinen. Es wird die Größe der Grafik besitzen.
             </para>
-            <note>
-              <para>
-                Diese Koordinaten funktionieren im Moment nicht beim Unterfenster.
-              </para>
-            </note>
             <warning>
               <para>
                 Transparente Bereiche innerhalb der Grafik (mit der Farbe #FF00FF) erscheinen
@@ -769,16 +764,16 @@ end
           </term>
           <listitem>
             <para>
-              Die im Fenster anzuzeigende Grafik. Das Fenster wird an der angegebenen
-              Position <literal>X,Y</literal> auf dem Bildschirm erscheinen
-              (<literal>0,0</literal> ist die obere linke Ecke).
-              Du kannst <literal>-1</literal> für zentriert und <literal>-2</literal>
-              für rechts (<literal>X</literal>) und unten (<literal>Y</literal>) festlegen.
-              Das Fenster wird so groß sein wie die Grafik.
-              <literal>Breite</literal> und <literal>Höhe</literal>
-              kennzeichnen die Größe des Fensters; sie sind optional (wenn sie fehlen, hat
+              Die im Fenster anzuzeigende Grafik. Das Fenster wird so groß sein wie die Grafik.
+              <literal>width</literal> und <literal>height</literal>
+              kennzeichnen Breite und Höhe des Fensters; sie sind optional (wenn sie fehlen, hat
               das Fenster dieselbe Größe wie die Grafik).
             </para>
+            <note>
+              <para>
+                Die Koordinaten <literal>X,Y</literal> funktionieren im Moment nicht beim Unterfenster.
+              </para>
+            </note>
           </listitem>
         </varlistentry>
 
