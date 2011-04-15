@@ -39,58 +39,62 @@
 #include "sub/font_load.h"
 #include "sub/sub.h"
 
-int gtkEnableAudioEqualizer = 0;
-
-int gtkVfPP   = 0;
-int gtkVfLAVC = 0;
-
-int gtkAONorm             = 0;
-int gtkAOSurround         = 0;
-int gtkAOExtraStereo      = 0;
-float gtkAOExtraStereoMul = 1.0;
-#ifdef CONFIG_OSS_AUDIO
-char *gtkAOOSSMixer;
-char *gtkAOOSSMixerChannel;
-char *gtkAOOSSDevice;
-#endif
-#ifdef CONFIG_ALSA
-char *gtkAOALSAMixer;
-char *gtkAOALSAMixerChannel;
-char *gtkAOALSADevice;
-#endif
-#ifdef CONFIG_SDL
-char *gtkAOSDLDriver;
-#endif
-#ifdef CONFIG_ESD
-char *gtkAOESDDevice;
-#endif
-
 int gtkCacheOn   = 0;
 int gtkCacheSize = 2048;
 
-int gtkAutoSyncOn = 0;
-int gtkAutoSync   = 0;
+int gtkVfLAVC = 0;
+int gtkVfPP   = 0;
 
 #ifdef CONFIG_DXR3
 char *gtkDXR3Device;
 #endif
 
+int gtkAutoSyncOn = 0;
+int gtkAutoSync   = 0;
+
+int gtkAONorm             = 0;
+int gtkAOSurround         = 0;
+int gtkAOExtraStereo      = 0;
+float gtkAOExtraStereoMul = 1.0;
+
+#ifdef CONFIG_ALSA
+char *gtkAOALSAMixer;
+char *gtkAOALSAMixerChannel;
+char *gtkAOALSADevice;
+#endif
+
+#ifdef CONFIG_OSS_AUDIO
+char *gtkAOOSSMixer;
+char *gtkAOOSSMixerChannel;
+char *gtkAOOSSDevice;
+#endif
+
+#ifdef CONFIG_ESD
+char *gtkAOESDDevice;
+#endif
+
+#ifdef CONFIG_SDL
+char *gtkAOSDLDriver;
+#endif
+
+int gtkEnableAudioEqualizer = 0;
+
 int gtkSubDumpMPSub = 0;
 int gtkSubDumpSrt   = 0;
 
+#ifdef CONFIG_ASS
+gtkASS_t gtkASS;
+#endif
+
+int gtkEnablePlayBar   = 1;
 int gtkLoadFullscreen  = 0;
 int gtkShowVideoWindow = 1;
-int gtkEnablePlayBar   = 1;
 
 int gui_save_pos   = 1;
 int gui_main_pos_x = -2;
 int gui_main_pos_y = -2;
 int gui_sub_pos_x  = -1;
 int gui_sub_pos_y  = -1;
-
-#ifdef CONFIG_ASS
-gtkASS_t gtkASS;
-#endif
 
 static m_config_t *gui_conf;
 
