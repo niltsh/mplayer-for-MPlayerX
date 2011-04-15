@@ -417,7 +417,7 @@ end
             </para>
             <note>
               <para>
-                Dies funktioniert nicht beim Unterfenster, dort braucht man es nicht.
+                Dies kann für die Abspielleiste nicht benutzt werden.
               </para>
             </note>
           </listitem>

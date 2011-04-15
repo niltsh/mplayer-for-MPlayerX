@@ -357,7 +357,7 @@ blocks.
   <emphasis role="bold">disable</emphasis>.
   </para>
   <note><para>
-  This doesn't work for the subwindow, there is no need to.
+  This isn't available for the playbar.
   </para></note>
   </listitem>
 </varlistentry>
