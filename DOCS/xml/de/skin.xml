@@ -103,9 +103,9 @@
               <link linkend="skin-potmeter">potmeter</link> für Details.
             </para>
             <para>
-              <emphasis role="bold">Labels</emphasis> sind ein wenig speziell: Die Zeichen,
+              <emphasis role="bold">Labels</emphasis> sind ein wenig speziell: Die Buchstaben und Zeichen,
               die man zu ihrer Darstellung benötigt, werden von einer Grafikdatei und
-              die Zeichen in der Grafik durch eine
+              die Buchstaben und Zeichen in der Grafik durch eine
               <link linkend="skin-fonts">Schrift-Beschreibungsdatei</link> festgelegt.
               Letztere ist eine Volltextdatei, welche die x-,y-Position und Größe jedes
               Zeichens in der Grafik beschreibt (die Grafikdatei und ihre
@@ -569,7 +569,7 @@ end
               <literal>text</literal> wird mittels der identifizierten
               <literal>fontfile</literal> angezeigt. Der Text ist einfach ein
               eine Ausgangszeichenkette (<literal>$x</literal>-Variablen funktionieren nicht),
-              eingeschlossen von doppelten Anführungszeichen (das "-Zeichen kann jedoch
+              eingeschlossen von doppelten Anführungszeichen (das <literal>"</literal>-Zeichen kann jedoch
               nicht Teil des Textes sein).
               Das Label wird mittels der über die <literal>fontfile</literal> identifizierten
               Schrift angezeigt.
@@ -589,7 +589,7 @@ end
               Das Label wird als dynamisch bezeichnet, weil sein Text periodisch
               aktualisiert wird. Die maximale Breite des Labels wird mit dem
               Wert <literal>width</literal> vorgegeben (seine Höhe ist die der
-              Zeichen).
+              vorkommenden Zeichen).
               Wird der anzuzeigende Text breiter als dieser Wert, wird er gescrollt,
               andernfalls wird er innerhalb des angegebenen Bereichs gemäß des
               <literal>align</literal>-Parameters ausgerichtet:
@@ -599,7 +599,7 @@ end
             </para>
             <para>
               Der anzuzeigende Text wird mit <literal>text</literal> festgelegt:
-              Er muss zwischen doppelten Anführungszeichen stehen (das "-Zeichen kann jedoch
+              Er muss zwischen doppelten Anführungszeichen stehen (das <literal>"</literal>-Zeichen kann jedoch
               nicht Teil des Textes sein).
               Das Label wird mittels der über die <literal>fontfile</literal> identifizierten
               Schrift angezeigt.
@@ -662,7 +662,7 @@ end
                   </row>
                   <row>
                     <entry>$$</entry>
-                    <entry>das $-Zeichen</entry>
+                    <entry><literal>$</literal>-Zeichen</entry>
                   </row>
                   <row>
                     <entry>$a</entry>
@@ -854,7 +854,7 @@ end
     <title>Schriften</title>
     <para>
       Wie im Abschnitt über die Skin-Teile beschrieben, wird eine Schrift durch eine
-      Grafik und eine Beschreibungsdatei definiert. Du kannst die Zeichen irgendwo
+      Grafik und eine Beschreibungsdatei definiert. Du kannst die Buchstaben und Zeichen irgendwo
       innerhalb der Grafik platzieren, aber stell sicher, dass Position und Größe
       der Zeichen in der Beschreibungsdatei exakt angegeben sind.
     </para>
@@ -872,20 +872,20 @@ end
       <anchor id="skin-font-char"/>
       <programlisting>"char" = X, Y, width, hight</programlisting>
       Hier legen <literal>X</literal> und <literal>Y</literal> die Position des
-      <literal>char</literal>-Zeichens innerhalb der Grafik fest
+      Zeichens (hier mit <literal>char</literal> bezeichnet) innerhalb der Grafik fest
       (<literal>0,0</literal> steht für die obere linke Ecke).
-      <literal>width</literal> und <literal>height</literal> sind die Maße der
-      Zeichen in Pixel. Das Zeichen kann in UTF-8-Kodierung angegeben werden.
+      <literal>width</literal> und <literal>height</literal> sind die Maße des
+      Zeichens in Pixel. Das Zeichen kann in UTF-8-Kodierung angegeben werden.
     </para>
 
     <para>
-      Dieses Beispiel definiert die Zeichen A, B, C unter Anwendung von
+      Dieses Beispiel definiert die Buchstaben A, B, C unter Anwendung von
       <filename>font.png</filename>.
       <programlisting>
 ; Kann eine "Schrift" anstatt "font.png" sein.
 image = font.png
 
-; Drei Zeichen reichen zu Demonstrationszwecken :-)
+; Drei Buchstaben reichen zu Demonstrationszwecken :-)
 "A" =  0,0, 7,13
 "B" =  7,0, 7,13
 "C" = 14,0, 7,13<!--
@@ -895,21 +895,21 @@ image = font.png
     <sect2 id="skin-fonts-symbols">
       <title>Symbole</title>
       <para>
-        Einige Zeichen haben spezielle Bedeutungen, wenn sie von bestimmten
+        Einige Buchstaben haben spezielle Bedeutungen, wenn sie von bestimmten
         Variablen in <link linkend="skin-dlabel">dlabel</link> zurückgegeben
-        werden. Diese Zeichen sind dazu gedacht, als Symbole angezeigt zu werden,
-        so dass Dinge wie ein hübsches DVD-Logo an Stelle des Zeichens
+        werden. Diese Buchstaben sind dazu gedacht, als Symbole angezeigt zu werden,
+        so dass Dinge wie ein hübsches DVD-Logo an Stelle des Buchstabens
         '<literal>d</literal>' für einen DVD-Stream angezeigt werden können.
       </para>
       <para>
-        Die folgende Tabelle listet alle Zeichen auf, die zum Anzeigen von
+        Die folgende Tabelle listet alle Buchstaben auf, die zum Anzeigen von
         Symbolen genutzt werden können (und daher eine andere Schrift benötigen).
       </para>
 
       <informaltable>
         <tgroup cols="2">
           <thead>
-            <row><entry>Zeichen</entry><entry>Symbol</entry></row>
+            <row><entry>Buchstabe</entry><entry>Symbol</entry></row>
           </thead>
           <tbody>
             <row><entry><keycap>l</keycap></entry><entry>Play</entry></row>
