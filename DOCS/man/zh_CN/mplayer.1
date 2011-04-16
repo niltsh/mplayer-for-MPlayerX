@@ -1,5 +1,5 @@
-.\" sync with en/mplayer.1 rev. 33107 (304: 以下的按键仅适用于硬件加速视频输出)
-.\" fix translation error in legacy parts: currently fixed up to line 304
+.\" sync with en/mplayer.1 rev. 33107
+.\" fix translation error in legacy parts: currently fixed up to (833: \-edl-start-pts)
 .\" Encoding: UTF-8
 .\"
 .\" MPlayer (C) 2000-2010 MPlayer 团队
@@ -187,9 +187,9 @@ rotate, scale, noise, RGB/\:YUV转换）以及更多的功能。
 .PP
 .B gmplayer
 是具有图形化用户界面的 MPlayer。
-其与 MPlayer 具有相同的选项，然而这些选项可能无法全部正常使用，因为与经由 GUI 所作
+其与 MPlayer 具有相同的选项，然而这些选项可能无法全部起作用，因为与图形界面设置
 的配置（保存在 gui.conf 中）有冲突。
-特别是有些选项的设置可能被 gui.conf 中的设置覆盖，而另一些可能最终永久保存在
+特别是有些选项的设置可能被 gui.conf 中的设置重写，而另一些可能最终永久保存在
 gui.conf 中。
 .PP
 本手册页末尾有用法示例，能让你迅速上手。
@@ -302,8 +302,8 @@ MPlayer 有一个完全可配置的，命令驱动的控制层面，
 .PD 1
 .PP
 .RS
-(以下的按键仅适用于硬件加速视频输出(xv, (x)vidix, (x)mga, 等),
-软件均衡器(\-vf eq or \-vf eq2), 或者色调过滤器(\-vf hue)。)
+（以下按键仅当使用硬件加速的视频输出（xv, (x)vidix, (x)mga, 等）,
+软件均衡器（\-vf eq or \-vf eq2），或色调滤镜（\-vf hue）时有效。）
 .RE
 .PP
 .PD 0
@@ -320,7 +320,7 @@ MPlayer 有一个完全可配置的，命令驱动的控制层面，
 .PD 1
 .PP
 .RS
-（以下按键仅在使用 quartz 或 corevideo 视频输出驱动时有效。）
+（以下按键仅当使用 quartz 或 corevideo 视频输出驱动时有效。）
 .RE
 .PP
 .PD 0
@@ -332,27 +332,27 @@ MPlayer 有一个完全可配置的，命令驱动的控制层面，
 .IPs "command + 2"
 双倍尺寸。
 .IPs "command + f"
-切换全屏 (也请参见 \-fs)。
+切换全屏模式状态（另参见 \-fs）。
 .IPs "command + [ 和 command + ]"
-设置窗口的 alpha。
+设置影片窗口的 alpha 值。
 .RE
 .PD 1
 .PP
 .RS
-(以下的按键仅适用于 sdl 视频输出驱动。)
+（以下的按键仅当使用 sdl 视频输出驱动时有效。）
 .RE
 .PP
 .PD 0
 .RS
 .IPs "c\ \ \ \ "
-切换可用的全屏模式。
+在可用的全屏模式间切换。
 .IPs "n\ \ \ \ "
-原始尺寸。
+恢复为原来的模式。
 .RE
 .PD 1
 .PP
 .RS
-(以下的按键仅适用于多媒体键盘。)
+（以下的按键仅当使用具有多媒体按键的键盘时有效。）
 .RE
 .PP
 .PD 0
@@ -362,12 +362,12 @@ MPlayer 有一个完全可配置的，命令驱动的控制层面，
 .IPs "STOP\ "
 停止并退出。
 .IPs "PREVIOUS 和 NEXT"
-后退/\:快进 1 分。
+后退/\:快进 1 分钟。
 .RE
 .PD 1
 .PP
 .RS
-(以下的按键仅适用于已编译支持 TV 或 DVB 的输入并优先于以前的定义。)
+（以下的按键仅适用于编译时包含对于 TV 或 DVB 输入的支持的情况，并且优先级高于以上的按键定义。）
 .RE
 .PP
 .PD 0
@@ -382,34 +382,31 @@ MPlayer 有一个完全可配置的，命令驱动的控制层面，
 .PD 1
 .PP
 .RS
-(以下的按键仅适用于已编译支持 dvdnav: 用于导航菜单)
+（以下的按键仅适用于编译时包括对于 dvdnav 支持的情况：用于菜单导航。）
 .RE
 .PP
 .PD 0
 .RS
-.IPs "keypad 8"
-选择上。
-.IPs "keypad 2"
-选择下。
-.IPs "keypad 4"
-选择左。
-.IPs "keypad 6"
-选择右。
-.IPs "keypad 5"
+.IPs "小键盘 8"
+选择按钮向上。
+.IPs "小键盘 2"
+选择按钮向下。
+.IPs "小键盘 4"
+选择按钮向左。
+.IPs "小键盘 6"
+选择按钮向右。
+.IPs "小键盘 5"
 返回主菜单。
-.IPs "keypad 7"
-返回最近的菜单(先后次序是: 章节->标题->根)。
-.IPs "keypad ENTER"
-确定。
+.IPs "小键盘 7"
+返回最近的菜单（最优顺序是：章节->标题->根）。
+.IPs "小键盘 ENTER"
+确认选择。
 .RE
 .PD 1
 .PP
 .RS
 .
-（以下按键只有当编译时启用对于电视字幕的支持（teletext）时才有效：这些按键用于控制电
-视字幕，数据可能来自模拟电视输入或是 MPEG 传输流。）
-（以下按键用于控制电视信号的电视字幕。数据可能来源于模拟电视信号或 MPEG 传
-输数据流。）
+（以下按键用于控制图文电视，数据可以来自模拟电视输入或是 MPEG 传输流。）
 .RE
 .PP
 .PD 0
@@ -427,9 +424,9 @@ MPlayer 有一个完全可配置的，命令驱动的控制层面，
 .B 鼠标控制
 .PD 0
 .RS
-.IPs "button 3 和 button 4"
+.IPs "按钮 3 和 按钮 4"
 后退/\:快进 1 分。
-.IPs "button 5 和 button 6"
+.IPs "按钮 5 和 按钮 6"
 降低/\:提高音量。
 .RE
 .PD 1
@@ -438,15 +435,15 @@ MPlayer 有一个完全可配置的，命令驱动的控制层面，
 .B 操纵杆
 .PD 0
 .RS
-.IPs "left 和 right"
+.IPs "左 和 右"
 后退/\:快进 10 秒。
-.IPs "up 和 down"
+.IPs "上 和 下"
 快进/\:后退 1 分。
-.IPs "button 1"
+.IPs "按钮 1"
 暂停。
-.IPs "button 2"
-循环 OSD 状态: 无 / 搜索条 / 搜索条 + 计时器 / 搜索条 + 计时器 + 总时间。
-.IPs "button 3 和 button 4"
+.IPs "按钮 2"
+切换 OSD 状态：无 / 搜索条 / 搜索条 + 计时器 / 搜索条 + 计时器 + 总时间。
+.IPs "按钮 3 和 按钮 4"
 降低/\:提高音量。
 .RE
 .PD 1
@@ -457,23 +454,25 @@ MPlayer 有一个完全可配置的，命令驱动的控制层面，
 .\" --------------------------------------------------------------------------
 .
 .SH "用法"
-每个 "flag" 选项有个相反的 "noflag" 选项对应, 如: 选项 \-fs 相反的是 \-nofs。
+每个形如“flag”的选项都有一个相对应的形如“noflag”的选项，如：与选项 \-fs 相反的
+是 \-nofs 选项。
 .PP
-如果某选项标为: (仅用于 XXX), 就仅适用于与选项 XXX 联合使用或者已编译进 XXX。
+如果某选项标明为：（仅用于 XXX），则其只能与选项 XXX 一同使用，或者只在编译时包括对
+于 XXX 的支持情况下使用。
 .PP
-.I 注意:
-子选项解析器(例如用于 \-ao pcm 子选项)支持
-一种特殊的字符串转义(string-escaping)意欲和外部的 GUI 一起使用。
+.I 注意：
+子选项解析器（用于例如 \-ao pcm 之类的子选项）支持一种特殊的字符串转义方法，以用于
+外部的图形界面。
 .br
-其格式如下:
+其格式如下：
 .br
-%n%string_of_length_n
+%n%长_度_为_n_的_字_符_串
 .br
-.I 示例:
+.I 示例：
 .br
 mplayer \-ao pcm:file=%10%C:test.wav test.avi
 .br
-或在脚本中:
+或用于脚本中：
 .br
 mplayer \-ao pcm:file=%`expr length "$NAME"`%"$NAME" test.avi
 .PP
@@ -483,48 +482,48 @@ mplayer \-ao pcm:file=%`expr length "$NAME"`%"$NAME" test.avi
 .\" --------------------------------------------------------------------------
 .
 .SH "配置文件"
-你可以把所有选项放在配置文件中, 每次 MPlayer/MEncoder 运行时都会读取它们。
-系统范围的配置文件 "mplayer.conf" 位于你的配置目录
-(例如: /etc/\:mplayer 或者 /usr/\:local/\:etc/\:mplayer)中,
-用户指定的配置文件是 "~/\:.mplayer/\:config"。
-MEncoder 的配置文件是 "mencoder.conf" 位于你的配置目录
-(例如: /etc/\:mplayer 或者 /usr/\:local/\:etc/\:mplayer)中,
-用户指定的配置文件是 "~/\:.mplayer/\:mencoder.conf"。
-用户指定的选项优先于系统范围的选项, 而命令行选项优先于以上两者。
-配置文件的语法是 "option=<值>", 任何 "#" 后面的都认为是注释。
-启用没有参数值的选项可以把参数设为 "yes" 或者 "1" 或者 "true",
-而如果要停用就把它们设置为 "no" 或者 "0" 或者 "false"。
-甚至子选项也可以如此设定选项。
+所有选项都可放在配置文件中，每次 MPlayer/MEncoder 运行时都会从中读取。
+系统范围的配置文件“mplayer.conf”，位于配置目录中
+（例如：/etc/\:mplayer 或者 /usr/\:local/\:etc/\:mplayer），
+各个用户专用的配置文件是“~/\:.mplayer/\:config”。
+MEncoder 的配置文件是“mencoder.conf”，位于配置目录中
+（例如：/etc/\:mplayer 或者 /usr/\:local/\:etc/\:mplayer），
+各个用户专用的配置文件是“~/\:.mplayer/\:mencoder.conf”。
+各个用户专用的选项重定义系统范围选项的内容，而命令行选项则重定义以上两者的内容。
+配置文件的语法是“选项=<参数值>”，任何“#”后面的内容都认为是注释。
+无需参数值既可使用的选项可把参数值设为“yes”或“1”或“true”，
+而如果要停用则将其设为“no”或“0”或“false”。
+甚至子选项也可以此方式设定。
 .PP
-你也可以编写每个媒体文件专用的配置文件。
+同样可以编写每个媒体文件专用的配置文件。
 如果要给名叫‘movie.avi’的一个文件设置一个配置文件，则创建一个名为‘movie.avi.conf’的文件，
-其中存放了该媒体文件专用的选项，并将其放到 ~/.mplayer/。
-只要给出了 \-use\-filedir\-conf 选项（或是通行命令行，或是在全局配置文件中），你也可以把配置文
+其中存放了该媒体文件专用的选项，并将其放到 ~/.mplayer/ 中。
+只要给出了 \-use\-filedir\-conf 选项（或是通行命令行，或是在全局配置文件中给出），也可以把配置文
 件放到与所播放的媒体文件相同的目录下。
-如果在媒体文件所在目录下找到其专用的配置文件，则不会从 ~/.maplyer 目录下加载任何媒体文件专用的
+如果在媒体文件所在目录下找到其专用的配置文件，则不会从 ~/.maplyer 目录下加载任何单个媒体文件专用的
 配置。
-另外，\-use\-filedir\-conf 选项启用了目录专用的配置文件。
-对于该选项，MPlayer 首先尝试所播放文件的目录下加载 mplayer.conf，然后尝试加载任何存在的媒体文件
+另外，\-use\-filedir\-conf 选项允许每个目录有一个专用的配置文件。
+对于该选项，MPlayer 首先尝试在所播放文件的目录下加载 mplayer.conf，然后尝试加载任何存在的单个媒体文件
 专用的配置。
 .PP
-.I MPLAYER 配置文件示例:
+.I MPLAYER 配置文件示例：
 .sp 1
 .nf
 # 默认使用 Matrox 驱动。
 vo=xmga
 # 我喜欢在看片子的时候练习倒立。
 flip=yes
-# 解码/编码多个 PNG 文件,
-# 开始于 mf://文件掩码
+# 解码/编码多个 PNG 文件，
+# 起始文件为 mf://文件名掩码
 mf=type=png:fps=25
 # 怪异的负片图像好酷。
 vf=eq2=1.0:\-0.8
 .fi
 .PP
-.I "MENCODER 配置文件示例:"
+.I "MENCODER 配置文件示例："
 .sp 1
 .nf
-# 产生 MEncoder 输出到默认的文件名。
+# 设置 MEncoder 默认输出的文件名。
 o=encoded.avi
 # 下面四行使 mencoder tv:// 立刻开始捕捉。
 oac=pcm=yes
@@ -551,12 +550,12 @@ spuaa=20
 .\" --------------------------------------------------------------------------
 .
 .SH "配置集"
-为了方便操作不同的配置文件, 可以在配置文件中定义配置集。
-配置集以放在方括号中的名称开始, 如: "[my-profile]"。
-所有跟随的选项成为配置集的一部分。
-描述(通过 \-profile help 显示)定义于 profile-desc 选项。
-要结束该配置集, 使用别的名称开始即可
-或使用配置集名称 "default" 继续正常的选项。
+为了方便操作不同的配置，可在配置文件中定义配置集。
+配置集的开头为放在方括号中的名称，如：“[my-profile]”。
+所有之后的选项成为配置集的一部分。
+可用 profile-desc 选项定义描述内容（使用 \-profile help 将其显示出来）。
+要结束该配置集的定义，只需开始定义另一个配置集，或使用配置集名称“default”以继续定义
+常规的选项。
 .fi
 .PP
 .I "MPLAYER 配置集示例："
@@ -607,17 +606,16 @@ lavcopts=mbd=2:trell=yes:v4mv=yes
 .SH "通用选项"
 .
 .TP
-.B \-codecpath <dir>
+.B \-codecpath <目录>
 指定已编译编解码器的存放目录。
-Specify a directory for binary codecs.
 .
 .TP
-.B \-codecs\-file <文件名>（也请参见 \-afm，\-ac，\-vfm，\-vc）
-重载标准的搜索路径并使用指定的文件代替内置的 codecs.conf。
+.B \-codecs\-file <文件名>（另参见 \-afm、\-ac、\-vfm、\-vc）
+重定义编解码器的标准搜索路径并使用指定的文件代替内置的 codecs.conf。
 .
 .TP
 .B \-include <配置文件>
-指定配置文件在默认的配置文件后面解析。
+指定在默认配置文件后解析的配置文件。
 .
 .TP
 .B \-list\-options
@@ -625,47 +623,47 @@ Specify a directory for binary codecs.
 .
 .TP
 .B \-msgcharset <字符集>
-转换控制台消息为指定的字符集(默认是自动侦测: autodetect)。
-文字的字符集编码用选项 \-\-charset 指定配置。
-设置为 "noconv" 以停用转换 (为了如: iconv 问题)。
+将控制屏幕消息转换为指定的字符集（默认值：autodetect - 自动检测）。
+文本将以选项 \-\-charset 配置指定的字符集编码。
+设置为“noconv”可禁用编码转换（以解决 iconv 之类的问题）。
 .br
-.I 注意:
-选项在命令行解析完成后生效。
-环境变量 MPLAYER_CHARSET 能帮你去除开头几行混乱的输出。
+.I 注意：
+该选项在命令行解析完成后生效。
+环境变量 MPLAYER_CHARSET 有助于帮解决开头几行的错误输出。
 .
 .TP
 .B \-msgcolor
-在支持 ANSI 彩色标准的终端上启用彩色控制屏幕。
+在支持 ANSI 彩色标准的终端上启用彩色的控制屏幕输出。
 .
 .TP
 .B \-msglevel <all=<级别>:<模块>=<级别>:...>
-直接对各个模块控制冗赘度。
-此 "all" 模块改变所有模块(虽然没有在命令行中显式指定)的冗赘级别。
-查看所有模块的列表请参见于 "\-msglevel help"。
+直接控制各个模块的消息详细程度。
+“all”模块改变的是所有未在命令行中明确指定级别的模块的详细级别。
+参见“\-msglevel help”以查看包含所有模块的列表。
 .br
-.I 注意:
+.I 注意：
 有些消息在解析命令行之前就打印出来，因而不受 \-msglevel 影响。
-要控制这些消息的话，你得使用 MPLAYER_VERBOSE 环境变量，参见下面的解释以获取详细信息。
+要控制这些消息的话，需使用 MPLAYER_VERBOSE 环境变量，参见下面的解释以获取详细信息。
 .br
-可用级别:
+可用级别：
 .PD 0
 .RSs
 .IPs "\-1"
-完全沉默
+完全无输出
 .IPs " 0"
-仅致命消息
+仅输出致命问题的消息
 .IPs " 1"
-错误消息
+输出错误消息
 .IPs " 2"
-警告消息
+输出警告消息
 .IPs " 3"
-简短提示
+输出简短提示消息
 .IPs " 4"
-信息消息
+输出通知消息
 .IPs " 5"
-状态消息（默认值）
+输出状态消息（默认值）
 .IPs " 6"
-冗赘消息
+输出详细的消息
 .IPs " 7"
 调试级别 2
 .IPs " 8"
@@ -685,15 +683,15 @@ Specify a directory for binary codecs.
 .br
 .I 注意：
 如果命令行中指定了 \-include 或 \-use\-filedir\-conf 选项，
-那么这些选项将优先生效。
+那么这些选项会得到执行。
 .sp 1
 可用选项有：
 .PD 0
 .RSs
 .IPs "all\ \ "
 所有的配置文件
-.IPs "gui（仅仅是 GUI）"
-GUI 的配置文件
+.IPs "gui（仅用于图形界面）"
+图形界面的配置文件
 .IPs system
 系统配置文件
 .IPs "user\ "
@@ -703,129 +701,132 @@ GUI 的配置文件
 .
 .TP
 .B "\-quiet\ "
-使得控制台消息少输出; 特别地, 阻止状态行
-(即 A:   0.7 V:   0.6 A-V:  0.068 ...)的显示。
-对慢机器或者不能正确处理回车符(即 \\r)的旧机器特别有用。
+使控制台输出简略；尤其是阻止显示状态行
+（即 A:   0.7 V:   0.6 A-V:  0.068 ...）。
+特别有助于在慢速终端或者无法正确处理回车符（即 \\r）的终端上的使用。
 .
 .TP
-.B \-priority <优先>（仅适用于 Windows 和 OS/2）
+.B \-priority <优先级>（仅适用于 Windows 和 OS/2）
 根据 Windows 和 OS/2 下可用的预定义优先级设置 MPlayer 的进程优先级。
-可能的 <优先> 值为:
+可设的 <优先级> 值为：
 .RSs
 idle|belownormal|normal|abovenormal|high|realtime
 .RE
 .sp 1
 .RS
-.I 警告:
-使用 realtime(实时) 优先级会引起系统锁住。
+.I 警告：
+使用 realtime（实时）优先级会引起系统锁死。
 .RE
 .
 .TP
-.B \-profile <配置轮廓1,配置轮廓2,...>
-使用给定的配置轮廓, \-profile help 显示定义的配置轮廓列表。
+.B \-profile <配置集1,配置集2,...>
+使用指定的配置集，\-profile help 显示已定义的配置集列表。
 .
 .TP
-.B \-really\-quiet (也请参见 \-quiet)
+.B \-really\-quiet（另参见 \-quiet）
 显示比 \-quiet 更少的输出和状态信息。
-同时禁止图形界面错误消息对话框。
+同时禁用图形界面上的错误消息对话框。
 .
 .TP
 .B \-show\-profile <配置轮廓>
-显示配置轮廓的描述和内容。
+显示配置集的描述和内容。
 .
 .TP
 .B \-use\-filedir\-conf
-在文件播放时的相同目录之下寻找该特定文件的配置文件。
+在正播放文件的目录下寻找该文件专用的配置文件。
 .br
-.I 警告:
-播放未经信任的媒体可能有危险。
+.I 警告：
+播放不信任的数据媒体上的内容可能有危险。
 .
 .TP
 .B "\-v\ \ \ \ \ "
-提高冗赘级别, 对命令行中发现的各个 \-v 提高一级。
+提高消息详细级别，命令行中每发现一个 \-v 提高一级。
 .
 .
 .
 .SH "播放器选项（仅适用于MPLAYER）"
 .
 .TP
-.B \-autoq <质量> (和 \-vf [s]pp 一起使用)
-依据可用的 CPU 空闲时间动态改变后期处理的级别。
-你指定的数字可能是已使用中的最高级别。通常你可以使用有点高的级别数字。
-为此你必须使用不带参数的 \-vf [s]pp 选项。
+.B \-autoq <质量>（与 \-vf [s]pp 一同使用）
+根据可用的 CPU 空闲时间动态调整后期处理的级别。
+指定的质量数值将是所使用的最高级别。
+通常可以使用较大的数值。
+必须使用不带参数的 \-vf [s]pp 选项以使该选项起作用。
 .
 .TP
 .B \-autosync <因子>
-基于音频延迟的检测逐步调整 A/V 同步。
-指定 \-autosync 0, 也就是默认值, 将导致帧计时完全基于音频延迟的检测。
-指定 \-autosync 1 也是一样, 但会微妙地改变所使用的 A/V 修正算法。
-对那些视频帧率不均匀, 但用 \-nosound 可以正常播放的电影,
-设置大于 1 的整数值一般会有所帮助。
-这个值越大, 计时方法越接近于 \-nosound。
-对于某些音频延迟检测实现不完善的声卡驱动, 试试用 \-autosync\ 30 来平滑此问题。
-使用这个值时, 如果出现 A/V 同步大偏移, 只需要 1, 2 秒时间就可以搞定。
-对于所有的声卡驱动, 对突然的 A/V 偏移, 在反应时间上有延迟,
-这应该是打开此选项的唯一副作用。
+基于测得的音频延迟逐步调节音视频的同步。
+指定 \-autosync 0，即默认值，将导致帧的播放节奏完全基于测得的音频延迟。
+指定 \-autosync 1 同样如此，但会小幅调整所使用的音视频修正算法。
+将该选项设为大于 1 的整数有助于播放视频帧率不平稳，但用 \-nosound 可以
+正常播放的电影。
+值越大，播放节奏越接近于 \-nosound。
+尝试用 \-autosync\ 30 可缓解未完美实现音频延迟检测的声卡驱动的问题。
+使用这个值后，如果出现了音视频同步上的大偏离，则只需要 1 或 2 秒时间就可以解决。
+在所有的声卡驱动下，音视频偏离突然出现时反应时间上有所延迟，这是打开此选项的唯一副作用。
 .
 .TP
 .B \-benchmark
-在终端打印一些回放后的 CPU 使用率和丢帧数的统计信息。
-与 \-nosound 和 \-vo null 联合使用可用来仅仅评测视频编解码器.
+播放后在终端打印一些关于 CPU 使用率和丢帧数的统计信息。
+与 \-nosound 和 \-vo null 一同使用可用于单单评测视频编解码器的性能。
 .br
-.I 注意:
-使用此参数仅仅回放视频时, MPlayer 也将忽略帧持续期(frame duration)
-(你可以认为那是不定帧率)。
+.I 注意：
+使用该选项后，即使只播放视频 MPlayer 也将忽略每个帧的播放时间的信息
+（可以认为这是不限制帧率）。
 .
 .TP
-.B \-colorkey <号码>
-改变 colorkey 为你所选的 RGB 值。
+.B \-colorkey <编号>
+将透明色的键值改为所选的 RGB 数值。
 0x000000 是黑色而 0xffffff 是白色。
-仅被视频输出驱动 cvidix, fbdev, svga, vesa, winvidix, xmga, xvidix,
-xover, xv (参见 \-vo xv:ck), xvmc (参见 \-vo xv:ck) 和 directx 支持。
+仅 cvidix、fbdev、svga、vesa、winvidix、xmga、xvidix、
+xover、xv（参见 \-vo xv:ck）、xvmc（参见 \-vo xv:ck）和 directx 等
+视频输出驱动支持。
 .
 .TP
 .B \-nocolorkey
-停用 colorkeying。
-仅被视频输出驱动 cvidix, fbdev, svga, vesa, winvidix, xmga, xvidix,
-xover, xv (参见 \-vo xv:ck), xvmc (参见 \-vo xv:ck) 和 directx 支持。
+禁用透明色。
+仅 cvidix、fbdev、svga、vesa、winvidix、xmga、xvidix、
+xover、xv（参见 \-vo xv:ck）、xvmc（参见 \-vo xv:ck）和 directx 等
+视频输出驱动支持。
 .
 .TP
 .B \-correct\-pts（处于测试阶段）
-切换 MPlayer 到试验模式,
-其中视频帧的时戳计算不同, 且支持视频过滤器添加新的帧或修改已有的时戳。
-可以看到更精确的时戳, 例如通过 \-ass 选项修改播放字幕与镜头同步。
-没有 \-correct\-pts, 字幕同步典型地会被某些帧关闭。
-此选项不能与某些分路器和编解码器一起正常工作。
+将 MPlayer 切换到试验模式，其中视频帧的时间戳以不同的方式计算，
+并且支持视频滤镜添加新的帧或修改已有帧的时间戳。
+可以看到更精确的时间戳，例如，当通过 \-ass 选项播放与镜头切换同步
+的字幕时。
+如不使用 \-correct\-pts，字幕的显示节奏往往地会因某些帧而失效。
+该选项在使用了某些流分离器和编解码器时无法正常起作用。
 .
 .TP
-.B \-crash\-debug（调试代码）
-一旦崩溃或 SIGTRAP 自动联上 gdb 调试程序。
-此支持必须已编译进配置 \-\-enable\-crash\-debug。
+.B \-crash\-debug（用于调试代码）
+一旦程序崩溃或出现 SIGTRAP 自动联上 gdb 调试程序。
+支持该选项必须编译时已配置 \-\-enable\-crash\-debug。
 .
 .TP
 .B \-doubleclick\-time
 以毫秒为单位的时间值，用以判定两次连续的按键动作是否为一次双击动作（默认值：
 300）。
-设为0则让你的窗体系统判断什么样动作的是双击（仅当 \-vo directx 时）。
+设为 0 则让视窗系统判断什么样动作的是双击（仅当 \-vo directx时）。
 .br
 .I 注意：
-你会体验到不同的效果，这取决于你绑定了 MOUSE_BTN0_DBL 还是
-MOUSE_BTN0\-MOUSE_BTN0_DBL。
+可能会体验到些许不同的效果，这取决于绑定的是 MOUSE_BTN0_DBL 还是
+MOUSE_BTN0\-MOUSE_BTN0_DBL 事件。
 .
 .TP
 .B \-edlout <文件名>
 新建文件并写入 EDL（编辑决定列表）记录。
-回放时, 用户按“i”键标记跳过块的开始结束处。
-这提供了用户一个以后能精调 EDL 项的开始点。
-详情请参见 http://www.mplayerhq.hu/\:DOCS/\:HTML/\:en/\:edl.html。
+播放时，用户按“i”键标记跳过区域的开始或结束点。
+该功能提供给用户一个以后能精确调整的 EDL 项的开始点。
+详情参见 http://www.mplayerhq.hu/\:DOCS/\:HTML/\:en/\:edl.html。
 .
 .TP
 .B \-edl-backward-delay <数值>
-当在播放并回倒过程中使用 EDL 时，可能会停在某条 EDL 记录中间。
-在此情况下，MPlayer 会进一步回倒至这条 EDL 记录的起始位值，之后会立即跳过
+当在播放过程中使用了 EDL 并回倒时，可能会停在某条 EDL 记录中间。
+在此情况下，MPlayer 会进一步回倒至这条 EDL 记录的起始位置，之后会立即跳过
 EDL 记录所描述的场景。
-为避免这种现象，MPlayer 会跳至距 EDL 记录前端固定间隔的一个位置。
-该参数使你能够以秒为单位指定这个时间间隔。
+为避免这种现象，MPlayer 会跳至距 EDL 记录前端某个固定间隔处。
+该参数以秒为单位指定这个时间间隔。
 （默认值：2 秒）。
 .
 .TP
@@ -3951,7 +3952,7 @@ gamma 的设置只能是通过全局的 X 服务器的设置才有效。
 .
 .TP
 .B "aa\ \ \ \ \ "
-ASCII art 视频输出驱动工作于文字控制台。
+ASCII art 视频输出驱动工作于文字控制屏幕。
 .br
 .I 注意：
 该驱动不能正确处理 \-aspect 选项。
@@ -3962,7 +3963,7 @@ ASCII art 视频输出驱动工作于文字控制台。
 .
 .TP
 .B "caca\ \ \ "
-彩色 ASCII art 视频输出驱动工作于文字控制台。
+彩色 ASCII art 视频输出驱动工作于文字控制屏幕。
 .
 .TP
 .B "bl\ \ \ \ \ "
@@ -5617,7 +5618,7 @@ Completely empties the filter list.
 .TP
 .B rectangle[=w:h:x:y]
 在图像之上于指定坐标画一个所要求宽度和高度的矩形，并且将当前矩形的参数输出至
-控制台窗口。
+控制屏幕窗口。
 该选项可用来找到最优的切割参数。
 如果你将 input.conf 中的指令‘change_rectangle’与按键绑定，那么你可以实时
 移动和调整矩阵。
@@ -10753,7 +10754,7 @@ AVOption 的完整列表可在 FFmpeg 用户手册中找到。
 .
 .TP
 .B MPLAYER_CHARSET (也请参见 \-msgcharset)
-转换控制台的消息显示为指定字符集 (默认值是自动检测: autodetect)。
+转换控制屏幕的消息显示为指定字符集 (默认值是自动检测: autodetect)。
 值 "noconv" 表示不要转换。
 .
 .TP
