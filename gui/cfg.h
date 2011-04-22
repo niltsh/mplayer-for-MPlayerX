@@ -27,9 +27,7 @@ extern int gtkCacheSize;
 extern int gtkVfLAVC;
 extern int gtkVfPP;
 
-#ifdef CONFIG_DXR3
 extern char *gtkDXR3Device;
-#endif
 
 extern int gtkAutoSyncOn;
 extern int gtkAutoSync;
@@ -39,25 +37,17 @@ extern int gtkAOSurround;
 extern int gtkAOExtraStereo;
 extern float gtkAOExtraStereoMul;
 
-#ifdef CONFIG_ALSA
 extern char *gtkAOALSAMixer;
 extern char *gtkAOALSAMixerChannel;
 extern char *gtkAOALSADevice;
-#endif
 
-#ifdef CONFIG_OSS_AUDIO
 extern char *gtkAOOSSMixer;
 extern char *gtkAOOSSMixerChannel;
 extern char *gtkAOOSSDevice;
-#endif
 
-#ifdef CONFIG_ESD
 extern char *gtkAOESDDevice;
-#endif
 
-#ifdef CONFIG_SDL
 extern char *gtkAOSDLDriver;
-#endif
 
 extern int gtkEnableAudioEqualizer;
 extern char *gtkEquChannel1;
@@ -77,9 +67,9 @@ typedef struct {
     int top_margin;
     int bottom_margin;
 } gtkASS_t;
+#endif
 
 extern gtkASS_t gtkASS;
-#endif
 
 extern int gtkEnablePlayBar;
 extern int gtkLoadFullscreen;
