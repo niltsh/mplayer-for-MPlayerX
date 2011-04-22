@@ -681,7 +681,6 @@ static int get_buffer(AVCodecContext *avctx, AVFrame *pic){
             mp_msg(MSGT_DECVIDEO, MSGL_DBG5, "vd_ffmpeg::get_buffer (xvmc render=%p)\n", render);
         assert(render != 0);
         assert(render->xvmc_id == AV_XVMC_ID);
-        render->state |= AV_XVMC_STATE_PREDICTION;
     }
 #endif
 
@@ -761,16 +760,6 @@ static void release_buffer(struct AVCodecContext *avctx, AVFrame *pic){
         // Palette support: free palette buffer allocated in get_buffer
         if (mpi->bpp == 8)
             av_freep(&mpi->planes[1]);
-#if CONFIG_XVMC
-        if (IMGFMT_IS_XVMC(mpi->imgfmt)) {
-            struct xvmc_pix_fmt *render = (struct xvmc_pix_fmt*)pic->data[2]; //same as mpi->priv
-            if(mp_msg_test(MSGT_DECVIDEO, MSGL_DBG5))
-                mp_msg(MSGT_DECVIDEO, MSGL_DBG5, "vd_ffmpeg::release_buffer (xvmc render=%p)\n", render);
-            assert(render!=NULL);
-            assert(render->xvmc_id == AV_XVMC_ID);
-            render->state&=~AV_XVMC_STATE_PREDICTION;
-        }
-#endif
         // release mpi (in case MPI_IMGTYPE_NUMBERED is used, e.g. for VDPAU)
         mpi->usage_count--;
     }
