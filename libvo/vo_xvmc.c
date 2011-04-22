@@ -95,6 +95,13 @@ static XvMCMacroBlockArray mv_blocks;
 #define MAX_SURFACES 8
 static int number_of_surfaces=0;
 static XvMCSurface surface_array[MAX_SURFACES];
+static struct render_info {
+#define STATE_DISPLAY_PENDING 1  /**  the surface should be shown, the video driver manipulates this */
+#define STATE_PREDICTION      2  /**  the surface is needed for prediction, the codec manipulates this */
+#define STATE_OSD_SOURCE      4  /**  the surface is needed for subpicture rendering */
+    int state;
+    void *p_osd_target_surface_render;
+} surface_render_info[MAX_SURFACES];
 static struct xvmc_pix_fmt *surface_render;
 
 static struct xvmc_pix_fmt *p_render_surface_to_show = NULL;
@@ -147,6 +154,16 @@ static int Shmem_Flag;
 #endif
 XvImage * xvimage;
 
+static struct render_info *get_render_info(struct xvmc_pix_fmt *cur_render)
+{
+    int idx;
+    if (!surface_render || !cur_render)
+        return NULL;
+    idx = cur_render - surface_render;
+    if (idx < 0 || idx >= MAX_SURFACES)
+        return NULL;
+    return surface_render_info + idx;
+}
 
 static void allocate_xvimage(int xvimage_width,int xvimage_height,int xv_format)
 {
@@ -364,7 +381,7 @@ static uint32_t xvmc_draw_image(mp_image_t *mpi){
     assert( rndr->xvmc_id == AV_XVMC_ID );
     mp_msg(MSGT_VO,MSGL_DBG4,"vo_xvmc: draw_image(show rndr=%p)\n",rndr);
 // the surface have passed vf system without been skiped, it will be displayed
-    rndr->state |= AV_XVMC_STATE_DISPLAY_PENDING;
+    get_render_info(rndr)->state |= STATE_DISPLAY_PENDING;
     p_render_surface_to_show = rndr;
     top_field_first = mpi->fields & MP_IMGFIELD_TOP_FIRST;
     return VO_TRUE;
@@ -852,6 +869,7 @@ static void draw_osd(void){
         XvMCSyncSubpicture(mDisplay,&subpicture);//todo usleeep wait!
 
         if(subpicture_mode == BLEND_SUBPICTURE){
+            struct render_info *info;
             osd_rndr = find_free_surface();
             if(osd_rndr == NULL)
                 return;// no free surface to draw OSD in
@@ -872,12 +890,14 @@ static void draw_osd(void){
             osd_rndr->picture_structure = p_render_surface_to_show->picture_structure;
 //add more if needed    osd_rndr-> = p_render_surface_to_show->;
 
-            p_render_surface_to_show->state &= ~AV_XVMC_STATE_DISPLAY_PENDING;
-            p_render_surface_to_show->state |= AV_XVMC_STATE_OSD_SOURCE;
-            p_render_surface_to_show->p_osd_target_surface_render = osd_rndr;
+            info = get_render_info(p_render_surface_to_show);
+            info->state &= ~STATE_DISPLAY_PENDING;
+            info->state |= STATE_OSD_SOURCE;
+            info->p_osd_target_surface_render = osd_rndr;
 
             p_render_surface_to_show = osd_rndr;
-            p_render_surface_to_show->state = AV_XVMC_STATE_DISPLAY_PENDING;
+            info = get_render_info(p_render_surface_to_show);
+            info->state = STATE_DISPLAY_PENDING;
 
             mp_msg(MSGT_VO,MSGL_DBG4,"vo_xvmc:draw_osd: surface_to_show changed to %p\n",osd_rndr);
         }//endof if(BLEND)
@@ -979,9 +999,9 @@ static void flip_page(void){
 
 //the visible surface won't be displayed anymore, mark it as free
     if(p_render_surface_visible != NULL)
-        p_render_surface_visible->state &= ~AV_XVMC_STATE_DISPLAY_PENDING;
+        get_render_info(p_render_surface_visible)->state &= ~STATE_DISPLAY_PENDING;
 
-//!!fixme   assert(p_render_surface_to_show->state & AV_XVMC_STATE_DISPLAY_PENDING);
+//!!fixme   assert(p_render_surface_to_show->state & STATE_DISPLAY_PENDING);
 
     //show it, displaying is always vsynced, so skip it for benchmark
     put_xvmc_image(p_render_surface_to_show,first_frame);
@@ -1027,10 +1047,10 @@ static void xvmc_free(void){
             XvMCHideSurface(mDisplay,&surface_array[i]);//it doesn't hurt, I hope
             XvMCDestroySurface(mDisplay,&surface_array[i]);
 
-            if( (surface_render[i].state != 0) &&
+            if( (surface_render_info[i].state != 0) &&
                 (p_render_surface_visible != &surface_render[i]) )
                 mp_msg(MSGT_VO,MSGL_INFO,"vo_xvmc::uninit surface_render[%d].status=%d\n",i,
-                        surface_render[i].state);
+                        surface_render_info[i].state);
         }
 
         memset(surface_render, 0, MAX_SURFACES * sizeof(struct xvmc_pix_fmt)); //for debugging
@@ -1147,12 +1167,12 @@ static void check_osd_source(struct xvmc_pix_fmt *src_rndr) {
     int stat;
 
     //If this is source surface, check does the OSD rendering is compleate
-    if(src_rndr->state & AV_XVMC_STATE_OSD_SOURCE){
+    if(get_render_info(src_rndr)->state & STATE_OSD_SOURCE){
         mp_msg(MSGT_VO,MSGL_DBG4,"vo_xvmc: OSD surface=%p querying\n",src_rndr);
-        osd_rndr = src_rndr->p_osd_target_surface_render;
+        osd_rndr = get_render_info(src_rndr)->p_osd_target_surface_render;
         XvMCGetSurfaceStatus(mDisplay, osd_rndr->p_surface, &stat);
         if(!(stat & XVMC_RENDERING))
-            src_rndr->state &= ~AV_XVMC_STATE_OSD_SOURCE;
+            get_render_info(src_rndr)->state &= ~STATE_OSD_SOURCE;
     }
 }
 static int count_free_surfaces(void) {
@@ -1161,7 +1181,7 @@ static int count_free_surfaces(void) {
     num=0;
     for(i=0; i<number_of_surfaces; i++){
         check_osd_source(&surface_render[i]);
-        if(surface_render[i].state == 0)
+        if(surface_render_info[i].state == 0)
             num++;
     }
     return num;
@@ -1176,7 +1196,7 @@ static struct xvmc_pix_fmt *find_free_surface(void) {
     for(i=0; i<number_of_surfaces; i++){
 
         check_osd_source(&surface_render[i]);
-        if( surface_render[i].state == 0){
+        if( surface_render_info[i].state == 0){
             XvMCGetSurfaceStatus(mDisplay, surface_render[i].p_surface,&stat);
             if( (stat & XVMC_DISPLAYING) == 0 )
                 return &surface_render[i];
@@ -1198,7 +1218,7 @@ static struct xvmc_pix_fmt *find_free_surface(void) {
 //todo remove when stable
     mp_msg(MSGT_VO,MSGL_WARN,"vo_xvmc: no free surfaces, this should not happen in g1\n");
     for(i=0;i<number_of_surfaces;i++)
-        mp_msg(MSGT_VO,MSGL_WARN,"vo_xvmc: surface[%d].state=%d\n",i,surface_render[i].state);
+        mp_msg(MSGT_VO,MSGL_WARN,"vo_xvmc: surface[%d].state=%d\n",i,surface_render_info[i].state);
     return NULL;
 }
 
@@ -1207,13 +1227,13 @@ static void xvmc_clean_surfaces(void){
 
     for(i=0; i<number_of_surfaces; i++){
 
-        surface_render[i].state&=!( AV_XVMC_STATE_DISPLAY_PENDING |
-                                    AV_XVMC_STATE_OSD_SOURCE |
+        surface_render_info[i].state&=!( STATE_DISPLAY_PENDING |
+                                    STATE_OSD_SOURCE |
                                     0);
-        surface_render[i].p_osd_target_surface_render=NULL;
-        if(surface_render[i].state != 0){
+        surface_render_info[i].p_osd_target_surface_render=NULL;
+        if(surface_render_info[i].state != 0){
             mp_msg(MSGT_VO,MSGL_WARN,"vo_xvmc: surface[%d].state=%d\n",
-                                   i,surface_render[i].state);
+                                   i,surface_render_info[i].state);
         }
     }
     free_element=0;//clean up the queue
@@ -1248,7 +1268,7 @@ assert(rndr->next_free_data_block_num == 0);
 
     rndr->picture_structure = 0;
     rndr->flags = 0;
-    rndr->state = 0;
+    get_render_info(rndr)->state = 0;
     rndr->start_mv_blocks_num = 0;
     rndr->filled_mv_blocks_num = 0;
     rndr->next_free_data_block_num = 0;
