@@ -122,8 +122,7 @@ static struct fb_cmap *make_directcolor_cmap(struct fb_var_screeninfo *var)
   bcols = 1 << var->blue.length;
 
   /* Make our palette the length of the deepest color */
-  cols = (rcols > gcols ? rcols : gcols);
-  cols = (cols > bcols ? cols : bcols);
+  cols = FFMAX3(rcols, gcols, bcols);
 
   red = malloc(cols * sizeof(red[0]));
   if(!red) {
