@@ -59,11 +59,6 @@
 #include <assert.h>
 
 
-#if LIBAVCODEC_BUILD < ((51<<16)+(40<<8)+2)
-#error You need at least libavcodec v51.40.2
-#endif
-
-
 static int benchmark;
 static int use_sleep;
 static int first_frame;//draw colorkey on first frame
