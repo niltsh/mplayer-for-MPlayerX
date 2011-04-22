@@ -309,9 +309,9 @@ static int init(sh_video_t *sh){
     avctx->get_format = get_format;
     if(ctx->do_dr1){
         avctx->flags|= CODEC_FLAG_EMU_EDGE;
-        avctx->get_buffer= get_buffer;
+        avctx->    get_buffer=     get_buffer;
         avctx->release_buffer= release_buffer;
-        avctx->reget_buffer= get_buffer;
+        avctx->  reget_buffer=     get_buffer;
     }
 
     avctx->flags|= lavc_param_bitexact;
