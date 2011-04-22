@@ -358,13 +358,8 @@ static int draw_slice(uint8_t *src[], int stride[], int w, int h, int x, int y)
 	uint8_t *dest = next_frame + (in_width * y + x) * fb_pixel_size;
 	int next = in_width * fb_pixel_size;
 #endif
-	int i;
 
-	for (i = 0; i < h; i++) {
-		fast_memcpy(dest, in, w * fb_pixel_size);
-		dest += next;
-		in += stride[0];
-	}
+	memcpy_pic(dest, in, w * fb_pixel_size, h, next, stride[0]);
 	return 0;
 }
 
@@ -375,14 +370,11 @@ static void check_events(void)
 static void flip_page(void)
 {
 #ifndef USE_CONVERT2FB
-	int i, out_offset = 0, in_offset = 0;
+	int out_offset = 0, in_offset = 0;
 
-	for (i = 0; i < in_height; i++) {
-		fast_memcpy(center + out_offset, next_frame + in_offset,
-				in_width * fb_pixel_size);
-		out_offset += fb_line_len;
-		in_offset += in_width * fb_pixel_size;
-	}
+	memcpy_pic(center + out_offset, next_frame + in_offset,
+	           in_width * fb_pixel_size, in_height,
+	           fb_line_len, in_width * fb_pixel_size);
 #endif
 }
 
