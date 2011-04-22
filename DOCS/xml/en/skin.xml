@@ -313,7 +313,7 @@ blocks.
   <para>
   Lets you specify the background image to be used for the main window.
   The window will appear at the given <literal>X,Y</literal> position on
-  the screen The window will have the size of the image.
+  the screen. It will have the size of the image.
   </para>
   <warning><para>Transparent regions in the image (colored #FF00FF) appear black
   on X servers without the XShape extension. The image's width must be dividable
@@ -642,10 +642,11 @@ The following entries can be used in the
   <literal>width</literal> and <literal>height</literal>
   denote the size of the window; they are optional (if they are missing, the
   window is the same size as the image).
-  </para></listitem>
+  </para>
   <note><para>
   The <literal>X,Y</literal> coordinates do not currently work for the subwindow.
   </para></note>
+  </listitem>
 </varlistentry>
 
 <varlistentry>
