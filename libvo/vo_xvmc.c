@@ -148,7 +148,7 @@ const LIBVO_EXTERN(xvmc);
 static XShmSegmentInfo Shminfo;
 static int Shmem_Flag;
 #endif
-XvImage * xvimage;
+static XvImage * xvimage;
 
 static struct render_info *get_render_info(struct xvmc_pix_fmt *cur_render)
 {
