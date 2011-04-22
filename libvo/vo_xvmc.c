@@ -121,8 +121,8 @@ static void   init_osd_yuv_pal(void);
 static const struct{
     int id;//id as xvimages or as mplayer RGB|{8,15,16,24,32}
     void (* init_func_ptr)(void);
-    void (* draw_func_ptr)();
-    void (* clear_func_ptr)();
+    void (* draw_func_ptr)(int, int, int, int, unsigned char *, unsigned char *, int);
+    void (* clear_func_ptr)(int, int, int, int);
     } osd_render[]={
                         {0x34344149,init_osd_yuv_pal,draw_osd_AI44,clear_osd_subpic},
                         {0x34344941,init_osd_yuv_pal,draw_osd_IA44,clear_osd_subpic},
