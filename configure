@@ -6877,7 +6877,7 @@ test -d ffmpeg/libavutil ||
   die "MPlayer will not compile without libavutil in the source tree."
 ffmpeg=no
 if test "$ffmpeg_a" = auto ; then
-  test -d ffmpeg/libavutil && ffmpeg_a=yes && ffmpeg=yes && extra_cflags="$extra_cflags -DFF_API_MAX_STREAMS=0"
+  test -d ffmpeg/libavutil && ffmpeg_a=yes && ffmpeg=yes && extra_cflags="$extra_cflags -DFF_API_HURRY_UP=1 -DFF_API_MAX_STREAMS=0"
 elif test "$ffmpeg_so" = auto ; then
   ffmpeg_so=no
   if $_pkg_config --exists libavutil ; then
@@ -8683,6 +8683,7 @@ $def_yasm
 #define HAVE_SYMVER_ASM_LABEL 0
 #define HAVE_SYMVER_GNU_ASM 0
 #define HAVE_SYS_SELECT_H 0
+#define HAVE_TRUNC 1
 #define HAVE_VFP_ARGS 1
 #define HAVE_VIRTUALALLOC 0
 
