@@ -456,10 +456,12 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
             break;
         }
         case AVMEDIA_TYPE_ATTACHMENT:{
-            if (st->codec->codec_id == CODEC_ID_TTF)
-                demuxer_add_attachment(demuxer, st->filename,
+            if (st->codec->codec_id == CODEC_ID_TTF) {
+                AVMetadataTag *fnametag = av_metadata_get(st->metadata, "filename", NULL, 0);
+                demuxer_add_attachment(demuxer, fnametag ? fnametag->value : NULL,
                                        "application/x-truetype-font",
                                        codec->extradata, codec->extradata_size);
+            }
             break;
         }
         default:
