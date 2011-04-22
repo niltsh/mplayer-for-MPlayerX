@@ -1527,7 +1527,7 @@ int demuxer_add_attachment(demuxer_t *demuxer, const char *name,
         demuxer->attachments = realloc(demuxer->attachments,
                 (demuxer->num_attachments + 32) * sizeof(demux_attachment_t));
 
-    demuxer->attachments[demuxer->num_attachments].name = strdup(name);
+    demuxer->attachments[demuxer->num_attachments].name = name ? strdup(name) : NULL;
     demuxer->attachments[demuxer->num_attachments].type = strdup(type);
     demuxer->attachments[demuxer->num_attachments].data = malloc(size);
     memcpy(demuxer->attachments[demuxer->num_attachments].data, data, size);
