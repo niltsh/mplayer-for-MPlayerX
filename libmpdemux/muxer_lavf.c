@@ -308,7 +308,7 @@ static void write_trailer(muxer_t *muxer)
 static void list_formats(void) {
 	AVOutputFormat *fmt;
 	mp_msg(MSGT_DEMUX, MSGL_INFO, "Available lavf output formats:\n");
-	for (fmt = first_oformat; fmt; fmt = fmt->next)
+	for (fmt = av_oformat_next(NULL); fmt; fmt = av_oformat_next(fmt))
 		mp_msg(MSGT_DEMUX, MSGL_INFO, "%15s : %s\n", fmt->name, fmt->long_name);
 }
 
