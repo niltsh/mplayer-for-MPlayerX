@@ -364,15 +364,15 @@ int muxer_init_muxer_lavf(muxer_t *muxer)
         priv->oc->preload= (int)(mux_preload*AV_TIME_BASE);
         priv->oc->max_delay= (int)(mux_max_delay*AV_TIME_BASE);
         if (info_name)
-            av_strlcpy(priv->oc->title    , info_name,      sizeof(priv->oc->title    ));
+            av_metadata_set2(&priv->oc->metadata, "title",     info_name,      0);
         if (info_artist)
-            av_strlcpy(priv->oc->author   , info_artist,    sizeof(priv->oc->author   ));
+            av_metadata_set2(&priv->oc->metadata, "author",    info_artist,    0);
         if (info_genre)
-            av_strlcpy(priv->oc->genre    , info_genre,     sizeof(priv->oc->genre    ));
+            av_metadata_set2(&priv->oc->metadata, "genre",     info_genre,     0);
         if (info_copyright)
-            av_strlcpy(priv->oc->copyright, info_copyright, sizeof(priv->oc->copyright));
+            av_metadata_set2(&priv->oc->metadata, "copyright", info_copyright, 0);
         if (info_comment)
-            av_strlcpy(priv->oc->comment  , info_comment,   sizeof(priv->oc->comment  ));
+            av_metadata_set2(&priv->oc->metadata, "comment",   info_comment,   0);
 
         if(mux_avopt){
             if(parse_avopts(priv->oc, mux_avopt) < 0){
