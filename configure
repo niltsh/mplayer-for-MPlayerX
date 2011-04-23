@@ -8648,6 +8648,7 @@ $def_xform_asm
 $def_xmm_clobbers
 $def_yasm
 
+#define CONFIG_AUDIO_FLOAT 0
 #define CONFIG_FASTDIV 0
 #define CONFIG_FFSERVER 0
 #define CONFIG_GPL 1
@@ -8664,6 +8665,7 @@ $def_yasm
 #define HAVE_INLINE_ASM 1
 #define HAVE_ISATTY 0
 #define HAVE_LDBRX 0
+#define HAVE_MAPVIEWOFFILE 0
 #define HAVE_PPC4XX 0
 #define HAVE_STRERROR_R 0
 #define HAVE_SYMVER_ASM_LABEL 0
