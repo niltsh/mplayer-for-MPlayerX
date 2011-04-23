@@ -192,7 +192,10 @@ Rauschunterdrückung (denoising), RGB/\:YUV-Konvertierung und mehr).
 .PP
 .B gmplayer
 ist die Bezeichnung für MPlayer mit einem graphischen Benutzerinterface.
-Er verfügt über die gleichen Optionen wie MPlayer.
+Neben einigen eigenen Optionen, die in gui.conf gespeichert werden, verfügt
+er über die gleichen Optionen wie MPlayer. Einige der MPlayer-Optionen werden
+allerdings in gui.conf gespeichert und können so unabhängig von MPlayer
+gewählt werden. (Siehe GUI-KONFIGURATIONSDATEI weiter unten.)
 .PP
 Beispiele zum Gebrauch, die dir zu einem schnellen Start verhelfen,
 findest Du am Ende dieser Manpage.
@@ -570,6 +573,131 @@ subalign=2
 subpos=96
 spuaa=20
 .fi
+.PP
+.I GUI-KONFIGURATIONSDATEI
+.sp 1
+GUI-eigene Optionen (Namen der MPlayer-Optionen in Klammern):
+ao_alsa_device
+.RB ( alsa:device ") (nur mit ALSA),"
+ao_alsa_mixer
+.RB ( mixer ") (nur mit ALSA),"
+ao_alsa_mixer_channel
+.RB ( mixer-channel ") (nur mit ALSA),"
+ao_esd_device
+.RB ( esd: ") (nur mit ESD),"
+ao_extra_stereo
+.RB ( "af extrastereo" "),"
+ao_extra_stereo_coefficient
+.RB ( "af extrastereo=" "),"
+ao_oss_device
+.RB ( oss: ") (nur mit OSS),"
+ao_oss_mixer
+.RB ( mixer ") (nur mit OSS),"
+ao_oss_mixer_channel
+.RB ( mixer-channel ") (nur mit OSS),"
+ao_sdl_subdriver
+.RB ( sdl: ") (nur mit SDL),
+ao_surround (unbenutzt),
+ao_volnorm
+.RB ( "af volnorm" "),"
+autosync (aktiviert/deaktiviert),
+autosync_size
+.RB ( autosync "),"
+cache (aktiviert/deaktiviert),
+cache_size
+.RB ( cache "),"
+enable_audio_equ
+.RB ( "af equalizer" "),"
+equ_band_00 ... equ_band_59,
+.RB ( "af equalizer=" "),"
+equ_channel_1 ... equ_channel_6
+.RB ( "af channels=" "),"
+gui_main_pos_x,
+gui_main_pos_y,
+gui_save_pos (ja/nein),
+gui_video_out_pos_x,
+gui_video_out_pos_y,
+load_fullscreen  (ja/nein),
+playbar (aktiviert/deaktiviert),
+show_videowin (ja/nein),
+vf_lavc
+.RB ( "vf lavc" "),"
+vf_pp
+.RB ( "vf pp" "),"
+vo_dxr3_device (unbenutzt) (nur mit DXR3).
+.sp 1
+MPlayer-Optionen, die in gui.conf gespeichert werden (Namen der GUI-Optionen,
+Namen der MPlayer-Optionen in Klammern):
+a_afm
+.RB ( afm ),
+ao_driver
+.RB ( ao ),
+ass_bottom_margin
+.RB ( ass-bottom-margin ") (nur mit ASS),"
+ass_enabled
+.RB ( ass ") (nur mit ASS),"
+ass_top_margin
+.RB ( ass-top-margin ") (nur mit ASS),"
+ass_use_margins
+.RB ( ass-use-margins ") (nur mit ASS),"
+cdrom_device
+.RB ( cdrom-device ),
+dvd_device
+.RB ( dvd-device ),
+font_autoscale
+.RB ( subfont-autoscale ") (nur mit FreeType),"
+font_blur
+.RB ( subfont-blur ") (nur mit FreeType),"
+font_encoding
+.RB ( subfont-encoding ") (nur mit FreeType),"
+font_factor
+.RB ( ffactor ),
+font_name
+.RB ( font ),
+font_osd_scale
+.RB ( subfont-osd-scale ") (nur mit FreeType),"
+font_outline
+.RB ( subfont-outline ") (nur mit FreeType),"
+font_text_scale
+.RB ( subfont-text-scale ") (nur mit FreeType),"
+gui_skin
+.RB ( skin ),
+osd_level
+.RB ( osdlevel ),
+softvol
+.RB ( softvol ),
+stopxscreensaver
+.RB ( stop-xscreensaver ),
+sub_auto_load
+.RB ( autosub ),
+sub_cp
+.RB ( subcp ") (nur mit iconv),"
+sub_overlap
+.RB ( overlapsub ),
+sub_pos
+.RB ( subpos ),
+sub_unicode
+.RB ( unicode ),
+v_flip
+.RB ( flip ),
+v_framedrop
+.RB ( framedrop ),
+v_idx
+.RB ( idx ),
+v_ni
+.RB ( ni ),
+v_vfm
+.RB ( vfm ),
+vf_autoq
+.RB ( autoq ),
+vo_direct_render
+.RB ( panscan ),
+vo_doublebuffering
+.RB ( dr ),
+vo_driver
+.RB ( vo ),
+vo_panscan
+.RB ( double ).
 .
 .\" --------------------------------------------------------------------------
 .\" Profile

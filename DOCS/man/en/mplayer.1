@@ -187,10 +187,9 @@ more.
 .PP
 .B gmplayer
 is MPlayer with a graphical user interface.
-It has the same options as MPlayer, however they might not all work correctly
-due to conflicts with the configuration via the GUI (stored in gui.conf).
-In particular some options might be overwritten by settings in gui.conf while
-others might end up stored permanently in gui.conf.
+Besides some own options (stored in gui.conf), it has the same options as
+MPlayer, however some MPlayer options will be stored in gui.conf so that they
+can be chosen independently from MPlayer. (See GUI CONFIGURATION FILE below.)
 .PP
 Usage examples to get you started quickly can be found at the end
 of this man page.
@@ -558,6 +557,131 @@ subalign=2
 subpos=96
 spuaa=20
 .fi
+.PP
+.I "GUI CONFIGURATION FILE"
+.sp 1
+GUI's own options are (MPlayer option names in parentheses):
+ao_alsa_device
+.RB ( alsa:device ") (ALSA only),"
+ao_alsa_mixer
+.RB ( mixer ") (ALSA only),"
+ao_alsa_mixer_channel
+.RB ( mixer-channel ") (ALSA only),"
+ao_esd_device
+.RB ( esd: ") (ESD only),"
+ao_extra_stereo
+.RB ( "af extrastereo" "),"
+ao_extra_stereo_coefficient
+.RB ( "af extrastereo=" "),"
+ao_oss_device
+.RB ( oss: ") (OSS only),"
+ao_oss_mixer
+.RB ( mixer ") (OSS only),"
+ao_oss_mixer_channel
+.RB ( mixer-channel ") (OSS only),"
+ao_sdl_subdriver
+.RB ( sdl: ") (SDL only),
+ao_surround (unused),
+ao_volnorm
+.RB ( "af volnorm" "),"
+autosync (enable/disable),
+autosync_size
+.RB ( autosync "),"
+cache (enable/disable),
+cache_size
+.RB ( cache "),"
+enable_audio_equ
+.RB ( "af equalizer" "),"
+equ_band_00 ... equ_band_59,
+.RB ( "af equalizer=" "),"
+equ_channel_1 ... equ_channel_6
+.RB ( "af channels=" "),"
+gui_main_pos_x,
+gui_main_pos_y,
+gui_save_pos (yes/no),
+gui_video_out_pos_x,
+gui_video_out_pos_y,
+load_fullscreen  (yes/no),
+playbar (enable/disable),
+show_videowin (yes/no),
+vf_lavc
+.RB ( "vf lavc" "),"
+vf_pp
+.RB ( "vf pp" "),"
+vo_dxr3_device (unused) (DXR3 only).
+.sp 1
+MPlayer options stored in gui.conf (GUI option names, MPlayer option names in
+parentheses) are:
+a_afm
+.RB ( afm ),
+ao_driver
+.RB ( ao ),
+ass_bottom_margin
+.RB ( ass-bottom-margin ") (ASS only),"
+ass_enabled
+.RB ( ass ") (ASS only),"
+ass_top_margin
+.RB ( ass-top-margin ") (ASS only),"
+ass_use_margins
+.RB ( ass-use-margins ") (ASS only),"
+cdrom_device
+.RB ( cdrom-device ),
+dvd_device
+.RB ( dvd-device ),
+font_autoscale
+.RB ( subfont-autoscale ") (FreeType only),"
+font_blur
+.RB ( subfont-blur ") (FreeType only),"
+font_encoding
+.RB ( subfont-encoding ") (FreeType only),"
+font_factor
+.RB ( ffactor ),
+font_name
+.RB ( font ),
+font_osd_scale
+.RB ( subfont-osd-scale ") (FreeType only),"
+font_outline
+.RB ( subfont-outline ") (FreeType only),"
+font_text_scale
+.RB ( subfont-text-scale ") (FreeType only),"
+gui_skin
+.RB ( skin ),
+osd_level
+.RB ( osdlevel ),
+softvol
+.RB ( softvol ),
+stopxscreensaver
+.RB ( stop-xscreensaver ),
+sub_auto_load
+.RB ( autosub ),
+sub_cp
+.RB ( subcp ") (iconv only),"
+sub_overlap
+.RB ( overlapsub ),
+sub_pos
+.RB ( subpos ),
+sub_unicode
+.RB ( unicode ),
+v_flip
+.RB ( flip ),
+v_framedrop
+.RB ( framedrop ),
+v_idx
+.RB ( idx ),
+v_ni
+.RB ( ni ),
+v_vfm
+.RB ( vfm ),
+vf_autoq
+.RB ( autoq ),
+vo_direct_render
+.RB ( panscan ),
+vo_doublebuffering
+.RB ( dr ),
+vo_driver
+.RB ( vo ),
+vo_panscan
+.RB ( double ).
 .
 .\" --------------------------------------------------------------------------
 .\" Profiles
