@@ -39,22 +39,22 @@
 #include "sub/font_load.h"
 #include "sub/sub.h"
 
-int gtkCacheOn   = 0;
+int gtkCacheOn;
 int gtkCacheSize = 2048;
 
-int gtkVfLAVC = 0;
-int gtkVfPP   = 0;
+int gtkVfLAVC;
+int gtkVfPP;
 
 #ifdef CONFIG_DXR3
 char *gtkDXR3Device;
 #endif
 
-int gtkAutoSyncOn = 0;
-int gtkAutoSync   = 0;
+int gtkAutoSyncOn;
+int gtkAutoSync;
 
-int gtkAONorm             = 0;
-int gtkAOSurround         = 0;
-int gtkAOExtraStereo      = 0;
+int gtkAONorm;
+int gtkAOSurround;
+int gtkAOExtraStereo;
 float gtkAOExtraStereoMul = 1.0;
 
 #ifdef CONFIG_ALSA
@@ -77,17 +77,17 @@ char *gtkAOESDDevice;
 char *gtkAOSDLDriver;
 #endif
 
-int gtkEnableAudioEqualizer = 0;
+int gtkEnableAudioEqualizer;
 
-int gtkSubDumpMPSub = 0;
-int gtkSubDumpSrt   = 0;
+int gtkSubDumpMPSub;
+int gtkSubDumpSrt;
 
 #ifdef CONFIG_ASS
 gtkASS_t gtkASS;
 #endif
 
-int gtkEnablePlayBar   = 1;
-int gtkLoadFullscreen  = 0;
+int gtkEnablePlayBar = 1;
+int gtkLoadFullscreen;
 int gtkShowVideoWindow = 1;
 
 int gui_save_pos   = 1;
