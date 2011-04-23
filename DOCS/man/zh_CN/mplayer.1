@@ -1,5 +1,5 @@
-.\" sync with en/mplayer.1 rev. 33107
-.\" fix translation error in legacy parts: currently fixed up to (833: \-edl-start-pts)
+.\" sync with en/mplayer.1 rev. 33293
+.\" fix translation error in legacy parts: currently fixed up to (1105)
 .\" Encoding: UTF-8
 .\"
 .\" MPlayer (C) 2000-2010 MPlayer 团队
@@ -367,7 +367,7 @@ MPlayer 有一个完全可配置的，命令驱动的控制层面，
 .PD 1
 .PP
 .RS
-（以下的按键仅适用于编译时包含对于 TV 或 DVB 输入的支持的情况，并且优先级高于以上的按键定义。）
+（以下的按键仅用于编译时包含对于 TV 或 DVB 输入的支持的情况，并且优先级高于以上的按键定义。）
 .RE
 .PP
 .PD 0
@@ -382,7 +382,7 @@ MPlayer 有一个完全可配置的，命令驱动的控制层面，
 .PD 1
 .PP
 .RS
-（以下的按键仅适用于编译时包括对于 dvdnav 支持的情况：用于菜单导航。）
+（以下的按键仅用于编译时包括对于 dvdnav 支持的情况：用于菜单导航。）
 .RE
 .PP
 .PD 0
@@ -706,7 +706,7 @@ lavcopts=mbd=2:trell=yes:v4mv=yes
 特别有助于在慢速终端或者无法正确处理回车符（即 \\r）的终端上的使用。
 .
 .TP
-.B \-priority <优先级>（仅适用于 Windows 和 OS/2）
+.B \-priority <优先级>（仅用于 Windows 和 OS/2）
 根据 Windows 和 OS/2 下可用的预定义优先级设置 MPlayer 的进程优先级。
 可设的 <优先级> 值为：
 .RSs
@@ -744,7 +744,7 @@ idle|belownormal|normal|abovenormal|high|realtime
 .
 .
 .
-.SH "播放器选项（仅适用于MPLAYER）"
+.SH "播放器选项（仅用于MPLAYER）"
 .
 .TP
 .B \-autoq <质量>（与 \-vf [s]pp 一同使用）
@@ -756,11 +756,11 @@ idle|belownormal|normal|abovenormal|high|realtime
 .TP
 .B \-autosync <因子>
 基于测得的音频延迟逐步调节音视频的同步。
-指定 \-autosync 0，即默认值，将导致帧的播放节奏完全基于测得的音频延迟。
+指定 \-autosync 0，即默认值，将导致帧播放的计时完全基于测得的音频延迟。
 指定 \-autosync 1 同样如此，但会小幅调整所使用的音视频修正算法。
 将该选项设为大于 1 的整数有助于播放视频帧率不平稳，但用 \-nosound 可以
 正常播放的电影。
-值越大，播放节奏越接近于 \-nosound。
+值越大，播放的计时越接近于 \-nosound。
 尝试用 \-autosync\ 30 可缓解未完美实现音频延迟检测的声卡驱动的问题。
 使用这个值后，如果出现了音视频同步上的大偏离，则只需要 1 或 2 秒时间就可以解决。
 在所有的声卡驱动下，音视频偏离突然出现时反应时间上有所延迟，这是打开此选项的唯一副作用。
@@ -791,11 +791,11 @@ xover、xv（参见 \-vo xv:ck）、xvmc（参见 \-vo xv:ck）和 directx 等
 .
 .TP
 .B \-correct\-pts（处于测试阶段）
-将 MPlayer 切换到试验模式，其中视频帧的时间戳以不同的方式计算，
-并且支持视频滤镜添加新的帧或修改已有帧的时间戳。
-可以看到更精确的时间戳，例如，当通过 \-ass 选项播放与镜头切换同步
+将 MPlayer 切换到试验模式，其中视频帧的时间标签以不同的方式计算，
+并且支持视频滤镜添加新的帧或修改已有帧的时间标签。
+可以看到更精确的时间标签，例如，当通过 \-ass 选项播放与镜头切换同步
 的字幕时。
-如不使用 \-correct\-pts，字幕的显示节奏往往地会因某些帧而失效。
+如不使用 \-correct\-pts，字幕显示的计时往往地会因某些帧而失效。
 该选项在使用了某些流分离器和编解码器时无法正常起作用。
 .
 .TP
@@ -831,7 +831,7 @@ EDL 记录所描述的场景。
 .
 .TP
 .B \-edl-start-pts
-根据所播放文件的起始时间调整 EDL 记录的位置信息。 某些格式，尤其是 MPEG TS，
+根据所播放文件的起始时间调整 EDL 记录的位置信息。某些格式，尤其是 MPEG TS，
 通常起始于一个非零的当前时间标签值，并且当以 \-edlout 选项生成 EDL 文件时，
 EDL 记录含有一些只对这个特定文件来说是正确的绝对数值。如果重新编码成另一种格
 式，该 EDL 文件不再适用。使用 \-edl-start-pts 将自动根据起始时间调整 EDL 位
@@ -843,25 +843,25 @@ EDL 记录含有一些只对这个特定文件来说是正确的绝对数值。�
 禁止调整 EDL 位置信息。
 .
 .TP
-.B \-enqueue（仅用于 GUI）
+.B \-enqueue（仅用于图形界面）
 将命令行中给定的文件排入播放列表但不立刻播放。
 .
 .TP
 .B \-fixed\-vo
-为多个文件锁定一个固定的视频系统 (对所有的文件(反)初始化仅一次)。
-这样, 对所有文件只打开一个窗口。
-目前 fixed-vo 兼容的驱动有: gl, gl2, mga, svga, x11, xmga,
-xv, xvidix 和 dfbmga。
+强制使用单个固定的视频系统用于多个文件的播放（一次初始化/终止操作用于所有文件）。
+这样只打开一个窗口，将用于所有文件的播放。
+目前以下驱动兼容 fixed-vo：gl、gl2、mga、svga、x11、xmga、
+xv、xvidix 和 dfbmga。
 .
 .TP
-.B \-framedrop（也请参见 \-hardframedrop，未使用 \-nocorrect\-pts 时只可用于实验）
-跳过显示一些帧从而在慢的机器上保持 A/V 同步。
-视频滤镜不会应用到这些帧上。对于 B-帧 甚至解码也完全跳过。
+.B \-framedrop（另参见 \-hardframedrop，未使用 \-nocorrect\-pts 时只可用于测试）
+跳过某些帧的显示从而在运行慢的机器上保持音视频同步。
+视频滤镜不会应用到这些帧上。对于 B-帧来说，甚至解码也完全跳过。
 .
 .TP
 .B \-(no)gui
-启用或停用 GUI 接口(默认取决于可执行文件名)。
-仅能作为命令行第一个参数。不能作为选项写入配置文件。
+启用或禁用图形界面（默认方式取决于可执行文件的文件名）。
+仅能作为命令行第一个参数起作用。无法作为配置文件选项起作用。
 .
 .TP
 .B \-h, \-help, \-\-help
@@ -869,22 +869,23 @@ xv, xvidix 和 dfbmga。
 .
 .TP
 .B \-hardframedrop（未使用 \-nocorrect\-pts 时只可用于实验）
-更加密集的丢帧（中断解码过程）。将导致图像失真！
+更加密集地丢帧（中断解码过程）。
+会导致图像失真！
 注意，libmpeg2 解码器尤其可能在使用该选项后崩溃，所以请考虑使用
 “\-vc ffmpeg12,”。
 .
 .TP
 .B \-heartbeat\-cmd
-在播放的时候每隔 30 秒通过 system() 调用（即通过 shell 调用）执行的命令。
+播放时每隔 30 秒通过 system() 调用（即通过 shell 调用）执行的命令。
 .sp 1
 .I 注意：
 MPlayer 执行此命令时不加以检查，所以你有责任确保该命令不造成任何安全问题（例
-如，如果“.”就像在 Windows 中那样是在你的路径中，则确保使用完整路径）。
-并且该选项只有在播放视频时有效（即没有使用 \-novideo，但可以使用 \-vo null）。
+如，如果“.”就像在 Windows 中那样位于搜索路径中，则应确保使用完整路径）。
+并且该选项只有在播放视频时有效（即没有使用 \-novideo；但可以使用 \-vo null）。
 .sp 1
-该选项可能被“误用”以禁用不提供对于适当的 X API 接口的支持的屏幕保护程序。
-如果你觉得这太复杂了，请要求屏幕保护程序的作者提供对于适当的 X API 的支持。
+该选项可以“滥用”于禁用不支持规范的 X API 调用的屏幕保护程序。
 （另参见 \-stop\-xscreensaver）
+如果觉得这太复杂了，请要求屏幕保护程序的编写者支持规范的 X API 调用。
 .sp 1
 .I 用于 xscreensaver 的示例：
 mplayer \-heartbeat\-cmd "xscreensaver\-command \-deactivate" file
@@ -896,54 +897,54 @@ mplayer \-heartbeat\-cmd "gnome\-screensaver\-command \-p" file
 .
 .TP
 .B \-identify
-是 \-msglevel identify=4 的简写形式。使用便于解析的格式显示文件参数。
-同时打印更为详细的关于字幕和音轨的语言与 ID 号的信息。
+为 \-msglevel identify=4 的简便写法。使用便于解析的格式显示文件参数。
+同时打印更为详细的字幕和音轨的语言与 ID 号信息。
 在某些情形下，使用 \-msglevel identify=6 能得到更多的信息。
 例如，对于一张 DVD 或蓝光 DVD，该选项能列出每个标题的章节和时长，以及一个碟片 ID 号。
-将此选项与 \-frames 0 一起使用能禁止所有视频输出。
-封装脚本 TOOLS/\:midentify.sh 禁止 MPlayer 的其它输出，
-并且（很可能）shellescapes（脚本转义）了文件名。
+将该选项与 \-frames 0 一起使用能禁止所有视频输出。
+包装该选项的脚本 TOOLS/\:midentify.sh 能禁止 MPlayer 的其它输出，
+并且（顺利的话）将文件名转义为 shell 程序使用的形式。
 .
 .TP
-.B \-idle (也请参见 \-slave)
-当没有文件播放时, 让 MPlayer 空闲等待而不是退出。
-一般在 slave 模式时有用, 能通过输入命令控制 MPlayer。
+.B \-idle（另参见 \-slave）
+当没有文件播放时，让 MPlayer 空转运行而非退出。
+通常在 slave 模式下有用，能通过输入命令控制 MPlayer。
 .
 .TP
 .B \-input <命令>
-此选项可以用来配置输入系统的某些部分。路径相对于 ~/.mplayer/。
+该选项可用于配置输入系统的某些部分。指定的路径相对于 ~/.mplayer/。
 .br
-.I 注意:
-自动重复功能目前只有游戏操纵杆支持。
+.I 注意：
+自动连按功能目前只有游戏操纵杆支持。
 .sp 1
-可用的命令有:
+可用的命令有：
 .sp 1
 .PD 0
 .RSs
 .IPs conf=<文件名>
-指定输入配置文件而不是默认的 ~/\:.mplayer/\:input.conf。
-如果没有给出完全路径名, 将假设是 ~/\:.mplayer/\:<文件名>。
+指定输入配置文件代替默认使用的 ~/\:.mplayer/\:input.conf。
+如果没有给出完整路径名，则使用 ~/\:.mplayer/\:<文件名>。
 .IPs ar-dev=<设备>
-用作为苹果 IR 遥控器的设置（默认值是自动侦测，仅用于 Linux）。
+用作苹果 IR 遥控器的设备（默认值是自动侦测，仅用于 Linux）。
 .IPs ar-delay
-在开始自动重复一个键之前等待多少毫秒 (0 代表停用)。
+开始自动连按某个按键之前延迟多少毫秒（0 为禁用）。
 .IPs ar-rate
-自动重复数是每秒重复多少次按键。
+自动连按时每秒产生的按键次数。
 .IPs (no)default-bindings
-默认情况下使用 MPlayer 自带的键位设置。
+使用 MPlayer 默认情况下自带的键位设置。
 .IPs keylist
-列出所有可以被绑定于命令的键。
+列出所有可绑定命令的按键。
 .IPs cmdlist
-列出所有可以被绑定于键的命令。
+列出所有可绑定按键的命令。
 .IPs js-dev
-指定使用的操纵杆设备(默认是: /dev/\:input/\:js0)。
+指定使用的操纵杆设备（默认值：/dev/\:input/\:js0）。
 .IPs file=<文件名>
 从给定文件中读取命令。
-一般结合 FIFO 时有用。
+通常有助于与先入先出管道一同使用。
 .br
-.I 注意:
-当给定文件是 FIFO 时 MPlayer 打开两个端头, 这样你就可以做
-几次 ‘echo "seek 10" > mp_pipe’ 而管道仍保持有效。
+.I 注意：
+当给定文件是先入先出管道时，MPlayer 会打开两个管道两端，这样就可以
+重复执行‘echo "seek 10" > mp_pipe’而管道仍然有效。
 .RE
 .PD 1
 .
@@ -952,152 +953,153 @@ mplayer \-heartbeat\-cmd "gnome\-screensaver\-command \-p" file
 指定先入先出队列的大小供缓冲按键事件（默认值：7）。
 大小为 n 的先入先出队列能容纳 (n\-1) 缓冲事件。
 如果设太小一些按键事件会丢失。
-如果设太大，MPlayer 在处理被缓冲的事件时可能显得像是卡住了。
-如果想得到同引入此选项前的版本一样的行为效果，则
-对于 Linux 应设置为 2，对于 Windows 应设为 1024。
+如果设太大，MPlayer 在处理经缓冲的事件时可能显得像是卡住了。
+如果想得到同引入该选项前的 MPlayer 版本一样的行为效果，则
+对于 Linux 应设为 2，对于 Windows 应设为 1024。
 如果值设得小，则应当设置 \-doubleclick\-time 为 0 以禁用双击，这样
 双击事件就不会与其它常规的键盘事件争夺缓冲空间了。
 .
 .TP
-.B \-lircconf <文件名> (仅适用于 LIRC)
-为 LIRC 指定配置文件(默认是: ~/.lircrc)。
+.B \-lircconf <文件名>（仅用于 LIRC）
+指定 LIRC 的配置文件（默认值：~/.lircrc）。
 .
 .TP
 .B \-list\-properties
 打印可用的属性列表。
 .
 .TP
-.B \-loop <数>
-重复回放电影 <数> 遍。
-0 表示重复不断。
+.B \-loop <次数>
+重复播放电影 <次数> 遍。
+0 表示不断重复播放。
 .
 .TP
-.B \-menu （仅用于OSD菜单）
-打开 OSD 菜单支持。.
+.B \-menu（仅用于 OSD 菜单）
+打开 OSD 菜单支持。
 .
 .TP
-.B \-menu\-cfg <文件名> （仅用于OSD菜单）
-使用另一种的 menu.conf。
+.B \-menu\-cfg <文件名>（仅用于OSD菜单）
+使用另外的 menu.conf。
 .
 .TP
 .B \-menu\-chroot <路径>（仅用于OSD菜单）
-将文件选择菜单的根目录更改为一个特定位置。
+将文件选择菜单的根目录更改为一个指定的位置。
 .sp 1
 .I 示例：
 .PD 0
 .RSs
 .IPs \-menu\-chroot /home"
-将限制文件选择菜单查找/\:home以及其下的目录（即不可能访问 /，但可以访问
+限制文件选择菜单只能查找 /\:home 及其以下的目录（即不可能访问 /，但可以访问
 /home/user_name）。
 .RE
 .PD 1
 .
 .TP
 .B \-menu\-keepdir（仅用于OSD菜单）
-文件浏览器从最近浏览位置开始浏览，而不是当前目录。
+文件浏览器从最近访问过的位置开始浏览，而非当前目录。
 .
 .TP
-.B \-menu\-root <参数值> (仅适用于 OSD 菜单)
+.B \-menu\-root <参数值>（仅用于 OSD 菜单）
 指定主菜单。
 .
 .TP
-.B \-menu\-startup (仅适用于 OSD 菜单)
+.B \-menu\-startup（仅用于 OSD 菜单）
 在 MPlayer 启动时显示主菜单。
 .
 .TP
 .B \-mouse\-movements
-允许 MPlayer 接收来自视频输出驱动的指针事件。
-必须选择 DVD 菜单中的按钮。
+允许 MPlayer 接收视频输出驱动报告的指针移动事件。
+选择 DVD 菜单中的按钮需要该选项。
 支持基于 X11 的视频输出（x11、xv、xvmc等）以及 gl、gl2、direct3d 和 corevideo 的视频输出
 .
 .TP
 .B \-noar
-关闭对于 AppleIR 的支持。
+关闭对于苹果 IR 遥控器的支持。
 .
 .TP
 .B \-noconsolecontrols
 阻止 MPlayer 读取标准输入的键盘事件。
-读取标准输入的数据时有用。命令行中发现 \- 会自动启用。
-会遇到不得不手动设置的情形, 比如你
-打开 /dev/\:stdin (或者你系统中等价的设备), 在播放列表中使用 stdin
-或者意欲以后通过 slave 命令的 loadfile 或 loadlist 从 stdin 读取。
+读取标准输入的数据时有用。命令行中有 \- 时会自动启用该选项。
+有些情况下必须手动设置，比如，如果要打开 /dev/\:stdin
+（或者系统中类似的设备），在播放列表中使用标准输入，或是打算之后
+通过被动命令 loadfile 或 loadlist 从标准输入读取内容。
 .
 .TP
 .B \-nojoystick
-关闭支持操纵杆。
+关闭对于操纵杆的支持。
 .
 .TP
 .B \-nolirc
-关闭支持 LIRC。
+关闭对于 LIRC 的支持。
 .
 .TP
 .B \-nomouseinput
-停用鼠标键 按/\:放 输入 (mozplayerxp 的上下文菜单依赖此选项)。
+禁用鼠标按键的‘按/\:放’事件的输入（mozplayerxp 的上下文菜单需要该选项）。
 .
 .TP
-.B \-rtc (仅适用 RTC)
-打开使用 Linux 的 RTC (实时钟 \- /dev/\:rtc) 作为计时机制。
-唤醒过程每 1/1024 秒核查当前时间。
-除非现代 Linux 内核配置为桌面应用, 因为当使用正常的定时睡眠时,
-已唤醒相似精度的过程。
+.B \-rtc（仅用于 RTC）
+启用 Linux RTC（实时时钟 \- /dev/\:rtc）用于计时。
+该选项每 1/1024 秒唤醒进程以校对当前时间。
+对于配置为桌面应用的现代 Linux 内核来说没有什么作用，因为在调用普通计
+时方式的 sleep 时，这些内核已经以相类似的精度唤醒进程了。
 .
 .TP
 .B \-playing\-msg <字符串>
-开始回放前打印出字符串。
-支持以下的扩展:
+开始播放前打印字符串。
+支持以下的变量替换：
 .RSs
 .IPs ${NAME}
-扩展为属性 NAME 的值。
+规换为属性 NAME 的值。
 .IPs ?(NAME:TEXT)
-仅当属性 NAME 可用时扩展 TEXT（文字）。
+仅当属性 NAME 存在时替换为 TEXT 的值。
 .IPs ?(!NAME:TEXT)
-仅当属性 NAME 不可用时扩展 TEXT（文字）。
-Expand TEXT only if the property NAME is not available.
+仅当属性 NAME 不存在时替换为 TEXT 的值。
 .RE
 .
 .TP
 .B \-playlist <文件名>
-根据播放列表播放文件(ASX, Winamp, SMIL, 或者
-one-file-per-line(每行一个文件) 格式)。
+根据播放列表播放文件（支持 ASX、Winamp、SMIL、或
+每行一个文件名的格式）。
 .br
-.I 注意:
-此选项作为条目仅应用于播放列表的元素以后, 会找到选项。
+.I 注意：
+该选项处理为一项条目，其后的选项仅应用于该播放列表
+的元素。
 .br
-FIXME: 需要彻底理清并建立文档。
+FIXME: 需彻底解释清楚并记入文档。
 .
 .TP
 .B \-rtc\-device <设备>
-为 RTC 计时使用指定的设备。
+指定 RTC 计时的设备。
 .
 .TP
 .B \-shuffle
 以随机顺序播放文件。
 .
 .TP
-.B \-skin <名> (仅用于 GUI)
-从默认皮肤目录
-/usr/\:local/\:share/\:mplayer/\:skins/\: 或 ~/.mplayer/\:skins/
-下的, 作为参数的给定目录中装载皮肤。
+.B \-skin <名称>（仅用于 GUI）
+从默认界面外观目录
+~/.mplayer/\:skins/ 和 /usr/\:local/\:share/\:mplayer/\:skins/\:
+下的参数所指定名称的子目录中装载界面外观。
 .sp 1
-.I 示例:
+.I 示例：
 .PD 0
 .RSs
 .IPs "\-skin fittyfene"
-尝试 /usr/\:local/\:share/\:mplayer/\:skins/\:fittyfene
-然后是 ~/.mplayer/\:skins/\:fittyfene。
+尝试从 ~/.mplayer/\:skins/\:fittyfene 加载，
+然后是 /usr/\:local/\:share/\:mplayer/\:skins/\:fittyfene。
 .RE
 .PD 1
 .
 .TP
-.B \-slave (也请参见 \-input)
-切换到 slave 模式, MPlayer 为其他程序在后台运行。
-MPlayer 从标准输入读取以新行 (\\n) 分隔开的命令行,
-而不再截获键盘事件。
+.B \-slave（另参见 \-input）
+切换到被动模式，MPlayer 运行为其他程序在后端。
+MPlayer 从标准输入读取以新行符（\\n）分隔开的命令，
+而不是监听键盘事件。
 .br
-.I 注意:
-请参见 \-input cmdlist 的命令列表和 DOCS/tech/slave.txt 中的描述。
-另外，该选项并非用来禁用其它的输入，例如通过视频窗口。要使用其它方法实现那种效果，例如
-\-input nodefault\-bindings:conf=/dev/null。
+.I 注意：
+参见 \-input cmdlist 以查阅有哪些被动模式下的命令，以及 DOCS/tech/slave.txt 以
+查阅这些命令的描述。
+另外，该选项并非用于禁用其它的输入的，例如通过视频窗口的输入。需使用其它方法实现
+那种效果，例如 \-input nodefault\-bindings:conf=/dev/null。
 .
 .TP
 .B \-softsleep
@@ -2400,7 +2402,7 @@ MPlayer 在 verbose (\-v) 模式下会打印可用的语言。
 .PD 0
 .RSs
 .IPs 0
-精确匹配
+精确匹配（默认方式）
 .IPs 1
 装载所有包含电影名称的字幕。
 .IPs 2
@@ -3489,7 +3491,7 @@ ffodivxvdpau 一同使用）
 .PD 1
 .
 .TP
-.B xvmc (仅用于 X11 的 \-vc ffmpeg12mc)
+.B xvmc（仅用于带有 FFmpeg MPEG-1/2 解码器的 X11）
 视频输出驱动使用 XFree86 4.x 的 XvMC(X 视频运动补偿) 扩展
 以加速 MPEG-1/2 和 VCR2 的解码。
 .PD 0
@@ -7972,14 +7974,6 @@ Lavc很少会使用低于vqmin值的量化参数。
 最大量化参数，10\-31应该是一个合理的范围（默认值：31）。
 .
 .TP
-.B mbqmin=<1\-31>
-过时参数，应使用vqmin
-.
-.TP
-.B mbqmax=<1\-31>
-过时参数，应使用vqmax
-.
-.TP
 .B vqdiff=<1\-31>
 连续的I或P帧之间最大的量化参数差别（默认值：3）
 .
@@ -10933,16 +10927,12 @@ FIXME: 待解释。
 .SS GUI:
 .
 .TP
-.B CHARSET
-FIXME: 待解释。
-.
-.TP
 .B DISPLAY
-FIXME: 待解释。
+图形界面连接的显示终端的名称
 .
 .TP
 .B HOME
-FIXME: 待解释。
+当前用户的起始目录。
 .
 .SS libavformat:
 .
