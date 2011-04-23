@@ -89,9 +89,6 @@ void appInitStruct(void)
     appMPlayer.IndexOfMainItems = -1;
     appMPlayer.IndexOfBarItems  = -1;
     appMPlayer.IndexOfMenuItems = -1;
-
-    appMPlayer.sub.x = -1;   // NOTE TO MYSELF: is this really necessary?
-    appMPlayer.sub.y = -1;   // NOTE TO MYSELF: is this really necessary?
 }
 
 void appFreeStruct(void)

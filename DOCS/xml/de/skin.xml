@@ -766,11 +766,6 @@ end
               kennzeichnen Breite und Höhe des Fensters; sie sind optional (wenn sie fehlen, hat
               das Fenster dieselbe Größe wie die Grafik).
             </para>
-            <note>
-              <para>
-                Die Koordinaten <literal>X,Y</literal> funktionieren im Moment nicht beim Unterfenster.
-              </para>
-            </note>
           </listitem>
         </varlistentry>
 

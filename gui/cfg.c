@@ -91,10 +91,10 @@ int gtkLoadFullscreen  = 0;
 int gtkShowVideoWindow = 1;
 
 int gui_save_pos   = 1;
-int gui_main_pos_x = -2;
-int gui_main_pos_y = -2;
-int gui_sub_pos_x  = -1;
-int gui_sub_pos_y  = -1;
+int gui_main_pos_x = -3;
+int gui_main_pos_y = -3;
+int gui_sub_pos_x  = -3;
+int gui_sub_pos_y  = -3;
 
 static m_config_t *gui_conf;
 

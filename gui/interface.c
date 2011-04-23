@@ -237,9 +237,13 @@ void guiInit(void)
     }
 
     if (gui_save_pos) {
+        if (gui_main_pos_x != -3)
         appMPlayer.main.x = gui_main_pos_x;
+        if (gui_main_pos_y != -3)
         appMPlayer.main.y = gui_main_pos_y;
+        if (gui_sub_pos_x != -3)
         appMPlayer.sub.x  = gui_sub_pos_x;
+        if (gui_sub_pos_y != -3)
         appMPlayer.sub.y  = gui_sub_pos_y;
     }
 
