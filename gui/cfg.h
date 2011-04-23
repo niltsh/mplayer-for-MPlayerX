@@ -60,14 +60,12 @@ extern char *gtkEquChannel6;
 extern int gtkSubDumpMPSub;
 extern int gtkSubDumpSrt;
 
-#ifdef CONFIG_ASS
 typedef struct {
     int enabled;
     int use_margins;
     int top_margin;
     int bottom_margin;
 } gtkASS_t;
-#endif
 
 extern gtkASS_t gtkASS;
 
