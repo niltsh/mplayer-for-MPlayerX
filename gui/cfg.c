@@ -55,7 +55,7 @@ int gtkAutoSync;
 int gtkAONorm;
 int gtkAOSurround;
 int gtkAOExtraStereo;
-float gtkAOExtraStereoMul = 1.0;
+float gtkAOExtraStereoMul = 1.0f;
 
 #ifdef CONFIG_ALSA
 char *gtkAOALSAMixer;
