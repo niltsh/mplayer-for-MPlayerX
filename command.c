@@ -878,12 +878,14 @@ static int mp_property_audio(m_option_t *prop, int action, void *arg,
     if (!mpctx->demuxer || !mpctx->demuxer->audio)
         return M_PROPERTY_UNAVAILABLE;
     current_id = mpctx->demuxer->audio->id;
+    if (current_id >= 0)
+        audio_id = ((sh_audio_t *)mpctx->demuxer->a_streams[current_id])->aid;
 
     switch (action) {
     case M_PROPERTY_GET:
         if (!arg)
             return M_PROPERTY_ERROR;
-        *(int *) arg = current_id;
+        *(int *) arg = audio_id;
         return M_PROPERTY_OK;
     case M_PROPERTY_PRINT:
         if (!arg)
@@ -898,7 +900,7 @@ static int mp_property_audio(m_option_t *prop, int action, void *arg,
                 av_strlcpy(lang, sh->lang, 40);
             // TODO: use a proper STREAM_CTRL instead of this mess
             else if (sh && mpctx->stream->type == STREAMTYPE_BD) {
-                const char *l = bd_lang_from_id(mpctx->stream, sh->aid);
+                const char *l = bd_lang_from_id(mpctx->stream, audio_id);
                 if (l)
                     av_strlcpy(lang, l, sizeof(lang));
             }
@@ -918,7 +920,7 @@ static int mp_property_audio(m_option_t *prop, int action, void *arg,
                 mp_dvdnav_lang_from_aid(mpctx->stream, current_id, lang);
 #endif
             *(char **) arg = malloc(64);
-            snprintf(*(char **) arg, 64, "(%d) %s", current_id, lang);
+            snprintf(*(char **) arg, 64, "(%d) %s", audio_id, lang);
         }
         return M_PROPERTY_OK;
 
@@ -928,15 +930,18 @@ static int mp_property_audio(m_option_t *prop, int action, void *arg,
             tmp = *((int *) arg);
         else
             tmp = -1;
-        audio_id = demuxer_switch_audio(mpctx->demuxer, tmp);
-        if (audio_id == -2
-            || (audio_id > -1
-                && mpctx->demuxer->audio->id != current_id && current_id != -2))
+        tmp = demuxer_switch_audio(mpctx->demuxer, tmp);
+        if (tmp == -2
+            || (tmp > -1
+                && mpctx->demuxer->audio->id != current_id && current_id != -2)) {
             uninit_player(INITIALIZED_AO | INITIALIZED_ACODEC);
-        if (audio_id > -1 && mpctx->demuxer->audio->id != current_id) {
+            audio_id = tmp;
+        }
+        if (tmp > -1 && mpctx->demuxer->audio->id != current_id) {
             sh_audio_t *sh2;
             sh2 = mpctx->demuxer->a_streams[mpctx->demuxer->audio->id];
             if (sh2) {
+                audio_id = sh2->aid;
                 sh2->ds = mpctx->demuxer->audio;
                 mpctx->sh_audio = sh2;
                 reinit_audio_chain();
@@ -958,12 +963,14 @@ static int mp_property_video(m_option_t *prop, int action, void *arg,
     if (!mpctx->demuxer || !mpctx->demuxer->video)
         return M_PROPERTY_UNAVAILABLE;
     current_id = mpctx->demuxer->video->id;
+    if (current_id >= 0)
+        video_id = ((sh_video_t *)mpctx->demuxer->v_streams[current_id])->vid;
 
     switch (action) {
     case M_PROPERTY_GET:
         if (!arg)
             return M_PROPERTY_ERROR;
-        *(int *) arg = current_id;
+        *(int *) arg = video_id;
         return M_PROPERTY_OK;
     case M_PROPERTY_PRINT:
         if (!arg)
@@ -974,7 +981,7 @@ static int mp_property_video(m_option_t *prop, int action, void *arg,
         else {
             char lang[40] = MSGTR_Unknown;
             *(char **) arg = malloc(64);
-            snprintf(*(char **) arg, 64, "(%d) %s", current_id, lang);
+            snprintf(*(char **) arg, 64, "(%d) %s", video_id, lang);
         }
         return M_PROPERTY_OK;
 
@@ -984,16 +991,19 @@ static int mp_property_video(m_option_t *prop, int action, void *arg,
             tmp = *((int *) arg);
         else
             tmp = -1;
-        video_id = demuxer_switch_video(mpctx->demuxer, tmp);
-        if (video_id == -2
-            || (video_id > -1 && mpctx->demuxer->video->id != current_id
-                && current_id != -2))
+        tmp = demuxer_switch_video(mpctx->demuxer, tmp);
+        if (tmp == -2
+            || (tmp > -1 && mpctx->demuxer->video->id != current_id
+                && current_id != -2)) {
             uninit_player(INITIALIZED_VCODEC |
-                          (fixed_vo && video_id != -2 ? 0 : INITIALIZED_VO));
-        if (video_id > -1 && mpctx->demuxer->video->id != current_id) {
+                          (fixed_vo && tmp != -2 ? 0 : INITIALIZED_VO));
+            video_id = tmp;
+        }
+        if (tmp > -1 && mpctx->demuxer->video->id != current_id) {
             sh_video_t *sh2;
             sh2 = mpctx->demuxer->v_streams[mpctx->demuxer->video->id];
             if (sh2) {
+                video_id = sh2->vid;
                 sh2->ds = mpctx->demuxer->video;
                 mpctx->sh_video = sh2;
                 reinit_video_chain();
