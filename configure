@@ -320,7 +320,6 @@ Optional features:
   --disable-mplayer      disable MPlayer compilation [enable]
   --enable-gui           enable GMPlayer compilation (GTK+ GUI) [disable]
   --enable-gtk1          force using GTK 1.2 for the GUI  [disable]
-  --disable-largefiles   disable support for files > 2GB [enable]
   --enable-termcap       use termcap database for key codes [autodetect]
   --enable-termios       use termios database for key codes [autodetect]
   --disable-iconv        disable iconv for encoding conversion [autodetect]
@@ -801,7 +800,6 @@ _tga=yes
 _directfb=auto
 _zr=auto
 _bl=no
-_largefiles=yes
 #language=en
 _shm=auto
 _charset="UTF-8"
@@ -1298,8 +1296,6 @@ for ac_option do
   --disable-bl)         _bl=no          ;;
   --enable-mtrr)        _mtrr=yes       ;;
   --disable-mtrr)       _mtrr=no        ;;
-  --enable-largefiles)  _largefiles=yes ;;
-  --disable-largefiles) _largefiles=no  ;;
   --enable-shm)         _shm=yes        ;;
   --disable-shm)        _shm=no         ;;
   --enable-select)      _select=yes     ;;
@@ -5859,11 +5855,9 @@ fi
 if test "$_dvdread_internal" = yes; then
   def_dvdread='#define CONFIG_DVDREAD 1'
   inputmodules="dvdread(internal) $inputmodules"
-  _largefiles=yes
   res_comment="internal"
 elif test "$_dvdread" = yes; then
   def_dvdread='#define CONFIG_DVDREAD 1'
-  _largefiles=yes
   extra_ldflags="$extra_ldflags -ldvdread"
   inputmodules="dvdread(external) $inputmodules"
   res_comment="external"
@@ -5899,7 +5893,6 @@ if test "$_libdvdcss_internal" = yes ; then
   cflags_libdvdcss_dvdread="-Ilibdvdcss"
   def_dvdcss="#define HAVE_DVDCSS_DVDCSS_H 1"
   inputmodules="libdvdcss(internal) $inputmodules"
-  _largefiles=yes
 else
   noinputmodules="libdvdcss(internal) $noinputmodules"
 fi
@@ -7856,14 +7849,8 @@ libs_mplayer=$_ld_tmp
 
 
 #############################################################################
-# 64 bit file offsets?
-if test "$_largefiles" = yes || freebsd ; then
-  CFLAGS="$CFLAGS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
-  if test "$_dvdread" = yes || test "$_libdvdcss_internal" = yes ; then
-    # dvdread support requires this (for off64_t)
-    CFLAGS="$CFLAGS -D_LARGEFILE64_SOURCE"
-  fi
-fi
+
+CFLAGS="$CFLAGS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE"
 
 CXXFLAGS=" $CFLAGS -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS"
 
@@ -7890,7 +7877,6 @@ if test "$_dvdnav" = auto ; then
   statement_check_broken stdint.h dvdnav/dvdnav.h 'dvdnav_t *dvd = 0' $_dvdnavdir $_dvdnavlibs $_ld_dl $_ld_pthread && _dvdnav=yes
 fi
 if test "$_dvdnav" = yes ; then
-  _largefiles=yes
   def_dvdnav='#define CONFIG_DVDNAV 1'
   if test "$dvdnav_internal" = yes ; then
     cflags_libdvdnav="-Ilibdvdnav"
