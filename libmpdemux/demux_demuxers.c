@@ -104,7 +104,13 @@ static void demux_demuxers_seek(demuxer_t *demuxer,float rel_seek_secs,float aud
   // Get the new pos
   pos = demuxer->video->pts;
   if (!pos) {
-    demux_fill_buffer(priv->vd, demuxer->video);
+    // since the video demuxer might provide multiple
+    // streams (e.g. subs) we might have to call
+    // demux_fill_buffer multiple times.
+    int limit = 10;
+    do {
+      demux_fill_buffer(priv->vd, demuxer->video);
+    } while (--limit && !demuxer->video->first);
     if (demuxer->video->first)
       pos = demuxer->video->first->pts;
   }
