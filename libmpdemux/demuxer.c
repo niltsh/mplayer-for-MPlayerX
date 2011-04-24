@@ -225,9 +225,7 @@ static const demuxer_desc_t *get_demuxer_desc_from_type(int file_format)
     return NULL;
 }
 
-
-demuxer_t *new_demuxer(stream_t *stream, int type, int a_id, int v_id,
-                       int s_id, char *filename)
+demuxer_t *alloc_demuxer(stream_t *stream, int type, const char *filename)
 {
     demuxer_t *d = calloc(1, sizeof(*d));
     d->stream = stream;
@@ -238,9 +236,6 @@ demuxer_t *new_demuxer(stream_t *stream, int type, int a_id, int v_id,
     d->seekable = 1;
     d->synced = 0;
     d->filepos = -1;
-    d->audio = new_demuxer_stream(d, a_id);
-    d->video = new_demuxer_stream(d, v_id);
-    d->sub = new_demuxer_stream(d, s_id);
     d->type = type;
     if (type)
         if (!(d->desc = get_demuxer_desc_from_type(type)))
@@ -249,6 +244,16 @@ demuxer_t *new_demuxer(stream_t *stream, int type, int a_id, int v_id,
                    "big troubles ahead.");
     if (filename) // Filename hack for avs_check_file
         d->filename = strdup(filename);
+    return d;
+}
+
+demuxer_t *new_demuxer(stream_t *stream, int type, int a_id, int v_id,
+                       int s_id, char *filename)
+{
+    demuxer_t *d = alloc_demuxer(stream, type, filename);
+    d->audio = new_demuxer_stream(d, a_id);
+    d->video = new_demuxer_stream(d, v_id);
+    d->sub = new_demuxer_stream(d, s_id);
     stream->eof = 0;
     stream_seek(stream, stream->start_pos);
     return d;

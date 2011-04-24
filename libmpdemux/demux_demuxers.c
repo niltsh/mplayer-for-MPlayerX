@@ -35,10 +35,9 @@ typedef struct dd_priv {
 extern const demuxer_desc_t demuxer_desc_demuxers;
 
 demuxer_t*  new_demuxers_demuxer(demuxer_t* vd, demuxer_t* ad, demuxer_t* sd) {
-  demuxer_t* ret;
+  // Video is the most important :-)
+  demuxer_t* ret = alloc_demuxer(vd->stream, DEMUXER_TYPE_DEMUXERS, vd->filename);
   dd_priv_t* priv;
-
-  ret = calloc(1,sizeof(demuxer_t));
 
   priv = malloc(sizeof(dd_priv_t));
   priv->vd = vd;
@@ -47,8 +46,6 @@ demuxer_t*  new_demuxers_demuxer(demuxer_t* vd, demuxer_t* ad, demuxer_t* sd) {
   ret->priv = priv;
 
   ret->type = ret->file_format = DEMUXER_TYPE_DEMUXERS;
-  // Video is the most important :-)
-  ret->stream = vd->stream;
   ret->seekable = vd->seekable && ad->seekable && sd->seekable;
 
   ret->video = vd->video;

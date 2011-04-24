@@ -358,6 +358,7 @@ static inline void *realloc_struct(void *ptr, size_t nmemb, size_t size) {
 }
 
 demux_stream_t* new_demuxer_stream(struct demuxer *demuxer,int id);
+demuxer_t *alloc_demuxer(stream_t *stream, int type, const char *filename);
 demuxer_t* new_demuxer(stream_t *stream,int type,int a_id,int v_id,int s_id,char *filename);
 void free_demuxer_stream(demux_stream_t *ds);
 void free_demuxer(demuxer_t *demuxer);
