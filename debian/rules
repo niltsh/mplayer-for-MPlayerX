@@ -45,7 +45,6 @@ CONFIGURE_FLAGS = \
 	--enable-xvmc \
 	--enable-menu \
 	--disable-arts \
-	--enable-largefiles \
 	--language=all \
 	$(archconf)
 
