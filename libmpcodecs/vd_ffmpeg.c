@@ -103,6 +103,8 @@ static char *lavc_param_skip_frame_str = NULL;
 static int lavc_param_threads=1;
 static int lavc_param_bitexact=0;
 static char *lavc_avopt = NULL;
+static enum AVDiscard skip_idct;
+static enum AVDiscard skip_frame;
 
 static const mp_image_t mpi_no_picture =
 {
@@ -350,6 +352,9 @@ static int init(sh_video_t *sh){
             return 0;
         }
     }
+
+    skip_idct = avctx->skip_idct;
+    skip_frame = avctx->skip_frame;
 
     mp_dbg(MSGT_DECVIDEO, MSGL_DBG2, "libavcodec.size: %d x %d\n", avctx->width, avctx->height);
     switch (sh->format) {
@@ -609,13 +614,13 @@ static int get_buffer(AVCodecContext *avctx, AVFrame *pic){
             type = MP_IMGTYPE_STATIC;
             flags |= MP_IMGFLAG_PRESERVE;
         }
-        flags|=(!avctx->hurry_up && ctx->do_slices) ?
+        flags|=(avctx->skip_idct<=AVDISCARD_DEFAULT && avctx->skip_frame<=AVDISCARD_DEFAULT && ctx->do_slices) ?
                  MP_IMGFLAG_DRAW_CALLBACK:0;
         mp_msg(MSGT_DECVIDEO, MSGL_DBG2, type == MP_IMGTYPE_STATIC ? "using STATIC\n" : "using TEMP\n");
     } else {
         if(!pic->reference){
             ctx->b_count++;
-            flags|=(!avctx->hurry_up && ctx->do_slices) ?
+            flags|=(avctx->skip_idct<=AVDISCARD_DEFAULT && avctx->skip_frame<=AVDISCARD_DEFAULT && ctx->do_slices) ?
                      MP_IMGFLAG_DRAW_CALLBACK:0;
         }else{
             ctx->ip_count++;
@@ -827,7 +832,14 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
         }
     }
 
-    avctx->hurry_up=(flags&3)?((flags&2)?2:1):0;
+    avctx->skip_idct = skip_idct;
+    avctx->skip_frame = skip_frame;
+
+    if (flags&3) {
+        avctx->skip_frame = AVDISCARD_NONREF;
+        if (flags&2)
+            avctx->skip_idct = AVDISCARD_ALL;
+    }
 
     mp_msg(MSGT_DECVIDEO, MSGL_DBG2, "vd_ffmpeg data: %04x, %04x, %04x, %04x\n",
            ((int *)data)[0], ((int *)data)[1], ((int *)data)[2], ((int *)data)[3]);
