@@ -139,7 +139,6 @@ mv DOCS/man/zh DOCS/man/zh_CN
     --disable-encoder=X264 \
     \
     --enable-gui \
-    --enable-largefiles \
     --disable-termcap \
     --disable-bitmap-font \
     --enable-lirc \
@@ -187,7 +186,6 @@ mv -f mplayer gmplayer
     --disable-encoder=MP3LAME \
     --disable-encoder=X264 \
     \
-    --enable-largefiles \
     --disable-termcap \
     --disable-bitmap-font \
     --enable-lirc \
