@@ -159,6 +159,8 @@ static int demux_demuxers_control(demuxer_t *demuxer,int cmd, void *arg){
     case DEMUXER_CTRL_GET_PERCENT_POS:
       *((int *)arg) = demuxer_get_percent_pos(priv->vd);
       return DEMUXER_CTRL_OK;
+    case DEMUXER_CTRL_CORRECT_PTS:
+      return demux_control(priv->vd, DEMUXER_CTRL_CORRECT_PTS, NULL);
   }
   return DEMUXER_CTRL_NOTIMPL;
 }
