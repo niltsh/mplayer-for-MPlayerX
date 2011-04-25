@@ -1259,7 +1259,7 @@ GtkWidget * create_Preferences( void )
 
   AddLabel( MSGTR_PREFERENCES_CacheSize,hbox5 );
 
-  SBCacheadj=GTK_ADJUSTMENT( gtk_adjustment_new( 2048,32,1048576,1,10,10 ) );
+  SBCacheadj=GTK_ADJUSTMENT( gtk_adjustment_new( gtkCacheSize,32,1048576,1,32,0 ) );
   SBCache=gtk_spin_button_new( GTK_ADJUSTMENT( SBCacheadj ),1,0 );
   gtk_widget_show( SBCache );
   gtk_box_pack_start( GTK_BOX( hbox5 ),SBCache,TRUE,TRUE,0 );
