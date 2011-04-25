@@ -779,7 +779,6 @@ static const char help_text[]=
 #define MSGTR_DeletingSubtitles "[GUI] Mažu titulky.\n"
 #define MSGTR_LoadingSubtitles "[GUI] Načítám titulky: %s\n"
 #define MSGTR_AddingVideoFilter "[GUI] Přidávám video filtr: %s\n"
-#define MSGTR_RemovingVideoFilter "[GUI] Odstraňuji video filtr: %s\n"
 
 // mw.c
 #define MSGTR_NotAFile "Toto nevypadá jako soubor: %s !\n"

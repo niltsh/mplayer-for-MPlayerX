@@ -786,7 +786,6 @@ static const char help_text[]=
 #define MSGTR_DeletingSubtitles "[GUI] Elimino sottotitoli.\n"
 #define MSGTR_LoadingSubtitles "[GUI] Carico sottotitoli: %s\n"
 #define MSGTR_AddingVideoFilter "[GUI] Aggiungo filtro video: %s\n"
-#define MSGTR_RemovingVideoFilter "[GUI] Rimuovo filtro video: %s\n"
 
 // mw.c
 #define MSGTR_NotAFile "Questo non pare essere un file: %s !\n"

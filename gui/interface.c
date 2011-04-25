@@ -536,46 +536,6 @@ static void add_vf(char *str)
     mp_msg(MSGT_GPLAYER, MSGL_STATUS, MSGTR_AddingVideoFilter, str);
 }
 
-static void remove_vf(char *str)
-{
-    int n = 0;
-
-    if (!vf_settings)
-        return;
-
-    mp_msg(MSGT_GPLAYER, MSGL_STATUS, MSGTR_RemovingVideoFilter, str);
-
-    while (vf_settings[n++].name) ;
-
-    n--;
-
-    if (n > -1) {
-        int i = 0, m = -1;
-
-        while (vf_settings[i].name) {
-            if (!gstrcmp(vf_settings[i++].name, str)) {
-                m = i - 1;
-                break;
-            }
-        }
-
-        i--;
-
-        if (m > -1) {
-            if (n == 1) {
-                free(vf_settings[0].name);
-                free(vf_settings[0].attribs);
-                free(vf_settings);
-                vf_settings = NULL;
-            } else {
-                free(vf_settings[i].name);
-                free(vf_settings[i].attribs);
-                memcpy(&vf_settings[i], &vf_settings[i + 1], (n - i) * sizeof(m_obj_settings_t));
-            }
-        }
-    }
-}
-
 int guiGetEvent(int type, void *arg)
 {
     const ao_functions_t *audio_out = NULL;
@@ -911,8 +871,6 @@ int guiGetEvent(int type, void *arg)
         }
 
 #ifdef CONFIG_DXR3
-        remove_vf("lavc");
-
         if (video_driver_list && !gstrcmp(video_driver_list[0], "dxr3"))
             if (guiIntfStruct.StreamType != STREAMTYPE_DVD && guiIntfStruct.StreamType != STREAMTYPE_VCD)
                 if (gtkVfLAVC)
@@ -921,8 +879,6 @@ int guiGetEvent(int type, void *arg)
 
         if (gtkVfPP)
             add_vf("pp");
-        else
-            remove_vf("pp");
 
         // audio opts
 
