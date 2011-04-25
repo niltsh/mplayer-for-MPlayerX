@@ -99,55 +99,55 @@ int gui_sub_pos_y  = -3;
 static m_config_t *gui_conf;
 
 static const m_option_t gui_opts[] = {
-    { "cache",                       &gtkCacheOn,              CONF_TYPE_FLAG,        0,          0,     1,     NULL },
-    { "cache_size",                  &gtkCacheSize,            CONF_TYPE_INT,         CONF_RANGE, 32,  1048576, NULL },
+    { "cache",                       &gtkCacheOn,              CONF_TYPE_FLAG,        0,          0,     1,       NULL },
+    { "cache_size",                  &gtkCacheSize,            CONF_TYPE_INT,         CONF_RANGE, 32,    1048576, NULL },
 
-    { "vf_lavc",                     &gtkVfLAVC,               CONF_TYPE_FLAG,        0,          0,     1,     NULL },
-    { "vf_pp",                       &gtkVfPP,                 CONF_TYPE_FLAG,        0,          0,     1,     NULL },
+    { "vf_lavc",                     &gtkVfLAVC,               CONF_TYPE_FLAG,        0,          0,     1,       NULL },
+    { "vf_pp",                       &gtkVfPP,                 CONF_TYPE_FLAG,        0,          0,     1,       NULL },
 
 #ifdef CONFIG_DXR3
-    { "vo_dxr3_device",              &gtkDXR3Device,           CONF_TYPE_STRING,      0,          0,     0,     NULL },
+    { "vo_dxr3_device",              &gtkDXR3Device,           CONF_TYPE_STRING,      0,          0,     0,       NULL },
 #endif
 
-    { "autosync",                    &gtkAutoSyncOn,           CONF_TYPE_FLAG,        0,          0,     1,     NULL },
-    { "autosync_size",               &gtkAutoSync,             CONF_TYPE_INT,         CONF_RANGE, 0,     10000, NULL },
+    { "autosync",                    &gtkAutoSyncOn,           CONF_TYPE_FLAG,        0,          0,     1,       NULL },
+    { "autosync_size",               &gtkAutoSync,             CONF_TYPE_INT,         CONF_RANGE, 0,     10000,   NULL },
 
-    { "ao_volnorm",                  &gtkAONorm,               CONF_TYPE_FLAG,        0,          0,     1,     NULL },
-    { "ao_surround",                 &gtkAOSurround,           CONF_TYPE_FLAG,        0,          0,     1,     NULL },
-    { "ao_extra_stereo",             &gtkAOExtraStereo,        CONF_TYPE_FLAG,        0,          0,     1,     NULL },
-    { "ao_extra_stereo_coefficient", &gtkAOExtraStereoMul,     CONF_TYPE_FLOAT,       CONF_RANGE, -10,   10,    NULL },
+    { "ao_volnorm",                  &gtkAONorm,               CONF_TYPE_FLAG,        0,          0,     1,       NULL },
+    { "ao_surround",                 &gtkAOSurround,           CONF_TYPE_FLAG,        0,          0,     1,       NULL },
+    { "ao_extra_stereo",             &gtkAOExtraStereo,        CONF_TYPE_FLAG,        0,          0,     1,       NULL },
+    { "ao_extra_stereo_coefficient", &gtkAOExtraStereoMul,     CONF_TYPE_FLOAT,       CONF_RANGE, -10,   10,      NULL },
 
 #ifdef CONFIG_ALSA
-    { "ao_alsa_mixer",               &gtkAOALSAMixer,          CONF_TYPE_STRING,      0,          0,     0,     NULL },
-    { "ao_alsa_mixer_channel",       &gtkAOALSAMixerChannel,   CONF_TYPE_STRING,      0,          0,     0,     NULL },
-    { "ao_alsa_device",              &gtkAOALSADevice,         CONF_TYPE_STRING,      0,          0,     0,     NULL },
+    { "ao_alsa_mixer",               &gtkAOALSAMixer,          CONF_TYPE_STRING,      0,          0,     0,       NULL },
+    { "ao_alsa_mixer_channel",       &gtkAOALSAMixerChannel,   CONF_TYPE_STRING,      0,          0,     0,       NULL },
+    { "ao_alsa_device",              &gtkAOALSADevice,         CONF_TYPE_STRING,      0,          0,     0,       NULL },
 #endif
 
 #ifdef CONFIG_OSS_AUDIO
-    { "ao_oss_mixer",                &gtkAOOSSMixer,           CONF_TYPE_STRING,      0,          0,     0,     NULL },
-    { "ao_oss_mixer_channel",        &gtkAOOSSMixerChannel,    CONF_TYPE_STRING,      0,          0,     0,     NULL },
-    { "ao_oss_device",               &gtkAOOSSDevice,          CONF_TYPE_STRING,      0,          0,     0,     NULL },
+    { "ao_oss_mixer",                &gtkAOOSSMixer,           CONF_TYPE_STRING,      0,          0,     0,       NULL },
+    { "ao_oss_mixer_channel",        &gtkAOOSSMixerChannel,    CONF_TYPE_STRING,      0,          0,     0,       NULL },
+    { "ao_oss_device",               &gtkAOOSSDevice,          CONF_TYPE_STRING,      0,          0,     0,       NULL },
 #endif
 
 #ifdef CONFIG_ESD
-    { "ao_esd_device",               &gtkAOESDDevice,          CONF_TYPE_STRING,      0,          0,     0,     NULL },
+    { "ao_esd_device",               &gtkAOESDDevice,          CONF_TYPE_STRING,      0,          0,     0,       NULL },
 #endif
 
 #ifdef CONFIG_SDL
-    { "ao_sdl_subdriver",            &gtkAOSDLDriver,          CONF_TYPE_STRING,      0,          0,     0,     NULL },
+    { "ao_sdl_subdriver",            &gtkAOSDLDriver,          CONF_TYPE_STRING,      0,          0,     0,       NULL },
 #endif
 
-    { "enable_audio_equ",            &gtkEnableAudioEqualizer, CONF_TYPE_FLAG,        0,          0,     1,     NULL },
+    { "enable_audio_equ",            &gtkEnableAudioEqualizer, CONF_TYPE_FLAG,        0,          0,     1,       NULL },
 
-    { "equ_channel_1",               &gtkEquChannel1,          CONF_TYPE_STRING,      0,          0,     0,     NULL },
-    { "equ_channel_2",               &gtkEquChannel2,          CONF_TYPE_STRING,      0,          0,     0,     NULL },
-    { "equ_channel_3",               &gtkEquChannel3,          CONF_TYPE_STRING,      0,          0,     0,     NULL },
-    { "equ_channel_4",               &gtkEquChannel4,          CONF_TYPE_STRING,      0,          0,     0,     NULL },
-    { "equ_channel_5",               &gtkEquChannel5,          CONF_TYPE_STRING,      0,          0,     0,     NULL },
-    { "equ_channel_6",               &gtkEquChannel6,          CONF_TYPE_STRING,      0,          0,     0,     NULL },
+    { "equ_channel_1",               &gtkEquChannel1,          CONF_TYPE_STRING,      0,          0,     0,       NULL },
+    { "equ_channel_2",               &gtkEquChannel2,          CONF_TYPE_STRING,      0,          0,     0,       NULL },
+    { "equ_channel_3",               &gtkEquChannel3,          CONF_TYPE_STRING,      0,          0,     0,       NULL },
+    { "equ_channel_4",               &gtkEquChannel4,          CONF_TYPE_STRING,      0,          0,     0,       NULL },
+    { "equ_channel_5",               &gtkEquChannel5,          CONF_TYPE_STRING,      0,          0,     0,       NULL },
+    { "equ_channel_6",               &gtkEquChannel6,          CONF_TYPE_STRING,      0,          0,     0,       NULL },
 
 #define audio_equ_row(i, j) \
-    { "equ_band_" # i # j,           &gtkEquChannels[i][j],    CONF_TYPE_FLOAT,       CONF_RANGE, -15.0, 15.0,  NULL },
+    { "equ_band_" # i # j,           &gtkEquChannels[i][j],    CONF_TYPE_FLOAT,       CONF_RANGE, -15.0, 15.0,    NULL },
     audio_equ_row(0, 0) audio_equ_row(0, 1) audio_equ_row(0, 2) audio_equ_row(0, 3) audio_equ_row(0, 4) audio_equ_row(0, 5) audio_equ_row(0, 6) audio_equ_row(0, 7) audio_equ_row(0, 8) audio_equ_row(0, 9)
     audio_equ_row(1, 0) audio_equ_row(1, 1) audio_equ_row(1, 2) audio_equ_row(1, 3) audio_equ_row(1, 4) audio_equ_row(1, 5) audio_equ_row(1, 6) audio_equ_row(1, 7) audio_equ_row(1, 8) audio_equ_row(1, 9)
     audio_equ_row(2, 0) audio_equ_row(2, 1) audio_equ_row(2, 2) audio_equ_row(2, 3) audio_equ_row(2, 4) audio_equ_row(2, 5) audio_equ_row(2, 6) audio_equ_row(2, 7) audio_equ_row(2, 8) audio_equ_row(2, 9)
