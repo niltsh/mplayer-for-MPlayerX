@@ -974,7 +974,7 @@ TEST_OBJS = mp_msg.o mp_fifo.o osdep/$(GETCH) osdep/$(TIMER) -ltermcap -lm
 codec-cfg-test$(EXESUF): codec-cfg.c codecs.conf.h help_mp.h $(TEST_OBJS)
 	$(CC) -I. -Iffmpeg -DTESTING -o $@ $^
 
-codecs2html$(EXESUF): codec-cfg.c help_mp.h $(TEST_OBJS)
+codecs2html$(EXESUF): codec-cfg.c help_mp.h
 	$(CC) -I. -Iffmpeg -DCODECS2HTML -o $@ $^
 
 libvo/aspecttest$(EXESUF): libvo/aspect.o libvo/geometry.o $(TEST_OBJS)

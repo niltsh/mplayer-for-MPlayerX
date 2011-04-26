@@ -4,7 +4,7 @@
  * to compile test application:
  *  cc -I. -DTESTING -o codec-cfg-test codec-cfg.c mp_msg.o osdep/getch2.o -ltermcap
  * to compile CODECS2HTML:
- *   gcc -DCODECS2HTML -o codecs2html codec-cfg.c mp_msg.o
+ *   gcc -DCODECS2HTML -o codecs2html codec-cfg.c
  *
  * TODO: implement informat in CODECS2HTML too
  *
