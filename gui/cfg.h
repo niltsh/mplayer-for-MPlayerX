@@ -24,8 +24,8 @@
 extern int gtkCacheOn;
 extern int gtkCacheSize;
 
-extern int gtkVfLAVC;
 extern int gtkVfPP;
+extern int gtkVfLAVC;
 
 extern char *gtkDXR3Device;
 
