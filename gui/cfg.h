@@ -19,8 +19,6 @@
 #ifndef MPLAYER_GUI_CFG_H
 #define MPLAYER_GUI_CFG_H
 
-#include "config.h"
-
 extern int gtkCacheOn;
 extern int gtkCacheSize;
 
