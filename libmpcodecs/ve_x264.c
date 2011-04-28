@@ -38,7 +38,7 @@
 #include "stream/stream.h"
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"
-
+#include "osdep/strsep.h"
 #include "stream/stream.h"
 #include "libmpdemux/muxer.h"
 
