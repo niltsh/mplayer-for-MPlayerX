@@ -1,5 +1,5 @@
-.\" sync with en/mplayer.1 rev. 33293
-.\" fix translation error in legacy parts: currently fixed up to (1105)
+.\" sync with en/mplayer.1 rev. 33336
+.\" fix translation error in legacy parts: currently fixed up to (1463)
 .\"
 .\" MPlayer (C) 2000-2010 MPlayer 团队
 .\" 本(英文)手册页由 Gabucino, Diego Biurrun, Jonas Jermann 编写
@@ -79,7 +79,7 @@ vcd://轨道[/设备]
 .
 .br
 .B mplayer
-tv://[频道][/输入源标识符]
+tv://[频道][/输入源代码]
 [若干选项]
 .
 .br
@@ -186,10 +186,9 @@ rotate, scale, noise, RGB/\:YUV转换）以及更多的功能。
 .PP
 .B gmplayer
 是具有图形化用户界面的 MPlayer。
-其与 MPlayer 具有相同的选项，然而这些选项可能无法全部起作用，因为与图形界面设置
-的配置（保存在 gui.conf 中）有冲突。
-特别是有些选项的设置可能被 gui.conf 中的设置重写，而另一些可能最终永久保存在
-gui.conf 中。
+除了一些自有选项（存放在 gui.conf 中）以外，其与 MPlayer 具有同样的选项，
+然而有些 MPlayer 的选项会存放在 gui.conf 中以便能够独立于 MPlayer 使用。
+（参见下文的图形界面配置文件。）
 .PP
 本手册页末尾有用法示例，能让你迅速上手。
 .PP
@@ -543,6 +542,131 @@ subalign=2
 subpos=96
 spuaa=20
 .fi
+.PP
+.I "图形界面配置文件"
+.sp 1
+图形界面的自有选项有（括号中为 MPlayer 选项名）：
+ao_alsa_device
+.RB ( alsa:device ")（仅用于 ALSA），"
+ao_alsa_mixer
+.RB ( mixer ")（仅用于 ALSA），"
+ao_alsa_mixer_channel
+.RB ( mixer-channel ")（仅用于 ALSA），"
+ao_esd_device
+.RB ( esd: ")（仅用于 ESD），"
+ao_extra_stereo
+.RB ( "af extrastereo" ")，"
+ao_extra_stereo_coefficient
+.RB ( "af extrastereo=" ")，"
+ao_oss_device
+.RB ( oss: ")（仅用于 OSD），"
+ao_oss_mixer
+.RB ( mixer ")（仅用于 OSD），"
+ao_oss_mixer_channel
+.RB ( mixer-channel ")（仅用于 OSD），"
+ao_sdl_subdriver
+.RB ( sdl: ")（仅用于 SDL），
+ao_surround (unused)，
+ao_volnorm
+.RB ( "af volnorm" ")，"
+autosync (enable/disable)，
+autosync_size
+.RB ( autosync ")，"
+cache (enable/disable)，
+cache_size
+.RB ( cache ")，"
+enable_audio_equ
+.RB ( "af equalizer" ")，"
+equ_band_00 ... equ_band_59，
+.RB ( "af equalizer=" ")，"
+equ_channel_1 ... equ_channel_6
+.RB ( "af channels=" ")，"
+gui_main_pos_x，
+gui_main_pos_y，
+gui_save_pos (yes/no)，
+gui_video_out_pos_x，
+gui_video_out_pos_y，
+load_fullscreen  (yes/no)，
+playbar (enable/disable)，
+show_videowin (yes/no)，
+vf_lavc
+.RB ( "vf lavc" ")（仅用于 DXR3），"
+vf_pp
+.RB ( "vf pp" ")，"
+vo_dxr3_device (unused)（仅用于 DXR3）。
+.sp 1
+存放在 gui.conf 中的 MPlayer 选项有（表示为图形界面选项名，括号中
+为 MPlayer 选项名）：
+a_afm
+.RB ( afm )，
+ao_driver
+.RB ( ao )，
+ass_bottom_margin
+.RB ( ass-bottom-margin ")（仅用于 ASS），"
+ass_enabled
+.RB ( ass ")（仅用于 ASS），"
+ass_top_margin
+.RB ( ass-top-margin ")（仅用于 ASS），"
+ass_use_margins
+.RB ( ass-use-margins ")（仅用于 ASS），"
+cdrom_device
+.RB ( cdrom-device )，
+dvd_device
+.RB ( dvd-device )，
+font_autoscale
+.RB ( subfont-autoscale ")（仅用于 FreeType），"
+font_blur
+.RB ( subfont-blur ")（仅用于 FreeType），"
+font_encoding
+.RB ( subfont-encoding ")（仅用于 FreeType），"
+font_factor
+.RB ( ffactor )，
+font_name
+.RB ( font )，
+font_osd_scale
+.RB ( subfont-osd-scale ")（仅用于 FreeType），"
+font_outline
+.RB ( subfont-outline ")（仅用于 FreeType），"
+font_text_scale
+.RB ( subfont-text-scale ")（仅用于 FreeType），"
+gui_skin
+.RB ( skin )，
+osd_level
+.RB ( osdlevel )，
+softvol
+.RB ( softvol )，
+stopxscreensaver
+.RB ( stop-xscreensaver )，
+sub_auto_load
+.RB ( autosub )，
+sub_cp
+.RB ( subcp ")（仅用于 iconv only）"
+sub_overlap
+.RB ( overlapsub )，
+sub_pos
+.RB ( subpos )，
+sub_unicode
+.RB ( unicode )，
+v_flip
+.RB ( flip )，
+v_framedrop
+.RB ( framedrop )，
+v_idx
+.RB ( idx )，
+v_ni
+.RB ( ni )，
+v_vfm
+.RB ( vfm )，
+vf_autoq
+.RB ( autoq )，
+vo_direct_render
+.RB ( panscan )，
+vo_doublebuffering
+.RB ( dr )，
+vo_driver
+.RB ( vo )，
+vo_panscan
+.RB ( double )。
 .
 .\" --------------------------------------------------------------------------
 .\" 配置集
@@ -1102,208 +1226,230 @@ MPlayer 从标准输入读取以新行符（\\n）分隔开的命令，
 .
 .TP
 .B \-softsleep
-通过不断核查当前时间来测定帧的时间,
-而不是请求内核在适当的时刻唤醒 MPlayer。
-对于内核计时器精度不高且不能使用 RTC 时有用, 代价是较高的 CPU 消耗。
+通过不断校对当前时间，而非请求内核在正确的时间点
+唤醒 MPlayer 来实现对于帧的计时。
+如果内核计时器精度不高且不能使用 RTC，该选项很有作用。
+代价是 CPU 消耗较高。
 .
 .TP
-.B \-sstep <数>
-每帧后跳过 <数> 秒。
-影片的正常帧率仍被保留, 所以回放加速了。
-既然 MPlayer 仅能搜寻到下一个 keyframe, 加速过程可能不精准。
+.B \-sstep <秒数>
+每帧后跳过 <秒数> 秒。
+由于仍然使用影片标准帧率的计算方式，所以播放加快了。
+因为 MPlayer 仅能定位至下一个关键帧，所以该选项可能不精确。
 .
 .
 .
 .TP
 .B \-udp\-ip <ip>
-设置 \-udp\-master 发送的数据报所使用的目标地址。将其设置为广播地址将允许多个
-被动方使用同一个广播地址与主动方同步（默认值：127.0.0.1）。
+设置 \-udp\-master 发送的数据包所使用的目标地址。将其设置为广播地址将允许多个
+被动方使用同一个广播地址与主动方同步
+（默认值：127.0.0.1）。
 .
 .TP
 .B \-udp\-master
-在播放每一帧之前向 \-udp\-ip 的 \-udp\-port 端口发送数据报。该数据报指示了主动
-方的文件播放位置。
+在播放每一帧之前向 \-udp\-ip 的 \-udp\-port 端口发送数据包。该数据包指示主动
+方文件播放的位置。
 .
 .TP
 .B \-udp\-port <端口号>
-设置 \-udp\-master 发送的数据报使用的目标端口，以及 \-udp\-slave 监听的端口
+设置 \-udp\-master 发送的数据包使用的目标端口，以及 \-udp\-slave 监听的端口
 （默认值：23867）。
 .
 .TP
 .B \-udp\-seek\-threshold <秒数>
-当主动方定位时，被动方必须决定是否也要定位，或是以解码帧而不在帧间停顿的方式
+当主动方定位时，被动方必须决定是同样进行定位，还是以解码帧而非在帧间停顿的方式
 赶上主动方。如果主动方距离被动方已超过 <秒数> 秒，则被动方选择定位。
 否则，其选择赶上或等待主动方。
 该选项在大多数情况下应当保留为其默认的 1 秒设置。
 .
 .TP
 .B \-udp\-slave
-监听 \-udp\-port 指定的端口并同步主动方的播放位置。
+监听 \-udp\-port 指定的端口并同步主动方播放的位置。
 .
 .
 .SH "流分离器/媒体流选项"
 .
 .TP
 .B \-a52drc <级别>
-选择 AC-3 音频流的动态范围压缩(DRC)级别。
-<级别> 是 0 到 1 的浮点数, 其中 0 表示无压缩,
-(默认值) 1 表示全压缩 (使得响亮的通路更安静或相反)。
-可使用大于 2 的值，但仅供试验。
-此选项仅当 AC-3 流包含所需范围的压缩信息时显示效果。
+选择 AC-3 音频流的动态范围压缩（DRC）级别。
+<级别> 是 0 到 1 的浮点数，其中 0 表示无压缩，
+（默认值）1 表示完全模式的压缩（使响亮的通路变得安静
+并且反之亦然）。
+也可使用大于 2 的值，但仅供试验。
+该选项仅当 AC-3 流包含所需范围的压缩信息时
+有效果。
 .
 .TP
-.B \-aid <代码> (也请参见 \-alang)
-选择音频频道 (MPEG: 0\-31, AVI/\:OGM: 1\-99, ASF/\:RM: 0\-127,
-VOB(AC-3): 128\-159, VOB(LPCM): 160\-191, MPEG-TS 17\-8190)。
+.B \-aid <代码>（另参见 \-alang）
+选择音频频道（MPEG: 0\-31, AVI/\:OGM: 1\-99, ASF/\:RM: 0\-127, 
+VOB(AC-3): 128\-159, VOB(LPCM): 160\-191, MPEG-TS 17\-8190）。
 MPlayer 在 verbose (\-v) 模式下会打印可用的音频代码。
-当播放 MPEG-TS 流时, MPlayer/\:MEncoder 用第一个程序
-播放已选择的(如果有的话)音频流。
+当播放 MPEG-TS 媒体流时，MPlayer/\:MEncoder 将所选的音频流用于
+第一个节目（如果有的话）。
 .
 .TP
-.B \-ausid <代码>（也请参见 \-alang）
+.B \-ausid <代码>（另参见 \-alang）
 选择子音频流的频道。
-当前有效的取值范围为 0x55..0x75，并且当由原生流分解器（而不是 libavformat）时处理时，
+当前有效的取值范围为 0x55..0x75，并且当由原生流分离器（而非 libavformat）时处理时，
 只适用于MPEG-TS。
-由于媒体类型信息在媒体流中的嵌入方式有异或其在流中缺失，媒体类型可能无法正确识别，但当
-多个子流存在时，音频流会正确分解出来。
+由于媒体类型信息在媒体流中的嵌入方式有异或其在流中缺失，
+媒体类型可能无法正确识别，但当多个子流存在时，
+音频流会正确地分离出来。
 当使用 \-identify 运行时，MPlayer 打印出可用的子流的代码。
 .
 .TP
-.B \-alang <语言代码[,语言代码,...]> (也请参见 \-aid)
-指定使用音频语言的优先级列表。
-不同的容器格式使用不同的语言代号。DVDs 使用 ISO 639\-1 的
-两字符语言代号, Matroska、MPEG-TS 和 NUT 使用 ISO 639\-2 的
-三字符语言代号, 而 OGM 使用任意格式标识符。
-MPlayer 在 verbose (\-v) 模式下会打印可用的语言。
+.B \-alang <语言代码[,语言代码,...]>（另参见 \-aid）
+指定所使用音频语言的优先级列表。
+不同的容器格式使用不同的语言代码。
+DVDs 使用 ISO 639\-1 的双字符语言代码，
+Matroska、MPEG-TS 和 NUT 使用 ISO 639\-2 的
+三字符语言代码，而 OGM 使用一种灵活形式的标识代码。
+MPlayer 在输出详细信息模式下（\-v）运行时会打印可用的语言。
 .sp 1
-.I 示例:
+.I 示例：
 .PD 0
 .RSs
 .IPs "mplayer dvd://1 \-alang hu,en"
-选择 DVD 上的匈牙利语音轨播放而英语在没有匈牙利语时备用。
+选择播放 DVD 上的匈牙利语音轨，
+而在没有匈牙利语时退回使用英语。
 .IPs "mplayer \-alang jpn example.mkv"
-播放日语 Matroska 文件。
+使用日语播放 Matroska 文件。
 .RE
 .PD 1
 .
 .TP
-.B \-audio\-demuxer <[+]名称> (仅用于 \-audiofile)
-锁定用于 \-audiofile 的音频分路器类型。
-在名称前使用 "+" 锁定类型, 跳过某些核查!
-按照 \-audio\-demuxer help 打印出来的指定分路器类型。
-为了向后兼容, 也接受定义在 libmpdemux/\:demuxer.h 的分路器标识。
-\-audio\-demuxer audio 或 \-audio\-demuxer 17 锁定 MP3。
+.B \-audio\-demuxer <[+]名称>（仅用于 \-audiofile）
+强制使用某个类型的音频分离器用于 \-audiofile。
+要强制使用一个类型就在其名称前使用“+”，这会跳过某些检查！
+需使用 \-audio\-demuxer help 所打印出来的分离器类型。
+由于向后兼容，也可使用 libmpdemux/\:demuxer.h 中定义
+的分离器代码。
+\-audio\-demuxer audio 或 \-audio\-demuxer 17 强制使用 MP3。
 .
 .TP
 .B \-audiofile <文件名>
-在看电影时播放外部音频文件(WAV, MP3 或 Ogg Vorbis)。
+看电影画面时播放外部文件中的音频
+（WAV, MP3 或 Ogg Vorbis）。
 .
 .TP
-.B \-audiofile\-cache <千字节>
-对 \-audiofile 的文件流启用缓存, 使用指定大小的内存。
+.B \-audiofile\-cache <千字节数>
+对 \-audiofile 的音频流启用缓存，
+使用指定大小的内存。
 .
 .TP
-.B \-reuse\-socket （仅适用于udp://）
-允许SOCKET在关闭后立即被其它进程重新利用。
+.B \-reuse\-socket（仅用于 udp://）
+允许其它进程在连接端关闭后立即将其重新利用。
 .
 .TP
-.B \-bandwidth <字节值> (仅适用于网络)
-指定网络流的最大带宽(用于服务器可以以不同带宽传送内容的情况)。
-当你以慢速连接观看现场流媒体时有用。
-对于 Real RTSP 流, 也用来设置最大的传送带宽
-以容许较快的缓存填充和流转储。
+.B \-bandwidth <字节数>（仅用于网络）
+指定网络流传输的最大带宽（用于服务器可以
+以不同带宽传送内容的情况）。
+有助于以慢速连接观看实时流传输的媒体的情况。
+对于 Real RTSP 流传输方式，也用于设置最大传送带宽
+以便更快地填充缓冲和读取流内容。
 .
 .TP
-.B \-bluray\-angle <角度 ID>（仅用于蓝光 DVD）
+.B \-bluray\-angle <角度代码>（仅用于蓝光 DVD）
 有些蓝光碟片包含一些可从多个角度观看的场景。
-这里你可以告诉 MPlayer 使用哪个角度（默认值：1）。
+这个选项可以告诉 MPlayer 使用哪个角度（默认值：1）。
 .
 .TP
-.B \-bluray\-chapter <章节 ID>（仅用于蓝光 DVD）
-告诉 MPlayer 从哪个蓝光 DVD 章节开始当前标题内容的播放（默认值：1）。
+.B \-bluray\-chapter <章节代码>（仅用于蓝光 DVD）
+告诉 MPlayer 从哪个蓝光 DVD 章节开始播放当前标题的内容（默认值：1）。
 .
 .TP
 .B \-bluray\-device <碟片路径>（仅用于蓝光 DVD）
 指定蓝光碟片的位置。必须是一个具有蓝光 DVD 结构的目录。
 .
 .TP
-.B \-cache <千字节>
-此选项指定用多少内存(以 kBytes 为单位)作为播放文件或 URL 的预缓冲。
-对速度慢的媒体特别有用。
+.B \-cache <千字节数>
+该选项指定用多少内存（以千字节为单位）
+作为文件或 URL 内容的预先缓存。
+特别有助于播快慢的媒体。
 .
 .TP
 .B \-nocache
-关闭缓冲。
+关闭缓存。
 .
 .TP
-.B \-cache\-min <百分数>
-当缓冲填充到总数的 <百分数> 时开始回放。
+.B \-cache\-min <百分比数>
+当缓存填充到总量的 <百分比数> 时开始
+播放。
 .
 .TP
-.B \-cache\-seek\-min <百分数>
-如果查寻到的位置处于从当前位置算起的缓存大小的 <百分数> 之内,
-MPlayer 等待填充缓存到此位置而不是执行流查寻(默认是: 50)。
+.B \-cache\-seek\-min <百分比数>
+如果定位到的位置距当前位置的距离在缓存大小的 <百分比数> 之内，
+那么 MPlayer 将等待缓存填存到此位置而不是执行
+流定位操作（默认值：50）。
 .
 .TP
 .B \-capture（仅用于 MPlayer）
-提供将主媒体流（并非额外的音频流或其它类型的媒体流）抓取至文件的功能。使用 
-\-dumpfile 指定存放的文件，默认为“stream.dump”。
-如果使用了该选项，则可以通过按绑定至该功能的按键来开始和停止抓取操作。（参见
-“交互式控制”部分）。
-与 \-dumpstream 相同，除了 MPEG 媒体流，该选项可能产生不了可用的输出。
-需注意的是，由于缓冲有延迟，抓取到的数据的开始和结束位置比你所见到的位置靠后。
+提供将主媒体流（不含额外的音频流或其它类型的媒体流）抓取至文件的功能。
+使用 \-dumpfile 指定存放的文件，
+默认为“stream.dump”。
+如果使用了该选项，则可以通过按下绑定至该功能的按键来开始和停止抓取操作。
+（参见“交互式控制”部分）。
+与 \-dumpstream 相同，除了 MPEG 媒体流，该选项可能产生
+不了可用的输出。
+需注意的是，由于缓存有延迟，抓取到的数据的开始
+和结束位置比所见到的位置靠后。
 .
 .TP
-.B \-cdda <选项1:选项2> (仅适用于 CDDA)
-此选项用来调整 MPlayer 的 CD 音频读取特性。
+.B \-cdda <选项1:选项2>（仅用于 CD 数字音频）
+该选项用来调节 MPlayer 的 CD 音频读取功能。
 .sp 1
-可用选项有:
+可用选项有：
 .RSs
 .IPs speed=<参数值>
 设定 CD 转速。
 .IPs paranoia=<0\-2>
-设定谨慎级别。
-0 以外的值可能会打断除了第一个音轨的任何回放。
+设置 Paranoia 库使用等级。
+0 以外的值可能会使播放第一个音轨外的其它音轨不正常。
 .RSss
-0: 关闭检测 (默认)
+0：关闭检测（默认）
 .br
-1: 只进行重叠检测
+1：只进行重叠检测
 .br
-2: 完全数据修正和校检
+2：充分的数据修正和校检
 .REss
 .IPs generic-dev=<参数值>
 使用指定的通用 SCSI 设备。
 .IPs sector-size=<参数值>
-单位读取量。
+单次读取数据的大小。
 .IPs overlap=<参数值>
-锁定校检时的最小重叠搜索为 <参数值> 个扇区。
+强制校检时最小重叠搜索为 <参数值> 个扇区。
 .IPs toc-bias
-假定 TOC 报告中第1音轨的起始偏移量为 LBA 0。
-有些东芝光驱需要这样来修正音轨边界。
+假定 TOC 报告中第 1 音轨的起始偏移量
+寻址为 LBA 0。
+有些东芝光驱需要这样做以正确处理音轨边界。
 .IPs toc-offset=<参数值>
-报告音轨时在扇区数上再加上 <参数值> 个扇区。可能是负数。
+寻址音轨时，所报告的在扇区数需再加上 <参数值> 个扇区。
+可以是负数。
 .IPs (no)skip
-(不)接受不完整的数据重建。
+（不）使用不完整的数据重建结果。
 .RE
 .
 .TP
 .B \-cdrom\-device <设备路径>
-指定 CD-ROM 设备 (默认是: /dev/\:cdrom)。
+指定 CD-ROM 设备（默认值：/dev/\:cdrom）。
 .
 .TP
-.B \-channels <数字> (也请参见 \-af channels)
-请求播放的声道数 (默认是: 2)。
-MPlayer 要求解码器把音频解码到指定数量的声道。
-然后由解码器来实现这个要求。
-此选项通常只有在播放带 AC-3 音频(比如 DVD)的视频时才显得重要。
-在那时默认使用 liba52 解码并把音频正确地混合到需要的声道数。
-为了直接控制输出声道数独立于解码声道数, 使用声道过滤器。
+.B \-channels <数量>（另参见 \-af channels）
+要求播放时使用的声道数（默认值：2）。
+MPlayer 要求解码器将音频解码为该选项所指定的
+声道数。
+是否实现这个要求取决于解码器。
+该选项通常只在播放带 AC-3 音频（比如 DVD）的视频时才显重要。
+在那种情况下默认使用 liba52 解码并把音频正确地混音为所要求
+的声道数。
+要直接控制输出声道数而不管解码为多少声道，需使用
+声道过滤器。
 .br
-.I 注意:
-此选项可以被解码器(仅适用于 AC-3), 过滤镜(环绕立体声), 和音频
-输出驱动(至少 OSS 可以)接受。
+.I 注意：
+解码器（仅 AC-3）、过滤镜（surround）和音频
+输出驱动（至少 OSS 可以）接受该选项。
 .sp 1
-可用选项有:
+可用选项有：
 .sp 1
 .PD 0
 .RSs
