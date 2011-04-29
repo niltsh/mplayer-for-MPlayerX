@@ -38,6 +38,7 @@
 #ifdef __MINGW32__
 // for GetFileType to detect pipes
 #include <windows.h>
+#include <io.h>
 #endif
 
 static const ao_info_t info =
