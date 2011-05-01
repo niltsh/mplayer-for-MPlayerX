@@ -820,6 +820,12 @@ codec-cfg$(EXESUF): codec-cfg.c codec-cfg.h help_mp.h
 codecs.conf.h: codec-cfg$(EXESUF) etc/codecs.conf
 	./$^ > $@
 
+checksums: $(MPLAYER_DEPS) $(MENCODER_DEPS) mplayer$(EXESUF) mencoder$(EXESUF)
+	md5sum $^ > checksums
+
+check_checksums: $(MPLAYER_DEPS) $(MENCODER_DEPS) mplayer$(EXESUF) mencoder$(EXESUF)
+	md5sum -c checksums
+
 # ./configure must be rerun if it changed
 config.mak: configure
 	@echo "############################################################"
@@ -1112,7 +1118,7 @@ dhahelperclean:
 -include $(DEP_FILES) $(DRIVER_DEP_FILES) $(TESTS_DEP_FILES) $(TOOLS_DEP_FILES) $(DHAHELPER_DEPS_FILES)
 
 .PHONY: all doxygen *install* *tools drivers dhahelper*
-.PHONY: checkheaders *clean tests
+.PHONY: checkheaders *clean tests check_checksums
 
 # Disable suffix rules.  Most of the builtin rules are suffix rules,
 # so this saves some time on slow systems.
