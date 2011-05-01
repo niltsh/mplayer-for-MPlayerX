@@ -76,7 +76,7 @@ stream_defaults =
 static const m_option_t stream_params[] = {
 	{"prog", ST_OFF(prog), CONF_TYPE_STRING, 0, 0 ,0, NULL},
 	{"card", ST_OFF(card), CONF_TYPE_INT, M_OPT_RANGE, 1, 4, NULL},
-	{"timeout",ST_OFF(timeout),  CONF_TYPE_INT, M_OPT_RANGE, 1, 30, NULL},
+	{"timeout",ST_OFF(timeout),  CONF_TYPE_INT, M_OPT_RANGE, 1, 240, NULL},
 	{"file", ST_OFF(file), CONF_TYPE_STRING, 0, 0 ,0, NULL},
 
 	{"hostname", 	ST_OFF(prog), CONF_TYPE_STRING, 0, 0, 0, NULL },
@@ -96,7 +96,7 @@ static const struct m_struct_st stream_opts = {
 const m_option_t dvbin_opts_conf[] = {
 	{"prog", &stream_defaults.prog, CONF_TYPE_STRING, 0, 0 ,0, NULL},
 	{"card", &stream_defaults.card, CONF_TYPE_INT, M_OPT_RANGE, 1, 4, NULL},
-	{"timeout",  &stream_defaults.timeout,  CONF_TYPE_INT, M_OPT_RANGE, 1, 30, NULL},
+	{"timeout",  &stream_defaults.timeout,  CONF_TYPE_INT, M_OPT_RANGE, 1, 240, NULL},
 	{"file", &stream_defaults.file, CONF_TYPE_STRING, 0, 0 ,0, NULL},
 
 	{NULL, NULL, 0, 0, 0, 0, NULL}
