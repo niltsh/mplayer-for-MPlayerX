@@ -252,7 +252,7 @@ int vobsub_id=-1;
 char* audio_lang=NULL;
 char* dvdsub_lang=NULL;
 static char* spudec_ifo=NULL;
-char* filename=NULL; //"MI2-Trailer.avi";
+char* filename=NULL;
 int forced_subs_only=0;
 int file_filter=1;
 
