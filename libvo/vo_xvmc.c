@@ -1268,7 +1268,7 @@ assert(rndr->shared.next_free_data_block_num == 0);
 //keep strides 0 to avoid field manipulations
     mpi->stride[0] = 0;
     mpi->stride[1] = 0;
-    mpi->stride[2] = sizeof(rndr);
+    mpi->stride[2] = 0;
 
 // these are shared!! so watch out
 // do call RenderSurface before overwriting
