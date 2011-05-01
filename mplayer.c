@@ -142,10 +142,10 @@
 #endif
 
 
-int slave_mode=0;
-int player_idle_mode=0;
-int quiet=0;
-int enable_mouse_movements=0;
+int slave_mode;
+int player_idle_mode;
+int quiet;
+int enable_mouse_movements;
 float start_volume = -1;
 double start_pts = MP_NOPTS_VALUE;
 char *heartbeat_cmd;
@@ -162,9 +162,9 @@ static int cfg_include(m_option_t *conf, char *filename){
 	return m_config_parse_config_file(mconfig, filename);
 }
 
-static int max_framesize=0;
+static int max_framesize;
 
-int noconsolecontrols=0;
+int noconsolecontrols;
 //**************************************************************************//
 
 // Not all functions in mplayer.c take the context as an argument yet
@@ -183,62 +183,62 @@ static MPContext mpctx_s = {
 
 static MPContext *mpctx = &mpctx_s;
 
-int fixed_vo=0;
+int fixed_vo;
 
 // benchmark:
-double video_time_usage=0;
-double vout_time_usage=0;
-static double audio_time_usage=0;
-static int total_time_usage_start=0;
-static int total_frame_cnt=0;
-static int drop_frame_cnt=0; // total number of dropped frames
-int benchmark=0;
+double video_time_usage;
+double vout_time_usage;
+static double audio_time_usage;
+static int total_time_usage_start;
+static int total_frame_cnt;
+static int drop_frame_cnt; // total number of dropped frames
+int benchmark;
 
 // options:
 #define DEFAULT_STARTUP_DECODE_RETRY 8
-       int auto_quality=0;
-static int output_quality=0;
+       int auto_quality;
+static int output_quality;
 
 float playback_speed=1.0;
 
-int use_gui=0;
+int use_gui;
 
 #ifdef CONFIG_GUI
-int enqueue=0;
+int enqueue;
 #endif
 
-static int list_properties = 0;
+static int list_properties;
 
 int osd_level=1;
 // if nonzero, hide current OSD contents when GetTimerMS() reaches this
 unsigned int osd_visible;
 int osd_duration = 1000;
-int osd_fractions = 0; // determines how fractions of seconds are displayed
-                       // on OSD
+int osd_fractions; // determines how fractions of seconds are displayed
+                   // on OSD
 
 int term_osd = 1;
 static char* term_osd_esc = "\x1b[A\r\x1b[K";
-static char* playing_msg = NULL;
+static char* playing_msg;
 // seek:
 static double seek_to_sec;
-static off_t seek_to_byte=0;
-static off_t step_sec=0;
-static int loop_seek=0;
+static off_t seek_to_byte;
+static off_t step_sec;
+static int loop_seek;
 
 static m_time_size_t end_at = { .type = END_AT_NONE, .pos = 0 };
 
 // A/V sync:
-       int autosync=0; // 30 might be a good default value.
+       int autosync; // 30 might be a good default value.
 
 // may be changed by GUI:  (FIXME!)
-float rel_seek_secs=0;
-int abs_seek_pos=0;
+float rel_seek_secs;
+int abs_seek_pos;
 
 // codecs:
-char **audio_codec_list=NULL; // override audio codec
-char **video_codec_list=NULL; // override video codec
-char **audio_fm_list=NULL;    // override audio codec family
-char **video_fm_list=NULL;    // override video codec family
+char **audio_codec_list; // override audio codec
+char **video_codec_list; // override video codec
+char **audio_fm_list;    // override audio codec family
+char **video_fm_list;    // override video codec family
 
 // streaming:
 int audio_id=-1;
@@ -249,11 +249,11 @@ int dvdsub_id=-1;
 // in particular the subtitle ID for a language changes
 int dvdsub_lang_id;
 int vobsub_id=-1;
-char* audio_lang=NULL;
-char* dvdsub_lang=NULL;
-static char* spudec_ifo=NULL;
-char* filename=NULL;
-int forced_subs_only=0;
+char* audio_lang;
+char* dvdsub_lang;
+static char* spudec_ifo;
+char* filename;
+int forced_subs_only;
 int file_filter=1;
 
 // cache2:
@@ -265,43 +265,43 @@ float stream_cache_seek_min_percent=50.0;
 
 // dump:
 char *stream_dump_name = "stream.dump";
-int stream_dump_type = 0;
-int capture_dump = 0;
+int stream_dump_type;
+int capture_dump;
 
 // A-V sync:
 static float default_max_pts_correction=-1;
-static float max_pts_correction=0;//default_max_pts_correction;
-static float c_total=0;
-       float audio_delay=0;
-static int ignore_start=0;
+static float max_pts_correction;//default_max_pts_correction;
+static float c_total;
+       float audio_delay;
+static int ignore_start;
 
-static int softsleep=0;
+static int softsleep;
 
-       double force_fps=0;
-static int force_srate=0;
+       double force_fps;
+static int force_srate;
 static int audio_output_format=-1; // AF_FORMAT_UNKNOWN
-       int frame_dropping=0; // option  0=no drop  1= drop vo  2= drop decode
+       int frame_dropping; // option  0=no drop  1= drop vo  2= drop decode
 static int play_n_frames=-1;
 static int play_n_frames_mf=-1;
 
 // screen info:
-char** video_driver_list=NULL;
-char** audio_driver_list=NULL;
+char** video_driver_list;
+char** audio_driver_list;
 
 // sub:
-char *font_name=NULL;
-char *sub_font_name=NULL;
+char *font_name;
+char *sub_font_name;
 float font_factor=0.75;
-char **sub_name=NULL;
-char **sub_paths = NULL;
-float sub_delay=0;
-float sub_fps=0;
+char **sub_name;
+char **sub_paths;
+float sub_delay;
+float sub_fps;
 int   sub_auto = 1;
-char *vobsub_name=NULL;
-int   subcc_enabled=0;
+char *vobsub_name;
+int   subcc_enabled;
 int suboverlap_enabled = 1;
 
-char* current_module=NULL; // for debugging
+char* current_module; // for debugging
 
 
 #ifdef CONFIG_MENU
@@ -309,9 +309,9 @@ static const vf_info_t* const libmenu_vfs[] = {
   &vf_info_menu,
   NULL
 };
-static vf_instance_t* vf_menu = NULL;
-int use_menu = 0;
-static char* menu_cfg = NULL;
+static vf_instance_t* vf_menu;
+int use_menu;
+static char* menu_cfg;
 static char* menu_root = "main";
 #endif
 
@@ -321,30 +321,30 @@ static int nortc = 1;
 static char* rtc_device;
 #endif
 
-edl_record_ptr edl_records = NULL; ///< EDL entries memory area
-edl_record_ptr next_edl_record = NULL; ///< only for traversing edl_records
-short edl_decision = 0; ///< 1 when an EDL operation has been made.
-short edl_needs_reset = 0; ///< 1 if we need to reset EDL next pointer
-short edl_backward = 0; ///< 1 if we need to skip to the beginning of the next EDL record
-FILE* edl_fd = NULL; ///< fd to write to when in -edlout mode.
+edl_record_ptr edl_records; ///< EDL entries memory area
+edl_record_ptr next_edl_record; ///< only for traversing edl_records
+short edl_decision; ///< 1 when an EDL operation has been made.
+short edl_needs_reset; ///< 1 if we need to reset EDL next pointer
+short edl_backward; ///< 1 if we need to skip to the beginning of the next EDL record
+FILE* edl_fd; ///< fd to write to when in -edlout mode.
 // Number of seconds to add to the seek when jumping out
 // of EDL scene in backward direction. This is needed to
 // have some time after the seek to decide what to do next
 // (next seek, pause,...), otherwise after the seek it will
 // enter the same scene again and skip forward immediately
 float edl_backward_delay = 2;
-int edl_start_pts = 0; ///< Automatically add/sub this from EDL start/stop pos
+int edl_start_pts; ///< Automatically add/sub this from EDL start/stop pos
 int use_filedir_conf;
 int use_filename_title;
 
-static unsigned int initialized_flags=0;
+static unsigned int initialized_flags;
 
 /// step size of mixer changes
 int volstep = 3;
 
 #ifdef CONFIG_CRASH_DEBUG
 static char *prog_path;
-static int crash_debug = 0;
+static int crash_debug;
 #endif
 
 /* This header requires all the global variable declarations. */
@@ -759,7 +759,7 @@ static void child_sighandler(int x){
 #endif
 
 static void exit_sighandler(int x){
-  static int sig_count=0;
+  static int sig_count;
 #ifdef CONFIG_CRASH_DEBUG
   if (!crash_debug || x != SIGTRAP)
 #endif
@@ -1351,7 +1351,7 @@ struct mp_osd_msg {
 };
 
 /// OSD message stack.
-static mp_osd_msg_t* osd_msg_stack = NULL;
+static mp_osd_msg_t* osd_msg_stack;
 
 /**
  *  \brief Add a message on the OSD message stack
@@ -1439,7 +1439,7 @@ static void clear_osd_msgs(void) {
 
 static mp_osd_msg_t* get_osd_msg(void) {
     mp_osd_msg_t *msg,*prev,*last = NULL;
-    static unsigned last_update = 0;
+    static unsigned last_update;
     unsigned now = GetTimerMS();
     unsigned diff;
     char hidden_dec_done = 0;
@@ -2039,7 +2039,7 @@ static void adjust_sync_and_print_status(int between_frames, float timing_error)
 	v_pts = mpctx->sh_video->pts;
 
 	{
-	    static int drop_message=0;
+	    static int drop_message;
 	    double AV_delay = a_pts - audio_delay - v_pts;
 	    double x;
 	    // not a good idea to do A-V correction with with bogus values
