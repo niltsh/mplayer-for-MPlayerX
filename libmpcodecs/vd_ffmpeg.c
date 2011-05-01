@@ -304,6 +304,7 @@ static int init(sh_video_t *sh){
     ctx->pic = avcodec_alloc_frame();
     ctx->avctx = avcodec_alloc_context();
     avctx = ctx->avctx;
+    avcodec_get_context_defaults3(avctx, lavc_codec);
     avctx->opaque = sh;
     avctx->codec_type = AVMEDIA_TYPE_VIDEO;
     avctx->codec_id = lavc_codec->id;
@@ -346,7 +347,9 @@ static int init(sh_video_t *sh){
     avctx->skip_frame = str2AVDiscard(lavc_param_skip_frame_str);
 
     if(lavc_avopt){
-        if(parse_avopts(avctx, lavc_avopt) < 0){
+        if (parse_avopts(avctx, lavc_avopt) < 0 &&
+            (!lavc_codec->priv_class ||
+             parse_avopts(avctx->priv_data, lavc_avopt) < 0)) {
             mp_msg(MSGT_DECVIDEO, MSGL_ERR, "Your options /%s/ look like gibberish to me pal\n", lavc_avopt);
             uninit(sh);
             return 0;
