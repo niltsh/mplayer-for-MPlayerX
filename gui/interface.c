@@ -424,6 +424,8 @@ void guiExit(int how)
             m_config_free(gui_conf);
             gui_conf = NULL;
         }
+
+        appFreeStruct();
     }
 
     if (how != DONE)
