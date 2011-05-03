@@ -24,13 +24,9 @@
 #include "libavutil/common.h"
 
 guiItems appMPlayer = {
-    { 0 }, { 0 }, 0,
-    { 0 }, { 0 },
-    { 0 }, { 0 }, 0,
-    { 0 }, { 0 }, { 0 }, 0,
-    -1,    { 0 },
-    -1,    { 0 },
-    -1,    { 0 }
+    .IndexOfMainItems = -1,
+    .IndexOfBarItems  = -1,
+    .IndexOfMenuItems = -1
 };
 
 static const evName evNames[] = {
