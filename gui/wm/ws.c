@@ -33,6 +33,7 @@
 
 #include <stdint.h>
 
+#include "gui/interface.h"
 #include "config.h"
 #include "libvo/x11_common.h"
 #include "libvo/video_out.h"
@@ -40,6 +41,7 @@
 #include "libswscale/swscale.h"
 #include "libavutil/imgutils.h"
 #include "libmpcodecs/vf_scale.h"
+#include "mp_core.h"
 #include "mp_msg.h"
 #include "help_mp.h"
 #include "mplayer.h"
@@ -209,7 +211,7 @@ if(mDisplay){
  if ( !wsDisplay )
   {
    mp_msg( MSGT_GPLAYER,MSGL_FATAL,MSGTR_WS_CouldNotOpenDisplay );
-   exit( 0 );
+   guiExit( EXIT_ERROR );
   }
 }
 
@@ -381,7 +383,7 @@ void wsCreateWindow( wsTWindow * win,int X,int Y,int wX,int hY,int bW,int cV,uns
  if ( depth < 15 )
   {
    mp_msg( MSGT_GPLAYER,MSGL_FATAL,MSGTR_WS_ColorDepthTooLow );
-   exit( 0 );
+   guiExit( EXIT_ERROR );
   }
  XMatchVisualInfo( wsDisplay,wsScreen,depth,TrueColor,&win->VisualInfo );
 
@@ -494,7 +496,7 @@ void wsCreateWindow( wsTWindow * win,int X,int Y,int wX,int hY,int bW,int cV,uns
   for ( i=0;i < wsWLCount;i++ )
    if ( wsWindowList[i] == NULL ) break;
   if ( i == wsWLCount )
-   {  mp_msg( MSGT_GPLAYER,MSGL_FATAL,MSGTR_WS_TooManyOpenWindows ); exit( 0 ); }
+   {  mp_msg( MSGT_GPLAYER,MSGL_FATAL,MSGTR_WS_TooManyOpenWindows ); guiExit( EXIT_ERROR ); }
   wsWindowList[i]=win;
  }
 
@@ -1125,14 +1127,14 @@ void wsCreateImage( wsTWindow * win,int Width,int Height )
    if ( win->xImage == NULL )
     {
      mp_msg( MSGT_GPLAYER,MSGL_FATAL,MSGTR_WS_ShmError );
-     exit( 0 );
+     guiExit( EXIT_ERROR );
     }
    win->Shminfo.shmid=shmget( IPC_PRIVATE,win->xImage->bytes_per_line * win->xImage->height,IPC_CREAT|0777 );
    if ( win->Shminfo.shmid < 0 )
     {
      XDestroyImage( win->xImage );
      mp_msg( MSGT_GPLAYER,MSGL_FATAL,MSGTR_WS_ShmError );
-     exit( 0 );
+     guiExit( EXIT_ERROR );
     }
    win->Shminfo.shmaddr=(char *)shmat( win->Shminfo.shmid,0,0 );
 
@@ -1141,7 +1143,7 @@ void wsCreateImage( wsTWindow * win,int Width,int Height )
      XDestroyImage( win->xImage );
      if ( win->Shminfo.shmaddr != ((char *) -1) ) shmdt( win->Shminfo.shmaddr );
      mp_msg( MSGT_GPLAYER,MSGL_FATAL,MSGTR_WS_ShmError );
-     exit( 0 );
+     guiExit( EXIT_ERROR );
     }
    win->xImage->data=win->Shminfo.shmaddr;
    win->Shminfo.readOnly=0;
@@ -1158,7 +1160,7 @@ void wsCreateImage( wsTWindow * win,int Width,int Height )
     if ( ( win->xImage->data=malloc( win->xImage->bytes_per_line * win->xImage->height ) ) == NULL )
      {
       mp_msg( MSGT_GPLAYER,MSGL_FATAL,MSGTR_WS_NotEnoughMemoryDrawBuffer );
-      exit( 0 );
+      guiExit( EXIT_ERROR );
      }
    }
  win->ImageData=(unsigned char *)win->xImage->data;
