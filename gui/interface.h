@@ -239,6 +239,7 @@ char *gstrdup(const char *str);
 void *gtkSet(int cmd, float fparam, void *vparam);
 void guiDone(void);
 void guiEventHandling(void);
+void guiExit(int how);
 int guiGetEvent(int type, void *arg);
 void guiInit(void);
 void guiLoadFont(void);

@@ -247,7 +247,7 @@ void mplPBInit( void )
  if ( ( mplPBDrawBuffer = malloc( appMPlayer.bar.Bitmap.ImageSize ) ) == NULL )
   {
    gmp_msg( MSGT_GPLAYER,MSGL_FATAL,MSGTR_NEMDB );
-   exit_player( EXIT_ERROR );
+   guiExit( EXIT_ERROR );
   }
 
  appMPlayer.barWindow.Parent=appMPlayer.subWindow.WindowID;

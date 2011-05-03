@@ -75,7 +75,7 @@ int             i,pot = 0;
 void mplMainDraw( void )
 {
 
- if ( appMPlayer.mainWindow.State == wsWindowClosed ) exit_player( EXIT_QUIT );
+ if ( appMPlayer.mainWindow.State == wsWindowClosed ) guiExit( EXIT_QUIT );
 
  if ( appMPlayer.mainWindow.Visible == wsWindowNotVisible ||
       !mainVisible ) return;
@@ -105,7 +105,7 @@ void mplEventHandling( int msg,float param )
   {
 // --- user events
    case evExit:
-        exit_player( EXIT_QUIT );
+        guiExit( EXIT_QUIT );
         break;
 
    case evPlayNetwork:

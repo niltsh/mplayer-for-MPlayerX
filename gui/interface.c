@@ -52,6 +52,8 @@
 #include "stream/stream_dvd.h"
 #endif
 
+#define DONE -1
+
 guiInterface_t guiIntfStruct;
 
 int guiWinID = -1;
@@ -220,11 +222,11 @@ void guiInit(void)
     switch (i) {
     case -1:
         gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_SKIN_SKINCFG_SkinNotFound, skinName);
-        exit_player(EXIT_ERROR);
+        guiExit(EXIT_ERROR);
 
     case -2:
         gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_SKIN_SKINCFG_SkinCfgError, skinName);
-        exit_player(EXIT_ERROR);
+        guiExit(EXIT_ERROR);
     }
 
     // initialize windows
@@ -233,7 +235,7 @@ void guiInit(void)
 
     if (!mplDrawBuffer) {
         gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_NEMDB);
-        exit_player(EXIT_ERROR);
+        guiExit(EXIT_ERROR);
     }
 
     if (gui_save_pos) {
@@ -401,6 +403,22 @@ void guiDone(void)
 
     cfg_write();
     wsXDone();
+
+    guiExit(DONE);
+}
+
+// NOTE TO MYSELF: Before calling guiInit(), MPlayer calls GUI functions
+// cfg_read() and import_initial_playtree_into_gui(). Only
+// after guiInit() has been called successfully, guiDone()
+// (and thus guiExit()) will be executed by MPlayer on exit.
+// In other words, any MPlayer's exit between cfg_read() and
+// guiInit() will not execute guiDone().
+// With this function it is at least possible to handle
+// GUI's own abortions during (and before) guiInit().
+void guiExit(int how)
+{
+    if (how != DONE)
+        exit_player(how);
 }
 
 void guiLoadFont(void)
@@ -852,7 +870,7 @@ int guiGetEvent(int type, void *arg)
 
         if (!video_driver_list && !video_driver_list[0]) {
             gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_IDFGCVD);
-            exit_player(EXIT_ERROR);
+            guiExit(EXIT_ERROR);
         }
 
         {
