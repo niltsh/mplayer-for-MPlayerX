@@ -30,6 +30,12 @@
 #include "libavutil/avstring.h"
 #include "mp_msg.h"
 
+#define MAX_FONTS 25
+
+#define fntAlignLeft   0
+#define fntAlignCenter 1
+#define fntAlignRight  2
+
 static bmpFont *Fonts[MAX_FONTS];
 
 static int fntAddNewFont(char *name)

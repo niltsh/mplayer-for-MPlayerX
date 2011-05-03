@@ -21,8 +21,6 @@
 
 #include "gui/app.h"
 
-#define DLABEL_DELAY 2500   // in milliseconds
-
 void Render(wsTWindow *window, wItem *Items, int nrItems, char *db, int size);
 
 #endif /* MPLAYER_GUI_GUI_COMMON_H */

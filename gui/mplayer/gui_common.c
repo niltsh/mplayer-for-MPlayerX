@@ -35,6 +35,8 @@
 #include "osdep/timer.h"
 #include "stream/stream.h"
 
+#define DLABEL_DELAY 2500   // in milliseconds
+
 static char *image_buffer;
 static int image_width;
 
