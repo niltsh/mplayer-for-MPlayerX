@@ -169,8 +169,6 @@ void guiInit(void)
     guiIntfStruct.Balance    = 50.0f;
     guiIntfStruct.StreamType = -1;
 
-    appInitStruct();
-
     memset(&gtkEquChannels, 0, sizeof(gtkEquChannels));
 
 #ifdef CONFIG_DXR3

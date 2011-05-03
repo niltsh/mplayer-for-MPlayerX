@@ -23,7 +23,15 @@
 
 #include "libavutil/common.h"
 
-guiItems appMPlayer;
+guiItems appMPlayer = {
+    { 0 }, { 0 }, 0,
+    { 0 }, { 0 },
+    { 0 }, { 0 }, 0,
+    { 0 }, { 0 }, { 0 }, 0,
+    -1,    { 0 },
+    -1,    { 0 },
+    -1,    { 0 }
+};
 
 static const evName evNames[] = {
     { evNone,              "evNone"              },
@@ -84,13 +92,6 @@ static void appClearItem(wItem *item)
     memset(item, 0, sizeof(*item));
 }
 
-void appInitStruct(void)
-{
-    appMPlayer.IndexOfMainItems = -1;
-    appMPlayer.IndexOfBarItems  = -1;
-    appMPlayer.IndexOfMenuItems = -1;
-}
-
 void appFreeStruct(void)
 {
     int i;
@@ -114,7 +115,10 @@ void appFreeStruct(void)
     for (i = 0; i <= appMPlayer.IndexOfMenuItems; i++)
         appClearItem(&appMPlayer.menuItems[i]);
 
-    appInitStruct();
+    appMPlayer.IndexOfMainItems = -1;
+    appMPlayer.IndexOfBarItems  = -1;
+    appMPlayer.IndexOfMenuItems = -1;
+
     fntFreeFont();
 }
 
