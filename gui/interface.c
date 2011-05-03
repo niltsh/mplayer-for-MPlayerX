@@ -429,7 +429,7 @@ void guiExit(int how)
     }
 
     if (how != DONE)
-        exit_player(how);
+        exit_player_with_rc(how, how >= EXIT_ERROR);
 }
 
 void guiLoadFont(void)
