@@ -72,6 +72,8 @@ char *fsHistory[fsPersistant_MaxPos] = { NULL, NULL, NULL, NULL, NULL };
 
 float gtkEquChannels[6][10];
 
+static int initialized;
+
 int gstrcmp(const char *a, const char *b)
 {
     if (!a && !b)
@@ -379,6 +381,8 @@ void guiInit(void)
         guiSetFilename(guiIntfStruct.Subtitlename, subdata->filename);
 
     guiLoadFont();
+
+    initialized = 1;
 }
 
 void guiDone(void)
@@ -417,6 +421,13 @@ void guiDone(void)
 // GUI's own abortions during (and before) guiInit().
 void guiExit(int how)
 {
+    if (!initialized || (how == DONE)) {
+        if (gui_conf) {
+            m_config_free(gui_conf);
+            gui_conf = NULL;
+        }
+    }
+
     if (how != DONE)
         exit_player(how);
 }

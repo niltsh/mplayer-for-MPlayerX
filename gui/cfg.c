@@ -28,7 +28,6 @@
 #include "libmpcodecs/vd.h"
 #include "libvo/video_out.h"
 #include "libvo/x11_common.h"
-#include "m_config.h"
 #include "m_option.h"
 #include "mixer.h"
 #include "mp_msg.h"
@@ -38,6 +37,8 @@
 #include "path.h"
 #include "sub/font_load.h"
 #include "sub/sub.h"
+
+m_config_t *gui_conf;
 
 int gtkCacheOn;
 int gtkCacheSize = 2048;
@@ -95,8 +96,6 @@ int gui_main_pos_x = -3;
 int gui_main_pos_y = -3;
 int gui_sub_pos_x  = -3;
 int gui_sub_pos_y  = -3;
-
-static m_config_t *gui_conf;
 
 static const m_option_t gui_opts[] = {
     { "cache",                       &gtkCacheOn,              CONF_TYPE_FLAG,        0,          0,     1,       NULL },
