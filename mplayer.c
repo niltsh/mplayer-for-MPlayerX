@@ -1002,7 +1002,7 @@ static int libmpdemux_was_interrupted(int eof) {
   if((cmd = mp_input_get_cmd(0,0,0)) != NULL) {
        switch(cmd->id) {
        case MP_CMD_QUIT:
-	 exit_player_with_rc(EXIT_QUIT, (cmd->nargs > 0)? cmd->args[0].v.i : 0);
+	 run_command(mpctx, cmd);
        case MP_CMD_PLAY_TREE_STEP:
 	 eof = (cmd->args[0].v.i > 0) ? PT_NEXT_ENTRY : PT_PREV_ENTRY;
 	 mpctx->play_tree_step = (cmd->args[0].v.i == 0) ? 1 : cmd->args[0].v.i;
