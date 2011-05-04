@@ -637,6 +637,29 @@ void uninit_player(unsigned int mask){
     getch2_disable();
   }
 
+  if (mask & INITIALIZED_SUBS) {
+    initialized_flags &= ~INITIALIZED_SUBS;
+    if (mpctx->set_of_sub_size > 0) {
+      int i;
+      current_module="sub_free";
+      for (i = 0; i < mpctx->set_of_sub_size; ++i) {
+          sub_free(mpctx->set_of_subtitles[i]);
+#ifdef CONFIG_ASS
+          if (mpctx->set_of_ass_tracks[i])
+              ass_free_track(mpctx->set_of_ass_tracks[i]);
+#endif
+      }
+      mpctx->set_of_sub_size = 0;
+    }
+    vo_sub_last = vo_sub= NULL;
+    subdata = NULL;
+#ifdef CONFIG_ASS
+    ass_track = NULL;
+    if (ass_library)
+      ass_clear_fonts(ass_library);
+#endif
+  }
+
   if(mask&INITIALIZED_VOBSUB){
     initialized_flags&=~INITIALIZED_VOBSUB;
     current_module="uninit_vobsub";
@@ -3513,6 +3536,8 @@ if(1 || mpctx->sh_video) {
   load_subtitles(filename, fps, add_subtitles);
   if (mpctx->set_of_sub_size > 0)
       mpctx->sub_counts[SUB_SOURCE_SUBS] = mpctx->set_of_sub_size;
+  // set even if we have no subs yet, they may be added later
+  initialized_flags |= INITIALIZED_SUBS;
 }
 
 if (select_subtitle(mpctx)) {
@@ -3994,25 +4019,6 @@ if(benchmark){
 
 // time to uninit all, except global stuff:
 uninit_player(INITIALIZED_ALL-(INITIALIZED_GUI+INITIALIZED_INPUT+(fixed_vo?INITIALIZED_VO:0)));
-
-if(mpctx->set_of_sub_size > 0) {
-    current_module="sub_free";
-    for(i = 0; i < mpctx->set_of_sub_size; ++i) {
-        sub_free(mpctx->set_of_subtitles[i]);
-#ifdef CONFIG_ASS
-        if(mpctx->set_of_ass_tracks[i])
-            ass_free_track( mpctx->set_of_ass_tracks[i] );
-#endif
-    }
-    mpctx->set_of_sub_size = 0;
-}
-vo_sub_last = vo_sub=NULL;
-subdata=NULL;
-#ifdef CONFIG_ASS
-ass_track = NULL;
-if(ass_library)
-    ass_clear_fonts(ass_library);
-#endif
 
 if(mpctx->eof == PT_NEXT_ENTRY || mpctx->eof == PT_PREV_ENTRY) {
     mpctx->eof = mpctx->eof == PT_NEXT_ENTRY ? 1 : -1;
