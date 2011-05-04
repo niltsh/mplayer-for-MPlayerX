@@ -565,7 +565,9 @@ RECURSIVE              = YES
 
 EXCLUDE                = DOCS \
                          TOOLS \
+                         debian \
                          ffmpeg \
+                         help \
                          libass \
                          libdvdcss \
                          libdvdnav \
