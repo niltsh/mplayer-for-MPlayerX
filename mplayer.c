@@ -16,9 +16,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-/// \file
-/// \ingroup Properties Command2Property OSDMsgStack
-
 #include "config.h"
 
 #include <errno.h>
@@ -339,8 +336,7 @@ int use_filename_title;
 
 static unsigned int initialized_flags;
 
-/// step size of mixer changes
-int volstep = 3;
+int volstep = 3; ///< step size of mixer changes
 
 #ifdef CONFIG_CRASH_DEBUG
 static char *prog_path;
@@ -949,7 +945,7 @@ static void load_per_output_config (m_config_t* conf, char *cfg, char *out)
 }
 
 /**
- * Tries to load a config file
+ * @brief Tries to load a config file.
  * @return 0 if file was not found, 1 otherwise
  */
 static int try_load_config(m_config_t *conf, const char *file)
@@ -1183,11 +1179,11 @@ void init_vo_spudec(void) {
 }
 
 /**
- * \brief append a formatted string
- * \param buf buffer to print into
- * \param pos position of terminating 0 in buf
- * \param len maximum number of characters in buf, not including terminating 0
- * \param format printf format string
+ * @brief Append a formatted string.
+ * @param buf buffer to print into
+ * @param pos position of terminating 0 in buf
+ * @param len maximum number of characters in buf, not including terminating 0
+ * @param format printf format string
  */
 static void saddf(char *buf, unsigned *pos, int len, const char *format, ...)
 {
@@ -1202,11 +1198,11 @@ static void saddf(char *buf, unsigned *pos, int len, const char *format, ...)
 }
 
 /**
- * \brief append time in the hh:mm:ss.f format
- * \param buf buffer to print into
- * \param pos position of terminating 0 in buf
- * \param len maximum number of characters in buf, not including terminating 0
- * \param time time value to convert/append
+ * @brief Append time in the hh:mm:ss.f format.
+ * @param buf buffer to print into
+ * @param pos position of terminating 0 in buf
+ * @param len maximum number of characters in buf, not including terminating 0
+ * @param time time value to convert/append
  */
 static void sadd_hhmmssf(char *buf, unsigned *pos, int len, float time) {
   int64_t tenths = 10 * time;
@@ -1226,10 +1222,10 @@ static void sadd_hhmmssf(char *buf, unsigned *pos, int len, float time) {
 }
 
 /**
- * \brief print the status line
- * \param a_pos audio position
- * \param a_v A-V desynchronization
- * \param corr amount out A-V synchronization
+ * @brief Print the status line.
+ * @param a_pos audio position
+ * @param a_v A-V desynchronization
+ * @param corr amount out A-V synchronization
  */
 static void print_status(float a_pos, float a_v, float corr)
 {
@@ -1320,10 +1316,10 @@ static void print_status(float a_pos, float a_v, float corr)
 }
 
 /**
- * \brief build a chain of audio filters that converts the input format
+ * @brief Build a chain of audio filters that converts the input format.
  * to the ao's format, taking into account the current playback_speed.
- * \param sh_audio describes the requested input format of the chain.
- * \param ao_data describes the requested output format of the chain.
+ * @param sh_audio describes the requested input format of the chain.
+ * @param ao_data describes the requested output format of the chain.
  */
 static int build_afilter_chain(sh_audio_t *sh_audio, ao_data_t *ao_data)
 {
@@ -1364,26 +1360,20 @@ static int build_afilter_chain(sh_audio_t *sh_audio, ao_data_t *ao_data)
 
 typedef struct mp_osd_msg mp_osd_msg_t;
 struct mp_osd_msg {
-    /// Previous message on the stack.
-    mp_osd_msg_t* prev;
-    /// Message text.
-    char msg[128];
+    mp_osd_msg_t* prev; ///< Previous message on the stack
+    char msg[128];      ///< Message text
     int  id,level,started;
-    /// Display duration in ms.
-    unsigned  time;
+    unsigned  time;     ///< Display duration in ms
 };
 
-/// OSD message stack.
-static mp_osd_msg_t* osd_msg_stack;
+static mp_osd_msg_t* osd_msg_stack; ///< OSD message stack
 
 /**
- *  \brief Add a message on the OSD message stack
+ * @brief Add a message on the OSD message stack.
  *
- *  If a message with the same id is already present in the stack
- *  it is pulled on top of the stack, otherwise a new message is created.
- *
+ * If a message with the same id is already present in the stack
+ * it is pulled on top of the stack, otherwise a new message is created.
  */
-
 void set_osd_msg(int id, int level, int time, const char* fmt, ...) {
     mp_osd_msg_t *msg,*last=NULL;
     va_list va;
@@ -1415,12 +1405,10 @@ void set_osd_msg(int id, int level, int time, const char* fmt, ...) {
 }
 
 /**
- *  \brief Remove a message from the OSD stack
+ * @brief Remove a message from the OSD stack.
  *
- *  This function can be used to get rid of a message right away.
- *
+ * This function can be used to get rid of a message right away.
  */
-
 void rm_osd_msg(int id) {
     mp_osd_msg_t *msg,*last=NULL;
 
@@ -1438,10 +1426,8 @@ void rm_osd_msg(int id) {
 }
 
 /**
- *  \brief Remove all messages from the OSD stack
- *
+ * @brief Remove all messages from the OSD stack.
  */
-
 static void clear_osd_msgs(void) {
     mp_osd_msg_t* msg = osd_msg_stack, *prev = NULL;
     while(msg) {
@@ -1453,13 +1439,11 @@ static void clear_osd_msgs(void) {
 }
 
 /**
- *  \brief Get the current message from the OSD stack.
+ * @brief Get the current message from the OSD stack.
  *
- *  This function decrements the message timer and destroys the old ones.
- *  The message that should be displayed is returned (if any).
- *
+ * This function decrements the message timer and destroys the old ones.
+ * The message that should be displayed is returned (if any).
  */
-
 static mp_osd_msg_t* get_osd_msg(void) {
     mp_osd_msg_t *msg,*prev,*last = NULL;
     static unsigned last_update;
@@ -1513,12 +1497,10 @@ static mp_osd_msg_t* get_osd_msg(void) {
 }
 
 /**
- * \brief Display the OSD bar.
+ * @brief Display the OSD bar.
  *
  * Display the OSD bar or fall back on a simple message.
- *
  */
-
 void set_osd_bar(int type,const char* name,double min,double max,double val) {
 
     if(osd_level < 1) return;
@@ -1536,7 +1518,7 @@ void set_osd_bar(int type,const char* name,double min,double max,double val) {
 }
 
 /**
- * \brief Display text subtitles on the OSD
+ * @brief Display text subtitles on the OSD.
  */
 void set_osd_subtitle(subtitle *subs) {
     int i;
@@ -1557,14 +1539,12 @@ void set_osd_subtitle(subtitle *subs) {
 }
 
 /**
- * \brief Update the OSD message line.
+ * @brief Update the OSD message line.
  *
  * This function displays the current message on the vo OSD or on the term.
  * If the stack is empty and the OSD level is high enough the timer
  * is displayed (only on the vo OSD).
- *
  */
-
 static void update_osd_msg(void) {
     mp_osd_msg_t *msg;
     static char osd_text[128] = "";
@@ -1653,9 +1633,6 @@ static void update_osd_msg(void) {
     }
 }
 
-///@}
-// OSDMsgStack
-
 
 void reinit_audio_chain(void) {
     if (!mpctx->sh_audio)
@@ -1722,10 +1699,6 @@ init_error:
     mpctx->sh_audio=mpctx->d_audio->sh=NULL; // -> nosound
     mpctx->d_audio->id = -2;
 }
-
-
-///@}
-// Command2Property
 
 
 // Return pts value corresponding to the end point of audio written to the
@@ -1906,12 +1879,14 @@ static int select_subtitle(MPContext *mpctx)
 #ifndef FF_B_TYPE
 #define FF_B_TYPE 3
 #endif
-/// store decoded video image
+/**
+ * @brief Store decoded video image.
+ */
 static mp_image_t * mp_dvdnav_copy_mpi(mp_image_t *to_mpi,
                                        mp_image_t *from_mpi) {
     mp_image_t *mpi;
 
-    /// Do not store B-frames
+    // do not store B-frames
     if (from_mpi->pict_type == FF_B_TYPE)
         return to_mpi;
 
@@ -1934,7 +1909,7 @@ static mp_image_t * mp_dvdnav_copy_mpi(mp_image_t *to_mpi,
 
 static void mp_dvdnav_reset_stream (MPContext *ctx) {
     if (ctx->sh_video) {
-        /// clear video pts
+        // clear video pts
         ctx->d_video->pts = 0.0f;
         ctx->sh_video->pts = 0.0f;
         ctx->sh_video->i_pts = 0.0f;
@@ -1949,7 +1924,7 @@ static void mp_dvdnav_reset_stream (MPContext *ctx) {
     }
 
     if (ctx->sh_audio) {
-        /// free audio packets and reset
+        // free audio packets and reset
         ds_free_packs(ctx->d_audio);
         audio_delay -= ctx->sh_audio->stream_delay;
         ctx->delay =- audio_delay;
@@ -1967,11 +1942,13 @@ static void mp_dvdnav_reset_stream (MPContext *ctx) {
         }
     }
 
-    /// clear all EOF related flags
+    // clear all EOF related flags
     ctx->d_video->eof = ctx->d_audio->eof = ctx->stream->eof = 0;
 }
 
-/// Restore last decoded DVDNAV (still frame)
+/**
+ * @brief Restore last decoded DVDNAV (still frame).
+ */
 static mp_image_t *mp_dvdnav_restore_smpi(int *in_size,
                                           unsigned char **start,
                                           mp_image_t *decoded_frame)
@@ -1979,7 +1956,7 @@ static mp_image_t *mp_dvdnav_restore_smpi(int *in_size,
     if (mpctx->stream->type != STREAMTYPE_DVDNAV)
         return decoded_frame;
 
-    /// a change occured in dvdnav stream
+    // a change occured in dvdnav stream
     if (mp_dvdnav_cell_has_changed(mpctx->stream,0)) {
         mp_dvdnav_read_wait(mpctx->stream, 1, 1);
         mp_dvdnav_context_free(mpctx);
@@ -1991,11 +1968,11 @@ static mp_image_t *mp_dvdnav_restore_smpi(int *in_size,
     if (*in_size < 0) {
         float len;
 
-        /// Display still frame, if any
+        // display still frame, if any
         if (mpctx->nav_smpi && !mpctx->nav_buffer)
             decoded_frame = mpctx->nav_smpi;
 
-        /// increment video frame : continue playing after still frame
+        // increment video frame: continue playing after still frame
         len = demuxer_get_time_length(mpctx->demuxer);
         if (mpctx->sh_video->pts >= len &&
             mpctx->sh_video->pts > 0.0 && len > 0.0) {
@@ -2015,7 +1992,9 @@ static mp_image_t *mp_dvdnav_restore_smpi(int *in_size,
     return decoded_frame;
 }
 
-/// Save last decoded DVDNAV (still frame)
+/**
+ * @brief Save last decoded DVDNAV (still frame).
+ */
 static void mp_dvdnav_save_smpi(int in_size,
                                 unsigned char *start,
                                 mp_image_t *decoded_frame)
@@ -2399,7 +2378,7 @@ static double update_video(int *blit_frame)
 	in_size = video_read_frame(sh_video, &sh_video->next_frame_time,
 				   &start, force_fps);
 #ifdef CONFIG_DVDNAV
-	/// wait, still frame or EOF
+	// wait, still frame or EOF
 	if (mpctx->stream->type == STREAMTYPE_DVDNAV && in_size < 0) {
 	    if (mp_dvdnav_is_eof(mpctx->stream))
                 return -1;
@@ -2419,7 +2398,7 @@ static double update_video(int *blit_frame)
 #ifdef CONFIG_DVDNAV
 	full_frame = 1;
 	decoded_frame = mp_dvdnav_restore_smpi(&in_size,&start,decoded_frame);
-	/// still frame has been reached, no need to decode
+	// still frame has been reached, no need to decode
 	if (in_size > 0 && !decoded_frame)
 #endif
 	decoded_frame = decode_video(sh_video, start, in_size, drop_frame,
@@ -2459,7 +2438,7 @@ static double update_video(int *blit_frame)
 	update_osd_msg();
     }
 #ifdef CONFIG_DVDNAV
-	/// save back last still frame for future display
+	// save back last still frame for future display
 	mp_dvdnav_save_smpi(in_size,start,decoded_frame);
 #endif
     } while (!full_frame);
@@ -3004,7 +2983,7 @@ stream_set_interrupt_callback(mp_input_check_interrupt);
 initialized_flags|=INITIALIZED_INPUT;
 current_module = NULL;
 
-  /// Catch signals
+  // Catch signals
 #ifndef __MINGW32__
   signal(SIGCHLD,child_sighandler);
 #endif
