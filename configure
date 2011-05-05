@@ -3701,14 +3701,6 @@ fi
 echores "$_soundcard_h"
 
 
-echocheck "sys/videoio.h"
-sys_videoio_h=no
-def_sys_videoio_h='#undef HAVE_SYS_VIDEOIO_H'
-header_check sys/videoio.h && sys_videoio_h=yes &&
-    def_sys_videoio_h='#define HAVE_SYS_VIDEOIO_H 1'
-echores "$sys_videoio_h"
-
-
 echocheck "sys/dvdio.h"
 _dvdio=no
 # FreeBSD 8.1 has broken dvdio.h
@@ -7338,11 +7330,9 @@ fi #if freebsd || netbsd || openbsd || dragonfly || bsdos
 
 
 echocheck "DirectShow TV interface"
-if test "$_tv_dshow" = auto ; then
-  _tv_dshow=no
-  if test "$_tv" = yes && win32 ; then
+if test "$_tv_dshow" = auto && test "$_tv" = yes && win32 ; then
+    _tv_dshow=no
     statement_check ole2.h 'void* p; CoCreateInstance((GUID*)&GUID_NULL, NULL, CLSCTX_INPROC_SERVER, &GUID_NULL, &p)' -lole32 -luuid && _tv_dshow=yes
-  fi
 fi
 if test "$_tv_dshow" = yes ; then
   inputmodules="tv-dshow $inputmodules"
@@ -7356,11 +7346,9 @@ echores "$_tv_dshow"
 
 
 echocheck "Video 4 Linux TV interface"
-if test "$_tv_v4l1" = auto ; then
-  _tv_v4l1=no
-  if test "$_tv" = yes && linux ; then
+if test "$_tv_v4l1" = auto && test "$_tv" = yes && linux ; then
+    _tv_v4l1=no
     header_check_broken sys/time.h linux/videodev.h && _tv_v4l1=yes
-  fi
 fi
 if test "$_tv_v4l1" = yes ; then
   _audio_input=yes
@@ -7376,13 +7364,14 @@ echores "$_tv_v4l1"
 
 
 echocheck "Video 4 Linux 2 TV interface"
-if test "$_tv_v4l2" = auto ; then
-  _tv_v4l2=no
-  if test "$_tv" = yes && linux ; then
-    header_check_broken sys/time.h linux/videodev2.h && _tv_v4l2=yes
-  elif test "$_tv" = yes && test "$sys_videoio_h" = "yes" ; then
-    _tv_v4l2=yes
-  fi
+if test "$_tv_v4l2" = auto && test "$_tv" = yes ; then
+    _tv_v4l2=no
+    if linux ; then
+        header_check_broken sys/time.h linux/videodev2.h && _tv_v4l2=yes
+    else
+        header_check sys/videoio.h && _tv_v4l2=yes &&
+            def_sys_videoio_h='#define HAVE_SYS_VIDEOIO_H 1'
+    fi
 fi
 if test "$_tv_v4l2" = yes ; then
   _audio_input=yes
@@ -7420,12 +7409,11 @@ echores "$_radio"
 echocheck "Capture for Radio interface"
 echores "$_radio_capture"
 
+
 echocheck "Video 4 Linux 2 Radio interface"
-if test "$_radio_v4l2" = auto ; then
-  _radio_v4l2=no
-  if test "$_radio" = yes && linux ; then
+if test "$_radio_v4l2" = auto && test "$_radio" = yes && linux ; then
+    _radio_v4l2=no
     header_check linux/videodev2.h && _radio_v4l2=yes
-  fi
 fi
 if test "$_radio_v4l2" = yes ; then
   def_radio_v4l2='#define CONFIG_RADIO_V4L2 1'
@@ -7434,12 +7422,11 @@ else
 fi
 echores "$_radio_v4l2"
 
+
 echocheck "Video 4 Linux Radio interface"
-if test "$_radio_v4l" = auto ; then
-  _radio_v4l=no
-  if test "$_radio" = yes && linux ; then
+if test "$_radio_v4l" = auto && test "$_radio" = yes && linux ; then
+    _radio_v4l=no
     header_check linux/videodev.h && _radio_v4l=yes
-  fi
 fi
 if test "$_radio_v4l" = yes ; then
   def_radio_v4l='#define CONFIG_RADIO_V4L 1'
@@ -7476,16 +7463,14 @@ if test "$_radio_v4l" = no && test "$_radio_v4l2" = no &&
 fi
 
 echocheck "Video 4 Linux 2 MPEG PVR interface"
-if test "$_pvr" = auto ; then
+if test "$_pvr" = auto && test "$_tv_v4l2" = yes && linux ; then
  _pvr=no
- if test "$_tv_v4l2" = yes && linux ; then
   cat > $TMPC <<EOF
 #include <sys/time.h>
 #include <linux/videodev2.h>
 int main(void) { struct v4l2_ext_controls ext; return ext.controls->value; }
 EOF
   cc_check && _pvr=yes
- fi
 fi
 if test "$_pvr" = yes ; then
   def_pvr='#define CONFIG_PVR 1'
