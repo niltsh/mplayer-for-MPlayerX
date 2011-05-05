@@ -673,7 +673,7 @@ _md5sum=yes
 _yuv4mpeg=yes
 _gif=auto
 _gl=auto
-matrixview=yes
+matrixview=auto
 _ggi=auto
 _ggiwmh=auto
 _aa=auto
@@ -5194,7 +5194,7 @@ echores "$_gl"
 
 
 echocheck "MatrixView"
-if test "$_gl" = no ; then
+if test "$matrixview" = auto && test "$_gl" = no ; then
   matrixview=no
 fi
 if test "$matrixview" = yes ; then
