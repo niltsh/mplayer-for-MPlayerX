@@ -93,13 +93,13 @@ extern int use_gui;             // this is defined in mplayer.c
 
 #define guiSetFilename(s, n) \
     { \
-        gfree((void **)&s); \
+        free(s); \
         s = gstrdup(n); \
     }
 
 #define guiSetDF(s, d, n) \
     { \
-        gfree((void **)&s); \
+        free(s); \
         s = malloc(strlen(d) + strlen(n) + 5); \
         sprintf(s, "%s/%s", d, n); \
     }
