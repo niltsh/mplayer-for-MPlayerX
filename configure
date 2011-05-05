@@ -5859,9 +5859,9 @@ echores "$_dvdread"
 
 
 echocheck "internal libdvdcss"
-if test "$_libdvdcss_internal" = auto ; then
+if test "$_libdvdcss_internal" = auto && test "$_dvdread_internal" = yes ; then
   _libdvdcss_internal=no
-  test "$_dvdread_internal" = yes && test -d libdvdcss && _libdvdcss_internal=yes
+  test -d libdvdcss && _libdvdcss_internal=yes
   hpux && test "$_hpux_scsi_h" = no && _libdvdcss_internal=no
 fi
 if test "$_libdvdcss_internal" = yes ; then
@@ -7162,7 +7162,7 @@ echores "$_libnut"
 
 #check must be done after FFmpeg one
 echocheck "zr"
-if test "$_zr" = auto ; then
+if test "$_zr" = auto && test "$ffmpeg_a" = yes ; then
   #36067's seem to identify themselves as 36057PQC's, so the line
   #below should work for 36067's and 36057's.
   if grep -q -s -e "Multimedia video controller: Zoran Corporation ZR36057" /proc/pci ; then
@@ -7172,18 +7172,12 @@ if test "$_zr" = auto ; then
   fi
 fi
 if test "$_zr" = yes ; then
-  if test "$ffmpeg_a" = yes ; then
     def_zr='#define CONFIG_ZR 1'
     vomodules="zr zr2 $vomodules"
     mplayer_encoders="$mplayer_encoders MJPEG_ENCODER"
-  else
-    res_comment="ffmpeg (static) is required by zr, sorry"
-    novomodules="zr $novomodules"
-    def_zr='#undef CONFIG_ZR'
-  fi
 else
-  def_zr='#undef CONFIG_ZR'
-  novomodules="zr zr2 $novomodules"
+    def_zr='#undef CONFIG_ZR'
+    novomodules="zr zr2 $novomodules"
 fi
 echores "$_zr"
 
@@ -7483,8 +7477,8 @@ echores "$_pvr"
 
 
 echocheck "ftp"
-if test "$_ftp" = "auto" ; then
-test "$networking" = "yes" && ! beos && _ftp=yes
+if test "$_ftp" = "auto" && test "$networking" = "yes" && ! beos ; then
+    _ftp=yes
 fi
 if test "$_ftp" = yes ; then
   def_ftp='#define CONFIG_FTP 1'
