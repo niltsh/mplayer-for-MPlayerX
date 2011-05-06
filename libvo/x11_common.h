@@ -102,8 +102,8 @@ extern XSizeHints vo_hint;
 //XvPortID xv_port;
 extern unsigned int xv_port;
 
-int vo_xv_set_eq(uint32_t xv_port, char * name, int value);
-int vo_xv_get_eq(uint32_t xv_port, char * name, int *value);
+int vo_xv_set_eq(uint32_t xv_port, const char * name, int value);
+int vo_xv_get_eq(uint32_t xv_port, const char * name, int *value);
 
 int vo_xv_enable_vsync(void);
 

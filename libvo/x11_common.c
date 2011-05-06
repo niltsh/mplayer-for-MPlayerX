@@ -1894,7 +1894,7 @@ uint32_t vo_x11_get_equalizer(char *name, int *value)
 }
 
 #ifdef CONFIG_XV
-int vo_xv_set_eq(uint32_t xv_port, char *name, int value)
+int vo_xv_set_eq(uint32_t xv_port, const char *name, int value)
 {
     XvAttribute *attributes;
     int i, howmany, xv_atom;
@@ -1964,7 +1964,7 @@ int vo_xv_set_eq(uint32_t xv_port, char *name, int value)
     return VO_FALSE;
 }
 
-int vo_xv_get_eq(uint32_t xv_port, char *name, int *value)
+int vo_xv_get_eq(uint32_t xv_port, const char *name, int *value)
 {
 
     XvAttribute *attributes;
