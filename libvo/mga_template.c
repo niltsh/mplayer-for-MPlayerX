@@ -18,6 +18,7 @@
 
 #include "fastmemcpy.h"
 #include "cpudetect.h"
+#include "libmpcodecs/vf.h"
 #include "libswscale/swscale.h"
 #include "libavutil/imgutils.h"
 #include "libmpcodecs/vf_scale.h"
@@ -246,11 +247,11 @@ static int control(uint32_t request, void *data, ...)
     return draw_image(data);
   case VOCTRL_SET_EQUALIZER:
     {
-     va_list ap;
+     vf_equalizer_t *eq=data;
      short value;
      uint32_t luma,prev;
 
-     if ( strcmp( data,"brightness" ) && strcmp( data,"contrast" ) ) return VO_FALSE;
+     if ( strcmp( eq->item,"brightness" ) && strcmp( eq->item,"contrast" ) ) return VO_FALSE;
 
      if (ioctl(f,MGA_VID_GET_LUMA,&prev)) {
 	perror("Error in mga_vid_config ioctl()");
@@ -260,12 +261,8 @@ static int control(uint32_t request, void *data, ...)
 
 //     printf("GET: 0x%4X 0x%4X  \n",(prev>>16),(prev&0xffff));
 
-     va_start(ap, data);
-     value = va_arg(ap, int);
-     va_end(ap);
-
-//     printf("value: %d -> ",value);
-     value=((value+100)*255)/200-128; // maps -100=>-128 and +100=>127
+//     printf("value: %d -> ",eq->value);
+     value=((eq->value+100)*255)/200-128; // maps -100=>-128 and +100=>127
 //     printf("%d  \n",value);
 
      if(!strcmp(data,"contrast"))
@@ -284,12 +281,11 @@ static int control(uint32_t request, void *data, ...)
 
   case VOCTRL_GET_EQUALIZER:
     {
-     va_list ap;
-     int * value;
+     vf_equalizer_t *eq=data;
      short val;
      uint32_t luma;
 
-     if ( strcmp( data,"brightness" ) && strcmp( data,"contrast" ) ) return VO_FALSE;
+     if ( strcmp( eq->item,"brightness" ) && strcmp( eq->item,"contrast" ) ) return VO_FALSE;
 
      if (ioctl(f,MGA_VID_GET_LUMA,&luma)) {
 	perror("Error in mga_vid_config ioctl()");
@@ -297,16 +293,12 @@ static int control(uint32_t request, void *data, ...)
 	return VO_FALSE;
      }
 
-     if ( !strcmp( data,"contrast" ) )
+     if ( !strcmp( eq->item,"contrast" ) )
 	 val=(luma & 0xFFFF);
      else
 	 val=(luma >> 16);
 
-     va_start(ap, data);
-     value = va_arg(ap, int*);
-     va_end(ap);
-
-     *value = (val*200)/255;
+     eq->value = (val*200)/255;
 
      return VO_TRUE;
     }

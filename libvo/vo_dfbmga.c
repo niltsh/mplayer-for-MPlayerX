@@ -30,6 +30,7 @@
 #include "config.h"
 #include "video_out.h"
 #include "video_out_internal.h"
+#include "libmpcodecs/vf.h"
 #include "fastmemcpy.h"
 #include "sub/sub.h"
 #include "mp_msg.h"
@@ -1426,25 +1427,13 @@ control( uint32_t request, void *data, ... )
 
      case VOCTRL_SET_EQUALIZER:
           {
-               va_list ap;
-               int value;
-
-               va_start( ap, data );
-               value = va_arg( ap, int );
-               va_end( ap );
-
-               return set_equalizer( data, value );
+               vf_equalizer_t *eq=data;
+               return set_equalizer( eq->item, eq->value );
           }
      case VOCTRL_GET_EQUALIZER:
           {
-               va_list ap;
-               int *value;
-
-               va_start( ap, data );
-               value = va_arg( ap, int* );
-               va_end( ap );
-
-               return get_equalizer( data, value );
+               vf_equalizer_t *eq=data;
+               return get_equalizer( eq->item, &eq->value );
           }
      }
 

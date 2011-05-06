@@ -39,6 +39,7 @@
 #include "mp_msg.h"
 #include "video_out.h"
 #include "video_out_internal.h"
+#include "libmpcodecs/vf.h"
 #include "x11_common.h"
 #include "aspect.h"
 #include "sub/font_load.h"
@@ -1367,26 +1368,15 @@ static int control(uint32_t request, void *data, ...)
         resize();
         return VO_TRUE;
     case VOCTRL_SET_EQUALIZER: {
-        va_list ap;
-        int value;
+        vf_equalizer_t *eq=data;
         if (image_format == IMGFMT_BGRA)
             return VO_NOTIMPL;
 
-        va_start(ap, data);
-        value = va_arg(ap, int);
-
-        va_end(ap);
-        return set_equalizer(data, value);
+        return set_equalizer(eq->item, eq->value);
     }
     case VOCTRL_GET_EQUALIZER: {
-        va_list ap;
-        int *value;
-
-        va_start(ap, data);
-        value = va_arg(ap, int *);
-
-        va_end(ap);
-        return get_equalizer(data, value);
+        vf_equalizer_t *eq=data;
+        return get_equalizer(eq->item, &eq->value);
     }
     case VOCTRL_ONTOP:
         vo_x11_ontop();

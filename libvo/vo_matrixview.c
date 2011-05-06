@@ -30,6 +30,7 @@
 #include "subopt-helper.h"
 #include "video_out.h"
 #include "video_out_internal.h"
+#include "libmpcodecs/vf.h"
 #include "gl_common.h"
 #include "libswscale/swscale.h"
 #include "libmpcodecs/vf_scale.h"
@@ -296,29 +297,22 @@ static int control(uint32_t request, void *data, ...)
         return VO_TRUE;
     case VOCTRL_GET_EQUALIZER:
         {
-            va_list va;
-            int *value;
-            va_start(va, data);
-            value = va_arg(va, int *);
-            va_end(va);
-            if (strcasecmp(data, "contrast") == 0) {
-                *value = eq_contrast;
-            } else if (strcasecmp(data, "brightness") == 0) {
-                *value = eq_brightness;
+            vf_equalizer_t *eq=data;
+
+            if (strcasecmp(eq->item, "contrast") == 0) {
+                eq->value = eq_contrast;
+            } else if (strcasecmp(eq->item, "brightness") == 0) {
+                eq->value = eq_brightness;
             }
         }
         return VO_TRUE;
     case VOCTRL_SET_EQUALIZER:
         {
-            va_list va;
-            int value;
-            va_start(va, data);
-            value = va_arg(va, int);
-            va_end(va);
-            if (strcasecmp(data, "contrast") == 0) {
-                contrast_set(value);
-            } else if (strcasecmp(data, "brightness") == 0) {
-                brightness_set(value);
+            vf_equalizer_t *eq=data;
+            if (strcasecmp(eq->item, "contrast") == 0) {
+                contrast_set(eq->value);
+            } else if (strcasecmp(eq->item, "brightness") == 0) {
+                brightness_set(eq->value);
             }
         }
         return VO_TRUE;

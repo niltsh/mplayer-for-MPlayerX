@@ -36,6 +36,7 @@
 #include "config.h"
 #include "video_out.h"
 #include "video_out_internal.h"
+#include "libmpcodecs/vf.h"
 #include "aspect.h"
 #include "libswscale/swscale.h"
 #include "libmpcodecs/vf_scale.h"
@@ -731,31 +732,21 @@ static int control(uint32_t request, void *data, ...)
   case VOCTRL_QUERY_FORMAT:
     return query_format(*((uint32_t*)data));
   case VOCTRL_SET_EQUALIZER: {
-    va_list ap;
-    int val;
+    vf_equalizer_t *eq=data;
 
-    va_start(ap, data);
-    val = va_arg(ap, int);
-    va_end(ap);
-
-    if(strcmp((char*)data,"contrast") == 0)
-      p->contrast = ( val + 100 ) * 64 / 100;
-    else if(strcmp((char*)data,"brightness") == 0)
-      p->bright = ( val + 100) * 128 / 100;
+    if(strcmp(eq->item,"contrast") == 0)
+      p->contrast = ( eq->value + 100 ) * 64 / 100;
+    else if(strcmp(eq->item,"brightness") == 0)
+      p->bright = ( eq->value + 100) * 128 / 100;
     return VO_TRUE;
   }
   case VOCTRL_GET_EQUALIZER: {
-    va_list ap;
-    int* val;
+    vf_equalizer_t *eq=data;
 
-    va_start(ap, data);
-    val = va_arg(ap, int*);
-    va_end(ap);
-
-    if(strcmp((char*)data,"contrast") == 0)
-      *val = (p->contrast - 64) * 100 / 64;
-    else if(strcmp((char*)data,"brightness") == 0)
-      *val = (p->bright - 128) * 100 / 128;
+    if(strcmp(eq->item,"contrast") == 0)
+      eq->value = (p->contrast - 64) * 100 / 64;
+    else if(strcmp(eq->item,"brightness") == 0)
+      eq->value = (p->bright - 128) * 100 / 128;
 
     return VO_TRUE;
   }

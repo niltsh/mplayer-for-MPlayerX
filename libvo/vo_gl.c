@@ -32,6 +32,7 @@
 #include "subopt-helper.h"
 #include "video_out.h"
 #include "video_out_internal.h"
+#include "libmpcodecs/vf.h"
 #include "sub/font_load.h"
 #include "sub/sub.h"
 
@@ -1361,34 +1362,26 @@ static int control(uint32_t request, void *data, ...)
   case VOCTRL_GET_EQUALIZER:
     if (is_yuv) {
       int i;
-      va_list va;
-      int *value;
-      va_start(va, data);
-      value = va_arg(va, int *);
-      va_end(va);
+      vf_equalizer_t *eq=data;
       for (i = 0; eq_map[i].name; i++)
-        if (strcmp(data, eq_map[i].name) == 0) break;
+        if (strcmp(eq->item, eq_map[i].name) == 0) break;
       if (!(eq_map[i].supportmask & (1 << use_yuv)))
         break;
-      *value = *eq_map[i].value;
+      eq->value = *eq_map[i].value;
       return VO_TRUE;
     }
     break;
   case VOCTRL_SET_EQUALIZER:
     if (is_yuv) {
       int i;
-      va_list va;
-      int value;
-      va_start(va, data);
-      value = va_arg(va, int);
-      va_end(va);
+      vf_equalizer_t *eq=data;
       for (i = 0; eq_map[i].name; i++)
-        if (strcmp(data, eq_map[i].name) == 0) break;
+        if (strcmp(eq->item, eq_map[i].name) == 0) break;
       if (!(eq_map[i].supportmask & (1 << use_yuv)))
         break;
-      *eq_map[i].value = value;
+      *eq_map[i].value = eq->value;
       if (strcmp(data, "gamma") == 0)
-        eq_rgamma = eq_ggamma = eq_bgamma = value;
+        eq_rgamma = eq_ggamma = eq_bgamma = eq->value;
       update_yuvconv();
       return VO_TRUE;
     }

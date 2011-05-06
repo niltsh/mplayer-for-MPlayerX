@@ -23,6 +23,7 @@
 #include "config.h"
 #include "video_out.h"
 #include "video_out_internal.h"
+#include "libmpcodecs/vf.h"
 #include "aspect.h"
 
 
@@ -674,25 +675,13 @@ static int control(uint32_t request, void *data, ...)
             return VO_TRUE;
         case VOCTRL_SET_EQUALIZER:
             {
-                va_list ap;
-                int value;
-
-                va_start(ap, data);
-                value = va_arg(ap, int);
-
-                va_end(ap);
-                return vo_x11_set_equalizer(data, value);
+                vf_equalizer_t *eq=data;
+                return vo_x11_set_equalizer(eq->item, &(eq->value));
             }
         case VOCTRL_GET_EQUALIZER:
             {
-                va_list ap;
-                int *value;
-
-                va_start(ap, data);
-                value = va_arg(ap, int *);
-
-                va_end(ap);
-                return vo_x11_get_equalizer(data, value);
+                vf_equalizer_t *eq=data;
+                return vo_x11_get_equalizer(eq->item, &eq->value);
             }
         case VOCTRL_ONTOP:
             vo_x11_ontop();

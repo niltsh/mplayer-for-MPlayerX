@@ -29,6 +29,7 @@
 #include "config.h"
 #include "video_out.h"
 #include "video_out_internal.h"
+#include "libmpcodecs/vf.h"
 #include "fastmemcpy.h"
 #include "input/input.h"
 #include "libmpcodecs/vd.h"
@@ -1566,22 +1567,12 @@ static int control(uint32_t request, void *data, ...)
 		    return VO_TRUE;
 		}
 	case VOCTRL_SET_EQUALIZER: {
-		va_list	ap;
-		int	value;
-
-		va_start(ap, data);
-		value = va_arg(ap, int);
-		va_end(ap);
-		return color_ctrl_set(data, value);
+        vf_equalizer_t *eq=data;
+		return color_ctrl_set(eq->item, eq->value);
 	}
 	case VOCTRL_GET_EQUALIZER: {
-		va_list	ap;
-		int	*value;
-
-		va_start(ap, data);
-		value = va_arg(ap, int*);
-		va_end(ap);
-		return color_ctrl_get(data, value);
+        vf_equalizer_t *eq=data;
+		return color_ctrl_get(eq->item, &eq->value);
 	}
     case VOCTRL_UPDATE_SCREENINFO:
         if (vidmode) {

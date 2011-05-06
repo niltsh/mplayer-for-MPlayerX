@@ -26,6 +26,7 @@
 #include "video_out.h"
 #include "video_out_internal.h"
 #include "osdep/timer.h"
+#include "libmpcodecs/vf.h"
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -1332,26 +1333,14 @@ static int control(uint32_t request, void *data, ... )
             return VO_TRUE;
         case VOCTRL_SET_EQUALIZER:
         {
-            va_list ap;
-            int value;
-
-            va_start(ap, data);
-            value = va_arg(ap, int);
-            va_end(ap);
-
-            return vo_xv_set_eq(xv_port, data, value);
+            vf_equalizer_t *eq=data;
+            return vo_xv_set_eq(xv_port, eq->item, eq->value);
         }
 
         case VOCTRL_GET_EQUALIZER:
         {
-            va_list ap;
-            int *value;
-
-            va_start(ap, data);
-            value = va_arg(ap, int*);
-            va_end(ap);
-
-            return vo_xv_get_eq(xv_port, data, value);
+            vf_equalizer_t *eq=data;
+            return vo_xv_get_eq(xv_port, eq->item, &eq->value);
         }
         case VOCTRL_UPDATE_SCREENINFO:
             update_xinerama_info();

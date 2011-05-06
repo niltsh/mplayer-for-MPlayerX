@@ -32,6 +32,7 @@
 #include "config.h"
 #include "video_out.h"
 #include "video_out_internal.h"
+#include "libmpcodecs/vf.h"
 #include "fastmemcpy.h"
 #include "sub/sub.h"
 #include "mp_msg.h"
@@ -1382,25 +1383,13 @@ static int control(uint32_t request, void *data, ...)
 	return put_image(data);
     case VOCTRL_SET_EQUALIZER:
       {
-        va_list ap;
-	int value;
-
-        va_start(ap, data);
-	value = va_arg(ap, int);
-        va_end(ap);
-
-	return directfb_set_video_eq(data, value);
+        vf_equalizer_t *eq=data;
+	return directfb_set_video_eq(eq->item, eq->value);
       }
     case VOCTRL_GET_EQUALIZER:
       {
-	va_list ap;
-        int *value;
-
-        va_start(ap, data);
-        value = va_arg(ap, int*);
-        va_end(ap);
-
-	return directfb_get_video_eq(data, value);
+        vf_equalizer_t *eq=data;
+	return directfb_get_video_eq(eq->item, &eq->value);
       }
   };
   return VO_NOTIMPL;
