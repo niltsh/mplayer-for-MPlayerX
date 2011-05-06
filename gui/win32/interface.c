@@ -493,7 +493,7 @@ void guiInit(void)
     /* Create The gui thread */
     if (!mygui)
     {
-        hThread = _beginthreadex(NULL, 0, GuiThread, NULL, 0, &threadId);
+        hThread = CreateThread(NULL, 0, GuiThread, NULL, 0, &threadId);
         mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] Creating GUI Thread 0x%04x\n", threadId);
     }
 
