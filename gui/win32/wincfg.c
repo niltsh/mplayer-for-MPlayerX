@@ -56,7 +56,7 @@ int gui_main_pos_y = -2;
 int gui_sub_pos_x = -1;
 int gui_sub_pos_y = -1;
 
-static m_config_t *gui_conf;
+m_config_t *gui_conf;
 static const m_option_t gui_opts[] =
 {
     {   "priority", &proc_priority, CONF_TYPE_STRING, 0, 0, 0, NULL},
