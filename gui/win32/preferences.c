@@ -561,14 +561,14 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
                     if(guiIntfStruct.Playing) guiGetEvent(guiCEvent, (void *)guiSetStop);
 
                     /* Set the video driver */
-                    gfree(video_driver_list[0]);
+                    free(video_driver_list[0]);
                     strl = SendMessage(vo_driver, CB_GETCURSEL, 0, 0);
                     video_driver_list[0] = malloc(strl);
                     SendMessage(vo_driver, CB_GETLBTEXT, (WPARAM)strl,
                                 (LPARAM)video_driver_list[0]);
 
                     /* Set the audio driver */
-                    gfree(audio_driver_list[0]);
+                    free(audio_driver_list[0]);
                     strl = SendMessage(ao_driver, CB_GETCURSEL, 0, 0);
                     audio_driver_list[0] = malloc(strl);
                     SendMessage(ao_driver, CB_GETLBTEXT, (WPARAM)strl,

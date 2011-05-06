@@ -34,7 +34,6 @@
 #define SOLID_GREY (HBRUSH) CreateSolidBrush(RGB(232, 232, 232))
 #define SOLID_GREY2 (HBRUSH) CreateSolidBrush(RGB(175, 175, 175))
 
-#define gfree free
 
 #define MAXFILE 1024
 

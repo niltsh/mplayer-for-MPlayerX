@@ -433,8 +433,10 @@ void mplSetFileName(char *dir, char *name, int type)
         guiSetDF(guiIntfStruct.Filename, dir, name);
 
     guiIntfStruct.StreamType = type;
-    free((void **) &guiIntfStruct.AudioFile);
-    free((void **) &guiIntfStruct.Subtitlename);
+    free(guiIntfStruct.AudioFile);
+    guiIntfStruct.AudioFile = NULL;
+    free(guiIntfStruct.Subtitlename);
+    guiIntfStruct.Subtitlename = NULL;
 }
 
 void mplFullScreen( void )
