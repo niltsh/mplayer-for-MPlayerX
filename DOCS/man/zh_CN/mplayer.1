@@ -1,5 +1,5 @@
-.\" sync with en/mplayer.1 rev. 33336
-.\" fix translation error in legacy parts: currently fixed up to (1463)
+.\" sync with en/mplayer.1 rev. 33382
+.\" fix translation error in legacy parts: currently fixed up to (1829 \-radio)
 .\"
 .\" MPlayer (C) 2000-2010 MPlayer 团队
 .\" 本(英文)手册页由 Gabucino, Diego Biurrun, Jonas Jermann 编写
@@ -70,7 +70,7 @@ mencoder \- 影视编解码器
 .
 .br
 .B mplayer
-[dvd|dvdnav]://[标题|[开始标题]\-结束标题][/设备]
+[dvd|dvdnav]://[标题|[起始标题]\-中止标题][/设备]
 [若干选项]
 .
 .br
@@ -104,7 +104,7 @@ mf://[文件过滤码|@列表文件]
 .
 .br
 .B mplayer
-[cdda|cddb]://音轨[\-结束音轨][:速度][/设备]
+[cdda|cddb]://音轨[\-中止音轨][:速度][/设备]
 [若干选项]
 .
 .br
@@ -208,17 +208,17 @@ MPlayer 有一个完全可配置的，命令驱动的控制层面，
 .B 键盘控制
 .PD 0
 .RS
-.IPs "<\- 和 \->"
+.IPs "左 和 右"
 后退/\:快进 10 秒钟。
-.IPs "up 和 down"
+.IPs "上 和 下"
 快进/\:后退 1 分钟。
-.IPs "pgup 和 pgdown"
+.IPs "PGUP 和 PGDWN"
 快进/\:后退 10 分钟。
 .IPs "[ 和 ]"
 将当前播放速度减少/增加 10%。
 .IPs "{ 和 }"
 减半/加倍当前播放速度。
-.IPs "backspace"
+.IPs "BACKSPACE"
 将播放速度重置为正常水平。
 .IPs "< 和 >"
 在播放列表中后退/\:前进。
@@ -281,7 +281,7 @@ MPlayer 有一个完全可配置的，命令驱动的控制层面，
 .IPs "r 和 t"
 将字幕向上/下移动。
 .IPs "i（仅用于 \-edlout 模式）"
-设置 EDL 略过段落的开始点或末尾点，并写入指定的文件。
+设置 EDL 跳过段落的起始点或中止点，并写入指定的文件。
 .IPs "s（仅用于 \-vf screenshot）"
 截屏。
 .IPs "S（仅用于 \-vf screenshot）"
@@ -291,7 +291,7 @@ MPlayer 有一个完全可配置的，命令驱动的控制层面，
 .IPs "P\ \ \ \ "
 在 OSD 上显示进度条、已播放时间以及总长度信息。
 .IPs "! 和 @"
-定位到前一章节/后一章节的开始处。
+定位到前一章节/后一章节的起始处。
 .IPs "D（仅用于\-vo xvmc、\-vo vdpau、\-vf yadif、\-vf kerndeint）"
 激活/禁用解除隔行扫描过滤器。
 .IPs "A"
@@ -365,7 +365,7 @@ MPlayer 有一个完全可配置的，命令驱动的控制层面，
 .PD 1
 .PP
 .RS
-（以下的按键仅用于编译时包含对于 TV 或 DVB 输入的支持的情况，并且优先级高于以上的按键定义。）
+（以下的按键仅用于编译时包含对于电视或数字视频广播输入的支持的情况，并且优先级高于以上的按键定义。）
 .RE
 .PP
 .PD 0
@@ -677,7 +677,7 @@ vo_panscan
 配置集的开头为放在方括号中的名称，如：“[my-profile]”。
 所有之后的选项成为配置集的一部分。
 可用 profile-desc 选项定义描述内容（使用 \-profile help 将其显示出来）。
-要结束该配置集的定义，只需开始定义另一个配置集，或使用配置集名称“default”以继续定义
+要中止该配置集的定义，只需开始定义另一个配置集，或使用配置集名称“default”以继续定义
 常规的选项。
 .fi
 .PP
@@ -939,8 +939,8 @@ MOUSE_BTN0\-MOUSE_BTN0_DBL 事件。
 .TP
 .B \-edlout <文件名>
 新建文件并写入 EDL（编辑决定列表）记录。
-播放时，用户按“i”键标记跳过区域的开始或结束点。
-该功能提供给用户一个以后能精确调整的 EDL 项的开始点。
+播放时，用户按“i”键标记跳过区域的起始或中止点。
+该功能提供给用户一个以后能精确调整的 EDL 项的起始点。
 详情参见 http://www.mplayerhq.hu/\:DOCS/\:HTML/\:en/\:edl.html。
 .
 .TP
@@ -967,7 +967,7 @@ EDL 记录含有一些只对这个特定文件来说是正确的绝对数值。�
 .
 .TP
 .B \-enqueue（仅用于图形界面）
-将命令行中给定的文件排入播放列表但不立刻播放。
+将命令行中所给文件排入播放列表但不立刻播放。
 .
 .TP
 .B \-fixed\-vo
@@ -1062,11 +1062,11 @@ mplayer \-heartbeat\-cmd "gnome\-screensaver\-command \-p" file
 .IPs js-dev
 指定使用的操纵杆设备（默认值：/dev/\:input/\:js0）。
 .IPs file=<文件名>
-从给定文件中读取命令。
+从所给文件中读取命令。
 通常有助于与先入先出管道一同使用。
 .br
 .I 注意：
-当给定文件是先入先出管道时，MPlayer 会打开两个管道两端，这样就可以
+当所给文件是先入先出管道时，MPlayer 会打开两个管道两端，这样就可以
 重复执行‘echo "seek 10" > mp_pipe’而管道仍然有效。
 .RE
 .PD 1
@@ -1391,8 +1391,8 @@ MPlayer 在输出详细信息模式下（\-v）运行时会打印可用的语言
 （参见“交互式控制”部分）。
 与 \-dumpstream 相同，除了 MPEG 媒体流，该选项可能产生
 不了可用的输出。
-需注意的是，由于缓存有延迟，抓取到的数据的开始
-和结束位置比所见到的位置靠后。
+需注意的是，由于缓存有延迟，抓取到的数据的起始
+和中止位置比所见到的位置靠后。
 .
 .TP
 .B \-cdda <选项1:选项2>（仅用于 CD 数字音频）
@@ -1465,164 +1465,176 @@ MPlayer 要求解码器将音频解码为该选项所指定的
 .PD 1
 .
 .TP
-.B \-chapter <场景标识>[\-<末尾场景标识>] (仅适用于 dvd:// 和 dvdnav://)
-指定从哪个场景开始播放。也可以指定在哪个场景结束播放 (默认值为: 1)。
+.B \-chapter <章节代码>[\-<中止章节代码>]（仅用于 dvd:// 和 dvdnav://）
+指定从哪个章节开始播放。
+可同时指定播放至哪个场景中止（默认值：1）。
 .
 .TP
-.B \-cookies (仅适用于网络)
-HTTP 请求时发送 cookies。
+.B \-cookies（仅用于网络）
+HTTP 请求时发送 cookie。
 .
 .TP
-.B \-cookies\-file <文件名> (仅适用于网络)
-从 <文件名> 中读取 HTTP cookies (默认是: ~/.mozilla/ 和 ~/.netscape/)
-而跳过从默认位置读取。
+.B \-cookies\-file <文件名>（仅用于网络）
+从 <文件名> 中读取 HTTP cookie（默认路径：~/.mozilla/ 和 ~/.netscape/）
+并且不从默认位置读取 cookie。
 假定文件是 Netscape 格式。
 .
 .TP
-.B \-delay <数>
-音频延迟数秒 (正或负的浮点数)
+.B \-delay <秒数>
+以秒为单位的音频延迟长度（正或负的浮点数）
 .br
 负值延迟音频，而正值延迟视频。
-注意这与MEncoder的\-audio\-delay选项正好相反。
+注意该选项与 MEncoder 的 \-audio\-delay 选项效果正好相反。
 .br
-.I 注意:
-当和 MEncoder 一起用时, 并不保证能与 \-ovc copy 一起工作正常;
-请使用 \-audio\-delay。
+.I 注意：
+当用于 MEncoder 时，该选项并不一定能与 \-ovc copy 一起正确地发挥作用；
+需改为使用 \-audio\-delay。
 .
 .TP
 .B \-ignore\-start
-忽略 AVI 文件中指定的流开始时间。
-对于 MPlayer, 用 \-audio\-delay 选项编码的文件废除了流延迟。
-在编码时期, 此选项防止 MEncoder 转送原流的开始时间到新的文件;
+忽略 AVI 文件中指定的流起始时间。
+在 MPlayer 中，该选项使文件中用 \-audio\-delay 选项编码的
+媒体流的延迟无效。
+在编码时，该选项防止 MEncoder 将原来媒体流的起始时间写入新文件中；
 但是 \-audio\-delay 选项并不受影响。
-注意 MEncoder 有时会自动调整流开始时间以补偿预期的解码延迟,
-所以没有测试之前不要使用此选项进行编码。
+注意，MEncoder 有时会自动调整流的起始时间以补偿预计
+将出现的解码延迟，所以未测试之前勿使用该选项
+进行编码。
 .
 .TP
 .B \-demuxer <[+]类型名>
-锁定分路器类型。
-在名称前使用 "+" 锁定类型, 跳过某些核查!
-按照 \-demuxer help 打印出来的指定分路器类型。
-为了向后兼容, 也接受定义在 libmpdemux/\:demuxer.h 的分路器标识。
+强制使用指定类型的流分离器。
+要强制使用该类型，就在其名称前加上“+”。这样会跳过某些检查！
+需使用 \-demuxer help 打印出来的流分离器名称。
+为了向后兼容，该选项中也可使用 libmpdemux/\:demuxer.h 中定义的
+流分离器代码。
 .
 .TP
-.B \-dumpaudio (仅用于 MPlayer)
-转储原始的音频压缩流到 ./stream.dump (用于 MPEG/\:AC-3,
-对大多数其它情形, 转储的文件不可播放)。
-如果你在命令行中指定多于其中 \-dumpaudio, \-dumpvideo, \-dumpstream
-的一个, 只有最后一个生效。
+.B \-dumpaudio（仅用于 MPlayer）
+将原始未压缩的音频流导出到 ./stream.dump 中（对于 MPEG/\:AC-3 有作用，
+其它情况下大多数生成的文件无法播放）。
+如果在命令行中指定多个 \-dumpaudio、\-dumpvideo或\-dumpstream 选项，
+则只有最后一个生效。
 .
 .TP
-.B \-dumpfile <文件名> (仅用于 MPlayer)
-指定 MPlayer 应该转储到的文件。
-应该与 \-dumpaudio / \-dumpvideo / \-dumpstream \-capture 一起使用。
+.B \-dumpfile <文件名>（仅用于 MPlayer）
+指定 MPlayer 应该导出至哪个文件。
+应与 \-dumpaudio / \-dumpvideo / \-dumpstream \-capture 一同使用。
 .
 .TP
-.B \-dumpstream (仅用于 MPlayer)
-转储原始流到 ./stream.dump。
-从 DVD 或网络上抓取的时候有用。
-如果你在命令行中指定多于其中 \-dumpaudio, \-dumpvideo, \-dumpstream
-的一个, 只有最后一个生效。
+.B \-dumpstream（仅用于 MPlayer）
+将未处理的媒体流导出到 ./stream.dump 中。
+有助于从 DVD 或网络上抓取内容。
+如果在命令行中指定多个 \-dumpaudio、\-dumpvideo、\-dumpstream 选项，
+则只有最后一个生效。
 .
 .TP
-.B \-dumpvideo (仅用于 MPlayer)
-转储原始流到 ./stream.dump (不是十分有用)。
-如果你在命令行中指定多于其中 \-dumpaudio, \-dumpvideo, \-dumpstream
-的一个, 只有最后一个生效。
+.B \-dumpvideo（仅用于 MPlayer）
+将原始未压缩的视频流导出到 ./stream.dump 中（不是十分有用）。
+如果在命令行中指定多个 \-dumpaudio、\-dumpvideo、\-dumpstream 选项，
+则只有最后一个生效。
 .
 .TP
-.B \-dvbin <选项> (仅用于 DVB)
-为了替代默认的值, 把下面的参数传递给 DVB 输入模块:
+.B \-dvbin <若干选项>（仅用于数字视频广播）
+将以下参数传给数字视频广播输入模块，
+以替换默认参数：
 .sp 1
 .PD 0
 .RSs
 .IPs card=<1\-4>
-指定使用卡号 1\-4 (默认是: 1).
+指定使用的数字电视卡号 1\-4（默认值：1）。
 .IPs file=<文件名>
-指示 MPlayer 从频道中读取 <文件名>。
-默认是 ~/.mplayer/\:channels.conf.{sat,ter,cbl,atsc} (基于卡的类型)
-或者最后于求助 ~/.mplayer/\:channels.conf。
-.IPs timeout=<1\-30>
-放弃试图调谐的最大等候秒数(默认是: 30)。
+指示 MPlayer 从 <文件名> 中读取频道列表。
+默认是从 ~/.mplayer/\:channels.conf.{sat,ter,cbl,atsc}（取决于数字电视卡的类型）
+或是在前者都无效时从 ~/.mplayer/\:channels.conf 读取。
+.IPs timeout=<1\-240>
+尝试调整频率时放弃调整前最大等候秒数（默认值：30）。
 .RE
 .PD 1
 .
 .TP
-.B \-dvd\-device <设备路径> (仅用于 DVD)
-指定 DVD 设备或 .iso 文件名（默认是: /dev/\:dvd）。
-你也可以指定目录, 其中包含以前直接从 DVD 拷贝（比如用 vobcopy）的文件。
+.B \-dvd\-device <设备路径>（仅用于 DVD）
+指定 DVD 设备或 .iso 文件名（默认值：/dev/\:dvd）。
+也可以指定一个目录，其中包含之前（使用 vobcopy 之类工具）
+直接从 DVD 拷贝的文件。
 .
 .TP
-.B \-dvd\-speed <以KB/s为单位的因数或速度值> （仅适用于DVD）
-尝试限制DVD的传输速度（默认值：0，代表不作更改）。
-DVD的基础速率约为1350KB/s，所以一台8倍速的驱动器能以最高10800KB/s的速度读取
+.B \-dvd\-speed <以 KB/s 为单位的因数或速度值>（仅用于DVD）
+尝试限制 DVD 的传输速度（默认值：0，不作更改）。
+DVD的基础速率约为 1350KB/s，所以一台8倍速的驱动器能以最高 10800KB/s 的速度读取
 数据。
-较低的速度使驱动器工作得更安静，对于观看DVD片来说，2700KB/s应该是足够安静且快速
-了。
-MPlayer在关闭时将驱动器的速度重置至默认值。
-数值如果小于100则表示1350KB/s的倍数，例如\-dvd\-speed 8表示选择10800KB/s。
+速度越低驱动器工作得越安静，对于观看 DVD 影片来说，2700KB/s 应该是既安静且
+传输足够快了。
+MPlayer 在关闭时将驱动器的速度重置为默认值。
+数值如果小于 100 则表示 1350KB/s 的倍数，例如 \-dvd\-speed 8 表示
+选择 10800KB/s。
 .br
 .I 注意：
-你需要用DVD设备的写权限以更改传输速度。
+更改传输速度需要 DVD 设备的写入权限。
 .
 .TP
-.B \-dvdangle <视角标识> (仅用于 DVD)
+.B \-dvdangle <视角代码>（仅用于 DVD）
 有些 DVD 碟片中的场景可以从多个视角观看。
-这里你可以告诉 MPlayer 使用哪个视角(默认是: 1)。
+通过该选项可以告诉 MPlayer 使用哪个视角（默认值：1）。
 .
 .TP
 .B \-edl <文件名>
-回放时启用编辑决定列表(EDL)。
-根据给定文件的条目视频被跳过, 而音频或静音或不静音。
-如何使用详情请参见 http://www.mplayerhq.hu/\:DOCS/\:HTML/\:en/\:edl.html。
+播放时启用编辑决定列表（EDL）。
+根据所给文件中的条目，将跳过某段视频，
+音频设为静音或不静音。
+参见 http://www.mplayerhq.hu/\:DOCS/\:HTML/\:en/\:edl.html 以
+了解使用该选项的详情。
 .
 .TP
-.B \-endpos <[[hh:]mm:]ss[.ms]|size[b|kb|mb]> (也请参见 \-ss 和 \-sb)
-停止在给定的时间或以字节计的位置。
+.B \-endpos <[[hh:]mm:]ss[.ms]|size[b|kb|mb]>（另参见 \-ss 和 \-sb）
+停止在所给时间或字节数表示的位置。
 .br
 .I 注意：
-以字节计的位置可能不精确，因为只能暂停在帧数据块的边界上。
-当与 \-ss 选项组合使用时, \-endpos 的时间会向前移动 \-ss 指定的秒数。
+字节数表示的位置可能不精确，因为只能停在帧数据块的边界上。
+当与 \-ss 选项组合使用时，\-endpos 的时间会向前平移 \-ss 指定
+的秒数。
 .sp 1
-.I 示例:
+.I 示例：
 .PD 0
 .RSs
 .IPs "\-endpos 56"
-56 秒后停止。
+停在 56 秒处。
 .IPs "\-endpos 01:10:00"
-1 小时 10 分后停止。
+停在 1 小时 10 分处。
 .IPs "\-ss 10 \-endpos 56"
 1 分 6 秒后停止。
 .IPs "\-endpos 100mb"
-只编码 100 MB。
+只编码 100 MB 的数据。
 .RE
 .PD 1
 .
 .TP
 .B \-forceidx
-强制索引重建。
-对索引受损的文件(A/V 不同步等等)有用。
-这使得不可能搜索的文件启用搜索。
-你能使用 MEncoder 永久性地修复索引 (请参见文档)。
+强制重建索引。
+有助于索引受损（音视频不同步等）的文件。
+这使无法播放时定位的文件能够定位。
+可使用 MEncoder 永久性地修复索引（参见文档）。
 .br
-.I 注意:
-此选项仅对原本支持搜索的媒体有效 (即不能是: 标准输入, 管道, 等)。
+.I 注意：
+该选项仅当所处理的媒体支持播放时定位时有效
+（即不能是：标准输入、管道等）。
 .
 .TP
-.B \-fps <浮点数>
-重载帧速率。
-如果原先的值是错误的或缺少的有用。
+.B \-fps <浮点数值>
+改写视频帧速率。
+有助于原始数值错误或不存在的情况。
 .
 .TP
-.B \-frames <参数值>
-只播放/\:转换前<参数值>帧, 然后退出。
+.B \-frames <数字>
+只播放/\:转换最初的 <数字> 帧，然后退出。
 .
 .TP
-.B \-hr\-mp3\-seek (仅用于 MP3)
-高精度 MP3 搜索。
-播放外部 MP3 文件时启用,
-因为我们需要搜索到非常精确的位置来保持 A/V 同步。
-这种方法在后退搜索时尤其慢, 因为需要绕回到开头来寻找准确的帧位置。
+.B \-hr\-mp3\-seek（仅用于 MP3）
+高精度 MP3 播放定位。
+播放外部 MP3 文件时启用，
+因为此时需要定位到非常精确的位置以保持音视频同步。
+向后定位时可能尤其慢，因为需要绕回到开头以
+寻找帧的准确位置。
 .
 .TP
 .B \-http-header-fields <字段1,字段2>
@@ -1654,153 +1666,161 @@ Connection: close
 .RE
 .
 .TP
-.B \-idx (也请参见 \-forceidx)
-在没有找到索引的情况下重建文件的索引, 从而允许搜索。
-对于损坏的/\:不完整的下载, 或制作低劣的文件有用。
+.B \-idx（另参见 \-forceidx）
+在没有找到索引的情况下重建文件的索引，从而播放时能够定位。
+有助于下载有误/\:不完整的文件，或生成错误的文件。
 .br
-.I 注意:
-此选项仅对原本支持搜索的媒体有效 (即不能是: 标准输入, 管道, 等)。
+.I 注意：
+该选项仅当原本支持播放时定位的媒体时有效
+（即不能是：标准输入、管道等）。
 .
 .TP
 .B \-noidx
 跳过重建索引文件的步骤。
-MEncoder在此选项下跳过写入索引的步骤。
+MEncoder 在该选项下跳过写入索引的步骤。
+.
 .TP
-.B \-ipv4\-only\-proxy (仅适用于网络)
-对于 IPv6 地址跳过代理服务器。
-仍然用于 IPv4 连接。
+.B \-ipv4\-only\-proxy（仅用于网络）
+使用 IPv6 地址时不用代理服务器。
+IPv4 连接仍然使用代理。
 .
 .TP
 .B \-loadidx <索引文件>
-从 \-saveidx 保存的此文件中, 读取视频索引数据。
-索引用于搜索, 过载其它任何包含在 AVI 本身的索引。
-MPlayer 不阻止你装载产生于不同 AVI 的索引文件,
-但是的确会导致不利的结果。
+从该文件中读取 \-saveidx 保存的视频索引数据。
+该索引用于播放时的定位，替换其它一切 AVI 本身
+装载的索引。
+MPlayer 并不防止加载产生自不同 AVI 文件的索引，
+但是这肯定会导致不良的结果。
 .br
-.I 注意:
-既然 MPlayer 现在支持 OpenDML, 此选项已废弃。
+.I 注意：
+由于 MPlayer 现在已经支持 OpenDML，该选项已废弃。
 .
 .TP
-.B \-mc <每帧秒数>
-每帧的最大 A-V 同步修正(以秒为单位)。
+.B \-mc <秒数/帧>
+（以秒为单位的）每帧最大的音视频同步修正量。
 .br
-对于 mencoder，\-mc 0 应当总是与 \-noskip 一同使用，否则几乎必然导致音视频
-不同步。
+使用 mencoder 时，\-mc 0 应当总是与 \-noskip 一同使用，否则几乎
+必然导致音视频不同步。
 .
 .TP
 .B \-mf <选项1:选项2:...>
-用来从多个 PNG 或 JPEG 文件中解码。
+用于从多个 PNG 或 JPEG 文件中解码。
 .sp 1
-可用选项有:
+可用选项有：
 .sp 1
 .PD 0
 .RSs
 .IPs w=<参数值>
-输入文件的宽度 (默认是: 自动检测)
+输入图像文件的宽度（默认值：自动检测）
 .IPs h=<参数值>
-输入文件的高度 (默认是: 自动检测)
+输入图像文件的高度（默认是值：自动检测）
 .IPs fps=<参数值>
-输出的帧率 (默认是: 25)
+输出的帧率（默认值：25）
 .IPs type=<参数值>
-输入文件的类型 (可用类型是: jpeg, png, tga, sgi)
+输入文件类型（可用类型：jpeg、png、tga、sgi）
 .RE
 .PD 1
 .
 .TP
-.B \-ni (仅用于 AVI)
-锁定使用非交错的 AVI 分析器(修复某些质量差的 AVI 文件的播放)。
+.B \-ni（仅用于 AVI）
+强制使用非交错 AVI 解析器（修复某些异常 AVI 文件
+的播放错误）。
 .
 .TP
-.B \-nobps (仅用于 AVI)
-不使用平均比特率值来维持 A-V 同步。
-对某些文件头损坏的 AVI 文件有帮助。
+.B \-nobps（仅用于 AVI）
+不使用平均字节/秒的信息以维持音视频同步。
+有助于某些文件头损坏的 AVI 文件。
 .
 .TP
 .B \-noextbased
-停用基于后缀名的分路器选择机制。
-默认情况下, 当文件类型(分路器)无法可靠检测时
-(文件没有头部或者不够可靠), 使用文件后缀名来选择分路器。
-基于内容的分路器总是可作为备用的。
+禁止基于扩展名选择流分离器。
+默认情况下，当无法可靠检测文件类型（流分离器）时
+（文件没有头部数据或者该数据不可靠），将使用文件
+扩展名以选择流分离器。
+使用该选项后，总是退而基于内容选择流分离器。
 .
 .TP
-.B \-passwd <密码> (也请参见\-user 选项) (仅适用于网络)
-设置 http 认证密码.
+.B \-passwd <密码>（另参见 \-user 选项）（仅用于网络）
+设置 http 认证密码。
 .
 .TP
-.B \-prefer\-ipv4 (仅适用于网络)
-使用 IPv4 网络连接。
-IPv6 自动地作为备用。
+.B \-prefer\-ipv4（仅用于网络）
+使用 IPv4 连接网络。
+失败时自动退而使用 IPv6。
 .
 .TP
-.B \-prefer\-ipv6 (仅适用于 IPv6 网络)
-使用 IPv6 网络连接。
-IPv4 自动地作为备用。
+.B \-prefer\-ipv6（仅用于 IPv6 网络）
+使用 IPv6 连接网络。
+失败时自动退而使用 IPv4。
 .
 .TP
-.B \-psprobe <字节所在位置>
-当播放 MPEG-PS 或 MPEG-PES 流时，此选项让你设定你希望 MPlayer 查看多少字节以确认
-所要使用的视频编/解码器。
-在播放含有 H.264 流的 EVO 或 VDR 文件时需要此选项。
+.B \-psprobe <以字节计量的位置>
+当播放 MPEG-PS 或 MPEG-PES 流时，该选项用以设定
+希望 MPlayer 扫描多少字节以确认所要使用的
+视频编解码器。
+播放含有 H.264 流的 EVO 或 VDR 文件时需要该选项。
 .
 .TP
-.B \-pvr <选项1:选项2:...> (仅适用于 PVR)
-此选项调谐 PVR 捕捉模块的各种编码属性。
-不得不与基于硬件 MPEG 编码器 V4L2 驱动支持的卡一起使用。
+.B \-pvr <选项1:选项2:...>（仅用于 PVR）
+该选项调整 PVR 捕捉模块的各种编码属性。
+必须与 V4L2 驱动支持的 MPEG 硬编码卡
+一起使用。
 Hauppauge WinTV PVR\-150/250/350/500 和所有基于 IVTV 的卡
-是众所周知的 PVR 捕捉卡。
-小心只有 Linux 2.6.18 及以上的内核能通过 V4L2 层处理 MPEG 流。
-对于 MPEG 流硬件捕捉卡并使用 MPlayer/MEncoder 来观看电影的,
-使用 "pvr://" 作为 URL 地址。
+据悉是 PVR 捕捉卡。
+注意只有 Linux 2.6.18 及以上的内核能通过 V4L2 层
+处理 MPEG 流。
+要硬件捕捉 MPEG 流并使用 MPlayer/MEncoder 来观看其内容，
+使用“pvr://”作为影片的 URL 地址。
 .sp 1
-可用选项有:
+可用选项有：
 .RSs
 .IPs aspect=<0\-3>
-指定宽高比:
+指定输入宽高比：
 .RSss
-0: 1:1
+0：1:1
 .br
-1: 4:3 (默认)
+1：4:3（默认值）
 .br
-2: 16:9
+2：16:9
 .br
-3: 2.21:1
+3：2.21:1
 .REss
 .IPs arate=<32000\-48000>
-指定编码音频率(encoding audio rate) (默认是: 48000 Hz, 可用的有: 32000,
+指定编码音频的码率（默认值：48000 Hz，可用值：32000、
 44100 和 48000 Hz)。
 .IPs alayer=<1\-3>
-指定编码 MPEG 音频层 (默认是: 2)。
+指定 MPEG 音频编码层级（默认值：2）。
 .IPs abitrate=<32\-448>
-指定音频编码比特率(以 kbps 为单位) (默认是: 384)。
+指定音频编码比特率（以 kbps 为单位）（默认值：384）。
 .IPs amode=<参数值>
 指定音频编码模式。
-可用的预设值是 "stereo", "joint_stereo", "dual" 和 "mono" (默认是: stereo)。
+可用预设值有“stereo”、“joint_stereo”、“dual”和“mono”（默认值：stereo）。
 .IPs vbitrate=<参数值>
-指定平均编码视频比特率(以 Mbps 为单位) (默认是: 6)。
+指定（以 Mbps 为单位的）编码视频的平均比特率（默认值：6）。
 .IPs vmode=<参数值>
-指定视频编码模式:
+指定视频编码模式：
 .RSss
-vbr: Variable BitRate (可变比特率) (默认)
+vbr：可变比特率（默认值）
 .br
-cbr: Constant BitRate (常量比特率)
+cbr：恒定比特率
 .REss
 .IPs vpeak=<参数值>
-指定编码视频比特率峰值(以 Mbps 为单位)
-(只对 VBR 编码有用, 默认是: 9.6)。
+指定以 Mbps 为单位的编码视频的比特率峰值
+（只对 VBR 编码有用，默认值：9.6）。
 .IPs fmt=<参数值>
-选择进行编码的 MPEG 格式:
+选择用于编码的 MPEG 格式：
 .RSss
-ps:    MPEG-2 Program Stream (MPEG-2 程序流) (默认)
+ps：   MPEG-2 节目流（默认值）
 .br
-ts:    MPEG-2 Transport Stream (MPEG-2 传输流)
+ts：   MPEG-2 传输流
 .br
-mpeg1: MPEG-1 System Stream (MPEG-1 系统流)
+mpeg1：MPEG-1 系统流
 .br
-vcd:   Video CD compatible stream (VCD 可兼容流)
+vcd：  VCD 可兼容流
 .br
-svcd:  Super Video CD compatible stream (SVCD 可兼容流)
+svcd： SVCD 可兼容流
 .br
-dvd:   DVD compatible stream (DVD 可兼容流)
+dvd：  DVD 可兼容流
 .REss
 .RE
 .PD 1
@@ -5219,7 +5239,7 @@ Jan Meier 回路实现算法（fcut=650, feed=95）
 .RE
 .sp 1
 .RS
-如果同时指定了 fcut 或 feed 选项与配置，则这两个选项将覆盖配置中选项的值。
+如果同时指定了 fcut 或 feed 选项与配置，则这两个选项将替换配置中选项的值。
 .RE
 .RE
 .PD 1
