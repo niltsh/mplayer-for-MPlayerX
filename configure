@@ -5184,8 +5184,8 @@ echores "$_gl"
 
 
 echocheck "MatrixView"
-if test "$matrixview" = auto && test "$_gl" = no ; then
-  matrixview=no
+if test "$matrixview" = auto ; then
+  matrixview="$_gl"
 fi
 if test "$matrixview" = yes ; then
   vomodules="matrixview $vomodules"
