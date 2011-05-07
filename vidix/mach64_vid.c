@@ -642,7 +642,6 @@ static void mach64_vid_stop_video( void )
 
 static void mach64_vid_display_video( void )
 {
-    uint32_t vf;
     mach64_fifo_wait(14);
 
     OUTREG(OVERLAY_Y_X_START,			besr.y_x_start);
@@ -672,7 +671,7 @@ static void mach64_vid_display_video( void )
 // bit 28-31 nothing interresting just crashed my system when i played with them  :(
 
     mach64_wait_for_idle();
-    vf = INREG(VIDEO_FORMAT);
+    INREG(VIDEO_FORMAT);
 
 // Bits 16-19 seem to select the format
 // 0x0  dunno behaves strange
@@ -718,7 +717,7 @@ static void mach64_vid_display_video( void )
 
 static int mach64_vid_init_video( vidix_playback_t *config )
 {
-    uint32_t src_w,src_h,dest_w,dest_h,pitch,h_inc,v_inc,left,leftUV,top,ecp,y_pos;
+    uint32_t src_w,src_h,dest_w,dest_h,pitch,h_inc,v_inc,left,top,ecp,y_pos;
     int is_420,best_pitch,mpitch;
     int src_offset_y, src_offset_u, src_offset_v;
     unsigned int i;
@@ -837,7 +836,6 @@ static int mach64_vid_init_video( vidix_playback_t *config )
 	mach64_buffer_base[i][2]= (mach64_overlay_offset + config->offsets[i] + src_offset_v)&~15;
     }
 
-    leftUV = (left >> 17) & 15;
     left = (left >> 16) & 15;
     besr.scale_inc = ( h_inc << 16 ) | v_inc;
     y_pos = config->dest.y;
