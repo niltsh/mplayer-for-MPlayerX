@@ -75,7 +75,6 @@ char section[64];
 int i,j;
 int chardb=0;
 int fontdb=-1;
-int version=0;
 int first=1;
 
 desc=malloc(sizeof(font_desc_t));if(!desc) goto fail_out;
@@ -233,7 +232,9 @@ while(fgets(sor,1020,f)){
           continue;
       }
       if(pdb==2 && strcmp(p[0],"descversion")==0){
-          version=atoi(p[1]);
+          // This version field was never used.
+          // Since bitmap fonts are now deprecated there is
+          // no point in handling it.
           continue;
       }
       if(pdb==2 && strcmp(p[0],"spacewidth")==0){
