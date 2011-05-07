@@ -255,6 +255,8 @@ static int cache_fill(cache_vars_t *s)
 }
 
 static int cache_execute_control(cache_vars_t *s) {
+  double double_res;
+  unsigned uint_res;
   static unsigned last;
   int quit = s->control == -2;
   if (quit || !s->stream->control) {
@@ -277,7 +279,8 @@ static int cache_execute_control(cache_vars_t *s) {
     case STREAM_CTRL_GET_CURRENT_TIME:
     case STREAM_CTRL_SEEK_TO_TIME:
     case STREAM_CTRL_GET_ASPECT_RATIO:
-      s->control_res = s->stream->control(s->stream, s->control, &s->control_double_arg);
+      s->control_res = s->stream->control(s->stream, s->control, &double_res);
+      s->control_double_arg = double_res;
       break;
     case STREAM_CTRL_SEEK_TO_CHAPTER:
     case STREAM_CTRL_GET_NUM_CHAPTERS:
@@ -285,7 +288,8 @@ static int cache_execute_control(cache_vars_t *s) {
     case STREAM_CTRL_GET_NUM_ANGLES:
     case STREAM_CTRL_GET_ANGLE:
     case STREAM_CTRL_SET_ANGLE:
-      s->control_res = s->stream->control(s->stream, s->control, &s->control_uint_arg);
+      s->control_res = s->stream->control(s->stream, s->control, &uint_res);
+      s->control_uint_arg = uint_res;
       break;
     default:
       s->control_res = STREAM_UNSUPPORTED;
