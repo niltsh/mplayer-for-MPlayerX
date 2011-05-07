@@ -105,9 +105,9 @@ void gtkClearList( GtkWidget * list )
 
 int gtkFindCList( GtkWidget * list,char * item )
 {
- gint    j,t;
+ gint    j;
  gchar * tmpstr;
- for( t=0,j=0;j<GTK_CLIST( list )->rows;j++ )
+ for( j=0;j<GTK_CLIST( list )->rows;j++ )
   {
    gtk_clist_get_text( GTK_CLIST( list ),j,0,&tmpstr );
    if ( !strcmp( tmpstr,item ) ) return j;
