@@ -21,6 +21,7 @@
 
 #include "config.h"
 #include "m_config.h"
+#include "mp_core.h"
 #include "playtree.h"
 #include "stream/stream.h"
 
@@ -239,7 +240,7 @@ char *gstrdup(const char *str);
 void *gtkSet(int cmd, float fparam, void *vparam);
 void guiDone(void);
 void guiEventHandling(void);
-void guiExit(int how);
+void guiExit(enum exit_reason how);
 int guiGetEvent(int type, void *arg);
 void guiInit(void);
 void guiLoadFont(void);

@@ -40,7 +40,6 @@
 #include "libvo/video_out.h"
 #include "libvo/x11_common.h"
 #include "mixer.h"
-#include "mp_core.h"
 #include "mp_msg.h"
 #include "mpcommon.h"
 #include "mplayer.h"
@@ -414,7 +413,7 @@ void guiDone(void)
     }
 }
 
-void guiExit(int how)
+void guiExit(enum exit_reason how)
 {
     exit_player_with_rc(how, how >= EXIT_ERROR);
 }
