@@ -65,7 +65,7 @@ fsdp_parse (const char *text_description, fsdp_description_t * dsc)
 {
   fsdp_error_t result;
   const char *p = text_description, *p2;
-  unsigned int index, j;
+  unsigned int j;
   /* temps for sscanf */
   const unsigned int TEMPCHARS = 6;
   char fsdp_buf[TEMPCHARS][MAXSHORTFIELDLEN];
@@ -252,7 +252,6 @@ fsdp_parse (const char *text_description, fsdp_description_t * dsc)
     return FSDPE_MISSING_TIME;
   dsc->time_periods = calloc (dsc->time_periods_count,
 			      sizeof (fsdp_time_period_t *));
-  index = 0;
   for (j = 0; j < dsc->time_periods_count; j++)
   {
     unsigned int h = 0;
