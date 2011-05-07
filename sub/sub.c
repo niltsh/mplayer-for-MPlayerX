@@ -671,7 +671,6 @@ inline static void vo_update_text_sub(mp_osd_obj_t* obj,int dxs,int dys){
    unsigned char *t;
    int c,i,j,l,x,y,font,prevc,counter;
    int k;
-   int lastStripPosition;
    int xsize;
    int xmin=dxs,xmax=0;
    int h,lasth;
@@ -690,7 +689,6 @@ inline static void vo_update_text_sub(mp_osd_obj_t* obj,int dxs,int dys){
       // too long lines divide into a smaller ones
       i=k=lasth=0;
       h=sub_font->height;
-      lastStripPosition=-1;
       l=vo_sub->lines;
 
     {
