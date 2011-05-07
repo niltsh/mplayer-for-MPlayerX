@@ -1307,7 +1307,7 @@ static const struct {
   {NULL,          NULL,       0                 }
 };
 
-static int control(uint32_t request, void *data, ...)
+static int control(uint32_t request, void *data)
 {
   switch (request) {
   case VOCTRL_PAUSE:

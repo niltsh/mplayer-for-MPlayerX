@@ -1291,7 +1291,7 @@ assert(rndr->shared.next_free_data_block_num == 0);
 return VO_TRUE;
 }
 
-static int control(uint32_t request, void *data, ... )
+static int control(uint32_t request, void *data)
 {
     switch (request){
         case VOCTRL_GET_DEINTERLACE:

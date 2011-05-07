@@ -35,7 +35,7 @@ int      vidix_init(unsigned src_width,unsigned src_height,
 int	 vidix_start(void);
 int	 vidix_stop(void);
 void     vidix_term( void );
-uint32_t vidix_control(uint32_t request, void *data, ...);
+uint32_t vidix_control(uint32_t request, void *data);
 uint32_t vidix_query_fourcc(uint32_t fourcc);
 
 #include "vidix/vidix.h"

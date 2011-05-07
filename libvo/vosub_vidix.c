@@ -62,7 +62,7 @@ static vidix_playback_t   vidix_play;
 static vidix_fourcc_t	  vidix_fourcc;
 static vo_functions_t *   vo_server;
 static vidix_yuv_t	  dstrides;
-/*static uint32_t (*server_control)(uint32_t request, void *data, ...);*/
+/*static uint32_t (*server_control)(uint32_t request, void *data);*/
 
 int vidix_start(void)
 {
@@ -577,7 +577,7 @@ static uint32_t vidix_get_image(mp_image_t *mpi)
     return VO_FALSE;
 }
 
-uint32_t vidix_control(uint32_t request, void *data, ...)
+uint32_t vidix_control(uint32_t request, void *data)
 {
   switch (request) {
   case VOCTRL_QUERY_FORMAT:
@@ -665,7 +665,6 @@ uint32_t vidix_control(uint32_t request, void *data, ...)
   }
   }
   return VO_NOTIMPL;
-  // WARNING: we drop extra parameters (...) here!
 //  return server_control(request,data); //VO_NOTIMPL;
 }
 

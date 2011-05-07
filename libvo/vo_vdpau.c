@@ -1314,7 +1314,7 @@ static int set_equalizer(char *name, int value)
     return update_csc_matrix();
 }
 
-static int control(uint32_t request, void *data, ...)
+static int control(uint32_t request, void *data)
 {
     if (handle_preemption() < 0)
         return VO_FALSE;

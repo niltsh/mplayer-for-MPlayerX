@@ -949,7 +949,7 @@ static int color_ctrl_get(char *what, int *value)
     return VO_TRUE;
 }
 
-static int control(uint32_t request, void *data, ...)
+static int control(uint32_t request, void *data)
 {
     switch (request) {
     case VOCTRL_GET_IMAGE:

@@ -412,7 +412,7 @@ static int preinit(const char *arg)
   return 0;
 }
 
-static int control(uint32_t request, void *data, ...)
+static int control(uint32_t request, void *data)
 {
   if(!sub_vo) return VO_ERROR;
   switch (request) {
