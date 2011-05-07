@@ -438,7 +438,7 @@ static char *menu_fribidi(char *txt)
   static size_t buffer_size = 1024;
   static char *outputstr;
 
-  FriBidiCharType base;
+  FriBidiParType base;
   fribidi_boolean log2vis;
   size_t len;
 
@@ -459,7 +459,7 @@ static char *menu_fribidi(char *txt)
       outputstr = realloc(outputstr, buffer_size);
     }
     len = fribidi_charset_to_unicode (char_set_num, txt, len, logical);
-    base = menu_fribidi_flip_commas?FRIBIDI_TYPE_ON:FRIBIDI_TYPE_L;
+    base = menu_fribidi_flip_commas?FRIBIDI_PAR_ON:FRIBIDI_PAR_LTR;
     log2vis = fribidi_log2vis (logical, len, &base, visual, NULL, NULL, NULL);
     if (log2vis) {
       len = fribidi_remove_bidi_marks (visual, len, NULL, NULL, NULL);
