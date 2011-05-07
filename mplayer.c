@@ -2757,7 +2757,10 @@ int gui_no_filename=0;
     parse_cfgfiles(mconfig);
 
 #ifdef CONFIG_GUI
-    if ( use_gui ) cfg_read();
+    if ( use_gui ) {
+      initialized_flags|=INITIALIZED_GUI;
+      cfg_read();
+    }
 #endif
 
     mpctx->playtree = m_config_parse_mp_command_line(mconfig, argc, argv);
@@ -3018,7 +3021,6 @@ current_module = NULL;
   if(use_gui){
        guiInit();
        guiGetEvent(guiSetContext, mpctx);
-       initialized_flags|=INITIALIZED_GUI;
        guiGetEvent( guiCEvent,(char *)((gui_no_filename) ? 0 : 1) );
   }
 #endif

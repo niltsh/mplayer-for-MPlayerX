@@ -52,8 +52,6 @@
 #include "stream/stream_dvd.h"
 #endif
 
-#define DONE -1
-
 guiInterface_t guiIntfStruct;
 
 int guiWinID = -1;
@@ -385,6 +383,7 @@ void guiInit(void)
 
 void guiDone(void)
 {
+    if (initialized) {
     mplMainRender = 0;
 
     mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] done.\n");
@@ -405,31 +404,19 @@ void guiDone(void)
 
     cfg_write();
     wsXDone();
-
-    guiExit(DONE);
-}
-
-// NOTE TO MYSELF: Before calling guiInit(), MPlayer calls GUI functions
-//                 cfg_read() and import_initial_playtree_into_gui(). Only
-//                 after guiInit() has been called successfully, guiDone()
-//                 (and thus guiExit()) will be executed by MPlayer on exit.
-//                 In other words, any MPlayer's exit between cfg_read() and
-//                 guiInit() will not execute guiDone().
-//                 With this function it is at least possible to handle
-//                 GUI's own abortions during (and before) guiInit().
-void guiExit(int how)
-{
-    if (!initialized || (how == DONE)) {
-        if (gui_conf) {
-            m_config_free(gui_conf);
-            gui_conf = NULL;
-        }
-
-        appFreeStruct();
     }
 
-    if (how != DONE)
-        exit_player_with_rc(how, how >= EXIT_ERROR);
+    appFreeStruct();
+
+    if (gui_conf) {
+        m_config_free(gui_conf);
+        gui_conf = NULL;
+    }
+}
+
+void guiExit(int how)
+{
+    exit_player_with_rc(how, how >= EXIT_ERROR);
 }
 
 void guiLoadFont(void)
