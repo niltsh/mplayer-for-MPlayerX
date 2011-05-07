@@ -885,7 +885,6 @@ static void draw_osd(void){
         XvMCSyncSubpicture(mDisplay,&subpicture);//todo usleeep wait!
 
         if(subpicture_mode == BLEND_SUBPICTURE){
-            struct render_info *info;
             osd_rndr = find_free_surface();
             if(osd_rndr == NULL)
                 return;// no free surface to draw OSD in
