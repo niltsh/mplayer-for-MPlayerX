@@ -1118,10 +1118,8 @@ void wsDestroyImage( wsTWindow * win )
 
 void wsCreateImage( wsTWindow * win,int Width,int Height )
 {
- int CompletionType = -1;
  if ( wsUseXShm )
   {
-   CompletionType=XShmGetEventBase( wsDisplay ) + ShmCompletion;
    win->xImage=XShmCreateImage( wsDisplay,win->VisualInfo.visual,
                    win->VisualInfo.depth,ZPixmap,NULL,&win->Shminfo,Width,Height );
    if ( win->xImage == NULL )
