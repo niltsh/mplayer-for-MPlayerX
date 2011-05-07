@@ -67,14 +67,13 @@
 #define ENOTSUP EOPNOTSUPP
 #endif
 
-/* from radeon_vid */
-#define GETREG(TYPE,PTR,OFFZ)		(*((volatile TYPE*)((PTR)+(OFFZ))))
-#define SETREG(TYPE,PTR,OFFZ,VAL)	(*((volatile TYPE*)((PTR)+(OFFZ))))=VAL
+#define GETREG(TYPE,PTR)		(*(volatile TYPE*)(PTR))
+#define SETREG(TYPE,PTR,VAL)		(*(volatile TYPE*)(PTR))=VAL
 
-#define readb(addr)		GETREG(uint8_t,(uint32_t)(addr),0)
-#define writeb(val,addr)	SETREG(uint8_t,(uint32_t)(addr),0,val)
-#define readl(addr)		GETREG(uint32_t,(uint32_t)(addr),0)
-#define writel(val,addr)	SETREG(uint32_t,(uint32_t)(addr),0,val)
+#define readb(addr)		GETREG(uint8_t,addr)
+#define writeb(val,addr)	SETREG(uint8_t,addr,val)
+#define readl(addr)		GETREG(uint32_t,addr)
+#define writel(val,addr)	SETREG(uint32_t,addr,val)
 
 static int mga_verbose = 0;
 
