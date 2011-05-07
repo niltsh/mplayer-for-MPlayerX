@@ -171,7 +171,7 @@ void unmap_phys_mem(void *ptr, unsigned long size)
 {
   int res = munmap(ptr,size);
 
-  if (res == (int)MAP_FAILED)
+  if (res == -1)
   {
       perror("libdha: unmapping memory failed");
       return;
