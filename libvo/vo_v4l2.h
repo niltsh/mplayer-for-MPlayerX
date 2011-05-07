@@ -25,6 +25,6 @@
 
 extern int v4l2_fd;
 
-int v4l2_write (unsigned char *data, int len);
+int v4l2_write (const unsigned char *data, int len);
 
 #endif /* MPLAYER_VO_V4L2_H */
