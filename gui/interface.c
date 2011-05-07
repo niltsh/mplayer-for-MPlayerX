@@ -384,26 +384,26 @@ void guiInit(void)
 void guiDone(void)
 {
     if (initialized) {
-    mplMainRender = 0;
+        mplMainRender = 0;
 
-    mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] done.\n");
+        mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] done.\n");
 
-    if (gui_save_pos) {
-        gui_main_pos_x = appMPlayer.mainWindow.X;
-        gui_main_pos_y = appMPlayer.mainWindow.Y;
-        gui_sub_pos_x  = appMPlayer.subWindow.X;
-        gui_sub_pos_y  = appMPlayer.subWindow.Y;
-    }
+        if (gui_save_pos) {
+            gui_main_pos_x = appMPlayer.mainWindow.X;
+            gui_main_pos_y = appMPlayer.mainWindow.Y;
+            gui_sub_pos_x  = appMPlayer.subWindow.X;
+            gui_sub_pos_y  = appMPlayer.subWindow.Y;
+        }
 
 #ifdef CONFIG_ASS
-    ass_enabled       = gtkASS.enabled;
-    ass_use_margins   = gtkASS.use_margins;
-    ass_top_margin    = gtkASS.top_margin;
-    ass_bottom_margin = gtkASS.bottom_margin;
+        ass_enabled       = gtkASS.enabled;
+        ass_use_margins   = gtkASS.use_margins;
+        ass_top_margin    = gtkASS.top_margin;
+        ass_bottom_margin = gtkASS.bottom_margin;
 #endif
 
-    cfg_write();
-    wsXDone();
+        cfg_write();
+        wsXDone();
     }
 
     appFreeStruct();
