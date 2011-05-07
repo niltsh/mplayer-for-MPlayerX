@@ -1283,7 +1283,7 @@ static int preinit(const char *arg)
     return 0;
 }
 
-static int get_equalizer(char *name, int *value)
+static int get_equalizer(const char *name, int *value)
 {
     if (!strcasecmp(name, "brightness"))
         *value = procamp.brightness * 100;
@@ -1298,7 +1298,7 @@ static int get_equalizer(char *name, int *value)
     return VO_TRUE;
 }
 
-static int set_equalizer(char *name, int value)
+static int set_equalizer(const char *name, int value)
 {
     if (!strcasecmp(name, "brightness"))
         procamp.brightness = value / 100.0;
