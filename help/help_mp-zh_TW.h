@@ -614,7 +614,7 @@ static const char help_text[]=
 #define MSGTR_EnterTelecineMode "\ndemux_mpg: 檢測到 24fps 漸進的 NTSC 内容, 改變幀率中。\n"
 
 #define MSGTR_CacheFill "\r緩存填充: %5.2f%% (%"PRId64" 字節)   "
-#define MSGTR_NoBindFound "找不到鍵 '%s' 的鍵綁定。"
+#define MSGTR_NoBindFound "找不到鍵 '%s' 的鍵綁定。\n"
 #define MSGTR_FailedToOpen "打開 %s 失敗。\n"
 
 // dec_video.c & dec_audio.c:

@@ -1090,13 +1090,14 @@ mp_input_get_cmd_from_keys(int n,int* keys, int paused) {
     cmd = mp_input_find_bind_for_key(def_cmd_binds,n,keys);
 
   if(cmd == NULL) {
-    mp_msg(MSGT_INPUT,MSGL_WARN,MSGTR_NoBindFound,mp_input_get_key_name(keys[0]));
-    if(n > 1) {
-      int s;
-      for(s=1; s < n; s++)
-	mp_msg(MSGT_INPUT,MSGL_WARN,"-%s",mp_input_get_key_name(keys[s]));
+    char key_name[100];
+    int i;
+    av_strlcpy(key_name, mp_input_get_key_name(keys[0]), sizeof(key_name));
+    for (i = 1; i < n; i++) {
+      av_strlcat(key_name, "-", sizeof(key_name));
+      av_strlcat(key_name, mp_input_get_key_name(keys[i]), sizeof(key_name));
     }
-    mp_msg(MSGT_INPUT,MSGL_WARN,"                         \n");
+    mp_msg(MSGT_INPUT,MSGL_WARN,MSGTR_NoBindFound,key_name);
     return NULL;
   }
   if (strcmp(cmd, "ignore") == 0) return NULL;

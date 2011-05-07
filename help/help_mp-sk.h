@@ -580,7 +580,7 @@ static const char help_text[]=
 #define MSGTR_EnterTelecineMode "\ndemux_mpg: detekovaný 24000/1001 fps progresívny NTSC, prepínam frekvenciu snímkov.\n"
 
 #define MSGTR_CacheFill "\rNaplnenie cache: %5.2f%% (%"PRId64" bajtov)   "
-#define MSGTR_NoBindFound "Tlačidlo '%s' nemá priradenú žiadnu funkciu."
+#define MSGTR_NoBindFound "Tlačidlo '%s' nemá priradenú žiadnu funkciu.\n"
 #define MSGTR_FailedToOpen "Zlyhalo otvorenie %s\n"
 
 // dec_video.c & dec_audio.c:

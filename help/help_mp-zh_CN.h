@@ -1420,7 +1420,7 @@ static const char help_text[]=
 #define MSGTR_EnterTelecineMode "\ndemux_mpg：检测到 24000/1001fps 的逐行扫描 NTSC 内容，切换帧率。\n"
 
 #define MSGTR_CacheFill "\r缓冲已填充：%5.2f%%（%"PRId64" 字节）"
-#define MSGTR_NoBindFound "按键‘%s’未绑定功能。"
+#define MSGTR_NoBindFound "按键‘%s’未绑定功能。\n"
 #define MSGTR_FailedToOpen "未能打开 %s。\n"
 
 #define MSGTR_VideoID "[%s] 找到视频流，-vid %d\n"

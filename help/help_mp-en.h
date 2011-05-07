@@ -1440,7 +1440,7 @@ static const char help_text[]=
 #define MSGTR_EnterTelecineMode "\ndemux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.\n"
 
 #define MSGTR_CacheFill "\rCache fill: %5.2f%% (%"PRId64" bytes)   "
-#define MSGTR_NoBindFound "No bind found for key '%s'."
+#define MSGTR_NoBindFound "No bind found for key '%s'.\n"
 #define MSGTR_FailedToOpen "Failed to open %s.\n"
 
 #define MSGTR_VideoID "[%s] Video stream found, -vid %d\n"

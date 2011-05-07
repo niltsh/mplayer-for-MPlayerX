@@ -654,7 +654,7 @@ static const char help_text[]=
 #define MSGTR_EnterTelecineMode "\ndemux_mpg: 24000/1001fps progressiver NTSC-Inhalt erkannt, wechsele Framerate.\n"
 
 #define MSGTR_CacheFill "\rFülle Zwischenpuffer: %5.2f%% (%"PRId64" Bytes)   "
-#define MSGTR_NoBindFound "Bindung für Taste '%s' nicht gefunden."
+#define MSGTR_NoBindFound "Bindung für Taste '%s' nicht gefunden.\n"
 #define MSGTR_FailedToOpen "Konnte '%s' nicht öffnen.\n"
 
 #define MSGTR_VideoID "[%s] Videostream gefunden, -vid %d\n"

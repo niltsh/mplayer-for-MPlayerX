@@ -636,7 +636,7 @@ static const char help_text[]=
 #define MSGTR_EnterTelecineMode "\nBulunan içerik demux_mpg: 24000/1001fps progressive NTSC, kare oranı değiştirliyor.\n"
 
 #define MSGTR_CacheFill "\rÖnbellek doyumu: %5.2f%% (%"PRId64" bayt)  "
-#define MSGTR_NoBindFound "'%s' tuşu için bağ bulunamadı "
+#define MSGTR_NoBindFound "'%s' tuşu için bağ bulunamadı.\n"
 #define MSGTR_FailedToOpen "%s açılamadı\n"
 
 #define MSGTR_VideoID "[%s] Görüntü akışı bulundu, -vid %d\n"

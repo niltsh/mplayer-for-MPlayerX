@@ -1433,7 +1433,7 @@ static const char help_text[]=
 #define MSGTR_EnterTelecineMode "\ndemux_mpg: 24000/1001fps progresszív NTSC formátumot találtam, frameráta váltás.\n"
 
 #define MSGTR_CacheFill "\rCache feltöltés: %5.2f%% (%"PRId64" bájt)   "
-#define MSGTR_NoBindFound "Nincs semmi sem összerendelve a(z) '%s' gombbal."
+#define MSGTR_NoBindFound "Nincs semmi sem összerendelve a(z) '%s' gombbal.\n"
 #define MSGTR_FailedToOpen "Nem lehet megnyitni: %s.\n"
 
 #define MSGTR_VideoID "[%s] Megtalált videó folyam, -vid %d\n"

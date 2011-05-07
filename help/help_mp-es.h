@@ -1432,7 +1432,7 @@ static const char help_text[]=
 #define MSGTR_LeaveTelecineMode "\ndemux_mpg: contenido NTSC de 30000/1001cps detectado, cambiando cuadros por segundo.\n"
 #define MSGTR_EnterTelecineMode "\ndemux_mpg: contenido NTSC progresivo de 24000/1001cps detectado, cambiando cuadros por segundo.\n"
 #define MSGTR_CacheFill "\rLlenando cache: %5.2f%% (%"PRId64" bytes)   "
-#define MSGTR_NoBindFound "No se econtró una asignación para la tecla '%s'"
+#define MSGTR_NoBindFound "No se econtró una asignación para la tecla '%s'\n"
 #define MSGTR_FailedToOpen "No se pudo abrir %s\n"
 #define MSGTR_VideoID "[%s] Stream de video encontrado, -vid %d\n"
 #define MSGTR_AudioID "[%s] Stream de audio encontrado, -aid %d\n"

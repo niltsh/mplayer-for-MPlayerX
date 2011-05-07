@@ -628,7 +628,7 @@ static const char help_text[]=
 #define MSGTR_LeaveTelecineMode "\ndemux_mpg : contenu NTSC 30000/1001fps détecté, ajustement du débit.\n"
 #define MSGTR_EnterTelecineMode "\ndemux_mpg : contenu NTSC 24000/1001fps progressif détecté, ajustement du débit.\n"
 #define MSGTR_CacheFill "\rRemplissage du cache : %5.2f%% (%"PRId64" octets)   "
-#define MSGTR_NoBindFound "Aucune action attachée à la touche '%s'"
+#define MSGTR_NoBindFound "Aucune action attachée à la touche '%s'\n"
 #define MSGTR_FailedToOpen "Échec à l'ouverture de '%s'\n"
 
 #define MSGTR_VideoID "[%s] Flux vidéo trouvé, -vid %d\n"

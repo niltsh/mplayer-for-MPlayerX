@@ -1423,7 +1423,7 @@ static const char help_text[]=
 #define MSGTR_EnterTelecineMode "\ndemux_mpg: обнаружено 24000/1001 кадра/сек NTSC содержимое с построчной развёрткой,\nпереключаю частоту кадров.\n"
 
 #define MSGTR_CacheFill "\rЗаполнение кэша: %5.2f%% (%"PRId64" байт(а))   "
-#define MSGTR_NoBindFound "Не найдена привязка к клавише '%s'."
+#define MSGTR_NoBindFound "Не найдена привязка к клавише '%s'.\n"
 #define MSGTR_FailedToOpen "Не могу открыть %s.\n"
 
 #define MSGTR_VideoID "[%s] Найден видео поток, -vid %d\n"

@@ -1429,7 +1429,7 @@ static const char help_text[]=
 #define MSGTR_EnterTelecineMode "\ndemux_mpg: Rilevato formato NTSC 24000/1001fps progressivo, cambio framerate.\n"
 
 #define MSGTR_CacheFill "\rRiempio cache: %5.2f%% (%"PRId64" byte)   "
-#define MSGTR_NoBindFound "Nessun controllo legato al tasto '%s'."
+#define MSGTR_NoBindFound "Nessun controllo legato al tasto '%s'.\n"
 #define MSGTR_FailedToOpen "Apertura di '%s' fallita.\n"
                                                                //
 #define MSGTR_VideoID "[%s] Trovato flusso video, -vid %d\n"
