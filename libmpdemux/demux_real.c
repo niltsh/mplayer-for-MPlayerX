@@ -1687,7 +1687,7 @@ header_end:
   } else {
         priv->audio_curpos = priv->str_data_offset[demuxer->audio->id] + 18;
         stream_seek(demuxer->stream, priv->str_data_offset[demuxer->audio->id]+10);
-        priv->a_num_of_packets=priv->a_num_of_packets = stream_read_dword(demuxer->stream);
+        priv->a_num_of_packets = stream_read_dword(demuxer->stream);
         priv->video_curpos = priv->str_data_offset[demuxer->video->id] + 18;
         stream_seek(demuxer->stream, priv->str_data_offset[demuxer->video->id]+10);
         priv->v_num_of_packets = stream_read_dword(demuxer->stream);
