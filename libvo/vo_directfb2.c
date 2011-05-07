@@ -984,7 +984,7 @@ static void uninit(void)
 }
 
 
-static uint32_t directfb_set_video_eq(char *data, int value) //data==name
+static uint32_t directfb_set_video_eq(const char *data, int value) //data==name
 {
 
 	DFBColorAdjustment ca;
@@ -1042,7 +1042,7 @@ if (layer) {
 
 }
 
-static uint32_t directfb_get_video_eq(char *data, int *value) // data==name
+static uint32_t directfb_get_video_eq(const char *data, int *value) // data==name
 {
 
 	DFBColorAdjustment ca;
