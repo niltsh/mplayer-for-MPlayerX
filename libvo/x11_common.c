@@ -1827,7 +1827,7 @@ static int transform_color(float val,
     return (unsigned short) (s * 65535);
 }
 
-uint32_t vo_x11_set_equalizer(char *name, int value)
+uint32_t vo_x11_set_equalizer(const char *name, int value)
 {
     float gamma, brightness, contrast;
     float rf, gf, bf;
@@ -1878,7 +1878,7 @@ uint32_t vo_x11_set_equalizer(char *name, int value)
     return VO_TRUE;
 }
 
-uint32_t vo_x11_get_equalizer(char *name, int *value)
+uint32_t vo_x11_get_equalizer(const char *name, int *value)
 {
     if (cmap == None)
         return VO_NOTAVAIL;
