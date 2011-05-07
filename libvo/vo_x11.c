@@ -658,7 +658,7 @@ static int control(uint32_t request, void *data)
         case VOCTRL_SET_EQUALIZER:
             {
                 vf_equalizer_t *eq=data;
-                return vo_x11_set_equalizer(eq->item, &(eq->value));
+                return vo_x11_set_equalizer(eq->item, eq->value);
             }
         case VOCTRL_GET_EQUALIZER:
             {
