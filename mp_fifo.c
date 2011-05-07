@@ -72,7 +72,7 @@ int mplayer_get_key(int fd){
 unsigned doubleclick_time = 300;
 
 static void put_double(int code) {
-  if (code >= MOUSE_BTN0 && code <= MOUSE_BTN9)
+  if (code >= MOUSE_BTN0 && code <= MOUSE_BTN_LAST)
     mplayer_put_key_internal(code - MOUSE_BTN0 + MOUSE_BTN0_DBL);
 }
 
@@ -83,7 +83,7 @@ void mplayer_put_key(int code) {
   // ignore system-doubleclick if we generate these events ourselves
   if (doubleclick_time &&
       (code & ~MP_KEY_DOWN) >= MOUSE_BTN0_DBL &&
-      (code & ~MP_KEY_DOWN) <= MOUSE_BTN9_DBL)
+      (code & ~MP_KEY_DOWN) <= MOUSE_BTN_LAST_DBL)
     return;
   mplayer_put_key_internal(code);
   if (code & MP_KEY_DOWN) {
