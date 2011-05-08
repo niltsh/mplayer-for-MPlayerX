@@ -22,6 +22,13 @@
  */
 
 #include <windows.h>
+
+#if defined(__CYGWIN__)
+#define _beginthreadex CreateThread
+#else
+#include <process.h>
+#endif
+
 #include "path.h"
 #include "gui/interface.h"
 #include "m_option.h"
@@ -493,7 +500,7 @@ void guiInit(void)
     /* Create The gui thread */
     if (!mygui)
     {
-        hThread = CreateThread(NULL, 0, GuiThread, NULL, 0, &threadId);
+        hThread = _beginthreadex(NULL, 0, GuiThread, NULL, 0, &threadId);
         mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] Creating GUI Thread 0x%04x\n", threadId);
     }
 
