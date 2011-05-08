@@ -1,5 +1,5 @@
 .\" sync with en/mplayer.1 rev. 33382
-.\" fix translation error in legacy parts: currently fixed up to (1829 \-radio)
+.\" fix translation error in legacy parts: currently fixed up to (1949)
 .\"
 .\" MPlayer (C) 2000-2010 MPlayer 团队
 .\" 本(英文)手册页由 Gabucino, Diego Biurrun, Jonas Jermann 编写
@@ -114,7 +114,7 @@ cue://文件[:音轨]
 .
 .br
 .B mplayer
-[file|mms[t]|http|http_proxy|rt[s]p|ftp|udp|unsv|icyx|noicyx|smb]://
+[file|mms[t]|http|http_proxy|rt[s]p|ftp|udp|unsv|icyx|noicyx|smb]://\
 [用户名:密码@]URL[:端口] [若干选项]
 .
 .br
@@ -300,7 +300,7 @@ MPlayer 有一个完全可配置的，命令驱动的控制层面，
 .PD 1
 .PP
 .RS
-（以下按键仅当使用硬件加速的视频输出（xv, (x)vidix, (x)mga, 等）,
+（以下按键仅当使用硬件加速的视频输出（xv, (x)vidix, (x)mga, 等），
 软件均衡器（\-vf eq or \-vf eq2），或色调滤镜（\-vf hue）时有效。）
 .RE
 .PP
@@ -1826,119 +1826,127 @@ dvd：  DVD 可兼容流
 .PD 1
 .
 .TP
-.B \-radio <选项1:选项2:...> （仅适用于收音）
-这些选项集用以设置收音捕捉模块的各种参数。
-要用MPlayer收听电台使用‘radio://<频率>’（如果不提供频道选项）或
-‘radio://<频道号>’（如果提供频道选项）作为URL。
-你可以通过以‘-v’选项运行MPlayer查看允许的频率范围。
-若要启动捕捉子系统，则使用‘radio://<频率或频道>/capture’。
-如果不给出关键字capture，则你可以只使用输入线缆收听电台。
-由于同步问题，不推荐使用capture来收听电台，这会使效果不佳。
+.B \-radio <选项1:选项2:...>（仅用于无线电广播）
+这些选项用以设置无线电捕捉模块的各种参数。
+要用 MPlayer 收听电台需使用‘radio://<频率>’
+（如果不提供频道选项）或‘radio://<频道号>’
+（如果提供频道选项）作为 URL。
+可通过使用‘-v’选项运行 MPlayer 查看可行的频率范围。
+要启动捕捉子系统，则使用‘radio://<频率或频道>/capture’。
+如果不使用关键字 capture，则可以只使用有线
+方式收听电台。
+由于同步问题，不推荐使用 capture 来收听电台，
+这会使效果不佳。
 .sp 1
 可用选项有：
 .RSs
-.IPs device=<值>
-所使用的收音设备（默认值：Linux下为/dev/radio0，而*BSD下为/dev/tuner0）。
-.IPs driver=<值>
-所使用的收音驱动（默认值：如果有则用v412，否则为v41）。
-当前支持v41和v412驱动。
+.IPs device=<参数值>
+所使用的无线电设备（默认值：Linux 下为 /dev/radio0，而 *BSD 下为 /dev/tuner0）。
+.IPs driver=<参数值>
+所使用的无线电广播驱动（默认值：如果有则用 v412，否则为 v41）。
+当前支持 v41 和 v412 驱动。
 .IPs volume=<0..100>
-收音设备的音量（默认为100）
-.IPs "freq_min=<值>（仅适用于*BSD BT848）"
+无线电设备的音量（默认为100）
+.IPs "freq_min=<值>（仅用于*BSD BT848）"
 允许的最小频率（默认值：87.50）
 .IPs "freq_max=<value>（仅适用于*BSD BT848）"
 允许的最大频率（默认值：108.00）
 .IPs
-channels=<频率>\-<名称>[=<常规值>],<频率>\-<名称>[=<常规值>],...
+channels=<频率>\-<名称>,<频率>\-<名称>,...
 设置频道列表。
-在名称中用“_”代替空格（或使用引号）。
-频道名字就会以OSD方式显示出来，而从命令radio_step_channel和radio_set_channel
-对于遥控会很有用（参见LIRC）。
-如果给出，则URL中的数字将作为频道列表中的频道位置编号。
+在名称中需用“_”代替空格（或使用引号）。
+频道名字会以 OSD 方式显示出来，从而可将被动
+命令 radio_step_channel 和 radio_set_channel 使
+用于遥控器上
+（参见LIRC）。
+如果在 URL 中使用数字，则该数字将作为频道列表中
+所指定频道的位置。
 .br
-.I 示例:
+.I 示例：
 radio://1, radio://104.4, radio_set_channel 1
-.IPs "adevice=<值>（仅用于录制无线电广播时）"
-作为所捕捉声音来源的设备的名字
-没有这样的名字将禁用捕捉功能，即便URL中出现capture关键字。
-如果设备名中含有一个‘=’，则模块将使用ALSA来捕捉，
-否则用OSS。
-.IPs "arate=<参数值>（仅用于录制无线电广播时）"
-以每秒采样数为单位的频率值（默认值：44100）。
+.IPs "adevice=<参数值>（仅用于录制无线电广播）"
+所捕捉声音来源的设备的名字。
+没有这个名字将禁用捕捉功能，
+即使 URL 中出现 capture 关键字。
+如果设备名中含有‘=’，则该模块将使用 ALSA 来捕捉，
+否则使用 OSS。
+.IPs "arate=<参数值>（仅用于录制无线电广播）"
+以每秒采样数为单位的采样率（默认值：44100）。
 .br
 .I 注意：
-当使用音频捕捉时，也将\-rawaudio rate=<数值>选项设置为arate中一样的值。
-如果你存在声音播放速度的问题（播放太快），尝试以不同的速率值
-（例如4800，44100，32000……）播放 。
-.IPs "achannels=<参数值>（仅用于录制无线电广播时）"
+当使用音频捕捉时，也将 \-rawaudio rate=<参数值> 选项
+设置为 arate 中一样的值。
+如果存在声音播放速度的问题（播放太快），请尝试以不同的采样率
+（例如 4800，44100，32000……）播放 。
+.IPs "achannels=<参数值>（仅用于录制无线电广播）"
 捕捉声音的声道数。
 .RE
 .
 .TP
 .B \-rawaudio <选项1:选项2:...>
-此选项可让你播放原始音频文件。
-你也不得不使用 \-demuxer rawaudio。
-也可以用来播放不是 44kHz 16-位 立体声的音频 CD。
-播放原始 AC-3 流请使用 \-rawaudio format=0x2000 \-demuxer rawaudio。
+该选项用于播放未经处理的音频文件。
+必须同时使用 \-demuxer rawaudio。
+也可用于播放非 44kHz 16-位 立体声的音频 CD。
+要播放未经处理的 AC-3 流要使用 \-rawaudio format=0x2000 \-demuxer rawaudio。
 .sp 1
-可用选项有:
+可用选项有：
 .sp 1
 .PD 0
 .RSs
 .IPs channels=<参数值>
 声道数
 .IPs rate=<参数值>
-每秒采样率
+以每秒采样数为单位的采样率
 .IPs samplesize=<参数值>
-样本大小(以字节为单位)
+以字节为单位的采样数据大小
 .IPs bitrate=<参数值>
-原始音频文件的比特率
+未经处理的音频文件的比特率
 .IPs format=<参数值>
-16-进制的 fourcc
+16-进制 fourcc 代码
 .RE
 .PD 1
 .
 .TP
 .B \-rawvideo <选项1:选项2:...>
-此选项可让你播放原始视频文件。
-你也不得不使用 \-demuxer rawvideo。
+该选项用于播放未经处理的视频文件。
+必须同时使用 \-demuxer rawvideo。
 .sp 1
-可用的选项有:
+可用的选项有：
 .sp 1
 .PD 0
 .RSs
 .IPs fps=<参数值>
-每秒帧(速)率 (默认是: 25.0)
+以每秒帧数为单位的频率（默认值：25.0）
 .IPs sqcif|qcif|cif|4cif|pal|ntsc
-设置标准的图像大小
+设置为视频标准的图像大小
 .IPs w=<参数值>
-图像宽(以像素为单位)
+以像素为单位的图像宽度
 .IPs h=<参数值>
-图像高(以像素为单位)
+以像素为单位的图像高度
 .IPs i420|yv12|yuy2|y8
 设置色彩空间
 .IPs format=<参数值>
-16-进制或字符串常量形式的色彩空间值(fourcc)
-使用\-rawvideo format=help以获取可用字符串的列表。
+16 进制或字符串常量形式的色彩空间值（fourcc 代码）
+使用 \-rawvideo format=help 可获取可用字符串的列表。
 .IPs size=<参数值>
-帧大小(以字节为单位)
+以字节为单位的帧大小
 .REss
 .sp 1
 .RS
-.I 示例:
+.I 示例：
 .RE
 .PD 0
 .RSs
 .IPs "mplayer foreman.qcif \-demuxer rawvideo \-rawvideo qcif"
-播放著名的 "foreman" 视频样本。
+播放著名的“foreman”样本视频。
 .IPs "mplayer sample-720x576.yuv \-demuxer rawvideo \-rawvideo w=720:h=576"
-播放原始 YUV 样本。
+播放未经处理的 YUV 格式的样本。
 .RE
 .PD 1
 .
 .TP
-.B \-referrer <字符串>（仅用于网络环境）
-为 HTTP 请求指定引用页面的路径或 URL。
+.B \-referrer <字符串>（仅用于网络）
+指定 HTTP 请求引用页面的路径或 URL。
 .
 .TP
 .B \-rtsp\-port
