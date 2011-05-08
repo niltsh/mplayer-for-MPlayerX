@@ -363,6 +363,7 @@ static int demux_asf_fill_buffer(demuxer_t *demux, demux_stream_t *ds){
             unsigned char segtype=p[1];
             unsigned padding;
             unsigned plen;
+            unsigned sequence;
             unsigned long time=0;
             unsigned short duration=0;
 
@@ -397,7 +398,7 @@ static int demux_asf_fill_buffer(demuxer_t *demux, demux_stream_t *ds){
 
             // Read sequence:
 	    if(!check_varlen(p, p_end, flags>> 1)) return 0; // Not enough data
-	    read_varlen(&p, flags >> 1, 0);
+	    sequence = read_varlen(&p, flags >> 1, 0);
 
             // Read padding size (padding):
 	    if(!check_varlen(p, p_end, flags>> 3)) return 0; // Not enough data
