@@ -276,18 +276,20 @@ static int cache_execute_control(cache_vars_t *s) {
   }
   if (s->control == -1) return 1;
   switch (s->control) {
-    case STREAM_CTRL_GET_CURRENT_TIME:
     case STREAM_CTRL_SEEK_TO_TIME:
+      double_res = s->control_double_arg;
+    case STREAM_CTRL_GET_CURRENT_TIME:
     case STREAM_CTRL_GET_ASPECT_RATIO:
       s->control_res = s->stream->control(s->stream, s->control, &double_res);
       s->control_double_arg = double_res;
       break;
     case STREAM_CTRL_SEEK_TO_CHAPTER:
+    case STREAM_CTRL_SET_ANGLE:
+      uint_res = s->control_uint_arg;
     case STREAM_CTRL_GET_NUM_CHAPTERS:
     case STREAM_CTRL_GET_CURRENT_CHAPTER:
     case STREAM_CTRL_GET_NUM_ANGLES:
     case STREAM_CTRL_GET_ANGLE:
-    case STREAM_CTRL_SET_ANGLE:
       s->control_res = s->stream->control(s->stream, s->control, &uint_res);
       s->control_uint_arg = uint_res;
       break;
