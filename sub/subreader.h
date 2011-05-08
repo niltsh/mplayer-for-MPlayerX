@@ -23,6 +23,11 @@
 
 #include "config.h"
 
+#ifdef CONFIG_FRIBIDI
+#include <fribidi/fribidi.h>
+int do_fribid_log2vis(int charset, const char *in, FriBidiChar *logical, FriBidiChar *visual, int flip_commas);
+#endif
+
 extern int suboverlap_enabled;
 extern int sub_no_text_pp;  // disable text post-processing
 extern int sub_match_fuzziness;
