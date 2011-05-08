@@ -1235,7 +1235,11 @@ subtitle* subcp_recode (subtitle *sub)
  */
 int do_fribid_log2vis(int charset, const char *in, FriBidiChar *logical, FriBidiChar *visual, int flip_commas)
 {
+#ifdef FRIBIDI_PAR_LTR
   FriBidiParType base = flip_commas ? FRIBIDI_PAR_ON : FRIBIDI_PAR_LTR;
+#else
+  FriBidiCharType base = flip_commas ? FRIBIDI_TYPE_ON : FRIBIDI_TYPE_L;
+#endif
   int len = strlen(in);
   len = fribidi_charset_to_unicode(charset, in, len, logical);
   if (!fribidi_log2vis(logical, len, &base, visual, NULL, NULL, NULL))
