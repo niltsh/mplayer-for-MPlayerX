@@ -151,9 +151,9 @@ static int item_section(char *in)
 // end
 static int item_end(char *in)
 {
-#ifdef MP_DEBUG
     char *space, *name;
 
+#ifdef MP_DEBUG
     if (currWinName[0]) {
         space = " ";
         name  = currWinName;
