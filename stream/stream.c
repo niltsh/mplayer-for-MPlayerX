@@ -163,7 +163,7 @@ static stream_t* open_stream_plugin(const stream_info_t* sinfo, const char* file
       m_option_t url_opt =
 	{ "stream url", arg , CONF_TYPE_CUSTOM_URL, 0, 0 ,0, sinfo->opts };
       if(m_option_parse(&url_opt,"stream url",filename,arg,M_CONFIG_FILE) < 0) {
-	mp_msg(MSGT_OPEN,MSGL_ERR, "URL parsing failed on url %s\n",filename);
+	mp_msg(MSGT_OPEN,MSGL_ERR, MSGTR_URLParsingFailed,filename);
 	m_struct_free(desc,arg);
 	return NULL;
       }
@@ -174,7 +174,7 @@ static stream_t* open_stream_plugin(const stream_info_t* sinfo, const char* file
 	mp_msg(MSGT_OPEN,MSGL_DBG2, "Set stream arg %s=%s\n",
 	       options[i],options[i+1]);
 	if(!m_struct_set(desc,arg,options[i],options[i+1]))
-	  mp_msg(MSGT_OPEN,MSGL_WARN, "Failed to set stream option %s=%s\n",
+	  mp_msg(MSGT_OPEN,MSGL_WARN, MSGTR_FailedSetStreamOption,
 		 options[i],options[i+1]);
       }
     }
@@ -200,7 +200,7 @@ static stream_t* open_stream_plugin(const stream_info_t* sinfo, const char* file
     return NULL;
   }
   if(s->type <= -2)
-    mp_msg(MSGT_OPEN,MSGL_WARN, "Warning streams need a type !!!!\n");
+    mp_msg(MSGT_OPEN,MSGL_WARN, MSGTR_StreamNeedType);
   if(s->flags & MP_STREAM_SEEK && !s->seek)
     s->flags &= ~MP_STREAM_SEEK;
   if(s->seek && !(s->flags & MP_STREAM_SEEK))
@@ -226,7 +226,7 @@ stream_t* open_stream_full(const char* filename,int mode, char** options, int* f
   for(i = 0 ; auto_open_streams[i] ; i++) {
     sinfo = auto_open_streams[i];
     if(!sinfo->protocols) {
-      mp_msg(MSGT_OPEN,MSGL_WARN, "Stream type %s has protocols == NULL, it's a bug\n", sinfo->name);
+      mp_msg(MSGT_OPEN,MSGL_WARN, MSGTR_StreamProtocolNULL, sinfo->name);
       continue;
     }
     for(j = 0 ; sinfo->protocols[j] ; j++) {
@@ -255,14 +255,14 @@ stream_t* open_stream_full(const char* filename,int mode, char** options, int* f
     }
   }
 
-  mp_msg(MSGT_OPEN,MSGL_ERR, "No stream found to handle url %s\n",filename);
+  mp_msg(MSGT_OPEN,MSGL_ERR, MSGTR_StreamCantHandleURL,filename);
   return NULL;
 }
 
 stream_t* open_output_stream(const char* filename, char** options) {
   int file_format; //unused
   if(!filename) {
-    mp_msg(MSGT_OPEN,MSGL_ERR,"open_output_stream(), NULL filename, report this bug\n");
+    mp_msg(MSGT_OPEN,MSGL_ERR,MSGTR_StreamNULLFilename);
     return NULL;
   }
 
@@ -274,7 +274,7 @@ stream_t* open_output_stream(const char* filename, char** options) {
 void stream_capture_do(stream_t *s)
 {
   if (fwrite(s->buffer, s->buf_len, 1, s->capture_file) < 1) {
-    mp_msg(MSGT_GLOBAL, MSGL_ERR, "Error writing capture file: %s\n",
+    mp_msg(MSGT_GLOBAL, MSGL_ERR, MSGTR_StreamErrorWritingCapture,
            strerror(errno));
     fclose(s->capture_file);
     s->capture_file = NULL;
@@ -368,7 +368,7 @@ if(newpos==0 || newpos!=s->pos){
 #ifdef CONFIG_NETWORKING
     if(s->seek) { // new stream seek is much cleaner than streaming_ctrl one
       if(!s->seek(s,newpos)) {
-      	mp_msg(MSGT_STREAM,MSGL_ERR, "Seek failed\n");
+      	mp_msg(MSGT_STREAM,MSGL_ERR, MSGTR_StreamSeekFailed);
       	return 0;
       }
       break;
@@ -376,14 +376,14 @@ if(newpos==0 || newpos!=s->pos){
 
     if( s->streaming_ctrl!=NULL && s->streaming_ctrl->streaming_seek ) {
       if( s->streaming_ctrl->streaming_seek( s->fd, newpos, s->streaming_ctrl )<0 ) {
-        mp_msg(MSGT_STREAM,MSGL_INFO,"Stream not seekable!\n");
+        mp_msg(MSGT_STREAM,MSGL_INFO,MSGTR_StreamNotSeekable);
         return 1;
       }
       break;
     }
 #endif
     if(newpos<s->pos){
-      mp_msg(MSGT_STREAM,MSGL_INFO,"Cannot seek backward in linear streams!\n");
+      mp_msg(MSGT_STREAM,MSGL_INFO,MSGTR_StreamCannotSeekBackward);
       return 1;
     }
     break;
@@ -393,7 +393,7 @@ if(newpos==0 || newpos!=s->pos){
       return 0;
     // Now seek
     if(!s->seek(s,newpos)) {
-      mp_msg(MSGT_STREAM,MSGL_ERR, "Seek failed\n");
+      mp_msg(MSGT_STREAM,MSGL_ERR, MSGTR_StreamSeekFailed);
       return 0;
     }
   }

@@ -1894,6 +1894,17 @@ static const char help_text[]=
 #define MSGTR_CantOpenBluray "Couldn't open Blu-ray device: %s\n"
 #define MSGTR_CantOpenDVD "Couldn't open DVD device: %s (%s)\n"
 
+#define MSGTR_URLParsingFailed "URL parsing failed on url %s\n"
+#define MSGTR_FailedSetStreamOption "Failed to set stream option %s=%s\n"
+#define MSGTR_StreamNeedType "Streams need a type!\n"
+#define MSGTR_StreamProtocolNULL "Stream type %s has protocols == NULL, it's a bug\n"
+#define MSGTR_StreamCantHandleURL "No stream found to handle url %s\n"
+#define MSGTR_StreamNULLFilename "open_output_stream(), NULL filename, report this bug\n"
+#define MSGTR_StreamErrorWritingCapture "Error writing capture file: %s\n"
+#define MSGTR_StreamSeekFailed "Seek failed\n"
+#define MSGTR_StreamNotSeekable "Stream not seekable!\n"
+#define MSGTR_StreamCannotSeekBackward "Cannot seek backward in linear streams!\n"
+
 // stream_cdda.c
 #define MSGTR_MPDEMUX_CDDA_CantOpenCDDADevice "Can't open CDDA device.\n"
 #define MSGTR_MPDEMUX_CDDA_CantOpenDisc "Can't open disc.\n"
