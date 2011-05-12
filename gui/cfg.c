@@ -114,7 +114,7 @@ static const m_option_t gui_opts[] = {
     { "ao_volnorm",                  &gtkAONorm,               CONF_TYPE_FLAG,        0,          0,     1,       NULL },
     { "ao_surround",                 &gtkAOSurround,           CONF_TYPE_FLAG,        0,          0,     1,       NULL },
     { "ao_extra_stereo",             &gtkAOExtraStereo,        CONF_TYPE_FLAG,        0,          0,     1,       NULL },
-    { "ao_extra_stereo_coefficient", &gtkAOExtraStereoMul,     CONF_TYPE_FLOAT,       CONF_RANGE, -10,   10,      NULL },
+    { "ao_extra_stereo_coefficient", &gtkAOExtraStereoMul,     CONF_TYPE_FLOAT,       CONF_RANGE, -10.0, 10.0,    NULL },
 
 #ifdef CONFIG_ALSA
     { "ao_alsa_mixer",               &gtkAOALSAMixer,          CONF_TYPE_STRING,      0,          0,     0,       NULL },
@@ -207,10 +207,10 @@ static const m_option_t gui_opts[] = {
 
 #ifdef CONFIG_FREETYPE
     { "font_encoding",               &subtitle_font_encoding,  CONF_TYPE_STRING,      0,          0,     0,       NULL },
-    { "font_text_scale",             &text_font_scale_factor,  CONF_TYPE_FLOAT,       CONF_RANGE, 0,     100,     NULL },
-    { "font_osd_scale",              &osd_font_scale_factor,   CONF_TYPE_FLOAT,       CONF_RANGE, 0,     100,     NULL },
-    { "font_blur",                   &subtitle_font_radius,    CONF_TYPE_FLOAT,       CONF_RANGE, 0,     8,       NULL },
-    { "font_outline",                &subtitle_font_thickness, CONF_TYPE_FLOAT,       CONF_RANGE, 0,     8,       NULL },
+    { "font_text_scale",             &text_font_scale_factor,  CONF_TYPE_FLOAT,       CONF_RANGE, 0.0,   100.0,   NULL },
+    { "font_osd_scale",              &osd_font_scale_factor,   CONF_TYPE_FLOAT,       CONF_RANGE, 0.0,   100.0,   NULL },
+    { "font_blur",                   &subtitle_font_radius,    CONF_TYPE_FLOAT,       CONF_RANGE, 0.0,   8.0,     NULL },
+    { "font_outline",                &subtitle_font_thickness, CONF_TYPE_FLOAT,       CONF_RANGE, 0.0,   8.0,     NULL },
     { "font_autoscale",              &subtitle_autoscale,      CONF_TYPE_INT,         CONF_RANGE, 0,     3,       NULL },
 #endif
 
