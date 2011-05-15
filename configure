@@ -6787,13 +6787,14 @@ if test "$_live" = auto  && test "$networking" = yes ; then
 #if (LIVEMEDIA_LIBRARY_VERSION_INT < 1141257600)
 #error Please upgrade to version 2006.03.03 or later of the "LIVE555 Streaming Media" libraries - available from <www.live555.com/liveMedia/>
 #endif
-int main(void) { return 0; }
+#include "BasicUsageEnvironment.hh"
+int main(void) { BasicTaskScheduler::createNew(); return 0; }
 EOF
 
   _live=no
   for I in $extra_cflags "-I$_libdir/live" "-I/usr/lib/live" "-I/usr/lib64/live" "-I/usr/local/live" "-I/usr/local/lib/live" ; do
-    cxx_check $I/liveMedia/include $I/UsageEnvironment/include $I/groupsock/include &&
         _livelibdir=$(echo $I| sed s/-I//) &&
+    cxx_check $I/liveMedia/include $I/UsageEnvironment/include $I/BasicUsageEnvironment/include $I/groupsock/include $_livelibdir/BasicUsageEnvironment/libBasicUsageEnvironment.a $_livelibdir/UsageEnvironment/libUsageEnvironment.a &&
       extra_ldflags="$_livelibdir/liveMedia/libliveMedia.a \
                  $_livelibdir/groupsock/libgroupsock.a \
                  $_livelibdir/UsageEnvironment/libUsageEnvironment.a \
@@ -6807,7 +6808,7 @@ EOF
   done
   if test "$_live" != yes ; then
       ld_tmp="-lliveMedia -lgroupsock -lUsageEnvironment -lBasicUsageEnvironment -lstdc++"
-      if cxx_check -I/usr/include/liveMedia -I/usr/include/UsageEnvironment -I/usr/include/groupsock $ld_tmp; then
+      if cxx_check -I/usr/include/liveMedia -I/usr/include/UsageEnvironment -I/usr/include/BasicUsageEnvironment -I/usr/include/groupsock $ld_tmp; then
           _live_dist=yes
       fi
   fi
