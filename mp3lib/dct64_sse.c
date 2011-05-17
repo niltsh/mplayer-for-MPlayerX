@@ -112,7 +112,6 @@ void dct64_sse(short *out0,short *out1,real *c)
     }
 
     {
-        real *costab = costab_mmx + 24;
         int i;
 
         __asm__(
@@ -121,7 +120,7 @@ void dct64_sse(short *out0,short *out1,real *c)
             "movaps    %1, %%xmm5\n\t"
             "movaps    %%xmm5, %%xmm6\n\t"
             :
-            :"m"(*costab), "m"(*nnnn)
+            :"m"(costab_mmx[24]), "m"(*nnnn)
            );
 
         for (i = 0; i < 0x20; i += 8)
