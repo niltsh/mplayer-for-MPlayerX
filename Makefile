@@ -575,6 +575,7 @@ SRCS_MPLAYER-$(LIBMENU_DVBIN) += libmenu/menu_dvbin.c
 SRCS_MPLAYER-$(LIRC)          += input/lirc.c
 SRCS_MPLAYER-$(MD5SUM)        += libvo/vo_md5sum.c
 SRCS_MPLAYER-$(MGA)           += libvo/vo_mga.c
+SRCS_MPLAYER-$(MNG)           += libvo/vo_mng.c
 SRCS_MPLAYER-$(NAS)           += libao2/ao_nas.c
 SRCS_MPLAYER-$(NETWORKING)    += udp_sync.c
 SRCS_MPLAYER-$(OPENAL)        += libao2/ao_openal.c

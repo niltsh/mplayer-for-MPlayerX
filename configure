@@ -380,7 +380,7 @@ Optional features:
 Codecs:
   --enable-gif              enable GIF support [autodetect]
   --enable-png              enable PNG input/output support [autodetect]
-  --enable-mng              enable MNG input support [autodetect]
+  --enable-mng              enable MNG input/output support [autodetect]
   --enable-jpeg             enable JPEG input/output support [autodetect]
   --enable-libcdio          enable libcdio support [autodetect]
   --enable-liblzo           enable liblzo support [autodetect]
@@ -4859,8 +4859,10 @@ echores "$_mng"
 if test "$_mng" = yes ; then
   def_mng='#define CONFIG_MNG 1'
   extra_ldflags="$extra_ldflags -lmng -lz"
+  vomodules="mng $vomodules"
 else
   def_mng='#undef CONFIG_MNG'
+  novomodules="mng $novomodules"
 fi
 
 echocheck "JPEG support"
