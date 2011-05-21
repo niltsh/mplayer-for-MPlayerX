@@ -44,7 +44,7 @@ void step_sub(sub_data *subd, float pts, int movement) {
 
     if (subd == NULL) return;
     subs = subd->subtitles;
-    key = (pts+sub_delay) * (subd->sub_uses_time ? 100 : sub_fps);
+    key = (pts-sub_delay) * (subd->sub_uses_time ? 100 : sub_fps);
 
     /* Tell the OSD subsystem that the OSD contents will change soon */
     vo_osd_changed(OSDTYPE_SUBTITLE);
@@ -64,7 +64,7 @@ void step_sub(sub_data *subd, float pts, int movement) {
     	movement = subd->sub_num - current_sub - 1;
 
     current_sub += movement;
-    sub_delay = subs[current_sub].start / (subd->sub_uses_time ? 100 : sub_fps) - pts;
+    sub_delay = pts - subs[current_sub].start / (subd->sub_uses_time ? 100 : sub_fps);
 }
 
 void find_sub(sub_data* subd,int key){
