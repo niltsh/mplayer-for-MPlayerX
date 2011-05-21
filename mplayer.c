@@ -267,6 +267,9 @@ float stream_cache_seek_min_percent = 50.0;
 // dump:
 char *stream_dump_name = "stream.dump";
 int stream_dump_type;
+uint64_t stream_dump_count;
+unsigned stream_dump_start_time;
+unsigned stream_dump_last_print_time;
 int capture_dump;
 
 // A-V sync:
@@ -1333,6 +1336,38 @@ static void print_status(float a_pos, float a_v, float corr)
         mp_msg(MSGT_STATUSLINE, MSGL_STATUS, "%s\r", line);
     }
     free(line);
+}
+
+static void stream_dump_progress_start(void)
+{
+    stream_dump_start_time = stream_dump_last_print_time = GetTimerMS();
+}
+
+static void stream_dump_progress(uint64_t len, stream_t *stream)
+{
+    unsigned t = GetTimerMS();
+    uint64_t start = stream->start_pos;
+    uint64_t end   = stream->end_pos;
+    uint64_t pos   = stream->pos;
+
+    stream_dump_count += len;
+    if (t - stream_dump_last_print_time - 1000 > UINT_MAX / 2)
+        return;
+    stream_dump_last_print_time = t;
+    /* TODO: pretty print sizes; ETA */
+    if (end > start && pos >= start && pos <= end) {
+        mp_msg(MSGT_STATUSLINE, MSGL_STATUS, MSGTR_DumpBytesWrittenPercent,
+               stream_dump_count, 100.0 * (pos - start) / (end - start));
+    } else {
+        mp_msg(MSGT_STATUSLINE, MSGL_STATUS, MSGTR_DumpBytesWritten,
+               stream_dump_count);
+    }
+}
+
+static void stream_dump_progress_end(void)
+{
+    mp_msg(MSGT_CPLAYER, MSGL_INFO, MSGTR_DumpBytesWrittenTo,
+           stream_dump_count, stream_dump_name);
 }
 
 /**
@@ -3284,6 +3319,7 @@ play_next_file:
             int chapter = dvd_chapter - 1;
             stream_control(mpctx->stream, STREAM_CTRL_SEEK_TO_CHAPTER, &chapter);
         }
+        stream_dump_progress_start();
         while (!mpctx->stream->eof && !async_quit_request) {
             len = stream_read(mpctx->stream, buf, 4096);
             if (len > 0) {
@@ -3292,6 +3328,7 @@ play_next_file:
                     exit_player(EXIT_ERROR);
                 }
             }
+            stream_dump_progress(len, mpctx->stream);
             if (dvd_last_chapter > 0) {
                 int chapter = -1;
                 if (stream_control(mpctx->stream, STREAM_CTRL_GET_CURRENT_CHAPTER,
@@ -3303,6 +3340,7 @@ play_next_file:
             mp_msg(MSGT_MENCODER, MSGL_FATAL, MSGTR_ErrorWritingFile, stream_dump_name);
             exit_player(EXIT_ERROR);
         }
+        stream_dump_progress_end();
         mp_msg(MSGT_CPLAYER, MSGL_INFO, MSGTR_CoreDumped);
         exit_player_with_rc(EXIT_EOF, 0);
     }
@@ -3488,14 +3526,17 @@ goto_enable_cache:
             mp_msg(MSGT_CPLAYER, MSGL_FATAL, MSGTR_CantOpenDumpfile);
             exit_player(EXIT_ERROR);
         }
+        stream_dump_progress_start();
         while (!ds->eof) {
             unsigned char *start;
             int in_size = ds_get_packet(ds, &start);
             if ((mpctx->demuxer->file_format == DEMUXER_TYPE_AVI || mpctx->demuxer->file_format == DEMUXER_TYPE_ASF || mpctx->demuxer->file_format == DEMUXER_TYPE_MOV)
                 && stream_dump_type == 2)
                 fwrite(&in_size, 1, 4, f);
-            if (in_size > 0)
+            if (in_size > 0) {
                 fwrite(start, in_size, 1, f);
+                stream_dump_progress(in_size, mpctx->stream);
+            }
             if (dvd_last_chapter > 0) {
                 int cur_chapter = demuxer_get_current_chapter(mpctx->demuxer);
                 if (cur_chapter != -1 && cur_chapter + 1 > dvd_last_chapter)
@@ -3503,6 +3544,7 @@ goto_enable_cache:
             }
         }
         fclose(f);
+        stream_dump_progress_end();
         mp_msg(MSGT_CPLAYER, MSGL_INFO, MSGTR_CoreDumped);
         exit_player_with_rc(EXIT_EOF, 0);
     }
