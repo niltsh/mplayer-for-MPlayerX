@@ -36,7 +36,6 @@
 #include "libmpcodecs/dec_video.h"
 #include "libmpcodecs/vd.h"
 #include "libmpcodecs/vf.h"
-#include "libvo/video_out.h"
 #include "libvo/x11_common.h"
 #include "mixer.h"
 #include "mp_msg.h"
