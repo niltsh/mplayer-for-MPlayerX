@@ -32,7 +32,6 @@
 #include "help_mp.h"
 #include "input/input.h"
 #include "libaf/equalizer.h"
-#include "libao2/audio_out.h"
 #include "libmpcodecs/dec_audio.h"
 #include "libmpcodecs/dec_video.h"
 #include "libmpcodecs/vd.h"
@@ -553,7 +552,6 @@ static void add_vf(char *str)
 
 int guiGetEvent(int type, void *arg)
 {
-    const ao_functions_t *audio_out = NULL;
     mixer_t *mixer = NULL;
 
     stream_t *stream = arg;
@@ -563,7 +561,6 @@ int guiGetEvent(int type, void *arg)
 #endif
 
     if (guiIntfStruct.mpcontext) {
-        audio_out = mpctx_get_audio_out(guiIntfStruct.mpcontext);
         mixer     = mpctx_get_mixer(guiIntfStruct.mpcontext);
     }
 
@@ -705,7 +702,7 @@ int guiGetEvent(int type, void *arg)
         break;
 
     case guiSetVolume:
-        if (audio_out) {
+        if (mixer) {
             float l, r;
 
             mixer_getvolume(mixer, &l, &r);
@@ -746,7 +743,7 @@ int guiGetEvent(int type, void *arg)
 
         // audio
 
-        if (audio_out) {
+        if (mixer) {
             float l, r;
 
             mixer_getvolume(mixer, &l, &r);
