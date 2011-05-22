@@ -201,6 +201,8 @@ m_config_free(m_config_t* config) {
     }
     if(i->name != i->opt->name)
       free(i->name);
+    if(i->opt->p && (i->opt->type->flags & M_OPT_TYPE_DYNAMIC))
+      m_option_free(i->opt, i->opt->p);
     ct = i->next;
     free(i);
     i = ct;
