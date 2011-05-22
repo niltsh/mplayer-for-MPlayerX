@@ -554,7 +554,6 @@ static void add_vf(char *str)
 int guiGetEvent(int type, void *arg)
 {
     const ao_functions_t *audio_out = NULL;
-    const vo_functions_t *video_out = NULL;
     mixer_t *mixer = NULL;
 
     stream_t *stream = arg;
@@ -565,7 +564,6 @@ int guiGetEvent(int type, void *arg)
 
     if (guiIntfStruct.mpcontext) {
         audio_out = mpctx_get_audio_out(guiIntfStruct.mpcontext);
-        video_out = mpctx_get_video_out(guiIntfStruct.mpcontext);
         mixer     = mpctx_get_mixer(guiIntfStruct.mpcontext);
     }
 
