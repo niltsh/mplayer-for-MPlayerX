@@ -559,9 +559,8 @@ int guiGetEvent(int type, void *arg)
     dvd_priv_t *dvdp = arg;
 #endif
 
-    if (guiIntfStruct.mpcontext) {
-        mixer     = mpctx_get_mixer(guiIntfStruct.mpcontext);
-    }
+    if (guiIntfStruct.mpcontext)
+        mixer = mpctx_get_mixer(guiIntfStruct.mpcontext);
 
     switch (type) {
     case guiXEvent:
