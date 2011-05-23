@@ -290,6 +290,11 @@ Franz, Fabian (Fabianx) <mplayer@fabian-franz.de>
 Gansser, Martin <mgansser@ngi.de>
     * HP-UX port
 
+George, Nicolas (cigaes) <nicolas.george@normalesup.org>
+    * small subtitles/ASS improvements and cleanups
+    * forced key frames
+    * stats audio filter
+
 Gereöffy, Árpád (A'rpi/ESP-team) <arpi@thot.banki.hu>
     * project founder, first project maintainer
     * MPlayer, MEncoder core, A-V sync
