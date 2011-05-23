@@ -9,6 +9,9 @@ MPlayer (1.0)
     Demuxers:
     * experimental support for using binary Quicktime codecs with -demuxer lavf.
 
+    Filters:
+    * delogo: allow to change the rectangle based on the time.
+
     Other:
     * experimental support for PGS (BluRay-compatible), DVB and XSUB subtitles.
     * experimental af_cmdline slave command to change e.g. audio equalizer options at runtime.
