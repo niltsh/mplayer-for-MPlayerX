@@ -548,6 +548,33 @@ static gboolean on_FileSelect_key_release_event( GtkWidget * widget,
  return FALSE;
 }
 
+static gboolean fs_fsFNameList_event( GtkWidget * widget,
+                                      GdkEventKey * event,
+                                      gpointer user_data )
+{
+  GdkEventButton *bevent;
+  gint row, col;
+
+  (void) user_data;
+
+  bevent = (GdkEventButton *) event;
+
+  if ( event->type == GDK_BUTTON_RELEASE && bevent->button == 2 )
+  {
+    if ( gtk_clist_get_selection_info( GTK_CLIST( widget ), bevent->x, bevent->y, &row, &col ) )
+    {
+      gtk_clist_get_text( GTK_CLIST( widget ), row, 1, &fsSelectedFile );
+      g_free( fsSelectedFileUtf8 );
+      fsSelectedFileUtf8 = g_filename_from_utf8( fsSelectedFile, -1, NULL, NULL, NULL );
+      if ( fsSelectedFileUtf8 ) fsSelectedFile = fsSelectedFileUtf8;
+      gtk_button_released( GTK_BUTTON( fsOk ) );
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
 static void fs_Destroy( void )
 {
  g_free( fsSelectedFileUtf8 );
@@ -675,6 +702,7 @@ GtkWidget * create_FileSelect( void )
  gtk_signal_connect( GTK_OBJECT( fsOk ),"released",GTK_SIGNAL_FUNC( fs_Ok_released ),fsCombo4 );
  gtk_signal_connect( GTK_OBJECT( fsCancel ),"released",GTK_SIGNAL_FUNC( fs_Cancel_released ),NULL );
  gtk_signal_connect( GTK_OBJECT( fsFNameList ),"select_row",(GtkSignalFunc)fs_fsFNameList_select_row,NULL );
+ gtk_signal_connect( GTK_OBJECT( fsFNameList ),"event", (GtkSignalFunc)fs_fsFNameList_event,NULL );
 
  gtk_widget_grab_focus( fsFNameList );
 
