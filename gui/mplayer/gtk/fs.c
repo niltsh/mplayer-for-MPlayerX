@@ -549,7 +549,7 @@ static gboolean on_FileSelect_key_release_event( GtkWidget * widget,
 }
 
 static gboolean fs_fsFNameList_event( GtkWidget * widget,
-                                      GdkEventKey * event,
+                                      GdkEvent * event,
                                       gpointer user_data )
 {
   GdkEventButton *bevent;
