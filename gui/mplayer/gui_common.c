@@ -154,8 +154,6 @@ static char *Translate(char *str)
             case '1':
                 t = guiIntfStruct.TimeSec;
 calclengthhhmmss:
-                if (t < 0)
-                    t = 0;
                 snprintf(tmp, sizeof(tmp), "%02d:%02d:%02d", t / 3600, t / 60 % 60, t % 60);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
@@ -167,8 +165,6 @@ calclengthhhmmss:
             case '2':
                 t = guiIntfStruct.TimeSec;
 calclengthmmmmss:
-                if (t < 0)
-                    t = 0;
                 snprintf(tmp, sizeof(tmp), "%04d:%02d", t / 60, t % 60);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
@@ -189,10 +185,7 @@ calclengthmmmmss:
                 break;
 
             case '8':
-                t = guiIntfStruct.TimeSec;
-                if (t < 0)
-                    t = 0;
-                snprintf(tmp, sizeof(tmp), "%01d:%02d:%02d", t / 3600, (t / 60) % 60, t % 60);
+                snprintf(tmp, sizeof(tmp), "%01d:%02d:%02d", guiIntfStruct.TimeSec / 3600, (guiIntfStruct.TimeSec / 60) % 60, guiIntfStruct.TimeSec % 60);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
