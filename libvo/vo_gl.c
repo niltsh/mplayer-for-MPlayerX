@@ -230,7 +230,7 @@ static void texSize(int w, int h, int *texw, int *texh) {
 //! maximum size of custom fragment program
 #define MAX_CUSTOM_PROG_SIZE (1024 * 1024)
 static void update_yuvconv(void) {
-  int xs, ys;
+  int xs, ys, depth;
   float bri = eq_bri / 100.0;
   float cont = (eq_cont + 100) / 100.0;
   float hue = eq_hue / 100.0 * 3.1415927;
@@ -239,11 +239,12 @@ static void update_yuvconv(void) {
   float ggamma = exp(log(8.0) * eq_ggamma / 100.0);
   float bgamma = exp(log(8.0) * eq_bgamma / 100.0);
   gl_conversion_params_t params = {gl_target, yuvconvtype,
-      {colorspace, levelconv, bri, cont, hue, sat, rgamma, ggamma, bgamma},
+      {colorspace, levelconv, bri, cont, hue, sat, rgamma, ggamma, bgamma, 0},
       texture_width, texture_height, 0, 0, filter_strength};
-  mp_get_chroma_shift(image_format, &xs, &ys, NULL);
+  mp_get_chroma_shift(image_format, &xs, &ys, &depth);
   params.chrom_texw = params.texw >> xs;
   params.chrom_texh = params.texh >> ys;
+  params.csp_params.input_shift = -depth & 7;
   glSetupYUVConversion(&params);
   if (custom_prog) {
     FILE *f = fopen(custom_prog, "rb");
@@ -1081,7 +1082,7 @@ query_format(uint32_t format)
     if (format == IMGFMT_RGB24 || format == IMGFMT_RGBA)
         return caps;
     if (use_yuv && mp_get_chroma_shift(format, NULL, NULL, &depth) &&
-        (depth == 8 || depth == 16) &&
+        (depth == 8 || depth == 16 || glYUVLargeRange(use_yuv)) &&
         (IMGFMT_IS_YUVP16_NE(format) || !IMGFMT_IS_YUVP16(format)))
         return caps;
     // HACK, otherwise we get only b&w with some filters (e.g. -vf eq)
