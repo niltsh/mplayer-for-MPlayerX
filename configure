@@ -3531,7 +3531,7 @@ if test "$_mman" = yes ; then
   def_mman_h='#define HAVE_SYS_MMAN_H 1'
 else
   def_mmap='#define HAVE_MMAP 0'
-  def_mman_h='#undef HAVE_SYS_MMAN_H'
+  def_mman_h='#define HAVE_SYS_MMAN_H 0'
   os2 && need_mmap=yes
 fi
 echores "$_mman"

@@ -70,7 +70,7 @@ for DLL to know too much about its environment.
 #include <kstat.h>
 #endif
 
-#ifdef HAVE_SYS_MMAN_H
+#if HAVE_SYS_MMAN_H
 #include <sys/mman.h>
 #else
 #include "osdep/mmap.h"

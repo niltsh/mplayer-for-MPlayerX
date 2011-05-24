@@ -39,7 +39,7 @@ struct DMO_VideoDecoder
 #include <fcntl.h>
 #include <errno.h>
 #include <sys/types.h>
-#ifdef HAVE_SYS_MMAN_H
+#if HAVE_SYS_MMAN_H
 #include <sys/mman.h>
 #endif
 #include <stdio.h>

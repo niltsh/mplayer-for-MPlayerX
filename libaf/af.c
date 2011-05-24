@@ -66,7 +66,7 @@ static const af_info_t * const filter_list[] = {
    &af_info_pan,
    &af_info_surround,
    &af_info_sub,
-#ifdef HAVE_SYS_MMAN_H
+#if HAVE_SYS_MMAN_H
    &af_info_export,
 #endif
    &af_info_volnorm,
