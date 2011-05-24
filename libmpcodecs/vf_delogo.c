@@ -252,7 +252,7 @@ static const unsigned int fmt_list[]={
 static int load_timed_rectangles(struct vf_priv_s *delogo)
 {
     FILE *f;
-    char line[LINE_MAX];
+    char line[2048];
     int lineno = 0, p;
     double ts, last_ts = 0;
     struct timed_rectangle *rect = NULL, *nr;
