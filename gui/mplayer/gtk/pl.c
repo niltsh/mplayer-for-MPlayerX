@@ -104,6 +104,7 @@ static int * CLListSelected = NULL;
 
 static int sigSel;
 static int sigUnsel;
+static int sigEvent;
 
 typedef struct
 {
@@ -264,6 +265,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 
 	gtk_signal_handler_block( GTK_OBJECT( CLSelected ),sigSel );
 	gtk_signal_handler_block( GTK_OBJECT( CLSelected ),sigUnsel );
+	gtk_signal_handler_block( GTK_OBJECT( CLSelected ),sigEvent );
 
         gtk_clist_freeze( GTK_CLIST( CLSelected ) );
         for ( i=0;i<NrOfSelected-c;i++ )
@@ -279,6 +281,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 
 	gtk_signal_handler_unblock( GTK_OBJECT( CLSelected ),sigSel );
 	gtk_signal_handler_unblock( GTK_OBJECT( CLSelected ),sigUnsel );
+	gtk_signal_handler_unblock( GTK_OBJECT( CLSelected ),sigEvent );
 
        }
        break;
@@ -313,6 +316,40 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
        }
        break;
  }
+}
+
+static gboolean plEvent ( GtkWidget * widget,
+                          GdkEvent * event,
+                          gpointer user_data )
+{
+  GdkEventButton *bevent;
+  gint row, col;
+
+  (void) user_data;
+
+  bevent = (GdkEventButton *) event;
+
+  if ( event->type == GDK_BUTTON_RELEASE && bevent->button == 2 )
+  {
+    if ( gtk_clist_get_selection_info( GTK_CLIST( widget ), bevent->x, bevent->y, &row, &col ) )
+    {
+      switch ( (int) user_data )
+      {
+        case 0:
+          CLFileSelected[row] = 1;
+          plButtonReleased( NULL, (void *) 3 );
+          CLFileSelected[row] = 0;
+          return TRUE;
+
+        case 1:
+          CLListSelected[row] = 1;
+          plButtonReleased( NULL, (void *) 2 );
+          return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
 }
 
 static int check_for_subdir( gchar * path )
@@ -557,8 +594,10 @@ GtkWidget * create_PlayList( void )
 
   gtk_signal_connect( GTK_OBJECT( CLFiles ),"select_row",GTK_SIGNAL_FUNC( plRowSelect ),(void *)0 );
   gtk_signal_connect( GTK_OBJECT( CLFiles ),"unselect_row",GTK_SIGNAL_FUNC( plUnRowSelect ),(void *)0 );
+  gtk_signal_connect( GTK_OBJECT( CLFiles ),"event",GTK_SIGNAL_FUNC( plEvent ),(void *)0 );
   sigSel=gtk_signal_connect( GTK_OBJECT( CLSelected ),"select_row",GTK_SIGNAL_FUNC( plRowSelect ),(void*)1 );
   sigUnsel=gtk_signal_connect( GTK_OBJECT( CLSelected ),"unselect_row",GTK_SIGNAL_FUNC( plUnRowSelect ),(void*)1 );
+  sigEvent=gtk_signal_connect( GTK_OBJECT( CLSelected ),"event",GTK_SIGNAL_FUNC( plEvent ),(void *)1 );
 
   gtk_signal_connect( GTK_OBJECT( Add ),"clicked",GTK_SIGNAL_FUNC( plButtonReleased ),(void*)3 );
   gtk_signal_connect( GTK_OBJECT( Remove ),"clicked",GTK_SIGNAL_FUNC( plButtonReleased ),(void*)2 );
