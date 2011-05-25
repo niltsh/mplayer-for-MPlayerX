@@ -274,14 +274,18 @@ static int initTextures(void)
 
       glTexEnvf (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
       if (is_yuv) {
-        int xs, ys;
-        mp_get_chroma_shift(image_format, &xs, &ys, NULL);
+        int xs, ys, depth;
+        int chroma_clear_val = 128;
+        mp_get_chroma_shift(image_format, &xs, &ys, &depth);
+        chroma_clear_val >>= -depth & 7;
         mpglActiveTexture(GL_TEXTURE1);
         glCreateClearTex(GL_TEXTURE_2D, gl_internal_format, gl_bitmap_format,  gl_bitmap_type, GL_LINEAR,
-                         texture_width >> xs, texture_height >> ys, 128);
+                         texture_width >> xs, texture_height >> ys,
+                         chroma_clear_val);
         mpglActiveTexture(GL_TEXTURE2);
         glCreateClearTex(GL_TEXTURE_2D, gl_internal_format, gl_bitmap_format,  gl_bitmap_type, GL_LINEAR,
-                         texture_width >> xs, texture_height >> ys, 128);
+                         texture_width >> xs, texture_height >> ys,
+                         chroma_clear_val);
         mpglActiveTexture(GL_TEXTURE0);
       }
 

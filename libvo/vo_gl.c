@@ -550,9 +550,11 @@ static int initGl(uint32_t d_width, uint32_t d_height) {
 
   if (is_yuv) {
     int i;
-    int xs, ys;
+    int xs, ys, depth;
+    int chroma_clear_val = 128;
     scale_type = get_scale_type(1);
-    mp_get_chroma_shift(image_format, &xs, &ys, NULL);
+    mp_get_chroma_shift(image_format, &xs, &ys, &depth);
+    chroma_clear_val >>= -depth & 7;
     mpglGenTextures(21, default_texs);
     default_texs[21] = 0;
     for (i = 0; i < 7; i++) {
@@ -563,12 +565,14 @@ static int initGl(uint32_t d_width, uint32_t d_height) {
     }
     mpglActiveTexture(GL_TEXTURE1);
     glCreateClearTex(gl_target, gl_texfmt, gl_format, gl_type, scale_type,
-                     texture_width >> xs, texture_height >> ys, 128);
+                     texture_width >> xs, texture_height >> ys,
+                     chroma_clear_val);
     if (mipmap_gen)
       mpglTexParameteri(gl_target, GL_GENERATE_MIPMAP, GL_TRUE);
     mpglActiveTexture(GL_TEXTURE2);
     glCreateClearTex(gl_target, gl_texfmt, gl_format, gl_type, scale_type,
-                     texture_width >> xs, texture_height >> ys, 128);
+                     texture_width >> xs, texture_height >> ys,
+                     chroma_clear_val);
     if (mipmap_gen)
       mpglTexParameteri(gl_target, GL_GENERATE_MIPMAP, GL_TRUE);
     mpglActiveTexture(GL_TEXTURE0);
