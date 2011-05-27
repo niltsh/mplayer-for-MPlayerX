@@ -1,10 +1,6 @@
-.\" sync with en/mplayer.1 rev. 33458
-.\" fix translation error in legacy parts: currently fixed up to (2292)
-.\"
-.\" MPlayer (C) 2000-2010 MPlayer 团队
-.\" 本(英文)手册页由 Gabucino, Diego Biurrun, Jonas Jermann 编写
-.\" 视频滤镜、通用编解码器选项、各编解码器特有的编码选项三个章节由
-.\" JRaSH <jrash06 AT 163.com>重新翻译
+.\" sync with en/mplayer.1 rev. 33488
+.\" This man page was/is done by Gabucino, Diego Biurrun, Jonas Jermann
+.\" translation by JRaSH<jrash06 at 163.com>, currently fixed up to (2718)
 .
 .\" --------------------------------------------------------------------------
 .\" 宏定义
@@ -54,19 +50,23 @@ mencoder \- 影视编解码器
 .
 .br
 .B mplayer
-[若干选项] 文件1 [若干该文件专用的选项] [文件2] [若干该文件专用的选项]
+[若干选项] 文件1 \
+[若干该文件专用的选项] [文件2] [若干该文件专用的选项]
 .
 .br
 .B mplayer
-[若干选项] {文件和选项组} [该组专用的选项]
+[若干选项] \
+{文件和选项组} \
+[该组专用的选项]
 .
 .br
 .B mplayer
-[br]://[标题][/设备] [若干选项]
+[br]://[标题][/设备] \
+[若干选项]
 .
 .br
 .B mplayer
-[dvd|dvdnav]://[标题|[起始标题]\-中止标题][/设备]
+[dvd|dvdnav]://[标题|[起始标题]\-中止标题][/设备] \
 [若干选项]
 .
 .br
@@ -75,37 +75,37 @@ vcd://轨道[/设备]
 .
 .br
 .B mplayer
-tv://[频道][/输入源代码]
+tv://[频道][/输入源代码] \
 [若干选项]
 .
 .br
 .B mplayer
-radio://[频道|频率][/捕捉设备]
+radio://[频道|频率][/捕捉设备] \
 [若干选项]
 .
 .br
 .B mplayer
-pvr://
+pvr:// \
 [若干选项]
 .
 .br
 .B mplayer
-dvb://[卡号@]频道
+dvb://[卡号@]频道 \
 [若干选项]
 .
 .br
 .B mplayer
-mf://[文件过滤码|@列表文件]
+mf://[文件过滤码|@列表文件] \
 [\-mf 若干选项] [若干选项]
 .
 .br
 .B mplayer
-[cdda|cddb]://音轨[\-中止音轨][:速度][/设备]
+[cdda|cddb]://音轨[\-中止音轨][:速度][/设备] \
 [若干选项]
 .
 .br
 .B mplayer
-cue://文件[:音轨]
+cue://文件[:音轨] \
 [若干选项]
 .
 .br
@@ -115,32 +115,32 @@ cue://文件[:音轨]
 .
 .br
 .B mplayer
-sdp://文件
+sdp://文件 \
 [若干选项]
 .
 .br
 .B mplayer
-mpst://主机[:端口]/URL
+mpst://主机[:端口]/URL \
 [若干选项]
 .
 .br
 .B mplayer
-tivo://主机/[list|llist|fsid]
+tivo://主机/[list|llist|fsid] \
 [若干选项]
 .
 .br
 .B gmplayer
-[若干选项]
+[若干选项] \
 [\-skin\ 界面外观]
 .
 .br
 .B mencoder
-[若干选项] 文件
+[若干选项] 文件 \
 [文件|URL|\-] [\-o 文件 | file://文件 | smb://[用户名:密码@]主机/文件路径]
 .
 .br
 .B mencoder
-[若干选项] 文件1
+[若干选项] 文件1 \
 [该文件专用的选项] [文件2] [该文件专用的选项]
 .ad
 .hy
@@ -2289,79 +2289,86 @@ ALSA 的硬件代码中须将‘:’替换为‘.’。
 .RE
 .
 .TP
-.B \-tvscan <选项1:选项2:...>（仅用于电视播放及MPlayer中）
-设置电视频道扫描器。
-MPlayer将同时打印“-tv channels=”选项中的值，包括已有的以及刚找到的频道。
+.B \-tvscan <选项1:选项2:...>（仅用于电视播放及 MPlayer 中）
+调整电视频道扫描器。\
+MPlayer 将同时打印“-tv channels=”选项中的值，\
+包括已有的以及刚找到的频道。
 .sp 1
-可用子选项为：
+可用子选项有：
 .RSs
 .IPs autostart
 在启动后立即开始频道的扫描（默认值：禁用）。
 .IPs period=<0.1\-2.0>
-指定切换至下一个频道前延迟的时间，单位为秒（默认值：0.5）。
-较低的值将使扫描更快，但可能将无效的电视频道侦测为有效。
+指定切换至下一个频道前延迟的时间，单位为秒（默认值：0.5）。\
+较低的值将使扫描更快，但可能将无效的电视频道\
+检测为有效。
 .IPs threshold=<1\-100>
-用于设备报告的信号强度的阈值（单位为百分比）（默认值：50）。
-高于该值的信号强度将代表当前扫描的频道是有效的。
+（单位为百分比的）设备报告的信号强度的阈值\
+（默认值：50）。\
+高于该值的信号强度表示当前扫描的频道是\
+有效的。
 .RE
 .
 .TP
-.B \-user <用户名> (也请参见 \-passwd) (仅用于网络)
+.B \-user <用户名>（另参见 \-passwd）（仅用于网络）
 指定 HTTP 认证的用户名。
 .
 .TP
 .B \-user\-agent <字符串>
-使用 <字符串> 作为 HTTP 流的用户代理。
+使用 <字符串> 作为 HTTP 流的 user agent 值。
 .
 .TP
-.B \-vid <标识>
-选择视频频道 (MPG: 0\-15, ASF: 0\-255, MPEG-TS: 17\-8190)。
-当播放 MPEG-TS 流时, MPlayer/\:MEncoder 用第一个程序
-播放已选择的(如果有的话)视频流。
+.B \-vid <代码>
+选择视频频道（MPG：0\-15，ASF：0\-255，MPEG-TS：17\-8190）。\
+当播放 MPEG-TS 流时，MPlayer/\:MEncoder 将播放所选视频流的\
+第一个节目（如果存在的话）。
 .
 .TP
-.B \-vivo <子选项> (调试代码)
-锁定 VIVO 分路器的音频参数(用于调试)。
+.B \-vivo <子选项>（用于调试代码）
+强制设置 VIVO 流分离器的音频参数（用于调试目的）。\
+FIXME: Document this.
 .
 .
 .
 .SH "OSD/字幕选项"
-.I 注意:
-也请参见 \-vf expand。
+.I 注意：
+另参见 \-vf expand。
 .
 .TP
-.B \-ass (仅适用于 FreeType)
-打开 SSA/ASS 字幕提供。
-通过此选项, libass 将用于 SSA/ASS 外部字幕和 Matroska 轨迹。
-你可能也想使用 \-embeddedfonts。
+.B \-ass（仅用于 FreeType）
+打开 SSA/ASS 字幕渲染功能。\
+指定了该选项后，将使用 libass 播放 SSA/ASS 外部字幕\
+和 Matroska 字幕轨道。\
+可能也需要使用 \-embeddedfonts。
 .br
 .I 注意：
-不像通常的 OSD，libass 默认使用 fontconfig。使用 \-nofontconfig 以禁用此行为。
+不像通常的 OSD 界面，libass 默认使用 fontconfig。要禁用此行为，\
+使用 \-nofontconfig。
 .
 .TP
 .B \-ass\-border\-color <参数值>
-为文字字幕设置边框 (轮廓) 颜色。
+设置文字字幕边线（轮廓）的颜色。\
 颜色格式是 RRGGBBAA。
 .
 .TP
 .B \-ass\-bottom\-margin <参数值>
-在帧底部添加黑条。
-SSA/ASS 提供器能在那里放置字幕 (与 \-ass\-use\-margins 组合用)。
+在帧画面底部添加黑色条状区域。\
+SSA/ASS 渲染器能在那里放置字幕（与 \-ass\-use\-margins 组合使用）。
 .
 .TP
 .B \-ass\-color <参数值>
-为文字字幕设置颜色。
+设置文字字幕的颜色。\
 颜色格式是 RRGGBBAA。
 .
 .TP
 .B \-ass\-font\-scale <参数值>
-为 SSA/ASS 提供器中的字体设置比例系数。
+设置用于 SSA/ASS 渲染器中字体的缩放系数。
 .
 .TP
-.B \-ass\-force\-style <[Style.]Param=参数值[,...]>
-改写一些样式或脚本信息的参数。
+.B \-ass\-force\-style <[样式.]参数=参数值[,...]>
+改写样式或脚本信息的参数。
 .sp
-.I 示例:
+.I 示例：
 .PD 0
 .RSs
 \-ass\-force\-style FontName=Arial,Default.Bold=1
@@ -2376,122 +2383,135 @@ SSA/ASS 提供器能在那里放置字幕 (与 \-ass\-use\-margins 组合用)。
 <类型> 可以是：
 .PD 0
 .RSs
-.IPs <类型>
 .IPs 0
 无微调。
 .IPs 1
-FreeType自动微调器，轻量模式。
+FreeType 自动微调器，轻量模式。
 .IPs 2
-FreeType自动微调器，普通模式。
+FreeType 自动微调器，普通模式。
 .IPs 3
 字体内置微调。
 .IPs 0\-3 + 4
-相同，但微调只有当OSD以全屏方式显示而因此不会伸缩时才会使用。
+相同，但微调只有当 OSD 以全屏方式渲染\
+并因此不会缩放时才会使用。
 .RE
 .RSs
-默认值为7（当OSD不伸缩时使用内置微调器，否则无微调）。
+默认值为 7（当 OSD 不缩放时使用内置微调器，否则无微调）。
 .RE
 .PD 1
 .
 .TP
 .B \-ass\-line\-spacing <参数值>
-为 SSA/ASS 提供器设置行间隔。
+为 SSA/ASS 渲染器设置行间隔值。
 .
 .TP
 .B \-ass\-styles <文件名>
-装载指定文件中找到的所有 SSA/ASS 风格并在提供文字字幕时使用。
-文件的语法完全像是 SSA/ASS 中的一节 [V4 Styles] / [V4+ Styles]。
+装载指定文件中找到的所有 SSA/ASS 样式，\
+并将其用于渲染文字字幕。\
+文件内容的语法须与 SSA/ASS 中的 [V4 Styles] / [V4+ Styles] 一节\
+所记述的完全一致。
 .
 .TP
 .B \-ass\-top\-margin <参数值>
-在帧顶部添加黑条。
-SSA/ASS 提供器能在那里放置字幕 (与 \-ass\-use\-margins 组合用)。
+在帧画面顶部添加黑色条状区域。\
+SSA/ASS 渲染器能在那里放置字幕（与 \-ass\-use\-margins 组合使用）。
 .
 .TP
 .B \-ass\-use\-margins
-启用放置字幕(如果有的话)在黑框中。
+启用存在字幕时将其放置在黑色条状\
+区域的模式。
 .
 .TP
-.B \-dumpjacosub (仅用于 MPlayer)
-转换给定的(由 \-sub 选项指定的)字幕成为基于时间的 JACOsub 字幕格式。
+.B \-dumpjacosub（仅用于 MPlayer）
+将所给（由 \-sub 选项指定）的字幕转换为\
+基于时间的 JACOsub 字幕格式。\
 在当前的目录中创建 dumpsub.js 文件。
 .
 .TP
-.B \-dumpmicrodvdsub (仅用于 MPlayer)
-转换给定的(由 \-sub 选项指定的)字幕成为 MicroDVD 字幕格式。
+.B \-dumpmicrodvdsub（仅用于 MPlayer）
+将所给（由 \-sub 选项指定）的字幕转换为\
+ MicroDVD 字幕格式。\
 在当前的目录中创建 dumpsub.sub 文件。
 .
 .TP
-.B \-dumpmpsub (仅用于 MPlayer)
-转换给定的(由 \-sub 选项指定的)字幕成为 MPlayer 的字幕格式, MPsub。
+.B \-dumpmpsub（仅用于 MPlayer）
+将所给（由 \-sub 选项指定）的字幕转换为\
+ MPlayer 的字幕格式，MPsub。\
 在当前的目录中创建 dumpsub.mpsub 文件。
 .
 .TP
-.B \-dumpsami (仅用于 MPlayer)
-转换给定的(由 \-sub 选项指定的)字幕成为基于时间的 SAMI 字幕格式。
+.B \-dumpsami（仅用于 MPlayer）
+将所给（由 \-sub 选项指定）的字幕转换为\
+基于时间的 SAMI 字幕格式。\
 在当前的目录中创建 dumpsub.smi 文件。
 .
 .TP
-.B \-dumpsrtsub (仅用于 MPlayer)
-转换给定的(由 \-sub 选项指定的)字幕成为基于时间的 SubViewer (SRT) 字幕格式。
+.B \-dumpsrtsub（仅用于 MPlayer）
+将所给（由 \-sub 选项指定）的字幕转换为\
+基于时间的 SubViewer（SRT）字幕格式。\
 在当前的目录中创建 dumpsub.srt 文件。
 .br
-.I 注意:
-有些破硬件播放器对 Unix 行结尾的 SRT 字幕会哽住。
-如果你够彩碰到这样的盒子, 把你的字幕文件到 unix2dos 或类似的程序过一过,
-替换 Unix 行结尾为 DOS/Windows 行结尾。
+.I 注意：
+有些不良的硬件播放器遇到使用 Unix 式的行结尾字符\
+的 SRT 字幕会出现故障。\
+如果碰巧使用的是这样的机器，则可使用 unix2dos 或\
+类似的程序处理一下字幕文件，以将 Unix 式的行结尾\
+替换为 DOS/Windows 式的行结尾。
 .
 .TP
-.B \-dumpsub (仅用于 MPlayer) (BETA 代码)
-从 VOB 流中转储字幕子流。
-也请参见 \-dump*sub 和 \-vobsubout* 选项。
+.B \-dumpsub（仅用于 MPlayer）（用于公测的代码）
+从 VOB 流中导出字幕子数据流。\
+另参见 \-dump*sub 和 \-vobsubout* 选项。
 .
 .TP
-.B \-embeddedfonts (仅用于 FreeType)
-允许抽取 Matroska 内嵌字体（默认值：禁止）。
-这些字体能用于 SSA/ASS 字幕渲染 (\-ass 选项)。
-字体文件创建在~/.mplayer/\:fonts目录中。
+.B \-embeddedfonts（仅用于 FreeType）
+启用抽取 Matroska 内嵌字体的操作（默认值：禁用）。\
+这些字体可用于 SSA/ASS 字幕的渲染\
+（\-ass 选项）。\
+字体文件创建在 ~/.mplayer/\:fonts 目录中。
 .br
 .I 注意：
-在FontConfig 2.4.2或更新的版本里，内嵌字体直接从内存中打开而这个选项默认打开。
+使用 FontConfig 2.4.2 或更新的版本时，内嵌字体直接\
+在内存中打开，而这个选项默认启用。
 .
 .TP
 .B \-ffactor <数字>
-对字体的 alphamap 重新采样。
-可设为:
+对字体的 alphamap （透明区域映射表）重新采样。\
+可设为：
 .PD 0
 .RSs
 .IPs 0
-普通白色字体
+纯白字体
 .IPs 0.75
-非常细的黑色边框(默认值)
+非常细的黑色边框（默认值）
 .IPs 1
-细的黑色边框
+细黑边框
 .IPs 10
-粗的黑色边框
+粗黑边框
 .RE
 .PD 1
 .
 .TP
-.B \-flip\-hebrew (仅用于 FriBiDi)
-打开使用 FriBiDi 的翻转字幕。
+.B \-flip\-hebrew（仅用于 FriBiDi）
+开启使用 FriBiDi 翻转字幕的模式。
 .
 .TP
 .B \-noflip\-hebrew\-commas
-改变 FriBiDi 中假定的字幕中的逗号位置。
-如果字幕中的逗号显示在句首而不是在句尾, 就使用它。
+改变 FriBiDi 对于字幕中逗号摆放位置的预测方式。\
+如果字幕中的逗号显示在句首而非句尾，\
+就使用该选项。
 .
 .TP
-.B \-font <文件 font.desc 的路径，字体（FreeType）的路径，字体样式（Fontconfig）的路径>
-在别的目录中寻找 OSD/\:SUB 字体(
-默认的普通字体为: ~/\:.mplayer/\:font/\:font.desc,
-默认的 FreeType 字体为: ~/.mplayer/\:subfont.ttf)。
+.B \-font <font.desc 文件的路径，字体的路径（FreeType），字体样式（Fontconfig）>
+在别的目录中寻找 OSD/\:SUB 的字体\
+（普通字体的默认路径为：~/\:.mplayer/\:font/\:font.desc，\
+FreeType 字体的默认路径为：~/.mplayer/\:subfont.ttf)。
 .br
-.I 注意:
-对于 FreeType, 此选项决定文本字体文件的路径。
-对于 Fontconfig, 此选项决定 Fontconfig 的字体名称。
+.I 注意：
+使用 FreeType 时，该选项决定了文本字体文件的路径。\
+使用 Fontconfig 时，该选项决定了 Fontconfig 的字体名称。
 .sp 1
-.I 示例:
+.I 示例：
 .PD 0
 .RSs
 \-font ~/\:.mplayer/\:arial-14/\:font.desc
@@ -2505,35 +2525,40 @@ SSA/ASS 提供器能在那里放置字幕 (与 \-ass\-use\-margins 组合用)。
 .PD 1
 .
 .TP
-.B \-fontconfig (仅用于 fontconfig)
-启用使用 fontconfig 管理的字体。
+.B \-fontconfig（仅用于 fontconfig）
+启用 fontconfig 管理字体。
 .br
 .I 注意：
-\-ass 自动打开该选项，除非明确使用 \-nofontconfig 改变这一行为。
+默认情况下，fontconfig 用于 libass 渲染的字幕，而不用于 OSD 界面。\
+使用 \-fontconfig 后，则将 fontconfig 同时用于 libass 和 OSD；\
+使用 \-nofontconfig 后，则完全不使用 fontconfig。
 .
 .TP
 .B \-forcedsubsonly
-仅显示锁定的字幕, 例如由 \-slang 选择的 DVD 字幕流。
+仅显示强制使用的 DVD 字幕流的字幕，例如由 \-slang 选择的\
+那些字幕。
 .
 .TP
-.B \-fribidi\-charset <字符集名称> (仅用于 FriBiDi)
-当编码非 UTF-8 字幕(默认是: ISO8859\-8)时, 指定传递到 FriBiDi 的字符集。
+.B \-fribidi\-charset <字符集名称>（仅用于 FriBiDi）
+当编码非 UTF-8 字幕时，指定传给 FriBiDi 模块的数据的字符集。\
+（默认值：ISO8859\-8）
 .
 .TP
 .B \-ifo <VOBsub 的 IFO 文件>
-指出用于装载 VOBsub 字幕的调色板和帧尺寸的文件。
+指定用于装载 VOBsub 字幕的调色板和帧画面尺寸\
+的文件。
 .
 .TP
 .B \-noautosub
-关闭自动载入字幕文件。
+关闭自动载入字幕文件的行为。
 .
 .TP
 .B \-osd\-duration <时间>
-设置 OSD 信息的停留时间(以毫秒 ms 为单位) (默认是: 1000)。
+以毫秒为单位设置 OSD 信息的停留时间（默认值：1000）。
 .
 .TP
 .B \-osd\-fractions <0\-2>
-设置 OSD 中当前时间的秒数的小数部分如何显示：
+设置 OSD 中当前时间标签中秒数的小数部分如何显示：
 .PD 0
 .RSs
 .IPs 0
@@ -2541,56 +2566,61 @@ SSA/ASS 提供器能在那里放置字幕 (与 \-ass\-use\-margins 组合用)。
 .IPs 1
 显示头两位十进制数字。
 .IPs 2
-显示当前秒钟内大致的帧计数值。
-该帧计数值并不精确而只是一个近似值。
-在可变帧数编码的情况下，发现这个近似值远远偏离实际的帧计数值。
+显示当前所在秒内大致的帧计数值。\
+该帧计数值并不精确而只是一个近似值。\
+在可变帧数编码的情况下，经验表明这个近似值远远偏离\
+实际的帧计数值。
 .RE
 .PD 1
 .
 .TP
-.B \-osdlevel <0\-3> (仅用于 MPlayer)
+.B \-osdlevel <0\-3>（仅用于 MPlayer）
 指定 OSD 的启始模式。
 .PD 0
 .RSs
 .IPs 0
 只有字幕
 .IPs 1
-音量 + 搜索条 (默认)
+音量 + 定位条（默认行为）
 .IPs 2
-音量 + 搜索条 + 计时器 + 百分比
+音量 + 定位条 + 计时器 + 百分比进度
 .IPs 3
-音量 + 搜索条 + 计时器 + 百分比 + 总时间
+音量 + 定位条 + 计时器 + 百分比进度 + 总时间长度
 .RE
 .PD 1
 .
 .TP
 .B \-overlapsub
-虽然当前有字幕显示, 允许同时显示下一行字幕(默认启用只支持特定格式)。
+允许当前有字幕显示仍显示下一个字幕\
+（默认方式是只在使用特定字幕格式时\
+启用该项支持）。
 .
 .TP
-.B \-sid <标识> (也请参见 \-slang, \-vobsubid)
-显示由 <标识> (0\-31) 指定的字幕流。
-MPlayer 运行在 verbose (\-v) 模式时, 打印可用的字幕标识。
-如果你不能选择 DVD 中其中之一的字幕, 也请试试 \-vobsubid。
+.B \-sid <代码>（也请参见 \-slang、\-vobsubid）
+显示由 <代码>（0\-31）指定的字幕流。\
+MPlayer 以详细输出模式（\-v）运行时，会打印可用的字幕代码。\
+如果无法选用 DVD 中的某个字幕，也可尝试 \-vobsubid。
 .
 .TP
 .B \-nosub
-禁用所有默认情况下自动选择的内部字幕（就像 Matroska/mkv 之类的流分离器所支持的那样）。
-使用 \-noautosub 以禁止自动加载外部字幕文件。
+禁用所有默认情况下自动选择的内部字幕（就像 Matroska/mkv 之类的\
+流分离器所支持的那样）。\
+要使用 \-noautosub 以禁止自动加载外部字幕文件。
 .
 .TP
-.B \-slang <语言代号[,语言代号,...]> (也请参见 \-sid)
-指定使用字幕语言的优先级列表。
-不同的容器格式使用不同的语言代号。DVDs 使用 ISO 639\-1 的
-两字符语言代号, Matroska 使用 ISO 639\-2 的
-三字符语言代号, 而 OGM 使用自由格式标识符。
-MPlayer 在 verbose (\-v) 模式下会打印可用的语言。
+.B \-slang <语言代码[,语言代码,...]>（另参见 \-sid）
+指定所使用字幕语言的优先级列表。\
+不同的容器格式使用不同的语言代码。\
+DVD 使用 ISO 639\-1 的双字符语言代码，Matroska 使用 ISO 639\-2 的\
+三字符语言代码，而 OGM 使用一种不限制形式的标识代码。\
+MPlayer 以详细输出模式（\-v）运行时会打印可用的语言。
 .sp 1
-.I 示例:
+.I 示例：
 .PD 0
 .RSs
 .IPs "mplayer dvd://1 \-slang hu,en"
-选择 DVD 上的匈牙利语字幕轨迹而英语在没有匈牙利语时备用。
+选用 DVD 上的匈牙利语字幕轨道，而在没有匈牙利语时\
+退而使用英语。
 .IPs "mplayer \-slang jpn example.mkv"
 播放日语字幕的 Matroska 文件。
 .RE
@@ -2598,34 +2628,35 @@ MPlayer 在 verbose (\-v) 模式下会打印可用的语言。
 .
 .TP
 .B \-spuaa <模式>
-设置 DVD/\:VOBsub 的反锯齿/\:缩放模式。
-甚至在原始的与缩放的帧尺寸已匹配时, 还可能在 <模式> 上增加 16 以强制进行缩放,
-比如使用高斯柔化来平滑字幕。
-可用模式有:
+DVD/\:VOBsub 的抗锯齿/\:缩放模式。\
+即使原始帧与缩放帧的画面尺寸已匹配，也可在 <模式> 数值上\
+增加 16 以强制执行缩放。\
+该选项可用于进行诸如利用高斯柔化平滑字幕的操作。\
+可用模式有：
 .PD 0
 .RSs
 .IPs 0
-不缩放(最快, 很丑)
+不处理（运行最快，视觉效果很差）
 .IPs 1
-近似缩放(好像坏了?)
+近似模式（该模式已失效？）
 .IPs 2
-完全缩放(慢)
+完全模式（运行慢）
 .IPs 3
-二次线性缩放(默认值, 快速而且效果不坏)
+双重线性模式（默认值，运行快且效果不算太差）
 .IPs 4
-使用软件缩放的高斯柔化(看起来很好)
+使用软件缩放器的高斯模糊模式（视觉效果很好）
 .RE
 .PD 1
 .
 .TP
 .B \-spualign <\-1\-2>
-指定 SPU (DVD/\:VOBsub) 字幕该如何对齐。
+指定 SPU（DVD/\:VOBsub）字幕的对齐方式。
 .PD 0
 .RSs
 .IPs "\-1"
-原始位置。
+置于原本的位置。
 .IPs " 0"
-顶部对齐 (原始行为, 默认)。
+顶部对齐（原本的行为，默认）。
 .IPs " 1"
 中央对齐。
 .IPs " 2"
@@ -2635,50 +2666,53 @@ MPlayer 在 verbose (\-v) 模式下会打印可用的语言。
 .
 .TP
 .B \-spugauss <0.0\-3.0>
-高斯模糊的可变参数用于 \-spuaa 4。
-越高表示越柔化 (默认是: 1.0)。
+用于 \-spuaa 4 高斯模糊的方差参数。\
+值越高意味着越模糊（默认值：1.0）。
 .
 .TP
 .B \-sub <字幕文件1,字幕文件2,...>
-使用/\:显示指定的字幕文件。
-同时只能显示一个文件。
+使用/\:显示所指定的字幕文件。\
+同一时间只能显示一个文件。
 .
 .TP
 .B \-sub\-bg\-alpha <0\-255>
-指定字幕和 OSD 背景的 alpha 通道值。
-值越大代表越透明。但 0 表示完全透明。
+指定字幕和 OSD 背景的 alpha 通道值。\
+值越大代表越透明。\
+0 表示完全透明。
 .
 .TP
 .B \-sub\-bg\-color <0\-255>
-指定字幕和 OSD 背景的颜色值。
-目前字幕是灰度图像所以这个值相当于颜色的亮度。
-255 代表白色 0 代表黑色。
+指定字幕和 OSD 背景的颜色值。\
+目前字幕是灰度图像，所以这个值相当于\
+颜色的亮度。\
+255 代表白色，0 代表黑色。
 .
 .TP
-.B \-sub\-demuxer <[+]名称> (仅用于 \-subfile) (BETA 代码)
-锁定 \-subfile 的字幕分路器类型。
-在名称前使用 "+" 锁定类型, 跳过某些核查!
-按照 \-sub\-demuxer help 打印出来的指定分路器类型。
-为了向后兼容, 也接受定义在 subreader.h 的分路器标识。
+.B \-sub\-demuxer <[+]名称>（仅用于 \-subfile）（用于公测的代码）
+强制指定 \-subfile 的字幕流分离器类型。\
+在名称前使用‘+’强制使用该类型，这将跳过某些检查！\
+需使用 \-sub\-demuxer help 所打印出来的分离器名称。\
+为了向后兼容，也可识别 subreader.h 中定义的分离器\
+代码。
 .
 .TP
 .B \-sub\-fuzziness <模式>
-搜寻字幕时调整匹配模糊度:
+调整搜索字幕时模糊匹配的程度：
 .PD 0
 .RSs
 .IPs 0
 精确匹配（默认方式）
 .IPs 1
-装载所有包含电影名称的字幕。
+加载所有包含影片名称的字幕。
 .IPs 2
-装载当前目录以及 \-sub\-paths 目录中的所有字幕。
+加载当前目录以及 \-sub\-paths 目录中的所有字幕。
 .RE
 .PD 1
 .
 .TP
 .B \-sub\-no\-text\-pp
-停用载入字幕后的任何形式的文字后期处理。
-用于调试目的。
+禁用载入字幕后执行的任何形式的文字后期处理操作。\
+可用于调试目的。
 .
 .TP
 .B \-subalign <0\-2>
@@ -7349,6 +7383,10 @@ xtile * ytile的数。
 长方形区域的模糊边缘的宽度（增加w和h的大小）。
 当设为\-1时，屏幕上将绘出一个绿色的长方形以方便寻找合适的x、y、w、
 h参数值。
+.IPs file=<文件名>
+可指定一个文本文件，从中加载坐标。\
+每一行内容必须有一个时间标签（以秒为单位，并且升序排序）以及\
+“x:y:w:h:t”坐标值（t 可省略）。
 .RE
 .PD 1
 .
@@ -7801,7 +7839,7 @@ Specify an initial value for the PTS.
 .sp 1
 指定的时间标记必须按升序排列。
 .sp 1
-因为 MEncoder 不在滤镜链中传递时间标记，所以很可能需要使用 fixpts 滤镜以使该选
+因为 MEncoder 不在滤镜链中传递时间标签，所以很可能需要使用 fixpts 滤镜以使该选
 项生效。
 .sp 1
 并非所有的编解码器可以强制使用关键帧。
