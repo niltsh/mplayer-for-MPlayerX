@@ -1,11 +1,14 @@
-// Synced with help_mp-en.h rev. 33454
-// Reminder of hard terms which need better/final solution later:
-//   (file links to be updated later if available!);
-//   NAV; section/subsection;  XScreenSaver; keycolor;
-//   AGP move failed on Y plane;
-//   profile? demuxer? drain? flush?
+// Synced with help_mp-en.h rev. 33478
 //
 // Translated by JRaSH <jrash06@163.com>
+
+
+
+
+
+
+
+
 
 // ========================= MPlayer help ===========================
 
@@ -64,9 +67,12 @@ static const char help_text[]=
 #define MSGTR_BuiltinCodecsConf "使用内建默认的 codecs.conf 文件。\n"
 #define MSGTR_CantLoadFont "无法加载位图字体：%s\n"
 #define MSGTR_CantLoadSub "无法加载字幕：%s\n"
-#define MSGTR_DumpSelectedStreamMissing "内存转储：致命错误：指定的媒体流不存在！\n"
-#define MSGTR_CantOpenDumpfile "无法打开内存转储文件。\n"
-#define MSGTR_CoreDumped "内核转储 :)\n"
+#define MSGTR_DumpSelectedStreamMissing "内核导出：致命错误：指定的媒体流不存在！\n"
+#define MSGTR_CantOpenDumpfile "无法打开内核导出文件。\n"
+#define MSGTR_CoreDumped "内核已导出 :)\n"
+#define MSGTR_DumpBytesWrittenPercent "导出：已写入 %"PRIu64" 字节（~%.1f%%）\r"
+#define MSGTR_DumpBytesWritten "导出：已写入 %"PRIu64" 字节\r"
+#define MSGTR_DumpBytesWrittenTo "导出：已将 %"PRIu64" 字节写入‘%s’中。\n"
 #define MSGTR_FPSnotspecified "FPS 在文件头中没有指定或者无效，请使用 -fps 选项。\n"
 #define MSGTR_TryForceAudioFmtStr "尝试强制使用音频编解码器驱动族 %s...\n"
 #define MSGTR_CantFindAudioCodec "无法找到音频格式 0x%X 的编解码器。\n"
@@ -327,53 +333,65 @@ static const char help_text[]=
 "\n"\
 "大多数配置已经经过严格的双盲聆听的测试和调整，以验证并达到这个目标。\n"\
 "\n"\
-"这些配置经过不断升级以跟上最近的开发成果，所以应该能给你提供目前 LAME \n"\
-"所能提供的将近最好的质量。\n"\
+\
+"这些配置经过不断升级以跟上最近的开发成果，所以应该能给你提供目前 LAME 所能提供的\n"\
+"将近最好的质量。\n"\
 "\n"\
-"启用这些预设配置：\n"\
+\
+"要启用这些预设配置：\n"\
 "\n"\
 "   使用 VBR 模式（通常质量最高）：\n"\
 "\n"\
 "     “preset=standard” 该预设配置在处理大多数音乐上，通常大多数人应该是感\n"\
-"                             觉不到差异的，其质量已经相当高。\n" \
+"                         觉不到差异的，其质量已经相当高。\n" \
 "\n"\
-"     “preset=extreme” 如果你有极好的听力和相当的设备，该预设配置一般会比\n"\
-"                             “standard”模式提供更高一点的质量。\n"\
+\
+"     “preset=extreme”  如果你有极好的听力和相当的设备，该预设配置一般会比\n"\
+"                        “standard”模式提供更高一点的质量。\n"\
 "\n"\
+\
+\
 "   使用 CBR 320kbps（预设配置开关选项里的最高质量）：\n"\
 "\n"\
-"     “preset=insane”  对于大多数人在大多数情况下，该选项通常有些过度。但是\n"\
-"                             如果你一定要有最高质量并且完全不关心文件大小，\n"\
-"                             那这正是适合你的。\n"\
+"     “preset=insane”   对于大多数人在大多数情况下，该选项通常有些过度。但是\n"\
+"                         如果你一定要有最高质量并且完全不关心文件大小，那这正\n"\
+"                         是适合你的。\n"\
 "\n"\
+\
 "   使用 ABR 模式（给定比特率下提供较高质量，但不及 VBR 质量高）：\n"\
 "\n"\
 "     \"preset=<kbps>\"  使用该预设配置通常会在一个指定的比特率下提错良好的质量。\n"\
-"                             根据输入的比特率，预设配置将判断该情形下的最优设置。\n"\
-"                             虽然该方法行之有效，但并没有 VBR 模式那么灵活，\n"\
-"                             并且通常在高比特率下达不到 VBR 所具有的同等质量。\n"\
+"                        根据输入的比特率，预设配置将判断该情形下的最优设置。虽\n"\
+"                        然该方法行之有效，但并没有 VBR 模式那么灵活，并且通常\n"\
+"                        在高比特率下达不到 VBR 所具有的同等质量。\n"\
 "\n"\
-"以下选项在相应的配置集中也可使用:\n"\
+\
+\
+\
+"以下选项在相应的配置集中也可使用：\n"\
 "\n"\
 "   <fast>        standard\n"\
 "   <fast>        extreme\n"\
 "                 insane\n"\
-"   <cbr>（ABR Mode）- 默认使用的是 ABR 模式。要使用该模式，\n"\
-"                      只要指定一个比特率就行了。例如：\n"\
-"                      “preset=185”启用该预设配置，\n"\
-"                      使用 185 作为平均比特率。\n"\
+"   <cbr>（ABR Mode）- 默认使用的是 ABR 模式。要使用该模式，只要\n"\
+"                      指定一个比特率就行了。例如：“preset=185”\n"\
+"                      启用该预设配置，使用 185 作为平均比特率。\n"\
 "\n"\
-"   “fast” - 在特定的配置集中启用新的高速 VBR 模式。\n"\
-"            速度开关的坏处是比特率往往比普通模式下稍高，\n"\
-"            并且质量也会稍低一点。\n"\
-"      警告：在当前版本下, 高速预设配置可能产生比一般模式高太多的比特率。\n"\
+\
+"   “fast” - 在特定的配置集中启用新的高速 VBR 模式。速度开关的坏处是\n"\
+"              比特率往往比普通模式下稍高，并且质量也会稍低一点。\n"\
+\
+\
+"      警告：在当前版本下，高速预设配置可能产生比一般模式高太多的比特率。\n"\
 "\n"\
-"   “cbr”  - 如果你使用 ABR 模式（见上）时指定了一个比特率, 如\n"\
-"            80、96、112、128、160、192、224、256、320，你可以使\n"\
-"            用“cbr”选项强制以 CBR 模式编码代替标准 ABR 模式。\n"\
-"            ABR 固然提供更高的质量，但是 CBR 在某些情况下可能会\n"\
-"            相当有用，比如当在因特网上传送 MP3 流可能十分重要时。\n"\
+\
+"   “cbr”  - 如果你使用 ABR 模式（见上）时指定了一个比特率, 如 80、\n"\
+"              96、112、128、160、192、224、256、320，你可以使用\n"\
+"              “cbr”选项强制以 CBR 模式编码代替标准 ABR 模式。ABR\n"\
+"              固然提供更高的质量，但是 CBR 在某些情况下可能会相当有\n"\
+"              用，比如当在因特网上传送 MP3 流可能十分重要时。\n"\
 "\n"\
+\
 "    举例：\n"\
 "\n"\
 "    \"-lameopts fast:preset=standard  \"\n"\
@@ -388,9 +406,9 @@ static const char help_text[]=
 "fm/radio/tape => 112kbps    hifi => 160kbps\n"\
 "cd => 192kbps               studio => 256kbps"
 #define MSGTR_LameCantInit \
-"无法设定 LAME 选项，请检查比特率/采样率，一些\n"\
-"非常低的比特率（<32）需要低采样率（如 -srate 8000）。\n"\
-"如果其它方法都不行，请试试使用预设配置。"
+"无法设定 LAME 选项，请检查比特率/采样率，一些非常低的比特率（<32）需要低采样率\n"\
+"（如 -srate 8000）。\n"\
+"如果其它方法都不行，请尝试使用预设配置。"
 #define MSGTR_ConfigFileError "配置文件错误"
 #define MSGTR_ErrorParsingCommandLine "解析命令行错误"
 #define MSGTR_VideoStreamRequired "必须有视频流！\n"
@@ -455,7 +473,7 @@ static const char help_text[]=
 "                 （比特率 320 kbps）\n"\
 "                 <8-320>：以给定比特率为平均比特率的 ABR 编码方式。\n\n"
 
-//codec-cfg.c
+// codec-cfg.c
 #define MSGTR_DuplicateFourcc "FourCC 代码重复"
 #define MSGTR_TooManyFourccs "FourCC/格式代码过多……"
 #define MSGTR_ParseError "解析错误"
@@ -517,6 +535,7 @@ static const char help_text[]=
 // loader/ldt_keeper.c
 #define MSGTR_LOADER_DYLD_Warning "警告：尝试使用 DLL 编解码器，但是环境变量\n         DYLD_BIND_AT_LAUNCH 未设定。 这很可能造成程序崩溃。\n"
 
+
 // ====================== GUI messages/buttons ========================
 
 // --- labels ---
@@ -572,6 +591,7 @@ static const char help_text[]=
 #define MSGTR_SKIN_BITMAP_ConversionError "%s 中的数据执行 24 比特至 32 比特转换出错\n"
 #define MSGTR_SKIN_UnknownMessage "未知信息‘%s’\n"
 #define MSGTR_SKIN_NotEnoughMemory "内存不足\n"
+#define MSGTR_SKIN_TooManyItemsDeclared "声明项目过多。\n"
 #define MSGTR_SKIN_FONT_TooManyFontsDeclared "字体的声明过多。\n"
 #define MSGTR_SKIN_FONT_FontFileNotFound "未找到字体描述文件。\n"
 #define MSGTR_SKIN_FONT_FontImageNotFound "未找到字体图像文件。\n"
@@ -832,6 +852,7 @@ static const char help_text[]=
 #define MSGTR_LIBVO_FONT_LOAD_FT_CannotPrepareOSDFont "无法设置 OSD 字体。\n"
 #define MSGTR_LIBVO_FONT_LOAD_FT_CannotGenerateTables "无法生成映射表。\n"
 #define MSGTR_LIBVO_FONT_LOAD_FT_DoneFreeTypeFailed "调用 FT_Done_FreeType 失败。\n"
+#define MSGTR_LIBVO_FONT_LOAD_FT_FontconfigNoMatch "Fontconfig 选取字体失败。请尝试不使用...\n"
 
 // sub.c
 #define MSGTR_VO_SUB_Seekbar "定位条"
@@ -1080,6 +1101,7 @@ static const char help_text[]=
 "[VO_XV] DOCS/HTML/en/video.html#xv！\n"\
 "[VO_XV] 参见‘mplayer -vo help’获取其它（非 xv）视频输出驱动的信息。\n"\
 "[VO_XV] 试试 -vo x11。\n"
+#define MSGTR_VO_XV_ImagedimTooHigh "源图像尺寸过大：%ux%u（最大值限制为 %ux%u）\n"
 
 // vo_yuv4mpeg.c
 #define MSGTR_VO_YUV4MPEG_InterlacedHeightDivisibleBy4 "隔行扫描模式要求图像高度能被 4 整除。"
@@ -1277,6 +1299,7 @@ static const char help_text[]=
 // ao_plugin.c
 #define MSGTR_AO_PLUGIN_InvalidPlugin "[AO PLUGIN] 无效插件：%s\n"
 
+
 // ======================= audio filters ================================
 
 // af_scaletempo.c
@@ -1428,7 +1451,6 @@ static const char help_text[]=
 #define MSGTR_SubtitleID "[%s] 找到字幕流，-sid %d\n"
 
 // asfheader.c
-
 #define MSGTR_MPDEMUX_ASFHDR_HeaderSizeOver1MB "致命错误：文件头部大小超过 1 MB（%d）！\n请联系 MPlayer 的作者, 并且发送或上传此文件。\n"
 #define MSGTR_MPDEMUX_ASFHDR_HeaderMallocFailed "无法为文件头部分配 %d 字节的存放空间。\n"
 #define MSGTR_MPDEMUX_ASFHDR_EOFWhileReadingHeader "读 ASF 头部时遇到文件结尾，文件损坏或不完整？\n"
@@ -2010,9 +2032,10 @@ static const char help_text[]=
 #define MSGTR_TV_UnknownImageFormat ""\
 "==================================================================\n"\
 " 警告：请求输出的图像格式未经测试或未知（0x%x）\n"\
-" 这可能导致播放故障或程序崩溃！缺陷报告将被忽略！你应该再次尝试使\n"\
-" 用YV12（这是默认的色彩空间）并阅读文档！\n"\
+" 这可能导致播放故障或程序崩溃！缺陷报告将被忽略！你应该再次尝试使用\n"\
+" YV12（这是默认的色彩空间）并阅读文档！\n"\
 "==================================================================\n"
+
 #define MSGTR_TV_SelectedNormId "已选择规格化参数标识符：%d\n"
 #define MSGTR_TV_SelectedNorm "已选择规格化参数：%s\n"
 #define MSGTR_TV_CannotSetNorm "错误：无法设置规格化参数！\n"
