@@ -1132,11 +1132,11 @@ void vo_x11_create_vo_window(XVisualInfo *vis, int x, int y,
     if (!vo_border) vo_x11_decoration(mDisplay, vo_window, 0);
     // map window
     XMapWindow(mDisplay, vo_window);
-    vo_x11_clearwindow(mDisplay, vo_window);
     // wait for map
     do {
       XNextEvent(mDisplay, &xev);
     } while (xev.type != MapNotify || xev.xmap.event != vo_window);
+    vo_x11_clearwindow(mDisplay, vo_window);
     XSelectInput(mDisplay, vo_window, NoEventMask);
     XSync(mDisplay, False);
     vo_x11_selectinput_witherr(mDisplay, vo_window,
