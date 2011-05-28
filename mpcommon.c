@@ -272,6 +272,7 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
                     len -= p - packet;
                     packet = p;
                 }
+                if (endpts == MP_NOPTS_VALUE) endpts = subpts + 4;
                 sub_add_text(&subs, packet, len, endpts, 1);
                 set_osd_subtitle(&subs);
             }
