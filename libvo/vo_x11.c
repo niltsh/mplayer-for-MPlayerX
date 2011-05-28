@@ -105,7 +105,7 @@ static void check_events(void)
         vo_x11_clearwindow(mDisplay, vo_window);
     else if (ret & VO_EVENT_EXPOSE)
         vo_x11_clearwindow_part(mDisplay, vo_window, myximage->width,
-                                myximage->height, 0);
+                                myximage->height, vo_fs);
     if (ret & VO_EVENT_EXPOSE && int_pause)
         flip_page();
 }
