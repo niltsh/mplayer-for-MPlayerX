@@ -168,7 +168,7 @@ static void deallocate_xvimage(int foo);
 static void resize(void)
 {
     calc_src_dst_rects(image_width, image_height, &src_rect, &dst_rect, NULL, NULL);
-    vo_x11_clearwindow_part(mDisplay, vo_window, dst_rect.width, dst_rect.height, vo_fs);
+//    vo_x11_clearwindow_part(mDisplay, vo_window, dst_rect.width, dst_rect.height, vo_fs);
     vo_xv_draw_colorkey(dst_rect.left, dst_rect.top, dst_rect.width, dst_rect.height);
 }
 
@@ -240,13 +240,13 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
             depth = 24;
         XMatchVisualInfo(mDisplay, mScreen, depth, TrueColor, &vinfo);
 
-        xswa.background_pixel = 0;
+        xswa.border_pixel = 0;
+        xswamask = CWBorderPixel;
         if (xv_ck_info.method == CK_METHOD_BACKGROUND)
         {
           xswa.background_pixel = xv_colorkey;
+          xswamask |= CWBackPixel;
         }
-        xswa.border_pixel = 0;
-        xswamask = CWBackPixel | CWBorderPixel;
 
             vo_x11_create_vo_window(&vinfo, vo_dx, vo_dy, vo_dwidth, vo_dheight,
                    flags, CopyFromParent, "xv", title);

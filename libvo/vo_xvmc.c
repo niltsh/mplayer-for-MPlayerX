@@ -666,11 +666,12 @@ skip_surface_allocation:
         if (depth != 15 && depth != 16 && depth != 24 && depth != 32) depth = 24;
         XMatchVisualInfo(mDisplay, mScreen, depth, TrueColor, &vinfo);
 
-        xswa.background_pixel = 0;
-        if (xv_ck_info.method == CK_METHOD_BACKGROUND)
-            xswa.background_pixel = xv_colorkey;
         xswa.border_pixel     = 0;
-        xswamask = CWBackPixel | CWBorderPixel;
+        xswamask = CWBorderPixel;
+        if (xv_ck_info.method == CK_METHOD_BACKGROUND){
+            xswa.background_pixel = xv_colorkey;
+            xswamask |= CWBackPixel;
+        }
 
         vo_x11_create_vo_window(&vinfo, vo_dx, vo_dy, d_width, d_height, flags,
                                 CopyFromParent, "xvmc", title);
