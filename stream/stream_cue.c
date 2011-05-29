@@ -186,7 +186,7 @@ static int cue_find_bin (const char *firstline) {
   {
     firstline += 6;
     i = 0;
-    while ( *firstline != '"')
+    while ( *firstline && *firstline != '"')
     {
       bin_filename[i] = *firstline++;
 
