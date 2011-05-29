@@ -224,9 +224,8 @@ static int cue_find_bin (const char *firstline) {
       break;
     case 2:
       /* now I would say the whole filename is shit, build our own */
-      strncpy(s, cue_filename, strlen(cue_filename) - 3 );
-      s[strlen(cue_filename) - 3] = '\0';
-      strcat(s, "bin");
+      av_strlcpy(s, cue_filename, strlen(cue_filename) - 3 );
+      strcat(s, ".bin");
       cur_name = s;
       break;
     case 3:
@@ -236,9 +235,8 @@ static int cue_find_bin (const char *firstline) {
       break;
     case 4:
       /* now I would say the whole filename is shit, build our own */
-      strncpy(s, cue_filename, strlen(cue_filename) - 3 );
-      s[strlen(cue_filename) - 3] = '\0';
-      strcat(s, "img");
+      av_strlcpy(s, cue_filename, strlen(cue_filename) - 3 );
+      strcat(s, ".img");
       cur_name = s;
       break;
     case 5:
