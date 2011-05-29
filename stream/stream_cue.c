@@ -190,7 +190,7 @@ static int cue_find_bin (char *firstline) {
     {
       bin_filename[j] = firstline[6 + i];
 
-      /* if I found a path info, than delete all bevor it */
+      /* if I found a path info, then delete all before it */
       switch (bin_filename[j])
       {
         case '\\':
