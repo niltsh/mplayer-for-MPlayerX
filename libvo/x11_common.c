@@ -763,7 +763,6 @@ void vo_x11_uninit(void)
     {
         if (vo_gc != None)
         {
-            XSetBackground(mDisplay, vo_gc, 0);
             XFreeGC(mDisplay, vo_gc);
             vo_gc = None;
         }
