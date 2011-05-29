@@ -173,11 +173,11 @@ static int cue_getTrackinfo(FILE *fd_cue, char *Line, tTrack *track)
  */
 static int cue_find_bin (const char *firstline) {
   const char *cur_name;
-  int i;
   char bin_filename[256];
   char s[256];
   char t[256];
   int fd_bin;
+  int i = 0;
 
   /* get the filename out of that */
   /*                      12345 6  */
@@ -185,7 +185,6 @@ static int cue_find_bin (const char *firstline) {
   if (strncmp(firstline, "FILE \"",6)==0)
   {
     firstline += 6;
-    i = 0;
     while ( *firstline && *firstline != '"')
     {
       bin_filename[i] = *firstline++;
@@ -205,9 +204,8 @@ static int cue_find_bin (const char *firstline) {
           i++;
       }
     }
-    bin_filename[i] = '\0';
-
   }
+  bin_filename[i] = '\0';
 
   fd_bin = -1;
   for (i = 0; fd_bin == -1 && i < 6; i++) {
