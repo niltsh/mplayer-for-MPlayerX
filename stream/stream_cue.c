@@ -107,7 +107,7 @@ static struct cue_track_pos {
 /* number of tracks on the cd */
 static int nTracks = 0;
 
-static int digits2int(char s[2], int errval) {
+static int digits2int(const char s[2], int errval) {
   uint8_t a = s[0] - '0';
   uint8_t b = s[1] - '0';
   if (a > 9 || b > 9)
@@ -171,7 +171,7 @@ static int cue_getTrackinfo(FILE *fd_cue, char *Line, tTrack *track)
  * on the arrays to have the same size, thus we need to make
  * sure the sizes are in sync.
  */
-static int cue_find_bin (char *firstline) {
+static int cue_find_bin (const char *firstline) {
   const char *cur_name;
   int i;
   char bin_filename[256];
@@ -304,7 +304,7 @@ static inline int cue_mode_2_sector_size(int mode)
 }
 
 
-static int cue_read_cue (char *in_cue_filename)
+static int cue_read_cue (const char *in_cue_filename)
 {
   struct stat filestat;
   char sLine[256];
