@@ -320,7 +320,7 @@ static int cue_read_cue (const char *in_cue_filename)
   /* split the filename into a path and filename part */
   s = strdup(in_cue_filename);
   t = strrchr(s, '/');
-  if (t == (char *)NULL)
+  if (!t)
      t = ".";
   else {
      *t = '\0';
