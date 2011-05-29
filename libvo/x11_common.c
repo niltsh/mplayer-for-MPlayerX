@@ -1045,7 +1045,7 @@ Window vo_x11_create_smooth_window(Display * mDisplay, Window mRoot,
     xswa.bit_gravity = StaticGravity;
 
     ret_win =
-        XCreateWindow(mDisplay, mRootWin, x, y, width, height, 0, depth,
+        XCreateWindow(mDisplay, mRoot, x, y, width, height, 0, depth,
                       CopyFromParent, vis, xswamask, &xswa);
     XSetWMProtocols(mDisplay, ret_win, &XAWM_DELETE_WINDOW, 1);
     if (f_gc == None)
