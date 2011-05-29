@@ -230,7 +230,6 @@ static int cue_find_bin (const char *firstline) {
     case 3:
       /* ok try it with path */
       snprintf(t, sizeof( t ), "%s/%s", bincue_path, s);
-      fd_bin = open (t, O_RDONLY);
       cur_name = t;
       break;
     case 4:
