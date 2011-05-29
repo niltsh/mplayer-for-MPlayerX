@@ -210,6 +210,8 @@ static int cue_find_bin (const char *firstline) {
 
   fd_bin = -1;
   for (i = 0; fd_bin == -1 && i < 6; i++) {
+    if (i > 1 && strlen(cue_filename) < 3)
+      break;
     switch (i) {
     case 0:
       /* now try to open that file, without path */
