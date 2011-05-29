@@ -173,7 +173,7 @@ static int cue_getTrackinfo(FILE *fd_cue, char *Line, tTrack *track)
  */
 static int cue_find_bin (char *firstline) {
   const char *cur_name;
-  int i,j;
+  int i;
   char bin_filename[256];
   char s[256];
   char t[256];
@@ -184,29 +184,28 @@ static int cue_find_bin (char *firstline) {
   mp_msg (MSGT_OPEN,MSGL_INFO, "[bincue] cue_find_bin(%s)\n", firstline);
   if (strncmp(firstline, "FILE \"",6)==0)
   {
+    firstline += 6;
     i = 0;
-    j = 0;
-    while ( firstline[6 + i] != '"')
+    while ( *firstline != '"')
     {
-      bin_filename[j] = firstline[6 + i];
+      bin_filename[i] = *firstline++;
 
       /* if I found a path info, then delete all before it */
-      switch (bin_filename[j])
+      switch (bin_filename[i])
       {
         case '\\':
-          j = 0;
+          i = 0;
           break;
 
         case '/':
-          j = 0;
+          i = 0;
           break;
 
         default:
-          j++;
+          i++;
       }
-      i++;
     }
-    bin_filename[j+1] = '\0';
+    bin_filename[i+1] = '\0';
 
   }
 
