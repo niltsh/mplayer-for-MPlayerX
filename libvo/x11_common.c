@@ -1075,7 +1075,6 @@ void vo_x11_create_vo_window(XVisualInfo *vis, int x, int y,
                              Colormap col_map,
                              const char *classname, const char *title)
 {
-  XGCValues xgcv;
   if (WinID >= 0) {
     vo_fs = flags & VOFLAG_FULLSCREEN;
     vo_window = WinID ? (Window)WinID : mRootWin;
@@ -1157,7 +1156,8 @@ void vo_x11_create_vo_window(XVisualInfo *vis, int x, int y,
 final:
   if (vo_gc != None)
     XFreeGC(mDisplay, vo_gc);
-  vo_gc = XCreateGC(mDisplay, vo_window, GCForeground, &xgcv);
+  vo_gc = XCreateGC(mDisplay, vo_window, 0, NULL);
+
   XSync(mDisplay, False);
   vo_mouse_autohide = 1;
 }
