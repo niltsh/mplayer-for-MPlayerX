@@ -205,7 +205,7 @@ static int cue_find_bin (const char *firstline) {
           i++;
       }
     }
-    bin_filename[i+1] = '\0';
+    bin_filename[i] = '\0';
 
   }
 
