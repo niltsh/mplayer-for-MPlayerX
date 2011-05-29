@@ -172,6 +172,7 @@ static int cue_getTrackinfo(FILE *fd_cue, char *Line, tTrack *track)
  * sure the sizes are in sync.
  */
 static int cue_find_bin (const char *firstline) {
+  struct stat filestat;
   const char *cur_name;
   char bin_filename[256];
   char s[256];
@@ -246,6 +247,10 @@ static int cue_find_bin (const char *firstline) {
       break;
     }
     fd_bin = open(cur_name, O_RDONLY);
+    if (fstat(fd_bin, &filestat) == -1 || !S_ISREG(filestat.st_mode)) {
+        close(fd_bin);
+        fd_bin = -1;
+    }
     if (fd_bin == -1) {
       mp_msg(MSGT_OPEN,MSGL_STATUS, MSGTR_MPDEMUX_CUEREAD_BinFilenameTested,
             cur_name);
