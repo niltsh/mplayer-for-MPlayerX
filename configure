@@ -8138,8 +8138,7 @@ YASMDEP    = $_yasm
 YASMFLAGS  = $YASMFLAGS
 
 CONFIG_STATIC = yes
-SRC_PATH      = ../../
-BUILD_ROOT    = ..
+SRC_PATH      = ../
 LIBPREF       = lib
 LIBSUF        = .a
 LIBNAME       = \$(LIBPREF)\$(NAME)\$(LIBSUF)
@@ -8739,13 +8738,17 @@ for part in $arch $subarch; do
 done
 echo "$(ff_config_enable "$cpuexts_all" "$cpuexts" "%" "HAVE")" >> "$TMPS"
 
-cmp -s "$TMPS" config.asm || mv -f "$TMPS" config.asm
+cmp -s "$TMPS" ffmpeg/config.asm || mv -f "$TMPS" ffmpeg/config.asm
 fi
 
 
 # Create a config.mak for FFmpeg that includes MPlayer's config.mak.
 cat > ffmpeg/config.mak << EOF
 include ../../config.mak
+EOF
+
+cat > ffmpeg/config.h << EOF
+#include "../config.h"
 EOF
 
 #############################################################################
