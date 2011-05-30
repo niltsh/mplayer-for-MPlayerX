@@ -32,7 +32,7 @@ struct vf_priv_s {
   float sense; // first parameter
   float level; // second parameter
   unsigned int imgfmt;
-  char diff;
+  int diff;
   uint32_t max;
 //  int dfr;
 //  int rdfr;
@@ -73,7 +73,7 @@ static int config (struct vf_instance *vf,
       vf->priv->diff = 31;
     mp_msg (MSGT_VFILTER, MSGL_INFO, "Drop-interlaced: %dx%d diff %d / level %u\n",
            vf->priv->pmpi->width, vf->priv->pmpi->height,
-           (int)vf->priv->diff, (unsigned int)vf->priv->max);
+           vf->priv->diff, (unsigned int)vf->priv->max);
 //    vf->priv->rdfr = vf->priv->dfr = 0;
     vf->priv->was_dint = 0;
     return vf_next_config(vf,width,height,d_width,d_height,flags,outfmt);
