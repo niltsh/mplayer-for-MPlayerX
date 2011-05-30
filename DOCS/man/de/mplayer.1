@@ -4571,6 +4571,26 @@ dies nur in manchen Fällen sinnvoll ist.
 .PD 1
 .
 .TP
+.B "mng\ \ \ \ "
+Gibt das Video in eine animierte MNG-Datei mit 24 bpp RGB Bildern
+in verlustfreier Kompression aus.
+.PD 0
+.RSs
+.IPs <output>
+Gibt den Ausgabedateinamen an (zwingend erforderlich).
+.REss
+.PD 1
+.RS
+.sp 1
+.I BEISPIEL:
+.RE
+.PD 0
+.RSs
+mplayer video.mkv \-vo mng:output.mng
+.RE
+.PD 1
+.
+.TP
 .B "tga\ \ \ \ "
 Gibt jeden Frame in eine TGA-Datei im aktuellen Verzeichnis aus.
 Jede Datei bekommt die Frame-Nummer mit vorangestellt ergänzenden Nullen als

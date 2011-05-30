@@ -4774,6 +4774,26 @@ be useful in some rare cases.
 .PD 1
 .
 .TP
+.B "mng\ \ \ \ "
+Output video into an animated MNG file using 24 bpp RGB images
+with lossless compression.
+.PD 0
+.RSs
+.IPs <output>
+Specify the output filename (mandatory).
+.REss
+.PD 1
+.RS
+.sp 1
+.I EXAMPLE:
+.RE
+.PD 0
+.RSs
+mplayer video.mkv \-vo mng:output.mng
+.RE
+.PD 1
+.
+.TP
 .B "tga\ \ \ \ "
 Output each frame into a Targa file in the current directory.
 Each file takes the frame number padded with leading zeros as name.
