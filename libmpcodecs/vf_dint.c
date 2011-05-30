@@ -81,10 +81,10 @@ static int config (struct vf_instance *vf,
 
 static int put_image (struct vf_instance *vf, mp_image_t *mpi, double pts)
 {
-    char rrow0[MAXROWSIZE];
-    char rrow1[MAXROWSIZE];
-    char rrow2[MAXROWSIZE];
-    char *row0 = rrow0, *row1 = rrow1, *row2 = rrow2/*, *row3 = rrow3*/;
+    int8_t rrow0[MAXROWSIZE];
+    int8_t rrow1[MAXROWSIZE];
+    int8_t rrow2[MAXROWSIZE];
+    int8_t *row0 = rrow0, *row1 = rrow1, *row2 = rrow2/*, *row3 = rrow3*/;
     int rowsize = mpi->width;
     uint32_t nok = 0, max = vf->priv->max;
     int diff = vf->priv->diff;
