@@ -2749,6 +2749,9 @@ if test -z "$YASMFLAGS" ; then
     x86_64 && objformat="macho64" || objformat="macho"
   elif win32 ; then
     objformat="win32"
+  elif os2 ; then
+    _yasm=nasm
+    objformat="aout"
   else
     objformat="elf"
   fi
