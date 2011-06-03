@@ -93,8 +93,8 @@ int stop_xscreensaver = 0;
 
 static int dpms_disabled = 0;
 
-char *mDisplayName = NULL;
-Display *mDisplay = NULL;
+char *mDisplayName;
+Display *mDisplay;
 Window mRootWin;
 int mScreen;
 int mLocalDisplay;
