@@ -197,7 +197,7 @@ static int wsErrorHandler( Display * dpy, XErrorEvent * Event )
  return 0;
 }
 
-void wsXInit( void* mDisplay )
+void wsXInit( Display* mDisplay )
 {
  int    eventbase;
  int    errorbase;

@@ -193,7 +193,7 @@ void guiInit(void)
     gtkInit();
 
     // initialize X
-    wsXInit((void *)mDisplay);
+    wsXInit(mDisplay);
 
     // load skin
 

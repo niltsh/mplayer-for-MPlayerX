@@ -209,7 +209,7 @@ extern int                  wsUseXShm;
 extern unsigned long        wsKeyTable[512];
 
 void wsXDone( void );
-void wsXInit( void* disp );
+void wsXInit( Display* disp );
 
 int wsGetDepthOnScreen( void );
 
