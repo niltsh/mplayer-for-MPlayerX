@@ -35,6 +35,7 @@
 #include "config.h"
 #include "help_mp.h"
 #include "mp_msg.h"
+#include "libvo/x11_common.h"
 
 #include "widgets.h"
 #include "gui/app.h"
@@ -74,11 +75,22 @@ Pixmap	    guiIconMask;
 
 void gtkInit( void )
 {
+ int argc = 0;
+ char *arg[3], **argv = arg;
+
+ arg[argc++] = "gmplayer";
+
+ if (mDisplayName)                 // MPlayer option '-display' was given
+ {
+   arg[argc++] = "--display";      // Pass corresponding command line arguments to GTK,
+   arg[argc++] = mDisplayName;     // to open the requested display for the GUI, too.
+ }
+
  mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[widget] init GTK ...\n" );
 #ifdef CONFIG_GTK2
  gtk_disable_setlocale();
 #endif
- gtk_init( 0,NULL );
+ gtk_init( &argc, &argv );
 // gdk_set_use_xshm( TRUE );
 
  {
