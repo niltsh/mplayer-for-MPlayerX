@@ -786,7 +786,6 @@ static const char help_text[]=
 #define MSGTR_NotAFile "Это не похоже на файл: '%s' !\n"
 
 // ws.c
-#define MSGTR_WS_CouldNotOpenDisplay "[ws] Не могу открыть дисплей.\n"
 #define MSGTR_WS_RemoteDisplay "[ws] Удалённый дисплей, отключаю XMITSHM.\n"
 #define MSGTR_WS_NoXshm "[ws] Извините, ваша система не поддерживает расширение разделяемой памяти X'ов.\n"
 #define MSGTR_WS_NoXshape "[ws] Извините, ваша система не поддерживает расширение XShape.\n"

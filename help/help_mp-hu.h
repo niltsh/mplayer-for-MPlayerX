@@ -797,7 +797,6 @@ static const char help_text[]=
 #define MSGTR_NotAFile "Úgy tűnik, hogy ez nem fájl: %s !\n"
 
 // ws.c
-#define MSGTR_WS_CouldNotOpenDisplay "[ws] A képernyő nem nyitható meg.\n"
 #define MSGTR_WS_RemoteDisplay "[ws] Távoli képernyő, XMITSHM kikapcsolva.\n"
 #define MSGTR_WS_NoXshm "[ws] Bocs, a rendszered nem támogatja az X osztott memória kiterjesztést.\n"
 #define MSGTR_WS_NoXshape "[ws] Bocs, a rendszered nem támogatja az XShape kiterjesztést.\n"

@@ -784,7 +784,6 @@ static const char help_text[]=
 #define MSGTR_NotAFile "Toto nevypadá jako soubor: %s !\n"
 
 // ws.c
-#define MSGTR_WS_CouldNotOpenDisplay "[ws] Nelze otevřít display.\n"
 #define MSGTR_WS_RemoteDisplay "[ws] Vzdálený display, vypínám XMITSHM.\n"
 #define MSGTR_WS_NoXshm "[ws] Promiňte, ale váš systém nepodporuje rozšíření X shared memory.\n"
 #define MSGTR_WS_NoXshape "[ws] Promiňte, ale váš systém nepodporuje rozšíření XShape.\n"

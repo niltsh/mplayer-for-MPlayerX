@@ -981,7 +981,6 @@ static const char help_text[]=
 
 // ws.c
 
-#define MSGTR_WS_CouldNotOpenDisplay "[ws] Gösterge açılamadı.\n"
 #define MSGTR_WS_RemoteDisplay "[ws] uzaktan kumanda göstergesi, XMITSHM devredışı bırakılıyor.\n"
 #define MSGTR_WS_NoXshm "[ws] Üzgünüm, sisteminiz X paylaşımlı bellek genişletmesini desteklemiyor.\n"
 #define MSGTR_WS_NoXshape "[ws] Üzgünüm, sisteminiz Xshape genişletmesini desteklemiyor.\n"

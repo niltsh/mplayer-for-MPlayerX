@@ -779,7 +779,6 @@ static const char help_text[]=
 #define MSGTR_NotAFile "Здається, це не файл: %s !\n"
 
 // ws.c
-#define MSGTR_WS_CouldNotOpenDisplay "[ws] Не можу відкрити дисплей.\n"
 #define MSGTR_WS_RemoteDisplay "[ws] Віддалений дисплей, вимикаю XMITSHM.\n"
 #define MSGTR_WS_NoXshm "[ws] Вибачте, ваша система не підтримує розширення загальної пам'яті X.\n"
 #define MSGTR_WS_NoXshape "[ws] Вибачте, здається, ваша система не підтримує розширення XShape.\n"

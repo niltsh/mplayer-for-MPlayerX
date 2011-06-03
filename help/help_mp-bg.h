@@ -812,7 +812,6 @@ static const char help_text[]=
 
 // ws.c
 
-#define MSGTR_WS_CouldNotOpenDisplay "[ws] Не може да бъде отворен DISPLAY.\n"
 #define MSGTR_WS_RemoteDisplay "[ws] Отдалечен дисплей, изключване на  XMITSHM.\n"
 #define MSGTR_WS_NoXshm "[ws] За съжаление вашата система не поддържа разширението на X за споделена памет.\n"
 #define MSGTR_WS_NoXshape "[ws] За съжаление вашата система не поддържа разширението XShape.\n"

@@ -807,7 +807,6 @@ static const char help_text[]=
 #define MSGTR_NotAFile "This does not seem to be a file: %s !\n"
 
 // ws.c
-#define MSGTR_WS_CouldNotOpenDisplay "[ws] Could not open the display.\n"
 #define MSGTR_WS_RemoteDisplay "[ws] Remote display, disabling XMITSHM.\n"
 #define MSGTR_WS_NoXshm "[ws] Sorry, your system does not support the X shared memory extension.\n"
 #define MSGTR_WS_NoXshape "[ws] Sorry, your system does not support the XShape extension.\n"

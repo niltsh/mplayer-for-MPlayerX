@@ -953,7 +953,6 @@ static const char help_text[]=
 
 // ws.c
 
-#define MSGTR_WS_CouldNotOpenDisplay "[ws] 打不開顯示。\n"
 #define MSGTR_WS_RemoteDisplay "[ws] 遠程顯示, 停用 XMITSHM。\n"
 #define MSGTR_WS_NoXshm "[ws] 抱歉, 你的係統不支持 X 共享内存擴展。\n"
 #define MSGTR_WS_NoXshape "[ws] 抱歉, 你的係統不支持 XShape 擴展。\n"
