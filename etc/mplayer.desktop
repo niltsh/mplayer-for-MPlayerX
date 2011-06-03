@@ -2,7 +2,7 @@
 Type=Application
 Name=MPlayer
 GenericName=Media Player
-Name[ca]=Reproductor multimèdia MPlayer
+GenericName[ca]=Reproductor multimèdia
 Comment=Play movies and songs
 Comment[ca]=Reproduïu vídeos i cançons
 Comment[de]=Filme und Musik abspielen
