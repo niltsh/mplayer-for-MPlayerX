@@ -39,6 +39,7 @@
 
 #include "widgets.h"
 #include "gui/app.h"
+#include "gui/interface.h"
 #include "gui/wm/ws.h"
 
 
@@ -78,7 +79,7 @@ void gtkInit( void )
  int argc = 0;
  char *arg[3], **argv = arg;
 
- arg[argc++] = "gmplayer";
+ arg[argc++] = GMPlayer;
 
  if (mDisplayName)                 // MPlayer option '-display' was given
  {

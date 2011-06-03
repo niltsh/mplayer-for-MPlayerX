@@ -34,6 +34,8 @@
 extern int use_gui;             // this is defined in mplayer.c
 // ------------------------------------------------------------
 
+#define GMPlayer "gmplayer"
+
 #define guiXEvent          0
 #define guiCEvent          1
 #define guiIEvent          2
