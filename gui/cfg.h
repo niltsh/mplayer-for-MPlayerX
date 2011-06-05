@@ -20,6 +20,7 @@
 #define MPLAYER_GUI_CFG_H
 
 #include "m_config.h"
+#include "m_option.h"
 
 extern m_config_t *gui_conf;
 
@@ -81,6 +82,7 @@ extern int gui_main_pos_y;
 extern int gui_sub_pos_x;
 extern int gui_sub_pos_y;
 
+int cfg_gui_include(m_option_t *conf, char *filename);
 int cfg_read(void);
 int cfg_write(void);
 

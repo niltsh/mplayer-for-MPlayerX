@@ -766,7 +766,7 @@ anstelle der systemweit installierten oder
 der eingebauten codecs.conf.
 .
 .TP
-.B \-include <Konfigurationsdatei>
+.B \-include <Konfigurationsdatei> (siehe auch \-gui-include)
 Gib eine Konfigurationsdatei an, die nach den Standardkonfigurationsdateien
 eingelesen werden soll.
 .
@@ -1033,6 +1033,11 @@ B-Frames werden überhaupt nicht decodiert.
 ab).
 Funktioniert nur als erstes Argument auf der Kommandozeile.
 Funktioniert nicht als Option in einer Konfigurationsdatei.
+.
+.TP
+.B \-gui-include <GUI-Konfigurationsdatei> (siehe auch \-include) (nur beim GUI)
+Gibt eine GUI-Konfigurationsdatei an, die nach der Standardkonfigurationsdatei
+gui.conf eingelesen werden soll.
 .
 .TP
 .B \-h, \-help, \-\-help

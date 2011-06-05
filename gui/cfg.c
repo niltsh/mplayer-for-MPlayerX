@@ -28,7 +28,6 @@
 #include "libmpcodecs/vd.h"
 #include "libvo/video_out.h"
 #include "libvo/x11_common.h"
-#include "m_option.h"
 #include "mixer.h"
 #include "mp_msg.h"
 #include "mpcommon.h"
@@ -243,6 +242,13 @@ static char *gfgets(char *str, int size, FILE *f)
     }
 
     return s;
+}
+
+int cfg_gui_include(m_option_t *conf, char *filename)
+{
+    (void)conf;
+
+    return m_config_parse_config_file(gui_conf, filename);
 }
 
 int cfg_read(void)
