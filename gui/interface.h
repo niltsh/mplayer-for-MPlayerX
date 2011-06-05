@@ -205,7 +205,6 @@ typedef struct {
 
 typedef struct plItem {
     struct plItem *prev, *next;
-    int played;
     char *path;
     char *name;
 } plItem;
