@@ -1075,6 +1075,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
 
             next->next = item;
             item->prev = next;
+            item->next = NULL;
         } else {
             item->prev = item->next = NULL;
             plCurrent  = plList = item;
