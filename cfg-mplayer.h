@@ -307,6 +307,7 @@ const m_option_t mplayer_opts[]={
     {"skin", &skinName, CONF_TYPE_STRING, CONF_GLOBAL, 0, 0, NULL},
     {"enqueue", &enqueue, CONF_TYPE_FLAG, 0, 0, 1, NULL},
     {"noenqueue", &enqueue, CONF_TYPE_FLAG, 0, 1, 0, NULL},
+    {"guiwid", "-guiwid has been removed, use -gui-wid instead.\n", CONF_TYPE_PRINT, 0, 0, 0, NULL},
     {"gui-wid", &guiWinID, CONF_TYPE_INT, 0, 0, 0, NULL},
     {"gui-include", cfg_gui_include, CONF_TYPE_FUNC_PARAM, CONF_NOSAVE, 0, 0, NULL},
 #endif
