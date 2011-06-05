@@ -1102,7 +1102,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
             return gtkSet(gtkAddPlItem, 0, (void *)item);
         return NULL;   // NOTE TO MYSELF: remove this
 
-    // get current item from playlist
+    // get next item from playlist
     case gtkGetNextPlItem:
         if (plCurrent && plCurrent->next) {
             plCurrent = plCurrent->next;
@@ -1123,6 +1123,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
 
         return NULL;
 
+    // get previous item from playlist
     case gtkGetPrevPlItem:
         if (plCurrent && plCurrent->prev) {
             plCurrent = plCurrent->prev;
