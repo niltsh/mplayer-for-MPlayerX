@@ -256,6 +256,8 @@ int cfg_read(void)
     char *cfg;
     FILE *f;
 
+    player_idle_mode = 1;   // GUI is in idle mode by default
+
     // configuration
 
     cfg = get_path("gui.conf");

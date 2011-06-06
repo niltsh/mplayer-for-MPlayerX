@@ -155,7 +155,6 @@ static const char help_text[]=
 #define MSGTR_IncreaseRTCMaxUserFreq "Próbáld ki ezt: \"echo %lu > /proc/sys/dev/rtc/max-user-freq\" hozzáadni a rendszer indító script-jeidhez!\n"
 #define MSGTR_LinuxRTCInitErrorPieOn "Linux RTC inicializálási hiba az ioctl-ben (rtc_pie_on): %s\n"
 #define MSGTR_UsingTimingType "%s időzítés használata.\n"
-#define MSGTR_NoIdleAndGui "Az -idle opció nem használható a GMPlayerrel.\n"
 #define MSGTR_MenuInitialized "Menü inicializálva: %s\n"
 #define MSGTR_MenuInitFailed "Menü inicializálás nem sikerült.\n"
 #define MSGTR_Getch2InitializedTwice "FIGYELEM: getch2_init kétszer lett meghívva!\n"

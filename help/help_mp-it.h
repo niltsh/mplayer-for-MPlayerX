@@ -156,7 +156,6 @@ static const char help_text[]=
 "agli script di avvio del sistema.\n"
 #define MSGTR_LinuxRTCInitErrorPieOn "Linux RTC: errore di init in ioctl (rtc_pie_on): %s\n"
 #define MSGTR_UsingTimingType "Uso la temporizzazione %s.\n"
-#define MSGTR_NoIdleAndGui "L'opzione -idle non può essere usata con GMPlayer.\n"
 #define MSGTR_MenuInitialized "Menu inizializzato: %s\n"
 #define MSGTR_MenuInitFailed "Inizializzazione Menu fallita.\n"
 #define MSGTR_Getch2InitializedTwice "WARNING: getch2_init chiamata 2 volte!\n"

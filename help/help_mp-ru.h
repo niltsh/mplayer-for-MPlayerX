@@ -152,7 +152,6 @@ static const char help_text[]=
 #define MSGTR_IncreaseRTCMaxUserFreq "Попробуйте добавить \"echo %lu > /proc/sys/dev/rtc/max-user-freq\" \nв загрузочные скрипты Вашей системы.\n"
 #define MSGTR_LinuxRTCInitErrorPieOn "Ошибка инициализации Linux RTC в ioctl (rtc_pie_on): %s\n"
 #define MSGTR_UsingTimingType "Используется %s синхронизация.\n"
-#define MSGTR_NoIdleAndGui "Опция -idle не может быть использована вместе с GMPlayer.\n"
 #define MSGTR_MenuInitialized "Меню инициализировано: %s\n"
 #define MSGTR_MenuInitFailed "Не могу инициализировать меню.\n"
 #define MSGTR_Getch2InitializedTwice "ПРЕДУПРЕЖДЕНИЕ: getch2_init вызван дважды!\n"

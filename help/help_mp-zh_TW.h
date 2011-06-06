@@ -154,7 +154,6 @@ static const char help_text[]=
 #define MSGTR_IncreaseRTCMaxUserFreq "試圖添加 \"echo %lu > /proc/sys/dev/rtc/max-user-freq\" 到你的係統啟動脚本。\n"
 #define MSGTR_LinuxRTCInitErrorPieOn "Linux RTC 初始化錯誤在 ioctl (rtc_pie_on): %s\n"
 #define MSGTR_UsingTimingType "正在使用 %s 計時。\n"
-#define MSGTR_NoIdleAndGui "GMPLayer 不能使用選項 -idle。\n"
 #define MSGTR_MenuInitialized "菜單已初始化: %s\n"
 #define MSGTR_MenuInitFailed "菜單初始化失敗。\n"
 #define MSGTR_Getch2InitializedTwice "警告: getch2_init 被調用兩次!\n"

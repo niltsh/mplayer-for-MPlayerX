@@ -150,7 +150,6 @@ static const char help_text[]=
 #define MSGTR_IncreaseRTCMaxUserFreq "Skúste pridať \"echo %lu > /proc/sys/dev/rtc/max-user-freq\" do štartovacích skriptov vášho systému.\n"
 #define MSGTR_LinuxRTCInitErrorPieOn "Chyba pri inicializácii Linuxových RTC v ioctl (rtc_pie_on): %s\n"
 #define MSGTR_UsingTimingType "Používam %s časovanie.\n"
-#define MSGTR_NoIdleAndGui "Voľba -idle sa nedá použiť pre GMPlayer.\n"
 #define MSGTR_MenuInitialized "Menu inicializované: %s\n"
 #define MSGTR_MenuInitFailed "Zlyhala inicializácia menu.\n"
 #define MSGTR_Getch2InitializedTwice "VAROVANIE: getch2_init je volaná dvakrát!\n"

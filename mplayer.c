@@ -2960,18 +2960,14 @@ int main(int argc, char *argv[])
     if (opt_exit)
         exit_player(EXIT_NONE);
 
-    if (player_idle_mode && use_gui) {
-        mp_msg(MSGT_CPLAYER, MSGL_FATAL, MSGTR_NoIdleAndGui);
-        exit_player_with_rc(EXIT_NONE, 1);
-    }
-
-    if (!filename && !player_idle_mode) {
-        if (!use_gui) {
+    if (!filename) {
+        if (use_gui)
+            gui_no_filename = 1;
+        else if (!player_idle_mode) {
             // no file/vcd/dvd -> show HELP:
             mp_msg(MSGT_CPLAYER, MSGL_INFO, help_text);
             exit_player_with_rc(EXIT_NONE, 0);
-        } else
-            gui_no_filename = 1;
+        }
     }
 
     /* Display what configure line was used */
@@ -4173,7 +4169,7 @@ goto_next_file:  // don't jump here after ao/vo/getch initialization!
     }
 #endif
 
-    if (use_gui || mpctx->playtree_iter != NULL || player_idle_mode) {
+    if ((use_gui && guiIntfStruct.Playing) || mpctx->playtree_iter != NULL || player_idle_mode) {
         if (!mpctx->playtree_iter)
             filename = NULL;
         mpctx->eof = 0;
