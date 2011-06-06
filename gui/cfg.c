@@ -267,6 +267,12 @@ int cfg_read(void)
     mp_msg(MSGT_GPLAYER, MSGL_V, "[cfg] reading config file: %s\n", cfg);
 
     gui_conf = m_config_new();
+
+    if (!gui_conf) {
+        gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_MemAllocFailed);
+        guiExit(EXIT_ERROR);
+    }
+
     m_config_register_options(gui_conf, gui_opts);
 
     if (!disable_gui_conf && (m_config_parse_config_file(gui_conf, cfg) < 0)) {
