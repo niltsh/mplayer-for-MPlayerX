@@ -164,6 +164,8 @@ static const m_option_t gui_opts[] = {
     { "gui_video_out_pos_x",         &gui_sub_pos_x,           CONF_TYPE_INT,         0,          0,     0,       NULL },
     { "gui_video_out_pos_y",         &gui_sub_pos_y,           CONF_TYPE_INT,         0,          0,     0,       NULL },
 
+    { "idle",                        &player_idle_mode,        CONF_TYPE_FLAG,        CONF_GLOBAL, 0,     1,       NULL },
+
     // NOTE TO MYSELF: Do we really need all/any non-gtkOptions, i.e. override mplayer options?
 
     { "gui_skin",                    &skinName,                CONF_TYPE_STRING,      0,          0,     0,       NULL },

@@ -101,6 +101,7 @@ static GtkWidget * CBLoadFullscreen;
 static GtkWidget * CBSaveWinPos;
 static GtkWidget * CBStopXScreenSaver;
 static GtkWidget * CBPlayBar;
+static GtkWidget * CBNoIdle;
 
 static GtkWidget * SBCache;
 static GtkAdjustment * SBCacheadj;
@@ -406,6 +407,7 @@ void ShowPreferences( void )
    gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBPlayBar ),0 );
    gtk_widget_set_sensitive( CBPlayBar,FALSE );
   }
+ gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBNoIdle ),!player_idle_mode );
 
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBCache ),0 );
  gtk_adjustment_set_value( SBCacheadj,(float)gtkCacheSize );
@@ -623,6 +625,7 @@ static void prButton( GtkButton * button, gpointer user_data )
 	gtkShowVideoWindow=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBShowVideoWindow ) );
 	stop_xscreensaver=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBStopXScreenSaver ) );
 	gtkEnablePlayBar=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBPlayBar ) );
+	player_idle_mode=!gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBNoIdle ) );
 	gtkSet( gtkSetAutoq,HSPPQualityadj->value,NULL );
 
 	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBCache ) ) ) { gtkCacheSize=(int)SBCacheadj->value; gtkCacheOn=1; }
@@ -1273,6 +1276,7 @@ GtkWidget * create_Preferences( void )
   CBSaveWinPos=AddCheckButton( MSGTR_PREFERENCES_SaveWinPos,vbox602 );
   CBStopXScreenSaver=AddCheckButton( MSGTR_PREFERENCES_XSCREENSAVER,vbox602 );
   CBPlayBar=AddCheckButton( MSGTR_PREFERENCES_PlayBar,vbox602 );
+  CBNoIdle=AddCheckButton( MSGTR_PREFERENCES_NoIdle,vbox602 );
 
   AddHSeparator( vbox602 );
 

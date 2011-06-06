@@ -772,6 +772,7 @@ static const char help_text[]=
 #define MSGTR_PREFERENCES_SaveWinPos "Save window position"
 #define MSGTR_PREFERENCES_XSCREENSAVER "Stop XScreenSaver"
 #define MSGTR_PREFERENCES_PlayBar "Enable playbar"
+#define MSGTR_PREFERENCES_NoIdle "Quit after playing"
 #define MSGTR_PREFERENCES_AutoSync "AutoSync on/off"
 #define MSGTR_PREFERENCES_AutoSyncValue "Autosync: "
 #define MSGTR_PREFERENCES_CDROMDevice "CD-ROM device:"
