@@ -161,6 +161,7 @@ m_config_new(void) {
   int i;
 
   config = calloc(1,sizeof(m_config_t));
+  if (!config) return NULL;
   config->lvl = 1; // 0 Is the defaults
   if(!initialized) {
     initialized = 1;
@@ -169,6 +170,10 @@ m_config_new(void) {
     profile_opt_type.set = set_profile;
   }
   config->self_opts = malloc(sizeof(ref_opts));
+  if (!config->self_opts) {
+    free(config);
+    return NULL;
+  }
   memcpy(config->self_opts,ref_opts,sizeof(ref_opts));
   for(i = 0 ; config->self_opts[i].name ; i++)
     config->self_opts[i].priv = config;
