@@ -121,8 +121,8 @@ debian/mplayer-gui/usr/bin/gmplayer:
 	install -D -m 755 mplayer $(CURDIR)/debian/mplayer-gui/usr/bin/gmplayer
 	install -D -m 644 etc/mplayer.desktop \
 	                  $(CURDIR)/debian/mplayer-gui/usr/share/applications/mplayer.desktop
-	install -D -m 644 etc/mplayer.xpm \
-	                  $(CURDIR)/debian/mplayer-gui/usr/share/pixmaps/mplayer.xpm
+	install -D -m 644 etc/mplayer.png \
+	                  $(CURDIR)/debian/mplayer-gui/usr/share/pixmaps/mplayer.png
 
 
 # binaries already installed via build rules as we have to build several flavors

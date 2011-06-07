@@ -905,7 +905,7 @@ install-%: %$(EXESUF) install-dirs
 install-gui: install-mplayer
 	-ln -sf mplayer$(EXESUF) $(BINDIR)/gmplayer$(EXESUF)
 	$(INSTALL) -d $(DATADIR)/skins $(prefix)/share/pixmaps $(prefix)/share/applications
-	$(INSTALL) -m 644 etc/mplayer.xpm $(prefix)/share/pixmaps/
+	$(INSTALL) -m 644 etc/mplayer.png $(prefix)/share/pixmaps/
 	$(INSTALL) -m 644 etc/mplayer.desktop $(prefix)/share/applications/
 
 install-gui-man:      $(foreach lang,$(MAN_LANGS),install-gui-man-$(lang))
@@ -946,7 +946,7 @@ uninstall:
 	rm -f $(BINDIR)/mplayer$(EXESUF) $(BINDIR)/gmplayer$(EXESUF)
 	rm -f $(BINDIR)/mencoder$(EXESUF)
 	rm -f $(MANDIR)/man1/mencoder.1 $(MANDIR)/man1/mplayer.1
-	rm -f $(prefix)/share/pixmaps/mplayer.xpm
+	rm -f $(prefix)/share/pixmaps/mplayer.png
 	rm -f $(prefix)/share/applications/mplayer.desktop
 	rm -f $(MANDIR)/man1/mplayer.1 $(MANDIR)/man1/mencoder.1
 	rm -f $(foreach lang,$(MAN_LANGS),$(foreach man,mplayer.1 mencoder.1,$(MANDIR)/$(lang)/man1/$(man)))
