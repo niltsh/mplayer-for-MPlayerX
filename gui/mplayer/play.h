@@ -33,5 +33,6 @@ void mplPrev(void);
 void mplRelSeek(float percent);
 void mplSetFileName(char *dir, char *name, int type);
 void mplState(void);
+void mplStop(void);
 
 #endif /* MPLAYER_GUI_PLAY_H */

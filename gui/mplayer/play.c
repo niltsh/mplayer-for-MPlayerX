@@ -461,3 +461,8 @@ void mplNext(void)
     if (guiIntfStruct.Playing == 1)
         mplEventHandling(evPlay, 0);
 }
+
+void mplStop(void)
+{
+    mplEventHandling(evStop, 0);
+}

@@ -2963,6 +2963,12 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
             break;
 
         case MP_CMD_STOP:
+#ifdef CONFIG_GUI
+            // playtree_iter isn't used by the GUI
+            if (use_gui)
+                mplStop();
+            else
+#endif
             // Go back to the starting point.
             while (play_tree_iter_up_step
                    (mpctx->playtree_iter, 0, 1) != PLAY_TREE_ITER_END)

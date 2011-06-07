@@ -506,9 +506,7 @@ play_tree_iter_new(play_tree_t* pt,m_config_t* config) {
 void
 play_tree_iter_free(play_tree_iter_t* iter) {
 
-#ifdef MP_DEBUG
-  assert(iter != NULL);
-#endif
+  if (!iter) return;
 
   if(iter->status_stack) {
 #ifdef MP_DEBUG
