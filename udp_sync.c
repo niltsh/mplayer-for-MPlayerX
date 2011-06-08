@@ -53,6 +53,9 @@ const char *udp_ip = "127.0.0.1"; // where the master sends datagrams
                                   // (can be a broadcast address)
 float udp_seek_threshold = 1.0;   // how far off before we seek
 
+// remember where the master is in the file
+static double udp_master_position = -1.0;
+
 // how far off is still considered equal
 #define UDP_TIMING_TOLERANCE 0.02
 
@@ -81,9 +84,6 @@ static int get_udp(int blocking, double *master_position)
     int n;
 
     static int sockfd = -1;
-
-    *master_position = MP_NOPTS_VALUE;
-
     if (sockfd == -1) {
         struct timeval tv = { .tv_sec = 30 };
         struct sockaddr_in servaddr = { 0 };
@@ -164,12 +164,10 @@ void send_udp(const char *send_to_ip, int port, char *mesg)
 // position.  returns 1 if the master tells us to exit, 0 otherwise.
 int udp_slave_sync(MPContext *mpctx)
 {
-    double udp_master_position;
-
     // grab any waiting datagrams without blocking
     int master_exited = get_udp(0, &udp_master_position);
 
-    while (udp_master_position != MP_NOPTS_VALUE && !master_exited) {
+    while (!master_exited) {
         double my_position = mpctx->sh_video->pts;
 
         // if we're way off, seek to catch up
