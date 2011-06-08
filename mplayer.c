@@ -2263,11 +2263,11 @@ static int sleep_until_update(float *time_frame, float *aq_sleep_time)
 #ifdef CONFIG_NETWORKING
     if (udp_slave) {
         int udp_master_exited = udp_slave_sync(mpctx);
-        if (udp_master_exited) {
+        if (udp_master_exited > 0) {
             mp_msg(MSGT_CPLAYER, MSGL_INFO, MSGTR_MasterQuit);
             exit_player(EXIT_QUIT);
-        }
-        return 0;
+        } else if (udp_master_exited == 0)
+            return 0;
     }
 #endif /* CONFIG_NETWORKING */
 
