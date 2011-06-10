@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 33478
+// Synced with help_mp-en.h rev. 33565
 //
 // Translated by JRaSH <jrash06@163.com>
 
@@ -74,9 +74,9 @@ static const char help_text[]=
 #define MSGTR_DumpBytesWritten "导出：已写入 %"PRIu64" 字节\r"
 #define MSGTR_DumpBytesWrittenTo "导出：已将 %"PRIu64" 字节写入‘%s’中。\n"
 #define MSGTR_FPSnotspecified "FPS 在文件头中没有指定或者无效，请使用 -fps 选项。\n"
-#define MSGTR_TryForceAudioFmtStr "尝试强制使用音频编解码器驱动族 %s...\n"
+#define MSGTR_TryForceAudioFmtStr "尝试强制使用音频编解码器驱动类 %s...\n"
 #define MSGTR_CantFindAudioCodec "无法找到音频格式 0x%X 的编解码器。\n"
-#define MSGTR_TryForceVideoFmtStr "尝试强制使用视频编解码器驱动族 %s...\n"
+#define MSGTR_TryForceVideoFmtStr "尝试强制使用视频编解码器驱动类 %s...\n"
 #define MSGTR_CantFindVideoCodec "无法找到匹配所选 -vo 参数和视频格式 0x%X 的编解码器。\n"
 #define MSGTR_CannotInitVO "致命错误：无法初始化视频驱动！\n"
 #define MSGTR_CannotInitAO "无法打开/初始化音频设备 -> 禁用声音。\n"
@@ -84,7 +84,7 @@ static const char help_text[]=
 
 #define MSGTR_SystemTooSlow "\n\n"\
 "         ************************************************\n"\
-"         ****     你的系统运行太“慢”，播放不了!    ****\n"\
+"         ****     你的系统运行太“慢”，无法播放！     ****\n"\
 "         ************************************************\n"\
 " 可能的原因、问题和变通的办法：\n"\
 "- 最常见的原因：损坏的或有漏洞的 _audio_ 驱动\n"\
@@ -115,8 +115,8 @@ static const char help_text[]=
 #define MSGTR_AvailableAudioOutputDrivers "可用的音频输出驱动：\n"
 #define MSGTR_AvailableAudioCodecs "可用的音频编解码器：\n"
 #define MSGTR_AvailableVideoCodecs "可用的视频编解码器：\n"
-#define MSGTR_AvailableAudioFm "\n可用的（编译时已包含的）音频编解码器族/驱动：\n"
-#define MSGTR_AvailableVideoFm "\n可用的（编译时已包含的）视频编解码器族/驱动：\n"
+#define MSGTR_AvailableAudioFm "\n可用的（编译时已包含的）音频编解码器类/驱动：\n"
+#define MSGTR_AvailableVideoFm "\n可用的（编译时已包含的）视频编解码器类/驱动：\n"
 #define MSGTR_AvailableFsType "可用的全屏图层变换模式：\n"
 #define MSGTR_UsingRTCTiming "使用 Linux 的硬件 RTC 计时（%ldHz）。\n"
 #define MSGTR_CannotReadVideoProperties "视频：无法读取视频属性\n"
@@ -719,8 +719,8 @@ static const char help_text[]=
 #define MSGTR_PREFERENCES_AutoQuality "自动控制质量："
 #define MSGTR_PREFERENCES_NI "使用非交错的 AVI 解析器"
 #define MSGTR_PREFERENCES_IDX "如果需要的话，重建索引表"
-#define MSGTR_PREFERENCES_VideoCodecFamily "视频编解码器族："
-#define MSGTR_PREFERENCES_AudioCodecFamily "音频编解码器族："
+#define MSGTR_PREFERENCES_VideoCodecFamily "视频编解码器类："
+#define MSGTR_PREFERENCES_AudioCodecFamily "音频编解码器类："
 #define MSGTR_PREFERENCES_FRAME_OSD_Level "OSD 级别"
 #define MSGTR_PREFERENCES_FRAME_Subtitle "字幕"
 #define MSGTR_PREFERENCES_FRAME_Font "字体"
@@ -772,6 +772,7 @@ static const char help_text[]=
 #define MSGTR_PREFERENCES_SaveWinPos "保存窗口位置"
 #define MSGTR_PREFERENCES_XSCREENSAVER "停用 XScreenSaver 屏保"
 #define MSGTR_PREFERENCES_PlayBar "启用播放条"
+#define MSGTR_PREFERENCES_NoIdle "播放后退出"
 #define MSGTR_PREFERENCES_AutoSync "启用/禁用自动同步"
 #define MSGTR_PREFERENCES_AutoSyncValue "自动同步："
 #define MSGTR_PREFERENCES_CDROMDevice "CD-ROM 设备："
@@ -1604,8 +1605,8 @@ static const char help_text[]=
 #define MSGTR_UsingExternalPP "[PP] 使用外部的后期处理过滤器，max q = %d。\n"
 #define MSGTR_UsingCodecPP "[PP] 使用编解码器的后期处理过滤器，max q = %d。\n"
 #define MSGTR_VideoAttributeNotSupportedByVO_VD "所选的 vo & vd 不支持视频属性‘%s’。\n"
-#define MSGTR_VideoCodecFamilyNotAvailableStr "所请求使用的视频编解码器族 [%s] (vfm=%s) 不可用。\n需在编译时启用该模块。\n"
-#define MSGTR_AudioCodecFamilyNotAvailableStr "所请求使用的音频编解码器族 [%s] (afm=%s) 不可用。\n需在编译时启用该模块。\n"
+#define MSGTR_VideoCodecFamilyNotAvailableStr "所请求使用的视频编解码器类 [%s] (vfm=%s) 不可用。\n需在编译时启用该模块。\n"
+#define MSGTR_AudioCodecFamilyNotAvailableStr "所请求使用的音频编解码器类 [%s] (afm=%s) 不可用。\n需在编译时启用该模块。\n"
 #define MSGTR_OpeningVideoDecoder "正打开视频解码器：[%s] %s\n"
 #define MSGTR_SelectedVideoCodec "所选视频编解码器为：[%s] vfm: %s (%s)\n"
 #define MSGTR_OpeningAudioDecoder "正打开音频解码器：[%s] %s\n"
@@ -1723,9 +1724,9 @@ static const char help_text[]=
 
 // ass_fontconfig.c
 #define MSGTR_LIBASS_SelectedFontFamilyIsNotTheRequestedOne "[ass] fontconfig：所选字体不是所要求使用的：'%s' != '%s'\n"
-#define MSGTR_LIBASS_UsingDefaultFontFamily "[ass] fontconfig_select：使用默认的字体族：(%s, %d, %d) -> %s, %d\n"
+#define MSGTR_LIBASS_UsingDefaultFontFamily "[ass] fontconfig_select：使用默认的字体类：(%s, %d, %d) -> %s, %d\n"
 #define MSGTR_LIBASS_UsingDefaultFont "[ass] fontconfig_select: 使用缺省字体: (%s, %d, %d) -> %s, %d\n"
-#define MSGTR_LIBASS_UsingArialFontFamily "[ass] fontconfig_select：使用‘Arial’字体族：(%s, %d, %d) -> %s, %d\n"
+#define MSGTR_LIBASS_UsingArialFontFamily "[ass] fontconfig_select：使用‘Arial’字体类：(%s, %d, %d) -> %s, %d\n"
 #define MSGTR_LIBASS_FcInitLoadConfigAndFontsFailed "[ass] FcInitLoadConfigAndFonts 失败。\n"
 #define MSGTR_LIBASS_UpdatingFontCache "[ass] 更新字体缓冲。\n"
 #define MSGTR_LIBASS_BetaVersionsOfFontconfigAreNotSupported "[ass] 不支持测试版本的 fontconfig。\n[ass] 在报告该缺陷前请先更新至最新版。\n"
@@ -1857,7 +1858,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_CACHE2_ReadFileposDiffers "!!! read_filepos 有出入!!! 请报告该缺陷...\n"
 
 // network.c
-#define MSGTR_MPDEMUX_NW_UnknownAF "未知网络地址族 %d\n"
+#define MSGTR_MPDEMUX_NW_UnknownAF "未知网络地址类 %d\n"
 #define MSGTR_MPDEMUX_NW_ResolvingHostForAF "正在解析 %s 用于 %s...\n"
 #define MSGTR_MPDEMUX_NW_CantResolv "无解析网络名用于 %s：%s\n"
 #define MSGTR_MPDEMUX_NW_ConnectingToServer "正在连接到服务器 %s[%s]：%d...\n"
