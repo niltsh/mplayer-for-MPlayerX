@@ -627,7 +627,7 @@ int demux_fill_buffer(demuxer_t *demux, demux_stream_t *ds)
 // return value:
 //     0 = EOF
 //     1 = successful
-#define MAX_ACUMULATED_PACKETS 64
+#define MAX_ACCUMULATED_PACKETS 64
 int ds_fill_buffer(demux_stream_t *ds)
 {
     demuxer_t *demux = ds->demuxer;
@@ -656,7 +656,7 @@ int ds_fill_buffer(demux_stream_t *ds)
             if (demux->reference_clock != MP_NOPTS_VALUE) {
                 if (   p->pts != MP_NOPTS_VALUE
                     && p->pts >  demux->reference_clock
-                    && ds->packs < MAX_ACUMULATED_PACKETS) {
+                    && ds->packs < MAX_ACCUMULATED_PACKETS) {
                     if (demux_fill_buffer(demux, ds))
                         continue;
                 }
@@ -847,7 +847,7 @@ int ds_get_packet_pts(demux_stream_t *ds, unsigned char **start, double *pts)
 /**
  * Get a subtitle packet. In particular avoid reading the stream.
  * \param pts input: maximum pts value of subtitle packet. NOPTS or NULL for any.
- *            output: start/referece pts of subtitle
+ *            output: start/reference pts of subtitle
  *            May be NULL.
  * \param endpts output: pts for end of display time. May be NULL.
  * \return -1 if no packet is available
