@@ -792,7 +792,9 @@ void exit_player(enum exit_reason how)
 static void child_sighandler(int x)
 {
     pid_t pid;
-    while ((pid = waitpid(-1, NULL, WNOHANG)) > 0) ;
+    do {
+        pid = waitpid(-1, NULL, WNOHANG);
+    } while (pid > 0);
 }
 
 #endif
