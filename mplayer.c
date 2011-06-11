@@ -1801,6 +1801,15 @@ double playing_audio_pts(sh_audio_t *sh_audio, demux_stream_t *d_audio,
            audio_out->get_delay();
 }
 
+static int is_at_end(MPContext *mpctx, m_time_size_t *end_at, double pts)
+{
+    switch (end_at->type) {
+    case END_AT_TIME: return end_at->pos <= pts;
+    case END_AT_SIZE: return end_at->pos <= stream_tell(mpctx->stream);
+    }
+    return 0;
+}
+
 static int check_framedrop(double frame_time)
 {
     // check for frame-drop:
@@ -3802,8 +3811,7 @@ goto_enable_cache:
                 if (!quiet)
                     print_status(a_pos, 0, 0);
 
-                if (end_at.type == END_AT_TIME && end_at.pos < a_pos ||
-                    end_at.type == END_AT_SIZE && end_at.pos < stream_tell(mpctx->stream))
+                if (is_at_end(mpctx, &end_at, a_pos))
                     mpctx->eof = PT_NEXT_ENTRY;
                 update_subtitles(NULL, a_pos, mpctx->d_sub, 0);
                 update_osd_msg();
@@ -3923,9 +3931,8 @@ goto_enable_cache:
                         mpctx->eof = PT_NEXT_ENTRY;
                 }
 
-                if (!frame_time_remaining &&
-                    ((end_at.type == END_AT_TIME && mpctx->sh_video->pts >= end_at.pos) ||
-                     (end_at.type == END_AT_SIZE && stream_tell(mpctx->stream) >= end_at.pos)))
+                if (!frame_time_remaining && is_at_end(mpctx, &end_at,
+                                                       mpctx->sh_video->pts))
                     mpctx->eof = PT_NEXT_ENTRY;
             } // end if(mpctx->sh_video)
 
