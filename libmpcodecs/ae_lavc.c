@@ -187,7 +187,17 @@ int mpae_init_lavc(audio_encoder_t *encoder)
 	lavc_actx->codec_type = AVMEDIA_TYPE_AUDIO;
 	lavc_actx->codec_id = lavc_acodec->id;
 	// put sample parameters
-	lavc_actx->sample_fmt = lavc_acodec->sample_fmts ? lavc_acodec->sample_fmts[0] : AV_SAMPLE_FMT_S16;
+	lavc_actx->sample_fmt = AV_SAMPLE_FMT_S16;
+	if (lavc_acodec->sample_fmts) {
+		const enum AVSampleFormat *fmts;
+		lavc_actx->sample_fmt = lavc_acodec->sample_fmts[0]; // fallback to first format
+		for (fmts = lavc_acodec->sample_fmts; *fmts != AV_SAMPLE_FMT_NONE; fmts++) {
+			if (*fmts == AV_SAMPLE_FMT_S16) { // preferred format found
+				lavc_actx->sample_fmt = *fmts;
+				break;
+			}
+		}
+	}
 	if (lavc_actx->sample_fmt != AV_SAMPLE_FMT_S16)
 	    mp_msg(MSGT_MENCODER, MSGL_ERR, "Encoder requires input not properly supported."
 	                                    "Try using e.g. 'ac3_fixed' instead of 'ac3' as codec\n");
