@@ -3796,7 +3796,7 @@ goto_enable_cache:
                 double a_pos = 0;
                 // sh_audio can be NULL due to video stream switching
                 // TODO: handle this better
-                if ((!quiet || end_at.type == END_AT_TIME) && mpctx->sh_audio)
+                if (mpctx->sh_audio)
                     a_pos = playing_audio_pts(mpctx->sh_audio, mpctx->d_audio, mpctx->audio_out);
 
                 if (!quiet)
