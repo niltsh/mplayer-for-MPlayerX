@@ -685,9 +685,10 @@ SRCS_MENCODER = mencoder.c \
 
 COMMON_LIBS-$(FFMPEG_A) += ffmpeg/libavformat/libavformat.a \
                            ffmpeg/libavcodec/libavcodec.a   \
-                           ffmpeg/libavutil/libavutil.a     \
                            ffmpeg/libpostproc/libpostproc.a \
-                           ffmpeg/libswscale/libswscale.a
+                           ffmpeg/libswscale/libswscale.a   \
+                           ffmpeg/libavutil/libavutil.a     \
+
 COMMON_LIBS += $(COMMON_LIBS-yes)
 
 OBJS_COMMON    += $(addsuffix .o, $(basename $(SRCS_COMMON)))
