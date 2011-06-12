@@ -157,7 +157,7 @@ static int skip_limit=-1;
 float playback_speed=1.0;
 
 static int force_srate=0;
-static int audio_output_format=0;
+static int audio_output_format=AF_FORMAT_UNKNOWN;
 
 char *vobsub_out=NULL;
 unsigned int vobsub_out_index=0;
@@ -1071,6 +1071,7 @@ if(!init_audio_filters(sh_audio,
 
 aparams.channels = ao_data.channels;
 aparams.sample_rate = ao_data.samplerate;
+aparams.sample_format = ao_data.format;
 aparams.audio_preload = 1000 * audio_preload;
 if(mux_a->codec != ACODEC_COPY) {
     aencoder = new_audio_encoder(mux_a, &aparams);
@@ -1082,6 +1083,9 @@ if(mux_a->codec != ACODEC_COPY) {
       mp_msg(MSGT_CPLAYER,MSGL_FATAL,MSGTR_NoMatchingFilter);
       mencoder_exit(1,NULL);
     }
+    ao_data.format = aencoder->input_format;
+    ao_data.channels = aparams.channels;
+    ao_data.samplerate = aparams.sample_rate;
 }
 switch(mux_a->codec){
 case ACODEC_COPY:

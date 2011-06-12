@@ -193,7 +193,7 @@ int mpae_init_lavc(audio_encoder_t *encoder)
 		const enum AVSampleFormat *fmts;
 		lavc_actx->sample_fmt = lavc_acodec->sample_fmts[0]; // fallback to first format
 		for (fmts = lavc_acodec->sample_fmts; *fmts != AV_SAMPLE_FMT_NONE; fmts++) {
-			if (*fmts == AV_SAMPLE_FMT_S16) { // preferred format found
+			if (samplefmt2affmt(*fmts) == encoder->params.sample_format) { // preferred format found
 				lavc_actx->sample_fmt = *fmts;
 				break;
 			}

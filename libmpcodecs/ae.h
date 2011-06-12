@@ -38,6 +38,7 @@ typedef struct {
 	int bitrate;
 	int samples_per_frame;
 	int audio_preload;
+	int sample_format;
 } audio_encoding_params_t;
 
 typedef struct audio_encoder_s {
