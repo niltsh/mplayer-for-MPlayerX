@@ -2080,12 +2080,17 @@ static void mp_dvdnav_save_smpi(int in_size,
         return;
 
     free(mpctx->nav_buffer);
+    mpctx->nav_buffer  = NULL;
+    mpctx->nav_start   = NULL;
+    mpctx->nav_in_size = -1;
 
+    if (in_size > 0)
     mpctx->nav_buffer  = malloc(in_size);
+    if (mpctx->nav_buffer) {
     mpctx->nav_start   = start;
-    mpctx->nav_in_size = mpctx->nav_buffer ? in_size : -1;
-    if (mpctx->nav_buffer)
+        mpctx->nav_in_size = in_size;
         memcpy(mpctx->nav_buffer, start, in_size);
+    }
 
     if (decoded_frame && mpctx->nav_smpi != decoded_frame)
         mpctx->nav_smpi = mp_dvdnav_copy_mpi(mpctx->nav_smpi, decoded_frame);
