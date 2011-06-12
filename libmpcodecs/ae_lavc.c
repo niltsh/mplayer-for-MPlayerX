@@ -122,11 +122,12 @@ static int encode_lavc(audio_encoder_t *encoder, uint8_t *dest, void *src, int s
 			(!strcmp(lavc_acodec->name,"ac3") ||
 			!strcmp(lavc_acodec->name,"libfaac"))) {
 		int isac3 = !strcmp(lavc_acodec->name,"ac3");
+		int bps = av_get_bytes_per_sample(lavc_actx->sample_fmt);
 		reorder_channel_nch(src, AF_CHANNEL_LAYOUT_MPLAYER_DEFAULT,
 		                    isac3 ? AF_CHANNEL_LAYOUT_LAVC_DEFAULT
 		                          : AF_CHANNEL_LAYOUT_AAC_DEFAULT,
 		                    encoder->params.channels,
-		                    size / 2, 2);
+		                    size / bps, bps);
 	}
 	n = avcodec_encode_audio(lavc_actx, dest, size, src);
         compressed_frame_size = n;
@@ -251,7 +252,9 @@ int mpae_init_lavc(audio_encoder_t *encoder)
 		lavc_actx->frame_size = (lavc_actx->block_align - 4 * lavc_actx->channels) * 8 / (4 * lavc_actx->channels) + 1;
 	}
 
-	encoder->decode_buffer_size = lavc_actx->frame_size * 2 * encoder->params.channels;
+	encoder->decode_buffer_size = lavc_actx->frame_size *
+	                              av_get_bytes_per_sample(lavc_actx->sample_fmt) *
+	                              encoder->params.channels;
 	while (encoder->decode_buffer_size < 1024) encoder->decode_buffer_size *= 2;
 	encoder->bind = bind_lavc;
 	encoder->get_frame_size = get_frame_size;
