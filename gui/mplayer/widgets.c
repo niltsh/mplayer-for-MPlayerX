@@ -69,8 +69,8 @@ int gtkInitialized = 0;
 
 // --- init & close gtk
 
-static GdkPixmap * gtkIcon;
-static GdkBitmap * gtkIconMask;
+static GdkPixmap * gdkIcon;
+static GdkBitmap * gdkIconMask;
 Pixmap	    guiIcon;
 Pixmap	    guiIconMask;
 
@@ -98,11 +98,11 @@ void gtkInit( void )
   GtkWidget * win;
   win=gtk_window_new( GTK_WINDOW_TOPLEVEL );
 
-  if ( !gtkIcon )
-    gtkIcon=gdk_pixmap_colormap_create_from_xpm_d( win->window,gdk_colormap_get_system(),&gtkIconMask,&win->style->bg[GTK_STATE_NORMAL],(gchar **) mplayer_xpm );
+  if ( !gdkIcon )
+    gdkIcon=gdk_pixmap_colormap_create_from_xpm_d( win->window,gdk_colormap_get_system(),&gdkIconMask,&win->style->bg[GTK_STATE_NORMAL],(gchar **) mplayer_xpm );
 
-  guiIcon=GDK_WINDOW_XWINDOW( gtkIcon );
-  guiIconMask=GDK_WINDOW_XWINDOW( gtkIconMask );
+  guiIcon=GDK_WINDOW_XWINDOW( gdkIcon );
+  guiIconMask=GDK_WINDOW_XWINDOW( gdkIconMask );
 
   gtk_widget_destroy( win );
  }
