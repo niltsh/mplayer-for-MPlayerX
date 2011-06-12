@@ -114,8 +114,7 @@ typedef struct vf_seteq_s
 
 #include "vfcap.h"
 
-//FIXME this should be in a common header, but i dunno which
-#define MP_NOPTS_VALUE (-1LL<<63) //both int64_t and double should be able to represent this exactly
+#include "mp_global.h"
 
 
 // functions:
