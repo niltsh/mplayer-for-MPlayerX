@@ -2033,7 +2033,7 @@ static mp_image_t *mp_dvdnav_restore_smpi(int *in_size,
     if (mpctx->stream->type != STREAMTYPE_DVDNAV)
         return decoded_frame;
 
-    // a change occured in dvdnav stream
+    // a change occurred in dvdnav stream
     if (mp_dvdnav_cell_has_changed(mpctx->stream, 0)) {
         mp_dvdnav_read_wait(mpctx->stream, 1, 1);
         mp_dvdnav_context_free(mpctx);
