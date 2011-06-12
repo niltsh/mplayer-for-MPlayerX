@@ -101,8 +101,8 @@ void gtkInit( void )
   if ( !gdkIcon )
     gdkIcon=gdk_pixmap_colormap_create_from_xpm_d( win->window,gdk_colormap_get_system(),&gdkIconMask,&win->style->bg[GTK_STATE_NORMAL],(gchar **) mplayer_xpm );
 
-  guiIcon=GDK_WINDOW_XWINDOW( gdkIcon );
-  guiIconMask=GDK_WINDOW_XWINDOW( gdkIconMask );
+  guiIcon=GDK_PIXMAP_XID( gdkIcon );
+  guiIconMask=GDK_PIXMAP_XID( gdkIconMask );
 
   gtk_widget_destroy( win );
  }
