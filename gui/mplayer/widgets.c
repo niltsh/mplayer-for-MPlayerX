@@ -69,8 +69,8 @@ int gtkInitialized = 0;
 
 // --- init & close gtk
 
-GdkPixmap * gtkIcon = NULL;
-GdkBitmap * gtkIconMask = NULL;
+GdkPixmap * gtkIcon;
+GdkBitmap * gtkIconMask;
 Pixmap	    guiIcon;
 Pixmap	    guiIconMask;
 
