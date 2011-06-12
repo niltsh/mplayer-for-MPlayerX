@@ -283,7 +283,7 @@ static int softsleep;
 
 double force_fps;
 static int force_srate;
-static int audio_output_format = -1; // AF_FORMAT_UNKNOWN
+static int audio_output_format = AF_FORMAT_UNKNOWN;
 int frame_dropping;        // option  0=no drop  1= drop vo  2= drop decode
 static int play_n_frames    = -1;
 static int play_n_frames_mf = -1;
