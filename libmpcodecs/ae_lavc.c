@@ -199,9 +199,6 @@ int mpae_init_lavc(audio_encoder_t *encoder)
 			}
 		}
 	}
-	if (lavc_actx->sample_fmt != AV_SAMPLE_FMT_S16)
-	    mp_msg(MSGT_MENCODER, MSGL_ERR, "Encoder requires input not properly supported."
-	                                    "Try using e.g. 'ac3_fixed' instead of 'ac3' as codec\n");
 	encoder->input_format = samplefmt2affmt(lavc_actx->sample_fmt);
 	lavc_actx->channels = encoder->params.channels;
 	lavc_actx->sample_rate = encoder->params.sample_rate;
