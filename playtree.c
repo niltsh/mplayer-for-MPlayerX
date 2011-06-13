@@ -473,7 +473,6 @@ play_tree_iter_push_params(play_tree_iter_t* iter) {
 
   if(!pt->child)
     iter->entry_pushed = 1;
-  return;
 }
 
 play_tree_iter_t*
