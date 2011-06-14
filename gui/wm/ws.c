@@ -1253,7 +1253,7 @@ void wsSetShape( wsTWindow * win,char * data )
 void wsSetIcon( Display * dsp,Window win,Pixmap icon,Pixmap mask )
 {
  XWMHints * wm;
- long	    data[2];
+ CARD32     data[2];
  Atom	    iconatom;
 
  wm=XGetWMHints( dsp,win );
