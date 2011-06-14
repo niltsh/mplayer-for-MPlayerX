@@ -1272,5 +1272,3 @@ void wsSetIcon( Display * dsp,Window win,Pixmap icon,Pixmap mask )
 
  XFree( wm );
 }
-
-#include "wsmkeys.h"
