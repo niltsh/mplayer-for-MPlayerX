@@ -922,7 +922,6 @@ static const char help_text[]=
 
 // cfg.c
 
-#define MSGTR_ConfigFileReadError "[cfg] błąd wczytywania pliku konfiguracyjnego ...\n"
 #define MSGTR_UnableToSaveOption "[cfg] Nie udało się zapisać opcji '%s'.\n"
 
 // interface.c

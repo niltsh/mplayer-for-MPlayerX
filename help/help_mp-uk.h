@@ -766,7 +766,6 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_Warning "Попередження!"
 
 // cfg.c
-#define MSGTR_ConfigFileReadError "[cfg] помилка читання файлу налаштунків ...\n"
 #define MSGTR_UnableToSaveOption "[cfg] Не можу зберегти '%s' опцію.\n"
 
 // interface.c

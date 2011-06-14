@@ -795,7 +795,6 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_Warning "警告！"
 
 // cfg.c
-#define MSGTR_ConfigFileReadError "[cfg] 配置文件读取错误...\n"
 #define MSGTR_UnableToSaveOption "[cfg] 无法保存‘%s’选项。\n"
 
 // interface.c

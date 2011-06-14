@@ -161,6 +161,8 @@ void guiInit(void)
 {
     int i;
 
+    mp_msg(MSGT_GPLAYER, MSGL_V, "GUI init.\n");
+
     memset(&guiIntfStruct, 0, sizeof(guiIntfStruct));
     guiIntfStruct.Balance    = 50.0f;
     guiIntfStruct.StreamType = -1;
@@ -200,8 +202,8 @@ void guiInit(void)
     skinDirInHome  = get_path("skins");
     skinMPlayerDir = MPLAYER_DATADIR "/skins";
 
-    mp_msg(MSGT_GPLAYER, MSGL_V, "SKIN dir 1: '%s'\n", skinDirInHome);
-    mp_msg(MSGT_GPLAYER, MSGL_V, "SKIN dir 2: '%s'\n", skinMPlayerDir);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] skin directory #1: %s\n", skinDirInHome);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] skin directory #2: %s\n", skinMPlayerDir);
 
     if (!skinName)
         skinName = strdup("default");
@@ -269,11 +271,9 @@ void guiInit(void)
     wsSetShape(&appMPlayer.mainWindow, appMPlayer.main.Mask.Image);
     wsXDNDMakeAwareness(&appMPlayer.mainWindow);
 
-#ifdef DEBUG
-    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[main] depth on screen: %d\n", wsDepthOnScreen);
-    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[main] parent: 0x%x\n", (int)appMPlayer.mainWindow.WindowID);
-    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[main] sub: 0x%x\n", (int)appMPlayer.subWindow.WindowID);
-#endif
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] screen depth: %d\n", wsDepthOnScreen);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] mainWindow ID: 0x%x\n", (int)appMPlayer.mainWindow.WindowID);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] subWindow ID: 0x%x\n", (int)appMPlayer.subWindow.WindowID);
 
     appMPlayer.mainWindow.ReDraw       = (void *)mplMainDraw;
     appMPlayer.mainWindow.MouseHandler = mplMainMouseHandle;
@@ -384,8 +384,6 @@ void guiDone(void)
     if (initialized) {
         mplMainRender = 0;
 
-        mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] done.\n");
-
         if (gui_save_pos) {
             gui_main_pos_x = appMPlayer.mainWindow.X;
             gui_main_pos_y = appMPlayer.mainWindow.Y;
@@ -410,6 +408,8 @@ void guiDone(void)
         m_config_free(gui_conf);
         gui_conf = NULL;
     }
+
+    mp_msg(MSGT_GPLAYER, MSGL_V, "GUI done.\n");
 }
 
 void guiExit(enum exit_reason how)
@@ -450,7 +450,7 @@ void guiLoadFont(void)
         vo_font = read_font_desc(font_name, font_factor, 0);
 
         if (!vo_font)
-            mp_msg(MSGT_CPLAYER, MSGL_ERR, MSGTR_CantLoadFont, font_name);
+            gmp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_CantLoadFont, font_name);
     } else {
         font_name = gstrdup(get_path("font/font.desc"));
         vo_font   = read_font_desc(font_name, font_factor, 0);
@@ -505,7 +505,7 @@ void guiLoadSubtitle(char *name)
         subdata = sub_read_file(name, guiIntfStruct.FPS);
 
         if (!subdata)
-            mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_CantLoadSub, name);
+            gmp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_CantLoadSub, name);
 
         sub_name    = (malloc(2 * sizeof(char *))); // when mplayer will be restarted
         sub_name[0] = strdup(name);                 // sub_name[0] will be read
@@ -547,7 +547,7 @@ static void add_vf(char *str)
         vf_settings[1].name    = NULL;
     }
 
-    mp_msg(MSGT_GPLAYER, MSGL_STATUS, MSGTR_AddingVideoFilter, str);
+    mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_AddingVideoFilter, str);
 }
 
 int guiGetEvent(int type, void *arg)
@@ -682,7 +682,7 @@ int guiGetEvent(int type, void *arg)
 
     case guiIEvent:
 
-        mp_msg(MSGT_GPLAYER, MSGL_V, "cmd: %d\n", (int)arg);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] guiIEvent: %d\n", (int)arg);
 
         switch ((int)arg) {
         case MP_CMD_QUIT:
@@ -1385,8 +1385,7 @@ static int import_file_into_gui(char *temp, int insert)
     else
         pathname[strlen(pathname) - strlen(filename)] = 0;
 
-    // NOTE TO MYSELF: FIXME: Change to MSGL_DBG2?
-    mp_msg(MSGT_PLAYTREE, MSGL_V, "Adding filename %s && pathname %s\n", filename, pathname);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] playtree, add: %s/%s\n", pathname, filename);
 
     item = calloc(1, sizeof(plItem));
 

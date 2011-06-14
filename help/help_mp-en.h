@@ -65,8 +65,8 @@ static const char help_text[]=
 #define MSGTR_GetpathProblem "get_path(\"config\") problem\n"
 #define MSGTR_CreatingCfgFile "Creating config file: %s\n"
 #define MSGTR_BuiltinCodecsConf "Using built-in default codecs.conf.\n"
-#define MSGTR_CantLoadFont "Cannot load bitmap font: %s\n"
-#define MSGTR_CantLoadSub "Cannot load subtitles: %s\n"
+#define MSGTR_CantLoadFont "Cannot load bitmap font '%s'.\n"
+#define MSGTR_CantLoadSub "Cannot load subtitles '%s'.\n"
 #define MSGTR_DumpSelectedStreamMissing "dump: FATAL: Selected stream missing!\n"
 #define MSGTR_CantOpenDumpfile "Cannot open dump file.\n"
 #define MSGTR_CoreDumped "Core dumped ;)\n"
@@ -408,7 +408,7 @@ static const char help_text[]=
 "Cannot set LAME options, check bitrate/samplerate, some very low bitrates\n"\
 "(<32) need lower samplerates (i.e. -srate 8000).\n"\
 "If everything else fails, try a preset."
-#define MSGTR_ConfigFileError "config file error"
+#define MSGTR_ConfigFileError "Config file error"
 #define MSGTR_ErrorParsingCommandLine "error parsing command line"
 #define MSGTR_VideoStreamRequired "Video stream is mandatory!\n"
 #define MSGTR_ForcingInputFPS "Input fps will be interpreted as %5.3f instead.\n"
@@ -795,13 +795,12 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_Warning "Warning!"
 
 // cfg.c
-#define MSGTR_ConfigFileReadError "[cfg] config file read error ...\n"
-#define MSGTR_UnableToSaveOption "[cfg] Unable to save the '%s' option.\n"
+#define MSGTR_UnableToSaveOption "Unable to save option '%s'.\n"
 
 // interface.c
-#define MSGTR_DeletingSubtitles "[GUI] Deleting subtitles.\n"
-#define MSGTR_LoadingSubtitles "[GUI] Loading subtitles: %s\n"
-#define MSGTR_AddingVideoFilter "[GUI] Adding video filter: %s\n"
+#define MSGTR_DeletingSubtitles "Deleting subtitles.\n"
+#define MSGTR_LoadingSubtitles "Loading subtitles '%s'.\n"
+#define MSGTR_AddingVideoFilter "Adding video filter '%s'.\n"
 
 // mw.c
 #define MSGTR_NotAFile "This does not seem to be a file: %s !\n"

@@ -781,7 +781,6 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_Warning "Avvertimento!"
 
 // cfg.c
-#define MSGTR_ConfigFileReadError "[cfg] errore di lettura file di configurazione...\n"
 #define MSGTR_UnableToSaveOption "[cfg] non riesco a salvare l'opzione '%s'.\n"
 
 // interface.c

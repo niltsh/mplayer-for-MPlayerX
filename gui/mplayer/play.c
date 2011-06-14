@@ -217,8 +217,8 @@ void ChangeSkin(char *name)
         mplMenuDrawBuffer = calloc(1, appMPlayer.menu.Bitmap.ImageSize);
 
         if (!mplMenuDrawBuffer) {
-            mp_msg(MSGT_GPLAYER, MSGL_STATUS, MSGTR_NEMDB);
-            return;
+            gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_NEMDB);
+            guiExit(EXIT_ERROR);
         }
 
         wsResizeWindow(&appMPlayer.menuWindow, appMPlayer.menu.width, appMPlayer.menu.height);
@@ -261,8 +261,8 @@ void ChangeSkin(char *name)
     mplDrawBuffer = calloc(1, appMPlayer.main.Bitmap.ImageSize);
 
     if (!mplDrawBuffer) {
-        mp_msg(MSGT_GPLAYER, MSGL_STATUS, MSGTR_NEMDB);
-        return;
+        gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_NEMDB);
+        guiExit(EXIT_ERROR);
     }
 
     wsDestroyWindow(&appMPlayer.mainWindow);

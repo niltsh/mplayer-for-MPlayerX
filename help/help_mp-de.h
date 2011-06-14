@@ -69,8 +69,8 @@ static const char help_text[]=
 #define MSGTR_GetpathProblem "get_path(\"config\") fehlgeschlagen.\n"
 #define MSGTR_CreatingCfgFile "Erstelle Konfigurationsdatei: %s\n"
 #define MSGTR_BuiltinCodecsConf "Benutze eingebaute Standardwerte für codecs.conf.\n"
-#define MSGTR_CantLoadFont "Kann Bitmap-Schriftdatei nicht laden: %s\n"
-#define MSGTR_CantLoadSub "Kann Untertitel nicht laden: %s\n"
+#define MSGTR_CantLoadFont "Bitmap-Schriftdatei '%s' kann nicht geladen werden.\n"
+#define MSGTR_CantLoadSub "Untertitel '%s' können nicht geladen werden.\n"
 #define MSGTR_DumpSelectedStreamMissing "dump: FATAL: Ausgewählter Stream fehlt!\n"
 #define MSGTR_CantOpenDumpfile "Kann dump-Datei nicht öffnen!\n"
 #define MSGTR_CoreDumped "Core dumped ;)\n"
@@ -1004,13 +1004,12 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_Warning "Warnung!"
 
 // cfg.c
-#define MSGTR_ConfigFileReadError "[cfg] Fehler beim Lesen der Konfigurationsdatei ...\n"
-#define MSGTR_UnableToSaveOption "[cfg] Kann die Option '%s' nicht speichern.\n"
+#define MSGTR_UnableToSaveOption "Die Option '%s' kann nicht gespeichert werden.\n"
 
 // interface.c
-#define MSGTR_DeletingSubtitles "[GUI] Lösche Untertitel.\n"
-#define MSGTR_LoadingSubtitles "[GUI] Lade Untertitel: %s\n"
-#define MSGTR_AddingVideoFilter "[GUI] Füge Videofilter %s hinzu.\n"
+#define MSGTR_DeletingSubtitles "Untertitel werden gelöscht.\n"
+#define MSGTR_LoadingSubtitles "Untertitel '%s' werden geladen.\n"
+#define MSGTR_AddingVideoFilter "Videofilter '%s' wird hinzugefügt.\n"
 
 // mw.c
 #define MSGTR_NotAFile "Dies scheint keine Datei zu sein: %s !\n"

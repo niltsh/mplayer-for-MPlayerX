@@ -78,7 +78,7 @@ void gtkInit( void )
  GdkPixmap *gdkIcon;
  GdkBitmap *gdkIconMask;
 
- mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[widget] GTK init\n" );
+ mp_msg( MSGT_GPLAYER,MSGL_V,"GTK init.\n" );
 
  arg[argc++] = GMPlayer;
 

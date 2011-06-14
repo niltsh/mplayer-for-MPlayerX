@@ -797,7 +797,6 @@ static const char help_text[]=
 
 // cfg.c
 
-#define MSGTR_ConfigFileReadError "[cfg] грешка при четене на конфигурационния файл ...\n"
 #define MSGTR_UnableToSaveOption "Не може да се запамети опцията '%s'.\n"
 
 // interface.c

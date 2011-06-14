@@ -264,7 +264,7 @@ int cfg_read(void)
 
     cfg = get_path("gui.conf");
 
-    mp_msg(MSGT_GPLAYER, MSGL_V, "[cfg] reading config file: %s\n", cfg);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[cfg] file: %s\n", cfg);
 
     gui_conf = m_config_new();
 
@@ -276,7 +276,7 @@ int cfg_read(void)
     m_config_register_options(gui_conf, gui_opts);
 
     if (!disable_gui_conf && (m_config_parse_config_file(gui_conf, cfg) < 0)) {
-        mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_ConfigFileError);
+        gmp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_ConfigFileError);
 // guiExit(1);
     }
 
