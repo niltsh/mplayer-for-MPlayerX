@@ -539,6 +539,7 @@ void mplMainKeyHandle( int KeyCode,int Type,int Key )
       case wsXF86LowerVolume:  msg=evDecVolume; break;
       case wsXF86RaiseVolume:  msg=evIncVolume; break;
       case wsXF86Mute:         msg=evMute; break;
+      case wsXF86Pause:
       case wsXF86Play:         msg=evPlaySwitchToPause; break;
       case wsXF86Stop:         msg=evStop; break;
       case wsXF86Prev:         msg=evPrev; break;

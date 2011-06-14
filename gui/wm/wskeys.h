@@ -30,6 +30,7 @@
 #define wsXF86RaiseVolume 0x13 + 256
 #define wsXF86Mute        0x12 + 256
 #define wsXF86Play        0x14 + 256
+#define wsXF86Pause       0x31 + 256
 #define wsXF86Stop        0x15 + 256
 #define wsXF86Prev        0x16 + 256
 #define wsXF86Next        0x17 + 256
