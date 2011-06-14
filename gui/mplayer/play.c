@@ -270,7 +270,7 @@ void ChangeSkin(char *name)
     wsCreateWindow(&appMPlayer.mainWindow, appMPlayer.main.x, appMPlayer.main.y, appMPlayer.main.width, appMPlayer.main.height, wsNoBorder, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, wsShowFrame | wsMaxSize | wsHideWindow, "MPlayer");
     wsCreateImage(&appMPlayer.mainWindow, appMPlayer.main.Bitmap.Width, appMPlayer.main.Bitmap.Height);
     wsSetShape(&appMPlayer.mainWindow, appMPlayer.main.Mask.Image);
-    wsSetIcon(wsDisplay, appMPlayer.mainWindow.WindowID, guiIcon, guiIconMask);
+    wsSetIcon(wsDisplay, appMPlayer.mainWindow.WindowID, &guiIcon);
 
     appMPlayer.mainWindow.ReDraw       = (void *)mplMainDraw;
     appMPlayer.mainWindow.MouseHandler = mplMainMouseHandle;

@@ -22,6 +22,8 @@
 #ifndef MPLAYER_GUI_WS_H
 #define MPLAYER_GUI_WS_H
 
+#include "gui/mplayer/widgets.h"
+
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/keysym.h>
@@ -243,7 +245,7 @@ void wsSetLayer( Display * wsDisplay, Window win, int layer );
 void wsFullScreen( wsTWindow * win );
 void wsPostRedisplay( wsTWindow * win );
 void wsSetShape( wsTWindow * win, char * data );
-void wsSetIcon( Display * dsp, Window win, Pixmap icon, Pixmap mask );
+void wsSetIcon( Display * dsp, Window win, guiIcon_t * icon );
 
 // ----------------------------------------------------------------------------------------------
 //    Draw string at x,y with fc ( foreground color ) and bc ( background color ).

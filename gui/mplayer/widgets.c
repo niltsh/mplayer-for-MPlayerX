@@ -69,8 +69,7 @@ int gtkInitialized = 0;
 
 // --- init & close gtk
 
-Pixmap	    guiIcon;
-Pixmap	    guiIconMask;
+guiIcon_t guiIcon;
 
 void gtkInit( void )
 {
@@ -100,14 +99,14 @@ void gtkInit( void )
  // start up GTK which realizes the pixmaps
  gtk_main_iteration_do(FALSE);
 
- guiIcon=GDK_PIXMAP_XID( gdkIcon );
- guiIconMask=GDK_PIXMAP_XID( gdkIconMask );
+ guiIcon.normal=GDK_PIXMAP_XID( gdkIcon );
+ guiIcon.normal_mask=GDK_PIXMAP_XID( gdkIconMask );
 
  gtkInitialized=1;
 }
 
 void gtkAddIcon( GtkWidget * window )
-{ wsSetIcon( gdk_display,GDK_WINDOW_XWINDOW( window->window ),guiIcon,guiIconMask ); }
+{ wsSetIcon( gdk_display,GDK_WINDOW_XWINDOW( window->window ),&guiIcon ); }
 
 void gtkClearList( GtkWidget * list )
 { gtk_clist_clear( GTK_CLIST( list ) ); }

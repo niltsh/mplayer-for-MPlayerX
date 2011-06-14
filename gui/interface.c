@@ -295,8 +295,8 @@ void guiInit(void)
     btnModify(evSetBalance, guiIntfStruct.Balance);
     btnModify(evSetMoviePosition, guiIntfStruct.Position);
 
-    wsSetIcon(wsDisplay, appMPlayer.mainWindow.WindowID, guiIcon, guiIconMask);
-    wsSetIcon(wsDisplay, appMPlayer.subWindow.WindowID, guiIcon, guiIconMask);
+    wsSetIcon(wsDisplay, appMPlayer.mainWindow.WindowID, &guiIcon);
+    wsSetIcon(wsDisplay, appMPlayer.subWindow.WindowID, &guiIcon);
 
     guiIntfStruct.Playing = 0;
 

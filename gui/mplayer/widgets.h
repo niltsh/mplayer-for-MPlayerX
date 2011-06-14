@@ -23,13 +23,13 @@
 #include <stdlib.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
+#include <X11/Xlib.h>
 
 #include "config.h"
 #include "osdep/shmem.h"
 #include "play.h"
 #include "mplayer.h"
 #include "gui/interface.h"
-#include "gui/wm/ws.h"
 
 #define GTK_MB_SIMPLE 0
 #define GTK_MB_MODAL 1
@@ -53,8 +53,12 @@ extern int             gtkPopupMenuParam;
 extern char          * sbMPlayerDirInHome;
 extern char          * sbMPlayerPrefixDir;
 
-extern Pixmap      guiIcon;
-extern Pixmap	   guiIconMask;
+typedef struct {
+  Pixmap normal;
+  Pixmap normal_mask;
+} guiIcon_t;
+
+extern guiIcon_t guiIcon;
 
 void widgetsCreate( void );
 
