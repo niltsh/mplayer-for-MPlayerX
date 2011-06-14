@@ -79,6 +79,8 @@ void gtkInit( void )
  GdkPixmap *gdkIcon;
  GdkBitmap *gdkIconMask;
 
+ mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[widget] GTK init\n" );
+
  arg[argc++] = GMPlayer;
 
  if (mDisplayName)                 // MPlayer option '-display' was given
@@ -87,12 +89,11 @@ void gtkInit( void )
    arg[argc++] = mDisplayName;     // to open the requested display for the GUI, too.
  }
 
- mp_dbg( MSGT_GPLAYER,MSGL_DBG2,"[widget] init GTK ...\n" );
 #ifdef CONFIG_GTK2
  gtk_disable_setlocale();
 #endif
+
  gtk_init( &argc, &argv );
-// gdk_set_use_xshm( TRUE );
 
  gdkIcon=gdk_pixmap_colormap_create_from_xpm_d( NULL,gdk_colormap_get_system(),&gdkIconMask,NULL,(gchar **) mplayer_xpm );
 
