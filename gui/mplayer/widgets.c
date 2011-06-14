@@ -94,13 +94,13 @@ void gtkInit( void )
  gtk_init( &argc, &argv );
 // gdk_set_use_xshm( TRUE );
 
-    gdkIcon=gdk_pixmap_colormap_create_from_xpm_d( NULL,gdk_colormap_get_system(),&gdkIconMask,NULL,(gchar **) mplayer_xpm );
+ gdkIcon=gdk_pixmap_colormap_create_from_xpm_d( NULL,gdk_colormap_get_system(),&gdkIconMask,NULL,(gchar **) mplayer_xpm );
 
  // start up GTK which realizes the pixmaps
  gtk_main_iteration_do(FALSE);
 
-  guiIcon=GDK_PIXMAP_XID( gdkIcon );
-  guiIconMask=GDK_PIXMAP_XID( gdkIconMask );
+ guiIcon=GDK_PIXMAP_XID( gdkIcon );
+ guiIconMask=GDK_PIXMAP_XID( gdkIconMask );
 
  gtkInitialized=1;
 }
