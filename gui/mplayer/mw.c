@@ -35,6 +35,7 @@
 #include "help_mp.h"
 #include "libvo/x11_common.h"
 #include "libvo/fastmemcpy.h"
+#include "libvo/wskeys.h"
 
 #include "stream/stream.h"
 #include "stream/url.h"

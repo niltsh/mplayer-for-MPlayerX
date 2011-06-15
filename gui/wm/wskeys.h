@@ -19,11 +19,6 @@
 #ifndef MPLAYER_GUI_WSKEYS_H
 #define MPLAYER_GUI_WSKEYS_H
 
-#define wsEnter         0x0d + 256
-#define wsEscape        0x1b + 256
-#define wsGrayMul       0xaa + 256
-#define wsGrayDiv       0xaf + 256
-
 //Keys for multimedia keyboard
 
 #define wsXF86LowerVolume 0x11 + 256
