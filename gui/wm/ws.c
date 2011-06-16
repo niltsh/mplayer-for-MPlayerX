@@ -1537,6 +1537,7 @@ void wsSetIcon(Display *dsp, Window win, guiIcon_t *icon)
     Atom iconatom;
     CARD32 data[2];
 
+    if (icon->normal) {
     wm = XGetWMHints(dsp, win);
 
     if (!wm)
@@ -1548,12 +1549,15 @@ void wsSetIcon(Display *dsp, Window win, guiIcon_t *icon)
 
     XSetWMHints(dsp, win, wm);
     XFree(wm);
+    }
 
+    if (icon->small || icon->normal) {
     iconatom = XInternAtom(dsp, "KWM_WIN_ICON", False);
     data[0]  = (icon->small ? icon->small : icon->normal);
     data[1]  = (icon->small ? icon->small_mask : icon->normal_mask);
 
     XChangeProperty(dsp, win, iconatom, iconatom, 32, PropModeReplace, (unsigned char *)data, 2);
+    }
 
     if (icon->collection) {
         iconatom = XInternAtom(dsp, "_NET_WM_ICON", False);
