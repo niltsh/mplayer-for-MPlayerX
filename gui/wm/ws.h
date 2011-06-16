@@ -216,7 +216,7 @@ int wsGetDepthOnScreen(void);
 
 void wsDoExit(void);
 void wsMainLoop(void);
-Bool wsEvents(Display *display, XEvent *Event, XPointer arg);
+Bool wsEvents(Display *display, XEvent *Event);
 void wsHandleEvents(void);
 
 // ----------------------------------------------------------------------------------------------

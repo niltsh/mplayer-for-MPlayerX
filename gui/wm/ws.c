@@ -194,7 +194,7 @@ static int wsErrorHandler(Display *dpy, XErrorEvent *Event)
 {
     char type[128];
 
-    XGetErrorText(wsDisplay, Event->error_code, type, 128);
+    XGetErrorText(dpy, Event->error_code, type, 128);
     fprintf(stderr, "[ws] Error in display.\n");
     fprintf(stderr, "[ws]  Error code: %d ( %s )\n", Event->error_code, type);
     fprintf(stderr, "[ws]  Request code: %d\n", Event->request_code);
@@ -597,7 +597,7 @@ void wsDestroyWindow(wsTWindow *win)
 //   Handle events.
 // ----------------------------------------------------------------------------------------------
 
-Bool wsEvents(Display *display, XEvent *Event, XPointer arg)
+Bool wsEvents(Display *display, XEvent *Event)
 {
     unsigned long i = 0;
     int l;
@@ -836,7 +836,7 @@ void wsHandleEvents(void)
     while (XPending(wsDisplay)) {
         XNextEvent(wsDisplay, &wsEvent);
 //   printf("### X event: %d  [%d]\n",wsEvent.type,delay);
-        wsEvents(wsDisplay, &wsEvent, NULL);
+        wsEvents(wsDisplay, &wsEvent);
     }
 }
 
@@ -847,13 +847,13 @@ void wsMainLoop(void)
     mp_msg(MSGT_GPLAYER, MSGL_V, "[ws] init threads: %d\n", XInitThreads());
     XSynchronize(wsDisplay, False);
     XLockDisplay(wsDisplay);
-// XIfEvent( wsDisplay,&wsEvent,wsEvents,NULL );
+// XIfEvent( wsDisplay,&wsEvent,wsEvents );
 
     while (wsTrue) {
         // handle pending events
         while (XPending(wsDisplay)) {
             XNextEvent(wsDisplay, &wsEvent);
-            wsEvents(wsDisplay, &wsEvent, NULL);
+            wsEvents(wsDisplay, &wsEvent);
             delay = 0;
         }
 
@@ -986,6 +986,8 @@ void wsConvert(wsTWindow *win, unsigned char *Image, unsigned int Size)
     uint8_t *dst[4]       = { win->ImageData, NULL, NULL, NULL };
     int dst_stride[4];
     int i;
+
+    (void)Size;
 
     sws_ctx = sws_getCachedContext(sws_ctx, win->xImage->width, win->xImage->height, PIX_FMT_RGB32,
                                    win->xImage->width, win->xImage->height, out_pix_fmt,
