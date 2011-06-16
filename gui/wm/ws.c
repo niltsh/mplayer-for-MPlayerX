@@ -1532,8 +1532,8 @@ void wsSetShape(wsTWindow *win, char *data)
 void wsSetIcon(Display *dsp, Window win, guiIcon_t *icon)
 {
     XWMHints *wm;
-    CARD32 data[2];
     Atom iconatom;
+    CARD32 data[2];
 
     wm = XGetWMHints(dsp, win);
 
@@ -1545,11 +1545,11 @@ void wsSetIcon(Display *dsp, Window win, guiIcon_t *icon)
     wm->flags      |= IconPixmapHint | IconMaskHint;
 
     XSetWMHints(dsp, win, wm);
+    XFree(wm);
 
+    iconatom = XInternAtom(dsp, "KWM_WIN_ICON", False);
     data[0]  = icon->normal;
     data[1]  = icon->normal_mask;
-    iconatom = XInternAtom(dsp, "KWM_WIN_ICON", 0);
-    XChangeProperty(dsp, win, iconatom, iconatom, 32, PropModeReplace, (unsigned char *)data, 2);
 
-    XFree(wm);
+    XChangeProperty(dsp, win, iconatom, iconatom, 32, PropModeReplace, (unsigned char *)data, 2);
 }
