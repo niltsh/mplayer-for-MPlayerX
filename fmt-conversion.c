@@ -19,6 +19,7 @@
 #include "mp_msg.h"
 #include "libavutil/avutil.h"
 #include "libmpcodecs/img_format.h"
+#include "libavutil/pixfmt.h"
 #include "libavutil/samplefmt.h"
 #include "libaf/af_format.h"
 #include "fmt-conversion.h"
