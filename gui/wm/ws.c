@@ -1538,25 +1538,25 @@ void wsSetIcon(Display *dsp, Window win, guiIcon_t *icon)
     CARD32 data[2];
 
     if (icon->normal) {
-    wm = XGetWMHints(dsp, win);
+        wm = XGetWMHints(dsp, win);
 
-    if (!wm)
-        wm = XAllocWMHints();
+        if (!wm)
+            wm = XAllocWMHints();
 
-    wm->icon_pixmap = icon->normal;
-    wm->icon_mask   = icon->normal_mask;
-    wm->flags      |= IconPixmapHint | IconMaskHint;
+        wm->icon_pixmap = icon->normal;
+        wm->icon_mask   = icon->normal_mask;
+        wm->flags      |= IconPixmapHint | IconMaskHint;
 
-    XSetWMHints(dsp, win, wm);
-    XFree(wm);
+        XSetWMHints(dsp, win, wm);
+        XFree(wm);
     }
 
     if (icon->small || icon->normal) {
-    iconatom = XInternAtom(dsp, "KWM_WIN_ICON", False);
-    data[0]  = (icon->small ? icon->small : icon->normal);
-    data[1]  = (icon->small ? icon->small_mask : icon->normal_mask);
+        iconatom = XInternAtom(dsp, "KWM_WIN_ICON", False);
+        data[0]  = (icon->small ? icon->small : icon->normal);
+        data[1]  = (icon->small ? icon->small_mask : icon->normal_mask);
 
-    XChangeProperty(dsp, win, iconatom, iconatom, 32, PropModeReplace, (unsigned char *)data, 2);
+        XChangeProperty(dsp, win, iconatom, iconatom, 32, PropModeReplace, (unsigned char *)data, 2);
     }
 
     if (icon->collection) {
