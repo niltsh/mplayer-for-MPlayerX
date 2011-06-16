@@ -55,6 +55,8 @@ extern char *sbMPlayerDirInHome;
 extern char *sbMPlayerPrefixDir;
 
 typedef struct {
+    Pixmap small;
+    Pixmap small_mask;
     Pixmap normal;
     Pixmap normal_mask;
     int collection_size;

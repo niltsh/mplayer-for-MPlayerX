@@ -1550,8 +1550,8 @@ void wsSetIcon(Display *dsp, Window win, guiIcon_t *icon)
     XFree(wm);
 
     iconatom = XInternAtom(dsp, "KWM_WIN_ICON", False);
-    data[0]  = icon->normal;
-    data[1]  = icon->normal_mask;
+    data[0]  = (icon->small ? icon->small : icon->normal);
+    data[1]  = (icon->small ? icon->small_mask : icon->normal_mask);
 
     XChangeProperty(dsp, win, iconatom, iconatom, 32, PropModeReplace, (unsigned char *)data, 2);
 
