@@ -50,7 +50,7 @@ static void render(int bitsperpixel, image *dst, image *src, int x, int y, int s
             }
             else if(bpp > 2)
             {
-                if(!transparent || *((unsigned int *) (src->data + soffset + (i * src->width * bpp) + c)) != 0x00ff00ff)
+                if(!transparent || !IS_TRANSPARENT(*((unsigned int *) (src->data + soffset + (i * src->width * bpp) + c))))
                     memcpy(dst->data + offset + c, src->data + soffset + (i * src->width * bpp) + c, bpp);
             }
         }

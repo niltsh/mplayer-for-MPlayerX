@@ -156,24 +156,12 @@ static int Convert24to32(txSample *bf)
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 32 bpp conversion size: %lu\n", bf->ImageSize);
 
         for (c = 0, i = 0; c < bf->ImageSize; c += 4, i += 3)
-            *(uint32_t *)&bf->Image[c] = AV_RB24(&orgImage[i]);
+            *(uint32_t *)&bf->Image[c] = ALPHA_OPAQUE | AV_RB24(&orgImage[i]);
 
         free(orgImage);
     }
 
     return 1;
-}
-
-static void Normalize(txSample *bf)
-{
-    unsigned long i;
-
-    for (i = 0; i < bf->ImageSize; i += 4)
-#if HAVE_BIGENDIAN
-        bf->Image[i] = 0;
-#else
-        bf->Image[i + 3] = 0;
-#endif
 }
 
 static unsigned char *fExist(unsigned char *fname)
@@ -219,8 +207,6 @@ int bpRead(char *fname, txSample *bf)
     if (!Convert24to32(bf))
         return -8;
 
-    Normalize(bf);
-
     return 0;
 }
 
@@ -254,7 +240,7 @@ int Convert32to1(txSample *in, txSample *out)
     for (i = 0; i < out->Width * out->Height; i++) {
         tmp >>= 1;
 
-        if (buf[i] != TRANSPARENT)
+        if (!IS_TRANSPARENT(buf[i]))
             tmp |= 0x80;
         else {
             buf[i] = 0;
