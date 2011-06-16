@@ -30,7 +30,6 @@
 #include "gui/skin/font.h"
 #include "gui/skin/skin.h"
 #include "gui/wm/ws.h"
-#include "gui/wm/wskeys.h"
 
 #include "help_mp.h"
 #include "libvo/x11_common.h"
