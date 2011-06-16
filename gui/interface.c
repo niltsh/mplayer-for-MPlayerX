@@ -403,6 +403,7 @@ void guiDone(void)
     }
 
     appFreeStruct();
+    free(guiIcon.collection);
 
     if (gui_conf) {
         m_config_free(gui_conf);

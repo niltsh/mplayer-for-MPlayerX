@@ -24,6 +24,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 #include <X11/Xlib.h>
+#include <X11/Xproto.h>
 
 #include "config.h"
 #include "osdep/shmem.h"
@@ -56,6 +57,8 @@ extern char *sbMPlayerPrefixDir;
 typedef struct {
     Pixmap normal;
     Pixmap normal_mask;
+    int collection_size;
+    CARD32 *collection;
 } guiIcon_t;
 
 extern guiIcon_t guiIcon;

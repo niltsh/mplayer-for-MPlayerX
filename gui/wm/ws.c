@@ -1554,4 +1554,9 @@ void wsSetIcon(Display *dsp, Window win, guiIcon_t *icon)
     data[1]  = icon->normal_mask;
 
     XChangeProperty(dsp, win, iconatom, iconatom, 32, PropModeReplace, (unsigned char *)data, 2);
+
+    if (icon->collection) {
+        iconatom = XInternAtom(dsp, "_NET_WM_ICON", False);
+        XChangeProperty(dsp, win, iconatom, XA_CARDINAL, 32, PropModeReplace, (unsigned char *)icon->collection, icon->collection_size);
+    }
 }

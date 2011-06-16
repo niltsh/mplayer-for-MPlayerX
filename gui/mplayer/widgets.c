@@ -35,6 +35,7 @@
 #include "config.h"
 #include "help_mp.h"
 #include "mp_msg.h"
+#include "libavutil/intreadwrite.h"
 #include "libvo/x11_common.h"
 
 #include "widgets.h"
@@ -66,16 +67,21 @@ int gtkInitialized    = 0;
 
 #include "pixmaps/mplayer.xpm"
 
+#define THRESHOLD 128   // transparency values equal to or above this will become
+                        // opaque, all values below this will become transparent
+
 // --- init & close gtk
 
 guiIcon_t guiIcon;
 
 void gtkInit(void)
 {
-    int argc = 0;
+    int argc = 0, i;
     char *arg[3], **argv = arg;
+    GdkPixbuf *pixbuf;
     GdkPixmap *gdkIcon;
     GdkBitmap *gdkIconMask;
+    guchar *data;
 
     mp_msg(MSGT_GPLAYER, MSGL_V, "GTK init.\n");
 
@@ -92,7 +98,27 @@ void gtkInit(void)
 
     gtk_init(&argc, &argv);
 
-    gdkIcon = gdk_pixmap_colormap_create_from_xpm_d(NULL, gdk_colormap_get_system(), &gdkIconMask, NULL, (gchar **)mplayer_xpm);
+    pixbuf = gdk_pixbuf_new_from_xpm_data((const char **)mplayer_xpm);
+
+    gdk_pixbuf_render_pixmap_and_mask_for_colormap(pixbuf, gdk_colormap_get_system(), &gdkIcon, &gdkIconMask, THRESHOLD);
+
+    if (gdk_pixbuf_get_colorspace(pixbuf) == GDK_COLORSPACE_RGB &&
+        gdk_pixbuf_get_n_channels(pixbuf) == 4 &&
+        gdk_pixbuf_get_bits_per_sample(pixbuf) == 8) {
+        guiIcon.collection_size = 2 + gdk_pixbuf_get_width(pixbuf) * gdk_pixbuf_get_height(pixbuf);
+
+        guiIcon.collection = malloc(guiIcon.collection_size * sizeof(*guiIcon.collection));
+
+        if (guiIcon.collection) {
+            guiIcon.collection[0] = gdk_pixbuf_get_width(pixbuf);
+            guiIcon.collection[1] = gdk_pixbuf_get_height(pixbuf);
+
+            data = gdk_pixbuf_get_pixels(pixbuf);
+
+            for (i = 2; i < guiIcon.collection_size; data += 4, i++)
+                guiIcon.collection[i] = (data[3] << 24) | AV_RB24(data);  // RGBA -> ARGB
+        }
+    }
 
     // start up GTK which realizes the pixmaps
     gtk_main_iteration_do(FALSE);
