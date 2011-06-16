@@ -31,13 +31,4 @@
 #define wsXF86Next        0x17 + 256
 #define wsXF86Media       0x32 + 256
 
-// NOTE TO MYSELF: This is only for the Acer AirKey V keyboard.
-#define wsXFMMPrev        0x98
-#define wsXFMMStop        0xb1
-#define wsXFMMPlay	  0x95
-#define wsXFMMNext        0x93
-#define wsXFMMVolUp       0xad
-#define wsXFMMVolDown     0xa6
-#define wsXFMMMute        0x99
-
 #endif /* MPLAYER_GUI_WSKEYS_H */

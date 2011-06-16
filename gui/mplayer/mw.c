@@ -523,13 +523,13 @@ void mplMainKeyHandle( int KeyCode,int Type,int Key )
    switch ( KeyCode )
     {
      // NOTE TO MYSELF: This is only for the Acer AirKey V keyboard.
-     case wsXFMMPrev:     msg=evPrev;              break;
+   /*case wsXFMMPrev:     msg=evPrev;              break;
      case wsXFMMStop:	  msg=evStop;              break;
      case wsXFMMPlay:	  msg=evPlaySwitchToPause; break;
      case wsXFMMNext:	  msg=evNext;	           break;
      case wsXFMMVolUp:	  msg=evIncVolume;         break;
      case wsXFMMVolDown:  msg=evDecVolume;         break;
-     case wsXFMMMute: 	  msg=evMute;	           break;
+     case wsXFMMMute: 	  msg=evMute;	           break;*/
     }
   }
   else
