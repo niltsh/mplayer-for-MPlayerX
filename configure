@@ -2774,7 +2774,7 @@ else
   warn_cflags=yes
 fi
 
-echo "pabsw xmm0, xmm0" > $TMPS
+echo "pextrd [eax], xmm0, 1" > $TMPS
 if test "$_yasm" ; then
   if ! yasm_check ; then
     if x86_64 ; then
