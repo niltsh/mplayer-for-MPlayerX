@@ -379,7 +379,7 @@ static void SimplePotmeterPutImage(txSample *bf, int x, int y, float frac)
     }
 }
 
-void Render(wsTWindow *window, wItem *Items, int nrItems, char *db, int size)
+void RenderAll(wsTWindow *window, wItem *Items, int nrItems, char *db, int size)
 {
     wItem *item;
     txSample *image = NULL;

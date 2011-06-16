@@ -21,6 +21,6 @@
 
 #include "gui/app.h"
 
-void Render(wsTWindow *window, wItem *Items, int nrItems, char *db, int size);
+void RenderAll(wsTWindow *window, wItem *Items, int nrItems, char *db, int size);
 
 #endif /* MPLAYER_GUI_GUI_COMMON_H */
