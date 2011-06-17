@@ -118,7 +118,8 @@ void gtkInit(void)
             for (i = 2; i < guiIcon.collection_size; data += 4, i++)
                 guiIcon.collection[i] = (data[3] << 24) | AV_RB24(data);  // RGBA -> ARGB
         }
-    }
+    } else
+        mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_ICONERROR, "mplayer");
 
     // start up GTK which realizes the pixmaps
     gtk_main_iteration_do(FALSE);

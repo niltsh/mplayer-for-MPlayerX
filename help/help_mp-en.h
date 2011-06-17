@@ -574,6 +574,7 @@ static const char help_text[]=
 #define MSGTR_NEMFMR "Sorry, not enough memory for menu rendering."
 #define MSGTR_IDFGCVD "Sorry, no GUI-compatible video output driver found.\n"
 #define MSGTR_NEEDLAVC "Sorry, you cannot play non-MPEG files with your DXR3/H+ device without reencoding.\nPlease enable lavc in the DXR3/H+ configuration box."
+#define MSGTR_ICONERROR "Icon '%s' not found or unsupported format.\n"
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "Error in skin config file on line %d: %s"
