@@ -282,34 +282,32 @@ void wsXInit(Display *mDisplay)
 
     wsGetDepthOnScreen();
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws] Screen depth: %d\n", wsDepthOnScreen);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  size: %dx%d\n", wsMaxX, wsMaxY);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws] Screen depth: %d\n", wsDepthOnScreen);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  size: %dx%d\n", wsMaxX, wsMaxY);
 
 #ifdef CONFIG_XINERAMA
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  origin: +%d+%d\n", wsOrgX, wsOrgY);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  origin: +%d+%d\n", wsOrgX, wsOrgY);
 #endif
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  red mask: 0x%x\n", wsRedMask);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  green mask: 0x%x\n", wsGreenMask);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  blue mask: 0x%x\n", wsBlueMask);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  red mask: 0x%x\n", wsRedMask);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  green mask: 0x%x\n", wsGreenMask);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  blue mask: 0x%x\n", wsBlueMask);
 
 #ifdef MP_DEBUG
-        if (wsUseXShm) {
-            int minor, major, shp;
+    if (wsUseXShm) {
+        int minor, major, shp;
 
-            XShmQueryVersion(wsDisplay, &major, &minor, &shp);
-            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws] XShm version is %d.%d\n", major, minor);
-        }
+        XShmQueryVersion(wsDisplay, &major, &minor, &shp);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws] XShm version is %d.%d\n", major, minor);
+    }
 
 #ifdef CONFIG_XSHAPE
+    if (wsUseXShape) {
+        int minor, major;
 
-        if (wsUseXShape) {
-            int minor, major;
-
-            XShapeQueryVersion(wsDisplay, &major, &minor);
-            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws] XShape version is %d.%d\n", major, minor);
-        }
-
+        XShapeQueryVersion(wsDisplay, &major, &minor);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws] XShape version is %d.%d\n", major, minor);
+    }
 #endif
 #endif
 
