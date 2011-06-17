@@ -228,18 +228,18 @@ void wsXInit(Display *mDisplay)
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws] display name: %s => %s display.\n", dispname, localdisp ? "local" : "REMOTE");
 
         if (!localdisp)
-            mp_msg(MSGT_GPLAYER, MSGL_V, MSGTR_WS_RemoteDisplay);
+            mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_WS_RemoteDisplay);
     }
 
     if (!XShmQueryExtension(wsDisplay)) {
-        mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_WS_NoXshm);
+        mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_WS_NoXshm);
         wsUseXShm = 0;
     }
 
 #ifdef CONFIG_XSHAPE
 
     if (!XShapeQueryExtension(wsDisplay, &eventbase, &errorbase)) {
-        mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_WS_NoXshape);
+        mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_WS_NoXshape);
         wsUseXShape = 0;
     }
 
@@ -281,33 +281,38 @@ void wsXInit(Display *mDisplay)
     wsOrgY = xinerama_y;
 
     wsGetDepthOnScreen();
-#ifdef DEBUG
-    {
-        int minor, major, shp;
-        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] Screen depth: %d\n", wsDepthOnScreen);
-        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  size: %dx%d\n", wsMaxX, wsMaxY);
-#ifdef CONFIG_XINERAMA
-        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  origin: +%d+%d\n", wsOrgX, wsOrgY);
-#endif
-        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  red mask: 0x%x\n", wsRedMask);
-        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  green mask: 0x%x\n", wsGreenMask);
-        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  blue mask: 0x%x\n", wsBlueMask);
 
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws] Screen depth: %d\n", wsDepthOnScreen);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  size: %dx%d\n", wsMaxX, wsMaxY);
+
+#ifdef CONFIG_XINERAMA
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  origin: +%d+%d\n", wsOrgX, wsOrgY);
+#endif
+
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  red mask: 0x%x\n", wsRedMask);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  green mask: 0x%x\n", wsGreenMask);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  blue mask: 0x%x\n", wsBlueMask);
+
+#ifdef MP_DEBUG
         if (wsUseXShm) {
+            int minor, major, shp;
+
             XShmQueryVersion(wsDisplay, &major, &minor, &shp);
-            mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] XShm version is %d.%d\n", major, minor);
+            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws] XShm version is %d.%d\n", major, minor);
         }
 
 #ifdef CONFIG_XSHAPE
 
         if (wsUseXShape) {
+            int minor, major;
+
             XShapeQueryVersion(wsDisplay, &major, &minor);
-            mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] XShape version is %d.%d\n", major, minor);
+            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws] XShape version is %d.%d\n", major, minor);
         }
 
 #endif
-    }
 #endif
+
     wsOutMask = wsGetOutMask();
 
     switch (wsOutMask) {
