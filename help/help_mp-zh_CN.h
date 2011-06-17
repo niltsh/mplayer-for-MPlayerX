@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 33565
+// Synced with help_mp-en.h rev. 33618
 //
 // Translated by JRaSH <jrash06@163.com>
 
@@ -65,8 +65,8 @@ static const char help_text[]=
 #define MSGTR_GetpathProblem "get_path(\"config\") 调用出现问题\n"
 #define MSGTR_CreatingCfgFile "创建配置文件：%s\n"
 #define MSGTR_BuiltinCodecsConf "使用内建默认的 codecs.conf 文件。\n"
-#define MSGTR_CantLoadFont "无法加载位图字体：%s\n"
-#define MSGTR_CantLoadSub "无法加载字幕：%s\n"
+#define MSGTR_CantLoadFont "无法加载位图字体‘%s’\n"
+#define MSGTR_CantLoadSub "无法加载字幕‘%s’\n"
 #define MSGTR_DumpSelectedStreamMissing "内核导出：致命错误：指定的媒体流不存在！\n"
 #define MSGTR_CantOpenDumpfile "无法打开内核导出文件。\n"
 #define MSGTR_CoreDumped "内核已导出 :)\n"
@@ -798,9 +798,9 @@ static const char help_text[]=
 #define MSGTR_UnableToSaveOption "[cfg] 无法保存‘%s’选项。\n"
 
 // interface.c
-#define MSGTR_DeletingSubtitles "[GUI] 删除字幕。\n"
-#define MSGTR_LoadingSubtitles "[GUI] 加载字幕：%s\n"
-#define MSGTR_AddingVideoFilter "[GUI] 添加视频滤镜：%s\n"
+#define MSGTR_DeletingSubtitles "删除字幕。\n"
+#define MSGTR_LoadingSubtitles "加载字幕：%s\n"
+#define MSGTR_AddingVideoFilter "添加视频滤镜：%s\n"
 
 // mw.c
 #define MSGTR_NotAFile "这好像不是文件：%s！\n"
