@@ -106,8 +106,8 @@ static void mplPBDraw( void )
    vo_mouse_autohide=0;
 
    fast_memcpy( mplPBDrawBuffer,appMPlayer.bar.Bitmap.Image,appMPlayer.bar.Bitmap.ImageSize );
-   RenderAll( &appMPlayer.barWindow,appMPlayer.barItems,appMPlayer.IndexOfBarItems,mplPBDrawBuffer,appMPlayer.bar.Bitmap.ImageSize );
-   wsConvert( &appMPlayer.barWindow,mplPBDrawBuffer,appMPlayer.bar.Bitmap.ImageSize );
+   RenderAll( &appMPlayer.barWindow,appMPlayer.barItems,appMPlayer.IndexOfBarItems,mplPBDrawBuffer );
+   wsConvert( &appMPlayer.barWindow,mplPBDrawBuffer );
   }
  wsPutImage( &appMPlayer.barWindow );
 }

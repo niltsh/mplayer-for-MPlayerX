@@ -979,15 +979,13 @@ void wsDoExit(void)
 // ----------------------------------------------------------------------------------------------
 //    Put 'Image' to window.
 // ----------------------------------------------------------------------------------------------
-void wsConvert(wsTWindow *win, unsigned char *Image, unsigned int Size)
+void wsConvert(wsTWindow *win, unsigned char *Image)
 {
     const uint8_t *src[4] = { Image, NULL, NULL, NULL };
     int src_stride[4]     = { 4 * win->xImage->width, 0, 0, 0 };
     uint8_t *dst[4]       = { win->ImageData, NULL, NULL, NULL };
     int dst_stride[4];
     int i;
-
-    (void)Size;
 
     sws_ctx = sws_getCachedContext(sws_ctx, win->xImage->width, win->xImage->height, PIX_FMT_RGB32,
                                    win->xImage->width, win->xImage->height, out_pix_fmt,

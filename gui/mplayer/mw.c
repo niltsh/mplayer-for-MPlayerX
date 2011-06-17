@@ -87,7 +87,7 @@ void mplMainDraw( void )
    btnModify( evSetVolume,guiIntfStruct.Volume );
 
    fast_memcpy( mplDrawBuffer,appMPlayer.main.Bitmap.Image,appMPlayer.main.Bitmap.ImageSize );
-   RenderAll( &appMPlayer.mainWindow,appMPlayer.mainItems,appMPlayer.IndexOfMainItems,mplDrawBuffer,appMPlayer.main.Bitmap.ImageSize );
+   RenderAll( &appMPlayer.mainWindow,appMPlayer.mainItems,appMPlayer.IndexOfMainItems,mplDrawBuffer );
    mplMainRender=0;
   }
  wsPutImage( &appMPlayer.mainWindow );

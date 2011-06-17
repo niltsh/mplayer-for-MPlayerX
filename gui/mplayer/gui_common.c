@@ -379,7 +379,7 @@ static void SimplePotmeterPutImage(txSample *bf, int x, int y, float frac)
     }
 }
 
-void RenderAll(wsTWindow *window, wItem *Items, int nrItems, char *db, int size)
+void RenderAll(wsTWindow *window, wItem *Items, int nrItems, char *db)
 {
     wItem *item;
     txSample *image = NULL;
@@ -481,5 +481,5 @@ void RenderAll(wsTWindow *window, wItem *Items, int nrItems, char *db, int size)
         }
     }
 
-    wsConvert(window, db, size);
+    wsConvert(window, db);
 }

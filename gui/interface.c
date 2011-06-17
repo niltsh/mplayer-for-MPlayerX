@@ -289,7 +289,7 @@ void guiInit(void)
     wsClearWindow(appMPlayer.subWindow);
 
     if (appMPlayer.sub.Bitmap.Image)
-        wsConvert(&appMPlayer.subWindow, appMPlayer.sub.Bitmap.Image, appMPlayer.sub.Bitmap.ImageSize);
+        wsConvert(&appMPlayer.subWindow, appMPlayer.sub.Bitmap.Image);
 
     btnModify(evSetVolume, guiIntfStruct.Volume);
     btnModify(evSetBalance, guiIntfStruct.Balance);

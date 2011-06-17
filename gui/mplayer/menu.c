@@ -61,7 +61,7 @@ static void mplMenuDraw( void )
     }
    mplOldMenuItem=mplMenuItem;
 // ---
-   wsConvert( &appMPlayer.menuWindow,mplMenuDrawBuffer,appMPlayer.menu.Bitmap.ImageSize );
+   wsConvert( &appMPlayer.menuWindow,mplMenuDrawBuffer );
    mplMenuRender=0;
   }
  wsPutImage( &appMPlayer.menuWindow );

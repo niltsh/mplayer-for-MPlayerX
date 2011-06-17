@@ -239,7 +239,7 @@ void ChangeSkin(char *name)
     }
 
     if (appMPlayer.sub.Bitmap.Image)
-        wsConvert(&appMPlayer.subWindow, appMPlayer.sub.Bitmap.Image, appMPlayer.sub.Bitmap.ImageSize);
+        wsConvert(&appMPlayer.subWindow, appMPlayer.sub.Bitmap.Image);
 
     if (!guiIntfStruct.Playing) {
         mplSubRender = 1;

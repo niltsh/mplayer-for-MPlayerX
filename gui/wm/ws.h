@@ -262,7 +262,7 @@ void wsSetMousePosition(wsTWindow *win, int x, int y);
 // Image handling
 // ----------------------------------------------------------------------------------------------
 void wsCreateImage(wsTWindow *win, int Width, int Height);
-void wsConvert(wsTWindow *win, unsigned char *Image, unsigned int Size);
+void wsConvert(wsTWindow *win, unsigned char *Image);
 void wsPutImage(wsTWindow *win);
 void wsResizeImage(wsTWindow *win, int Width, int Height);
 void wsDestroyImage(wsTWindow *win);
