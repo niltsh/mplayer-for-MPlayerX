@@ -50,7 +50,7 @@
 #include "stream/stream_dvd.h"
 #endif
 
-guiInterface_t guiIntfStruct;
+guiInterface_t guiInfo;
 
 int guiWinID = -1;
 
@@ -62,7 +62,7 @@ plItem *plCurrent    = NULL;
 plItem *plList       = NULL;
 plItem *plLastPlayed = NULL;
 
-URLItem *URLList = NULL;
+urlItem *URLList = NULL;
 
 char *fsHistory[fsPersistant_MaxPos] = { NULL, NULL, NULL, NULL, NULL };
 
@@ -163,9 +163,9 @@ void guiInit(void)
 
     mp_msg(MSGT_GPLAYER, MSGL_V, "GUI init.\n");
 
-    memset(&guiIntfStruct, 0, sizeof(guiIntfStruct));
-    guiIntfStruct.Balance    = 50.0f;
-    guiIntfStruct.StreamType = -1;
+    memset(&guiInfo, 0, sizeof(guiInfo));
+    guiInfo.Balance    = 50.0f;
+    guiInfo.StreamType = -1;
 
     memset(&gtkEquChannels, 0, sizeof(gtkEquChannels));
 
@@ -229,99 +229,99 @@ void guiInit(void)
 
     // initialize windows
 
-    mplDrawBuffer = malloc(appMPlayer.main.Bitmap.ImageSize);
+    mainDrawBuffer = malloc(guiApp.main.Bitmap.ImageSize);
 
-    if (!mplDrawBuffer) {
+    if (!mainDrawBuffer) {
         gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_NEMDB);
         guiExit(EXIT_ERROR);
     }
 
     if (gui_save_pos) {
         if (gui_main_pos_x != -3)
-            appMPlayer.main.x = gui_main_pos_x;
+            guiApp.main.x = gui_main_pos_x;
         if (gui_main_pos_y != -3)
-            appMPlayer.main.y = gui_main_pos_y;
+            guiApp.main.y = gui_main_pos_y;
         if (gui_sub_pos_x != -3)
-            appMPlayer.sub.x = gui_sub_pos_x;
+            guiApp.sub.x = gui_sub_pos_x;
         if (gui_sub_pos_y != -3)
-            appMPlayer.sub.y = gui_sub_pos_y;
+            guiApp.sub.y = gui_sub_pos_y;
     }
 
     if (WinID > 0) {
-        appMPlayer.subWindow.Parent = WinID;
-        appMPlayer.sub.x = 0;
-        appMPlayer.sub.y = 0;
+        guiApp.subWindow.Parent = WinID;
+        guiApp.sub.x = 0;
+        guiApp.sub.y = 0;
     }
 
     if (guiWinID >= 0)
-        appMPlayer.mainWindow.Parent = guiWinID;
+        guiApp.mainWindow.Parent = guiWinID;
 
-    wsCreateWindow(&appMPlayer.subWindow, appMPlayer.sub.x, appMPlayer.sub.y, appMPlayer.sub.width, appMPlayer.sub.height, wsNoBorder, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, wsShowFrame | wsHideWindow, "MPlayer - Video");
-    wsDestroyImage(&appMPlayer.subWindow);
-    wsCreateImage(&appMPlayer.subWindow, appMPlayer.sub.Bitmap.Width, appMPlayer.sub.Bitmap.Height);
-    wsXDNDMakeAwareness(&appMPlayer.subWindow);
+    wsCreateWindow(&guiApp.subWindow, guiApp.sub.x, guiApp.sub.y, guiApp.sub.width, guiApp.sub.height, wsNoBorder, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, wsShowFrame | wsHideWindow, "MPlayer - Video");
+    wsDestroyImage(&guiApp.subWindow);
+    wsCreateImage(&guiApp.subWindow, guiApp.sub.Bitmap.Width, guiApp.sub.Bitmap.Height);
+    wsXDNDMakeAwareness(&guiApp.subWindow);
 
-    mplMenuInit();
-    mplPBInit();
+    uiMenuInit();
+    uiPlaybarInit();
 
 // i=wsHideFrame|wsMaxSize|wsHideWindow;
-// if ( appMPlayer.mainDecoration ) i=wsShowFrame|wsMaxSize|wsHideWindow;
+// if ( guiApp.mainDecoration ) i=wsShowFrame|wsMaxSize|wsHideWindow;
     i = wsShowFrame | wsMaxSize | wsHideWindow;
-    wsCreateWindow(&appMPlayer.mainWindow, appMPlayer.main.x, appMPlayer.main.y, appMPlayer.main.width, appMPlayer.main.height, wsNoBorder, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, i, "MPlayer");
-    wsSetShape(&appMPlayer.mainWindow, appMPlayer.main.Mask.Image);
-    wsXDNDMakeAwareness(&appMPlayer.mainWindow);
+    wsCreateWindow(&guiApp.mainWindow, guiApp.main.x, guiApp.main.y, guiApp.main.width, guiApp.main.height, wsNoBorder, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, i, "MPlayer");
+    wsSetShape(&guiApp.mainWindow, guiApp.main.Mask.Image);
+    wsXDNDMakeAwareness(&guiApp.mainWindow);
 
     mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] screen depth: %d\n", wsDepthOnScreen);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] mainWindow ID: 0x%x\n", (int)appMPlayer.mainWindow.WindowID);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] subWindow ID: 0x%x\n", (int)appMPlayer.subWindow.WindowID);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] mainWindow ID: 0x%x\n", (int)guiApp.mainWindow.WindowID);
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] subWindow ID: 0x%x\n", (int)guiApp.subWindow.WindowID);
 
-    appMPlayer.mainWindow.ReDraw       = (void *)mplMainDraw;
-    appMPlayer.mainWindow.MouseHandler = mplMainMouseHandle;
-    appMPlayer.mainWindow.KeyHandler   = mplMainKeyHandle;
-    appMPlayer.mainWindow.DandDHandler = mplDandDHandler;
+    guiApp.mainWindow.ReDraw       = (void *)uiMainDraw;
+    guiApp.mainWindow.MouseHandler = uiMainMouseHandle;
+    guiApp.mainWindow.KeyHandler   = uiMainKeyHandle;
+    guiApp.mainWindow.DandDHandler = uiDandDHandler;
 
-    appMPlayer.subWindow.ReDraw       = (void *)mplSubDraw;
-    appMPlayer.subWindow.MouseHandler = mplSubMouseHandle;
-    appMPlayer.subWindow.KeyHandler   = mplMainKeyHandle;
-    appMPlayer.subWindow.DandDHandler = mplDandDHandler;
+    guiApp.subWindow.ReDraw       = (void *)uiSubDraw;
+    guiApp.subWindow.MouseHandler = uiSubMouseHandle;
+    guiApp.subWindow.KeyHandler   = uiMainKeyHandle;
+    guiApp.subWindow.DandDHandler = uiDandDHandler;
 
-    wsSetBackgroundRGB(&appMPlayer.subWindow, appMPlayer.sub.R, appMPlayer.sub.G, appMPlayer.sub.B);
-    wsClearWindow(appMPlayer.subWindow);
+    wsSetBackgroundRGB(&guiApp.subWindow, guiApp.sub.R, guiApp.sub.G, guiApp.sub.B);
+    wsClearWindow(guiApp.subWindow);
 
-    if (appMPlayer.sub.Bitmap.Image)
-        wsConvert(&appMPlayer.subWindow, appMPlayer.sub.Bitmap.Image);
+    if (guiApp.sub.Bitmap.Image)
+        wsConvert(&guiApp.subWindow, guiApp.sub.Bitmap.Image);
 
-    btnModify(evSetVolume, guiIntfStruct.Volume);
-    btnModify(evSetBalance, guiIntfStruct.Balance);
-    btnModify(evSetMoviePosition, guiIntfStruct.Position);
+    btnModify(evSetVolume, guiInfo.Volume);
+    btnModify(evSetBalance, guiInfo.Balance);
+    btnModify(evSetMoviePosition, guiInfo.Position);
 
-    wsSetIcon(wsDisplay, appMPlayer.mainWindow.WindowID, &guiIcon);
-    wsSetIcon(wsDisplay, appMPlayer.subWindow.WindowID, &guiIcon);
+    wsSetIcon(wsDisplay, guiApp.mainWindow.WindowID, &guiIcon);
+    wsSetIcon(wsDisplay, guiApp.subWindow.WindowID, &guiIcon);
 
-    guiIntfStruct.Playing = 0;
+    guiInfo.Playing = 0;
 
-    if (!appMPlayer.mainDecoration)
-        wsWindowDecoration(&appMPlayer.mainWindow, 0);
+    if (!guiApp.mainDecoration)
+        wsWindowDecoration(&guiApp.mainWindow, 0);
 
-    wsVisibleWindow(&appMPlayer.mainWindow, wsShowWindow);
+    wsVisibleWindow(&guiApp.mainWindow, wsShowWindow);
 
 #if 0
-    wsVisibleWindow(&appMPlayer.subWindow, wsShowWindow);
+    wsVisibleWindow(&guiApp.subWindow, wsShowWindow);
     {
         XEvent xev;
 
         do
             XNextEvent(wsDisplay, &xev);
-        while (xev.type != MapNotify || xev.xmap.event != appMPlayer.subWindow.WindowID);
+        while (xev.type != MapNotify || xev.xmap.event != guiApp.subWindow.WindowID);
 
-        appMPlayer.subWindow.Mapped = wsMapped;
+        guiApp.subWindow.Mapped = wsMapped;
     }
 
     if (!fullscreen)
         fullscreen = gtkLoadFullscreen;
 
     if (fullscreen) {
-        mplFullScreen();
+        uiFullScreen();
         btnModify(evFullScreen, btnPressed);
     }
 #else
@@ -329,50 +329,50 @@ void guiInit(void)
         fullscreen = gtkLoadFullscreen;
 
     if (gtkShowVideoWindow) {
-        wsVisibleWindow(&appMPlayer.subWindow, wsShowWindow);
+        wsVisibleWindow(&guiApp.subWindow, wsShowWindow);
         {
             XEvent xev;
 
             do
                 XNextEvent(wsDisplay, &xev);
-            while (xev.type != MapNotify || xev.xmap.event != appMPlayer.subWindow.WindowID);
+            while (xev.type != MapNotify || xev.xmap.event != guiApp.subWindow.WindowID);
 
-            appMPlayer.subWindow.Mapped = wsMapped;
+            guiApp.subWindow.Mapped = wsMapped;
         }
 
         if (fullscreen) {
-            mplFullScreen();
+            uiFullScreen();
             btnModify(evFullScreen, btnPressed);
         }
     } else {
         if (fullscreen) {
-            wsVisibleWindow(&appMPlayer.subWindow, wsShowWindow);
+            wsVisibleWindow(&guiApp.subWindow, wsShowWindow);
             {
                 XEvent xev;
 
                 do
                     XNextEvent(wsDisplay, &xev);
-                while (xev.type != MapNotify || xev.xmap.event != appMPlayer.subWindow.WindowID);
+                while (xev.type != MapNotify || xev.xmap.event != guiApp.subWindow.WindowID);
 
-                appMPlayer.subWindow.Mapped = wsMapped;
+                guiApp.subWindow.Mapped = wsMapped;
             }
-            wsVisibleWindow(&appMPlayer.subWindow, wsShowWindow);
-            mplFullScreen();
+            wsVisibleWindow(&guiApp.subWindow, wsShowWindow);
+            uiFullScreen();
             btnModify(evFullScreen, btnPressed);
         }
     }
 #endif
 
-    mplSubRender = 1;
+    uiSubRender = 1;
 
     if (filename)
-        mplSetFileName(NULL, filename, STREAMTYPE_FILE);
+        uiSetFileName(NULL, filename, STREAMTYPE_FILE);
 
     if (plCurrent && !filename)
-        mplSetFileName(plCurrent->path, plCurrent->name, STREAMTYPE_FILE);
+        uiSetFileName(plCurrent->path, plCurrent->name, STREAMTYPE_FILE);
 
     if (subdata)
-        guiSetFilename(guiIntfStruct.Subtitlename, subdata->filename);
+        guiSetFilename(guiInfo.Subtitlename, subdata->filename);
 
     guiLoadFont();
 
@@ -382,13 +382,13 @@ void guiInit(void)
 void guiDone(void)
 {
     if (initialized) {
-        mplMainRender = 0;
+        uiMainRender = 0;
 
         if (gui_save_pos) {
-            gui_main_pos_x = appMPlayer.mainWindow.X;
-            gui_main_pos_y = appMPlayer.mainWindow.Y;
-            gui_sub_pos_x  = appMPlayer.subWindow.X;
-            gui_sub_pos_y  = appMPlayer.subWindow.Y;
+            gui_main_pos_x = guiApp.mainWindow.X;
+            gui_main_pos_y = guiApp.mainWindow.Y;
+            gui_sub_pos_x  = guiApp.subWindow.X;
+            gui_sub_pos_y  = guiApp.subWindow.Y;
         }
 
 #ifdef CONFIG_ASS
@@ -467,8 +467,8 @@ void guiLoadFont(void)
 
 void guiLoadSubtitle(char *name)
 {
-    if (guiIntfStruct.Playing == 0) {
-        guiIntfStruct.SubtitleChanged = 1; // what is this for? (mw)
+    if (guiInfo.Playing == 0) {
+        guiInfo.SubtitleChanged = 1; // what is this for? (mw)
         return;
     }
 
@@ -503,7 +503,7 @@ void guiLoadSubtitle(char *name)
     if (name) {
         mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_LoadingSubtitles, name);
 
-        subdata = sub_read_file(name, guiIntfStruct.FPS);
+        subdata = sub_read_file(name, guiInfo.FPS);
 
         if (!subdata)
             gmp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_CantLoadSub, name);
@@ -561,12 +561,12 @@ int guiGetEvent(int type, void *arg)
     dvd_priv_t *dvdp = arg;
 #endif
 
-    if (guiIntfStruct.mpcontext)
-        mixer = mpctx_get_mixer(guiIntfStruct.mpcontext);
+    if (guiInfo.mpcontext)
+        mixer = mpctx_get_mixer(guiInfo.mpcontext);
 
     switch (type) {
     case guiXEvent:
-        guiIntfStruct.event_struct = arg;
+        guiInfo.event_struct = arg;
         wsEvents(wsDisplay, arg);
         gtkEventHandling();
         break;
@@ -575,91 +575,91 @@ int guiGetEvent(int type, void *arg)
 
         switch ((int)arg) {
         case guiSetPlay:
-            guiIntfStruct.Playing = 1;
-// if ( !gtkShowVideoWindow ) wsVisibleWindow( &appMPlayer.subWindow,wsHideWindow );
+            guiInfo.Playing = 1;
+// if ( !gtkShowVideoWindow ) wsVisibleWindow( &guiApp.subWindow,wsHideWindow );
             break;
 
         case guiSetStop:
-            guiIntfStruct.Playing = 0;
-// if ( !gtkShowVideoWindow ) wsVisibleWindow( &appMPlayer.subWindow,wsHideWindow );
+            guiInfo.Playing = 0;
+// if ( !gtkShowVideoWindow ) wsVisibleWindow( &guiApp.subWindow,wsHideWindow );
             break;
 
         case guiSetPause:
-            guiIntfStruct.Playing = 2;
+            guiInfo.Playing = 2;
             break;
         }
 
-        mplState();
+        uiState();
         break;
 
     case guiSetState:
-        mplState();
+        uiState();
         break;
 
     case guiSetFileName:
         if (arg)
-            guiSetFilename(guiIntfStruct.Filename, arg);
+            guiSetFilename(guiInfo.Filename, arg);
         break;
 
     case guiSetAudioOnly:
 
-        guiIntfStruct.AudioOnly = (int)arg;
+        guiInfo.AudioOnly = (int)arg;
 
         if ((int)arg) {
-            guiIntfStruct.NoWindow = True;
-            wsVisibleWindow(&appMPlayer.subWindow, wsHideWindow);
+            guiInfo.NoWindow = True;
+            wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
         } else
-            wsVisibleWindow(&appMPlayer.subWindow, wsShowWindow);
+            wsVisibleWindow(&guiApp.subWindow, wsShowWindow);
 
         break;
 
     case guiSetContext:
-        guiIntfStruct.mpcontext = arg;
+        guiInfo.mpcontext = arg;
     // NOTE TO MYSELF: is break missing?
 
     case guiSetDemuxer:
-        guiIntfStruct.demuxer = arg;
+        guiInfo.demuxer = arg;
         break;
 
     case guiSetAfilter:
-        guiIntfStruct.afilter = arg;
+        guiInfo.afilter = arg;
         break;
 
     case guiSetShVideo:
 
-        if (!appMPlayer.subWindow.isFullScreen) {
-            wsResizeWindow(&appMPlayer.subWindow, vo_dwidth, vo_dheight);
-            wsMoveWindow(&appMPlayer.subWindow, True, appMPlayer.sub.x, appMPlayer.sub.y);
+        if (!guiApp.subWindow.isFullScreen) {
+            wsResizeWindow(&guiApp.subWindow, vo_dwidth, vo_dheight);
+            wsMoveWindow(&guiApp.subWindow, True, guiApp.sub.x, guiApp.sub.y);
         }
 
-        guiIntfStruct.MovieWidth  = vo_dwidth;
-        guiIntfStruct.MovieHeight = vo_dheight;
+        guiInfo.MovieWidth  = vo_dwidth;
+        guiInfo.MovieHeight = vo_dheight;
 
         if (guiWinID >= 0)
-            wsMoveWindow(&appMPlayer.mainWindow, 0, 0, vo_dheight);
+            wsMoveWindow(&guiApp.mainWindow, 0, 0, vo_dheight);
 
-        WinID = appMPlayer.subWindow.WindowID;
+        WinID = guiApp.subWindow.WindowID;
         break;
 
 #ifdef CONFIG_DVDREAD
     case guiSetDVD:
-        guiIntfStruct.DVD.titles   = dvdp->vmg_file->tt_srpt->nr_of_srpts;
-        guiIntfStruct.DVD.chapters = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
-        guiIntfStruct.DVD.angles   = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
-        guiIntfStruct.DVD.nr_of_audio_channels = dvdp->nr_of_channels;
-        memcpy(guiIntfStruct.DVD.audio_streams, dvdp->audio_streams, sizeof(dvdp->audio_streams));
-        guiIntfStruct.DVD.nr_of_subtitles = dvdp->nr_of_subtitles;
-        memcpy(guiIntfStruct.DVD.subtitles, dvdp->subtitles, sizeof(dvdp->subtitles));
-        guiIntfStruct.DVD.current_title   = dvd_title + 1;
-        guiIntfStruct.DVD.current_chapter = dvd_chapter + 1;
-        guiIntfStruct.DVD.current_angle   = dvd_angle + 1;
-        guiIntfStruct.Track = dvd_title + 1;
+        guiInfo.DVD.titles   = dvdp->vmg_file->tt_srpt->nr_of_srpts;
+        guiInfo.DVD.chapters = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
+        guiInfo.DVD.angles   = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
+        guiInfo.DVD.nr_of_audio_channels = dvdp->nr_of_channels;
+        memcpy(guiInfo.DVD.audio_streams, dvdp->audio_streams, sizeof(dvdp->audio_streams));
+        guiInfo.DVD.nr_of_subtitles = dvdp->nr_of_subtitles;
+        memcpy(guiInfo.DVD.subtitles, dvdp->subtitles, sizeof(dvdp->subtitles));
+        guiInfo.DVD.current_title   = dvd_title + 1;
+        guiInfo.DVD.current_chapter = dvd_chapter + 1;
+        guiInfo.DVD.current_angle   = dvd_angle + 1;
+        guiInfo.Track = dvd_title + 1;
         break;
 #endif
 
     case guiSetStream:
 
-        guiIntfStruct.StreamType = stream->type;
+        guiInfo.StreamType = stream->type;
 
         switch (stream->type) {
 #ifdef CONFIG_DVDREAD
@@ -670,8 +670,8 @@ int guiGetEvent(int type, void *arg)
 
 #ifdef CONFIG_VCD
         case STREAMTYPE_VCD:
-            guiIntfStruct.VCDTracks = 0;
-            stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiIntfStruct.VCDTracks);
+            guiInfo.VCDTracks = 0;
+            stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiInfo.VCDTracks);
             break;
 #endif
 
@@ -687,18 +687,18 @@ int guiGetEvent(int type, void *arg)
 
         switch ((int)arg) {
         case MP_CMD_QUIT:
-            mplEventHandling(evExit, 0);
+            uiEventHandling(evExit, 0);
             break;
 
         case MP_CMD_VO_FULLSCREEN:
-            mplEventHandling(evFullScreen, 0);
+            uiEventHandling(evFullScreen, 0);
             break;
         }
 
         break;
 
     case guiReDraw:
-        mplEventHandling(evRedraw, 0);
+        uiEventHandling(evRedraw, 0);
         break;
 
     case guiSetVolume:
@@ -706,37 +706,37 @@ int guiGetEvent(int type, void *arg)
             float l, r;
 
             mixer_getvolume(mixer, &l, &r);
-            guiIntfStruct.Volume = (r > l ? r : l);
+            guiInfo.Volume = (r > l ? r : l);
 
             if (r != l)
-                guiIntfStruct.Balance = ((r - l) + 100) * 0.5f;
+                guiInfo.Balance = ((r - l) + 100) * 0.5f;
             else
-                guiIntfStruct.Balance = 50.0f;
+                guiInfo.Balance = 50.0f;
 
-            btnModify(evSetVolume, guiIntfStruct.Volume);
-            btnModify(evSetBalance, guiIntfStruct.Balance);
+            btnModify(evSetVolume, guiInfo.Volume);
+            btnModify(evSetBalance, guiInfo.Balance);
         }
         break;
 
     case guiSetFileFormat:
-        guiIntfStruct.FileFormat = (int)arg;
+        guiInfo.FileFormat = (int)arg;
         break;
 
     case guiSetValues:
 
         // video
 
-        guiIntfStruct.sh_video = arg;
+        guiInfo.sh_video = arg;
 
         if (arg) {
             sh_video_t *sh = arg;
-            guiIntfStruct.FPS = sh->fps;
+            guiInfo.FPS = sh->fps;
         }
 
-        if (guiIntfStruct.NoWindow)
-            wsVisibleWindow(&appMPlayer.subWindow, wsHideWindow);
+        if (guiInfo.NoWindow)
+            wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
 
-        if (guiIntfStruct.StreamType == STREAMTYPE_STREAM)
+        if (guiInfo.StreamType == STREAMTYPE_STREAM)
             btnSet(evSetMoviePosition, btnDisabled);
         else
             btnSet(evSetMoviePosition, btnReleased);
@@ -747,15 +747,15 @@ int guiGetEvent(int type, void *arg)
             float l, r;
 
             mixer_getvolume(mixer, &l, &r);
-            guiIntfStruct.Volume = (r > l ? r : l);
+            guiInfo.Volume = (r > l ? r : l);
 
             if (r != l)
-                guiIntfStruct.Balance = ((r - l) + 100) * 0.5f;
+                guiInfo.Balance = ((r - l) + 100) * 0.5f;
             else
-                guiIntfStruct.Balance = 50.0f;
+                guiInfo.Balance = 50.0f;
 
-            btnModify(evSetVolume, guiIntfStruct.Volume);
-            btnModify(evSetBalance, guiIntfStruct.Balance);
+            btnModify(evSetVolume, guiInfo.Volume);
+            btnModify(evSetBalance, guiInfo.Balance);
         }
 
         if (gtkEnableAudioEqualizer) {
@@ -775,9 +775,9 @@ int guiGetEvent(int type, void *arg)
         // subtitle
 
 #ifdef CONFIG_DXR3
-        if (video_driver_list && !gstrcmp(video_driver_list[0], "dxr3") && (guiIntfStruct.FileFormat != DEMUXER_TYPE_MPEG_PS) && !gtkVfLAVC) {
+        if (video_driver_list && !gstrcmp(video_driver_list[0], "dxr3") && (guiInfo.FileFormat != DEMUXER_TYPE_MPEG_PS) && !gtkVfLAVC) {
             gtkMessageBox(GTK_MB_FATAL, MSGTR_NEEDLAVC);
-            guiIntfStruct.Playing = 0;
+            guiInfo.Playing = 0;
             return True;
         }
 #endif
@@ -786,8 +786,8 @@ int guiGetEvent(int type, void *arg)
 
     case guiSetDefaults:
 
-// if ( guiIntfStruct.Playing == 1 && guiIntfStruct.FilenameChanged )
-        if (guiIntfStruct.FilenameChanged) {
+// if ( guiInfo.Playing == 1 && guiInfo.FilenameChanged )
+        if (guiInfo.FilenameChanged) {
             audio_id  = -1;
             video_id  = -1;
             dvdsub_id = -1;
@@ -798,9 +798,9 @@ int guiGetEvent(int type, void *arg)
             force_fps = 0;
         }
 
-        guiIntfStruct.demuxer  = NULL;
-        guiIntfStruct.sh_video = NULL;
-        wsPostRedisplay(&appMPlayer.subWindow);
+        guiInfo.demuxer  = NULL;
+        guiInfo.sh_video = NULL;
+        wsPostRedisplay(&guiApp.subWindow);
 
         break;
 
@@ -808,7 +808,7 @@ int guiGetEvent(int type, void *arg)
 
         guiGetEvent(guiSetDefaults, NULL);
 
-        switch (guiIntfStruct.StreamType) {
+        switch (guiInfo.StreamType) {
         case STREAMTYPE_PLAYLIST:
             break;
 
@@ -817,8 +817,8 @@ int guiGetEvent(int type, void *arg)
         {
             char tmp[512];
 
-            sprintf(tmp, "vcd://%d", guiIntfStruct.Track + 1);
-            guiSetFilename(guiIntfStruct.Filename, tmp);
+            sprintf(tmp, "vcd://%d", guiInfo.Track + 1);
+            guiSetFilename(guiInfo.Filename, tmp);
         }
         break;
 #endif
@@ -828,23 +828,23 @@ int guiGetEvent(int type, void *arg)
         {
             char tmp[512];
 
-            sprintf(tmp, "dvd://%d", guiIntfStruct.Title);
-            guiSetFilename(guiIntfStruct.Filename, tmp);
+            sprintf(tmp, "dvd://%d", guiInfo.Title);
+            guiSetFilename(guiInfo.Filename, tmp);
         }
 
-            dvd_chapter = guiIntfStruct.Chapter;
-            dvd_angle   = guiIntfStruct.Angle;
+            dvd_chapter = guiInfo.Chapter;
+            dvd_angle   = guiInfo.Angle;
 
             break;
 #endif
         }
 
-// if ( guiIntfStruct.StreamType != STREAMTYPE_PLAYLIST ) // Does not make problems anymore!
+// if ( guiInfo.StreamType != STREAMTYPE_PLAYLIST ) // Does not make problems anymore!
         {
-            if (guiIntfStruct.Filename)
-                filename = gstrdup(guiIntfStruct.Filename);
+            if (guiInfo.Filename)
+                filename = gstrdup(guiInfo.Filename);
             else if (filename)
-                guiSetFilename(guiIntfStruct.Filename, filename);
+                guiSetFilename(guiInfo.Filename, filename);
         }
 
         // video opts
@@ -868,12 +868,12 @@ int guiGetEvent(int type, void *arg)
         {
             int i = 0;
 
-            guiIntfStruct.NoWindow = False;
+            guiInfo.NoWindow = False;
 
             while (video_out_drivers[i++]) {
                 if (video_out_drivers[i - 1]->control(VOCTRL_GUISUPPORT, NULL) == VO_TRUE) {
                     if ((video_driver_list && !gstrcmp(video_driver_list[0], (char *)video_out_drivers[i - 1]->info->short_name)) && (video_out_drivers[i - 1]->control(VOCTRL_GUI_NOWINDOW, NULL) == VO_TRUE)) {
-                        guiIntfStruct.NoWindow = True;
+                        guiInfo.NoWindow = True;
                         break;
                     }
                 }
@@ -882,7 +882,7 @@ int guiGetEvent(int type, void *arg)
 
 #ifdef CONFIG_DXR3
         if (video_driver_list && !gstrcmp(video_driver_list[0], "dxr3"))
-            if (guiIntfStruct.StreamType != STREAMTYPE_DVD && guiIntfStruct.StreamType != STREAMTYPE_VCD)
+            if (guiInfo.StreamType != STREAMTYPE_DVD && guiInfo.StreamType != STREAMTYPE_VCD)
                 if (gtkVfLAVC)
                     add_vf("lavc");
 #endif
@@ -977,7 +977,7 @@ int guiGetEvent(int type, void *arg)
 
         // subtitle
 
-// subdata->filename=gstrdup( guiIntfStruct.Subtitlename );
+// subdata->filename=gstrdup( guiInfo.Subtitlename );
         stream_dump_type = 0;
 
         if (gtkSubDumpMPSub)
@@ -997,16 +997,16 @@ int guiGetEvent(int type, void *arg)
         if (gtkAutoSyncOn)
             autosync = gtkAutoSync;
 
-        if (guiIntfStruct.AudioFile)
-            audio_stream = gstrdup(guiIntfStruct.AudioFile);
-        else if (guiIntfStruct.FilenameChanged)
+        if (guiInfo.AudioFile)
+            audio_stream = gstrdup(guiInfo.AudioFile);
+        else if (guiInfo.FilenameChanged)
             gfree((void **)&audio_stream);
 
 // audio_stream = NULL;
 
-        guiIntfStruct.DiskChanged     = 0;
-        guiIntfStruct.FilenameChanged = 0;
-        guiIntfStruct.NewPlay = 0;
+        guiInfo.DiskChanged     = 0;
+        guiInfo.FilenameChanged = 0;
+        guiInfo.NewPlay = 0;
 
 #ifdef CONFIG_ASS
         ass_enabled       = gtkASS.enabled;
@@ -1023,7 +1023,7 @@ int guiGetEvent(int type, void *arg)
 
 void guiEventHandling(void)
 {
-    if (!guiIntfStruct.Playing || guiIntfStruct.NoWindow)
+    if (!guiInfo.Playing || guiInfo.NoWindow)
         wsHandleEvents();
 
     gtkEventHandling();
@@ -1056,7 +1056,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
 {
     equalizer_t *eq   = (equalizer_t *)vparam;
     plItem *item      = (plItem *)vparam;
-    URLItem *url_item = (URLItem *)vparam;
+    urlItem *url_item = (urlItem *)vparam;
     int is_added      = True;
 
     switch (cmd) {
@@ -1167,7 +1167,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
         free(curr);
     }
 
-        mplCurr();   // instead of using mplNext && mplPrev
+        uiCurr();   // instead of using uiNext && uiPrev
 
         return plCurrent;
 
@@ -1203,7 +1203,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
     // handle url
     case gtkAddURLItem:
         if (URLList) {
-            URLItem *next_url = URLList;
+            urlItem *next_url = URLList;
             is_added = False;
 
             while (next_url->next) {
@@ -1276,28 +1276,28 @@ void *gtkSet(int cmd, float fparam, void *vparam)
     case gtkClearStruct:
 
         if ((unsigned int)vparam & guiFilenames) {
-            gfree((void **)&guiIntfStruct.Filename);
-            gfree((void **)&guiIntfStruct.Subtitlename);
-            gfree((void **)&guiIntfStruct.AudioFile);
+            gfree((void **)&guiInfo.Filename);
+            gfree((void **)&guiInfo.Subtitlename);
+            gfree((void **)&guiInfo.AudioFile);
             gtkSet(gtkDelPl, 0, NULL);
         }
 
 #ifdef CONFIG_DVDREAD
         if ((unsigned int)vparam & guiDVD)
-            memset(&guiIntfStruct.DVD, 0, sizeof(guiDVDStruct));
+            memset(&guiInfo.DVD, 0, sizeof(guiDVDStruct));
 #endif
 
 #ifdef CONFIG_VCD
         if ((unsigned int)vparam & guiVCD)
-            guiIntfStruct.VCDTracks = 0;
+            guiInfo.VCDTracks = 0;
 #endif
 
         return NULL;
 
     case gtkSetExtraStereo:
         gtkAOExtraStereoMul = fparam;
-        if (guiIntfStruct.afilter)
-            af_control_any_rev(guiIntfStruct.afilter, AF_CONTROL_ES_MUL | AF_CONTROL_SET, &gtkAOExtraStereoMul);
+        if (guiInfo.afilter)
+            af_control_any_rev(guiInfo.afilter, AF_CONTROL_ES_MUL | AF_CONTROL_SET, &gtkAOExtraStereoMul);
         return NULL;
 
     case gtkSetPanscan:
@@ -1321,23 +1321,23 @@ void *gtkSet(int cmd, float fparam, void *vparam)
     // set equalizers
 
     case gtkSetContrast:
-        if (guiIntfStruct.sh_video)
-            set_video_colors(guiIntfStruct.sh_video, "contrast", (int)fparam);
+        if (guiInfo.sh_video)
+            set_video_colors(guiInfo.sh_video, "contrast", (int)fparam);
         return NULL;
 
     case gtkSetBrightness:
-        if (guiIntfStruct.sh_video)
-            set_video_colors(guiIntfStruct.sh_video, "brightness", (int)fparam);
+        if (guiInfo.sh_video)
+            set_video_colors(guiInfo.sh_video, "brightness", (int)fparam);
         return NULL;
 
     case gtkSetHue:
-        if (guiIntfStruct.sh_video)
-            set_video_colors(guiIntfStruct.sh_video, "hue", (int)fparam);
+        if (guiInfo.sh_video)
+            set_video_colors(guiInfo.sh_video, "hue", (int)fparam);
         return NULL;
 
     case gtkSetSaturation:
-        if (guiIntfStruct.sh_video)
-            set_video_colors(guiIntfStruct.sh_video, "saturation", (int)fparam);
+        if (guiInfo.sh_video)
+            set_video_colors(guiInfo.sh_video, "saturation", (int)fparam);
         return NULL;
 
     case gtkSetEqualizer:
@@ -1349,18 +1349,18 @@ void *gtkSet(int cmd, float fparam, void *vparam)
             tmp.ch  = eq->channel;
             tmp.arg = gtkEquChannels[eq->channel];
 
-            if (guiIntfStruct.afilter)
-                af_control_any_rev(guiIntfStruct.afilter, AF_CONTROL_EQUALIZER_GAIN | AF_CONTROL_SET, &tmp);
+            if (guiInfo.afilter)
+                af_control_any_rev(guiInfo.afilter, AF_CONTROL_EQUALIZER_GAIN | AF_CONTROL_SET, &tmp);
         } else {
             int i;
 
             memset(gtkEquChannels, 0, sizeof(gtkEquChannels));
 
-            if (guiIntfStruct.afilter) {
+            if (guiInfo.afilter) {
                 for (i = 0; i < 6; i++) {
                     tmp.ch  = i;
                     tmp.arg = gtkEquChannels[i];
-                    af_control_any_rev(guiIntfStruct.afilter, AF_CONTROL_EQUALIZER_GAIN | AF_CONTROL_SET, &tmp);
+                    af_control_any_rev(guiInfo.afilter, AF_CONTROL_EQUALIZER_GAIN | AF_CONTROL_SET, &tmp);
                 }
             }
         }
@@ -1423,12 +1423,12 @@ int import_initial_playtree_into_gui(play_tree_t *my_playtree, m_config_t *confi
                 result = 1;
     }
 
-    mplCurr();   // update filename
-    mplGotoTheNext = 1;
+    uiCurr();   // update filename
+    uiGotoTheNext = 1;
 
     if (!enqueue)
-        filename = guiIntfStruct.Filename;             // Backward compatibility; if file is specified on commandline,
-                                                       // gmplayer does directly start in Play-Mode.
+        filename = guiInfo.Filename;             // Backward compatibility; if file is specified on commandline,
+                                                 // gmplayer does directly start in Play-Mode.
     else
         filename = NULL;
 
@@ -1464,7 +1464,7 @@ int import_playtree_playlist_into_gui(play_tree_t *my_playtree, m_config_t *conf
     if (save && result)
         gtkSet(gtkDelCurrPlItem, 0, 0);
 
-    mplCurr();   // update filename
+    uiCurr();   // update filename
     filename = NULL;
 
     return result;

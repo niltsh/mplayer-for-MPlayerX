@@ -47,7 +47,7 @@ void ShowURLDialogBox( void )
 
  if ( URLList )
   {
-   URLItem * item = URLList;
+   urlItem * item = URLList;
    g_list_free( URLComboEntrys );
    URLComboEntrys=NULL;
    while( item )
@@ -76,7 +76,7 @@ static void HideURLDialogBox( void )
 
 static void on_Button_pressed( GtkButton * button,gpointer user_data )
 {
- URLItem * item;
+ urlItem * item;
 
  if ( (int)user_data )
   {
@@ -97,12 +97,12 @@ static void on_Button_pressed( GtkButton * button,gpointer user_data )
       }
      URLComboEntrys=g_list_prepend( URLComboEntrys,(gchar *)str );
 
-     item=calloc( 1,sizeof( URLItem ) );
+     item=calloc( 1,sizeof( urlItem ) );
      item->url=gstrdup( str );
      gtkSet( gtkAddURLItem,0,(void *)item );
 
-     guiSetFilename( guiIntfStruct.Filename,str ); guiIntfStruct.FilenameChanged=1;
-     mplEventHandling( evPlayNetwork,0 );
+     guiSetFilename( guiInfo.Filename,str ); guiInfo.FilenameChanged=1;
+     uiEventHandling( evPlayNetwork,0 );
     }
   }
  HideURLDialogBox();

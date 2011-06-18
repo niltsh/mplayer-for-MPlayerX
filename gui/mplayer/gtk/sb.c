@@ -95,10 +95,10 @@ static void prButton( GtkObject * object,gpointer user_data )
   switch ( (int)user_data )
    {
     case 0: // cancel
-	if ( strcmp( sbSelectedSkin,gtkOldSkin ) ) ChangeSkin( gtkOldSkin );
+	if ( strcmp( sbSelectedSkin,gtkOldSkin ) ) uiChangeSkin( gtkOldSkin );
 	break;
    case 1: // ok
-	ChangeSkin( sbSelectedSkin );   // NOTE TO MYSELF: skin already changed!
+	uiChangeSkin( sbSelectedSkin );   // NOTE TO MYSELF: skin already changed!
 	free( skinName );
 	skinName=strdup( sbSelectedSkin );
 	break;
@@ -113,7 +113,7 @@ static void on_SkinList_select_row( GtkCList * clist,gint row,gint column,GdkEve
  if ( strcmp( prev,sbSelectedSkin ) )
   {
    prev=sbSelectedSkin;
-   ChangeSkin( sbSelectedSkin );
+   uiChangeSkin( sbSelectedSkin );
    gtkActive( SkinBrowser );
   }
  if( !bevent ) return;

@@ -41,14 +41,14 @@ LRESULT CALLBACK SubUrlWndProc(HWND, UINT, WPARAM, LPARAM);
 int set_video_colors(sh_video_t *sh_video, const char *item, int value);
 int get_video_colors(sh_video_t *sh_video, const char *item, int *value);
 
-guiInterface_t guiIntfStruct;
+guiInterface_t guiInfo;
 int addurl = 0;
 
 void guiLoadSubtitle(char *name)
 {
-    if (!guiIntfStruct.Playing)
+    if (!guiInfo.Playing)
     {
-        guiIntfStruct.SubtitleChanged = 1;
+        guiInfo.SubtitleChanged = 1;
         return;
     }
     if (subdata)
@@ -78,7 +78,7 @@ void guiLoadSubtitle(char *name)
     if (name)
     {
         mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_LoadingSubtitles, name);
-        subdata = sub_read_file(strdup(name), guiIntfStruct.FPS);
+        subdata = sub_read_file(strdup(name), guiInfo.FPS);
         if (!subdata) mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_CantLoadSub,name);
         sub_name = (malloc(2 * sizeof(char*))); /* when mplayer will be restarted */
         sub_name[0] = strdup(name);               /* sub_name[0] will be read */
@@ -140,7 +140,7 @@ int display_openfilewindow(gui_t *gui, int add)
             {
                 if (GetFullPathName(filename, MAX_PATH, filename, &filepart))
                 {
-                    mplSetFileName(NULL, filename, STREAMTYPE_FILE);
+                    uiSetFileName(NULL, filename, STREAMTYPE_FILE);
                     if(!parse_filename(filename, playtree, mconfig, 0))
                         gui->playlist->add_track(gui->playlist, filename, NULL, filepart, 0);
                     mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] Adding file: %s - path %s\n", filespec, filename);
@@ -159,7 +159,7 @@ void display_opensubtitlewindow(gui_t *gui)
     char subtitlefile[MAX_PATH];
 
     /* Safety check */
-    if (guiIntfStruct.Playing == 0 || !guiIntfStruct.sh_video) return;
+    if (guiInfo.Playing == 0 || !guiInfo.sh_video) return;
 
     memset(&subtitleopen, 0, sizeof(OPENFILENAME));
     memset(subtitlefile, 0, sizeof(subtitlefile));
@@ -325,7 +325,7 @@ static LRESULT CALLBACK OpenUrlWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPAR
                 {
                     char file[MAX_PATH];
                     SendMessage(url, WM_GETTEXT, MAX_PATH, (LPARAM) file);
-                    mplSetFileName(NULL, file, STREAMTYPE_STREAM);
+                    uiSetFileName(NULL, file, STREAMTYPE_STREAM);
                     if((f = fopen(history, "wt+")))
                     {
                         fprintf(f, file);
@@ -525,7 +525,7 @@ static LRESULT CALLBACK PlayListWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPA
                     {
                 case ID_PLAY:
                         if(selected) pl->current = selected - 1;
-                        mplSetFileName(NULL, pl->tracks[pl->current]->filename, STREAMTYPE_STREAM);
+                        uiSetFileName(NULL, pl->tracks[pl->current]->filename, STREAMTYPE_STREAM);
                         gui->startplay(gui);
                     }
                     return 0;
@@ -546,15 +546,15 @@ static LRESULT CALLBACK PlayListWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPA
                     break;
                 case ID_ADDFILE:
                 {
-                    if(guiIntfStruct.StreamType == STREAMTYPE_DVD ||
-                       guiIntfStruct.StreamType == STREAMTYPE_DVDNAV) return 0;
+                    if(guiInfo.StreamType == STREAMTYPE_DVD ||
+                       guiInfo.StreamType == STREAMTYPE_DVDNAV) return 0;
                     display_openfilewindow(gui, 1);
                     break;
                 }
                 case ID_ADDURL:
                 {
-                    if(guiIntfStruct.StreamType == STREAMTYPE_DVD ||
-                       guiIntfStruct.StreamType == STREAMTYPE_DVDNAV) return 0;
+                    if(guiInfo.StreamType == STREAMTYPE_DVD ||
+                       guiInfo.StreamType == STREAMTYPE_DVDNAV) return 0;
                     display_openurlwindow(gui, 1);
                     break;
                 }
@@ -566,8 +566,8 @@ static LRESULT CALLBACK PlayListWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPA
                 }
                 case ID_PLAYLISTLOAD:
                 {
-                    if(guiIntfStruct.StreamType == STREAMTYPE_DVD ||
-                       guiIntfStruct.StreamType == STREAMTYPE_DVDNAV) return 0;
+                    if(guiInfo.StreamType == STREAMTYPE_DVD ||
+                       guiInfo.StreamType == STREAMTYPE_DVDNAV) return 0;
                     display_loadplaylistwindow(gui);
                     break;
                 }
@@ -575,8 +575,8 @@ static LRESULT CALLBACK PlayListWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPA
                 {
                     /* no point saving an empty playlist */
                     if(!gui->playlist->trackcount ||
-                        guiIntfStruct.StreamType == STREAMTYPE_DVD ||
-                        guiIntfStruct.StreamType == STREAMTYPE_DVDNAV)
+                        guiInfo.StreamType == STREAMTYPE_DVD ||
+                        guiInfo.StreamType == STREAMTYPE_DVDNAV)
                         return 0;
                     display_saveplaylistwindow(gui);
                     break;
@@ -708,7 +708,7 @@ static LRESULT CALLBACK SkinBrowserWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, 
                     int len = SendMessage(listbox, LB_GETTEXTLEN, index, 0);
                     if (len)
                     {
-                        if (guiIntfStruct.Playing) guiGetEvent(guiCEvent, (void *) guiSetStop);
+                        if (guiInfo.Playing) guiGetEvent(guiCEvent, (void *) guiSetStop);
                         free(skinName);
                         skinName = malloc(len + 1);
                         SendMessage(listbox, LB_GETTEXT, (WPARAM) index, (LPARAM) skinName);
@@ -821,17 +821,17 @@ static LRESULT CALLBACK TitleChapterWndProc(HWND hwnd, UINT iMsg, WPARAM wParam,
                                  NULL);
             SendMessage(chapter, WM_SETFONT, (WPARAM) GetStockObject(DEFAULT_GUI_FONT), 0);
 
-            for (i=0; i<guiIntfStruct.DVD.titles; i++)
+            for (i=0; i<guiInfo.DVD.titles; i++)
             {
                 /* we have to reverse the order here because of the way CB_INSERTSTRING adds items */
-                sprintf(&titles[i], "%d", guiIntfStruct.DVD.titles - i);
+                sprintf(&titles[i], "%d", guiInfo.DVD.titles - i);
                 SendDlgItemMessage(hwnd, ID_TITLESEL, CB_INSERTSTRING, 0, (LPARAM) &titles[i]);
             }
             SendDlgItemMessage(hwnd, ID_TITLESEL, CB_SETCURSEL, dvd_title, 0);
 
-            for (j=0; j<guiIntfStruct.DVD.chapters; j++)
+            for (j=0; j<guiInfo.DVD.chapters; j++)
             {
-                sprintf(&chapters[j], "%d", guiIntfStruct.DVD.chapters - j);
+                sprintf(&chapters[j], "%d", guiInfo.DVD.chapters - j);
                 SendDlgItemMessage(hwnd, ID_CHAPTERSEL, CB_INSERTSTRING, 0, (LPARAM) &chapters[j]);
             }
             SendDlgItemMessage(hwnd, ID_CHAPTERSEL, CB_SETCURSEL, dvd_chapter, 0);
@@ -846,10 +846,10 @@ static LRESULT CALLBACK TitleChapterWndProc(HWND hwnd, UINT iMsg, WPARAM wParam,
                     return 0;
                 case ID_OK:
                 {
-                    guiIntfStruct.DVD.current_title = SendMessage(title, CB_GETCURSEL, 0, 0) + 1;
-                    guiIntfStruct.DVD.current_chapter = SendMessage(chapter, CB_GETCURSEL, 0, 0) + 1;
+                    guiInfo.DVD.current_title = SendMessage(title, CB_GETCURSEL, 0, 0) + 1;
+                    guiInfo.DVD.current_chapter = SendMessage(chapter, CB_GETCURSEL, 0, 0) + 1;
 
-                    if((guiIntfStruct.DVD.current_title != 0 || guiIntfStruct.DVD.current_chapter != 0))
+                    if((guiInfo.DVD.current_title != 0 || guiInfo.DVD.current_chapter != 0))
                     {
                         gui->startplay(gui);
                         DestroyWindow(hwnd);
@@ -870,7 +870,7 @@ void display_chapterselwindow(gui_t *gui)
     WNDCLASS wc;
     int x, y;
 
-    if (guiIntfStruct.StreamType != STREAMTYPE_DVD) return;
+    if (guiInfo.StreamType != STREAMTYPE_DVD) return;
     if (FindWindow(NULL, "Select Title/Chapter...")) return;
 
     wc.style         = CS_HREDRAW | CS_VREDRAW;
@@ -993,13 +993,13 @@ static LRESULT CALLBACK EqWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lP
                                ((LPCREATESTRUCT) lParam) -> hInstance, NULL);
             SendDlgItemMessage(hwnd, ID_EQ3, TBM_SETRANGE, 1, MAKELONG(0, 200));
 
-            if(guiIntfStruct.sh_video && guiIntfStruct.Playing)
+            if(guiInfo.sh_video && guiInfo.Playing)
             {
                 EnableWindow(eq0, 1); EnableWindow(eq1, 1); EnableWindow(eq2, 1); EnableWindow(eq3, 1);
-                get_video_colors(guiIntfStruct.sh_video, "brightness", &vo_gamma_brightness);
-                get_video_colors(guiIntfStruct.sh_video, "contrast", &vo_gamma_contrast);
-                get_video_colors(guiIntfStruct.sh_video, "hue", &vo_gamma_hue);
-                get_video_colors(guiIntfStruct.sh_video, "saturation", &vo_gamma_saturation);
+                get_video_colors(guiInfo.sh_video, "brightness", &vo_gamma_brightness);
+                get_video_colors(guiInfo.sh_video, "contrast", &vo_gamma_contrast);
+                get_video_colors(guiInfo.sh_video, "hue", &vo_gamma_hue);
+                get_video_colors(guiInfo.sh_video, "saturation", &vo_gamma_saturation);
             }
             SendDlgItemMessage(hwnd, ID_EQ0, TBM_SETPOS, 1, (LPARAM)100 - vo_gamma_brightness);
             SendDlgItemMessage(hwnd, ID_EQ1, TBM_SETPOS, 1, (LPARAM)100 - vo_gamma_contrast);
@@ -1012,19 +1012,19 @@ static LRESULT CALLBACK EqWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lP
             switch (LOWORD(wParam))
             {
                 case TB_THUMBTRACK:
-                    if(guiIntfStruct.sh_video && guiIntfStruct.Playing)
+                    if(guiInfo.sh_video && guiInfo.Playing)
                     {
                         vo_gamma_brightness = 100 - SendDlgItemMessage(hwnd, ID_EQ0, TBM_GETPOS, 0, 0);
-                        set_video_colors(guiIntfStruct.sh_video, "brightness", vo_gamma_brightness);
+                        set_video_colors(guiInfo.sh_video, "brightness", vo_gamma_brightness);
 
                         vo_gamma_contrast = 100 - SendDlgItemMessage(hwnd, ID_EQ1, TBM_GETPOS, 0, 0);
-                        set_video_colors(guiIntfStruct.sh_video, "contrast", vo_gamma_contrast);
+                        set_video_colors(guiInfo.sh_video, "contrast", vo_gamma_contrast);
 
                         vo_gamma_hue = 100 - SendDlgItemMessage(hwnd, ID_EQ2, TBM_GETPOS, 0, 0);
-                        set_video_colors(guiIntfStruct.sh_video, "hue", vo_gamma_hue);
+                        set_video_colors(guiInfo.sh_video, "hue", vo_gamma_hue);
 
                         vo_gamma_saturation = 100 - SendDlgItemMessage(hwnd, ID_EQ3, TBM_GETPOS, 0, 0);
-                        set_video_colors(guiIntfStruct.sh_video, "saturation", vo_gamma_saturation);
+                        set_video_colors(guiInfo.sh_video, "saturation", vo_gamma_saturation);
                     }
                     else
                     {
@@ -1052,23 +1052,23 @@ static LRESULT CALLBACK EqWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lP
                     DestroyWindow(hwnd);
                     return 0;
                 case ID_DEFAULTS:
-                    if(guiIntfStruct.sh_video && guiIntfStruct.Playing)
+                    if(guiInfo.sh_video && guiInfo.Playing)
                     {
                         vo_gamma_brightness=0;
                         SendDlgItemMessage(hwnd, ID_EQ0, TBM_SETPOS, 1, (LPARAM)100);
-                        set_video_colors(guiIntfStruct.sh_video, "brightness", vo_gamma_brightness);
+                        set_video_colors(guiInfo.sh_video, "brightness", vo_gamma_brightness);
 
                         vo_gamma_contrast=0;
                         SendDlgItemMessage(hwnd, ID_EQ1, TBM_SETPOS, 1, (LPARAM)100);
-                        set_video_colors(guiIntfStruct.sh_video, "contrast", vo_gamma_contrast);
+                        set_video_colors(guiInfo.sh_video, "contrast", vo_gamma_contrast);
 
                         vo_gamma_hue=0;
                         SendDlgItemMessage(hwnd, ID_EQ2, TBM_SETPOS, 1, (LPARAM)100);
-                        set_video_colors(guiIntfStruct.sh_video, "hue", vo_gamma_hue);
+                        set_video_colors(guiInfo.sh_video, "hue", vo_gamma_hue);
 
                         vo_gamma_saturation=0;
                         SendDlgItemMessage(hwnd, ID_EQ3, TBM_SETPOS, 1, (LPARAM)100);
-                        set_video_colors(guiIntfStruct.sh_video, "saturation", vo_gamma_saturation);
+                        set_video_colors(guiInfo.sh_video, "saturation", vo_gamma_saturation);
                     }
                     break;
             }
@@ -1085,7 +1085,7 @@ void display_eqwindow(gui_t *gui)
     WNDCLASS wc;
     int x, y;
 
-    if(!guiIntfStruct.sh_video) return;
+    if(!guiInfo.sh_video) return;
     if(FindWindow(NULL, "MPlayer - Equalizer")) return;
     wc.style         = CS_HREDRAW | CS_VREDRAW;
     wc.lpfnWndProc   = EqWndProc;

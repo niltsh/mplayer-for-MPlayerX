@@ -30,34 +30,34 @@
 #include "gui/interface.h"
 #include "widgets.h"
 
-int             mplSubRender = 0;
-int             SubVisible = 0;
+int             uiSubRender = 0;
+int             subVisible = 0;
 
-void mplSubDraw( void )
+void uiSubDraw( void )
 {
- if ( appMPlayer.subWindow.State == wsWindowClosed ) guiExit( EXIT_QUIT );
+ if ( guiApp.subWindow.State == wsWindowClosed ) guiExit( EXIT_QUIT );
 
- if ( appMPlayer.subWindow.State == wsWindowFocusIn ) SubVisible++;
- if ( appMPlayer.subWindow.State == wsWindowFocusOut && metacity_hack != 3 ) SubVisible--;
+ if ( guiApp.subWindow.State == wsWindowFocusIn ) subVisible++;
+ if ( guiApp.subWindow.State == wsWindowFocusOut && metacity_hack != 3 ) subVisible--;
 
- if ( !appMPlayer.subWindow.Mapped ||
-      appMPlayer.subWindow.Visible == wsWindowNotVisible ) return;
+ if ( !guiApp.subWindow.Mapped ||
+      guiApp.subWindow.Visible == wsWindowNotVisible ) return;
 
- if ( guiIntfStruct.Playing ) mplSubRender=0;
+ if ( guiInfo.Playing ) uiSubRender=0;
 
- if ( mplSubRender && appMPlayer.subWindow.State == wsWindowExpose )
+ if ( uiSubRender && guiApp.subWindow.State == wsWindowExpose )
   {
-   if ( appMPlayer.sub.Bitmap.Image ) wsPutImage( &appMPlayer.subWindow );
+   if ( guiApp.sub.Bitmap.Image ) wsPutImage( &guiApp.subWindow );
   }
- appMPlayer.subWindow.State=0;
+ guiApp.subWindow.State=0;
 }
 
-void mplSubMouseHandle( int Button,int X,int Y,int RX,int RY )
+void uiSubMouseHandle( int Button,int X,int Y,int RX,int RY )
 {
  static int mplSubMoved = 0;
  static int msButton = 0;
 
- mplPBShow( X,Y );
+ uiPlaybarShow( X,Y );
 
  switch( Button )
   {
@@ -66,11 +66,11 @@ void mplSubMouseHandle( int Button,int X,int Y,int RX,int RY )
           break;
    case wsPMMouseButton:
           gtkShow( evHidePopUpMenu,NULL );
-          mplShowMenu( RX,RY );
+          uiShowMenu( RX,RY );
           msButton=wsPMMouseButton;
           break;
    case wsRMMouseButton:
-          mplHideMenu( RX,RY,1 );
+          uiHideMenu( RX,RY,1 );
           msButton=0;
           break;
 // ---
@@ -85,19 +85,19 @@ void mplSubMouseHandle( int Button,int X,int Y,int RX,int RY )
            {
             case wsPLMouseButton:
                    mplSubMoved=1;
-                   if ( !appMPlayer.subWindow.isFullScreen ) wsMoveWindow( &appMPlayer.subWindow,False,RX - sx,RY - sy );
+                   if ( !guiApp.subWindow.isFullScreen ) wsMoveWindow( &guiApp.subWindow,False,RX - sx,RY - sy );
                    break;
             case wsPMMouseButton:
-                   mplMenuMouseHandle( X,Y,RX,RY );
+                   uiMenuMouseHandle( X,Y,RX,RY );
                    break;
-	    default: mplPBShow( X,Y ); break;
+	    default: uiPlaybarShow( X,Y ); break;
            }
           break;
    case wsRLMouseButton:
-          if ( ( !mplSubMoved )&&( appMPlayer.subWindow.isFullScreen ) )
+          if ( ( !mplSubMoved )&&( guiApp.subWindow.isFullScreen ) )
            {
-            if( SubVisible++%2 ) wsMoveTopWindow( wsDisplay,appMPlayer.mainWindow.WindowID );
-             else wsMoveTopWindow( wsDisplay,appMPlayer.subWindow.WindowID );
+            if( subVisible++%2 ) wsMoveTopWindow( wsDisplay,guiApp.mainWindow.WindowID );
+             else wsMoveTopWindow( wsDisplay,guiApp.subWindow.WindowID );
 	   }
           msButton=0;
           mplSubMoved=0;

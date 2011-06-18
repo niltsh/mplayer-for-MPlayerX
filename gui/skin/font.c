@@ -270,7 +270,7 @@ static int fntTextHeight(int id, char *str)
     return max;
 }
 
-txSample *fntRender(wItem *item, int px, char *txt)
+guiImage *fntRender(wItem *item, int px, char *txt)
 {
     unsigned char *u;
     unsigned int i;
@@ -301,7 +301,7 @@ txSample *fntRender(wItem *item, int px, char *txt)
         if (!item->Bitmap.ImageSize)
             return NULL;
 
-        item->Bitmap.BPP   = 32;
+        item->Bitmap.Bpp   = 32;
         item->Bitmap.Image = malloc(item->Bitmap.ImageSize);
 
         if (!item->Bitmap.Image)

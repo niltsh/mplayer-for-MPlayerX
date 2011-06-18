@@ -61,7 +61,7 @@ int guiWinID = 0;
 
 char *skinName = NULL;
 char *codecname = NULL;
-int mplGotoTheNext = 1;
+int uiGotoTheNext = 1;
 static gui_t *mygui = NULL;
 static int update_subwindow(void);
 static RECT old_rect;
@@ -146,29 +146,29 @@ void greplace(char ***list, char *search, char *replace)
 /* this function gets called by the gui to update mplayer */
 static void guiSetEvent(int event)
 {
-    if(guiIntfStruct.mpcontext)
-        mixer = mpctx_get_mixer(guiIntfStruct.mpcontext);
+    if(guiInfo.mpcontext)
+        mixer = mpctx_get_mixer(guiInfo.mpcontext);
 
     switch(event)
     {
         case evPlay:
         case evPlaySwitchToPause:
         case evPauseSwitchToPlay:
-            mplPlay();
+            uiPlay();
             break;
         case evPause:
-            mplPause();
+            uiPause();
             break;
 #ifdef CONFIG_DVDREAD
         case evPlayDVD:
         {
             static char dvdname[MAX_PATH];
-            guiIntfStruct.DVD.current_title = dvd_title;
-            guiIntfStruct.DVD.current_chapter = dvd_chapter;
-            guiIntfStruct.DVD.current_angle = dvd_angle;
-            guiIntfStruct.DiskChanged = 1;
+            guiInfo.DVD.current_title = dvd_title;
+            guiInfo.DVD.current_chapter = dvd_chapter;
+            guiInfo.DVD.current_angle = dvd_angle;
+            guiInfo.DiskChanged = 1;
 
-            mplSetFileName(NULL, dvd_device, STREAMTYPE_DVD);
+            uiSetFileName(NULL, dvd_device, STREAMTYPE_DVD);
             dvdname[0] = 0;
             strcat(dvdname, "DVD Movie");
             GetVolumeInformation(dvd_device, dvdname, MAX_PATH, NULL, NULL, NULL, NULL, 0);
@@ -217,12 +217,12 @@ static void guiSetEvent(int event)
             break;
         }
         case evStop:
-            if(guiIntfStruct.Playing)
+            if(guiInfo.Playing)
                 guiGetEvent(guiCEvent, (void *) guiSetStop);
             break;
         case evSetMoviePosition:
         {
-            rel_seek_secs = guiIntfStruct.Position / 100.0f;
+            rel_seek_secs = guiInfo.Position / 100.0f;
             abs_seek_pos = 3;
             break;
         }
@@ -243,17 +243,17 @@ static void guiSetEvent(int event)
         {
             float l,r;
 
-            if (guiIntfStruct.Playing == 0)
+            if (guiInfo.Playing == 0)
                 break;
 
-            if (guiIntfStruct.Balance == 50.0f)
-                mixer_setvolume(mixer, guiIntfStruct.Volume, guiIntfStruct.Volume);
+            if (guiInfo.Balance == 50.0f)
+                mixer_setvolume(mixer, guiInfo.Volume, guiInfo.Volume);
 
-            l = guiIntfStruct.Volume * ((100.0f - guiIntfStruct.Balance) / 50.0f);
-            r = guiIntfStruct.Volume * ((guiIntfStruct.Balance) / 50.0f);
+            l = guiInfo.Volume * ((100.0f - guiInfo.Balance) / 50.0f);
+            r = guiInfo.Volume * ((guiInfo.Balance) / 50.0f);
 
-            if (l > guiIntfStruct.Volume) l=guiIntfStruct.Volume;
-            if (r > guiIntfStruct.Volume) r=guiIntfStruct.Volume;
+            if (l > guiInfo.Volume) l=guiInfo.Volume;
+            if (r > guiInfo.Volume) r=guiInfo.Volume;
             mixer_setvolume(mixer, l, r);
             /* Check for balance support on mixer - there is a better way ?? */
             if (r != l)
@@ -262,8 +262,8 @@ static void guiSetEvent(int event)
                 if (r == l)
                 {
                     mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] Mixer doesn't support balanced audio\n");
-                    mixer_setvolume(mixer, guiIntfStruct.Volume, guiIntfStruct.Volume);
-                    guiIntfStruct.Balance = 50.0f;
+                    mixer_setvolume(mixer, guiInfo.Volume, guiInfo.Volume);
+                    guiInfo.Balance = 50.0f;
                 }
             }
             break;
@@ -279,24 +279,24 @@ static void guiSetEvent(int event)
         case evDropFile:
         case evLoadPlay:
         {
-            switch(guiIntfStruct.StreamType)
+            switch(guiInfo.StreamType)
             {
 #ifdef CONFIG_DVDREAD
                 case STREAMTYPE_DVD:
                 {
-                    guiIntfStruct.Title = guiIntfStruct.DVD.current_title;
-                    guiIntfStruct.Chapter = guiIntfStruct.DVD.current_chapter;
-                    guiIntfStruct.Angle = guiIntfStruct.DVD.current_angle;
-                    guiIntfStruct.DiskChanged = 1;
+                    guiInfo.Title = guiInfo.DVD.current_title;
+                    guiInfo.Chapter = guiInfo.DVD.current_chapter;
+                    guiInfo.Angle = guiInfo.DVD.current_angle;
+                    guiInfo.DiskChanged = 1;
                     guiGetEvent(guiCEvent, (void *) guiSetPlay);
                     break;
                 }
 #endif
                 default:
                 {
-                    guiIntfStruct.FilenameChanged = guiIntfStruct.NewPlay = 1;
+                    guiInfo.FilenameChanged = guiInfo.NewPlay = 1;
                     update_playlistwindow();
-                    mplGotoTheNext = guiIntfStruct.Playing? 0 : 1;
+                    uiGotoTheNext = guiInfo.Playing? 0 : 1;
                     guiGetEvent(guiCEvent, (void *) guiSetStop);
                     guiGetEvent(guiCEvent, (void *) guiSetPlay);
                     break;
@@ -305,118 +305,118 @@ static void guiSetEvent(int event)
            break;
         }
         case evNext:
-            mplNext();
+            uiNext();
             break;
         case evPrev:
-            mplPrev();
+            uiPrev();
             break;
     }
 }
 
-void mplPlay( void )
+void uiPlay( void )
 {
-   if((!guiIntfStruct.Filename ) || (guiIntfStruct.Filename[0] == 0))
+   if((!guiInfo.Filename ) || (guiInfo.Filename[0] == 0))
      return;
 
-   if(guiIntfStruct.Playing > 0)
+   if(guiInfo.Playing > 0)
    {
-       mplPause();
+       uiPause();
        return;
    }
-   guiIntfStruct.NewPlay = 1;
+   guiInfo.NewPlay = 1;
    guiGetEvent(guiCEvent, (void *) guiSetPlay);
 }
 
-void mplPause( void )
+void uiPause( void )
 {
-   if(!guiIntfStruct.Playing) return;
+   if(!guiInfo.Playing) return;
 
-   if(guiIntfStruct.Playing == 1)
+   if(guiInfo.Playing == 1)
    {
        mp_cmd_t * cmd = calloc(1, sizeof(*cmd));
        cmd->id=MP_CMD_PAUSE;
        cmd->name=strdup("pause");
        mp_input_queue_cmd(cmd);
-   } else guiIntfStruct.Playing = 1;
+   } else guiInfo.Playing = 1;
 }
 
-void mplNext(void)
+void uiNext(void)
 {
-    if(guiIntfStruct.Playing == 2) return;
-    switch(guiIntfStruct.StreamType)
+    if(guiInfo.Playing == 2) return;
+    switch(guiInfo.StreamType)
     {
 #ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
-            if(guiIntfStruct.DVD.current_chapter == (guiIntfStruct.DVD.chapters - 1))
+            if(guiInfo.DVD.current_chapter == (guiInfo.DVD.chapters - 1))
                 return;
-            guiIntfStruct.DVD.current_chapter++;
+            guiInfo.DVD.current_chapter++;
             break;
 #endif
         default:
             if(mygui->playlist->current == (mygui->playlist->trackcount - 1))
                 return;
-            mplSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename,
+            uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename,
                            STREAMTYPE_STREAM);
             break;
     }
     mygui->startplay(mygui);
 }
 
-void mplPrev(void)
+void uiPrev(void)
 {
-    if(guiIntfStruct.Playing == 2) return;
-    switch(guiIntfStruct.StreamType)
+    if(guiInfo.Playing == 2) return;
+    switch(guiInfo.StreamType)
     {
 #ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
-            if(guiIntfStruct.DVD.current_chapter == 1)
+            if(guiInfo.DVD.current_chapter == 1)
                 return;
-            guiIntfStruct.DVD.current_chapter--;
+            guiInfo.DVD.current_chapter--;
             break;
 #endif
         default:
             if(mygui->playlist->current == 0)
                 return;
-            mplSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)--]->filename,
+            uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)--]->filename,
                            STREAMTYPE_STREAM);
             break;
     }
     mygui->startplay(mygui);
 }
 
-void mplEnd( void )
+void uiEnd( void )
 {
-    if(!mplGotoTheNext && guiIntfStruct.Playing)
+    if(!uiGotoTheNext && guiInfo.Playing)
     {
-        mplGotoTheNext = 1;
+        uiGotoTheNext = 1;
         return;
     }
 
-    if(mplGotoTheNext && guiIntfStruct.Playing &&
+    if(uiGotoTheNext && guiInfo.Playing &&
       (mygui->playlist->current < (mygui->playlist->trackcount - 1)) &&
-      guiIntfStruct.StreamType != STREAMTYPE_DVD &&
-      guiIntfStruct.StreamType != STREAMTYPE_DVDNAV)
+      guiInfo.StreamType != STREAMTYPE_DVD &&
+      guiInfo.StreamType != STREAMTYPE_DVDNAV)
     {
         /* we've finished this file, reset the aspect */
         if(movie_aspect >= 0)
             movie_aspect = -1;
 
-        mplGotoTheNext = guiIntfStruct.FilenameChanged = guiIntfStruct.NewPlay = 1;
-        mplSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename, STREAMTYPE_STREAM);
-        //sprintf(guiIntfStruct.Filename, mygui->playlist->tracks[(mygui->playlist->current)++]->filename);
+        uiGotoTheNext = guiInfo.FilenameChanged = guiInfo.NewPlay = 1;
+        uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename, STREAMTYPE_STREAM);
+        //sprintf(guiInfo.Filename, mygui->playlist->tracks[(mygui->playlist->current)++]->filename);
     }
 
-    if(guiIntfStruct.FilenameChanged && guiIntfStruct.NewPlay)
+    if(guiInfo.FilenameChanged && guiInfo.NewPlay)
         return;
 
-    guiIntfStruct.TimeSec = 0;
-    guiIntfStruct.Position = 0;
-    guiIntfStruct.AudioType = 0;
+    guiInfo.TimeSec = 0;
+    guiInfo.Position = 0;
+    guiInfo.AudioType = 0;
 
 #ifdef CONFIG_DVDREAD
-    guiIntfStruct.DVD.current_title = 1;
-    guiIntfStruct.DVD.current_chapter = 1;
-    guiIntfStruct.DVD.current_angle = 1;
+    guiInfo.DVD.current_title = 1;
+    guiInfo.DVD.current_chapter = 1;
+    guiInfo.DVD.current_angle = 1;
 #endif
 
     if (mygui->playlist->current == (mygui->playlist->trackcount - 1))
@@ -431,24 +431,24 @@ void mplEnd( void )
     guiGetEvent(guiCEvent, (void *) guiSetStop);
 }
 
-void mplSetFileName(char *dir, char *name, int type)
+void uiSetFileName(char *dir, char *name, int type)
 {
     if(!name) return;
     if(!dir)
-        guiSetFilename(guiIntfStruct.Filename, name)
+        guiSetFilename(guiInfo.Filename, name)
     else
-        guiSetDF(guiIntfStruct.Filename, dir, name);
+        guiSetDF(guiInfo.Filename, dir, name);
 
-    guiIntfStruct.StreamType = type;
-    free(guiIntfStruct.AudioFile);
-    guiIntfStruct.AudioFile = NULL;
-    free(guiIntfStruct.Subtitlename);
-    guiIntfStruct.Subtitlename = NULL;
+    guiInfo.StreamType = type;
+    free(guiInfo.AudioFile);
+    guiInfo.AudioFile = NULL;
+    free(guiInfo.Subtitlename);
+    guiInfo.Subtitlename = NULL;
 }
 
-void mplFullScreen( void )
+void uiFullScreen( void )
 {
-    if(!guiIntfStruct.sh_video) return;
+    if(!guiInfo.sh_video) return;
 
     if(sub_window)
     {
@@ -496,7 +496,7 @@ static unsigned __stdcall GuiThread(void* param)
 
 void guiInit(void)
 {
-    memset(&guiIntfStruct, 0, sizeof(guiIntfStruct));
+    memset(&guiInfo, 0, sizeof(guiInfo));
     /* Create The gui thread */
     if (!mygui)
     {
@@ -536,26 +536,26 @@ int guiGetEvent(int type, void *arg)
 #endif
     if(!mygui || !mygui->skin) return 0;
 
-    if(guiIntfStruct.mpcontext)
+    if(guiInfo.mpcontext)
     {
-        audio_out = mpctx_get_audio_out(guiIntfStruct.mpcontext);
-        video_out = mpctx_get_video_out(guiIntfStruct.mpcontext);
-        mixer = mpctx_get_mixer(guiIntfStruct.mpcontext);
-        playtree = mpctx_get_playtree_iter(guiIntfStruct.mpcontext);
+        audio_out = mpctx_get_audio_out(guiInfo.mpcontext);
+        video_out = mpctx_get_video_out(guiInfo.mpcontext);
+        mixer = mpctx_get_mixer(guiInfo.mpcontext);
+        playtree = mpctx_get_playtree_iter(guiInfo.mpcontext);
     }
 
     switch (type)
     {
         case guiSetFileFormat:
-            guiIntfStruct.FileFormat = (int) arg;
+            guiInfo.FileFormat = (int) arg;
             break;
         case guiSetParameters:
         {
             guiGetEvent(guiSetDefaults, NULL);
-            guiIntfStruct.DiskChanged = 0;
-            guiIntfStruct.FilenameChanged = 0;
-            guiIntfStruct.NewPlay = 0;
-            switch(guiIntfStruct.StreamType)
+            guiInfo.DiskChanged = 0;
+            guiInfo.FilenameChanged = 0;
+            guiInfo.NewPlay = 0;
+            switch(guiInfo.StreamType)
             {
                 case STREAMTYPE_PLAYLIST:
                     break;
@@ -563,42 +563,42 @@ int guiGetEvent(int type, void *arg)
                 case STREAMTYPE_DVD:
                 {
                     char tmp[512];
-                    dvd_title = guiIntfStruct.DVD.current_title;
-                    dvd_chapter = guiIntfStruct.DVD.current_chapter;
-                    dvd_angle = guiIntfStruct.DVD.current_angle;
-                    sprintf(tmp,"dvd://%d", guiIntfStruct.Title);
-                    guiSetFilename(guiIntfStruct.Filename, tmp);
+                    dvd_title = guiInfo.DVD.current_title;
+                    dvd_chapter = guiInfo.DVD.current_chapter;
+                    dvd_angle = guiInfo.DVD.current_angle;
+                    sprintf(tmp,"dvd://%d", guiInfo.Title);
+                    guiSetFilename(guiInfo.Filename, tmp);
                     break;
                 }
 #endif
             }
-            if(guiIntfStruct.Filename)
-                filename = strdup(guiIntfStruct.Filename);
+            if(guiInfo.Filename)
+                filename = strdup(guiInfo.Filename);
             else if(filename)
-                strcpy(guiIntfStruct.Filename, filename);
+                strcpy(guiInfo.Filename, filename);
             break;
         }
         case guiSetAudioOnly:
         {
-            guiIntfStruct.AudioOnly = (int) arg;
+            guiInfo.AudioOnly = (int) arg;
             if(IsWindowVisible(mygui->subwindow))
                 ShowWindow(mygui->subwindow, SW_HIDE);
             break;
         }
         case guiSetContext:
-            guiIntfStruct.mpcontext = arg;
+            guiInfo.mpcontext = arg;
             break;
         case guiSetDemuxer:
-            guiIntfStruct.demuxer = arg;
+            guiInfo.demuxer = arg;
             break;
         case guiSetValues:
         {
-            guiIntfStruct.sh_video = arg;
+            guiInfo.sh_video = arg;
             if (arg)
             {
                 sh_video_t *sh = arg;
                 codecname = sh->codec->name;
-                guiIntfStruct.FPS = sh->fps;
+                guiInfo.FPS = sh->fps;
 
                 /* we have video, show the subwindow */
                 if(!IsWindowVisible(mygui->subwindow) || IsIconic(mygui->subwindow))
@@ -611,17 +611,17 @@ int guiGetEvent(int type, void *arg)
         }
         case guiSetShVideo:
         {
-            guiIntfStruct.MovieWidth = vo_dwidth;
-            guiIntfStruct.MovieHeight = vo_dheight;
+            guiInfo.MovieWidth = vo_dwidth;
+            guiInfo.MovieHeight = vo_dheight;
 
-            sub_aspect = (float)guiIntfStruct.MovieWidth/guiIntfStruct.MovieHeight;
+            sub_aspect = (float)guiInfo.MovieWidth/guiInfo.MovieHeight;
             if(WinID != -1)
                update_subwindow();
             break;
         }
         case guiSetStream:
         {
-            guiIntfStruct.StreamType = stream->type;
+            guiInfo.StreamType = stream->type;
             switch(stream->type)
             {
 #ifdef CONFIG_DVDREAD
@@ -635,17 +635,17 @@ int guiGetEvent(int type, void *arg)
 #ifdef CONFIG_DVDREAD
         case guiSetDVD:
         {
-            guiIntfStruct.DVD.titles = dvdp->vmg_file->tt_srpt->nr_of_srpts;
-            guiIntfStruct.DVD.chapters = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
-            guiIntfStruct.DVD.angles = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
-            guiIntfStruct.DVD.nr_of_audio_channels = dvdp->nr_of_channels;
-            memcpy(guiIntfStruct.DVD.audio_streams, dvdp->audio_streams, sizeof(dvdp->audio_streams));
-            guiIntfStruct.DVD.nr_of_subtitles = dvdp->nr_of_subtitles;
-            memcpy(guiIntfStruct.DVD.subtitles, dvdp->subtitles, sizeof(dvdp->subtitles));
-            guiIntfStruct.DVD.current_title = dvd_title + 1;
-            guiIntfStruct.DVD.current_chapter = dvd_chapter + 1;
-            guiIntfStruct.DVD.current_angle = dvd_angle + 1;
-            guiIntfStruct.Track = dvd_title + 1;
+            guiInfo.DVD.titles = dvdp->vmg_file->tt_srpt->nr_of_srpts;
+            guiInfo.DVD.chapters = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
+            guiInfo.DVD.angles = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
+            guiInfo.DVD.nr_of_audio_channels = dvdp->nr_of_channels;
+            memcpy(guiInfo.DVD.audio_streams, dvdp->audio_streams, sizeof(dvdp->audio_streams));
+            guiInfo.DVD.nr_of_subtitles = dvdp->nr_of_subtitles;
+            memcpy(guiInfo.DVD.subtitles, dvdp->subtitles, sizeof(dvdp->subtitles));
+            guiInfo.DVD.current_title = dvd_title + 1;
+            guiInfo.DVD.current_chapter = dvd_chapter + 1;
+            guiInfo.DVD.current_angle = dvd_angle + 1;
+            guiInfo.Track = dvd_title + 1;
             break;
         }
 #endif
@@ -653,28 +653,28 @@ int guiGetEvent(int type, void *arg)
             mygui->updatedisplay(mygui, mygui->mainwindow);
             break;
         case guiSetAfilter:
-            guiIntfStruct.afilter = arg;
+            guiInfo.afilter = arg;
             break;
         case guiCEvent:
         {
-            guiIntfStruct.Playing = (int) arg;
-            switch (guiIntfStruct.Playing)
+            guiInfo.Playing = (int) arg;
+            switch (guiInfo.Playing)
             {
                 case guiSetPlay:
                 {
-                    guiIntfStruct.Playing = 1;
+                    guiInfo.Playing = 1;
                     break;
                 }
                 case guiSetStop:
                 {
-                    guiIntfStruct.Playing = 0;
+                    guiInfo.Playing = 0;
                     if(movie_aspect >= 0)
                         movie_aspect = -1;
                     update_subwindow();
                     break;
                 }
                 case guiSetPause:
-                    guiIntfStruct.Playing = 2;
+                    guiInfo.Playing = 2;
                     break;
             }
             break;
@@ -686,7 +686,7 @@ int guiGetEvent(int type, void *arg)
             switch((int) arg)
             {
                 case MP_CMD_VO_FULLSCREEN:
-                    mplFullScreen();
+                    uiFullScreen();
                     break;
                 case MP_CMD_QUIT:
                 {
@@ -702,7 +702,7 @@ int guiGetEvent(int type, void *arg)
             break;
         }
         case guiSetFileName:
-            if (arg) guiIntfStruct.Filename = arg;
+            if (arg) guiInfo.Filename = arg;
             break;
         case guiSetDefaults:
         {
@@ -715,8 +715,8 @@ int guiGetEvent(int type, void *arg)
             dvd_title = 0;
             force_fps = 0;
             if(!mygui->playlist->tracks) return 0;
-            filename = guiIntfStruct.Filename = mygui->playlist->tracks[mygui->playlist->current]->filename;
-            guiIntfStruct.Track = mygui->playlist->current + 1;
+            filename = guiInfo.Filename = mygui->playlist->tracks[mygui->playlist->current]->filename;
+            guiInfo.Track = mygui->playlist->current + 1;
             if(gtkAONorm) greplace(&af_cfg.list, "volnorm", "volnorm");
             if(gtkAOExtraStereo)
             {
@@ -738,11 +738,11 @@ int guiGetEvent(int type, void *arg)
                 /* FIXME this algo is not correct */
                 float l, r;
                 mixer_getvolume(mixer, &l, &r);
-                guiIntfStruct.Volume = (r > l ? r : l); /* max(r,l) */
+                guiInfo.Volume = (r > l ? r : l); /* max(r,l) */
                 if (r != l)
-                    guiIntfStruct.Balance = ((r-l) + 100.0f) * 0.5f;
+                    guiInfo.Balance = ((r-l) + 100.0f) * 0.5f;
                 else
-                    guiIntfStruct.Balance = 50.0f;
+                    guiInfo.Balance = 50.0f;
             }
             break;
         }
@@ -800,7 +800,7 @@ int import_initial_playtree_into_gui(play_tree_t *my_playtree, m_config_t *confi
                 result = 1;
         }
     }
-    mplGotoTheNext = 1;
+    uiGotoTheNext = 1;
 
     if (result)
     {
@@ -862,18 +862,18 @@ static int update_subwindow(void)
     {
         WinID = -1; // so far only directx supports WinID in windows
 
-        if(IsWindowVisible(mygui->subwindow) && guiIntfStruct.sh_video && guiIntfStruct.Playing)
+        if(IsWindowVisible(mygui->subwindow) && guiInfo.sh_video && guiInfo.Playing)
         {
             ShowWindow(mygui->subwindow, SW_HIDE);
             return 0;
         }
-        else if(guiIntfStruct.AudioOnly)
+        else if(guiInfo.AudioOnly)
             return 0;
         else ShowWindow(mygui->subwindow, SW_SHOW);
     }
 
     /* we've come out of fullscreen at the end of file */
-    if((!IsWindowVisible(mygui->subwindow) || IsIconic(mygui->subwindow)) && !guiIntfStruct.AudioOnly)
+    if((!IsWindowVisible(mygui->subwindow) || IsIconic(mygui->subwindow)) && !guiInfo.AudioOnly)
         ShowWindow(mygui->subwindow, SW_SHOWNORMAL);
 
     /* get our current window coordinates */
@@ -886,7 +886,7 @@ static int update_subwindow(void)
     if(x <= 0) x = old_rect.left;
     if(y <= 0) y = old_rect.top;
 
-    if(!guiIntfStruct.Playing)
+    if(!guiInfo.Playing)
     {
         window *desc = NULL;
         int i;
@@ -901,8 +901,8 @@ static int update_subwindow(void)
     }
     else
     {
-        rd.right = rd.left+guiIntfStruct.MovieWidth;
-        rd.bottom = rd.top+guiIntfStruct.MovieHeight;
+        rd.right = rd.left+guiInfo.MovieWidth;
+        rd.bottom = rd.top+guiInfo.MovieHeight;
 
         if (movie_aspect > 0.0)       // forced aspect from the cmdline
             sub_aspect = movie_aspect;
@@ -920,7 +920,7 @@ static int update_subwindow(void)
     wp.flags = SWP_NOOWNERZORDER | SWP_SHOWWINDOW;
 
     /* erase the bitmap image if there's video */
-    if(guiIntfStruct.Playing != 0 && guiIntfStruct.sh_video)
+    if(guiInfo.Playing != 0 && guiInfo.sh_video)
         SendMessage(mygui->subwindow, WM_ERASEBKGND, (WPARAM)GetDC(mygui->subwindow), 0);
 
     /* reset the window aspect */

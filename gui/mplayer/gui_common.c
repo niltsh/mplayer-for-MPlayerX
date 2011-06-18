@@ -46,19 +46,19 @@ static void TranslateFilename(int c, char *tmp, size_t tmplen)
     char *p;
     size_t len;
 
-    switch (guiIntfStruct.StreamType) {
+    switch (guiInfo.StreamType) {
     case STREAMTYPE_STREAM:
-        av_strlcpy(tmp, guiIntfStruct.Filename, tmplen);
+        av_strlcpy(tmp, guiInfo.Filename, tmplen);
         break;
 
     case STREAMTYPE_FILE:
-        if (guiIntfStruct.Filename && guiIntfStruct.Filename[0]) {
-            p = strrchr(guiIntfStruct.Filename, '/');
+        if (guiInfo.Filename && guiInfo.Filename[0]) {
+            p = strrchr(guiInfo.Filename, '/');
 
             if (p)
                 av_strlcpy(tmp, p + 1, tmplen);
             else
-                av_strlcpy(tmp, guiIntfStruct.Filename, tmplen);
+                av_strlcpy(tmp, guiInfo.Filename, tmplen);
 
             len = strlen(tmp);
 
@@ -74,8 +74,8 @@ static void TranslateFilename(int c, char *tmp, size_t tmplen)
 
 #ifdef CONFIG_DVDREAD
     case STREAMTYPE_DVD:
-        if (guiIntfStruct.DVD.current_chapter)
-            snprintf(tmp, tmplen, MSGTR_Chapter, guiIntfStruct.DVD.current_chapter);
+        if (guiInfo.DVD.current_chapter)
+            snprintf(tmp, tmplen, MSGTR_Chapter, guiInfo.DVD.current_chapter);
         else
             av_strlcat(tmp, MSGTR_NoChapter, tmplen);
         break;
@@ -83,7 +83,7 @@ static void TranslateFilename(int c, char *tmp, size_t tmplen)
 
 #ifdef CONFIG_VCD
     case STREAMTYPE_VCD:
-        snprintf(tmp, tmplen, MSGTR_VCDTrack, guiIntfStruct.Track);
+        snprintf(tmp, tmplen, MSGTR_VCDTrack, guiInfo.Track);
         break;
 #endif
 
@@ -128,7 +128,7 @@ static char *Translate(char *str)
         } else {
             switch (str[++i]) {
             case 't':
-                snprintf(tmp, sizeof(tmp), "%02d", guiIntfStruct.Track);
+                snprintf(tmp, sizeof(tmp), "%02d", guiInfo.Track);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
@@ -148,112 +148,112 @@ static char *Translate(char *str)
                 break;
 
             case '6':
-                t = guiIntfStruct.LengthInSec;
+                t = guiInfo.LengthInSec;
                 goto calclengthhhmmss;
 
             case '1':
-                t = guiIntfStruct.TimeSec;
+                t = guiInfo.TimeSec;
 calclengthhhmmss:
                 snprintf(tmp, sizeof(tmp), "%02d:%02d:%02d", t / 3600, t / 60 % 60, t % 60);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case '7':
-                t = guiIntfStruct.LengthInSec;
+                t = guiInfo.LengthInSec;
                 goto calclengthmmmmss;
 
             case '2':
-                t = guiIntfStruct.TimeSec;
+                t = guiInfo.TimeSec;
 calclengthmmmmss:
                 snprintf(tmp, sizeof(tmp), "%04d:%02d", t / 60, t % 60);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case '3':
-                snprintf(tmp, sizeof(tmp), "%02d", guiIntfStruct.TimeSec / 3600);
+                snprintf(tmp, sizeof(tmp), "%02d", guiInfo.TimeSec / 3600);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case '4':
-                snprintf(tmp, sizeof(tmp), "%02d", (guiIntfStruct.TimeSec / 60) % 60);
+                snprintf(tmp, sizeof(tmp), "%02d", (guiInfo.TimeSec / 60) % 60);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case '5':
-                snprintf(tmp, sizeof(tmp), "%02d", guiIntfStruct.TimeSec % 60);
+                snprintf(tmp, sizeof(tmp), "%02d", guiInfo.TimeSec % 60);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case '8':
-                snprintf(tmp, sizeof(tmp), "%01d:%02d:%02d", guiIntfStruct.TimeSec / 3600, (guiIntfStruct.TimeSec / 60) % 60, guiIntfStruct.TimeSec % 60);
+                snprintf(tmp, sizeof(tmp), "%01d:%02d:%02d", guiInfo.TimeSec / 3600, (guiInfo.TimeSec / 60) % 60, guiInfo.TimeSec % 60);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case 'v':
-                snprintf(tmp, sizeof(tmp), "%3.2f%%", guiIntfStruct.Volume);
+                snprintf(tmp, sizeof(tmp), "%3.2f%%", guiInfo.Volume);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case 'V':
-                snprintf(tmp, sizeof(tmp), "%3.1f", guiIntfStruct.Volume);
+                snprintf(tmp, sizeof(tmp), "%3.1f", guiInfo.Volume);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case 'b':
-                snprintf(tmp, sizeof(tmp), "%3.2f%%", guiIntfStruct.Balance);
+                snprintf(tmp, sizeof(tmp), "%3.2f%%", guiInfo.Balance);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case 'B':
-                snprintf(tmp, sizeof(tmp), "%3.1f", guiIntfStruct.Balance);
+                snprintf(tmp, sizeof(tmp), "%3.1f", guiInfo.Balance);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case 'd':
-                snprintf(tmp, sizeof(tmp), "%d", guiIntfStruct.FrameDrop);
+                snprintf(tmp, sizeof(tmp), "%d", guiInfo.FrameDrop);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case 'x':
-                snprintf(tmp, sizeof(tmp), "%d", guiIntfStruct.MovieWidth);
+                snprintf(tmp, sizeof(tmp), "%d", guiInfo.MovieWidth);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case 'y':
-                snprintf(tmp, sizeof(tmp), "%d", guiIntfStruct.MovieHeight);
+                snprintf(tmp, sizeof(tmp), "%d", guiInfo.MovieHeight);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case 'C':
-                snprintf(tmp, sizeof(tmp), "%s", guiIntfStruct.sh_video ? ((sh_video_t *)guiIntfStruct.sh_video)->codec->name : "");
+                snprintf(tmp, sizeof(tmp), "%s", guiInfo.sh_video ? ((sh_video_t *)guiInfo.sh_video)->codec->name : "");
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case 's':
-                if (guiIntfStruct.Playing == 0)
+                if (guiInfo.Playing == 0)
                     av_strlcat(trbuf, "s", sizeof(trbuf));
                 break;
 
             case 'l':
-                if (guiIntfStruct.Playing == 1)
+                if (guiInfo.Playing == 1)
                     av_strlcat(trbuf, "p", sizeof(trbuf));
                 break;
 
             case 'e':
-                if (guiIntfStruct.Playing == 2)
+                if (guiInfo.Playing == 2)
                     av_strlcat(trbuf, "e", sizeof(trbuf));
                 break;
 
             case 'a':
 
-                mixer = mpctx_get_mixer(guiIntfStruct.mpcontext);
+                mixer = mpctx_get_mixer(guiInfo.mpcontext);
 
                 if (mixer->muted) {
                     av_strlcat(trbuf, "n", sizeof(trbuf));
                     break;
                 }
 
-                switch (guiIntfStruct.AudioType) {
+                switch (guiInfo.AudioType) {
                 case 0:
                     av_strlcat(trbuf, "n", sizeof(trbuf));
                     break;
@@ -270,7 +270,7 @@ calclengthmmmmss:
                 break;
 
             case 'T':
-                switch (guiIntfStruct.StreamType) {
+                switch (guiInfo.StreamType) {
                 case STREAMTYPE_FILE:
                     av_strlcat(trbuf, "f", sizeof(trbuf));
                     break;
@@ -312,7 +312,7 @@ calclengthmmmmss:
     return trbuf;
 }
 
-static void PutImage(txSample *bf, int x, int y, int max, int ofs)
+static void PutImage(guiImage *bf, int x, int y, int max, int ofs)
 {
     int i = 0, ix, iy;
     uint32_t *buf = NULL;
@@ -352,7 +352,7 @@ static void PutImage(txSample *bf, int x, int y, int max, int ofs)
 #endif
 }
 
-static void SimplePotmeterPutImage(txSample *bf, int x, int y, float frac)
+static void SimplePotmeterPutImage(guiImage *bf, int x, int y, float frac)
 {
     int i = 0, w, r, ix, iy;
     uint32_t *buf = NULL;
@@ -382,7 +382,7 @@ static void SimplePotmeterPutImage(txSample *bf, int x, int y, float frac)
 void RenderAll(wsTWindow *window, wItem *Items, int nrItems, char *db)
 {
     wItem *item;
-    txSample *image = NULL;
+    guiImage *image = NULL;
     int i, ofs;
 
     image_buffer = db;

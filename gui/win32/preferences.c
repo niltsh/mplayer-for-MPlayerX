@@ -407,7 +407,7 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
             if(gtkAOExtraStereo)
             {
                 SendDlgItemMessage(hwnd, ID_EXTRASTEREO, BM_SETCHECK, 1, 0);
-                if(!guiIntfStruct.Playing)
+                if(!guiInfo.Playing)
                 {
                     EnableWindow(track1, 1);
                     EnableWindow(track2, 1);
@@ -558,7 +558,7 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
                 case ID_APPLY:
                 {
                     int strl;
-                    if(guiIntfStruct.Playing) guiGetEvent(guiCEvent, (void *)guiSetStop);
+                    if(guiInfo.Playing) guiGetEvent(guiCEvent, (void *)guiSetStop);
 
                     /* Set the video driver */
                     free(video_driver_list[0]);

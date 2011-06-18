@@ -19,20 +19,20 @@
 #ifndef MPLAYER_GUI_PLAY_H
 #define MPLAYER_GUI_PLAY_H
 
-extern int mplGotoTheNext;
+extern int uiGotoTheNext;
 
-void ChangeSkin(char *name);
-void mplAbsSeek(float sec);
-void mplCurr(void);
-void mplEnd(void);
-void mplFullScreen(void);
-void mplNext(void);
-void mplPause(void);
-void mplPlay(void);
-void mplPrev(void);
-void mplRelSeek(float percent);
-void mplSetFileName(char *dir, char *name, int type);
-void mplState(void);
-void mplStop(void);
+void uiAbsSeek(float sec);
+void uiChangeSkin(char *name);
+void uiCurr(void);
+void uiEnd(void);
+void uiFullScreen(void);
+void uiNext(void);
+void uiPause(void);
+void uiPlay(void);
+void uiPrev(void);
+void uiRelSeek(float percent);
+void uiSetFileName(char *dir, char *name, int type);
+void uiState(void);
+void uiStop(void);
 
 #endif /* MPLAYER_GUI_PLAY_H */

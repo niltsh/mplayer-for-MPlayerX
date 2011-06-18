@@ -315,12 +315,12 @@ int cfg_read(void)
     if (f) {
         while (!feof(f)) {
             char tmp[512];
-            URLItem *item;
+            urlItem *item;
 
             if (gfgets(tmp, 512, f) == NULL)
                 continue;
 
-            item      = calloc(1, sizeof(URLItem));
+            item      = calloc(1, sizeof(urlItem));
             item->url = strdup(tmp);
             gtkSet(gtkAddURLItem, 0, (void *)item);
         }

@@ -28,13 +28,13 @@
 typedef struct {
     unsigned long Width;
     unsigned long Height;
-    unsigned int BPP;
+    unsigned int Bpp;
     unsigned long ImageSize;
     char *Image;
-} txSample;
+} guiImage;
 
-void bpFree(txSample *bf);
-int bpRead(char *fname, txSample *bf);
-int Convert32to1(txSample *in, txSample *out);
+void bpFree(guiImage *bf);
+int bpRead(char *fname, guiImage *bf);
+int bpRenderMask(guiImage *in, guiImage *out);
 
 #endif /* MPLAYER_GUI_BITMAP_H */

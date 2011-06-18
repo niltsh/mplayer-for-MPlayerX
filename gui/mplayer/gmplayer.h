@@ -19,36 +19,36 @@
 #ifndef MPLAYER_GUI_GMPLAYER_H
 #define MPLAYER_GUI_GMPLAYER_H
 
-extern int             mplSubRender;
-extern int             mplMainRender;
+extern int             uiSubRender;
+extern int             uiMainRender;
 
-extern unsigned char * mplDrawBuffer;
-extern unsigned char * mplMenuDrawBuffer;
+extern unsigned char * mainDrawBuffer;
+extern unsigned char * menuDrawBuffer;
 extern int             mainVisible;
 
-extern int             mplMainAutoPlay;
-extern int             mplMiddleMenu;
-extern int             mplPBFade;
+extern int             uiMainAutoPlay;
+extern int             uiMiddleMenu;
+extern int             uiPlaybarFade;
 
 extern int             sx, sy;
 
-void mplInit( void * disp );
+void uiInit( void * disp );
 
-void mplMainDraw( void );
-void mplEventHandling( int msg, float param );
-void mplMainMouseHandle( int Button, int X, int Y, int RX, int RY );
-void mplMainKeyHandle( int KeyCode, int Type, int Key );
-void mplDandDHandler(int num, char** files);
+void uiMainDraw( void );
+void uiEventHandling( int msg, float param );
+void uiMainMouseHandle( int Button, int X, int Y, int RX, int RY );
+void uiMainKeyHandle( int KeyCode, int Type, int Key );
+void uiDandDHandler(int num, char** files);
 
-void mplSubDraw( void );
-void mplSubMouseHandle( int Button, int X, int Y, int RX, int RY );
+void uiSubDraw( void );
+void uiSubMouseHandle( int Button, int X, int Y, int RX, int RY );
 
-void mplMenuInit( void );
-void mplHideMenu( int mx, int my, int w );
-void mplShowMenu( int mx, int my );
-void mplMenuMouseHandle( int X, int Y, int RX, int RY );
+void uiMenuInit( void );
+void uiHideMenu( int mx, int my, int w );
+void uiShowMenu( int mx, int my );
+void uiMenuMouseHandle( int X, int Y, int RX, int RY );
 
-void mplPBInit( void );
-void mplPBShow( int x, int y );
+void uiPlaybarInit( void );
+void uiPlaybarShow( int x, int y );
 
 #endif /* MPLAYER_GUI_GMPLAYER_H */

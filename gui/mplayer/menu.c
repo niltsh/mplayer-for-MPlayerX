@@ -28,127 +28,127 @@
 
 #include "widgets.h"
 
-unsigned char * mplMenuDrawBuffer = NULL;
-int             mplMenuRender = 1;
-int             mplMenuItem = -1;
-int             mplOldMenuItem = -1;
-int             mplMenuX,mplMenuY;
-static int      mplMenuIsInitialized = 0;
+unsigned char * menuDrawBuffer = NULL;
+int             menuRender = 1;
+int             menuItem = -1;
+int             oldMenuItem = -1;
+int             menuX,menuY;
+static int      menuIsInitialized = 0;
 
-static void mplMenuDraw( void )
+static void uiMenuDraw( void )
 {
  uint32_t * buf = NULL;
  uint32_t * drw = NULL;
  int             x,y,tmp;
 
- if ( !appMPlayer.menuIsPresent || !appMPlayer.menu.Bitmap.Image ) return;
- if ( !mplMenuRender && !appMPlayer.menuWindow.Visible ) return;
+ if ( !guiApp.menuIsPresent || !guiApp.menu.Bitmap.Image ) return;
+ if ( !menuRender && !guiApp.menuWindow.Visible ) return;
 
- if ( mplMenuRender || mplMenuItem != mplOldMenuItem )
+ if ( menuRender || menuItem != oldMenuItem )
   {
-   memcpy( mplMenuDrawBuffer,appMPlayer.menu.Bitmap.Image,appMPlayer.menu.Bitmap.ImageSize );
+   memcpy( menuDrawBuffer,guiApp.menu.Bitmap.Image,guiApp.menu.Bitmap.ImageSize );
 // ---
-   if ( mplMenuItem != -1 )
+   if ( menuItem != -1 )
     {
-     buf=(uint32_t *)mplMenuDrawBuffer;
-     drw=(uint32_t *)appMPlayer.menuSelected.Bitmap.Image;
-     for ( y=appMPlayer.menuItems[ mplMenuItem ].y; y < appMPlayer.menuItems[ mplMenuItem ].y + appMPlayer.menuItems[ mplMenuItem ].height; y++ )
-       for ( x=appMPlayer.menuItems[ mplMenuItem ].x; x < appMPlayer.menuItems[ mplMenuItem ].x + appMPlayer.menuItems[ mplMenuItem ].width; x++ )
+     buf=(uint32_t *)menuDrawBuffer;
+     drw=(uint32_t *)guiApp.menuSelected.Bitmap.Image;
+     for ( y=guiApp.menuItems[ menuItem ].y; y < guiApp.menuItems[ menuItem ].y + guiApp.menuItems[ menuItem ].height; y++ )
+       for ( x=guiApp.menuItems[ menuItem ].x; x < guiApp.menuItems[ menuItem ].x + guiApp.menuItems[ menuItem ].width; x++ )
          {
-          tmp=drw[ y * appMPlayer.menuSelected.width + x ];
-          if ( !IS_TRANSPARENT ( tmp ) ) buf[ y * appMPlayer.menu.width + x ]=tmp;
+          tmp=drw[ y * guiApp.menuSelected.width + x ];
+          if ( !IS_TRANSPARENT ( tmp ) ) buf[ y * guiApp.menu.width + x ]=tmp;
          }
     }
-   mplOldMenuItem=mplMenuItem;
+   oldMenuItem=menuItem;
 // ---
-   wsConvert( &appMPlayer.menuWindow,mplMenuDrawBuffer );
-   mplMenuRender=0;
+   wsConvert( &guiApp.menuWindow,menuDrawBuffer );
+   menuRender=0;
   }
- wsPutImage( &appMPlayer.menuWindow );
+ wsPutImage( &guiApp.menuWindow );
 }
 
-void mplMenuMouseHandle( int X,int Y,int RX,int RY )
+void uiMenuMouseHandle( int X,int Y,int RX,int RY )
 {
  int x,y,i;
 
- if ( !appMPlayer.menu.Bitmap.Image ) return;
+ if ( !guiApp.menu.Bitmap.Image ) return;
 
- mplMenuItem=-1;
- x=RX - appMPlayer.menuWindow.X;
- y=RY - appMPlayer.menuWindow.Y;
- if ( ( x < 0 ) || ( y < 0  ) || ( x > appMPlayer.menu.width ) || ( y > appMPlayer.menu.height ) )
+ menuItem=-1;
+ x=RX - guiApp.menuWindow.X;
+ y=RY - guiApp.menuWindow.Y;
+ if ( ( x < 0 ) || ( y < 0  ) || ( x > guiApp.menu.width ) || ( y > guiApp.menu.height ) )
   {
-   wsPostRedisplay( &appMPlayer.menuWindow );
+   wsPostRedisplay( &guiApp.menuWindow );
    return;
   }
 
- for( i=0;i<=appMPlayer.IndexOfMenuItems;i++ )
+ for( i=0;i<=guiApp.IndexOfMenuItems;i++ )
   {
    if ( wgIsRect( x,y,
-         appMPlayer.menuItems[i].x,appMPlayer.menuItems[i].y,
-         appMPlayer.menuItems[i].x+appMPlayer.menuItems[i].width,appMPlayer.menuItems[i].y+appMPlayer.menuItems[i].height ) ) { mplMenuItem=i; break; }
+         guiApp.menuItems[i].x,guiApp.menuItems[i].y,
+         guiApp.menuItems[i].x+guiApp.menuItems[i].width,guiApp.menuItems[i].y+guiApp.menuItems[i].height ) ) { menuItem=i; break; }
   }
- wsPostRedisplay( &appMPlayer.menuWindow );
+ wsPostRedisplay( &guiApp.menuWindow );
 }
 
-void mplShowMenu( int mx,int my )
+void uiShowMenu( int mx,int my )
 {
  int x,y;
 
- if ( !appMPlayer.menuIsPresent || !appMPlayer.menu.Bitmap.Image ) return;
+ if ( !guiApp.menuIsPresent || !guiApp.menu.Bitmap.Image ) return;
 
  x=mx;
- if ( x + appMPlayer.menuWindow.Width > wsMaxX ) x=wsMaxX - appMPlayer.menuWindow.Width - 1 + wsOrgX;
+ if ( x + guiApp.menuWindow.Width > wsMaxX ) x=wsMaxX - guiApp.menuWindow.Width - 1 + wsOrgX;
  y=my;
- if ( y + appMPlayer.menuWindow.Height > wsMaxY ) y=wsMaxY - appMPlayer.menuWindow.Height - 1 + wsOrgY;
+ if ( y + guiApp.menuWindow.Height > wsMaxY ) y=wsMaxY - guiApp.menuWindow.Height - 1 + wsOrgY;
 
- mplMenuX=x; mplMenuY=y;
+ menuX=x; menuY=y;
 
- mplMenuItem = 0;
+ menuItem = 0;
 
- wsMoveWindow( &appMPlayer.menuWindow,False,x,y );
- wsMoveTopWindow( wsDisplay,appMPlayer.menuWindow.WindowID );
- wsSetLayer( wsDisplay,appMPlayer.menuWindow.WindowID,1 );
- mplMenuRender=1;
- wsVisibleWindow( &appMPlayer.menuWindow,wsShowWindow );
- wsPostRedisplay( &appMPlayer.menuWindow );
+ wsMoveWindow( &guiApp.menuWindow,False,x,y );
+ wsMoveTopWindow( wsDisplay,guiApp.menuWindow.WindowID );
+ wsSetLayer( wsDisplay,guiApp.menuWindow.WindowID,1 );
+ menuRender=1;
+ wsVisibleWindow( &guiApp.menuWindow,wsShowWindow );
+ wsPostRedisplay( &guiApp.menuWindow );
 }
 
-void mplHideMenu( int mx,int my,int w )
+void uiHideMenu( int mx,int my,int w )
 {
- int x,y,i=mplMenuItem;
+ int x,y,i=menuItem;
 
- if ( !appMPlayer.menuIsPresent || !appMPlayer.menu.Bitmap.Image ) return;
+ if ( !guiApp.menuIsPresent || !guiApp.menu.Bitmap.Image ) return;
 
- x=mx-mplMenuX;
- y=my-mplMenuY;
-// x=RX - appMPlayer.menuWindow.X;
-// y=RY - appMPlayer.menuWindow.Y;
+ x=mx-menuX;
+ y=my-menuY;
+// x=RX - guiApp.menuWindow.X;
+// y=RY - guiApp.menuWindow.Y;
 
- wsVisibleWindow( &appMPlayer.menuWindow,wsHideWindow );
+ wsVisibleWindow( &guiApp.menuWindow,wsHideWindow );
 
  if ( ( x < 0 ) || ( y < 0 ) ) return;
 
 // printf( "---------> %d %d,%d\n",i,x,y );
-// printf( "--------> mi: %d,%d %dx%d\n",appMPlayer.menuItems[i].x,appMPlayer.menuItems[i].y,appMPlayer.menuItems[i].width,appMPlayer.menuItems[i].height );
+// printf( "--------> mi: %d,%d %dx%d\n",guiApp.menuItems[i].x,guiApp.menuItems[i].y,guiApp.menuItems[i].width,guiApp.menuItems[i].height );
  if ( wgIsRect( x,y,
-        appMPlayer.menuItems[i].x,appMPlayer.menuItems[i].y,
-        appMPlayer.menuItems[i].x+appMPlayer.menuItems[i].width,
-        appMPlayer.menuItems[i].y+appMPlayer.menuItems[i].height ) )
+        guiApp.menuItems[i].x,guiApp.menuItems[i].y,
+        guiApp.menuItems[i].x+guiApp.menuItems[i].width,
+        guiApp.menuItems[i].y+guiApp.menuItems[i].height ) )
    {
-    mplEventHandling( appMPlayer.menuItems[i].message,(float)w );
+    uiEventHandling( guiApp.menuItems[i].message,(float)w );
    }
 }
 
-void mplMenuInit( void )
+void uiMenuInit( void )
 {
 
- if ( mplMenuIsInitialized || !appMPlayer.menuIsPresent || !appMPlayer.menu.Bitmap.Image ) return;
+ if ( menuIsInitialized || !guiApp.menuIsPresent || !guiApp.menu.Bitmap.Image ) return;
 
- appMPlayer.menu.x=0;
- appMPlayer.menu.y=0;
+ guiApp.menu.x=0;
+ guiApp.menu.y=0;
 
- if ( ( mplMenuDrawBuffer = calloc( 1,appMPlayer.menu.Bitmap.ImageSize ) ) == NULL )
+ if ( ( menuDrawBuffer = calloc( 1,guiApp.menu.Bitmap.ImageSize ) ) == NULL )
   {
 #ifdef DEBUG
     mp_msg( MSGT_GPLAYER,MSGL_DBG2,MSGTR_NEMFMR );
@@ -157,19 +157,19 @@ void mplMenuInit( void )
    return;
   }
 
- wsCreateWindow( &appMPlayer.menuWindow,
- appMPlayer.menu.x,appMPlayer.menu.y,appMPlayer.menu.width,appMPlayer.menu.height,
+ wsCreateWindow( &guiApp.menuWindow,
+ guiApp.menu.x,guiApp.menu.y,guiApp.menu.width,guiApp.menu.height,
  wsNoBorder,wsShowMouseCursor|wsHandleMouseButton|wsHandleMouseMove,wsOverredirect|wsHideFrame|wsMaxSize|wsMinSize|wsHideWindow,"MPlayer menu" );
 
- wsSetShape( &appMPlayer.menuWindow,appMPlayer.menu.Mask.Image );
+ wsSetShape( &guiApp.menuWindow,guiApp.menu.Mask.Image );
 
 #ifdef DEBUG
-  mp_msg( MSGT_GPLAYER,MSGL_DBG2,"menu: 0x%x\n",(int)appMPlayer.menuWindow.WindowID );
+  mp_msg( MSGT_GPLAYER,MSGL_DBG2,"menu: 0x%x\n",(int)guiApp.menuWindow.WindowID );
 #endif
 
- mplMenuIsInitialized=1;
- appMPlayer.menuWindow.ReDraw=mplMenuDraw;
-// appMPlayer.menuWindow.MouseHandler=mplMenuMouseHandle;
-// appMPlayer.menuWindow.KeyHandler=mplMainKeyHandle;
- mplMenuRender=1; wsPostRedisplay( &appMPlayer.menuWindow );
+ menuIsInitialized=1;
+ guiApp.menuWindow.ReDraw=uiMenuDraw;
+// guiApp.menuWindow.MouseHandler=uiMenuMouseHandle;
+// guiApp.menuWindow.KeyHandler=uiMainKeyHandle;
+ menuRender=1; wsPostRedisplay( &guiApp.menuWindow );
 }

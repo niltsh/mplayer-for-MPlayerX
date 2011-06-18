@@ -140,8 +140,8 @@ typedef struct {
     int x, y;
     int width, height;
 
-    txSample Bitmap;
-    txSample Mask;
+    guiImage Bitmap;
+    guiImage Mask;
 
     int fontid;
     int align;
@@ -171,9 +171,9 @@ typedef struct {
     wItem sub;
     wsTWindow subWindow;
 
-    wItem bar;
-    wsTWindow barWindow;
-    int barIsPresent;
+    wItem playbar;
+    wsTWindow playbarWindow;
+    int playbarIsPresent;
 
     wItem menu;
     wItem menuSelected;
@@ -183,14 +183,14 @@ typedef struct {
     int IndexOfMainItems;
     wItem mainItems[MAX_ITEMS];
 
-    int IndexOfBarItems;
-    wItem barItems[MAX_ITEMS];
+    int IndexOfPlaybarItems;
+    wItem playbarItems[MAX_ITEMS];
 
     int IndexOfMenuItems;
     wItem menuItems[MAX_ITEMS];
 } guiItems;
 
-extern guiItems appMPlayer;
+extern guiItems guiApp;
 
 int appFindMessage(unsigned char *str);
 void appFreeStruct(void);

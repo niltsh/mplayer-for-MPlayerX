@@ -29,7 +29,7 @@
 #include "libvo/fastmemcpy.h"
 #include "mp_msg.h"
 
-static int pngRead(unsigned char *fname, txSample *bf)
+static int pngRead(unsigned char *fname, guiImage *bf)
 {
     FILE *file;
     long len;
@@ -88,35 +88,35 @@ static int pngRead(unsigned char *fname, txSample *bf)
 
     switch (avctx->pix_fmt) {
     case PIX_FMT_GRAY8:
-        bf->BPP = 8;
+        bf->Bpp = 8;
         break;
 
     case PIX_FMT_GRAY16BE:
-        bf->BPP = 16;
+        bf->Bpp = 16;
         break;
 
     case PIX_FMT_RGB24:
-        bf->BPP = 24;
+        bf->Bpp = 24;
         break;
 
     case PIX_FMT_BGRA:
     case PIX_FMT_ARGB:
-        bf->BPP = 32;
+        bf->Bpp = 32;
         break;
 
     default:
-        bf->BPP = 0;
+        bf->Bpp = 0;
         break;
     }
 
-    if (decode_ok && bf->BPP) {
+    if (decode_ok && bf->Bpp) {
         bf->Width  = avctx->width;
         bf->Height = avctx->height;
-        bpl = bf->Width * (bf->BPP / 8);
+        bpl = bf->Width * (bf->Bpp / 8);
         bf->ImageSize = bpl * bf->Height;
 
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] file: %s\n", fname);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap]  size: %lux%lu, color depth: %u\n", bf->Width, bf->Height, bf->BPP);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap]  size: %lux%lu, color depth: %u\n", bf->Width, bf->Height, bf->Bpp);
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap]  image size: %lu\n", bf->ImageSize);
 
         bf->Image = malloc(bf->ImageSize);
@@ -132,18 +132,18 @@ static int pngRead(unsigned char *fname, txSample *bf)
     av_free(avctx);
     av_free(data);
 
-    return !(decode_ok && bf->BPP);
+    return !(decode_ok && bf->Bpp);
 }
 
-static int Convert24to32(txSample *bf)
+static int Convert24to32(guiImage *bf)
 {
     char *orgImage;
     unsigned long i, c;
 
-    if (bf->BPP == 24) {
+    if (bf->Bpp == 24) {
         orgImage = bf->Image;
 
-        bf->BPP       = 32;
+        bf->Bpp       = 32;
         bf->ImageSize = bf->Width * bf->Height * 4;
         bf->Image     = calloc(1, bf->ImageSize);
 
@@ -183,7 +183,7 @@ static unsigned char *fExist(unsigned char *fname)
     return NULL;
 }
 
-int bpRead(char *fname, txSample *bf)
+int bpRead(char *fname, guiImage *bf)
 {
     int r;
 
@@ -199,8 +199,8 @@ int bpRead(char *fname, txSample *bf)
         return -5;
     }
 
-    if (bf->BPP < 24) {
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] bpp too low: %u\n", bf->BPP);
+    if (bf->Bpp < 24) {
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] bpp too low: %u\n", bf->Bpp);
         return -1;
     }
 
@@ -210,13 +210,13 @@ int bpRead(char *fname, txSample *bf)
     return 0;
 }
 
-void bpFree(txSample *bf)
+void bpFree(guiImage *bf)
 {
     free(bf->Image);
     memset(bf, 0, sizeof(*bf));
 }
 
-int Convert32to1(txSample *in, txSample *out)
+int bpRenderMask(guiImage *in, guiImage *out)
 {
     uint32_t *buf;
     unsigned long i;
@@ -226,7 +226,7 @@ int Convert32to1(txSample *in, txSample *out)
 
     out->Width     = in->Width;
     out->Height    = in->Height;
-    out->BPP       = 1;
+    out->Bpp       = 1;
     out->ImageSize = (out->Width * out->Height + 7) / 8;
     out->Image     = calloc(1, out->ImageSize);
 

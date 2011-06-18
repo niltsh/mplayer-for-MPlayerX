@@ -312,7 +312,7 @@ void ShowPreferences( void )
    case 3: gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( RBOSDTPTT ),TRUE ); break;
   }
 #if 0
- if ( guiIntfStruct.Subtitlename ) gtk_entry_set_text( GTK_ENTRY( ESubtitleName ),guiIntfStruct.Subtitlename );
+ if ( guiInfo.Subtitlename ) gtk_entry_set_text( GTK_ENTRY( ESubtitleName ),guiInfo.Subtitlename );
 #endif
 
 #ifdef CONFIG_ICONV
@@ -402,7 +402,7 @@ void ShowPreferences( void )
  gtk_adjustment_set_value( HSPPQualityadj,auto_quality );
 
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBPlayBar ),gtkEnablePlayBar );
- if ( !appMPlayer.barIsPresent )
+ if ( !guiApp.playbarIsPresent )
   {
    gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBPlayBar ),0 );
    gtk_widget_set_sensitive( CBPlayBar,FALSE );
@@ -674,7 +674,7 @@ static gboolean prHScaler( GtkWidget * widget,GdkEventMotion  * event,gpointer u
  switch ( (int)user_data )
   {
    case 0: // extra stereo coefficient
-	if ( !guiIntfStruct.Playing ) break;
+	if ( !guiInfo.Playing ) break;
 	gtkSet( gtkSetExtraStereo,HSExtraStereoMuladj->value,NULL );
 	break;
    case 1: // audio delay
@@ -720,12 +720,12 @@ static void prToggled( GtkToggleButton * togglebutton,gpointer user_data )
  switch ( (int)user_data )
   {
    case 0: // extra stereo coefficient
-	if ( guiIntfStruct.Playing )
+	if ( guiInfo.Playing )
 	gtk_widget_set_sensitive( HSExtraStereoMul,gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBExtraStereo ) ) );
 	break;
 //   case 1: // normalize
 //   case 2: // equalizer
-//	if ( guiIntfStruct.Playing ) gtkMessageBox( GTK_MB_WARNING,"Please remember, this function need restart the playing." );
+//	if ( guiInfo.Playing ) gtkMessageBox( GTK_MB_WARNING,"Please remember, this function need restart the playing." );
 //	break;
    case 3:
 	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBShowVideoWindow ) ) ) gtk_widget_set_sensitive( CBLoadFullscreen,TRUE );
@@ -740,7 +740,7 @@ static void prToggled( GtkToggleButton * togglebutton,gpointer user_data )
 	  gtkActive( Preferences );
 	 } else window=wsHideWindow;
 
-	if ( !guiIntfStruct.Playing ) wsVisibleWindow( &appMPlayer.subWindow,window );
+	if ( !guiInfo.Playing ) wsVisibleWindow( &guiApp.subWindow,window );
 	break;
    case 4:
    case 5:
@@ -1248,7 +1248,7 @@ GtkWidget * create_Preferences( void )
 
   AddLabel( MSGTR_PREFERENCES_AutoQuality,hbox5 );
 
-  if ( guiIntfStruct.sh_video && guiIntfStruct.Playing ) HSPPQualityadj=GTK_ADJUSTMENT( gtk_adjustment_new( 0,0,get_video_quality_max( guiIntfStruct.sh_video ),0,0,0 ) );
+  if ( guiInfo.sh_video && guiInfo.Playing ) HSPPQualityadj=GTK_ADJUSTMENT( gtk_adjustment_new( 0,0,get_video_quality_max( guiInfo.sh_video ),0,0,0 ) );
    else HSPPQualityadj=GTK_ADJUSTMENT( gtk_adjustment_new( 0,0,100,0,0,0 ) );
   HSPPQuality=AddHScaler( HSPPQualityadj,hbox5,0 );
 

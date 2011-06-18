@@ -249,11 +249,11 @@ static void updatedisplay(gui_t *gui, HWND hwnd)
         if(gui->skin->widgets[i]->type == tyHpotmeter || gui->skin->widgets[i]->type == tyPotmeter)
         {
             if(gui->skin->widgets[i]->msg == evSetVolume)
-                gui->skin->widgets[i]->value = guiIntfStruct.Volume;
+                gui->skin->widgets[i]->value = guiInfo.Volume;
             else if(gui->skin->widgets[i]->msg == evSetMoviePosition)
-                gui->skin->widgets[i]->value = guiIntfStruct.Position;
+                gui->skin->widgets[i]->value = guiInfo.Position;
             else if(gui->skin->widgets[i]->msg == evSetBalance)
-                gui->skin->widgets[i]->value = guiIntfStruct.Balance;
+                gui->skin->widgets[i]->value = guiInfo.Balance;
             if(gui->skin->widgets[i]->window == get_windowtype(hwnd))
                 renderwidget(gui->skin, get_drawground(hwnd), gui->skin->widgets[i],
                              gui->skin->widgets[i]->pressed ? 0 : 1);
@@ -263,15 +263,15 @@ static void updatedisplay(gui_t *gui, HWND hwnd)
         {
             if(gui->skin->widgets[i]->msg == evPlaySwitchToPause)
             {
-                gui->skin->widgets[i]->value = guiIntfStruct.Playing;
+                gui->skin->widgets[i]->value = guiInfo.Playing;
                     renderwidget(gui->skin, get_drawground(hwnd), gui->skin->widgets[i],
-                                 guiIntfStruct.Playing == 1 ? 0 : 1);
+                                 guiInfo.Playing == 1 ? 0 : 1);
             }
             if(gui->skin->widgets[i]->msg == evMute)
             {
-                gui->skin->widgets[i]->value = guiIntfStruct.Volume;
+                gui->skin->widgets[i]->value = guiInfo.Volume;
                     renderwidget(gui->skin, get_drawground(hwnd), gui->skin->widgets[i],
-                                 guiIntfStruct.Volume == 0.0f ? 0 : 1);
+                                 guiInfo.Volume == 0.0f ? 0 : 1);
             }
         }
     }
@@ -453,7 +453,7 @@ static LRESULT CALLBACK SubProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
                 for(i=0; i<filecount; i++)
                 {
                     DragQueryFile((HDROP) wParam, i, file, MAX_PATH);
-                    mplSetFileName(NULL, file, STREAMTYPE_FILE);
+                    uiSetFileName(NULL, file, STREAMTYPE_FILE);
                     if(!parse_filename(file, playtree, mconfig, 1))
                         gui->playlist->add_track(gui->playlist, file, NULL, NULL, 0);
                 }
@@ -487,7 +487,7 @@ static LRESULT CALLBACK SubProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
             point.x = GET_X_LPARAM(lParam);
             point.y = GET_Y_LPARAM(lParam);
             ClientToScreen(hWnd, &point);
-            if(guiIntfStruct.StreamType == STREAMTYPE_DVD)
+            if(guiInfo.StreamType == STREAMTYPE_DVD)
                 EnableMenuItem(gui->dvdmenu, ID_CHAPTERSEL, MF_BYCOMMAND | MF_ENABLED);
             TrackPopupMenu(gui->submenu, 0, point.x, point.y, 0, hWnd, NULL);
             return 0;
@@ -609,7 +609,7 @@ static LRESULT CALLBACK SubProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
             GetClientRect(hWnd, &rect);
             width = rect.right - rect.left;
             height = rect.bottom - rect.top;
-            if(guiIntfStruct.Playing == 0)
+            if(guiInfo.Playing == 0)
             {
                 int i;
                 window *desc = NULL;
@@ -725,7 +725,7 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
             {
                 PCOPYDATASTRUCT cdData;
                 cdData = (PCOPYDATASTRUCT) lParam;
-                mplSetFileName(NULL, cdData->lpData, STREAMTYPE_FILE);
+                uiSetFileName(NULL, cdData->lpData, STREAMTYPE_FILE);
                 if(!parse_filename(cdData->lpData, playtree, mconfig, 1))
                     gui->playlist->add_track(gui->playlist, cdData->lpData, NULL, NULL, 0);
                 gui->startplay(gui);
@@ -742,7 +742,7 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                 for(i=0; i<filecount; i++)
                 {
                     DragQueryFile((HDROP) wParam, i, file, MAX_PATH);
-                    mplSetFileName(NULL, file, STREAMTYPE_FILE);
+                    uiSetFileName(NULL, file, STREAMTYPE_FILE);
                     if(!parse_filename(file, playtree, mconfig, 1))
                         gui->playlist->add_track(gui->playlist, file, NULL, NULL, 0);
                 }
@@ -889,15 +889,15 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                             item->value = 0.0f;
 
                         if(item->msg == evSetVolume)
-                            guiIntfStruct.Volume = (float) item->value;
+                            guiInfo.Volume = (float) item->value;
                         else if(item->msg == evSetMoviePosition)
-                            guiIntfStruct.Position = (float) item->value;
+                            guiInfo.Position = (float) item->value;
                         else if(item->msg == evSetBalance)
                         {
                             /* make the range for 50% a bit bigger, because the sliders for balance usually suck */
                             if((item->value - 50.0f < 1.5f) && (item->value - 50.0f > -1.5f))
                                 item->value = 50.0f;
-                            guiIntfStruct.Balance = (float) item->value;
+                            guiInfo.Balance = (float) item->value;
                         }
                         updatedisplay(gui, hWnd);
                         handlemsg(hWnd, item->msg);

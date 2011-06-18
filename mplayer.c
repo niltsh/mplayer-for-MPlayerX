@@ -2605,7 +2605,7 @@ static void pause_loop(void)
         if (use_gui) {
             guiEventHandling();
             guiGetEvent(guiReDraw, NULL);
-            if (guiIntfStruct.Playing != 2 || (rel_seek_secs || abs_seek_pos))
+            if (guiInfo.Playing != 2 || (rel_seek_secs || abs_seek_pos))
                 break;
         }
 #endif
@@ -2648,7 +2648,7 @@ static void pause_loop(void)
     (void)GetRelativeTime(); // ignore time that passed during pause
 #ifdef CONFIG_GUI
     if (use_gui) {
-        if (guiIntfStruct.Playing == guiSetStop)
+        if (guiInfo.Playing == guiSetStop)
             mpctx->eof = 1;
         else
             guiGetEvent(guiCEvent, (char *)guiSetPlay);
@@ -3138,7 +3138,7 @@ play_next_file:
     if (use_gui) {
         mpctx->file_format = DEMUXER_TYPE_UNKNOWN;
         guiGetEvent(guiSetDefaults, 0);
-        while (guiIntfStruct.Playing != 1) {
+        while (guiInfo.Playing != 1) {
             mp_cmd_t *cmd;
             usec_sleep(20000);
             guiEventHandling();
@@ -3149,9 +3149,9 @@ play_next_file:
             }
         }
         guiGetEvent(guiSetParameters, NULL);
-        if (guiIntfStruct.StreamType == STREAMTYPE_STREAM) {
+        if (guiInfo.StreamType == STREAMTYPE_STREAM) {
             play_tree_t *entry = play_tree_new();
-            play_tree_add_file(entry, guiIntfStruct.Filename);
+            play_tree_add_file(entry, guiInfo.Filename);
             if (mpctx->playtree)
                 play_tree_free_list(mpctx->playtree->child, 1);
             else
@@ -3725,9 +3725,9 @@ goto_enable_cache:
 #ifdef CONFIG_GUI
         if (use_gui) {
             if (mpctx->sh_audio)
-                guiIntfStruct.AudioType = mpctx->sh_audio->channels;
+                guiInfo.AudioType = mpctx->sh_audio->channels;
             else
-                guiIntfStruct.AudioType = 0;
+                guiInfo.AudioType = 0;
             if (!mpctx->sh_video && mpctx->sh_audio)
                 guiGetEvent(guiSetAudioOnly, (char *)1);
             else
@@ -4042,27 +4042,27 @@ goto_enable_cache:
                 guiEventHandling();
                 if (mpctx->demuxer->file_format == DEMUXER_TYPE_AVI && mpctx->sh_video && mpctx->sh_video->video.dwLength > 2) {
                     // get pos from frame number / total frames
-                    guiIntfStruct.Position = (float)mpctx->d_video->pack_no * 100.0f / mpctx->sh_video->video.dwLength;
+                    guiInfo.Position = (float)mpctx->d_video->pack_no * 100.0f / mpctx->sh_video->video.dwLength;
                 } else {
-                    guiIntfStruct.Position = demuxer_get_percent_pos(mpctx->demuxer);
+                    guiInfo.Position = demuxer_get_percent_pos(mpctx->demuxer);
                 }
                 if (mpctx->sh_video)
-                    guiIntfStruct.TimeSec = mpctx->sh_video->pts;
+                    guiInfo.TimeSec = mpctx->sh_video->pts;
                 else if (mpctx->sh_audio)
-                    guiIntfStruct.TimeSec = playing_audio_pts(mpctx->sh_audio, mpctx->d_audio, mpctx->audio_out);
-                guiIntfStruct.LengthInSec = demuxer_get_time_length(mpctx->demuxer);
+                    guiInfo.TimeSec = playing_audio_pts(mpctx->sh_audio, mpctx->d_audio, mpctx->audio_out);
+                guiInfo.LengthInSec = demuxer_get_time_length(mpctx->demuxer);
                 guiGetEvent(guiReDraw, NULL);
                 guiGetEvent(guiSetVolume, NULL);
-                if (guiIntfStruct.Playing == 0)
+                if (guiInfo.Playing == 0)
                     break;                  // STOP
-                if (guiIntfStruct.Playing == 2)
+                if (guiInfo.Playing == 2)
                     mpctx->osd_function = OSD_PAUSE;
-                if (guiIntfStruct.DiskChanged || guiIntfStruct.NewPlay)
+                if (guiInfo.DiskChanged || guiInfo.NewPlay)
                     goto goto_next_file;
 #ifdef CONFIG_DVDREAD
                 if (mpctx->stream->type == STREAMTYPE_DVD) {
                     dvd_priv_t *dvdp = mpctx->stream->priv;
-                    guiIntfStruct.DVD.current_chapter = dvd_chapter_from_cell(dvdp, guiIntfStruct.DVD.current_title - 1, dvdp->cur_cell) + 1;
+                    guiInfo.DVD.current_chapter = dvd_chapter_from_cell(dvdp, guiInfo.DVD.current_title - 1, dvdp->cur_cell) + 1;
                 }
 #endif
             }
@@ -4157,15 +4157,15 @@ goto_next_file:  // don't jump here after ao/vo/getch initialization!
 #ifdef CONFIG_GUI
     if (use_gui && !mpctx->playtree_iter) {
 #ifdef CONFIG_DVDREAD
-        if (!guiIntfStruct.DiskChanged)
+        if (!guiInfo.DiskChanged)
 #endif
-        mplEnd();
+        uiEnd();
     }
 #endif
 
     if (
 #ifdef CONFIG_GUI
-        (use_gui && guiIntfStruct.Playing) ||
+        (use_gui && guiInfo.Playing) ||
 #endif
                                               mpctx->playtree_iter != NULL || player_idle_mode) {
         if (!mpctx->playtree_iter)

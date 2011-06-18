@@ -36,14 +36,14 @@ typedef struct {
 typedef struct {
     fntChar Fnt[ASCII_CHRS + EXTRA_CHRS];
     unsigned char nonASCIIidx[EXTRA_CHRS][UTF8LENGTH];
-    txSample Bitmap;
+    guiImage Bitmap;
     char name[MAX_FONT_NAME];
 } bmpFont;
 
 int fntFindID(char *name);
 void fntFreeFont(void);
 int fntRead(char *path, char *fname);
-txSample *fntRender(wItem *item, int px, char *txt);
+guiImage *fntRender(wItem *item, int px, char *txt);
 int fntTextWidth(int id, char *str);
 
 #endif /* MPLAYER_GUI_FONT_H */

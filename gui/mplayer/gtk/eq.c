@@ -84,12 +84,12 @@ static void eqSetBands( int channel )
  gtk_adjustment_set_value( A8000adj,0.0f - gtkEquChannels[channel][8] );
  gtk_adjustment_set_value( A16000adj,0.0f - gtkEquChannels[channel][9] );
 
- if ( guiIntfStruct.sh_video )
+ if ( guiInfo.sh_video )
   {
-   get_video_colors( guiIntfStruct.sh_video,"brightness",&vo_gamma_brightness );
-   get_video_colors( guiIntfStruct.sh_video,"contrast",&vo_gamma_contrast );
-   get_video_colors( guiIntfStruct.sh_video,"hue",&vo_gamma_hue );
-   get_video_colors( guiIntfStruct.sh_video,"saturation",&vo_gamma_saturation );
+   get_video_colors( guiInfo.sh_video,"brightness",&vo_gamma_brightness );
+   get_video_colors( guiInfo.sh_video,"contrast",&vo_gamma_contrast );
+   get_video_colors( guiInfo.sh_video,"hue",&vo_gamma_hue );
+   get_video_colors( guiInfo.sh_video,"saturation",&vo_gamma_saturation );
   }
 
  gtk_adjustment_set_value( VContrastadj,(float)vo_gamma_contrast );
@@ -105,17 +105,17 @@ static void eqSetChannelNames( void )
  str[1]="";
  str[0]=MSGTR_EQU_All;
  gtk_clist_append( GTK_CLIST( ChannelsList ) ,str);
- if ( guiIntfStruct.AudioType > 1 )
+ if ( guiInfo.AudioType > 1 )
   {
    str[0]=gtkEquChannel1; gtk_clist_append( GTK_CLIST( ChannelsList ) ,str);
    str[0]=gtkEquChannel2; gtk_clist_append( GTK_CLIST( ChannelsList ) ,str);
   }
- if ( guiIntfStruct.AudioType > 2 )
+ if ( guiInfo.AudioType > 2 )
   {
    str[0]=gtkEquChannel3; gtk_clist_append( GTK_CLIST( ChannelsList ) ,str);
    str[0]=gtkEquChannel4; gtk_clist_append( GTK_CLIST( ChannelsList ) ,str);
   }
- if ( guiIntfStruct.AudioType > 4 )
+ if ( guiInfo.AudioType > 4 )
   {
    str[0]=gtkEquChannel5; gtk_clist_append( GTK_CLIST( ChannelsList ) ,str);
    str[0]=gtkEquChannel6; gtk_clist_append( GTK_CLIST( ChannelsList ) ,str);
@@ -137,7 +137,7 @@ void ShowEqualizer( void )
 
  eqSetChannelNames();
 
- if ( !guiIntfStruct.Playing || !guiIntfStruct.sh_video )
+ if ( !guiInfo.Playing || !guiInfo.sh_video )
   {
    gtk_widget_set_sensitive( VContrast,FALSE );
    gtk_widget_set_sensitive( VBrightness,FALSE );
@@ -146,7 +146,7 @@ void ShowEqualizer( void )
   }
  Channel=-1;
  eqSetBands( 0 );
- if ( !guiIntfStruct.Playing || !gtkEnableAudioEqualizer )
+ if ( !guiInfo.Playing || !gtkEnableAudioEqualizer )
   {
    gtk_widget_set_sensitive( ChannelsList,FALSE );
    gtk_widget_set_sensitive( A3125,FALSE );
@@ -225,13 +225,13 @@ static void eqButtonReleased( GtkButton * button,gpointer user_data )
    case 1:
 	if ( gtk_notebook_get_current_page( GTK_NOTEBOOK( Notebook ) ) == 0 )
 	 {
-	  if ( !guiIntfStruct.Playing || !gtkEnableAudioEqualizer ) break;
+	  if ( !guiInfo.Playing || !gtkEnableAudioEqualizer ) break;
 	  gtkSet( gtkSetEqualizer,0,NULL );
 	  eqSetBands( Channel );
 	 }
 	 else
 	  {
-	   if ( !guiIntfStruct.Playing ) break;
+	   if ( !guiInfo.Playing ) break;
 	   gtkSet( gtkSetContrast,0.0f,NULL );
 	   gtkSet( gtkSetBrightness,0.0f,NULL );
 	   gtkSet( gtkSetHue,0.0f,NULL );

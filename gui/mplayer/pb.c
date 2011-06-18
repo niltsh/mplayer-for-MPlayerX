@@ -51,68 +51,68 @@
 unsigned int GetTimerMS( void );
 unsigned int GetTimer( void );
 
-unsigned char * mplPBDrawBuffer = NULL;
-int		mplPBVisible = 0;
-int  		mplPBLength = 0;
-int		mplPBFade = 0;
+unsigned char * playbarDrawBuffer = NULL;
+int		playbarVisible = 0;
+int  		playbarLength = 0;
+int		uiPlaybarFade = 0;
 
-static void mplPBDraw( void )
+static void uiPlaybarDraw( void )
 {
  int x;
 
- if ( !appMPlayer.subWindow.isFullScreen ) return;
- if ( !mplPBVisible || !appMPlayer.barIsPresent ) return;
+ if ( !guiApp.subWindow.isFullScreen ) return;
+ if ( !playbarVisible || !guiApp.playbarIsPresent ) return;
 
-// appMPlayer.bar.x=( appMPlayer.subWindow.Width - appMPlayer.bar.width ) / 2;
- switch( appMPlayer.bar.x )
+// guiApp.playbar.x=( guiApp.subWindow.Width - guiApp.playbar.width ) / 2;
+ switch( guiApp.playbar.x )
   {
-   case -1: x=( appMPlayer.subWindow.Width - appMPlayer.bar.width ) / 2; break;
-   case -2: x=( appMPlayer.subWindow.Width - appMPlayer.bar.width ); break;
-   default: x=appMPlayer.bar.x;
+   case -1: x=( guiApp.subWindow.Width - guiApp.playbar.width ) / 2; break;
+   case -2: x=( guiApp.subWindow.Width - guiApp.playbar.width ); break;
+   default: x=guiApp.playbar.x;
   }
 
- switch ( mplPBFade )
+ switch ( uiPlaybarFade )
   {
    case 1: // fade in
-        mplPBLength--;
-        if ( appMPlayer.subWindow.Height - appMPlayer.bar.height >= mplPBLength )
+        playbarLength--;
+        if ( guiApp.subWindow.Height - guiApp.playbar.height >= playbarLength )
 	 {
-	  mplPBLength=appMPlayer.subWindow.Height - appMPlayer.bar.height;
-	  mplPBFade=0;
+	  playbarLength=guiApp.subWindow.Height - guiApp.playbar.height;
+	  uiPlaybarFade=0;
 	  vo_mouse_autohide=0;
 	 }
-        wsMoveWindow( &appMPlayer.barWindow,0,x,mplPBLength );
+        wsMoveWindow( &guiApp.playbarWindow,0,x,playbarLength );
 	break;
    case 2: // fade out
-	mplPBLength+=10;
-	if ( mplPBLength > appMPlayer.subWindow.Height )
+	playbarLength+=10;
+	if ( playbarLength > guiApp.subWindow.Height )
 	 {
-	  mplPBLength=appMPlayer.subWindow.Height;
-	  mplPBFade=mplPBVisible=0;
+	  playbarLength=guiApp.subWindow.Height;
+	  uiPlaybarFade=playbarVisible=0;
           vo_mouse_autohide=1;
-          wsVisibleWindow( &appMPlayer.barWindow,wsHideWindow );
+          wsVisibleWindow( &guiApp.playbarWindow,wsHideWindow );
 	  return;
 	 }
-        wsMoveWindow( &appMPlayer.barWindow,0,x,mplPBLength );
+        wsMoveWindow( &guiApp.playbarWindow,0,x,playbarLength );
 	break;
   }
 
 // --- render
- if ( appMPlayer.barWindow.State == wsWindowExpose )
+ if ( guiApp.playbarWindow.State == wsWindowExpose )
   {
-   btnModify( evSetMoviePosition,guiIntfStruct.Position );
-   btnModify( evSetVolume,guiIntfStruct.Volume );
+   btnModify( evSetMoviePosition,guiInfo.Position );
+   btnModify( evSetVolume,guiInfo.Volume );
 
    vo_mouse_autohide=0;
 
-   fast_memcpy( mplPBDrawBuffer,appMPlayer.bar.Bitmap.Image,appMPlayer.bar.Bitmap.ImageSize );
-   RenderAll( &appMPlayer.barWindow,appMPlayer.barItems,appMPlayer.IndexOfBarItems,mplPBDrawBuffer );
-   wsConvert( &appMPlayer.barWindow,mplPBDrawBuffer );
+   fast_memcpy( playbarDrawBuffer,guiApp.playbar.Bitmap.Image,guiApp.playbar.Bitmap.ImageSize );
+   RenderAll( &guiApp.playbarWindow,guiApp.playbarItems,guiApp.IndexOfPlaybarItems,playbarDrawBuffer );
+   wsConvert( &guiApp.playbarWindow,playbarDrawBuffer );
   }
- wsPutImage( &appMPlayer.barWindow );
+ wsPutImage( &guiApp.playbarWindow );
 }
 
-static void mplPBMouseHandle( int Button, int X, int Y, int RX, int RY )
+static void uiPlaybarMouseHandle( int Button, int X, int Y, int RX, int RY )
 {
  static int     itemtype = 0;
         int     i;
@@ -122,19 +122,19 @@ static void mplPBMouseHandle( int Button, int X, int Y, int RX, int RY )
  static int     SelectedItem = -1;
 	int     currentselected = -1;
 
- for ( i=0;i <= appMPlayer.IndexOfBarItems;i++ )
-   if ( ( appMPlayer.barItems[i].pressed != btnDisabled )&&
-      ( wgIsRect( X,Y,appMPlayer.barItems[i].x,appMPlayer.barItems[i].y,appMPlayer.barItems[i].x+appMPlayer.barItems[i].width,appMPlayer.barItems[i].y+appMPlayer.barItems[i].height ) ) )
+ for ( i=0;i <= guiApp.IndexOfPlaybarItems;i++ )
+   if ( ( guiApp.playbarItems[i].pressed != btnDisabled )&&
+      ( wgIsRect( X,Y,guiApp.playbarItems[i].x,guiApp.playbarItems[i].y,guiApp.playbarItems[i].x+guiApp.playbarItems[i].width,guiApp.playbarItems[i].y+guiApp.playbarItems[i].height ) ) )
     { currentselected=i; break; }
 
  switch ( Button )
   {
    case wsPMMouseButton:
         gtkShow( evHidePopUpMenu,NULL );
-        mplShowMenu( RX,RY );
+        uiShowMenu( RX,RY );
         break;
    case wsRMMouseButton:
-        mplHideMenu( RX,RY,0 );
+        uiHideMenu( RX,RY,0 );
         break;
    case wsRRMouseButton:
         gtkShow( evShowPopUpMenu,NULL );
@@ -144,7 +144,7 @@ static void mplPBMouseHandle( int Button, int X, int Y, int RX, int RY )
 	gtkShow( evHidePopUpMenu,NULL );
         SelectedItem=currentselected;
         if ( SelectedItem == -1 ) break; // yeees, i'm move the fucking window
-        item=&appMPlayer.barItems[SelectedItem];
+        item=&guiApp.playbarItems[SelectedItem];
 	itemtype=item->type;
 	item->pressed=btnPressed;
 
@@ -162,7 +162,7 @@ static void mplPBMouseHandle( int Button, int X, int Y, int RX, int RY )
    case wsRLMouseButton:
         if ( SelectedItem != -1 )   // NOTE TO MYSELF: only if itButton, itHPotmeter or itVPotmeter
          {
-          item=&appMPlayer.barItems[SelectedItem];
+          item=&guiApp.playbarItems[SelectedItem];
           item->pressed=btnReleased;
          }
 	SelectedItem=-1;
@@ -174,16 +174,16 @@ static void mplPBMouseHandle( int Button, int X, int Y, int RX, int RY )
 	  case itPotmeter:
 	  case itHPotmeter:
 	       btnModify( item->message,(float)( X - item->x ) / item->width * 100.0f );
-	       mplEventHandling( item->message,item->value );
+	       uiEventHandling( item->message,item->value );
 	       value=item->value;
 	       break;
 	  case itVPotmeter:
 	       btnModify( item->message, ( 1. - (float)( Y - item->y ) / item->height) * 100.0f );
-	       mplEventHandling( item->message,item->value );
+	       uiEventHandling( item->message,item->value );
 	       value=item->value;
 	       break;
 	 }
-	mplEventHandling( item->message,value );
+	uiEventHandling( item->message,value );
 
 	itemtype=0;
 	break;
@@ -191,21 +191,21 @@ static void mplPBMouseHandle( int Button, int X, int Y, int RX, int RY )
    case wsP5MouseButton: value=-2.5f; goto rollerhandled;
    case wsP4MouseButton: value= 2.5f;
 rollerhandled:
-        item=&appMPlayer.barItems[currentselected];
+        item=&guiApp.playbarItems[currentselected];
         if ( ( item->type == itHPotmeter )||( item->type == itVPotmeter )||( item->type == itPotmeter ) )
 	 {
 	  item->value+=value;
 	  btnModify( item->message,item->value );
-	  mplEventHandling( item->message,item->value );
+	  uiEventHandling( item->message,item->value );
 	 }
 	break;
 // ---
    case wsMoveMouse:
-        item=&appMPlayer.barItems[SelectedItem];
+        item=&guiApp.playbarItems[SelectedItem];
 	switch ( itemtype )
 	 {
 	  case itPRMButton:
-	       mplMenuMouseHandle( X,Y,RX,RY );
+	       uiMenuMouseHandle( X,Y,RX,RY );
 	       break;
 	  case itPotmeter:
 	       item->value=(float)( X - item->x ) / item->width * 100.0f;
@@ -218,48 +218,48 @@ rollerhandled:
 potihandled:
 	       if ( item->value > 100.0f ) item->value=100.0f;
 	       if ( item->value < 0.0f ) item->value=0.0f;
-	       mplEventHandling( item->message,item->value );
+	       uiEventHandling( item->message,item->value );
 	       break;
 	 }
         break;
   }
 }
 
-void mplPBShow( int x, int y )
+void uiPlaybarShow( int x, int y )
 {
- if ( !appMPlayer.barIsPresent || !gtkEnablePlayBar ) return;
- if ( !appMPlayer.subWindow.isFullScreen ) return;
+ if ( !guiApp.playbarIsPresent || !gtkEnablePlayBar ) return;
+ if ( !guiApp.subWindow.isFullScreen ) return;
 
- if ( y > appMPlayer.subWindow.Height - appMPlayer.bar.height )
+ if ( y > guiApp.subWindow.Height - guiApp.playbar.height )
   {
-   if ( !mplPBFade ) wsVisibleWindow( &appMPlayer.barWindow,wsShowWindow );
-   mplPBFade=1; mplPBVisible=1; wsPostRedisplay( &appMPlayer.barWindow );
+   if ( !uiPlaybarFade ) wsVisibleWindow( &guiApp.playbarWindow,wsShowWindow );
+   uiPlaybarFade=1; playbarVisible=1; wsPostRedisplay( &guiApp.playbarWindow );
   }
-  else if ( !mplPBFade ) mplPBFade=2;
+  else if ( !uiPlaybarFade ) uiPlaybarFade=2;
 }
 
-void mplPBInit( void )
+void uiPlaybarInit( void )
 {
- if ( !appMPlayer.barIsPresent ) return;
+ if ( !guiApp.playbarIsPresent ) return;
 
- gfree( (void**)&mplPBDrawBuffer );
+ gfree( (void**)&playbarDrawBuffer );
 
- if ( ( mplPBDrawBuffer = malloc( appMPlayer.bar.Bitmap.ImageSize ) ) == NULL )
+ if ( ( playbarDrawBuffer = malloc( guiApp.playbar.Bitmap.ImageSize ) ) == NULL )
   {
    gmp_msg( MSGT_GPLAYER,MSGL_FATAL,MSGTR_NEMDB );
    guiExit( EXIT_ERROR );
   }
 
- appMPlayer.barWindow.Parent=appMPlayer.subWindow.WindowID;
- wsCreateWindow( &appMPlayer.barWindow,
-   appMPlayer.bar.x,appMPlayer.bar.y,appMPlayer.bar.width,appMPlayer.bar.height,
+ guiApp.playbarWindow.Parent=guiApp.subWindow.WindowID;
+ wsCreateWindow( &guiApp.playbarWindow,
+   guiApp.playbar.x,guiApp.playbar.y,guiApp.playbar.width,guiApp.playbar.height,
    wsNoBorder,wsShowMouseCursor|wsHandleMouseButton|wsHandleMouseMove,wsHideFrame|wsHideWindow,"PlayBar" );
 
- wsSetShape( &appMPlayer.barWindow,appMPlayer.bar.Mask.Image );
+ wsSetShape( &guiApp.playbarWindow,guiApp.playbar.Mask.Image );
 
- appMPlayer.barWindow.ReDraw=(void *)mplPBDraw;
- appMPlayer.barWindow.MouseHandler=mplPBMouseHandle;
- appMPlayer.barWindow.KeyHandler=mplMainKeyHandle;
+ guiApp.playbarWindow.ReDraw=(void *)uiPlaybarDraw;
+ guiApp.playbarWindow.MouseHandler=uiPlaybarMouseHandle;
+ guiApp.playbarWindow.KeyHandler=uiMainKeyHandle;
 
- mplPBLength=appMPlayer.subWindow.Height;
+ playbarLength=guiApp.subWindow.Height;
 }

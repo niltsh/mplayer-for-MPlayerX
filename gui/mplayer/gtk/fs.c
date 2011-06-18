@@ -263,7 +263,7 @@ void ShowFileSelect( int type,int modal )
         gtk_combo_set_popdown_strings( GTK_COMBO( List ),fsList_items );
         g_list_free( fsList_items );
         gtk_entry_set_text( GTK_ENTRY( fsFilterCombo ),fsVideoFilterNames[k >= 0 ? k : i-2][0] );
-	tmp=guiIntfStruct.Filename;
+	tmp=guiInfo.Filename;
         break;
    case fsSubtitleSelector:
         gtk_window_set_title( GTK_WINDOW( fsFileSelect ),MSGTR_SubtitleSelect );
@@ -274,7 +274,7 @@ void ShowFileSelect( int type,int modal )
         gtk_combo_set_popdown_strings( GTK_COMBO( List ),fsList_items );
         g_list_free( fsList_items );
         gtk_entry_set_text( GTK_ENTRY( fsFilterCombo ),fsSubtitleFilterNames[k >= 0 ? k : i-2][0] );
-	tmp=guiIntfStruct.Subtitlename;
+	tmp=guiInfo.Subtitlename;
         break;
    case fsOtherSelector:
         gtk_window_set_title( GTK_WINDOW( fsFileSelect ),MSGTR_OtherSelect );
@@ -284,7 +284,7 @@ void ShowFileSelect( int type,int modal )
         gtk_combo_set_popdown_strings( GTK_COMBO( List ),fsList_items );
         g_list_free( fsList_items );
         gtk_entry_set_text( GTK_ENTRY( fsFilterCombo ),fsOtherFilterNames[0][0] );
-	tmp=guiIntfStruct.Othername;
+	tmp=guiInfo.Othername;
         break;
    case fsAudioSelector:
 	gtk_window_set_title( GTK_WINDOW( fsFileSelect ),MSGTR_AudioFileSelect );
@@ -295,7 +295,7 @@ void ShowFileSelect( int type,int modal )
 	gtk_combo_set_popdown_strings( GTK_COMBO( List ),fsList_items );
 	g_list_free( fsList_items );
 	gtk_entry_set_text( GTK_ENTRY( fsFilterCombo ),fsAudioFileNames[k >= 0 ? k : i-2][0] );
-	tmp=guiIntfStruct.AudioFile;
+	tmp=guiInfo.AudioFile;
 	break;
    case fsFontSelector:
         gtk_window_set_title( GTK_WINDOW( fsFileSelect ),MSGTR_FontSelect );
@@ -476,22 +476,22 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
  switch ( fsType )
   {
    case fsVideoSelector:
-          guiSetDF( guiIntfStruct.Filename,fsSelectedDirectory,fsSelectedFile );
-          guiIntfStruct.StreamType=STREAMTYPE_FILE;
-          guiIntfStruct.FilenameChanged=1; sub_fps=0;
-	  gfree( (void **)&guiIntfStruct.AudioFile );
-	  gfree( (void **)&guiIntfStruct.Subtitlename );
+          guiSetDF( guiInfo.Filename,fsSelectedDirectory,fsSelectedFile );
+          guiInfo.StreamType=STREAMTYPE_FILE;
+          guiInfo.FilenameChanged=1; sub_fps=0;
+	  gfree( (void **)&guiInfo.AudioFile );
+	  gfree( (void **)&guiInfo.Subtitlename );
           fs_PersistantHistory( get_current_dir_name_utf8() );      //totem, write into history
           break;
    case fsSubtitleSelector:
-          guiSetDF( guiIntfStruct.Subtitlename,fsSelectedDirectory,fsSelectedFile );
-	  guiLoadSubtitle( guiIntfStruct.Subtitlename );
+          guiSetDF( guiInfo.Subtitlename,fsSelectedDirectory,fsSelectedFile );
+	  guiLoadSubtitle( guiInfo.Subtitlename );
           break;
    case fsOtherSelector:
-          guiSetDF( guiIntfStruct.Othername,fsSelectedDirectory,fsSelectedFile );
+          guiSetDF( guiInfo.Othername,fsSelectedDirectory,fsSelectedFile );
           break;
    case fsAudioSelector:
-          guiSetDF( guiIntfStruct.AudioFile,fsSelectedDirectory,fsSelectedFile );
+          guiSetDF( guiInfo.AudioFile,fsSelectedDirectory,fsSelectedFile );
           break;
    case fsFontSelector:
           guiSetDF( font_name,fsSelectedDirectory,fsSelectedFile );
@@ -509,7 +509,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
    item=item->next;
   }
  if ( i ) fsTopList_items=g_list_prepend( fsTopList_items,(gchar *)get_current_dir_name_utf8() );
- if ( mplMainAutoPlay ) { mplMainAutoPlay=0; mplEventHandling( evPlay,0 ); }
+ if ( uiMainAutoPlay ) { uiMainAutoPlay=0; uiEventHandling( evPlay,0 ); }
   else guiGetEvent( guiCEvent,guiSetStop );
 }
 

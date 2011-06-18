@@ -212,9 +212,9 @@ typedef struct plItem {
 typedef struct urlItem {
     struct urlItem *next;
     char *url;
-} URLItem;
+} urlItem;
 
-extern guiInterface_t guiIntfStruct;
+extern guiInterface_t guiInfo;
 
 extern int guiWinID;
 
@@ -226,7 +226,7 @@ extern plItem *plList;
 extern plItem *plCurrent;
 extern plItem *plLastPlayed;
 
-extern URLItem *URLList;
+extern urlItem *URLList;
 
 extern char *fsHistory[fsPersistant_MaxPos];
 

@@ -218,7 +218,7 @@ void gtkMessageBox(int type, const gchar *str)
 
 void gtkSetLayer(GtkWidget *wdg)
 {
-    wsSetLayer(gdk_display, GDK_WINDOW_XWINDOW(wdg->window), appMPlayer.subWindow.isFullScreen);
+    wsSetLayer(gdk_display, GDK_WINDOW_XWINDOW(wdg->window), guiApp.subWindow.isFullScreen);
     gtkActive(wdg);
 }
 

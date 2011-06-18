@@ -90,7 +90,7 @@ static int in_window(char *name)
     return 0;
 }
 
-int skinBPRead(char *fname, txSample *bf)
+int skinBPRead(char *fname, guiImage *bf)
 {
     int i = bpRead(fname, bf);
 
@@ -137,7 +137,7 @@ static int item_section(char *in)
     }
 
     if (!strcmp(strlower(in), "movieplayer"))
-        skin = &appMPlayer;
+        skin = &guiApp;
     else {
         skin_error(MSGTR_SKIN_UNKNOWN_NAME, in);
         return 1;
@@ -203,9 +203,9 @@ static int item_window(char *in)
         currWinItemIdx = NULL;
         currWinItems   = NULL;
     } else if (strcmp(in, "playbar") == 0) {
-        currWin = &skin->bar;
-        currWinItemIdx = &skin->IndexOfBarItems;
-        currWinItems   = skin->barItems;
+        currWin = &skin->playbar;
+        currWinItemIdx = &skin->IndexOfPlaybarItems;
+        currWinItems   = skin->playbarItems;
     } else if (strcmp(in, "menu") == 0) {
         currWin = &skin->menu;
         currWinItemIdx = &skin->IndexOfMenuItems;
@@ -277,7 +277,7 @@ static int item_base(char *in)
 
     if (!is_sub) {
 #ifdef CONFIG_XSHAPE
-        if (!Convert32to1(&currWin->Bitmap, &currWin->Mask)) {
+        if (!bpRenderMask(&currWin->Bitmap, &currWin->Mask)) {
             skin_error(MSGTR_SKIN_NotEnoughMemory);
             return 1;
         }
@@ -288,7 +288,7 @@ static int item_base(char *in)
     }
 
     if (is_bar)
-        skin->barIsPresent = 1;
+        skin->playbarIsPresent = 1;
     if (is_menu)
         skin->menuIsPresent = 1;
 

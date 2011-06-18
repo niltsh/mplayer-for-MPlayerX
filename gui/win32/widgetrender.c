@@ -126,55 +126,55 @@ static char *generatetextfromlabel(widget *item)
     }
     strcpy(text, item->label);
     if(item->type == tySlabel) return text;
-    stringreplace(text, "$1", "%.2i:%.2i:%.2i", guiIntfStruct.TimeSec / 3600,
-                 (guiIntfStruct.TimeSec / 60) % 60, guiIntfStruct.TimeSec % 60);
-    stringreplace(text, "$2", "%.4i:%.2i", guiIntfStruct.TimeSec / 60, guiIntfStruct.TimeSec % 60);
-    stringreplace(text, "$3", "%.2i", guiIntfStruct.TimeSec / 3600);
-    stringreplace(text, "$4", "%.2i", (guiIntfStruct.TimeSec / 60) % 60);
-    stringreplace(text, "$5", "%.2i", guiIntfStruct.TimeSec % 60);
-    stringreplace(text, "$6", "%.2i:%.2i:%.2i", guiIntfStruct.LengthInSec / 3600,
-                 (guiIntfStruct.LengthInSec / 60) % 60, guiIntfStruct.LengthInSec % 60);
-    stringreplace(text, "$7", "%.4i:%.2i", guiIntfStruct.LengthInSec / 60, guiIntfStruct.LengthInSec % 60);
-    stringreplace(text, "$8", "%i:%.2i:%.2i", guiIntfStruct.TimeSec / 3600,
-                 (guiIntfStruct.TimeSec / 60) % 60, guiIntfStruct.TimeSec % 60);
-    stringreplace(text, "$v", "%3.2f", guiIntfStruct.Volume);
-    stringreplace(text, "$V", "%3.1f", guiIntfStruct.Volume);
-    stringreplace(text, "$b", "%3.2f", guiIntfStruct.Balance);
-    stringreplace(text, "$B", "%3.1f", guiIntfStruct.Balance);
-    stringreplace(text, "$t", "%.2i", guiIntfStruct.Track);
-    stringreplace(text, "$o", "%s", guiIntfStruct.Filename);
-    stringreplace(text, "$x", "%i", guiIntfStruct.MovieWidth);
-    stringreplace(text, "$y", "%i", guiIntfStruct.MovieHeight);
-    stringreplace(text, "$C", "%s", guiIntfStruct.sh_video ? codecname : "");
+    stringreplace(text, "$1", "%.2i:%.2i:%.2i", guiInfo.TimeSec / 3600,
+                 (guiInfo.TimeSec / 60) % 60, guiInfo.TimeSec % 60);
+    stringreplace(text, "$2", "%.4i:%.2i", guiInfo.TimeSec / 60, guiInfo.TimeSec % 60);
+    stringreplace(text, "$3", "%.2i", guiInfo.TimeSec / 3600);
+    stringreplace(text, "$4", "%.2i", (guiInfo.TimeSec / 60) % 60);
+    stringreplace(text, "$5", "%.2i", guiInfo.TimeSec % 60);
+    stringreplace(text, "$6", "%.2i:%.2i:%.2i", guiInfo.LengthInSec / 3600,
+                 (guiInfo.LengthInSec / 60) % 60, guiInfo.LengthInSec % 60);
+    stringreplace(text, "$7", "%.4i:%.2i", guiInfo.LengthInSec / 60, guiInfo.LengthInSec % 60);
+    stringreplace(text, "$8", "%i:%.2i:%.2i", guiInfo.TimeSec / 3600,
+                 (guiInfo.TimeSec / 60) % 60, guiInfo.TimeSec % 60);
+    stringreplace(text, "$v", "%3.2f", guiInfo.Volume);
+    stringreplace(text, "$V", "%3.1f", guiInfo.Volume);
+    stringreplace(text, "$b", "%3.2f", guiInfo.Balance);
+    stringreplace(text, "$B", "%3.1f", guiInfo.Balance);
+    stringreplace(text, "$t", "%.2i", guiInfo.Track);
+    stringreplace(text, "$o", "%s", guiInfo.Filename);
+    stringreplace(text, "$x", "%i", guiInfo.MovieWidth);
+    stringreplace(text, "$y", "%i", guiInfo.MovieHeight);
+    stringreplace(text, "$C", "%s", guiInfo.sh_video ? codecname : "");
     stringreplace(text, "$$", "$");
 
     if(!strcmp(text, "$p") || !strcmp(text, "$s") || !strcmp(text, "$e"))
     {
-        if(guiIntfStruct.Playing == 0) stringreplace(text, NULL, "s");
-        else if(guiIntfStruct.Playing == 1) stringreplace(text, NULL, "p");
-        else if(guiIntfStruct.Playing == 2) stringreplace(text, NULL, "e");
+        if(guiInfo.Playing == 0) stringreplace(text, NULL, "s");
+        else if(guiInfo.Playing == 1) stringreplace(text, NULL, "p");
+        else if(guiInfo.Playing == 2) stringreplace(text, NULL, "e");
     }
 
-    if(guiIntfStruct.AudioType == 0) stringreplace(text, "$a", "n");
-    else if(guiIntfStruct.AudioType == 1) stringreplace(text, "$a", "m");
+    if(guiInfo.AudioType == 0) stringreplace(text, "$a", "n");
+    else if(guiInfo.AudioType == 1) stringreplace(text, "$a", "m");
     else stringreplace(text, "$a", "t");
 
-    if(guiIntfStruct.StreamType == 0)
+    if(guiInfo.StreamType == 0)
         stringreplace(text, "$T", "f");
 #ifdef CONFIG_DVDREAD
-    else if(guiIntfStruct.StreamType == STREAMTYPE_DVD || guiIntfStruct.StreamType == STREAMTYPE_DVDNAV)
+    else if(guiInfo.StreamType == STREAMTYPE_DVD || guiInfo.StreamType == STREAMTYPE_DVDNAV)
         stringreplace(text, "$T", "d");
 #endif
     else stringreplace(text, "$T", "u");
 
-    if(guiIntfStruct.Filename)
+    if(guiInfo.Filename)
     {
-        for (i=0; i<strlen(guiIntfStruct.Filename); i++)
-            tmp[i] = tolower(guiIntfStruct.Filename[i]);
+        for (i=0; i<strlen(guiInfo.Filename); i++)
+            tmp[i] = tolower(guiInfo.Filename[i]);
         stringreplace(text, "$f", tmp);
 
-        for (i=0; i<strlen(guiIntfStruct.Filename); i++)
-            tmp[i] = toupper(guiIntfStruct.Filename[i]);
+        for (i=0; i<strlen(guiInfo.Filename); i++)
+            tmp[i] = toupper(guiInfo.Filename[i]);
         stringreplace(text, "$F", tmp);
     }
 
