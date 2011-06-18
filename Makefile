@@ -996,7 +996,7 @@ mp3lib/test$(EXESUF) mp3lib/test2$(EXESUF): $(SRCS_MP3LIB:.c=.o) libvo/aclib.o c
 
 TESTS = codecs2html codec-cfg-test libvo/aspecttest mp3lib/test mp3lib/test2
 
-ifdef ARCH_X86
+ifdef ARCH_X86_32
 TESTS += loader/qtx/list loader/qtx/qtxload
 endif
 
