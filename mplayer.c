@@ -2548,7 +2548,7 @@ static double update_video(int *blit_frame)
             sh_video->last_pts = sh_video->pts;
         else if (sh_video->last_pts > sh_video->pts) {
             // make a guess whether this is some kind of discontinuity
-            // we should jump along with or some wron timestamps we
+            // we should jump along with or some wrong timestamps we
             // should replace instead
             if (sh_video->pts < sh_video->last_pts - 20 * sh_video->frametime)
                 sh_video->last_pts = sh_video->pts;
