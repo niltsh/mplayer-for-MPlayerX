@@ -1665,7 +1665,7 @@ Stop at given time or byte position.
 .I NOTE:
 Byte position may not be accurate, as it can only stop at a frame boundary.
 When used in conjunction with \-ss option, \-endpos time will shift forward by
-seconds specified with \-ss.
+seconds specified with \-ss if not a byte position.
 .sp 1
 .I EXAMPLE:
 .PD 0
@@ -1676,7 +1676,9 @@ Stop at 56 seconds.
 Stop at 1 hour 10 minutes.
 .IPs "\-ss 10 \-endpos 56"
 Stop at 1 minute 6 seconds.
-.IPs "\-endpos 100mb"
+.IPs "mplayer \-endpos 100mb"
+Stop playback after reading 100MB of the input file.
+.IPs "mencoder \-endpos 100mb"
 Encode only 100 MB.
 .RE
 .PD 1
