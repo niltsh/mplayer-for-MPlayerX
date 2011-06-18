@@ -43,7 +43,7 @@
 #include "gui/interface.h"
 #include "gui/wm/ws.h"
 
-#include "play.h"
+#include "actions.h"
 #include "gtk/fs.h"
 
 GtkWidget *PopUpMenu = NULL;

@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "gui_common.h"
+#include "render.h"
 #include "gui/interface.h"
 #include "gui/skin/font.h"
 

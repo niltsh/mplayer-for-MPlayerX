@@ -44,9 +44,9 @@
 #include "codec-cfg.h"
 
 #include "gmplayer.h"
-#include "play.h"
+#include "actions.h"
 #include "widgets.h"
-#include "gui_common.h"
+#include "render.h"
 
 unsigned int GetTimerMS( void );
 unsigned int GetTimer( void );

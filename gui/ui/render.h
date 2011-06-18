@@ -16,11 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef MPLAYER_GUI_GUI_COMMON_H
-#define MPLAYER_GUI_GUI_COMMON_H
+#ifndef MPLAYER_GUI_RENDER_H
+#define MPLAYER_GUI_RENDER_H
 
 #include "gui/app.h"
 
 void RenderAll(wsTWindow *window, wItem *Items, int nrItems, char *db);
 
-#endif /* MPLAYER_GUI_GUI_COMMON_H */
+#endif /* MPLAYER_GUI_RENDER_H */

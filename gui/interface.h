@@ -29,7 +29,7 @@
 // the GUI and that only need to include interface.h for this.
 // ------------------------------------------------------------
 #include "cfg.h"
-#include "mplayer/play.h"
+#include "ui/actions.h"
 
 extern int use_gui;             // this is defined in mplayer.c
 // ------------------------------------------------------------

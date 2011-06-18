@@ -28,7 +28,7 @@
 
 #include "config.h"
 #include "osdep/shmem.h"
-#include "play.h"
+#include "actions.h"
 #include "mplayer.h"
 #include "gui/interface.h"
 

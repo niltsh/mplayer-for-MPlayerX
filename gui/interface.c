@@ -21,9 +21,9 @@
 
 #include "interface.h"
 #include "app.h"
-#include "mplayer/gmplayer.h"
-#include "mplayer/widgets.h"
 #include "skin/skin.h"
+#include "ui/gmplayer.h"
+#include "ui/widgets.h"
 #include "wm/ws.h"
 #include "wm/wsxdnd.h"
 

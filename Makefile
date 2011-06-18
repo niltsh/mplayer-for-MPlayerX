@@ -521,25 +521,25 @@ SRCS_MPLAYER-$(GUI)          += gui/util/bitmap.c
 SRCS_MPLAYER-$(GUI_GTK)      += gui/app.c \
                                 gui/cfg.c \
                                 gui/interface.c \
-                                gui/mplayer/gui_common.c \
-                                gui/mplayer/menu.c \
-                                gui/mplayer/mw.c \
-                                gui/mplayer/pb.c \
-                                gui/mplayer/play.c \
-                                gui/mplayer/sw.c \
-                                gui/mplayer/widgets.c \
-                                gui/mplayer/gtk/about.c \
-                                gui/mplayer/gtk/eq.c \
-                                gui/mplayer/gtk/fs.c \
-                                gui/mplayer/gtk/gtk_common.c \
-                                gui/mplayer/gtk/gtk_menu.c \
-                                gui/mplayer/gtk/gtk_url.c \
-                                gui/mplayer/gtk/mb.c \
-                                gui/mplayer/gtk/opts.c \
-                                gui/mplayer/gtk/pl.c \
-                                gui/mplayer/gtk/sb.c \
                                 gui/skin/font.c \
                                 gui/skin/skin.c \
+                                gui/ui/actions.c \
+                                gui/ui/gtk/about.c \
+                                gui/ui/gtk/eq.c \
+                                gui/ui/gtk/fs.c \
+                                gui/ui/gtk/gtk_common.c \
+                                gui/ui/gtk/gtk_menu.c \
+                                gui/ui/gtk/gtk_url.c \
+                                gui/ui/gtk/mb.c \
+                                gui/ui/gtk/opts.c \
+                                gui/ui/gtk/pl.c \
+                                gui/ui/gtk/sb.c \
+                                gui/ui/main.c \
+                                gui/ui/menu.c \
+                                gui/ui/playbar.c \
+                                gui/ui/render.c \
+                                gui/ui/sub.c \
+                                gui/ui/widgets.c \
                                 gui/util/cut.c \
                                 gui/util/string.c \
                                 gui/wm/ws.c \
@@ -735,11 +735,11 @@ DIRS =  . \
         ffmpeg/libswscale/sparc \
         ffmpeg/libswscale/x86 \
         gui \
-        gui/mplayer \
-        gui/mplayer/gtk \
         gui/skin \
-        gui/wm \
+        gui/ui \
+        gui/ui/gtk \
         gui/win32 \
+        gui/wm \
         input \
         libaf \
         libao2 \

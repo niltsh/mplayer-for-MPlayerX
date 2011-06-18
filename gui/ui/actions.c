@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "play.h"
+#include "actions.h"
 #include "gmplayer.h"
 #include "gui/app.h"
 #include "gui/interface.h"

@@ -53,7 +53,7 @@
 
 #define GUI_REDRAW_WAIT 375
 
-#include "play.h"
+#include "actions.h"
 #include "widgets.h"
 
 unsigned int GetTimerMS( void );
@@ -70,7 +70,7 @@ int             boxMoved = 0;
 int             sx = 0,sy = 0;
 int             i,pot = 0;
 
-#include "gui_common.h"
+#include "render.h"
 
 void uiMainDraw( void )
 {

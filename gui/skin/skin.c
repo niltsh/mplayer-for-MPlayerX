@@ -23,7 +23,7 @@
 #include "font.h"
 #include "gui/app.h"
 #include "gui/interface.h"
-#include "gui/mplayer/widgets.h"
+#include "gui/ui/widgets.h"
 #include "gui/util/cut.h"
 #include "gui/util/string.h"
 
