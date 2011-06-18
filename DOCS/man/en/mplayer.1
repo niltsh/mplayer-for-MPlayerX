@@ -4788,8 +4788,8 @@ Output video into an animated MNG file using 24 bpp RGB images
 with lossless compression.
 .PD 0
 .RSs
-.IPs <output>
-Specify the output filename (mandatory).
+.IPs output=<filename>
+Specify the output filename (default: out.mng).
 .REss
 .PD 1
 .RS
@@ -4798,7 +4798,7 @@ Specify the output filename (mandatory).
 .RE
 .PD 0
 .RSs
-mplayer video.mkv \-vo mng:output.mng
+mplayer video.mkv \-vo mng:output=test.mng
 .RE
 .PD 1
 .

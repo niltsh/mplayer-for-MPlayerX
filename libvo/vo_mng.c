@@ -40,6 +40,7 @@
 #include "video_out.h"
 #include "video_out_internal.h"
 #include "mp_msg.h"
+#include "subopt-helper.h"
 
 #define VOMNG_DEFAULT_DELAY_MS (100) /* default delay of a frame */
 
@@ -566,6 +567,12 @@ static int draw_slice(uint8_t *srcimg[], int stride[],
     return 0;
 }
 
+/** list of suboptions */
+static const opt_t subopts[] = {
+    {"output", OPT_ARG_MSTRZ, &vomng.out_file_name, NULL},
+    {NULL,     0,             NULL,                 NULL}
+};
+
 /**
  * @brief pre-initialize MNG vo module
  * @param[in] *arg arguments passed to MNG vo module (output file name)
@@ -573,19 +580,19 @@ static int draw_slice(uint8_t *srcimg[], int stride[],
  */
 static int preinit(const char *arg)
 {
-    /* get name of output file */
-    if (!arg || !*arg) {
-        mp_msg(MSGT_VO, MSGL_ERR, "vomng: MNG output file must be given,"
-                                  " example: -vo mng:output.mng\n");
+    if (subopt_parse(arg, subopts)) {
+        mp_msg(MSGT_VO, MSGL_ERR,
+               "\n-vo mng command line help:\n"
+               "Example: mplayer -vo mng:output=file.mng\n"
+               "\nOptions:\n"
+               "  output=<filename>\n"
+               "    Specify the output file.  The default is out.mng.\n"
+               "\n");
         vomng_prop_cleanup();
         return 1;
     }
-    vomng.out_file_name = strdup(arg);
-    if (!vomng.out_file_name) {
-        mp_msg(MSGT_VO, MSGL_ERR, "vomng: out of memory\n");
-        vomng_prop_cleanup();
-        return 1;
-    }
+    if (!vomng.out_file_name)
+        vomng.out_file_name = strdup("out.mng");
 
     return 0;
 }

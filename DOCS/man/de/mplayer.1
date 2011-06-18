@@ -4586,8 +4586,8 @@ Gibt das Video in eine animierte MNG-Datei mit 24 bpp RGB Bildern
 in verlustfreier Kompression aus.
 .PD 0
 .RSs
-.IPs <output>
-Gibt den Ausgabedateinamen an (zwingend erforderlich).
+.IPs output=<Dateiname>
+Gibt den Ausgabedateinamen an (Standard: out.mng).
 .REss
 .PD 1
 .RS
@@ -4596,7 +4596,7 @@ Gibt den Ausgabedateinamen an (zwingend erforderlich).
 .RE
 .PD 0
 .RSs
-mplayer video.mkv \-vo mng:output.mng
+mplayer video.mkv \-vo mng:output=test.mng
 .RE
 .PD 1
 .
