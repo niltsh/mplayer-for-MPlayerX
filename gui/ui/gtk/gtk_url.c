@@ -30,8 +30,8 @@
 #include "gtk_common.h"
 #include "gui/interface.h"
 #include "gui/app.h"
-#include "gui/mplayer/gmplayer.h"
-#include "gui/mplayer/widgets.h"
+#include "gui/ui/gmplayer.h"
+#include "gui/ui/widgets.h"
 #include "help_mp.h"
 
 GtkWidget * URL = NULL;

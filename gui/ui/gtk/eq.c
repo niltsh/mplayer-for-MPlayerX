@@ -36,7 +36,7 @@
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"
 #include "libmpcodecs/dec_video.h"
-#include "gui/mplayer/widgets.h"
+#include "gui/ui/widgets.h"
 
 #include "eq.h"
 #include "gtk_common.h"

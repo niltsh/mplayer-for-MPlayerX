@@ -34,7 +34,7 @@
 #include "libvo/video_out.h"
 #include "osdep/priority.h"
 #include "mixer.h"
-#include "gui/mplayer/gmplayer.h"
+#include "gui/ui/gmplayer.h"
 #include "gui/interface.h"
 #include "gui.h"
 

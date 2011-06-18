@@ -48,7 +48,7 @@
 #include "access_mpcontext.h"
 #include "libmpcodecs/vd.h"
 #include "libmpcodecs/dec_audio.h"
-#include "gui/mplayer/gmplayer.h"
+#include "gui/ui/gmplayer.h"
 #include "mp_core.h"
 #include "mpcommon.h"
 #include "gui.h"

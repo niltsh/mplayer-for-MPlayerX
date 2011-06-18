@@ -20,8 +20,8 @@
 #include "gui/app.h"
 #include "help_mp.h"
 
-#include "gui/mplayer/pixmaps/about.xpm"
-#include "gui/mplayer/widgets.h"
+#include "gui/ui/pixmaps/about.xpm"
+#include "gui/ui/widgets.h"
 #include "about.h"
 #include "gtk_common.h"
 

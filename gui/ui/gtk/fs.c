@@ -24,11 +24,11 @@
 #include <unistd.h>
 
 #include "config.h"
-#include "gui/mplayer/gmplayer.h"
+#include "gui/ui/gmplayer.h"
 
-#include "gui/mplayer/pixmaps/up.xpm"
-#include "gui/mplayer/pixmaps/dir.xpm"
-#include "gui/mplayer/pixmaps/file.xpm"
+#include "gui/ui/pixmaps/up.xpm"
+#include "gui/ui/pixmaps/dir.xpm"
+#include "gui/ui/pixmaps/file.xpm"
 
 #include "gui/app.h"
 #include "gui/interface.h"
@@ -36,7 +36,7 @@
 #include "mpcommon.h"
 #include "stream/stream.h"
 
-#include "gui/mplayer/widgets.h"
+#include "gui/ui/widgets.h"
 #include "fs.h"
 #include "opts.h"
 #include "gtk_common.h"
