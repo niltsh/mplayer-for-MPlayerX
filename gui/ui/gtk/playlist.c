@@ -36,53 +36,8 @@
 #include "playlist.h"
 #include "tools.h"
 
-static char * book_open_xpm[] = {
-	"16 16 4 1",
-	"       c None s None",
-	".      c black",
-	"X      c #808080",
-	"o      c white",
-	"                ",
-	"  ..            ",
-	" .Xo.    ...    ",
-	" .Xoo. ..oo.    ",
-	" .Xooo.Xooo...  ",
-	" .Xooo.oooo.X.  ",
-	" .Xooo.Xooo.X.  ",
-	" .Xooo.oooo.X.  ",
-	" .Xooo.Xooo.X.  ",
-	" .Xooo.oooo.X.  ",
-	"  .Xoo.Xoo..X.  ",
-	"   .Xo.o..ooX.  ",
-	"    .X..XXXXX.  ",
-	"    ..X.......  ",
-	"     ..         ",
-	"                "};
-
-static char * book_closed_xpm[] = {
-	"16 16 6 1",
-	"       c None s None",
-	".      c black",
-	"X      c blue",
-	"o      c yellow",
-	"O      c #007FEA",
-	"#      c white",
-	"                ",
-	"       ..       ",
-	"     ..XX.      ",
-	"   ..XXXXX.     ",
-	" ..XXXXXXXX.    ",
-	".ooXXXXXXXXX.   ",
-	"..ooXXXXXXXXX.  ",
-	".X.ooXXXXXXXXX. ",
-	".XX.ooXXXXXX..  ",
-	" .XX.ooXXX..#O  ",
-	"  .XX.oo..##OO. ",
-	"   .XX..##OO..  ",
-	"    .X.#OO..    ",
-	"     ..O..      ",
-	"      ..        ",
-	"                "};
+#include "gui/ui/pixmaps/open2.xpm"
+#include "gui/ui/pixmaps/dir2.xpm"
 
        GtkWidget * PlayList = NULL;
 static GtkWidget * CTDirTree;
@@ -521,8 +476,8 @@ GtkWidget * create_PlayList( void )
   gtk_clist_column_titles_show( GTK_CLIST( CTDirTree ) );
   gtk_clist_set_shadow_type( GTK_CLIST( CTDirTree ),GTK_SHADOW_NONE );
 
-  if ( !pxOpenedBook ) pxOpenedBook=gdk_pixmap_create_from_xpm_d( PlayList->window,&msOpenedBook,&transparent,book_closed_xpm );
-  if ( !pxClosedBook ) pxClosedBook=gdk_pixmap_create_from_xpm_d( PlayList->window,&msClosedBook,&transparent,book_open_xpm );
+  if ( !pxOpenedBook ) pxOpenedBook=gdk_pixmap_create_from_xpm_d( PlayList->window,&msOpenedBook,&transparent,(gchar **)dir2_xpm );
+  if ( !pxClosedBook ) pxClosedBook=gdk_pixmap_create_from_xpm_d( PlayList->window,&msClosedBook,&transparent,(gchar **)open2_xpm );
 
   parent=gtk_ctree_insert_node( GTK_CTREE( CTDirTree ),NULL,NULL,&root,4,pxOpenedBook,msOpenedBook,pxClosedBook,msClosedBook,FALSE,FALSE );
   DirNode=malloc( sizeof( DirNodeType ) );
