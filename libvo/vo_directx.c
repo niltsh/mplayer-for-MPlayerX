@@ -1005,13 +1005,13 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
 	//create palette for 256 color mode
 	if(image_format==IMGFMT_BGR8){
 		LPDIRECTDRAWPALETTE ddpalette=NULL;
-		char* palette=malloc(4*256);
+		LPPALETTEENTRY palette=calloc(256, sizeof(*palette));
 		int i;
 		for(i=0; i<256; i++){
-			palette[4*i+0] = ((i >> 5) & 0x07) * 255 / 7;
-			palette[4*i+1] = ((i >> 2) & 0x07) * 255 / 7;
-			palette[4*i+2] = ((i >> 0) & 0x03) * 255 / 3;
-			palette[4*i+3] = PC_NOCOLLAPSE;
+			palette[i].peRed   = ((i >> 5) & 0x07) * 255 / 7;
+			palette[i].peGreen = ((i >> 2) & 0x07) * 255 / 7;
+			palette[i].peBlue  = ((i >> 0) & 0x03) * 255 / 3;
+			palette[i].peFlags = PC_NOCOLLAPSE;
 		}
 		g_lpdd->lpVtbl->CreatePalette(g_lpdd,DDPCAPS_8BIT|DDPCAPS_INITIALIZE,palette,&ddpalette,NULL);
 		g_lpddsPrimary->lpVtbl->SetPalette(g_lpddsPrimary,ddpalette);
