@@ -128,7 +128,7 @@ void uiEnd(void)
         } else
             wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
 
-        guiGetEvent(guiCEvent, guiSetStop);
+        guiGetEvent(guiCEvent, (void *)guiSetStop);
         uiSubRender = 1;
         wsSetBackgroundRGB(&guiApp.subWindow, guiApp.sub.R, guiApp.sub.G, guiApp.sub.B);
         wsClearWindow(guiApp.subWindow);

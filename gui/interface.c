@@ -664,7 +664,7 @@ int guiGetEvent(int type, void *arg)
         switch (stream->type) {
 #ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
-            guiGetEvent(guiSetDVD, (char *)stream->priv);
+            guiGetEvent(guiSetDVD, stream->priv);
             break;
 #endif
 
