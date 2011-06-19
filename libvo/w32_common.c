@@ -93,6 +93,7 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
             event_flags |= VO_EVENT_EXPOSE;
             break;
         case WM_MOVE:
+            event_flags |= VO_EVENT_MOVE;
             p.x = 0;
             p.y = 0;
             ClientToScreen(vo_window, &p);
