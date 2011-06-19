@@ -512,8 +512,11 @@ Die Konfigurationsdatei für MEncoder ist 'mencoder.conf' in deinem
 Konfigurationsverzeichnis (z.B.\& /etc/\:mplayer oder
 /usr/\:local/\:etc/\:mplayer), die benutzerspezifische
 ist '~/\:.mplayer/\:mencoder.conf'.
-Benutzerspezifische Einstellungen haben Vorrang vor den systemweiten,
-und Optionen auf der Kommandozeile überschreiben die beiden anderen.
+Benutzerspezifische Einstellungen haben Vorrang vor den systemweiten (im
+Falle von
+.B gmplayer
+haben die Optionen in gui.conf Vorrang vor den benutzerspezifischen)
+und Optionen auf der Kommandozeile überschreiben alle anderen.
 Die Syntax der Konfigurationsdateien lautet 'Option=<Wert>'
 und alles, was nach einem '#' kommt, wird als Kommentar verstanden und nicht
 ausgewertet.

@@ -497,8 +497,10 @@ specific one is '~/\:.mplayer/\:config'.
 The configuration file for MEncoder is 'mencoder.conf' in your configuration
 directory (e.g.\& /etc/\:mplayer or /usr/\:local/\:etc/\:mplayer), the
 user specific one is '~/\:.mplayer/\:mencoder.conf'.
-User specific options override system-wide options and options given on the
-command line override either.
+User specific options override system-wide options (in case of
+.BR gmplayer ,
+gui.conf options override user specific options) and options given on the
+command line override all.
 The syntax of the configuration files is 'option=<value>', everything after
 a '#' is considered a comment.
 Options that work without values can be enabled by setting them to 'yes'
