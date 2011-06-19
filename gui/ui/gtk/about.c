@@ -20,7 +20,7 @@
 #include "gui/app.h"
 #include "help_mp.h"
 
-#include "gui/ui/pixmaps/about.xpm"
+#include "gui/ui/pixmaps/emblem.xpm"
 #include "gui/ui/widgets.h"
 #include "about.h"
 #include "gtk_common.h"
@@ -73,7 +73,7 @@ GtkWidget * create_About( void )
   vbox=AddVBox( AddDialogFrame( About ),0 );
 
   pixmapstyle=gtk_widget_get_style( About );
-  pixmapwid=gdk_pixmap_colormap_create_from_xpm_d( About->window,gdk_colormap_get_system(),&mask,&pixmapstyle->bg[GTK_STATE_NORMAL],(gchar **) about_xpm );
+  pixmapwid=gdk_pixmap_colormap_create_from_xpm_d( About->window,gdk_colormap_get_system(),&mask,&pixmapstyle->bg[GTK_STATE_NORMAL],(gchar **) emblem_xpm );
   pixmap1=gtk_pixmap_new( pixmapwid,mask );
 
   gtk_widget_set_name( pixmap1,"pixmap1" );

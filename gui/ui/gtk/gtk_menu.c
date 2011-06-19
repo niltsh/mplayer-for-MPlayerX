@@ -36,32 +36,32 @@
 #include "libmpdemux/stheader.h"
 #include "libavutil/avstring.h"
 
-#include "gui/ui/pixmaps/ab.xpm"
+#include "gui/ui/pixmaps/about.xpm"
 #include "gui/ui/pixmaps/half.xpm"
 #include "gui/ui/pixmaps/normal.xpm"
 #include "gui/ui/pixmaps/double.xpm"
-#include "gui/ui/pixmaps/fs.xpm"
+#include "gui/ui/pixmaps/full.xpm"
 #include "gui/ui/pixmaps/exit.xpm"
 #include "gui/ui/pixmaps/prefs.xpm"
-#include "gui/ui/pixmaps/eq.xpm"
-#include "gui/ui/pixmaps/pl.xpm"
+#include "gui/ui/pixmaps/equalizer.xpm"
+#include "gui/ui/pixmaps/playlist.xpm"
 #include "gui/ui/pixmaps/skin.xpm"
 #include "gui/ui/pixmaps/sound.xpm"
 #include "gui/ui/pixmaps/open.xpm"
 #include "gui/ui/pixmaps/play.xpm"
-#include "gui/ui/pixmaps/stop2.xpm"
+#include "gui/ui/pixmaps/stop.xpm"
 #include "gui/ui/pixmaps/pause.xpm"
 #include "gui/ui/pixmaps/prev.xpm"
 #include "gui/ui/pixmaps/next.xpm"
 #include "gui/ui/pixmaps/aspect.xpm"
-#include "gui/ui/pixmaps/a11.xpm"
-#include "gui/ui/pixmaps/a169.xpm"
-#include "gui/ui/pixmaps/a235.xpm"
-#include "gui/ui/pixmaps/a43.xpm"
+#include "gui/ui/pixmaps/aspect11.xpm"
+#include "gui/ui/pixmaps/aspect169.xpm"
+#include "gui/ui/pixmaps/aspect235.xpm"
+#include "gui/ui/pixmaps/aspect43.xpm"
 #include "gui/ui/pixmaps/file2.xpm"
 #include "gui/ui/pixmaps/url.xpm"
 #include "gui/ui/pixmaps/sub.xpm"
-#include "gui/ui/pixmaps/delsub.xpm"
+#include "gui/ui/pixmaps/nosub.xpm"
 #include "gui/ui/pixmaps/empty.xpm"
 #include "gui/ui/pixmaps/loadeaf.xpm"
 #include "gui/ui/pixmaps/title.xpm"
@@ -70,8 +70,8 @@
 #include "gui/ui/pixmaps/playdvd.xpm"
 #include "gui/ui/pixmaps/chapter.xpm"
 #include "gui/ui/pixmaps/dolby.xpm"
-#include "gui/ui/pixmaps/tongue.xpm"
-#include "gui/ui/pixmaps/tonguebla.xpm"
+#include "gui/ui/pixmaps/audiolang.xpm"
+#include "gui/ui/pixmaps/sublang.xpm"
 #include "gui/ui/pixmaps/empty1px.xpm"
 #endif
 #ifdef CONFIG_VCD
@@ -419,7 +419,7 @@ GtkWidget * create_PopUpMenu( void )
  window1 = gtk_widget_get_toplevel(Menu);
 
 
-  AddMenuItem( window1, (const char*)ab_xpm, Menu,MSGTR_MENU_AboutMPlayer"     ", evAbout );
+  AddMenuItem( window1, (const char*)about_xpm, Menu,MSGTR_MENU_AboutMPlayer"     ", evAbout );
   AddSeparator( Menu );
    SubMenu=AddSubMenu( window1, (const char*)open_xpm, Menu,MSGTR_MENU_Open );
     AddMenuItem( window1, (const char*)file2_xpm, SubMenu,MSGTR_MENU_PlayFile"    ", evLoadPlay );
@@ -431,12 +431,12 @@ GtkWidget * create_PopUpMenu( void )
 #endif
     AddMenuItem( window1, (const char*)url_xpm, SubMenu,MSGTR_MENU_PlayURL, evSetURL );
     AddMenuItem( window1, (const char*)sub_xpm, SubMenu,MSGTR_MENU_LoadSubtitle"   ", evLoadSubtitle );
-    AddMenuItem( window1, (const char*)delsub_xpm, SubMenu,MSGTR_MENU_DropSubtitle,evDropSubtitle );
+    AddMenuItem( window1, (const char*)nosub_xpm, SubMenu,MSGTR_MENU_DropSubtitle,evDropSubtitle );
     AddMenuItem( window1, (const char*)loadeaf_xpm, SubMenu,MSGTR_MENU_LoadExternAudioFile, evLoadAudioFile );
    SubMenu=AddSubMenu(window1, (const char*)play_xpm, Menu,MSGTR_MENU_Playing );
     AddMenuItem( window1, (const char*)play_xpm, SubMenu,MSGTR_MENU_Play"        ", evPlay );
     AddMenuItem( window1, (const char*)pause_xpm, SubMenu,MSGTR_MENU_Pause, evPause );
-    AddMenuItem( window1, (const char*)stop2_xpm, SubMenu,MSGTR_MENU_Stop, evStop );
+    AddMenuItem( window1, (const char*)stop_xpm, SubMenu,MSGTR_MENU_Stop, evStop );
     AddMenuItem( window1, (const char*)next_xpm, SubMenu,MSGTR_MENU_NextStream, evNext );
     AddMenuItem( window1, (const char*)prev_xpm, SubMenu,MSGTR_MENU_PrevStream, evPrev );
 //    AddSeparator( SubMenu );
@@ -507,7 +507,7 @@ GtkWidget * create_PopUpMenu( void )
         MenuItem=AddMenuItem( window1, (const char*)empty_xpm, DVDChapterMenu,MSGTR_MENU_None,evNone );
         gtk_widget_set_sensitive( MenuItem,FALSE );
        }
-    DVDAudioLanguageMenu=AddSubMenu( window1, (const char*)tongue_xpm, DVDSubMenu,MSGTR_MENU_AudioLanguages );
+    DVDAudioLanguageMenu=AddSubMenu( window1, (const char*)audiolang_xpm, DVDSubMenu,MSGTR_MENU_AudioLanguages );
      if ( guiInfo.DVD.nr_of_audio_channels )
       {
        char tmp[64]; int i, id = guiInfo.demuxer ? ((demuxer_t *)guiInfo.demuxer)->audio->id : audio_id;
@@ -527,7 +527,7 @@ GtkWidget * create_PopUpMenu( void )
         MenuItem=AddMenuItem( window1, (const char*)empty_xpm, DVDAudioLanguageMenu,MSGTR_MENU_None,evNone );
         gtk_widget_set_sensitive( MenuItem,FALSE );
        }
-    DVDSubtitleLanguageMenu=AddSubMenu( window1, (const char*)tonguebla_xpm, DVDSubMenu,MSGTR_MENU_SubtitleLanguages );
+    DVDSubtitleLanguageMenu=AddSubMenu( window1, (const char*)sublang_xpm, DVDSubMenu,MSGTR_MENU_SubtitleLanguages );
      if ( guiInfo.DVD.nr_of_subtitles )
       {
        char tmp[64]; int i;
@@ -550,10 +550,10 @@ GtkWidget * create_PopUpMenu( void )
 //  if ( guiInfo.Playing )
    {
     AspectMenu=AddSubMenu( window1, (const char*)aspect_xpm, Menu,MSGTR_MENU_AspectRatio );
-    AddMenuItem( window1, (const char*)a11_xpm, AspectMenu,MSGTR_MENU_Original,( 1 << 16 ) + evSetAspect );
-    AddMenuItem( window1, (const char*)a169_xpm, AspectMenu,"16:9",( 2 << 16 ) + evSetAspect );
-    AddMenuItem( window1, (const char*)a43_xpm, AspectMenu,"4:3",( 3 << 16 ) + evSetAspect );
-    AddMenuItem( window1, (const char*)a235_xpm, AspectMenu,"2.35",( 4 << 16 ) + evSetAspect );
+    AddMenuItem( window1, (const char*)aspect11_xpm, AspectMenu,MSGTR_MENU_Original,( 1 << 16 ) + evSetAspect );
+    AddMenuItem( window1, (const char*)aspect169_xpm, AspectMenu,"16:9",( 2 << 16 ) + evSetAspect );
+    AddMenuItem( window1, (const char*)aspect43_xpm, AspectMenu,"4:3",( 3 << 16 ) + evSetAspect );
+    AddMenuItem( window1, (const char*)aspect235_xpm, AspectMenu,"2.35",( 4 << 16 ) + evSetAspect );
    }
 
   if ( guiInfo.Playing && guiInfo.demuxer && guiInfo.StreamType != STREAMTYPE_DVD )
@@ -610,10 +610,10 @@ GtkWidget * create_PopUpMenu( void )
   AddSeparator( Menu );
   MenuItem=AddMenuCheckItem( window1, (const char*)sound_xpm, Menu,MSGTR_MENU_Mute,mixer->muted,evMute );
   if ( !guiInfo.AudioType ) gtk_widget_set_sensitive( MenuItem,FALSE );
-  AddMenuItem( window1, (const char*)pl_xpm, Menu,MSGTR_MENU_PlayList, evPlayList );
+  AddMenuItem( window1, (const char*)playlist_xpm, Menu,MSGTR_MENU_PlayList, evPlayList );
   AddMenuItem( window1, (const char*)skin_xpm, Menu,MSGTR_MENU_SkinBrowser, evSkinBrowser );
   AddMenuItem( window1, (const char*)prefs_xpm, Menu,MSGTR_MENU_Preferences, evPreferences );
-  AddMenuItem( window1, (const char*)eq_xpm, Menu,MSGTR_Equalizer, evEqualizer );
+  AddMenuItem( window1, (const char*)equalizer_xpm, Menu,MSGTR_Equalizer, evEqualizer );
 
   if ( guiInfo.NoWindow == False )
    {
@@ -630,7 +630,7 @@ GtkWidget * create_PopUpMenu( void )
     H=AddMenuCheckItem( window1, (const char*)half_xpm, Menu,MSGTR_MENU_HalfSize,b_half,evHalfSize );
     N=AddMenuCheckItem( window1, (const char*)normal_xpm, Menu,MSGTR_MENU_NormalSize"      ",b1,evNormalSize );
     D=AddMenuCheckItem( window1, (const char*)double_xpm, Menu,MSGTR_MENU_DoubleSize,b2,evDoubleSize );
-    F=AddMenuCheckItem( window1, (const char*)fs_xpm, Menu,MSGTR_MENU_FullScreen,guiApp.subWindow.isFullScreen,evFullScreen );
+    F=AddMenuCheckItem( window1, (const char*)full_xpm, Menu,MSGTR_MENU_FullScreen,guiApp.subWindow.isFullScreen,evFullScreen );
   if ( !gtkShowVideoWindow && !guiInfo.Playing )
    {
     gtk_widget_set_sensitive( H,FALSE );
