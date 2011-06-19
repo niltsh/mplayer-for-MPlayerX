@@ -148,12 +148,10 @@ extern int file_filter;
 // These appear in options list
 extern float playback_speed;
 extern int fixed_vo;
-extern int forced_subs_only;
 
 
 void uninit_player(unsigned int mask);
 void reinit_audio_chain(void);
-void init_vo_spudec(void);
 double playing_audio_pts(sh_audio_t *sh_audio, demux_stream_t *d_audio,
 			 const ao_functions_t *audio_out);
 void exit_player(enum exit_reason how);

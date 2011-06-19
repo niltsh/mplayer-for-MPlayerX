@@ -103,7 +103,6 @@
 int vo_doublebuffering=0;
 int vo_directrendering=0;
 int vo_config_count=1;
-int forced_subs_only=0;
 
 //--------------------------
 
@@ -120,7 +119,6 @@ int dvdsub_id=-1;
 int vobsub_id=-1;
 char* audio_lang=NULL;
 char* dvdsub_lang=NULL;
-static char* spudec_ifo=NULL;
 
 static char** audio_codec_list=NULL;  // override audio codec
 static char** video_codec_list=NULL;  // override video codec
@@ -809,19 +807,7 @@ if (vobsub_out) {
 #endif
 }
 else {
-if (spudec_ifo) {
-  unsigned int palette[16], width, height;
-  if (vobsub_parse_ifo(NULL,spudec_ifo, palette, &width, &height, 1, -1, NULL) >= 0)
-    vo_spudec=spudec_new_scaled(palette, sh_video->disp_w, sh_video->disp_h, NULL, 0);
-}
-#ifdef CONFIG_DVDREAD
-if (vo_spudec==NULL) {
-vo_spudec=spudec_new_scaled(stream->type==STREAMTYPE_DVD?((dvd_priv_t *)(stream->priv))->cur_pgc->palette:NULL,
-                           sh_video->disp_w, sh_video->disp_h, NULL, 0);
-}
-#endif
-if (vo_spudec)
-  spudec_set_forced_subs_only(vo_spudec, forced_subs_only);
+init_vo_spudec(stream, sh_video, d_dvdsub ? d_dvdsub->sh : NULL);
 }
 
 ostream = open_output_stream(out_filename, 0);

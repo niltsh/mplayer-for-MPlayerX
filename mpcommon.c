@@ -21,6 +21,8 @@
 #endif
 #include <stdlib.h>
 #include "stream/stream.h"
+#include "stream/stream_dvd.h"
+#include "stream/stream_dvdnav.h"
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"
 #include "codec-cfg.h"
@@ -52,6 +54,8 @@ ASS_Track* ass_track = 0; // current track to render
 
 sub_data* subdata = NULL;
 subtitle* vo_sub_last = NULL;
+char *spudec_ifo;
+int forced_subs_only;
 
 const char *mencoder_version = "MEncoder " VERSION;
 const char *mplayer_version  = "MPlayer "  VERSION;
@@ -91,6 +95,55 @@ if (HAVE_CMOV)
     mp_msg(MSGT_CPLAYER,MSGL_V,"\n");
 #endif /* CONFIG_RUNTIME_CPUDETECT */
 #endif /* ARCH_X86 */
+}
+
+void init_vo_spudec(struct stream *stream, struct sh_video *sh_video, struct sh_sub *sh_sub)
+{
+    unsigned width, height;
+    spudec_free(vo_spudec);
+    vo_spudec = NULL;
+
+    // we currently can't work without video stream
+    if (!sh_video)
+        return;
+
+    if (spudec_ifo) {
+        unsigned int palette[16];
+        current_module = "spudec_init_vobsub";
+        if (vobsub_parse_ifo(NULL, spudec_ifo, palette, &width, &height, 1, -1, NULL) >= 0)
+            vo_spudec = spudec_new_scaled(palette, width, height, NULL, 0);
+    }
+
+    width  = sh_video->disp_w;
+    height = sh_video->disp_h;
+
+#ifdef CONFIG_DVDREAD
+    if (vo_spudec == NULL && stream->type == STREAMTYPE_DVD) {
+        current_module = "spudec_init_dvdread";
+        vo_spudec      = spudec_new_scaled(((dvd_priv_t *)(stream->priv))->cur_pgc->palette,
+                                           width, height,
+                                           NULL, 0);
+    }
+#endif
+
+#ifdef CONFIG_DVDNAV
+    if (vo_spudec == NULL && stream->type == STREAMTYPE_DVDNAV) {
+        unsigned int *palette = mp_dvdnav_get_spu_clut(stream);
+        current_module = "spudec_init_dvdnav";
+        vo_spudec      = spudec_new_scaled(palette, width, height, NULL, 0);
+    }
+#endif
+
+    if (vo_spudec == NULL) {
+        current_module = "spudec_init_normal";
+        vo_spudec      = spudec_new_scaled(NULL, width, height,
+                                           sh_sub ? sh_sub->extradata : NULL,
+                                           sh_sub ? sh_sub->extradata_len : 0);
+        spudec_set_font_factor(vo_spudec, font_factor);
+    }
+
+    if (vo_spudec)
+        spudec_set_forced_subs_only(vo_spudec, forced_subs_only);
 }
 
 static int is_text_sub(int type)

@@ -252,9 +252,7 @@ int dvdsub_lang_id;
 int vobsub_id = -1;
 char *audio_lang;
 char *dvdsub_lang;
-static char *spudec_ifo;
 char *filename;
-int forced_subs_only;
 int file_filter = 1;
 
 // cache2:
@@ -1150,55 +1148,6 @@ void update_set_of_subtitles(void)
     } else if (mpctx->set_of_sub_size <= 0 && subdata != NULL) { // *subdata was added
         set_of_subtitles[mpctx->set_of_sub_pos = mpctx->set_of_sub_size] = subdata;
         ++mpctx->set_of_sub_size;
-    }
-}
-
-void init_vo_spudec(void)
-{
-    unsigned width, height;
-    spudec_free(vo_spudec);
-    vo_spudec = NULL;
-
-    // we currently can't work without video stream
-    if (!mpctx->sh_video)
-        return;
-
-    if (spudec_ifo) {
-        unsigned int palette[16];
-        current_module = "spudec_init_vobsub";
-        if (vobsub_parse_ifo(NULL, spudec_ifo, palette, &width, &height, 1, -1, NULL) >= 0)
-            vo_spudec = spudec_new_scaled(palette, width, height, NULL, 0);
-    }
-
-    width  = mpctx->sh_video->disp_w;
-    height = mpctx->sh_video->disp_h;
-
-#ifdef CONFIG_DVDREAD
-    if (vo_spudec == NULL && mpctx->stream->type == STREAMTYPE_DVD) {
-        current_module = "spudec_init_dvdread";
-        vo_spudec      = spudec_new_scaled(((dvd_priv_t *)(mpctx->stream->priv))->cur_pgc->palette,
-                                           width, height,
-                                           NULL, 0);
-    }
-#endif
-
-#ifdef CONFIG_DVDNAV
-    if (vo_spudec == NULL && mpctx->stream->type == STREAMTYPE_DVDNAV) {
-        unsigned int *palette = mp_dvdnav_get_spu_clut(mpctx->stream);
-        current_module = "spudec_init_dvdnav";
-        vo_spudec      = spudec_new_scaled(palette, width, height, NULL, 0);
-    }
-#endif
-
-    if (vo_spudec == NULL) {
-        sh_sub_t *sh = mpctx->d_sub->sh;
-        current_module = "spudec_init_normal";
-        vo_spudec      = spudec_new_scaled(NULL, width, height, sh->extradata, sh->extradata_len);
-        spudec_set_font_factor(vo_spudec, font_factor);
-    }
-
-    if (vo_spudec != NULL) {
-        mp_property_do("sub_forced_only", M_PROPERTY_SET, &forced_subs_only, mpctx);
     }
 }
 
@@ -3604,7 +3553,7 @@ goto_enable_cache:
 //================== Read SUBTITLES (DVD & TEXT) ==========================
     if (vo_spudec == NULL &&
         (mpctx->stream->type == STREAMTYPE_DVD || mpctx->stream->type == STREAMTYPE_DVDNAV)) {
-        init_vo_spudec();
+        init_vo_spudec(mpctx->stream, mpctx->sh_video, mpctx->d_sub ? mpctx->d_sub->sh : NULL);
     }
 
     if (1 || mpctx->sh_video) {

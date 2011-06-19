@@ -1624,7 +1624,7 @@ static int mp_property_sub(m_option_t *prop, int action, void *arg,
             if (d_sub->sh && d_sub->id >= 0) {
                 sh_sub_t *sh = d_sub->sh;
                 if (sh->type == 'v')
-                    init_vo_spudec();
+                    init_vo_spudec(mpctx->stream, mpctx->sh_video, sh);
 #ifdef CONFIG_ASS
                 else if (ass_enabled)
                     ass_track = sh->ass_track;

@@ -27,12 +27,16 @@
 
 #define ROUND(x) ((int)((x) < 0 ? (x) - 0.5 : (x) + 0.5))
 
+struct stream;
 struct sh_audio;
 struct sh_video;
+struct sh_sub;
 
 extern double sub_last_pts;
 extern ASS_Track *ass_track;
 extern subtitle *vo_sub_last;
+extern char *spudec_ifo;
+extern int forced_subs_only;
 
 extern int sub_auto;
 extern float sub_delay;
@@ -67,6 +71,7 @@ extern m_config_t *mconfig;
 extern const m_option_t noconfig_opts[];
 
 void print_version(const char* name);
+void init_vo_spudec(struct stream *stream, struct sh_video *sh_video, struct sh_sub *sh_sub);
 void update_subtitles(struct sh_video *sh_video, double refpts, demux_stream_t *d_dvdsub, int reset);
 void update_teletext(struct sh_video *sh_video, demuxer_t *demuxer, int reset);
 int select_audio(demuxer_t* demuxer, int audio_id, char* audio_lang);
