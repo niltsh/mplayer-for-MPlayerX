@@ -228,7 +228,7 @@ m_config_t* mconfig;
 
 static int cfg_inc_verbose(m_option_t *conf){ ++verbose; return 0;}
 
-static int cfg_include(m_option_t *conf, char *filename){
+static int cfg_include(m_option_t *conf, const char *filename){
 	return m_config_parse_config_file(mconfig, filename);
 }
 
