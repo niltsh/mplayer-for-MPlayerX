@@ -37,10 +37,6 @@
 #include "sub/sub.h"
 #include "w32_common.h"
 
-#ifdef CONFIG_GUI
-#include "gui/interface.h"
-#endif
-
 #ifndef WM_XBUTTONDOWN
 # define WM_XBUTTONDOWN    0x020B
 # define WM_XBUTTONUP      0x020C
@@ -998,11 +994,6 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
 	image_height = height;
     if(format != primary_image_format)nooverlay = 0;
 
-#ifdef CONFIG_GUI
-    if(use_gui){
-        guiGetEvent(guiSetShVideo, 0);
-    }
-#endif
     /*release all directx objects*/
     if (g_cc != NULL)g_cc->lpVtbl->Release(g_cc);
     g_cc=NULL;
