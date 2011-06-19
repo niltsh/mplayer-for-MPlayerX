@@ -69,7 +69,6 @@ static RECT                 rs;                     //rect of our source image
 static HBRUSH               colorbrush = NULL;      // Handle to colorkey brush
 static HBRUSH               blackbrush = NULL;      // Handle to black brush
 static uint32_t image_width, image_height;          //image width and height
-static uint32_t d_image_width, d_image_height;      //image width and height zoomed
 static uint8_t  *image=NULL;                        //image data
 static void* tmp_image = NULL;
 static uint32_t image_format=0;                       //image format
@@ -84,10 +83,6 @@ static COLORREF windowcolor = RGB(0,0,16);          //windowcolor == colorkey
 static int adapter_count=0;
 static GUID selected_guid;
 static GUID *selected_guid_ptr = NULL;
-static RECT monitor_rect;	                        //monitor coordinates
-static float window_aspect;
-static BOOL (WINAPI* myGetMonitorInfo)(HMONITOR, LPMONITORINFO) = NULL;
-static RECT last_rect = {0xDEADC0DE, 0xDEADC0DE, 0xDEADC0DE, 0xDEADC0DE};
 
 /*****************************************************************************
  * DirectDraw GUIDs.
@@ -376,7 +371,6 @@ static BOOL WINAPI EnumCallbackEx(GUID FAR *lpGUID, LPSTR lpDriverDescription, L
     mp_msg(MSGT_VO, MSGL_INFO ,"<vo_directx> adapter %d: %s", adapter_count, lpDriverDescription);
 
     if(adapter_count == vo_adapter_num){
-        MONITORINFO mi;
         if (!lpGUID)
             selected_guid_ptr = NULL;
         else
@@ -384,11 +378,7 @@ static BOOL WINAPI EnumCallbackEx(GUID FAR *lpGUID, LPSTR lpDriverDescription, L
             selected_guid = *lpGUID;
             selected_guid_ptr = &selected_guid;
         }
-        mi.cbSize = sizeof(mi);
 
-        if (myGetMonitorInfo(hm, &mi)) {
-			monitor_rect = mi.rcMonitor;
-        }
         mp_msg(MSGT_VO, MSGL_INFO ,"\t\t<--");
     }
     mp_msg(MSGT_VO, MSGL_INFO ,"\n");
@@ -403,16 +393,8 @@ static uint32_t Directx_InitDirectDraw(void)
 	HRESULT    (WINAPI *OurDirectDrawCreateEx)(GUID *,LPVOID *, REFIID,IUnknown FAR *);
 	DDSURFACEDESC2 ddsd;
 	LPDIRECTDRAWENUMERATEEX OurDirectDrawEnumerateEx;
-	HINSTANCE user32dll=LoadLibrary("user32.dll");
 
 	adapter_count = 0;
-	if(user32dll){
-		myGetMonitorInfo=GetProcAddress(user32dll,"GetMonitorInfoA");
-		if(!myGetMonitorInfo && vo_adapter_num){
-			mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx> -adapter is not supported on Win95\n");
-			vo_adapter_num = 0;
-		}
-	}
 
 	mp_msg(MSGT_VO, MSGL_DBG3,"<vo_directx><INFO>Initing DirectDraw\n" );
 
@@ -423,8 +405,6 @@ static uint32_t Directx_InitDirectDraw(void)
         mp_msg(MSGT_VO, MSGL_FATAL,"<vo_directx><FATAL ERROR>failed loading ddraw.dll\n" );
 		return 1;
     }
-
-    last_rect.left = 0xDEADC0DE;   // reset window position cache
 
 	if(vo_adapter_num){ //display other than default
         OurDirectDrawEnumerateEx = (LPDIRECTDRAWENUMERATEEX) GetProcAddress(hddraw_dll,"DirectDrawEnumerateExA");
@@ -442,7 +422,6 @@ static uint32_t Directx_InitDirectDraw(void)
         if(vo_adapter_num >= adapter_count)
             mp_msg(MSGT_VO, MSGL_ERR,"Selected adapter (%d) doesn't exist: Default Display Adapter selected\n",vo_adapter_num);
     }
-    FreeLibrary(user32dll);
 
 	OurDirectDrawCreateEx = (void *)GetProcAddress(hddraw_dll, "DirectDrawCreateEx");
     if ( OurDirectDrawCreateEx == NULL )
@@ -831,8 +810,6 @@ static int preinit(const char *arg)
 		    nooverlay = 1;
 		}
 	}
-    monitor_rect.right=GetSystemMetrics(SM_CXSCREEN);
-    monitor_rect.bottom=GetSystemMetrics(SM_CYSCREEN);
 
     windowcolor = vo_colorkey;
     colorbrush = CreateSolidBrush(windowcolor);
@@ -1024,10 +1001,7 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
 	image_format =  format;
 	image_width = width;
 	image_height = height;
-	d_image_width = d_width;
-	d_image_height = d_height;
     if(format != primary_image_format)nooverlay = 0;
-    window_aspect= (float)d_image_width / (float)d_image_height;
 
 #ifdef CONFIG_GUI
     if(use_gui){
@@ -1195,7 +1169,6 @@ static int control(uint32_t request, void *data)
 	case VOCTRL_GET_IMAGE:
       	return get_image(data);
     case VOCTRL_QUERY_FORMAT:
-        last_rect.left = 0xDEADC0DE;   // reset window position cache
         return query_format(*((uint32_t*)data));
 	case VOCTRL_DRAW_IMAGE:
         return put_image(data);
@@ -1216,7 +1189,6 @@ static int control(uint32_t request, void *data)
 			{
 				if(vo_rootwin) vo_rootwin = 0;
 				else vo_rootwin = 1;
-				last_rect.left = 0xDEADC0DE;   // reset window position cache
 				Directx_ManageDisplay();
 			}
 		return VO_TRUE;
@@ -1237,9 +1209,6 @@ static int control(uint32_t request, void *data)
     case VOCTRL_UPDATE_SCREENINFO:
         w32_update_xinerama_info();
         return VO_TRUE;
-    case VOCTRL_RESET:
-        last_rect.left = 0xDEADC0DE;   // reset window position cache
-        // fall-through intended
     };
     return VO_NOTIMPL;
 }
