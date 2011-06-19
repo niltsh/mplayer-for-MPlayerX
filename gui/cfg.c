@@ -246,7 +246,7 @@ static char *gfgets(char *str, int size, FILE *f)
     return s;
 }
 
-int cfg_gui_include(m_option_t *conf, char *filename)
+int cfg_gui_include(m_option_t *conf, const char *filename)
 {
     (void)conf;
 
