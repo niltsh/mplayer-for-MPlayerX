@@ -56,6 +56,8 @@ typedef enum stereo_code {
     ABOVE_BELOW_RL,     //above-below (right eye above, left eye below)
     ABOVE_BELOW_2_LR,   //above-below with half height resolution
     ABOVE_BELOW_2_RL,   //above-below with half height resolution
+    INTERLEAVE_ROWS_LR, //row-interleave (left eye has top row)
+    INTERLEAVE_ROWS_RL, //row-interleave (right eye has top row)
     STEREO_CODE_COUNT   //no value set - TODO: needs autodetection
 } stereo_code;
 
@@ -109,6 +111,7 @@ struct vf_priv_s {
     int ana_matrix[3][6];
     unsigned int width;
     unsigned int height;
+    unsigned int row_step;
 } const vf_priv_default = {
   {SIDE_BY_SIDE_LR},
   {ANAGLYPH_RC_DUBOIS}
@@ -135,6 +138,7 @@ static int config(struct vf_instance *vf, int width, int height, int d_width,
     //default input values
     vf->priv->width             = width;
     vf->priv->height            = height;
+    vf->priv->row_step          = 1;
     vf->priv->in.width          = width;
     vf->priv->in.height         = height;
     vf->priv->in.off_left       = 0;
@@ -213,6 +217,18 @@ static int config(struct vf_instance *vf, int width, int height, int d_width,
         vf->priv->out.height    = vf->priv->height * 2;
         vf->priv->out.row_left  = vf->priv->height;
         break;
+    case INTERLEAVE_ROWS_LR:
+        vf->priv->row_step      = 2;
+        vf->priv->height        = vf->priv->height / 2;
+        vf->priv->out.off_right = vf->priv->width * 3;
+        vf->priv->in.off_right += vf->priv->in.width * 3;
+        break;
+    case INTERLEAVE_ROWS_RL:
+        vf->priv->row_step      = 2;
+        vf->priv->height        = vf->priv->height / 2;
+        vf->priv->out.off_left  = vf->priv->width * 3;
+        vf->priv->in.off_left  += vf->priv->in.width * 3;
+        break;
     case MONO_R:
         //same as MONO_L only needs switching of input offsets
         vf->priv->in.off_left   = vf->priv->in.off_right;
@@ -262,18 +278,20 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts)
         case ABOVE_BELOW_RL:
         case ABOVE_BELOW_2_LR:
         case ABOVE_BELOW_2_RL:
+        case INTERLEAVE_ROWS_LR:
+        case INTERLEAVE_ROWS_RL:
             memcpy_pic(dmpi->planes[0] + out_off_left,
                        mpi->planes[0] + in_off_left,
                        3 * vf->priv->width,
                        vf->priv->height,
-                       dmpi->stride[0],
-                       mpi->stride[0]);
+                       dmpi->stride[0] * vf->priv->row_step,
+                       mpi->stride[0] * vf->priv->row_step);
             memcpy_pic(dmpi->planes[0] + out_off_right,
                        mpi->planes[0] + in_off_right,
                        3 * vf->priv->width,
                        vf->priv->height,
-                       dmpi->stride[0],
-                       mpi->stride[0]);
+                       dmpi->stride[0] * vf->priv->row_step,
+                       mpi->stride[0] * vf->priv->row_step);
             break;
         case MONO_L:
         case MONO_R:
@@ -395,6 +413,10 @@ static const struct format_preset {
     {"above_below_half_height_left_first", ABOVE_BELOW_2_LR},
     {"ab2r",                               ABOVE_BELOW_2_RL},
     {"above_below_half_height_right_first",ABOVE_BELOW_2_RL},
+    {"irl",                                INTERLEAVE_ROWS_LR},
+    {"interleave_rows_left_first",         INTERLEAVE_ROWS_LR},
+    {"irr",                                INTERLEAVE_ROWS_RL},
+    {"interleave_rows_right_first",        INTERLEAVE_ROWS_RL},
     { NULL, 0}
 };
 
