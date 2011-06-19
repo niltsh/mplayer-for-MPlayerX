@@ -777,8 +777,6 @@ static uint32_t Directx_CheckPrimaryPixelformat(void)
 
 static int preinit(const char *arg)
 {
-    HINSTANCE hInstance = GetModuleHandle(NULL);
-    char exedir[MAX_PATH];
 	if(arg)
 	{
 		if(strstr(arg,"noaccel"))
