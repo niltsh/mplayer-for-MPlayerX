@@ -738,6 +738,7 @@ DIRS =  . \
         gui/skin \
         gui/ui \
         gui/ui/gtk \
+        gui/util \
         gui/win32 \
         gui/wm \
         input \
