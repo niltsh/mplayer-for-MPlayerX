@@ -431,6 +431,11 @@ void uiEnd( void )
     guiGetEvent(guiCEvent, (void *) guiSetStop);
 }
 
+void uiStop()
+{
+    guiGetEvent(guiCEvent, (void *) guiSetStop);
+}
+
 void uiSetFileName(char *dir, char *name, int type)
 {
     if(!name) return;
@@ -860,7 +865,7 @@ static int update_subwindow(void)
 
     if(!sub_window)
     {
-        WinID = -1; // so far only directx supports WinID in windows
+        WinID = -1;
 
         if(IsWindowVisible(mygui->subwindow) && guiInfo.sh_video && guiInfo.Playing)
         {
