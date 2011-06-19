@@ -431,7 +431,7 @@ void uiEnd( void )
     guiGetEvent(guiCEvent, (void *) guiSetStop);
 }
 
-void uiStop()
+void uiStop(void)
 {
     guiGetEvent(guiCEvent, (void *) guiSetStop);
 }
