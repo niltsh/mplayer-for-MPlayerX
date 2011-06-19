@@ -16,8 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef MPLAYER_GUI_PLAY_H
-#define MPLAYER_GUI_PLAY_H
+#ifndef MPLAYER_GUI_ACTIONS_H
+#define MPLAYER_GUI_ACTIONS_H
 
 extern int uiGotoTheNext;
 
@@ -35,4 +35,4 @@ void uiSetFileName(char *dir, char *name, int type);
 void uiState(void);
 void uiStop(void);
 
-#endif /* MPLAYER_GUI_PLAY_H */
+#endif /* MPLAYER_GUI_ACTIONS_H */
