@@ -377,16 +377,9 @@ static void uninit(void)
 
 static BOOL WINAPI EnumCallbackEx(GUID FAR *lpGUID, LPSTR lpDriverDescription, LPSTR lpDriverName, LPVOID lpContext, HMONITOR  hm)
 {
-    mp_msg(MSGT_VO, MSGL_INFO ,"<vo_directx> adapter %d: ", adapter_count);
-
     if (!lpGUID)
-    {
-        mp_msg(MSGT_VO, MSGL_INFO ,"%s", "Primary Display Adapter");
-    }
-    else
-    {
-        mp_msg(MSGT_VO, MSGL_INFO ,"%s", lpDriverDescription);
-    }
+        lpDriverDescription = "Primary Display Adapter";
+    mp_msg(MSGT_VO, MSGL_INFO ,"<vo_directx> adapter %d: %s", adapter_count, lpDriverDescription);
 
     if(adapter_count == vo_adapter_num){
         MONITORINFO mi;
