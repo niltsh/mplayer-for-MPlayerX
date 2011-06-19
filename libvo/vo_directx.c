@@ -68,8 +68,6 @@ static RECT                 rd;                     //rect of our stretched imag
 static RECT                 rs;                     //rect of our source image
 static HBRUSH               colorbrush = NULL;      // Handle to colorkey brush
 static HBRUSH               blackbrush = NULL;      // Handle to black brush
-static HICON                mplayericon = NULL;     // Handle to mplayer icon
-static HCURSOR              mplayercursor = NULL;   // Handle to mplayer cursor
 static uint32_t image_width, image_height;          //image width and height
 static uint32_t d_image_width, d_image_height;      //image width and height zoomed
 static uint8_t  *image=NULL;                        //image data
@@ -356,10 +354,6 @@ static void uninit(void)
 	mp_msg(MSGT_VO, MSGL_DBG3,"<vo_directx><INFO>primary released\n");
 	UnregisterClass(WNDCLASSNAME_WINDOWED, GetModuleHandle(NULL));
 	UnregisterClass(WNDCLASSNAME_FULLSCREEN, GetModuleHandle(NULL));
-	if (mplayericon) DestroyIcon(mplayericon);
-	mplayericon = NULL;
-	if (mplayercursor) DestroyCursor(mplayercursor);
-	mplayercursor = NULL;
 	if (colorbrush) DeleteObject(colorbrush);
 	colorbrush = NULL;
 	mp_msg(MSGT_VO, MSGL_DBG3,"<vo_directx><INFO>GDI resources deleted\n");
@@ -837,13 +831,6 @@ static int preinit(const char *arg)
 		    nooverlay = 1;
 		}
 	}
-	/*load icon from the main app*/
-    if(GetModuleFileName(NULL,exedir,MAX_PATH))
-    {
-        mplayericon = ExtractIcon( hInstance, exedir, 0 );
-  	}
-    if(!mplayericon)mplayericon=LoadIcon(NULL,IDI_APPLICATION);
-    mplayercursor = LoadCursor(NULL, IDC_ARROW);
     monitor_rect.right=GetSystemMetrics(SM_CXSCREEN);
     monitor_rect.bottom=GetSystemMetrics(SM_CYSCREEN);
 
