@@ -844,19 +844,6 @@ static inline void gtkMessageBox(int type, const char *str)
     fflush(stderr);
 }
 
-void guiMessageBox(int level, char *str)
-{
-    switch(level)
-    {
-        case MSGL_FATAL:
-            gtkMessageBox(GTK_MB_FATAL | GTK_MB_SIMPLE, str);
-            break;
-        case MSGL_ERR:
-            gtkMessageBox(GTK_MB_ERROR | GTK_MB_SIMPLE, str);
-            break;
-    }
-}
-
 static int update_subwindow(void)
 {
     int x,y;
