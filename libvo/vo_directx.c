@@ -1062,7 +1062,7 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
 //  contrast	[0, 20000]
 //  hue		[-180, 180]
 //  saturation	[0, 20000]
-static uint32_t color_ctrl_set(char *what, int value)
+static uint32_t color_ctrl_set(const char *what, int value)
 {
 	uint32_t	r = VO_NOTIMPL;
 	DDCOLORCONTROL	dcc;
@@ -1099,7 +1099,7 @@ static uint32_t color_ctrl_set(char *what, int value)
 }
 
 //analoguous to color_ctrl_set
-static uint32_t color_ctrl_get(char *what, int *value)
+static uint32_t color_ctrl_get(const char *what, int *value)
 {
 	uint32_t	r = VO_NOTIMPL;
 	DDCOLORCONTROL	dcc;
