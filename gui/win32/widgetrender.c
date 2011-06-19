@@ -25,6 +25,7 @@
 #include <ctype.h>
 #include <windows.h>
 
+#include "gui/util/bitmap.h"
 #include "gui/interface.h"
 #include "gui.h"
 
