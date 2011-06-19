@@ -56,8 +56,6 @@
 #endif
 
 /* Globals / Externs */
-void renderinfobox(skin_t *skin, window_priv_t *priv);
-void renderwidget(skin_t *skin, image *dest, widget *item, int state);
 float sub_aspect;
 
 DWORD oldtime;
