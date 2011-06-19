@@ -525,15 +525,15 @@ SRCS_MPLAYER-$(GUI_GTK)      += gui/app.c \
                                 gui/skin/skin.c \
                                 gui/ui/actions.c \
                                 gui/ui/gtk/about.c \
-                                gui/ui/gtk/eq.c \
-                                gui/ui/gtk/fs.c \
-                                gui/ui/gtk/gtk_common.c \
-                                gui/ui/gtk/gtk_menu.c \
-                                gui/ui/gtk/gtk_url.c \
-                                gui/ui/gtk/mb.c \
-                                gui/ui/gtk/opts.c \
-                                gui/ui/gtk/pl.c \
-                                gui/ui/gtk/sb.c \
+                                gui/ui/gtk/equalizer.c \
+                                gui/ui/gtk/fileselect.c \
+                                gui/ui/gtk/menu.c \
+                                gui/ui/gtk/msgbox.c \
+                                gui/ui/gtk/playlist.c \
+                                gui/ui/gtk/preferences.c \
+                                gui/ui/gtk/skinbrowser.c \
+                                gui/ui/gtk/tools.c \
+                                gui/ui/gtk/url.c \
                                 gui/ui/main.c \
                                 gui/ui/menu.c \
                                 gui/ui/playbar.c \

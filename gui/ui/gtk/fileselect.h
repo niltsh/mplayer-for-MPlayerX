@@ -16,14 +16,24 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef MPLAYER_GUI_PL_H
-#define MPLAYER_GUI_PL_H
+#ifndef MPLAYER_GUI_FILESELECT_H
+#define MPLAYER_GUI_FILESELECT_H
 
 #include <gtk/gtk.h>
 
-void ShowPlayList( void );
-void HidePlayList( void );
+#define fsVideoSelector    0
+#define fsSubtitleSelector 1
+#define fsOtherSelector    2
+#define fsAudioSelector    3
+#define fsFontSelector     4
 
-GtkWidget * create_PlayList (void);
+#include <errno.h>
 
-#endif /* MPLAYER_GUI_PL_H */
+extern GtkWidget   * fsFileSelect;
+
+void HideFileSelect( void );
+void ShowFileSelect( int type, int modal );
+
+GtkWidget * create_FileSelect( void );
+
+#endif /* MPLAYER_GUI_FILESELECT_H */

@@ -24,8 +24,8 @@
 #include <stdio.h>
 
 #include "config.h"
-#include "sb.h"
-#include "gtk_common.h"
+#include "skinbrowser.h"
+#include "tools.h"
 
 #include "gui/app.h"
 #include "help_mp.h"

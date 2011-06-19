@@ -16,8 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef MPLAYER_GUI_GTK_URL_H
-#define MPLAYER_GUI_GTK_URL_H
+#ifndef MPLAYER_GUI_URL_H
+#define MPLAYER_GUI_URL_H
 
 #include <gtk/gtk.h>
 
@@ -27,4 +27,4 @@ extern int         gtkVURLDialogBox;
 void ShowURLDialogBox( void );
 GtkWidget * create_URL( void );
 
-#endif /* MPLAYER_GUI_GTK_URL_H */
+#endif /* MPLAYER_GUI_URL_H */

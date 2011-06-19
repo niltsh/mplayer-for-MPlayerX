@@ -38,8 +38,8 @@
 #include "libmpcodecs/dec_video.h"
 #include "gui/ui/widgets.h"
 
-#include "eq.h"
-#include "gtk_common.h"
+#include "equalizer.h"
+#include "tools.h"
 
 #define eqRange 15
 

@@ -44,9 +44,9 @@
 #include "gui/interface.h"
 #include "gui/ui/gmplayer.h"
 #include "gui/ui/widgets.h"
-#include "opts.h"
-#include "fs.h"
-#include "gtk_common.h"
+#include "preferences.h"
+#include "fileselect.h"
+#include "tools.h"
 
 // for mpcodecs_[av]d_drivers:
 #include "libmpcodecs/vd.h"

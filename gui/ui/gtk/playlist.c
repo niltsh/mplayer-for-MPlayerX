@@ -33,8 +33,8 @@
 
 #include "gui/interface.h"
 #include "gui/ui/widgets.h"
-#include "pl.h"
-#include "gtk_common.h"
+#include "playlist.h"
+#include "tools.h"
 
 static char * book_open_xpm[] = {
 	"16 16 4 1",

@@ -16,14 +16,18 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef MPLAYER_GUI_EQ_H
-#define MPLAYER_GUI_EQ_H
+#ifndef MPLAYER_GUI_PREFERENCES_H
+#define MPLAYER_GUI_PREFERENCES_H
 
 #include <gtk/gtk.h>
 
-extern GtkWidget * Equalizer;
+extern GtkWidget * AudioConfig;
+extern GtkWidget * Preferences;
+extern GtkWidget * prEFontName;
 
-GtkWidget * create_Equalizer( void );
-void ShowEqualizer( void );
+GtkWidget * create_Preferences( void );
+GtkWidget * create_AudioConfig( void );
 
-#endif /* MPLAYER_GUI_EQ_H */
+void ShowPreferences( void );
+
+#endif /* MPLAYER_GUI_PREFERENCES_H */

@@ -16,8 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef MPLAYER_GUI_SB_H
-#define MPLAYER_GUI_SB_H
+#ifndef MPLAYER_GUI_SKINBROWSER_H
+#define MPLAYER_GUI_SKINBROWSER_H
 
 #include <gtk/gtk.h>
 
@@ -27,4 +27,4 @@ extern GtkWidget * SkinBrowser;
 void ShowSkinBrowser( void );
 GtkWidget * create_SkinBrowser( void );
 
-#endif /* MPLAYER_GUI_SB_H */
+#endif /* MPLAYER_GUI_SKINBROWSER_H */

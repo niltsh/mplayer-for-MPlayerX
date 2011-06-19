@@ -19,7 +19,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
-#include "gtk_common.h"
+#include "tools.h"
 
 void WidgetDestroy( GtkWidget * widget,GtkWidget ** widget_pointer )
 {

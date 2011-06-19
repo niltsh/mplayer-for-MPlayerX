@@ -16,18 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef MPLAYER_GUI_OPTS_H
-#define MPLAYER_GUI_OPTS_H
+#ifndef MPLAYER_GUI_PLAYLIST_H
+#define MPLAYER_GUI_PLAYLIST_H
 
 #include <gtk/gtk.h>
 
-extern GtkWidget * AudioConfig;
-extern GtkWidget * Preferences;
-extern GtkWidget * prEFontName;
+void ShowPlayList( void );
+void HidePlayList( void );
 
-GtkWidget * create_Preferences( void );
-GtkWidget * create_AudioConfig( void );
+GtkWidget * create_PlayList (void);
 
-void ShowPreferences( void );
-
-#endif /* MPLAYER_GUI_OPTS_H */
+#endif /* MPLAYER_GUI_PLAYLIST_H */

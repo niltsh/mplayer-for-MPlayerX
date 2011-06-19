@@ -37,9 +37,9 @@
 #include "stream/stream.h"
 
 #include "gui/ui/widgets.h"
-#include "fs.h"
-#include "opts.h"
-#include "gtk_common.h"
+#include "fileselect.h"
+#include "preferences.h"
+#include "tools.h"
 
 #ifndef __linux__
 #define get_current_dir_name()  getcwd(NULL, PATH_MAX)

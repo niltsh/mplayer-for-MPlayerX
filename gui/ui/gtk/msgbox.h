@@ -16,8 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef MPLAYER_GUI_MB_H
-#define MPLAYER_GUI_MB_H
+#ifndef MPLAYER_GUI_MSGBOX_H
+#define MPLAYER_GUI_MSGBOX_H
 
 #include <gtk/gtk.h>
 
@@ -26,4 +26,4 @@ extern GtkWidget * MessageBox;
 GtkWidget * create_MessageBox( int type );
 void ShowMessageBox( const char * msg );
 
-#endif /* MPLAYER_GUI_MB_H */
+#endif /* MPLAYER_GUI_MSGBOX_H */

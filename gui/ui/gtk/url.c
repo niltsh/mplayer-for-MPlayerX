@@ -26,8 +26,8 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
-#include "gtk_url.h"
-#include "gtk_common.h"
+#include "url.h"
+#include "tools.h"
 #include "gui/interface.h"
 #include "gui/app.h"
 #include "gui/ui/gmplayer.h"

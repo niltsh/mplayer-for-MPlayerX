@@ -26,7 +26,7 @@
 #include "mixer.h"
 #include "mpcommon.h"
 
-#include "gtk_menu.h"
+#include "menu.h"
 #include "gui/ui/widgets.h"
 #include "gui/ui/gmplayer.h"
 #include "gui/app.h"

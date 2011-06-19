@@ -16,8 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef MPLAYER_GUI_GTK_COMMON_H
-#define MPLAYER_GUI_GTK_COMMON_H
+#ifndef MPLAYER_GUI_TOOLS_H
+#define MPLAYER_GUI_TOOLS_H
 
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
@@ -38,4 +38,4 @@ GtkWidget * AddVScaler( GtkAdjustment * adj, GtkWidget * parent, int digit );
 GtkWidget * AddComboBox( GtkWidget * parent );
 void WidgetDestroy( GtkWidget * widget, GtkWidget ** widget_pointer );
 
-#endif /* MPLAYER_GUI_GTK_COMMON_H */
+#endif /* MPLAYER_GUI_TOOLS_H */

@@ -23,7 +23,7 @@
 #include "gui/ui/pixmaps/emblem.xpm"
 #include "gui/ui/widgets.h"
 #include "about.h"
-#include "gtk_common.h"
+#include "tools.h"
 
 GtkWidget * About = NULL;
 

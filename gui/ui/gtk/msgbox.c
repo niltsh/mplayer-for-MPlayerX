@@ -24,8 +24,8 @@
 #include "gui/ui/pixmaps/warning.xpm"
 
 #include "gui/ui/widgets.h"
-#include "mb.h"
-#include "gtk_common.h"
+#include "msgbox.h"
+#include "tools.h"
 
 GtkWidget * gtkMessageBoxText;
 GtkWidget * MessageBox = NULL;

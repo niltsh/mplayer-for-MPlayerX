@@ -44,7 +44,7 @@
 #include "gui/wm/ws.h"
 
 #include "actions.h"
-#include "gtk/fs.h"
+#include "gtk/fileselect.h"
 
 GtkWidget *PopUpMenu = NULL;
 
@@ -55,15 +55,14 @@ int gtkPopupMenu      = 0;
 int gtkPopupMenuParam = 0;
 int gtkInitialized    = 0;
 
-#include "gtk/sb.h"
-#include "gtk/pl.h"
-#include "gtk/fs.h"
-#include "gtk/mb.h"
+#include "gtk/skinbrowser.h"
+#include "gtk/playlist.h"
+#include "gtk/msgbox.h"
 #include "gtk/about.h"
-#include "gtk/opts.h"
-#include "gtk/gtk_menu.h"
-#include "gtk/gtk_url.h"
-#include "gtk/eq.h"
+#include "gtk/preferences.h"
+#include "gtk/menu.h"
+#include "gtk/url.h"
+#include "gtk/equalizer.h"
 
 #include "pixmaps/mplayer.xpm"
 
