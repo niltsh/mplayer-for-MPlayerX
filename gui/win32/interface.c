@@ -118,7 +118,7 @@ char *gstrdup(const char *str)
  * \brief this replaces a string starting with search by replace.
  * If not found, replace is appended.
  */
-void greplace(char ***list, char *search, char *replace)
+static void greplace(char ***list, char *search, char *replace)
 {
     int i = 0;
     int len = (search) ? strlen(search) : 0;
@@ -758,7 +758,7 @@ int guiGetEvent(int type, void *arg)
 }
 
 /* This function adds/inserts one file into the gui playlist */
-int import_file_into_gui(char *pathname, int insert)
+static int import_file_into_gui(char *pathname, int insert)
 {
     char filename[MAX_PATH];
     char *filepart = filename;
@@ -835,7 +835,7 @@ int import_playtree_playlist_into_gui(play_tree_t *my_playtree, m_config_t *conf
     return result;
 }
 
-inline void gtkMessageBox(int type, const char *str)
+static inline void gtkMessageBox(int type, const char *str)
 {
     if (type & GTK_MB_FATAL)
         MessageBox(NULL, str, "MPlayer GUI for Windows Error", MB_OK | MB_ICONERROR);

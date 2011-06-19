@@ -180,7 +180,7 @@ void display_opensubtitlewindow(gui_t *gui)
         guiLoadSubtitle(subtitlefile);
 }
 
-void display_loadplaylistwindow(gui_t *gui)
+static void display_loadplaylistwindow(gui_t *gui)
 {
     OPENFILENAME playlistopen;
     char playlistfile[MAX_PATH];
@@ -207,7 +207,7 @@ void display_loadplaylistwindow(gui_t *gui)
     }
 }
 
-void display_saveplaylistwindow(gui_t* gui)
+static void display_saveplaylistwindow(gui_t* gui)
 {
     OPENFILENAME playlistsave;
     static FILE *playlist_file = NULL;

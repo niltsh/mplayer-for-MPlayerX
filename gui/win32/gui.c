@@ -68,7 +68,7 @@ play_tree_t *playtree = NULL;
 static HBRUSH    colorbrush = NULL;           //Handle to colorkey brush
 static COLORREF windowcolor = RGB(255,0,255); //Windowcolor == colorkey
 
-void console_toggle(void)
+static void console_toggle(void)
 {
     if (console_state)
     {
