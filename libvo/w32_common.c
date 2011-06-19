@@ -203,10 +203,17 @@ int vo_w32_check_events(void) {
     if (WinID >= 0) {
         BOOL res;
         RECT r;
+        POINT p;
         res = GetClientRect(vo_window, &r);
         if (res && (r.right != vo_dwidth || r.bottom != vo_dheight)) {
             vo_dwidth = r.right; vo_dheight = r.bottom;
             event_flags |= VO_EVENT_RESIZE;
+        }
+        p.x = 0; p.y = 0;
+        ClientToScreen(vo_window, &p);
+        if (p.x != vo_dx || p.y != vo_dy) {
+            vo_dx = p.x; vo_dy = p.y;
+            event_flags |= VO_EVENT_MOVE;
         }
         res = GetClientRect(WinID, &r);
         if (res && (r.right != vo_dwidth || r.bottom != vo_dheight))
