@@ -37,16 +37,6 @@
 #include "sub/sub.h"
 #include "w32_common.h"
 
-#ifndef WM_XBUTTONDOWN
-# define WM_XBUTTONDOWN    0x020B
-# define WM_XBUTTONUP      0x020C
-# define WM_XBUTTONDBLCLK  0x020D
-#endif
-
-#define WNDCLASSNAME_WINDOWED	"MPlayer - The Movie Player"
-#define WNDCLASSNAME_FULLSCREEN	"MPlayer - Fullscreen"
-#define WNDSTYLE WS_OVERLAPPEDWINDOW|WS_SIZEBOX
-
 static LPDIRECTDRAWCOLORCONTROL	g_cc = NULL;		//color control interface
 static LPDIRECTDRAW7        g_lpdd = NULL;          //DirectDraw Object
 static LPDIRECTDRAWSURFACE7  g_lpddsPrimary = NULL;  //Primary Surface: viewport through the Desktop
@@ -338,8 +328,6 @@ static void uninit(void)
 	if (g_lpddsPrimary != NULL) g_lpddsPrimary->lpVtbl->Release(g_lpddsPrimary);
     g_lpddsPrimary = NULL;
 	mp_msg(MSGT_VO, MSGL_DBG3,"<vo_directx><INFO>primary released\n");
-	UnregisterClass(WNDCLASSNAME_WINDOWED, GetModuleHandle(NULL));
-	UnregisterClass(WNDCLASSNAME_FULLSCREEN, GetModuleHandle(NULL));
 	if (colorbrush) DeleteObject(colorbrush);
 	colorbrush = NULL;
 	mp_msg(MSGT_VO, MSGL_DBG3,"<vo_directx><INFO>GDI resources deleted\n");
