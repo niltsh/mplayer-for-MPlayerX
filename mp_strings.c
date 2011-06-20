@@ -27,13 +27,12 @@
 char *mp_asprintf(const char *fmt, ...)
 {
     char *p = NULL;
-    va_list va, va_bak;
+    va_list va;
     int len;
 
     va_start(va, fmt);
-    va_copy(va_bak, va);
-
     len = vsnprintf(NULL, 0, fmt, va);
+    va_end(va);
     if (len < 0)
         goto end;
 
@@ -41,11 +40,12 @@ char *mp_asprintf(const char *fmt, ...)
     if (!p)
         goto end;
 
-    len = vsnprintf(p, len + 1, fmt, va_bak);
+    va_start(va, fmt);
+    len = vsnprintf(p, len + 1, fmt, va);
+    va_end(va);
     if (len < 0)
         free(p), p = NULL;
 
 end:
-    va_end(va);
     return p;
 }
