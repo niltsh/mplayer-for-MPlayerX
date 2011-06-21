@@ -7929,10 +7929,10 @@ mono output (right eye only)
 .I NOTE:
 To use either of the interleaved-rows output formats to display
 full-screen on a row-interleaved 3D display, you will need to scale the
-video to the correct size first using the "scale" filter, if it's not
-already the right size.  Typically, that is 1920x1080 stereo (so use
-e.g. "-vf scale=3840x1080,stereo3d=irl" for side-by-side encoded
-movies, for example).
+video to the correct height first using the "scale" filter, if it is not
+already the right height.  Typically, that is 1080 rows (so use e.g.
+"-vf scale=1440:1080,stereo3d=sbsl:irl" for a 720p side-by-side encoded
+movie).
 .RE
 .PD 1
 .
