@@ -530,10 +530,10 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
         av_strlcat(mp_filename, "foobar.dummy", sizeof(mp_filename));
 
     if (!(priv->avif->flags & AVFMT_NOFILE)) {
-    priv->pb = av_alloc_put_byte(priv->buffer, BIO_BUFFER_SIZE, 0,
-                                 demuxer, mp_read, NULL, mp_seek);
-    priv->pb->read_seek = mp_read_seek;
-    priv->pb->is_streamed = !demuxer->stream->end_pos || (demuxer->stream->flags & MP_STREAM_SEEK) != MP_STREAM_SEEK;
+        priv->pb = av_alloc_put_byte(priv->buffer, BIO_BUFFER_SIZE, 0,
+                                     demuxer, mp_read, NULL, mp_seek);
+        priv->pb->read_seek = mp_read_seek;
+        priv->pb->is_streamed = !demuxer->stream->end_pos || (demuxer->stream->flags & MP_STREAM_SEEK) != MP_STREAM_SEEK;
     }
 
     if(av_open_input_stream(&avfc, priv->pb, mp_filename, priv->avif, &ap)<0){
@@ -840,7 +840,7 @@ static void demux_close_lavf(demuxer_t *demuxer)
     lavf_priv_t* priv = demuxer->priv;
     if (priv){
         if(priv->avfc)
-       {
+        {
          av_freep(&priv->avfc->key);
          av_close_input_stream(priv->avfc);
         }
