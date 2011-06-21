@@ -312,13 +312,13 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts)
         case ANAGLYPH_YB_GRAY:
         case ANAGLYPH_YB_HALF:
         case ANAGLYPH_YB_COLOR: {
-            int x,y,il,ir,o;
+            int i,x,y,il,ir,o;
             unsigned char *source     = mpi->planes[0];
             unsigned char *dest       = dmpi->planes[0];
             unsigned int   out_width  = vf->priv->out.width;
             int           *ana_matrix[3];
 
-            for(int i = 0; i < 3; i++)
+            for(i = 0; i < 3; i++)
                 ana_matrix[i] = vf->priv->ana_matrix[i];
 
             for (y = 0; y < vf->priv->out.height; y++) {
