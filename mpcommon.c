@@ -21,8 +21,12 @@
 #endif
 #include <stdlib.h>
 #include "stream/stream.h"
+#ifdef CONFIG_DVDREAD
 #include "stream/stream_dvd.h"
+#endif
+#ifdef CONFIG_DVDNAV
 #include "stream/stream_dvdnav.h"
+#endif
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"
 #include "codec-cfg.h"
