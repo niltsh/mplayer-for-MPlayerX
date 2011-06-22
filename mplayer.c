@@ -2537,7 +2537,7 @@ static void pause_loop(void)
     }
 #ifdef CONFIG_GUI
     if (use_gui)
-        guiGetEvent(guiCEvent, (char *)guiSetPause);
+        guiGetEvent(guiSetState, (char *)guiSetPause);
 #endif
     if (mpctx->video_out && mpctx->sh_video && vo_config_count)
         mpctx->video_out->control(VOCTRL_PAUSE, NULL);
@@ -2604,7 +2604,7 @@ static void pause_loop(void)
         if (guiInfo.Playing == guiSetStop)
             mpctx->eof = 1;
         else
-            guiGetEvent(guiCEvent, (char *)guiSetPlay);
+            guiGetEvent(guiSetState, (char *)guiSetPlay);
     }
 #endif
 }
@@ -3052,7 +3052,7 @@ int main(int argc, char *argv[])
     if (use_gui) {
         guiInit();
         guiGetEvent(guiSetContext, mpctx);
-        guiGetEvent(guiCEvent, (char *)((gui_no_filename) ? 0 : 1));
+        guiGetEvent(guiSetState, (char *)((gui_no_filename) ? 0 : 1));
     }
 #endif
 

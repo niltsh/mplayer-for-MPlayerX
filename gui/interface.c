@@ -572,7 +572,7 @@ int guiGetEvent(int type, void *arg)
         gtkEventHandling();
         break;
 
-    case guiCEvent:
+    case guiSetState:
 
         switch ((int)arg) {
         case guiSetPlay:

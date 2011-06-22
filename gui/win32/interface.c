@@ -218,7 +218,7 @@ static void guiSetEvent(int event)
         }
         case evStop:
             if(guiInfo.Playing)
-                guiGetEvent(guiCEvent, (void *) guiSetStop);
+                guiGetEvent(guiSetState, (void *) guiSetStop);
             break;
         case evSetMoviePosition:
         {
@@ -288,7 +288,7 @@ static void guiSetEvent(int event)
                     guiInfo.Chapter = guiInfo.DVD.current_chapter;
                     guiInfo.Angle = guiInfo.DVD.current_angle;
                     guiInfo.DiskChanged = 1;
-                    guiGetEvent(guiCEvent, (void *) guiSetPlay);
+                    guiGetEvent(guiSetState, (void *) guiSetPlay);
                     break;
                 }
 #endif
@@ -297,8 +297,8 @@ static void guiSetEvent(int event)
                     guiInfo.FilenameChanged = guiInfo.NewPlay = 1;
                     update_playlistwindow();
                     uiGotoTheNext = guiInfo.Playing? 0 : 1;
-                    guiGetEvent(guiCEvent, (void *) guiSetStop);
-                    guiGetEvent(guiCEvent, (void *) guiSetPlay);
+                    guiGetEvent(guiSetState, (void *) guiSetStop);
+                    guiGetEvent(guiSetState, (void *) guiSetPlay);
                     break;
                }
            }
@@ -324,7 +324,7 @@ void uiPlay( void )
        return;
    }
    guiInfo.NewPlay = 1;
-   guiGetEvent(guiCEvent, (void *) guiSetPlay);
+   guiGetEvent(guiSetState, (void *) guiSetPlay);
 }
 
 void uiPause( void )
@@ -428,12 +428,12 @@ void uiEnd( void )
         style = WS_OVERLAPPEDWINDOW | WS_SIZEBOX;
         SetWindowLong(mygui->subwindow, GWL_STYLE, style);
     }
-    guiGetEvent(guiCEvent, (void *) guiSetStop);
+    guiGetEvent(guiSetState, (void *) guiSetStop);
 }
 
 void uiStop(void)
 {
-    guiGetEvent(guiCEvent, (void *) guiSetStop);
+    guiGetEvent(guiSetState, (void *) guiSetStop);
 }
 
 void uiSetFileName(char *dir, char *name, int type)
@@ -660,7 +660,7 @@ int guiGetEvent(int type, void *arg)
         case guiSetAfilter:
             guiInfo.afilter = arg;
             break;
-        case guiCEvent:
+        case guiSetState:
         {
             guiInfo.Playing = (int) arg;
             switch (guiInfo.Playing)
