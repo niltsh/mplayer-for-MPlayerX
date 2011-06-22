@@ -145,12 +145,6 @@ static image *pngRead(skin_t *skin, unsigned char *fname)
     free(filename);
     bf->width = bmp.Width; bf->height = bmp.Height;
 
-#ifdef DEBUG
-    mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[png] loaded image %s\n", fname);
-    mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[png] size: %dx%d bits: %d\n", bf->width, bf->height, BPP);
-    mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[png] imagesize: %u\n", imgsize);
-#endif
-
     bf->size = bf->width * bf->height * skin->desktopbpp / 8;
     if (skin->desktopbpp == 32)
       bf->data = bmp.Image;
