@@ -31,11 +31,6 @@
 #include "vidix/dhahelperwin/dhahelper.h"
 
 static HANDLE hDriver;
-int IsWinNT(void);
-
-
-
-
 
 static __inline__ int enable_os_io(void)
 {

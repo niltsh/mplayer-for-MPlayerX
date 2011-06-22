@@ -49,6 +49,8 @@ typedef struct MapDevRequest
 #define METHOD_NEITHER                  3
 
 
+int IsWinNT(void);
+
 int IsWinNT(void) {
   OSVERSIONINFO OSVersionInfo;
   OSVersionInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
