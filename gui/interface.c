@@ -593,10 +593,6 @@ int guiGetEvent(int type, void *arg)
         uiState();
         break;
 
-    case guiSetState:
-        uiState();
-        break;
-
     case guiSetFileName:
         if (arg)
             guiSetFilename(guiInfo.Filename, arg);
