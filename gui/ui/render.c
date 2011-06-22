@@ -234,7 +234,8 @@ calclengthmmmmss:
                     av_strlcat(trbuf, "s", sizeof(trbuf));
                 break;
 
-            case 'l':
+            case 'l': // legacy
+            case 'p':
                 if (guiInfo.Playing == GUI_PLAY)
                     av_strlcat(trbuf, "p", sizeof(trbuf));
                 break;

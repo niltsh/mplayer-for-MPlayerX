@@ -695,7 +695,7 @@ end
                     </entry>
                   </row>
                   <row>
-                    <entry>$l</entry>
+                    <entry>$p</entry>
                     <entry>
                       Buchstabe <keycap>p</keycap> (wenn ein Film abgespielt wird)
                     </entry>
@@ -735,7 +735,7 @@ end
 
       <note>
         <para>
-          Die Variablen <literal>$a, $T, $l, $s</literal> und <literal>$e</literal>
+          Die Variablen <literal>$a, $T, $p, $s</literal> und <literal>$e</literal>
           geben Buchstaben zurück, die als spezielle Symbole angezeigt werden sollen
           (zum Beispiel steht <keycap>e</keycap> für das Pause-Symbol, welches gewöhnlich
           etwa so || aussieht).
