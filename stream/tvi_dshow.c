@@ -2804,7 +2804,9 @@ static int init(priv_t * priv)
         hr = init_chain_common(priv->pBuilder, priv->chains[1]);
         if(FAILED(hr))
         {
-            mp_msg(MSGT_TV, MSGL_V, "tvi_dshow: Unable to initialize audio chain (Error:0x%x). Audio disabled\n", (unsigned long)hr);
+            mp_msg(MSGT_TV, MSGL_V,
+                   "tvi_dshow: Unable to initialize audio chain (Error:0x%lx). Audio disabled\n",
+                   (unsigned long)hr);
             priv->chains[1]->arpmt=calloc(1, sizeof(AM_MEDIA_TYPE*));
             priv->chains[1]->arStreamCaps=calloc(1, sizeof(void*));
         }
@@ -2818,7 +2820,9 @@ static int init(priv_t * priv)
         hr = init_chain_common(priv->pBuilder, priv->chains[2]);
         if(FAILED(hr))
         {
-            mp_msg(MSGT_TV, MSGL_V, "tvi_dshow: Unable to initialize VBI chain (Error:0x%x). Teletext disabled\n", (unsigned long)hr);
+            mp_msg(MSGT_TV, MSGL_V,
+                   "tvi_dshow: Unable to initialize VBI chain (Error:0x%lx). Teletext disabled\n",
+                   (unsigned long)hr);
             priv->chains[2]->arpmt=calloc(1, sizeof(AM_MEDIA_TYPE*));
             priv->chains[2]->arStreamCaps=calloc(1, sizeof(void*));
         }
