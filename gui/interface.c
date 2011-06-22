@@ -298,8 +298,6 @@ void guiInit(void)
     wsSetIcon(wsDisplay, guiApp.mainWindow.WindowID, &guiIcon);
     wsSetIcon(wsDisplay, guiApp.subWindow.WindowID, &guiIcon);
 
-    guiInfo.Playing = 0;
-
     if (!guiApp.mainDecoration)
         wsWindowDecoration(&guiApp.mainWindow, 0);
 
@@ -356,12 +354,15 @@ void guiInit(void)
 
                 guiApp.subWindow.Mapped = wsMapped;
             }
-            wsVisibleWindow(&guiApp.subWindow, wsShowWindow);
-            uiFullScreen();
+            guiInfo.Playing = 2;   // set pause, because of !gtkShowVideoWindow...
+            uiFullScreen();        // ...guiInfo.Playing is required
+            wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
             btnModify(evFullScreen, btnPressed);
         }
     }
 #endif
+
+    guiInfo.Playing = 0;
 
     uiSubRender = 1;
 
