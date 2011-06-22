@@ -187,7 +187,7 @@ static void freeimages(skin_t *skin)
 }
 
 #ifdef DEBUG
-void dumpwidgets(skin_t *skin)
+static void dumpwidgets(skin_t *skin)
 {
     unsigned int i;
     for (i=0; i<skin->widgetcount; i++)
