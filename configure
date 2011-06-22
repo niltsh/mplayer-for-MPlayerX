@@ -1761,7 +1761,6 @@ elif x86; then
 fi
 
 if [ "$cc_vendor" = "gnu" ] && [ "$_cc_major" = 2 ] ; then
-  test $_sse      = auto && _sse=no
   test $_win32dll = auto && _win32dll=no
   ass_internal=no
 fi
