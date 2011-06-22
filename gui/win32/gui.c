@@ -263,7 +263,7 @@ static void updatedisplay(gui_t *gui, HWND hwnd)
             {
                 gui->skin->widgets[i]->value = guiInfo.Playing;
                     renderwidget(gui->skin, get_drawground(hwnd), gui->skin->widgets[i],
-                                 guiInfo.Playing == 1 ? 0 : 1);
+                                 guiInfo.Playing == GUI_PLAY ? 0 : 1);
             }
             if(gui->skin->widgets[i]->msg == evMute)
             {
@@ -607,7 +607,7 @@ static LRESULT CALLBACK SubProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
             GetClientRect(hWnd, &rect);
             width = rect.right - rect.left;
             height = rect.bottom - rect.top;
-            if(guiInfo.Playing == 0)
+            if(guiInfo.Playing == GUI_STOP)
             {
                 int i;
                 window *desc = NULL;

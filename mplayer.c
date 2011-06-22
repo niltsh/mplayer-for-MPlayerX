@@ -2558,7 +2558,7 @@ static void pause_loop(void)
         if (use_gui) {
             guiEventHandling();
             guiGetEvent(guiReDraw, NULL);
-            if (guiInfo.Playing != 2 || (rel_seek_secs || abs_seek_pos))
+            if (guiInfo.Playing != GUI_PAUSE || (rel_seek_secs || abs_seek_pos))
                 break;
         }
 #endif
@@ -3052,7 +3052,7 @@ int main(int argc, char *argv[])
     if (use_gui) {
         guiInit();
         guiGetEvent(guiSetContext, mpctx);
-        guiGetEvent(guiSetState, (char *)((gui_no_filename) ? 0 : 1));
+        guiGetEvent(guiSetState, (void *)((gui_no_filename) ? GUI_STOP : GUI_PLAY));
     }
 #endif
 
@@ -3091,7 +3091,7 @@ play_next_file:
     if (use_gui) {
         mpctx->file_format = DEMUXER_TYPE_UNKNOWN;
         guiGetEvent(guiSetDefaults, 0);
-        while (guiInfo.Playing != 1) {
+        while (guiInfo.Playing != GUI_PLAY) {
             mp_cmd_t *cmd;
             usec_sleep(20000);
             guiEventHandling();
@@ -4006,9 +4006,9 @@ goto_enable_cache:
                 guiInfo.LengthInSec = demuxer_get_time_length(mpctx->demuxer);
                 guiGetEvent(guiReDraw, NULL);
                 guiGetEvent(guiSetVolume, NULL);
-                if (guiInfo.Playing == 0)
+                if (guiInfo.Playing == GUI_STOP)
                     break;                  // STOP
-                if (guiInfo.Playing == 2)
+                if (guiInfo.Playing == GUI_PAUSE)
                     mpctx->osd_function = OSD_PAUSE;
                 if (guiInfo.DiskChanged || guiInfo.NewPlay)
                     goto goto_next_file;

@@ -243,7 +243,7 @@ static void guiSetEvent(int event)
         {
             float l,r;
 
-            if (guiInfo.Playing == 0)
+            if (guiInfo.Playing == GUI_STOP)
                 break;
 
             if (guiInfo.Balance == 50.0f)
@@ -318,7 +318,7 @@ void uiPlay( void )
    if((!guiInfo.Filename ) || (guiInfo.Filename[0] == 0))
      return;
 
-   if(guiInfo.Playing > 0)
+   if(guiInfo.Playing > GUI_STOP)
    {
        uiPause();
        return;
@@ -331,18 +331,18 @@ void uiPause( void )
 {
    if(!guiInfo.Playing) return;
 
-   if(guiInfo.Playing == 1)
+   if(guiInfo.Playing == GUI_PLAY)
    {
        mp_cmd_t * cmd = calloc(1, sizeof(*cmd));
        cmd->id=MP_CMD_PAUSE;
        cmd->name=strdup("pause");
        mp_input_queue_cmd(cmd);
-   } else guiInfo.Playing = 1;
+   } else guiInfo.Playing = GUI_PLAY;
 }
 
 void uiNext(void)
 {
-    if(guiInfo.Playing == 2) return;
+    if(guiInfo.Playing == GUI_PAUSE) return;
     switch(guiInfo.StreamType)
     {
 #ifdef CONFIG_DVDREAD
@@ -364,7 +364,7 @@ void uiNext(void)
 
 void uiPrev(void)
 {
-    if(guiInfo.Playing == 2) return;
+    if(guiInfo.Playing == GUI_PAUSE) return;
     switch(guiInfo.StreamType)
     {
 #ifdef CONFIG_DVDREAD
@@ -667,19 +667,19 @@ int guiGetEvent(int type, void *arg)
             {
                 case GUI_PLAY:
                 {
-                    guiInfo.Playing = 1;
+                    guiInfo.Playing = GUI_PLAY;
                     break;
                 }
                 case GUI_STOP:
                 {
-                    guiInfo.Playing = 0;
+                    guiInfo.Playing = GUI_STOP;
                     if(movie_aspect >= 0)
                         movie_aspect = -1;
                     update_subwindow();
                     break;
                 }
                 case GUI_PAUSE:
-                    guiInfo.Playing = 2;
+                    guiInfo.Playing = GUI_PAUSE;
                     break;
             }
             break;
@@ -912,7 +912,7 @@ static int update_subwindow(void)
     wp.flags = SWP_NOOWNERZORDER | SWP_SHOWWINDOW;
 
     /* erase the bitmap image if there's video */
-    if(guiInfo.Playing != 0 && guiInfo.sh_video)
+    if(guiInfo.Playing != GUI_STOP && guiInfo.sh_video)
         SendMessage(mygui->subwindow, WM_ERASEBKGND, (WPARAM)GetDC(mygui->subwindow), 0);
 
     /* reset the window aspect */

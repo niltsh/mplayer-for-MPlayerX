@@ -354,7 +354,7 @@ void guiInit(void)
 
                 guiApp.subWindow.Mapped = wsMapped;
             }
-            guiInfo.Playing = 2;   // set pause, because of !gtkShowVideoWindow...
+            guiInfo.Playing = GUI_PAUSE; // because of !gtkShowVideoWindow...
             uiFullScreen();        // ...guiInfo.Playing is required
             wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
             btnModify(evFullScreen, btnPressed);
@@ -362,7 +362,7 @@ void guiInit(void)
     }
 #endif
 
-    guiInfo.Playing = 0;
+    guiInfo.Playing = GUI_STOP;
 
     uiSubRender = 1;
 
@@ -576,17 +576,17 @@ int guiGetEvent(int type, void *arg)
 
         switch ((int)arg) {
         case GUI_PLAY:
-            guiInfo.Playing = 1;
 // if ( !gtkShowVideoWindow ) wsVisibleWindow( &guiApp.subWindow,wsHideWindow );
+            guiInfo.Playing = GUI_PLAY;
             break;
 
         case GUI_STOP:
-            guiInfo.Playing = 0;
 // if ( !gtkShowVideoWindow ) wsVisibleWindow( &guiApp.subWindow,wsHideWindow );
+            guiInfo.Playing = GUI_STOP;
             break;
 
         case GUI_PAUSE:
-            guiInfo.Playing = 2;
+            guiInfo.Playing = GUI_PAUSE;
             break;
         }
 

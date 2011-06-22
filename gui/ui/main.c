@@ -153,7 +153,7 @@ play_dvd_2:
    case evPlaySwitchToPause:
 play:
 
-        if ( ( msg == evPlaySwitchToPause )&&( guiInfo.Playing == 2 ) ) goto NoPause;
+        if ( ( msg == evPlaySwitchToPause )&&( guiInfo.Playing == GUI_PAUSE ) ) goto NoPause;
 
 	if ( gtkSet( gtkGetCurrPlItem,0,NULL ) &&( guiInfo.StreamType == STREAMTYPE_FILE ) )
 	 {
@@ -173,7 +173,7 @@ play:
 	       gtkSet( gtkClearStruct,0,(void *)(guiALL - guiVCD - guiFilenames) );
 	       if ( !cdrom_device ) cdrom_device=gstrdup( DEFAULT_CDROM_DEVICE );
 	       uiSetFileName( NULL,cdrom_device,STREAMTYPE_VCD );
-	       if ( guiInfo.Playing != 2 )
+	       if ( guiInfo.Playing != GUI_PAUSE )
 	        {
 		 if ( !guiInfo.Track )
                    guiInfo.Track=1;
@@ -186,7 +186,7 @@ play:
 	       gtkSet( gtkClearStruct,0,(void *)(guiALL - guiDVD - guiFilenames) );
 	       if ( !dvd_device ) dvd_device=gstrdup( DEFAULT_DVD_DEVICE );
 	       uiSetFileName( NULL,dvd_device,STREAMTYPE_DVD );
-	       if ( guiInfo.Playing != 2 )
+	       if ( guiInfo.Playing != GUI_PAUSE )
 	        {
 		 guiInfo.Title=guiInfo.DVD.current_title;
 		 guiInfo.Chapter=guiInfo.DVD.current_chapter;
@@ -626,7 +626,7 @@ void uiDandDHandler(int num,char** files)
 
   if (filename) {
     uiSetFileName( NULL,filename,STREAMTYPE_FILE );
-    if ( guiInfo.Playing == 1 ) uiEventHandling( evStop,0 );
+    if ( guiInfo.Playing == GUI_PLAY ) uiEventHandling( evStop,0 );
     uiEventHandling( evPlay,0 );
   }
   if (subtitles) {

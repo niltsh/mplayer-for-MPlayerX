@@ -159,7 +159,7 @@ void display_opensubtitlewindow(gui_t *gui)
     char subtitlefile[MAX_PATH];
 
     /* Safety check */
-    if (guiInfo.Playing == 0 || !guiInfo.sh_video) return;
+    if (guiInfo.Playing == GUI_STOP || !guiInfo.sh_video) return;
 
     memset(&subtitleopen, 0, sizeof(OPENFILENAME));
     memset(subtitlefile, 0, sizeof(subtitlefile));

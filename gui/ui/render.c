@@ -230,17 +230,17 @@ calclengthmmmmss:
                 break;
 
             case 's':
-                if (guiInfo.Playing == 0)
+                if (guiInfo.Playing == GUI_STOP)
                     av_strlcat(trbuf, "s", sizeof(trbuf));
                 break;
 
             case 'l':
-                if (guiInfo.Playing == 1)
+                if (guiInfo.Playing == GUI_PLAY)
                     av_strlcat(trbuf, "p", sizeof(trbuf));
                 break;
 
             case 'e':
-                if (guiInfo.Playing == 2)
+                if (guiInfo.Playing == GUI_PAUSE)
                     av_strlcat(trbuf, "e", sizeof(trbuf));
                 break;
 

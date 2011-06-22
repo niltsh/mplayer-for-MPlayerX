@@ -140,10 +140,10 @@ void uiPlay(void)
 {
     if (!guiInfo.Filename ||
         (guiInfo.Filename[0] == 0) ||
-        (guiInfo.Playing == 1))
+        (guiInfo.Playing == GUI_PLAY))
         return;
 
-    if (guiInfo.Playing == 2) {
+    if (guiInfo.Playing == GUI_PAUSE) {
         uiPause();
         return;
     }
@@ -159,18 +159,18 @@ void uiPause(void)
     if (!guiInfo.Playing)
         return;
 
-    if (guiInfo.Playing == 1) {
+    if (guiInfo.Playing == GUI_PLAY) {
         mp_cmd_t *cmd = calloc(1, sizeof(*cmd));
         cmd->id   = MP_CMD_PAUSE;
         cmd->name = strdup("pause");
         mp_input_queue_cmd(cmd);
     } else
-        guiInfo.Playing = 1;
+        guiInfo.Playing = GUI_PLAY;
 }
 
 void uiState(void)
 {
-    if (guiInfo.Playing == 0 || guiInfo.Playing == 2) {
+    if (guiInfo.Playing == GUI_STOP || guiInfo.Playing == GUI_PAUSE) {
         btnModify(evPlaySwitchToPause, btnReleased);
         btnModify(evPauseSwitchToPlay, btnDisabled);
     } else {
@@ -314,7 +314,7 @@ void uiCurr(void)
     plItem *curr;
     int stop = 0;
 
-    if (guiInfo.Playing == 2)
+    if (guiInfo.Playing == GUI_PAUSE)
         return;
 
     switch (guiInfo.StreamType) {
@@ -344,7 +344,7 @@ void uiCurr(void)
     if (stop)
         uiEventHandling(evStop, 0);
 
-    if (guiInfo.Playing == 1)
+    if (guiInfo.Playing == GUI_PLAY)
         uiEventHandling(evPlay, 0);
 }
 
@@ -353,7 +353,7 @@ void uiPrev(void)
     plItem *prev;
     int stop = 0;
 
-    if (guiInfo.Playing == 2)
+    if (guiInfo.Playing == GUI_PAUSE)
         return;
 
     switch (guiInfo.StreamType) {
@@ -398,7 +398,7 @@ void uiPrev(void)
     if (stop)
         uiEventHandling(evStop, 0);
 
-    if (guiInfo.Playing == 1)
+    if (guiInfo.Playing == GUI_PLAY)
         uiEventHandling(evPlay, 0);
 }
 
@@ -407,7 +407,7 @@ void uiNext(void)
     int stop = 0;
     plItem *next;
 
-    if (guiInfo.Playing == 2)
+    if (guiInfo.Playing == GUI_PAUSE)
         return;
 
     switch (guiInfo.StreamType) {
@@ -458,7 +458,7 @@ void uiNext(void)
     if (stop)
         uiEventHandling(evStop, 0);
 
-    if (guiInfo.Playing == 1)
+    if (guiInfo.Playing == GUI_PLAY)
         uiEventHandling(evPlay, 0);
 }
 

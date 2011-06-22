@@ -151,9 +151,9 @@ static char *generatetextfromlabel(widget *item)
 
     if(!strcmp(text, "$p") || !strcmp(text, "$s") || !strcmp(text, "$e"))
     {
-        if(guiInfo.Playing == 0) stringreplace(text, NULL, "s");
-        else if(guiInfo.Playing == 1) stringreplace(text, NULL, "p");
-        else if(guiInfo.Playing == 2) stringreplace(text, NULL, "e");
+        if(guiInfo.Playing == GUI_STOP) stringreplace(text, NULL, "s");
+        else if(guiInfo.Playing == GUI_PLAY) stringreplace(text, NULL, "p");
+        else if(guiInfo.Playing == GUI_PAUSE) stringreplace(text, NULL, "e");
     }
 
     if(guiInfo.AudioType == 0) stringreplace(text, "$a", "n");
