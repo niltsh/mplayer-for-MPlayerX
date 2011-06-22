@@ -55,9 +55,9 @@ extern int use_gui;             // this is defined in mplayer.c
 #define guiSetAfilter      17
 #define guiSetContext      18
 
-#define guiSetStop  0
-#define guiSetPlay  1
-#define guiSetPause 2
+#define GUI_STOP  0
+#define GUI_PLAY  1
+#define GUI_PAUSE 2
 
 #define guiDVD       1
 #define guiVCD       2

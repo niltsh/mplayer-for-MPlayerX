@@ -510,7 +510,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
   }
  if ( i ) fsTopList_items=g_list_prepend( fsTopList_items,(gchar *)get_current_dir_name_utf8() );
  if ( uiMainAutoPlay ) { uiMainAutoPlay=0; uiEventHandling( evPlay,0 ); }
-  else guiGetEvent( guiSetState,(void *) guiSetStop );
+  else guiGetEvent( guiSetState,(void *) GUI_STOP );
 }
 
 static void fs_Cancel_released( GtkButton * button,gpointer user_data )

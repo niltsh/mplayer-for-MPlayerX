@@ -128,7 +128,7 @@ void uiEnd(void)
         } else
             wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
 
-        guiGetEvent(guiSetState, (void *)guiSetStop);
+        guiGetEvent(guiSetState, (void *)GUI_STOP);
         uiSubRender = 1;
         wsSetBackgroundRGB(&guiApp.subWindow, guiApp.sub.R, guiApp.sub.G, guiApp.sub.B);
         wsClearWindow(guiApp.subWindow);
@@ -148,7 +148,7 @@ void uiPlay(void)
         return;
     }
 
-    guiGetEvent(guiSetState, (void *)guiSetPlay);
+    guiGetEvent(guiSetState, (void *)GUI_PLAY);
     uiSubRender = 0;
     wsSetBackgroundRGB(&guiApp.subWindow, 0, 0, 0);
     wsClearWindow(guiApp.subWindow);

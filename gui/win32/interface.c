@@ -218,7 +218,7 @@ static void guiSetEvent(int event)
         }
         case evStop:
             if(guiInfo.Playing)
-                guiGetEvent(guiSetState, (void *) guiSetStop);
+                guiGetEvent(guiSetState, (void *) GUI_STOP);
             break;
         case evSetMoviePosition:
         {
@@ -288,7 +288,7 @@ static void guiSetEvent(int event)
                     guiInfo.Chapter = guiInfo.DVD.current_chapter;
                     guiInfo.Angle = guiInfo.DVD.current_angle;
                     guiInfo.DiskChanged = 1;
-                    guiGetEvent(guiSetState, (void *) guiSetPlay);
+                    guiGetEvent(guiSetState, (void *) GUI_PLAY);
                     break;
                 }
 #endif
@@ -297,8 +297,8 @@ static void guiSetEvent(int event)
                     guiInfo.FilenameChanged = guiInfo.NewPlay = 1;
                     update_playlistwindow();
                     uiGotoTheNext = guiInfo.Playing? 0 : 1;
-                    guiGetEvent(guiSetState, (void *) guiSetStop);
-                    guiGetEvent(guiSetState, (void *) guiSetPlay);
+                    guiGetEvent(guiSetState, (void *) GUI_STOP);
+                    guiGetEvent(guiSetState, (void *) GUI_PLAY);
                     break;
                }
            }
@@ -324,7 +324,7 @@ void uiPlay( void )
        return;
    }
    guiInfo.NewPlay = 1;
-   guiGetEvent(guiSetState, (void *) guiSetPlay);
+   guiGetEvent(guiSetState, (void *) GUI_PLAY);
 }
 
 void uiPause( void )
@@ -428,12 +428,12 @@ void uiEnd( void )
         style = WS_OVERLAPPEDWINDOW | WS_SIZEBOX;
         SetWindowLong(mygui->subwindow, GWL_STYLE, style);
     }
-    guiGetEvent(guiSetState, (void *) guiSetStop);
+    guiGetEvent(guiSetState, (void *) GUI_STOP);
 }
 
 void uiStop(void)
 {
-    guiGetEvent(guiSetState, (void *) guiSetStop);
+    guiGetEvent(guiSetState, (void *) GUI_STOP);
 }
 
 void uiSetFileName(char *dir, char *name, int type)
@@ -665,12 +665,12 @@ int guiGetEvent(int type, void *arg)
             guiInfo.Playing = (int) arg;
             switch (guiInfo.Playing)
             {
-                case guiSetPlay:
+                case GUI_PLAY:
                 {
                     guiInfo.Playing = 1;
                     break;
                 }
-                case guiSetStop:
+                case GUI_STOP:
                 {
                     guiInfo.Playing = 0;
                     if(movie_aspect >= 0)
@@ -678,7 +678,7 @@ int guiGetEvent(int type, void *arg)
                     update_subwindow();
                     break;
                 }
-                case guiSetPause:
+                case GUI_PAUSE:
                     guiInfo.Playing = 2;
                     break;
             }

@@ -2537,7 +2537,7 @@ static void pause_loop(void)
     }
 #ifdef CONFIG_GUI
     if (use_gui)
-        guiGetEvent(guiSetState, (char *)guiSetPause);
+        guiGetEvent(guiSetState, (void *)GUI_PAUSE);
 #endif
     if (mpctx->video_out && mpctx->sh_video && vo_config_count)
         mpctx->video_out->control(VOCTRL_PAUSE, NULL);
@@ -2601,10 +2601,10 @@ static void pause_loop(void)
     (void)GetRelativeTime(); // ignore time that passed during pause
 #ifdef CONFIG_GUI
     if (use_gui) {
-        if (guiInfo.Playing == guiSetStop)
+        if (guiInfo.Playing == GUI_STOP)
             mpctx->eof = 1;
         else
-            guiGetEvent(guiSetState, (char *)guiSetPlay);
+            guiGetEvent(guiSetState, (void *)GUI_PLAY);
     }
 #endif
 }

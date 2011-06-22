@@ -227,7 +227,7 @@ NoPause:
         break;
 
    case evStop:
-	guiInfo.Playing=guiSetStop;
+	guiInfo.Playing=GUI_STOP;
 	uiState();
 	guiInfo.NoWindow=False;
 	break;

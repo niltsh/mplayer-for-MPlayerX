@@ -558,7 +558,7 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
                 case ID_APPLY:
                 {
                     int strl;
-                    if(guiInfo.Playing) guiGetEvent(guiSetState, (void *)guiSetStop);
+                    if(guiInfo.Playing) guiGetEvent(guiSetState, (void *)GUI_STOP);
 
                     /* Set the video driver */
                     free(video_driver_list[0]);
