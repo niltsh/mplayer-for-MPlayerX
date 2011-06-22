@@ -38,7 +38,24 @@
 #include "help_mp.h"
 #include "dialogs.h"
 
-static void set_defaults(void);
+
+static void set_defaults(void)
+{
+    proc_priority = "normal";
+    vo_doublebuffering = 1;
+    vo_directrendering = 0;
+    frame_dropping = 0;
+    soft_vol = 0;
+    gtkAONorm = 0;
+    gtkAOExtraStereo = 0;
+    gtkAOExtraStereoMul = 1.0;
+    audio_delay = 0.0;
+    sub_window = 1;
+    gtkCacheOn = 0;
+    gtkCacheSize = 2048;
+    gtkAutoSyncOn = 0;
+    gtkAutoSync = 0;
+}
 
 static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -693,22 +710,4 @@ void display_prefswindow(gui_t *gui)
    SetWindowLongPtr(hWnd, GWLP_USERDATA, (DWORD) gui);
    ShowWindow(hWnd, SW_SHOW);
    UpdateWindow(hWnd);
-}
-
-static void set_defaults(void)
-{
-    proc_priority = "normal";
-    vo_doublebuffering = 1;
-    vo_directrendering = 0;
-    frame_dropping = 0;
-    soft_vol = 0;
-    gtkAONorm = 0;
-    gtkAOExtraStereo = 0;
-    gtkAOExtraStereoMul = 1.0;
-    audio_delay = 0.0;
-    sub_window = 1;
-    gtkCacheOn = 0;
-    gtkCacheSize = 2048;
-    gtkAutoSyncOn = 0;
-    gtkAutoSync = 0;
 }
