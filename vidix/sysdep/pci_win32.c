@@ -29,6 +29,7 @@
 #include <windows.h>
 #include <ddk/ntddk.h>
 #include "vidix/dhahelperwin/dhahelper.h"
+#include "libdha_win32.h"
 
 static HANDLE hDriver;
 

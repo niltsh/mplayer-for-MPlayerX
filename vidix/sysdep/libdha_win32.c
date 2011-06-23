@@ -23,6 +23,7 @@
 #include <windows.h>
 #include <ddk/ntddk.h>
 #include "vidix/dhahelperwin/dhahelper.h"
+#include "libdha_win32.h"
 
 /*
   This is the request structure that applications use
@@ -48,8 +49,6 @@ typedef struct MapDevRequest
 #define FILE_DEVICE_UNKNOWN             0x00000022
 #define METHOD_NEITHER                  3
 
-
-int IsWinNT(void);
 
 int IsWinNT(void) {
   OSVERSIONINFO OSVersionInfo;
