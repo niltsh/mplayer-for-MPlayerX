@@ -194,17 +194,20 @@ execute the <command>gmplayer</command> binary.
 
 <para>
 As <application>MPlayer</application> doesn't have a skin included, you
-have to download one if you want to use the GUI. See the <ulink
+have to download at least one if you want to use the GUI. See Skins at the <ulink
 url="http://www.mplayerhq.hu/dload.html">download page</ulink>.
-It should be extracted to the usual system-wide directory (<filename
-class="directory">$PREFIX/share/mplayer/skins</filename>), or to <filename
-class="directory">$HOME/.mplayer/skins</filename>.
-<application>MPlayer</application> by default looks in these directories
-for a directory named <filename class="directory">default</filename>, but
-you can use the <option>-skin <replaceable>newskin</replaceable></option>
-option, or the <literal>skin=newskin</literal> config file directive to use
-the skin in the <filename class="directory">*/skins/newskin</filename>
-directory.
+A skin should be extracted to the usual system-wide directory <filename
+class="directory">$PREFIX/share/mplayer/skins</filename> or to the user
+specific directory <filename class="directory">$HOME/.mplayer/skins</filename>
+and resides as a subdirectory there.
+<application>MPlayer</application> by default first looks in the user specific
+directory, then the system-wide directory for a subdirectory named
+<filename class="directory">default</filename> (which
+simply can be a link to your favourite skin) to load the skin, but
+you can use the <option>-skin <replaceable>myskin</replaceable></option>
+option, or the <literal>skin=myskin</literal> config file directive to use
+a different skin from the <filename class="directory">skins</filename>
+directories.
 </para>
 </sect1>
 

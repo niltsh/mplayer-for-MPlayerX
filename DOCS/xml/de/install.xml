@@ -235,18 +235,21 @@ make install</screen>
     </para>
 
     <para>
-      Da <application>MPlayer</application> kein Skin enthält, musst du eins
-      herunterladen, um die GUI benutzen zu können. Siehe
+      Da <application>MPlayer</application> kein Skin mitbringt, musst du zumindest eines
+      herunterladen, um die GUI benutzen zu können. Siehe dazu Skins auf der
       <ulink url="http://www.mplayerhq.hu/dload.html">Download-Seite</ulink>.
-      Sie sollten in das normale systemweite Verzeichnis
-      (<filename class="directory">$PREFIX/share/mplayer/skins</filename>) oder nach
-      <filename class="directory">$HOME/.mplayer/skins</filename> installiert werden.
-      <application>MPlayer</application> schaut nach Voreinstellung in diesen Verzeichnissen
-      nach einem Verzeichnis mit dem Namen <filename class="directory">default</filename>,
-      du kannst aber die Option <option>-skin <replaceable>newskin</replaceable></option>
-      oder die Konfigurationsdateianweisung
-      <literal>skin=newskin</literal> nutzen, um ein Skin im Verzeichnis
-      <filename class="directory">*/skins/newskin</filename> zu benutzen.
+      Ein Skin sollte in das normale systemweite Verzeichnis
+      <filename class="directory">$PREFIX/share/mplayer/skins</filename> oder in das
+      benutzerspezifische <filename class="directory">$HOME/.mplayer/skins</filename>
+      installiert werden und liegt dann dort als Unterverzeichnis.
+      <application>MPlayer</application> sucht standardmäßig zuerst in dem
+      benutzerspezifischen und dann in dem systemweiten Verzeichnis nach einem
+      Unterverzeichnis mit dem Namen <filename class="directory">default</filename>
+      (das einfach ein Link auf das Lieblingsskin sein kann), um das Skin zu laden.
+      Du kannst aber auch die Option <option>-skin <replaceable>meinskin</replaceable></option>
+      oder die Konfigurationsdateianweisung <literal>skin=meinskin</literal> benutzen,
+      um ein anderes Skin aus den <filename class="directory">skins</filename>-Verzeichnissen
+      zu verwenden.
     </para>
   </sect1>
 
