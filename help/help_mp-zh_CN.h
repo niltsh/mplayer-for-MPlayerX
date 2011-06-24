@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 33618
+// Synced with help_mp-en.h rev. 33639
 //
 // Translated by JRaSH <jrash06@163.com>
 
@@ -574,6 +574,7 @@ static const char help_text[]=
 #define MSGTR_NEMFMR "抱歉，没有足够的内存用于菜单渲染。"
 #define MSGTR_IDFGCVD "抱歉，未找到与 GUI 兼容的视频输出驱动。\n"
 #define MSGTR_NEEDLAVC "抱歉，未重新编码前无法用你的 DXR3/H+ 设备播放非 MPEG 文件。\n请启用 DXR3/H+ 配置盒中的 lavc 编解码器。"
+#define MSGTR_ICONERROR "图标‘%s’未找到或格式不支持。\n"
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "界面外观配置文件错误，行 %d：%s"
