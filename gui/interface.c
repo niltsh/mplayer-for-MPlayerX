@@ -355,7 +355,7 @@ void guiInit(void)
                 guiApp.subWindow.Mapped = wsMapped;
             }
             guiInfo.Playing = GUI_PAUSE; // because of !gtkShowVideoWindow...
-            uiFullScreen();        // ...guiInfo.Playing is required
+            uiFullScreen();          // ...guiInfo.Playing is required
             wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
             btnModify(evFullScreen, btnPressed);
         }

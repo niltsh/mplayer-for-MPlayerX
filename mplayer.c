@@ -4120,7 +4120,7 @@ goto_next_file:  // don't jump here after ao/vo/getch initialization!
 #ifdef CONFIG_GUI
         (use_gui && guiInfo.Playing) ||
 #endif
-                                              mpctx->playtree_iter != NULL || player_idle_mode) {
+                                        mpctx->playtree_iter != NULL || player_idle_mode) {
         if (!mpctx->playtree_iter)
             filename = NULL;
         mpctx->eof = 0;
