@@ -575,18 +575,11 @@ int guiGetEvent(int type, void *arg)
     case guiSetState:
 
         switch ((int)arg) {
+        case GUI_STOP:
         case GUI_PLAY:
 // if ( !gtkShowVideoWindow ) wsVisibleWindow( &guiApp.subWindow,wsHideWindow );
-            guiInfo.Playing = GUI_PLAY;
-            break;
-
-        case GUI_STOP:
-// if ( !gtkShowVideoWindow ) wsVisibleWindow( &guiApp.subWindow,wsHideWindow );
-            guiInfo.Playing = GUI_STOP;
-            break;
-
         case GUI_PAUSE:
-            guiInfo.Playing = GUI_PAUSE;
+            guiInfo.Playing = (int)arg;
             break;
         }
 
