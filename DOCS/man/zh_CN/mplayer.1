@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 33564
+.\" sync with en/mplayer.1 rev. 33689
 .\" This man page was/is done by Gabucino, Diego Biurrun, Jonas Jermann
 .\" translation by JRaSH<jrash06 at 163.com>, currently fixed up to (10016)
 .
@@ -497,8 +497,10 @@ mplayer \-ao pcm:file=%`expr length "$NAME"`%"$NAME" test.avi
 MEncoder 的配置文件是“mencoder.conf”，位于配置目录中\
 （例如：/etc/\:mplayer 或者 /usr/\:local/\:etc/\:mplayer），\
 各个用户专用的配置文件是“~/\:.mplayer/\:mencoder.conf”。\
-各个用户专用的选项重定义系统范围选项的内容，\
-而命令行选项则重定义以上两者的内容。\
+各个用户专用的选项覆盖系统范围定义的选项（当使用
+.BR gmplayer
+时，gui.conf 的选项覆盖各个用户专用的选项），而命令行中指定的\
+选项覆盖其它所有选项。\
 配置文件的语法是“选项=<参数值>”，\
 任何“#”后面的内容都认为是注释。\
 无需参数值既可使用的选项可把参数值设为“yes”或“1”或“true”，\
@@ -1659,13 +1661,13 @@ MPlayer 在关闭时将驱动器的速度重置为默认值。\
 了解使用该选项的详情。
 .
 .TP
-.B \-endpos <[[hh:]mm:]ss[.ms]|size[b|kb|mb]>（另见 \-ss 和 \-sb）
+.B \-endpos <[[hh:]mm:]ss[.ms]|大小[b|kb|mb]>（另见 \-ss 和 \-sb）
 停止在所给时间或字节数表示的位置。
 .br
 .I 注意：
 字节数表示的位置可能不精确，因为只能停在帧数据块的边界上。\
-当与 \-ss 选项组合使用时，\-endpos 的时间会向前平移 \-ss 指定\
-的秒数。
+当与 \-ss 选项组合使用时，如非以字节数指定位置，\-endpos 的时间\
+会向前平移 \-ss 所指定的秒数。
 .sp 1
 .I 示例：
 .PD 0
@@ -1676,7 +1678,9 @@ MPlayer 在关闭时将驱动器的速度重置为默认值。\
 停在 1 小时 10 分处。
 .IPs "\-ss 10 \-endpos 56"
 1 分 6 秒后停止。
-.IPs "\-endpos 100mb"
+.IPs "mplayer \-endpos 100mb"
+读取输入文件的 100MB 数据后停止播放。
+.IPs "mencoder \-endpos 100mb"
 只编码 100 MB 的数据。
 .RE
 .PD 1
@@ -4788,8 +4792,8 @@ PGMYUV 与 PGM 类似，但另外包含 U 和 V 平面的数据，附加\
 的 24 位 RGB 图像。
 .PD 0
 .RSs
-.IPs <输出文件>
-指定输出文件名（必须指定）。
+.IPs output=<输出文件>
+指定输出文件名（默认值：out.mng）。
 .REss
 .PD 1
 .RS
@@ -4798,7 +4802,7 @@ PGMYUV 与 PGM 类似，但另外包含 U 和 V 平面的数据，附加\
 .RE
 .PD 0
 .RSs
-mplayer video.mkv \-vo mng:output.mng
+mplayer video.mkv \-vo mng:output=test.mng
 .RE
 .PD 1
 .
@@ -7905,6 +7909,14 @@ stereo3d 选项用于转换不同的立体图像格式。
 黄/蓝立体彩色图像（黄色图层通过左眼图像，蓝色图层\
 通过右眼图像）
 .RE
+.B irl 或 interleave_rows_left_first
+.RS
+像素行交错排列（左眼图像占据最高一行，右眼图像从其下一行开始）
+.RE
+.B irr 或 interleave_rows_right_first
+.RS
+像素行交错排列（右眼图像占据最高一行，左眼图像从其下一行开始）
+.RE
 .B ml 或 mono_left
 .RS
 单眼图像输出（只输出左眼图像）
@@ -7914,6 +7926,13 @@ stereo3d 选项用于转换不同的立体图像格式。
 单眼图像输出（只输出右眼图像）
 .RE
 .RE
+.I 注意：
+无论使用哪一种像素行交错排列的输出格式\
+在行交错的 3D 显示终端上显示全屏画面，\
+都需在视频未具有正确的高度时使用“scale”\
+过滤器将其缩放至准确的高度。典型的情况是，\
+高度为 1080 行（所以要使用诸如“-vf scale=1440:1080,stereo3d=sbsl:irl”\
+以处理 720p 平行排列方式编码的影片）。
 .RE
 .PD 1
 .
@@ -12156,7 +12175,7 @@ MPlayer 最初由 Arpad Gereoffy 制作。\
 MPlayer 为 (C) 2000\-2011 MPlayer 团队所有
 .PP
 本（英文）手册主要由 Gabucino、Jonas Jermann 和 Diego Biurrun 编写，\
-由 Diego Biurrun 维护。中文版由 JRaSH <jrash06 AT gmail.com> 翻译。\
+由 Diego Biurrun 维护。中文版由 JRaSH <jrash06 AT 163.com> 翻译。\
 有关本手册的事宜，请发送邮件至 MPlayer-DOCS 邮件列表。\
 与翻译相关的邮件归属于 MPlayer-translations 邮件列表。
 .\" end of file
