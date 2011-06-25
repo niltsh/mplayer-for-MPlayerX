@@ -8160,7 +8160,7 @@ YASMDEP    = $_yasm
 YASMFLAGS  = $YASMFLAGS
 
 CONFIG_STATIC = yes
-SRC_PATH      = ../
+SRC_PATH      = .
 LIBPREF       = lib
 LIBSUF        = .a
 LIBNAME       = \$(LIBPREF)\$(NAME)\$(LIBSUF)
