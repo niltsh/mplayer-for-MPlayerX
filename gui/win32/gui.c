@@ -1273,7 +1273,7 @@ static void maketransparent(HWND hwnd, COLORREF crTransparent)
 static int window_render(gui_t *gui, HWND hWnd, HDC hdc, window_priv_t *priv, window *desc, BITMAPINFO binfo)
 {
     int i;
-    SetWindowLongPtr(hWnd, GWLP_USERDATA, (DWORD) gui);
+    SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR) gui);
     (gui->window_priv_count)++;
     gui->window_priv = realloc(gui->window_priv, sizeof(window_priv_t *) * gui->window_priv_count);
     priv = gui->window_priv[gui->window_priv_count - 1] = calloc(1, sizeof(window_priv_t));

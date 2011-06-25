@@ -707,7 +707,7 @@ void display_prefswindow(gui_t *gui)
                         NULL,
                         hInstance,
                         NULL);
-   SetWindowLongPtr(hWnd, GWLP_USERDATA, (DWORD) gui);
+   SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR) gui);
    ShowWindow(hWnd, SW_SHOW);
    UpdateWindow(hWnd);
 }

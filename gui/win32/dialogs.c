@@ -399,7 +399,7 @@ void display_openurlwindow(gui_t *gui, int add)
                         NULL,
                         hInstance,
                         NULL);
-   SetWindowLongPtr(hWnd, GWLP_USERDATA, (DWORD) gui);
+   SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR) gui);
    ShowWindow(hWnd, SW_SHOW);
    UpdateWindow(hWnd);
 }
@@ -651,7 +651,7 @@ void display_playlistwindow(gui_t *gui)
                         NULL,
                         hInstance,
                         NULL);
-   SetWindowLongPtr(hWnd, GWLP_USERDATA, (DWORD)gui);
+   SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)gui);
    updatetracklist(hWnd);
    DragAcceptFiles(hWnd,TRUE);
    ShowWindow(hWnd, SW_SHOW);
@@ -768,7 +768,7 @@ void display_skinbrowser(gui_t* gui)
                         NULL,
                         hInstance,
                         NULL);
-   SetWindowLongPtr(hWnd, GWLP_USERDATA, (DWORD) gui);
+   SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR) gui);
    ShowWindow(hWnd, SW_SHOW);
    UpdateWindow(hWnd);
 }
@@ -897,7 +897,7 @@ void display_chapterselwindow(gui_t *gui)
                         NULL,
                         hInstance,
                         NULL);
-   SetWindowLongPtr(hWnd, GWLP_USERDATA, (DWORD) gui);
+   SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR) gui);
    ShowWindow(hWnd, SW_SHOW);
    UpdateWindow(hWnd);
 }
@@ -1111,7 +1111,7 @@ void display_eqwindow(gui_t *gui)
                         NULL,
                         hInstance,
                         NULL);
-   SetWindowLongPtr(hWnd, GWLP_USERDATA, (DWORD) gui);
+   SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR) gui);
    ShowWindow(hWnd, SW_SHOW);
    UpdateWindow(hWnd);
 }
