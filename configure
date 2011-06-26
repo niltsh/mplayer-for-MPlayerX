@@ -8169,8 +8169,9 @@ CONFIG_STATIC = yes
 SRC_PATH      = .
 LIBPREF       = lib
 LIBSUF        = .a
-LIBNAME       = \$(LIBPREF)\$(NAME)\$(LIBSUF)
 FULLNAME      = \$(NAME)\$(BUILDSUF)
+LIBNAME       = \$(LIBPREF)\$(FULLNAME)\$(LIBSUF)
+SLIBNAME      = \$(SLIBPREF)\$(FULLNAME)\$(SLIBSUF)
 
 # Some FFmpeg codecs depend on these. Enable them unconditionally for now.
 CONFIG_AANDCT  = yes
