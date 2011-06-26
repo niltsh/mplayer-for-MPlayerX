@@ -8772,7 +8772,10 @@ fi
 
 # Create a config.mak for FFmpeg that includes MPlayer's config.mak.
 cat > ffmpeg/config.mak << EOF
-include ../../config.mak
+ifndef FFMPEG_CONFIG_MAK
+FFMPEG_CONFIG_MAK = 1
+include ../config.mak
+endif # MPLAYER_CONFIG_MAK
 EOF
 
 cat > ffmpeg/config.h << EOF

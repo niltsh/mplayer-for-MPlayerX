@@ -807,7 +807,7 @@ all: $(ALL_PRG-yes)
 	$(WINDRES) -I. $< $@
 
 $(FFMPEGLIBS): $(FFMPEGFILES) config.h
-	$(MAKE) -C $(@D)
+	$(MAKE) -C ffmpeg $(@:ffmpeg/%=%)
 	touch $@
 
 mencoder$(EXESUF): $(MENCODER_DEPS)
