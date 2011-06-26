@@ -1144,12 +1144,12 @@ static void create_menu(gui_t *gui)
     gui->diskmenu = CreatePopupMenu();
     gui->menu=CreatePopupMenu();
     gui->trayplaymenu = CreatePopupMenu();
-    AppendMenu(gui->menu, MF_STRING | MF_POPUP, (UINT) gui->trayplaymenu, "Open...");
+    AppendMenu(gui->menu, MF_STRING | MF_POPUP, (UINT_PTR) gui->trayplaymenu, "Open...");
     AppendMenu(gui->trayplaymenu, MF_STRING, IDFILE_OPEN, "File...");
     AppendMenu(gui->trayplaymenu, MF_STRING, IDURL_OPEN, "Url...");
     AppendMenu(gui->trayplaymenu, MF_STRING, IDDIR_OPEN, "Directory...");
     AppendMenu(gui->menu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->menu, MF_STRING | MF_POPUP, (UINT) gui->diskmenu, "Play &CD/DVD/VCD/SVCD");
+    AppendMenu(gui->menu, MF_STRING | MF_POPUP, (UINT_PTR) gui->diskmenu, "Play &CD/DVD/VCD/SVCD");
     AppendMenu(gui->menu, MF_SEPARATOR, 0, 0);
     AppendMenu(gui->menu, MF_STRING, IDSUBTITLE_OPEN, "Open Subtitle");
     AppendMenu(gui->menu, MF_STRING, ID_SKINBROWSER, "Skin Browser");
@@ -1165,9 +1165,9 @@ static void create_traymenu(gui_t *gui)
 {
     gui->traymenu = CreatePopupMenu();
     gui->trayplaybackmenu = CreatePopupMenu();
-    AppendMenu(gui->traymenu, MF_STRING | MF_POPUP, (UINT) gui->trayplaymenu, "Open...");
+    AppendMenu(gui->traymenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->trayplaymenu, "Open...");
     AppendMenu(gui->traymenu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->traymenu, MF_STRING | MF_POPUP, (UINT) gui->trayplaybackmenu, "Playback");
+    AppendMenu(gui->traymenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->trayplaybackmenu, "Playback");
     AppendMenu(gui->trayplaybackmenu, MF_STRING, ID_SEEKB, "Seek Backwards");
     AppendMenu(gui->trayplaybackmenu, MF_STRING, ID_PTRACK, "Previous Track");
     AppendMenu(gui->trayplaybackmenu, MF_STRING, ID_PLAY, "Play/Pause");
@@ -1195,7 +1195,7 @@ static void create_submenu(gui_t *gui)
     gui->dvdmenu = CreatePopupMenu();
     gui->aspectmenu = CreatePopupMenu();
     gui->subtitlemenu = CreatePopupMenu();
-    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT) gui->trayplaymenu, "Open...");
+    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->trayplaymenu, "Open...");
     AppendMenu(gui->submenu, MF_SEPARATOR, 0, 0);
     AppendMenu(gui->submenu, MF_STRING, ID_SEEKB, "Seek Backwards");
     AppendMenu(gui->submenu, MF_STRING, ID_PTRACK, "Previous Track");
@@ -1207,9 +1207,9 @@ static void create_submenu(gui_t *gui)
     AppendMenu(gui->submenu, MF_STRING, ID_FULLSCREEN, "Toggle Fullscreen");
     AppendMenu(gui->submenu, MF_STRING, ID_MUTE, "Toggle Mute");
     AppendMenu(gui->submenu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT) gui->aspectmenu, "Aspect Ratio");
-    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT) gui->subtitlemenu, "Subtitle Options");
-    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT) gui->dvdmenu, "DVD Options");
+    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->aspectmenu, "Aspect Ratio");
+    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->subtitlemenu, "Subtitle Options");
+    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->dvdmenu, "DVD Options");
 #ifdef CONFIG_DVDREAD
     AppendMenu(gui->dvdmenu, MF_STRING | MF_GRAYED, ID_CHAPTERSEL, "Select Title/Chapter...");
 #endif
