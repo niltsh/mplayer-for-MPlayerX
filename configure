@@ -8147,6 +8147,12 @@ ZR = $_zr
 FFMPEG     = $ffmpeg
 FFMPEG_A   = $ffmpeg_a
 
+CONFIG_AVCODEC  = $ffmpeg_a
+CONFIG_AVFORMAT = $ffmpeg_a
+CONFIG_AVUTIL   = $ffmpeg_a
+CONFIG_POSTPROC = $ffmpeg_a
+CONFIG_SWSCALE  = $ffmpeg_a
+
 ASFLAGS    = \$(CFLAGS)
 AS_DEPFLAGS= $DEPFLAGS
 HOSTCC     = \$(HOST_CC)
@@ -8194,7 +8200,6 @@ CONFIG_ENCODERS = yes
 CONFIG_GPL      = yes
 CONFIG_MLIB     = $_mlib
 CONFIG_MUXERS   = $_mencoder
-CONFIG_POSTPROC = yes
 CONFIG_RTPDEC   = $networking
 CONFIG_VDPAU    = $_vdpau
 CONFIG_XVMC     = $_xvmc
