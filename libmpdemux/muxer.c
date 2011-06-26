@@ -121,7 +121,7 @@ void muxer_flush(muxer_t *m) {
 }
 
 /* buffer frames until we either:
- * (a) have at least one frame from each stream
+ * (a) have at least one non-empty frame from each stream
  * (b) run out of memory */
 void muxer_write_chunk(muxer_stream_t *s, size_t len, unsigned int flags, double dts, double pts) {
     if(dts == MP_NOPTS_VALUE) dts= s->timer;
@@ -154,7 +154,14 @@ void muxer_write_chunk(muxer_stream_t *s, size_t len, unsigned int flags, double
         return;
       }
       memcpy(buf->buffer, s->buffer, buf->len);
-      s->muxbuf_seen = 1;
+
+      /* If mencoder inserts "repeat last frame" chunks with len == 0
+       * before the encoder is configured and first real frame is output
+       * or a broken file starts a stream with such frames, then muxer
+       * won't find needed info for writing initial header.
+       * Wait until the first real frame is seen. */
+      if (len > 0)
+          s->muxbuf_seen = 1;
 
       /* see if we need to keep buffering */
       s->muxer->muxbuf_skip_buffer = 1;
