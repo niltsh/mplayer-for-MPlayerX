@@ -1075,7 +1075,7 @@ static int mp_property_fullscreen(m_option_t *prop, int action, void *arg,
     case M_PROPERTY_STEP_DOWN:
 #ifdef CONFIG_GUI
         if (use_gui)
-            guiGetEvent(guiIEvent, (char *) MP_CMD_VO_FULLSCREEN);
+            guiGetEvent(guiIEvent, (void *) MP_CMD_VO_FULLSCREEN);
         else
 #endif
         if (vo_config_count)

@@ -584,7 +584,7 @@ void uninit_player(unsigned int mask)
             uninit_audio(mpctx->sh_audio);
 #ifdef CONFIG_GUI
         if (use_gui)
-            guiGetEvent(guiSetAfilter, (char *)NULL);
+            guiGetEvent(guiSetAfilter, NULL);
 #endif
         mpctx->sh_audio      = NULL;
         mpctx->mixer.afilter = NULL;
@@ -1334,7 +1334,7 @@ static int build_afilter_chain(sh_audio_t *sh_audio, ao_data_t *ao_data)
     if (!sh_audio) {
 #ifdef CONFIG_GUI
         if (use_gui)
-            guiGetEvent(guiSetAfilter, (char *)NULL);
+            guiGetEvent(guiSetAfilter, NULL);
 #endif
         mpctx->mixer.afilter = NULL;
         return 0;
@@ -1359,7 +1359,7 @@ static int build_afilter_chain(sh_audio_t *sh_audio, ao_data_t *ao_data)
     mpctx->mixer.afilter = sh_audio->afilter;
 #ifdef CONFIG_GUI
     if (use_gui)
-        guiGetEvent(guiSetAfilter, (char *)sh_audio->afilter);
+        guiGetEvent(guiSetAfilter, sh_audio->afilter);
 #endif
     return result;
 }
@@ -3097,7 +3097,7 @@ play_next_file:
             guiEventHandling();
             guiGetEvent(guiReDraw, NULL);
             if ((cmd = mp_input_get_cmd(0, 0, 0)) != NULL) {
-                guiGetEvent(guiIEvent, (char *)cmd->id);
+                guiGetEvent(guiIEvent, (void *)cmd->id);
                 mp_cmd_free(cmd);
             }
         }
@@ -3244,7 +3244,7 @@ play_next_file:
 
 #ifdef CONFIG_GUI
     if (use_gui)
-        guiGetEvent(guiSetStream, (char *)mpctx->stream);
+        guiGetEvent(guiSetStream, mpctx->stream);
 #endif
 
     if (mpctx->file_format == DEMUXER_TYPE_PLAYLIST) {
@@ -3679,13 +3679,13 @@ goto_enable_cache:
         if (use_gui) {
             guiInfo.AudioChannels = mpctx->sh_audio ? mpctx->sh_audio->channels : 0;
             if (!mpctx->sh_video && mpctx->sh_audio)
-                guiGetEvent(guiSetAudioOnly, (char *)1);
+                guiGetEvent(guiSetAudioOnly, (void *)1);
             else
-                guiGetEvent(guiSetAudioOnly, (char *)0);
-            guiGetEvent(guiSetFileFormat, (char *)mpctx->demuxer->file_format);
-            if (guiGetEvent(guiSetValues, (char *)mpctx->sh_video))
+                guiGetEvent(guiSetAudioOnly, (void *)0);
+            guiGetEvent(guiSetFileFormat, (void *)mpctx->demuxer->file_format);
+            if (guiGetEvent(guiSetValues, mpctx->sh_video))
                 goto goto_next_file;
-            guiGetEvent(guiSetDemuxer, (char *)mpctx->demuxer);
+            guiGetEvent(guiSetDemuxer, mpctx->demuxer);
         }
 #endif
 
