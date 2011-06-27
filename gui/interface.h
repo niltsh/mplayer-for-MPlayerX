@@ -178,7 +178,7 @@ typedef struct {
     float Balance;
 
     int Track;
-    int AudioType;
+    int AudioChannels;
     int StreamType;
     int AudioOnly;
     int TimeSec;

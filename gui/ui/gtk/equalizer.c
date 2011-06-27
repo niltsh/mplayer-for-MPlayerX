@@ -105,17 +105,17 @@ static void eqSetChannelNames( void )
  str[1]="";
  str[0]=MSGTR_EQU_All;
  gtk_clist_append( GTK_CLIST( ChannelsList ) ,str);
- if ( guiInfo.AudioType > 1 )
+ if ( guiInfo.AudioChannels > 1 )
   {
    str[0]=gtkEquChannel1; gtk_clist_append( GTK_CLIST( ChannelsList ) ,str);
    str[0]=gtkEquChannel2; gtk_clist_append( GTK_CLIST( ChannelsList ) ,str);
   }
- if ( guiInfo.AudioType > 2 )
+ if ( guiInfo.AudioChannels > 2 )
   {
    str[0]=gtkEquChannel3; gtk_clist_append( GTK_CLIST( ChannelsList ) ,str);
    str[0]=gtkEquChannel4; gtk_clist_append( GTK_CLIST( ChannelsList ) ,str);
   }
- if ( guiInfo.AudioType > 4 )
+ if ( guiInfo.AudioChannels > 4 )
   {
    str[0]=gtkEquChannel5; gtk_clist_append( GTK_CLIST( ChannelsList ) ,str);
    str[0]=gtkEquChannel6; gtk_clist_append( GTK_CLIST( ChannelsList ) ,str);

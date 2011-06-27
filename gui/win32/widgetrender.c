@@ -156,8 +156,8 @@ static char *generatetextfromlabel(widget *item)
         else if(guiInfo.Playing == GUI_PAUSE) stringreplace(text, NULL, "e");
     }
 
-    if(guiInfo.AudioType == 0) stringreplace(text, "$a", "n");
-    else if(guiInfo.AudioType == 1) stringreplace(text, "$a", "m");
+    if(guiInfo.AudioChannels == 0) stringreplace(text, "$a", "n");
+    else if(guiInfo.AudioChannels == 1) stringreplace(text, "$a", "m");
     else stringreplace(text, "$a", "t");
 
     if(guiInfo.StreamType == 0)

@@ -411,7 +411,7 @@ void uiEnd( void )
 
     guiInfo.TimeSec = 0;
     guiInfo.Position = 0;
-    guiInfo.AudioType = 0;
+    guiInfo.AudioChannels = 0;
 
 #ifdef CONFIG_DVDREAD
     guiInfo.DVD.current_title = 1;

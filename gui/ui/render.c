@@ -254,7 +254,7 @@ calclengthmmmmss:
                     break;
                 }
 
-                switch (guiInfo.AudioType) {
+                switch (guiInfo.AudioChannels) {
                 case 0:
                     av_strlcat(trbuf, "n", sizeof(trbuf));
                     break;

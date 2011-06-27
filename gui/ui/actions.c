@@ -113,7 +113,7 @@ void uiEnd(void)
 
         guiInfo.TimeSec   = 0;
         guiInfo.Position  = 0;
-        guiInfo.AudioType = 0;
+        guiInfo.AudioChannels = 0;
         guiInfo.NoWindow  = False;
 
 #ifdef CONFIG_DVDREAD
