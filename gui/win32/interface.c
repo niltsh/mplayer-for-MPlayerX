@@ -551,9 +551,6 @@ int guiGetEvent(int type, void *arg)
 
     switch (type)
     {
-        case guiSetFileFormat:
-            guiInfo.FileFormat = (int) arg;
-            break;
         case guiSetParameters:
         {
             guiGetEvent(guiSetDefaults, NULL);

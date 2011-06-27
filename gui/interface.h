@@ -49,7 +49,6 @@ extern int use_gui;             // this is defined in mplayer.c
 #define guiSetVolume       11
 #define guiSetDefaults     12
 #define guiSetValues       13
-#define guiSetFileFormat   14
 #define guiSetDemuxer      15
 #define guiSetParameters   16
 #define guiSetAfilter      17
@@ -184,7 +183,6 @@ typedef struct {
     int TimeSec;
     int LengthInSec;
     int FrameDrop;
-    int FileFormat;
     float FPS;
 
     char *Filename;

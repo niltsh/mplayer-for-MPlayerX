@@ -3679,10 +3679,9 @@ goto_enable_cache:
         if (use_gui) {
             guiInfo.AudioChannels = mpctx->sh_audio ? mpctx->sh_audio->channels : 0;
             guiGetEvent(guiSetAudioOnly, (void *)(mpctx->sh_audio && !mpctx->sh_video));
-            guiGetEvent(guiSetFileFormat, (void *)mpctx->demuxer->file_format);
+            guiGetEvent(guiSetDemuxer, mpctx->demuxer);
             if (guiGetEvent(guiSetValues, mpctx->sh_video))
                 goto goto_next_file;
-            guiGetEvent(guiSetDemuxer, mpctx->demuxer);
         }
 #endif
 
