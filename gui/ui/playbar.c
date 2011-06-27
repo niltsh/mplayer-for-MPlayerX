@@ -81,7 +81,7 @@ static void uiPlaybarDraw( void )
 	  uiPlaybarFade=0;
 	  vo_mouse_autohide=0;
 	 }
-        wsMoveWindow( &guiApp.playbarWindow,0,x,playbarLength );
+        wsMoveWindow( &guiApp.playbarWindow,False,x,playbarLength );
 	break;
    case 2: // fade out
 	playbarLength+=10;
@@ -93,7 +93,7 @@ static void uiPlaybarDraw( void )
           wsVisibleWindow( &guiApp.playbarWindow,wsHideWindow );
 	  return;
 	 }
-        wsMoveWindow( &guiApp.playbarWindow,0,x,playbarLength );
+        wsMoveWindow( &guiApp.playbarWindow,False,x,playbarLength );
 	break;
   }
 

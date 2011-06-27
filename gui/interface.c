@@ -626,7 +626,7 @@ int guiGetEvent(int type, void *arg)
         guiInfo.MovieHeight = vo_dheight;
 
         if (guiWinID >= 0)
-            wsMoveWindow(&guiApp.mainWindow, 0, 0, vo_dheight);
+            wsMoveWindow(&guiApp.mainWindow, False, 0, vo_dheight);
 
         WinID = guiApp.subWindow.WindowID;
         break;

@@ -306,7 +306,7 @@ set_volume:
             uiFullScreen();
            }
           wsResizeWindow( &guiApp.subWindow, guiInfo.MovieWidth / 2, guiInfo.MovieHeight / 2 );
-          wsMoveWindow( &guiApp.subWindow, 0,
+          wsMoveWindow( &guiApp.subWindow, False,
                         ( wsMaxX - guiInfo.MovieWidth/2  )/2 + wsOrgX,
                         ( wsMaxY - guiInfo.MovieHeight/2 )/2 + wsOrgY  );
          }
@@ -320,7 +320,7 @@ set_volume:
             uiFullScreen();
            }
           wsResizeWindow( &guiApp.subWindow, guiInfo.MovieWidth * 2, guiInfo.MovieHeight * 2 );
-          wsMoveWindow( &guiApp.subWindow, 0,
+          wsMoveWindow( &guiApp.subWindow, False,
                         ( wsMaxX - guiInfo.MovieWidth*2  )/2 + wsOrgX,
                         ( wsMaxY - guiInfo.MovieHeight*2 )/2 + wsOrgY  );
          }
@@ -334,7 +334,7 @@ set_volume:
             uiFullScreen();
            }
           wsResizeWindow( &guiApp.subWindow, guiInfo.MovieWidth, guiInfo.MovieHeight );
-          wsMoveWindow( &guiApp.subWindow, 0,
+          wsMoveWindow( &guiApp.subWindow, False,
                         ( wsMaxX - guiInfo.MovieWidth  )/2 + wsOrgX,
                         ( wsMaxY - guiInfo.MovieHeight )/2 + wsOrgY  );
 	  break;
