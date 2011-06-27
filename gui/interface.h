@@ -43,7 +43,7 @@ extern int use_gui;             // this is defined in mplayer.c
 #define guiSetFileName     4
 #define guiSetAudioOnly    6
 #define guiReDrawSubWindow 7
-#define guiSetVideo        8
+#define guiSetVideoWindow  8
 #define guiSetStream       9
 #define guiReDraw          10
 #define guiSetVolume       11

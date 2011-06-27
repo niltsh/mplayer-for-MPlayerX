@@ -615,7 +615,7 @@ int guiGetEvent(int type, void *arg)
         guiInfo.afilter = arg;
         break;
 
-    case guiSetVideo:
+    case guiSetVideoWindow:
 
         if (!guiApp.subWindow.isFullScreen) {
             wsResizeWindow(&guiApp.subWindow, vo_dwidth, vo_dheight);

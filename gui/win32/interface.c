@@ -614,7 +614,7 @@ int guiGetEvent(int type, void *arg)
             }
             break;
         }
-        case guiSetVideo:
+        case guiSetVideoWindow:
         {
             guiInfo.MovieWidth = vo_dwidth;
             guiInfo.MovieHeight = vo_dheight;
