@@ -615,7 +615,7 @@ GtkWidget * create_PopUpMenu( void )
   AddMenuItem( window1, (const char*)prefs_xpm, Menu,MSGTR_MENU_Preferences, evPreferences );
   AddMenuItem( window1, (const char*)equalizer_xpm, Menu,MSGTR_Equalizer, evEqualizer );
 
-  if ( guiInfo.NoWindow == False )
+  if ( guiInfo.MovieWindow )
    {
     int b1 = 0, b2 = 0, b_half = 0;
     AddSeparator( Menu );

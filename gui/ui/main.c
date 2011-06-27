@@ -229,7 +229,7 @@ NoPause:
    case evStop:
 	guiInfo.Playing=GUI_STOP;
 	uiState();
-	guiInfo.NoWindow=False;
+	guiInfo.MovieWindow=True;
 	break;
 
    case evLoadPlay:

@@ -40,7 +40,7 @@ int uiGotoTheNext = 1;
 
 void uiFullScreen(void)
 {
-    if (guiInfo.NoWindow && guiInfo.Playing)
+    if (!guiInfo.MovieWindow && guiInfo.Playing)
         return;
 
     if (guiInfo.Playing && guiApp.subWindow.isFullScreen) {
@@ -114,7 +114,7 @@ void uiEnd(void)
         guiInfo.TimeSec       = 0;
         guiInfo.Position      = 0;
         guiInfo.AudioChannels = 0;
-        guiInfo.NoWindow      = False;
+        guiInfo.MovieWindow   = True;
 
 #ifdef CONFIG_DVDREAD
         guiInfo.DVD.current_title   = 1;

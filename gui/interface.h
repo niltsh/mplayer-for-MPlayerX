@@ -172,7 +172,7 @@ typedef struct {
 
     int MovieWidth;
     int MovieHeight;
-    int NoWindow;
+    int MovieWindow;
 
     float Volume;
     float Balance;

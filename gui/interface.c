@@ -596,7 +596,7 @@ int guiGetEvent(int type, void *arg)
         guiInfo.AudioOnly = (int)arg;
 
         if (guiInfo.AudioOnly) {
-            guiInfo.NoWindow = True;
+            guiInfo.MovieWindow = False;
             wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
         } else
             wsVisibleWindow(&guiApp.subWindow, wsShowWindow);
@@ -723,7 +723,7 @@ int guiGetEvent(int type, void *arg)
             guiInfo.FPS = sh->fps;
         }
 
-        if (guiInfo.NoWindow)
+        if (!guiInfo.MovieWindow)
             wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
 
         if (guiInfo.StreamType == STREAMTYPE_STREAM)
@@ -858,12 +858,12 @@ int guiGetEvent(int type, void *arg)
         {
             int i = 0;
 
-            guiInfo.NoWindow = False;
+            guiInfo.MovieWindow = True;
 
             while (video_out_drivers[i++]) {
                 if (video_out_drivers[i - 1]->control(VOCTRL_GUISUPPORT, NULL) == VO_TRUE) {
                     if ((video_driver_list && !gstrcmp(video_driver_list[0], (char *)video_out_drivers[i - 1]->info->short_name)) && (video_out_drivers[i - 1]->control(VOCTRL_GUI_NOWINDOW, NULL) == VO_TRUE)) {
-                        guiInfo.NoWindow = True;
+                        guiInfo.MovieWindow = False;
                         break;
                     }
                 }
@@ -1013,7 +1013,7 @@ int guiGetEvent(int type, void *arg)
 
 void guiEventHandling(void)
 {
-    if (!guiInfo.Playing || guiInfo.NoWindow)
+    if (!guiInfo.Playing || !guiInfo.MovieWindow)
         wsHandleEvents();
 
     gtkEventHandling();
