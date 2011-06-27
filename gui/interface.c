@@ -605,7 +605,7 @@ int guiGetEvent(int type, void *arg)
 
     case guiSetContext:
         guiInfo.mpcontext = arg;
-    // NOTE TO MYSELF: is break missing?
+        break;
 
     case guiSetDemuxer:
         guiInfo.demuxer = arg;
