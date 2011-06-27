@@ -667,9 +667,9 @@ int guiGetEvent(int type, void *arg)
 
         break;
 
-    case guiIEvent:
+    case guiRunCommand:
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] guiIEvent: %d\n", (int)arg);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] guiRunCommand: %d\n", (int)arg);
 
         switch ((int)arg) {
         case MP_CMD_QUIT:

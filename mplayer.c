@@ -3097,7 +3097,7 @@ play_next_file:
             guiEventHandling();
             guiGetEvent(guiReDraw, NULL);
             if ((cmd = mp_input_get_cmd(0, 0, 0)) != NULL) {
-                guiGetEvent(guiIEvent, (void *)cmd->id);
+                guiGetEvent(guiRunCommand, (void *)cmd->id);
                 mp_cmd_free(cmd);
             }
         }

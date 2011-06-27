@@ -678,7 +678,7 @@ int guiGetEvent(int type, void *arg)
             }
             break;
         }
-        case guiIEvent:
+        case guiRunCommand:
         {
             mp_msg(MSGT_GPLAYER,MSGL_V, "cmd: %d\n", (int) arg);
             /* MPlayer asks us to quit */
