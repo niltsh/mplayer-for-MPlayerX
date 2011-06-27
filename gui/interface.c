@@ -595,7 +595,7 @@ int guiGetEvent(int type, void *arg)
 
         guiInfo.AudioOnly = (int)arg;
 
-        if ((int)arg) {
+        if (guiInfo.AudioOnly) {
             guiInfo.NoWindow = True;
             wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
         } else

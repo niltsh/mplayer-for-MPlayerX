@@ -3678,10 +3678,7 @@ goto_enable_cache:
 #ifdef CONFIG_GUI
         if (use_gui) {
             guiInfo.AudioChannels = mpctx->sh_audio ? mpctx->sh_audio->channels : 0;
-            if (!mpctx->sh_video && mpctx->sh_audio)
-                guiGetEvent(guiSetAudioOnly, (void *)1);
-            else
-                guiGetEvent(guiSetAudioOnly, (void *)0);
+            guiGetEvent(guiSetAudioOnly, (void *)(mpctx->sh_audio && !mpctx->sh_video));
             guiGetEvent(guiSetFileFormat, (void *)mpctx->demuxer->file_format);
             if (guiGetEvent(guiSetValues, mpctx->sh_video))
                 goto goto_next_file;
