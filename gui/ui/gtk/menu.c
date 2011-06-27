@@ -411,6 +411,7 @@ GtkWidget * create_PopUpMenu( void )
  GtkWidget * SubMenu = NULL;
  GtkWidget * MenuItem = NULL;
  GtkWidget * H, * N, * D, * F;
+ demuxer_t *demuxer = mpctx_get_demuxer(guiInfo.mpcontext);
  mixer_t *mixer = mpctx_get_mixer(guiInfo.mpcontext);
  int global_sub_size = mpctx_get_global_sub_size(guiInfo.mpcontext);
 
@@ -510,7 +511,7 @@ GtkWidget * create_PopUpMenu( void )
     DVDAudioLanguageMenu=AddSubMenu( window1, (const char*)audiolang_xpm, DVDSubMenu,MSGTR_MENU_AudioLanguages );
      if ( guiInfo.DVD.nr_of_audio_channels )
       {
-       char tmp[64]; int i, id = guiInfo.demuxer ? ((demuxer_t *)guiInfo.demuxer)->audio->id : audio_id;
+       char tmp[64]; int i, id = demuxer ? demuxer->audio->id : audio_id;
        for ( i=0;i < guiInfo.DVD.nr_of_audio_channels;i++ )
         {
 	 snprintf( tmp,64,"%s - %s %s",GetLanguage( guiInfo.DVD.audio_streams[i].language ),
@@ -556,20 +557,20 @@ GtkWidget * create_PopUpMenu( void )
     AddMenuItem( window1, (const char*)aspect235_xpm, AspectMenu,"2.35",( 4 << 16 ) + evSetAspect );
    }
 
-  if ( guiInfo.Playing && guiInfo.demuxer && guiInfo.StreamType != STREAMTYPE_DVD )
+  if ( guiInfo.Playing && demuxer && guiInfo.StreamType != STREAMTYPE_DVD )
    {
     int i,c = 0;
 
     for ( i=0;i < MAX_A_STREAMS;i++ )
-     if ( ((demuxer_t *)guiInfo.demuxer)->a_streams[i] ) c++;
+     if ( demuxer->a_streams[i] ) c++;
 
     if ( c > 1 )
      {
       SubMenu=AddSubMenu( window1, (const char*)empty_xpm, Menu,MSGTR_MENU_AudioTrack );
       for ( i=0;i < MAX_A_STREAMS;i++ )
-       if ( ((demuxer_t *)guiInfo.demuxer)->a_streams[i] )
+       if ( demuxer->a_streams[i] )
         {
-         int aid = ((sh_audio_t *)((demuxer_t *)guiInfo.demuxer)->a_streams[i])->aid;
+         int aid = ((sh_audio_t *)demuxer->a_streams[i])->aid;
          char tmp[32];
          snprintf( tmp,32,MSGTR_MENU_Track,aid );
          AddMenuItem( window1, (const char*)empty_xpm, SubMenu,tmp,( aid << 16 ) + evSetAudio );
@@ -577,15 +578,15 @@ GtkWidget * create_PopUpMenu( void )
      }
 
     for ( c=0,i=0;i < MAX_V_STREAMS;i++ )
-     if ( ((demuxer_t *)guiInfo.demuxer)->v_streams[i] ) c++;
+     if ( demuxer->v_streams[i] ) c++;
 
     if ( c > 1 )
      {
       SubMenu=AddSubMenu( window1, (const char*)empty_xpm, Menu,MSGTR_MENU_VideoTrack );
       for ( i=0;i < MAX_V_STREAMS;i++ )
-       if ( ((demuxer_t *)guiInfo.demuxer)->v_streams[i] )
+       if ( demuxer->v_streams[i] )
         {
-         int vid = ((sh_video_t *)((demuxer_t *)guiInfo.demuxer)->v_streams[i])->vid;
+         int vid = ((sh_video_t *)demuxer->v_streams[i])->vid;
          char tmp[32];
          snprintf( tmp,32,MSGTR_MENU_Track,vid );
          AddMenuItem( window1, (const char*)empty_xpm, SubMenu,tmp,( vid << 16 ) + evSetVideo );

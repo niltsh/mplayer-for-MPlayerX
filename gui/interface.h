@@ -49,7 +49,6 @@ extern int use_gui;             // this is defined in mplayer.c
 #define guiSetVolume       11
 #define guiSetDefaults     12
 #define guiSetValues       13
-#define guiSetDemuxer      15
 #define guiSetParameters   16
 #define guiSetAfilter      17
 #define guiSetContext      18
@@ -149,7 +148,6 @@ typedef struct {
     struct MPContext *mpcontext;
     void *sh_video;
     void *afilter;
-    void *demuxer;
     void *event_struct;
 
     int DiskChanged;

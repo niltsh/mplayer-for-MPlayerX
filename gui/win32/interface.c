@@ -590,9 +590,6 @@ int guiGetEvent(int type, void *arg)
         case guiSetContext:
             guiInfo.mpcontext = arg;
             break;
-        case guiSetDemuxer:
-            guiInfo.demuxer = arg;
-            break;
         case guiSetValues:
         {
             guiInfo.sh_video = arg;

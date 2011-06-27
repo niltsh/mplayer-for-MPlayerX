@@ -607,10 +607,6 @@ int guiGetEvent(int type, void *arg)
         guiInfo.mpcontext = arg;
         break;
 
-    case guiSetDemuxer:
-        guiInfo.demuxer = arg;
-        break;
-
     case guiSetAfilter:
         guiInfo.afilter = arg;
         break;
@@ -784,7 +780,6 @@ int guiGetEvent(int type, void *arg)
             force_fps = 0;
         }
 
-        guiInfo.demuxer  = NULL;
         guiInfo.sh_video = NULL;
         wsPostRedisplay(&guiApp.subWindow);
 

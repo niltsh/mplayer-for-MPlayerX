@@ -118,12 +118,12 @@ void uiEventHandling( int msg,float param )
 	break;
 
    case evSetAudio:
-        if ( !guiInfo.demuxer || audio_id == iparam ) break;
+        if ( !mpctx_get_demuxer(guiInfo.mpcontext) || audio_id == iparam ) break;
 	audio_id=iparam;
 	goto play;
 
    case evSetVideo:
-        if ( !guiInfo.demuxer || video_id == iparam ) break;
+        if ( !mpctx_get_demuxer(guiInfo.mpcontext) || video_id == iparam ) break;
 	video_id=iparam;
 	goto play;
 
