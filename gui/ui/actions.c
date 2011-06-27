@@ -111,10 +111,10 @@ void uiEnd(void)
         if (guiInfo.FilenameChanged || guiInfo.NewPlay)
             return;
 
-        guiInfo.TimeSec   = 0;
-        guiInfo.Position  = 0;
+        guiInfo.TimeSec       = 0;
+        guiInfo.Position      = 0;
         guiInfo.AudioChannels = 0;
-        guiInfo.NoWindow  = False;
+        guiInfo.NoWindow      = False;
 
 #ifdef CONFIG_DVDREAD
         guiInfo.DVD.current_title   = 1;
