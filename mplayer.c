@@ -3101,7 +3101,7 @@ play_next_file:
                 mp_cmd_free(cmd);
             }
         }
-        guiGetEvent(guiSetParameters, NULL);
+        guiGetEvent(guiPreparation, NULL);
         if (guiInfo.StreamType == STREAMTYPE_STREAM) {
             play_tree_t *entry = play_tree_new();
             play_tree_add_file(entry, guiInfo.Filename);

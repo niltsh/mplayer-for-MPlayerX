@@ -785,7 +785,7 @@ int guiGetEvent(int type, void *arg)
 
         break;
 
-    case guiSetParameters:
+    case guiPreparation:
 
         guiGetEvent(guiSetDefaults, NULL);
 

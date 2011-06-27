@@ -49,7 +49,7 @@ extern int use_gui;             // this is defined in mplayer.c
 #define guiSetVolume       11
 #define guiSetDefaults     12
 #define guiSetValues       13
-#define guiSetParameters   16
+#define guiPreparation     16
 #define guiSetAfilter      17
 #define guiSetContext      18
 

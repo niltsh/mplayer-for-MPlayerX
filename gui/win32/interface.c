@@ -174,7 +174,7 @@ static void guiSetEvent(int event)
             GetVolumeInformation(dvd_device, dvdname, MAX_PATH, NULL, NULL, NULL, NULL, 0);
             capitalize(dvdname);
             mp_msg(MSGT_GPLAYER, MSGL_V, "Opening DVD %s -> %s\n", dvd_device, dvdname);
-            guiGetEvent(guiSetParameters, (void *) STREAMTYPE_DVD);
+            guiGetEvent(guiPreparation, (void *) STREAMTYPE_DVD);
             mygui->playlist->clear_playlist(mygui->playlist);
             mygui->playlist->add_track(mygui->playlist, filename, NULL, dvdname, 0);
             mygui->startplay(mygui);
@@ -551,7 +551,7 @@ int guiGetEvent(int type, void *arg)
 
     switch (type)
     {
-        case guiSetParameters:
+        case guiPreparation:
         {
             guiGetEvent(guiSetDefaults, NULL);
             guiInfo.DiskChanged = 0;
