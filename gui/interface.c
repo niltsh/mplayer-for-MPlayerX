@@ -695,13 +695,13 @@ int guiGetEvent(int type, void *arg)
             btnModify(evSetVolume, guiInfo.Volume);
 
             if (guiInfo.Balance != last_balance) {
-            if (guiInfo.Volume)
-                guiInfo.Balance = ((r - l) / guiInfo.Volume + 1.0) * 50.0;
-            else
-                guiInfo.Balance = 50.0f;
+                if (guiInfo.Volume)
+                    guiInfo.Balance = ((r - l) / guiInfo.Volume + 1.0) * 50.0;
+                else
+                    guiInfo.Balance = 50.0f;
 
-            last_balance = guiInfo.Balance;
-            btnModify(evSetBalance, guiInfo.Balance);
+                last_balance = guiInfo.Balance;
+                btnModify(evSetBalance, guiInfo.Balance);
             }
         }
         break;
