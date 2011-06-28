@@ -687,17 +687,22 @@ int guiGetEvent(int type, void *arg)
     case guiSetMixer:
         if (mixer) {
             float l, r;
+            static float last_balance = -1;
 
             mixer_getvolume(mixer, &l, &r);
-            guiInfo.Volume = FFMAX(l, r);
 
+            guiInfo.Volume = FFMAX(l, r);
+            btnModify(evSetVolume, guiInfo.Volume);
+
+            if (guiInfo.Balance != last_balance) {
             if (guiInfo.Volume)
                 guiInfo.Balance = ((r - l) / guiInfo.Volume + 1.0) * 50.0;
             else
                 guiInfo.Balance = 50.0f;
 
-            btnModify(evSetVolume, guiInfo.Volume);
+            last_balance = guiInfo.Balance;
             btnModify(evSetBalance, guiInfo.Balance);
+            }
         }
         break;
 
