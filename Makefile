@@ -798,7 +798,6 @@ all: $(ALL_PRG-yes)
 
 $(FFMPEGLIBS): $(FFMPEGFILES) config.h
 	$(MAKE) -C ffmpeg $(@:ffmpeg/%=%)
-	touch $@
 
 mencoder$(EXESUF): $(MENCODER_DEPS)
 mencoder$(EXESUF): EXTRALIBS += $(EXTRALIBS_MENCODER)
