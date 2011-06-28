@@ -366,9 +366,6 @@ void guiInit(void)
 
     uiSubRender = 1;
 
-    if (filename)
-        uiSetFileName(NULL, filename, STREAMTYPE_FILE);
-
     if (plCurrent && !filename)
         uiSetFileName(plCurrent->path, plCurrent->name, STREAMTYPE_FILE);
 
