@@ -52,6 +52,7 @@
 
 guiInterface_t guiInfo = {
     .StreamType = STREAMTYPE_DUMMY,
+    .MovieWindow = True,
     .Balance    = 50.0f
 };
 
