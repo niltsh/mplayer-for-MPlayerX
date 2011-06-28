@@ -3679,7 +3679,7 @@ goto_enable_cache:
         if (use_gui) {
             guiInfo.AudioChannels = mpctx->sh_audio ? mpctx->sh_audio->channels : 0;
             guiGetEvent(guiSetAudioOnly, (void *)(mpctx->sh_audio && !mpctx->sh_video));
-            if (guiGetEvent(guiSetValues, mpctx->sh_video))
+            if (guiGetEvent(guiSetVideo, mpctx->sh_video))
                 goto goto_next_file;
         }
 #endif

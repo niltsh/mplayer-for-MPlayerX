@@ -704,7 +704,7 @@ int guiGetEvent(int type, void *arg)
         }
         break;
 
-    case guiSetValues:
+    case guiSetVideo:
 
         // video
 
