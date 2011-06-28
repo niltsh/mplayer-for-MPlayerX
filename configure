@@ -8782,6 +8782,7 @@ EOF
 cat > ffmpeg/config.h << EOF
 #include "../config.h"
 EOF
+touch ffmpeg/.config
 
 #############################################################################
 
