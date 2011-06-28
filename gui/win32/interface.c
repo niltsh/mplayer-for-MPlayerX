@@ -731,7 +731,7 @@ int guiGetEvent(int type, void *arg)
             if(gtkAutoSyncOn) autosync = gtkAutoSync;
             break;
         }
-        case guiSetVolume:
+        case guiSetMixer:
         {
             if(audio_out)
             {

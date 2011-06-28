@@ -684,7 +684,7 @@ int guiGetEvent(int type, void *arg)
         uiEventHandling(evRedraw, 0);
         break;
 
-    case guiSetVolume:
+    case guiSetMixer:
         if (mixer) {
             float l, r;
 
