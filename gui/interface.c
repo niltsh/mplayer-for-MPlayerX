@@ -591,11 +591,11 @@ int guiGetEvent(int type, void *arg)
             guiSetFilename(guiInfo.Filename, arg);
         break;
 
-    case guiSetAudioOnly:
+    case guiSetAudio:
 
-        guiInfo.AudioOnly = (int)arg;
+        guiInfo.AudioChannels = arg ? ((sh_audio_t *)arg)->channels : 0;
 
-        if (guiInfo.AudioOnly) {
+        if (!guiInfo.MovieWindow || (arg && !guiInfo.sh_video)) {
             guiInfo.MovieWindow = False;
             wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
         } else
@@ -714,9 +714,6 @@ int guiGetEvent(int type, void *arg)
             sh_video_t *sh = arg;
             guiInfo.FPS = sh->fps;
         }
-
-        if (!guiInfo.MovieWindow)
-            wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
 
         if (guiInfo.StreamType == STREAMTYPE_STREAM)
             btnSet(evSetMoviePosition, btnDisabled);

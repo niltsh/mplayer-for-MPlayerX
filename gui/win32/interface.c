@@ -580,9 +580,11 @@ int guiGetEvent(int type, void *arg)
                 strcpy(guiInfo.Filename, filename);
             break;
         }
-        case guiSetAudioOnly:
+        case guiSetAudio:
         {
-            guiInfo.AudioOnly = (int) arg;
+            // NOTE: This type doesn't mean (and never meant) that we have
+            // *just* audio, so there probably should be a check before
+            // hiding (see gui/interface.c).
             if(IsWindowVisible(mygui->subwindow))
                 ShowWindow(mygui->subwindow, SW_HIDE);
             break;

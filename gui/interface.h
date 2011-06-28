@@ -41,7 +41,7 @@ extern int use_gui;             // this is defined in mplayer.c
 #define guiRunCommand      2
 #define guiSetDVD          3
 #define guiSetFileName     4
-#define guiSetAudioOnly    6
+#define guiSetAudio        6
 #define guiReDrawSubWindow 7
 #define guiSetVideoWindow  8
 #define guiSetStream       9
@@ -177,7 +177,6 @@ typedef struct {
     int Track;
     int AudioChannels;
     int StreamType;
-    int AudioOnly;
     int TimeSec;
     int LengthInSec;
     int FrameDrop;
