@@ -682,14 +682,13 @@ SRCS_MENCODER = mencoder.c \
                 libmpdemux/muxer_rawvideo.c \
                 $(SRCS_MENCODER-yes)
 
+# (linking) order matters for these libraries
+FFMPEGPARTS = libpostproc libswscale libavformat libavcodec libavutil
+FFMPEGLIBS  = $(foreach part, $(FFMPEGPARTS), ffmpeg/$(part)/$(part).a)
+FFMPEGFILES = $(foreach part, $(FFMPEGPARTS), $(wildcard $(addprefix ffmpeg/$(part)/,*.[chS] /*/*.[chS] /*/*.asm)))
 
-COMMON_LIBS-$(FFMPEG_A) += ffmpeg/libavformat/libavformat.a \
-                           ffmpeg/libavcodec/libavcodec.a   \
-                           ffmpeg/libpostproc/libpostproc.a \
-                           ffmpeg/libswscale/libswscale.a   \
-                           ffmpeg/libavutil/libavutil.a     \
-
-COMMON_LIBS += $(COMMON_LIBS-yes)
+COMMON_LIBS-$(FFMPEG_A)           += $(FFMPEGLIBS)
+COMMON_LIBS                       += $(COMMON_LIBS-yes)
 
 OBJS_COMMON    += $(addsuffix .o, $(basename $(SRCS_COMMON)))
 OBJS_MENCODER  += $(addsuffix .o, $(basename $(SRCS_MENCODER)))
@@ -775,15 +774,6 @@ ALLHEADERS = $(foreach dir,$(DIRS),$(wildcard $(dir)/*.h))
 ADDSUFFIXES     = $(foreach suf,$(1),$(addsuffix $(suf),$(2)))
 ADD_ALL_DIRS    = $(call ADDSUFFIXES,$(1),$(DIRS))
 ADD_ALL_EXESUFS = $(1) $(call ADDSUFFIXES,$(EXESUFS_ALL),$(1))
-
-FFMPEGPARTS = libavcodec \
-              libavformat \
-              libavutil \
-              libpostproc \
-              libswscale \
-
-FFMPEGLIBS  = $(foreach part, $(FFMPEGPARTS), ffmpeg/$(part)/$(part).a)
-FFMPEGFILES = $(foreach part, $(FFMPEGPARTS), $(wildcard $(addprefix ffmpeg/$(part)/,*.[chS] /*/*.[chS] /*/*.asm)))
 
 
 
