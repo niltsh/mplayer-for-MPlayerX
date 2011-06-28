@@ -3995,8 +3995,8 @@ goto_enable_cache:
                 else if (mpctx->sh_audio)
                     guiInfo.TimeSec = playing_audio_pts(mpctx->sh_audio, mpctx->d_audio, mpctx->audio_out);
                 guiInfo.LengthInSec = demuxer_get_time_length(mpctx->demuxer);
-                guiGetEvent(guiReDraw, NULL);
                 guiGetEvent(guiSetVolume, NULL);
+                guiGetEvent(guiReDraw, NULL);
                 if (guiInfo.Playing == GUI_STOP)
                     break;                  // STOP
                 if (guiInfo.Playing == GUI_PAUSE)
