@@ -50,7 +50,10 @@
 #include "stream/stream_dvd.h"
 #endif
 
-guiInterface_t guiInfo;
+guiInterface_t guiInfo = {
+    .StreamType = STREAMTYPE_DUMMY,
+    .Balance    = 50.0f
+};
 
 int guiWinID = -1;
 
@@ -162,10 +165,6 @@ void guiInit(void)
     int i;
 
     mp_msg(MSGT_GPLAYER, MSGL_V, "GUI init.\n");
-
-    memset(&guiInfo, 0, sizeof(guiInfo));
-    guiInfo.Balance    = 50.0f;
-    guiInfo.StreamType = -1;
 
     memset(&gtkEquChannels, 0, sizeof(gtkEquChannels));
 
