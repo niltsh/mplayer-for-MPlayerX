@@ -3052,7 +3052,7 @@ int main(int argc, char *argv[])
     if (use_gui) {
         guiInit();
         guiGetEvent(guiSetContext, mpctx);
-        guiGetEvent(guiSetState, (void *)((gui_no_filename) ? GUI_STOP : GUI_PLAY));
+        guiGetEvent(guiSetState, (void *)(gui_no_filename ? GUI_STOP : GUI_PLAY));
     }
 #endif
 
