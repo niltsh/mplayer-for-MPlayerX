@@ -51,9 +51,9 @@
 #endif
 
 guiInterface_t guiInfo = {
-    .StreamType = STREAMTYPE_DUMMY,
+    .StreamType  = STREAMTYPE_DUMMY,
     .MovieWindow = True,
-    .Balance    = 50.0f
+    .Balance     = 50.0f
 };
 
 int guiWinID = -1;
