@@ -3677,7 +3677,7 @@ goto_enable_cache:
 
 #ifdef CONFIG_GUI
         if (use_gui) {
-            if (guiGetEvent(guiSetVideo, mpctx->sh_video))
+            if (!guiGetEvent(guiSetVideo, mpctx->sh_video))
                 goto goto_next_file;
             guiGetEvent(guiSetAudio, mpctx->sh_audio);
         }

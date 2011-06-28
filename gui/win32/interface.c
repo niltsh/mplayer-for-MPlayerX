@@ -695,7 +695,7 @@ int guiGetEvent(int type, void *arg)
                     free(mygui);
                     mygui = NULL;
                     exit_player(EXIT_QUIT);
-                    return 0;
+                    return 1;
                 }
                 default:
                     break;
@@ -750,7 +750,7 @@ int guiGetEvent(int type, void *arg)
         default:
             mp_msg(MSGT_GPLAYER, MSGL_ERR, "[GUI] GOT UNHANDLED EVENT %i\n", type);
     }
-    return 0;
+    return 1;
 }
 
 /* This function adds/inserts one file into the gui playlist */
