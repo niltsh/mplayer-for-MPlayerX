@@ -689,10 +689,10 @@ int guiGetEvent(int type, void *arg)
             float l, r;
 
             mixer_getvolume(mixer, &l, &r);
-            guiInfo.Volume = (r > l ? r : l);
+            guiInfo.Volume = FFMAX(l, r);
 
-            if (r != l)
-                guiInfo.Balance = ((r - l) + 100) * 0.5f;
+            if (guiInfo.Volume)
+                guiInfo.Balance = ((r - l) / guiInfo.Volume + 1.0) * 50.0;
             else
                 guiInfo.Balance = 50.0f;
 
@@ -719,20 +719,7 @@ int guiGetEvent(int type, void *arg)
 
         // audio
 
-        if (mixer) {
-            float l, r;
-
-            mixer_getvolume(mixer, &l, &r);
-            guiInfo.Volume = (r > l ? r : l);
-
-            if (r != l)
-                guiInfo.Balance = ((r - l) + 100) * 0.5f;
-            else
-                guiInfo.Balance = 50.0f;
-
-            btnModify(evSetVolume, guiInfo.Volume);
-            btnModify(evSetBalance, guiInfo.Balance);
-        }
+        guiGetEvent(guiSetMixer, NULL);
 
         if (gtkEnableAudioEqualizer) {
             equalizer_t eq;
