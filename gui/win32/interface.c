@@ -384,53 +384,6 @@ void uiPrev(void)
     mygui->startplay(mygui);
 }
 
-void uiEnd( void )
-{
-    if(!uiGotoTheNext && guiInfo.Playing)
-    {
-        uiGotoTheNext = 1;
-        return;
-    }
-
-    if(uiGotoTheNext && guiInfo.Playing &&
-      (mygui->playlist->current < (mygui->playlist->trackcount - 1)) &&
-      guiInfo.StreamType != STREAMTYPE_DVD &&
-      guiInfo.StreamType != STREAMTYPE_DVDNAV)
-    {
-        /* we've finished this file, reset the aspect */
-        if(movie_aspect >= 0)
-            movie_aspect = -1;
-
-        uiGotoTheNext = guiInfo.FilenameChanged = guiInfo.NewPlay = 1;
-        uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename, STREAMTYPE_STREAM);
-        //sprintf(guiInfo.Filename, mygui->playlist->tracks[(mygui->playlist->current)++]->filename);
-    }
-
-    if(guiInfo.FilenameChanged && guiInfo.NewPlay)
-        return;
-
-    guiInfo.TimeSec = 0;
-    guiInfo.Position = 0;
-    guiInfo.AudioChannels = 0;
-
-#ifdef CONFIG_DVDREAD
-    guiInfo.DVD.current_title = 1;
-    guiInfo.DVD.current_chapter = 1;
-    guiInfo.DVD.current_angle = 1;
-#endif
-
-    if (mygui->playlist->current == (mygui->playlist->trackcount - 1))
-        mygui->playlist->current = 0;
-
-    fullscreen = 0;
-    if(style == WS_VISIBLE | WS_POPUP)
-    {
-        style = WS_OVERLAPPEDWINDOW | WS_SIZEBOX;
-        SetWindowLong(mygui->subwindow, GWL_STYLE, style);
-    }
-    guiGetEvent(guiSetState, (void *) GUI_STOP);
-}
-
 void uiStop(void)
 {
     guiGetEvent(guiSetState, (void *) GUI_STOP);
@@ -744,6 +697,53 @@ int guiGetEvent(int type, void *arg)
                     guiInfo.Balance = 50.0f;
             }
             break;
+        }
+        case guiEndFile:
+        {
+          if(!uiGotoTheNext && guiInfo.Playing)
+          {
+              uiGotoTheNext = 1;
+              break;
+          }
+
+          if(uiGotoTheNext && guiInfo.Playing &&
+            (mygui->playlist->current < (mygui->playlist->trackcount - 1)) &&
+            guiInfo.StreamType != STREAMTYPE_DVD &&
+            guiInfo.StreamType != STREAMTYPE_DVDNAV)
+          {
+              /* we've finished this file, reset the aspect */
+              if(movie_aspect >= 0)
+                  movie_aspect = -1;
+
+              uiGotoTheNext = guiInfo.FilenameChanged = guiInfo.NewPlay = 1;
+              uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename, STREAMTYPE_STREAM);
+              //sprintf(guiInfo.Filename, mygui->playlist->tracks[(mygui->playlist->current)++]->filename);
+          }
+
+          if(guiInfo.FilenameChanged && guiInfo.NewPlay)
+              break;
+
+          guiInfo.TimeSec = 0;
+          guiInfo.Position = 0;
+          guiInfo.AudioChannels = 0;
+
+#ifdef CONFIG_DVDREAD
+          guiInfo.DVD.current_title = 1;
+          guiInfo.DVD.current_chapter = 1;
+          guiInfo.DVD.current_angle = 1;
+#endif
+
+          if (mygui->playlist->current == (mygui->playlist->trackcount - 1))
+              mygui->playlist->current = 0;
+
+          fullscreen = 0;
+          if(style == WS_VISIBLE | WS_POPUP)
+          {
+              style = WS_OVERLAPPEDWINDOW | WS_SIZEBOX;
+              SetWindowLong(mygui->subwindow, GWL_STYLE, style);
+          }
+          guiGetEvent(guiSetState, (void *) GUI_STOP);
+          break;
         }
         default:
             mp_msg(MSGT_GPLAYER, MSGL_ERR, "[GUI] GOT UNHANDLED EVENT %i\n", type);

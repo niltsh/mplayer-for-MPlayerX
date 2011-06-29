@@ -555,6 +555,7 @@ int guiGetEvent(int type, void *arg)
 #ifdef CONFIG_DVDREAD
     dvd_priv_t *dvd;
 #endif
+    plItem *next;
 
     if (guiInfo.mpcontext)
         mixer = mpctx_get_mixer(guiInfo.mpcontext);
@@ -969,6 +970,50 @@ int guiGetEvent(int type, void *arg)
         guiInfo.event_struct = arg;
         wsEvents(wsDisplay, arg);
         gtkEventHandling();
+        break;
+
+    case guiEndFile:
+
+        if (!uiGotoTheNext && guiInfo.Playing) {
+            uiGotoTheNext = 1;
+            break;
+        }
+
+        if (guiInfo.Playing && (next = gtkSet(gtkGetNextPlItem, 0, NULL)) && (plLastPlayed != next)) {
+            plLastPlayed = next;
+            guiSetDF(guiInfo.Filename, next->path, next->name);
+            guiInfo.StreamType      = STREAMTYPE_FILE;
+            guiInfo.FilenameChanged = guiInfo.NewPlay = 1;
+            gfree((void **)&guiInfo.AudioFile);
+            gfree((void **)&guiInfo.Subtitlename);
+        } else {
+            if (guiInfo.FilenameChanged || guiInfo.NewPlay)
+                break;
+
+            guiInfo.TimeSec       = 0;
+            guiInfo.Position      = 0;
+            guiInfo.AudioChannels = 0;
+            guiInfo.MovieWindow   = True;
+
+#ifdef CONFIG_DVDREAD
+            guiInfo.DVD.current_title   = 1;
+            guiInfo.DVD.current_chapter = 1;
+            guiInfo.DVD.current_angle   = 1;
+#endif
+
+            if (!guiApp.subWindow.isFullScreen && gtkShowVideoWindow) {
+                wsResizeWindow(&guiApp.subWindow, guiApp.sub.width, guiApp.sub.height);
+                wsMoveWindow(&guiApp.subWindow, True, guiApp.sub.x, guiApp.sub.y);
+            } else
+                wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
+
+            guiGetEvent(guiSetState, (void *)GUI_STOP);
+            uiSubRender = 1;
+            wsSetBackgroundRGB(&guiApp.subWindow, guiApp.sub.R, guiApp.sub.G, guiApp.sub.B);
+            wsClearWindow(guiApp.subWindow);
+            wsPostRedisplay(&guiApp.subWindow);
+        }
+
         break;
     }
 

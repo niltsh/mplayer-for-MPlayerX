@@ -24,7 +24,6 @@ extern int uiGotoTheNext;
 void uiAbsSeek(float sec);
 void uiChangeSkin(char *name);
 void uiCurr(void);
-void uiEnd(void);
 void uiFullScreen(void);
 void uiNext(void);
 void uiPause(void);

@@ -4103,7 +4103,7 @@ goto_next_file:  // don't jump here after ao/vo/getch initialization!
 #ifdef CONFIG_DVDREAD
         if (!guiInfo.DiskChanged)
 #endif
-        uiEnd();
+        guiGetEvent(guiEndFile, NULL);
     }
 #endif
 
