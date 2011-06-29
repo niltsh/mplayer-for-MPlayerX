@@ -2692,7 +2692,6 @@ echores $pic
 
 def_bswap='#define HAVE_BSWAP 0'
 def_ebx_available='#define HAVE_EBX_AVAILABLE 0'
-def_ten_operands='#define HAVE_TEN_OPERANDS 0'
 def_xmm_clobbers='#define HAVE_XMM_CLOBBERS 0'
 
 if x86 ; then
@@ -2709,21 +2708,6 @@ else
 fi
 echores $_asmalign_pot
 
-
-echocheck "10 assembler operands"
-ten_operands=no
-cat > $TMPC << EOF
-int main(void) {
-    int x=0;
-    __asm__ volatile(
-        ""
-        :"+&rm"(x), "+&rm"(x), "+&rm"(x), "+&rm"(x), "+&rm"(x), "+&rm"(x)
-    );
-    return 0;
-}
-EOF
-cc_check && ten_operands=yes && def_ten_operands='#define HAVE_TEN_OPERANDS 1'
-echores $ten_operands
 
 echocheck "ebx availability"
 ebx_available=no
@@ -8651,7 +8635,6 @@ $def_posix_memalign
 $def_pthreads
 $def_round
 $def_roundf
-$def_ten_operands
 $def_threads
 $def_truncf
 $def_xform_asm
