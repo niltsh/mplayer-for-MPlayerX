@@ -167,8 +167,6 @@ void guiInit(void)
 
     mp_msg(MSGT_GPLAYER, MSGL_V, "GUI init.\n");
 
-    memset(&gtkEquChannels, 0, sizeof(gtkEquChannels));
-
 #ifdef CONFIG_DXR3
     if (!gtkDXR3Device)
         gtkDXR3Device = strdup("/dev/em8300-0");
