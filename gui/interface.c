@@ -658,7 +658,7 @@ int guiGetEvent(int type, void *arg)
         stream = arg;
         guiInfo.StreamType = stream->type;
 
-        switch (stream->type) {
+        switch (guiInfo.StreamType) {
 #ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
             guiGetEvent(guiSetDVD, stream->priv);
