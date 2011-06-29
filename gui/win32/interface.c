@@ -582,6 +582,7 @@ int guiGetEvent(int type, void *arg)
         }
         case guiSetAudio:
         {
+            guiInfo.MovieWindow = (arg && !guiInfo.sh_video);
             // NOTE: This type doesn't mean (and never meant) that we have
             // *just* audio, so there probably should be a check before
             // hiding (see gui/interface.c).
@@ -855,13 +856,13 @@ static int update_subwindow(void)
             ShowWindow(mygui->subwindow, SW_HIDE);
             return 0;
         }
-        else if(guiInfo.AudioOnly)
+        else if(!guiInfo.MovieWindow)
             return 0;
         else ShowWindow(mygui->subwindow, SW_SHOW);
     }
 
     /* we've come out of fullscreen at the end of file */
-    if((!IsWindowVisible(mygui->subwindow) || IsIconic(mygui->subwindow)) && !guiInfo.AudioOnly)
+    if((!IsWindowVisible(mygui->subwindow) || IsIconic(mygui->subwindow)) && guiInfo.MovieWindow)
         ShowWindow(mygui->subwindow, SW_SHOWNORMAL);
 
     /* get our current window coordinates */
