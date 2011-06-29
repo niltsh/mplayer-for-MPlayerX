@@ -580,11 +580,6 @@ int guiGetEvent(int type, void *arg)
         uiState();
         break;
 
-    case guiSetFileName:
-        if (arg)
-            guiSetFilename(guiInfo.Filename, arg);
-        break;
-
     case guiSetAudio:
 
         guiInfo.AudioChannels = arg ? ((sh_audio_t *)arg)->channels : 0;

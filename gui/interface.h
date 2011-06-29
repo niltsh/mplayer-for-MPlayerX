@@ -40,7 +40,6 @@ extern int use_gui;             // this is defined in mplayer.c
 #define guiSetState        1
 #define guiRunCommand      2
 #define guiSetDVD          3
-#define guiSetFileName     4
 #define guiSetAudio        6
 #define guiReDrawSubWindow 7
 #define guiSetVideoWindow  8

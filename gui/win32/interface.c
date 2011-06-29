@@ -703,9 +703,6 @@ int guiGetEvent(int type, void *arg)
             }
             break;
         }
-        case guiSetFileName:
-            if (arg) guiInfo.Filename = arg;
-            break;
         case guiSetDefaults:
         {
             audio_id = -1;
