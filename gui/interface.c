@@ -560,10 +560,8 @@ int guiGetEvent(int type, void *arg)
         mixer = mpctx_get_mixer(guiInfo.mpcontext);
 
     switch (type) {
-    case guiXEvent:
-        guiInfo.event_struct = arg;
-        wsEvents(wsDisplay, arg);
-        gtkEventHandling();
+    case guiSetContext:
+        guiInfo.mpcontext = arg;
         break;
 
     case guiSetState:
@@ -578,165 +576,6 @@ int guiGetEvent(int type, void *arg)
         }
 
         uiState();
-        break;
-
-    case guiSetAudio:
-
-        guiInfo.AudioChannels = arg ? ((sh_audio_t *)arg)->channels : 0;
-
-        if (arg && !guiInfo.sh_video)
-            guiInfo.MovieWindow = False;
-
-        guiGetEvent(guiSetMixer, NULL);
-
-        if (gtkEnableAudioEqualizer) {
-            equalizer_t eq;
-            int i, j;
-
-            for (i = 0; i < FF_ARRAY_ELEMS(gtkEquChannels); i++) {
-                for (j = 0; j < FF_ARRAY_ELEMS(*gtkEquChannels); j++) {
-                    eq.channel = i;
-                    eq.band    = j;
-                    eq.gain    = gtkEquChannels[i][j];
-                    gtkSet(gtkSetEqualizer, 0, &eq);
-                }
-            }
-        }
-
-        wsVisibleWindow(&guiApp.subWindow, (guiInfo.MovieWindow ? wsShowWindow : wsHideWindow));
-        break;
-
-    case guiSetContext:
-        guiInfo.mpcontext = arg;
-        break;
-
-    case guiSetAfilter:
-        guiInfo.afilter = arg;
-        break;
-
-    case guiSetVideoWindow:
-
-        if (!guiApp.subWindow.isFullScreen) {
-            wsResizeWindow(&guiApp.subWindow, vo_dwidth, vo_dheight);
-            wsMoveWindow(&guiApp.subWindow, True, guiApp.sub.x, guiApp.sub.y);
-        }
-
-        guiInfo.MovieWidth  = vo_dwidth;
-        guiInfo.MovieHeight = vo_dheight;
-
-        if (guiWinID >= 0)
-            wsMoveWindow(&guiApp.mainWindow, False, 0, vo_dheight);
-
-        WinID = guiApp.subWindow.WindowID;
-        break;
-
-#ifdef CONFIG_DVDREAD
-    case guiSetDVD:
-        dvd = arg;
-        guiInfo.DVD.titles   = dvd->vmg_file->tt_srpt->nr_of_srpts;
-        guiInfo.DVD.chapters = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
-        guiInfo.DVD.angles   = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
-        guiInfo.DVD.nr_of_audio_channels = dvd->nr_of_channels;
-        memcpy(guiInfo.DVD.audio_streams, dvd->audio_streams, sizeof(dvd->audio_streams));
-        guiInfo.DVD.nr_of_subtitles = dvd->nr_of_subtitles;
-        memcpy(guiInfo.DVD.subtitles, dvd->subtitles, sizeof(dvd->subtitles));
-        guiInfo.DVD.current_title   = dvd_title + 1;
-        guiInfo.DVD.current_chapter = dvd_chapter + 1;
-        guiInfo.DVD.current_angle   = dvd_angle + 1;
-        guiInfo.Track = dvd_title + 1;
-        break;
-#endif
-
-    case guiSetStream:
-
-        stream = arg;
-        guiInfo.StreamType = stream->type;
-
-        switch (guiInfo.StreamType) {
-#ifdef CONFIG_DVDREAD
-        case STREAMTYPE_DVD:
-            guiGetEvent(guiSetDVD, stream->priv);
-            break;
-#endif
-
-#ifdef CONFIG_VCD
-        case STREAMTYPE_VCD:
-            guiInfo.VCDTracks = 0;
-            stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiInfo.VCDTracks);
-            break;
-#endif
-
-        default:
-            break;
-        }
-
-        break;
-
-    case guiRunCommand:
-
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] guiRunCommand: %d\n", (int)arg);
-
-        switch ((int)arg) {
-        case MP_CMD_QUIT:
-            uiEventHandling(evExit, 0);
-            break;
-
-        case MP_CMD_VO_FULLSCREEN:
-            uiEventHandling(evFullScreen, 0);
-            break;
-        }
-
-        break;
-
-    case guiReDraw:
-        uiEventHandling(evRedraw, 0);
-        break;
-
-    case guiSetMixer:
-        if (mixer) {
-            float l, r;
-            static float last_balance = -1;
-
-            mixer_getvolume(mixer, &l, &r);
-
-            guiInfo.Volume = FFMAX(l, r);
-            btnModify(evSetVolume, guiInfo.Volume);
-
-            if (guiInfo.Balance != last_balance) {
-                if (guiInfo.Volume)
-                    guiInfo.Balance = ((r - l) / guiInfo.Volume + 1.0) * 50.0;
-                else
-                    guiInfo.Balance = 50.0f;
-
-                last_balance = guiInfo.Balance;
-                btnModify(evSetBalance, guiInfo.Balance);
-            }
-        }
-        break;
-
-    case guiSetVideo:
-
-        // video
-
-        guiInfo.sh_video = arg;
-
-        if (arg) {
-            sh_video_t *sh = arg;
-            guiInfo.FPS = sh->fps;
-        }
-
-        if (guiInfo.StreamType == STREAMTYPE_STREAM)
-            btnSet(evSetMoviePosition, btnDisabled);
-        else
-            btnSet(evSetMoviePosition, btnReleased);
-
-#ifdef CONFIG_DXR3
-        if (video_driver_list && !gstrcmp(video_driver_list[0], "dxr3") && (((demuxer_t *)mpctx_get_demuxer(guiInfo.mpcontext))->file_format != DEMUXER_TYPE_MPEG_PS) && !gtkVfLAVC) {
-            gtkMessageBox(GTK_MB_FATAL, MSGTR_NEEDLAVC);
-            return False;
-        }
-#endif
-
         break;
 
     case guiSetDefaults:
@@ -755,6 +594,22 @@ int guiGetEvent(int type, void *arg)
 
         guiInfo.sh_video = NULL;
         wsPostRedisplay(&guiApp.subWindow);
+
+        break;
+
+    case guiRunCommand:
+
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] guiRunCommand: %d\n", (int)arg);
+
+        switch ((int)arg) {
+        case MP_CMD_QUIT:
+            uiEventHandling(evExit, 0);
+            break;
+
+        case MP_CMD_VO_FULLSCREEN:
+            uiEventHandling(evFullScreen, 0);
+            break;
+        }
 
         break;
 
@@ -969,6 +824,151 @@ int guiGetEvent(int type, void *arg)
         ass_bottom_margin = gtkASS.bottom_margin;
 #endif
 
+        break;
+
+    case guiSetStream:
+
+        stream = arg;
+        guiInfo.StreamType = stream->type;
+
+        switch (guiInfo.StreamType) {
+#ifdef CONFIG_DVDREAD
+        case STREAMTYPE_DVD:
+            guiGetEvent(guiSetDVD, stream->priv);
+            break;
+#endif
+
+#ifdef CONFIG_VCD
+        case STREAMTYPE_VCD:
+            guiInfo.VCDTracks = 0;
+            stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiInfo.VCDTracks);
+            break;
+#endif
+
+        default:
+            break;
+        }
+
+        break;
+
+#ifdef CONFIG_DVDREAD
+    case guiSetDVD:
+        dvd = arg;
+        guiInfo.DVD.titles   = dvd->vmg_file->tt_srpt->nr_of_srpts;
+        guiInfo.DVD.chapters = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
+        guiInfo.DVD.angles   = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
+        guiInfo.DVD.nr_of_audio_channels = dvd->nr_of_channels;
+        memcpy(guiInfo.DVD.audio_streams, dvd->audio_streams, sizeof(dvd->audio_streams));
+        guiInfo.DVD.nr_of_subtitles = dvd->nr_of_subtitles;
+        memcpy(guiInfo.DVD.subtitles, dvd->subtitles, sizeof(dvd->subtitles));
+        guiInfo.DVD.current_title   = dvd_title + 1;
+        guiInfo.DVD.current_chapter = dvd_chapter + 1;
+        guiInfo.DVD.current_angle   = dvd_angle + 1;
+        guiInfo.Track = dvd_title + 1;
+        break;
+#endif
+
+    case guiSetAfilter:
+        guiInfo.afilter = arg;
+        break;
+
+    case guiSetVideo:
+
+        // video
+
+        guiInfo.sh_video = arg;
+
+        if (arg) {
+            sh_video_t *sh = arg;
+            guiInfo.FPS = sh->fps;
+        }
+
+        if (guiInfo.StreamType == STREAMTYPE_STREAM)
+            btnSet(evSetMoviePosition, btnDisabled);
+        else
+            btnSet(evSetMoviePosition, btnReleased);
+
+#ifdef CONFIG_DXR3
+        if (video_driver_list && !gstrcmp(video_driver_list[0], "dxr3") && (((demuxer_t *)mpctx_get_demuxer(guiInfo.mpcontext))->file_format != DEMUXER_TYPE_MPEG_PS) && !gtkVfLAVC) {
+            gtkMessageBox(GTK_MB_FATAL, MSGTR_NEEDLAVC);
+            return False;
+        }
+#endif
+
+        break;
+
+    case guiSetAudio:
+
+        guiInfo.AudioChannels = arg ? ((sh_audio_t *)arg)->channels : 0;
+
+        if (arg && !guiInfo.sh_video)
+            guiInfo.MovieWindow = False;
+
+        guiGetEvent(guiSetMixer, NULL);
+
+        if (gtkEnableAudioEqualizer) {
+            equalizer_t eq;
+            int i, j;
+
+            for (i = 0; i < FF_ARRAY_ELEMS(gtkEquChannels); i++) {
+                for (j = 0; j < FF_ARRAY_ELEMS(*gtkEquChannels); j++) {
+                    eq.channel = i;
+                    eq.band    = j;
+                    eq.gain    = gtkEquChannels[i][j];
+                    gtkSet(gtkSetEqualizer, 0, &eq);
+                }
+            }
+        }
+
+        wsVisibleWindow(&guiApp.subWindow, (guiInfo.MovieWindow ? wsShowWindow : wsHideWindow));
+        break;
+
+    case guiSetMixer:
+        if (mixer) {
+            float l, r;
+            static float last_balance = -1;
+
+            mixer_getvolume(mixer, &l, &r);
+
+            guiInfo.Volume = FFMAX(l, r);
+            btnModify(evSetVolume, guiInfo.Volume);
+
+            if (guiInfo.Balance != last_balance) {
+                if (guiInfo.Volume)
+                    guiInfo.Balance = ((r - l) / guiInfo.Volume + 1.0) * 50.0;
+                else
+                    guiInfo.Balance = 50.0f;
+
+                last_balance = guiInfo.Balance;
+                btnModify(evSetBalance, guiInfo.Balance);
+            }
+        }
+        break;
+
+    case guiReDraw:
+        uiEventHandling(evRedraw, 0);
+        break;
+
+    case guiSetVideoWindow:
+
+        if (!guiApp.subWindow.isFullScreen) {
+            wsResizeWindow(&guiApp.subWindow, vo_dwidth, vo_dheight);
+            wsMoveWindow(&guiApp.subWindow, True, guiApp.sub.x, guiApp.sub.y);
+        }
+
+        guiInfo.MovieWidth  = vo_dwidth;
+        guiInfo.MovieHeight = vo_dheight;
+
+        if (guiWinID >= 0)
+            wsMoveWindow(&guiApp.mainWindow, False, 0, vo_dheight);
+
+        WinID = guiApp.subWindow.WindowID;
+        break;
+
+    case guiXEvent:
+        guiInfo.event_struct = arg;
+        wsEvents(wsDisplay, arg);
+        gtkEventHandling();
         break;
     }
 
