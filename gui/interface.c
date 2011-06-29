@@ -908,7 +908,7 @@ int guiGetEvent(int type, void *arg)
 
         if (gtkEnableAudioEqualizer) {
             equalizer_t eq;
-            int i, j;
+            unsigned int i, j;
 
             for (i = 0; i < FF_ARRAY_ELEMS(gtkEquChannels); i++) {
                 for (j = 0; j < FF_ARRAY_ELEMS(*gtkEquChannels); j++) {
@@ -1306,7 +1306,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
             if (guiInfo.afilter)
                 af_control_any_rev(guiInfo.afilter, AF_CONTROL_EQUALIZER_GAIN | AF_CONTROL_SET, &tmp);
         } else {
-            int i;
+            unsigned int i;
 
             memset(gtkEquChannels, 0, sizeof(gtkEquChannels));
 
