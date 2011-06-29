@@ -610,6 +610,18 @@ int guiGetEvent(int type, void *arg)
         case MP_CMD_VO_FULLSCREEN:
             uiEventHandling(evFullScreen, 0);
             break;
+
+        case MP_CMD_PLAY_TREE_STEP:
+            uiEventHandling(evNext, 0);
+            break;
+
+        case -MP_CMD_PLAY_TREE_STEP:
+            uiEventHandling(evPrev, 0);
+            break;
+
+        case MP_CMD_STOP:
+            uiEventHandling(evStop, 0);
+            break;
         }
 
         break;

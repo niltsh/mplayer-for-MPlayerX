@@ -2801,10 +2801,10 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
                     int i = 0;
                     if (n > 0)
                         for (i = 0; i < n; i++)
-                            uiNext();
+                            guiGetEvent(guiRunCommand, (void *)MP_CMD_PLAY_TREE_STEP);
                     else
                         for (i = 0; i < -1 * n; i++)
-                            uiPrev();
+                            guiGetEvent(guiRunCommand, (void *)-MP_CMD_PLAY_TREE_STEP);
                 } else
 #endif
                 {
@@ -2966,7 +2966,7 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
 #ifdef CONFIG_GUI
             // playtree_iter isn't used by the GUI
             if (use_gui)
-                uiStop();
+                guiGetEvent(guiRunCommand, (void *)MP_CMD_STOP);
             else
 #endif
             // Go back to the starting point.

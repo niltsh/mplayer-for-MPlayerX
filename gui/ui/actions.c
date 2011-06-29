@@ -416,8 +416,3 @@ void uiNext(void)
     if (guiInfo.Playing == GUI_PLAY)
         uiEventHandling(evPlay, 0);
 }
-
-void uiStop(void)
-{
-    uiEventHandling(evStop, 0);
-}

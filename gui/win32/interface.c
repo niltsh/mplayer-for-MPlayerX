@@ -384,11 +384,6 @@ void uiPrev(void)
     mygui->startplay(mygui);
 }
 
-void uiStop(void)
-{
-    guiGetEvent(guiSetState, (void *) GUI_STOP);
-}
-
 void uiSetFileName(char *dir, char *name, int type)
 {
     if(!name) return;
@@ -651,6 +646,15 @@ int guiGetEvent(int type, void *arg)
                     exit_player(EXIT_QUIT);
                     return 1;
                 }
+                case MP_CMD_PLAY_TREE_STEP:
+                  guiSetEvent(evNext);
+                  break;
+                case -MP_CMD_PLAY_TREE_STEP:
+                  guiSetEvent(evPrev);
+                  break;
+                case MP_CMD_STOP:
+                  guiSetEvent(evStop);
+                  break;
                 default:
                     break;
             }
