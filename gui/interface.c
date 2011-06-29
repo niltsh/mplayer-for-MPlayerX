@@ -32,6 +32,7 @@
 #include "help_mp.h"
 #include "input/input.h"
 #include "libaf/equalizer.h"
+#include "libavutil/common.h"
 #include "libmpcodecs/dec_audio.h"
 #include "libmpcodecs/dec_video.h"
 #include "libmpcodecs/vd.h"
@@ -597,8 +598,8 @@ int guiGetEvent(int type, void *arg)
             equalizer_t eq;
             int i, j;
 
-            for (i = 0; i < 6; i++) {
-                for (j = 0; j < 10; j++) {
+            for (i = 0; i < FF_ARRAY_ELEMS(gtkEquChannels); i++) {
+                for (j = 0; j < FF_ARRAY_ELEMS(*gtkEquChannels); j++) {
                     eq.channel = i;
                     eq.band    = j;
                     eq.gain    = gtkEquChannels[i][j];
@@ -1315,7 +1316,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
             memset(gtkEquChannels, 0, sizeof(gtkEquChannels));
 
             if (guiInfo.afilter) {
-                for (i = 0; i < 6; i++) {
+                for (i = 0; i < FF_ARRAY_ELEMS(gtkEquChannels); i++) {
                     tmp.ch  = i;
                     tmp.arg = gtkEquChannels[i];
                     af_control_any_rev(guiInfo.afilter, AF_CONTROL_EQUALIZER_GAIN | AF_CONTROL_SET, &tmp);

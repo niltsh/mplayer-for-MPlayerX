@@ -31,6 +31,7 @@
 #include "gui/cfg.h"
 #include "help_mp.h"
 #include "libaf/equalizer.h"
+#include "libavutil/common.h"
 #include "libvo/video_out.h"
 #include "stream/stream.h"
 #include "libmpdemux/demuxer.h"
@@ -255,8 +256,8 @@ static void eqSelectChannelsListRow( GtkCList * clist,gint row,gint column,GdkEv
  if ( Channel == -1 )
   {
    int i,j; equalizer_t eq;
-   for ( i=1;i<6;i++ )
-    for ( j=0;j<10;j++ )
+   for ( i=1;i<FF_ARRAY_ELEMS(gtkEquChannels);i++ )
+    for ( j=0;j<FF_ARRAY_ELEMS(*gtkEquChannels);j++ )
      { eq.band=j; eq.channel=i; eq.gain=gtkEquChannels[0][j]; gtkSet( gtkSetEqualizer,0,&eq ); }
   }
 }
