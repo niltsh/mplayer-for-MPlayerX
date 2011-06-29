@@ -506,7 +506,7 @@ int guiGetEvent(int type, void *arg)
     {
         case guiPreparation:
         {
-            guiGetEvent(guiSetDefaults, NULL);
+            guiGetEvent(guiNewFile, NULL);
             guiInfo.DiskChanged = 0;
             guiInfo.FilenameChanged = 0;
             guiInfo.NewPlay = 0;
@@ -656,7 +656,7 @@ int guiGetEvent(int type, void *arg)
             }
             break;
         }
-        case guiSetDefaults:
+        case guiNewFile:
         {
             audio_id = -1;
             video_id = -1;

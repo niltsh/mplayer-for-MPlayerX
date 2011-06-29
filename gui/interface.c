@@ -579,7 +579,7 @@ int guiGetEvent(int type, void *arg)
         uiState();
         break;
 
-    case guiSetDefaults:
+    case guiNewFile:
 
 // if ( guiInfo.Playing == 1 && guiInfo.FilenameChanged )
         if (guiInfo.FilenameChanged) {
@@ -616,7 +616,7 @@ int guiGetEvent(int type, void *arg)
 
     case guiPreparation:
 
-        guiGetEvent(guiSetDefaults, NULL);
+        guiGetEvent(guiNewFile, NULL);
 
         switch (guiInfo.StreamType) {
         case STREAMTYPE_PLAYLIST:
