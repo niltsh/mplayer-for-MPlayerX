@@ -552,11 +552,9 @@ static void add_vf(char *str)
 int guiGetEvent(int type, void *arg)
 {
     mixer_t *mixer = NULL;
-
-    stream_t *stream = arg;
-
+    stream_t *stream;
 #ifdef CONFIG_DVDREAD
-    dvd_priv_t *dvdp = arg;
+    dvd_priv_t *dvdp;
 #endif
 
     if (guiInfo.mpcontext)
@@ -640,6 +638,7 @@ int guiGetEvent(int type, void *arg)
 
 #ifdef CONFIG_DVDREAD
     case guiSetDVD:
+        dvdp = arg;
         guiInfo.DVD.titles   = dvdp->vmg_file->tt_srpt->nr_of_srpts;
         guiInfo.DVD.chapters = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
         guiInfo.DVD.angles   = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
@@ -656,6 +655,7 @@ int guiGetEvent(int type, void *arg)
 
     case guiSetStream:
 
+        stream = arg;
         guiInfo.StreamType = stream->type;
 
         switch (stream->type) {
