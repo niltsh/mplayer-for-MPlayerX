@@ -595,6 +595,22 @@ int guiGetEvent(int type, void *arg)
         if (arg && !guiInfo.sh_video)
             guiInfo.MovieWindow = False;
 
+        guiGetEvent(guiSetMixer, NULL);
+
+        if (gtkEnableAudioEqualizer) {
+            equalizer_t eq;
+            int i, j;
+
+            for (i = 0; i < 6; i++) {
+                for (j = 0; j < 10; j++) {
+                    eq.channel = i;
+                    eq.band    = j;
+                    eq.gain    = gtkEquChannels[i][j];
+                    gtkSet(gtkSetEqualizer, 0, &eq);
+                }
+            }
+        }
+
         wsVisibleWindow(&guiApp.subWindow, (guiInfo.MovieWindow ? wsShowWindow : wsHideWindow));
         break;
 
@@ -719,24 +735,6 @@ int guiGetEvent(int type, void *arg)
             btnSet(evSetMoviePosition, btnDisabled);
         else
             btnSet(evSetMoviePosition, btnReleased);
-
-        // audio
-
-        guiGetEvent(guiSetMixer, NULL);
-
-        if (gtkEnableAudioEqualizer) {
-            equalizer_t eq;
-            int i, j;
-
-            for (i = 0; i < 6; i++) {
-                for (j = 0; j < 10; j++) {
-                    eq.channel = i;
-                    eq.band    = j;
-                    eq.gain    = gtkEquChannels[i][j];
-                    gtkSet(gtkSetEqualizer, 0, &eq);
-                }
-            }
-        }
 
         // subtitle
 
