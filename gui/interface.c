@@ -554,7 +554,7 @@ int guiGetEvent(int type, void *arg)
     mixer_t *mixer = NULL;
     stream_t *stream;
 #ifdef CONFIG_DVDREAD
-    dvd_priv_t *dvdp;
+    dvd_priv_t *dvd;
 #endif
 
     if (guiInfo.mpcontext)
@@ -638,14 +638,14 @@ int guiGetEvent(int type, void *arg)
 
 #ifdef CONFIG_DVDREAD
     case guiSetDVD:
-        dvdp = arg;
-        guiInfo.DVD.titles   = dvdp->vmg_file->tt_srpt->nr_of_srpts;
-        guiInfo.DVD.chapters = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
-        guiInfo.DVD.angles   = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
-        guiInfo.DVD.nr_of_audio_channels = dvdp->nr_of_channels;
-        memcpy(guiInfo.DVD.audio_streams, dvdp->audio_streams, sizeof(dvdp->audio_streams));
-        guiInfo.DVD.nr_of_subtitles = dvdp->nr_of_subtitles;
-        memcpy(guiInfo.DVD.subtitles, dvdp->subtitles, sizeof(dvdp->subtitles));
+        dvd = arg;
+        guiInfo.DVD.titles   = dvd->vmg_file->tt_srpt->nr_of_srpts;
+        guiInfo.DVD.chapters = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
+        guiInfo.DVD.angles   = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
+        guiInfo.DVD.nr_of_audio_channels = dvd->nr_of_channels;
+        memcpy(guiInfo.DVD.audio_streams, dvd->audio_streams, sizeof(dvd->audio_streams));
+        guiInfo.DVD.nr_of_subtitles = dvd->nr_of_subtitles;
+        memcpy(guiInfo.DVD.subtitles, dvd->subtitles, sizeof(dvd->subtitles));
         guiInfo.DVD.current_title   = dvd_title + 1;
         guiInfo.DVD.current_chapter = dvd_chapter + 1;
         guiInfo.DVD.current_angle   = dvd_angle + 1;
