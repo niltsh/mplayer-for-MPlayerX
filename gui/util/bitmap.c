@@ -25,6 +25,7 @@
 
 #include "help_mp.h"
 #include "libavcodec/avcodec.h"
+#include "libavutil/common.h"
 #include "libavutil/intreadwrite.h"
 #include "libvo/fastmemcpy.h"
 #include "mp_msg.h"
