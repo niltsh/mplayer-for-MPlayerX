@@ -739,7 +739,6 @@ int guiGetEvent(int type, void *arg)
 #ifdef CONFIG_DXR3
         if (video_driver_list && !gstrcmp(video_driver_list[0], "dxr3") && (((demuxer_t *)mpctx_get_demuxer(guiInfo.mpcontext))->file_format != DEMUXER_TYPE_MPEG_PS) && !gtkVfLAVC) {
             gtkMessageBox(GTK_MB_FATAL, MSGTR_NEEDLAVC);
-            guiInfo.Playing = 0;
             return False;
         }
 #endif
