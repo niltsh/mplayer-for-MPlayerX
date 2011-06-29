@@ -603,10 +603,6 @@ int guiGetEvent(int type, void *arg)
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] guiRunCommand: %d\n", (int)arg);
 
         switch ((int)arg) {
-        case MP_CMD_QUIT:
-            uiEventHandling(evExit, 0);
-            break;
-
         case MP_CMD_VO_FULLSCREEN:
             uiEventHandling(evFullScreen, 0);
             break;
@@ -621,6 +617,10 @@ int guiGetEvent(int type, void *arg)
 
         case MP_CMD_STOP:
             uiEventHandling(evStop, 0);
+            break;
+
+        case MP_CMD_QUIT:
+            uiEventHandling(evExit, 0);
             break;
         }
 
