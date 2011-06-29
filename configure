@@ -8156,7 +8156,11 @@ LIBPREF       = lib
 LIBSUF        = .a
 FULLNAME      = \$(NAME)\$(BUILDSUF)
 LIBNAME       = \$(LIBPREF)\$(FULLNAME)\$(LIBSUF)
-SLIBNAME      = \$(SLIBPREF)\$(FULLNAME)\$(SLIBSUF)
+
+# These are not necessary for building, since we do not use shared libraries,
+# but without them target names clash, causing Make warnings by the boatload.
+SLIBNAME            = \$(SLIBPREF)\$(FULLNAME)\$(SLIBSUF)
+SLIBNAME_WITH_MAJOR = \$(SLIBNAME)
 
 # Some FFmpeg codecs depend on these. Enable them unconditionally for now.
 CONFIG_AANDCT  = yes
