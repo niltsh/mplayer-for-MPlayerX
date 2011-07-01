@@ -6800,7 +6800,7 @@ EOF
       _live=yes && break
   done
   if test "$_live" != yes ; then
-      ld_tmp="-lliveMedia -lgroupsock -lUsageEnvironment -lBasicUsageEnvironment -lstdc++"
+      ld_tmp="-lliveMedia -lgroupsock -lBasicUsageEnvironment -lUsageEnvironment -lstdc++"
       if cxx_check -I/usr/include/liveMedia -I/usr/include/UsageEnvironment -I/usr/include/BasicUsageEnvironment -I/usr/include/groupsock $ld_tmp; then
           _live_dist=yes
       fi
