@@ -35,7 +35,6 @@
 #include "libvo/vo_fbdev.h"
 #include "libvo/vo_zr.h"
 #include "mp_fifo.h"
-#include "sub/unrar_exec.h"
 
 
 const m_option_t vd_conf[]={
@@ -255,13 +254,6 @@ const m_option_t mplayer_opts[]={
 #else
     {"menu", "OSD menu support was not compiled in.\n", CONF_TYPE_PRINT,0, 0, 0, NULL},
 #endif /* CONFIG_MENU */
-
-    // these should be moved to -common, and supported in MEncoder
-    {"vobsub", &vobsub_name, CONF_TYPE_STRING, 0, 0, 0, NULL},
-    {"vobsubid", &vobsub_id, CONF_TYPE_INT, CONF_RANGE, 0, 31, NULL},
-#ifdef CONFIG_UNRAR_EXEC
-    {"unrarexec", &unrar_executable, CONF_TYPE_STRING, 0, 0, 0, NULL},
-#endif
 
     {"sstep", &step_sec, CONF_TYPE_INT, CONF_MIN, 0, 0, NULL},
 

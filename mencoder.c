@@ -777,6 +777,8 @@ if(sh_audio && (out_audio_codec || seek_to_sec || !sh_audio->wf || playback_spee
     }
   }
 
+  vo_vobsub = vobsub_open(vobsub_name, spudec_ifo, 1, &vo_spudec);
+
 // set up video encoder:
 
 if (!curfile) { // curfile is non zero when a second file is opened
@@ -806,7 +808,7 @@ if (vobsub_out) {
     }
 #endif
 }
-else {
+else if (!vo_spudec) {
 init_vo_spudec(stream, sh_video, d_dvdsub ? d_dvdsub->sh : NULL);
 }
 
