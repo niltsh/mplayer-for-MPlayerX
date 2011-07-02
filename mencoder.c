@@ -777,7 +777,8 @@ if(sh_audio && (out_audio_codec || seek_to_sec || !sh_audio->wf || playback_spee
     }
   }
 
-  vo_vobsub = vobsub_open(vobsub_name, spudec_ifo, 1, &vo_spudec);
+  if (vobsub_name)
+    vo_vobsub = vobsub_open(vobsub_name, spudec_ifo, 1, &vo_spudec);
 
 // set up video encoder:
 
