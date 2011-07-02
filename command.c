@@ -2558,7 +2558,7 @@ static struct mp_eosd_source overlay_source = {
 static void overlay_add(char *file, int id, int x, int y, unsigned col)
 {
     FILE *f;
-    unsigned w, h, bpp, maxval;
+    int w, h, bpp, maxval;
     uint8_t *data;
     struct mp_eosd_image *img;
 
