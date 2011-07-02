@@ -30,7 +30,7 @@
 #include "libvo/fastmemcpy.h"
 #include "mp_msg.h"
 
-static int pngRead(unsigned char *fname, guiImage *bf)
+static int pngRead(const char *fname, guiImage *bf)
 {
     FILE *file;
     long len;
@@ -165,10 +165,10 @@ static int Convert24to32(guiImage *bf)
     return 1;
 }
 
-static unsigned char *fExist(unsigned char *fname)
+static const char *fExist(const char *fname)
 {
     static const char ext[][4] = { "png", "PNG" };
-    static unsigned char buf[512];
+    static char buf[512];
     unsigned int i;
 
     if (access(fname, R_OK) == 0)
@@ -184,7 +184,7 @@ static unsigned char *fExist(unsigned char *fname)
     return NULL;
 }
 
-int bpRead(char *fname, guiImage *bf)
+int bpRead(const char *fname, guiImage *bf)
 {
     int r;
 
@@ -217,7 +217,7 @@ void bpFree(guiImage *bf)
     memset(bf, 0, sizeof(*bf));
 }
 
-int bpRenderMask(guiImage *in, guiImage *out)
+int bpRenderMask(const guiImage *in, guiImage *out)
 {
     uint32_t *buf;
     unsigned long i;
