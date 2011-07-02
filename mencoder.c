@@ -835,7 +835,7 @@ muxer->audio_delay_fix = audio_delay_fix;
 
 mux_v=muxer_new_stream(muxer,MUXER_TYPE_VIDEO);
 
-mux_v->buffer_size=0x200000; // 2MB
+mux_v->buffer_size=0x800000; // 8MB
 mux_v->buffer=malloc(mux_v->buffer_size);
 
 mux_v->source=sh_video;
