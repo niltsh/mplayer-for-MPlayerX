@@ -636,8 +636,7 @@ int cache_do_control(stream_t *stream, int cmd, void *arg) {
     case STREAM_CTRL_SEEK_TO_CHAPTER:
     case STREAM_CTRL_SEEK_TO_TIME:
     case STREAM_CTRL_SET_ANGLE:
-      if (s->control_res != STREAM_UNSUPPORTED)
-          stream->pos = s->read_filepos = s->control_new_pos;
+      stream->pos = s->read_filepos = s->control_new_pos;
       break;
   }
   return s->control_res;
