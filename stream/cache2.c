@@ -619,6 +619,8 @@ int cache_do_control(stream_t *stream, int cmd, void *arg) {
       return STREAM_UNSUPPORTED;
     }
   }
+  if (s->control_res != STREAM_OK)
+    return s->control_res;
   switch (cmd) {
     case STREAM_CTRL_GET_TIME_LENGTH:
     case STREAM_CTRL_GET_CURRENT_TIME:
