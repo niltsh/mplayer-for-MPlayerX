@@ -32,6 +32,8 @@
 #include "mpbswap.h"
 #include "libvo/fastmemcpy.h"
 
+#include "libavutil/avutil.h"
+
 /* Functions used by play to convert the input audio to the correct
    format */
 
@@ -474,23 +476,29 @@ static void change_bps(void* in, void* out, int len, int inbps, int outbps)
 
 static void float2int(float* in, void* out, int len, int bps)
 {
+  float f;
   register int i;
   switch(bps){
   case(1):
     for(i=0;i<len;i++)
-      ((int8_t*)out)[i] = lrintf(127.0 * in[i]);
+      ((int8_t *)out)[i] = av_clip_int8(lrintf(128.0 * in[i]));
     break;
   case(2):
     for(i=0;i<len;i++)
-      ((int16_t*)out)[i] = lrintf(32767.0 * in[i]);
+      ((int16_t*)out)[i] = av_clip_int16(lrintf(32768.0 * in[i]));
     break;
   case(3):
-    for(i=0;i<len;i++)
-      store24bit(out, i, lrintf(2147483647.0 * in[i]));
+    for(i=0;i<len;i++){
+      f = ldexp(in[i], 23);
+      store24bit(out, i,   av_clip(lrintf(f), -1*(1<<23), (1<<23)-1) << 8);
+    }
     break;
   case(4):
-    for(i=0;i<len;i++)
-      ((int32_t*)out)[i] = lrintf(2147483647.0 * in[i]);
+    for(i=0;i<len;i++){
+      f = ldexp(in[i], 23);
+      //The mantissa is only 23 bit, that's all the precision there is.
+      ((int32_t*)out)[i] = av_clip(lrintf(f), -1*(1<<23), (1<<23)-1) << 8;
+    }
     break;
   }
 }
