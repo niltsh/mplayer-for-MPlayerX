@@ -8746,7 +8746,7 @@ cat > ffmpeg/config.mak << EOF
 ifndef FFMPEG_CONFIG_MAK
 FFMPEG_CONFIG_MAK = 1
 include ../config.mak
-endif # MPLAYER_CONFIG_MAK
+endif # FFMPEG_CONFIG_MAK
 EOF
 
 cat > ffmpeg/config.h << EOF
