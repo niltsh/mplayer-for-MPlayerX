@@ -40,7 +40,6 @@ extern int use_gui;             // this is defined in mplayer.c
 #define GMP_RUN_COMMAND        2
 #define GMP_SET_DVD            3
 #define GMP_SET_AUDIO          6
-#define guiReDrawSubWindow 7
 #define GMP_SETUP_VIDEO_WINDOW 8
 #define GMP_SET_STREAM         9
 #define GMP_REDRAW             10
