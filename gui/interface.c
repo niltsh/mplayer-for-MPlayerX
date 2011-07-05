@@ -978,7 +978,7 @@ int gui(int what, void *arg)
         WinID = guiApp.subWindow.WindowID;
         break;
 
-    case GUI_X_EVENT:
+    case GUI_HANDLE_X_EVENT:
         guiInfo.event_struct = arg;
         wsEvents(wsDisplay, arg);
         gtkEventHandling();

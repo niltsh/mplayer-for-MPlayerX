@@ -821,7 +821,7 @@ int vo_x11_check_events(Display * mydisplay)
 #ifdef CONFIG_GUI
         if (use_gui)
         {
-            gui(GUI_X_EVENT, &Event);
+            gui(GUI_HANDLE_X_EVENT, &Event);
             if (vo_window != Event.xany.window)
                 continue;
         }
