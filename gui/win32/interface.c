@@ -485,7 +485,7 @@ int gui(int what, void *arg)
 {
     stream_t *stream = arg;
 #ifdef CONFIG_DVDREAD
-    dvd_priv_t *dvdp = arg;
+    dvd_priv_t *dvdp;
 #endif
     if(!mygui || !mygui->skin) return 0;
 
@@ -576,29 +576,23 @@ int gui(int what, void *arg)
             {
 #ifdef CONFIG_DVDREAD
                 case STREAMTYPE_DVD:
-                    gui(GMP_SET_DVD, stream->priv);
+                    dvdp = stream->priv;
+                    guiInfo.DVD.titles = dvdp->vmg_file->tt_srpt->nr_of_srpts;
+                    guiInfo.DVD.chapters = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
+                    guiInfo.DVD.angles = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
+                    guiInfo.DVD.nr_of_audio_channels = dvdp->nr_of_channels;
+                    memcpy(guiInfo.DVD.audio_streams, dvdp->audio_streams, sizeof(dvdp->audio_streams));
+                    guiInfo.DVD.nr_of_subtitles = dvdp->nr_of_subtitles;
+                    memcpy(guiInfo.DVD.subtitles, dvdp->subtitles, sizeof(dvdp->subtitles));
+                    guiInfo.DVD.current_title = dvd_title + 1;
+                    guiInfo.DVD.current_chapter = dvd_chapter + 1;
+                    guiInfo.DVD.current_angle = dvd_angle + 1;
+                    guiInfo.Track = dvd_title + 1;
                     break;
 #endif
             }
             break;
         }
-#ifdef CONFIG_DVDREAD
-        case GMP_SET_DVD:
-        {
-            guiInfo.DVD.titles = dvdp->vmg_file->tt_srpt->nr_of_srpts;
-            guiInfo.DVD.chapters = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
-            guiInfo.DVD.angles = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
-            guiInfo.DVD.nr_of_audio_channels = dvdp->nr_of_channels;
-            memcpy(guiInfo.DVD.audio_streams, dvdp->audio_streams, sizeof(dvdp->audio_streams));
-            guiInfo.DVD.nr_of_subtitles = dvdp->nr_of_subtitles;
-            memcpy(guiInfo.DVD.subtitles, dvdp->subtitles, sizeof(dvdp->subtitles));
-            guiInfo.DVD.current_title = dvd_title + 1;
-            guiInfo.DVD.current_chapter = dvd_chapter + 1;
-            guiInfo.DVD.current_angle = dvd_angle + 1;
-            guiInfo.Track = dvd_title + 1;
-            break;
-        }
-#endif
         case GMP_REDRAW:
             mygui->updatedisplay(mygui, mygui->mainwindow);
             break;

@@ -847,7 +847,18 @@ int gui(int what, void *arg)
         switch (guiInfo.StreamType) {
 #ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
-            gui(GMP_SET_DVD, stream->priv);
+            dvd = stream->priv;
+            guiInfo.DVD.titles   = dvd->vmg_file->tt_srpt->nr_of_srpts;
+            guiInfo.DVD.chapters = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
+            guiInfo.DVD.angles   = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
+            guiInfo.DVD.nr_of_audio_channels = dvd->nr_of_channels;
+            memcpy(guiInfo.DVD.audio_streams, dvd->audio_streams, sizeof(dvd->audio_streams));
+            guiInfo.DVD.nr_of_subtitles = dvd->nr_of_subtitles;
+            memcpy(guiInfo.DVD.subtitles, dvd->subtitles, sizeof(dvd->subtitles));
+            guiInfo.DVD.current_title   = dvd_title + 1;
+            guiInfo.DVD.current_chapter = dvd_chapter + 1;
+            guiInfo.DVD.current_angle   = dvd_angle + 1;
+            guiInfo.Track = dvd_title + 1;
             break;
 #endif
 
@@ -863,23 +874,6 @@ int gui(int what, void *arg)
         }
 
         break;
-
-#ifdef CONFIG_DVDREAD
-    case GMP_SET_DVD:
-        dvd = arg;
-        guiInfo.DVD.titles   = dvd->vmg_file->tt_srpt->nr_of_srpts;
-        guiInfo.DVD.chapters = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
-        guiInfo.DVD.angles   = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
-        guiInfo.DVD.nr_of_audio_channels = dvd->nr_of_channels;
-        memcpy(guiInfo.DVD.audio_streams, dvd->audio_streams, sizeof(dvd->audio_streams));
-        guiInfo.DVD.nr_of_subtitles = dvd->nr_of_subtitles;
-        memcpy(guiInfo.DVD.subtitles, dvd->subtitles, sizeof(dvd->subtitles));
-        guiInfo.DVD.current_title   = dvd_title + 1;
-        guiInfo.DVD.current_chapter = dvd_chapter + 1;
-        guiInfo.DVD.current_angle   = dvd_angle + 1;
-        guiInfo.Track = dvd_title + 1;
-        break;
-#endif
 
     case GMP_SET_AFILTER:
         guiInfo.afilter = arg;
