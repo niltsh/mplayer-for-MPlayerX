@@ -680,6 +680,8 @@ int gui(int what, void *arg)
             if(gtkAutoSyncOn) autosync = gtkAutoSync;
             break;
         }
+        case GUI_HANDLE_EVENTS:
+          break;
         case GUI_SET_MIXER:
         {
             if(audio_out)
@@ -911,5 +913,3 @@ static int update_subwindow(void)
     SendMessage(mygui->subwindow, WM_WINDOWPOSCHANGED, 0, (LPARAM)&wp);
     return 0;
 }
-
-void guiEventHandling(void) {}

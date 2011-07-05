@@ -49,6 +49,7 @@ extern int use_gui;             // this is defined in mplayer.c
 #define GUI_SET_AFILTER        17
 #define GUI_SET_CONTEXT        18
 #define GUI_END_FILE           19
+#define GUI_HANDLE_EVENTS      20
 
 #define GUI_STOP  0
 #define GUI_PLAY  1
@@ -231,7 +232,6 @@ int gstrcmp(const char *a, const char *b);
 char *gstrdup(const char *str);
 void *gtkSet(int cmd, float fparam, void *vparam);
 void guiDone(void);
-void guiEventHandling(void);
 void guiExit(enum exit_reason how);
 int gui(int what, void *arg);
 void guiInit(void);

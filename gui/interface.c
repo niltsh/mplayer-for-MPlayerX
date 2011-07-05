@@ -598,6 +598,12 @@ int gui(int what, void *arg)
 
         break;
 
+    case GUI_HANDLE_EVENTS:
+        if (!guiInfo.Playing || !guiInfo.MovieWindow)
+            wsHandleEvents();
+        gtkEventHandling();
+        break;
+
     case GUI_RUN_COMMAND:
 
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] GUI_RUN_COMMAND: %d\n", (int)arg);
@@ -1024,14 +1030,6 @@ int gui(int what, void *arg)
     }
 
     return True;
-}
-
-void guiEventHandling(void)
-{
-    if (!guiInfo.Playing || !guiInfo.MovieWindow)
-        wsHandleEvents();
-
-    gtkEventHandling();
 }
 
 // ---
