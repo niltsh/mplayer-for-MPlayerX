@@ -548,7 +548,7 @@ static void add_vf(char *str)
     mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_AddingVideoFilter, str);
 }
 
-int guiGetEvent(int type, void *arg)
+int gui(int type, void *arg)
 {
     mixer_t *mixer = NULL;
     stream_t *stream;
@@ -628,7 +628,7 @@ int guiGetEvent(int type, void *arg)
 
     case guiPreparation:
 
-        guiGetEvent(guiNewFile, NULL);
+        gui(guiNewFile, NULL);
 
         switch (guiInfo.StreamType) {
         case STREAMTYPE_PLAYLIST:
@@ -847,7 +847,7 @@ int guiGetEvent(int type, void *arg)
         switch (guiInfo.StreamType) {
 #ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
-            guiGetEvent(guiSetDVD, stream->priv);
+            gui(guiSetDVD, stream->priv);
             break;
 #endif
 
@@ -917,7 +917,7 @@ int guiGetEvent(int type, void *arg)
         if (arg && !guiInfo.sh_video)
             guiInfo.MovieWindow = False;
 
-        guiGetEvent(guiSetMixer, NULL);
+        gui(guiSetMixer, NULL);
 
         if (gtkEnableAudioEqualizer) {
             equalizer_t eq;
@@ -1019,7 +1019,7 @@ int guiGetEvent(int type, void *arg)
             } else
                 wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
 
-            guiGetEvent(guiSetState, (void *)GUI_STOP);
+            gui(guiSetState, (void *)GUI_STOP);
             uiSubRender = 1;
             wsSetBackgroundRGB(&guiApp.subWindow, guiApp.sub.R, guiApp.sub.G, guiApp.sub.B);
             wsClearWindow(guiApp.subWindow);

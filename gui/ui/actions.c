@@ -103,7 +103,7 @@ void uiPlay(void)
         return;
     }
 
-    guiGetEvent(guiSetState, (void *)GUI_PLAY);
+    gui(guiSetState, (void *)GUI_PLAY);
     uiSubRender = 0;
     wsSetBackgroundRGB(&guiApp.subWindow, 0, 0, 0);
     wsClearWindow(guiApp.subWindow);

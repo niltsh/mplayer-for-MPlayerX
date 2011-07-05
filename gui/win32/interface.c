@@ -174,7 +174,7 @@ static void guiSetEvent(int event)
             GetVolumeInformation(dvd_device, dvdname, MAX_PATH, NULL, NULL, NULL, NULL, 0);
             capitalize(dvdname);
             mp_msg(MSGT_GPLAYER, MSGL_V, "Opening DVD %s -> %s\n", dvd_device, dvdname);
-            guiGetEvent(guiPreparation, (void *) STREAMTYPE_DVD);
+            gui(guiPreparation, (void *) STREAMTYPE_DVD);
             mygui->playlist->clear_playlist(mygui->playlist);
             mygui->playlist->add_track(mygui->playlist, filename, NULL, dvdname, 0);
             mygui->startplay(mygui);
@@ -218,7 +218,7 @@ static void guiSetEvent(int event)
         }
         case evStop:
             if(guiInfo.Playing)
-                guiGetEvent(guiSetState, (void *) GUI_STOP);
+                gui(guiSetState, (void *) GUI_STOP);
             break;
         case evSetMoviePosition:
         {
@@ -288,7 +288,7 @@ static void guiSetEvent(int event)
                     guiInfo.Chapter = guiInfo.DVD.current_chapter;
                     guiInfo.Angle = guiInfo.DVD.current_angle;
                     guiInfo.DiskChanged = 1;
-                    guiGetEvent(guiSetState, (void *) GUI_PLAY);
+                    gui(guiSetState, (void *) GUI_PLAY);
                     break;
                 }
 #endif
@@ -297,8 +297,8 @@ static void guiSetEvent(int event)
                     guiInfo.FilenameChanged = guiInfo.NewPlay = 1;
                     update_playlistwindow();
                     uiGotoTheNext = guiInfo.Playing? 0 : 1;
-                    guiGetEvent(guiSetState, (void *) GUI_STOP);
-                    guiGetEvent(guiSetState, (void *) GUI_PLAY);
+                    gui(guiSetState, (void *) GUI_STOP);
+                    gui(guiSetState, (void *) GUI_PLAY);
                     break;
                }
            }
@@ -324,7 +324,7 @@ void uiPlay( void )
        return;
    }
    guiInfo.NewPlay = 1;
-   guiGetEvent(guiSetState, (void *) GUI_PLAY);
+   gui(guiSetState, (void *) GUI_PLAY);
 }
 
 void uiPause( void )
@@ -481,7 +481,7 @@ void guiDone(void)
 }
 
 /* this function gets called by mplayer to update the gui */
-int guiGetEvent(int type, void *arg)
+int gui(int type, void *arg)
 {
     stream_t *stream = arg;
 #ifdef CONFIG_DVDREAD
@@ -501,7 +501,7 @@ int guiGetEvent(int type, void *arg)
     {
         case guiPreparation:
         {
-            guiGetEvent(guiNewFile, NULL);
+            gui(guiNewFile, NULL);
             guiInfo.DiskChanged = 0;
             guiInfo.FilenameChanged = 0;
             guiInfo.NewPlay = 0;
@@ -576,7 +576,7 @@ int guiGetEvent(int type, void *arg)
             {
 #ifdef CONFIG_DVDREAD
                 case STREAMTYPE_DVD:
-                    guiGetEvent(guiSetDVD, stream->priv);
+                    gui(guiSetDVD, stream->priv);
                     break;
 #endif
             }
@@ -746,7 +746,7 @@ int guiGetEvent(int type, void *arg)
               style = WS_OVERLAPPEDWINDOW | WS_SIZEBOX;
               SetWindowLong(mygui->subwindow, GWL_STYLE, style);
           }
-          guiGetEvent(guiSetState, (void *) GUI_STOP);
+          gui(guiSetState, (void *) GUI_STOP);
           break;
         }
         default:

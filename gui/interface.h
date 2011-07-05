@@ -235,7 +235,7 @@ void *gtkSet(int cmd, float fparam, void *vparam);
 void guiDone(void);
 void guiEventHandling(void);
 void guiExit(enum exit_reason how);
-int guiGetEvent(int type, void *arg);
+int gui(int type, void *arg);
 void guiInit(void);
 void guiLoadFont(void);
 void guiLoadSubtitle(char *name);

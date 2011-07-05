@@ -1075,7 +1075,7 @@ static int mp_property_fullscreen(m_option_t *prop, int action, void *arg,
     case M_PROPERTY_STEP_DOWN:
 #ifdef CONFIG_GUI
         if (use_gui)
-            guiGetEvent(guiRunCommand, (void *) MP_CMD_VO_FULLSCREEN);
+            gui(guiRunCommand, (void *) MP_CMD_VO_FULLSCREEN);
         else
 #endif
         if (vo_config_count)
@@ -2801,10 +2801,10 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
                     int i = 0;
                     if (n > 0)
                         for (i = 0; i < n; i++)
-                            guiGetEvent(guiRunCommand, (void *)MP_CMD_PLAY_TREE_STEP);
+                            gui(guiRunCommand, (void *)MP_CMD_PLAY_TREE_STEP);
                     else
                         for (i = 0; i < -1 * n; i++)
-                            guiGetEvent(guiRunCommand, (void *)-MP_CMD_PLAY_TREE_STEP);
+                            gui(guiRunCommand, (void *)-MP_CMD_PLAY_TREE_STEP);
                 } else
 #endif
                 {
@@ -2966,7 +2966,7 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
 #ifdef CONFIG_GUI
             // playtree_iter isn't used by the GUI
             if (use_gui)
-                guiGetEvent(guiRunCommand, (void *)MP_CMD_STOP);
+                gui(guiRunCommand, (void *)MP_CMD_STOP);
             else
 #endif
             // Go back to the starting point.
