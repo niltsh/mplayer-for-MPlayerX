@@ -548,7 +548,7 @@ static void add_vf(char *str)
     mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_AddingVideoFilter, str);
 }
 
-int gui(int type, void *arg)
+int gui(int what, void *arg)
 {
     mixer_t *mixer = NULL;
     stream_t *stream;
@@ -560,7 +560,7 @@ int gui(int type, void *arg)
     if (guiInfo.mpcontext)
         mixer = mpctx_get_mixer(guiInfo.mpcontext);
 
-    switch (type) {
+    switch (what) {
     case GMP_SET_CONTEXT:
         guiInfo.mpcontext = arg;
         break;

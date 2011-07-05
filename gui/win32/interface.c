@@ -481,7 +481,7 @@ void guiDone(void)
 }
 
 /* this function gets called by mplayer to update the gui */
-int gui(int type, void *arg)
+int gui(int what, void *arg)
 {
     stream_t *stream = arg;
 #ifdef CONFIG_DVDREAD
@@ -497,7 +497,7 @@ int gui(int type, void *arg)
         playtree = mpctx_get_playtree_iter(guiInfo.mpcontext);
     }
 
-    switch (type)
+    switch (what)
     {
         case GMP_PREPARATION:
         {
@@ -750,7 +750,7 @@ int gui(int type, void *arg)
           break;
         }
         default:
-            mp_msg(MSGT_GPLAYER, MSGL_ERR, "[GUI] GOT UNHANDLED EVENT %i\n", type);
+            mp_msg(MSGT_GPLAYER, MSGL_ERR, "[GUI] GOT UNHANDLED EVENT %i\n", what);
     }
     return 1;
 }
