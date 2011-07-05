@@ -20,7 +20,7 @@
 #define MPLAYER_GUI_BITMAP_H
 
 #define GMP_TRANSPARENT 0xffff00ff   // transparent color (opaque fuchsia/magenta)
-#define ALPHA_OPAQUE   0xff000000
+#define ALPHA_OPAQUE    0xff000000
 
 // for legacy reasons, we must treat all kind of fuchsia/magenta as transparent
 #define IS_TRANSPARENT(c) ((ALPHA_OPAQUE | (c)) == GMP_TRANSPARENT)
