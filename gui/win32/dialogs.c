@@ -662,7 +662,7 @@ static LRESULT CALLBACK SkinBrowserWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, 
 {
     static HWND listbox;
     static char skinspath[MAX_PATH];
-    gui_t* gui = (gui_t*) GetWindowLongPtr(hwnd, GWLP_USERDATA);
+    gui_t* mygui = (gui_t*) GetWindowLongPtr(hwnd, GWLP_USERDATA);
     switch (iMsg)
     {
         case WM_CREATE:
@@ -718,9 +718,9 @@ static LRESULT CALLBACK SkinBrowserWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, 
                         strcat(skinspath, skinName);
                         ShowWindow(hwnd, SW_HIDE);
                         Shell_NotifyIcon(NIM_DELETE, &nid);
-                        destroy_window(gui);
-                        create_window(gui, skinspath);
-                        create_subwindow(gui, skinspath);
+                        destroy_window(mygui);
+                        create_window(mygui, skinspath);
+                        create_subwindow(mygui, skinspath);
                         SendMessage(hwnd, WM_CLOSE, 0, 0); /* Avoid crashing when switching skin */
                     }
                 }
