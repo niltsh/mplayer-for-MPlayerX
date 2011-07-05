@@ -237,7 +237,7 @@ int gui(int what, void *arg);
 void guiInit(void);
 void guiLoadFont(void);
 void guiLoadSubtitle(char *name);
-int import_initial_playtree_into_gui(play_tree_t *my_playtree, m_config_t *config, int enqueue);
-int import_playtree_playlist_into_gui(play_tree_t *my_playtree, m_config_t *config);
+int guiInitializePlaylist(play_tree_t *my_playtree, m_config_t *config, int enqueue);
+int guiAddPlaylist(play_tree_t *my_playtree, m_config_t *config);
 
 #endif /* MPLAYER_GUI_INTERFACE_H */
