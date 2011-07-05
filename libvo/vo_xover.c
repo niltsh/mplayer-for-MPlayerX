@@ -269,7 +269,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
   vo_dwidth=d_width; vo_dheight=d_height;
 
 #ifdef CONFIG_GUI
-  if(use_gui) gui( guiSetVideoWindow,0 ); // the GUI will set up / resize the window
+  if(use_gui) gui(GMP_SETUP_VIDEO_WINDOW, 0); // the GUI will set up / resize the window
   else
     {
 #endif

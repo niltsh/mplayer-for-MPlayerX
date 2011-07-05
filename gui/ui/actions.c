@@ -103,7 +103,7 @@ void uiPlay(void)
         return;
     }
 
-    gui(guiSetState, (void *)GUI_PLAY);
+    gui(GMP_SET_STATE, (void *)GUI_PLAY);
     uiSubRender = 0;
     wsSetBackgroundRGB(&guiApp.subWindow, 0, 0, 0);
     wsClearWindow(guiApp.subWindow);

@@ -561,11 +561,11 @@ int gui(int type, void *arg)
         mixer = mpctx_get_mixer(guiInfo.mpcontext);
 
     switch (type) {
-    case guiSetContext:
+    case GMP_SET_CONTEXT:
         guiInfo.mpcontext = arg;
         break;
 
-    case guiSetState:
+    case GMP_SET_STATE:
 
         switch ((int)arg) {
         case GUI_STOP:
@@ -579,7 +579,7 @@ int gui(int type, void *arg)
         uiState();
         break;
 
-    case guiNewFile:
+    case GMP_NEW_FILE:
 
 // if ( guiInfo.Playing == 1 && guiInfo.FilenameChanged )
         if (guiInfo.FilenameChanged) {
@@ -598,9 +598,9 @@ int gui(int type, void *arg)
 
         break;
 
-    case guiRunCommand:
+    case GMP_RUN_COMMAND:
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] guiRunCommand: %d\n", (int)arg);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] GMP_RUN_COMMAND: %d\n", (int)arg);
 
         switch ((int)arg) {
         case MP_CMD_VO_FULLSCREEN:
@@ -626,9 +626,9 @@ int gui(int type, void *arg)
 
         break;
 
-    case guiPreparation:
+    case GMP_PREPARATION:
 
-        gui(guiNewFile, NULL);
+        gui(GMP_NEW_FILE, 0);
 
         switch (guiInfo.StreamType) {
         case STREAMTYPE_PLAYLIST:
@@ -839,7 +839,7 @@ int gui(int type, void *arg)
 
         break;
 
-    case guiSetStream:
+    case GMP_SET_STREAM:
 
         stream = arg;
         guiInfo.StreamType = stream->type;
@@ -847,7 +847,7 @@ int gui(int type, void *arg)
         switch (guiInfo.StreamType) {
 #ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
-            gui(guiSetDVD, stream->priv);
+            gui(GMP_SET_DVD, stream->priv);
             break;
 #endif
 
@@ -865,7 +865,7 @@ int gui(int type, void *arg)
         break;
 
 #ifdef CONFIG_DVDREAD
-    case guiSetDVD:
+    case GMP_SET_DVD:
         dvd = arg;
         guiInfo.DVD.titles   = dvd->vmg_file->tt_srpt->nr_of_srpts;
         guiInfo.DVD.chapters = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
@@ -881,11 +881,11 @@ int gui(int type, void *arg)
         break;
 #endif
 
-    case guiSetAfilter:
+    case GMP_SET_AFILTER:
         guiInfo.afilter = arg;
         break;
 
-    case guiSetVideo:
+    case GMP_SET_VIDEO:
 
         // video
 
@@ -910,14 +910,14 @@ int gui(int type, void *arg)
 
         break;
 
-    case guiSetAudio:
+    case GMP_SET_AUDIO:
 
         guiInfo.AudioChannels = arg ? ((sh_audio_t *)arg)->channels : 0;
 
         if (arg && !guiInfo.sh_video)
             guiInfo.MovieWindow = False;
 
-        gui(guiSetMixer, NULL);
+        gui(GMP_SET_MIXER, 0);
 
         if (gtkEnableAudioEqualizer) {
             equalizer_t eq;
@@ -936,7 +936,7 @@ int gui(int type, void *arg)
         wsVisibleWindow(&guiApp.subWindow, (guiInfo.MovieWindow ? wsShowWindow : wsHideWindow));
         break;
 
-    case guiSetMixer:
+    case GMP_SET_MIXER:
         if (mixer) {
             float l, r;
             static float last_balance = -1;
@@ -958,11 +958,11 @@ int gui(int type, void *arg)
         }
         break;
 
-    case guiReDraw:
+    case GMP_REDRAW:
         uiEventHandling(evRedraw, 0);
         break;
 
-    case guiSetVideoWindow:
+    case GMP_SETUP_VIDEO_WINDOW:
 
         if (!guiApp.subWindow.isFullScreen) {
             wsResizeWindow(&guiApp.subWindow, vo_dwidth, vo_dheight);
@@ -978,13 +978,13 @@ int gui(int type, void *arg)
         WinID = guiApp.subWindow.WindowID;
         break;
 
-    case guiXEvent:
+    case GMP_X_EVENT:
         guiInfo.event_struct = arg;
         wsEvents(wsDisplay, arg);
         gtkEventHandling();
         break;
 
-    case guiEndFile:
+    case GMP_END_FILE:
 
         if (!uiGotoTheNext && guiInfo.Playing) {
             uiGotoTheNext = 1;
@@ -1019,7 +1019,7 @@ int gui(int type, void *arg)
             } else
                 wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
 
-            gui(guiSetState, (void *)GUI_STOP);
+            gui(GMP_SET_STATE, (void *)GUI_STOP);
             uiSubRender = 1;
             wsSetBackgroundRGB(&guiApp.subWindow, guiApp.sub.R, guiApp.sub.G, guiApp.sub.B);
             wsClearWindow(guiApp.subWindow);
