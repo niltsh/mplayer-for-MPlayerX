@@ -312,7 +312,7 @@ guiImage *fntRender(wItem *item, int px, char *txt)
     ibuf = (uint32_t *)Fonts[id]->Bitmap.Image;
 
     for (i = 0; i < item->Bitmap.ImageSize / 4; i++)
-        obuf[i] = GMP_TRANSPARENT;
+        obuf[i] = GUI_TRANSPARENT;
 
     if (tw <= iw) {
         switch (item->align) {

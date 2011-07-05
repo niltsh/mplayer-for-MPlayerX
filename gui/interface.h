@@ -35,20 +35,20 @@ extern int use_gui;             // this is defined in mplayer.c
 
 #define GMPlayer "gmplayer"
 
-#define GMP_X_EVENT            0
-#define GMP_SET_STATE          1
-#define GMP_RUN_COMMAND        2
-#define GMP_SET_AUDIO          6
-#define GMP_SETUP_VIDEO_WINDOW 8
-#define GMP_SET_STREAM         9
-#define GMP_REDRAW             10
-#define GMP_SET_MIXER          11
-#define GMP_NEW_FILE           12
-#define GMP_SET_VIDEO          13
-#define GMP_PREPARATION        16
-#define GMP_SET_AFILTER        17
-#define GMP_SET_CONTEXT        18
-#define GMP_END_FILE           19
+#define GUI_X_EVENT            0
+#define GUI_SET_STATE          1
+#define GUI_RUN_COMMAND        2
+#define GUI_SET_AUDIO          6
+#define GUI_SETUP_VIDEO_WINDOW 8
+#define GUI_SET_STREAM         9
+#define GUI_REDRAW             10
+#define GUI_SET_MIXER          11
+#define GUI_SET_FILE           12
+#define GUI_SET_VIDEO          13
+#define GUI_PREPARE            16
+#define GUI_SET_AFILTER        17
+#define GUI_SET_CONTEXT        18
+#define GUI_END_FILE           19
 
 #define GUI_STOP  0
 #define GUI_PLAY  1

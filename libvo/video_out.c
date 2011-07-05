@@ -372,7 +372,7 @@ int config_video_out(const vo_functions_t *vo, uint32_t width, uint32_t height,
 #ifdef CONFIG_GUI
     if (use_gui) {
       // GUI creates and manages window for us
-      gui(GMP_SETUP_VIDEO_WINDOW, 0);
+      gui(GUI_SETUP_VIDEO_WINDOW, 0);
     }
 #endif
   }

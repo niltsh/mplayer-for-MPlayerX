@@ -561,11 +561,11 @@ int gui(int what, void *arg)
         mixer = mpctx_get_mixer(guiInfo.mpcontext);
 
     switch (what) {
-    case GMP_SET_CONTEXT:
+    case GUI_SET_CONTEXT:
         guiInfo.mpcontext = arg;
         break;
 
-    case GMP_SET_STATE:
+    case GUI_SET_STATE:
 
         switch ((int)arg) {
         case GUI_STOP:
@@ -579,7 +579,7 @@ int gui(int what, void *arg)
         uiState();
         break;
 
-    case GMP_NEW_FILE:
+    case GUI_SET_FILE:
 
 // if ( guiInfo.Playing == 1 && guiInfo.FilenameChanged )
         if (guiInfo.FilenameChanged) {
@@ -598,9 +598,9 @@ int gui(int what, void *arg)
 
         break;
 
-    case GMP_RUN_COMMAND:
+    case GUI_RUN_COMMAND:
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] GMP_RUN_COMMAND: %d\n", (int)arg);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] GUI_RUN_COMMAND: %d\n", (int)arg);
 
         switch ((int)arg) {
         case MP_CMD_VO_FULLSCREEN:
@@ -626,9 +626,9 @@ int gui(int what, void *arg)
 
         break;
 
-    case GMP_PREPARATION:
+    case GUI_PREPARE:
 
-        gui(GMP_NEW_FILE, 0);
+        gui(GUI_SET_FILE, 0);
 
         switch (guiInfo.StreamType) {
         case STREAMTYPE_PLAYLIST:
@@ -839,7 +839,7 @@ int gui(int what, void *arg)
 
         break;
 
-    case GMP_SET_STREAM:
+    case GUI_SET_STREAM:
 
         stream = arg;
         guiInfo.StreamType = stream->type;
@@ -875,11 +875,11 @@ int gui(int what, void *arg)
 
         break;
 
-    case GMP_SET_AFILTER:
+    case GUI_SET_AFILTER:
         guiInfo.afilter = arg;
         break;
 
-    case GMP_SET_VIDEO:
+    case GUI_SET_VIDEO:
 
         // video
 
@@ -904,14 +904,14 @@ int gui(int what, void *arg)
 
         break;
 
-    case GMP_SET_AUDIO:
+    case GUI_SET_AUDIO:
 
         guiInfo.AudioChannels = arg ? ((sh_audio_t *)arg)->channels : 0;
 
         if (arg && !guiInfo.sh_video)
             guiInfo.MovieWindow = False;
 
-        gui(GMP_SET_MIXER, 0);
+        gui(GUI_SET_MIXER, 0);
 
         if (gtkEnableAudioEqualizer) {
             equalizer_t eq;
@@ -930,7 +930,7 @@ int gui(int what, void *arg)
         wsVisibleWindow(&guiApp.subWindow, (guiInfo.MovieWindow ? wsShowWindow : wsHideWindow));
         break;
 
-    case GMP_SET_MIXER:
+    case GUI_SET_MIXER:
         if (mixer) {
             float l, r;
             static float last_balance = -1;
@@ -952,11 +952,11 @@ int gui(int what, void *arg)
         }
         break;
 
-    case GMP_REDRAW:
+    case GUI_REDRAW:
         uiEventHandling(evRedraw, 0);
         break;
 
-    case GMP_SETUP_VIDEO_WINDOW:
+    case GUI_SETUP_VIDEO_WINDOW:
 
         if (!guiApp.subWindow.isFullScreen) {
             wsResizeWindow(&guiApp.subWindow, vo_dwidth, vo_dheight);
@@ -972,13 +972,13 @@ int gui(int what, void *arg)
         WinID = guiApp.subWindow.WindowID;
         break;
 
-    case GMP_X_EVENT:
+    case GUI_X_EVENT:
         guiInfo.event_struct = arg;
         wsEvents(wsDisplay, arg);
         gtkEventHandling();
         break;
 
-    case GMP_END_FILE:
+    case GUI_END_FILE:
 
         if (!uiGotoTheNext && guiInfo.Playing) {
             uiGotoTheNext = 1;
@@ -1013,7 +1013,7 @@ int gui(int what, void *arg)
             } else
                 wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
 
-            gui(GMP_SET_STATE, (void *)GUI_STOP);
+            gui(GUI_SET_STATE, (void *)GUI_STOP);
             uiSubRender = 1;
             wsSetBackgroundRGB(&guiApp.subWindow, guiApp.sub.R, guiApp.sub.G, guiApp.sub.B);
             wsClearWindow(guiApp.subWindow);

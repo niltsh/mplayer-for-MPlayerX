@@ -708,7 +708,7 @@ static LRESULT CALLBACK SkinBrowserWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, 
                     int len = SendMessage(listbox, LB_GETTEXTLEN, index, 0);
                     if (len)
                     {
-                        if (guiInfo.Playing) gui(GMP_SET_STATE, (void *) GUI_STOP);
+                        if (guiInfo.Playing) gui(GUI_SET_STATE, (void *) GUI_STOP);
                         free(skinName);
                         skinName = malloc(len + 1);
                         SendMessage(listbox, LB_GETTEXT, (WPARAM) index, (LPARAM) skinName);

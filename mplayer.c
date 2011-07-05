@@ -584,7 +584,7 @@ void uninit_player(unsigned int mask)
             uninit_audio(mpctx->sh_audio);
 #ifdef CONFIG_GUI
         if (use_gui)
-            gui(GMP_SET_AFILTER, NULL);
+            gui(GUI_SET_AFILTER, NULL);
 #endif
         mpctx->sh_audio      = NULL;
         mpctx->mixer.afilter = NULL;
@@ -1334,7 +1334,7 @@ static int build_afilter_chain(sh_audio_t *sh_audio, ao_data_t *ao_data)
     if (!sh_audio) {
 #ifdef CONFIG_GUI
         if (use_gui)
-            gui(GMP_SET_AFILTER, NULL);
+            gui(GUI_SET_AFILTER, NULL);
 #endif
         mpctx->mixer.afilter = NULL;
         return 0;
@@ -1359,7 +1359,7 @@ static int build_afilter_chain(sh_audio_t *sh_audio, ao_data_t *ao_data)
     mpctx->mixer.afilter = sh_audio->afilter;
 #ifdef CONFIG_GUI
     if (use_gui)
-        gui(GMP_SET_AFILTER, sh_audio->afilter);
+        gui(GUI_SET_AFILTER, sh_audio->afilter);
 #endif
     return result;
 }
@@ -2537,7 +2537,7 @@ static void pause_loop(void)
     }
 #ifdef CONFIG_GUI
     if (use_gui)
-        gui(GMP_SET_STATE, (void *)GUI_PAUSE);
+        gui(GUI_SET_STATE, (void *)GUI_PAUSE);
 #endif
     if (mpctx->video_out && mpctx->sh_video && vo_config_count)
         mpctx->video_out->control(VOCTRL_PAUSE, NULL);
@@ -2557,7 +2557,7 @@ static void pause_loop(void)
 #ifdef CONFIG_GUI
         if (use_gui) {
             guiEventHandling();
-            gui(GMP_REDRAW, 0);
+            gui(GUI_REDRAW, 0);
             if (guiInfo.Playing != GUI_PAUSE || (rel_seek_secs || abs_seek_pos))
                 break;
         }
@@ -2604,7 +2604,7 @@ static void pause_loop(void)
         if (guiInfo.Playing == GUI_STOP)
             mpctx->eof = 1;
         else
-            gui(GMP_SET_STATE, (void *)GUI_PLAY);
+            gui(GUI_SET_STATE, (void *)GUI_PLAY);
     }
 #endif
 }
@@ -3051,8 +3051,8 @@ int main(int argc, char *argv[])
 #ifdef CONFIG_GUI
     if (use_gui) {
         guiInit();
-        gui(GMP_SET_CONTEXT, mpctx);
-        gui(GMP_SET_STATE, (void *)(gui_no_filename ? GUI_STOP : GUI_PLAY));
+        gui(GUI_SET_CONTEXT, mpctx);
+        gui(GUI_SET_STATE, (void *)(gui_no_filename ? GUI_STOP : GUI_PLAY));
     }
 #endif
 
@@ -3090,18 +3090,18 @@ play_next_file:
 #ifdef CONFIG_GUI
     if (use_gui) {
         mpctx->file_format = DEMUXER_TYPE_UNKNOWN;
-        gui(GMP_NEW_FILE, 0);
+        gui(GUI_SET_FILE, 0);
         while (guiInfo.Playing != GUI_PLAY) {
             mp_cmd_t *cmd;
             usec_sleep(20000);
             guiEventHandling();
-            gui(GMP_REDRAW, 0);
+            gui(GUI_REDRAW, 0);
             if ((cmd = mp_input_get_cmd(0, 0, 0)) != NULL) {
-                gui(GMP_RUN_COMMAND, (void *)cmd->id);
+                gui(GUI_RUN_COMMAND, (void *)cmd->id);
                 mp_cmd_free(cmd);
             }
         }
-        gui(GMP_PREPARATION, 0);
+        gui(GUI_PREPARE, 0);
         if (guiInfo.StreamType == STREAMTYPE_STREAM) {
             play_tree_t *entry = play_tree_new();
             play_tree_add_file(entry, guiInfo.Filename);
@@ -3244,7 +3244,7 @@ play_next_file:
 
 #ifdef CONFIG_GUI
     if (use_gui)
-        gui(GMP_SET_STREAM, mpctx->stream);
+        gui(GUI_SET_STREAM, mpctx->stream);
 #endif
 
     if (mpctx->file_format == DEMUXER_TYPE_PLAYLIST) {
@@ -3677,9 +3677,9 @@ goto_enable_cache:
 
 #ifdef CONFIG_GUI
         if (use_gui) {
-            if (!gui(GMP_SET_VIDEO, mpctx->sh_video))
+            if (!gui(GUI_SET_VIDEO, mpctx->sh_video))
                 goto goto_next_file;
-            gui(GMP_SET_AUDIO, mpctx->sh_audio);
+            gui(GUI_SET_AUDIO, mpctx->sh_audio);
         }
 #endif
 
@@ -3995,8 +3995,8 @@ goto_enable_cache:
                 else if (mpctx->sh_audio)
                     guiInfo.TimeSec = playing_audio_pts(mpctx->sh_audio, mpctx->d_audio, mpctx->audio_out);
                 guiInfo.LengthInSec = demuxer_get_time_length(mpctx->demuxer);
-                gui(GMP_SET_MIXER, 0);
-                gui(GMP_REDRAW, 0);
+                gui(GUI_SET_MIXER, 0);
+                gui(GUI_REDRAW, 0);
                 if (guiInfo.Playing == GUI_STOP)
                     break;                  // STOP
                 if (guiInfo.Playing == GUI_PAUSE)
@@ -4103,7 +4103,7 @@ goto_next_file:  // don't jump here after ao/vo/getch initialization!
 #ifdef CONFIG_DVDREAD
         if (!guiInfo.DiskChanged)
 #endif
-        gui(GMP_END_FILE, 0);
+        gui(GUI_END_FILE, 0);
     }
 #endif
 

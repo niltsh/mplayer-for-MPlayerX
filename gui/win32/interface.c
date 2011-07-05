@@ -174,7 +174,7 @@ static void guiSetEvent(int event)
             GetVolumeInformation(dvd_device, dvdname, MAX_PATH, NULL, NULL, NULL, NULL, 0);
             capitalize(dvdname);
             mp_msg(MSGT_GPLAYER, MSGL_V, "Opening DVD %s -> %s\n", dvd_device, dvdname);
-            gui(GMP_PREPARATION, (void *) STREAMTYPE_DVD);
+            gui(GUI_PREPARE, (void *) STREAMTYPE_DVD);
             mygui->playlist->clear_playlist(mygui->playlist);
             mygui->playlist->add_track(mygui->playlist, filename, NULL, dvdname, 0);
             mygui->startplay(mygui);
@@ -218,7 +218,7 @@ static void guiSetEvent(int event)
         }
         case evStop:
             if(guiInfo.Playing)
-                gui(GMP_SET_STATE, (void *) GUI_STOP);
+                gui(GUI_SET_STATE, (void *) GUI_STOP);
             break;
         case evSetMoviePosition:
         {
@@ -288,7 +288,7 @@ static void guiSetEvent(int event)
                     guiInfo.Chapter = guiInfo.DVD.current_chapter;
                     guiInfo.Angle = guiInfo.DVD.current_angle;
                     guiInfo.DiskChanged = 1;
-                    gui(GMP_SET_STATE, (void *) GUI_PLAY);
+                    gui(GUI_SET_STATE, (void *) GUI_PLAY);
                     break;
                 }
 #endif
@@ -297,8 +297,8 @@ static void guiSetEvent(int event)
                     guiInfo.FilenameChanged = guiInfo.NewPlay = 1;
                     update_playlistwindow();
                     uiGotoTheNext = guiInfo.Playing? 0 : 1;
-                    gui(GMP_SET_STATE, (void *) GUI_STOP);
-                    gui(GMP_SET_STATE, (void *) GUI_PLAY);
+                    gui(GUI_SET_STATE, (void *) GUI_STOP);
+                    gui(GUI_SET_STATE, (void *) GUI_PLAY);
                     break;
                }
            }
@@ -324,7 +324,7 @@ void uiPlay( void )
        return;
    }
    guiInfo.NewPlay = 1;
-   gui(GMP_SET_STATE, (void *) GUI_PLAY);
+   gui(GUI_SET_STATE, (void *) GUI_PLAY);
 }
 
 void uiPause( void )
@@ -499,9 +499,9 @@ int gui(int what, void *arg)
 
     switch (what)
     {
-        case GMP_PREPARATION:
+        case GUI_PREPARE:
         {
-            gui(GMP_NEW_FILE, 0);
+            gui(GUI_SET_FILE, 0);
             guiInfo.DiskChanged = 0;
             guiInfo.FilenameChanged = 0;
             guiInfo.NewPlay = 0;
@@ -528,7 +528,7 @@ int gui(int what, void *arg)
                 strcpy(guiInfo.Filename, filename);
             break;
         }
-        case GMP_SET_AUDIO:
+        case GUI_SET_AUDIO:
         {
             guiInfo.MovieWindow = (arg && !guiInfo.sh_video);
             // NOTE: This type doesn't mean (and never meant) that we have
@@ -538,10 +538,10 @@ int gui(int what, void *arg)
                 ShowWindow(mygui->subwindow, SW_HIDE);
             break;
         }
-        case GMP_SET_CONTEXT:
+        case GUI_SET_CONTEXT:
             guiInfo.mpcontext = arg;
             break;
-        case GMP_SET_VIDEO:
+        case GUI_SET_VIDEO:
         {
             guiInfo.sh_video = arg;
             if (arg)
@@ -559,7 +559,7 @@ int gui(int what, void *arg)
             }
             break;
         }
-        case GMP_SETUP_VIDEO_WINDOW:
+        case GUI_SETUP_VIDEO_WINDOW:
         {
             guiInfo.MovieWidth = vo_dwidth;
             guiInfo.MovieHeight = vo_dheight;
@@ -569,7 +569,7 @@ int gui(int what, void *arg)
                update_subwindow();
             break;
         }
-        case GMP_SET_STREAM:
+        case GUI_SET_STREAM:
         {
             guiInfo.StreamType = stream->type;
             switch(stream->type)
@@ -593,13 +593,13 @@ int gui(int what, void *arg)
             }
             break;
         }
-        case GMP_REDRAW:
+        case GUI_REDRAW:
             mygui->updatedisplay(mygui, mygui->mainwindow);
             break;
-        case GMP_SET_AFILTER:
+        case GUI_SET_AFILTER:
             guiInfo.afilter = arg;
             break;
-        case GMP_SET_STATE:
+        case GUI_SET_STATE:
         {
             guiInfo.Playing = (int) arg;
             switch (guiInfo.Playing)
@@ -623,7 +623,7 @@ int gui(int what, void *arg)
             }
             break;
         }
-        case GMP_RUN_COMMAND:
+        case GUI_RUN_COMMAND:
         {
             mp_msg(MSGT_GPLAYER,MSGL_V, "cmd: %d\n", (int) arg);
             /* MPlayer asks us to quit */
@@ -654,7 +654,7 @@ int gui(int what, void *arg)
             }
             break;
         }
-        case GMP_NEW_FILE:
+        case GUI_SET_FILE:
         {
             audio_id = -1;
             video_id = -1;
@@ -680,7 +680,7 @@ int gui(int what, void *arg)
             if(gtkAutoSyncOn) autosync = gtkAutoSync;
             break;
         }
-        case GMP_SET_MIXER:
+        case GUI_SET_MIXER:
         {
             if(audio_out)
             {
@@ -696,7 +696,7 @@ int gui(int what, void *arg)
             }
             break;
         }
-        case GMP_END_FILE:
+        case GUI_END_FILE:
         {
           if(!uiGotoTheNext && guiInfo.Playing)
           {
@@ -740,7 +740,7 @@ int gui(int what, void *arg)
               style = WS_OVERLAPPEDWINDOW | WS_SIZEBOX;
               SetWindowLong(mygui->subwindow, GWL_STYLE, style);
           }
-          gui(GMP_SET_STATE, (void *) GUI_STOP);
+          gui(GUI_SET_STATE, (void *) GUI_STOP);
           break;
         }
         default:
