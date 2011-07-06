@@ -489,15 +489,21 @@ static void float2int(float* in, void* out, int len, int bps)
     break;
   case(3):
     for(i=0;i<len;i++){
-      f = ldexp(in[i], 23);
+      f = in[i] * 8388608;
       store24bit(out, i,   av_clip(lrintf(f), -1*(1<<23), (1<<23)-1) << 8);
     }
     break;
   case(4):
     for(i=0;i<len;i++){
-      f = ldexp(in[i], 23);
-      //The mantissa is only 23 bit, that's all the precision there is.
-      ((int32_t*)out)[i] = av_clip(lrintf(f), -1*(1<<23), (1<<23)-1) << 8;
+      f = in[i];
+      if (f <= -1.0)
+        ((int32_t*)out)[i] = INT_MIN;
+      else
+      if (f >=  1.0)//no need to use corrected constant, rounding won't cause overflow
+        ((int32_t*)out)[i] = INT_MAX;
+      else
+        ((int32_t*)out)[i] = lrintf(f*2147483648.0);
+
     }
     break;
   }
