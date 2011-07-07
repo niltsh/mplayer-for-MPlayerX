@@ -26,7 +26,7 @@ plItem *plList;
 plItem *plCurrent;
 plItem *plLastPlayed;
 
-urlItem *URLList;
+urlItem *urlList;
 
 void *listSet(int cmd, void *vparam)
 {
@@ -167,8 +167,8 @@ void *listSet(int cmd, void *vparam)
 
     // handle url
     case gtkAddURLItem:
-        if (URLList) {
-            urlItem *next_url = URLList;
+        if (urlList) {
+            urlItem *next_url = urlList;
             is_added = 0;
 
             while (next_url->next) {
@@ -184,7 +184,7 @@ void *listSet(int cmd, void *vparam)
                 next_url->next = url_item;
         } else {
             url_item->next = NULL;
-            URLList = url_item;
+            urlList = url_item;
         }
         return NULL;
     }

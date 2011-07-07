@@ -421,11 +421,11 @@ int cfg_write(void)
     f   = fopen(cfg, "wt+");
 
     if (f) {
-        while (URLList) {
-            if (URLList->url)
-                fprintf(f, "%s\n", URLList->url);
+        while (urlList) {
+            if (urlList->url)
+                fprintf(f, "%s\n", urlList->url);
 
-            URLList = URLList->next;
+            urlList = urlList->next;
         }
 
         fclose(f);

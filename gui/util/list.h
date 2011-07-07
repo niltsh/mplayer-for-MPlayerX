@@ -44,7 +44,7 @@ extern plItem *plList;
 extern plItem *plCurrent;
 extern plItem *plLastPlayed;
 
-extern urlItem *URLList;
+extern urlItem *urlList;
 
 void gaddlist(char ***list, const char *entry);
 void greplace(char ***list, const char *search, const char *replace);

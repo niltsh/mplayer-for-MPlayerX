@@ -47,9 +47,9 @@ void ShowURLDialogBox( void )
  if ( URL ) gtkActive( URL );
    else URL=create_URL();
 
- if ( URLList )
+ if ( urlList )
   {
-   urlItem * item = URLList;
+   urlItem * item = urlList;
    g_list_free( URLComboEntrys );
    URLComboEntrys=NULL;
    while( item )
