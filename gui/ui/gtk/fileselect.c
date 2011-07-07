@@ -172,7 +172,7 @@ static char * get_current_dir_name_utf8( void )
 static char * Filter( const char * name )
 {
  static char tmp[32];
- int  i,c;
+ unsigned int  i,c;
  for ( i=0,c=0;i < strlen( name );i++ )
   {
    if ( ( name[i] >='a' )&&( name[i] <= 'z' ) ) { tmp[c++]='['; tmp[c++]=name[i]; tmp[c++]=name[i] - 32; tmp[c++]=']'; }
