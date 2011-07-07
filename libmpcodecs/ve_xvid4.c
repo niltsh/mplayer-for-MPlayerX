@@ -56,6 +56,7 @@
 #include <assert.h>
 
 #include "m_option.h"
+#include "libavutil/rational.h"
 #include "libavutil/avutil.h"
 
 #define FINE (!0)
