@@ -841,6 +841,106 @@ int gui(int what, void *arg)
     return True;
 }
 
+// This function adds/inserts one file into the gui playlist.
+static int import_file_into_gui(char *temp, int insert)
+{
+    char *filename, *pathname;
+    plItem *item;
+
+    filename = strdup(mp_basename(temp));
+    pathname = strdup(temp);
+
+    if (strlen(pathname) - strlen(filename) > 0)
+        pathname[strlen(pathname) - strlen(filename) - 1] = 0;                                            // we have some path, so remove / at end
+    else
+        pathname[strlen(pathname) - strlen(filename)] = 0;
+
+    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] playtree, add: %s/%s\n", pathname, filename);
+
+    item = calloc(1, sizeof(plItem));
+
+    if (!item)
+        return 0;
+
+    item->name = filename;
+    item->path = pathname;
+
+    if (insert)
+        listSet(gtkInsertPlItem, item);           // inserts the item after current, and makes current=item
+    else
+        listSet(gtkAddPlItem, item);
+
+    return 1;
+}
+
+// This function imports the initial playtree (based on cmd-line files)
+// into the gui playlist by either:
+// - overwriting gui pl (enqueue=0)
+// - appending it to gui pl (enqueue=1)
+int guiInitializePlaylist(play_tree_t *my_playtree, m_config_t *config, int enqueue)
+{
+    play_tree_iter_t *my_pt_iter = NULL;
+    int result = 0;
+
+    if (!enqueue)
+        listSet(gtkDelPl, NULL);             // delete playlist before "appending"
+
+    if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
+        while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
+            // add it to end of list
+            if (import_file_into_gui(filename, 0))
+                result = 1;
+    }
+
+    uiCurr();   // update filename
+    uiGotoTheNext = 1;
+
+    if (!enqueue)
+        filename = guiInfo.Filename;             // Backward compatibility; if file is specified on commandline,
+                                                 // gmplayer does directly start in Play-Mode.
+    else
+        filename = NULL;
+
+    return result;
+}
+
+// This function imports and inserts an playtree, that is created "on the fly",
+// for example by parsing some MOV-Reference-File; or by loading an playlist
+// with "File Open".
+// The file which contained the playlist is thereby replaced with it's contents.
+int guiAddPlaylist(play_tree_t *my_playtree, m_config_t *config)
+{
+    play_tree_iter_t *my_pt_iter = NULL;
+    int result = 0;
+    plItem *save;
+
+    save = (plItem *)listSet(gtkGetCurrPlItem, NULL);    // save current item
+
+    if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
+        while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
+            // insert it into the list and set plCurrent=new item
+            if (import_file_into_gui(filename, 1))
+                result = 1;
+
+        pt_iter_destroy(&my_pt_iter);
+    }
+
+    if (save)
+        listSet(gtkSetCurrPlItem, save);
+    else
+        listSet(gtkSetCurrPlItem, plList);    // go to head, if plList was empty before
+
+    if (save && result)
+        listSet(gtkDelCurrPlItem, NULL);
+
+    uiCurr();   // update filename
+    filename = NULL;
+
+    return result;
+}
+
+/* GUI -> MPlayer */
+
 void mplayer(int cmd, float fparam, void *vparam)
 {
     equalizer_t *eq = (equalizer_t *)vparam;
@@ -989,104 +1089,6 @@ void mplayer(int cmd, float fparam, void *vparam)
         break;
     }
     }
-}
-
-// This function adds/inserts one file into the gui playlist.
-static int import_file_into_gui(char *temp, int insert)
-{
-    char *filename, *pathname;
-    plItem *item;
-
-    filename = strdup(mp_basename(temp));
-    pathname = strdup(temp);
-
-    if (strlen(pathname) - strlen(filename) > 0)
-        pathname[strlen(pathname) - strlen(filename) - 1] = 0;                                            // we have some path, so remove / at end
-    else
-        pathname[strlen(pathname) - strlen(filename)] = 0;
-
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] playtree, add: %s/%s\n", pathname, filename);
-
-    item = calloc(1, sizeof(plItem));
-
-    if (!item)
-        return 0;
-
-    item->name = filename;
-    item->path = pathname;
-
-    if (insert)
-        listSet(gtkInsertPlItem, item);           // inserts the item after current, and makes current=item
-    else
-        listSet(gtkAddPlItem, item);
-
-    return 1;
-}
-
-// This function imports the initial playtree (based on cmd-line files)
-// into the gui playlist by either:
-// - overwriting gui pl (enqueue=0)
-// - appending it to gui pl (enqueue=1)
-int guiInitializePlaylist(play_tree_t *my_playtree, m_config_t *config, int enqueue)
-{
-    play_tree_iter_t *my_pt_iter = NULL;
-    int result = 0;
-
-    if (!enqueue)
-        listSet(gtkDelPl, NULL);             // delete playlist before "appending"
-
-    if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
-        while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
-            // add it to end of list
-            if (import_file_into_gui(filename, 0))
-                result = 1;
-    }
-
-    uiCurr();   // update filename
-    uiGotoTheNext = 1;
-
-    if (!enqueue)
-        filename = guiInfo.Filename;             // Backward compatibility; if file is specified on commandline,
-                                                 // gmplayer does directly start in Play-Mode.
-    else
-        filename = NULL;
-
-    return result;
-}
-
-// This function imports and inserts an playtree, that is created "on the fly",
-// for example by parsing some MOV-Reference-File; or by loading an playlist
-// with "File Open".
-// The file which contained the playlist is thereby replaced with it's contents.
-int guiAddPlaylist(play_tree_t *my_playtree, m_config_t *config)
-{
-    play_tree_iter_t *my_pt_iter = NULL;
-    int result = 0;
-    plItem *save;
-
-    save = (plItem *)listSet(gtkGetCurrPlItem, NULL);    // save current item
-
-    if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
-        while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
-            // insert it into the list and set plCurrent=new item
-            if (import_file_into_gui(filename, 1))
-                result = 1;
-
-        pt_iter_destroy(&my_pt_iter);
-    }
-
-    if (save)
-        listSet(gtkSetCurrPlItem, save);
-    else
-        listSet(gtkSetCurrPlItem, plList);    // go to head, if plList was empty before
-
-    if (save && result)
-        listSet(gtkDelCurrPlItem, NULL);
-
-    uiCurr();   // update filename
-    filename = NULL;
-
-    return result;
 }
 
 void guiLoadFont(void)

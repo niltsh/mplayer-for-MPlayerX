@@ -194,6 +194,8 @@ void guiInit(void);
 int guiInitializePlaylist(play_tree_t *my_playtree, m_config_t *config, int enqueue);
 int guiAddPlaylist(play_tree_t *my_playtree, m_config_t *config);
 
+/* GUI -> MPlayer */
+
 void gmp_msg(int mod, int lev, const char *format, ...);
 void mplayer(int cmd, float fparam, void *vparam);
 void guiExit(enum exit_reason how);
