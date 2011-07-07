@@ -176,15 +176,10 @@ typedef struct {
 
 extern guiInterface_t guiInfo;
 
-extern int guiWinID;
-
-extern char *skinName;
 extern char *skinDirInHome;
 extern char *skinMPlayerDir;
 
 extern char *fsHistory[fsPersistant_MaxPos];
-
-extern float gtkEquChannels[6][10];
 
 /* MPlayer -> GUI */
 

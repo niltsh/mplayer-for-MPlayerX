@@ -80,6 +80,7 @@ char *gtkAOSDLDriver;
 #endif
 
 int gtkEnableAudioEqualizer;
+float gtkEquChannels[6][10];
 
 int gtkSubDumpMPSub;
 int gtkSubDumpSrt;
@@ -97,6 +98,10 @@ int gui_main_pos_x = -3;
 int gui_main_pos_y = -3;
 int gui_sub_pos_x  = -3;
 int gui_sub_pos_y  = -3;
+
+int guiWinID = -1;
+
+char *skinName;
 
 static const m_option_t gui_opts[] = {
     { "cache",                       &gtkCacheOn,              CONF_TYPE_FLAG,        0,           0,     1,       NULL },

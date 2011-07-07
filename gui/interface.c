@@ -60,15 +60,10 @@ guiInterface_t guiInfo = {
     .Balance     = 50.0f
 };
 
-int guiWinID = -1;
-
-char *skinName;
 char *skinDirInHome;
 char *skinMPlayerDir;
 
 char *fsHistory[fsPersistant_MaxPos] = { NULL, NULL, NULL, NULL, NULL };
-
-float gtkEquChannels[6][10];
 
 static int initialized;
 
