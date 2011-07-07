@@ -258,7 +258,7 @@ static void eqSelectChannelsListRow( GtkCList * clist,gint row,gint column,GdkEv
  eqSetBands( Channel );
  if ( Channel == -1 )
   {
-   int i,j; equalizer_t eq;
+   unsigned int i,j; equalizer_t eq;
    for ( i=1;i<FF_ARRAY_ELEMS(gtkEquChannels);i++ )
     for ( j=0;j<FF_ARRAY_ELEMS(*gtkEquChannels);j++ )
      { eq.band=j; eq.channel=i; eq.gain=gtkEquChannels[0][j]; mplayer( gtkSetEqualizer,0,&eq ); }
