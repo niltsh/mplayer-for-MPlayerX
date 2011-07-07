@@ -195,7 +195,7 @@ wsXDNDProcessClientMessage(wsTWindow* wnd, XClientMessageEvent *event)
 	}
 	/* now chek what we've got */
 	{
-	  int i;
+	  unsigned long i;
 	  for(i=0; i<ret_items; i++){
 	    if(ret_buff[i] == ok){
 	      atom_support = ok;
