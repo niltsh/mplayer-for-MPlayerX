@@ -29,6 +29,7 @@
 #include "gui/app.h"
 #include "gui/skin/font.h"
 #include "gui/skin/skin.h"
+#include "gui/util/string.h"
 #include "gui/wm/ws.h"
 
 #include "help_mp.h"

@@ -44,6 +44,7 @@
 #include "gui/interface.h"
 #include "gui/ui/gmplayer.h"
 #include "gui/ui/widgets.h"
+#include "gui/util/string.h"
 #include "preferences.h"
 #include "fileselect.h"
 #include "tools.h"

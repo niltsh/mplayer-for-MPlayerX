@@ -25,6 +25,7 @@
 #include "gui/interface.h"
 #include "gui/skin/font.h"
 #include "gui/skin/skin.h"
+#include "gui/util/string.h"
 #include "gui/wm/wsxdnd.h"
 #include "widgets.h"
 

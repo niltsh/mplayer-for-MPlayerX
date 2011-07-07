@@ -38,6 +38,7 @@
 #include "libmpdemux/stheader.h"
 #include "libmpcodecs/dec_video.h"
 #include "gui/ui/widgets.h"
+#include "gui/util/string.h"
 
 #include "equalizer.h"
 #include "tools.h"

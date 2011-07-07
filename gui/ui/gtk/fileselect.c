@@ -32,6 +32,7 @@
 
 #include "gui/app.h"
 #include "gui/interface.h"
+#include "gui/util/string.h"
 #include "help_mp.h"
 #include "mpcommon.h"
 #include "stream/stream.h"

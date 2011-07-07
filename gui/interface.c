@@ -24,6 +24,7 @@
 #include "skin/skin.h"
 #include "ui/gmplayer.h"
 #include "ui/widgets.h"
+#include "util/string.h"
 #include "wm/ws.h"
 #include "wm/wsxdnd.h"
 
@@ -74,42 +75,6 @@ char *fsHistory[fsPersistant_MaxPos] = { NULL, NULL, NULL, NULL, NULL };
 float gtkEquChannels[6][10];
 
 static int initialized;
-
-int gstrcmp(const char *a, const char *b)
-{
-    if (!a && !b)
-        return 0;
-    if (!a || !b)
-        return -1;
-
-    return strcmp(a, b);
-}
-
-static int gstrncmp(const char *a, const char *b, int size)
-{
-    if (!a && !b)
-        return 0;
-    if (!a || !b)
-        return -1;
-
-    return strncmp(a, b, size);
-}
-
-char *gstrdup(const char *str)
-{
-    if (!str)
-        return NULL;
-
-    return strdup(str);
-}
-
-char *gstrchr(char *str, int c)
-{
-    if (!str)
-        return NULL;
-
-    return strchr(str, c);
-}
 
 void gfree(void **p)
 {

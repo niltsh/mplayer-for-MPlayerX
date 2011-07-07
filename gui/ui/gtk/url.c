@@ -32,6 +32,7 @@
 #include "gui/app.h"
 #include "gui/ui/gmplayer.h"
 #include "gui/ui/widgets.h"
+#include "gui/util/string.h"
 #include "help_mp.h"
 
 GtkWidget * URL = NULL;

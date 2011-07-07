@@ -22,6 +22,7 @@
 
 #include "cfg.h"
 #include "interface.h"
+#include "util/string.h"
 
 #include "config.h"
 #include "help_mp.h"
