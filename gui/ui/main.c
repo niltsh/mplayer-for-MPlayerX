@@ -30,6 +30,7 @@
 #include "gui/interface.h"
 #include "gui/skin/font.h"
 #include "gui/skin/skin.h"
+#include "gui/util/mem.h"
 #include "gui/util/string.h"
 #include "gui/wm/ws.h"
 
@@ -111,8 +112,8 @@ void uiEventHandling( int msg,float param )
         break;
 
    case evPlayNetwork:
-        gfree( (void **)&guiInfo.Subtitlename );
-	gfree( (void **)&guiInfo.AudioFile );
+        nfree( guiInfo.Subtitlename );
+	nfree( guiInfo.AudioFile );
 	guiInfo.StreamType=STREAMTYPE_STREAM;
         goto play;
    case evSetURL:
@@ -243,7 +244,7 @@ NoPause:
         break;
    case evLoadSubtitle:  gtkShow( evLoadSubtitle,NULL );  break;
    case evDropSubtitle:
-	gfree( (void **)&guiInfo.Subtitlename );
+	nfree( guiInfo.Subtitlename );
 	guiLoadSubtitle( NULL );
 	break;
    case evLoadAudioFile: gtkShow( evLoadAudioFile,NULL ); break;
@@ -594,7 +595,7 @@ void uiDandDHandler(int num,char** files)
 	  if((len=strlen(++ext)) && (type=strstr(supported,ext)) &&\
 	     (type-supported)%4 == 0 && *(type+len) == '/'){
 	    /* handle subtitle file */
-	    gfree((void**)&subtitles);
+	    nfree(subtitles);
 	    subtitles = str;
 	    continue;
 	  }
@@ -632,7 +633,7 @@ void uiDandDHandler(int num,char** files)
     uiEventHandling( evPlay,0 );
   }
   if (subtitles) {
-    gfree((void**)&guiInfo.Subtitlename);
+    nfree(guiInfo.Subtitlename);
     guiInfo.Subtitlename = subtitles;
     guiLoadSubtitle(guiInfo.Subtitlename);
   }

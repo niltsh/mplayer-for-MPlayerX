@@ -22,8 +22,8 @@
 #include <string.h>
 
 #include "font.h"
-#include "gui/interface.h"
 #include "gui/util/cut.h"
+#include "gui/util/mem.h"
 #include "gui/util/string.h"
 #include "skin.h"
 
@@ -73,7 +73,7 @@ void fntFreeFont(void)
     for (i = 0; i < MAX_FONTS; i++) {
         if (Fonts[i]) {
             bpFree(&Fonts[i]->Bitmap);
-            gfree((void **)&Fonts[i]);
+            nfree(Fonts[i]);
         }
     }
 }
@@ -97,7 +97,7 @@ int fntRead(char *path, char *fname)
     f = fopen(buf, "rt");
 
     if (!f) {
-        gfree((void **)&Fonts[id]);
+        nfree(Fonts[id]);
         return -3;
     }
 
@@ -158,7 +158,7 @@ int fntRead(char *path, char *fname)
 
             if (skinBPRead(buf, &Fonts[id]->Bitmap) != 0) {
                 bpFree(&Fonts[id]->Bitmap);
-                gfree((void **)&Fonts[id]);
+                nfree(Fonts[id]);
                 fclose(f);
                 return -4;
             }

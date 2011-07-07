@@ -33,6 +33,7 @@
 
 #include "gui/interface.h"
 #include "gui/ui/widgets.h"
+#include "gui/util/mem.h"
 #include "playlist.h"
 #include "tools.h"
 
@@ -156,7 +157,7 @@ void HidePlayList( void )
 {
  if ( !PlayList ) return;
  NrOfSelected=NrOfEntrys=0;
- gfree( (void **)&CLListSelected ); gfree( (void **)&CLFileSelected );
+ nfree( CLListSelected ); nfree( CLFileSelected );
  free( old_path );
  old_path=strdup( current_path );
  gtk_widget_hide( PlayList );

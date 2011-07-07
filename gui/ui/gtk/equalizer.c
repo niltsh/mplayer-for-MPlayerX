@@ -39,6 +39,7 @@
 #include "libmpdemux/stheader.h"
 #include "libmpcodecs/dec_video.h"
 #include "gui/ui/widgets.h"
+#include "gui/util/mem.h"
 #include "gui/util/string.h"
 
 #include "equalizer.h"
@@ -562,12 +563,12 @@ static void ecButtonReleased( GtkButton * button,gpointer user_data )
 {
  if ( (int)user_data )
  { // if you pressed Ok
-  gfree( (void **)&gtkEquChannel1 ); gtkEquChannel1=gstrdup( gtk_entry_get_text( GTK_ENTRY( CEChannel1 ) ) );
-  gfree( (void **)&gtkEquChannel2 ); gtkEquChannel2=gstrdup( gtk_entry_get_text( GTK_ENTRY( CEChannel2 ) ) );
-  gfree( (void **)&gtkEquChannel3 ); gtkEquChannel3=gstrdup( gtk_entry_get_text( GTK_ENTRY( CEChannel3 ) ) );
-  gfree( (void **)&gtkEquChannel4 ); gtkEquChannel4=gstrdup( gtk_entry_get_text( GTK_ENTRY( CEChannel4 ) ) );
-  gfree( (void **)&gtkEquChannel5 ); gtkEquChannel5=gstrdup( gtk_entry_get_text( GTK_ENTRY( CEChannel5 ) ) );
-  gfree( (void **)&gtkEquChannel6 ); gtkEquChannel6=gstrdup( gtk_entry_get_text( GTK_ENTRY( CEChannel6 ) ) );
+  nfree( gtkEquChannel1 ); gtkEquChannel1=gstrdup( gtk_entry_get_text( GTK_ENTRY( CEChannel1 ) ) );
+  nfree( gtkEquChannel2 ); gtkEquChannel2=gstrdup( gtk_entry_get_text( GTK_ENTRY( CEChannel2 ) ) );
+  nfree( gtkEquChannel3 ); gtkEquChannel3=gstrdup( gtk_entry_get_text( GTK_ENTRY( CEChannel3 ) ) );
+  nfree( gtkEquChannel4 ); gtkEquChannel4=gstrdup( gtk_entry_get_text( GTK_ENTRY( CEChannel4 ) ) );
+  nfree( gtkEquChannel5 ); gtkEquChannel5=gstrdup( gtk_entry_get_text( GTK_ENTRY( CEChannel5 ) ) );
+  nfree( gtkEquChannel6 ); gtkEquChannel6=gstrdup( gtk_entry_get_text( GTK_ENTRY( CEChannel6 ) ) );
   eqSetChannelNames();
  }
  HideEquConfig();

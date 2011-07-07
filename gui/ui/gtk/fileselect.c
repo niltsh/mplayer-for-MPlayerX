@@ -32,6 +32,7 @@
 
 #include "gui/app.h"
 #include "gui/interface.h"
+#include "gui/util/mem.h"
 #include "gui/util/string.h"
 #include "help_mp.h"
 #include "mpcommon.h"
@@ -371,7 +372,7 @@ static void fs_PersistantHistory( char * subject )
     char * tmp = fsHistory[i]; fsHistory[i]=fsHistory[0]; fsHistory[0]=tmp;
     return;
    }
- gfree( (void **)&fsHistory[fsPersistant_MaxPos - 1] );
+ nfree( fsHistory[fsPersistant_MaxPos - 1] );
  for ( i=fsPersistant_MaxPos - 1;i;i-- ) fsHistory[i]=fsHistory[i - 1];
  fsHistory[0]=gstrdup( subject );
 }
@@ -480,8 +481,8 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
           guiSetDF( guiInfo.Filename,fsSelectedDirectory,fsSelectedFile );
           guiInfo.StreamType=STREAMTYPE_FILE;
           guiInfo.FilenameChanged=1; sub_fps=0;
-	  gfree( (void **)&guiInfo.AudioFile );
-	  gfree( (void **)&guiInfo.Subtitlename );
+	  nfree( guiInfo.AudioFile );
+	  nfree( guiInfo.Subtitlename );
           fs_PersistantHistory( get_current_dir_name_utf8() );      //totem, write into history
           break;
    case fsSubtitleSelector:

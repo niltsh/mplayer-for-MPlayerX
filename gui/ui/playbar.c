@@ -29,6 +29,7 @@
 #include "gui/interface.h"
 #include "gui/skin/font.h"
 #include "gui/skin/skin.h"
+#include "gui/util/mem.h"
 #include "gui/wm/ws.h"
 
 #include "help_mp.h"
@@ -243,7 +244,7 @@ void uiPlaybarInit( void )
 {
  if ( !guiApp.playbarIsPresent ) return;
 
- gfree( (void**)&playbarDrawBuffer );
+ nfree( playbarDrawBuffer );
 
  if ( ( playbarDrawBuffer = malloc( guiApp.playbar.Bitmap.ImageSize ) ) == NULL )
   {

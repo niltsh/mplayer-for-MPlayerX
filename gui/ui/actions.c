@@ -25,6 +25,7 @@
 #include "gui/interface.h"
 #include "gui/skin/font.h"
 #include "gui/skin/skin.h"
+#include "gui/util/mem.h"
 #include "gui/util/string.h"
 #include "gui/wm/wsxdnd.h"
 #include "widgets.h"
@@ -261,8 +262,8 @@ void uiSetFileName(char *dir, char *name, int type)
         guiSetDF(guiInfo.Filename, dir, name)
 
     guiInfo.StreamType = type;
-    gfree((void **)&guiInfo.AudioFile);
-    gfree((void **)&guiInfo.Subtitlename);
+    nfree(guiInfo.AudioFile);
+    nfree(guiInfo.Subtitlename);
 }
 
 void uiCurr(void)

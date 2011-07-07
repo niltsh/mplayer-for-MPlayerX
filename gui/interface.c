@@ -24,6 +24,7 @@
 #include "skin/skin.h"
 #include "ui/gmplayer.h"
 #include "ui/widgets.h"
+#include "util/mem.h"
 #include "util/string.h"
 #include "wm/ws.h"
 #include "wm/wsxdnd.h"
@@ -75,12 +76,6 @@ char *fsHistory[fsPersistant_MaxPos] = { NULL, NULL, NULL, NULL, NULL };
 float gtkEquChannels[6][10];
 
 static int initialized;
-
-void gfree(void **p)
-{
-    free(*p);
-    *p = NULL;
-}
 
 /**
  * \brief This actually creates a new list containing only one element...
@@ -419,7 +414,7 @@ void guiLoadFont(void)
         vo_font   = read_font_desc(font_name, font_factor, 0);
 
         if (!vo_font) {
-            gfree((void **)&font_name);
+            nfree(font_name);
             font_name = gstrdup(MPLAYER_DATADIR "/font/font.desc");
             vo_font   = read_font_desc(font_name, font_factor, 0);
         }
@@ -793,7 +788,7 @@ int gui(int what, void *arg)
         if (guiInfo.AudioFile)
             audio_stream = gstrdup(guiInfo.AudioFile);
         else if (guiInfo.FilenameChanged)
-            gfree((void **)&audio_stream);
+            nfree(audio_stream);
 
 // audio_stream = NULL;
 
@@ -961,8 +956,8 @@ int gui(int what, void *arg)
             guiSetDF(guiInfo.Filename, next->path, next->name);
             guiInfo.StreamType      = STREAMTYPE_FILE;
             guiInfo.FilenameChanged = guiInfo.NewPlay = 1;
-            gfree((void **)&guiInfo.AudioFile);
-            gfree((void **)&guiInfo.Subtitlename);
+            nfree(guiInfo.AudioFile);
+            nfree(guiInfo.Subtitlename);
         } else {
             if (guiInfo.FilenameChanged || guiInfo.NewPlay)
                 break;
@@ -1221,7 +1216,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
         return NULL;
 
     case gtkSetFontEncoding:
-        gfree((void **)&subtitle_font_encoding);
+        nfree(subtitle_font_encoding);
         subtitle_font_encoding = gstrdup((char *)vparam);
         guiLoadFont();
         return NULL;
@@ -1234,7 +1229,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
 
 #ifdef CONFIG_ICONV
     case gtkSetSubEncoding:
-        gfree((void **)&sub_cp);
+        nfree(sub_cp);
         sub_cp = gstrdup((char *)vparam);
         break;
 #endif
@@ -1244,9 +1239,9 @@ void *gtkSet(int cmd, float fparam, void *vparam)
     case gtkClearStruct:
 
         if ((unsigned int)vparam & guiFilenames) {
-            gfree((void **)&guiInfo.Filename);
-            gfree((void **)&guiInfo.Subtitlename);
-            gfree((void **)&guiInfo.AudioFile);
+            nfree(guiInfo.Filename);
+            nfree(guiInfo.Subtitlename);
+            nfree(guiInfo.AudioFile);
             gtkSet(gtkDelPl, 0, NULL);
         }
 

@@ -44,6 +44,7 @@
 #include "gui/interface.h"
 #include "gui/ui/gmplayer.h"
 #include "gui/ui/widgets.h"
+#include "gui/util/mem.h"
 #include "gui/util/string.h"
 #include "preferences.h"
 #include "fileselect.h"
@@ -1563,33 +1564,33 @@ static void audioButton(GtkButton *button, gpointer user_data) {
     case 1:
 #ifdef CONFIG_OSS_AUDIO
       if (strncmp(ao_driver[0], "oss", 3) == 0) {
-        gfree((void **) &gtkAOOSSDevice);
+        nfree(gtkAOOSSDevice);
         gtkAOOSSDevice = gstrdup(getGtkEntryText(CEAudioDevice));
-        gfree((void **) &gtkAOOSSMixer);
+        nfree(gtkAOOSSMixer);
         gtkAOOSSMixer = gstrdup(getGtkEntryText(CEAudioMixer));
-        gfree((void **) &gtkAOOSSMixerChannel);
+        nfree(gtkAOOSSMixerChannel);
         gtkAOOSSMixerChannel = gstrdup(getGtkEntryText(CEAudioMixerChannel));
       }
 #endif
 #ifdef CONFIG_ALSA
       if (strncmp(ao_driver[0], "alsa", 4) == 0) {
-        gfree((void **) &gtkAOALSADevice);
+        nfree(gtkAOALSADevice);
         gtkAOALSADevice = gstrdup(getGtkEntryText(CEAudioDevice));
-        gfree((void **) &gtkAOALSAMixer);
+        nfree(gtkAOALSAMixer);
         gtkAOALSAMixer = gstrdup(getGtkEntryText(CEAudioMixer));
-        gfree((void **) &gtkAOALSAMixerChannel);
+        nfree(gtkAOALSAMixerChannel);
         gtkAOALSAMixerChannel = gstrdup(getGtkEntryText(CEAudioMixerChannel));
       }
 #endif
 #ifdef CONFIG_SDL
       if (strncmp(ao_driver[0], "sdl", 3) == 0) {
-        gfree((void **) &gtkAOSDLDriver);
+        nfree(gtkAOSDLDriver);
         gtkAOSDLDriver = gstrdup(getGtkEntryText(CEAudioDevice));
       }
 #endif
 #ifdef CONFIG_ESD
       if (strncmp(ao_driver[0], "esd", 3) == 0) {
-        gfree((void **) &gtkAOESDDevice);
+        nfree(gtkAOESDDevice);
         gtkAOESDDevice = gstrdup(getGtkEntryText(CEAudioDevice));
       }
 #endif
@@ -1759,7 +1760,7 @@ static void dxr3Button( GtkButton * button,gpointer user_data )
  switch ( (int)user_data )
  {
   case 0: // Ok
-       gfree( (void **)&gtkDXR3Device ); gtkDXR3Device=strdup( gtk_entry_get_text( GTK_ENTRY( CEDXR3Device ) ) );
+       nfree( gtkDXR3Device ); gtkDXR3Device=strdup( gtk_entry_get_text( GTK_ENTRY( CEDXR3Device ) ) );
        gtkVfLAVC=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( RBVLavc ) );
   case 1: // Cancel
        HideDXR3Config();
