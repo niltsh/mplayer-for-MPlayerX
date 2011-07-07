@@ -29,6 +29,7 @@
 #include "config.h"
 #include "gui/app.h"
 #include "gui/cfg.h"
+#include "gui/interface.h"
 #include "help_mp.h"
 #include "libaf/equalizer.h"
 #include "libavutil/common.h"

@@ -30,7 +30,6 @@
 #include "osdep/shmem.h"
 #include "actions.h"
 #include "mplayer.h"
-#include "gui/interface.h"
 
 #define GTK_MB_SIMPLE 0
 #define GTK_MB_MODAL 1

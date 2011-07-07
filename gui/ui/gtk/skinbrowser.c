@@ -28,6 +28,7 @@
 #include "tools.h"
 
 #include "gui/app.h"
+#include "gui/interface.h"
 #include "help_mp.h"
 
 #include "gui/ui/widgets.h"

@@ -30,6 +30,7 @@
 #include "gui/ui/widgets.h"
 #include "gui/ui/gmplayer.h"
 #include "gui/app.h"
+#include "gui/interface.h"
 
 #include "stream/stream.h"
 #include "libmpdemux/demuxer.h"
