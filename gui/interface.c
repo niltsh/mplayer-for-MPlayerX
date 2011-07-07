@@ -72,6 +72,8 @@ float gtkEquChannels[6][10];
 
 static int initialized;
 
+/* MPlayer -> GUI */
+
 void guiInit(void)
 {
     int i;
@@ -318,109 +320,6 @@ void guiDone(void)
     }
 
     mp_msg(MSGT_GPLAYER, MSGL_V, "GUI done.\n");
-}
-
-void guiExit(enum exit_reason how)
-{
-    exit_player_with_rc(how, how >= EXIT_ERROR);
-}
-
-void guiLoadFont(void)
-{
-#ifdef CONFIG_FREETYPE
-    load_font_ft(vo_image_width, vo_image_height, &vo_font, font_name, osd_font_scale_factor);
-#else
-    if (vo_font) {
-        int i;
-
-        free(vo_font->name);
-        free(vo_font->fpath);
-
-        for (i = 0; i < 16; i++) {
-            if (vo_font->pic_a[i]) {
-                free(vo_font->pic_a[i]->bmp);
-                free(vo_font->pic_a[i]->pal);
-            }
-        }
-
-        for (i = 0; i < 16; i++) {
-            if (vo_font->pic_b[i]) {
-                free(vo_font->pic_b[i]->bmp);
-                free(vo_font->pic_b[i]->pal);
-            }
-        }
-
-        free(vo_font);
-        vo_font = NULL;
-    }
-
-    if (font_name) {
-        vo_font = read_font_desc(font_name, font_factor, 0);
-
-        if (!vo_font)
-            gmp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_CantLoadFont, font_name);
-    } else {
-        font_name = gstrdup(get_path("font/font.desc"));
-        vo_font   = read_font_desc(font_name, font_factor, 0);
-
-        if (!vo_font) {
-            nfree(font_name);
-            font_name = gstrdup(MPLAYER_DATADIR "/font/font.desc");
-            vo_font   = read_font_desc(font_name, font_factor, 0);
-        }
-    }
-#endif
-}
-
-void guiLoadSubtitle(char *name)
-{
-    if (guiInfo.Playing == 0) {
-        guiInfo.SubtitleChanged = 1; // what is this for? (mw)
-        return;
-    }
-
-    if (subdata) {
-        mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_DeletingSubtitles);
-
-        sub_free(subdata);
-        subdata = NULL;
-        vo_sub  = NULL;
-
-        if (vo_osd_list) {
-            int len;
-            mp_osd_obj_t *osd;
-
-            osd = vo_osd_list;
-
-            while (osd) {
-                if (osd->type == OSDTYPE_SUBTITLE)
-                    break;
-
-                osd = osd->next;
-            }
-
-            if (osd && (osd->flags & OSDFLAG_VISIBLE)) {
-                len = osd->stride * (osd->bbox.y2 - osd->bbox.y1);
-                memset(osd->bitmap_buffer, 0, len);
-                memset(osd->alpha_buffer, 0, len);
-            }
-        }
-    }
-
-    if (name) {
-        mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_LoadingSubtitles, name);
-
-        subdata = sub_read_file(name, guiInfo.FPS);
-
-        if (!subdata)
-            gmp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_CantLoadSub, name);
-
-        sub_name    = (malloc(2 * sizeof(char *))); // when mplayer will be restarted
-        sub_name[0] = strdup(name);                 // sub_name[0] will be read
-        sub_name[1] = NULL;
-    }
-
-    update_set_of_subtitles();
 }
 
 static void add_vf(char *str)
@@ -1188,6 +1087,109 @@ int guiAddPlaylist(play_tree_t *my_playtree, m_config_t *config)
     filename = NULL;
 
     return result;
+}
+
+void guiLoadFont(void)
+{
+#ifdef CONFIG_FREETYPE
+    load_font_ft(vo_image_width, vo_image_height, &vo_font, font_name, osd_font_scale_factor);
+#else
+    if (vo_font) {
+        int i;
+
+        free(vo_font->name);
+        free(vo_font->fpath);
+
+        for (i = 0; i < 16; i++) {
+            if (vo_font->pic_a[i]) {
+                free(vo_font->pic_a[i]->bmp);
+                free(vo_font->pic_a[i]->pal);
+            }
+        }
+
+        for (i = 0; i < 16; i++) {
+            if (vo_font->pic_b[i]) {
+                free(vo_font->pic_b[i]->bmp);
+                free(vo_font->pic_b[i]->pal);
+            }
+        }
+
+        free(vo_font);
+        vo_font = NULL;
+    }
+
+    if (font_name) {
+        vo_font = read_font_desc(font_name, font_factor, 0);
+
+        if (!vo_font)
+            gmp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_CantLoadFont, font_name);
+    } else {
+        font_name = gstrdup(get_path("font/font.desc"));
+        vo_font   = read_font_desc(font_name, font_factor, 0);
+
+        if (!vo_font) {
+            nfree(font_name);
+            font_name = gstrdup(MPLAYER_DATADIR "/font/font.desc");
+            vo_font   = read_font_desc(font_name, font_factor, 0);
+        }
+    }
+#endif
+}
+
+void guiLoadSubtitle(char *name)
+{
+    if (guiInfo.Playing == 0) {
+        guiInfo.SubtitleChanged = 1; // what is this for? (mw)
+        return;
+    }
+
+    if (subdata) {
+        mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_DeletingSubtitles);
+
+        sub_free(subdata);
+        subdata = NULL;
+        vo_sub  = NULL;
+
+        if (vo_osd_list) {
+            int len;
+            mp_osd_obj_t *osd;
+
+            osd = vo_osd_list;
+
+            while (osd) {
+                if (osd->type == OSDTYPE_SUBTITLE)
+                    break;
+
+                osd = osd->next;
+            }
+
+            if (osd && (osd->flags & OSDFLAG_VISIBLE)) {
+                len = osd->stride * (osd->bbox.y2 - osd->bbox.y1);
+                memset(osd->bitmap_buffer, 0, len);
+                memset(osd->alpha_buffer, 0, len);
+            }
+        }
+    }
+
+    if (name) {
+        mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_LoadingSubtitles, name);
+
+        subdata = sub_read_file(name, guiInfo.FPS);
+
+        if (!subdata)
+            gmp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_CantLoadSub, name);
+
+        sub_name    = (malloc(2 * sizeof(char *))); // when mplayer will be restarted
+        sub_name[0] = strdup(name);                 // sub_name[0] will be read
+        sub_name[1] = NULL;
+    }
+
+    update_set_of_subtitles();
+}
+
+void guiExit(enum exit_reason how)
+{
+    exit_player_with_rc(how, how >= EXIT_ERROR);
 }
 
 // NOTE TO MYSELF: This function is nonsense.

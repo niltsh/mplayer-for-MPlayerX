@@ -186,15 +186,18 @@ extern char *fsHistory[fsPersistant_MaxPos];
 
 extern float gtkEquChannels[6][10];
 
-void gmp_msg(int mod, int lev, const char *format, ...);
-void mplayer(int cmd, float fparam, void *vparam);
+/* MPlayer -> GUI */
+
 void guiDone(void);
-void guiExit(enum exit_reason how);
 int gui(int what, void *arg);
 void guiInit(void);
-void guiLoadFont(void);
-void guiLoadSubtitle(char *name);
 int guiInitializePlaylist(play_tree_t *my_playtree, m_config_t *config, int enqueue);
 int guiAddPlaylist(play_tree_t *my_playtree, m_config_t *config);
+
+void gmp_msg(int mod, int lev, const char *format, ...);
+void mplayer(int cmd, float fparam, void *vparam);
+void guiExit(enum exit_reason how);
+void guiLoadFont(void);
+void guiLoadSubtitle(char *name);
 
 #endif /* MPLAYER_GUI_INTERFACE_H */
