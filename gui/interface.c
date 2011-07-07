@@ -942,7 +942,7 @@ int gui(int what, void *arg)
     return True;
 }
 
-void *mplayer(int cmd, float fparam, void *vparam)
+void mplayer(int cmd, float fparam, void *vparam)
 {
     equalizer_t *eq = (equalizer_t *)vparam;
 
@@ -953,38 +953,38 @@ void *mplayer(int cmd, float fparam, void *vparam)
     case gtkSetFontFactor:
         font_factor = fparam;
         guiLoadFont();
-        return NULL;
+        break;
 #else
     case gtkSetFontOutLine:
         subtitle_font_thickness = (8.0f / 100.0f) * fparam;
         guiLoadFont();
-        return NULL;
+        break;
 
     case gtkSetFontBlur:
         subtitle_font_radius = (8.0f / 100.0f) * fparam;
         guiLoadFont();
-        return NULL;
+        break;
 
     case gtkSetFontTextScale:
         text_font_scale_factor = fparam;
         guiLoadFont();
-        return NULL;
+        break;
 
     case gtkSetFontOSDScale:
         osd_font_scale_factor = fparam;
         guiLoadFont();
-        return NULL;
+        break;
 
     case gtkSetFontEncoding:
         nfree(subtitle_font_encoding);
         subtitle_font_encoding = gstrdup((char *)vparam);
         guiLoadFont();
-        return NULL;
+        break;
 
     case gtkSetFontAutoScale:
         subtitle_autoscale = (int)fparam;
         guiLoadFont();
-        return NULL;
+        break;
 #endif
 
 #ifdef CONFIG_ICONV
@@ -1015,13 +1015,13 @@ void *mplayer(int cmd, float fparam, void *vparam)
             guiInfo.VCDTracks = 0;
 #endif
 
-        return NULL;
+        break;
 
     case gtkSetExtraStereo:
         gtkAOExtraStereoMul = fparam;
         if (guiInfo.afilter)
             af_control_any_rev(guiInfo.afilter, AF_CONTROL_ES_MUL | AF_CONTROL_SET, &gtkAOExtraStereoMul);
-        return NULL;
+        break;
 
     case gtkSetPanscan:
     {
@@ -1034,34 +1034,33 @@ void *mplayer(int cmd, float fparam, void *vparam)
         mp_cmd->args[1].v.i = 1;
         mp_input_queue_cmd(mp_cmd);
     }
-
-        return NULL;
+    break;
 
     case gtkSetAutoq:
         auto_quality = (int)fparam;
-        return NULL;
+        break;
 
     // set equalizers
 
     case gtkSetContrast:
         if (guiInfo.sh_video)
             set_video_colors(guiInfo.sh_video, "contrast", (int)fparam);
-        return NULL;
+        break;
 
     case gtkSetBrightness:
         if (guiInfo.sh_video)
             set_video_colors(guiInfo.sh_video, "brightness", (int)fparam);
-        return NULL;
+        break;
 
     case gtkSetHue:
         if (guiInfo.sh_video)
             set_video_colors(guiInfo.sh_video, "hue", (int)fparam);
-        return NULL;
+        break;
 
     case gtkSetSaturation:
         if (guiInfo.sh_video)
             set_video_colors(guiInfo.sh_video, "saturation", (int)fparam);
-        return NULL;
+        break;
 
     case gtkSetEqualizer:
     {
@@ -1088,11 +1087,9 @@ void *mplayer(int cmd, float fparam, void *vparam)
             }
         }
 
-        return NULL;
+        break;
     }
     }
-
-    return NULL;
 }
 
 // This function adds/inserts one file into the gui playlist.

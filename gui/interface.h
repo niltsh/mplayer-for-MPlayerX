@@ -187,7 +187,7 @@ extern char *fsHistory[fsPersistant_MaxPos];
 extern float gtkEquChannels[6][10];
 
 void gmp_msg(int mod, int lev, const char *format, ...);
-void *mplayer(int cmd, float fparam, void *vparam);
+void mplayer(int cmd, float fparam, void *vparam);
 void guiDone(void);
 void guiExit(enum exit_reason how);
 int gui(int what, void *arg);
