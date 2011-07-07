@@ -17,8 +17,6 @@
  */
 
 #include "app.h"
-
-#include "interface.h"
 #include "skin/font.h"
 
 #include "libavutil/common.h"
