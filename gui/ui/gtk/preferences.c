@@ -512,7 +512,7 @@ static void prEntry( GtkContainer * container,gpointer user_data )
         comment=gtk_entry_get_text( GTK_ENTRY( EFontEncoding ) );
         for ( i=0;lEncoding[i].name;i++ )
 	  if ( !gstrcmp( lEncoding[i].comment,comment ) ) break;
-	if ( lEncoding[i].comment ) gtkSet( gtkSetFontEncoding,0,lEncoding[i].name );
+	if ( lEncoding[i].comment ) mplayer( gtkSetFontEncoding,0,lEncoding[i].name );
 	break;
 #endif
 #ifdef CONFIG_ICONV
@@ -520,8 +520,8 @@ static void prEntry( GtkContainer * container,gpointer user_data )
         comment=gtk_entry_get_text( GTK_ENTRY( ESubEncoding ) );
         for ( i=0;lEncoding[i].name;i++ )
 	  if ( !gstrcmp( lEncoding[i].comment,comment ) ) break;
-	if ( lEncoding[i].comment ) gtkSet( gtkSetSubEncoding,0,lEncoding[i].name );
-	 else gtkSet( gtkSetSubEncoding,0,NULL );
+	if ( lEncoding[i].comment ) mplayer( gtkSetSubEncoding,0,lEncoding[i].name );
+	 else mplayer( gtkSetSubEncoding,0,NULL );
 	break;
 #endif
   }
@@ -545,7 +545,7 @@ static void prButton( GtkButton * button, gpointer user_data )
 	gtkAOExtraStereo=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBExtraStereo ) );
 	gtkAONorm=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBNormalize ) );
 	soft_vol=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBSoftwareMixer ) );
-	gtkSet( gtkSetExtraStereo,HSExtraStereoMuladj->value,NULL );
+	mplayer( gtkSetExtraStereo,HSExtraStereoMuladj->value,NULL );
 	audio_delay=HSAudioDelayadj->value;
 
 	gaddlist( &audio_driver_list,ao_driver[0] );
@@ -588,16 +588,16 @@ static void prButton( GtkButton * button, gpointer user_data )
         // --- 4. page
 	setdup( &font_name,gtk_entry_get_text( GTK_ENTRY( prEFontName ) ) );
 #ifndef CONFIG_FREETYPE
-	gtkSet( gtkSetFontFactor,HSFontFactoradj->value,NULL );
+	mplayer( gtkSetFontFactor,HSFontFactoradj->value,NULL );
 #else
-	gtkSet( gtkSetFontBlur,HSFontBluradj->value,NULL );
-	gtkSet( gtkSetFontOutLine,HSFontOutLineadj->value,NULL );
-	gtkSet( gtkSetFontTextScale,HSFontTextScaleadj->value,NULL );
-	gtkSet( gtkSetFontOSDScale,HSFontOSDScaleadj->value,NULL );
-	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( RBFontNoAutoScale ) ) ) gtkSet( gtkSetFontAutoScale,0,NULL );
-	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( RBFontAutoScaleHeight ) ) ) gtkSet( gtkSetFontAutoScale,1,NULL );
-	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( RBFontAutoScaleWidth ) ) ) gtkSet( gtkSetFontAutoScale,2,NULL );
-	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( RBFontAutoScaleDiagonal ) ) ) gtkSet( gtkSetFontAutoScale,3,NULL );
+	mplayer( gtkSetFontBlur,HSFontBluradj->value,NULL );
+	mplayer( gtkSetFontOutLine,HSFontOutLineadj->value,NULL );
+	mplayer( gtkSetFontTextScale,HSFontTextScaleadj->value,NULL );
+	mplayer( gtkSetFontOSDScale,HSFontOSDScaleadj->value,NULL );
+	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( RBFontNoAutoScale ) ) ) mplayer( gtkSetFontAutoScale,0,NULL );
+	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( RBFontAutoScaleHeight ) ) ) mplayer( gtkSetFontAutoScale,1,NULL );
+	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( RBFontAutoScaleWidth ) ) ) mplayer( gtkSetFontAutoScale,2,NULL );
+	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( RBFontAutoScaleDiagonal ) ) ) mplayer( gtkSetFontAutoScale,3,NULL );
 #endif
 
 	// -- 5. page
@@ -629,7 +629,7 @@ static void prButton( GtkButton * button, gpointer user_data )
 	stop_xscreensaver=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBStopXScreenSaver ) );
 	gtkEnablePlayBar=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBPlayBar ) );
 	player_idle_mode=!gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBNoIdle ) );
-	gtkSet( gtkSetAutoq,HSPPQualityadj->value,NULL );
+	mplayer( gtkSetAutoq,HSPPQualityadj->value,NULL );
 
 	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBCache ) ) ) { gtkCacheSize=(int)SBCacheadj->value; gtkCacheOn=1; }
 	 else gtkCacheOn=0;
@@ -678,13 +678,13 @@ static gboolean prHScaler( GtkWidget * widget,GdkEventMotion  * event,gpointer u
   {
    case 0: // extra stereo coefficient
 	if ( !guiInfo.Playing ) break;
-	gtkSet( gtkSetExtraStereo,HSExtraStereoMuladj->value,NULL );
+	mplayer( gtkSetExtraStereo,HSExtraStereoMuladj->value,NULL );
 	break;
    case 1: // audio delay
 	audio_delay=HSAudioDelayadj->value;
 	break;
    case 2: // panscan
-        gtkSet( gtkSetPanscan,HSPanscanadj->value,NULL );
+        mplayer( gtkSetPanscan,HSPanscanadj->value,NULL );
 	break;
    case 3: // sub delay
         sub_delay=HSSubDelayadj->value;
@@ -694,24 +694,24 @@ static gboolean prHScaler( GtkWidget * widget,GdkEventMotion  * event,gpointer u
 	break;
 #ifndef CONFIG_FREETYPE
    case 5: // font factor
-        gtkSet( gtkSetFontFactor,HSFontFactoradj->value,NULL );
+        mplayer( gtkSetFontFactor,HSFontFactoradj->value,NULL );
 	break;
 #else
    case 6: // font blur
-	gtkSet( gtkSetFontBlur,HSFontBluradj->value,NULL );
+	mplayer( gtkSetFontBlur,HSFontBluradj->value,NULL );
         break;
    case 7: // font outline
-        gtkSet( gtkSetFontOutLine,HSFontOutLineadj->value,NULL );
+        mplayer( gtkSetFontOutLine,HSFontOutLineadj->value,NULL );
         break;
    case 8: // text scale
-        gtkSet( gtkSetFontTextScale,HSFontTextScaleadj->value,NULL );
+        mplayer( gtkSetFontTextScale,HSFontTextScaleadj->value,NULL );
 	break;
    case 9: // osd scale
-        gtkSet( gtkSetFontOSDScale,HSFontOSDScaleadj->value,NULL );
+        mplayer( gtkSetFontOSDScale,HSFontOSDScaleadj->value,NULL );
 	break;
 #endif
    case 10: // auto quality
-	gtkSet( gtkSetAutoq,HSPPQualityadj->value,NULL );
+	mplayer( gtkSetAutoq,HSPPQualityadj->value,NULL );
 	break;
   }
  return FALSE;
@@ -749,7 +749,7 @@ static void prToggled( GtkToggleButton * togglebutton,gpointer user_data )
    case 5:
    case 6:
    case 7:
-	gtkSet( gtkSetFontAutoScale,(float)((int)user_data - 4 ),NULL );
+	mplayer( gtkSetFontAutoScale,(float)((int)user_data - 4 ),NULL );
 	break;
    case 8:
 	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBCache ) ) ) gtk_widget_set_sensitive( SBCache,TRUE );

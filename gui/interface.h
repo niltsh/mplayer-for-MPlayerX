@@ -55,6 +55,7 @@ extern int use_gui;             // this is defined in mplayer.c
 #define GUI_PLAY  1
 #define GUI_PAUSE 2
 
+// NOTE TO MYSELF: This should rather be in app.h.
 #define guiDVD       1
 #define guiVCD       2
 #define guiFilenames 4
@@ -186,7 +187,7 @@ extern char *fsHistory[fsPersistant_MaxPos];
 extern float gtkEquChannels[6][10];
 
 void gmp_msg(int mod, int lev, const char *format, ...);
-void *gtkSet(int cmd, float fparam, void *vparam);
+void *mplayer(int cmd, float fparam, void *vparam);
 void guiDone(void);
 void guiExit(enum exit_reason how);
 int gui(int what, void *arg);

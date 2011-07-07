@@ -201,8 +201,8 @@ static gboolean eqHScaleMotion( GtkWidget * widget,GdkEventMotion  * event,gpoin
   {
    int i;
    for ( i=0;i<6;i++ )
-    { eq.channel=i; gtkSet( gtkSetEqualizer,0,&eq ); }
-  } else { eq.channel=Channel; gtkSet( gtkSetEqualizer,0,&eq ); }
+    { eq.channel=i; mplayer( gtkSetEqualizer,0,&eq ); }
+  } else { eq.channel=Channel; mplayer( gtkSetEqualizer,0,&eq ); }
 
  return FALSE;
 }
@@ -212,10 +212,10 @@ static gboolean eqVScaleMotion( GtkWidget * widget,GdkEventMotion  * event,gpoin
 
  switch( (int)user_data )
   {
-   case 1: gtkSet( gtkSetContrast,VContrastadj->value,NULL );      break;
-   case 2: gtkSet( gtkSetBrightness,VBrightnessadj->value,NULL );  break;
-   case 3: gtkSet( gtkSetHue,VHueadj->value,NULL );	           break;
-   case 4: gtkSet( gtkSetSaturation,VSaturationadj->value,NULL );  break;
+   case 1: mplayer( gtkSetContrast,VContrastadj->value,NULL );      break;
+   case 2: mplayer( gtkSetBrightness,VBrightnessadj->value,NULL );  break;
+   case 3: mplayer( gtkSetHue,VHueadj->value,NULL );	           break;
+   case 4: mplayer( gtkSetSaturation,VSaturationadj->value,NULL );  break;
   }
 
  return FALSE;
@@ -230,16 +230,16 @@ static void eqButtonReleased( GtkButton * button,gpointer user_data )
 	if ( gtk_notebook_get_current_page( GTK_NOTEBOOK( Notebook ) ) == 0 )
 	 {
 	  if ( !guiInfo.Playing || !gtkEnableAudioEqualizer ) break;
-	  gtkSet( gtkSetEqualizer,0,NULL );
+	  mplayer( gtkSetEqualizer,0,NULL );
 	  eqSetBands( Channel );
 	 }
 	 else
 	  {
 	   if ( !guiInfo.Playing ) break;
-	   gtkSet( gtkSetContrast,0.0f,NULL );
-	   gtkSet( gtkSetBrightness,0.0f,NULL );
-	   gtkSet( gtkSetHue,0.0f,NULL );
-	   gtkSet( gtkSetSaturation,0.0f,NULL );
+	   mplayer( gtkSetContrast,0.0f,NULL );
+	   mplayer( gtkSetBrightness,0.0f,NULL );
+	   mplayer( gtkSetHue,0.0f,NULL );
+	   mplayer( gtkSetSaturation,0.0f,NULL );
 	   eqSetBands( Channel );
 	  }
 	break;
@@ -261,7 +261,7 @@ static void eqSelectChannelsListRow( GtkCList * clist,gint row,gint column,GdkEv
    int i,j; equalizer_t eq;
    for ( i=1;i<FF_ARRAY_ELEMS(gtkEquChannels);i++ )
     for ( j=0;j<FF_ARRAY_ELEMS(*gtkEquChannels);j++ )
-     { eq.band=j; eq.channel=i; eq.gain=gtkEquChannels[0][j]; gtkSet( gtkSetEqualizer,0,&eq ); }
+     { eq.band=j; eq.channel=i; eq.gain=gtkEquChannels[0][j]; mplayer( gtkSetEqualizer,0,&eq ); }
   }
 }
 

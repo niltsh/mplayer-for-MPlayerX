@@ -139,7 +139,7 @@ void uiEventHandling( int msg,float param )
    case evSetVCDTrack:
         guiInfo.Track=iparam;
    case evPlayVCD:
- 	gtkSet( gtkClearStruct,0,(void *)guiALL );
+ 	mplayer( gtkClearStruct,0,(void *)guiALL );
 	guiInfo.StreamType=STREAMTYPE_VCD;
 	goto play;
 #endif
@@ -149,7 +149,7 @@ void uiEventHandling( int msg,float param )
         guiInfo.DVD.current_chapter=1;
         guiInfo.DVD.current_angle=1;
 play_dvd_2:
- 	gtkSet( gtkClearStruct,0,(void *)(guiALL - guiDVD) );
+ 	mplayer( gtkClearStruct,0,(void *)(guiALL - guiDVD) );
         guiInfo.StreamType=STREAMTYPE_DVD;
 	goto play;
 #endif
@@ -170,11 +170,11 @@ play:
          {
 	  case STREAMTYPE_STREAM:
 	  case STREAMTYPE_FILE:
-	       gtkSet( gtkClearStruct,0,(void *)(guiALL - guiFilenames) );
+	       mplayer( gtkClearStruct,0,(void *)(guiALL - guiFilenames) );
 	       break;
 #ifdef CONFIG_VCD
           case STREAMTYPE_VCD:
-	       gtkSet( gtkClearStruct,0,(void *)(guiALL - guiVCD - guiFilenames) );
+	       mplayer( gtkClearStruct,0,(void *)(guiALL - guiVCD - guiFilenames) );
 	       if ( !cdrom_device ) cdrom_device=gstrdup( DEFAULT_CDROM_DEVICE );
 	       uiSetFileName( NULL,cdrom_device,STREAMTYPE_VCD );
 	       if ( guiInfo.Playing != GUI_PAUSE )
@@ -187,7 +187,7 @@ play:
 #endif
 #ifdef CONFIG_DVDREAD
           case STREAMTYPE_DVD:
-	       gtkSet( gtkClearStruct,0,(void *)(guiALL - guiDVD - guiFilenames) );
+	       mplayer( gtkClearStruct,0,(void *)(guiALL - guiDVD - guiFilenames) );
 	       if ( !dvd_device ) dvd_device=gstrdup( DEFAULT_DVD_DEVICE );
 	       uiSetFileName( NULL,dvd_device,STREAMTYPE_DVD );
 	       if ( guiInfo.Playing != GUI_PAUSE )

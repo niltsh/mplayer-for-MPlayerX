@@ -838,7 +838,7 @@ int gui(int what, void *arg)
                     eq.channel = i;
                     eq.band    = j;
                     eq.gain    = gtkEquChannels[i][j];
-                    gtkSet(gtkSetEqualizer, 0, &eq);
+                    mplayer(gtkSetEqualizer, 0, &eq);
                 }
             }
         }
@@ -942,7 +942,7 @@ int gui(int what, void *arg)
     return True;
 }
 
-void *gtkSet(int cmd, float fparam, void *vparam)
+void *mplayer(int cmd, float fparam, void *vparam)
 {
     equalizer_t *eq = (equalizer_t *)vparam;
 
@@ -995,7 +995,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
 #endif
 
     // misc
-
+    // NOTE TO MYSELF: This should rather be in app.c.
     case gtkClearStruct:
 
         if ((unsigned int)vparam & guiFilenames) {
