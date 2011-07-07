@@ -37,6 +37,7 @@
 #include "help_mp.h"
 #include "mpcommon.h"
 #include "stream/stream.h"
+#include "libavutil/common.h"
 
 #include "gui/ui/widgets.h"
 #include "fileselect.h"
@@ -332,11 +333,11 @@ void ShowFileSelect( int type,int modal )
 
  if ( fsTopList_items ) g_list_free( fsTopList_items ); fsTopList_items=NULL;
  {
-  int  i, c = 1;
+  unsigned int  i, c = 1;
 
   if ( fsType == fsVideoSelector )
    {
-    for ( i=0;i < fsPersistant_MaxPos;i++ )
+    for ( i=0;i < FF_ARRAY_ELEMS(fsHistory);i++ )
      if ( fsHistory[i] ) { fsTopList_items=g_list_append( fsTopList_items,fsHistory[i] ); c=0; }
    }
   if ( c ) fsTopList_items=g_list_append( fsTopList_items,(gchar *)get_current_dir_name_utf8() );
@@ -362,18 +363,18 @@ void HideFileSelect( void )
 
 static void fs_PersistantHistory( char * subject )
 {
- int i;
+ unsigned int i;
 
  if ( fsType != fsVideoSelector ) return;
 
- for ( i=0;i < fsPersistant_MaxPos;i++ )
+ for ( i=0;i < FF_ARRAY_ELEMS(fsHistory);i++ )
   if ( fsHistory[i] && !strcmp( fsHistory[i],subject ) )
    {
     char * tmp = fsHistory[i]; fsHistory[i]=fsHistory[0]; fsHistory[0]=tmp;
     return;
    }
- nfree( fsHistory[fsPersistant_MaxPos - 1] );
- for ( i=fsPersistant_MaxPos - 1;i;i-- ) fsHistory[i]=fsHistory[i - 1];
+ nfree( fsHistory[FF_ARRAY_ELEMS(fsHistory) - 1] );
+ for ( i=FF_ARRAY_ELEMS(fsHistory) - 1;i;i-- ) fsHistory[i]=fsHistory[i - 1];
  fsHistory[0]=gstrdup( subject );
 }
 //-----------------------------------------------

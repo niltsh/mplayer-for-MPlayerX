@@ -87,8 +87,7 @@ extern int guiWinID;
 
 extern char *skinName;
 
-#define fsPersistant_MaxPos 5
-extern char *fsHistory[fsPersistant_MaxPos];
+extern char *fsHistory[5];
 
 int cfg_gui_include(m_option_t *conf, const char *filename);
 int cfg_read(void);
