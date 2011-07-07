@@ -478,7 +478,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
  switch ( fsType )
   {
    case fsVideoSelector:
-          guiSetDF( guiInfo.Filename,fsSelectedDirectory,fsSelectedFile );
+          setddup( &guiInfo.Filename,fsSelectedDirectory,fsSelectedFile );
           guiInfo.StreamType=STREAMTYPE_FILE;
           guiInfo.FilenameChanged=1; sub_fps=0;
 	  nfree( guiInfo.AudioFile );
@@ -486,17 +486,17 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
           fs_PersistantHistory( get_current_dir_name_utf8() );      //totem, write into history
           break;
    case fsSubtitleSelector:
-          guiSetDF( guiInfo.Subtitlename,fsSelectedDirectory,fsSelectedFile );
+          setddup( &guiInfo.Subtitlename,fsSelectedDirectory,fsSelectedFile );
 	  guiLoadSubtitle( guiInfo.Subtitlename );
           break;
    case fsOtherSelector:
-          guiSetDF( guiInfo.Othername,fsSelectedDirectory,fsSelectedFile );
+          setddup( &guiInfo.Othername,fsSelectedDirectory,fsSelectedFile );
           break;
    case fsAudioSelector:
-          guiSetDF( guiInfo.AudioFile,fsSelectedDirectory,fsSelectedFile );
+          setddup( &guiInfo.AudioFile,fsSelectedDirectory,fsSelectedFile );
           break;
    case fsFontSelector:
-          guiSetDF( font_name,fsSelectedDirectory,fsSelectedFile );
+          setddup( &font_name,fsSelectedDirectory,fsSelectedFile );
 	  guiLoadFont();
 	  if ( Preferences ) gtk_entry_set_text( GTK_ENTRY( prEFontName ),font_name );
 	  break;

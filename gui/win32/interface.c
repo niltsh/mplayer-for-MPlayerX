@@ -96,6 +96,19 @@ char *gstrdup(const char *str)
     return strdup(str);
 }
 
+static void setdup (char **old, const char *str)
+{
+  free(*old);
+  *old = gstrdup(str);
+}
+
+static void setddup (char **old, const char *dir, const char *name)
+{
+  free(*old);
+  *old = malloc(strlen(dir) + strlen(name) + 2);
+  if (*old) sprintf(*old, "%s/%s", dir, name);
+}
+
 /**
  * \brief this actually creates a new list containing only one element...
  */
@@ -388,9 +401,9 @@ void uiSetFileName(char *dir, char *name, int type)
 {
     if(!name) return;
     if(!dir)
-        guiSetFilename(guiInfo.Filename, name)
+        setdup(&guiInfo.Filename, name);
     else
-        guiSetDF(guiInfo.Filename, dir, name);
+        setddup(&guiInfo.Filename, dir, name);
 
     guiInfo.StreamType = type;
     free(guiInfo.AudioFile);
@@ -517,7 +530,7 @@ int gui(int what, void *arg)
                     dvd_chapter = guiInfo.DVD.current_chapter;
                     dvd_angle = guiInfo.DVD.current_angle;
                     sprintf(tmp,"dvd://%d", guiInfo.Title);
-                    guiSetFilename(guiInfo.Filename, tmp);
+                    setdup(&guiInfo.Filename, tmp);
                     break;
                 }
 #endif

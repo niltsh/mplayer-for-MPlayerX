@@ -329,7 +329,7 @@ void guiInit(void)
         uiSetFileName(plCurrent->path, plCurrent->name, STREAMTYPE_FILE);
 
     if (subdata)
-        guiSetFilename(guiInfo.Subtitlename, subdata->filename);
+        setdup(&guiInfo.Subtitlename, subdata->filename);
 
     guiLoadFont();
 
@@ -606,7 +606,7 @@ int gui(int what, void *arg)
             char tmp[512];
 
             sprintf(tmp, "vcd://%d", guiInfo.Track + 1);
-            guiSetFilename(guiInfo.Filename, tmp);
+            setdup(&guiInfo.Filename, tmp);
         }
         break;
 #endif
@@ -617,7 +617,7 @@ int gui(int what, void *arg)
             char tmp[512];
 
             sprintf(tmp, "dvd://%d", guiInfo.Title);
-            guiSetFilename(guiInfo.Filename, tmp);
+            setdup(&guiInfo.Filename, tmp);
         }
 
             dvd_chapter = guiInfo.Chapter;
@@ -632,7 +632,7 @@ int gui(int what, void *arg)
             if (guiInfo.Filename)
                 filename = gstrdup(guiInfo.Filename);
             else if (filename)
-                guiSetFilename(guiInfo.Filename, filename);
+                setdup(&guiInfo.Filename, filename);
         }
 
         // video opts
@@ -953,7 +953,7 @@ int gui(int what, void *arg)
 
         if (guiInfo.Playing && (next = gtkSet(gtkGetNextPlItem, 0, NULL)) && (plLastPlayed != next)) {
             plLastPlayed = next;
-            guiSetDF(guiInfo.Filename, next->path, next->name);
+            setddup(&guiInfo.Filename, next->path, next->name);
             guiInfo.StreamType      = STREAMTYPE_FILE;
             guiInfo.FilenameChanged = guiInfo.NewPlay = 1;
             nfree(guiInfo.AudioFile);

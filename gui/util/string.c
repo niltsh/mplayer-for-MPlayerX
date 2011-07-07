@@ -16,6 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "string.h"
@@ -129,4 +131,18 @@ char *gstrdup(const char *str)
         return NULL;
 
     return strdup(str);
+}
+
+void setdup(char **old, const char *str)
+{
+    free(*old);
+    *old = gstrdup(str);
+}
+
+void setddup(char **old, const char *dir, const char *name)
+{
+    free(*old);
+    *old = malloc(strlen(dir) + strlen(name) + 2);
+    if (*old)
+        sprintf(*old, "%s/%s", dir, name);
 }

@@ -257,9 +257,9 @@ void uiSetFileName(char *dir, char *name, int type)
         return;
 
     if (!dir)
-        guiSetFilename(guiInfo.Filename, name)
+        setdup(&guiInfo.Filename, name);
     else
-        guiSetDF(guiInfo.Filename, dir, name)
+        setddup(&guiInfo.Filename, dir, name);
 
     guiInfo.StreamType = type;
     nfree(guiInfo.AudioFile);

@@ -89,19 +89,6 @@ extern int use_gui;             // this is defined in mplayer.c
 
 #define fsPersistant_MaxPos 5
 
-#define guiSetFilename(s, n) \
-    { \
-        free(s); \
-        s = gstrdup(n); \
-    }
-
-#define guiSetDF(s, d, n) \
-    { \
-        free(s); \
-        s = malloc(strlen(d) + strlen(n) + 5); \
-        sprintf(s, "%s/%s", d, n); \
-    }
-
 typedef struct {
     int x;
     int y;
