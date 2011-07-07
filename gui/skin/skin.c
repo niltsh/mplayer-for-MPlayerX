@@ -38,6 +38,9 @@ typedef struct {
     int (*func)(char *in);
 } _item;
 
+char *skinDirInHome;
+char *skinMPlayerDir;
+
 static guiItems *skin;
 
 static int linenumber;

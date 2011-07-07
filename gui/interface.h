@@ -176,9 +176,6 @@ typedef struct {
 
 extern guiInterface_t guiInfo;
 
-extern char *skinDirInHome;
-extern char *skinMPlayerDir;
-
 extern char *fsHistory[fsPersistant_MaxPos];
 
 /* MPlayer -> GUI */

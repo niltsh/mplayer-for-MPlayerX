@@ -21,6 +21,9 @@
 
 #include "gui/util/bitmap.h"
 
+extern char *skinDirInHome;
+extern char *skinMPlayerDir;
+
 int skinBPRead(char *fname, guiImage *bf);
 int skinRead(char *dname);
 

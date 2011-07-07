@@ -28,7 +28,8 @@
 #include "tools.h"
 
 #include "gui/app.h"
-#include "gui/interface.h"
+#include "gui/cfg.h"
+#include "gui/skin/skin.h"
 #include "help_mp.h"
 
 #include "gui/ui/widgets.h"
