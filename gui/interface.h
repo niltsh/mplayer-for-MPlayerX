@@ -211,7 +211,6 @@ extern char *fsHistory[fsPersistant_MaxPos];
 
 extern float gtkEquChannels[6][10];
 
-void gaddlist(char ***list, const char *entry);
 void gmp_msg(int mod, int lev, const char *format, ...);
 void *gtkSet(int cmd, float fparam, void *vparam);
 void guiDone(void);

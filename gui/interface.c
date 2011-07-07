@@ -24,6 +24,7 @@
 #include "skin/skin.h"
 #include "ui/gmplayer.h"
 #include "ui/widgets.h"
+#include "util/list.h"
 #include "util/mem.h"
 #include "util/string.h"
 #include "wm/ws.h"
@@ -76,51 +77,6 @@ char *fsHistory[fsPersistant_MaxPos] = { NULL, NULL, NULL, NULL, NULL };
 float gtkEquChannels[6][10];
 
 static int initialized;
-
-/**
- * \brief This actually creates a new list containing only one element...
- */
-void gaddlist(char ***list, const char *entry)
-{
-    int i;
-
-    if (*list) {
-        for (i = 0; (*list)[i]; i++)
-            free((*list)[i]);
-
-        free(*list);
-    }
-
-    *list      = malloc(2 * sizeof(char **));
-    (*list)[0] = gstrdup(entry);
-    (*list)[1] = NULL;
-}
-
-/**
- * \brief This replaces a string starting with search by replace.
- * If not found, replace is appended.
- */
-static void greplace(char ***list, const char *search, const char *replace)
-{
-    int i   = 0;
-    int len = (search ? strlen(search) : 0);
-
-    if (*list) {
-        for (i = 0; (*list)[i]; i++) {
-            if (search && (strncmp((*list)[i], search, len) == 0)) {
-                free((*list)[i]);
-                (*list)[i] = gstrdup(replace);
-                return;
-            }
-        }
-
-        *list = realloc(*list, (i + 2) * sizeof(char *));
-    } else
-        *list = malloc(2 * sizeof(char *));
-
-    (*list)[i]     = gstrdup(replace);
-    (*list)[i + 1] = NULL;
-}
 
 void guiInit(void)
 {
