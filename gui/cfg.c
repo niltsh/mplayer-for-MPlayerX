@@ -103,6 +103,8 @@ int guiWinID = -1;
 
 char *skinName;
 
+char *fsHistory[fsPersistant_MaxPos];
+
 static const m_option_t gui_opts[] = {
     { "cache",                       &gtkCacheOn,              CONF_TYPE_FLAG,        0,           0,     1,       NULL },
     { "cache_size",                  &gtkCacheSize,            CONF_TYPE_INT,         CONF_RANGE,  32,    1048576, NULL },

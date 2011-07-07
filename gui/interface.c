@@ -60,8 +60,6 @@ guiInterface_t guiInfo = {
     .Balance     = 50.0f
 };
 
-char *fsHistory[fsPersistant_MaxPos] = { NULL, NULL, NULL, NULL, NULL };
-
 static int initialized;
 
 /* MPlayer -> GUI */

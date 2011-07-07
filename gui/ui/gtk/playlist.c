@@ -31,7 +31,7 @@
 #include "help_mp.h"
 #include "stream/stream.h"
 
-#include "gui/interface.h"
+#include "gui/cfg.h"
 #include "gui/ui/widgets.h"
 #include "gui/util/list.h"
 #include "gui/util/mem.h"

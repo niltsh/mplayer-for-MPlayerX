@@ -79,8 +79,6 @@ extern int use_gui;             // this is defined in mplayer.c
 #define gtkSetFontAutoScale 21
 #define gtkSetSubEncoding   22
 
-#define fsPersistant_MaxPos 5
-
 typedef struct {
     int x;
     int y;
@@ -175,8 +173,6 @@ typedef struct {
 } guiInterface_t;
 
 extern guiInterface_t guiInfo;
-
-extern char *fsHistory[fsPersistant_MaxPos];
 
 /* MPlayer -> GUI */
 
