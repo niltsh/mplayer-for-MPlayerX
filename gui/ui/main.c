@@ -30,6 +30,7 @@
 #include "gui/interface.h"
 #include "gui/skin/font.h"
 #include "gui/skin/skin.h"
+#include "gui/util/list.h"
 #include "gui/util/mem.h"
 #include "gui/util/string.h"
 #include "gui/wm/ws.h"
@@ -158,9 +159,9 @@ play:
 
         if ( ( msg == evPlaySwitchToPause )&&( guiInfo.Playing == GUI_PAUSE ) ) goto NoPause;
 
-	if ( gtkSet( gtkGetCurrPlItem,0,NULL ) &&( guiInfo.StreamType == STREAMTYPE_FILE ) )
+	if ( listSet( gtkGetCurrPlItem,NULL ) &&( guiInfo.StreamType == STREAMTYPE_FILE ) )
 	 {
-	  plItem * next = gtkSet( gtkGetCurrPlItem,0,NULL );
+	  plItem * next = listSet( gtkGetCurrPlItem,NULL );
 	  plLastPlayed=next;
 	  uiSetFileName( next->path,next->name,STREAMTYPE_FILE );
 	 }
@@ -239,7 +240,7 @@ NoPause:
         uiMainAutoPlay=1;
 //	guiInfo.StreamType=STREAMTYPE_FILE;
    case evLoad:
-	gtkSet( gtkDelPl,0,NULL );
+	listSet( gtkDelPl,NULL );
         gtkShow( evLoad,NULL );
         break;
    case evLoadSubtitle:  gtkShow( evLoadSubtitle,NULL );  break;
@@ -605,7 +606,7 @@ void uiDandDHandler(int num,char** files)
       /* clear playlist */
       if (filename == NULL) {
 	filename = files[f];
-	gtkSet(gtkDelPl,0,NULL);
+	listSet(gtkDelPl,NULL);
       }
 
       item = calloc(1,sizeof(plItem));
@@ -620,7 +621,7 @@ void uiDandDHandler(int num,char** files)
 	item->name = strdup(str);
 	item->path = strdup("");
       }
-      gtkSet(gtkAddPlItem,0,(void*)item);
+      listSet(gtkAddPlItem,item);
     } else {
       mp_msg( MSGT_GPLAYER,MSGL_WARN,MSGTR_NotAFile,str );
     }

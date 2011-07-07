@@ -66,12 +66,6 @@ char *skinName;
 char *skinDirInHome;
 char *skinMPlayerDir;
 
-plItem *plCurrent    = NULL;
-plItem *plList       = NULL;
-plItem *plLastPlayed = NULL;
-
-urlItem *URLList = NULL;
-
 char *fsHistory[fsPersistant_MaxPos] = { NULL, NULL, NULL, NULL, NULL };
 
 float gtkEquChannels[6][10];
@@ -907,7 +901,7 @@ int gui(int what, void *arg)
             break;
         }
 
-        if (guiInfo.Playing && (next = gtkSet(gtkGetNextPlItem, 0, NULL)) && (plLastPlayed != next)) {
+        if (guiInfo.Playing && (next = listSet(gtkGetNextPlItem, NULL)) && (plLastPlayed != next)) {
             plLastPlayed = next;
             setddup(&guiInfo.Filename, next->path, next->name);
             guiInfo.StreamType      = STREAMTYPE_FILE;
@@ -948,201 +942,11 @@ int gui(int what, void *arg)
     return True;
 }
 
-// ---
-#if defined(MP_DEBUG) && 0
-void list(void)
-{
-    plItem *next = plList;
-
-    printf("--- list ---\n");
-
-    while (next || next->next) {
-        printf("item: %s/%s\n", next->path, next->name);
-
-        if (next->next)
-            next = next->next;
-        else
-            break;
-    }
-
-    printf("--- end of list ---\n");
-}
-#else
-#define list();
-#endif
-
 void *gtkSet(int cmd, float fparam, void *vparam)
 {
-    equalizer_t *eq   = (equalizer_t *)vparam;
-    plItem *item      = (plItem *)vparam;
-    urlItem *url_item = (urlItem *)vparam;
-    int is_added      = True;
+    equalizer_t *eq = (equalizer_t *)vparam;
 
     switch (cmd) {
-    // handle playlist
-
-    // add item to playlist
-    case gtkAddPlItem:
-
-        if (plList) {
-            plItem *next = plList;
-
-            while (next->next)
-// {
-// printf( "%s\n",next->name );
-                next = next->next;
-// }
-
-            next->next = item;
-            item->prev = next;
-            item->next = NULL;
-        } else {
-            item->prev = item->next = NULL;
-            plCurrent  = plList = item;
-        }
-
-        list();
-
-        return NULL;
-
-    // add item into playlist after current
-    case gtkInsertPlItem:
-        if (plCurrent) {
-            plItem *curr = plCurrent;
-            item->next = curr->next;
-
-            if (item->next)
-                item->next->prev = item;
-
-            item->prev = curr;
-            curr->next = item;
-            plCurrent  = plCurrent->next;
-
-            return plCurrent;
-        } else
-            return gtkSet(gtkAddPlItem, 0, (void *)item);
-        return NULL;   // NOTE TO MYSELF: remove this
-
-    // get next item from playlist
-    case gtkGetNextPlItem:
-        if (plCurrent && plCurrent->next) {
-            plCurrent = plCurrent->next;
-// if (!plCurrent && plList)
-// {
-// plItem *next = plList;
-//
-// while (next->next)
-// {
-// if (!next->next) break;
-// next = next->next;
-// }
-//
-// plCurrent = next;
-// }
-            return plCurrent;
-        }
-
-        return NULL;
-
-    // get previous item from playlist
-    case gtkGetPrevPlItem:
-        if (plCurrent && plCurrent->prev) {
-            plCurrent = plCurrent->prev;
-// if ( !plCurrent && plList ) plCurrent=plList;
-            return plCurrent;
-        }
-
-        return NULL;
-
-    // set current item
-    case gtkSetCurrPlItem:
-        plCurrent = item;
-        return plCurrent;
-
-    // get current item
-    case gtkGetCurrPlItem:
-        return plCurrent;
-
-    // delete current item
-    case gtkDelCurrPlItem:
-    {
-        plItem *curr = plCurrent;
-
-        if (!curr)
-            return NULL;
-
-        if (curr->prev)
-            curr->prev->next = curr->next;
-        if (curr->next)
-            curr->next->prev = curr->prev;
-        if (curr == plList)
-            plList = curr->next;
-
-        plCurrent = curr->next;
-
-        // free it
-        free(curr->path);
-        free(curr->name);
-        free(curr);
-    }
-
-        uiCurr();   // instead of using uiNext && uiPrev
-
-        return plCurrent;
-
-    // delete list
-    case gtkDelPl:
-    {
-        plItem *curr = plList;
-        plItem *next;
-
-        if (!plList)
-            return NULL;
-
-        if (!curr->next) {
-            free(curr->path);
-            free(curr->name);
-            free(curr);
-        } else {
-            while (curr->next) {
-                next = curr->next;
-                free(curr->path);
-                free(curr->name);
-                free(curr);
-                curr = next;
-            }
-        }
-
-        plList    = NULL;
-        plCurrent = NULL;
-    }
-
-        return NULL;
-
-    // handle url
-    case gtkAddURLItem:
-        if (URLList) {
-            urlItem *next_url = URLList;
-            is_added = False;
-
-            while (next_url->next) {
-                if (!gstrcmp(next_url->url, url_item->url)) {
-                    is_added = True;
-                    break;
-                }
-
-                next_url = next_url->next;
-            }
-
-            if (!is_added && gstrcmp(next_url->url, url_item->url))
-                next_url->next = url_item;
-        } else {
-            url_item->next = NULL;
-            URLList = url_item;
-        }
-
-        return NULL;
-
         // subtitle
 
 #ifndef CONFIG_FREETYPE
@@ -1198,7 +1002,7 @@ void *gtkSet(int cmd, float fparam, void *vparam)
             nfree(guiInfo.Filename);
             nfree(guiInfo.Subtitlename);
             nfree(guiInfo.AudioFile);
-            gtkSet(gtkDelPl, 0, NULL);
+            listSet(gtkDelPl, NULL);
         }
 
 #ifdef CONFIG_DVDREAD
@@ -1316,9 +1120,9 @@ static int import_file_into_gui(char *temp, int insert)
     item->path = pathname;
 
     if (insert)
-        gtkSet(gtkInsertPlItem, 0, (void *)item);            // inserts the item after current, and makes current=item
+        listSet(gtkInsertPlItem, item);           // inserts the item after current, and makes current=item
     else
-        gtkSet(gtkAddPlItem, 0, (void *)item);
+        listSet(gtkAddPlItem, item);
 
     return 1;
 }
@@ -1333,7 +1137,7 @@ int guiInitializePlaylist(play_tree_t *my_playtree, m_config_t *config, int enqu
     int result = 0;
 
     if (!enqueue)
-        gtkSet(gtkDelPl, 0, 0);             // delete playlist before "appending"
+        listSet(gtkDelPl, NULL);             // delete playlist before "appending"
 
     if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
@@ -1364,7 +1168,7 @@ int guiAddPlaylist(play_tree_t *my_playtree, m_config_t *config)
     int result = 0;
     plItem *save;
 
-    save = (plItem *)gtkSet(gtkGetCurrPlItem, 0, 0);    // save current item
+    save = (plItem *)listSet(gtkGetCurrPlItem, NULL);    // save current item
 
     if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
@@ -1376,12 +1180,12 @@ int guiAddPlaylist(play_tree_t *my_playtree, m_config_t *config)
     }
 
     if (save)
-        gtkSet(gtkSetCurrPlItem, 0, (void *)save);
+        listSet(gtkSetCurrPlItem, save);
     else
-        gtkSet(gtkSetCurrPlItem, 0, (void *)plList);     // go to head, if plList was empty before
+        listSet(gtkSetCurrPlItem, plList);    // go to head, if plList was empty before
 
     if (save && result)
-        gtkSet(gtkDelCurrPlItem, 0, 0);
+        listSet(gtkDelCurrPlItem, NULL);
 
     uiCurr();   // update filename
     filename = NULL;

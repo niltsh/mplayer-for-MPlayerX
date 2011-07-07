@@ -25,6 +25,7 @@
 #include "gui/interface.h"
 #include "gui/skin/font.h"
 #include "gui/skin/skin.h"
+#include "gui/util/list.h"
 #include "gui/util/mem.h"
 #include "gui/util/string.h"
 #include "gui/wm/wsxdnd.h"
@@ -287,7 +288,7 @@ void uiCurr(void)
 
     default:
 
-        curr = gtkSet(gtkGetCurrPlItem, 0, NULL);
+        curr = listSet(gtkGetCurrPlItem, NULL);
 
         if (curr) {
             uiSetFileName(curr->path, curr->name, STREAMTYPE_FILE);
@@ -341,7 +342,7 @@ void uiPrev(void)
 
     default:
 
-        prev = gtkSet(gtkGetPrevPlItem, 0, NULL);
+        prev = listSet(gtkGetPrevPlItem, NULL);
 
         if (prev) {
             uiSetFileName(prev->path, prev->name, STREAMTYPE_FILE);
@@ -401,7 +402,7 @@ void uiNext(void)
 
     default:
 
-        next = gtkSet(gtkGetNextPlItem, 0, NULL);
+        next = listSet(gtkGetNextPlItem, NULL);
 
         if (next) {
             uiSetFileName(next->path, next->name, STREAMTYPE_FILE);

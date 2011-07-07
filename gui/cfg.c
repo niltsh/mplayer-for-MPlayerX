@@ -22,6 +22,7 @@
 
 #include "cfg.h"
 #include "interface.h"
+#include "util/list.h"
 #include "util/string.h"
 
 #include "config.h"
@@ -300,7 +301,7 @@ int cfg_read(void)
             item->path = strdup(tmp);
             gfgets(tmp, 512, f);
             item->name = strdup(tmp);
-            gtkSet(gtkAddPlItem, 0, (void *)item);
+            listSet(gtkAddPlItem, item);
         }
 
         fclose(f);
@@ -323,7 +324,7 @@ int cfg_read(void)
 
             item      = calloc(1, sizeof(urlItem));
             item->url = strdup(tmp);
-            gtkSet(gtkAddURLItem, 0, (void *)item);
+            listSet(gtkAddURLItem, item);
         }
 
         fclose(f);

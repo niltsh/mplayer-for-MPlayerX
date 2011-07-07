@@ -19,7 +19,35 @@
 #ifndef MPLAYER_GUI_LIST_H
 #define MPLAYER_GUI_LIST_H
 
+#define gtkAddPlItem     5
+#define gtkGetNextPlItem 6
+#define gtkGetPrevPlItem 7
+#define gtkGetCurrPlItem 8
+#define gtkDelPl         9
+#define gtkDelCurrPlItem 23
+#define gtkInsertPlItem  24
+#define gtkSetCurrPlItem 25
+#define gtkAddURLItem    15
+
+typedef struct plItem {
+    struct plItem *prev, *next;
+    char *path;
+    char *name;
+} plItem;
+
+typedef struct urlItem {
+    struct urlItem *next;
+    char *url;
+} urlItem;
+
+extern plItem *plList;
+extern plItem *plCurrent;
+extern plItem *plLastPlayed;
+
+extern urlItem *URLList;
+
 void gaddlist(char ***list, const char *entry);
 void greplace(char ***list, const char *search, const char *replace);
+void *listSet(int cmd, void *vparam);
 
 #endif /* MPLAYER_GUI_LIST_H */

@@ -65,17 +65,11 @@ extern int use_gui;             // this is defined in mplayer.c
 #define gtkSetHue           2
 #define gtkSetSaturation    3
 #define gtkSetEqualizer     4
-#define gtkAddPlItem        5
-#define gtkGetNextPlItem    6
-#define gtkGetPrevPlItem    7
-#define gtkGetCurrPlItem    8
-#define gtkDelPl            9
 #define gtkSetExtraStereo   10
 #define gtkSetPanscan       11
 #define gtkSetFontFactor    12
 #define gtkSetAutoq         13
 #define gtkClearStruct      14
-#define gtkAddURLItem       15
 #define gtkSetFontOutLine   16
 #define gtkSetFontBlur      17
 #define gtkSetFontTextScale 18
@@ -83,9 +77,6 @@ extern int use_gui;             // this is defined in mplayer.c
 #define gtkSetFontEncoding  20
 #define gtkSetFontAutoScale 21
 #define gtkSetSubEncoding   22
-#define gtkDelCurrPlItem    23
-#define gtkInsertPlItem     24
-#define gtkSetCurrPlItem    25
 
 #define fsPersistant_MaxPos 5
 
@@ -182,17 +173,6 @@ typedef struct {
     int SkinChange;
 } guiInterface_t;
 
-typedef struct plItem {
-    struct plItem *prev, *next;
-    char *path;
-    char *name;
-} plItem;
-
-typedef struct urlItem {
-    struct urlItem *next;
-    char *url;
-} urlItem;
-
 extern guiInterface_t guiInfo;
 
 extern int guiWinID;
@@ -200,12 +180,6 @@ extern int guiWinID;
 extern char *skinName;
 extern char *skinDirInHome;
 extern char *skinMPlayerDir;
-
-extern plItem *plList;
-extern plItem *plCurrent;
-extern plItem *plLastPlayed;
-
-extern urlItem *URLList;
 
 extern char *fsHistory[fsPersistant_MaxPos];
 

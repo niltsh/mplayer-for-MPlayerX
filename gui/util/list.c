@@ -22,6 +22,176 @@
 #include "list.h"
 #include "string.h"
 
+plItem *plList;
+plItem *plCurrent;
+plItem *plLastPlayed;
+
+urlItem *URLList;
+
+void *listSet(int cmd, void *vparam)
+{
+    plItem *item      = (plItem *)vparam;
+    urlItem *url_item = (urlItem *)vparam;
+    int is_added      = 1;
+
+    switch (cmd) {
+    // handle playlist
+
+    // add item to playlist
+    case gtkAddPlItem:
+        if (plList) {
+            plItem *next = plList;
+
+            while (next->next)
+// {
+// printf( "%s\n",next->name );
+                next = next->next;
+// }
+
+            next->next = item;
+            item->prev = next;
+            item->next = NULL;
+        } else {
+            item->prev = item->next = NULL;
+            plCurrent  = plList = item;
+        }
+        return NULL;
+
+    // add item into playlist after current
+    case gtkInsertPlItem:
+        if (plCurrent) {
+            plItem *curr = plCurrent;
+            item->next = curr->next;
+
+            if (item->next)
+                item->next->prev = item;
+
+            item->prev = curr;
+            curr->next = item;
+            plCurrent  = plCurrent->next;
+
+            return plCurrent;
+        } else
+            return listSet(gtkAddPlItem, item);
+
+    // get next item from playlist
+    case gtkGetNextPlItem:
+        if (plCurrent && plCurrent->next) {
+            plCurrent = plCurrent->next;
+// if (!plCurrent && plList)
+// {
+// plItem *next = plList;
+//
+// while (next->next)
+// {
+// if (!next->next) break;
+// next = next->next;
+// }
+//
+// plCurrent = next;
+// }
+            return plCurrent;
+        }
+        return NULL;
+
+    // get previous item from playlist
+    case gtkGetPrevPlItem:
+        if (plCurrent && plCurrent->prev) {
+            plCurrent = plCurrent->prev;
+// if ( !plCurrent && plList ) plCurrent=plList;
+            return plCurrent;
+        }
+        return NULL;
+
+    // set current item
+    case gtkSetCurrPlItem:
+        plCurrent = item;
+        return plCurrent;
+
+    // get current item
+    case gtkGetCurrPlItem:
+        return plCurrent;
+
+    // delete current item
+    case gtkDelCurrPlItem:
+    {
+        plItem *curr = plCurrent;
+
+        if (!curr)
+            return NULL;
+
+        if (curr->prev)
+            curr->prev->next = curr->next;
+        if (curr->next)
+            curr->next->prev = curr->prev;
+        if (curr == plList)
+            plList = curr->next;
+
+        plCurrent = curr->next;
+
+        // free it
+        free(curr->path);
+        free(curr->name);
+        free(curr);
+    }
+        //uiCurr();     // instead of using uiNext && uiPrev
+        return plCurrent;
+
+    // delete list
+    case gtkDelPl:
+    {
+        plItem *curr = plList;
+        plItem *next;
+
+        if (!plList)
+            return NULL;
+
+        if (!curr->next) {
+            free(curr->path);
+            free(curr->name);
+            free(curr);
+        } else {
+            while (curr->next) {
+                next = curr->next;
+                free(curr->path);
+                free(curr->name);
+                free(curr);
+                curr = next;
+            }
+        }
+
+        plList    = NULL;
+        plCurrent = NULL;
+    }
+        return NULL;
+
+    // handle url
+    case gtkAddURLItem:
+        if (URLList) {
+            urlItem *next_url = URLList;
+            is_added = 0;
+
+            while (next_url->next) {
+                if (!gstrcmp(next_url->url, url_item->url)) {
+                    is_added = 1;
+                    break;
+                }
+
+                next_url = next_url->next;
+            }
+
+            if (!is_added && gstrcmp(next_url->url, url_item->url))
+                next_url->next = url_item;
+        } else {
+            url_item->next = NULL;
+            URLList = url_item;
+        }
+        return NULL;
+    }
+
+    return NULL;
+}
+
 /**
  * \brief This actually creates a new list containing only one element...
  */

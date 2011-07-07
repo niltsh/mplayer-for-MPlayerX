@@ -33,6 +33,7 @@
 
 #include "gui/interface.h"
 #include "gui/ui/widgets.h"
+#include "gui/util/list.h"
 #include "gui/util/mem.h"
 #include "playlist.h"
 #include "tools.h"
@@ -190,7 +191,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
   case 1: // ok
        {
         int i;
-	if ( plList ) gtkSet( gtkDelPl,0,NULL );
+	if ( plList ) listSet( gtkDelPl,NULL );
 	for ( i=0;i<NrOfSelected;i++ )
 	 {
 	  plItem * item;
@@ -202,7 +203,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	  if ( !item->name ) item->name = strdup( text[0] );
 	  item->path=g_filename_from_utf8( text[1], -1, NULL, NULL, NULL );
 	  if ( !item->path ) item->path = strdup( text[1] );
-	  gtkSet( gtkAddPlItem,0,(void*)item );
+	  listSet( gtkAddPlItem,item );
 	 }
 	if ( plCurrent )
 	 {

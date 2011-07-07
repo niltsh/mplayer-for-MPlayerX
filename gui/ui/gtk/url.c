@@ -32,6 +32,7 @@
 #include "gui/app.h"
 #include "gui/ui/gmplayer.h"
 #include "gui/ui/widgets.h"
+#include "gui/util/list.h"
 #include "gui/util/string.h"
 #include "help_mp.h"
 
@@ -100,7 +101,7 @@ static void on_Button_pressed( GtkButton * button,gpointer user_data )
 
      item=calloc( 1,sizeof( urlItem ) );
      item->url=gstrdup( str );
-     gtkSet( gtkAddURLItem,0,(void *)item );
+     listSet( gtkAddURLItem,item );
 
      setdup( &guiInfo.Filename,str ); guiInfo.FilenameChanged=1;
      uiEventHandling( evPlayNetwork,0 );
