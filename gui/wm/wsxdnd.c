@@ -165,7 +165,7 @@ wsXDNDProcessClientMessage(wsTWindow* wnd, XClientMessageEvent *event)
     if ((event->data.l[1] & 1) == 0){
       int index;
       for(index = 0; index <= 2 ; index++){
-	if (event->data.l[2+index] == ok) {
+	if ((Atom) event->data.l[2+index] == ok) {
 	  atom_support = ok;
 	}
       }
@@ -216,7 +216,7 @@ wsXDNDProcessClientMessage(wsTWindow* wnd, XClientMessageEvent *event)
   }
 
   if (event->message_type == XA_XdndDrop) {
-    if (event->data.l[0] != XGetSelectionOwner(wsDisplay, XA_XdndSelection)){
+    if ((Window) event->data.l[0] != XGetSelectionOwner(wsDisplay, XA_XdndSelection)){
       puts("Wierd selection owner... QT?");
     }
     if (atom_support != None) {
