@@ -84,7 +84,7 @@ int parse_filename(char *file, play_tree_t *playtree, m_config_t *mconfig, int c
     if(strstr(file, ".m3u") || strstr(file, ".pls"))
     {
         playtree = parse_playlist_file(file);
-        guiAddPlaylist(playtree, mconfig);
+        guiPlaylistAdd(playtree, mconfig);
         return 1;
     }
     return 0;
@@ -795,7 +795,7 @@ static int import_file_into_gui(char *pathname, int insert)
     by either:
     - overwriting gui pl (enqueue=0) */
 
-int guiInitializePlaylist(play_tree_t *my_playtree, m_config_t *config, int enqueue)
+int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqueue)
 {
     play_tree_iter_t *my_pt_iter = NULL;
     int result = 0;
@@ -826,7 +826,7 @@ int guiInitializePlaylist(play_tree_t *my_playtree, m_config_t *config, int enqu
    parsing some MOV-Reference-File; or by loading an playlist with "File Open"
    The file which contained the playlist is thereby replaced with it's contents. */
 
-int guiAddPlaylist(play_tree_t *my_playtree, m_config_t *config)
+int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
 {
     play_tree_iter_t *my_pt_iter = NULL;
     int result = 0;

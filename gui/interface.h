@@ -179,8 +179,8 @@ extern guiInterface_t guiInfo;
 void guiDone(void);
 int gui(int what, void *arg);
 void guiInit(void);
-int guiInitializePlaylist(play_tree_t *my_playtree, m_config_t *config, int enqueue);
-int guiAddPlaylist(play_tree_t *my_playtree, m_config_t *config);
+int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqueue);
+int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config);
 
 /* GUI -> MPlayer */
 
