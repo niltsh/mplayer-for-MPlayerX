@@ -729,7 +729,7 @@ int gui(int what, void *arg)
                     eq.channel = i;
                     eq.band    = j;
                     eq.gain    = gtkEquChannels[i][j];
-                    mplayer(gtkSetEqualizer, 0, &eq);
+                    mplayer(MPLAYER_SET_EQUALIZER, 0, &eq);
                 }
             }
         }
@@ -941,45 +941,45 @@ void mplayer(int what, float fparam, void *vparam)
         // subtitle
 
 #ifndef CONFIG_FREETYPE
-    case gtkSetFontFactor:
+    case MPLAYER_SET_FONT_FACTOR:
         font_factor = fparam;
         mplayerLoadFont();
         break;
 #else
-    case gtkSetFontOutLine:
+    case MPLAYER_SET_FONT_OUTLINE:
         subtitle_font_thickness = (8.0f / 100.0f) * fparam;
         mplayerLoadFont();
         break;
 
-    case gtkSetFontBlur:
+    case MPLAYER_SET_FONT_BLUR:
         subtitle_font_radius = (8.0f / 100.0f) * fparam;
         mplayerLoadFont();
         break;
 
-    case gtkSetFontTextScale:
+    case MPLAYER_SET_FONT_TEXTSCALE:
         text_font_scale_factor = fparam;
         mplayerLoadFont();
         break;
 
-    case gtkSetFontOSDScale:
+    case MPLAYER_SET_FONT_OSDSCALE:
         osd_font_scale_factor = fparam;
         mplayerLoadFont();
         break;
 
-    case gtkSetFontEncoding:
+    case MPLAYER_SET_FONT_ENCODING:
         nfree(subtitle_font_encoding);
         subtitle_font_encoding = gstrdup((char *)vparam);
         mplayerLoadFont();
         break;
 
-    case gtkSetFontAutoScale:
+    case MPLAYER_SET_FONT_AUTOSCALE:
         subtitle_autoscale = (int)fparam;
         mplayerLoadFont();
         break;
 #endif
 
 #ifdef CONFIG_ICONV
-    case gtkSetSubEncoding:
+    case MPLAYER_SET_SUB_ENCODING:
         nfree(sub_cp);
         sub_cp = gstrdup((char *)vparam);
         break;
@@ -1008,13 +1008,13 @@ void mplayer(int what, float fparam, void *vparam)
 
         break;
 
-    case gtkSetExtraStereo:
+    case MPLAYER_SET_EXTRA_STEREO:
         gtkAOExtraStereoMul = fparam;
         if (guiInfo.afilter)
             af_control_any_rev(guiInfo.afilter, AF_CONTROL_ES_MUL | AF_CONTROL_SET, &gtkAOExtraStereoMul);
         break;
 
-    case gtkSetPanscan:
+    case MPLAYER_SET_PANSCAN:
     {
         mp_cmd_t *mp_cmd;
 
@@ -1027,33 +1027,33 @@ void mplayer(int what, float fparam, void *vparam)
     }
     break;
 
-    case gtkSetAutoq:
+    case MPLAYER_SET_AUTO_QUALITY:
         auto_quality = (int)fparam;
         break;
 
     // set equalizers
 
-    case gtkSetContrast:
+    case MPLAYER_SET_CONTRAST:
         if (guiInfo.sh_video)
             set_video_colors(guiInfo.sh_video, "contrast", (int)fparam);
         break;
 
-    case gtkSetBrightness:
+    case MPLAYER_SET_BRIGHTNESS:
         if (guiInfo.sh_video)
             set_video_colors(guiInfo.sh_video, "brightness", (int)fparam);
         break;
 
-    case gtkSetHue:
+    case MPLAYER_SET_HUE:
         if (guiInfo.sh_video)
             set_video_colors(guiInfo.sh_video, "hue", (int)fparam);
         break;
 
-    case gtkSetSaturation:
+    case MPLAYER_SET_SATURATION:
         if (guiInfo.sh_video)
             set_video_colors(guiInfo.sh_video, "saturation", (int)fparam);
         break;
 
-    case gtkSetEqualizer:
+    case MPLAYER_SET_EQUALIZER:
     {
         af_control_ext_t tmp;
 

@@ -60,24 +60,24 @@ extern int use_gui;             // this is defined in mplayer.c
 #define guiVCD       2
 #define guiFilenames 4
 #define guiALL       0xffffffff
-
-#define gtkSetContrast      0
-#define gtkSetBrightness    1
-#define gtkSetHue           2
-#define gtkSetSaturation    3
-#define gtkSetEqualizer     4
-#define gtkSetExtraStereo   10
-#define gtkSetPanscan       11
-#define gtkSetFontFactor    12
-#define gtkSetAutoq         13
 #define gtkClearStruct      14
-#define gtkSetFontOutLine   16
-#define gtkSetFontBlur      17
-#define gtkSetFontTextScale 18
-#define gtkSetFontOSDScale  19
-#define gtkSetFontEncoding  20
-#define gtkSetFontAutoScale 21
-#define gtkSetSubEncoding   22
+
+#define MPLAYER_SET_CONTRAST       0
+#define MPLAYER_SET_BRIGHTNESS     1
+#define MPLAYER_SET_HUE            2
+#define MPLAYER_SET_SATURATION     3
+#define MPLAYER_SET_EQUALIZER      4
+#define MPLAYER_SET_EXTRA_STEREO   10
+#define MPLAYER_SET_PANSCAN        11
+#define MPLAYER_SET_FONT_FACTOR    12
+#define MPLAYER_SET_AUTO_QUALITY   13
+#define MPLAYER_SET_FONT_OUTLINE   16
+#define MPLAYER_SET_FONT_BLUR      17
+#define MPLAYER_SET_FONT_TEXTSCALE 18
+#define MPLAYER_SET_FONT_OSDSCALE  19
+#define MPLAYER_SET_FONT_ENCODING  20
+#define MPLAYER_SET_FONT_AUTOSCALE 21
+#define MPLAYER_SET_SUB_ENCODING   22
 
 typedef struct {
     int x;
