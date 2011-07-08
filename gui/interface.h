@@ -184,7 +184,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
 
 /* GUI -> MPlayer */
 
-void mplayer(int cmd, float fparam, void *vparam);
+void mplayer(int what, float fparam, void *vparam);
 void mplayerLoadFont(void);
 void mplayerLoadSubtitle(char *name);
 void gmp_msg(int mod, int lev, const char *format, ...);

@@ -933,11 +933,11 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
 
 /* GUI -> MPlayer */
 
-void mplayer(int cmd, float fparam, void *vparam)
+void mplayer(int what, float fparam, void *vparam)
 {
     equalizer_t *eq = (equalizer_t *)vparam;
 
-    switch (cmd) {
+    switch (what) {
         // subtitle
 
 #ifndef CONFIG_FREETYPE
