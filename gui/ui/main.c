@@ -246,7 +246,7 @@ NoPause:
    case evLoadSubtitle:  gtkShow( evLoadSubtitle,NULL );  break;
    case evDropSubtitle:
 	nfree( guiInfo.Subtitlename );
-	guiLoadSubtitle( NULL );
+	mplayerLoadSubtitle( NULL );
 	break;
    case evLoadAudioFile: gtkShow( evLoadAudioFile,NULL ); break;
    case evPrev: uiPrev(); break;
@@ -636,6 +636,6 @@ void uiDandDHandler(int num,char** files)
   if (subtitles) {
     nfree(guiInfo.Subtitlename);
     guiInfo.Subtitlename = subtitles;
-    guiLoadSubtitle(guiInfo.Subtitlename);
+    mplayerLoadSubtitle(guiInfo.Subtitlename);
   }
 }

@@ -488,7 +488,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
           break;
    case fsSubtitleSelector:
           setddup( &guiInfo.Subtitlename,fsSelectedDirectory,fsSelectedFile );
-	  guiLoadSubtitle( guiInfo.Subtitlename );
+	  mplayerLoadSubtitle( guiInfo.Subtitlename );
           break;
    case fsOtherSelector:
           setddup( &guiInfo.Othername,fsSelectedDirectory,fsSelectedFile );
@@ -498,7 +498,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
           break;
    case fsFontSelector:
           setddup( &font_name,fsSelectedDirectory,fsSelectedFile );
-	  guiLoadFont();
+	  mplayerLoadFont();
 	  if ( Preferences ) gtk_entry_set_text( GTK_ENTRY( prEFontName ),font_name );
 	  break;
   }

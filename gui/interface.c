@@ -275,7 +275,7 @@ void guiInit(void)
     if (subdata)
         setdup(&guiInfo.Subtitlename, subdata->filename);
 
-    guiLoadFont();
+    mplayerLoadFont();
 
     initialized = 1;
 }
@@ -616,7 +616,7 @@ int gui(int what, void *arg)
             stream_dump_type = 6;
 
         gtkSubDumpMPSub = gtkSubDumpSrt = 0;
-        guiLoadFont();
+        mplayerLoadFont();
 
         // misc
 
@@ -943,38 +943,38 @@ void mplayer(int cmd, float fparam, void *vparam)
 #ifndef CONFIG_FREETYPE
     case gtkSetFontFactor:
         font_factor = fparam;
-        guiLoadFont();
+        mplayerLoadFont();
         break;
 #else
     case gtkSetFontOutLine:
         subtitle_font_thickness = (8.0f / 100.0f) * fparam;
-        guiLoadFont();
+        mplayerLoadFont();
         break;
 
     case gtkSetFontBlur:
         subtitle_font_radius = (8.0f / 100.0f) * fparam;
-        guiLoadFont();
+        mplayerLoadFont();
         break;
 
     case gtkSetFontTextScale:
         text_font_scale_factor = fparam;
-        guiLoadFont();
+        mplayerLoadFont();
         break;
 
     case gtkSetFontOSDScale:
         osd_font_scale_factor = fparam;
-        guiLoadFont();
+        mplayerLoadFont();
         break;
 
     case gtkSetFontEncoding:
         nfree(subtitle_font_encoding);
         subtitle_font_encoding = gstrdup((char *)vparam);
-        guiLoadFont();
+        mplayerLoadFont();
         break;
 
     case gtkSetFontAutoScale:
         subtitle_autoscale = (int)fparam;
-        guiLoadFont();
+        mplayerLoadFont();
         break;
 #endif
 
@@ -1083,7 +1083,7 @@ void mplayer(int cmd, float fparam, void *vparam)
     }
 }
 
-void guiLoadFont(void)
+void mplayerLoadFont(void)
 {
 #ifdef CONFIG_FREETYPE
     load_font_ft(vo_image_width, vo_image_height, &vo_font, font_name, osd_font_scale_factor);
@@ -1130,7 +1130,7 @@ void guiLoadFont(void)
 #endif
 }
 
-void guiLoadSubtitle(char *name)
+void mplayerLoadSubtitle(char *name)
 {
     if (guiInfo.Playing == 0) {
         guiInfo.SubtitleChanged = 1; // what is this for? (mw)

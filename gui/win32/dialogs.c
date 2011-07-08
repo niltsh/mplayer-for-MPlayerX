@@ -45,7 +45,7 @@ int get_video_colors(sh_video_t *sh_video, const char *item, int *value);
 guiInterface_t guiInfo;
 int addurl = 0;
 
-void guiLoadSubtitle(char *name)
+void mplayerLoadSubtitle(char *name)
 {
     if (!guiInfo.Playing)
     {
@@ -178,7 +178,7 @@ void display_opensubtitlewindow(gui_t *gui)
     subtitleopen.nMaxFile = MAXFILE;
 
     if(GetOpenFileName(&subtitleopen))
-        guiLoadSubtitle(subtitlefile);
+        mplayerLoadSubtitle(subtitlefile);
 }
 
 static void display_loadplaylistwindow(gui_t *gui)
