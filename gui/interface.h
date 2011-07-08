@@ -35,21 +35,23 @@ extern int use_gui;             // this is defined in mplayer.c
 
 #define GMPlayer "gmplayer"
 
-#define GUI_HANDLE_X_EVENT     0
-#define GUI_SET_STATE          1
-#define GUI_RUN_COMMAND        2
-#define GUI_SET_AUDIO          6
-#define GUI_SETUP_VIDEO_WINDOW 8
-#define GUI_SET_STREAM         9
-#define GUI_REDRAW             10
-#define GUI_SET_MIXER          11
-#define GUI_SET_FILE           12
-#define GUI_SET_VIDEO          13
-#define GUI_PREPARE            16
-#define GUI_SET_AFILTER        17
-#define GUI_SET_CONTEXT        18
-#define GUI_END_FILE           19
-#define GUI_HANDLE_EVENTS      20
+enum {
+    GUI_END_FILE,
+    GUI_HANDLE_EVENTS,
+    GUI_HANDLE_X_EVENT,
+    GUI_PREPARE,
+    GUI_REDRAW,
+    GUI_RUN_COMMAND,
+    GUI_SETUP_VIDEO_WINDOW,
+    GUI_SET_AFILTER,
+    GUI_SET_AUDIO,
+    GUI_SET_CONTEXT,
+    GUI_SET_FILE,
+    GUI_SET_MIXER,
+    GUI_SET_STATE,
+    GUI_SET_STREAM,
+    GUI_SET_VIDEO
+};
 
 #define GUI_STOP  0
 #define GUI_PLAY  1
@@ -60,24 +62,26 @@ extern int use_gui;             // this is defined in mplayer.c
 #define guiVCD       2
 #define guiFilenames 4
 #define guiALL       0xffffffff
-#define gtkClearStruct      14
+#define gtkClearStruct 99
 
-#define MPLAYER_SET_CONTRAST       0
-#define MPLAYER_SET_BRIGHTNESS     1
-#define MPLAYER_SET_HUE            2
-#define MPLAYER_SET_SATURATION     3
-#define MPLAYER_SET_EQUALIZER      4
-#define MPLAYER_SET_EXTRA_STEREO   10
-#define MPLAYER_SET_PANSCAN        11
-#define MPLAYER_SET_FONT_FACTOR    12
-#define MPLAYER_SET_AUTO_QUALITY   13
-#define MPLAYER_SET_FONT_OUTLINE   16
-#define MPLAYER_SET_FONT_BLUR      17
-#define MPLAYER_SET_FONT_TEXTSCALE 18
-#define MPLAYER_SET_FONT_OSDSCALE  19
-#define MPLAYER_SET_FONT_ENCODING  20
-#define MPLAYER_SET_FONT_AUTOSCALE 21
-#define MPLAYER_SET_SUB_ENCODING   22
+enum {
+    MPLAYER_SET_AUTO_QUALITY,
+    MPLAYER_SET_BRIGHTNESS,
+    MPLAYER_SET_CONTRAST,
+    MPLAYER_SET_EQUALIZER,
+    MPLAYER_SET_EXTRA_STEREO,
+    MPLAYER_SET_FONT_AUTOSCALE,
+    MPLAYER_SET_FONT_BLUR,
+    MPLAYER_SET_FONT_ENCODING,
+    MPLAYER_SET_FONT_FACTOR,
+    MPLAYER_SET_FONT_OSDSCALE,
+    MPLAYER_SET_FONT_OUTLINE,
+    MPLAYER_SET_FONT_TEXTSCALE,
+    MPLAYER_SET_HUE,
+    MPLAYER_SET_PANSCAN,
+    MPLAYER_SET_SATURATION,
+    MPLAYER_SET_SUB_ENCODING
+};
 
 typedef struct {
     int x;
