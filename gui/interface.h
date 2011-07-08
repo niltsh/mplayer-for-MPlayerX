@@ -176,18 +176,18 @@ extern guiInterface_t guiInfo;
 
 /* MPlayer -> GUI */
 
-void guiDone(void);
 int gui(int what, void *arg);
+void guiDone(void);
 void guiInit(void);
-int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqueue);
 int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config);
+int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqueue);
 
 /* GUI -> MPlayer */
 
-void gmp_msg(int mod, int lev, const char *format, ...);
 void mplayer(int cmd, float fparam, void *vparam);
-void guiExit(enum exit_reason how);
 void mplayerLoadFont(void);
 void mplayerLoadSubtitle(char *name);
+void gmp_msg(int mod, int lev, const char *format, ...);
+void guiExit(enum exit_reason how);
 
 #endif /* MPLAYER_GUI_INTERFACE_H */
