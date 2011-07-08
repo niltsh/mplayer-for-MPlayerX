@@ -31,6 +31,7 @@
 #include "libao2/audio_out.h"
 #include "osdep/priority.h"
 #include "mixer.h"
+#include "gui/util/list.h"
 #include "gui/ui/gmplayer.h"
 #include "gui/interface.h"
 #include "gui.h"

@@ -48,7 +48,10 @@
 #include "access_mpcontext.h"
 #include "libmpcodecs/vd.h"
 #include "libmpcodecs/dec_audio.h"
+#include "gui/ui/actions.h"
 #include "gui/ui/gmplayer.h"
+#include "gui/util/list.h"
+#include "gui/util/string.h"
 #include "mp_core.h"
 #include "mpcommon.h"
 #include "gui.h"
@@ -96,13 +99,13 @@ char *gstrdup(const char *str)
     return strdup(str);
 }
 
-static void setdup (char **old, const char *str)
+void setdup (char **old, const char *str)
 {
   free(*old);
   *old = gstrdup(str);
 }
 
-static void setddup (char **old, const char *dir, const char *name)
+void setddup (char **old, const char *dir, const char *name)
 {
   free(*old);
   *old = malloc(strlen(dir) + strlen(name) + 2);
@@ -131,7 +134,7 @@ void gaddlist( char ***list, const char *entry)
  * \brief this replaces a string starting with search by replace.
  * If not found, replace is appended.
  */
-static void greplace(char ***list, char *search, char *replace)
+void greplace(char ***list, const char *search, const char *replace)
 {
     int i = 0;
     int len = (search) ? strlen(search) : 0;

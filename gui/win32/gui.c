@@ -41,6 +41,7 @@
 #include "libvo/video_out.h"
 #include "libmpcodecs/vd.h"
 #include "gui/interface.h"
+#include "gui/ui/actions.h"
 #include "gui/ui/gmplayer.h"
 #include "gui.h"
 #include "dialogs.h"

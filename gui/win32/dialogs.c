@@ -25,6 +25,7 @@
 #include <commctrl.h>
 #include "path.h"
 #include "gui/interface.h"
+#include "gui/ui/actions.h"
 #include "mp_msg.h"
 #include "help_mp.h"
 #include "mpcommon.h"
