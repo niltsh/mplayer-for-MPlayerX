@@ -56,13 +56,6 @@ enum {
 #define GUI_PLAY  1
 #define GUI_PAUSE 2
 
-// NOTE TO MYSELF: This should rather be in app.h.
-#define guiDVD       1
-#define guiVCD       2
-#define guiFilenames 4
-#define guiALL       0xffffffff
-#define gtkClearStruct 99
-
 enum {
     MPLAYER_EXIT_GUI,
     MPLAYER_SET_AUTO_QUALITY,

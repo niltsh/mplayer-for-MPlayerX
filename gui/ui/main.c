@@ -55,6 +55,11 @@
 #include "mp_core.h"
 #include "mpcommon.h"
 
+#define CLEAR_FILE 1
+#define CLEAR_DVD  2
+#define CLEAR_VCD  4
+#define CLEAR_ALL  (CLEAR_FILE + CLEAR_DVD + CLEAR_VCD)
+
 #define GUI_REDRAW_WAIT 375
 
 #include "actions.h"
@@ -98,6 +103,25 @@ void uiMainDraw( void )
 // XFlush( wsDisplay );
 }
 
+static void guiInfoMediumClear (int what)
+{
+  if (what & CLEAR_FILE)
+  {
+    nfree(guiInfo.Filename);
+    nfree(guiInfo.Subtitlename);
+    nfree(guiInfo.AudioFile);
+    listSet(gtkDelPl, NULL);
+  }
+
+#ifdef CONFIG_DVDREAD
+  if (what & CLEAR_DVD) memset(&guiInfo.DVD, 0, sizeof(guiDVDStruct));
+#endif
+
+#ifdef CONFIG_VCD
+  if (what & CLEAR_VCD) guiInfo.VCDTracks = 0;
+#endif
+}
+
 static unsigned last_redraw_time = 0;
 
 void uiEventHandling( int msg,float param )
@@ -139,7 +163,7 @@ void uiEventHandling( int msg,float param )
    case evSetVCDTrack:
         guiInfo.Track=iparam;
    case evPlayVCD:
- 	mplayer( gtkClearStruct,0,(void *)guiALL );
+ 	guiInfoMediumClear ( CLEAR_ALL );
 	guiInfo.StreamType=STREAMTYPE_VCD;
 	goto play;
 #endif
@@ -149,7 +173,7 @@ void uiEventHandling( int msg,float param )
         guiInfo.DVD.current_chapter=1;
         guiInfo.DVD.current_angle=1;
 play_dvd_2:
- 	mplayer( gtkClearStruct,0,(void *)(guiALL - guiDVD) );
+ 	guiInfoMediumClear( CLEAR_ALL - CLEAR_DVD );
         guiInfo.StreamType=STREAMTYPE_DVD;
 	goto play;
 #endif
@@ -170,11 +194,11 @@ play:
          {
 	  case STREAMTYPE_STREAM:
 	  case STREAMTYPE_FILE:
-	       mplayer( gtkClearStruct,0,(void *)(guiALL - guiFilenames) );
+	       guiInfoMediumClear( CLEAR_ALL - CLEAR_FILE );
 	       break;
 #ifdef CONFIG_VCD
           case STREAMTYPE_VCD:
-	       mplayer( gtkClearStruct,0,(void *)(guiALL - guiVCD - guiFilenames) );
+	       guiInfoMediumClear( CLEAR_ALL - CLEAR_VCD - CLEAR_FILE );
 	       if ( !cdrom_device ) cdrom_device=gstrdup( DEFAULT_CDROM_DEVICE );
 	       uiSetFileName( NULL,cdrom_device,STREAMTYPE_VCD );
 	       if ( guiInfo.Playing != GUI_PAUSE )
@@ -187,7 +211,7 @@ play:
 #endif
 #ifdef CONFIG_DVDREAD
           case STREAMTYPE_DVD:
-	       mplayer( gtkClearStruct,0,(void *)(guiALL - guiDVD - guiFilenames) );
+	       guiInfoMediumClear( CLEAR_ALL - CLEAR_DVD - CLEAR_FILE );
 	       if ( !dvd_device ) dvd_device=gstrdup( DEFAULT_DVD_DEVICE );
 	       uiSetFileName( NULL,dvd_device,STREAMTYPE_DVD );
 	       if ( guiInfo.Playing != GUI_PAUSE )

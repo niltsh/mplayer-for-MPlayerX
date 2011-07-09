@@ -986,29 +986,6 @@ void mplayer(int what, float fparam, void *vparam)
         break;
 #endif
 
-    // misc
-    // NOTE TO MYSELF: This should rather be in app.c.
-    case gtkClearStruct:
-
-        if ((unsigned int)vparam & guiFilenames) {
-            nfree(guiInfo.Filename);
-            nfree(guiInfo.Subtitlename);
-            nfree(guiInfo.AudioFile);
-            listSet(gtkDelPl, NULL);
-        }
-
-#ifdef CONFIG_DVDREAD
-        if ((unsigned int)vparam & guiDVD)
-            memset(&guiInfo.DVD, 0, sizeof(guiDVDStruct));
-#endif
-
-#ifdef CONFIG_VCD
-        if ((unsigned int)vparam & guiVCD)
-            guiInfo.VCDTracks = 0;
-#endif
-
-        break;
-
     case MPLAYER_SET_EXTRA_STEREO:
         gtkAOExtraStereoMul = fparam;
         if (guiInfo.afilter)
