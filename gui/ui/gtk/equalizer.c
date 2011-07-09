@@ -212,10 +212,10 @@ static gboolean eqVScaleMotion( GtkWidget * widget,GdkEventMotion  * event,gpoin
 
  switch( (int)user_data )
   {
-   case 1: mplayer( MPLAYER_SET_CONTRAST,VContrastadj->value,NULL );      break;
-   case 2: mplayer( MPLAYER_SET_BRIGHTNESS,VBrightnessadj->value,NULL );  break;
-   case 3: mplayer( MPLAYER_SET_HUE,VHueadj->value,NULL );	           break;
-   case 4: mplayer( MPLAYER_SET_SATURATION,VSaturationadj->value,NULL );  break;
+   case 1: mplayer( MPLAYER_SET_CONTRAST,VContrastadj->value,0 );      break;
+   case 2: mplayer( MPLAYER_SET_BRIGHTNESS,VBrightnessadj->value,0 );  break;
+   case 3: mplayer( MPLAYER_SET_HUE,VHueadj->value,0 );	           break;
+   case 4: mplayer( MPLAYER_SET_SATURATION,VSaturationadj->value,0 );  break;
   }
 
  return FALSE;
@@ -236,10 +236,10 @@ static void eqButtonReleased( GtkButton * button,gpointer user_data )
 	 else
 	  {
 	   if ( !guiInfo.Playing ) break;
-	   mplayer( MPLAYER_SET_CONTRAST,0,NULL );
-	   mplayer( MPLAYER_SET_BRIGHTNESS,0,NULL );
-	   mplayer( MPLAYER_SET_HUE,0,NULL );
-	   mplayer( MPLAYER_SET_SATURATION,0,NULL );
+	   mplayer( MPLAYER_SET_CONTRAST,0,0 );
+	   mplayer( MPLAYER_SET_BRIGHTNESS,0,0 );
+	   mplayer( MPLAYER_SET_HUE,0,0 );
+	   mplayer( MPLAYER_SET_SATURATION,0,0 );
 	   eqSetBands( Channel );
 	  }
 	break;
