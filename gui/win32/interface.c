@@ -50,6 +50,7 @@
 #include "libmpcodecs/dec_audio.h"
 #include "gui/ui/actions.h"
 #include "gui/ui/gmplayer.h"
+#include "gui/util/mem.h"
 #include "gui/util/list.h"
 #include "gui/util/string.h"
 #include "mp_core.h"
@@ -409,10 +410,8 @@ void uiSetFileName(char *dir, char *name, int type)
         setddup(&guiInfo.Filename, dir, name);
 
     guiInfo.StreamType = type;
-    free(guiInfo.AudioFile);
-    guiInfo.AudioFile = NULL;
-    free(guiInfo.Subtitlename);
-    guiInfo.Subtitlename = NULL;
+    nfree(guiInfo.AudioFile);
+    nfree(guiInfo.Subtitlename);
 }
 
 void uiFullScreen( void )
@@ -488,8 +487,7 @@ void guiDone(void)
         WaitForSingleObject(hThread, INFINITE);
         CloseHandle(hThread);
         mygui->uninit(mygui);
-        free(mygui);
-        mygui = NULL;
+        nfree(mygui);
     }
     /* Remove tray icon */
     Shell_NotifyIcon(NIM_DELETE, &nid);
@@ -651,8 +649,7 @@ int gui(int what, void *arg)
                 case MP_CMD_QUIT:
                 {
                     mygui->uninit(mygui);
-                    free(mygui);
-                    mygui = NULL;
+                    nfree(mygui);
                     exit_player(EXIT_QUIT);
                     return 1;
                 }

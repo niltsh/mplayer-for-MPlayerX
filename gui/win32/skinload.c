@@ -32,6 +32,7 @@
 #include "libswscale/swscale.h"
 #include "libavutil/imgutils.h"
 #include "gui.h"
+#include "gui/util/mem.h"
 #include "gui/util/bitmap.h"
 
 #define MAX_LINESIZE 256
@@ -218,55 +219,41 @@ static void freeskin(skin_t *skin)
 {
     unsigned int i;
 
-    free(skin->skindir);
-    skin->skindir = NULL;
+    nfree(skin->skindir);
 
     for (i=1; i<=skin->lastusedid; i++)
         skin->removewidget(skin, i);
 
-    free(skin->widgets);
-    skin->widgets = NULL;
+    nfree(skin->widgets);
 
     freeimages(skin);
     for(i=0; i<skin->windowcount; i++)
     {
-        free(skin->windows[i]->name);
-        skin->windows[i]->name = NULL;
+        nfree(skin->windows[i]->name);
         free(skin->windows[i]);
     }
 
-    free(skin->windows);
-    skin->windows = NULL;
+    nfree(skin->windows);
 
     for (i=0; i<skin->fontcount; i++)
     {
         unsigned int x;
 
-        free(skin->fonts[i]->name);
-        skin->fonts[i]->name = NULL;
-
-        free(skin->fonts[i]->id);
-        skin->fonts[i]->id = NULL;
+        nfree(skin->fonts[i]->name);
+        nfree(skin->fonts[i]->id);
 
         for (x=0; x<skin->fonts[i]->charcount; x++)
-        {
-            free(skin->fonts[i]->chars[x]);
-            skin->fonts[i]->chars[x] = NULL;
-        }
+            nfree(skin->fonts[i]->chars[x]);
 
-        free(skin->fonts[i]->chars);
-        skin->fonts[i]->chars = NULL;
+        nfree(skin->fonts[i]->chars);
 
-        free(skin->fonts[i]);
-        skin->fonts[i] = NULL;
+        nfree(skin->fonts[i]);
     }
-    free(skin->fonts);
-    skin->fonts = NULL;
+    nfree(skin->fonts);
 #ifdef DEBUG
     mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN FREE] skin freed\n");
 #endif
-    free(skin);
-    skin = NULL;
+    nfree(skin);
 }
 
 static void removewidget(skin_t *skin, int id)
@@ -280,8 +267,7 @@ static void removewidget(skin_t *skin, int id)
         if(skin->widgets[i]->id == id)
         {
             free(skin->widgets[i]->label);
-            free(skin->widgets[i]);
-            skin->widgets[i] = NULL;
+            nfree(skin->widgets[i]);
         }
         else
         {

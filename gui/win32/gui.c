@@ -43,6 +43,7 @@
 #include "gui/interface.h"
 #include "gui/ui/actions.h"
 #include "gui/ui/gmplayer.h"
+#include "gui/util/mem.h"
 #include "gui.h"
 #include "dialogs.h"
 
@@ -1118,8 +1119,7 @@ int destroy_window(gui_t *gui)
             DeleteObject(gui->window_priv[i]->bitmap);
         free(gui->window_priv[i]);
     }
-    free(gui->window_priv);
-    gui->window_priv = NULL;
+    nfree(gui->window_priv);
     gui->window_priv_count = 0;
 
     /* destroy the main window */
