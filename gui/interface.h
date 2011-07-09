@@ -21,7 +21,6 @@
 
 #include "config.h"
 #include "m_config.h"
-#include "mp_core.h"
 #include "playtree.h"
 #include "stream/stream.h"
 
@@ -65,6 +64,7 @@ enum {
 #define gtkClearStruct 99
 
 enum {
+    MPLAYER_EXIT_GUI,
     MPLAYER_SET_AUTO_QUALITY,
     MPLAYER_SET_BRIGHTNESS,
     MPLAYER_SET_CONTRAST,
@@ -192,6 +192,5 @@ void mplayer(int what, float fparam, void *vparam);
 void mplayerLoadFont(void);
 void mplayerLoadSubtitle(char *name);
 void gmp_msg(int mod, int lev, const char *format, ...);
-void guiExit(enum exit_reason how);
 
 #endif /* MPLAYER_GUI_INTERFACE_H */

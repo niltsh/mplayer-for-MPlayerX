@@ -79,7 +79,7 @@ int             i,pot = 0;
 void uiMainDraw( void )
 {
 
- if ( guiApp.mainWindow.State == wsWindowClosed ) guiExit( EXIT_QUIT );
+ if ( guiApp.mainWindow.State == wsWindowClosed ) mplayer( MPLAYER_EXIT_GUI, EXIT_QUIT, 0 );
 
  if ( guiApp.mainWindow.Visible == wsWindowNotVisible ||
       !mainVisible ) return;
@@ -109,7 +109,7 @@ void uiEventHandling( int msg,float param )
   {
 // --- user events
    case evExit:
-        guiExit( EXIT_QUIT );
+        mplayer( MPLAYER_EXIT_GUI, EXIT_QUIT, 0 );
         break;
 
    case evPlayNetwork:

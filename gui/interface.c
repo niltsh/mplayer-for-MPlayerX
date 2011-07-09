@@ -45,6 +45,7 @@
 #include "libvo/video_out.h"
 #include "libvo/x11_common.h"
 #include "mixer.h"
+#include "mp_core.h"
 #include "mp_msg.h"
 #include "mpcommon.h"
 #include "mplayer.h"
@@ -123,11 +124,11 @@ void guiInit(void)
     switch (i) {
     case -1:
         gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_SKIN_SKINCFG_SkinNotFound, skinName);
-        guiExit(EXIT_ERROR);
+        mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
 
     case -2:
         gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_SKIN_SKINCFG_SkinCfgError, skinName);
-        guiExit(EXIT_ERROR);
+        mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
     }
 
     // initialize windows
@@ -136,7 +137,7 @@ void guiInit(void)
 
     if (!mainDrawBuffer) {
         gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_NEMDB);
-        guiExit(EXIT_ERROR);
+        mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
     }
 
     if (gui_save_pos) {
@@ -491,7 +492,7 @@ int gui(int what, void *arg)
 
         if (!video_driver_list && !video_driver_list[0]) {
             gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_IDFGCVD);
-            guiExit(EXIT_ERROR);
+            mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
         }
 
         {
@@ -1080,6 +1081,10 @@ void mplayer(int what, float fparam, void *vparam)
 
         break;
     }
+
+    case MPLAYER_EXIT_GUI:
+        exit_player_with_rc((enum exit_reason)fparam, (enum exit_reason)fparam >= EXIT_ERROR);
+        break;
     }
 }
 
@@ -1179,11 +1184,6 @@ void mplayerLoadSubtitle(char *name)
     }
 
     update_set_of_subtitles();
-}
-
-void guiExit(enum exit_reason how)
-{
-    exit_player_with_rc(how, how >= EXIT_ERROR);
 }
 
 // NOTE TO MYSELF: This function is nonsense.

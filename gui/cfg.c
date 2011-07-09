@@ -31,6 +31,7 @@
 #include "libvo/video_out.h"
 #include "libvo/x11_common.h"
 #include "mixer.h"
+#include "mp_core.h"
 #include "mp_msg.h"
 #include "mpcommon.h"
 #include "mplayer.h"
@@ -279,14 +280,14 @@ int cfg_read(void)
 
     if (!gui_conf) {
         gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_MemAllocFailed);
-        guiExit(EXIT_ERROR);
+        mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
     }
 
     m_config_register_options(gui_conf, gui_opts);
 
     if (!disable_gui_conf && (m_config_parse_config_file(gui_conf, cfg) < 0)) {
         gmp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_ConfigFileError);
-// guiExit(1);
+// mplayer(MPLAYER_EXIT_GUI, 1, 0);
     }
 
     free(cfg);

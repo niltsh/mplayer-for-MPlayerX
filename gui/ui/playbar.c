@@ -249,7 +249,7 @@ void uiPlaybarInit( void )
  if ( ( playbarDrawBuffer = malloc( guiApp.playbar.Bitmap.ImageSize ) ) == NULL )
   {
    gmp_msg( MSGT_GPLAYER,MSGL_FATAL,MSGTR_NEMDB );
-   guiExit( EXIT_ERROR );
+   mplayer( MPLAYER_EXIT_GUI, EXIT_ERROR, 0 );
   }
 
  guiApp.playbarWindow.Parent=guiApp.subWindow.WindowID;

@@ -424,7 +424,7 @@ void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV
 
     if (depth < 15) {
         mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_WS_ColorDepthTooLow);
-        guiExit(EXIT_ERROR);
+        mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
     }
 
     XMatchVisualInfo(wsDisplay, wsScreen, depth, TrueColor, &win->VisualInfo);
@@ -550,7 +550,7 @@ void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV
 
         if (i == wsWLCount) {
             mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_WS_TooManyOpenWindows);
-            guiExit(EXIT_ERROR);
+            mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
         }
 
         wsWindowList[i] = win;
@@ -1358,7 +1358,7 @@ void wsCreateImage(wsTWindow *win, int Width, int Height)
 
         if (win->xImage == NULL) {
             mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_WS_ShmError);
-            guiExit(EXIT_ERROR);
+            mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
         }
 
         win->Shminfo.shmid = shmget(IPC_PRIVATE, win->xImage->bytes_per_line * win->xImage->height, IPC_CREAT | 0777);
@@ -1366,7 +1366,7 @@ void wsCreateImage(wsTWindow *win, int Width, int Height)
         if (win->Shminfo.shmid < 0) {
             XDestroyImage(win->xImage);
             mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_WS_ShmError);
-            guiExit(EXIT_ERROR);
+            mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
         }
 
         win->Shminfo.shmaddr = (char *)shmat(win->Shminfo.shmid, 0, 0);
@@ -1378,7 +1378,7 @@ void wsCreateImage(wsTWindow *win, int Width, int Height)
                 shmdt(win->Shminfo.shmaddr);
 
             mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_WS_ShmError);
-            guiExit(EXIT_ERROR);
+            mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
         }
 
         win->xImage->data     = win->Shminfo.shmaddr;
@@ -1394,7 +1394,7 @@ void wsCreateImage(wsTWindow *win, int Width, int Height)
 
         if ((win->xImage->data = malloc(win->xImage->bytes_per_line * win->xImage->height)) == NULL) {
             mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_WS_NotEnoughMemoryDrawBuffer);
-            guiExit(EXIT_ERROR);
+            mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
         }
     }
 

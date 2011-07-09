@@ -35,7 +35,7 @@ int             subVisible = 0;
 
 void uiSubDraw( void )
 {
- if ( guiApp.subWindow.State == wsWindowClosed ) guiExit( EXIT_QUIT );
+ if ( guiApp.subWindow.State == wsWindowClosed ) mplayer( MPLAYER_EXIT_GUI, EXIT_QUIT, 0 );
 
  if ( guiApp.subWindow.State == wsWindowFocusIn ) subVisible++;
  if ( guiApp.subWindow.State == wsWindowFocusOut && metacity_hack != 3 ) subVisible--;

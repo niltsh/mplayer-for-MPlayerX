@@ -176,7 +176,7 @@ void uiChangeSkin(char *name)
 
         if (!menuDrawBuffer) {
             gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_NEMDB);
-            guiExit(EXIT_ERROR);
+            mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
         }
 
         wsResizeWindow(&guiApp.menuWindow, guiApp.menu.width, guiApp.menu.height);
@@ -220,7 +220,7 @@ void uiChangeSkin(char *name)
 
     if (!mainDrawBuffer) {
         gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_NEMDB);
-        guiExit(EXIT_ERROR);
+        mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
     }
 
     wsDestroyWindow(&guiApp.mainWindow);
