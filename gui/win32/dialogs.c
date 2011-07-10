@@ -47,11 +47,8 @@ int addurl = 0;
 
 void mplayerLoadSubtitle(char *name)
 {
-    if (!guiInfo.Playing)
-    {
-        guiInfo.SubtitleChanged = 1;
-        return;
-    }
+    if (!guiInfo.Playing) return;
+
     if (subdata)
     {
         mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_DeletingSubtitles);

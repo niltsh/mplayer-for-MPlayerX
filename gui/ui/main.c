@@ -576,7 +576,6 @@ void uiMainKeyHandle( int KeyCode,int Type,int Key )
       case wsEscape:
     	    if ( guiApp.subWindow.isFullScreen )
 	     {
-	      if ( guiInfo.event_struct ) ((XEvent *)guiInfo.event_struct)->type=None;
 	      uiEventHandling( evNormalSize,0 );
 	      return;
 	     }

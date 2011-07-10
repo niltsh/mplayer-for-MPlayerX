@@ -76,26 +76,6 @@ enum {
     MPLAYER_SET_SUB_ENCODING
 };
 
-typedef struct {
-    int x;
-    int y;
-    int width;
-    int height;
-} guiResizeStruct;
-
-typedef struct {
-    int signal;
-    char module[512];
-} guiUnknownErrorStruct;
-
-typedef struct {
-    int seek;
-    int format;
-    int width;
-    int height;
-    char codecdll[128];
-} guiVideoStruct;
-
 #ifdef CONFIG_DVDREAD
 typedef struct {
     int titles;
@@ -112,15 +92,9 @@ typedef struct {
 #endif
 
 typedef struct {
-    int message;
-    guiResizeStruct resize;
-    guiVideoStruct videodata;
-    guiUnknownErrorStruct error;
-
     struct MPContext *mpcontext;
     void *sh_video;
     void *afilter;
-    void *event_struct;
 
     int DiskChanged;
     int NewPlay;
@@ -151,22 +125,16 @@ typedef struct {
     int StreamType;
     int TimeSec;
     int LengthInSec;
-    int FrameDrop;
     float FPS;
 
     char *Filename;
     int FilenameChanged;
 
     char *Subtitlename;
-    int SubtitleChanged;
 
     char *Othername;
-    int OtherChanged;
 
     char *AudioFile;
-    int AudioFileChanged;
-
-    int SkinChange;
 } guiInterface_t;
 
 extern guiInterface_t guiInfo;

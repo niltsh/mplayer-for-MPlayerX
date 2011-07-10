@@ -209,11 +209,6 @@ calclengthmmmmss:
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
-            case 'd':
-                snprintf(tmp, sizeof(tmp), "%d", guiInfo.FrameDrop);
-                av_strlcat(trbuf, tmp, sizeof(trbuf));
-                break;
-
             case 'x':
                 snprintf(tmp, sizeof(tmp), "%d", guiInfo.MovieWidth);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));

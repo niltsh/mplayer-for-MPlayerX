@@ -781,7 +781,6 @@ int gui(int what, void *arg)
         break;
 
     case GUI_HANDLE_X_EVENT:
-        guiInfo.event_struct = arg;
         wsEvents(wsDisplay, arg);
         gtkEventHandling();
         break;
@@ -1114,10 +1113,8 @@ void mplayerLoadFont(void)
 
 void mplayerLoadSubtitle(char *name)
 {
-    if (guiInfo.Playing == 0) {
-        guiInfo.SubtitleChanged = 1; // what is this for? (mw)
+    if (guiInfo.Playing == 0)
         return;
-    }
 
     if (subdata) {
         mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_DeletingSubtitles);
