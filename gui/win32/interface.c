@@ -94,53 +94,6 @@ int parse_filename(char *file, play_tree_t *playtree, m_config_t *mconfig, int c
     return 0;
 }
 
-/**
- * \brief this actually creates a new list containing only one element...
- */
-void gaddlist( char ***list, const char *entry)
-{
-    int i;
-
-    if (*list)
-    {
-        for (i=0; (*list)[i]; i++) free((*list)[i]);
-        free(*list);
-    }
-
-    *list = malloc(2 * sizeof(char **));
-    (*list)[0] = gstrdup(entry);
-    (*list)[1] = NULL;
-}
-
-/**
- * \brief this replaces a string starting with search by replace.
- * If not found, replace is appended.
- */
-void greplace(char ***list, const char *search, const char *replace)
-{
-    int i = 0;
-    int len = (search) ? strlen(search) : 0;
-
-    if (*list)
-    {
-        for (i = 0; (*list)[i]; i++)
-        {
-            if (search && (!strncmp((*list)[i], search, len)))
-            {
-                free((*list)[i]);
-                (*list)[i] = gstrdup(replace);
-                return;
-            }
-        }
-    *list = realloc(*list, (i + 2) * sizeof(char *));
-    }
-    else
-        *list = malloc(2 * sizeof(char *));
-
-    (*list)[i] = gstrdup(replace);
-    (*list)[i + 1] = NULL;
-}
-
 /* this function gets called by the gui to update mplayer */
 static void guiSetEvent(int event)
 {
