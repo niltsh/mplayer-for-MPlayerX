@@ -220,7 +220,7 @@ calclengthmmmmss:
                 break;
 
             case 'C':
-                snprintf(tmp, sizeof(tmp), "%s", guiInfo.sh_video ? ((sh_video_t *)guiInfo.sh_video)->codec->name : "");
+                snprintf(tmp, sizeof(tmp), "%s", guiInfo.sh_video ? guiInfo.sh_video->codec->name : "");
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 

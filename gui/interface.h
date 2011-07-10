@@ -20,7 +20,10 @@
 #define MPLAYER_GUI_INTERFACE_H
 
 #include "config.h"
+#include "libaf/af.h"
+#include "libmpdemux/stheader.h"
 #include "m_config.h"
+#include "mp_core.h"
 #include "playtree.h"
 #include "stream/stream.h"
 
@@ -76,7 +79,6 @@ enum {
     MPLAYER_SET_SUB_ENCODING
 };
 
-#ifdef CONFIG_DVDREAD
 typedef struct {
     int titles;
     int chapters;
@@ -89,12 +91,11 @@ typedef struct {
     int nr_of_subtitles;
     stream_language_t subtitles[32];
 } guiDVDStruct;
-#endif
 
 typedef struct {
-    struct MPContext *mpcontext;
-    void *sh_video;
-    void *afilter;
+    MPContext *mpcontext;
+    sh_video_t *sh_video;
+    af_stream_t *afilter;
 
     int DiskChanged;
     int NewPlay;
