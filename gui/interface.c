@@ -692,11 +692,6 @@ int gui(int what, void *arg)
 
         guiInfo.sh_video = arg;
 
-        if (arg) {
-            sh_video_t *sh = arg;
-            guiInfo.FPS = sh->fps;
-        }
-
         if (guiInfo.StreamType == STREAMTYPE_STREAM)
             btnSet(evSetMoviePosition, btnDisabled);
         else
@@ -1146,7 +1141,7 @@ void mplayerLoadSubtitle(char *name)
     if (name) {
         mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_LoadingSubtitles, name);
 
-        subdata = sub_read_file(name, guiInfo.FPS);
+        subdata = sub_read_file(name, (guiInfo.sh_video ? guiInfo.sh_video->fps : 0));
 
         if (!subdata)
             gmp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_CantLoadSub, name);

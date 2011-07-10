@@ -76,7 +76,7 @@ void mplayerLoadSubtitle(char *name)
     if (name)
     {
         mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_LoadingSubtitles, name);
-        subdata = sub_read_file(strdup(name), guiInfo.FPS);
+        subdata = sub_read_file(strdup(name), (guiInfo.sh_video ? guiInfo.sh_video->fps : 0));
         if (!subdata) mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_CantLoadSub,name);
         sub_name = (malloc(2 * sizeof(char*))); /* when mplayer will be restarted */
         sub_name[0] = strdup(name);               /* sub_name[0] will be read */

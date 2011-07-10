@@ -562,7 +562,6 @@ int gui(int what, void *arg)
             {
                 sh_video_t *sh = arg;
                 codecname = sh->codec->name;
-                guiInfo.FPS = sh->fps;
 
                 /* we have video, show the subwindow */
                 if(!IsWindowVisible(mygui->subwindow) || IsIconic(mygui->subwindow))

@@ -126,7 +126,6 @@ typedef struct {
     int StreamType;
     int TimeSec;
     int LengthInSec;
-    float FPS;
 
     char *Filename;
     int FilenameChanged;
