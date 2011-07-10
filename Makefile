@@ -517,7 +517,8 @@ SRCS_MPLAYER-$(GL_SDL)       += libvo/sdl_common.c
 SRCS_MPLAYER-$(GL_WIN32)     += libvo/w32_common.c
 SRCS_MPLAYER-$(GL_X11)       += libvo/x11_common.c
 SRCS_MPLAYER-$(MATRIXVIEW)   += libvo/vo_matrixview.c libvo/matrixview.c
-SRCS_MPLAYER-$(GUI)          += gui/util/bitmap.c
+SRCS_MPLAYER-$(GUI)          += gui/util/bitmap.c \
+                                gui/util/string.c
 SRCS_MPLAYER-$(GUI_GTK)      += gui/app.c \
                                 gui/cfg.c \
                                 gui/interface.c \
@@ -542,7 +543,6 @@ SRCS_MPLAYER-$(GUI_GTK)      += gui/app.c \
                                 gui/ui/widgets.c \
                                 gui/util/cut.c \
                                 gui/util/list.c \
-                                gui/util/string.c \
                                 gui/wm/ws.c \
                                 gui/wm/wsxdnd.c \
 

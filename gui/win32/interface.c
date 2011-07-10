@@ -94,25 +94,6 @@ int parse_filename(char *file, play_tree_t *playtree, m_config_t *mconfig, int c
     return 0;
 }
 
-char *gstrdup(const char *str)
-{
-    if (!str) return NULL;
-    return strdup(str);
-}
-
-void setdup (char **old, const char *str)
-{
-  free(*old);
-  *old = gstrdup(str);
-}
-
-void setddup (char **old, const char *dir, const char *name)
-{
-  free(*old);
-  *old = malloc(strlen(dir) + strlen(name) + 2);
-  if (*old) sprintf(*old, "%s/%s", dir, name);
-}
-
 /**
  * \brief this actually creates a new list containing only one element...
  */
