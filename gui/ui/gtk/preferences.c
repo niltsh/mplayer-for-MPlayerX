@@ -1000,10 +1000,10 @@ GtkWidget * create_Preferences( void )
     AddFrame( NULL,GTK_SHADOW_NONE,
       AddFrame( MSGTR_PREFERENCES_FRAME_OSD_Level,GTK_SHADOW_ETCHED_OUT,vbox6,0 ),1 ),0 );
 
-  RBOSDNone=AddRadioButton( MSGTR_PREFERENCES_None,&OSD_group,vbox600 );
-  RBOSDIndicator=AddRadioButton( MSGTR_PREFERENCES_OSDProgress,&OSD_group,vbox600 );
-  RBOSDTandP=AddRadioButton( MSGTR_PREFERENCES_OSDTimer,&OSD_group,vbox600 );
-  RBOSDTPTT=AddRadioButton( MSGTR_PREFERENCES_OSDTimerPercentageTotalTime,&OSD_group,vbox600 );
+  RBOSDNone=AddRadioButton( MSGTR_PREFERENCES_OSD_LEVEL0,&OSD_group,vbox600 );
+  RBOSDIndicator=AddRadioButton( MSGTR_PREFERENCES_OSD_LEVEL1,&OSD_group,vbox600 );
+  RBOSDTandP=AddRadioButton( MSGTR_PREFERENCES_OSD_LEVEL2,&OSD_group,vbox600 );
+  RBOSDTPTT=AddRadioButton( MSGTR_PREFERENCES_OSD_LEVEL3,&OSD_group,vbox600 );
 
   vbox7=AddVBox(
     AddFrame( NULL,GTK_SHADOW_NONE,
