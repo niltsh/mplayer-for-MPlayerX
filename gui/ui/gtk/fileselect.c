@@ -279,7 +279,7 @@ void ShowFileSelect( int type,int modal )
         gtk_entry_set_text( GTK_ENTRY( fsFilterCombo ),fsSubtitleFilterNames[k >= 0 ? k : i-2][0] );
 	tmp=guiInfo.Subtitlename;
         break;
-   case fsOtherSelector:
+/*   case fsOtherSelector:
         gtk_window_set_title( GTK_WINDOW( fsFileSelect ),MSGTR_OtherSelect );
         fsList_items=NULL;
         for( i=0;fsOtherFilterNames[i][0];i++ )
@@ -288,7 +288,7 @@ void ShowFileSelect( int type,int modal )
         g_list_free( fsList_items );
         gtk_entry_set_text( GTK_ENTRY( fsFilterCombo ),fsOtherFilterNames[0][0] );
 	tmp=guiInfo.Othername;
-        break;
+        break;*/
    case fsAudioSelector:
 	gtk_window_set_title( GTK_WINDOW( fsFileSelect ),MSGTR_AudioFileSelect );
 	fsList_items=NULL;
@@ -406,11 +406,11 @@ static void fs_fsFilterCombo_changed( GtkEditable * editable,
            if( !strcmp( str,fsSubtitleFilterNames[i][0] ) )
             { fsFilter=fsSubtitleFilterNames[i][1]; fsLastSubtitleFilterSelected = i; break; }
           break;
-   case fsOtherSelector:
+/*   case fsOtherSelector:
           for( i=0;fsOtherFilterNames[i][0];i++ )
            if( !strcmp( str,fsOtherFilterNames[i][0] ) )
             { fsFilter=fsOtherFilterNames[i][1]; break; }
-          break;
+          break;*/
    case fsAudioSelector:
           for( i=0;fsAudioFileNames[i][0];i++ )
            if( !strcmp( str,fsAudioFileNames[i][0] ) )
@@ -490,9 +490,9 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
           setddup( &guiInfo.Subtitlename,fsSelectedDirectory,fsSelectedFile );
 	  mplayerLoadSubtitle( guiInfo.Subtitlename );
           break;
-   case fsOtherSelector:
+/*   case fsOtherSelector:
           setddup( &guiInfo.Othername,fsSelectedDirectory,fsSelectedFile );
-          break;
+          break;*/
    case fsAudioSelector:
           setddup( &guiInfo.AudioFile,fsSelectedDirectory,fsSelectedFile );
           break;

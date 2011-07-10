@@ -132,8 +132,6 @@ typedef struct {
 
     char *Subtitlename;
 
-    char *Othername;
-
     char *AudioFile;
 } guiInterface_t;
 
