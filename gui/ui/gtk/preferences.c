@@ -114,8 +114,8 @@ static GtkWidget * SBAutoSync;
 static GtkAdjustment * SBAutoSyncadj;
 
 static GtkWidget * RBOSDNone;
-static GtkWidget * RBOSDTandP;
 static GtkWidget * RBOSDIndicator;
+static GtkWidget * RBOSDTandP;
 static GtkWidget * RBOSDTPTT;
 
 static GtkWidget * HSAudioDelay;
@@ -1001,8 +1001,8 @@ GtkWidget * create_Preferences( void )
       AddFrame( MSGTR_PREFERENCES_FRAME_OSD_Level,GTK_SHADOW_ETCHED_OUT,vbox6,0 ),1 ),0 );
 
   RBOSDNone=AddRadioButton( MSGTR_PREFERENCES_None,&OSD_group,vbox600 );
-  RBOSDTandP=AddRadioButton( MSGTR_PREFERENCES_OSDTimer,&OSD_group,vbox600 );
   RBOSDIndicator=AddRadioButton( MSGTR_PREFERENCES_OSDProgress,&OSD_group,vbox600 );
+  RBOSDTandP=AddRadioButton( MSGTR_PREFERENCES_OSDTimer,&OSD_group,vbox600 );
   RBOSDTPTT=AddRadioButton( MSGTR_PREFERENCES_OSDTimerPercentageTotalTime,&OSD_group,vbox600 );
 
   vbox7=AddVBox(
@@ -1361,8 +1361,8 @@ GtkWidget * create_Preferences( void )
 #endif
 #if 0
   gtk_signal_connect( GTK_OBJECT( RBOSDNone ),"toggled",GTK_SIGNAL_FUNC( on_RBOSDNone_toggled ),NULL );
-  gtk_signal_connect( GTK_OBJECT( RBOSDTandP ),"toggled",GTK_SIGNAL_FUNC( on_RBOSDTandP_toggled ),NULL );
   gtk_signal_connect( GTK_OBJECT( RBOSDIndicator ),"toggled",GTK_SIGNAL_FUNC( on_RBOSDIndicator_toggled ),NULL );
+  gtk_signal_connect( GTK_OBJECT( RBOSDTandP ),"toggled",GTK_SIGNAL_FUNC( on_RBOSDTandP_toggled ),NULL );
   gtk_signal_connect( GTK_OBJECT( RBOSDTPTT ),"toggled",GTK_SIGNAL_FUNC( on_RBOSDIndicator_toggled ),NULL );
   gtk_signal_connect( GTK_OBJECT( CBAudioEqualizer ),"toggled",GTK_SIGNAL_FUNC( on_CBAudioEqualizer_toggled ),NULL );
 #endif
