@@ -53,6 +53,7 @@ char * get_current_dir_name( void );
 gchar         * fsSelectedFile = NULL;
 gchar         * fsSelectedFileUtf8 = NULL;
 gchar         * fsSelectedDirectory = NULL;
+gchar         * fsSelectedDirectoryUtf8 = NULL;
 unsigned char * fsThatDir = ".";
 const gchar   * fsFilter = "*";
 
@@ -248,8 +249,8 @@ static void CheckDir( GtkWidget * list )
 
 void ShowFileSelect( int type,int modal )
 {
- int i, k;
- char * tmp = NULL;
+ int i, k, fsMedium;
+ char * tmp = NULL, * dir = NULL;
 
  if ( fsFileSelect ) gtkActive( fsFileSelect );
   else fsFileSelect=create_FileSelect();
@@ -313,10 +314,14 @@ void ShowFileSelect( int type,int modal )
 	break;
   }
 
+ fsMedium=(fsType == fsVideoSelector || fsType == fsSubtitleSelector || fsType == fsAudioSelector);
+
+ if ( !tmp && fsMedium ) tmp=guiInfo.Filename;
+
  if ( tmp && tmp[0] )
   {
    struct stat f;
-   char * dir = strdup( tmp );
+   dir = strdup( tmp );
 
    do
     {
@@ -326,22 +331,27 @@ void ShowFileSelect( int type,int modal )
      if ( c ) *c=0;
     } while ( strrchr( dir,'/' ) );
 
-   if ( dir[0] ) chdir( dir );
-
-   free( dir );
+   if ( !dir[0] ) nfree( dir );
   }
 
  if ( fsTopList_items ) g_list_free( fsTopList_items ); fsTopList_items=NULL;
  {
   unsigned int  i, c = 1;
 
-  if ( fsType == fsVideoSelector )
+
+  if ( fsMedium )
    {
     for ( i=0;i < FF_ARRAY_ELEMS(fsHistory);i++ )
-     if ( fsHistory[i] ) { fsTopList_items=g_list_append( fsTopList_items,fsHistory[i] ); c=0; }
+     if ( fsHistory[i] ) { fsTopList_items=g_list_append( fsTopList_items,fsHistory[i] ); if ( c ) c=gstrcmp( dir,fsHistory[i] ); }
    }
-  if ( c ) fsTopList_items=g_list_append( fsTopList_items,(gchar *)get_current_dir_name_utf8() );
+  if ( c && dir )
+   {
+     g_free( fsSelectedDirectoryUtf8 );
+     fsSelectedDirectoryUtf8=g_filename_to_utf8( dir, -1, NULL, NULL, NULL );
+     fsTopList_items=g_list_prepend( fsTopList_items,fsSelectedDirectoryUtf8 );
+   }
  }
+ free( dir );
  if ( getenv( "HOME" ) ) fsTopList_items=g_list_append( fsTopList_items,getenv( "HOME" ) );
  fsTopList_items=g_list_append( fsTopList_items,"/home" );
  fsTopList_items=g_list_append( fsTopList_items,"/mnt" );
@@ -582,6 +592,8 @@ static void fs_Destroy( void )
 {
  g_free( fsSelectedFileUtf8 );
  fsSelectedFileUtf8 = NULL;
+ g_free( fsSelectedDirectoryUtf8 );
+ fsSelectedDirectoryUtf8 = NULL;
  WidgetDestroy( fsFileSelect, &fsFileSelect );
 }
 
