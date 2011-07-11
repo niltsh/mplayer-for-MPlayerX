@@ -513,6 +513,9 @@ static void loadfonts(skin_t* skin)
         if(!(fp = fopen(filename,"rb")))
         {
             mp_msg(MSGT_GPLAYER, MSGL_ERR, "[FONT LOAD] Font not found \"%s\"\n", skin->fonts[x]->name);
+            free(tmp);
+            free(desc);
+            free(filename);
             return;
         }
         while(!feof(fp))
@@ -603,6 +606,9 @@ skin_t* loadskin(char* skindir, int desktopbpp)
     {
         mp_msg(MSGT_GPLAYER, MSGL_FATAL, "[SKIN LOAD] Skin \"%s\" not found\n", skindir);
         skin->freeskin(skin);
+        free(tmp);
+        free(desc);
+        free(filename);
         return NULL;
     }
 
