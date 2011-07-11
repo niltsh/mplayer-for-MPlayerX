@@ -1520,7 +1520,7 @@ int create_window(gui_t *gui, char *skindir)
     return 0;
 }
 
-gui_t *create_gui(char *skindir, char *skinName, void (*playercontrol)(int event))
+gui_t *create_gui(char *skindir, void (*playercontrol)(int event))
 {
     gui_t *gui = calloc(1, sizeof(gui_t));
     char temp[MAX_PATH];
@@ -1540,7 +1540,6 @@ gui_t *create_gui(char *skindir, char *skinName, void (*playercontrol)(int event
     /* create playlist */
     gui->playlist = create_playlist();
 
-    if(!skinName) skinName = strdup("Blue");
     sprintf(temp, "%s\\%s", skindir, skinName);
     if(create_window(gui, temp)) return NULL;
     if(create_subwindow(gui, temp)) return NULL;

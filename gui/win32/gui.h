@@ -98,7 +98,7 @@ struct gui_t
 #define     wsMovable       2
 #define     wsSizeable      4
 
-gui_t *create_gui(char *skindir, char *skinName, void (*playercontrol)(int event));
+gui_t *create_gui(char *skindir, void (*playercontrol)(int event));
 int destroy_window(gui_t *gui);
 int create_window(gui_t *gui, char *skindir);
 int create_subwindow(gui_t *gui, char *skindir);

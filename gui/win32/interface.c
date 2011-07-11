@@ -377,7 +377,7 @@ static unsigned __stdcall GuiThread(void* param)
     MSG msg;
 
     if(!skinName) skinName = strdup("Blue");
-    if(!mygui) mygui = create_gui(get_path("skins"), skinName, guiSetEvent);
+    if(!mygui) mygui = create_gui(get_path("skins"), guiSetEvent);
     if(!mygui) exit_player(EXIT_ERROR);
 
     if(autosync && autosync != gtkAutoSync)
