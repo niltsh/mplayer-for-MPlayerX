@@ -177,8 +177,6 @@ static struct
   { "cp874",       MSGTR_PREFERENCES_FontEncoding20 },
   { NULL,NULL }
  };
-char * lCEncoding = NULL;
-char * lSEncoding = NULL;
 #endif
 
 static int    old_audio_driver = 0;
@@ -324,8 +322,7 @@ void ShowPreferences( void )
    int i;
    for ( i=0;lEncoding[i].name;i++ )
     if ( !gstrcmp( sub_cp,lEncoding[i].name ) ) break;
-   if ( lEncoding[i].name ) lSEncoding=lEncoding[i].comment;
-   gtk_entry_set_text( GTK_ENTRY( ESubEncoding ),lSEncoding );
+   if ( lEncoding[i].name ) gtk_entry_set_text( GTK_ENTRY( ESubEncoding ),lEncoding[i].comment );
   }
 #endif
 
@@ -344,8 +341,7 @@ void ShowPreferences( void )
    int i;
    for ( i=0;lEncoding[i].name;i++ )
     if ( !gstrcmp( subtitle_font_encoding,lEncoding[i].name ) ) break;
-   if ( lEncoding[i].name ) lCEncoding=lEncoding[i].comment;
-   gtk_entry_set_text( GTK_ENTRY( EFontEncoding ),lCEncoding );
+   if ( lEncoding[i].name ) gtk_entry_set_text( GTK_ENTRY( EFontEncoding ),lEncoding[i].comment );
   }
  switch ( subtitle_autoscale )
   {
