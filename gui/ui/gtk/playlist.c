@@ -489,7 +489,7 @@ GtkWidget * create_PlayList( void )
   gtk_ctree_expand( GTK_CTREE( CTDirTree ),parent );
   gtk_widget_show( CTDirTree );
 
-  old_path = fsHistory[0];
+  old_path = g_filename_from_utf8( fsHistory[0], -1, NULL, NULL, NULL );
 
   gtk_clist_set_column_widget( GTK_CLIST( CTDirTree ),0,
     AddLabel( MSGTR_PLAYLIST_DirectoryTree,NULL ) );
