@@ -718,7 +718,7 @@ static LRESULT CALLBACK SkinBrowserWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, 
                         Shell_NotifyIcon(NIM_DELETE, &nid);
                         destroy_window(mygui);
                         create_window(mygui, skinspath);
-                        create_subwindow(mygui, skinspath);
+                        create_subwindow(mygui);
                         SendMessage(hwnd, WM_CLOSE, 0, 0); /* Avoid crashing when switching skin */
                     }
                 }
