@@ -106,7 +106,7 @@ static char *geteventname(int event)
 }
 
 /* reads a complete image as is into image buffer */
-static image *pngRead(skin_t *skin, unsigned char *fname)
+static image *pngRead(skin_t *skin, const char *fname)
 {
     int i;
     guiImage bmp;

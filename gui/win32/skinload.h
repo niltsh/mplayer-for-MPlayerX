@@ -107,7 +107,7 @@ struct skin_t
     void (*addwidget)(skin_t *skin, window *win, const char *desc);
     void (*removewidget)(skin_t *skin, int id);
     char *(*geteventname)(int event);
-    image *(*pngRead)(skin_t *skin, unsigned char *fname);
+    image *(*pngRead)(skin_t *skin, const char *fname);
 };
 
 skin_t *loadskin(char *skindir, int desktopbpp);
