@@ -321,7 +321,7 @@ void ShowPreferences( void )
   {
    int i;
    for ( i=0;lEncoding[i].name;i++ )
-    if ( !gstrcmp( sub_cp,lEncoding[i].name ) ) break;
+    if ( !gstrcasecmp( sub_cp,lEncoding[i].name ) ) break;
    if ( lEncoding[i].name ) gtk_entry_set_text( GTK_ENTRY( ESubEncoding ),lEncoding[i].comment );
   }
 #endif
@@ -340,7 +340,7 @@ void ShowPreferences( void )
   {
    int i;
    for ( i=0;lEncoding[i].name;i++ )
-    if ( !gstrcmp( subtitle_font_encoding,lEncoding[i].name ) ) break;
+    if ( !gstrcasecmp( subtitle_font_encoding,lEncoding[i].name ) ) break;
    if ( lEncoding[i].name ) gtk_entry_set_text( GTK_ENTRY( EFontEncoding ),lEncoding[i].comment );
   }
  switch ( subtitle_autoscale )

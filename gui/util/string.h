@@ -20,6 +20,7 @@
 #define MPLAYER_GUI_STRING_H
 
 char *decomment(char *in);
+int gstrcasecmp(const char *a, const char *b);
 char *gstrchr(const char *str, int c);
 int gstrcmp(const char *a, const char *b);
 char *gstrdup(const char *str);
