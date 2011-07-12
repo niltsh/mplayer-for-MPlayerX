@@ -45,7 +45,7 @@ int get_video_colors(sh_video_t *sh_video, const char *item, int *value);
 guiInterface_t guiInfo;
 int addurl = 0;
 
-void mplayerLoadSubtitle(char *name)
+void mplayerLoadSubtitle(const char *name)
 {
     if (!guiInfo.Playing) return;
 

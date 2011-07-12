@@ -91,7 +91,7 @@ extern int fribidi_flip_commas;
 typedef void (*open_sub_func)(char *, float, int);
 typedef int (*open_vob_func)(const char *, const char * const, int, void *);
 
-sub_data* sub_read_file (char *filename, float pts);
+sub_data* sub_read_file (const char *filename, float pts);
 subtitle* subcp_recode (subtitle *sub);
 // enca_fd is the file enca uses to determine the codepage.
 // setting to NULL disables enca.

@@ -1105,7 +1105,7 @@ void mplayerLoadFont(void)
 #endif
 }
 
-void mplayerLoadSubtitle(char *name)
+void mplayerLoadSubtitle(const char *name)
 {
     if (guiInfo.Playing == 0)
         return;

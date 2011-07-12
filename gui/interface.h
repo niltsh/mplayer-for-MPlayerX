@@ -149,7 +149,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
 
 void mplayer(int what, float fparam, void *vparam);
 void mplayerLoadFont(void);
-void mplayerLoadSubtitle(char *name);
+void mplayerLoadSubtitle(const char *name);
 void gmp_msg(int mod, int lev, const char *format, ...);
 
 #endif /* MPLAYER_GUI_INTERFACE_H */

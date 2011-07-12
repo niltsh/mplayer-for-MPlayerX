@@ -1429,7 +1429,7 @@ const char* guess_cp(stream_t *st, const char *preferred_language, const char *f
 #undef MAX_GUESS_BUFFER_SIZE
 #endif
 
-sub_data* sub_read_file (char *filename, float fps) {
+sub_data* sub_read_file (const char *filename, float fps) {
     int utf16;
     stream_t* fd;
     int n_max, n_first, i, j, sub_first, sub_orig;
