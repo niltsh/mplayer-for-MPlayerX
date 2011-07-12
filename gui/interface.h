@@ -139,7 +139,7 @@ extern guiInterface_t guiInfo;
 
 /* MPlayer -> GUI */
 
-int gui(int what, void *arg);
+int gui(int what, void *data);
 void guiDone(void);
 void guiInit(void);
 int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config);
@@ -147,7 +147,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
 
 /* GUI -> MPlayer */
 
-void mplayer(int what, float fparam, void *vparam);
+void mplayer(int what, float value, void *data);
 void mplayerLoadFont(void);
 void mplayerLoadSubtitle(const char *name);
 void gmp_msg(int mod, int lev, const char *format, ...);

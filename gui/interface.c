@@ -349,7 +349,7 @@ static void add_vf(char *str)
     mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_AddingVideoFilter, str);
 }
 
-int gui(int what, void *arg)
+int gui(int what, void *data)
 {
     mixer_t *mixer = NULL;
     stream_t *stream;
@@ -363,17 +363,17 @@ int gui(int what, void *arg)
 
     switch (what) {
     case GUI_SET_CONTEXT:
-        guiInfo.mpcontext = arg;
+        guiInfo.mpcontext = data;
         break;
 
     case GUI_SET_STATE:
 
-        switch ((int)arg) {
+        switch ((int)data) {
         case GUI_STOP:
         case GUI_PLAY:
 // if ( !gtkShowVideoWindow ) wsVisibleWindow( &guiApp.subWindow,wsHideWindow );
         case GUI_PAUSE:
-            guiInfo.Playing = (int)arg;
+            guiInfo.Playing = (int)data;
             break;
         }
 
@@ -407,9 +407,9 @@ int gui(int what, void *arg)
 
     case GUI_RUN_COMMAND:
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] GUI_RUN_COMMAND: %d\n", (int)arg);
+        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] GUI_RUN_COMMAND: %d\n", (int)data);
 
-        switch ((int)arg) {
+        switch ((int)data) {
         case MP_CMD_VO_FULLSCREEN:
             uiEventHandling(evFullScreen, 0);
             break;
@@ -648,7 +648,7 @@ int gui(int what, void *arg)
 
     case GUI_SET_STREAM:
 
-        stream = arg;
+        stream = data;
         guiInfo.StreamType = stream->type;
 
         switch (guiInfo.StreamType) {
@@ -683,14 +683,14 @@ int gui(int what, void *arg)
         break;
 
     case GUI_SET_AFILTER:
-        guiInfo.afilter = arg;
+        guiInfo.afilter = data;
         break;
 
     case GUI_SET_VIDEO:
 
         // video
 
-        guiInfo.sh_video = arg;
+        guiInfo.sh_video = data;
 
         if (guiInfo.StreamType == STREAMTYPE_STREAM)
             btnSet(evSetMoviePosition, btnDisabled);
@@ -708,9 +708,9 @@ int gui(int what, void *arg)
 
     case GUI_SET_AUDIO:
 
-        guiInfo.AudioChannels = arg ? ((sh_audio_t *)arg)->channels : 0;
+        guiInfo.AudioChannels = data ? ((sh_audio_t *)data)->channels : 0;
 
-        if (arg && !guiInfo.sh_video)
+        if (data && !guiInfo.sh_video)
             guiInfo.MovieWindow = False;
 
         gui(GUI_SET_MIXER, 0);
@@ -775,7 +775,7 @@ int gui(int what, void *arg)
         break;
 
     case GUI_HANDLE_X_EVENT:
-        wsEvents(wsDisplay, arg);
+        wsEvents(wsDisplay, data);
         gtkEventHandling();
         break;
 
@@ -927,47 +927,47 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
 
 /* GUI -> MPlayer */
 
-void mplayer(int what, float fparam, void *vparam)
+void mplayer(int what, float value, void *data)
 {
-    equalizer_t *eq = (equalizer_t *)vparam;
+    equalizer_t *eq = (equalizer_t *)data;
 
     switch (what) {
         // subtitle
 
 #ifndef CONFIG_FREETYPE
     case MPLAYER_SET_FONT_FACTOR:
-        font_factor = fparam;
+        font_factor = value;
         mplayerLoadFont();
         break;
 #else
     case MPLAYER_SET_FONT_OUTLINE:
-        subtitle_font_thickness = (8.0f / 100.0f) * fparam;
+        subtitle_font_thickness = (8.0f / 100.0f) * value;
         mplayerLoadFont();
         break;
 
     case MPLAYER_SET_FONT_BLUR:
-        subtitle_font_radius = (8.0f / 100.0f) * fparam;
+        subtitle_font_radius = (8.0f / 100.0f) * value;
         mplayerLoadFont();
         break;
 
     case MPLAYER_SET_FONT_TEXTSCALE:
-        text_font_scale_factor = fparam;
+        text_font_scale_factor = value;
         mplayerLoadFont();
         break;
 
     case MPLAYER_SET_FONT_OSDSCALE:
-        osd_font_scale_factor = fparam;
+        osd_font_scale_factor = value;
         mplayerLoadFont();
         break;
 
     case MPLAYER_SET_FONT_ENCODING:
         nfree(subtitle_font_encoding);
-        subtitle_font_encoding = gstrdup((char *)vparam);
+        subtitle_font_encoding = gstrdup((char *)data);
         mplayerLoadFont();
         break;
 
     case MPLAYER_SET_FONT_AUTOSCALE:
-        subtitle_autoscale = (int)fparam;
+        subtitle_autoscale = (int)value;
         mplayerLoadFont();
         break;
 #endif
@@ -975,12 +975,12 @@ void mplayer(int what, float fparam, void *vparam)
 #ifdef CONFIG_ICONV
     case MPLAYER_SET_SUB_ENCODING:
         nfree(sub_cp);
-        sub_cp = gstrdup((char *)vparam);
+        sub_cp = gstrdup((char *)data);
         break;
 #endif
 
     case MPLAYER_SET_EXTRA_STEREO:
-        gtkAOExtraStereoMul = fparam;
+        gtkAOExtraStereoMul = value;
         if (guiInfo.afilter)
             af_control_any_rev(guiInfo.afilter, AF_CONTROL_ES_MUL | AF_CONTROL_SET, &gtkAOExtraStereoMul);
         break;
@@ -992,36 +992,36 @@ void mplayer(int what, float fparam, void *vparam)
         mp_cmd       = calloc(1, sizeof(*mp_cmd));
         mp_cmd->id   = MP_CMD_PANSCAN;
         mp_cmd->name = strdup("panscan");
-        mp_cmd->args[0].v.f = fparam;
+        mp_cmd->args[0].v.f = value;
         mp_cmd->args[1].v.i = 1;
         mp_input_queue_cmd(mp_cmd);
     }
     break;
 
     case MPLAYER_SET_AUTO_QUALITY:
-        auto_quality = (int)fparam;
+        auto_quality = (int)value;
         break;
 
     // set equalizers
 
     case MPLAYER_SET_CONTRAST:
         if (guiInfo.sh_video)
-            set_video_colors(guiInfo.sh_video, "contrast", (int)fparam);
+            set_video_colors(guiInfo.sh_video, "contrast", (int)value);
         break;
 
     case MPLAYER_SET_BRIGHTNESS:
         if (guiInfo.sh_video)
-            set_video_colors(guiInfo.sh_video, "brightness", (int)fparam);
+            set_video_colors(guiInfo.sh_video, "brightness", (int)value);
         break;
 
     case MPLAYER_SET_HUE:
         if (guiInfo.sh_video)
-            set_video_colors(guiInfo.sh_video, "hue", (int)fparam);
+            set_video_colors(guiInfo.sh_video, "hue", (int)value);
         break;
 
     case MPLAYER_SET_SATURATION:
         if (guiInfo.sh_video)
-            set_video_colors(guiInfo.sh_video, "saturation", (int)fparam);
+            set_video_colors(guiInfo.sh_video, "saturation", (int)value);
         break;
 
     case MPLAYER_SET_EQUALIZER:
@@ -1053,7 +1053,7 @@ void mplayer(int what, float fparam, void *vparam)
     }
 
     case MPLAYER_EXIT_GUI:
-        exit_player_with_rc((enum exit_reason)fparam, (enum exit_reason)fparam >= EXIT_ERROR);
+        exit_player_with_rc((enum exit_reason)value, (enum exit_reason)value >= EXIT_ERROR);
         break;
     }
 }

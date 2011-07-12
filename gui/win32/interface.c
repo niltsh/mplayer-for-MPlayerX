@@ -429,9 +429,9 @@ void guiDone(void)
 }
 
 /* this function gets called by mplayer to update the gui */
-int gui(int what, void *arg)
+int gui(int what, void *data)
 {
-    stream_t *stream = arg;
+    stream_t *stream = data;
 #ifdef CONFIG_DVDREAD
     dvd_priv_t *dvdp;
 #endif
@@ -478,7 +478,7 @@ int gui(int what, void *arg)
         }
         case GUI_SET_AUDIO:
         {
-            guiInfo.MovieWindow = (arg && !guiInfo.sh_video);
+            guiInfo.MovieWindow = (data && !guiInfo.sh_video);
             // NOTE: This type doesn't mean (and never meant) that we have
             // *just* audio, so there probably should be a check before
             // hiding (see gui/interface.c).
@@ -487,14 +487,14 @@ int gui(int what, void *arg)
             break;
         }
         case GUI_SET_CONTEXT:
-            guiInfo.mpcontext = arg;
+            guiInfo.mpcontext = data;
             break;
         case GUI_SET_VIDEO:
         {
-            guiInfo.sh_video = arg;
-            if (arg)
+            guiInfo.sh_video = data;
+            if (data)
             {
-                sh_video_t *sh = arg;
+                sh_video_t *sh = data;
                 codecname = sh->codec->name;
 
                 /* we have video, show the subwindow */
@@ -544,11 +544,11 @@ int gui(int what, void *arg)
             mygui->updatedisplay(mygui, mygui->mainwindow);
             break;
         case GUI_SET_AFILTER:
-            guiInfo.afilter = arg;
+            guiInfo.afilter = data;
             break;
         case GUI_SET_STATE:
         {
-            guiInfo.Playing = (int) arg;
+            guiInfo.Playing = (int) data;
             switch (guiInfo.Playing)
             {
                 case GUI_PLAY:
@@ -572,9 +572,9 @@ int gui(int what, void *arg)
         }
         case GUI_RUN_COMMAND:
         {
-            mp_msg(MSGT_GPLAYER,MSGL_V, "cmd: %d\n", (int) arg);
+            mp_msg(MSGT_GPLAYER,MSGL_V, "cmd: %d\n", (int) data);
             /* MPlayer asks us to quit */
-            switch((int) arg)
+            switch((int) data)
             {
                 case MP_CMD_VO_FULLSCREEN:
                     uiFullScreen();
