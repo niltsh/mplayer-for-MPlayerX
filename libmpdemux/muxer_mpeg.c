@@ -1436,7 +1436,7 @@ static void update_scr(muxer_t *muxer)
 			muxer->sysrate = (muxer->sysrate * 11) / 10;	//raise by 10%
 			d = (double) priv->packet_size / (double)muxer->sysrate;
 			priv->delta_scr = (uint64_t) (d * 27000000.0f);
-			mp_msg(MSGT_MUXER, MSGL_INFO, "\r\nBUFFER UNDEFLOW at stream %d, raising muxrate to %d kb/s, delta_scr: %"PRIu64"\r\n", i, muxer->sysrate/125, priv->delta_scr);
+			mp_msg(MSGT_MUXER, MSGL_INFO, "\r\nBUFFER UNDERFLOW at stream %d, raising muxrate to %d kb/s, delta_scr: %"PRIu64"\r\n", i, muxer->sysrate/125, priv->delta_scr);
 			spriv->track_bufsize = 0;
 		}
 
