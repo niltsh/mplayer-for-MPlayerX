@@ -710,30 +710,6 @@ INSTALL_TARGETS-$(MENCODER) += install-mencoder install-mencoder-man
 INSTALL_TARGETS-$(MPLAYER)  += install-mplayer  install-mplayer-man
 
 DIRS =  . \
-        ffmpeg/libavcodec \
-        ffmpeg/libavcodec/alpha \
-        ffmpeg/libavcodec/arm \
-        ffmpeg/libavcodec/bfin \
-        ffmpeg/libavcodec/mlib \
-        ffmpeg/libavcodec/ppc \
-        ffmpeg/libavcodec/sh4 \
-        ffmpeg/libavcodec/sparc \
-        ffmpeg/libavcodec/x86 \
-        ffmpeg/libavformat \
-        ffmpeg/libavutil \
-        ffmpeg/libavutil/arm \
-        ffmpeg/libavutil/bfin \
-        ffmpeg/libavutil/ppc \
-        ffmpeg/libavutil/sh4 \
-        ffmpeg/libavutil/tomi \
-        ffmpeg/libavutil/x86 \
-        ffmpeg/libpostproc \
-        ffmpeg/libswscale \
-        ffmpeg/libswscale/bfin \
-        ffmpeg/libswscale/mlib \
-        ffmpeg/libswscale/ppc \
-        ffmpeg/libswscale/sparc \
-        ffmpeg/libswscale/x86 \
         gui \
         gui/skin \
         gui/ui \
@@ -940,11 +916,14 @@ uninstall:
 	rm -f $(MANDIR)/man1/mplayer.1 $(MANDIR)/man1/mencoder.1
 	rm -f $(foreach lang,$(MAN_LANGS),$(foreach man,mplayer.1 mencoder.1,$(MANDIR)/$(lang)/man1/$(man)))
 
-clean:
+clean distclean::
+	$(MAKE) -C ffmpeg $@
+
+clean::
 	-rm -f $(call ADD_ALL_DIRS,/*.o /*.a /*.ho /*~)
 	-rm -f $(call ADD_ALL_EXESUFS,mplayer mencoder)
 
-distclean: clean testsclean toolsclean driversclean dhahelperclean
+distclean:: clean testsclean toolsclean driversclean dhahelperclean
 	-rm -rf DOCS/tech/doxygen
 	-rm -f $(call ADD_ALL_DIRS,/*.d)
 	-rm -f config.* codecs.conf.h help_mp.h version.h TAGS tags
