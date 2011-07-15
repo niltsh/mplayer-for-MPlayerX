@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 33639
+// Synced with help_mp-en.h rev. 33866
 //
 // Translated by JRaSH <jrash06@163.com>
 
@@ -698,6 +698,10 @@ static const char help_text[]=
 #define MSGTR_PREFERENCES_HFrameDrop "启用强制丢帧（危险）"
 #define MSGTR_PREFERENCES_Flip "上下翻转图像"
 #define MSGTR_PREFERENCES_Panscan "全景模式："
+#define MSGTR_PREFERENCES_OSD_LEVEL0 "仅显示字幕"
+#define MSGTR_PREFERENCES_OSD_LEVEL1 "显示音量和定位条"
+#define MSGTR_PREFERENCES_OSD_LEVEL2 "显示音量、定位条、计时器和进度百分比"
+#define MSGTR_PREFERENCES_OSD_LEVEL3 "显示音量、定位条、计时器、进度百分比和时间总长"
 #define MSGTR_PREFERENCES_Subtitle "字幕："
 #define MSGTR_PREFERENCES_SUB_Delay "延迟："
 #define MSGTR_PREFERENCES_SUB_FPS "帧率："
