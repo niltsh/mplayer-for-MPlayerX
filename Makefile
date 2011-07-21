@@ -1034,7 +1034,7 @@ drivers/radeon_vid.o drivers/rage128_vid.o: CFLAGS += -fomit-frame-pointer -fno-
 
 install-drivers: $(DRIVER_OBJS)
 	-mkdir -p $(MODULES_DIR)
-	install -m 644 $(KERNEL_OBJS) $(MODULES_DIR)
+	$(INSTALL) -m 644 $(KERNEL_OBJS) $(MODULES_DIR)
 	depmod -a
 	-mknod /dev/mga_vid    c 178 0
 	-mknod /dev/tdfx_vid   c 178 0
@@ -1051,7 +1051,7 @@ vidix/dhahelper/dhahelper.o vidix/dhahelper/test: CFLAGS = $(KERNEL_CFLAGS)
 
 install-dhahelper: vidix/dhahelper/dhahelper.o
 	-mkdir -p $(MODULES_DIR)
-	install -m 644 $< $(MODULES_DIR)
+	$(INSTALL) -m 644 $< $(MODULES_DIR)
 	depmod -a
 	-mknod /dev/dhahelper c 180 0
 
