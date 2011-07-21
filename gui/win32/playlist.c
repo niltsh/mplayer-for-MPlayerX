@@ -22,6 +22,7 @@
  */
 
 #include <windows.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "mp_msg.h"
@@ -29,7 +30,7 @@
 
 /* TODO: implement sort_playlist */
 
-BOOL adddirtoplaylist(playlist_t *playlist, const char *path, BOOL recursive)
+bool adddirtoplaylist(playlist_t *playlist, const char *path, bool recursive)
 {
     HANDLE findHandle = INVALID_HANDLE_VALUE;
     WIN32_FIND_DATA finddata;

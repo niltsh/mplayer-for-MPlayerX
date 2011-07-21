@@ -720,20 +720,14 @@ DIRS =  . \
         input \
         libaf \
         libao2 \
-        libass \
-        libdvdcss \
-        libdvdnav \
-        libdvdnav/vm \
-        libdvdread4 \
         libmenu \
         libmpcodecs \
         libmpcodecs/native \
         libmpdemux \
-        libmpeg2 \
         libvo \
         loader \
-        loader/dshow \
         loader/dmo \
+        loader/dshow \
         loader/wine \
         mp3lib \
         osdep \
@@ -742,14 +736,22 @@ DIRS =  . \
         stream/librtsp \
         stream/realrtsp \
         sub \
-        tremor \
         TOOLS \
         vidix \
+
+ALL_DIRS = $(DIRS) \
+        libass \
+        libdvdcss \
+        libdvdnav \
+        libdvdnav/vm \
+        libdvdread4 \
+        libmpeg2 \
+        tremor \
 
 ALLHEADERS = $(foreach dir,$(DIRS),$(wildcard $(dir)/*.h))
 
 ADDSUFFIXES     = $(foreach suf,$(1),$(addsuffix $(suf),$(2)))
-ADD_ALL_DIRS    = $(call ADDSUFFIXES,$(1),$(DIRS))
+ADD_ALL_DIRS    = $(call ADDSUFFIXES,$(1),$(ALL_DIRS))
 ADD_ALL_EXESUFS = $(1) $(call ADDSUFFIXES,$(EXESUFS_ALL),$(1))
 
 
