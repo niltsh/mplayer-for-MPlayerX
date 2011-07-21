@@ -5733,9 +5733,8 @@ elif openbsd ; then
   default_cdrom_device="/dev/rcd0c"
 elif sunos ; then
   default_cdrom_device="/vol/dev/aliases/cdrom0"
-  # Modern Solaris versions use HAL instead of the vold daemon, the volfs
-  # file system and the volfs service.
-  test -r "/cdrom/cdrom0" && default_cdrom_device="/cdrom/cdrom0"
+  # Solaris 10 and newer use HAL instead of the vold daemon.
+  test $(uname -r | sed 's/^5\.//') -gt 10 && default_cdrom_device="/cdrom/cdrom0"
 elif amigaos ; then
   default_cdrom_device="a1ide.device:2"
 else
