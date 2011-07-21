@@ -752,8 +752,7 @@ ALLHEADERS = $(foreach dir,$(DIRS),$(wildcard $(dir)/*.h))
 
 ADDSUFFIXES     = $(foreach suf,$(1),$(addsuffix $(suf),$(2)))
 ADD_ALL_DIRS    = $(call ADDSUFFIXES,$(1),$(ALL_DIRS))
-ADD_ALL_EXESUFS = $(1) $(call ADDSUFFIXES,$(EXESUFS_ALL),$(1))
-
+ADD_ALL_EXESUFS = $(call ADDSUFFIXES,$(EXESUFS_ALL),$(1))
 
 
 ###### generic rules #######
