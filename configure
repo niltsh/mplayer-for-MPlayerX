@@ -1466,21 +1466,7 @@ if test -z "$_target" ; then
 
 
   # host's CPU/instruction set
-   host_arch=$(uname -p 2>&1)
-   case "$host_arch" in
-   i386|sparc|ppc|alpha|arm|mips|vax)
-     ;;
-   powerpc) # Darwin returns 'powerpc'
-     host_arch=ppc
-     ;;
-   *) # uname -p on Linux returns 'unknown' for the processor type,
-      # OpenBSD returns 'Intel Pentium/MMX ("Genuine Intel" 586-class)'
-
-      # Maybe uname -m (machine hardware name) returns something we
-      # recognize.
-
-      # x86/x86pc is used by QNX
-      case "$(uname -m 2>&1)" in
+  case "$(uname -m 2>&1)" in
       x86_64|amd64|i[3-9]86*|x86|x86pc|k5|k6|k6_2|k6_3|k6-2|k6-3|pentium*|athlon*|i586_i686|i586-i686|BePC) host_arch=i386 ;;
       ia64) host_arch=ia64 ;;
       macppc|ppc) host_arch=ppc ;;
@@ -1497,8 +1483,6 @@ if test -z "$_target" ; then
       vax) host_arch=vax ;;
       xtensa*) host_arch=xtensa ;;
       *) host_arch=UNKNOWN ;;
-    esac
-    ;;
   esac
 else # if test -z "$_target"
   system_name=$(echo $_target | cut -d '-' -f 2)
