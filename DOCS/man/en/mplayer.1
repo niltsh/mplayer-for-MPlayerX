@@ -10769,7 +10769,7 @@ Controls the decision performed by b_adapt.
 A higher b_bias produces more B-frames (default: 0).
 .
 .TP
-.B (no)b_pyramid
+.B b_pyramid=<normal|strict|none>
 Allows B-frames to be used as references for predicting other frames.
 For example, consider 3 consecutive B-frames: I0 B1 B2 B3 P4.
 Without this option, B-frames follow the same pattern as MPEG-[124].
@@ -10784,6 +10784,17 @@ However, this is an experimental option: it is not fully tuned and
 may not always help.
 Requires bframes >= 2.
 Disadvantage: increases decoding delay to 2 frames.
+.PD 0
+.RSs
+.IPs normal
+Allow B-frames as references as described above (not Blu-ray compatible).
+.IPs strict
+Disallow P-frames referencing B-frames. Gives worse compression, but is
+required for Blu-ray compatibility.
+.IPs "none\ "
+Disable using B-frames as references.
+.RE
+.PD 1
 .
 .TP
 .B (no)deblock

@@ -4474,19 +4474,19 @@ man страницы <application>MPlayer</application>'а.
 <tbody>
 <row>
   <entry>Очень высокое качество</entry>
-  <entry><option>subq=6:partitions=all:8x8dct:me=umh:frameref=5:bframes=3:b_pyramid:weight_b</option></entry>
+  <entry><option>subq=6:partitions=all:8x8dct:me=umh:frameref=5:bframes=3:b_pyramid=normal:weight_b</option></entry>
   <entry>6fps</entry>
   <entry>0дБ</entry>
 </row>
 <row>
   <entry>Высокое качество</entry>
-  <entry><option>subq=5:8x8dct:frameref=2:bframes=3:b_pyramid:weight_b</option></entry>
+  <entry><option>subq=5:8x8dct:frameref=2:bframes=3:b_pyramid=normal:weight_b</option></entry>
   <entry>13fps</entry>
   <entry>-0.89дБ</entry>
 </row>
 <row>
   <entry>Быстро</entry>
-  <entry><option>subq=4:bframes=2:b_pyramid:weight_b</option></entry>
+  <entry><option>subq=4:bframes=2:b_pyramid=normal:weight_b</option></entry>
   <entry>17fps</entry>
   <entry>-1.48дБ</entry>
 </row>

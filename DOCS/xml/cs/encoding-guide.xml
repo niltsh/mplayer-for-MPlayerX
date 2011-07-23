@@ -4189,19 +4189,19 @@ počítače a pokrokům ve vývoji, můžete dospět k velmi odlišným výsledk
 <tbody>
 <row>
   <entry>Velmi vysoká kvalita</entry>
-  <entry><option>subq=6:partitions=all:8x8dct:me=umh:frameref=5:bframes=3:b_pyramid:weight_b</option></entry>
+  <entry><option>subq=6:partitions=all:8x8dct:me=umh:frameref=5:bframes=3:b_pyramid=normal:weight_b</option></entry>
   <entry>6</entry>
   <entry>0</entry>
 </row>
 <row>
   <entry>Vysoká kvalita</entry>
-  <entry><option>subq=5:8x8dct:frameref=2:bframes=3:b_pyramid:weight_b</option></entry>
+  <entry><option>subq=5:8x8dct:frameref=2:bframes=3:b_pyramid=normal:weight_b</option></entry>
   <entry>13</entry>
   <entry>-0.89</entry>
 </row>
 <row>
   <entry>Rychlé enkódování</entry>
-  <entry><option>subq=4:bframes=2:b_pyramid:weight_b</option></entry>
+  <entry><option>subq=4:bframes=2:b_pyramid=normal:weight_b</option></entry>
   <entry>17</entry>
   <entry>-1.48</entry>
 </row>
