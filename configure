@@ -3074,15 +3074,6 @@ fi
 echores "$_kstat"
 
 
-echocheck "posix4"
-# required for nanosleep on some systems
-_posix4=no
-statement_check time.h 'nanosleep(0, 0)' -lposix4 && _posix4=yes
-if test "$_posix4" = yes ; then
-  extra_ldflags="$extra_ldflags -lposix4"
-fi
-echores "$_posix4"
-
 for func in exp2 exp2f llrint llrintf log2 log2f lrint lrintf round roundf truncf; do
 echocheck $func
 eval _$func=no
