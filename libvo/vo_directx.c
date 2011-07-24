@@ -159,12 +159,10 @@ static void draw_osd(void)
 
 static int query_format(uint32_t format)
 {
-    uint32_t i = 0;
-    while (i < NUM_FORMATS) {
+    int i;
+    for (i = 0; i < NUM_FORMATS; i++)
         if (g_ddpf[i].img_format == format)
             return drv_caps[i];
-        i++;
-    }
     return 0;
 }
 
@@ -681,8 +679,7 @@ static uint32_t Directx_CheckOverlayPixelformats(void)
     //it is not possible to query for pixel formats supported by the
     //overlay hardware: try out various formats till one works
     //try to create an overlay surface using one of the pixel formats in our global list
-    i = 0;
-    do {
+    for (i = 0; i < NUM_FORMATS; i++) {
         ddsdOverlay.ddpfPixelFormat = g_ddpf[i].g_ddpfOverlay;
         ddrval = g_lpdd->lpVtbl->CreateSurface(g_lpdd, &ddsdOverlay, &g_lpddsOverlay, NULL);
         if (ddrval == DD_OK) {
@@ -695,7 +692,7 @@ static uint32_t Directx_CheckOverlayPixelformats(void)
             g_lpddsOverlay->lpVtbl->Release(g_lpddsOverlay);
             g_lpddsOverlay = NULL;
         }
-    } while (++i < NUM_FORMATS);
+    }
     mp_msg(MSGT_VO, MSGL_V, "<vo_directx><INFO>Your card supports %i of %i overlayformats\n", formatcount, NUM_FORMATS);
     if (formatcount == 0) {
         mp_msg(MSGT_VO, MSGL_V, "<vo_directx><WARN>Your card supports overlay, but we couldn't create one\n");
@@ -715,7 +712,7 @@ static uint32_t Directx_CheckOverlayPixelformats(void)
 //find out the Pixelformat of the Primary Surface
 static uint32_t Directx_CheckPrimaryPixelformat(void)
 {
-    uint32_t i = 0;
+    int i;
     uint32_t formatcount = 0;
     DDPIXELFORMAT ddpf;
     DDSURFACEDESC2 ddsd;
@@ -732,7 +729,7 @@ static uint32_t Directx_CheckPrimaryPixelformat(void)
         mp_msg(MSGT_VO, MSGL_FATAL, "<vo_directx><FATAL ERROR>can't get pixelformat\n");
         return 1;
     }
-    while (i < NUM_FORMATS) {
+    for (i = 0; i < NUM_FORMATS; i++) {
         if (g_ddpf[i].g_ddpfOverlay.dwRGBBitCount == ddpf.dwRGBBitCount) {
             if (g_ddpf[i].g_ddpfOverlay.dwRBitMask == ddpf.dwRBitMask) {
                 mp_msg(MSGT_VO, MSGL_V, "<vo_directx><FORMAT PRIMARY>%i %s supported\n", i, g_ddpf[i].img_format_name);
@@ -741,7 +738,6 @@ static uint32_t Directx_CheckPrimaryPixelformat(void)
                 primary_image_format = g_ddpf[i].img_format;
             }
         }
-        i++;
     }
     //get the colorkey for overlay mode
     destcolorkey = CLR_INVALID;
