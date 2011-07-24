@@ -244,49 +244,38 @@ static uint32_t Directx_CreateOverlay(uint32_t imgfmt)
             mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>");
         switch (ddrval) {
         case DDERR_INCOMPATIBLEPRIMARY:
-        { mp_msg(MSGT_VO, MSGL_ERR, "incompatible primary surface\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "incompatible primary surface\n");
           break;
-        }
         case DDERR_INVALIDCAPS:
-        { mp_msg(MSGT_VO, MSGL_ERR, "invalid caps\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "invalid caps\n");
           break;
-        }
         case DDERR_INVALIDOBJECT:
-        { mp_msg(MSGT_VO, MSGL_ERR, "invalid object\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "invalid object\n");
           break;
-        }
         case DDERR_INVALIDPARAMS:
-        { mp_msg(MSGT_VO, MSGL_ERR, "invalid parameters\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "invalid parameters\n");
           break;
-        }
         case DDERR_NODIRECTDRAWHW:
-        { mp_msg(MSGT_VO, MSGL_ERR, "no directdraw hardware\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "no directdraw hardware\n");
           break;
-        }
         case DDERR_NOEMULATION:
-        { mp_msg(MSGT_VO, MSGL_ERR, "can't emulate\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "can't emulate\n");
           break;
-        }
         case DDERR_NOFLIPHW:
-        { mp_msg(MSGT_VO, MSGL_ERR, "hardware can't do flip\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "hardware can't do flip\n");
           break;
-        }
         case DDERR_NOOVERLAYHW:
-        { mp_msg(MSGT_VO, MSGL_ERR, "hardware can't do overlay\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "hardware can't do overlay\n");
           break;
-        }
         case DDERR_OUTOFMEMORY:
-        { mp_msg(MSGT_VO, MSGL_ERR, "not enough system memory\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "not enough system memory\n");
           break;
-        }
         case DDERR_UNSUPPORTEDMODE:
-        { mp_msg(MSGT_VO, MSGL_ERR, "unsupported mode\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "unsupported mode\n");
           break;
-        }
         case DDERR_OUTOFVIDEOMEMORY:
-        { mp_msg(MSGT_VO, MSGL_ERR, "not enough video memory\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "not enough video memory\n");
           break;
-        }
         default:
             mp_msg(MSGT_VO, MSGL_ERR, "create surface failed with 0x%x\n", ddrval);
         }
@@ -532,26 +521,26 @@ static uint32_t Directx_ManageDisplay(void)
         if (rd.bottom > vo_screenheight)
             rs.bottom = ((vo_screenheight - rd.top) * 1000) / ystretch1000;
         /*do not allow to zoom or shrink if hardware isn't able to do so*/
-        if ((width < image_width) && !(capsDrv.dwFXCaps & DDFXCAPS_OVERLAYSHRINKX)) {
+        if (width < image_width && !(capsDrv.dwFXCaps & DDFXCAPS_OVERLAYSHRINKX)) {
             if (capsDrv.dwFXCaps & DDFXCAPS_OVERLAYSHRINKXN)
                 mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>can only shrinkN\n");
             else
                 mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>can't shrink x\n");
             rd.right = rd.left + image_width;
-        } else if ((width > image_width) && !(capsDrv.dwFXCaps & DDFXCAPS_OVERLAYSTRETCHX)) {
+        } else if (width > image_width && !(capsDrv.dwFXCaps & DDFXCAPS_OVERLAYSTRETCHX)) {
             if (capsDrv.dwFXCaps & DDFXCAPS_OVERLAYSTRETCHXN)
                 mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>can only stretchN\n");
             else
                 mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>can't stretch x\n");
             rd.right = rd.left + image_width;
         }
-        if ((height < image_height) && !(capsDrv.dwFXCaps & DDFXCAPS_OVERLAYSHRINKY)) {
+        if (height < image_height && !(capsDrv.dwFXCaps & DDFXCAPS_OVERLAYSHRINKY)) {
             if (capsDrv.dwFXCaps & DDFXCAPS_OVERLAYSHRINKYN)
                 mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>can only shrinkN\n");
             else
                 mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>can't shrink y\n");
             rd.bottom = rd.top + image_height;
-        } else if ((height > image_height) && !(capsDrv.dwFXCaps & DDFXCAPS_OVERLAYSTRETCHY)) {
+        } else if (height > image_height && !(capsDrv.dwFXCaps & DDFXCAPS_OVERLAYSTRETCHY)) {
             if (capsDrv.dwFXCaps & DDFXCAPS_OVERLAYSTRETCHYN)
                 mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>can only stretchN\n");
             else
@@ -615,39 +604,30 @@ static uint32_t Directx_ManageDisplay(void)
         mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>");
         switch (ddrval) {
         case DDERR_NOSTRETCHHW:
-        { mp_msg(MSGT_VO, MSGL_ERR, "hardware can't stretch: try to size the window back\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "hardware can't stretch: try to size the window back\n");
           break;
-        }
         case DDERR_INVALIDRECT:
-        { mp_msg(MSGT_VO, MSGL_ERR, "invalid rectangle\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "invalid rectangle\n");
           break;
-        }
         case DDERR_INVALIDPARAMS:
-        { mp_msg(MSGT_VO, MSGL_ERR, "invalid parameters\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "invalid parameters\n");
           break;
-        }
         case DDERR_HEIGHTALIGN:
-        { mp_msg(MSGT_VO, MSGL_ERR, "height align\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "height align\n");
           break;
-        }
         case DDERR_XALIGN:
-        { mp_msg(MSGT_VO, MSGL_ERR, "x align\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "x align\n");
           break;
-        }
         case DDERR_UNSUPPORTED:
-        { mp_msg(MSGT_VO, MSGL_ERR, "unsupported\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "unsupported\n");
           break;
-        }
         case DDERR_INVALIDSURFACETYPE:
-        { mp_msg(MSGT_VO, MSGL_ERR, "invalid surfacetype\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "invalid surfacetype\n");
           break;
-        }
         case DDERR_INVALIDOBJECT:
-        { mp_msg(MSGT_VO, MSGL_ERR, "invalid object\n");
+          mp_msg(MSGT_VO, MSGL_ERR, "invalid object\n");
           break;
-        }
         case DDERR_SURFACELOST:
-        {
             mp_msg(MSGT_VO, MSGL_ERR, "surfaces lost\n");
             g_lpddsOverlay->lpVtbl->Restore(g_lpddsOverlay);                               //restore and try again
             g_lpddsPrimary->lpVtbl->Restore(g_lpddsPrimary);
@@ -655,7 +635,6 @@ static uint32_t Directx_ManageDisplay(void)
             if (ddrval != DD_OK)
                 mp_msg(MSGT_VO, MSGL_FATAL, "<vo_directx><FATAL ERROR>UpdateOverlay failed again\n");
             break;
-        }
         default:
             mp_msg(MSGT_VO, MSGL_ERR, " 0x%x\n", ddrval);
         }
@@ -932,7 +911,7 @@ static uint32_t get_image(mp_image_t *mpi)
         mp_msg(MSGT_VO, MSGL_V, "<vo_directx><ERROR>not static\n");
         return VO_FALSE;
     }
-    if ((mpi->width == dstride) || (mpi->flags & (MP_IMGFLAG_ACCEPT_STRIDE | MP_IMGFLAG_ACCEPT_WIDTH))) {
+    if (mpi->width == dstride || (mpi->flags & (MP_IMGFLAG_ACCEPT_STRIDE | MP_IMGFLAG_ACCEPT_WIDTH))) {
         if (mpi->flags & MP_IMGFLAG_PLANAR) {
             if (image_format == IMGFMT_YV12) {
                 mpi->planes[2] = image + dstride * image_height;
@@ -1180,7 +1159,7 @@ static int control(uint32_t request, void *data)
     case VOCTRL_GET_IMAGE:
         return get_image(data);
     case VOCTRL_QUERY_FORMAT:
-        return query_format(*((uint32_t *)data));
+        return query_format(*(uint32_t *)data);
     case VOCTRL_DRAW_IMAGE:
         return put_image(data);
     case VOCTRL_BORDER:
@@ -1204,11 +1183,9 @@ static int control(uint32_t request, void *data)
         }
         return VO_TRUE;
     case VOCTRL_FULLSCREEN:
-    {
         vo_w32_fullscreen();
         Directx_ManageDisplay();
         return VO_TRUE;
-    }
     case VOCTRL_SET_EQUALIZER: {
         vf_equalizer_t *eq = data;
         return color_ctrl_set(eq->item, eq->value);
