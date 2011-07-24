@@ -164,6 +164,40 @@ static int query_format(uint32_t format)
     return 0;
 }
 
+struct errmap {
+    HRESULT err;
+    const char *errstr;
+} static const dd_errmap[] = {
+    {DDERR_INCOMPATIBLEPRIMARY, "incompatible primary surface"},
+    {DDERR_INVALIDCAPS, "invalid caps"},
+    {DDERR_INVALIDOBJECT, "invalid object"},
+    {DDERR_INVALIDPARAMS, "invalid parameters"},
+    {DDERR_INVALIDRECT, "invalid rectangle"},
+    {DDERR_INVALIDSURFACETYPE, "invalid surfacetype"},
+    {DDERR_NODIRECTDRAWHW, "no directdraw hardware"},
+    {DDERR_NOEMULATION, "can't emulate"},
+    {DDERR_NOFLIPHW, "hardware can't do flip"},
+    {DDERR_NOOVERLAYHW, "hardware can't do overlay"},
+    {DDERR_NOSTRETCHHW, "hardware can't stretch: try to size the window back"},
+    {DDERR_OUTOFMEMORY, "not enough system memory"},
+    {DDERR_OUTOFVIDEOMEMORY, "not enough video memory"},
+    {DDERR_UNSUPPORTED, "unsupported"},
+    {DDERR_UNSUPPORTEDMODE, "unsupported mode"},
+    {DDERR_HEIGHTALIGN, "height align"},
+    {DDERR_XALIGN, "x align"},
+    {DDERR_SURFACELOST, "surfaces lost"},
+    {0, NULL}
+};
+
+static const char *dd_errstr(HRESULT res)
+{
+    int i;
+    for (i = 0; dd_errmap[i].errstr; i++)
+        if (dd_errmap[i].err == res)
+            return dd_errmap[i].errstr;
+    return "unknown error";
+}
+
 static uint32_t Directx_CreatePrimarySurface(void)
 {
     DDSURFACEDESC2 ddsd = { .dwSize = sizeof(ddsd) };
@@ -237,44 +271,7 @@ static uint32_t Directx_CreateOverlay(uint32_t imgfmt)
         if (ddrval == DDERR_INVALIDPIXELFORMAT)
             mp_msg(MSGT_VO, MSGL_V, "<vo_directx><ERROR> invalid pixelformat: %s\n", g_ddpf[i].img_format_name);
         else
-            mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>");
-        switch (ddrval) {
-        case DDERR_INCOMPATIBLEPRIMARY:
-          mp_msg(MSGT_VO, MSGL_ERR, "incompatible primary surface\n");
-          break;
-        case DDERR_INVALIDCAPS:
-          mp_msg(MSGT_VO, MSGL_ERR, "invalid caps\n");
-          break;
-        case DDERR_INVALIDOBJECT:
-          mp_msg(MSGT_VO, MSGL_ERR, "invalid object\n");
-          break;
-        case DDERR_INVALIDPARAMS:
-          mp_msg(MSGT_VO, MSGL_ERR, "invalid parameters\n");
-          break;
-        case DDERR_NODIRECTDRAWHW:
-          mp_msg(MSGT_VO, MSGL_ERR, "no directdraw hardware\n");
-          break;
-        case DDERR_NOEMULATION:
-          mp_msg(MSGT_VO, MSGL_ERR, "can't emulate\n");
-          break;
-        case DDERR_NOFLIPHW:
-          mp_msg(MSGT_VO, MSGL_ERR, "hardware can't do flip\n");
-          break;
-        case DDERR_NOOVERLAYHW:
-          mp_msg(MSGT_VO, MSGL_ERR, "hardware can't do overlay\n");
-          break;
-        case DDERR_OUTOFMEMORY:
-          mp_msg(MSGT_VO, MSGL_ERR, "not enough system memory\n");
-          break;
-        case DDERR_UNSUPPORTEDMODE:
-          mp_msg(MSGT_VO, MSGL_ERR, "unsupported mode\n");
-          break;
-        case DDERR_OUTOFVIDEOMEMORY:
-          mp_msg(MSGT_VO, MSGL_ERR, "not enough video memory\n");
-          break;
-        default:
-            mp_msg(MSGT_VO, MSGL_ERR, "create surface failed with 0x%x\n", ddrval);
-        }
+            mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>create surface failed: %s (0x%x)\n", dd_errstr(ddrval), ddrval);
         return 1;
     }
     g_lpddsBack = g_lpddsOverlay;
@@ -589,42 +586,13 @@ static uint32_t Directx_ManageDisplay(void)
         // perhaps shrinking the source size
         mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>UpdateOverlay failed\n");
         mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>Overlay:x1:%i,y1:%i,x2:%i,y2:%i,w:%i,h:%i\n", rd.left, rd.top, rd.right, rd.bottom, rd.right - rd.left, rd.bottom - rd.top);
-        mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>");
-        switch (ddrval) {
-        case DDERR_NOSTRETCHHW:
-          mp_msg(MSGT_VO, MSGL_ERR, "hardware can't stretch: try to size the window back\n");
-          break;
-        case DDERR_INVALIDRECT:
-          mp_msg(MSGT_VO, MSGL_ERR, "invalid rectangle\n");
-          break;
-        case DDERR_INVALIDPARAMS:
-          mp_msg(MSGT_VO, MSGL_ERR, "invalid parameters\n");
-          break;
-        case DDERR_HEIGHTALIGN:
-          mp_msg(MSGT_VO, MSGL_ERR, "height align\n");
-          break;
-        case DDERR_XALIGN:
-          mp_msg(MSGT_VO, MSGL_ERR, "x align\n");
-          break;
-        case DDERR_UNSUPPORTED:
-          mp_msg(MSGT_VO, MSGL_ERR, "unsupported\n");
-          break;
-        case DDERR_INVALIDSURFACETYPE:
-          mp_msg(MSGT_VO, MSGL_ERR, "invalid surfacetype\n");
-          break;
-        case DDERR_INVALIDOBJECT:
-          mp_msg(MSGT_VO, MSGL_ERR, "invalid object\n");
-          break;
-        case DDERR_SURFACELOST:
-            mp_msg(MSGT_VO, MSGL_ERR, "surfaces lost\n");
+        mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>%s (0x%x)\n", dd_errstr(ddrval), ddrval);
+        if (ddrval == DDERR_SURFACELOST) {
             g_lpddsOverlay->lpVtbl->Restore(g_lpddsOverlay);                               //restore and try again
             g_lpddsPrimary->lpVtbl->Restore(g_lpddsPrimary);
             ddrval = g_lpddsOverlay->lpVtbl->UpdateOverlay(g_lpddsOverlay, &rs, g_lpddsPrimary, &rd, dwUpdateFlags, &ovfx);
             if (ddrval != DD_OK)
                 mp_msg(MSGT_VO, MSGL_FATAL, "<vo_directx><FATAL ERROR>UpdateOverlay failed again\n");
-            break;
-        default:
-            mp_msg(MSGT_VO, MSGL_ERR, " 0x%x\n", ddrval);
         }
         /*ok we can't do anything about it -> hide overlay*/
         if (ddrval != DD_OK) {
