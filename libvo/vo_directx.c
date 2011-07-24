@@ -488,17 +488,20 @@ static uint32_t Directx_ManageDisplay(void)
     rd.right=rd.left+width;
     rd.bottom=rd.top+height;
 
-      if(!nooverlay && (!width || !height)){
-	    /*window is minimized*/
-	    ddrval = g_lpddsOverlay->lpVtbl->UpdateOverlay(g_lpddsOverlay,NULL, g_lpddsPrimary, NULL, DDOVER_HIDE, NULL);
-	    return 0;
-	  }
-
 	/*ok, let's workaround some overlay limitations*/
 	if(!nooverlay)
 	{
 		uint32_t        uStretchFactor1000;  //minimum stretch
         uint32_t        xstretch1000,ystretch1000;
+
+        if (!width || !height) {
+            // window is minimized, so we should hide the overlay in case
+            // colorkeying is not used or working.
+            // In addition trying to set width/height to 0 would crash
+            g_lpddsOverlay->lpVtbl->UpdateOverlay(g_lpddsOverlay, NULL, g_lpddsPrimary, NULL, DDOVER_HIDE, NULL);
+            return 0;
+        }
+
 		/*get driver capabilities*/
         ZeroMemory(&capsDrv, sizeof(capsDrv));
         capsDrv.dwSize = sizeof(capsDrv);
