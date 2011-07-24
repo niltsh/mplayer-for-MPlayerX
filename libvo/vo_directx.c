@@ -80,13 +80,11 @@ static const GUID MP_IID_IDirectDrawColorControl = {
     0x4b9f0ee0, 0x0d7e, 0x11d0, { 0x9b, 0x06, 0x00, 0xa0, 0xc9, 0x03, 0xa3, 0xb8 }
 };
 
-typedef struct directx_fourcc_caps {
+struct directx_fourcc_caps {
     char img_format_name[6];    //human readable name
     uint32_t img_format;        //as MPlayer image format
     DDPIXELFORMAT g_ddpfOverlay; //as Directx Sourface description
-} directx_fourcc_caps;
-
-static const directx_fourcc_caps g_ddpf[] = {
+} static const g_ddpf[] = {
     { "YV12 ", IMGFMT_YV12,  { sizeof(DDPIXELFORMAT), DDPF_FOURCC, MAKEFOURCC('Y', 'V', '1', '2'), 0, 0, 0, 0, 0 } },
     { "I420 ", IMGFMT_I420,  { sizeof(DDPIXELFORMAT), DDPF_FOURCC, MAKEFOURCC('I', '4', '2', '0'), 0, 0, 0, 0, 0 } }, //yv12 with swapped uv
     { "IYUV ", IMGFMT_IYUV,  { sizeof(DDPIXELFORMAT), DDPF_FOURCC, MAKEFOURCC('I', 'Y', 'U', 'V'), 0, 0, 0, 0, 0 } }, //same as i420
