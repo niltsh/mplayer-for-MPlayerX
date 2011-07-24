@@ -2935,7 +2935,7 @@ int main(int argc, char *argv[])
 
     // Many users forget to include command line in bugreports...
     if (mp_msg_test(MSGT_CPLAYER, MSGL_V)) {
-        mp_msg(MSGT_CPLAYER, MSGL_INFO, MSGTR_CommandLine);
+        mp_msg(MSGT_CPLAYER, MSGL_INFO, "CommandLine:");
         for (i = 1; i < argc; i++)
             mp_msg(MSGT_CPLAYER, MSGL_INFO, " '%s'", argv[i]);
         mp_msg(MSGT_CPLAYER, MSGL_INFO, "\n");
@@ -2963,7 +2963,7 @@ int main(int argc, char *argv[])
                 close(rtc_fd);
                 rtc_fd = -1;
             } else
-                mp_msg(MSGT_CPLAYER, MSGL_V, MSGTR_UsingRTCTiming, irqp);
+                mp_msg(MSGT_CPLAYER, MSGL_V, "Using Linux hardware RTC timing (%ldHz).\n", irqp);
         }
     }
 #ifdef CONFIG_GUI
@@ -2998,16 +2998,16 @@ int main(int argc, char *argv[])
 #ifdef CONFIG_MENU
     if (use_menu) {
         if (menu_cfg && menu_init(mpctx, menu_cfg))
-            mp_msg(MSGT_CPLAYER, MSGL_V, MSGTR_MenuInitialized, menu_cfg);
+            mp_msg(MSGT_CPLAYER, MSGL_V, "Menu initialized: %s\n", menu_cfg);
         else {
             menu_cfg = get_path("menu.conf");
             if (menu_init(mpctx, menu_cfg))
-                mp_msg(MSGT_CPLAYER, MSGL_V, MSGTR_MenuInitialized, menu_cfg);
+                mp_msg(MSGT_CPLAYER, MSGL_V, "Menu initialized: %s\n", menu_cfg);
             else {
                 if (menu_init(mpctx, MPLAYER_CONFDIR "/menu.conf"))
-                    mp_msg(MSGT_CPLAYER, MSGL_V, MSGTR_MenuInitialized, MPLAYER_CONFDIR "/menu.conf");
+                    mp_msg(MSGT_CPLAYER, MSGL_V,  "Menu initialized: %s\n", MPLAYER_CONFDIR "/menu.conf");
                 else {
-                    mp_msg(MSGT_CPLAYER, MSGL_ERR, MSGTR_MenuInitFailed);
+                    mp_msg(MSGT_CPLAYER, MSGL_ERR, "Menu init failed.\n");
                     use_menu = 0;
                 }
             }

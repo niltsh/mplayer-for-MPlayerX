@@ -51,7 +51,7 @@ int mp_input_joystick_init(char* dev) {
   int initialized = 0;
   struct js_event ev;
 
-  mp_msg(MSGT_INPUT,MSGL_V,MSGTR_INPUT_JOYSTICK_Opening,dev ? dev : JS_DEV);
+  mp_msg(MSGT_INPUT, MSGL_V, "Opening joystick device %s\n", dev ? dev : JS_DEV);
 
   fd = open( dev ? dev : JS_DEV , O_RDONLY | O_NONBLOCK );
   if(fd < 0) {

@@ -155,7 +155,6 @@ static const char help_text[]=
 #define MSGTR_UnknownAudio "Ukjent/manglende lydformat, bruker nosound\n"
 
 // LIRC:
-#define MSGTR_SettingUpLIRC "Setter opp lirc støtte...\n"
 #define MSGTR_LIRCopenfailed "Feil under åpning av lirc!\n"
 #define MSGTR_LIRCcfgerr "Feil under lesing av lirc konfigurasjonsfil %s!\n"
 

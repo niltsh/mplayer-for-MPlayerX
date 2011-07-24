@@ -99,7 +99,7 @@ static int init(sh_video_t *sh){
     }
     DS_SetAttr_DivX("Quality",divx_quality);
     DS_VideoDecoder_StartInternal(sh->context);
-    mp_msg(MSGT_DECVIDEO,MSGL_V,MSGTR_DShowInitOK);
+    mp_msg(MSGT_DECVIDEO, MSGL_V, "INFO: Win32/DShow video codec init OK.\n");
     return 1;
 }
 

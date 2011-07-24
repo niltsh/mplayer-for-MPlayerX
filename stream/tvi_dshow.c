@@ -1092,7 +1092,7 @@ static HRESULT set_nearest_freq(priv_t * priv, long lFreq)
             mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TVI_DS_UnableExtractFreqTable);
             return E_FAIL;
         };
-        mp_msg(MSGT_TV, MSGL_V, MSGTR_TVI_DS_FreqTableLoaded, tunerInput == TunerInputAntenna ? "broadcast" : "cable",
+        mp_msg(MSGT_TV, MSGL_V, "tvi_dshow: loaded system (%s) frequency table for country id=%d (channels:%d).\n", tunerInput == TunerInputAntenna ? "broadcast" : "cable",
             chanlist2country(priv->tv_param->chanlist), priv->freq_table_len);
     }
 
@@ -1143,7 +1143,7 @@ static int set_frequency(priv_t * priv, long lFreq)
     if (priv->direct_setfreq_call) {	//using direct call to set frequency
 	hr = set_frequency_direct(priv->pTVTuner, lFreq);
 	if (FAILED(hr)) {
-	    mp_msg(MSGT_TV, MSGL_V, MSGTR_TVI_DS_DirectSetFreqFailed);
+	    mp_msg(MSGT_TV, MSGL_V, "tvi_dshow: Unable to set frequency directly. OS built-in channels table will be used.\n");
 	    priv->direct_setfreq_call = 0;
 	}
     }
@@ -1252,7 +1252,7 @@ static void get_capabilities(priv_t * priv)
     mp_msg(MSGT_TV, MSGL_DBG4, "tvi_dshow: get_capabilities called\n");
     if (priv->pTVTuner) {
 
-	mp_msg(MSGT_TV, MSGL_V, MSGTR_TVI_DS_SupportedNorms);
+	mp_msg(MSGT_TV, MSGL_V, "tvi_dshow: supported norms:");
 	hr = OLE_CALL_ARGS(priv->pTVTuner, get_AvailableTVFormats,
 		       &lAvailableFormats);
 	if (FAILED(hr))
@@ -1276,7 +1276,7 @@ static void get_capabilities(priv_t * priv)
 	tv_available_inputs = malloc(sizeof(long) * lInputPins);
 	tv_available_inputs_count = 0;
 
-	mp_msg(MSGT_TV, MSGL_V, MSGTR_TVI_DS_AvailableVideoInputs);
+	mp_msg(MSGT_TV, MSGL_V, "tvi_dshow: available video inputs:");
 	for (i = 0; i < lInputPins; i++) {
 	    OLE_CALL_ARGS(priv->pCrossbar, get_CrossbarPinInfo, 1, i,
 		      &lRelated, &lPhysicalType);
@@ -1297,7 +1297,7 @@ static void get_capabilities(priv_t * priv)
 	hr = OLE_CALL_ARGS(priv->chains[1]->pCaptureFilter, EnumPins, &pEnum);
 	if (FAILED(hr))
 	    return;
-	mp_msg(MSGT_TV, MSGL_V, MSGTR_TVI_DS_AvailableAudioInputs);
+	mp_msg(MSGT_TV, MSGL_V, "tvi_dshow: available audio inputs:");
 	i = 0;
 	while (OLE_CALL_ARGS(pEnum, Next, 1, &pPin, NULL) == S_OK) {
 	    memset(&pi, 0, sizeof(pi));
@@ -1319,7 +1319,7 @@ static void get_capabilities(priv_t * priv)
                         else
 			    OLE_CALL_ARGS(pIAMixer, put_MixLevel, 1.0);
 #endif
-			mp_msg(MSGT_TV, MSGL_V, MSGTR_TVI_DS_InputSelected);
+			mp_msg(MSGT_TV, MSGL_V, "(selected)");
 		    } else {
 			OLE_CALL_ARGS(pIAMixer, put_Enable, FALSE);
 #if 0
@@ -1992,7 +1992,7 @@ static IBaseFilter *find_capture_device(int index, REFCLSID category)
 	if(get_device_name(pM, tmp, DEVICE_NAME_MAX_LEN)!=TVI_CONTROL_TRUE)
 	    mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TVI_DS_UnableGetDeviceName, i);
         else
-	    mp_msg(MSGT_TV, MSGL_V, MSGTR_TVI_DS_DeviceName, i, tmp);
+	    mp_msg(MSGT_TV, MSGL_V, "tvi_dshow: Device #%d: %s\n", i, tmp);
 	if (index != -1 && i == index) {
 	    mp_msg(MSGT_TV, MSGL_INFO, MSGTR_TVI_DS_UsingDevice, index, tmp);
 	    hr = OLE_CALL_ARGS(pM, BindToObject, 0, 0, &IID_IBaseFilter,(void *) &pFilter);

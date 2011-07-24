@@ -162,7 +162,7 @@ static void fixup(audio_encoder_t *encoder)
         encoder->stream->h.dwRate=encoder->stream->wf->nAvgBytesPerSec;
         encoder->stream->h.dwScale=1;
         encoder->stream->wf->nBlockAlign=1;
-        mp_msg(MSGT_MENCODER, MSGL_V, MSGTR_CBRAudioByterate,
+        mp_msg(MSGT_MENCODER, MSGL_V, "\n\nCBR audio: %d bytes/sec, %d bytes/block\n",
             encoder->stream->h.dwRate,((MPEGLAYER3WAVEFORMAT*)(encoder->stream->wf))->nBlockSize);
     }
 }
@@ -193,14 +193,14 @@ int mpae_init_lame(audio_encoder_t *encoder)
     if(lame_param_mode>=0) lame_set_mode(lame,lame_param_mode); // j-st
     if(lame_param_ratio>0) lame_set_compression_ratio(lame,lame_param_ratio);
     if(lame_param_scale>0) {
-        mp_msg(MSGT_MENCODER, MSGL_V, MSGTR_SettingAudioInputGain, lame_param_scale);
+        mp_msg(MSGT_MENCODER, MSGL_V, "Setting audio input gain to %f.\n", lame_param_scale);
         lame_set_scale(lame,lame_param_scale);
     }
     if(lame_param_lowpassfreq>=-1) lame_set_lowpassfreq(lame,lame_param_lowpassfreq);
     if(lame_param_highpassfreq>=-1) lame_set_highpassfreq(lame,lame_param_highpassfreq);
 #ifdef CONFIG_MP3LAME_PRESET
     if(lame_param_preset != NULL) {
-        mp_msg(MSGT_MENCODER, MSGL_V, MSGTR_LamePresetEquals,lame_param_preset);
+        mp_msg(MSGT_MENCODER, MSGL_V, "\npreset=%s\n\n", lame_param_preset);
         if(lame_presets_set(lame,lame_param_fast, (lame_param_vbr==0), lame_param_preset) < 0)
             return 0;
     }

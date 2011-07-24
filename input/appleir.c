@@ -79,7 +79,7 @@ int mp_input_appleir_init (char *dev)
 
   if (dev)
   {
-    mp_msg (MSGT_INPUT, MSGL_V, MSGTR_INPUT_APPLE_IR_Init, dev);
+    mp_msg (MSGT_INPUT, MSGL_V, "Initializing Apple IR on %s\n", dev);
     fd = open (dev, O_RDONLY | O_NONBLOCK);
     if (fd < 0)
     {
@@ -108,7 +108,7 @@ int mp_input_appleir_init (char *dev)
           id.vendor  == USB_VENDOR_APPLE &&
           (id.product == USB_DEV_APPLE_IR ||id.product == USB_DEV_APPLE_IR_2))
       {
-        mp_msg (MSGT_INPUT, MSGL_V, MSGTR_INPUT_APPLE_IR_Detect, file);
+        mp_msg (MSGT_INPUT, MSGL_V, "Detected Apple IR on %s\n", file);
         return fd;
       }
       close (fd);

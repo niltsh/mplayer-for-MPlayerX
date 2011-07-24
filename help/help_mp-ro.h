@@ -67,7 +67,6 @@ static const char help_text[]=
 #define MSGTR_GetpathProblem "get_path(\"config\") problem\n"
 #define MSGTR_CreatingCfgFile "Creez fiºierul de configurare: %s\n"\
         "Încearcã '-vo help' pentru o listã cu driveri video disponibili.\n"
-#define MSGTR_BuiltinCodecsConf "Folosesc 'codecs.conf' built-in.\n"
 #define MSGTR_CantLoadFont "Nu pot încãrca fontul: %s\n"
 #define MSGTR_CantLoadSub "Nu pot încãrca subtitrarea: %s\n"
 #define MSGTR_FPSnotspecified "FPS (nr. de cadre pe secundã) nu e specificat în header sau e greºit; foloseºte opþiunea '-fps'.\n"
@@ -112,7 +111,6 @@ static const char help_text[]=
 #define MSGTR_AvailableAudioCodecs "Codec-uri audio disponibile:\n"
 #define MSGTR_AvailableVideoCodecs "Codec-uri video disponibile:\n"
 #define MSGTR_AvailableFsType "Moduri fullscreen disponibile:\n"
-#define MSGTR_UsingRTCTiming "Using Linux hardware RTC timing (%ldHz).\n"
 #define MSGTR_CannotReadVideoProperties "Video: Nu pot citi proprietãþile.\n"
 #define MSGTR_NoStreamFound "Nu am gãsit nici un canal.\n"
 #define MSGTR_ErrorInitializingVODevice "Eroare la activarea ieºirii video (-vo) aleasã.\n"
@@ -240,11 +238,8 @@ static const char help_text[]=
 #define MSGTR_MOVcomprhdr "MOV: Pentru a folosi headere compresate e nevoie de ZLIB!\n"
 #define MSGTR_MOVvariableFourCC "MOV: ATENTIE: Am detectat FOURCC variabil!?\n"
 #define MSGTR_MOVtooManyTrk "MOV: ATENTIE: prea multe piste"
-#define MSGTR_FoundAudioStream "==> Canal audio gãsit: %d\n"
-#define MSGTR_FoundVideoStream "==> Canal video gãsit: %d\n"
 #define MSGTR_DetectedTV "TV detectat! ;-)\n"
 #define MSGTR_ErrorOpeningOGGDemuxer "Nu pot deschide demultiplexorul ogg.\n"
-#define MSGTR_ASFSearchingForAudioStream "ASF: Caut canalul audio (id:%d).\n"
 #define MSGTR_CannotOpenAudioStream "Nu pot deschide canalul audio: %s\n"
 #define MSGTR_CannotOpenSubtitlesStream "Nu pot deschide canalul de subtitrare: %s\n"
 #define MSGTR_OpeningAudioDemuxerFailed "Nu am reuºit sã deschid demultiplexorul audio: %s\n"
@@ -265,17 +260,13 @@ static const char help_text[]=
 
 #define MSGTR_UsingExternalPP "[PP] Folosesc filtru de postprocesare extern, q max = %d.\n"
 #define MSGTR_UsingCodecPP "[PP] Folosesc postprocesarea codecului, q max = %d.\n"
-#define MSGTR_VideoAttributeNotSupportedByVO_VD "Atributul video '%s' nu e suportat de vo & vd alese.\n"
 #define MSGTR_OpeningVideoDecoder "Deschid decodorul video: [%s] %s\n"
 #define MSGTR_OpeningAudioDecoder "Deschid decodorul audio: [%s] %s\n"
 #define MSGTR_VDecoderInitFailed "VDecoder init eºuat :(\n"
 #define MSGTR_ADecoderInitFailed "ADecoder init eºuat :(\n"
 #define MSGTR_ADecoderPreinitFailed "ADecoder preinit eºuat :(\n"
-#define MSGTR_AllocatingBytesForInputBuffer "dec_audio: Aloc %d bytes pentru bufferul de intrare.\n"
-#define MSGTR_AllocatingBytesForOutputBuffer "dec_audio: Aloc %d + %d = %d bytes pentru bufferul de ieºire.\n"
 
 // LIRC:
-#define MSGTR_SettingUpLIRC "Pregãtesc folosirea LIRC...\n"
 #define MSGTR_LIRCopenfailed "Nu am reuºit sã activez LIRC.\n"
 #define MSGTR_LIRCcfgerr "Nu am putut citi fiºierul de configurare LIRC %s.\n"
 

@@ -77,9 +77,9 @@ void print_version(const char* name)
            gCpuCaps.has3DNow, gCpuCaps.has3DNowExt,
            gCpuCaps.hasSSE, gCpuCaps.hasSSE2, gCpuCaps.hasSSSE3);
 #if CONFIG_RUNTIME_CPUDETECT
-    mp_msg(MSGT_CPLAYER,MSGL_V, MSGTR_CompiledWithRuntimeDetection);
+    mp_msg(MSGT_CPLAYER, MSGL_V, "Compiled with runtime CPU detection.\n");
 #else
-    mp_msg(MSGT_CPLAYER,MSGL_V, MSGTR_CompiledWithCPUExtensions);
+    mp_msg(MSGT_CPLAYER, MSGL_V, "Compiled for x86 CPU with extensions:");
 if (HAVE_MMX)
     mp_msg(MSGT_CPLAYER,MSGL_V," MMX");
 if (HAVE_MMX2)
@@ -478,7 +478,7 @@ int common_init(void)
                     free(conf_path);
                     return 0;
                 }
-                mp_msg(MSGT_CPLAYER,MSGL_V,MSGTR_BuiltinCodecsConf);
+                mp_msg(MSGT_CPLAYER, MSGL_V, "Using built-in default codecs.conf.\n");
             }
         }
         free(conf_path);

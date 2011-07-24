@@ -78,7 +78,7 @@ void muxer_flush(muxer_t *m) {
     if (!m->muxbuf)
         return;
 
-    mp_msg(MSGT_MUXER, MSGL_V, MSGTR_MuxbufSending, m->muxbuf_num);
+    mp_msg(MSGT_MUXER, MSGL_V, "Muxer frame buffer sending %d frame(s) to the muxer.\n", m->muxbuf_num);
 
     /* fix parameters for all streams */
     for (num = 0; m->streams[num]; ++num) {

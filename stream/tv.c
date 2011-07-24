@@ -378,7 +378,7 @@ int tv_set_norm(tvi_handle_t *tvh, char* norm)
 {
     tvh->norm = norm_from_string(tvh, norm);
 
-    mp_msg(MSGT_TV, MSGL_V, MSGTR_TV_SelectedNorm, norm);
+    mp_msg(MSGT_TV, MSGL_V, "Selected norm : %s\n", norm);
     if (tvh->functions->control(tvh->priv, TVI_CONTROL_TUN_SET_NORM, &tvh->norm) != TVI_CONTROL_TRUE) {
 	mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TV_CannotSetNorm);
 	return 0;
@@ -392,7 +392,7 @@ static int tv_set_norm_i(tvi_handle_t *tvh, int norm)
 {
    tvh->norm = norm;
 
-   mp_msg(MSGT_TV, MSGL_V, MSGTR_TV_SelectedNormId, norm);
+   mp_msg(MSGT_TV, MSGL_V, "Selected norm id: %d\n", norm);
    if (tvh->functions->control(tvh->priv, TVI_CONTROL_TUN_SET_NORM, &tvh->norm) != TVI_CONTROL_TRUE) {
       mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TV_CannotSetNorm);
       return 0;
@@ -542,7 +542,7 @@ static int open_tv(tvi_handle_t *tvh)
 	mp_msg(MSGT_TV, MSGL_WARN, MSGTR_TV_UnableFindChanlist,
 	    tvh->tv_param->chanlist);
     else
-	mp_msg(MSGT_TV, MSGL_V, MSGTR_TV_SelectedChanlist,
+	mp_msg(MSGT_TV, MSGL_V, "Selected channel list: %s (including %d channels)\n",
 	    chanlists[tvh->chanlist].name, chanlists[tvh->chanlist].count);
 
     if (tvh->tv_param->freq && tvh->tv_param->channel)
@@ -604,14 +604,14 @@ static int open_tv(tvi_handle_t *tvh)
 	funcs->control(tvh->priv, TVI_CONTROL_TUN_SET_FREQ, &freq);
 
 	funcs->control(tvh->priv, TVI_CONTROL_TUN_GET_FREQ, &freq);
-	mp_msg(MSGT_TV, MSGL_V, MSGTR_TV_SelectedFrequency,
-	    freq, (float)freq/16);
+        mp_msg(MSGT_TV, MSGL_V, "Selected frequency: %lu (%.3f)\n",
+               freq, (float)freq/16);
     }
 
 	    if (tvh->tv_param->channel) {
 	struct CHANLIST cl;
 
-	mp_msg(MSGT_TV, MSGL_V, MSGTR_TV_RequestedChannel, tvh->tv_param->channel);
+	mp_msg(MSGT_TV, MSGL_V, "Requested channel: %s\n", tvh->tv_param->channel);
 	for (i = 0; i < chanlists[tvh->chanlist].count; i++)
 	{
 	    cl = tvh->chanlist_s[i];
@@ -840,7 +840,7 @@ static demuxer_t* demux_open_tv(demuxer_t *demuxer)
 	sh_audio->wf->nBlockAlign = sh_audio->samplesize * sh_audio->channels;
 	sh_audio->wf->nAvgBytesPerSec = sh_audio->i_bps;
 
-	mp_msg(MSGT_DECVIDEO, MSGL_V, MSGTR_TV_AudioFormat,
+        mp_msg(MSGT_DECVIDEO, MSGL_V, "  TV audio: %d channels, %d bits, %d Hz\n",
           sh_audio->wf->nChannels, sh_audio->wf->wBitsPerSample,
           sh_audio->wf->nSamplesPerSec);
 
@@ -930,7 +930,7 @@ int tv_get_freq(tvi_handle_t *tvh, unsigned long *freq)
     if (tvh->functions->control(tvh->priv, TVI_CONTROL_IS_TUNER, 0) == TVI_CONTROL_TRUE)
     {
 	tvh->functions->control(tvh->priv, TVI_CONTROL_TUN_GET_FREQ, freq);
-	mp_msg(MSGT_TV, MSGL_V, MSGTR_TV_CurrentFrequency,
+	mp_msg(MSGT_TV, MSGL_V, "Current frequency: %lu (%.3f)\n",
 	    *freq, (float)*freq/16);
     }
     return 1;
@@ -946,7 +946,7 @@ int tv_set_freq(tvi_handle_t *tvh, unsigned long freq)
 	tvh->functions->control(tvh->priv, TVI_CONTROL_TUN_SET_FREQ, &freq);
 
 	tvh->functions->control(tvh->priv, TVI_CONTROL_TUN_GET_FREQ, &freq);
-	mp_msg(MSGT_TV, MSGL_V, MSGTR_TV_CurrentFrequency,
+	mp_msg(MSGT_TV, MSGL_V, "Current frequency: %lu (%.3f)\n",
 	    freq, (float)freq/16);
     }
     teletext_control(tvh->demuxer->teletext,TV_VBI_CONTROL_RESET,

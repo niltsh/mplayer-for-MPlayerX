@@ -159,7 +159,7 @@ const ao_functions_t* init_best_audio_out(char** ao_list,int use_plugin,int rate
         else
             ao_len = strlen(ao);
 
-        mp_msg(MSGT_AO, MSGL_V, MSGTR_AO_TryingPreferredAudioDriver,
+        mp_msg(MSGT_AO, MSGL_V, "Trying preferred audio driver '%.*s', options '%s'\n",
                ao_len, ao, ao_subdevice ? ao_subdevice : "[none]");
 
         for(i=0;audio_out_drivers[i];i++){
@@ -182,7 +182,7 @@ const ao_functions_t* init_best_audio_out(char** ao_list,int use_plugin,int rate
     free(ao_subdevice);
     ao_subdevice = NULL;
 
-    mp_msg(MSGT_AO, MSGL_V, MSGTR_AO_TryingEveryKnown);
+    mp_msg(MSGT_AO, MSGL_V, "Trying every known audio driver...\n");
 
     // now try the rest...
     for(i=0;audio_out_drivers[i];i++){

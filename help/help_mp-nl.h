@@ -57,7 +57,6 @@ static const char help_text[]=
 #define MSGTR_NoHomeDir "Kan HOME dir niet vinden\n"
 #define MSGTR_GetpathProblem "get_path(\"config\") probleem\n"
 #define MSGTR_CreatingCfgFile "Bezig met het creëren van configuratie bestand: %s\n"
-#define MSGTR_BuiltinCodecsConf "De standaard ingebouwde codecs.conf wordt gebruikt\n"
 #define MSGTR_CantLoadFont "Kan font niet laden: %s\n"
 #define MSGTR_CantLoadSub "Kan ondertitels niet lezen: %s\n"
 #define MSGTR_DumpSelectedStreamMissing "dump: FATAL: geselecteerde stream ontbreekt!\n"
@@ -99,8 +98,6 @@ static const char help_text[]=
 #define MSGTR_Playing "Bezig met het afspelen van %s\n"
 #define MSGTR_NoSound "Audio: geen geluid!!!\n"
 #define MSGTR_FPSforced "FPS geforceerd om %5.3f te zijn (ftime: %5.3f)\n"
-#define MSGTR_CompiledWithRuntimeDetection "Gecompileerd met RUNTIME CPU detectie - waarschuwing, dit is niet optimaal! Om de best mogelijke performantie te krijgen, hercompileer je mplayer met --disable-runtime-cpudetection\n"
-#define MSGTR_CompiledWithCPUExtensions "Gecompileerd voor x86 CPU met de volgende uitbreidingen:"
 #define MSGTR_AvailableVideoOutputDrivers "Beschikbare video output drivers:\n"
 #define MSGTR_AvailableAudioOutputDrivers "Beschikbare audio output drivers:\n"
 #define MSGTR_AvailableAudioCodecs "Beschikbare audio codecs:\n"
@@ -108,7 +105,6 @@ static const char help_text[]=
 #define MSGTR_AvailableAudioFm "\nBeschikbare (ingecompileerde) audio codec families/drivers:\n"
 #define MSGTR_AvailableVideoFm "\nBeschikbare (ingecompileerde) video codec families/drivers:\n"
 #define MSGTR_AvailableFsType "Beschikbare fullscreen modi:\n"
-#define MSGTR_UsingRTCTiming "Er wordt gebruik gemaakt van Linux's hardware RTC timing (%ldHz)\n"
 #define MSGTR_CannotReadVideoProperties "Video: kan eigenschappen niet lezen\n"
 #define MSGTR_NoStreamFound "Geen stream gevonden\n"
 #define MSGTR_ErrorInitializingVODevice "Fout bij het openen/initialiseren van het gekozen video_out (-vo) apparaat!\n"
@@ -140,14 +136,11 @@ static const char help_text[]=
 #define MSGTR_LoadingConfig "Bezig met het laden van de configuratie '%s'\n"
 #define MSGTR_AddedSubtitleFile "SUB: bestand met ondertitels toegevoegd (%d): %s\n"
 #define MSGTR_ErrorOpeningOutputFile "Fout bij het openen van het bestand [%s]! Geen schrijfrechten!\n"
-#define MSGTR_CommandLine "CommandLine:"
 #define MSGTR_RTCDeviceNotOpenable "Kon %s niet openen: %s (moet leesbaar zijn voor deze gebruiker.)\n"
 #define MSGTR_LinuxRTCInitErrorIrqpSet "Linux RTC initialisatiefout in ioctl (rtc_irqp_set %lu): %s\n"
 #define MSGTR_IncreaseRTCMaxUserFreq "Probeer \"echo %lu > /proc/sys/dev/rtc/max-user-freq\" toe te voegen in de opstartbestanden van uw systeem.\n"
 #define MSGTR_LinuxRTCInitErrorPieOn "Linux RTC initialisatiefout in ioctl (rtc_pie_on): %s\n"
 #define MSGTR_UsingTimingType "Gebruikt %s timing.\n"
-#define MSGTR_MenuInitialized "Menu geinitialiseerd: %s\n"
-#define MSGTR_MenuInitFailed "Menu initialisatie mislukt.\n"
 #define MSGTR_Getch2InitializedTwice "WAARSCHUWING: getch2_init is twee maal opgeroepen!\n"
 #define MSGTR_DumpstreamFdUnavailable "Deze stream can niet opgeslagen worde - geen bestandsomschrijving (file descriptor) beschikbaar.\n"
 #define MSGTR_CantOpenLibmenuFilterWithThisRootMenu "Kan de libmenu video filter niet openen met het root menu %s.\n"
@@ -205,12 +198,9 @@ static const char help_text[]=
 #define MSGTR_MP3AudioSelected "MP3 audio geselecteerd\n"
 #define MSGTR_CannotAllocateBytes "Kon %d bytes niet toewijzen\n"
 #define MSGTR_SettingAudioDelay " AUDIO DELAY wordt gezet op %5.3f\n"
-#define MSGTR_SettingAudioInputGain "De audio input verstreking wordt ingesteld op %f\n"
-#define MSGTR_LamePresetEquals "\npreset=%s\n\n"
 #define MSGTR_LimitingAudioPreload "Audio audio preload wordt beperkt tot 0.4s\n"
 #define MSGTR_IncreasingAudioDensity "Audio densiteit wordt opgevoerd tot 4\n"
 #define MSGTR_ZeroingAudioPreloadAndMaxPtsCorrection "Audio preload wordt ingesteld op 0, max pts correctie is 0\n"
-#define MSGTR_CBRAudioByterate "\n\nCBR audio: %d bytes/sec, %d bytes/blok\n"
 #define MSGTR_LameVersion "LAME versie %s (%s)\n\n"
 #define MSGTR_InvalidBitrateForLamePreset "Fout: De ingestelde bitrate valt buiten het bereik van deze preset\n"\
 "\n"\
@@ -390,7 +380,6 @@ static const char help_text[]=
 #define MSGTR_CodecNeedsOutfmt "\ncodec(%s) heeft 'outfmt' nodig!\n"
 #define MSGTR_CantAllocateComment "Kan geen geheugen toewijzen voor commentaar. "
 #define MSGTR_GetTokenMaxNotLessThanMAX_NR_TOKEN "get_token(): max >= MAX_MR_TOKEN!"
-#define MSGTR_ReadingFile "Percent ingelezen %s: "
 #define MSGTR_CantOpenFileError "Kan '%s' niet openen: %s\n"
 #define MSGTR_CantGetMemoryForLine "Kan geen geheugen toewijzen voor 'line': %s\n"
 #define MSGTR_CantReallocCodecsp "Kan '*codecsp' niet re-alloceren: %s\n"
@@ -445,7 +434,6 @@ static const char help_text[]=
 #define MSGTR_SwitchToNi "\nSlecht geinterleaved .AVI bestand gedetecteerd - schakel om naar -ni mode!\n"
 #define MSGTR_Detected_XXX_FileFormat "%s bestandsformaat gedetecteerd!\n"
 #define MSGTR_DetectedAudiofile "Audio bestandsformaat gedetecteerd!\n"
-#define MSGTR_NotSystemStream "Geen MPEG System Stream formaat... (misschien Transport Stream?)\n"
 #define MSGTR_InvalidMPEGES "Invalid MPEG-ES stream??? Contacteer de auteur, het zou een bug kunnen zijn :(\n"
 #define MSGTR_FormatNotRecognized "============= Sorry, dit bestandsformaat niet herkend/ondersteund ===============\n"\
                                   "=== Als dit een AVI bestand, ASF bestand of MPEG stream is, contacteer dan aub de auteur! ===\n"
@@ -467,11 +455,8 @@ static const char help_text[]=
 #define MSGTR_MOVcomprhdr "MOV: Gecomprimeerde headers (nog) niet ondersteund!\n"
 #define MSGTR_MOVvariableFourCC "MOV: Waarschuwing! variabele FOURCC gedetecteerd!?\n"
 #define MSGTR_MOVtooManyTrk "MOV: Waarschuwing! te veel tracks!"
-#define MSGTR_FoundAudioStream "==> Audio stream gevonden: %d\n"
-#define MSGTR_FoundVideoStream "==> Video stream gevonden: %d\n"
 #define MSGTR_DetectedTV "TV gedetecteerd! ;-)\n"
 #define MSGTR_ErrorOpeningOGGDemuxer "Kan de Ogg demuxer niet openen\n"
-#define MSGTR_ASFSearchingForAudioStream "ASF: Bezig met zoeken naar audio stream (id:%d)\n"
 #define MSGTR_CannotOpenAudioStream "Kan audio stream niet openen: %s\n"
 #define MSGTR_CannotOpenSubtitlesStream "Kan ondertitelingstream niet openen: %s\n"
 #define MSGTR_OpeningAudioDemuxerFailed "Kan audio demuxer niet openen: %s\n"
@@ -503,21 +488,15 @@ static const char help_text[]=
 
 #define MSGTR_UsingExternalPP "[PP] Gebruik makend van externe postprocessing filter, max q = %d\n"
 #define MSGTR_UsingCodecPP "[PP] Gebruik makend van de codec's interne postprocessing, max q = %d\n"
-#define MSGTR_VideoAttributeNotSupportedByVO_VD "Video attribuut '%s' wordt niet ondersteund door de gekozen vo & vd! \n"
 #define MSGTR_VideoCodecFamilyNotAvailableStr "Aangevraagde video codec familie [%s] (vfm=%s) niet beschikbaar (activeer het bij het compileren!)\n"
 #define MSGTR_AudioCodecFamilyNotAvailableStr "Aangevraagde audio codec familie [%s] (afm=%s) niet beschikbaar (activeer het bij het compileren!)\n"
 #define MSGTR_OpeningVideoDecoder "Bezig met het openen van de video decoder: [%s] %s\n"
 #define MSGTR_OpeningAudioDecoder "Bezig met het openen van de audio decoder: [%s] %s\n"
-#define MSGTR_UninitVideoStr "Deinitialisatie video: %s  \n"
-#define MSGTR_UninitAudioStr "Deinitialisatie audio: %s  \n"
 #define MSGTR_VDecoderInitFailed "VDecoder initialisatie mislukt :(\n"
 #define MSGTR_ADecoderInitFailed "ADecoder initialisatie mislukt :(\n"
 #define MSGTR_ADecoderPreinitFailed "ADecoder preinitialisatie mislukt :(\n"
-#define MSGTR_AllocatingBytesForInputBuffer "dec_audio: Bezig met het toekennen van %d bytes voor de invoer buffer\n"
-#define MSGTR_AllocatingBytesForOutputBuffer "dec_audio: Bezig met het toekennen van %d + %d = %d bytes voor uitvoer buffer\n"
 
 // LIRC:
-#define MSGTR_SettingUpLIRC "Bezig met configuratie van lirc ondersteuning...\n"
 #define MSGTR_LIRCopenfailed "Laden van lirc ondersteuning mislukt!\n"
 #define MSGTR_LIRCcfgerr "Lezen van LIRC config bestand mislukt %s!\n"
 
@@ -535,8 +514,6 @@ static const char help_text[]=
 
 // vd_dshow.c, vd_dmo.c
 #define MSGTR_DownloadCodecPackage "De binary codecs moeten worden geinstalleerd of bijgewerkt.\nZie http://www.mplayerhq.hu/dload.html\n"
-#define MSGTR_DShowInitOK "INFO: Win32/DShow video codec initialisatie OK.\n"
-#define MSGTR_DMOInitOK "INFO: Win32/DMO video codec initialisatie OK.\n"
 
 // x11_common.c
 #define MSGTR_EwmhFullscreenStateFailed "\nX11: Kon de \"EWMH fullscreen Event!\" niet versturen\n"
@@ -881,7 +858,6 @@ static const char help_text[]=
 
 // ao_sun.c
 #define MSGTR_AO_SUN_RtscSetinfoFailed "[AO SUN] rtsc: SETINFO failed.\n"
-#define MSGTR_AO_SUN_RtscWriteFailed "[AO SUN] rtsc: write failed."
 #define MSGTR_AO_SUN_CantOpenAudioDev "[AO SUN] Can't open audio device %s, %s  -> nosound.\n"
 #define MSGTR_AO_SUN_UnsupSampleRate "[AO SUN] audio_setup: your card doesn't support %d channel, %s, %d Hz samplerate.\n"
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   ***  Your audio driver DOES NOT support select()  ***\nRecompile MPlayer with #undef HAVE_AUDIO_SELECT in config.h !\n\n"

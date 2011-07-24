@@ -86,7 +86,7 @@ static int init_audio_codec(sh_audio_t *sh_audio)
     /* allocate audio in buffer: */
     if (sh_audio->audio_in_minsize > 0) {
 	sh_audio->a_in_buffer_size = sh_audio->audio_in_minsize;
-	mp_msg(MSGT_DECAUDIO, MSGL_V, MSGTR_AllocatingBytesForInputBuffer,
+	mp_msg(MSGT_DECAUDIO, MSGL_V, "dec_audio: Allocating %d bytes for input buffer.\n",
 	       sh_audio->a_in_buffer_size);
 	sh_audio->a_in_buffer = av_mallocz(sh_audio->a_in_buffer_size);
 	sh_audio->a_in_buffer_len = 0;
@@ -94,7 +94,7 @@ static int init_audio_codec(sh_audio_t *sh_audio)
 
     sh_audio->a_buffer_size = sh_audio->audio_out_minsize + MAX_OUTBURST;
 
-    mp_msg(MSGT_DECAUDIO, MSGL_V, MSGTR_AllocatingBytesForOutputBuffer,
+    mp_msg(MSGT_DECAUDIO, MSGL_V, "dec_audio: Allocating %d + %d = %d bytes for output buffer.\n",
 	   sh_audio->audio_out_minsize, MAX_OUTBURST, sh_audio->a_buffer_size);
 
     sh_audio->a_buffer = av_mallocz(sh_audio->a_buffer_size);
@@ -305,7 +305,7 @@ void uninit_audio(sh_audio_t *sh_audio)
 	sh_audio->afilter = NULL;
     }
     if (sh_audio->initialized) {
-	mp_msg(MSGT_DECAUDIO, MSGL_V, MSGTR_UninitAudioStr,
+	mp_msg(MSGT_DECAUDIO, MSGL_V, "Uninit audio: %s\n",
 	       sh_audio->codec->drv);
 	sh_audio->ad_driver->uninit(sh_audio);
 #ifdef CONFIG_DYNAMIC_PLUGINS
@@ -345,7 +345,8 @@ int init_audio_filters(sh_audio_t *sh_audio, int in_samplerate,
     // filter config:
     memcpy(&afs->cfg, &af_cfg, sizeof(af_cfg_t));
 
-    mp_msg(MSGT_DECAUDIO, MSGL_V, MSGTR_BuildingAudioFilterChain,
+    mp_msg(MSGT_DECAUDIO, MSGL_V,
+           "Building audio filter chain for %dHz/%dch/%s -> %dHz/%dch/%s...\n",
 	   afs->input.rate, afs->input.nch,
 	   af_fmt2str_short(afs->input.format), afs->output.rate,
 	   afs->output.nch, af_fmt2str_short(afs->output.format));

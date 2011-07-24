@@ -171,7 +171,7 @@ int ai_alsa_xrun(audio_in_t *ai)
 	mp_msg(MSGT_TV, MSGL_ERR, MSGTR_MPDEMUX_AIALSA_AlsaXRUN,
 	       diff.tv_sec * 1000 + diff.tv_usec / 1000.0);
 	if (mp_msg_test(MSGT_TV, MSGL_V)) {
-	    mp_msg(MSGT_TV, MSGL_ERR, MSGTR_MPDEMUX_AIALSA_AlsaStatus);
+	    mp_msg(MSGT_TV, MSGL_ERR, "ALSA Status:\n");
 	    snd_pcm_status_dump(status, ai->alsa.log);
 	}
 	if ((res = snd_pcm_prepare(ai->alsa.handle))<0) {

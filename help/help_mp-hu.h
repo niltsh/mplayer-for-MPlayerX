@@ -60,7 +60,6 @@ static const char help_text[]=
 #define MSGTR_NoHomeDir "Nem találom a HOME könyvtárat.\n"
 #define MSGTR_GetpathProblem "get_path(\"config\") probléma\n"
 #define MSGTR_CreatingCfgFile "Konfigurációs fájl létrehozása: %s\n"
-#define MSGTR_BuiltinCodecsConf "Befordított codecs.conf használata.\n"
 #define MSGTR_CantLoadFont "Nem tudom betölteni a következő bittérképes betűt: %s\n"
 #define MSGTR_CantLoadSub "Nem tudom betölteni a feliratot: %s\n"
 #define MSGTR_DumpSelectedStreamMissing "dump: VÉGZETES HIBA: a kért stream nem található!\n"
@@ -104,8 +103,6 @@ static const char help_text[]=
 #define MSGTR_Playing "\n%s lejátszása.\n"
 #define MSGTR_NoSound "Audio: nincs hang!!!\n"
 #define MSGTR_FPSforced "FPS kényszerítve %5.3f  (ftime: %5.3f)\n"
-#define MSGTR_CompiledWithRuntimeDetection "Futásidejű CPU detektálás használata.\n"
-#define MSGTR_CompiledWithCPUExtensions "x86-os CPU - a következő kiterjesztésekkel:"
 #define MSGTR_AvailableVideoOutputDrivers "Rendelkezésre álló video meghajtók:\n"
 #define MSGTR_AvailableAudioOutputDrivers "Rendelkezésre álló audio meghajtók:\n"
 #define MSGTR_AvailableAudioCodecs "Rendelkezésre álló audio codec-ek:\n"
@@ -113,7 +110,6 @@ static const char help_text[]=
 #define MSGTR_AvailableAudioFm "Rendelkezésre álló (befordított) audio codec családok/meghajtók:\n"
 #define MSGTR_AvailableVideoFm "Rendelkezésre álló (befordított) video codec családok/meghajtók:\n"
 #define MSGTR_AvailableFsType "A használható teljesképernyős réteg-módok:\n"
-#define MSGTR_UsingRTCTiming "Linux hardveres RTC időzítés használata (%ldHz)\n"
 #define MSGTR_CannotReadVideoProperties "Video: tulajdonságok beolvasása nem lehetséges.\n"
 #define MSGTR_NoStreamFound "Nem található stream\n"
 #define MSGTR_ErrorInitializingVODevice "Hiba a kiválasztott video_out (-vo) egység inicializásakor!\n"
@@ -149,14 +145,11 @@ static const char help_text[]=
 #define MSGTR_AddedSubtitleFile "SUB: Felirat fájl (%d) hozzáadva: %s\n"
 #define MSGTR_RemovedSubtitleFile "SUB: Felirat fájl (%d) eltávolítva: %s\n"
 #define MSGTR_ErrorOpeningOutputFile "Hiba a(z) [%s] fájl írásakor!\n"
-#define MSGTR_CommandLine "Parancs sor:"
 #define MSGTR_RTCDeviceNotOpenable "%s megnyitása nem sikerült: %s (a felhasználó által olvashatónak kell lennie.)\n"
 #define MSGTR_LinuxRTCInitErrorIrqpSet "Linux RTC inicializálási hiba az ioctl-ben (rtc_irqp_set %lu): %s\n"
 #define MSGTR_IncreaseRTCMaxUserFreq "Próbáld ki ezt: \"echo %lu > /proc/sys/dev/rtc/max-user-freq\" hozzáadni a rendszer indító script-jeidhez!\n"
 #define MSGTR_LinuxRTCInitErrorPieOn "Linux RTC inicializálási hiba az ioctl-ben (rtc_pie_on): %s\n"
 #define MSGTR_UsingTimingType "%s időzítés használata.\n"
-#define MSGTR_MenuInitialized "Menü inicializálva: %s\n"
-#define MSGTR_MenuInitFailed "Menü inicializálás nem sikerült.\n"
 #define MSGTR_Getch2InitializedTwice "FIGYELEM: getch2_init kétszer lett meghívva!\n"
 #define MSGTR_DumpstreamFdUnavailable "Ezt a folyamot nem lehet dump-olni - a fájlleíró nem elérhető.\n"
 #define MSGTR_CantOpenLibmenuFilterWithThisRootMenu "A libmenu video szűrőt nem sikerült a(z) %s főmenüvel megnyitni.\n"
@@ -292,12 +285,9 @@ static const char help_text[]=
 #define MSGTR_CannotAllocateBytes "%d byte nem foglalható le.\n"
 #define MSGTR_SettingAudioDelay "Audió késleltetés beállítása: %5.3fs.\n"
 #define MSGTR_SettingVideoDelay "Videó késleltetés beállítása: %5.3fs.\n"
-#define MSGTR_SettingAudioInputGain "Audió input erősítése %f.\n"
-#define MSGTR_LamePresetEquals "\npreset=%s\n\n"
 #define MSGTR_LimitingAudioPreload "Audió előretöltés korlátozva 0.4 mp-re.\n"
 #define MSGTR_IncreasingAudioDensity "Audió tömörítés növelése 4-re.\n"
 #define MSGTR_ZeroingAudioPreloadAndMaxPtsCorrection "Audió előretöltés 0-ra állítva, max pts javítás 0.\n"
-#define MSGTR_CBRAudioByterate "\n\nCBR audio: %d byte/mp, %d byte/blokk\n"
 #define MSGTR_LameVersion "LAME %s (%s) verzió\n\n"
 #define MSGTR_InvalidBitrateForLamePreset "Hiba: A megadott bitráta az ezen beállításhoz tartozó határokon kívül van.\n"\
 "\n"\
@@ -484,7 +474,6 @@ static const char help_text[]=
 #define MSGTR_CodecNeedsOutfmt "\ncodec(%s) 'outfmt'-t igényel!\n"
 #define MSGTR_CantAllocateComment "Nem tudok memóriát foglalni a megjegyzésnek. "
 #define MSGTR_GetTokenMaxNotLessThanMAX_NR_TOKEN "get_token(): max >= MAX_MR_TOKEN!"
-#define MSGTR_ReadingFile "%s olvasása: "
 #define MSGTR_CantOpenFileError "Nem tudom megnyitni '%s'-t: %s\n"
 #define MSGTR_CantGetMemoryForLine "Nem tudok memóriát foglalni a 'line'-nak: %s\n"
 #define MSGTR_CantReallocCodecsp "A '*codecsp' nem foglalható le újra: %s\n"
@@ -1132,10 +1121,8 @@ static const char help_text[]=
 
 // audio_out.c
 #define MSGTR_AO_ALSA9_1x_Removed "audio_out: alsa9 és alsa1x modulok törölve lettek, használd a -ao alsa kapcsolót helyettük.\n"
-#define MSGTR_AO_TryingPreferredAudioDriver "Preferált '%.*s' audió vezérlő próbálása, opciók: '%s'\n"
 #define MSGTR_AO_NoSuchDriver "Nincs ilyen audió vezérlő: '%.*s'\n"
 #define MSGTR_AO_FailedInit "A(z) '%s' audió vezérlő inicializálása nem sikerült\n"
-#define MSGTR_AO_TryingEveryKnown "Az összes ismert audió vezérlő kipróbálása...\n"
 
 // ao_oss.c
 #define MSGTR_AO_OSS_CantOpenMixer "[AO OSS] audio_setup: Nem tudom megnyitni a(z) %s keverő eszközt: %s\n"
@@ -1198,7 +1185,6 @@ static const char help_text[]=
 
 // ao_sun.c
 #define MSGTR_AO_SUN_RtscSetinfoFailed "[AO SUN] rtsc: SETINFO sikertelen.\n"
-#define MSGTR_AO_SUN_RtscWriteFailed "[AO SUN] rtsc: írás sikertelen.\n"
 #define MSGTR_AO_SUN_CantOpenAudioDev "[AO SUN] %s audio eszköz nem elérhető, %s  -> nincs hang.\n"
 #define MSGTR_AO_SUN_UnsupSampleRate "[AO SUN] audio_setup: a kártyád nem támogat %d csatornát, %s, %d Hz samplerate-t.\n"
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   ***  A hangkártyád NEM támogatja a select()-et ***\nFordítsd újra az MPlayer-t az #undef HAVE_AUDIO_SELECT sorral a config.h-ban !\n\n"
@@ -1312,7 +1298,6 @@ static const char help_text[]=
 // ========================== INPUT =========================================
 
 // joystick.c
-#define MSGTR_INPUT_JOYSTICK_Opening "Botkormány eszköz megnyitása: %s\n"
 #define MSGTR_INPUT_JOYSTICK_CantOpen "Nem sikerült a(z) %s botkormány eszközt megnyitni: %s\n"
 #define MSGTR_INPUT_JOYSTICK_ErrReading "Hiba a botkormány eszköz olvasása közben: %s\n"
 #define MSGTR_INPUT_JOYSTICK_LoosingBytes "Botkormány: elvesztettünk %d bájtnyi adatot\n"
@@ -1320,8 +1305,6 @@ static const char help_text[]=
 #define MSGTR_INPUT_JOYSTICK_WarnUnknownEvent "Botkormány ismeretlen figyelmeztető esemény típus: %d\n"
 
 // appleir.c
-#define MSGTR_INPUT_APPLE_IR_Init "Apple IR inicializálása %s eszközön.\n"
-#define MSGTR_INPUT_APPLE_IR_Detect "Apple IR megtalálva %s eszközön.\n"
 #define MSGTR_INPUT_APPLE_IR_CantOpen "Nem nyitható meg az Apple IR eszköz: %s\n"
 
 // input.c
@@ -1352,7 +1335,6 @@ static const char help_text[]=
 #define MSGTR_INPUT_INPUT_ErrCantInitAppleRemote "Apple Remote inicializálása nem sikerült.\n"
 
 // lirc.c
-#define MSGTR_SettingUpLIRC "LIRC támogatás indítása...\n"
 #define MSGTR_LIRCopenfailed "Nem tudtam megnyitni a lirc támogatást. Nem fogod tudni használni a távirányítót.\n"
 #define MSGTR_LIRCcfgerr "Nem tudom olvasni a LIRC konfigurációs fájlt: %s \n"
 
@@ -1367,7 +1349,6 @@ static const char help_text[]=
 #define MSGTR_WarningLenIsntDivisible "Figyelem! A len nem osztható a samplesize-zal!\n"
 #define MSGTR_MuxbufMallocErr "Muxer kocka buffernek nem sikerült memóriát foglalni!\n"
 #define MSGTR_MuxbufReallocErr "Muxer kocka buffernek nem sikerült memóriát újrafoglalni!\n"
-#define MSGTR_MuxbufSending "Muxer kocka bufferből %d kocka átküldve a muxer-nek.\n"
 #define MSGTR_WritingHeader "Fejléc írása...\n"
 #define MSGTR_WritingTrailer "Index írása...\n"
 
@@ -1385,7 +1366,6 @@ static const char help_text[]=
 #define MSGTR_ON2AviFormat "ON2 AVI formátum"
 #define MSGTR_Detected_XXX_FileFormat "Ez egy %s formátumú fájl!\n"
 #define MSGTR_DetectedAudiofile "Audio fájl detektálva!\n"
-#define MSGTR_NotSystemStream "Nem MPEG System Stream formátum... (talán Transport Stream?)\n"
 #define MSGTR_InvalidMPEGES "Hibás MPEG-ES-folyam? Lépj kapcsolatba a készítőkkel, lehet, hogy hiba!\n"
 #define MSGTR_FormatNotRecognized "========= Sajnos ez a fájlformátum ismeretlen vagy nem támogatott ===========\n"\
                                   "= Ha ez egy AVI, ASF vagy MPEG fájl, lépj kapcsolatba a készítőkkel (hiba)! =\n"
@@ -1410,11 +1390,8 @@ static const char help_text[]=
 #define MSGTR_MOVcomprhdr "MOV: A tömörített fejlécek támogatásához ZLIB kell!\n"
 #define MSGTR_MOVvariableFourCC "MOV: Vigyázat: változó FourCC detektálva!?\n"
 #define MSGTR_MOVtooManyTrk "MOV: Vigyázat: túl sok sáv!"
-#define MSGTR_FoundAudioStream "==> Megtalált audio folyam: %d\n"
-#define MSGTR_FoundVideoStream "==> Megtalált video folyam: %d\n"
 #define MSGTR_DetectedTV "TV detektálva! ;-)\n"
 #define MSGTR_ErrorOpeningOGGDemuxer "Ogg demuxer meghívása nem sikerült.\n"
-#define MSGTR_ASFSearchingForAudioStream "ASF: Audio folyam keresése (id:%d)\n"
 #define MSGTR_CannotOpenAudioStream "Audio folyam megnyitása sikertelen: %s\n"
 #define MSGTR_CannotOpenSubtitlesStream "Felirat folyam megnyitása sikertelen: %s\n"
 #define MSGTR_OpeningAudioDemuxerFailed "Audio demuxer meghívása sikertelen: %s\n"
@@ -1447,17 +1424,7 @@ static const char help_text[]=
 
 // aviheader.c
 #define MSGTR_MPDEMUX_AVIHDR_EmptyList "** üres lista?!\n"
-#define MSGTR_MPDEMUX_AVIHDR_FoundMovieAt "Film megtalálva: 0x%X - 0x%X\n"
-#define MSGTR_MPDEMUX_AVIHDR_FoundBitmapInfoHeader "'bih' megtalálva, %u bájt %d bájtból\n"
-#define MSGTR_MPDEMUX_AVIHDR_RegeneratingKeyfTableForMPG4V1 "A kulcs képkocka tábla újragenerálva az M$ mpg4v1 videóhoz.\n"
-#define MSGTR_MPDEMUX_AVIHDR_RegeneratingKeyfTableForDIVX3 "Kulcs képkocka tábla újragenerálása a DIVX3 videóhoz.\n"
-#define MSGTR_MPDEMUX_AVIHDR_RegeneratingKeyfTableForMPEG4 "Kulcs képkocka tábla újragenerálása az MPEG4 videóhoz.\n"
-#define MSGTR_MPDEMUX_AVIHDR_FoundWaveFmt "'wf' megtalálva, %d bájt %d bájtból\n"
-#define MSGTR_MPDEMUX_AVIHDR_FoundAVIV2Header "AVI: dmlh megtalálva (size=%d) (total_frames=%d)\n"
-#define MSGTR_MPDEMUX_AVIHDR_ReadingIndexBlockChunksForFrames "INDEX blokk olvasása, %d chunk %d képkockához (fpos=%"PRId64").\n"
-#define MSGTR_MPDEMUX_AVIHDR_AdditionalRIFFHdr "Kiegészítő RIFF fejléc...\n"
 #define MSGTR_MPDEMUX_AVIHDR_WarnNotExtendedAVIHdr "** Figyelmeztetés: ez nem kiterjesztett AVI fejléc..\n"
-#define MSGTR_MPDEMUX_AVIHDR_BrokenChunk "Hibás chunk?  chunksize=%d  (id=%.4s)\n"
 #define MSGTR_MPDEMUX_AVIHDR_BuildingODMLidx "AVI: ODML: ODML index felépítése (%d superindexchunks)\n"
 #define MSGTR_MPDEMUX_AVIHDR_BrokenODMLfile "AVI: ODML: Hibás (nem teljes?) fájlt találtam. Tradícionális index használata.\n"
 #define MSGTR_MPDEMUX_AVIHDR_CantReadIdxFile "A(z) %s index fájl nem olvasható: %s\n"
@@ -1589,21 +1556,15 @@ static const char help_text[]=
 
 #define MSGTR_UsingExternalPP "[PP] Külső minőségjavító szűrő használata, max minőség = %d\n"
 #define MSGTR_UsingCodecPP "[PP] Codecbeli minőségjavítás használata, max minőség = %d\n"
-#define MSGTR_VideoAttributeNotSupportedByVO_VD "'%s' video tulajdonság nem támogatott a kiválasztott vo & vd meghajtók által!\n"
 #define MSGTR_VideoCodecFamilyNotAvailableStr "A kért [%s] video codec család (vfm=%s) nem kiválasztható (fordításnál kapcsold be!)\n"
 #define MSGTR_AudioCodecFamilyNotAvailableStr "A kért [%s] audio codec család (afm=%s) nem kiválasztható (fordításnál kapcsold be!)\n"
 #define MSGTR_OpeningVideoDecoder "Video dekóder meghívása: [%s] %s\n"
 #define MSGTR_SelectedVideoCodec "Kiválasztott videó codec: [%s] vfm: %s (%s)\n"
 #define MSGTR_OpeningAudioDecoder "Audio dekóder meghívása: [%s] %s\n"
 #define MSGTR_SelectedAudioCodec "Kiválasztott audió codec: [%s] afm: %s (%s)\n"
-#define MSGTR_BuildingAudioFilterChain "Audió szűrő lánc felépítése %dHz/%dch/%s -> %dHz/%dch/%s formátumhoz...\n"
-#define MSGTR_UninitVideoStr "Videó uninit: %s\n"
-#define MSGTR_UninitAudioStr "Audió uninit: %s\n"
 #define MSGTR_VDecoderInitFailed "VDecoder init nem sikerült :(\n"
 #define MSGTR_ADecoderInitFailed "ADecoder init nem sikerült :(\n"
 #define MSGTR_ADecoderPreinitFailed "ADecoder preinit nem sikerült :(\n"
-#define MSGTR_AllocatingBytesForInputBuffer "dec_audio: %d byte allokálása bemeneti buffernek.\n"
-#define MSGTR_AllocatingBytesForOutputBuffer "dec_audio: %d + %d = %d byte allokálása bemeneti buffernek.\n"
 
 // ad_dvdpcm.c:
 #define MSGTR_SamplesWanted "Példa fájlokra van szükségünk ilyen formátummal, hogy jobb legyen a támogatása. Ha neked van ilyened, keresd meg a fejlesztőket.\n"
@@ -1619,8 +1580,6 @@ static const char help_text[]=
 
 // vd_dshow.c, vd_dmo.c
 #define MSGTR_DownloadCodecPackage "Frissítened/installálnod kell a bináris codec csomagot.\nItt megtalálod: http://www.mplayerhq.hu/dload.html\n"
-#define MSGTR_DShowInitOK "INFO: Win32/DShow video codec inicializálása OK.\n"
-#define MSGTR_DMOInitOK "INFO: Win32/DMO video codec init OK.\n"
 
 // libmpcodecs/vd_dmo.c vd_dshow.c vd_vfw.c
 #define MSGTR_MPCODECS_CouldntAllocateImageForCinepakCodec "[VD_DMO] Nem foglalható le a kép a cinepak codec-hez.\n"
@@ -1761,9 +1720,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_AIALSA_PeriodEqualsBufferSize "Nem használható a buffer mérettel egyező periódus (%u == %lu)\n"
 #define MSGTR_MPDEMUX_AIALSA_CannotInstallSWParams "Sikertelen a szoftver paraméterek beállítása:\n"
 #define MSGTR_MPDEMUX_AIALSA_ErrorOpeningAudio "Hiba az audió megnyitásakor: %s\n"
-#define MSGTR_MPDEMUX_AIALSA_AlsaStatusError "ALSA státusz hiba: %s"
 #define MSGTR_MPDEMUX_AIALSA_AlsaXRUN "ALSA xrun!!! (legalább %.3f ms hosszan)\n"
-#define MSGTR_MPDEMUX_AIALSA_AlsaStatus "ALSA Státusz:\n"
 #define MSGTR_MPDEMUX_AIALSA_AlsaXRUNPrepareError "ALSA xrun: előkészítési hiba: %s"
 #define MSGTR_MPDEMUX_AIALSA_AlsaReadWriteError "ALSA olvasás/írás hiba"
 
@@ -1956,17 +1913,13 @@ static const char help_text[]=
 
 // stream_radio.c
 #define MSGTR_RADIO_ChannelNamesDetected "[radio] Rádió csatornák neve megtalálva.\n"
-#define MSGTR_RADIO_FreqRange "[radio] Az engedélyezett frekvencia tartomány %.2f-%.2f MHz.\n"
 #define MSGTR_RADIO_WrongFreqForChannel "[radio] Hibás frekvencia a(z) %s csatornának\n"
 #define MSGTR_RADIO_WrongChannelNumberFloat "[radio] Hibás csatorna szám: %.2f\n"
 #define MSGTR_RADIO_WrongChannelNumberInt "[radio] Hibás csatorna szám: %d\n"
 #define MSGTR_RADIO_WrongChannelName "[radio] Hibás csatorna név: %s\n"
 #define MSGTR_RADIO_FreqParameterDetected "[radio] Rádió frekvencia paramétere megtalálva.\n"
-#define MSGTR_RADIO_DoneParsingChannels "[radio] Csatornák értelmezése kész.\n"
 #define MSGTR_RADIO_GetTunerFailed "[radio] Figyelmeztetés:ioctl get tuner sikertelen: %s. Frac beállítása: %d.\n"
 #define MSGTR_RADIO_NotRadioDevice "[radio] %s nem rádiós eszköz!\n"
-#define MSGTR_RADIO_TunerCapLowYes "[radio] a tuner low:yes frac=%d\n"
-#define MSGTR_RADIO_TunerCapLowNo "[radio] a tuner low:no frac=%d\n"
 #define MSGTR_RADIO_SetFreqFailed "[radio] ioctl set frequency 0x%x (%.2f) sikertelen: %s\n"
 #define MSGTR_RADIO_GetFreqFailed "[radio] ioctl get frequency sikertelen: %s\n"
 #define MSGTR_RADIO_SetMuteFailed "[radio] ioctl set mute sikertelen: %s\n"
@@ -1976,27 +1929,21 @@ static const char help_text[]=
 #define MSGTR_RADIO_DroppingFrame "\n[radio] túl rossz - audió keret eldobása (%d bájt)!\n"
 #define MSGTR_RADIO_BufferEmpty "[radio] grab_audio_frame: üres a buffer, várakozás %d adat bájtra.\n"
 #define MSGTR_RADIO_AudioInitFailed "[radio] audio_in_init sikertelen: %s\n"
-#define MSGTR_RADIO_AudioBuffer "[radio] Audió rögzítés - buffer=%d bájt (blokk=%d bájt).\n"
 #define MSGTR_RADIO_AllocateBufferFailed "[radio] az audió buffer nem foglalható le (block=%d,buf=%d): %s\n"
 #define MSGTR_RADIO_CurrentFreq "[radio] Jelenlegi frekvencia: %.2f\n"
-#define MSGTR_RADIO_SelectedChannel "[radio] Kiválasztott csatorna: %d - %s (freq: %.2f)\n"
 #define MSGTR_RADIO_ChangeChannelNoChannelList "[radio] Nem lehet csatornát választani: nincs csatornalista megadva.\n"
 #define MSGTR_RADIO_UnableOpenDevice "[radio] '%s' nem nyitható meg: %s\n"
-#define MSGTR_RADIO_RadioDevice "[radio] Radio fd: %d, %s\n"
 #define MSGTR_RADIO_InitFracFailed "[radio] init_frac sikertelen.\n"
 #define MSGTR_RADIO_WrongFreq "[radio] Hibás frekvencia: %.2f\n"
 #define MSGTR_RADIO_UsingFreq "[radio] Használt frekvencia: %.2f.\n"
 #define MSGTR_RADIO_AudioInInitFailed "[radio] audio_in_init sikertelen.\n"
-#define MSGTR_RADIO_BufferString "[radio] %s: in buffer=%d dropped=%d\n"
 #define MSGTR_RADIO_AudioInSetupFailed "[radio] audio_in_setup hívás sikertelen: %s\n"
-#define MSGTR_RADIO_CaptureStarting "[radio] Mentés kezdése.\n"
 #define MSGTR_RADIO_ClearBufferFailed "[radio] Buffer kiürítése sikertelen: %s\n"
 #define MSGTR_RADIO_StreamEnableCacheFailed "[radio] stream_enable_cache hívás sikertelen: %s\n"
 #define MSGTR_RADIO_DriverUnknownStr "[radio] Ismeretlen vezérlő név: %s\n"
 #define MSGTR_RADIO_DriverV4L2 "[radio] V4Lv2 rádió interfész használata.\n"
 #define MSGTR_RADIO_DriverV4L "[radio] V4Lv1 rádió interfész használata.\n"
 #define MSGTR_RADIO_DriverBSDBT848 "[radio] *BSD BT848 rádió interfész használata.\n"
-#define MSGTR_RADIO_AvailableDrivers "[radio] Használható vezérlők: "
 
 //tv.c
 #define MSGTR_TV_BogusNormParameter "tv.c: norm_from_string(%s): Hibás norma paraméter, beállított: %s.\n"
@@ -2008,30 +1955,23 @@ static const char help_text[]=
 " figyelmen kívül hagyjuk! Próbáld újra YV12-vel (az alapértelmezett\n"\
 " színtérrel) és olvasd el a dokumentációt!\n"\
 "==================================================================\n"
-#define MSGTR_TV_SelectedNormId "Kiválasztott norma id: %d\n"
-#define MSGTR_TV_SelectedNorm "Kiválasztott norma: %s\n"
 #define MSGTR_TV_CannotSetNorm "Hiba: Nem lehet beállítani a normát!\n"
 #define MSGTR_TV_MJP_WidthHeight "  MJP: %d szélesség %d magasság\n"
 #define MSGTR_TV_UnableToSetWidth "Nem lehet beállítani a kívánt szélességet: %d\n"
 #define MSGTR_TV_UnableToSetHeight "Nem lehet beállítani a kívánt magasságot: %d\n"
 #define MSGTR_TV_NoTuner "A kiválasztott bemeneten nincs tuner!\n"
 #define MSGTR_TV_UnableFindChanlist "Nem található a kiválasztott csatorna lista! (%s)\n"
-#define MSGTR_TV_SelectedChanlist "Kiválasztott csatorna lista: %s (%d csatorna)\n"
 #define MSGTR_TV_ChannelFreqParamConflict "Nem állíthatod be a frekvenciát és a csatornát egy időben!\n"
 #define MSGTR_TV_ChannelNamesDetected "TV csatornák nevének keresése.\n"
 #define MSGTR_TV_NoFreqForChannel "Nem található frekvencia a(z) %s csatornához (%s)\n"
 #define MSGTR_TV_SelectedChannel3 "Kiválasztott csatorna: %s - %s (frekv: %.3f)\n"
 #define MSGTR_TV_SelectedChannel2 "Kiválasztott csatorna: %s (frekv: %.3f)\n"
-#define MSGTR_TV_SelectedFrequency "Kiválasztott frekvencia: %lu (%.3f)\n"
-#define MSGTR_TV_RequestedChannel "Kért csatorna: %s\n"
 #define MSGTR_TV_UnsupportedAudioType "A(z) '%s (%x)' audió típus nem támogatott!\n"
-#define MSGTR_TV_AudioFormat "  TV audió: %d csatorna, %d bit, %d Hz\n"
 #define MSGTR_TV_AvailableDrivers "Elérhető vezérlők:\n"
 #define MSGTR_TV_DriverInfo "Kiválasztott vezérlő: %s\n név: %s\n szerző: %s\n megjegyzés: %s\n"
 #define MSGTR_TV_NoSuchDriver "Nincs ilyen vezérlő: %s\n"
 #define MSGTR_TV_DriverAutoDetectionFailed "TV vezérlő automatikus felismerése sikertelen.\n"
 #define MSGTR_TV_UnknownColorOption "Ismeretlen szín opció (%d) van megadva!\n"
-#define MSGTR_TV_CurrentFrequency "Aktuális frekvencia: %lu (%.3f)\n"
 #define MSGTR_TV_NoTeletext "Nincs teletext"
 #define MSGTR_TV_Bt848IoctlFailed "tvi_bsdbt848: A(z) %s ioctl hívása sikertelen. Hiba: %s\n"
 #define MSGTR_TV_Bt848InvalidAudioRate "tvi_bsdbt848: Érvénytelen audió ráta. Hiba: %s\n"
@@ -2059,14 +1999,8 @@ static const char help_text[]=
 #define MSGTR_TVI_DS_DeviceNotFound "tvi_dshow: #%d számú eszköz nem található\n"
 #define MSGTR_TVI_DS_UnableGetDeviceName "tvi_dshow: #%d számú eszköz nevének lekérdezése sikertelen\n"
 #define MSGTR_TVI_DS_UsingDevice "tvi_dshow: #%d eszköz használata: %s\n"
-#define MSGTR_TVI_DS_DeviceName "tvi_dshow: #%d eszköz: %s\n"
 #define MSGTR_TVI_DS_DirectGetFreqFailed "tvi_dshow: Sikertelen a frekvencia közvetlen lekérdezése. Az OS beépített csatorna táblázata lesz használva.\n"
-#define MSGTR_TVI_DS_DirectSetFreqFailed "tvi_dshow: Sikertelen a frekvencia közvetlen beállítása. Az OS beépített csatorna táblázata lesz használva.\n"
-#define MSGTR_TVI_DS_SupportedNorms "tvi_dshow: támogatott normák:"
-#define MSGTR_TVI_DS_AvailableVideoInputs "tvi_dshow: használható videó bemenetek:"
-#define MSGTR_TVI_DS_AvailableAudioInputs "tvi_dshow: használható audió bemenetek:"
 //following phrase will be printed near the selected audio/video input
-#define MSGTR_TVI_DS_InputSelected "(kiválasztva)"
 #define MSGTR_TVI_DS_UnableExtractFreqTable "tvi_dshow: Sikertelen a frekvenciatáblázat betöltése a kstvtune-ból.\n"
 #define MSGTR_TVI_DS_WrongDeviceParam "tvi_dshow: Hibás eszköz paraméter: %s\n"
 #define MSGTR_TVI_DS_WrongDeviceIndex "tvi_dshow: Hibás eszköz index: %d\n"
@@ -2078,7 +2012,6 @@ static const char help_text[]=
 
 #define MSGTR_TVI_DS_ChangingWidthHeightNotSupported "tvi_dshow: A videó szélesség/magasság változtatását nem támogatja az eszköz.\n"
 #define MSGTR_TVI_DS_SelectingInputNotSupported  "tvi_dshow: A mentési forrás kiválasztását nem támogatja az eszköz\n"
-#define MSGTR_TVI_DS_FreqTableLoaded "tvi_dshow: a rendszer (%s) frekvencia táblázata betöltve az ország id=%d (csatornák:%d).\n"
 #define MSGTR_TVI_DS_ErrorParsingAudioFormatStruct "tvi_dshow: Nem értelmezhető az audió formátum struktúrája.\n"
 #define MSGTR_TVI_DS_ErrorParsingVideoFormatStruct "tvi_dshow: Nem értelmezhető a videó formátum struktúrája.\n"
 #define MSGTR_TVI_DS_UnableSetAudioMode "tvi_dshow: %d audió mód beállítása sikertelen. Hiba:0x%x\n"

@@ -328,7 +328,7 @@ sh_audio_t *new_sh_audio_aid(demuxer_t *demuxer, int id, int aid, const char *la
         mp_msg(MSGT_DEMUXER, MSGL_WARN, MSGTR_AudioStreamRedefined, id);
     else {
         sh_audio_t *sh = calloc(1, sizeof(sh_audio_t));
-        mp_msg(MSGT_DEMUXER, MSGL_V, MSGTR_FoundAudioStream, id);
+        mp_msg(MSGT_DEMUXER, MSGL_V, "==> Found audio stream: %d\n", id);
         demuxer->a_streams[id] = sh;
         sh->aid = aid;
         sh->ds = demuxer->audio;
@@ -376,7 +376,7 @@ sh_video_t *new_sh_video_vid(demuxer_t *demuxer, int id, int vid)
         mp_msg(MSGT_DEMUXER, MSGL_WARN, MSGTR_VideoStreamRedefined, id);
     else {
         sh_video_t *sh = calloc(1, sizeof(sh_video_t));
-        mp_msg(MSGT_DEMUXER, MSGL_V, MSGTR_FoundVideoStream, id);
+        mp_msg(MSGT_DEMUXER, MSGL_V, "==> Found video stream: %d\n", id);
         demuxer->v_streams[id] = sh;
         sh->vid = vid;
         sh->ds = demuxer->video;

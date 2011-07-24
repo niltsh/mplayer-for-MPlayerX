@@ -64,7 +64,6 @@ static const char help_text[]=
 #define MSGTR_NoHomeDir "无法找到 HOME 目录\n"
 #define MSGTR_GetpathProblem "get_path(\"config\") 调用出现问题\n"
 #define MSGTR_CreatingCfgFile "创建配置文件：%s\n"
-#define MSGTR_BuiltinCodecsConf "使用内建默认的 codecs.conf 文件。\n"
 #define MSGTR_CantLoadFont "无法加载位图字体‘%s’\n"
 #define MSGTR_CantLoadSub "无法加载字幕‘%s’\n"
 #define MSGTR_DumpSelectedStreamMissing "内核导出：致命错误：指定的媒体流不存在！\n"
@@ -109,8 +108,6 @@ static const char help_text[]=
 #define MSGTR_Playing "\n正在播放 %s。\n"
 #define MSGTR_NoSound "音频：没有音轨\n"
 #define MSGTR_FPSforced "FPS 强制设为 %5.3f（ftime：%5.3f）。\n"
-#define MSGTR_CompiledWithRuntimeDetection "编译时包含了实时 CPU 类型检测。\n"
-#define MSGTR_CompiledWithCPUExtensions "编译时针对 x86 CPU 扩展指令集优化："
 #define MSGTR_AvailableVideoOutputDrivers "可用的视频输出驱动：\n"
 #define MSGTR_AvailableAudioOutputDrivers "可用的音频输出驱动：\n"
 #define MSGTR_AvailableAudioCodecs "可用的音频编解码器：\n"
@@ -118,7 +115,6 @@ static const char help_text[]=
 #define MSGTR_AvailableAudioFm "\n可用的（编译时已包含的）音频编解码器类/驱动：\n"
 #define MSGTR_AvailableVideoFm "\n可用的（编译时已包含的）视频编解码器类/驱动：\n"
 #define MSGTR_AvailableFsType "可用的全屏图层变换模式：\n"
-#define MSGTR_UsingRTCTiming "使用 Linux 的硬件 RTC 计时（%ldHz）。\n"
 #define MSGTR_CannotReadVideoProperties "视频：无法读取视频属性\n"
 #define MSGTR_NoStreamFound "未找到媒体流。\n"
 #define MSGTR_ErrorInitializingVODevice "打开/初始化所选的（-vo）视频输出设备出错。\n"
@@ -153,14 +149,11 @@ static const char help_text[]=
 #define MSGTR_AddedSubtitleFile "字幕：添加字幕文件（%d）：%s\n"
 #define MSGTR_RemovedSubtitleFile "字幕：移除字幕文件（%d）： %s\n"
 #define MSGTR_ErrorOpeningOutputFile "未能以写入方式打开文件 [%s]！\n"
-#define MSGTR_CommandLine "命令行："
 #define MSGTR_RTCDeviceNotOpenable "未能打开 %s：%s（用户应当有权限读取该设备。）\n"
 #define MSGTR_LinuxRTCInitErrorIrqpSet "ioctl (rtc_irqp_set %lu) 中出现 Linux RTC 初始化错误：%s\n"
 #define MSGTR_IncreaseRTCMaxUserFreq "尝试添加 \"echo %lu > /proc/sys/dev/rtc/max-user-freq\" 到你的系统启动脚本中。\n"
 #define MSGTR_LinuxRTCInitErrorPieOn "ioctl (rtc_pie_on) 中出现 Linux RTC 初始置错误：%s\n"
 #define MSGTR_UsingTimingType "正在使用 %s 计时。\n"
-#define MSGTR_MenuInitialized "菜单已初始化：%s\n"
-#define MSGTR_MenuInitFailed "菜单初始化失败。\n"
 #define MSGTR_Getch2InitializedTwice "警告：getch2_init 被两次调用！\n"
 #define MSGTR_DumpstreamFdUnavailable "无法导出该数据流 - 没有可用的文件描述符。\n"
 #define MSGTR_CantOpenLibmenuFilterWithThisRootMenu "无法用根菜单 %s 打开 libmenu 视频过滤器。\n"
@@ -295,12 +288,9 @@ static const char help_text[]=
 #define MSGTR_CannotAllocateBytes "无法分配出 %d 字节。\n"
 #define MSGTR_SettingAudioDelay "设置音频延迟为 %5.3fs。\n"
 #define MSGTR_SettingVideoDelay "设置视频延迟为 %5.3fs。\n"
-#define MSGTR_SettingAudioInputGain "设置音频输出增益为 %f。\n"
-#define MSGTR_LamePresetEquals "\npreset=%s\n\n"
 #define MSGTR_LimitingAudioPreload "限制音频预加载长度为 0.4s。\n"
 #define MSGTR_IncreasingAudioDensity "增加音频密度至 4。\n"
 #define MSGTR_ZeroingAudioPreloadAndMaxPtsCorrection "强制音频预加载长度为 0，最大 PTS 校验长度为 0。\n"
-#define MSGTR_CBRAudioByterate "\n\nCBR 音频：%d 字节/秒，%d 字节/段\n"
 #define MSGTR_LameVersion "LAME 版本 %s（%s）\n\n"
 #define MSGTR_InvalidBitrateForLamePreset "错误：指定的比特率超出该预设配置的有效范围。\n"\
 "\n"\
@@ -487,7 +477,6 @@ static const char help_text[]=
 #define MSGTR_CodecNeedsOutfmt "\n编解码器（%s）缺少一个‘outfmt’!\n"
 #define MSGTR_CantAllocateComment "无法为注释文本分配内存。"
 #define MSGTR_GetTokenMaxNotLessThanMAX_NR_TOKEN "get_token()：max >= MAX_MR_TOKEN!"
-#define MSGTR_ReadingFile "正在读取 %s："
 #define MSGTR_CantOpenFileError "无法打开‘%s’：%s\n"
 #define MSGTR_CantGetMemoryForLine "无法获取内存提供给‘line’：%s\n"
 #define MSGTR_CantReallocCodecsp "无法重新分配‘*codecsp’：%s\n"
@@ -1148,10 +1137,8 @@ static const char help_text[]=
 
 // audio_out.c
 #define MSGTR_AO_ALSA9_1x_Removed "音频输出：alsa9 和 alsa1x 模块已不支持，请用 -ao alsa 代替。\n"
-#define MSGTR_AO_TryingPreferredAudioDriver "尝试使用偏好的音频驱动‘%.*s’，选项设为‘%s’\n"
 #define MSGTR_AO_NoSuchDriver "无此音频驱动‘%.*s’\n"
 #define MSGTR_AO_FailedInit "未能初始化音频驱动‘%s’\n"
-#define MSGTR_AO_TryingEveryKnown "尝试每个已知的音频驱动...\n"
 
 // ao_oss.c
 #define MSGTR_AO_OSS_CantOpenMixer "[AO OSS] audio_setup：无法打开混音设备 %s：%s\n"
@@ -1214,7 +1201,6 @@ static const char help_text[]=
 
 // ao_sun.c
 #define MSGTR_AO_SUN_RtscSetinfoFailed "[AO SUN] rtsc：SETINFO 失败。\n"
-#define MSGTR_AO_SUN_RtscWriteFailed "[AO SUN] rtsc：写入失败。\n"
 #define MSGTR_AO_SUN_CantOpenAudioDev "[AO SUN] 无法打开音频设备 %s，%s  -> nosound。\n"
 #define MSGTR_AO_SUN_UnsupSampleRate "[AO SUN] 音频设置：你的声卡不支持 %d 声道，%s，%d Hz 采样率。\n"
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   ***  你的音频驱动不支持 select()  ***\n需要在 config.h 中设置 #undef HAVE_AUDIO_SELECT 并重新编译 MPlayer！\n\n"
@@ -1328,7 +1314,6 @@ static const char help_text[]=
 // ========================== INPUT =========================================
 
 // joystick.c
-#define MSGTR_INPUT_JOYSTICK_Opening "打开操纵杆设备 %s\n"
 #define MSGTR_INPUT_JOYSTICK_CantOpen "无法打开操纵杆设备 %s：%s\n"
 #define MSGTR_INPUT_JOYSTICK_ErrReading "读取操纵杆设备时出错：%s\n"
 #define MSGTR_INPUT_JOYSTICK_LoosingBytes "操纵杆：丢失了 %d 字节的数据\n"
@@ -1336,8 +1321,6 @@ static const char help_text[]=
 #define MSGTR_INPUT_JOYSTICK_WarnUnknownEvent "操作杆未知警告事件类型 %d\n"
 
 // appleir.c
-#define MSGTR_INPUT_APPLE_IR_Init "在设备 %s 上初始化 Apple IR\n"
-#define MSGTR_INPUT_APPLE_IR_Detect "在设备 %s 上侦测到 Apple IR\n"
 #define MSGTR_INPUT_APPLE_IR_CantOpen "无法打开 Apple IR 设备：%s\n"
 
 // input.c
@@ -1368,7 +1351,6 @@ static const char help_text[]=
 #define MSGTR_INPUT_INPUT_ErrCantInitAppleRemote "无法初始化 Apple Remote 遥控器。\n"
 
 // lirc.c
-#define MSGTR_SettingUpLIRC "设置 LIRC 支持\n"
 #define MSGTR_LIRCopenfailed "启用 LIRC 支持失败。将无法使用你的遥控器。\n"
 #define MSGTR_LIRCcfgerr "读取 LIRC 配置文件 %s 失败。\n"
 
@@ -1383,7 +1365,6 @@ static const char help_text[]=
 #define MSGTR_WarningLenIsntDivisible "警告，音频长度无法被采样率整除！\n"
 #define MSGTR_MuxbufMallocErr "流合并器帧缓冲无法分配内存！\n"
 #define MSGTR_MuxbufReallocErr "合路器帧缓冲无法重新分配内存！\n"
-#define MSGTR_MuxbufSending "流合并器帧缓冲发送 %d 帧到流合并器。\n"
 #define MSGTR_WritingHeader "正在写入帧头...\n"
 #define MSGTR_WritingTrailer "正在写入索引...\n"
 
@@ -1401,7 +1382,6 @@ static const char help_text[]=
 #define MSGTR_ON2AviFormat "ON2 AVI 格式"
 #define MSGTR_Detected_XXX_FileFormat "检测到文件格式 %s。\n"
 #define MSGTR_DetectedAudiofile "检测到音频文件。\n"
-#define MSGTR_NotSystemStream "非 MPEG 系统的媒体流格式...（可能是网络传输的媒体流？）\n"
 #define MSGTR_InvalidMPEGES "无法的 MPEG-ES 媒体流？？？请联系开发者，这可能是软件的缺陷 :(\n"
 #define MSGTR_FormatNotRecognized "============= 抱歉, 此文件格式无法辨认或支持 ===============\n"\
                                   "===     如果此文件是 AVI、ASF 或 MPEG 媒体流，请联系开发者！   ===\n"
@@ -1426,11 +1406,8 @@ static const char help_text[]=
 #define MSGTR_MOVcomprhdr "MOV：需要 ZLIB 以支持经过压缩的文件头！\n"
 #define MSGTR_MOVvariableFourCC "MOV：警告：检测到可变的 FourCC 代码！？\n"
 #define MSGTR_MOVtooManyTrk "MOV：警告：轨道太多。"
-#define MSGTR_FoundAudioStream "==> 找到音频流：%d\n"
-#define MSGTR_FoundVideoStream "==> 找到视频流：%d\n"
 #define MSGTR_DetectedTV "检测到电视信号！;-)\n"
 #define MSGTR_ErrorOpeningOGGDemuxer "无法打开 Ogg 流分离器。\n"
-#define MSGTR_ASFSearchingForAudioStream "ASF：寻找音频流（id:%d）。\n"
 #define MSGTR_CannotOpenAudioStream "无法打开音频流：%s\n"
 #define MSGTR_CannotOpenSubtitlesStream "无法打开字幕流：%s\n"
 #define MSGTR_OpeningAudioDemuxerFailed "未能打开音频分离器：%s\n"
@@ -1463,17 +1440,7 @@ static const char help_text[]=
 
 // aviheader.c
 #define MSGTR_MPDEMUX_AVIHDR_EmptyList "**空列表？！\n"
-#define MSGTR_MPDEMUX_AVIHDR_FoundMovieAt "于 0x%X - 0x%X 位置找到影片数据\n"
-#define MSGTR_MPDEMUX_AVIHDR_FoundBitmapInfoHeader "找到‘bih’，%u 字节，%d\n"
-#define MSGTR_MPDEMUX_AVIHDR_RegeneratingKeyfTableForMPG4V1 "为 M$ mpg4v1 视频重新生成关键帧表。\n"
-#define MSGTR_MPDEMUX_AVIHDR_RegeneratingKeyfTableForDIVX3 "为 DIVX3 视频重新生成关键帧表。\n"
-#define MSGTR_MPDEMUX_AVIHDR_RegeneratingKeyfTableForMPEG4 "为 MPEG4 视频重新生成关键帧表。\n"
-#define MSGTR_MPDEMUX_AVIHDR_FoundWaveFmt "找到‘wf’，%d 字节，%d\n"
-#define MSGTR_MPDEMUX_AVIHDR_FoundAVIV2Header "AVI：发现 dmlh (size=%d) (total_frames=%d)\n"
-#define MSGTR_MPDEMUX_AVIHDR_ReadingIndexBlockChunksForFrames  "正在读取索引数据段，%d 段数据用于 %d 帧 (fpos=%"PRId64")。\n"
-#define MSGTR_MPDEMUX_AVIHDR_AdditionalRIFFHdr "额外的 RIFF 头部数据...\n"
 #define MSGTR_MPDEMUX_AVIHDR_WarnNotExtendedAVIHdr "** 警告：这不是扩展格式的 AVI 头部..\n"
-#define MSGTR_MPDEMUX_AVIHDR_BrokenChunk "数据段损坏？chunksize=%d  (id=%.4s)\n"
 #define MSGTR_MPDEMUX_AVIHDR_BuildingODMLidx "AVI：ODML：构造 ODML 索引 (%d superindexchunks)。\n"
 #define MSGTR_MPDEMUX_AVIHDR_BrokenODMLfile "AVI：ODML：检测到损坏的（不完整的？）文件。将使用传统的索引模式。\n"
 #define MSGTR_MPDEMUX_AVIHDR_CantReadIdxFile "无法读索引文件 %s：%s\n"
@@ -1605,21 +1572,15 @@ static const char help_text[]=
 
 #define MSGTR_UsingExternalPP "[PP] 使用外部的后期处理过滤器，max q = %d。\n"
 #define MSGTR_UsingCodecPP "[PP] 使用编解码器的后期处理过滤器，max q = %d。\n"
-#define MSGTR_VideoAttributeNotSupportedByVO_VD "所选的 vo & vd 不支持视频属性‘%s’。\n"
 #define MSGTR_VideoCodecFamilyNotAvailableStr "所请求使用的视频编解码器类 [%s] (vfm=%s) 不可用。\n需在编译时启用该模块。\n"
 #define MSGTR_AudioCodecFamilyNotAvailableStr "所请求使用的音频编解码器类 [%s] (afm=%s) 不可用。\n需在编译时启用该模块。\n"
 #define MSGTR_OpeningVideoDecoder "正打开视频解码器：[%s] %s\n"
 #define MSGTR_SelectedVideoCodec "所选视频编解码器为：[%s] vfm: %s (%s)\n"
 #define MSGTR_OpeningAudioDecoder "正打开音频解码器：[%s] %s\n"
 #define MSGTR_SelectedAudioCodec "所选音频编解码器为：[%s] afm: %s (%s)\n"
-#define MSGTR_BuildingAudioFilterChain "构造音频过滤器链用于 %dHz/%dch/%s -> %dHz/%dch/%s 转换...\n"
-#define MSGTR_UninitVideoStr "终止视频：%s\n"
-#define MSGTR_UninitAudioStr "终止音频：%s\n"
 #define MSGTR_VDecoderInitFailed "VDecoder 初始化失败 :(\n"
 #define MSGTR_ADecoderInitFailed "ADecoder 初始化失败 :(\n"
 #define MSGTR_ADecoderPreinitFailed "ADecoder 预先初始化失败 :(\n"
-#define MSGTR_AllocatingBytesForInputBuffer "dec_audio：输入缓冲分配了 %d 字节。\n"
-#define MSGTR_AllocatingBytesForOutputBuffer "dec_audio：输出缓冲分配了 %d + %d = %d 字节。\n"
 
 // libmpcodecs/ad_dvdpcm.c:
 #define MSGTR_SamplesWanted "需要该格式的编码样本以优化相关技术支持。有意请联系开发者。\n"
@@ -1635,8 +1596,6 @@ static const char help_text[]=
 
 // vd_dshow.c, vd_dmo.c
 #define MSGTR_DownloadCodecPackage "你需要升级/安装已编译编解码器包。\n请访问 http:\/\/www.mplayerhq.hu/dload.html\n"
-#define MSGTR_DShowInitOK "信息：Win32/DShow 视频编解码器初始化成功。\n"
-#define MSGTR_DMOInitOK "信息：Win32/DMO 视频编解码器初始化成功。\n"
 
 // libmpcodecs/vd_dmo.c vd_dshow.c vd_vfw.c
 #define MSGTR_MPCODECS_CouldntAllocateImageForCinepakCodec "[VD_DMO] 无法为 cinepak 编解码器分配进程映像。\n"
@@ -1778,9 +1737,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_AIALSA_PeriodEqualsBufferSize "无法使用长度等于缓冲大小的采样间隔 (%u == %lu)\n"
 #define MSGTR_MPDEMUX_AIALSA_CannotInstallSWParams "无法设置软件参数：\n"
 #define MSGTR_MPDEMUX_AIALSA_ErrorOpeningAudio "打开音频出错：%s\n"
-#define MSGTR_MPDEMUX_AIALSA_AlsaStatusError "ALSA 状态错误：%s"
 #define MSGTR_MPDEMUX_AIALSA_AlsaXRUN "ALSA xrun!!!（长度至少为 %.3f ms）\n"
-#define MSGTR_MPDEMUX_AIALSA_AlsaStatus "ALSA 状态：\n"
 #define MSGTR_MPDEMUX_AIALSA_AlsaXRUNPrepareError "ALSA xrun：准备出错：%s"
 #define MSGTR_MPDEMUX_AIALSA_AlsaReadWriteError "ALSA 读/写错误"
 
@@ -1984,17 +1941,13 @@ static const char help_text[]=
 
 // stream_radio.c
 #define MSGTR_RADIO_ChannelNamesDetected "[radio] 已检测到无线电频道名。\n"
-#define MSGTR_RADIO_FreqRange "[radio] 可用的频率范围是 %.2f-%.2f MHz。\n"
 #define MSGTR_RADIO_WrongFreqForChannel "[radio] 频道 %s 的频率错误\n"
 #define MSGTR_RADIO_WrongChannelNumberFloat "[radio] 错误的通道号: %.2f\n"
 #define MSGTR_RADIO_WrongChannelNumberInt "[radio] 频道号错误：%d\n"
 #define MSGTR_RADIO_WrongChannelName "[radio] 频道名错误：%s\n"
 #define MSGTR_RADIO_FreqParameterDetected "[radio] 已检测到无线电频率参数。\n"
-#define MSGTR_RADIO_DoneParsingChannels "[radio] 解析频道完成。\n"
 #define MSGTR_RADIO_GetTunerFailed "[radio] 警告：ioctl 获取无线电调谐器失败：%s。设置 frac 为 %d。\n"
 #define MSGTR_RADIO_NotRadioDevice "[radio] %s 非无线电设备！\n"
-#define MSGTR_RADIO_TunerCapLowYes "[radio] 无线电调谐器属性为 low:yes frac=%d\n"
-#define MSGTR_RADIO_TunerCapLowNo "[radio] 无线电调谐器属性为 low:no frac=%d\n"
 #define MSGTR_RADIO_SetFreqFailed "[radio] ioctl 设置频率 0x%x (%.2f) 失败：%s\n"
 #define MSGTR_RADIO_GetFreqFailed "[radio] ioctl 获取频率失败：%s\n"
 #define MSGTR_RADIO_SetMuteFailed "[radio] ioctl 设置静音失败：%s\n"
@@ -2004,27 +1957,21 @@ static const char help_text[]=
 #define MSGTR_RADIO_DroppingFrame "\n[radio] 太糟了 - 丢弃音频帧（%d 字节）！\n"
 #define MSGTR_RADIO_BufferEmpty "[radio] grab_audio_frame：缓冲为空，等待 %d 字节的数据。\n"
 #define MSGTR_RADIO_AudioInitFailed "[radio] audio_in_init 失败：%s\n"
-#define MSGTR_RADIO_AudioBuffer "[radio] 音频捕获 - buffer=%d 字节 (block=%d 字节)。\n"
 #define MSGTR_RADIO_AllocateBufferFailed "[radio] 无法分配音频缓冲 (block=%d,buf=%d)：%s\n"
 #define MSGTR_RADIO_CurrentFreq "[radio] 当前频率：%.2f\n"
-#define MSGTR_RADIO_SelectedChannel "[radio] 已选择频道：%d - %s（频率：%.2f）\n"
 #define MSGTR_RADIO_ChangeChannelNoChannelList "[radio] 无法切换频道：未给出的频道列表。\n"
 #define MSGTR_RADIO_UnableOpenDevice "[radio] 无法打开‘%s’：%s\n"
-#define MSGTR_RADIO_RadioDevice "[radio] 无线电设备文件标识符：%d, %s\n"
 #define MSGTR_RADIO_InitFracFailed "[radio] init_frac 失败。\n"
 #define MSGTR_RADIO_WrongFreq "[radio] 频率错误：%.2f\n"
 #define MSGTR_RADIO_UsingFreq "[radio] 使用频率：%.2f。\n"
 #define MSGTR_RADIO_AudioInInitFailed "[radio] audio_in_init 失败。\n"
-#define MSGTR_RADIO_BufferString "[radio] %s：缓冲中=%d 已丢弃=%d\n"
 #define MSGTR_RADIO_AudioInSetupFailed "[radio] audio_in_setup 调用失败：%s\n"
-#define MSGTR_RADIO_CaptureStarting "[radio] 开始捕获内容。\n"
 #define MSGTR_RADIO_ClearBufferFailed "[radio] 清空缓冲失败：%s\n"
 #define MSGTR_RADIO_StreamEnableCacheFailed "[radio] 调用 stream_enable_cache 失败：%s\n"
 #define MSGTR_RADIO_DriverUnknownStr "[radio] 未知驱动名称：%s\n"
 #define MSGTR_RADIO_DriverV4L2 "[radio] 使用 V4Lv2 无线电接口。\n"
 #define MSGTR_RADIO_DriverV4L "[radio] 使用 V4Lv1 无线电接口。\n"
 #define MSGTR_RADIO_DriverBSDBT848 "[radio] 使用 *BSD BT848 无线电接口。\n"
-#define MSGTR_RADIO_AvailableDrivers "[radio] 可用驱动："
 
 //tv.c
 #define MSGTR_TV_BogusNormParameter "tv.c：norm_from_string(%s)：规格化参数、设置非法 %s。\n"
@@ -2036,30 +1983,23 @@ static const char help_text[]=
 " YV12（这是默认的色彩空间）并阅读文档！\n"\
 "==================================================================\n"
 
-#define MSGTR_TV_SelectedNormId "已选择规格化参数标识符：%d\n"
-#define MSGTR_TV_SelectedNorm "已选择规格化参数：%s\n"
 #define MSGTR_TV_CannotSetNorm "错误：无法设置规格化参数！\n"
 #define MSGTR_TV_MJP_WidthHeight "  MJP：宽 %d 高 %d\n"
 #define MSGTR_TV_UnableToSetWidth "无法设置为所请求的宽度：%d\n"
 #define MSGTR_TV_UnableToSetHeight "无法设置为所请求的高度：%d\n"
 #define MSGTR_TV_NoTuner "所选输入没有频道调谐器！\n"
 #define MSGTR_TV_UnableFindChanlist "无法找到所选频道列表！（%s）\n"
-#define MSGTR_TV_SelectedChanlist "已选择频道列表：%s（包含 %d 个频道）\n"
 #define MSGTR_TV_ChannelFreqParamConflict "无法同时设置频率和频道！\n"
 #define MSGTR_TV_ChannelNamesDetected "已检测到电视频道名称。\n"
 #define MSGTR_TV_NoFreqForChannel "无法找到 %s（%s）频道的频率\n"
 #define MSGTR_TV_SelectedChannel3 "已选择频道：%s - %s（频率：%.3f）\n"
 #define MSGTR_TV_SelectedChannel2 "已选择频道：%s（频率：%.3f）\n"
-#define MSGTR_TV_SelectedFrequency "已选择频率：%lu（%.3f）\n"
-#define MSGTR_TV_RequestedChannel "已请求频道：%s\n"
 #define MSGTR_TV_UnsupportedAudioType "音频类型‘%s（%x）’不支持！\n"
-#define MSGTR_TV_AudioFormat "  电视音频：%d声道，%d 位，%d Hz\n"
 #define MSGTR_TV_AvailableDrivers "可用驱动：\n"
 #define MSGTR_TV_DriverInfo "已选择驱动：%s\n 名称：%s\n 作者：%s\n 注释：%s\n"
 #define MSGTR_TV_NoSuchDriver "没有这种驱动：%s\n"
 #define MSGTR_TV_DriverAutoDetectionFailed "自动检测电视驱动失败。\n"
 #define MSGTR_TV_UnknownColorOption "使用了未知色彩选项（%d）！\n"
-#define MSGTR_TV_CurrentFrequency "当前频率：%lu（%.3f）\n"
 #define MSGTR_TV_NoTeletext "无图文电视功能"
 #define MSGTR_TV_Bt848IoctlFailed "tvi_bsdbt848：调用 %s ioctl 失败。错误信息：%s\n"
 #define MSGTR_TV_Bt848InvalidAudioRate "tvi_bsdbt848：无效的音频码率值。错误信息：%s\n"
@@ -2087,14 +2027,8 @@ static const char help_text[]=
 #define MSGTR_TVI_DS_DeviceNotFound "tvi_dshow：未找到设备 #%d\n"
 #define MSGTR_TVI_DS_UnableGetDeviceName "tvi_dshow：无法获取设备 #%d 的名称\n"
 #define MSGTR_TVI_DS_UsingDevice "tvi_dshow：使用设备 #%d：%s\n"
-#define MSGTR_TVI_DS_DeviceName  "tvi_dshow: 设备 #%d：%s\n"
 #define MSGTR_TVI_DS_DirectGetFreqFailed "tvi_dshow：无法直接获取频率值。将使用操作系统内置的频道表。\n"
-#define MSGTR_TVI_DS_DirectSetFreqFailed "tvi_dshow：无法直接设置频率值。将使用操作系统内置的频道表。\n"
-#define MSGTR_TVI_DS_SupportedNorms "tvi_dshow：支持的规格化模式："
-#define MSGTR_TVI_DS_AvailableVideoInputs "tvi_dshow：可用的视频输入："
-#define MSGTR_TVI_DS_AvailableAudioInputs "tvi_dshow：可用的音频输入："
 //following phrase will be printed near the selected audio/video input
-#define MSGTR_TVI_DS_InputSelected "（已选用）"
 #define MSGTR_TVI_DS_UnableExtractFreqTable "tvi_dshow：无法从 kstvtune.ax 加载频率对照表\n"
 #define MSGTR_TVI_DS_WrongDeviceParam "tvi_dshow：设备参数错误：%s\n"
 #define MSGTR_TVI_DS_WrongDeviceIndex "tvi_dshow：设备索引错误：%d\n"
@@ -2106,7 +2040,6 @@ static const char help_text[]=
 
 #define MSGTR_TVI_DS_ChangingWidthHeightNotSupported "tvi_dshow：设备不支持改变视频的宽度/高度。\n"
 #define MSGTR_TVI_DS_SelectingInputNotSupported  "tvi_dshow：设备不支持选择视频捕捉的来源\n"
-#define MSGTR_TVI_DS_FreqTableLoaded "tvi_dshow：载入系统（%s）的频率对照表，对应国家 id=%d（频道数：%d）\n"
 #define MSGTR_TVI_DS_ErrorParsingAudioFormatStruct "tvi_dshow：无法解析音频格式的结构。\n"
 #define MSGTR_TVI_DS_ErrorParsingVideoFormatStruct "tvi_dshow：无法解析视频格式的结构。\n"
 #define MSGTR_TVI_DS_UnableSetAudioMode "tvi_dshow：无法设置音频模式 %d。错误代码：0x%x\n"

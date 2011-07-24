@@ -57,7 +57,6 @@ static const char help_text[]=
 #define MSGTR_NoHomeDir "Μη δυνατή η εύρεση του HOME φακέλου\n"
 #define MSGTR_GetpathProblem "get_path(\"config\") πρόβλημα\n"
 #define MSGTR_CreatingCfgFile "Δημιουργία του αρχείου config: %s\n"
-#define MSGTR_BuiltinCodecsConf "Χρήση του ενσωματωμένου προεπιλεγμένου codecs.conf\n"
 #define MSGTR_CantLoadFont "Μη δυνατότητα φόρτωσης της γραμματοσειράς: %s\n"
 #define MSGTR_CantLoadSub "Μη δυνατότητα φόρτωσης των υποτίτλων: %s\n"
 #define MSGTR_DumpSelectedStreamMissing "dump: Σφάλμα: λείπει το επιλεγμένο κανάλι!\n"
@@ -99,8 +98,6 @@ static const char help_text[]=
 #define MSGTR_Playing "Αναπαραγωγή του %s\n"
 #define MSGTR_NoSound "Ήχος: μη διαθέσιμο!!!\n"
 #define MSGTR_FPSforced "Τα FPS ρυθμίστηκαν να είναι %5.3f  (ftime: %5.3f)\n"
-#define MSGTR_CompiledWithRuntimeDetection "Μετάφραση με αυτόματη αναγνώριση επεξεργαστή - προσοχή, δεν είναι βέλτιστο! Για καλύτερες επιδόσεις, μεταφράστε το mplayer από τον πηγαίο κώδικα με --disable-runtime-cpudetection\n"
-#define MSGTR_CompiledWithCPUExtensions "Μετάφραση για x86 επεξεργαστή με τις ακόλουθες επεκτάσεις:"
 #define MSGTR_AvailableVideoOutputDrivers "Διαθέσιμοι οδηγοί για έξοδο βίντεο:\n"
 #define MSGTR_AvailableAudioOutputDrivers "Διαθέσιμοι οδηγοί για έξοδο ήχου:\n"
 #define MSGTR_AvailableAudioCodecs "Διαθέσιμα codecs ήχου:\n"
@@ -108,7 +105,6 @@ static const char help_text[]=
 #define MSGTR_AvailableAudioFm "\nΔιαθέσιμοι (compiled-in) οδηγοί/οικογένειες codec ήχου:\n"
 #define MSGTR_AvailableVideoFm "\nΔιαθέσιμοι (compiled-in) οδηγοί/οικογένειες codec βίντεο:\n"
 #define MSGTR_AvailableFsType "Διαθέσιμα επίπεδα αλλαγής σε πλήρη οθόνη:\n"
-#define MSGTR_UsingRTCTiming "Χρήση του hardware RTC του linux στα (%ldHz)\n"
 #define MSGTR_CannotReadVideoProperties "Βίντεο: αδύνατη η ανάγνωση ιδιοτήτων\n"
 #define MSGTR_NoStreamFound "Δεν βρέθηκε κανάλι\n"
 #define MSGTR_ErrorInitializingVODevice "Σφάλμα κατά το άνοιγμα/αρχικοποίηση της επιλεγμένης video_out (-vo) συσκευή!\n"
@@ -239,7 +235,6 @@ static const char help_text[]=
 #define MSGTR_SwitchToNi "\n Αναγνωρίστηκε λάθος interleaved .AVI - εναλλαγή στη μέθοδο -ni!\n"
 #define MSGTR_Detected_XXX_FileFormat "Αναγνωρίστηκε αρχείο τύπου %s!\n"
 #define MSGTR_DetectedAudiofile "Αναγνωρίστηκε αρχείο ήχου!\n"
-#define MSGTR_NotSystemStream "Μη Αναγνωρίσιμο MPEG System Stream format... (μήπως είναι Transport Stream?)\n"
 #define MSGTR_InvalidMPEGES "Μη Αναγνωρίσιμο κανάλι MPEG-ES??? Επικοινώνησε με τον δημιουργό, μπορεί να είναι ένα bug :(\n"
 #define MSGTR_FormatNotRecognized "============= Λυπάμαι, αυτό το είδος αρχείου δεν αναγνωρίζεται/υποστηρίζεται ===============\n"\
                                   "=== Αν το αρχείο είναι ένα AVI, ASF ή MPEG κανάλι, παρακαλώ επικοινωνήστε με τον δημιουργό! ===\n"
@@ -261,11 +256,8 @@ static const char help_text[]=
 #define MSGTR_MOVcomprhdr "MOV: Συμπιεσμένες επικεφαλίδες δεν υποστηρίζονται (ακόμα)!\n"
 #define MSGTR_MOVvariableFourCC "MOV: ΠΡΟΕΙΔΟΠΟΙΗΣΗ! μεταβλητό FOURCC βρέθηκε!?\n"
 #define MSGTR_MOVtooManyTrk "MOV: Προειδοποίηση! βρέθηκαν πολλά tracks!"
-#define MSGTR_FoundAudioStream "==> Βρέθηκε κανάλι ήχου: %d\n"
-#define MSGTR_FoundVideoStream "==> Βρέθηκε κανάλι βίντεο: %d\n"
 #define MSGTR_DetectedTV "Βρέθηκε TV! ;-)\n"
 #define MSGTR_ErrorOpeningOGGDemuxer "Δεν είναι δυνατό το άνοιγμα του ogg demuxer\n"
-#define MSGTR_ASFSearchingForAudioStream "ASF: Αναζήτηση για κανάλι ήχου (id:%d)\n"
 #define MSGTR_CannotOpenAudioStream "Δεν είναι δυνατό το άνοιγμα του καναλιού ήχου: %s\n"
 #define MSGTR_CannotOpenSubtitlesStream "Δεν είναι δυνατό το άνοιγμα του καναλιού υποτίτλων: %s\n"
 #define MSGTR_OpeningAudioDemuxerFailed "Αποτυχία κατά το άνοιγμα του demuxer ήχου: %s\n"
@@ -297,21 +289,15 @@ static const char help_text[]=
 
 #define MSGTR_UsingExternalPP "[PP] Χρήση εξωτερικού φίλτρου προεπεξεργασίας, μέγιστο q = %d\n"
 #define MSGTR_UsingCodecPP "[PP] Χρήση φίλτρου προεπεξεργασίας για το codec, μέγιστο q = %d\n"
-#define MSGTR_VideoAttributeNotSupportedByVO_VD "Η ιδιότητα για το βίντεο '%s' δεν υποστηρίζεται από το επιλεγμένο vo και vd! \n"
 #define MSGTR_VideoCodecFamilyNotAvailableStr "Η αίτηση για την οικογένεια του codec βίντεο [%s] (vfm=%s) δεν διατίθεται (ενεργοποιήστε το κατά την μετάφραση του προγράμματος!)\n"
 #define MSGTR_AudioCodecFamilyNotAvailableStr "Η αίτηση για την οικογένεια του codec ήχου [%s] (afm=%s) δεν διατίθεται (ενεργοποιήστε το κατά την μετάφραση του προγράμματος!)\n"
 #define MSGTR_OpeningVideoDecoder "Άνοιγμα αποκωδικοποιητή βίντεο: [%s] %s\n"
 #define MSGTR_OpeningAudioDecoder "Άνοιγμα αποκωδικοποιητή ήχου: [%s] %s\n"
-#define MSGTR_UninitVideoStr "uninit βίντεο: %s  \n"
-#define MSGTR_UninitAudioStr "uninit ήχο: %s  \n"
 #define MSGTR_VDecoderInitFailed "Αποτυχία αρχικοποίησης του VDecoder :(\n"
 #define MSGTR_ADecoderInitFailed "Αποτυχία αρχικοποίησης του ADecoder :(\n"
 #define MSGTR_ADecoderPreinitFailed "Αποτυχία προαρχικοποίησης του ADecoder :(\n"
-#define MSGTR_AllocatingBytesForInputBuffer "dec_audio: Απονομή %d bytes για τον buffer εισόδου\n"
-#define MSGTR_AllocatingBytesForOutputBuffer "dec_audio: Απονομή %d + %d = %d bytes για τον buffer εξόδου\n"
 
 // LIRC:
-#define MSGTR_SettingUpLIRC "Αρχικοποίηση υποστήριξης του lirc...\n"
 #define MSGTR_LIRCopenfailed "Αποτυχία στην αρχικοποίηση της υποστήριξης του lirc!\n"
 #define MSGTR_LIRCcfgerr "Αποτυχία κατά το διάβασμα του αρχείου παραμέτρων του lirc %s!\n"
 
@@ -329,8 +315,6 @@ static const char help_text[]=
 
 // vd_dshow.c, vd_dmo.c
 #define MSGTR_DownloadCodecPackage "Θα πρέπει να αναβαθμήσετε ή να εγκαταστήσετε το πακέτο με τα codecs.\nΔείτε τη διεύθυνση http://www.mplayerhq.hu/dload.html\n"
-#define MSGTR_DShowInitOK "Πληροφορία: το βίντεο codec Win32/DShow αρχικοποιήθηκε επιτυχώς.\n"
-#define MSGTR_DMOInitOK "Πληροφορία: το βίντεο codec Win32/DMO αρχικοποιήθηκε επιτυχώς.\n"
 
 // x11_common.c
 #define MSGTR_EwmhFullscreenStateFailed "\nX11: Αδύνατη η αποστολή του γεγονότος EWMH fullscreen!\n"

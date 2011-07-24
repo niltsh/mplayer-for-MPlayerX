@@ -108,7 +108,8 @@ int set_video_colors(sh_video_t *sh_video, const char *item, int value)
         if (mpvdec->control(sh_video, VDCTRL_SET_EQUALIZER, item,
                             (int *) value) == CONTROL_OK)
             return 1;
-    mp_msg(MSGT_DECVIDEO, MSGL_V, MSGTR_VideoAttributeNotSupportedByVO_VD,
+    mp_msg(MSGT_DECVIDEO, MSGL_V,
+           "Video attribute '%s' is not supported by selected vo & vd.\n",
            item);
     return 0;
 }
@@ -174,7 +175,7 @@ void uninit_video(sh_video_t *sh_video)
 {
     if (!sh_video->initialized)
         return;
-    mp_msg(MSGT_DECVIDEO, MSGL_V, MSGTR_UninitVideoStr, sh_video->codec->drv);
+    mp_msg(MSGT_DECVIDEO, MSGL_V, "Uninit video: %s\n", sh_video->codec->drv);
     mpvdec->uninit(sh_video);
     mpvdec = NULL;
 #ifdef CONFIG_DYNAMIC_PLUGINS

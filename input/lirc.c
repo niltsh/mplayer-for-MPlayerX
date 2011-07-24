@@ -41,7 +41,7 @@ mp_input_lirc_init(void) {
   int lirc_sock;
   int mode;
 
-  mp_msg(MSGT_LIRC,MSGL_V,MSGTR_SettingUpLIRC);
+  mp_msg(MSGT_LIRC, MSGL_V, "Setting up LIRC support...\n");
   if((lirc_sock=lirc_init("mplayer",1))==-1){
     mp_msg(MSGT_LIRC,MSGL_ERR,MSGTR_LIRCopenfailed);
     return -1;

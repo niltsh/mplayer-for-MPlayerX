@@ -68,7 +68,6 @@ static const char help_text[]=
 #define MSGTR_NoHomeDir "Kann Homeverzeichnis nicht finden.\n"
 #define MSGTR_GetpathProblem "get_path(\"config\") fehlgeschlagen.\n"
 #define MSGTR_CreatingCfgFile "Erstelle Konfigurationsdatei: %s\n"
-#define MSGTR_BuiltinCodecsConf "Benutze eingebaute Standardwerte für codecs.conf.\n"
 #define MSGTR_CantLoadFont "Bitmap-Schriftdatei '%s' kann nicht geladen werden.\n"
 #define MSGTR_CantLoadSub "Untertitel '%s' können nicht geladen werden.\n"
 #define MSGTR_DumpSelectedStreamMissing "dump: FATAL: Ausgewählter Stream fehlt!\n"
@@ -117,8 +116,6 @@ static const char help_text[]=
 #define MSGTR_Playing "\nSpiele %s.\n"
 #define MSGTR_NoSound "Audio: kein Ton!\n"
 #define MSGTR_FPSforced "FPS von %5.3f erzwungen (ftime: %5.3f).\n"
-#define MSGTR_CompiledWithRuntimeDetection "MPlayer mit CPU-Erkennung zur Laufzeit kompiliert.\n"
-#define MSGTR_CompiledWithCPUExtensions "Kompiliert für x86 CPU mit folgenden Erweiterungen:"
 #define MSGTR_AvailableVideoOutputDrivers "Verfügbare Videoausgabetreiber:\n"
 #define MSGTR_AvailableAudioOutputDrivers "Verfügbare Audioausgabetreiber:\n"
 #define MSGTR_AvailableAudioCodecs "Verfügbare Audiocodecs:\n"
@@ -126,7 +123,6 @@ static const char help_text[]=
 #define MSGTR_AvailableAudioFm "Verfügbare (in das Binary kompilierte) Audiocodecfamilien:\n"
 #define MSGTR_AvailableVideoFm "Verfügbare (in das Binary kompilierte) Videocodecfamilien:\n"
 #define MSGTR_AvailableFsType "Verfügbare Vollbildschirm-Modi:\n"
-#define MSGTR_UsingRTCTiming "Verwende Linux Hardware RTC-Timing (%ldHz).\n"
 #define MSGTR_CannotReadVideoProperties "Video: Kann Eigenschaften nicht lesen.\n"
 #define MSGTR_NoStreamFound "Keine Streams gefunden.\n"
 #define MSGTR_ErrorInitializingVODevice "Fehler beim Öffnen/Initialisieren des ausgewählten Videoausgabetreibers (-vo).\n"
@@ -164,14 +160,11 @@ static const char help_text[]=
 #define MSGTR_AddedSubtitleFile "SUB: Untertiteldatei (%d) hinzugefügt: %s\n"
 #define MSGTR_RemovedSubtitleFile "SUB: Untertiteldatei (%d) entfernt: %s\n"
 #define MSGTR_ErrorOpeningOutputFile "Fehler beim Öffnen von Datei [%s] zum Schreiben!\n"
-#define MSGTR_CommandLine "Kommandozeile:"
 #define MSGTR_RTCDeviceNotOpenable "Konnte %s nicht öffnen: %s (sollte für den Benutzer lesbar sein).\n"
 #define MSGTR_LinuxRTCInitErrorIrqpSet "Linux-RTC-Initialisierungsfehler in ioctl (rtc_irqp_set %lu): %s\n"
 #define MSGTR_IncreaseRTCMaxUserFreq "Versuche, \"echo %lu > /proc/sys/dev/rtc/max-user-freq\" zu deinen Systemstartskripten hinzuzufügen.\n"
 #define MSGTR_LinuxRTCInitErrorPieOn "Linux-RTC-Initialisierungsfehler in ioctl (rtc_pie_on): %s\n"
 #define MSGTR_UsingTimingType "Benutze %s-Zeitgeber.\n"
-#define MSGTR_MenuInitialized "Menü initialisiert: %s\n"
-#define MSGTR_MenuInitFailed "Initialisierung des Menüs fehlgeschlagen.\n"
 #define MSGTR_Getch2InitializedTwice "WARNUNG: getch2_init doppelt aufgerufen!\n"
 #define MSGTR_DumpstreamFdUnavailable "Kann Dump dieses Streams nicht anlegen - kein 'fd' verfügbar.\n"
 #define MSGTR_CantOpenLibmenuFilterWithThisRootMenu "Kann den libmenu-Videofilter nicht mit dem Ursprungsmenü %s öffnen.\n"
@@ -300,12 +293,9 @@ static const char help_text[]=
 #define MSGTR_CannotAllocateBytes "Konnte %d Bytes nicht reservieren.\n"
 #define MSGTR_SettingAudioDelay "Setze Audioverzögerung auf %5.3fs.\n"
 #define MSGTR_SettingVideoDelay "Setze Videoverzögerung auf %5.3fs.\n"
-#define MSGTR_SettingAudioInputGain "Setze Audioeingangsverstärkung auf %f.\n"
-#define MSGTR_LamePresetEquals "\nPreset=%s\n\n"
 #define MSGTR_LimitingAudioPreload "Limitiere Audio-Preload auf 0.4s.\n"
 #define MSGTR_IncreasingAudioDensity "Erhöhe Audiodichte auf 4.\n"
 #define MSGTR_ZeroingAudioPreloadAndMaxPtsCorrection "Erzwinge Audio-Preload von 0, maximale pts-Korrektur von 0.\n"
-#define MSGTR_CBRAudioByterate "\n\nCBR Audio: %d Bytes/Sek, %d Bytes/Block\n"
 #define MSGTR_LameVersion "LAME-Version %s (%s)\n\n"
 #define MSGTR_InvalidBitrateForLamePreset "Fehler: Die angegebene Bitrate ist außerhalb des gültigen Bereichs\nfür dieses Preset.\n"\
 "\n"\
@@ -498,7 +488,6 @@ static const char help_text[]=
 #define MSGTR_CodecNeedsOutfmt "\nCodec(%s) braucht ein 'outfmt'!\n"
 #define MSGTR_CantAllocateComment "Kann Speicher für Kommentar nicht allozieren. "
 #define MSGTR_GetTokenMaxNotLessThanMAX_NR_TOKEN "get_token(): max >= MAX_MR_TOKEN!"
-#define MSGTR_ReadingFile "Lese %s: "
 #define MSGTR_CantOpenFileError "Kann '%s' nicht öffnen: %s\n"
 #define MSGTR_CantGetMemoryForLine "Bekomme keinen Speicher für 'line': %s\n"
 #define MSGTR_CantReallocCodecsp "Kann '*codecsp' nicht erneut allozieren: %s\n"
@@ -603,7 +592,6 @@ static const char help_text[]=
 
 #define MSGTR_MuxbufMallocErr "Speicher für Muxer-Framepuffer konnte nicht alloziert werden!\n"
 #define MSGTR_MuxbufReallocErr "Speicher für Muxer-Framepuffer konnte nicht vergrößert werden!\n"
-#define MSGTR_MuxbufSending "Muxer-Framepuffer: Sende %d Frame(s) zum Muxer.\n"
 #define MSGTR_WritingHeader "Schreibe Dateikopf...\n"
 #define MSGTR_WritingTrailer "Schreibe Dateiindex...\n"
 
@@ -623,7 +611,6 @@ static const char help_text[]=
 #define MSGTR_ON2AviFormat "ON2 AVI-Format"
 #define MSGTR_Detected_XXX_FileFormat "%s-Dateiformat erkannt!\n"
 #define MSGTR_DetectedAudiofile "Audiodatei erkannt!\n"
-#define MSGTR_NotSystemStream "Kein MPEG System Stream... (vielleicht ein Transport Stream?)\n"
 #define MSGTR_InvalidMPEGES "Ungültiger MPEG-ES Stream??? Kontaktiere den Autor, das könnte ein Bug sein :(\n"
 #define MSGTR_FormatNotRecognized \
 "========== Sorry, dieses Dateiformat wird nicht erkannt/unterstützt ==========\n"\
@@ -650,11 +637,8 @@ static const char help_text[]=
 #define MSGTR_MOVcomprhdr "MOV: komprimierte Header benötigen ZLIB-Unterstützung.\n"
 #define MSGTR_MOVvariableFourCC "MOV: Warnung: Variabler FourCC erkannt!?\n"
 #define MSGTR_MOVtooManyTrk "MOV: WARNUNG: Zu viele Tracks."
-#define MSGTR_FoundAudioStream "==> Audiostream gefunden: %d\n"
-#define MSGTR_FoundVideoStream "==> Videostream gefunden: %d\n"
 #define MSGTR_DetectedTV "TV erkannt! ;-)\n"
 #define MSGTR_ErrorOpeningOGGDemuxer "Kann Ogg-Demuxer nicht öffnen.\n"
-#define MSGTR_ASFSearchingForAudioStream "ASF: Suche nach Audiostream (Id:%d).\n"
 #define MSGTR_CannotOpenAudioStream "Kann Audiostream nicht öffnen: %s\n"
 #define MSGTR_CannotOpenSubtitlesStream "Kann Untertitelstream nicht öffnen: %s\n"
 #define MSGTR_OpeningAudioDemuxerFailed "Öffnen des Audio-Demuxers fehlgeschlagen: %s\n"
@@ -695,24 +679,17 @@ static const char help_text[]=
 
 #define MSGTR_UsingExternalPP "[PP] Verwende externe Postprocessing-Filter, max q = %d.\n"
 #define MSGTR_UsingCodecPP "[PP] Verwende Postprocessing-Routinen des Codecs, max q = %d.\n"
-#define MSGTR_VideoAttributeNotSupportedByVO_VD "Videoeigenschaft '%s' wird von ausgewählten vo & vd nicht unterstützt.\n"
 #define MSGTR_VideoCodecFamilyNotAvailableStr "Erforderliche Videocodec Familie [%s] (vfm=%s) nicht verfügbar.\nAktiviere sie beim Kompilieren.\n"
 #define MSGTR_AudioCodecFamilyNotAvailableStr "Erforderliche Audiocodec-Familie [%s] (afm=%s) nicht verfügbar.\nAktiviere sie beim Kompilieren.\n"
 #define MSGTR_OpeningVideoDecoder "Öffne Videodecoder: [%s] %s\n"
 #define MSGTR_SelectedVideoCodec "Ausgewählter Videocodec: [%s] vfm: %s (%s)\n"
 #define MSGTR_OpeningAudioDecoder "Öffne Audiodecoder: [%s] %s\n"
 #define MSGTR_SelectedAudioCodec "Ausgewählter Audiocodec: [%s] afm: %s (%s)\n"
-#define MSGTR_BuildingAudioFilterChain "Baue Tonfilterkette von %dHz/%dch/%s nach %dHz/%dch/%s auf...\n"
-#define MSGTR_UninitVideoStr "Deinitialisiere Video: %s\n"
-#define MSGTR_UninitAudioStr "Deinitialisiere Audio: %s\n"
 #define MSGTR_VDecoderInitFailed "Initialisierung des Videodecoders fehlgeschlagen :(\n"
 #define MSGTR_ADecoderInitFailed "Initialisierung des Audiodecoders fehlgeschlagen :(\n"
 #define MSGTR_ADecoderPreinitFailed "Vorinitialisierung des Audiodecoders fehlgeschlagen :(\n"
-#define MSGTR_AllocatingBytesForInputBuffer "dec_audio: Reserviere %d Bytes für den Eingangspuffer.\n"
-#define MSGTR_AllocatingBytesForOutputBuffer "dec_audio: Reserviere %d + %d = %d Bytes für den Ausgabepuffer.\n"
 
 // LIRC:
-#define MSGTR_SettingUpLIRC "Initialisiere LIRC-Unterstützung...\n"
 #define MSGTR_LIRCopenfailed "Fehler beim Öffnen der LIRC-Unterstützung.\nVerwendung der Fernbedienung nicht möglich.\n"
 #define MSGTR_LIRCcfgerr "Kann LIRC-Konfigurationsdatei %s nicht lesen.\n"
 
@@ -730,8 +707,6 @@ static const char help_text[]=
 
 // vd_dshow.c, vd_dmo.c
 #define MSGTR_DownloadCodecPackage "Du musst das Binärcodec-Paket aktualisieren/installieren.\nGehe dazu auf http://www.mplayerhq.hu/dload.html\n"
-#define MSGTR_DShowInitOK "INFO: Win32/DShow Videocodec-Initialisierung OK.\n"
-#define MSGTR_DMOInitOK "INFO: Win32/DMO Videocodec-Initialisierung OK.\n"
 
 // x11_common.c
 #define MSGTR_EwmhFullscreenStateFailed "\nX11: Konnte EWMH-Fullscreen-Event nicht senden!\n"
@@ -1120,10 +1095,8 @@ static const char help_text[]=
 #define MSGTR_AO_ALSA9_1x_Removed \
 "audio_out: Die Module alsa9 und alsa1x wurden entfernt, benutze stattdessen \n" \
 "-ao alsa.\n"
-#define MSGTR_AO_TryingPreferredAudioDriver "Probiere bevorzugten Audiotreiber '%.*s', Optionen '%s'\n"
 #define MSGTR_AO_NoSuchDriver "Kein Audiotreiber '%.*s'\n"
 #define MSGTR_AO_FailedInit "Konnte Audiotreiber '%s' nicht initialisieren\n"
-#define MSGTR_AO_TryingEveryKnown "Probiere jeden bekannten Audiotreiber...\n"
 
 // ao_oss.c
 #define MSGTR_AO_OSS_CantOpenMixer "[AO OSS] audio_setup: Kann Mixer %s: %s nicht öffnen.\n"
@@ -1192,7 +1165,6 @@ static const char help_text[]=
 
 // ao_sun.c
 #define MSGTR_AO_SUN_RtscSetinfoFailed "[AO SUN] rtsc: SETINFO fehlgeschlagen.\n"
-#define MSGTR_AO_SUN_RtscWriteFailed "[AO SUN] rtsc: Schreiben fehlgeschlagen.\n"
 #define MSGTR_AO_SUN_CantOpenAudioDev "[AO SUN] Kann Audiogerät %s nicht öffnen, %s  -> nosound.\n"
 #define MSGTR_AO_SUN_UnsupSampleRate "[AO SUN] audio_setup: Deine Karte unterstützt %d Kanäle nicht, %s, %d Hz Samplerate.\n"
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n" \
@@ -1309,7 +1281,6 @@ static const char help_text[]=
 // ========================== INPUT =========================================
 
 // joystick.c
-#define MSGTR_INPUT_JOYSTICK_Opening "Öffne Joystick-Gerätedatei '%s'.\n"
 #define MSGTR_INPUT_JOYSTICK_CantOpen "Konnte Joystick-Gerätedatei '%s' nicht öffnen: %s\n"
 #define MSGTR_INPUT_JOYSTICK_ErrReading "Fehler beim Lesen von Joystick-Gerätedatei: %s\n"
 #define MSGTR_INPUT_JOYSTICK_LoosingBytes "Joystick: %d Byte Daten verloren.\n"
@@ -1317,8 +1288,6 @@ static const char help_text[]=
 #define MSGTR_INPUT_JOYSTICK_WarnUnknownEvent "Joystick: Warnung: Unbekannter Ereignistyp %d.\n"
 
 // appleir.c
-#define MSGTR_INPUT_APPLE_IR_Init "Initialisiere Apple-Fernbedienung auf %s\n"
-#define MSGTR_INPUT_APPLE_IR_Detect "Apple-Fernbedienung auf %s erkannt\n"
 #define MSGTR_INPUT_APPLE_IR_CantOpen "Kann Gerät für Apple-Fernbedienung nicht öffnen: %s\n"
 
 // input.c
@@ -1368,9 +1337,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_AIALSA_PeriodEqualsBufferSize "Periode darf nicht gleich der Puffergröße sein (%u == %lu).\n"
 #define MSGTR_MPDEMUX_AIALSA_CannotInstallSWParams "Konnte Softwareparameter nicht einrichten:\n"
 #define MSGTR_MPDEMUX_AIALSA_ErrorOpeningAudio "Konnte Audio nicht öffnen: %s\n"
-#define MSGTR_MPDEMUX_AIALSA_AlsaStatusError "ALSA-Statusfehler: %s"
 #define MSGTR_MPDEMUX_AIALSA_AlsaXRUN "ALSA xrun!!! (mindestens %.3f ms lang)\n"
-#define MSGTR_MPDEMUX_AIALSA_AlsaStatus "ALSA-Status:\n"
 #define MSGTR_MPDEMUX_AIALSA_AlsaXRUNPrepareError "ALSA xrun: Fehler bei Vorbereitung: %s"
 #define MSGTR_MPDEMUX_AIALSA_AlsaReadWriteError "ALSA-Ein/Ausgabefehler."
 
@@ -1460,17 +1427,7 @@ static const char help_text[]=
 
 // aviheader.c
 #define MSGTR_MPDEMUX_AVIHDR_EmptyList "** leere Liste?!\n"
-#define MSGTR_MPDEMUX_AVIHDR_FoundMovieAt "Film von 0x%X - 0x%X gefunden.\n"
-#define MSGTR_MPDEMUX_AVIHDR_FoundBitmapInfoHeader "'bih' gefunden, %u Byte von %d.\n"
-#define MSGTR_MPDEMUX_AVIHDR_RegeneratingKeyfTableForMPG4V1 "Erstelle Keyframe-Tabelle für MS-mpg4v1-Video neu.\n"
-#define MSGTR_MPDEMUX_AVIHDR_RegeneratingKeyfTableForDIVX3 "Erstelle Keyframe-Tabelle für DIVX3-Video neu.\n"
-#define MSGTR_MPDEMUX_AVIHDR_RegeneratingKeyfTableForMPEG4 "Erstelle Keyframe-Tabelle für MPEG4-Video neu.\n"
-#define MSGTR_MPDEMUX_AVIHDR_FoundWaveFmt "'wf' gefunden, %d Bytes von %d.\n"
-#define MSGTR_MPDEMUX_AVIHDR_FoundAVIV2Header "AVI: dmlh gefunden (size=%d) (total_frames=%d).\n"
-#define MSGTR_MPDEMUX_AVIHDR_ReadingIndexBlockChunksForFrames "Lese INDEX-Block, %d Blöcke für %d Frames (fpos=%"PRId64").\n"
-#define MSGTR_MPDEMUX_AVIHDR_AdditionalRIFFHdr "zusätzlicher RIFF-Kopf...\n"
 #define MSGTR_MPDEMUX_AVIHDR_WarnNotExtendedAVIHdr "** Warnung: Dies ist kein erweiterter AVI-Header...\n"
-#define MSGTR_MPDEMUX_AVIHDR_BrokenChunk "Kaputter Block?  Blockgröße=%d  (id=%.4s)\n"
 #define MSGTR_MPDEMUX_AVIHDR_BuildingODMLidx "AVI: ODML: Erstelle ODML-Index (%d Superindexblöcke).\n"
 #define MSGTR_MPDEMUX_AVIHDR_BrokenODMLfile "AVI: ODML: Kaputte (unfertige?) Datei erkannt. Benutze den herkömmlichen Index.\n"
 #define MSGTR_MPDEMUX_AVIHDR_CantReadIdxFile "Konnte Index-Datei '%s' nicht lesen: %s\n"
@@ -1978,17 +1935,13 @@ static const char help_text[]=
 
 // stream/stream_radio.c
 #define MSGTR_RADIO_ChannelNamesDetected "[Radio] Radiokanalnamen erkannt.\n"
-#define MSGTR_RADIO_FreqRange "[Radio] Erlaubter Frequenzbereich ist %.2f-%.2f MHz.\n"
 #define MSGTR_RADIO_WrongFreqForChannel "[Radio] Falsche Frequenz für Kanal %s\n"
 #define MSGTR_RADIO_WrongChannelNumberFloat "[Radio] Falsche Kanalnummer: %.2f\n"
 #define MSGTR_RADIO_WrongChannelNumberInt "[Radio] Falsche Kanalnummer: %d\n"
 #define MSGTR_RADIO_WrongChannelName "[Radio] Falscher Kanalname: %s\n"
 #define MSGTR_RADIO_FreqParameterDetected "[Radio] Radiofrequenzparameter erkannt.\n"
-#define MSGTR_RADIO_DoneParsingChannels "[Radio] Einlesen der Kanäle erledigt.\n"
 #define MSGTR_RADIO_GetTunerFailed "[Radio] Warnung: ioctl \"get tuner\" fehlgeschlagen: %s. Setze frac auf %d.\n"
 #define MSGTR_RADIO_NotRadioDevice "[Radio] %s ist kein Radiogerät!\n"
-#define MSGTR_RADIO_TunerCapLowYes "[Radio] Empfänger ist niedrig:ja frac=%d\n"
-#define MSGTR_RADIO_TunerCapLowNo "[Radio] Empfänger ist niedrig:nein frac=%d\n"
 #define MSGTR_RADIO_SetFreqFailed "[Radio] ioctl \"set frequency 0x%x (%.2f)\" fehlgeschlagen: %s\n"
 #define MSGTR_RADIO_GetFreqFailed "[Radio] ioctl \"get frequency\" fehlgeschlagen: %s\n"
 #define MSGTR_RADIO_SetMuteFailed "[Radio] ioctl \"set mute\" fehlgeschlagen: %s\n"
@@ -1998,27 +1951,21 @@ static const char help_text[]=
 #define MSGTR_RADIO_DroppingFrame "\n[Radio] zu schlecht - Audio-Frame ausgelassen (%d Bytes)!\n"
 #define MSGTR_RADIO_BufferEmpty "[Radio] grab_audio_frame: Puffer leer, warte auf %d Daten-Bytes.\n"
 #define MSGTR_RADIO_AudioInitFailed "[Radio] audio_in_init fehlgeschlagen: %s\n"
-#define MSGTR_RADIO_AudioBuffer "[Radio] Audio-Capture - Puffer=%d Bytes (Block=%d Bytes).\n"
 #define MSGTR_RADIO_AllocateBufferFailed "[Radio] Kann Audiopuffer nicht allozieren (Block=%d,buf=%d): %s\n"
 #define MSGTR_RADIO_CurrentFreq "[Radio] Momentane Frequenz: %.2f\n"
-#define MSGTR_RADIO_SelectedChannel "[Radio] Gewählter Kanal: %d - %s (Freq: %.2f)\n"
 #define MSGTR_RADIO_ChangeChannelNoChannelList "[Radio] Kann Kanal nicht wechseln: Keine Kanalliste angegeben.\n"
 #define MSGTR_RADIO_UnableOpenDevice "[Radio] Kann '%s' nicht öffnen: %s\n"
-#define MSGTR_RADIO_RadioDevice "[Radio] Radio fd: %d, %s\n"
 #define MSGTR_RADIO_InitFracFailed "[Radio] init_frac fehlgeschlagen.\n"
 #define MSGTR_RADIO_WrongFreq "[Radio] Falsche Frequenz: %.2f\n"
 #define MSGTR_RADIO_UsingFreq "[Radio] Verwende Frequenz: %.2f\n"
 #define MSGTR_RADIO_AudioInInitFailed "[Radio] audio_in_init fehlgeschlagen.\n"
-#define MSGTR_RADIO_BufferString "[Radio] %s: im Puffer=%d ausgelassen=%d\n"
 #define MSGTR_RADIO_AudioInSetupFailed "[Radio] Aufruf audio_in_setup fehlgeschlagen: %s\n"
-#define MSGTR_RADIO_CaptureStarting "[Radio] Starte Capture-Kram.\n"
 #define MSGTR_RADIO_ClearBufferFailed "[Radio] Klärung des Puffers fehlgeschlagen: %s\n"
 #define MSGTR_RADIO_StreamEnableCacheFailed "[Radio] Aufruf zu stream_enable_cache fehlgeschlagen: %s\n"
 #define MSGTR_RADIO_DriverUnknownStr "[Radio] Unbekannter Treibername: %s\n"
 #define MSGTR_RADIO_DriverV4L2 "[Radio] Benutze V4Lv2-Radioschnittstelle.\n"
 #define MSGTR_RADIO_DriverV4L "[Radio] Benutze V4Lv1-Radioschnittstelle.\n"
 #define MSGTR_RADIO_DriverBSDBT848 "[Radio] Benutze *BSD BT848-Radioschnittstelle.\n"
-#define MSGTR_RADIO_AvailableDrivers "[Radio] Verfügbare Treiber: "
 
 
 // ================================== LIBASS ====================================
@@ -2097,30 +2044,23 @@ static const char help_text[]=
 " Fehlerberichte werden ignoriert werden! Du solltest erneut versuchen\n"\
 " mit YV12 (was der Standardfarbraum ist) und die Dokumentation lesen!\n"\
 "=====================================================================\n"
-#define MSGTR_TV_SelectedNormId "Gewählte Norm-ID: %d\n"
-#define MSGTR_TV_SelectedNorm "Gewählte Norm : %s\n"
 #define MSGTR_TV_CannotSetNorm "Fehler: Kann Norm nicht setzen!\n"
 #define MSGTR_TV_MJP_WidthHeight "  MJP: Breite %d Höhe %d\n"
 #define MSGTR_TV_UnableToSetWidth "Kann angeforderte Breite nicht setzen: %d\n"
 #define MSGTR_TV_UnableToSetHeight "Kann angeforderte Höhe nicht setzen: %d\n"
 #define MSGTR_TV_NoTuner "Gewählter Input hat keinen Tuner!\n"
 #define MSGTR_TV_UnableFindChanlist "Kann gewählte Kanalliste nicht finden! (%s)\n"
-#define MSGTR_TV_SelectedChanlist "Gewählte Kanalliste: %s (enthält %d Kanäle)\n"
 #define MSGTR_TV_ChannelFreqParamConflict "Du kannst Frequenz und Kanal nicht gleichzeitig setzen!\n"
 #define MSGTR_TV_ChannelNamesDetected "TV-Kanalnamen erkannt.\n"
 #define MSGTR_TV_NoFreqForChannel "Konnte Frequenz für Kanal %s nicht finden (%s)\n"
 #define MSGTR_TV_SelectedChannel3 "Gewählter Kanal: %s - %s (Freq: %.3f)\n"
 #define MSGTR_TV_SelectedChannel2 "Gewählter Kanal: %s (Freq: %.3f)\n"
-#define MSGTR_TV_SelectedFrequency "Gewählte Frequenz: %lu (%.3f)\n"
-#define MSGTR_TV_RequestedChannel "Angeforderter Kanal: %s\n"
 #define MSGTR_TV_UnsupportedAudioType "Audiotyp '%s (%x)' nicht unterstützt!\n"
-#define MSGTR_TV_AudioFormat "  TV-Audio: %d Kanäle, %d Bits, %d Hz\n"
 #define MSGTR_TV_AvailableDrivers "Verfügbare Treiber:\n"
 #define MSGTR_TV_DriverInfo "Ausgewählter Treiber: %s\n Name: %s\n Autor: %s\n Kommentar: %s\n"
 #define MSGTR_TV_NoSuchDriver "Kein Treiber: %s\n"
 #define MSGTR_TV_DriverAutoDetectionFailed "Automatische Erkennung des TV-Treibers fehlgeschlagen.\n"
 #define MSGTR_TV_UnknownColorOption "Unbekannte Farboption (%d) angegeben!\n"
-#define MSGTR_TV_CurrentFrequency "Momentane Frequenz: %lu (%.3f)\n"
 #define MSGTR_TV_NoTeletext "Kein Videotext"
 #define MSGTR_TV_Bt848IoctlFailed "tvi_bsdbt848: Aufruf von %s ioctl fehlgeschlagen. Fehler: %s\n"
 #define MSGTR_TV_Bt848InvalidAudioRate "tvi_bsdbt848: Ungültige Audiorate. Fehler: %s\n"
@@ -2148,14 +2088,8 @@ static const char help_text[]=
 #define MSGTR_TVI_DS_DeviceNotFound "tvi_dshow: Gerät #%d nicht gefunden.\n"
 #define MSGTR_TVI_DS_UnableGetDeviceName "tvi_dshow: Kann Namen für Gerät #%d nicht ermitteln.\n"
 #define MSGTR_TVI_DS_UsingDevice "tvi_dshow: Benutze Gerät #%d: %s\n"
-#define MSGTR_TVI_DS_DeviceName  "tvi_dshow: Gerät #%d: %s\n"
 #define MSGTR_TVI_DS_DirectGetFreqFailed "tvi_dshow: Kann Frequenz nicht direkt ermitteln. Im Betriebssystem eingebaute\nKanaltabelle wird benutzt.\n"
-#define MSGTR_TVI_DS_DirectSetFreqFailed "tvi_dshow: Kann Frequenz nicht direkt setzen. Im Betriebssystem eingebaute\nKanaltabelle wird benutzt.\n"
-#define MSGTR_TVI_DS_SupportedNorms "tvi_dshow: unterstützte Normen:"
-#define MSGTR_TVI_DS_AvailableVideoInputs "tvi_dshow: verfügbare Video-Inputs:"
-#define MSGTR_TVI_DS_AvailableAudioInputs "tvi_dshow: verfügbare Audio-Inputs:"
 //following phrase will be printed near the selected audio/video input
-#define MSGTR_TVI_DS_InputSelected "(gewählt)"
 #define MSGTR_TVI_DS_UnableExtractFreqTable "tvi_dshow: Kann Frequenztabelle nicht von kstvtune.ax laden\n"
 #define MSGTR_TVI_DS_WrongDeviceParam "tvi_dshow: Falscher Geräteparameter: %s\n"
 #define MSGTR_TVI_DS_WrongDeviceIndex "tvi_dshow: Falscher Geräteindex: %d\n"
@@ -2167,7 +2101,6 @@ static const char help_text[]=
 
 #define MSGTR_TVI_DS_ChangingWidthHeightNotSupported "tvi_dshow: Änderung von Videobreite/-höhe wird vom Gerät nicht unterstützt.\n"
 #define MSGTR_TVI_DS_SelectingInputNotSupported  "tvi_dshow: Wahl der Capture-Quelle wird vom Gerät nicht unterstützt.\n"
-#define MSGTR_TVI_DS_FreqTableLoaded "tvi_dshow: Frequenztabelle des Systems (%s) für Land-ID=%d (Kanäle:%d) geladen.\n"
 #define MSGTR_TVI_DS_ErrorParsingAudioFormatStruct "tvi_dshow: Kann Struktur für Audioformat nicht parsen.\n"
 #define MSGTR_TVI_DS_ErrorParsingVideoFormatStruct "tvi_dshow: Kann Struktur für Videoformat nicht parsen.\n"
 #define MSGTR_TVI_DS_UnableSetAudioMode "tvi_dshow: Kann Audiomodus %d nicht setzen. Fehler:0x%x\n"

@@ -730,7 +730,7 @@ static int demux_mpg_probe(demuxer_t *demuxer) {
           if(demuxer->synced==2)
             mp_msg(MSGT_DEMUXER,MSGL_ERR,"MPEG: " MSGTR_MissingVideoStreamBug);
           else
-            mp_msg(MSGT_DEMUXER,MSGL_V,MSGTR_NotSystemStream);
+            mp_msg(MSGT_DEMUXER, MSGL_V, "Not MPEG System Stream format... (maybe Transport Stream?)\n");
         }
   }
   //FIXME this shouldn't be necessary

@@ -89,7 +89,7 @@ static int init(sh_video_t *sh){
 	DMO_VideoDecoder_SetDestFmt(ctx->decoder,out_fmt&255,0);    // RGB/BGR
     }
     DMO_VideoDecoder_StartInternal(ctx->decoder);
-    mp_msg(MSGT_DECVIDEO,MSGL_V,MSGTR_DMOInitOK);
+    mp_msg(MSGT_DECVIDEO, MSGL_V, "INFO: Win32/DMO video codec init OK.\n");
     return 1;
 }
 

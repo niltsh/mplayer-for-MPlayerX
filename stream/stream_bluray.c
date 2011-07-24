@@ -329,7 +329,7 @@ err_no_info:
     s->type        = STREAMTYPE_BLURAY;
     s->url         = strdup("br://");
 
-    mp_msg(MSGT_OPEN, MSGL_V, MSGTR_BlurayOK);
+    mp_msg(MSGT_OPEN, MSGL_V, "Blu-ray successfully opened.\n");
 
     return STREAM_OK;
 }

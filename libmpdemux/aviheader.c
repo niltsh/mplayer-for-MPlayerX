@@ -93,7 +93,8 @@ while(1){
       // found MOVI header
       if(!demuxer->movi_start) demuxer->movi_start=stream_tell(demuxer->stream);
       demuxer->movi_end=stream_tell(demuxer->stream)+len;
-      mp_msg(MSGT_HEADER,MSGL_V,MSGTR_MPDEMUX_AVIHDR_FoundMovieAt,(int)demuxer->movi_start,(int)demuxer->movi_end);
+      mp_msg(MSGT_HEADER, MSGL_V, "Found movie at 0x%X - 0x%X\n",
+             (int)demuxer->movi_start, (int)demuxer->movi_end);
       if(demuxer->stream->end_pos>demuxer->movi_end) demuxer->movi_end=demuxer->stream->end_pos;
       if(index_mode==-2 || index_mode==2 || index_mode==0)
         break; // reading from non-seekable source (stdin) or forced index or no index forced
@@ -268,7 +269,8 @@ while(1){
       if(last_fccType==streamtypeVIDEO){
         sh_video->bih=calloc(FFMAX(chunksize, sizeof(*sh_video->bih)), 1);
 //        sh_video->bih=malloc(chunksize); memset(sh_video->bih,0,chunksize);
-        mp_msg(MSGT_HEADER,MSGL_V,MSGTR_MPDEMUX_AVIHDR_FoundBitmapInfoHeader,chunksize,sizeof(*sh_video->bih));
+        mp_msg(MSGT_HEADER, MSGL_V, "Found 'bih', %u bytes of %d\n",
+               chunksize, sizeof(*sh_video->bih));
         stream_read(demuxer->stream,(char*) sh_video->bih,chunksize);
 	le2me_BITMAPINFOHEADER(sh_video->bih);  // swap to machine endian
 	if (sh_video->bih->biSize > chunksize && sh_video->bih->biSize > sizeof(*sh_video->bih))
@@ -289,7 +291,7 @@ while(1){
 	case mmioFOURCC('m', 'p', 'g', '4'):
 	case mmioFOURCC('D', 'I', 'V', '1'):
           idxfix_divx=3; // set index recovery mpeg4 flavour: msmpeg4v1
-	  mp_msg(MSGT_HEADER,MSGL_V,MSGTR_MPDEMUX_AVIHDR_RegeneratingKeyfTableForMPG4V1);
+	  mp_msg(MSGT_HEADER, MSGL_V, "Regenerating keyframe table for M$ mpg4v1 video.\n");
 	  break;
         case mmioFOURCC('D', 'I', 'V', '3'):
 	case mmioFOURCC('d', 'i', 'v', '3'):
@@ -306,7 +308,7 @@ while(1){
 	case mmioFOURCC('D', 'I', 'V', '2'):
         case mmioFOURCC('A', 'P', '4', '1'):
           idxfix_divx=1; // set index recovery mpeg4 flavour: msmpeg4v3
-	  mp_msg(MSGT_HEADER,MSGL_V,MSGTR_MPDEMUX_AVIHDR_RegeneratingKeyfTableForDIVX3);
+	  mp_msg(MSGT_HEADER, MSGL_V, "Regenerating keyframe table for DIVX3 video.\n");
 	  break;
         case mmioFOURCC('D', 'I', 'V', 'X'):
         case mmioFOURCC('d', 'i', 'v', 'x'):
@@ -316,7 +318,7 @@ while(1){
         case mmioFOURCC('F', 'M', 'P', '4'):
         case mmioFOURCC('f', 'm', 'p', '4'):
           idxfix_divx=2; // set index recovery mpeg4 flavour: generic mpeg4
-	  mp_msg(MSGT_HEADER,MSGL_V,MSGTR_MPDEMUX_AVIHDR_RegeneratingKeyfTableForMPEG4);
+	  mp_msg(MSGT_HEADER, MSGL_V, "Regenerating keyframe table for MPEG-4 video.\n");
 	  break;
         }
       } else
@@ -324,7 +326,8 @@ while(1){
 	unsigned wf_size = chunksize<sizeof(*sh_audio->wf)?sizeof(*sh_audio->wf):chunksize;
         sh_audio->wf=calloc(wf_size,1);
 //        sh_audio->wf=malloc(chunksize); memset(sh_audio->wf,0,chunksize);
-        mp_msg(MSGT_HEADER,MSGL_V,MSGTR_MPDEMUX_AVIHDR_FoundWaveFmt,chunksize,sizeof(*sh_audio->wf));
+        mp_msg(MSGT_HEADER, MSGL_V, "Found 'wf', %d bytes of %d\n",
+               chunksize, sizeof(*sh_audio->wf));
         stream_read(demuxer->stream,(char*) sh_audio->wf,chunksize);
 	le2me_WAVEFORMATEX(sh_audio->wf);
 	if (sh_audio->wf->cbSize != 0 &&
@@ -369,7 +372,8 @@ while(1){
     case mmioFOURCC('d', 'm', 'l', 'h'): {
 	// dmlh 00 00 00 04 frms
 	unsigned int total_frames = stream_read_dword_le(demuxer->stream);
-	mp_msg(MSGT_HEADER,MSGL_V,MSGTR_MPDEMUX_AVIHDR_FoundAVIV2Header, chunksize, total_frames);
+        mp_msg(MSGT_HEADER, MSGL_V, "AVI: dmlh found (size=%d) (total_frames=%d)\n",
+               chunksize, total_frames);
 	stream_skip(demuxer->stream, chunksize-4);
 	chunksize = 0;
     }
@@ -381,7 +385,8 @@ while(1){
       int read;
       int i;
       priv->idx_size=size2>>4;
-      mp_msg(MSGT_HEADER,MSGL_V,MSGTR_MPDEMUX_AVIHDR_ReadingIndexBlockChunksForFrames,
+      mp_msg(MSGT_HEADER, MSGL_V,
+        "Reading INDEX block, %d chunks for %d frames (fpos=%"PRId64").\n",
         priv->idx_size,avih.dwTotalFrames, (int64_t)stream_tell(demuxer->stream));
       priv->idx=malloc(priv->idx_size<<4);
 //      printf("\nindex to %p !!!!! (priv=%p)\n",priv->idx,priv);
@@ -405,7 +410,7 @@ while(1){
     case mmioFOURCC('R','I','F','F'): {
 	char riff_type[4];
 
-	mp_msg(MSGT_HEADER, MSGL_V, MSGTR_MPDEMUX_AVIHDR_AdditionalRIFFHdr);
+        mp_msg(MSGT_HEADER, MSGL_V, "Additional RIFF header...\n");
 	stream_read(demuxer->stream, riff_type, sizeof riff_type);
 	if (strncmp(riff_type, "AVIX", sizeof riff_type))
 	    mp_msg(MSGT_HEADER, MSGL_WARN, MSGTR_MPDEMUX_AVIHDR_WarnNotExtendedAVIHdr);
@@ -446,7 +451,7 @@ while(1){
   if(list_end>0 &&
      chunksize+stream_tell(demuxer->stream) == list_end) list_end=0;
   if(list_end>0 && chunksize+stream_tell(demuxer->stream)>list_end){
-      mp_msg(MSGT_HEADER,MSGL_V,MSGTR_MPDEMUX_AVIHDR_BrokenChunk,chunksize,(char *) &id);
+      mp_msg(MSGT_HEADER, MSGL_V, "Broken chunk?  chunksize=%d  (id=%.4s)\n", chunksize, (char *) &id);
       stream_seek(demuxer->stream,list_end);
       list_end=0;
   } else
