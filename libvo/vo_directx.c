@@ -81,7 +81,7 @@ static const GUID MP_IID_IDirectDrawColorControl = {
 };
 
 typedef struct directx_fourcc_caps {
-    char *img_format_name;      //human readable name
+    char img_format_name[6];    //human readable name
     uint32_t img_format;        //as MPlayer image format
     DDPIXELFORMAT g_ddpfOverlay; //as Directx Sourface description
 } directx_fourcc_caps;
