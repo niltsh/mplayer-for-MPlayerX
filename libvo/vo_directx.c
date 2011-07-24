@@ -168,7 +168,7 @@ static int query_format(uint32_t format)
 
 static uint32_t Directx_CreatePrimarySurface(void)
 {
-    DDSURFACEDESC2 ddsd;
+    DDSURFACEDESC2 ddsd = { .dwSize = sizeof(ddsd) };
     //cleanup
     if (g_lpddsPrimary)
         g_lpddsPrimary->lpVtbl->Release(g_lpddsPrimary);
@@ -176,8 +176,6 @@ static uint32_t Directx_CreatePrimarySurface(void)
 
     if (vidmode)
         g_lpdd->lpVtbl->SetDisplayMode(g_lpdd, vm_width, vm_height, vm_bpp, vo_refresh_rate, 0);
-    ZeroMemory(&ddsd, sizeof(ddsd));
-    ddsd.dwSize = sizeof(ddsd);
     //set flags and create a primary surface.
     ddsd.dwFlags = DDSD_CAPS;
     ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
@@ -193,7 +191,14 @@ static uint32_t Directx_CreatePrimarySurface(void)
 static uint32_t Directx_CreateOverlay(uint32_t imgfmt)
 {
     HRESULT ddrval;
-    DDSURFACEDESC2 ddsdOverlay;
+    DDSURFACEDESC2 ddsdOverlay = {
+        .dwSize = sizeof(ddsdOverlay),
+        .ddsCaps.dwCaps = DDSCAPS_OVERLAY | DDSCAPS_FLIP | DDSCAPS_COMPLEX | DDSCAPS_VIDEOMEMORY,
+        .dwFlags  = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH | DDSD_BACKBUFFERCOUNT | DDSD_PIXELFORMAT,
+        .dwWidth  = image_width,
+        .dwHeight = image_height,
+        .dwBackBufferCount = 2,
+    };
     uint32_t i = 0;
     while (i < NUM_FORMATS && imgfmt != g_ddpf[i].img_format)
         i++;
@@ -207,13 +212,6 @@ static uint32_t Directx_CreateOverlay(uint32_t imgfmt)
     g_lpddsOverlay = NULL;
     g_lpddsBack    = NULL;
     //create our overlay
-    ZeroMemory(&ddsdOverlay, sizeof(ddsdOverlay));
-    ddsdOverlay.dwSize = sizeof(ddsdOverlay);
-    ddsdOverlay.ddsCaps.dwCaps = DDSCAPS_OVERLAY | DDSCAPS_FLIP | DDSCAPS_COMPLEX | DDSCAPS_VIDEOMEMORY;
-    ddsdOverlay.dwFlags  = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH | DDSD_BACKBUFFERCOUNT | DDSD_PIXELFORMAT;
-    ddsdOverlay.dwWidth  = image_width;
-    ddsdOverlay.dwHeight = image_height;
-    ddsdOverlay.dwBackBufferCount = 2;
     ddsdOverlay.ddpfPixelFormat   = g_ddpf[i].g_ddpfOverlay;
     if (vo_doublebuffering) {    //tribblebuffering
         if (g_lpdd->lpVtbl->CreateSurface(g_lpdd, &ddsdOverlay, &g_lpddsOverlay, NULL) == DD_OK) {
@@ -287,17 +285,17 @@ static uint32_t Directx_CreateOverlay(uint32_t imgfmt)
 
 static uint32_t Directx_CreateBackpuffer(void)
 {
-    DDSURFACEDESC2 ddsd;
+    DDSURFACEDESC2 ddsd = {
+        .dwSize = sizeof(ddsd),
+        .ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY,
+        .dwFlags  = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT,
+        .dwWidth  = image_width,
+        .dwHeight = image_height,
+    };
     //cleanup
     if (g_lpddsBack)
         g_lpddsBack->lpVtbl->Release(g_lpddsBack);
     g_lpddsBack = NULL;
-    ZeroMemory(&ddsd, sizeof(ddsd));
-    ddsd.dwSize = sizeof(ddsd);
-    ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
-    ddsd.dwFlags  = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT;
-    ddsd.dwWidth  = image_width;
-    ddsd.dwHeight = image_height;
     if (g_lpdd->lpVtbl->CreateSurface(g_lpdd, &ddsd, &g_lpddsBack, 0) != DD_OK) {
         mp_msg(MSGT_VO, MSGL_FATAL, "<vo_directx><FATAL ERROR>can't create backpuffer\n");
         return 1;
@@ -460,8 +458,8 @@ static uint32_t Directx_InitDirectDraw(void)
 static uint32_t Directx_ManageDisplay(void)
 {
     HRESULT ddrval;
-    DDCAPS capsDrv;
-    DDOVERLAYFX ovfx;
+    DDCAPS capsDrv = { .dwSize = sizeof(capsDrv) };
+    DDOVERLAYFX ovfx = { .dwSize = sizeof(ovfx) };
     DWORD dwUpdateFlags = 0;
     int width, height;
 
@@ -496,8 +494,6 @@ static uint32_t Directx_ManageDisplay(void)
         }
 
         /*get driver capabilities*/
-        ZeroMemory(&capsDrv, sizeof(capsDrv));
-        capsDrv.dwSize = sizeof(capsDrv);
         if (g_lpdd->lpVtbl->GetCaps(g_lpdd, &capsDrv, NULL) != DD_OK)
             return 1;
         /*get minimum stretch, depends on display adaptor and mode (refresh rate!) */
@@ -558,8 +554,6 @@ static uint32_t Directx_ManageDisplay(void)
         if ((capsDrv.dwCaps & DDCAPS_ALIGNSIZEDEST) && capsDrv.dwAlignSizeDest)
             rd.right = rd.left + ((rd.right - rd.left) & - (signed)(capsDrv.dwAlignSizeDest));
         /*create an overlay FX structure to specify a destination color key*/
-        ZeroMemory(&ovfx, sizeof(ovfx));
-        ovfx.dwSize = sizeof(ovfx);
         if (vo_fs || vidmode) {
             ovfx.dckDestColorkey.dwColorSpaceLowValue  = 0;
             ovfx.dckDestColorkey.dwColorSpaceHighValue = 0;
@@ -659,14 +653,19 @@ static void check_events(void)
 //find out supported overlay pixelformats
 static uint32_t Directx_CheckOverlayPixelformats(void)
 {
-    DDCAPS capsDrv;
+    DDCAPS capsDrv = { .dwSize = sizeof(capsDrv) };
     HRESULT ddrval;
-    DDSURFACEDESC2 ddsdOverlay;
+    DDSURFACEDESC2 ddsdOverlay = {
+        .dwSize = sizeof(ddsdOverlay),
+        .ddsCaps.dwCaps = DDSCAPS_OVERLAY | DDSCAPS_VIDEOMEMORY,
+        .dwFlags  = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH | DDSD_PIXELFORMAT,
+        .dwWidth  = 300,
+        .dwHeight = 280,
+        .dwBackBufferCount = 0,
+    };
     uint32_t i;
     uint32_t formatcount = 0;
     //get driver caps to determine overlay support
-    ZeroMemory(&capsDrv, sizeof(capsDrv));
-    capsDrv.dwSize = sizeof(capsDrv);
     ddrval = g_lpdd->lpVtbl->GetCaps(g_lpdd, &capsDrv, NULL);
     if (FAILED(ddrval)) {
         mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>failed getting ddrawcaps\n");
@@ -679,13 +678,6 @@ static uint32_t Directx_CheckOverlayPixelformats(void)
     mp_msg(MSGT_VO, MSGL_V, "<vo_directx><INFO>testing supported overlay pixelformats\n");
     //it is not possible to query for pixel formats supported by the
     //overlay hardware: try out various formats till one works
-    ZeroMemory(&ddsdOverlay, sizeof(ddsdOverlay));
-    ddsdOverlay.dwSize = sizeof(ddsdOverlay);
-    ddsdOverlay.ddsCaps.dwCaps = DDSCAPS_OVERLAY | DDSCAPS_VIDEOMEMORY;
-    ddsdOverlay.dwFlags  = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH | DDSD_PIXELFORMAT;
-    ddsdOverlay.dwWidth  = 300;
-    ddsdOverlay.dwHeight = 280;
-    ddsdOverlay.dwBackBufferCount = 0;
     //try to create an overlay surface using one of the pixel formats in our global list
     i = 0;
     do {
@@ -1081,14 +1073,12 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_
 static uint32_t color_ctrl_set(const char *what, int value)
 {
     uint32_t r = VO_NOTIMPL;
-    DDCOLORCONTROL dcc;
+    DDCOLORCONTROL dcc = { .dwSize = sizeof(dcc) };
     //printf("\n*** %s = %d\n", what, value);
     if (!g_cc) {
         //printf("\n *** could not get color control interface!!!\n");
         return VO_NOTIMPL;
     }
-    ZeroMemory(&dcc, sizeof(dcc));
-    dcc.dwSize = sizeof(dcc);
 
     if (!strcmp(what, "brightness")) {
         dcc.dwFlags     = DDCOLOR_BRIGHTNESS;
@@ -1118,13 +1108,11 @@ static uint32_t color_ctrl_set(const char *what, int value)
 static uint32_t color_ctrl_get(const char *what, int *value)
 {
     uint32_t r = VO_NOTIMPL;
-    DDCOLORCONTROL dcc;
+    DDCOLORCONTROL dcc = { .dwSize = sizeof(dcc) };
     if (!g_cc) {
         //printf("\n *** could not get color control interface!!!\n");
         return VO_NOTIMPL;
     }
-    ZeroMemory(&dcc, sizeof(dcc));
-    dcc.dwSize = sizeof(dcc);
 
     if (g_cc->lpVtbl->GetColorControls(g_cc, &dcc) != DD_OK) {
         return r;
