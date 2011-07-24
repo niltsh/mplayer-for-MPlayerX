@@ -368,7 +368,10 @@ static BOOL WINAPI EnumCallbackEx(GUID FAR *lpGUID, LPSTR lpDriverDescription, L
 static uint32_t Directx_InitDirectDraw(void)
 {
     HRESULT (WINAPI *OurDirectDrawCreateEx)(GUID *, LPVOID *, REFIID, IUnknown FAR *);
-    DDSURFACEDESC2 ddsd;
+    DDSURFACEDESC2 ddsd = {
+        .dwSize  = sizeof(ddsd),
+        .dwFlags = DDSD_WIDTH | DDSD_HEIGHT | DDSD_PIXELFORMAT,
+    };
     LPDIRECTDRAWENUMERATEEX OurDirectDrawEnumerateEx;
 
     adapter_count = 0;
@@ -416,8 +419,6 @@ static uint32_t Directx_InitDirectDraw(void)
     }
 
     //get current screen siz for selected monitor ...
-    ddsd.dwSize  = sizeof(ddsd);
-    ddsd.dwFlags = DDSD_WIDTH | DDSD_HEIGHT | DDSD_PIXELFORMAT;
     g_lpdd->lpVtbl->GetDisplayMode(g_lpdd, &ddsd);
     if (vo_screenwidth && vo_screenheight) {
         vm_height = vo_screenheight;
