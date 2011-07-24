@@ -714,14 +714,12 @@ static uint32_t Directx_CheckPrimaryPixelformat(void)
 {
     int i;
     uint32_t formatcount = 0;
-    DDPIXELFORMAT ddpf;
+    DDPIXELFORMAT ddpf = { .dwSize = sizeof(ddpf) };
     DDSURFACEDESC2 ddsd;
     HDC hdc;
     HRESULT hres;
     COLORREF rgbT = RGB(0, 0, 0);
     mp_msg(MSGT_VO, MSGL_V, "<vo_directx><INFO>checking primary surface\n");
-    memset(&ddpf, 0, sizeof(DDPIXELFORMAT));
-    ddpf.dwSize = sizeof(DDPIXELFORMAT);
     //we have to create a primary surface first
     if (Directx_CreatePrimarySurface() != 0)
         return 1;
@@ -858,11 +856,11 @@ static void flip_page(void)
             mp_msg(MSGT_VO, MSGL_ERR, "<vo_directx><ERROR>can't flip page\n");
     }
     if (nooverlay) {
-        DDBLTFX ddbltfx;
         // ask for the "NOTEARING" option
-        memset(&ddbltfx, 0, sizeof(DDBLTFX));
-        ddbltfx.dwSize = sizeof(DDBLTFX);
-        ddbltfx.dwDDFX = DDBLTFX_NOTEARING;
+        DDBLTFX ddbltfx = {
+            .dwSize = sizeof(ddbltfx),
+            .dwDDFX = DDBLTFX_NOTEARING,
+        };
         g_lpddsPrimary->lpVtbl->Blt(g_lpddsPrimary, &rd, g_lpddsBack, NULL, DDBLT_WAIT, &ddbltfx);
     }
     if (g_lpddsBack->lpVtbl->Lock(g_lpddsBack, NULL, &ddsdsf, DDLOCK_NOSYSLOCK | DDLOCK_WAIT, NULL) == DD_OK) {
