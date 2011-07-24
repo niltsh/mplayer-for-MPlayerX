@@ -600,9 +600,6 @@ static const char help_text[]=
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[skin] грешка в конфигурационния файл на skin-а на ред %d: %s"
-#define MSGTR_SKIN_WARNING1 "[skin] внимание в конфигурационния файл на ред %d:\nоткрит widget (%s) без \"section\" преди това"
-#define MSGTR_SKIN_WARNING2 "[skin] внимание в конфигурациония файл на ред %d:\nоткрит widget (%s) без \"subsection\" преди това"
-#define MSGTR_SKIN_WARNING3 "[skin] внимание в конфигурационния файл на ред %d:\nтази подсекция не се поддържа от widget (%s)"
 #define MSGTR_SKIN_SkinFileNotFound "[skin] файлът ( %s ) не е намерен.\n"
 #define MSGTR_SKIN_BITMAP_16bit  "Bitmap с 16 и по-малко бита за цвят не се поддържа (%s).\n"
 #define MSGTR_SKIN_BITMAP_FileNotFound  "файлът не е намерен (%s)\n"
@@ -867,9 +864,7 @@ static const char help_text[]=
 // vo_yuv4mpeg.c
 #define MSGTR_VO_YUV4MPEG_InterlacedHeightDivisibleBy4 "Режимът interlaced изисква височината на образа да е кратна на  4."
 #define MSGTR_VO_YUV4MPEG_InterlacedLineBufAllocFail "Не може да се задели буфер за редовете за interlaced режим."
-#define MSGTR_VO_YUV4MPEG_InterlacedInputNotRGB "Входния формат не е RGB, не могат да се отделят цветовите полета!"
 #define MSGTR_VO_YUV4MPEG_WidthDivisibleBy2 "Широчината на образа трябва да е кратна на 2."
-#define MSGTR_VO_YUV4MPEG_NoMemRGBFrameBuf "Няма достатъчно памет за RGB кадров буфер."
 #define MSGTR_VO_YUV4MPEG_OutFileOpenError "Не е получена памет или файлов манипулатор за запис \"%s\"!"
 #define MSGTR_VO_YUV4MPEG_OutFileWriteError "Грешка при извеждане на изображението!"
 #define MSGTR_VO_YUV4MPEG_UnknownSubDev "Неизвестно подустройство: %s"

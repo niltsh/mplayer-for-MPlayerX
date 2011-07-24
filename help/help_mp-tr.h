@@ -1035,9 +1035,7 @@ static const char help_text[]=
 // vo_yuv4mpeg.c
 #define MSGTR_VO_YUV4MPEG_InterlacedHeightDivisibleBy4 "Örme(interlaced) modu 4'e bölünebilme için görüntü yüksekliğini gerektiriyor."
 #define MSGTR_VO_YUV4MPEG_InterlacedLineBufAllocFail "Örme (interlaced) modu için ilerleme tamponu atanamıyor."
-#define MSGTR_VO_YUV4MPEG_InterlacedInputNotRGB "Girdi RGB değil, alanlar ile renkler ayrılamıyor.!"
 #define MSGTR_VO_YUV4MPEG_WidthDivisibleBy2 "Görüntü genişliği 2 ile bölünür olmalıdır."
-#define MSGTR_VO_YUV4MPEG_NoMemRGBFrameBuf "RGB kare(frame) tamponu atama için yeterli bellek."
 #define MSGTR_VO_YUV4MPEG_OutFileOpenError " \"%s\" yazılması için bellek veya dosya kimlikleyiciye ulaşılamıyor!"
 #define MSGTR_VO_YUV4MPEG_OutFileWriteError "Çıktıya görüntü yazma hatası!"
 #define MSGTR_VO_YUV4MPEG_UnknownSubDev "Bilinmeyen alt-aygıt: %s"

@@ -1077,9 +1077,7 @@ static const char help_text[]=
 // vo_yuv4mpeg.c
 #define MSGTR_VO_YUV4MPEG_InterlacedHeightDivisibleBy4 "Prokládaný režim obrazu vyžaduje výšku obrazu dělitelnou 4."
 #define MSGTR_VO_YUV4MPEG_InterlacedLineBufAllocFail "Nelze alokovat řádkovou vyrovnávací paměť pro režim prokládaného obrazu."
-#define MSGTR_VO_YUV4MPEG_InterlacedInputNotRGB "Vstup není RGB, nelze oddělit jasovou složku podle polí!"
 #define MSGTR_VO_YUV4MPEG_WidthDivisibleBy2 "Šířka obrazu musí být dělitelná 2."
-#define MSGTR_VO_YUV4MPEG_NoMemRGBFrameBuf "Není dostatek paměti pro alokaci RGB framebufferu."
 #define MSGTR_VO_YUV4MPEG_OutFileOpenError "Nelze získat paměť nebo ukazatel souboru pro zápis \"%s\"!"
 #define MSGTR_VO_YUV4MPEG_OutFileWriteError "Chyba při zápisu obrázku na výstup!"
 #define MSGTR_VO_YUV4MPEG_UnknownSubDev "Neznámé podzařízení: %s"

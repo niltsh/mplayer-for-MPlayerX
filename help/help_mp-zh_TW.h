@@ -1007,9 +1007,7 @@ static const char help_text[]=
 // vo_yuv4mpeg.c
 #define MSGTR_VO_YUV4MPEG_InterlacedHeightDivisibleBy4 "交錯模式要求圖像高度能被 4 整除。"
 #define MSGTR_VO_YUV4MPEG_InterlacedLineBufAllocFail "無法為交錯模式分配綫緩衝。"
-#define MSGTR_VO_YUV4MPEG_InterlacedInputNotRGB "輸入不是 RGB, 不能按域分開色差!"
 #define MSGTR_VO_YUV4MPEG_WidthDivisibleBy2 "圖像寬度必須能被 2 整除。"
-#define MSGTR_VO_YUV4MPEG_NoMemRGBFrameBuf "内存不够, 不能分配 RGB 緩衝。"
 #define MSGTR_VO_YUV4MPEG_OutFileOpenError "不能取得内存或文件句柄以寫入 \"%s\"!"
 #define MSGTR_VO_YUV4MPEG_OutFileWriteError "圖像寫到輸出錯誤!"
 #define MSGTR_VO_YUV4MPEG_UnknownSubDev "未知的子設備: %s"

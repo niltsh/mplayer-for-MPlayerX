@@ -1021,9 +1021,7 @@ static const char help_text[]=
 // vo_yuv4mpeg.c
 #define MSGTR_VO_YUV4MPEG_InterlacedHeightDivisibleBy4 "Mode entrelacé requiert hauteur d'image divisible par 4."
 #define MSGTR_VO_YUV4MPEG_InterlacedLineBufAllocFail "Impossible d'allouer tampon de ligne pour mode entrelacé."
-#define MSGTR_VO_YUV4MPEG_InterlacedInputNotRGB "Entré non RGB, impossible décomposer chrominance !"
 #define MSGTR_VO_YUV4MPEG_WidthDivisibleBy2 "Largeur d'image doit être divisible par 2."
-#define MSGTR_VO_YUV4MPEG_NoMemRGBFrameBuf "Mémoire insuffisante pour allouer tampon d'image RGB."
 #define MSGTR_VO_YUV4MPEG_OutFileOpenError "Impossible d'obtenir ident. de fichier ou mémoire pour écriture \"%s\" !"
 #define MSGTR_VO_YUV4MPEG_OutFileWriteError "Erreur d'écriture d'image vers sortie !"
 #define MSGTR_VO_YUV4MPEG_UnknownSubDev "Sous-périphérique inconnu : %s"

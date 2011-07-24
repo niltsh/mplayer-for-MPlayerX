@@ -800,9 +800,7 @@ static const char help_text[]=
 // vo_yuv4mpeg.c
 #define MSGTR_VO_YUV4MPEG_InterlacedHeightDivisibleBy4 "De interlaced mode vereist een beeldhoogte die deelbaar is door vier."
 #define MSGTR_VO_YUV4MPEG_InterlacedLineBufAllocFail "Kan geen \"lijn\" buffer toewijzen voor de interlaced mode."
-#define MSGTR_VO_YUV4MPEG_InterlacedInputNotRGB "Input is geen RGB, de chrominantie kan niet opgesplitst worden op basis van de velden!"
 #define MSGTR_VO_YUV4MPEG_WidthDivisibleBy2 "De beeldbreedte moet deelbaar zijn door twee."
-#define MSGTR_VO_YUV4MPEG_NoMemRGBFrameBuf "Niet genoeg geheugen om een RGB framebuffer toe te wijzen."
 #define MSGTR_VO_YUV4MPEG_OutFileOpenError "Kan geen geheugen of \"file handle\" verkrijgen om de \"%s\" te schrijven!"
 #define MSGTR_VO_YUV4MPEG_OutFileWriteError "Fout bij het schrijven van het beeld naar de output!"
 #define MSGTR_VO_YUV4MPEG_UnknownSubDev "Ongekende subapparaat: %s"

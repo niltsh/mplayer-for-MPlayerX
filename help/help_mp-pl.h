@@ -709,9 +709,6 @@ static const char help_text[]=
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "[skórka] błąd w pliku konfiguracyjnym skórki, linia %d: %s"
-#define MSGTR_SKIN_WARNING1 "[skórka] uwaga: w pliku konfiguracyjnym, wiersz %d:\nznacznik widget (%s) znaleziony lecz brak \"section\" przed nim"
-#define MSGTR_SKIN_WARNING2 "[skórka] uwaga: w pliku konfiguracyjnym, wiersz %d:\nznacznik widget (%s) znaleziony lecz brak \"subsection\" przed nim"
-#define MSGTR_SKIN_WARNING3 "[skórka] uwaga: w pliku konfiguracyjnym, wiersz %d:\nta podsekcja nie jest obsługiwana przez widget (%s)"
 #define MSGTR_SKIN_SkinFileNotFound "[skórka] plik ( %s ) nie znaleziony.\n"
 #define MSGTR_SKIN_SkinFileNotReadable "[skórka] nie mogę odczytać pliku ( %s ).\n"
 #define MSGTR_SKIN_BITMAP_16bit  "Bitmapy o głębokości <=16 bitów nie są obsgługiwane (%s).\n"
@@ -992,9 +989,7 @@ static const char help_text[]=
 // vo_yuv4mpeg.c
 #define MSGTR_VO_YUV4MPEG_InterlacedHeightDivisibleBy4 "Tryb przeplotu wymaga aby wysokość obrazu była podzielna przez 4."
 #define MSGTR_VO_YUV4MPEG_InterlacedLineBufAllocFail "Nie mogę zaalokować bufora lini dla trybu przeplotu."
-#define MSGTR_VO_YUV4MPEG_InterlacedInputNotRGB "Wejście nie jest w formacie RGB, nie mogę oddzielić jasności przez pola!"
 #define MSGTR_VO_YUV4MPEG_WidthDivisibleBy2 "Szerokość obrazu musi być podzielna przez 2."
-#define MSGTR_VO_YUV4MPEG_NoMemRGBFrameBuf "Za mało pamięci aby zaalokować bufor klatek RGB."
 #define MSGTR_VO_YUV4MPEG_OutFileOpenError "Nie mogę dostać pamięci lub pliku aby zapisać \"%s\"!"
 #define MSGTR_VO_YUV4MPEG_OutFileWriteError "Błąd zapisu pliku na wyjście!"
 #define MSGTR_VO_YUV4MPEG_UnknownSubDev "Nieznane podurządzenie: %s"

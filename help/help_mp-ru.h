@@ -1078,9 +1078,7 @@ static const char help_text[]=
 // vo_yuv4mpeg.c
 #define MSGTR_VO_YUV4MPEG_InterlacedHeightDivisibleBy4 "Для режима c чересстрочной развёрткой необходимо, чтобы высота изображения\nделилась на 4."
 #define MSGTR_VO_YUV4MPEG_InterlacedLineBufAllocFail "Не могу выделить память для линейного буфера в режиме чересстрочной развёртки."
-#define MSGTR_VO_YUV4MPEG_InterlacedInputNotRGB "Вход не RGB, не могу разделить данные хромы по полям!"
 #define MSGTR_VO_YUV4MPEG_WidthDivisibleBy2 "Ширина изображения должна делиться на 2."
-#define MSGTR_VO_YUV4MPEG_NoMemRGBFrameBuf "Недостаточно памяти для размещения фреймбуфера RGB."
 #define MSGTR_VO_YUV4MPEG_OutFileOpenError "Не могу выделить память или файловый описатель для записи \"%s\"!"
 #define MSGTR_VO_YUV4MPEG_OutFileWriteError "Ошибка записи изображения в вывод!"
 #define MSGTR_VO_YUV4MPEG_UnknownSubDev "Неизвестное подустройство: %s"
