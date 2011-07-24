@@ -558,7 +558,7 @@ int parse_codec_cfg(const char *cfgfile)
     mp_msg(MSGT_CODECCFG, MSGL_V, "Reading %s: ", cfgfile);
 
     if ((fp = fopen(cfgfile, "r")) == NULL) {
-        mp_msg(MSGT_CODECCFG,MSGL_V,MSGTR_CantOpenFileError, cfgfile, strerror(errno));
+        mp_msg(MSGT_CODECCFG, MSGL_FATAL, MSGTR_CantOpenFileError, cfgfile, strerror(errno));
         return 0;
     }
 

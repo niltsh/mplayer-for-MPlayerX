@@ -188,7 +188,7 @@ static int realtime_samplecounter_available(char *dev)
 	    goto error;
 	}
 	if (info.play.samples < last_samplecnt) {
-            mp_msg(MSGT_AO, MSGL_V, "rtsc: %d > %d?\n", last_samplecnt, info.play.samples);
+            mp_msg(MSGT_AO, MSGL_ERR, "rtsc: %d > %d?\n", last_samplecnt, info.play.samples);
 	    goto error;
 	}
 
