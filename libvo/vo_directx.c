@@ -308,25 +308,24 @@ static uint32_t Directx_CreateBackpuffer(void)
 
 static void uninit(void)
 {
-    if (g_cc != NULL) {
+    if (g_cc)
         g_cc->lpVtbl->Release(g_cc);
-    }
     g_cc = NULL;
-    if (g_lpddclipper != NULL)
+    if (g_lpddclipper)
         g_lpddclipper->lpVtbl->Release(g_lpddclipper);
     g_lpddclipper = NULL;
     mp_msg(MSGT_VO, MSGL_DBG3, "<vo_directx><INFO>clipper released\n");
-    if (g_lpddsBack != NULL)
+    if (g_lpddsBack)
         g_lpddsBack->lpVtbl->Release(g_lpddsBack);
     g_lpddsBack = NULL;
     mp_msg(MSGT_VO, MSGL_DBG3, "<vo_directx><INFO>back surface released\n");
     if (vo_doublebuffering && !nooverlay) {
-        if (g_lpddsOverlay != NULL)
+        if (g_lpddsOverlay)
             g_lpddsOverlay->lpVtbl->Release(g_lpddsOverlay);
         g_lpddsOverlay = NULL;
         mp_msg(MSGT_VO, MSGL_DBG3, "<vo_directx><INFO>overlay surface released\n");
     }
-    if (g_lpddsPrimary != NULL)
+    if (g_lpddsPrimary)
         g_lpddsPrimary->lpVtbl->Release(g_lpddsPrimary);
     g_lpddsPrimary = NULL;
     mp_msg(MSGT_VO, MSGL_DBG3, "<vo_directx><INFO>primary released\n");
@@ -334,7 +333,7 @@ static void uninit(void)
         DeleteObject(colorbrush);
     colorbrush = NULL;
     mp_msg(MSGT_VO, MSGL_DBG3, "<vo_directx><INFO>GDI resources deleted\n");
-    if (g_lpdd != NULL) {
+    if (g_lpdd) {
         if (vidmode)
             g_lpdd->lpVtbl->RestoreDisplayMode(g_lpdd);
         g_lpdd->lpVtbl->Release(g_lpdd);
@@ -382,7 +381,7 @@ static uint32_t Directx_InitDirectDraw(void)
 
     //load direct draw DLL: based on videolans code
     hddraw_dll = LoadLibrary("DDRAW.DLL");
-    if (hddraw_dll == NULL) {
+    if (!hddraw_dll) {
         mp_msg(MSGT_VO, MSGL_FATAL, "<vo_directx><FATAL ERROR>failed loading ddraw.dll\n");
         return 1;
     }
@@ -405,7 +404,7 @@ static uint32_t Directx_InitDirectDraw(void)
     }
 
     OurDirectDrawCreateEx = (void *)GetProcAddress(hddraw_dll, "DirectDrawCreateEx");
-    if (OurDirectDrawCreateEx == NULL) {
+    if (!OurDirectDrawCreateEx) {
         FreeLibrary(hddraw_dll);
         hddraw_dll = NULL;
         mp_msg(MSGT_VO, MSGL_FATAL, "<vo_directx><FATAL ERROR>failed geting proc address: DirectDrawCreateEx\n");
@@ -702,7 +701,7 @@ static uint32_t Directx_CheckOverlayPixelformats(void)
             formatcount++;
         } else
             mp_msg(MSGT_VO, MSGL_V, "<vo_directx><FORMAT OVERLAY>%i %s not supported\n", i, g_ddpf[i].img_format_name);
-        if (g_lpddsOverlay != NULL) {
+        if (g_lpddsOverlay) {
             g_lpddsOverlay->lpVtbl->Release(g_lpddsOverlay);
             g_lpddsOverlay = NULL;
         }
@@ -988,20 +987,20 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_
         nooverlay = 0;
 
     /*release all directx objects*/
-    if (g_cc != NULL)
+    if (g_cc)
         g_cc->lpVtbl->Release(g_cc);
     g_cc = NULL;
     if (g_lpddclipper)
         g_lpddclipper->lpVtbl->Release(g_lpddclipper);
     g_lpddclipper = NULL;
-    if (g_lpddsBack != NULL)
+    if (g_lpddsBack)
         g_lpddsBack->lpVtbl->Release(g_lpddsBack);
     g_lpddsBack = NULL;
     if (vo_doublebuffering)
-        if (g_lpddsOverlay != NULL)
+        if (g_lpddsOverlay)
             g_lpddsOverlay->lpVtbl->Release(g_lpddsOverlay);
     g_lpddsOverlay = NULL;
-    if (g_lpddsPrimary != NULL)
+    if (g_lpddsPrimary)
         g_lpddsPrimary->lpVtbl->Release(g_lpddsPrimary);
     g_lpddsPrimary = NULL;
     mp_msg(MSGT_VO, MSGL_DBG3, "<vo_directx><INFO>overlay surfaces released\n");
