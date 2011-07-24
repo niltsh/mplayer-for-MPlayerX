@@ -579,14 +579,10 @@ static uint32_t Directx_ManageDisplay(void)
     }
 
     /*make sure the overlay is inside the screen*/
-    if (rd.left < 0)
-        rd.left = 0;
-    if (rd.right > vo_screenwidth)
-        rd.right = vo_screenwidth;
-    if (rd.top < 0)
-        rd.top = 0;
-    if (rd.bottom > vo_screenheight)
-        rd.bottom = vo_screenheight;
+    rd.top    = FFMAX(rd.top,  0);
+    rd.left   = FFMAX(rd.left, 0);
+    rd.bottom = FFMIN(rd.bottom, vo_screenheight);
+    rd.right  = FFMIN(rd.right,  vo_screenwidth);
 
     /*for nonoverlay mode we are finished, for overlay mode we have to display the overlay first*/
     if (nooverlay)
