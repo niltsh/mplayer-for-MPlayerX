@@ -153,20 +153,17 @@ static int realtime_samplecounter_available(char *dev)
     info.play.encoding = AUDIO_ENCODING_LINEAR;
     info.play.samples = 0;
     if (ioctl(fd, AUDIO_SETINFO, &info)) {
-	if ( mp_msg_test(MSGT_AO,MSGL_V) )
-	    mp_msg(MSGT_AO, MSGL_ERR, MSGTR_AO_SUN_RtscSetinfoFailed);
+        mp_msg(MSGT_AO, MSGL_ERR, MSGTR_AO_SUN_RtscSetinfoFailed);
 	goto error;
     }
 
     if (write(fd, silence, len) != len) {
-	if ( mp_msg_test(MSGT_AO,MSGL_V) )
-	    mp_msg(MSGT_AO, MSGL_ERR, MSGTR_AO_SUN_RtscWriteFailed);
+        mp_msg(MSGT_AO, MSGL_ERR, MSGTR_AO_SUN_RtscWriteFailed);
 	goto error;
     }
 
     if (ioctl(fd, AUDIO_GETINFO, &info)) {
-	if ( mp_msg_test(MSGT_AO,MSGL_V) )
-	    perror("rtsc: GETINFO1");
+        perror("rtsc: GETINFO1");
 	goto error;
     }
 
@@ -187,13 +184,11 @@ static int realtime_samplecounter_available(char *dev)
 	    break;
 
 	if (ioctl(fd, AUDIO_GETINFO, &info)) {
-	    if ( mp_msg_test(MSGT_AO,MSGL_V) )
-		perror("rtsc: GETINFO2 failed");
+            perror("rtsc: GETINFO2 failed");
 	    goto error;
 	}
 	if (info.play.samples < last_samplecnt) {
-	    if ( mp_msg_test(MSGT_AO,MSGL_V) )
-		mp_msg(MSGT_AO,MSGL_V,"rtsc: %d > %d?\n", last_samplecnt, info.play.samples);
+            mp_msg(MSGT_AO, MSGL_V, "rtsc: %d > %d?\n", last_samplecnt, info.play.samples);
 	    goto error;
 	}
 
