@@ -88,21 +88,21 @@ typedef struct directx_fourcc_caps {
 } directx_fourcc_caps;
 
 static directx_fourcc_caps g_ddpf[] = {
-    { "YV12 ", IMGFMT_YV12,  0, { sizeof(DDPIXELFORMAT), DDPF_FOURCC, MAKEFOURCC('Y', 'V', '1',        '2'),       0,          0, 0, 0, 0 } },
-    { "I420 ", IMGFMT_I420,  0, { sizeof(DDPIXELFORMAT), DDPF_FOURCC, MAKEFOURCC('I', '4', '2',        '0'),       0,          0, 0, 0, 0 } }, //yv12 with swapped uv
-    { "IYUV ", IMGFMT_IYUV,  0, { sizeof(DDPIXELFORMAT), DDPF_FOURCC, MAKEFOURCC('I', 'Y', 'U',        'V'),       0,          0, 0, 0, 0 } }, //same as i420
-    { "YVU9 ", IMGFMT_YVU9,  0, { sizeof(DDPIXELFORMAT), DDPF_FOURCC, MAKEFOURCC('Y', 'V', 'U',        '9'),       0,          0, 0, 0, 0 } },
-    { "YUY2 ", IMGFMT_YUY2,  0, { sizeof(DDPIXELFORMAT), DDPF_FOURCC, MAKEFOURCC('Y', 'U', 'Y',        '2'),       0,          0, 0, 0, 0 } },
-    { "UYVY ", IMGFMT_UYVY,  0, { sizeof(DDPIXELFORMAT), DDPF_FOURCC, MAKEFOURCC('U', 'Y', 'V',        'Y'),       0,          0, 0, 0, 0 } },
-    { "BGR8 ", IMGFMT_BGR8,  0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,              8,   0x00000000, 0x00000000, 0x00000000, 0 } },
-    { "RGB15", IMGFMT_RGB15, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,              16,  0x0000001F, 0x000003E0, 0x00007C00, 0 } }, //RGB 5:5:5
-    { "BGR15", IMGFMT_BGR15, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,              16,  0x00007C00, 0x000003E0, 0x0000001F, 0 } },
-    { "RGB16", IMGFMT_RGB16, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,              16,  0x0000001F, 0x000007E0, 0x0000F800, 0 } }, //RGB 5:6:5
-    { "BGR16", IMGFMT_BGR16, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,              16,  0x0000F800, 0x000007E0, 0x0000001F, 0 } },
-    { "RGB24", IMGFMT_RGB24, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,              24,  0x000000FF, 0x0000FF00, 0x00FF0000, 0 } },
-    { "BGR24", IMGFMT_BGR24, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,              24,  0x00FF0000, 0x0000FF00, 0x000000FF, 0 } },
-    { "RGB32", IMGFMT_RGB32, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,              32,  0x000000FF, 0x0000FF00, 0x00FF0000, 0 } },
-    { "BGR32", IMGFMT_BGR32, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,              32,  0x00FF0000, 0x0000FF00, 0x000000FF, 0 } }
+    { "YV12 ", IMGFMT_YV12,  0, { sizeof(DDPIXELFORMAT), DDPF_FOURCC, MAKEFOURCC('Y', 'V', '1', '2'), 0, 0, 0, 0, 0 } },
+    { "I420 ", IMGFMT_I420,  0, { sizeof(DDPIXELFORMAT), DDPF_FOURCC, MAKEFOURCC('I', '4', '2', '0'), 0, 0, 0, 0, 0 } }, //yv12 with swapped uv
+    { "IYUV ", IMGFMT_IYUV,  0, { sizeof(DDPIXELFORMAT), DDPF_FOURCC, MAKEFOURCC('I', 'Y', 'U', 'V'), 0, 0, 0, 0, 0 } }, //same as i420
+    { "YVU9 ", IMGFMT_YVU9,  0, { sizeof(DDPIXELFORMAT), DDPF_FOURCC, MAKEFOURCC('Y', 'V', 'U', '9'), 0, 0, 0, 0, 0 } },
+    { "YUY2 ", IMGFMT_YUY2,  0, { sizeof(DDPIXELFORMAT), DDPF_FOURCC, MAKEFOURCC('Y', 'U', 'Y', '2'), 0, 0, 0, 0, 0 } },
+    { "UYVY ", IMGFMT_UYVY,  0, { sizeof(DDPIXELFORMAT), DDPF_FOURCC, MAKEFOURCC('U', 'Y', 'V', 'Y'), 0, 0, 0, 0, 0 } },
+    { "BGR8 ", IMGFMT_BGR8,  0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,  8,  0x00000000, 0x00000000, 0x00000000, 0 } },
+    { "RGB15", IMGFMT_RGB15, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,  16, 0x0000001F, 0x000003E0, 0x00007C00, 0 } }, //RGB 5:5:5
+    { "BGR15", IMGFMT_BGR15, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,  16, 0x00007C00, 0x000003E0, 0x0000001F, 0 } },
+    { "RGB16", IMGFMT_RGB16, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,  16, 0x0000001F, 0x000007E0, 0x0000F800, 0 } }, //RGB 5:6:5
+    { "BGR16", IMGFMT_BGR16, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,  16, 0x0000F800, 0x000007E0, 0x0000001F, 0 } },
+    { "RGB24", IMGFMT_RGB24, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,  24, 0x000000FF, 0x0000FF00, 0x00FF0000, 0 } },
+    { "BGR24", IMGFMT_BGR24, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,  24, 0x00FF0000, 0x0000FF00, 0x000000FF, 0 } },
+    { "RGB32", IMGFMT_RGB32, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,  32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0 } },
+    { "BGR32", IMGFMT_BGR32, 0, { sizeof(DDPIXELFORMAT), DDPF_RGB,    0,  32, 0x00FF0000, 0x0000FF00, 0x000000FF, 0 } }
 };
 #define NUM_FORMATS (sizeof(g_ddpf) / sizeof(g_ddpf[0]))
 
