@@ -6522,7 +6522,7 @@ echores "$_musepack"
 
 
 echocheck "FAAC support"
-if test "$_faac" = auto ; then
+if test "$_faac" = auto && test "$_mencoder" = yes ; then
   cat > $TMPC <<EOF
 #include <inttypes.h>
 #include <faac.h>
@@ -6972,7 +6972,7 @@ echores "$_xvid_lavc"
 
 
 echocheck "x264"
-if test "$_x264" = auto ; then
+if test "$_x264" = auto && test "$_mencoder" = yes ; then
   cat > $TMPC << EOF
 #include <inttypes.h>
 #include <x264.h>
@@ -7146,15 +7146,13 @@ else
 fi
 echores "$_zr"
 
-# mencoder requires (optional) those libs: libmp3lame
-if test "$_mencoder" != no ; then
 
 echocheck "libmp3lame"
 def_mp3lame='#undef CONFIG_MP3LAME'
 def_mp3lame_lavc="#define CONFIG_LIBMP3LAME 0"
 def_mp3lame_preset='#undef CONFIG_MP3LAME_PRESET'
 def_mp3lame_preset_medium='#undef CONFIG_MP3LAME_PRESET_MEDIUM'
-if test "$_mp3lame" = auto ; then
+if test "$_mp3lame" = auto && test "$_mencoder" = yes; then
   _mp3lame=no
   statement_check lame/lame.h 'lame_set_VBR_quality(NULL, 0)' -lmp3lame &&
     _mp3lame=yes && _mp3lame_lavc=yes
@@ -7176,7 +7174,6 @@ fi
 res_comment="in FFmpeg: $_mp3lame_lavc"
 echores "$_mp3lame"
 
-fi # test "$_mencoder" != no
 
 echocheck "mencoder"
 if test "$_mencoder" = yes ; then
