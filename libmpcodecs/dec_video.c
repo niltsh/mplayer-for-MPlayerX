@@ -81,12 +81,12 @@ void set_video_quality(sh_video_t *sh_video, int quality)
 {
     vf_instance_t *vf = sh_video->vfilter;
     if (vf) {
-        int ret = vf->control(vf, VFCTRL_SET_PP_LEVEL, (void *) (&quality));
+        int ret = vf->control(vf, VFCTRL_SET_PP_LEVEL, &quality);
         if (ret == CONTROL_TRUE)
             return;             // success
     }
     if (mpvdec)
-        mpvdec->control(sh_video, VDCTRL_SET_PP_LEVEL, (void *) (&quality));
+        mpvdec->control(sh_video, VDCTRL_SET_PP_LEVEL, &quality);
 }
 
 int set_video_colors(sh_video_t *sh_video, const char *item, int value)
