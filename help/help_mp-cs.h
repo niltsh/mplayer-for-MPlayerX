@@ -1912,6 +1912,7 @@ static const char help_text[]=
 #define MSGTR_RADIO_AudioInitFailed "[radio] audio_in_init selhala: %s\n"
 #define MSGTR_RADIO_AllocateBufferFailed "[radio] nemohu alokovat vyrovnávací paměť zvuku (blok=%d,buf=%d): %s\n"
 #define MSGTR_RADIO_CurrentFreq "[radio] Současná frekvence: %.2f\n"
+#define MSGTR_RADIO_SelectedChannel "[radio] Zvolený kanál: %d - %s (frekv: %.2f)\n"
 #define MSGTR_RADIO_ChangeChannelNoChannelList "[radio] Nelze změnit kanál: nezadán seznam kanálů.\n"
 #define MSGTR_RADIO_UnableOpenDevice "[radio] Nelze otevřít '%s': %s\n"
 #define MSGTR_RADIO_InitFracFailed "[radio] init_frac selhala.\n"

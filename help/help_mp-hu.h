@@ -1931,6 +1931,7 @@ static const char help_text[]=
 #define MSGTR_RADIO_AudioInitFailed "[radio] audio_in_init sikertelen: %s\n"
 #define MSGTR_RADIO_AllocateBufferFailed "[radio] az audió buffer nem foglalható le (block=%d,buf=%d): %s\n"
 #define MSGTR_RADIO_CurrentFreq "[radio] Jelenlegi frekvencia: %.2f\n"
+#define MSGTR_RADIO_SelectedChannel "[radio] Kiválasztott csatorna: %d - %s (freq: %.2f)\n"
 #define MSGTR_RADIO_ChangeChannelNoChannelList "[radio] Nem lehet csatornát választani: nincs csatornalista megadva.\n"
 #define MSGTR_RADIO_UnableOpenDevice "[radio] '%s' nem nyitható meg: %s\n"
 #define MSGTR_RADIO_InitFracFailed "[radio] init_frac sikertelen.\n"

@@ -1959,6 +1959,7 @@ static const char help_text[]=
 #define MSGTR_RADIO_AudioInitFailed "[radio] audio_in_init 失败：%s\n"
 #define MSGTR_RADIO_AllocateBufferFailed "[radio] 无法分配音频缓冲 (block=%d,buf=%d)：%s\n"
 #define MSGTR_RADIO_CurrentFreq "[radio] 当前频率：%.2f\n"
+#define MSGTR_RADIO_SelectedChannel "[radio] 已选择频道：%d - %s（频率：%.2f）\n"
 #define MSGTR_RADIO_ChangeChannelNoChannelList "[radio] 无法切换频道：未给出的频道列表。\n"
 #define MSGTR_RADIO_UnableOpenDevice "[radio] 无法打开‘%s’：%s\n"
 #define MSGTR_RADIO_InitFracFailed "[radio] init_frac 失败。\n"

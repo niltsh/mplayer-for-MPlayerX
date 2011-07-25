@@ -1953,6 +1953,7 @@ static const char help_text[]=
 #define MSGTR_RADIO_AudioInitFailed "[Radio] audio_in_init fehlgeschlagen: %s\n"
 #define MSGTR_RADIO_AllocateBufferFailed "[Radio] Kann Audiopuffer nicht allozieren (Block=%d,buf=%d): %s\n"
 #define MSGTR_RADIO_CurrentFreq "[Radio] Momentane Frequenz: %.2f\n"
+#define MSGTR_RADIO_SelectedChannel "[Radio] Gewählter Kanal: %d - %s (Freq: %.2f)\n"
 #define MSGTR_RADIO_ChangeChannelNoChannelList "[Radio] Kann Kanal nicht wechseln: Keine Kanalliste angegeben.\n"
 #define MSGTR_RADIO_UnableOpenDevice "[Radio] Kann '%s' nicht öffnen: %s\n"
 #define MSGTR_RADIO_InitFracFailed "[Radio] init_frac fehlgeschlagen.\n"

@@ -1858,6 +1858,7 @@ static const char help_text[]=
 #define MSGTR_RADIO_AudioInitFailed "[radio] audio_in_init 失敗: %s\n"
 #define MSGTR_RADIO_AllocateBufferFailed "[radio] 不能分配音頻緩衝 (block=%d,buf=%d): %s\n"
 #define MSGTR_RADIO_CurrentFreq "[radio] 當前頻率: %.2f\n"
+#define MSGTR_RADIO_SelectedChannel "[radio] 已選通道: %d - %s (freq: %.2f)\n"
 #define MSGTR_RADIO_ChangeChannelNoChannelList "[radio] 不能改變通道: 無給定的通道列表。\n"
 #define MSGTR_RADIO_UnableOpenDevice "[radio] 無法打開 '%s': %s\n"
 #define MSGTR_RADIO_InitFracFailed "[radio] init_frac 失敗。\n"

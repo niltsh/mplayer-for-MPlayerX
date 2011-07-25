@@ -1905,6 +1905,7 @@ static const char help_text[]=
 #define MSGTR_RADIO_AudioInitFailed "[radio] audio_in_init: %s\n başarısız."
 #define MSGTR_RADIO_AllocateBufferFailed "[radio] ses için ara bellek bulanamadı (blok=%d,arabel=%d): %s\n"
 #define MSGTR_RADIO_CurrentFreq "[radio] Mevcut frekans: %.2f\n"
+#define MSGTR_RADIO_SelectedChannel "[radio] Seçilen kanal: %d - %s (frek: %.2f)\n"
 #define MSGTR_RADIO_ChangeChannelNoChannelList "[radio] Kanal değiştirelemez: Kanal listesine kanal verilmedi.\n"
 #define MSGTR_RADIO_UnableOpenDevice "[radio] '%s': %s açılamadı.\n"
 #define MSGTR_RADIO_InitFracFailed "[radio] init_frac başarılamadı.\n"
