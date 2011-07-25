@@ -6824,7 +6824,7 @@ test -d ffmpeg/libavutil ||
   die "MPlayer will not compile without libavutil in the source tree."
 ffmpeg=no
 if test "$ffmpeg_a" = auto ; then
-  test -d ffmpeg/libavutil && ffmpeg_a=yes && ffmpeg=yes && extra_cflags="$extra_cflags -DFF_API_MAX_STREAMS=0"
+  test -d ffmpeg/libavutil && ffmpeg_a=yes && ffmpeg=yes
 elif test "$ffmpeg_so" = auto ; then
   ffmpeg_so=no
   if $_pkg_config --exists libavutil ; then
