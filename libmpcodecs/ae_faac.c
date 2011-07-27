@@ -32,6 +32,7 @@
 #include "libmpdemux/muxer.h"
 #include <faac.h>
 #include "ae.h"
+#include "ae_faac.h"
 
 
 static faacEncHandle faac;
@@ -129,7 +130,7 @@ static int encode_faac(audio_encoder_t *encoder, uint8_t *dest, void *src, int l
 	return enc_frame_size;
 }
 
-int close_faac(audio_encoder_t *encoder)
+static int close_faac(audio_encoder_t *encoder)
 {
 	return 1;
 }
