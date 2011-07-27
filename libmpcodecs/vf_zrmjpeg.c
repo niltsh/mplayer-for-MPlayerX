@@ -111,7 +111,7 @@ static void convert_matrix(MpegEncContext *s, int (*qmat)[64],
 
 	for(qscale = qmin; qscale <= qmax; qscale++) {
 		int i;
-		if (s->dsp.fdct == ff_jpeg_fdct_islow) {
+		if (s->dsp.fdct == ff_jpeg_fdct_islow_8) {
 			for (i = 0; i < 64; i++) {
 				const int j = s->dsp.idct_permutation[i];
 /* 16 <= qscale * quant_matrix[i] <= 7905
