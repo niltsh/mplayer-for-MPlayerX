@@ -106,13 +106,13 @@ typedef struct {
 
 static zr_info_t zr_info[ZR_MAX_DEVICES] = {
 	{1, 1, 1, -1, -1, 2, {0, 0, 0, 0, 0}, NULL, 0, VIDEO_MODE_AUTO, NULL, 0, 0, 0, 0, 0,
-	0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+         0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, {0}, {0}, {0}, {{0}}, 0, 0},
 	{1, 1, 1, -1, -1, 2, {0, 0, 0, 0, 0}, NULL, 0, VIDEO_MODE_AUTO, NULL, 0, 0, 0, 0, 0,
-	0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+         0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, {0}, {0}, {0}, {{0}}, 0, 0},
 	{1, 1, 1, -1, -1, 2, {0, 0, 0, 0, 0}, NULL, 0, VIDEO_MODE_AUTO, NULL, 0, 0, 0, 0, 0,
-	0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+         0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, {0}, {0}, {0}, {{0}}, 0, 0},
 	{1, 1, 1, -1, -1, 2, {0, 0, 0, 0, 0}, NULL, 0, VIDEO_MODE_AUTO, NULL, 0, 0, 0, 0, 0,
-	0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+         0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, {0}, {0}, {0}, {{0}}, 0, 0}};
 
 
 
