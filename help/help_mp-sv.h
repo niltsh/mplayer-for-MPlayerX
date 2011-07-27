@@ -389,7 +389,6 @@ static const char help_text[]=
 #define MSGTR_CodecNeedsOutfmt "\ncodec(%s) behöver en 'outfmt'!\n"
 #define MSGTR_CantAllocateComment "Kan inte allokera minne flr kommentar. "
 #define MSGTR_GetTokenMaxNotLessThanMAX_NR_TOKEN "get_token() \b: max >= MAX_MR_TOKEN!" //FIXME translate?
-#define MSGTR_CantOpenFileError "Kan inte öppna '%s': %s\n"
 #define MSGTR_CantGetMemoryForLine "Kan inte få minne för 'line': %s\n"
 #define MSGTR_CantReallocCodecsp "Kan inte realloc '*codecsp': %s\n"
 #define MSGTR_CodecNameNotUnique "Codec namn '%s' är inte unikt."

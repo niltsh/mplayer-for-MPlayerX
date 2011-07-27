@@ -467,7 +467,6 @@ static const char help_text[]=
 #define MSGTR_CodecNeedsOutfmt "\nLe codec (%s) requiert un 'outfmt' !\n"
 #define MSGTR_CantAllocateComment "Ne peux allouer de mémoire pour le commentaire. "
 #define MSGTR_GetTokenMaxNotLessThanMAX_NR_TOKEN "get_token(): max >= MAX_MR_TOKEN !"
-#define MSGTR_CantOpenFileError "Ne peux ouvrir '%s' : %s\n"
 #define MSGTR_CantGetMemoryForLine "Ne peux allouer de mémoire pour 'line' : %s\n"
 #define MSGTR_CantReallocCodecsp "Ne peux pas effectuer de realloc() pour '*codecsp' : %s\n"
 #define MSGTR_CodecNameNotUnique "Le nom du codec '%s' n'est pas unique."

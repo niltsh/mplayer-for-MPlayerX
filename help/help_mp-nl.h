@@ -380,7 +380,6 @@ static const char help_text[]=
 #define MSGTR_CodecNeedsOutfmt "\ncodec(%s) heeft 'outfmt' nodig!\n"
 #define MSGTR_CantAllocateComment "Kan geen geheugen toewijzen voor commentaar. "
 #define MSGTR_GetTokenMaxNotLessThanMAX_NR_TOKEN "get_token(): max >= MAX_MR_TOKEN!"
-#define MSGTR_CantOpenFileError "Kan '%s' niet openen: %s\n"
 #define MSGTR_CantGetMemoryForLine "Kan geen geheugen toewijzen voor 'line': %s\n"
 #define MSGTR_CantReallocCodecsp "Kan '*codecsp' niet re-alloceren: %s\n"
 #define MSGTR_CodecNameNotUnique "De codec naam '%s' is niet uniek."

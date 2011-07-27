@@ -444,7 +444,6 @@ static const char help_text[]=
 #define MSGTR_CodecNeedsOutfmt "\nkódek(%s) vyžaduje 'outfmt'!\n"
 #define MSGTR_CantAllocateComment "Nedá sa alokovať pamäť pre poznámku. "
 #define MSGTR_GetTokenMaxNotLessThanMAX_NR_TOKEN "get_token(): max >= MAX_MR_TOKEN!"
-#define MSGTR_CantOpenFileError "Nedá sa otvoriť '%s': %s\n"
 #define MSGTR_CantGetMemoryForLine "Nejde získať pamäť pre 'line': %s\n"
 #define MSGTR_CantReallocCodecsp "Nedá sa realokovať '*codecsp': %s\n"
 #define MSGTR_CodecNameNotUnique " Meno kódeku '%s' nie je jedinečné."

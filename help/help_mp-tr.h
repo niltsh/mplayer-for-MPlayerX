@@ -469,7 +469,6 @@ static const char help_text[]=
 #define MSGTR_CodecNeedsOutfmt "\nkodek(%s) için bir 'outfmt' gerekiyor!\n"
 #define MSGTR_CantAllocateComment "Açıklama için bellek atanamıyor."
 #define MSGTR_GetTokenMaxNotLessThanMAX_NR_TOKEN "get_token(): max >= MAX_MR_TOKEN!"
-#define MSGTR_CantOpenFileError "'%s' açılamıyor: %s\n"
 #define MSGTR_CantGetMemoryForLine "'satır' için belleğe ulaşılamıyor: %s\n"
 #define MSGTR_CantReallocCodecsp "'*codecsp': %s yeniden atanamıyor.\n"
 #define MSGTR_CodecNameNotUnique "'%s' adı benzersiz değil."

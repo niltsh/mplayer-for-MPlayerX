@@ -450,7 +450,6 @@ static const char help_text[]=
 #define MSGTR_CodecNeedsOutfmt "\n編解碼器(%s) 需要一個 'outfmt'!\n"
 #define MSGTR_CantAllocateComment "不能為注釋分配内存。"
 #define MSGTR_GetTokenMaxNotLessThanMAX_NR_TOKEN "get_token(): max >= MAX_MR_TOKEN!"
-#define MSGTR_CantOpenFileError "打不開 '%s': %s\n"
 #define MSGTR_CantGetMemoryForLine "不能為 'line' 獲取内存: %s\n"
 #define MSGTR_CantReallocCodecsp "不能重新分配 '*codecsp': %s\n"
 #define MSGTR_CodecNameNotUnique "編解碼器名 '%s' 不唯一。"

@@ -392,7 +392,6 @@ static const char help_text[]=
 #define MSGTR_CodecNeedsOutfmt "\nкодекът(%s) се нуждае от 'outfmt'!\n"
 #define MSGTR_CantAllocateComment "Не може да се задели памет за коментар. "
 #define MSGTR_GetTokenMaxNotLessThanMAX_NR_TOKEN "get_token(): max >= MAX_MR_TOKEN!"
-#define MSGTR_CantOpenFileError "'%s': %s не може да бъде отворен\n"
 #define MSGTR_CantGetMemoryForLine "Няма достатъчно памет за 'line': %s\n"
 #define MSGTR_CantReallocCodecsp "Не може да презадели памет за '*codecsp': %s\n"
 #define MSGTR_CodecNameNotUnique "Името на кодека '%s' не е уникално."

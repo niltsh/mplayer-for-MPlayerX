@@ -474,7 +474,6 @@ static const char help_text[]=
 #define MSGTR_CodecNeedsOutfmt "\ncodec(%s) 'outfmt'-t igényel!\n"
 #define MSGTR_CantAllocateComment "Nem tudok memóriát foglalni a megjegyzésnek. "
 #define MSGTR_GetTokenMaxNotLessThanMAX_NR_TOKEN "get_token(): max >= MAX_MR_TOKEN!"
-#define MSGTR_CantOpenFileError "Nem tudom megnyitni '%s'-t: %s\n"
 #define MSGTR_CantGetMemoryForLine "Nem tudok memóriát foglalni a 'line'-nak: %s\n"
 #define MSGTR_CantReallocCodecsp "A '*codecsp' nem foglalható le újra: %s\n"
 #define MSGTR_CodecNameNotUnique "A(z) '%s' codec név nem egyedi."

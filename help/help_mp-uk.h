@@ -457,7 +457,6 @@ static const char help_text[]=
 #define MSGTR_CodecNeedsOutfmt "\nкодек(%s) потребує 'outfmt'!\n"
 #define MSGTR_CantAllocateComment "Не можу виділити пам'ять для коментаря. "
 #define MSGTR_GetTokenMaxNotLessThanMAX_NR_TOKEN "get_token(): max >= MAX_MR_TOKEN!"
-#define MSGTR_CantOpenFileError "Не можу відкрити '%s': %s\n"
 #define MSGTR_CantGetMemoryForLine "Не можу виділити пам'ять для 'line': %s\n"
 #define MSGTR_CantReallocCodecsp "Не можу виконати realloc для '*codecsp': %s\n"
 #define MSGTR_CodecNameNotUnique "Назва кодеку '%s' не унікальна."
