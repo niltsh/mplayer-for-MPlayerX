@@ -1778,7 +1778,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_ASF_UnknownASFStreamType "Tipo del flusso asf sconosciuto\n"
 #define MSGTR_MPDEMUX_ASF_Failed2ParseHTTPResponse "Interpretazione della risposta HTTP fallita.\n"
 #define MSGTR_MPDEMUX_ASF_ServerReturn "Il server risponde %d:%s\n"
-#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "AVVISO INTERPRETAZIONE ASF HTTP : Pragma %s tagliato da %zd byte a %d\n"
+#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "AVVISO INTERPRETAZIONE ASF HTTP : Pragma %s tagliato da %zu byte a %zu\n"
 #define MSGTR_MPDEMUX_ASF_SocketWriteError "Errore scrittura socket: %s\n"
 #define MSGTR_MPDEMUX_ASF_HeaderParseFailed "Interpretazione intestazione fallita.\n"
 #define MSGTR_MPDEMUX_ASF_NoStreamFound "Nessun flusso trovato.\n"

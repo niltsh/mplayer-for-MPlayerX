@@ -1780,7 +1780,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_ASF_UnknownASFStreamType "Ismeretlen ASF folyam típus\n"
 #define MSGTR_MPDEMUX_ASF_Failed2ParseHTTPResponse "Sikertelen a HTTP válasz értelmezése.\n"
 #define MSGTR_MPDEMUX_ASF_ServerReturn "Szerver válasz %d:%s\n"
-#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF HTTP ÉRTELMEZÉSI FIGYELMEZTETÉS : %s pragma levágva %zd bájtról %d bájtra\n"
+#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF HTTP ÉRTELMEZÉSI FIGYELMEZTETÉS : %s pragma levágva %zu bájtról %zu bájtra\n"
 #define MSGTR_MPDEMUX_ASF_SocketWriteError "socket írási hiba : %s\n"
 #define MSGTR_MPDEMUX_ASF_HeaderParseFailed "Sikertelen a fájléc értelmezése.\n"
 #define MSGTR_MPDEMUX_ASF_NoStreamFound "Nem található folyam.\n"

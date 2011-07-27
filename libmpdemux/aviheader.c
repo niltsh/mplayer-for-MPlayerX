@@ -269,7 +269,7 @@ while(1){
       if(last_fccType==streamtypeVIDEO){
         sh_video->bih=calloc(FFMAX(chunksize, sizeof(*sh_video->bih)), 1);
 //        sh_video->bih=malloc(chunksize); memset(sh_video->bih,0,chunksize);
-        mp_msg(MSGT_HEADER, MSGL_V, "Found 'bih', %u bytes of %d\n",
+        mp_msg(MSGT_HEADER, MSGL_V, "Found 'bih', %u bytes of %zu\n",
                chunksize, sizeof(*sh_video->bih));
         stream_read(demuxer->stream,(char*) sh_video->bih,chunksize);
 	le2me_BITMAPINFOHEADER(sh_video->bih);  // swap to machine endian
@@ -326,7 +326,7 @@ while(1){
 	unsigned wf_size = chunksize<sizeof(*sh_audio->wf)?sizeof(*sh_audio->wf):chunksize;
         sh_audio->wf=calloc(wf_size,1);
 //        sh_audio->wf=malloc(chunksize); memset(sh_audio->wf,0,chunksize);
-        mp_msg(MSGT_HEADER, MSGL_V, "Found 'wf', %d bytes of %d\n",
+        mp_msg(MSGT_HEADER, MSGL_V, "Found 'wf', %u bytes of %zu\n",
                chunksize, sizeof(*sh_audio->wf));
         stream_read(demuxer->stream,(char*) sh_audio->wf,chunksize);
 	le2me_WAVEFORMATEX(sh_audio->wf);

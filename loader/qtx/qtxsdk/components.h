@@ -736,13 +736,13 @@ static inline void dump_CodecDecompressParams(void* xxx){
     if(cd->wantedDestinationPixelTypes){
 	unsigned int* p=cd->wantedDestinationPixelTypes;
 	while(p[0]){
-	    printf("  0x%08X %.4s\n",p[0],&p[0]);
+	    printf("  0x%08X %p\n",p[0],&p[0]);
 	    ++p;
 	}
     }
     printf("screenFloodMethod=%d value=%d  preferredOffscreenPixelSize=%d\n",
 	cd->screenFloodMethod, cd->screenFloodValue, cd->preferredOffscreenPixelSize);
-    printf("callbacks: progress=%p compl=%p data=%p ftime=%p srcdata=%p sync=%p\n",
+    printf("callbacks: progress=%"PRId64" compl=%"PRId64" data=%"PRId64" ftime=%p srcdata=%p sync=%p\n",
      cd->progressProcRecord, cd->completionProcRecord,
      cd->dataProcRecord, cd->frameTime, cd->sourceData, cd->syncFrameTime);
 //    printf("\n");

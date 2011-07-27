@@ -264,7 +264,8 @@ static int xacodec_load(sh_video_t *sh, char *filename)
 
     if (mod_hdr->api_rev > XAVID_API_REV)
     {
-	mp_msg(MSGT_DECVIDEO, MSGL_FATAL, "xacodec: not supported api revision (%d) in %s\n",
+	mp_msg(MSGT_DECVIDEO, MSGL_FATAL,
+	   "xacodec: not supported api revision (%u) in %s\n",
 	    mod_hdr->api_rev, filename);
 	dlclose(priv->file_handler);
 	return 0;
@@ -278,27 +279,28 @@ static int xacodec_load(sh_video_t *sh, char *filename)
 	return 0;
     }
 
-    mp_msg(MSGT_DECVIDEO, MSGL_DBG2, "Exported functions by codec: [functable: %p entries: %d]\n",
+    mp_msg(MSGT_DECVIDEO, MSGL_DBG2,
+	"Exported functions by codec: [functable: %p entries: %u]\n",
 	mod_hdr->funcs, mod_hdr->num_funcs);
     for (i = 0; i < (int)mod_hdr->num_funcs; i++)
     {
-	mp_msg(MSGT_DECVIDEO, MSGL_DBG2, " %d: %d %d [iq:%p d:%p]\n",
+	mp_msg(MSGT_DECVIDEO, MSGL_DBG2, " %d: %u %u [iq:%p d:%p]\n",
 		i, func[i].what, func[i].id, func[i].iq_func, func[i].dec_func);
 	if (func[i].what & XAVID_AVI_QUERY)
 	{
-	    mp_msg(MSGT_DECVIDEO, MSGL_DBG2, " %p: avi init/query func (id: %d)\n",
+	    mp_msg(MSGT_DECVIDEO, MSGL_DBG2, " %p: avi init/query func (id: %u)\n",
 		func[i].iq_func, func[i].id);
 	    priv->iq_func = func[i].iq_func;
 	}
 	if (func[i].what & XAVID_QT_QUERY)
 	{
-	    mp_msg(MSGT_DECVIDEO, MSGL_DBG2, " %p: qt init/query func (id: %d)\n",
+	    mp_msg(MSGT_DECVIDEO, MSGL_DBG2, " %p: qt init/query func (id: %u)\n",
 		func[i].iq_func, func[i].id);
 	    priv->iq_func = func[i].iq_func;
 	}
 	if (func[i].what & XAVID_DEC_FUNC)
 	{
-	    mp_msg(MSGT_DECVIDEO, MSGL_DBG2, " %p: decoder func (init/query: %p) (id: %d)\n",
+	    mp_msg(MSGT_DECVIDEO, MSGL_DBG2, " %p: decoder func (init/query: %p) (id: %u)\n",
 		func[i].dec_func, func[i].iq_func, func[i].id);
 	    priv->dec_func = func[i].dec_func;
 	}
@@ -476,7 +478,8 @@ static void XA_2x2_OUT_4BLKS_Convert(unsigned char *image_p, unsigned int x, uns
 
 void *YUV2x2_Blk_Func(unsigned int image_type, int blks, unsigned int dith_flag)
 {
-    mp_dbg(MSGT_DECVIDEO,MSGL_DBG2, "YUV2x2_Blk_Func(image_type=%d, blks=%d, dith_flag=%d)\n",
+    mp_dbg(MSGT_DECVIDEO,MSGL_DBG2,
+	"YUV2x2_Blk_Func(image_type=%u, blks=%d, dith_flag=%u)\n",
 	image_type, blks, dith_flag);
     switch(blks){
     case 1:
@@ -485,7 +488,9 @@ void *YUV2x2_Blk_Func(unsigned int image_type, int blks, unsigned int dith_flag)
 	return (void*) XA_2x2_OUT_4BLKS_Convert;
     }
 
-    mp_msg(MSGT_DECVIDEO,MSGL_WARN,"Unimplemented: YUV2x2_Blk_Func(image_type=%d  blks=%d  dith=%d)\n",image_type,blks,dith_flag);
+    mp_msg(MSGT_DECVIDEO, MSGL_WARN,
+           "Unimplemented: YUV2x2_Blk_Func(image_type=%u  blks=%d  dith=%u)\n",
+           image_type, blks, dith_flag);
     return (void*) XA_dummy;
 }
 
@@ -496,8 +501,9 @@ static void XA_YUV_2x2_clr(XA_2x2_Color *cmap2x2, unsigned int Y0, unsigned int 
     unsigned int map_flag, unsigned int *map, XA_CHDR *chdr)
 {
 
-  mp_dbg(MSGT_DECVIDEO,MSGL_DBG3, "XA_YUV_2x2_clr(%p [%d,%d,%d,%d][%d][%d] %d %p %p)\n",
-          cmap2x2,Y0,Y1,Y2,Y3,U,V,map_flag,map,chdr);
+  mp_dbg(MSGT_DECVIDEO, MSGL_DBG3,
+         "XA_YUV_2x2_clr(%p [%u,%u,%u,%u][%u][%u] %u %p %p)\n",
+         cmap2x2, Y0, Y1, Y2, Y3, U, V, map_flag, map, chdr);
 
   cmap2x2->clr0_0=Y0;
   cmap2x2->clr0_1=Y1;
@@ -510,8 +516,9 @@ static void XA_YUV_2x2_clr(XA_2x2_Color *cmap2x2, unsigned int Y0, unsigned int 
 
 void *YUV2x2_Map_Func(unsigned int image_type, unsigned int dith_type)
 {
-    mp_dbg(MSGT_DECVIDEO,MSGL_DBG2, "YUV2x2_Map_Func('image_type: %d', 'dith_type: %d')",
-	    image_type, dith_type);
+    mp_dbg(MSGT_DECVIDEO, MSGL_DBG2,
+           "YUV2x2_Map_Func('image_type: %u', 'dith_type: %u')",
+           image_type, dith_type);
     return (void*)XA_YUV_2x2_clr;
 }
 
@@ -554,17 +561,19 @@ static void XA_YUV1611_Convert(unsigned char *image_p, unsigned int imagex, unsi
     int ystride=(yuv->y_w)?yuv->y_w:imagex;
     int uvstride=(yuv->uv_w)?yuv->uv_w:(imagex/4);
 
-    mp_dbg(MSGT_DECVIDEO,MSGL_DBG3, "YUVTabs:  %d %p %p %p %p %p\n",yuv_tabs->Uskip_mask,
+    mp_dbg(MSGT_DECVIDEO, MSGL_DBG3, "YUVTabs:  %lu %p %p %p %p %p\n",
+        yuv_tabs->Uskip_mask,
 	yuv_tabs->YUV_Y_tab,
 	yuv_tabs->YUV_UB_tab,
 	yuv_tabs->YUV_VR_tab,
 	yuv_tabs->YUV_UG_tab,
 	yuv_tabs->YUV_VG_tab );
 
-    mp_dbg(MSGT_DECVIDEO,MSGL_DBG3, "XA_YUV1611_Convert('image: %08x', 'imagex: %d', 'imagey: %d', 'i_x: %d', 'i_y: %d', 'yuv_bufs: %08x', 'yuv_tabs: %08x', 'map_flag: %d', 'map: %08x', 'chdr: %08x')",
+    mp_dbg(MSGT_DECVIDEO, MSGL_DBG3,
+        "XA_YUV1611_Convert('image: %p', 'imagex: %u', 'imagey: %u', 'i_x: %u', 'i_y: %u', 'yuv_bufs: %p', 'yuv_tabs: %p', 'map_flag: %u', 'map: %p', 'chdr: %p')",
 	image_p, imagex, imagey, i_x, i_y, yuv, yuv_tabs, map_flag, map, chdr);
 
-    mp_dbg(MSGT_DECVIDEO,MSGL_DBG3, "YUV: %p %p %p %X (%d) %dx%d %dx%d\n",
+    mp_dbg(MSGT_DECVIDEO,MSGL_DBG3, "YUV: %p %p %p %p (%u) %hux%hu %hux%hu\n",
 	yuv->Ybuf,yuv->Ubuf,yuv->Vbuf,yuv->the_buf,yuv->the_buf_size,
 	yuv->y_w,yuv->y_h,yuv->uv_w,yuv->uv_h);
 
@@ -617,7 +626,7 @@ static void XA_YUV1611_Convert(unsigned char *image_p, unsigned int imagex, unsi
 
 void *XA_YUV1611_Func(unsigned int image_type)
 {
-    mp_dbg(MSGT_DECVIDEO,MSGL_DBG2, "XA_YUV1611_Func('image_type: %d')", image_type);
+    mp_dbg(MSGT_DECVIDEO, MSGL_DBG2, "XA_YUV1611_Func('image_type: %u')", image_type);
     return (void *)XA_YUV1611_Convert;
 }
 
@@ -634,11 +643,12 @@ static void XA_YUV221111_Convert(unsigned char *image_p, unsigned int imagex, un
     int ystride=imagex; //(yuv->y_w)?yuv->y_w:imagex;
     int uvstride=imagex/2; //(yuv->uv_w)?yuv->uv_w:(imagex/2);
 
-    mp_dbg(MSGT_DECVIDEO,MSGL_DBG3, "XA_YUV221111_Convert(%p  %dx%d %d;%d [%dx%d]  %p %p %d %p %p)\n",
+    mp_dbg(MSGT_DECVIDEO, MSGL_DBG3,
+	"XA_YUV221111_Convert(%p  %ux%u %u;%u [%dx%d]  %p %p %u %p %p)\n",
 	image_p,imagex,imagey,i_x,i_y, sh->disp_w, sh->disp_h,
 	yuv,yuv_tabs,map_flag,map,chdr);
 
-    mp_dbg(MSGT_DECVIDEO,MSGL_DBG3, "YUV: %p %p %p %X (%X) %Xx%X %Xx%X\n",
+    mp_dbg(MSGT_DECVIDEO,MSGL_DBG3, "YUV: %p %p %p %p (%X) %hXx%hX %hXx%hX\n",
 	yuv->Ybuf,yuv->Ubuf,yuv->Vbuf,yuv->the_buf,yuv->the_buf_size,
 	yuv->y_w,yuv->y_h,yuv->uv_w,yuv->uv_h);
 
@@ -655,7 +665,7 @@ static void XA_YUV221111_Convert(unsigned char *image_p, unsigned int imagex, un
 
 void *XA_YUV221111_Func(unsigned int image_type)
 {
-    mp_dbg(MSGT_DECVIDEO,MSGL_DBG2, "XA_YUV221111_Func('image_type: %d')\n",image_type);
+    mp_dbg(MSGT_DECVIDEO,MSGL_DBG2, "XA_YUV221111_Func('image_type: %u')\n",image_type);
     return (void *)XA_YUV221111_Convert;
 }
 
@@ -725,7 +735,8 @@ static int init(sh_video_t *sh)
 		vo_format_name(sh->codec->outfmt[sh->outfmtidx]));
 	    return 0;
     }
-    mp_msg(MSGT_DECVIDEO, MSGL_INFO, "xacodec: querying for input %dx%d %dbit [fourcc: %4x] (%s)...\n",
+    mp_msg(MSGT_DECVIDEO, MSGL_INFO,
+           "xacodec: querying for input %ux%u %ubit [fourcc: %4x] (%s)...\n",
 	codec_hdr.x, codec_hdr.y, codec_hdr.depth, codec_hdr.compression, codec_hdr.description);
 
     if (xacodec_query(sh, &codec_hdr) == 0)

@@ -1798,7 +1798,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_ASF_UnknownASFStreamType "unknown ASF stream type\n"
 #define MSGTR_MPDEMUX_ASF_Failed2ParseHTTPResponse "Failed to parse HTTP response.\n"
 #define MSGTR_MPDEMUX_ASF_ServerReturn "Server returned %d:%s\n"
-#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF HTTP PARSE WARNING : Pragma %s cut from %zd bytes to %d\n"
+#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF HTTP PARSE WARNING : Pragma %s cut from %zu bytes to %zu\n"
 #define MSGTR_MPDEMUX_ASF_SocketWriteError "socket write error: %s\n"
 #define MSGTR_MPDEMUX_ASF_HeaderParseFailed "Failed to parse header.\n"
 #define MSGTR_MPDEMUX_ASF_NoStreamFound "No stream found.\n"

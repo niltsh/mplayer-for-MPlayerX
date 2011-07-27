@@ -1349,7 +1349,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_ASF_UnknownASFStreamType "Genre de flux asf inconnu\n"
 #define MSGTR_MPDEMUX_ASF_Failed2ParseHTTPResponse "Échec analyse réponse HTTP\n"
 #define MSGTR_MPDEMUX_ASF_ServerReturn "Retour de serveur %d:%s\n"
-#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ALERTE ANALYSE ASF HTTP : Pragma %s coupé de %zd octets à %d\n"
+#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ALERTE ANALYSE ASF HTTP : Pragma %s coupé de %zu octets à %zu\n"
 #define MSGTR_MPDEMUX_ASF_SocketWriteError "Erreur lecture interface (socket) : %s\n"
 #define MSGTR_MPDEMUX_ASF_HeaderParseFailed "Échec analyse entête\n"
 #define MSGTR_MPDEMUX_ASF_NoStreamFound "Aucun flux trouvé\n"

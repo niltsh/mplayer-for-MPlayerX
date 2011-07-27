@@ -1411,7 +1411,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_ASF_UnknownASFStreamType "unbekannter ASF-Datenstromtyp\n"
 #define MSGTR_MPDEMUX_ASF_Failed2ParseHTTPResponse "Konnte HTTP-Antworte nicht parsen.\n"
 #define MSGTR_MPDEMUX_ASF_ServerReturn "Server hat %d zurückgegeben: %s\n"
-#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF-HTTP-Parser Warnung: Pragma '%s' von %zd auf %d Byte abgeschnitten.\n"
+#define MSGTR_MPDEMUX_ASF_ASFHTTPParseWarnCuttedPragma "ASF-HTTP-Parser Warnung: Pragma '%s' von %zu auf %zu Byte abgeschnitten.\n"
 #define MSGTR_MPDEMUX_ASF_SocketWriteError "Socketschreibfehler: %s\n"
 #define MSGTR_MPDEMUX_ASF_HeaderParseFailed "Konnte Header nicht parsen.\n"
 #define MSGTR_MPDEMUX_ASF_NoStreamFound "Kein Stream gefunden.\n"
