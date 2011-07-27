@@ -69,7 +69,7 @@ static uint32_t in_width, in_height, in_format, in_depth, in_s3_format,
   screenwidth, screenheight, screendepth, screenstride,
   vidwidth, vidheight, vidx, vidy, page, offset, sreg;
 static char *inpage, *inpage0, *smem = NULL;
-static void (*alpha_func)();
+static void (*alpha_func)(int, int, unsigned char*, unsigned char*, int, unsigned char*, int);
 
 static void clear_screen(void);
 
