@@ -27,6 +27,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -40,8 +42,6 @@
 #include <sys/mman.h>
 #endif
 #include <sys/ioctl.h>
-
-#include "config.h"
 
 #include <netdb.h>
 #include <sys/socket.h>
