@@ -555,10 +555,10 @@ int parse_codec_cfg(const char *cfgfile)
 #endif
     }
 
-    mp_msg(MSGT_CODECCFG, MSGL_V, "Reading %s: ", cfgfile);
+    mp_msg(MSGT_CODECCFG, MSGL_V, "Reading optional codecs config file %s: ", cfgfile);
 
     if ((fp = fopen(cfgfile, "r")) == NULL) {
-        mp_msg(MSGT_CODECCFG, MSGL_V, "Can't open '%s': %s\n", cfgfile, strerror(errno));
+        mp_msg(MSGT_CODECCFG, MSGL_V, "%s\n", strerror(errno));
         return 0;
     }
 

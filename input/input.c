@@ -1581,7 +1581,8 @@ mp_input_parse_config(char *file) {
   fd = open(file,O_RDONLY);
 
   if(fd < 0) {
-    mp_msg(MSGT_INPUT,MSGL_V,"Can't open input config file %s: %s\n",file,strerror(errno));
+    mp_msg(MSGT_INPUT, MSGL_V, "Reading optional input config file %s: %s\n",
+           file, strerror(errno));
     return 0;
   }
 
