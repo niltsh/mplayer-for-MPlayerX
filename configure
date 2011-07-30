@@ -2756,7 +2756,7 @@ echores "$bswap"
 
 
 echocheck "xmm clobbers"
-inline_asm_check '"":::"%xxxmm0"' &&
+inline_asm_check '"":::"%xmm0"' &&
   def_xmm_clobbers='#define HAVE_XMM_CLOBBERS 1' &&
   xmm_clobbers=yes || xmm_clobbers=no
 echores "$xmm_clobbers"
