@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 33877
+.\" sync with en/mplayer.1 rev. 33893
 .\" This man page was/is done by Gabucino, Diego Biurrun, Jonas Jermann
 .\" translation by JRaSH<jrash06 at 163.com>, currently fixed up to (10016)
 .
@@ -10769,7 +10769,7 @@ I 帧和 P 帧之间连续出现的 B 帧的最大数量（默认值：3）
 b_bias 值越高产生的 B 帧越多（默认值：0）。
 .
 .TP
-.B (no)b_pyramid
+.B b_pyramid=<normal|strict|none>
 允许 B 帧作用预测其它帧的参照帧。\
 例如，考虑 3 个连续的 B 帧：IO B1 B2 B3 P4。\
 不用这个选项的话，B 帧的样式与 MPEG-[124] 中的一样。\
@@ -10784,6 +10784,17 @@ B2 与前面所述的一样，但 B1 是从 IO 和 B2 预测出来的，\
 并且可能不能总是起作用。\
 要求 bframes >= 2。\
 缺点：将解码延迟量增加至 2 帧。
+.PD 0
+.RSs
+.IPs normal
+允许 B 帧以如上所述的方式作为引用帧使用（与蓝光标准不兼容）。
+.IPs strict
+不允许 P 帧引用 B 帧。压缩率下降，但要与蓝光标准兼容时\
+必须使用。
+.IPs "none\ "
+禁止使用 B 帧作为引用帧。
+.RE
+.PD 1
 .
 .TP
 .B (no)deblock
