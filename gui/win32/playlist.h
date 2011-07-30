@@ -24,8 +24,6 @@
 #ifndef MPLAYER_GUI_PLAYLIST_H
 #define MPLAYER_GUI_PLAYLIST_H
 
-#include <stdbool.h>
-
 typedef struct
 {
     char *filename;
@@ -56,6 +54,6 @@ struct playlist_t
 #define SORT_BYDURATION     4
 
 playlist_t *create_playlist(void);
-bool adddirtoplaylist(playlist_t *playlist, const char* path, bool recursive);
+int adddirtoplaylist(playlist_t *playlist, const char* path, int recursive);
 
 #endif /* MPLAYER_GUI_PLAYLIST_H */
