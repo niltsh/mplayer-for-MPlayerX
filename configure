@@ -5853,15 +5853,9 @@ echores "$_libdvdcss_internal"
 
 echocheck "cdparanoia"
 if test "$_cdparanoia" = auto ; then
-    cat > $TMPC <<EOF
-#include <cdda_interface.h>
-#include <cdda_paranoia.h>
-// This need a better test. How ?
-int main(void) { void *test = cdda_verbose_set; return test == (void *)1; }
-EOF
     _cdparanoia=no
     for _inc_tmp in "" "-I/usr/include/cdda" "-I/usr/local/include/cdda" ; do
-      cc_check $_inc_tmp -lcdda_interface -lcdda_paranoia &&
+      statement_check_broken cdda_interface.h cdda_paranoia.h 'paranoia_cachemodel_size(NULL, 0)' $_inc_tmp -lcdda_interface -lcdda_paranoia &&
         _cdparanoia=yes && extra_cflags="$extra_cflags $_inc_tmp" && break
     done
 fi
