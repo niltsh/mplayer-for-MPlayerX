@@ -23,7 +23,6 @@
 #include "mpcommon.h"
 #include "demuxer.h"
 #include "stheader.h"
-#define HAVE_STRUCT_SOCKADDR_STORAGE
 #include "nemesi/rtsp.h"
 #include "nemesi/rtp.h"
 #include <sched.h>
