@@ -69,6 +69,9 @@ for DLL to know too much about its environment.
 #ifdef	HAVE_KSTAT
 #include <kstat.h>
 #endif
+#if HAVE_MALLOC_H
+#include <malloc.h>
+#endif
 
 #if HAVE_SYS_MMAN_H
 #include <sys/mman.h>
@@ -345,7 +348,7 @@ void* mreq_private(int size, int to_zero, int type);
 void* mreq_private(int size, int to_zero, int type)
 {
     int nsize = size + sizeof(alloc_header);
-    alloc_header* header = malloc(nsize);
+    alloc_header* header = memalign(16, nsize);
     if (!header)
         return 0;
     if (to_zero)
@@ -3962,6 +3965,13 @@ static LONG WINAPI explstrlenA(const char* str1)
     return result;
 }
 
+static LONG WINAPI explstrlenW(const uint16_t* s)
+{
+    int result = 0;
+    while (s && s[result]) result++;
+    return result;
+}
+
 static LONG WINAPI explstrcpyA(char* str1, const char* str2)
 {
     int result= (int) strcpy(str1, str2);
@@ -4310,6 +4320,8 @@ static int expsscanf(const char* str, const char* format, ...)
 static void* expfopen(const char* path, const char* mode)
 {
     printf("fopen: \"%s\"  mode:%s\n", path, mode);
+    if (strcmp(mode, "r") == 0 || strcmp(mode, "rb") == 0)
+        return NULL;
     //return fopen(path, mode);
     return fdopen(0, mode); // everything on screen
 }
@@ -4576,10 +4588,37 @@ static double expfrexp(double x, int* expo)
 }
 
 
+static void exp_splitpath(const char *path, char *drive, char *dir, char *name, char *ext)
+{
+    const char *ext_start = strrchr(path, '.');
+    int name_len = ext_start ? ext_start - path : strlen(path);
+    if (drive)
+        strcpy(drive, "");
+    if (dir)
+        strcpy(dir, "");
+    if (name) {
+        strncpy(name, path, name_len);
+        name[name_len] = 0;
+    }
+    if (ext)
+        strcpy(ext, ext_start ? ext_start : "");
+}
+
+static char *exp_mbsupr(char *str)
+{
+    int i;
+    for (i = 0; str[i]; i++) str[i] = toupper(str[i]);
+    return str;
+}
 
 static int exp_stricmp(const char* s1, const char* s2)
 {
     return strcasecmp(s1, s2);
+}
+
+static uint64_t exp_time64(void)
+{
+    return 0;
 }
 
 /* from declaration taken from Wine sources - this fountion seems to be
@@ -5284,6 +5323,7 @@ static const struct exports exp_kernel32[]=
     FF(MulDiv, -1)
     FF(lstrcmpiA, -1)
     FF(lstrlenA, -1)
+    FF(lstrlenW, -1)
     FF(lstrcpyA, -1)
     FF(lstrcatA, -1)
     FF(lstrcpynA,-1)
@@ -5570,10 +5610,25 @@ static const struct exports exp_msvcr80[]={
     FF(_CIsin,-1)
     FF(_CIcos,-1)
     FF(_CIsqrt,-1)
+    FF(memcpy,-1)
     FF(memset,-1)
+    FF(sprintf,-1)
+    FF(strncpy,-1)
+    FF(fopen,-1)
+    FF(malloc,-1)
+    FF(free,-1)
     FF(_initterm_e, -1)
     FF(_initterm, -1)
     FF(_decode_pointer, -1)
+
+// For CFDecode2.ax
+    {"_aligned_free",-1,(void*)expfree},
+    {"_aligned_malloc",-1,(void*)expmalloc},
+    FF(_splitpath,-1)
+    FF(_mbsupr,-1)
+    {"_mbscmp", -1, (void*)strcmp},
+    {"clock",-1,(void*)&clock},
+    FF(_time64,-1)
 /* needed by KGV1-VFW.dll */
     {"??2@YAPAXI@Z", -1, expnew},
     {"??3@YAXPAX@Z", -1, expdelete}
