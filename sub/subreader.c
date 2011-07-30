@@ -2515,15 +2515,16 @@ void sub_add_text(subtitle *sub, const char *txt, int len, double endpts, int st
   sub->text[sub->lines] = buf;
   sub->endpts[sub->lines] = endpts;
 
-#ifndef CONFIG_ASS
-  if (!strip_markup)
-    mp_msg(MSGT_SUBREADER, MSGL_ERR, "strip_markup must be set when ASS support is disabled!\n");
-  strip_markup = 1;
-#endif
   if (!strip_markup) {
+#ifdef CONFIG_ASS
     subassconvert_subrip(txt, buf, MAX_SUBLINE + 1);
     sub->text[sub->lines] = buf;
-  } else {
+#else
+    mp_msg(MSGT_SUBREADER, MSGL_ERR, "strip_markup must be set when ASS support is disabled!\n");
+    strip_markup = 1;
+#endif
+  }
+  if (strip_markup) {
     for (i = 0; i < len && pos < MAX_SUBLINE; i++) {
       char c = txt[i];
       if (c == '<') comment |= 1;
