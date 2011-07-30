@@ -435,6 +435,25 @@ HMODULE WINAPI LoadLibraryExA(LPCSTR libname, HANDLE hfile, DWORD flags)
 	    printf("Win32 LoadLibrary failed to load: %s\n", checked);
 
 #define RVA(x) ((char *)wm->module+(unsigned int)(x))
+	if (strstr(libname, "CFDecode2.ax") && wm)
+	{
+	    if (PE_FindExportedFunction(wm, "DllGetClassObject", TRUE) == RVA(0xd00e0))
+	    {
+	        // Patch some movdqa to movdqu
+	        // It is currently unclear why this is necessary, it seems
+	        // to be some output frame, but our frame seems correctly
+	        // aligned
+	        int offsets[] = {0x7318c, 0x731ba, 0x731e0, 0x731fe, 0};
+	        int i;
+	        for (i = 0; offsets[i]; i++)
+	        {
+	            int ofs = offsets[i];
+	            if (RVA(ofs)[0] == 0x66 && RVA(ofs)[1] == 0x0f &&
+	                RVA(ofs)[2] == 0x7f)
+	                RVA(ofs)[0] = 0xf3;
+	        }
+	    }
+	}
 	if (strstr(libname,"vp31vfw.dll") && wm)
 	{
 	    int i;
