@@ -6091,8 +6091,8 @@ EOF
     cc_check $_inc_tmp $_ld_tmp && _fribidi=yes
     if $_pkg_config --exists fribidi > /dev/null 2>&1 &&
        test "$_fribidi" = no ; then
-        _inc_tmp="$($_pkg_config --cflags)"
-        _ld_tmp="$($_pkg_config --libs)"
+        _inc_tmp="$($_pkg_config --cflags fribidi)"
+        _ld_tmp="$($_pkg_config --libs fribidi)"
         cc_check $_inc_tmp $_ld_tmp && _fribidi=yes
     fi
 fi
