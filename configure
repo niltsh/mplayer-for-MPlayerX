@@ -2665,6 +2665,10 @@ def_bswap='#define HAVE_BSWAP 0'
 def_ebx_available='#define HAVE_EBX_AVAILABLE 0'
 def_xmm_clobbers='#define HAVE_XMM_CLOBBERS 0'
 
+if x86_64 ; then
+inline_asm_check '"mov (%eax), %eax"' || die "Your binutils version is too old and not supported"
+fi
+
 if x86 ; then
 
 echocheck ".align is a power of two"
