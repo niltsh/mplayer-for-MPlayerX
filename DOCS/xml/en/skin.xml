@@ -737,8 +737,8 @@ image file to be used for the font (you do not have to specify the extension).
 Here <literal>X</literal> and <literal>Y</literal> specify the position of the
 <literal>char</literal> character in the image (<literal>0,0</literal> is the
 upper left corner). <literal>width</literal> and <literal>height</literal> are
-the dimensions of the character in pixels. The character may be in UTF-8
-encoding.
+the dimensions of the character in pixels. The character <literal>char</literal>
+shall be in UTF-8 encoding.
 </para>
 
 <para>
