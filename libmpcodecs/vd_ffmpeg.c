@@ -213,6 +213,7 @@ static void mp_msp_av_log_callback(void *ptr, int level, const char *fmt,
                 //FIXME subtitles, encoders (what msgt for them? there is no appropriate ...)
             }
         }else if(!strcmp(avc->class_name, "AVFormatContext")){
+            type= MSGT_DEMUXER;
 #if 0 //needs libavformat include FIXME iam too lazy to do this cleanly, probably the whole should be moved out of this file ...
             AVFormatContext *s= ptr;
             if(s->iformat)
