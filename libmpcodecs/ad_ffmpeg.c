@@ -26,7 +26,7 @@
 
 #include "ad_internal.h"
 #include "dec_audio.h"
-#include "vd_ffmpeg.h"
+#include "av_helpers.h"
 #include "libaf/reorder_ch.h"
 #include "fmt-conversion.h"
 

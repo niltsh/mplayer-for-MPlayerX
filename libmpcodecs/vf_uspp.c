@@ -35,7 +35,7 @@
 #include "img_format.h"
 #include "mp_image.h"
 #include "vf.h"
-#include "vd_ffmpeg.h"
+#include "av_helpers.h"
 #include "libvo/fastmemcpy.h"
 
 #define XMIN(a,b) ((a) < (b) ? (a) : (b))

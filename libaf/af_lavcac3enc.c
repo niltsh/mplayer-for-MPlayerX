@@ -25,11 +25,11 @@
 #include <string.h>
 #include <inttypes.h>
 
-#include "libmpcodecs/vd_ffmpeg.h"
 #include "config.h"
 #include "af.h"
 #include "help_mp.h"
 #include "reorder_ch.h"
+#include "av_helpers.h"
 
 #include "libavcodec/avcodec.h"
 #include "libavcodec/ac3.h"

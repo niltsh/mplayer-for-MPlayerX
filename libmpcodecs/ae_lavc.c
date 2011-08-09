@@ -30,7 +30,7 @@
 #include "stream/stream.h"
 #include "libmpdemux/muxer.h"
 #include "ae_lavc.h"
-#include "vd_ffmpeg.h"
+#include "av_helpers.h"
 #include "ve.h"
 #include "help_mp.h"
 #include "av_opts.h"

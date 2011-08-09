@@ -45,7 +45,7 @@
 #include "img_format.h"
 #include "mp_image.h"
 #include "vf.h"
-#include "vd_ffmpeg.h"
+#include "av_helpers.h"
 #include "libvo/fastmemcpy.h"
 
 #include "libavutil/internal.h"

@@ -24,6 +24,7 @@
 #include "stream.h"
 #include "m_option.h"
 #include "m_struct.h"
+#include "av_helpers.h"
 
 static int fill_buffer(stream_t *s, char *buffer, int max_len)
 {
@@ -87,7 +88,7 @@ static int open_f(stream_t *stream, int mode, void *opts, int *file_format)
     int64_t size;
     int dummy;
 
-    av_register_all();
+    init_avformat();
     if (mode == STREAM_READ)
         flags = URL_RDONLY;
     else if (mode == STREAM_WRITE)

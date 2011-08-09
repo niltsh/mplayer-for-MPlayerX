@@ -60,6 +60,7 @@ SRCS_COMMON-$(DVDREAD_INTERNAL)      += libdvdread4/bitreader.c \
 SRCS_COMMON-$(FAAD)                  += libmpcodecs/ad_faad.c
 SRCS_COMMON-$(FASTMEMCPY)            += libvo/aclib.c
 SRCS_COMMON-$(FFMPEG)                += av_opts.c                   \
+                                        av_helpers.c                \
                                         libaf/af_lavcresample.c     \
                                         libmpcodecs/ad_ffmpeg.c     \
                                         libmpcodecs/vd_ffmpeg.c     \

@@ -27,6 +27,7 @@
 #include "mp_msg.h"
 #include "help_mp.h"
 #include "av_opts.h"
+#include "av_helpers.h"
 
 #include "stream/stream.h"
 #include "aviprint.h"
@@ -154,7 +155,7 @@ static int lavf_check_file(demuxer_t *demuxer){
         demuxer->priv=calloc(sizeof(lavf_priv_t),1);
     priv= demuxer->priv;
 
-    av_register_all();
+    init_avformat();
 
     if (opt_format) {
         if (strcmp(opt_format, "help") == 0) {

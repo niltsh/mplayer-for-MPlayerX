@@ -25,6 +25,7 @@
 #include "mp_msg.h"
 #include "help_mp.h"
 #include "av_opts.h"
+#include "av_helpers.h"
 
 #include "libavutil/common.h"
 #include "libavutil/intreadwrite.h"
@@ -32,7 +33,6 @@
 #include "fmt-conversion.h"
 
 #include "vd_internal.h"
-#include "vd_ffmpeg.h"
 
 static const vd_info_t info = {
     "FFmpeg's libavcodec codec family",
@@ -53,8 +53,6 @@ LIBVD_EXTERN(ffmpeg)
 #if CONFIG_XVMC
 #include "libavcodec/xvmc.h"
 #endif
-
-int avcodec_initialized=0;
 
 typedef struct {
     AVCodecContext *avctx;
@@ -181,59 +179,6 @@ static int control(sh_video_t *sh, int cmd, void *arg, ...){
     return CONTROL_UNKNOWN;
 }
 
-static void mp_msp_av_log_callback(void *ptr, int level, const char *fmt,
-                                   va_list vl)
-{
-    static int print_prefix=1;
-    AVClass *avc= ptr ? *(AVClass **)ptr : NULL;
-    int type= MSGT_FIXME;
-    int mp_level;
-
-    switch(level){
-    case AV_LOG_VERBOSE: mp_level = MSGL_V ; break;
-    case AV_LOG_DEBUG:  mp_level= MSGL_V   ; break;
-    case AV_LOG_INFO :  mp_level= MSGL_INFO; break;
-    case AV_LOG_ERROR:  mp_level= MSGL_ERR ; break;
-    default          :  mp_level= level > AV_LOG_DEBUG ? MSGL_DBG2 : MSGL_ERR; break;
-    }
-
-    if (ptr && !avc)
-        mp_msg(MSGT_DECVIDEO, MSGL_ERR, "libav* called av_log with context containing a broken AVClass!\n");
-    if (avc) {
-        if(!strcmp(avc->class_name, "AVCodecContext")){
-            AVCodecContext *s= ptr;
-            if(s->codec){
-                if(s->codec->type == AVMEDIA_TYPE_AUDIO){
-                    if(s->codec->decode)
-                        type= MSGT_DECAUDIO;
-                }else if(s->codec->type == AVMEDIA_TYPE_VIDEO){
-                    if(s->codec->decode)
-                        type= MSGT_DECVIDEO;
-                }
-                //FIXME subtitles, encoders (what msgt for them? there is no appropriate ...)
-            }
-        }else if(!strcmp(avc->class_name, "AVFormatContext")){
-            type= MSGT_DEMUXER;
-#if 0 //needs libavformat include FIXME iam too lazy to do this cleanly, probably the whole should be moved out of this file ...
-            AVFormatContext *s= ptr;
-            if(s->iformat)
-                type= MSGT_DEMUXER;
-            else if(s->oformat)
-                type= MSGT_MUXER;
-#endif
-        }
-    }
-
-    if (!mp_msg_test(type, mp_level)) return;
-
-    if(print_prefix && avc) {
-        mp_msg(type, mp_level, "[%s @ %p]", avc->item_name(ptr), avc);
-    }
-
-    print_prefix= strchr(fmt, '\n') != NULL;
-    mp_msg_va(type, mp_level, fmt, vl);
-}
-
 static void set_format_params(struct AVCodecContext *avctx, enum PixelFormat fmt){
     int imgfmt;
     if (fmt == PIX_FMT_NONE)
@@ -258,16 +203,6 @@ static void set_format_params(struct AVCodecContext *avctx, enum PixelFormat fmt
         avctx->slice_flags = SLICE_FLAG_CODED_ORDER|SLICE_FLAG_ALLOW_FIELD;
     } else {
         avctx->slice_flags &= ~(SLICE_FLAG_CODED_ORDER|SLICE_FLAG_ALLOW_FIELD);
-    }
-}
-
-void init_avcodec(void)
-{
-    if (!avcodec_initialized) {
-        avcodec_init();
-        avcodec_register_all();
-        avcodec_initialized = 1;
-        av_log_set_callback(mp_msp_av_log_callback);
     }
 }
 

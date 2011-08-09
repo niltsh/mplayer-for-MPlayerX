@@ -47,7 +47,7 @@
 #include "mp_image.h"
 #include "ve.h"
 #include "vf.h"
-#include "vd_ffmpeg.h"
+#include "av_helpers.h"
 
 //===========================================================================//
 

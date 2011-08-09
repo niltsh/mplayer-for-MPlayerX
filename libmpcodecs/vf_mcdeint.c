@@ -66,7 +66,7 @@ Known Issues:
 #include "img_format.h"
 #include "mp_image.h"
 #include "vf.h"
-#include "vd_ffmpeg.h"
+#include "av_helpers.h"
 
 #define MIN(a,b) ((a) > (b) ? (b) : (a))
 #define MAX(a,b) ((a) < (b) ? (b) : (a))

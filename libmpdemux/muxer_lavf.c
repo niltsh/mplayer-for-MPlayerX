@@ -29,6 +29,7 @@
 #include "aviheader.h"
 #include "ms_hdr.h"
 #include "av_opts.h"
+#include "av_helpers.h"
 
 #include "stream/stream.h"
 #include "muxer.h"
@@ -317,7 +318,7 @@ int muxer_init_muxer_lavf(muxer_t *muxer)
 	muxer_priv_t *priv;
 	AVOutputFormat *fmt = NULL;
 
-	av_register_all();
+	init_avformat();
 
 	if (conf_format && strcmp(conf_format, "help") == 0) {
 		list_formats();
