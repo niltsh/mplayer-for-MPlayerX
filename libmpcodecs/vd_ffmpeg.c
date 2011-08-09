@@ -197,7 +197,9 @@ static void mp_msp_av_log_callback(void *ptr, int level, const char *fmt,
     default          :  mp_level= level > AV_LOG_DEBUG ? MSGL_DBG2 : MSGL_ERR; break;
     }
 
-    if(ptr){
+    if (ptr && !avc)
+        mp_msg(MSGT_DECVIDEO, MSGL_ERR, "libav* called av_log with context containing a broken AVClass!\n");
+    if (avc) {
         if(!strcmp(avc->class_name, "AVCodecContext")){
             AVCodecContext *s= ptr;
             if(s->codec){
