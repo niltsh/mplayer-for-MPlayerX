@@ -651,7 +651,11 @@ static int get_buffer(AVCodecContext *avctx, AVFrame *pic){
             mp_msg(MSGT_DECVIDEO, MSGL_WARN, MSGTR_MPCODECS_DRIFailure);
 
             ctx->do_dr1=0; //FIXME
+            // For frame-multithreading these contexts aren't
+            // the same and must both be updated.
+            ctx->avctx->get_buffer=
             avctx->get_buffer= avcodec_default_get_buffer;
+            ctx->avctx->reget_buffer=
             avctx->reget_buffer= avcodec_default_reget_buffer;
             if (pic->data[0])
                 release_buffer(avctx, pic);
