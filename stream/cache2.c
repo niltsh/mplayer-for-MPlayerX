@@ -121,7 +121,7 @@ static int cache_read(cache_vars_t *s, unsigned char *buf, int size)
 	if(s->eof) break;
 	if (s->max_filepos == last_max) {
 	    if (sleep_count++ == 10)
-	        mp_msg(MSGT_CACHE, MSGL_WARN, "Cache not filling, consider increasing -cache and/or -cache-min. [performance issue]\n");
+	        mp_msg(MSGT_CACHE, MSGL_WARN, "Cache empty, consider increasing -cache and/or -cache-min. [performance issue]\n");
 	} else {
 	    last_max = s->max_filepos;
 	    sleep_count = 0;
