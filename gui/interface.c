@@ -446,7 +446,7 @@ int gui(int what, void *data)
         {
             char tmp[512];
 
-            sprintf(tmp, "vcd://%d", guiInfo.Track + 1);
+            sprintf(tmp, "vcd://%d", guiInfo.Track);
             setdup(&guiInfo.Filename, tmp);
         }
         break;

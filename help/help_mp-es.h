@@ -545,7 +545,6 @@ static const char help_text[]=
 #define MSGTR_Preferences "Preferencias"
 #define MSGTR_AudioPreferences "Configuración de controlador de Audio"
 #define MSGTR_NoMediaOpened "no se abrió audio/video"
-#define MSGTR_VCDTrack "pista VCD %d"
 #define MSGTR_NoChapter "sin capítulo"
 #define MSGTR_Chapter "capítulo %d"
 #define MSGTR_NoFileLoaded "no se ha cargado ningún archivo"

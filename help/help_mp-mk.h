@@ -330,7 +330,6 @@ static const char help_text[]=
 #define MSGTR_Network "Мрежен проток ..."
 #define MSGTR_Preferences "Подесувања"
 #define MSGTR_NoMediaOpened "Не е отворен медиум."
-#define MSGTR_VCDTrack "VCD трака %d"
 #define MSGTR_NoChapter "Нема поглавје"
 #define MSGTR_Chapter "Поглавје %d"
 #define MSGTR_NoFileLoaded "Не е вчитана датотека."

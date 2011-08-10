@@ -333,7 +333,6 @@ static const char help_text[]=
 #define MSGTR_Network "네트워크 스트리밍..."
 #define MSGTR_Preferences "선택사항"
 #define MSGTR_NoMediaOpened "미디어 없음"
-#define MSGTR_VCDTrack "VCD 트랙 %d"
 #define MSGTR_NoChapter "챕터 없음"
 #define MSGTR_Chapter "챕터 %d"
 #define MSGTR_NoFileLoaded "파일 없음"

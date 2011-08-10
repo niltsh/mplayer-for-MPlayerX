@@ -462,7 +462,7 @@ GtkWidget * create_PopUpMenu( void )
        {
         snprintf( tmp,32,MSGTR_MENU_Title,i );
     //AddMenuItem( VCDTitleMenu,tmp,( i << 16 ) + evSetVCDTrack );
-        AddMenuItem(window1, (const char*)empty_xpm, VCDTitleMenu,tmp,( i << 16 ) + evSetVCDTrack );
+        AddMenuItem(window1, (const char*)empty_xpm, VCDTitleMenu,tmp,( ( i + 1 ) << 16 ) + evSetVCDTrack );
        }
      }
      else

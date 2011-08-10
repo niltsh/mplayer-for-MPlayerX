@@ -553,7 +553,6 @@ static const char help_text[]=
 #define MSGTR_Preferences "Предпочитания"
 #define MSGTR_AudioPreferences "Конфигуриране на аудио драйвера"
 #define MSGTR_NoMediaOpened "Няма отворени елементи."
-#define MSGTR_VCDTrack "VCD писта %d"
 #define MSGTR_NoChapter "Няма раздели"
 #define MSGTR_Chapter "Раздел %d"
 #define MSGTR_NoFileLoaded "Не е зареден файл."

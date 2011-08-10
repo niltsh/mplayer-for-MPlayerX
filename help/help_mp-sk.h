@@ -644,7 +644,6 @@ static const char help_text[]=
 #define MSGTR_Preferences "Preferencie"
 #define MSGTR_AudioPreferences "Konfiguracia ovladača zvuku"
 #define MSGTR_NoMediaOpened "Nič nie je otvorené"
-#define MSGTR_VCDTrack "VCD stopa %d"
 #define MSGTR_NoChapter "Žiadna kapitola"
 #define MSGTR_Chapter "Kapitola %d"
 #define MSGTR_NoFileLoaded "Nenahraný žiaden súbor"

@@ -678,7 +678,6 @@ static const char help_text[]=
 #define MSGTR_Preferences "首選項"
 #define MSGTR_AudioPreferences "音頻驅動配置"
 #define MSGTR_NoMediaOpened "没有打開媒體"
-#define MSGTR_VCDTrack "VCD 軌迹 %d"
 #define MSGTR_NoChapter "没有章節"
 #define MSGTR_Chapter "章節 %d"
 #define MSGTR_NoFileLoaded "没有載入文件"

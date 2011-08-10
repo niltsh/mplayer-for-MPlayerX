@@ -553,7 +553,6 @@ static const char help_text[]=
 #define MSGTR_Preferences "Inställningar"
 #define MSGTR_AudioPreferences "Audiodirvrutinskonfiguration"
 #define MSGTR_NoMediaOpened "Inget media öppnad"
-#define MSGTR_VCDTrack "VCD-spår %d"
 #define MSGTR_NoChapter "Inget kapitel"
 #define MSGTR_Chapter "Kapitel %d"
 #define MSGTR_NoFileLoaded "Ingen fil laddad"

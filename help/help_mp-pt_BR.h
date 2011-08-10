@@ -335,7 +335,6 @@ static const char help_text[]=
 #define MSGTR_Network "Rede..."
 #define MSGTR_Preferences "Preferências"
 #define MSGTR_NoMediaOpened "Nenhuma mídia aberta."
-#define MSGTR_VCDTrack "Trilha do VCD %d"
 #define MSGTR_NoChapter "Nenhum capítulo"
 #define MSGTR_Chapter "Capítulo %d"
 #define MSGTR_NoFileLoaded "Nenhum arquivo carregado"

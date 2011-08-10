@@ -539,7 +539,6 @@ static const char help_text[]=
 #define MSGTR_Preferences "Beállítások"
 #define MSGTR_AudioPreferences "Audio vezérlő beállítása"
 #define MSGTR_NoMediaOpened "nincs megnyitva semmi"
-#define MSGTR_VCDTrack "%d. VCD track"
 #define MSGTR_NoChapter "nincs megnyitott fejezet"
 #define MSGTR_Chapter "%d. fejezet"
 #define MSGTR_NoFileLoaded "nincs fájl betöltve"

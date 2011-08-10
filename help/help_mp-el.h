@@ -337,7 +337,6 @@ static const char help_text[]=
 #define MSGTR_Network "Streaming δικτύου."
 #define MSGTR_Preferences "Ιδιότητες"
 #define MSGTR_NoMediaOpened "Δεν φορτώθηκαν αρχεία"
-#define MSGTR_VCDTrack "VCD track %d"
 #define MSGTR_NoChapter "Μη χρήση κεφαλαίου"
 #define MSGTR_Chapter "Κεφάλαιο %d"
 #define MSGTR_NoFileLoaded "δεν φορτώθηκε αρχείο"

@@ -522,7 +522,6 @@ static const char help_text[]=
 #define MSGTR_Preferences "Шалаштування"
 #define MSGTR_AudioPreferences "Налаштування аудіо драйверу"
 #define MSGTR_NoMediaOpened "Носій не відкритий."
-#define MSGTR_VCDTrack "VCD доріжка %d"
 #define MSGTR_NoChapter "Без розділу"
 #define MSGTR_Chapter "Розділ %d"
 #define MSGTR_NoFileLoaded "Файл не завантжено."

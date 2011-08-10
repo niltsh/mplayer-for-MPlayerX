@@ -705,7 +705,6 @@ static const char help_text[]=
 #define MSGTR_Preferences "Tercihler"
 #define MSGTR_AudioPreferences "Ses sürücüsü ayarları"
 #define MSGTR_NoMediaOpened "Medya yok"
-#define MSGTR_VCDTrack "VCD parça %d"
 #define MSGTR_NoChapter "Bölüm yok"
 #define MSGTR_Chapter "Bölüm %d"
 #define MSGTR_NoFileLoaded "Dosya yüklenemedi"

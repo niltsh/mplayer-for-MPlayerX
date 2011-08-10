@@ -330,7 +330,6 @@ static const char help_text[]=
 #define MSGTR_Network "Netværksstreaming..."
 #define MSGTR_Preferences "Indstillinger"
 #define MSGTR_NoMediaOpened "Medie ikke åbnet"
-#define MSGTR_VCDTrack "VCD nummer %d"
 #define MSGTR_NoChapter "Ingen kapitel"
 #define MSGTR_Chapter "kapitel %d"
 #define MSGTR_NoFileLoaded "Ingen fil indlæst"

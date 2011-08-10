@@ -294,7 +294,6 @@ static const char help_text[]=
 #define MSGTR_Network "Streaming în reþea..."
 #define MSGTR_Preferences "Preferinþe"
 #define MSGTR_NoMediaOpened "Nu e deschis nici un fiºier."
-#define MSGTR_VCDTrack "Pista VCD %d"
 #define MSGTR_NoChapter "Nici un capitol"
 #define MSGTR_Chapter "Capitol %d"
 #define MSGTR_NoFileLoaded "Nici un fiºier încãrcat."

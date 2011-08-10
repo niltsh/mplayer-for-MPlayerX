@@ -83,7 +83,7 @@ static void TranslateFilename(int c, char *tmp, size_t tmplen)
 
 #ifdef CONFIG_VCD
     case STREAMTYPE_VCD:
-        snprintf(tmp, tmplen, MSGTR_VCDTrack, guiInfo.Track);
+        snprintf(tmp, tmplen, MSGTR_Title, guiInfo.Track - 1);
         break;
 #endif
 

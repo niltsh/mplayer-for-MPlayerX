@@ -333,8 +333,8 @@ void uiPrev(void)
 
 #ifdef CONFIG_VCD
     case STREAMTYPE_VCD:
-        if (--guiInfo.Track == 0) {
-            guiInfo.Track = 1;
+        if (--guiInfo.Track == 1) {
+            guiInfo.Track = 2;
             stop = 1;
         }
         break;
@@ -389,12 +389,8 @@ void uiNext(void)
     case STREAMTYPE_VCD:
 
         if (++guiInfo.Track >= guiInfo.VCDTracks) {
-            guiInfo.Track = guiInfo.VCDTracks;
-
-            if (guiInfo.VCDTracks > 1)
-                guiInfo.Track--;
-
-            stop = 1;
+            stop = (guiInfo.Track > guiInfo.VCDTracks);
+            guiInfo.Track = FFMAX(2, guiInfo.VCDTracks);
         }
 
         break;

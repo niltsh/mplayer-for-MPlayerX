@@ -204,7 +204,7 @@ play:
 	       if ( guiInfo.Playing != GUI_PAUSE )
 	        {
 		 if ( !guiInfo.Track )
-                   guiInfo.Track=1;
+                   guiInfo.Track=2;
                  guiInfo.DiskChanged=1;
 		}
 	       break;

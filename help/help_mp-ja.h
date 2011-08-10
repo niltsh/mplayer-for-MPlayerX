@@ -269,7 +269,6 @@ static const char help_text[]=
 #define MSGTR_SkinBrowser "スキンブラウザ"
 #define MSGTR_Preferences "設定"
 #define MSGTR_NoMediaOpened "メディアが開かれていません."
-#define MSGTR_VCDTrack "VCD トラック %d"
 #define MSGTR_NoChapter "キャプターがありません"
 #define MSGTR_Chapter "キャプター %d"
 #define MSGTR_NoFileLoaded "ファイルが読み込まれていません."
