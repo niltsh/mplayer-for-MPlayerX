@@ -41,7 +41,7 @@
 #include "libavcodec/mpegvideo.h"
 #include "libavcodec/mjpegenc.h"
 
-#include "libmpcodecs/vd_ffmpeg.h"
+#include "av_helpers.h"
 #include "jpeg_enc.h"
 
 
