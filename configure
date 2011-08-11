@@ -4198,9 +4198,9 @@ if test "$_directfb" = auto ; then
 #endif
 int main(void) { DirectFBInit(0, 0); return 0; }
 EOF
-  for _inc_tmp in "" -I/usr/local/include/directfb -I/usr/include/directfb -I/usr/local/include; do
-    cc_check $_inc_tmp -ldirectfb &&
-      _directfb=yes && extra_cflags="$extra_cflags $_inc_tmp" && break
+  for inc_tmp in "" -I/usr/local/include/directfb -I/usr/include/directfb -I/usr/local/include; do
+    cc_check $inc_tmp -ldirectfb &&
+      _directfb=yes && extra_cflags="$extra_cflags $inc_tmp" && break
   done
 fi
 if test "$_directfb" = yes ; then
@@ -4707,9 +4707,9 @@ cat >$TMPC << EOF
 #include <linux/dvb/audio.h>
 int main(void) {return 0;}
 EOF
-  for _inc_tmp in "" "-I/usr/src/DVB/include" ; do
-    cc_check $_inc_tmp && _dvb=yes &&
-      extra_cflags="$extra_cflags $_inc_tmp" && break
+  for inc_tmp in "" "-I/usr/src/DVB/include" ; do
+    cc_check $inc_tmp && _dvb=yes &&
+      extra_cflags="$extra_cflags $inc_tmp" && break
   done
 fi
 echores "$_dvb"
@@ -4985,7 +4985,7 @@ echores "$_vesa"
 
 
 echocheck "SDL"
-_inc_tmp=""
+inc_tmp=""
 ld_tmp=""
 def_sdl_sdl_h="#undef CONFIG_SDL_SDL_H"
 if test -z "$_sdlconfig" ; then
@@ -5015,7 +5015,7 @@ int main(int argc, char *argv[]) {
 EOF
   _sdl=no
   for ld_tmp in "-lSDL" "-lSDL -lpthread" "-lSDL -lwinmm -lgdi32" "-lSDL -lwinmm -lgdi32 -ldxguid" ; do
-    if cc_check -DCONFIG_SDL_SDL_H $_inc_tmp $ld_tmp ; then
+    if cc_check -DCONFIG_SDL_SDL_H $inc_tmp $ld_tmp ; then
       _sdl=yes
       def_sdl_sdl_h="#define CONFIG_SDL_SDL_H 1"
       break
@@ -5024,21 +5024,18 @@ EOF
   if test "$_sdl" = no && "$_sdlconfig" --version >>"$TMPLOG" 2>&1 ; then
     res_comment="using $_sdlconfig"
     if cygwin ; then
-      _inc_tmp="$($_sdlconfig --cflags | cut -d " " -f 1,5,6 | sed s/no-cygwin/cygwin/)"
+      inc_tmp="$($_sdlconfig --cflags | cut -d " " -f 1,5,6 | sed s/no-cygwin/cygwin/)"
       ld_tmp="$($_sdlconfig --libs | cut -d " " -f 1,4,6 | sed s/no-cygwin/cygwin/)"
     elif mingw32 ; then
-      _inc_tmp=$($_sdlconfig --cflags | sed s/-Dmain=SDL_main//)
+      inc_tmp=$($_sdlconfig --cflags | sed s/-Dmain=SDL_main//)
       ld_tmp=$($_sdlconfig --libs | sed -e s/-mwindows// -e s/-lmingw32//)
     else
-      _inc_tmp="$($_sdlconfig --cflags)"
+      inc_tmp="$($_sdlconfig --cflags)"
       ld_tmp="$($_sdlconfig --libs)"
     fi
-    if cc_check $_inc_tmp $ld_tmp >>"$TMPLOG" 2>&1 ; then
+    if cc_check $inc_tmp $ld_tmp >>"$TMPLOG" 2>&1 ; then
           _sdl=yes
-    elif cc_check $_inc_tmp $ld_tmp -lstdc++ >>"$TMPLOG" 2>&1 ; then
-          # HACK for BeOS/Haiku SDL
-          ld_tmp="$ld_tmp -lstdc++"
-    elif cc_check $_inc_tmp $ld_tmp -lstdc++ >>"$TMPLOG" 2>&1 ; then
+    elif cc_check $inc_tmp $ld_tmp -lstdc++ >>"$TMPLOG" 2>&1 ; then
           # HACK for BeOS/Haiku SDL
           ld_tmp="$ld_tmp -lstdc++"
           _sdl=yes
@@ -5047,7 +5044,7 @@ EOF
 fi
 if test "$_sdl" = yes ; then
   def_sdl='#define CONFIG_SDL 1'
-  extra_cflags="$extra_cflags $_inc_tmp"
+  extra_cflags="$extra_cflags $inc_tmp"
   libs_mplayer="$libs_mplayer $ld_tmp"
   vomodules="sdl $vomodules"
   aomodules="sdl $aomodules"
@@ -5244,9 +5241,9 @@ fi #if win32; then
 echocheck "DXR2"
 if test "$_dxr2" = auto; then
   _dxr2=no
-  for _inc_tmp in "" -I/usr/local/include/dxr2 -I/usr/include/dxr2; do
-    header_check dxr2ioctl.h $_inc_tmp && _dxr2=yes &&
-      extra_cflags="$extra_cflags $_inc_tmp" && break
+  for inc_tmp in "" -I/usr/local/include/dxr2 -I/usr/include/dxr2; do
+    header_check dxr2ioctl.h $inc_tmp && _dxr2=yes &&
+      extra_cflags="$extra_cflags $inc_tmp" && break
   done
 fi
 if test "$_dxr2" = yes; then
@@ -5861,9 +5858,9 @@ echores "$_libdvdcss_internal"
 echocheck "cdparanoia"
 if test "$_cdparanoia" = auto ; then
     _cdparanoia=no
-    for _inc_tmp in "" "-I/usr/include/cdda" "-I/usr/local/include/cdda" ; do
-      statement_check_broken cdda_interface.h cdda_paranoia.h 'paranoia_cachemodel_size(NULL, 0)' $_inc_tmp -lcdda_interface -lcdda_paranoia &&
-        _cdparanoia=yes && extra_cflags="$extra_cflags $_inc_tmp" && break
+    for inc_tmp in "" "-I/usr/include/cdda" "-I/usr/local/include/cdda" ; do
+      statement_check_broken cdda_interface.h cdda_paranoia.h 'paranoia_cachemodel_size(NULL, 0)' $inc_tmp -lcdda_interface -lcdda_paranoia &&
+        _cdparanoia=yes && extra_cflags="$extra_cflags $inc_tmp" && break
     done
 fi
 if test "$_cdparanoia" = yes ; then
@@ -5894,10 +5891,10 @@ EOF
             extra_ldflags="$extra_ldflags $ld_tmp" && break
     done
     if test "$_libcdio" = no && $_pkg_config --exists libcdio_paranoia ; then
-      _inc_tmp=$($_pkg_config --cflags libcdio_paranoia)
+      inc_tmp=$($_pkg_config --cflags libcdio_paranoia)
       ld_tmp=$($_pkg_config --libs libcdio_paranoia)
-      cc_check $_inc_tmp $ld_tmp && _libcdio=yes &&
-        extra_ldflags="$extra_ldflags $ld_tmp" && extra_cflags="$extra_cflags $_inc_tmp"
+      cc_check $inc_tmp $ld_tmp && _libcdio=yes &&
+        extra_ldflags="$extra_ldflags $ld_tmp" && extra_cflags="$extra_cflags $inc_tmp"
     fi
 fi
 if test "$_libcdio" = yes && test "$_cdparanoia" = no ; then
@@ -6007,10 +6004,10 @@ EOF
     cc_check $ld_tmp && _fontconfig=yes && extra_ldflags="$extra_ldflags $ld_tmp" && break
   done
   if test "$_fontconfig" = no && $_pkg_config --exists fontconfig ; then
-    _inc_tmp=$($_pkg_config --cflags fontconfig)
+    inc_tmp=$($_pkg_config --cflags fontconfig)
     ld_tmp=$($_pkg_config --libs fontconfig)
-    cc_check $_inc_tmp $ld_tmp && _fontconfig=yes &&
-      extra_ldflags="$extra_ldflags $ld_tmp" && extra_cflags="$extra_cflags $_inc_tmp"
+    cc_check $inc_tmp $ld_tmp && _fontconfig=yes &&
+      extra_ldflags="$extra_ldflags $ld_tmp" && extra_cflags="$extra_cflags $inc_tmp"
   fi
 fi
 if test "$_fontconfig" = yes ; then
@@ -6078,7 +6075,7 @@ echores "$_ass"
 
 
 echocheck "fribidi with charsets"
-_inc_tmp=""
+inc_tmp=""
 ld_tmp=""
 if test "$_fribidi" = auto ; then
     cat > $TMPC << EOF
@@ -6093,19 +6090,19 @@ int main(void) {
 }
 EOF
     _fribidi=no
-    _inc_tmp=""
+    inc_tmp=""
     ld_tmp="-lfribidi"
-    cc_check $_inc_tmp $ld_tmp && _fribidi=yes
+    cc_check $inc_tmp $ld_tmp && _fribidi=yes
     if $_pkg_config --exists fribidi > /dev/null 2>&1 &&
        test "$_fribidi" = no ; then
-        _inc_tmp="$($_pkg_config --cflags fribidi)"
+        inc_tmp="$($_pkg_config --cflags fribidi)"
         ld_tmp="$($_pkg_config --libs fribidi)"
-        cc_check $_inc_tmp $ld_tmp && _fribidi=yes
+        cc_check $inc_tmp $ld_tmp && _fribidi=yes
     fi
 fi
 if test "$_fribidi" = yes ; then
     def_fribidi='#define CONFIG_FRIBIDI 1'
-    extra_cflags="$extra_cflags $_inc_tmp"
+    extra_cflags="$extra_cflags $inc_tmp"
     extra_ldflags="$extra_ldflags $ld_tmp"
 else
     def_fribidi='#undef CONFIG_FRIBIDI'
@@ -6362,19 +6359,19 @@ int main(void) {
 }
 EOF
   ld_theora=$($_pkg_config --silence-errors --libs theora)
-  _inc_theora=$($_pkg_config --silence-errors --cflags theora)
-  cc_check $_inc_theora $ld_theora && extra_ldflags="$extra_ldflags $ld_theora" &&
-    extra_cflags="$extra_cflags $_inc_theora" && _theora=yes
+  inc_theora=$($_pkg_config --silence-errors --cflags theora)
+  cc_check $inc_theora $ld_theora && extra_ldflags="$extra_ldflags $ld_theora" &&
+    extra_cflags="$extra_cflags $inc_theora" && _theora=yes
   if test _theora = no; then
     ld_theora="-ltheora -logg"
     cc_check $ld_theora && extra_ldflags="$extra_ldflags $ld_theora" && _theora=yes
   fi
   if test "$_theora" = no && test "$_tremor_internal" = yes; then
     ld_theora=$($_pkg_config --silence-errors --libs theora)
-    _inc_theora=$($_pkg_config --silence-errors --cflags theora)
-    cc_check tremor/bitwise.c $_inc_theora $ld_theora &&
+    inc_theora=$($_pkg_config --silence-errors --cflags theora)
+    cc_check tremor/bitwise.c $inc_theora $ld_theora &&
       extra_ldflags="$extra_ldflags $ld_theora" &&
-      extra_cflags="$extra_cflags $_inc_theora" && _theora=yes
+      extra_cflags="$extra_cflags $inc_theora" && _theora=yes
     if test _theora = no; then
       ld_theora="-ltheora -logg"
       cc_check tremor/bitwise.c $ld_theora &&
@@ -6607,16 +6604,16 @@ int main(void) {
 EOF
   _libbs2b=no
   if $_pkg_config --exists libbs2b ; then
-    _inc_tmp=$($_pkg_config --cflags libbs2b)
+    inc_tmp=$($_pkg_config --cflags libbs2b)
     ld_tmp=$($_pkg_config --libs libbs2b)
-    cc_check $_inc_tmp $ld_tmp && extra_ldflags="$extra_ldflags $ld_tmp" &&
-      extra_cflags="$extra_cflags $_inc_tmp" && _libbs2b=yes
+    cc_check $inc_tmp $ld_tmp && extra_ldflags="$extra_ldflags $ld_tmp" &&
+      extra_cflags="$extra_cflags $inc_tmp" && _libbs2b=yes
   else
-    for _inc_tmp in "" -I/usr/include/bs2b -I/usr/local/include \
+    for inc_tmp in "" -I/usr/include/bs2b -I/usr/local/include \
         -I/usr/local/include/bs2b ; do
-      if cc_check $_inc_tmp -lbs2b ; then
+      if cc_check $inc_tmp -lbs2b ; then
         extra_ldflags="$extra_ldflags -lbs2b"
-        extra_cflags="$extra_cflags $_inc_tmp"
+        extra_cflags="$extra_cflags $inc_tmp"
         _libbs2b=yes
         break
       fi
@@ -6801,11 +6798,11 @@ if test "$_librtmp" = auto  && test "$networking" = yes ; then
   statement_check librtmp/rtmp.h 'RTMP_Socket(NULL)' -lrtmp &&
     _librtmp=yes && extra_ldflags="$extra_ldflags -lrtmp"
   if test "$_librtmp" != yes && $_pkg_config --exists librtmp ; then
-    _inc_tmp=$($_pkg_config --cflags librtmp)
+    inc_tmp=$($_pkg_config --cflags librtmp)
 	ld_tmp=$($_pkg_config --libs librtmp)
-	cc_check $_inc_tmp $ld_tmp && _librtmp=yes &&
+	cc_check $inc_tmp $ld_tmp && _librtmp=yes &&
 	  extra_ldflags="$extra_ldflags $ld_tmp" &&
-	  extra_cflags="$extra_cflags $_inc_tmp"
+	  extra_cflags="$extra_cflags $inc_tmp"
   fi
 fi
 if test "$_librtmp" = yes && test "$networking" = yes; then
@@ -7028,11 +7025,11 @@ int main(void)
 }
 EOF
     if $_pkg_config --exists dirac ; then
-      _inc_dirac=$($_pkg_config --silence-errors --cflags dirac)
+      inc_dirac=$($_pkg_config --silence-errors --cflags dirac)
       ld_dirac=$($_pkg_config --silence-errors --libs dirac)
-      cc_check $_inc_dirac $ld_dirac       &&
+      cc_check $inc_dirac $ld_dirac        &&
       _libdirac_lavc=yes                   &&
-      extra_cflags="$extra_cflags $_inc_dirac" &&
+      extra_cflags="$extra_cflags $inc_dirac" &&
       extra_ldflags="$extra_ldflags $ld_dirac"
     fi
   fi
@@ -7060,11 +7057,11 @@ if test "$_libschroedinger_lavc" = auto ; then
 int main(void) { schro_init(); return SCHRO_ENCODER_RATE_CONTROL_CONSTANT_QUALITY; }
 EOF
     if $_pkg_config --exists schroedinger-1.0 ; then
-      _inc_schroedinger=$($_pkg_config --silence-errors --cflags schroedinger-1.0)
+      inc_schroedinger=$($_pkg_config --silence-errors --cflags schroedinger-1.0)
       ld_schroedinger=$($_pkg_config --silence-errors --libs schroedinger-1.0)
-      cc_check $_inc_schroedinger $ld_schroedinger  &&
+      cc_check $inc_schroedinger $ld_schroedinger   &&
       _libschroedinger_lavc=yes                     &&
-      extra_cflags="$extra_cflags $_inc_schroedinger"   &&
+      extra_cflags="$extra_cflags $inc_schroedinger"   &&
       extra_ldflags="$extra_ldflags $ld_schroedinger"
     fi
   fi
