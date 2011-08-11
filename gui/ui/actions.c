@@ -318,16 +318,15 @@ void uiPrev(void)
 #ifdef CONFIG_DVDREAD
     case STREAMTYPE_DVD:
 
-        if (--guiInfo.DVD.current_chapter == 0) {
-            guiInfo.DVD.current_chapter = 1;
+        if (--guiInfo.Chapter == 0) {
+            guiInfo.Chapter = 1;
 
-            if (--guiInfo.DVD.current_title <= 0) {
-                guiInfo.DVD.current_title = 1;
+            if (--guiInfo.Track <= 0) {
+                guiInfo.Track = 1;
                 stop = 1;
             }
         }
 
-        guiInfo.Track = guiInfo.DVD.current_title;
         break;
 #endif
 
@@ -372,25 +371,24 @@ void uiNext(void)
 #ifdef CONFIG_DVDREAD
     case STREAMTYPE_DVD:
 
-        if (guiInfo.DVD.current_chapter++ == guiInfo.DVD.chapters) {
-            guiInfo.DVD.current_chapter = 1;
+        if (guiInfo.Chapter++ == guiInfo.Chapters) {
+            guiInfo.Chapter = 1;
 
-            if (++guiInfo.DVD.current_title > guiInfo.DVD.titles) {
-                guiInfo.DVD.current_title = guiInfo.DVD.titles;
+            if (++guiInfo.Track > guiInfo.Tracks) {
+                guiInfo.Track = guiInfo.Tracks;
                 stop = 1;
             }
         }
 
-        guiInfo.Track = guiInfo.DVD.current_title;
         break;
 #endif
 
 #ifdef CONFIG_VCD
     case STREAMTYPE_VCD:
 
-        if (++guiInfo.Track >= guiInfo.VCDTracks) {
-            stop = (guiInfo.Track > guiInfo.VCDTracks);
-            guiInfo.Track = FFMAX(2, guiInfo.VCDTracks);
+        if (++guiInfo.Track >= guiInfo.Tracks) {
+            stop = (guiInfo.Track > guiInfo.Tracks);
+            guiInfo.Track = FFMAX(2, guiInfo.Tracks);
         }
 
         break;

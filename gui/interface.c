@@ -457,7 +457,7 @@ int gui(int what, void *data)
         {
             char tmp[512];
 
-            sprintf(tmp, "dvd://%d", guiInfo.Title);
+            sprintf(tmp, "dvd://%d", guiInfo.Track);
             setdup(&guiInfo.Filename, tmp);
         }
 
@@ -655,24 +655,23 @@ int gui(int what, void *data)
 #ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
             dvd = stream->priv;
-            guiInfo.DVD.titles   = dvd->vmg_file->tt_srpt->nr_of_srpts;
-            guiInfo.DVD.chapters = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
-            guiInfo.DVD.angles   = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
+            guiInfo.Tracks   = dvd->vmg_file->tt_srpt->nr_of_srpts;
+            guiInfo.Chapters = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
+            guiInfo.Angles   = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
             guiInfo.DVD.nr_of_audio_channels = dvd->nr_of_channels;
             memcpy(guiInfo.DVD.audio_streams, dvd->audio_streams, sizeof(dvd->audio_streams));
             guiInfo.DVD.nr_of_subtitles = dvd->nr_of_subtitles;
             memcpy(guiInfo.DVD.subtitles, dvd->subtitles, sizeof(dvd->subtitles));
-            guiInfo.DVD.current_title   = dvd_title + 1;
-            guiInfo.DVD.current_chapter = dvd_chapter + 1;
-            guiInfo.DVD.current_angle   = dvd_angle + 1;
-            guiInfo.Track = dvd_title + 1;
+            guiInfo.Track   = dvd_title + 1;
+            guiInfo.Chapter = dvd_chapter + 1;
+            guiInfo.Angle   = dvd_angle + 1;
             break;
 #endif
 
 #ifdef CONFIG_VCD
         case STREAMTYPE_VCD:
-            guiInfo.VCDTracks = 0;
-            stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiInfo.VCDTracks);
+            guiInfo.Tracks = 0;
+            stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiInfo.Tracks);
             break;
 #endif
 
@@ -803,9 +802,9 @@ int gui(int what, void *data)
             guiInfo.MovieWindow   = True;
 
 #ifdef CONFIG_DVDREAD
-            guiInfo.DVD.current_title   = 1;
-            guiInfo.DVD.current_chapter = 1;
-            guiInfo.DVD.current_angle   = 1;
+            guiInfo.Track   = 1;
+            guiInfo.Chapter = 1;
+            guiInfo.Angle   = 1;
 #endif
 
             if (!guiApp.subWindow.isFullScreen && gtkShowVideoWindow) {

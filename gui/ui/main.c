@@ -114,11 +114,17 @@ static void guiInfoMediumClear (int what)
   }
 
 #ifdef CONFIG_DVDREAD
-  if (what & CLEAR_DVD) memset(&guiInfo.DVD, 0, sizeof(guiDVDStruct));
+  if (what & CLEAR_DVD)
+  {
+    memset(&guiInfo.DVD, 0, sizeof(guiDVDStruct));
+    guiInfo.Tracks = 0;
+    guiInfo.Chapters = 0;
+    guiInfo.Angles = 0;
+  }
 #endif
 
 #ifdef CONFIG_VCD
-  if (what & CLEAR_VCD) guiInfo.VCDTracks = 0;
+  if (what & CLEAR_VCD) guiInfo.Tracks = 0;
 #endif
 }
 
@@ -169,9 +175,9 @@ void uiEventHandling( int msg,float param )
 #endif
 #ifdef CONFIG_DVDREAD
    case evPlayDVD:
-        guiInfo.DVD.current_title=1;
-        guiInfo.DVD.current_chapter=1;
-        guiInfo.DVD.current_angle=1;
+        guiInfo.Track=1;
+        guiInfo.Chapter=1;
+        guiInfo.Angle=1;
 play_dvd_2:
  	guiInfoMediumClear( CLEAR_ALL - CLEAR_DVD );
         guiInfo.StreamType=STREAMTYPE_DVD;
@@ -216,9 +222,6 @@ play:
 	       uiSetFileName( NULL,dvd_device,STREAMTYPE_DVD );
 	       if ( guiInfo.Playing != GUI_PAUSE )
 	        {
-		 guiInfo.Title=guiInfo.DVD.current_title;
-		 guiInfo.Chapter=guiInfo.DVD.current_chapter;
-		 guiInfo.Angle=guiInfo.DVD.current_angle;
                  guiInfo.DiskChanged=1;
 		}
                break;
@@ -237,13 +240,13 @@ play:
         goto play_dvd_2;
         break;
    case evSetDVDChapter:
-        guiInfo.DVD.current_chapter=iparam;
+        guiInfo.Chapter=iparam;
         goto play_dvd_2;
         break;
    case evSetDVDTitle:
-        guiInfo.DVD.current_title=iparam;
-	guiInfo.DVD.current_chapter=1;
-	guiInfo.DVD.current_angle=1;
+        guiInfo.Track=iparam;
+	guiInfo.Chapter=1;
+	guiInfo.Angle=1;
         goto play_dvd_2;
         break;
 #endif

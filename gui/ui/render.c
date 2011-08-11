@@ -74,8 +74,8 @@ static void TranslateFilename(int c, char *tmp, size_t tmplen)
 
 #ifdef CONFIG_DVDREAD
     case STREAMTYPE_DVD:
-        if (guiInfo.DVD.current_chapter)
-            snprintf(tmp, tmplen, MSGTR_Chapter, guiInfo.DVD.current_chapter);
+        if (guiInfo.Chapter)
+            snprintf(tmp, tmplen, MSGTR_Chapter, guiInfo.Chapter);
         else
             av_strlcat(tmp, MSGTR_NoChapter, tmplen);
         break;

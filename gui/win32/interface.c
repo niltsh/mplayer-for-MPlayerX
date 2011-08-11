@@ -114,9 +114,9 @@ static void guiSetEvent(int event)
         case evPlayDVD:
         {
             static char dvdname[MAX_PATH];
-            guiInfo.DVD.current_title = dvd_title;
-            guiInfo.DVD.current_chapter = dvd_chapter;
-            guiInfo.DVD.current_angle = dvd_angle;
+            guiInfo.Track = dvd_title;
+            guiInfo.Chapter = dvd_chapter;
+            guiInfo.Angle = dvd_angle;
             guiInfo.DiskChanged = 1;
 
             uiSetFileName(NULL, dvd_device, STREAMTYPE_DVD);
@@ -235,9 +235,6 @@ static void guiSetEvent(int event)
 #ifdef CONFIG_DVDREAD
                 case STREAMTYPE_DVD:
                 {
-                    guiInfo.Title = guiInfo.DVD.current_title;
-                    guiInfo.Chapter = guiInfo.DVD.current_chapter;
-                    guiInfo.Angle = guiInfo.DVD.current_angle;
                     guiInfo.DiskChanged = 1;
                     gui(GUI_SET_STATE, (void *) GUI_PLAY);
                     break;
@@ -298,9 +295,9 @@ void uiNext(void)
     {
 #ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
-            if(guiInfo.DVD.current_chapter == (guiInfo.DVD.chapters - 1))
+            if(guiInfo.Chapter == (guiInfo.Chapters - 1))
                 return;
-            guiInfo.DVD.current_chapter++;
+            guiInfo.Chapter++;
             break;
 #endif
         default:
@@ -320,9 +317,9 @@ void uiPrev(void)
     {
 #ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
-            if(guiInfo.DVD.current_chapter == 1)
+            if(guiInfo.Chapter == 1)
                 return;
-            guiInfo.DVD.current_chapter--;
+            guiInfo.Chapter--;
             break;
 #endif
         default:
@@ -461,10 +458,10 @@ int gui(int what, void *data)
                 case STREAMTYPE_DVD:
                 {
                     char tmp[512];
-                    dvd_title = guiInfo.DVD.current_title;
-                    dvd_chapter = guiInfo.DVD.current_chapter;
-                    dvd_angle = guiInfo.DVD.current_angle;
-                    sprintf(tmp,"dvd://%d", guiInfo.Title);
+                    dvd_title = guiInfo.Track;
+                    dvd_chapter = guiInfo.Chapter;
+                    dvd_angle = guiInfo.Angle;
+                    sprintf(tmp,"dvd://%d", guiInfo.Track);
                     setdup(&guiInfo.Filename, tmp);
                     break;
                 }
@@ -524,16 +521,15 @@ int gui(int what, void *data)
 #ifdef CONFIG_DVDREAD
                 case STREAMTYPE_DVD:
                     dvdp = stream->priv;
-                    guiInfo.DVD.titles = dvdp->vmg_file->tt_srpt->nr_of_srpts;
-                    guiInfo.DVD.chapters = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
-                    guiInfo.DVD.angles = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
+                    guiInfo.Tracks = dvdp->vmg_file->tt_srpt->nr_of_srpts;
+                    guiInfo.Chapters = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
+                    guiInfo.Angles = dvdp->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
                     guiInfo.DVD.nr_of_audio_channels = dvdp->nr_of_channels;
                     memcpy(guiInfo.DVD.audio_streams, dvdp->audio_streams, sizeof(dvdp->audio_streams));
                     guiInfo.DVD.nr_of_subtitles = dvdp->nr_of_subtitles;
                     memcpy(guiInfo.DVD.subtitles, dvdp->subtitles, sizeof(dvdp->subtitles));
-                    guiInfo.DVD.current_title = dvd_title + 1;
-                    guiInfo.DVD.current_chapter = dvd_chapter + 1;
-                    guiInfo.DVD.current_angle = dvd_angle + 1;
+                    guiInfo.Chapter = dvd_chapter + 1;
+                    guiInfo.Angle = dvd_angle + 1;
                     guiInfo.Track = dvd_title + 1;
                     break;
 #endif
@@ -674,9 +670,9 @@ int gui(int what, void *data)
           guiInfo.AudioChannels = 0;
 
 #ifdef CONFIG_DVDREAD
-          guiInfo.DVD.current_title = 1;
-          guiInfo.DVD.current_chapter = 1;
-          guiInfo.DVD.current_angle = 1;
+          guiInfo.Track = 1;
+          guiInfo.Chapter = 1;
+          guiInfo.Angle = 1;
 #endif
 
           if (mygui->playlist->current == (mygui->playlist->trackcount - 1))

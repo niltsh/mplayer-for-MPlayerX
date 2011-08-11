@@ -80,12 +80,6 @@ enum {
 };
 
 typedef struct {
-    int titles;
-    int chapters;
-    int angles;
-    int current_chapter;
-    int current_title;
-    int current_angle;
     int nr_of_audio_channels;
     stream_language_t audio_streams[32];
     int nr_of_subtitles;
@@ -102,13 +96,14 @@ typedef struct {
 
 #ifdef CONFIG_DVDREAD
     guiDVDStruct DVD;
-    int Title;
-    int Angle;
+    int Chapters;
     int Chapter;
+    int Angles;
+    int Angle;
 #endif
 
-#ifdef CONFIG_VCD
-    int VCDTracks;
+#if defined(CONFIG_VCD) || defined(CONFIG_DVDREAD)
+    int Tracks;
 #endif
 
     int Playing;

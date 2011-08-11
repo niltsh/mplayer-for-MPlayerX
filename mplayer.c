@@ -4006,7 +4006,7 @@ goto_enable_cache:
 #ifdef CONFIG_DVDREAD
                 if (mpctx->stream->type == STREAMTYPE_DVD) {
                     dvd_priv_t *dvdp = mpctx->stream->priv;
-                    guiInfo.DVD.current_chapter = dvd_chapter_from_cell(dvdp, guiInfo.DVD.current_title - 1, dvdp->cur_cell) + 1;
+                    guiInfo.Chapter = dvd_chapter_from_cell(dvdp, guiInfo.Track - 1, dvdp->cur_cell) + 1;
                 }
 #endif
             }

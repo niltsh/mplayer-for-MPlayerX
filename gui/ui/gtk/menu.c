@@ -455,10 +455,10 @@ GtkWidget * create_PopUpMenu( void )
     AddMenuItem( window1, (const char*)playvcd_xpm, VCDSubMenu,MSGTR_MENU_PlayDisc,evPlayVCD );
     AddSeparator( VCDSubMenu );
     VCDTitleMenu=AddSubMenu( window1, (const char*)title_xpm, VCDSubMenu,MSGTR_MENU_Titles );
-    if ( guiInfo.VCDTracks )
+    if ( guiInfo.Tracks )
      {
       char tmp[32]; int i;
-      for ( i=1;i < guiInfo.VCDTracks;i++ )
+      for ( i=1;i < guiInfo.Tracks;i++ )
        {
         snprintf( tmp,32,MSGTR_MENU_Title,i );
     //AddMenuItem( VCDTitleMenu,tmp,( i << 16 ) + evSetVCDTrack );
@@ -477,14 +477,14 @@ GtkWidget * create_PopUpMenu( void )
 //    AddMenuItem( DVDSubMenu,MSGTR_MENU_ShowDVDMenu, evNone );
     AddSeparator( DVDSubMenu );
     DVDTitleMenu=AddSubMenu( window1, (const char*)title_xpm, DVDSubMenu,MSGTR_MENU_Titles );
-     if ( guiInfo.DVD.titles )
+     if ( guiInfo.Tracks )
       {
        char tmp[32]; int i;
-       for ( i=1 ; i<= guiInfo.DVD.titles;i++ )
+       for ( i=1 ; i<= guiInfo.Tracks;i++ )
         {
          snprintf( tmp,32,MSGTR_MENU_Title,i);
          AddMenuCheckItem( window1, (const char*)empty1px_xpm, DVDTitleMenu,tmp,
-			   guiInfo.DVD.current_title == i,
+			   guiInfo.Track == i,
 			   (i << 16) + evSetDVDTitle );
         }
       }
@@ -494,13 +494,13 @@ GtkWidget * create_PopUpMenu( void )
         gtk_widget_set_sensitive( MenuItem,FALSE );
        }
     DVDChapterMenu=AddSubMenu( window1, (const char*)chapter_xpm, DVDSubMenu,MSGTR_MENU_Chapters );
-     if ( guiInfo.DVD.chapters )
+     if ( guiInfo.Chapters )
       {
        char tmp[32]; int i;
-       for ( i=1;i <= guiInfo.DVD.chapters;i++ )
+       for ( i=1;i <= guiInfo.Chapters;i++ )
         {
          snprintf( tmp,32,MSGTR_MENU_Chapter,i );
-         AddMenuCheckItem( window1, (const char*)empty1px_xpm, DVDChapterMenu,tmp,guiInfo.DVD.current_chapter == i,
+         AddMenuCheckItem( window1, (const char*)empty1px_xpm, DVDChapterMenu,tmp,guiInfo.Chapter == i,
 			   ( i << 16 ) + evSetDVDChapter );
         }
       }

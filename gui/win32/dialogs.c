@@ -819,17 +819,17 @@ static LRESULT CALLBACK TitleChapterWndProc(HWND hwnd, UINT iMsg, WPARAM wParam,
                                  NULL);
             SendMessage(chapter, WM_SETFONT, (WPARAM) GetStockObject(DEFAULT_GUI_FONT), 0);
 
-            for (i=0; i<guiInfo.DVD.titles; i++)
+            for (i=0; i<guiInfo.Tracks; i++)
             {
                 /* we have to reverse the order here because of the way CB_INSERTSTRING adds items */
-                sprintf(&titles[i], "%d", guiInfo.DVD.titles - i);
+                sprintf(&titles[i], "%d", guiInfo.Tracks - i);
                 SendDlgItemMessage(hwnd, ID_TITLESEL, CB_INSERTSTRING, 0, (LPARAM) &titles[i]);
             }
             SendDlgItemMessage(hwnd, ID_TITLESEL, CB_SETCURSEL, dvd_title, 0);
 
-            for (j=0; j<guiInfo.DVD.chapters; j++)
+            for (j=0; j<guiInfo.Chapters; j++)
             {
-                sprintf(&chapters[j], "%d", guiInfo.DVD.chapters - j);
+                sprintf(&chapters[j], "%d", guiInfo.Chapters - j);
                 SendDlgItemMessage(hwnd, ID_CHAPTERSEL, CB_INSERTSTRING, 0, (LPARAM) &chapters[j]);
             }
             SendDlgItemMessage(hwnd, ID_CHAPTERSEL, CB_SETCURSEL, dvd_chapter, 0);
@@ -844,10 +844,10 @@ static LRESULT CALLBACK TitleChapterWndProc(HWND hwnd, UINT iMsg, WPARAM wParam,
                     return 0;
                 case ID_OK:
                 {
-                    guiInfo.DVD.current_title = SendMessage(title, CB_GETCURSEL, 0, 0) + 1;
-                    guiInfo.DVD.current_chapter = SendMessage(chapter, CB_GETCURSEL, 0, 0) + 1;
+                    guiInfo.Track = SendMessage(title, CB_GETCURSEL, 0, 0) + 1;
+                    guiInfo.Chapter = SendMessage(chapter, CB_GETCURSEL, 0, 0) + 1;
 
-                    if((guiInfo.DVD.current_title != 0 || guiInfo.DVD.current_chapter != 0))
+                    if((guiInfo.Track != 0 || guiInfo.Chapter != 0))
                     {
                         gui->startplay(gui);
                         DestroyWindow(hwnd);
