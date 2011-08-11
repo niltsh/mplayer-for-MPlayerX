@@ -4991,8 +4991,6 @@ def_sdl_sdl_h="#undef CONFIG_SDL_SDL_H"
 if test -z "$_sdlconfig" ; then
   if ( sdl-config --version ) >>"$TMPLOG" 2>&1 ; then
     _sdlconfig="sdl-config"
-  elif ( sdl11-config --version ) >>"$TMPLOG" 2>&1 ; then
-    _sdlconfig="sdl11-config"
   else
     _sdlconfig=false
   fi
