@@ -58,7 +58,7 @@
     touch ffmpeg/mp_auto_pull
   fi
 
-# Prevent locale nonsense from breaking basic text processing utils
+# Prevent locale nonsense from breaking basic text processing utilities
 export LC_ALL=C
 
 # Store the configure line that was used
@@ -152,7 +152,7 @@ EOF
 }
 
 # The following checks are special and should only be used with broken and
-# non-selfsufficient headers that do not include all of their dependencies.
+# non-self-sufficient headers that do not include all of their dependencies.
 
 header_check_broken() {
   cat > $TMPC << EOF
@@ -192,7 +192,7 @@ tmp_run() {
   "$TMPEXE" >> "$TMPLOG" 2>&1
 }
 
-# Display error message, flushes tempfile, exit
+# Display error message, flush temporary file, exit.
 die () {
   echo
   echo "Error: $@" >&2
@@ -429,7 +429,7 @@ Codecs:
   --enable-musepack         enable libmpcdec support (deprecated in favour of libavcodec) [disabled]
   --disable-libopencore_amrnb disable libopencore_amr narrowband [autodetect]
   --disable-libopencore_amrwb disable libopencore_amr wideband [autodetect]
-  --disable-libopenjpeg     disable OpenJPEG (JPEG2000) input/output support [autodetect]
+  --disable-libopenjpeg     disable OpenJPEG (JPEG 2000) input/output support [autodetect]
   --disable-crystalhd       disable CrystalHD support [autodetect]
   --disable-decoder=DECODER disable specified FFmpeg decoder
   --enable-decoder=DECODER  enable specified FFmpeg decoder
@@ -1413,7 +1413,7 @@ for ac_option do
   --enable-iwmmxt) _iwmmxt=yes ;;
   --disable-iwmmxt) _iwmmxt=no ;;
   --enable-mmx) _mmx=yes ;;
-  --disable-mmx) # 3Dnow! and MMX2 require MMX
+  --disable-mmx) # 3DNow! and MMX2 require MMX
         _3dnow=no _3dnowext=no _mmx=no _mmxext=no ;;
 
   *)
@@ -1715,20 +1715,20 @@ if test "$_nm" = auto ; then
   test -z "$_nm" && _nm=nm
 fi
 
-# XXX: this should be ok..
+# XXX: this should be OK..
 _cpuinfo="echo"
 
 if test "$_runtime_cpudetection" = no ; then
 
 # Cygwin has /proc/cpuinfo, but only supports Intel CPUs
-# FIXME: Remove the cygwin check once AMD CPUs are supported
+# FIXME: Remove the Cygwin check once AMD CPUs are supported
 if test -r /proc/cpuinfo && ! cygwin; then
   # Linux with /proc mounted, extract CPU information from it
   _cpuinfo="cat /proc/cpuinfo"
 elif test -r /compat/linux/proc/cpuinfo && ! x86 ; then
   # FreeBSD with Linux emulation /proc mounted,
   # extract CPU information from it
-  # Don't use it on x86 though, it never reports 3Dnow
+  # Don't use it on x86 though, it never reports 3DNow!
   _cpuinfo="cat /compat/linux/proc/cpuinfo"
 elif darwin && ! x86 ; then
   # use hostinfo on Darwin
@@ -1818,9 +1818,9 @@ EOF
   echores "$_mtrr"
 
   if test "$_gcc3_ext" != ""; then
-    # if we had to disable sse/sse2 because the active kernel does not
+    # If we had to disable SSE/SSE2 because the active kernel does not
     # support this instruction set extension, we also have to tell
-    # gcc3 to not generate sse/sse2 instructions for normal C code
+    # gcc3 to not generate SSE/SSE2 instructions for normal C code.
     cflag_check $_march $_gcc3_ext && _march="$_march $_gcc3_ext"
   fi
 
@@ -1879,7 +1879,7 @@ case "$host_arch" in
         fi
         ;;
     15) iproc=686
-        # k8 cpu-type only supported in gcc >= 3.4.0, but that will be
+        # k8 CPU type only supported in gcc >= 3.4.0, but that will be
         # caught and remedied in the optimization tests below.
         proc=k8
         ;;
@@ -2140,7 +2140,7 @@ case "$host_arch" in
       if test "$proc" = "k8"; then
         cflag_check -march=$proc $cpuopt=$proc || proc=athlon-xp
       fi
-      # This will fail if gcc version < 3.3, which is ok because earlier
+      # This will fail if gcc version < 3.3, which is OK because earlier
       # versions don't really support 64-bit on amd64.
       # Is this a valid assumption? -Corey
       if test "$proc" = "athlon-xp"; then
@@ -4390,7 +4390,7 @@ echores "$_xinerama"
 # Note: the -lXxf86vm library is the VideoMode extension and though it's not
 # needed for DGA, AFAIK every distribution packages together with DGA stuffs
 # named 'X extensions' or something similar.
-# This check may be useful for future mplayer versions (to change resolution)
+# This check may be useful for future MPlayer versions (to change resolution)
 # If you run into problems, remove '-lXxf86vm'.
 echocheck "Xxf86vm"
 if test "$_vm" = auto && test "$_x11" = yes ; then
@@ -4526,7 +4526,7 @@ if test "$_vidix" = yes ; then
   #test "$_vidix_drivers" || _vidix_drivers="cyberblade ivtv mach64 mga mga_crtc2 nvidia pm2 pm3 radeon rage128 s3 sh_veu sis unichrome"
   test "$_vidix_drivers" || _vidix_drivers="cyberblade mach64 mga mga_crtc2 nvidia pm2 pm3 radeon rage128 s3 sh_veu sis unichrome"
 
-  # some vidix drivers are architecture and os specific, discard them elsewhere
+  # some VIDIX drivers are architecture and os-specific, discard them elsewhere
   x86 || _vidix_drivers=$(echo $_vidix_drivers | sed -e s/cyberblade// -e s/sis// -e s/unichrome// -e s/s3//)
   (test $host_arch = "sh" && linux) || _vidix_drivers=$(echo $_vidix_drivers | sed s/sh_veu//)
 
@@ -4790,7 +4790,7 @@ echocheck "PNG support"
 if test "$_png" = auto ; then
   _png=no
   if irix ; then
-    # Don't check for -lpng on irix since it has its own libpng
+    # Don't check for -lpng on IRIX since it has its own libpng
     # incompatible with the GNU libpng
     res_comment="disabled on irix (not GNU libpng)"
   else
@@ -4847,7 +4847,7 @@ else
 fi
 
 
-echocheck "OpenJPEG (JPEG2000) support"
+echocheck "OpenJPEG (JPEG 2000) support"
 if test "$libopenjpeg" = auto ; then
   libopenjpeg=no
   define_statement_check OPJ_STATIC openjpeg.h 'opj_dparameters_t dec_params; opj_set_default_decoder_parameters(&dec_params)' -lopenjpeg && libopenjpeg=yes
@@ -4878,9 +4878,9 @@ echores "$_pnm"
 
 
 echocheck "GIF support"
-# This is to appease people who want to force gif support.
+# This is to appease people who want to force GIF support.
 # If it is forced to yes, then we still do checks to determine
-# which gif library to use.
+# which GIF library to use.
 if test "$_gif" = yes ; then
   _force_gif=yes
   _gif=auto
@@ -5987,12 +5987,12 @@ if test "$_fontconfig" = auto ; then
 #include <stdlib.h>
 #include <fontconfig/fontconfig.h>
 #if FC_VERSION < 20402
-#error At least version 2.4.2 of fontconfig required
+#error At least version 2.4.2 of Fontconfig required
 #endif
 int main(void) {
     int err = FcInit();
     if (err == FcFalse) {
-        printf("Couldn't initialize fontconfig lib\n");
+        printf("Could not initialize Fontconfig library.\n");
         exit(err);
     }
     return 0;
@@ -7746,7 +7746,7 @@ fi
 echores "$_lircc"
 
 if arm; then
-# Detect maemo development platform libraries availability (http://www.maemo.org),
+# Detect Maemo development platform libraries availability (http://www.maemo.org),
 # they are used when run on Nokia 770|8x0
 echocheck "maemo (Nokia 770|8x0)"
 if test "$_maemo" = auto ; then
@@ -8761,7 +8761,7 @@ EOF
 
 
 if test "$_mtrr" = yes ; then
-  echo "Please check mtrr settings at /proc/mtrr (see DOCS/HTML/$language_doc/video.html#mtrr)"
+  echo "Please check MTRR settings at /proc/mtrr (see DOCS/HTML/$language_doc/video.html#mtrr)"
   echo
 fi
 
