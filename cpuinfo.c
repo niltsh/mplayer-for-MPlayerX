@@ -32,10 +32,6 @@
 #define sleep(t) Sleep(1000*t);
 #endif
 
-#ifdef __BEOS__
-#define usleep(t) snooze(t)
-#endif
-
 #ifdef M_UNIX
 typedef long long int64_t;
 #define MISSING_USLEEP

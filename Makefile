@@ -183,7 +183,6 @@ SRCS_COMMON-$(NEED_MMAP)             += osdep/mmap-os2.c
 SRCS_COMMON-$(NEED_SETENV)           += osdep/setenv.c
 SRCS_COMMON-$(NEED_SHMEM)            += osdep/shmem.c
 SRCS_COMMON-$(NEED_STRSEP)           += osdep/strsep.c
-SRCS_COMMON-$(NEED_SWAB)             += osdep/swab.c
 SRCS_COMMON-$(NEED_VSSCANF)          += osdep/vsscanf.c
 SRCS_COMMON-$(NETWORKING)            += stream/stream_netstream.c \
                                         stream/asf_mmst_streaming.c \
