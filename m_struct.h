@@ -24,7 +24,7 @@
 /// An API to manipulate structs using m_option.
 ///@{
 
-/// \file m_struct.h
+/// \file
 
 struct m_option;
 

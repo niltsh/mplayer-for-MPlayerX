@@ -17,7 +17,7 @@
  */
 
 /**
- * \file subopt-helper.c
+ * \file
  *
  * \brief Compensates the suboption parsing code duplication a bit.
  *

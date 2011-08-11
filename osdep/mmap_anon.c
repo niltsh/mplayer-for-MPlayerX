@@ -17,7 +17,7 @@
  */
 
  /**
- * \file mmap_anon.c
+ * \file
  * \brief Provide a compatible anonymous space mapping function
  */
 #include "config.h"

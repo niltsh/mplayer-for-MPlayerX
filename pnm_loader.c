@@ -26,7 +26,7 @@
  */
 
 /**
- * \file pnm_loader.c
+ * \file
  * \brief PNM image files loader
  */
 

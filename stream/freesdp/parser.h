@@ -22,7 +22,7 @@
 */
 
 /**
- * @file parser.h
+ * @file
  * @ingroup parser
  * @short Specific public header for parsing module.
  **/

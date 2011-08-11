@@ -28,7 +28,7 @@
  */
 
 /**
- * \file gl_common.c
+ * \file
  * \brief OpenGL helper functions used by vo_gl.c and vo_gl2.c
  */
 

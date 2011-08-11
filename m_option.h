@@ -27,7 +27,7 @@
 /// \ref Properties APIs.
 ///@{
 
-/// \file m_option.h
+/// \file
 
 /// \ingroup OptionTypes
 typedef struct m_option_type m_option_type_t;

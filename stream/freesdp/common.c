@@ -18,7 +18,7 @@
 */
 
 /**
- * @file common.c
+ * @file
  *
  * @short Implementation of routines common to parse and formatting
  * modules .

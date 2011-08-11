@@ -18,7 +18,7 @@
 */
 
 /**
- * @file common.h
+ * @file
  * @ingroup common
  * @short Public header common for both parsing and formatting modules.
  **/

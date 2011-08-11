@@ -22,7 +22,7 @@
 */
 
 /**
- * @file priv.h
+ * @file
  *
  * @short Common private header for both formatting and parsing modules.
  **/

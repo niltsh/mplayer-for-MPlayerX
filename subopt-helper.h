@@ -20,7 +20,7 @@
 #define MPLAYER_SUBOPT_HELPER_H
 
 /**
- * \file subopt-helper.h
+ * \file
  *
  * \brief Datatype and functions declarations for usage
  *        of the suboption parser.

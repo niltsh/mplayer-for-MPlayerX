@@ -22,7 +22,7 @@
 */
 
 /**
- * @file parser.c
+ * @file
  *
  * @short Parsing module implementation.
  *

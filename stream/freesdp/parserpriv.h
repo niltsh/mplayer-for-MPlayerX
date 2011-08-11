@@ -18,7 +18,7 @@
 */
 
 /**
- * @file parserpriv.h
+ * @file
  *
  * @short Private header for parser module.
  **/

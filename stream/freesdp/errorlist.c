@@ -18,7 +18,7 @@
 */
 
 /**
- * @file errorlist.c
+ * @file
  *
  * @short Translation table for error numbers
  *

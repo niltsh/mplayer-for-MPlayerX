@@ -27,7 +27,7 @@
  */
 
 /**
- * \file vf_zrmjpeg.c
+ * \file
  *
  * \brief Does mjpeg encoding as required by the zrmjpeg filter as well
  * as by the zr video driver.
