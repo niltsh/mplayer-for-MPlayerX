@@ -40,6 +40,7 @@
 #include "cpudetect.h"
 #include "help_mp.h"
 #include "mp_msg.h"
+#include "parser-cfg.h"
 #include "sub/spudec.h"
 #include "version.h"
 #include "sub/vobsub.h"
@@ -405,6 +406,19 @@ static void noconfig_all(void)
 #ifdef CONFIG_GUI
     disable_gui_conf = 1;
 #endif /* CONFIG_GUI */
+}
+
+m_config_t *mconfig;
+
+int cfg_inc_verbose(m_option_t *conf)
+{
+    ++verbose;
+    return 0;
+}
+
+int cfg_include(m_option_t *conf, const char *filename)
+{
+    return m_config_parse_config_file(mconfig, filename);
 }
 
 const m_option_t noconfig_opts[] = {

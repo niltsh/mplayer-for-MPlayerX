@@ -77,6 +77,9 @@ void update_teletext(struct sh_video *sh_video, demuxer_t *demuxer, int reset);
 int select_audio(demuxer_t* demuxer, int audio_id, char* audio_lang);
 void set_osd_subtitle(subtitle *subs);
 
+int cfg_inc_verbose(m_option_t *conf);
+int cfg_include(m_option_t *conf, const char *filename);
+
 void common_preinit(void);
 int common_init(void);
 

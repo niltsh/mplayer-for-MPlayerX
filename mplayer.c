@@ -145,24 +145,6 @@ int enable_mouse_movements;
 float start_volume = -1;
 double start_pts   = MP_NOPTS_VALUE;
 char *heartbeat_cmd;
-
-m_config_t *mconfig;
-
-//**************************************************************************//
-//             Config file
-//**************************************************************************//
-
-static int cfg_inc_verbose(m_option_t *conf)
-{
-    ++verbose;
-    return 0;
-}
-
-static int cfg_include(m_option_t *conf, const char *filename)
-{
-    return m_config_parse_config_file(mconfig, filename);
-}
-
 static int max_framesize;
 
 int noconsolecontrols;
