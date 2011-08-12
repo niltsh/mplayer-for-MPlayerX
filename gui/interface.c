@@ -786,8 +786,8 @@ int gui(int what, void *data)
         if (guiInfo.Playing && (next = listSet(gtkGetNextPlItem, NULL)) && (plLastPlayed != next)) {
             plLastPlayed = next;
             setddup(&guiInfo.Filename, next->path, next->name);
-            guiInfo.StreamType      = STREAMTYPE_FILE;
-            guiInfo.NewPlay = GUI_FILE_NEW;
+            guiInfo.StreamType = STREAMTYPE_FILE;
+            guiInfo.NewPlay    = GUI_FILE_NEW;
             nfree(guiInfo.AudioFile);
             nfree(guiInfo.Subtitlename);
         } else {
