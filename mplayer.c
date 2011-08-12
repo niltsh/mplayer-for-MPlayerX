@@ -4075,7 +4075,7 @@ goto_next_file:  // don't jump here after ao/vo/getch initialization!
     }
 
 #ifdef CONFIG_GUI
-    if (use_gui && !mpctx->playtree_iter) {
+    if (use_gui) {
 #ifdef CONFIG_DVDREAD
         if (!guiInfo.DiskChanged)
 #endif
