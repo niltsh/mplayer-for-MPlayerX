@@ -3967,10 +3967,10 @@ goto_enable_cache:
                     guiInfo.Position = demuxer_get_percent_pos(mpctx->demuxer);
                 }
                 if (mpctx->sh_video)
-                    guiInfo.TimeSec = mpctx->sh_video->pts;
+                    guiInfo.ElapsedTime = mpctx->sh_video->pts;
                 else if (mpctx->sh_audio)
-                    guiInfo.TimeSec = playing_audio_pts(mpctx->sh_audio, mpctx->d_audio, mpctx->audio_out);
-                guiInfo.LengthInSec = demuxer_get_time_length(mpctx->demuxer);
+                    guiInfo.ElapsedTime = playing_audio_pts(mpctx->sh_audio, mpctx->d_audio, mpctx->audio_out);
+                guiInfo.RunningTime = demuxer_get_time_length(mpctx->demuxer);
                 gui(GUI_SET_MIXER, 0);
                 gui(GUI_REDRAW, 0);
                 if (guiInfo.Playing == GUI_STOP)

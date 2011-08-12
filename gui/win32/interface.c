@@ -341,8 +341,8 @@ void uiSetFileName(char *dir, char *name, int type)
         setddup(&guiInfo.Filename, dir, name);
 
     guiInfo.StreamType = type;
-    nfree(guiInfo.AudioFile);
-    nfree(guiInfo.Subtitlename);
+    nfree(guiInfo.AudioFilename);
+    nfree(guiInfo.SubtitleFilename);
 }
 
 void uiFullScreen( void )
@@ -664,7 +664,7 @@ int gui(int what, void *data)
           if(guiInfo.NewPlay == GUI_FILE_NEW)
               break;
 
-          guiInfo.TimeSec = 0;
+          guiInfo.ElapsedTime = 0;
           guiInfo.Position = 0;
           guiInfo.AudioChannels = 0;
 

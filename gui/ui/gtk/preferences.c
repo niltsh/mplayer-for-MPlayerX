@@ -313,7 +313,7 @@ void ShowPreferences( void )
    case 3: gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( RBOSDTPTT ),TRUE ); break;
   }
 #if 0
- if ( guiInfo.Subtitlename ) gtk_entry_set_text( GTK_ENTRY( ESubtitleName ),guiInfo.Subtitlename );
+ if ( guiInfo.SubtitleFilename ) gtk_entry_set_text( GTK_ENTRY( ESubtitleName ),guiInfo.SubtitleFilename );
 #endif
 
 #ifdef CONFIG_ICONV

@@ -148,44 +148,44 @@ static char *Translate(char *str)
                 break;
 
             case '6':
-                t = guiInfo.LengthInSec;
+                t = guiInfo.RunningTime;
                 goto calclengthhhmmss;
 
             case '1':
-                t = guiInfo.TimeSec;
+                t = guiInfo.ElapsedTime;
 calclengthhhmmss:
                 snprintf(tmp, sizeof(tmp), "%02d:%02d:%02d", t / 3600, t / 60 % 60, t % 60);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case '7':
-                t = guiInfo.LengthInSec;
+                t = guiInfo.RunningTime;
                 goto calclengthmmmmss;
 
             case '2':
-                t = guiInfo.TimeSec;
+                t = guiInfo.ElapsedTime;
 calclengthmmmmss:
                 snprintf(tmp, sizeof(tmp), "%04d:%02d", t / 60, t % 60);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case '3':
-                snprintf(tmp, sizeof(tmp), "%02d", guiInfo.TimeSec / 3600);
+                snprintf(tmp, sizeof(tmp), "%02d", guiInfo.ElapsedTime / 3600);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case '4':
-                snprintf(tmp, sizeof(tmp), "%02d", (guiInfo.TimeSec / 60) % 60);
+                snprintf(tmp, sizeof(tmp), "%02d", (guiInfo.ElapsedTime / 60) % 60);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case '5':
-                snprintf(tmp, sizeof(tmp), "%02d", guiInfo.TimeSec % 60);
+                snprintf(tmp, sizeof(tmp), "%02d", guiInfo.ElapsedTime % 60);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case '8':
-                snprintf(tmp, sizeof(tmp), "%01d:%02d:%02d", guiInfo.TimeSec / 3600, (guiInfo.TimeSec / 60) % 60, guiInfo.TimeSec % 60);
+                snprintf(tmp, sizeof(tmp), "%01d:%02d:%02d", guiInfo.ElapsedTime / 3600, (guiInfo.ElapsedTime / 60) % 60, guiInfo.ElapsedTime % 60);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 

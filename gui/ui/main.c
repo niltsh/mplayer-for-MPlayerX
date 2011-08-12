@@ -108,8 +108,8 @@ static void guiInfoMediumClear (int what)
   if (what & CLEAR_FILE)
   {
     nfree(guiInfo.Filename);
-    nfree(guiInfo.Subtitlename);
-    nfree(guiInfo.AudioFile);
+    nfree(guiInfo.SubtitleFilename);
+    nfree(guiInfo.AudioFilename);
     listSet(gtkDelPl, NULL);
   }
 
@@ -143,8 +143,8 @@ void uiEventHandling( int msg,float param )
         break;
 
    case evPlayNetwork:
-        nfree( guiInfo.Subtitlename );
-	nfree( guiInfo.AudioFile );
+        nfree( guiInfo.SubtitleFilename );
+	nfree( guiInfo.AudioFilename );
 	guiInfo.StreamType=STREAMTYPE_STREAM;
         goto play;
    case evSetURL:
@@ -272,7 +272,7 @@ NoPause:
         break;
    case evLoadSubtitle:  gtkShow( evLoadSubtitle,NULL );  break;
    case evDropSubtitle:
-	nfree( guiInfo.Subtitlename );
+	nfree( guiInfo.SubtitleFilename );
 	mplayerLoadSubtitle( NULL );
 	break;
    case evLoadAudioFile: gtkShow( evLoadAudioFile,NULL ); break;
@@ -660,8 +660,8 @@ void uiDandDHandler(int num,char** files)
     uiEventHandling( evPlay,0 );
   }
   if (subtitles) {
-    nfree(guiInfo.Subtitlename);
-    guiInfo.Subtitlename = subtitles;
-    mplayerLoadSubtitle(guiInfo.Subtitlename);
+    nfree(guiInfo.SubtitleFilename);
+    guiInfo.SubtitleFilename = subtitles;
+    mplayerLoadSubtitle(guiInfo.SubtitleFilename);
   }
 }

@@ -278,7 +278,7 @@ void ShowFileSelect( int type,int modal )
         gtk_combo_set_popdown_strings( GTK_COMBO( List ),fsList_items );
         g_list_free( fsList_items );
         gtk_entry_set_text( GTK_ENTRY( fsFilterCombo ),fsSubtitleFilterNames[k >= 0 ? k : i-2][0] );
-	tmp=guiInfo.Subtitlename;
+	tmp=guiInfo.SubtitleFilename;
         break;
 /*   case fsOtherSelector:
         gtk_window_set_title( GTK_WINDOW( fsFileSelect ),MSGTR_OtherSelect );
@@ -299,7 +299,7 @@ void ShowFileSelect( int type,int modal )
 	gtk_combo_set_popdown_strings( GTK_COMBO( List ),fsList_items );
 	g_list_free( fsList_items );
 	gtk_entry_set_text( GTK_ENTRY( fsFilterCombo ),fsAudioFileNames[k >= 0 ? k : i-2][0] );
-	tmp=guiInfo.AudioFile;
+	tmp=guiInfo.AudioFilename;
 	break;
    case fsFontSelector:
         gtk_window_set_title( GTK_WINDOW( fsFileSelect ),MSGTR_FontSelect );
@@ -492,19 +492,19 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
           setddup( &guiInfo.Filename,fsSelectedDirectory,fsSelectedFile );
           guiInfo.StreamType=STREAMTYPE_FILE;
           guiInfo.NewPlay=GUI_FILE_NEW; sub_fps=0;
-	  nfree( guiInfo.AudioFile );
-	  nfree( guiInfo.Subtitlename );
+	  nfree( guiInfo.AudioFilename );
+	  nfree( guiInfo.SubtitleFilename );
           fs_PersistantHistory( get_current_dir_name_utf8() );      //totem, write into history
           break;
    case fsSubtitleSelector:
-          setddup( &guiInfo.Subtitlename,fsSelectedDirectory,fsSelectedFile );
-	  mplayerLoadSubtitle( guiInfo.Subtitlename );
+          setddup( &guiInfo.SubtitleFilename,fsSelectedDirectory,fsSelectedFile );
+	  mplayerLoadSubtitle( guiInfo.SubtitleFilename );
           break;
 /*   case fsOtherSelector:
           setddup( &guiInfo.Othername,fsSelectedDirectory,fsSelectedFile );
           break;*/
    case fsAudioSelector:
-          setddup( &guiInfo.AudioFile,fsSelectedDirectory,fsSelectedFile );
+          setddup( &guiInfo.AudioFilename,fsSelectedDirectory,fsSelectedFile );
           break;
    case fsFontSelector:
           setddup( &font_name,fsSelectedDirectory,fsSelectedFile );

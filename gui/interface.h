@@ -125,14 +125,14 @@ typedef struct {
     int Track;
     int AudioChannels;
     int StreamType;
-    int TimeSec;
-    int LengthInSec;
+    int ElapsedTime;
+    int RunningTime;
 
     char *Filename;
 
-    char *Subtitlename;
+    char *SubtitleFilename;
 
-    char *AudioFile;
+    char *AudioFilename;
 } guiInterface_t;
 
 extern guiInterface_t guiInfo;

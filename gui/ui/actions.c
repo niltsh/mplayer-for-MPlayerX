@@ -263,8 +263,8 @@ void uiSetFileName(char *dir, char *name, int type)
         setddup(&guiInfo.Filename, dir, name);
 
     guiInfo.StreamType = type;
-    nfree(guiInfo.AudioFile);
-    nfree(guiInfo.Subtitlename);
+    nfree(guiInfo.AudioFilename);
+    nfree(guiInfo.SubtitleFilename);
 }
 
 void uiCurr(void)

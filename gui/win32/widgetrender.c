@@ -127,17 +127,17 @@ static char *generatetextfromlabel(widget *item)
     }
     strcpy(text, item->label);
     if(item->type == tySlabel) return text;
-    stringreplace(text, "$1", "%.2i:%.2i:%.2i", guiInfo.TimeSec / 3600,
-                 (guiInfo.TimeSec / 60) % 60, guiInfo.TimeSec % 60);
-    stringreplace(text, "$2", "%.4i:%.2i", guiInfo.TimeSec / 60, guiInfo.TimeSec % 60);
-    stringreplace(text, "$3", "%.2i", guiInfo.TimeSec / 3600);
-    stringreplace(text, "$4", "%.2i", (guiInfo.TimeSec / 60) % 60);
-    stringreplace(text, "$5", "%.2i", guiInfo.TimeSec % 60);
-    stringreplace(text, "$6", "%.2i:%.2i:%.2i", guiInfo.LengthInSec / 3600,
-                 (guiInfo.LengthInSec / 60) % 60, guiInfo.LengthInSec % 60);
-    stringreplace(text, "$7", "%.4i:%.2i", guiInfo.LengthInSec / 60, guiInfo.LengthInSec % 60);
-    stringreplace(text, "$8", "%i:%.2i:%.2i", guiInfo.TimeSec / 3600,
-                 (guiInfo.TimeSec / 60) % 60, guiInfo.TimeSec % 60);
+    stringreplace(text, "$1", "%.2i:%.2i:%.2i", guiInfo.ElapsedTime / 3600,
+                 (guiInfo.ElapsedTime / 60) % 60, guiInfo.ElapsedTime % 60);
+    stringreplace(text, "$2", "%.4i:%.2i", guiInfo.ElapsedTime / 60, guiInfo.ElapsedTime % 60);
+    stringreplace(text, "$3", "%.2i", guiInfo.ElapsedTime / 3600);
+    stringreplace(text, "$4", "%.2i", (guiInfo.ElapsedTime / 60) % 60);
+    stringreplace(text, "$5", "%.2i", guiInfo.ElapsedTime % 60);
+    stringreplace(text, "$6", "%.2i:%.2i:%.2i", guiInfo.RunningTime / 3600,
+                 (guiInfo.RunningTime / 60) % 60, guiInfo.RunningTime % 60);
+    stringreplace(text, "$7", "%.4i:%.2i", guiInfo.RunningTime / 60, guiInfo.RunningTime % 60);
+    stringreplace(text, "$8", "%i:%.2i:%.2i", guiInfo.ElapsedTime / 3600,
+                 (guiInfo.ElapsedTime / 60) % 60, guiInfo.ElapsedTime % 60);
     stringreplace(text, "$v", "%3.2f", guiInfo.Volume);
     stringreplace(text, "$V", "%3.1f", guiInfo.Volume);
     stringreplace(text, "$b", "%3.2f", guiInfo.Balance);

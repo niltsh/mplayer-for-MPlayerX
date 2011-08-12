@@ -273,7 +273,7 @@ void guiInit(void)
         uiSetFileName(plCurrent->path, plCurrent->name, STREAMTYPE_FILE);
 
     if (subdata)
-        setdup(&guiInfo.Subtitlename, subdata->filename);
+        setdup(&guiInfo.SubtitleFilename, subdata->filename);
 
     mplayerLoadFont();
 
@@ -606,7 +606,7 @@ int gui(int what, void *data)
 
         // subtitle
 
-// subdata->filename=gstrdup( guiInfo.Subtitlename );
+// subdata->filename=gstrdup( guiInfo.SubtitleFilename );
         stream_dump_type = 0;
 
         if (gtkSubDumpMPSub)
@@ -626,8 +626,8 @@ int gui(int what, void *data)
         if (gtkAutoSyncOn)
             autosync = gtkAutoSync;
 
-        if (guiInfo.AudioFile)
-            audio_stream = gstrdup(guiInfo.AudioFile);
+        if (guiInfo.AudioFilename)
+            audio_stream = gstrdup(guiInfo.AudioFilename);
         else if (guiInfo.NewPlay == GUI_FILE_NEW)
             nfree(audio_stream);
 
@@ -788,13 +788,13 @@ int gui(int what, void *data)
             setddup(&guiInfo.Filename, next->path, next->name);
             guiInfo.StreamType = STREAMTYPE_FILE;
             guiInfo.NewPlay    = GUI_FILE_NEW;
-            nfree(guiInfo.AudioFile);
-            nfree(guiInfo.Subtitlename);
+            nfree(guiInfo.AudioFilename);
+            nfree(guiInfo.SubtitleFilename);
         } else {
             if (guiInfo.NewPlay == GUI_FILE_NEW)
                 break;
 
-            guiInfo.TimeSec       = 0;
+            guiInfo.ElapsedTime   = 0;
             guiInfo.Position      = 0;
             guiInfo.AudioChannels = 0;
             guiInfo.MovieWindow   = True;
