@@ -117,7 +117,7 @@ static void guiSetEvent(int event)
             guiInfo.Track = dvd_title;
             guiInfo.Chapter = dvd_chapter;
             guiInfo.Angle = dvd_angle;
-            guiInfo.DiskChanged = 1;
+            guiInfo.NewPlay = GUI_FILE_SAME;
 
             uiSetFileName(NULL, dvd_device, STREAMTYPE_DVD);
             dvdname[0] = 0;
@@ -235,14 +235,15 @@ static void guiSetEvent(int event)
 #ifdef CONFIG_DVDREAD
                 case STREAMTYPE_DVD:
                 {
-                    guiInfo.DiskChanged = 1;
+                    guiInfo.NewPlay = GUI_FILE_SAME;
                     gui(GUI_SET_STATE, (void *) GUI_PLAY);
                     break;
                 }
 #endif
                 default:
                 {
-                    guiInfo.FilenameChanged = guiInfo.NewPlay = 1;
+                    guiInfo.FilenameChanged = 1;
+                    guiInfo.NewPlay = GUI_FILE_NEW;
                     update_playlistwindow();
                     uiGotoTheNext = guiInfo.Playing? 0 : 1;
                     gui(GUI_SET_STATE, (void *) GUI_STOP);
@@ -271,7 +272,7 @@ void uiPlay( void )
        uiPause();
        return;
    }
-   guiInfo.NewPlay = 1;
+   guiInfo.NewPlay = GUI_FILE_NEW;
    gui(GUI_SET_STATE, (void *) GUI_PLAY);
 }
 
@@ -447,7 +448,6 @@ int gui(int what, void *data)
         case GUI_PREPARE:
         {
             gui(GUI_SET_FILE, 0);
-            guiInfo.DiskChanged = 0;
             guiInfo.FilenameChanged = 0;
             guiInfo.NewPlay = 0;
             switch(guiInfo.StreamType)
@@ -657,12 +657,13 @@ int gui(int what, void *data)
               if(movie_aspect >= 0)
                   movie_aspect = -1;
 
-              uiGotoTheNext = guiInfo.FilenameChanged = guiInfo.NewPlay = 1;
+              uiGotoTheNext = guiInfo.FilenameChanged = 1;
+              guiInfo.NewPlay = GUI_FILE_NEW;
               uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename, STREAMTYPE_STREAM);
               //sprintf(guiInfo.Filename, mygui->playlist->tracks[(mygui->playlist->current)++]->filename);
           }
 
-          if(guiInfo.FilenameChanged && guiInfo.NewPlay)
+          if(guiInfo.FilenameChanged && (guiInfo.NewPlay == GUI_FILE_NEW))
               break;
 
           guiInfo.TimeSec = 0;

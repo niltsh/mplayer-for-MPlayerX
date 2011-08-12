@@ -633,7 +633,6 @@ int gui(int what, void *data)
 
 // audio_stream = NULL;
 
-        guiInfo.DiskChanged     = 0;
         guiInfo.FilenameChanged = 0;
         guiInfo.NewPlay = 0;
 
@@ -789,11 +788,12 @@ int gui(int what, void *data)
             plLastPlayed = next;
             setddup(&guiInfo.Filename, next->path, next->name);
             guiInfo.StreamType      = STREAMTYPE_FILE;
-            guiInfo.FilenameChanged = guiInfo.NewPlay = 1;
+            guiInfo.FilenameChanged = 1;
+            guiInfo.NewPlay = GUI_FILE_NEW;
             nfree(guiInfo.AudioFile);
             nfree(guiInfo.Subtitlename);
         } else {
-            if (guiInfo.FilenameChanged || guiInfo.NewPlay)
+            if (guiInfo.FilenameChanged || (guiInfo.NewPlay == GUI_FILE_NEW))
                 break;
 
             guiInfo.TimeSec       = 0;

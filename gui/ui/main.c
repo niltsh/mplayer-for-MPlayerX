@@ -201,6 +201,7 @@ play:
 	  case STREAMTYPE_STREAM:
 	  case STREAMTYPE_FILE:
 	       guiInfoMediumClear( CLEAR_ALL - CLEAR_FILE );
+	       guiInfo.NewPlay=GUI_FILE_NEW;
 	       break;
 #ifdef CONFIG_VCD
           case STREAMTYPE_VCD:
@@ -211,7 +212,7 @@ play:
 	        {
 		 if ( !guiInfo.Track )
                    guiInfo.Track=2;
-                 guiInfo.DiskChanged=1;
+                 guiInfo.NewPlay=GUI_FILE_SAME;
 		}
 	       break;
 #endif
@@ -222,12 +223,11 @@ play:
 	       uiSetFileName( NULL,dvd_device,STREAMTYPE_DVD );
 	       if ( guiInfo.Playing != GUI_PAUSE )
 	        {
-                 guiInfo.DiskChanged=1;
+                 guiInfo.NewPlay=GUI_FILE_SAME;
 		}
                break;
 #endif
          }
-	guiInfo.NewPlay=1;
         uiPlay();
         break;
 #ifdef CONFIG_DVDREAD
@@ -391,7 +391,7 @@ set_volume:
 	if ( guiInfo.StreamType == STREAMTYPE_DVD || guiInfo.StreamType == STREAMTYPE_VCD ) goto play_dvd_2;
 	 else
 #endif
-	 guiInfo.NewPlay=1;
+	 guiInfo.NewPlay=GUI_FILE_NEW;
 	break;
 
 // --- timer events

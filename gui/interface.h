@@ -59,6 +59,9 @@ enum {
 #define GUI_PLAY  1
 #define GUI_PAUSE 2
 
+#define GUI_FILE_SAME 1
+#define GUI_FILE_NEW  2
+
 enum {
     MPLAYER_EXIT_GUI,
     MPLAYER_SET_AUTO_QUALITY,
@@ -91,7 +94,6 @@ typedef struct {
     sh_video_t *sh_video;
     af_stream_t *afilter;
 
-    int DiskChanged;
     int NewPlay;
 
 #ifdef CONFIG_DVDREAD

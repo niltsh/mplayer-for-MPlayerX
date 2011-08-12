@@ -3977,7 +3977,7 @@ goto_enable_cache:
                     break;                  // STOP
                 if (guiInfo.Playing == GUI_PAUSE)
                     mpctx->osd_function = OSD_PAUSE;
-                if (guiInfo.DiskChanged || guiInfo.NewPlay)
+                if (guiInfo.NewPlay)
                     goto goto_next_file;
 #ifdef CONFIG_DVDREAD
                 if (mpctx->stream->type == STREAMTYPE_DVD) {
@@ -4076,9 +4076,7 @@ goto_next_file:  // don't jump here after ao/vo/getch initialization!
 
 #ifdef CONFIG_GUI
     if (use_gui) {
-#ifdef CONFIG_DVDREAD
-        if (!guiInfo.DiskChanged)
-#endif
+        if (guiInfo.NewPlay != GUI_FILE_SAME)
         gui(GUI_END_FILE, 0);
     }
 #endif
