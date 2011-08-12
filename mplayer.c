@@ -2745,8 +2745,6 @@ int main(int argc, char *argv[])
     int opt_exit = 0; // Flag indicating whether MPlayer should exit without playing anything.
     int i;
 
-    int gui_no_filename = 0;
-
     common_preinit();
 
     // Create the config context and register the options
@@ -2902,14 +2900,10 @@ int main(int argc, char *argv[])
     if (opt_exit)
         exit_player(EXIT_NONE);
 
-    if (!filename) {
-        if (use_gui)
-            gui_no_filename = 1;
-        else if (!player_idle_mode) {
+    if (!filename && !player_idle_mode && !use_gui) {
             // no file/vcd/dvd -> show HELP:
             mp_msg(MSGT_CPLAYER, MSGL_INFO, help_text);
             exit_player_with_rc(EXIT_NONE, 0);
-        }
     }
 
     /* Display what configure line was used */
@@ -3034,7 +3028,7 @@ int main(int argc, char *argv[])
     if (use_gui) {
         guiInit();
         gui(GUI_SET_CONTEXT, mpctx);
-        gui(GUI_SET_STATE, (void *)(gui_no_filename ? GUI_STOP : GUI_PLAY));
+        gui(GUI_SET_STATE, (void *)(filename ? GUI_PLAY : GUI_STOP));
     }
 #endif
 
