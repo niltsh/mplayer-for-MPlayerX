@@ -382,8 +382,8 @@ int gui(int what, void *data)
 
     case GUI_SET_FILE:
 
-// if ( guiInfo.Playing == 1 && guiInfo.FilenameChanged )
-        if (guiInfo.FilenameChanged) {
+// if ( guiInfo.Playing == 1 && guiInfo.NewPlay == GUI_FILE_NEW )
+        if (guiInfo.NewPlay == GUI_FILE_NEW) {
             audio_id  = -1;
             video_id  = -1;
             dvdsub_id = -1;
@@ -628,12 +628,11 @@ int gui(int what, void *data)
 
         if (guiInfo.AudioFile)
             audio_stream = gstrdup(guiInfo.AudioFile);
-        else if (guiInfo.FilenameChanged)
+        else if (guiInfo.NewPlay == GUI_FILE_NEW)
             nfree(audio_stream);
 
 // audio_stream = NULL;
 
-        guiInfo.FilenameChanged = 0;
         guiInfo.NewPlay = 0;
 
 #ifdef CONFIG_ASS
@@ -788,12 +787,11 @@ int gui(int what, void *data)
             plLastPlayed = next;
             setddup(&guiInfo.Filename, next->path, next->name);
             guiInfo.StreamType      = STREAMTYPE_FILE;
-            guiInfo.FilenameChanged = 1;
             guiInfo.NewPlay = GUI_FILE_NEW;
             nfree(guiInfo.AudioFile);
             nfree(guiInfo.Subtitlename);
         } else {
-            if (guiInfo.FilenameChanged || (guiInfo.NewPlay == GUI_FILE_NEW))
+            if (guiInfo.NewPlay == GUI_FILE_NEW)
                 break;
 
             guiInfo.TimeSec       = 0;

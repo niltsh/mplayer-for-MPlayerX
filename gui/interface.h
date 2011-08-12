@@ -129,7 +129,6 @@ typedef struct {
     int LengthInSec;
 
     char *Filename;
-    int FilenameChanged;
 
     char *Subtitlename;
 

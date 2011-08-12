@@ -242,7 +242,6 @@ static void guiSetEvent(int event)
 #endif
                 default:
                 {
-                    guiInfo.FilenameChanged = 1;
                     guiInfo.NewPlay = GUI_FILE_NEW;
                     update_playlistwindow();
                     uiGotoTheNext = guiInfo.Playing? 0 : 1;
@@ -448,7 +447,6 @@ int gui(int what, void *data)
         case GUI_PREPARE:
         {
             gui(GUI_SET_FILE, 0);
-            guiInfo.FilenameChanged = 0;
             guiInfo.NewPlay = 0;
             switch(guiInfo.StreamType)
             {
@@ -657,13 +655,13 @@ int gui(int what, void *data)
               if(movie_aspect >= 0)
                   movie_aspect = -1;
 
-              uiGotoTheNext = guiInfo.FilenameChanged = 1;
+              uiGotoTheNext = 1;
               guiInfo.NewPlay = GUI_FILE_NEW;
               uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename, STREAMTYPE_STREAM);
               //sprintf(guiInfo.Filename, mygui->playlist->tracks[(mygui->playlist->current)++]->filename);
           }
 
-          if(guiInfo.FilenameChanged && (guiInfo.NewPlay == GUI_FILE_NEW))
+          if(guiInfo.NewPlay == GUI_FILE_NEW)
               break;
 
           guiInfo.TimeSec = 0;

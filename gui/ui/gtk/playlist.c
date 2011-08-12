@@ -209,7 +209,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	 {
 	  uiSetFileName( plCurrent->path,plCurrent->name,STREAMTYPE_FILE );
 //	  setddup( &guiInfo.Filename,plCurrent->path,plCurrent->name );
-//	  guiInfo.FilenameChanged=1;
+//	  guiInfo.NewPlay=GUI_FILE_NEW;
 //	  guiInfo.StreamType=STREAMTYPE_FILE;
 	 }
        }

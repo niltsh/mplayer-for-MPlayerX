@@ -103,7 +103,7 @@ static void on_Button_pressed( GtkButton * button,gpointer user_data )
      item->url=gstrdup( str );
      listSet( gtkAddURLItem,item );
 
-     setdup( &guiInfo.Filename,str ); guiInfo.FilenameChanged=1;
+     setdup( &guiInfo.Filename,str ); guiInfo.NewPlay=GUI_FILE_NEW;
      uiEventHandling( evPlayNetwork,0 );
     }
   }
