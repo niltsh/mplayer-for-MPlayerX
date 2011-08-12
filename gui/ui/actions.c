@@ -346,6 +346,7 @@ void uiPrev(void)
         if (prev) {
             uiSetFileName(prev->path, prev->name, STREAMTYPE_FILE);
             uiGotoTheNext = 0;
+            guiInfo.Track--;
             break;
         }
 
@@ -401,6 +402,7 @@ void uiNext(void)
         if (next) {
             uiSetFileName(next->path, next->name, STREAMTYPE_FILE);
             uiGotoTheNext = 0;
+            guiInfo.Track++;
             break;
         }
 

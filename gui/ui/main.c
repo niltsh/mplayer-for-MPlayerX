@@ -201,6 +201,8 @@ play:
 	  case STREAMTYPE_STREAM:
 	  case STREAMTYPE_FILE:
 	       guiInfoMediumClear( CLEAR_ALL - CLEAR_FILE );
+	       if ( !guiInfo.Track )
+	         guiInfo.Track=1;
 	       guiInfo.NewPlay=GUI_FILE_NEW;
 	       break;
 #ifdef CONFIG_VCD

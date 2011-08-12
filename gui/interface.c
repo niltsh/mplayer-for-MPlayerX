@@ -790,6 +790,7 @@ int gui(int what, void *data)
             guiInfo.NewPlay    = GUI_FILE_NEW;
             nfree(guiInfo.AudioFilename);
             nfree(guiInfo.SubtitleFilename);
+            guiInfo.Track++;
         } else {
             if (guiInfo.NewPlay == GUI_FILE_NEW)
                 break;
