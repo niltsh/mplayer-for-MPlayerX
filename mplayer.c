@@ -2901,9 +2901,9 @@ int main(int argc, char *argv[])
         exit_player(EXIT_NONE);
 
     if (!filename && !player_idle_mode && !use_gui) {
-            // no file/vcd/dvd -> show HELP:
-            mp_msg(MSGT_CPLAYER, MSGL_INFO, help_text);
-            exit_player_with_rc(EXIT_NONE, 0);
+        // no file/vcd/dvd -> show HELP:
+        mp_msg(MSGT_CPLAYER, MSGL_INFO, help_text);
+        exit_player_with_rc(EXIT_NONE, 0);
     }
 
     /* Display what configure line was used */
