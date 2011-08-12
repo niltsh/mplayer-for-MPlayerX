@@ -129,7 +129,7 @@
 
           <listitem>
             <para>
-              Im <emphasis role="bold">Unterfenster</emphasis> erscheint der Film.
+              Im <emphasis role="bold">Unterfenster</emphasis> erscheint das Video.
               Es kann eine festgelegte Grafik anzeigen, wenn kein Film geladen
               ist (es ist ziemlich langweilig, ein leeres Fenster vor sich zu haben :-))
               <emphasis role="bold">Beachte:</emphasis> Transparenz ist hier
@@ -614,35 +614,35 @@ end
                 <tbody>
                   <row>
                     <entry>$1</entry>
-                    <entry>Abspieldauer im <emphasis>hh:mm:ss</emphasis>-Format</entry>
+                    <entry>bisherige Laufzeit im <emphasis>hh:mm:ss</emphasis>-Format</entry>
                   </row>
                   <row>
                     <entry>$2</entry>
-                    <entry>Abspieldauer im <emphasis>mmmm:ss</emphasis>-Format</entry>
+                    <entry>bisherige Laufzeit im <emphasis>mmmm:ss</emphasis>-Format</entry>
                   </row>
                   <row>
                     <entry>$3</entry>
-                    <entry>Abspieldauer im <emphasis>hh</emphasis>-Format (Stunden)</entry>
+                    <entry>bisherige Laufzeit im <emphasis>hh</emphasis>-Format (Stunden)</entry>
                   </row>
                   <row>
                     <entry>$4</entry>
-                    <entry>Abspieldauer im <emphasis>mm</emphasis>-Format (Minuten)</entry>
+                    <entry>bisherige Laufzeit im <emphasis>mm</emphasis>-Format (Minuten)</entry>
                   </row>
                   <row>
                     <entry>$5</entry>
-                    <entry>Abspieldauer im <emphasis>ss</emphasis>-Format (Sekunden)</entry>
+                    <entry>bisherige Laufzeit im <emphasis>ss</emphasis>-Format (Sekunden)</entry>
                   </row>
                   <row>
                     <entry>$6</entry>
-                    <entry>Filmlänge im <emphasis>hh:mm:ss</emphasis>-Format</entry>
+                    <entry>Gesamtlaufzeit im <emphasis>hh:mm:ss</emphasis>-Format</entry>
                   </row>
                   <row>
                     <entry>$7</entry>
-                    <entry>Filmlänge im <emphasis>mmmm:ss</emphasis>-Format</entry>
+                    <entry>Gesamtlaufzeit im <emphasis>mmmm:ss</emphasis>-Format</entry>
                   </row>
                   <row>
                     <entry>$8</entry>
-                    <entry>Abspieldauer im <emphasis>h:mm:ss</emphasis>-Format</entry>
+                    <entry>bisherige Laufzeit im <emphasis>h:mm:ss</emphasis>-Format</entry>
                   </row>
                   <row>
                     <entry>$v</entry>
@@ -673,7 +673,7 @@ end
                   </row>
                   <row>
                     <entry>$t</entry>
-                    <entry>Track-Nummer (in der Playliste)</entry>
+                    <entry>Track-Nummer (DVD, VCD oder Wiedergabeliste)</entry>
                   </row>
                   <row>
                     <entry>$o</entry>
@@ -714,11 +714,11 @@ end
                   </row>
                   <row>
                     <entry>$x</entry>
-                    <entry>Filmbreite</entry>
+                    <entry>Videobreite</entry>
                   </row>
                   <row>
                     <entry>$y</entry>
-                    <entry>Filmhöhe</entry>
+                    <entry>Videohöhe</entry>
                   </row>
                   <row>
                     <entry>$C</entry>
@@ -1065,7 +1065,7 @@ image = font.png
         <term><emphasis role="bold">evHalfSize</emphasis></term>
         <listitem>
           <para>
-            Setze das Filmfenster auf halbe Größe.
+            Setze das Videofenster auf halbe Größe.
           </para>
         </listitem>
       </varlistentry>
@@ -1073,7 +1073,7 @@ image = font.png
         <term><emphasis role="bold">evDoubleSize</emphasis></term>
         <listitem>
           <para>
-            Setze das Filmfenster auf doppelte Größe.
+            Setze das Videofenster auf doppelte Größe.
           </para>
         </listitem>
       </varlistentry>
@@ -1089,7 +1089,7 @@ image = font.png
         <term><emphasis role="bold">evNormalSize</emphasis></term>
         <listitem>
           <para>
-            Setze das Filmfenster auf normale Größe.
+            Setze das Videofenster auf normale Größe.
           </para>
         </listitem>
       </varlistentry>

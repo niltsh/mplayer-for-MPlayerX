@@ -73,7 +73,7 @@ Currently there are four windows to be decorated: the
 </listitem>
 
 <listitem><para>
-  The <emphasis role="bold">subwindow</emphasis> is where the movie appears. It
+  The <emphasis role="bold">subwindow</emphasis> is where the video appears. It
   can display a specified image if there is no movie loaded (it is quite boring
   to have an empty window :-)) <emphasis role="bold">Note:</emphasis>
   transparency is <emphasis role="bold">not allowed</emphasis> here.
@@ -502,35 +502,35 @@ blocks.
   <tbody>
   <row>
     <entry>$1</entry>
-    <entry>play time in <emphasis>hh:mm:ss</emphasis> format</entry>
+    <entry>elapsed time in <emphasis>hh:mm:ss</emphasis> format</entry>
   </row>
   <row>
     <entry>$2</entry>
-    <entry>play time in <emphasis>mmmm:ss</emphasis> format</entry>
+    <entry>elapsed time in <emphasis>mmmm:ss</emphasis> format</entry>
   </row>
   <row>
     <entry>$3</entry>
-    <entry>play time in <emphasis>hh</emphasis> format (hours)</entry>
+    <entry>elapsed time in <emphasis>hh</emphasis> format (hours)</entry>
   </row>
   <row>
     <entry>$4</entry>
-    <entry>play time in <emphasis>mm</emphasis> format (minutes)</entry>
+    <entry>elapsed time in <emphasis>mm</emphasis> format (minutes)</entry>
   </row>
   <row>
     <entry>$5</entry>
-    <entry>play time in <emphasis>ss</emphasis> format (seconds)</entry>
+    <entry>elapsed time in <emphasis>ss</emphasis> format (seconds)</entry>
   </row>
   <row>
     <entry>$6</entry>
-    <entry>movie length in <emphasis>hh:mm:ss</emphasis> format</entry>
+    <entry>running time in <emphasis>hh:mm:ss</emphasis> format</entry>
   </row>
   <row>
     <entry>$7</entry>
-    <entry>movie length in <emphasis>mmmm:ss</emphasis> format</entry>
+    <entry>running time in <emphasis>mmmm:ss</emphasis> format</entry>
   </row>
   <row>
     <entry>$8</entry>
-    <entry>play time in <emphasis>h:mm:ss</emphasis> format</entry>
+    <entry>elapsed time in <emphasis>h:mm:ss</emphasis> format</entry>
   </row>
   <row>
     <entry>$v</entry>
@@ -559,7 +559,7 @@ blocks.
   </row>
   <row>
     <entry>$t</entry>
-    <entry>track number (in playlist)</entry>
+    <entry>track number (DVD, VCD or playlist)</entry>
   </row>
   <row>
     <entry>$o</entry>
@@ -595,11 +595,11 @@ blocks.
   </row>
   <row>
     <entry>$x</entry>
-    <entry>movie width</entry>
+    <entry>video width</entry>
   </row>
   <row>
     <entry>$y</entry>
-    <entry>movie height</entry>
+    <entry>video height</entry>
   </row>
   <row>
     <entry>$C</entry>
@@ -915,13 +915,13 @@ menu entries.
 <varlistentry>
   <term><emphasis role="bold">evHalfSize</emphasis></term>
   <listitem><para>
-  Set the movie window to half size.
+  Set the video window to half size.
   </para></listitem>
 </varlistentry>
 <varlistentry>
   <term><emphasis role="bold">evDoubleSize</emphasis></term>
   <listitem><para>
-  Set the movie window to double size.
+  Set the video window to double size.
   </para></listitem>
 </varlistentry>
 <varlistentry>
@@ -933,7 +933,7 @@ menu entries.
 <varlistentry>
   <term><emphasis role="bold">evNormalSize</emphasis></term>
   <listitem><para>
-  Set the movie window to its normal size.
+  Set the video window to its normal size.
   </para></listitem>
 </varlistentry>
 </variablelist>
