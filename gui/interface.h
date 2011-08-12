@@ -37,6 +37,7 @@ extern int use_gui;             // this is defined in mplayer.c
 
 #define GMPlayer "gmplayer"
 
+// gui() instructions
 enum {
     GUI_END_FILE,
     GUI_HANDLE_EVENTS,
@@ -55,13 +56,16 @@ enum {
     GUI_SET_VIDEO
 };
 
+// Playing states
 #define GUI_STOP  0
 #define GUI_PLAY  1
 #define GUI_PAUSE 2
 
+// NewPlay reasons
 #define GUI_FILE_SAME 1
 #define GUI_FILE_NEW  2
 
+// mplayer() instructions
 enum {
     MPLAYER_EXIT_GUI,
     MPLAYER_SET_AUTO_QUALITY,
