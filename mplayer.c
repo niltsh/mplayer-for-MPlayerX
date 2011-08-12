@@ -4075,10 +4075,9 @@ goto_next_file:  // don't jump here after ao/vo/getch initialization!
     }
 
 #ifdef CONFIG_GUI
-    if (use_gui) {
+    if (use_gui)
         if (guiInfo.NewPlay != GUI_FILE_SAME)
-        gui(GUI_END_FILE, 0);
-    }
+            gui(GUI_END_FILE, 0);
 #endif
 
     if (
