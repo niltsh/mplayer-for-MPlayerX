@@ -98,41 +98,41 @@ typedef struct {
     sh_video_t *sh_video;
     af_stream_t *afilter;
 
-    int NewPlay;
+    int MovieWidth;
+    int MovieHeight;
+    int MovieWindow;
 
-#ifdef CONFIG_DVDREAD
-    guiDVDStruct DVD;
-    int Chapters;
-    int Chapter;
-    int Angles;
-    int Angle;
-#endif
+    int StreamType;           // public, read access by MPlayer
+    int AudioChannels;
+
+    char *Filename;           // public, read access by MPlayer
+    char *AudioFilename;
+    char *SubtitleFilename;
 
 #if defined(CONFIG_VCD) || defined(CONFIG_DVDREAD)
     int Tracks;
 #endif
 
-    int Playing;
-    float Position;
+    int Track;                // public, read access by MPlayer
 
-    int MovieWidth;
-    int MovieHeight;
-    int MovieWindow;
+#ifdef CONFIG_DVDREAD
+    guiDVDStruct DVD;
+    int Chapters;
+    int Chapter;              // public, write access by MPlayer
+    int Angles;
+    int Angle;
+#endif
+
+    int Playing;              // public, read access by MPlayer
+
+    int RunningTime;          // public, write access by MPlayer
+    int ElapsedTime;          // public, write access by MPlayer
+    float Position;           // public, write access by MPlayer
 
     float Volume;
     float Balance;
 
-    int Track;
-    int AudioChannels;
-    int StreamType;
-    int ElapsedTime;
-    int RunningTime;
-
-    char *Filename;
-
-    char *SubtitleFilename;
-
-    char *AudioFilename;
+    int NewPlay;              // public, read access by MPlayer
 } guiInterface_t;
 
 extern guiInterface_t guiInfo;
