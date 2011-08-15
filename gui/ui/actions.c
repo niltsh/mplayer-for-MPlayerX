@@ -43,12 +43,12 @@ int uiGotoTheNext = 1;
 
 void uiFullScreen(void)
 {
-    if (!guiInfo.MovieWindow && guiInfo.Playing)
+    if (!guiInfo.VideoWindow && guiInfo.Playing)
         return;
 
     if (guiInfo.Playing && guiApp.subWindow.isFullScreen) {
-        guiApp.subWindow.OldWidth  = guiInfo.MovieWidth;
-        guiApp.subWindow.OldHeight = guiInfo.MovieHeight;
+        guiApp.subWindow.OldWidth  = guiInfo.VideoWidth;
+        guiApp.subWindow.OldHeight = guiInfo.VideoHeight;
 
         switch (guiApp.sub.x) {
         case -1:

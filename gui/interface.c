@@ -57,8 +57,8 @@
 #endif
 
 guiInterface_t guiInfo = {
+    .VideoWindow = True,
     .StreamType  = STREAMTYPE_DUMMY,
-    .MovieWindow = True,
     .Balance     = 50.0f
 };
 
@@ -401,7 +401,7 @@ int gui(int what, void *data)
         break;
 
     case GUI_HANDLE_EVENTS:
-        if (!guiInfo.Playing || !guiInfo.MovieWindow)
+        if (!guiInfo.Playing || !guiInfo.VideoWindow)
             wsHandleEvents();
         gtkEventHandling();
         break;
@@ -498,12 +498,12 @@ int gui(int what, void *data)
         {
             int i = 0;
 
-            guiInfo.MovieWindow = True;
+            guiInfo.VideoWindow = True;
 
             while (video_out_drivers[i++]) {
                 if (video_out_drivers[i - 1]->control(VOCTRL_GUISUPPORT, NULL) == VO_TRUE) {
                     if ((video_driver_list && !gstrcmp(video_driver_list[0], (char *)video_out_drivers[i - 1]->info->short_name)) && (video_out_drivers[i - 1]->control(VOCTRL_GUI_NOWINDOW, NULL) == VO_TRUE)) {
-                        guiInfo.MovieWindow = False;
+                        guiInfo.VideoWindow = False;
                         break;
                     }
                 }
@@ -709,7 +709,7 @@ int gui(int what, void *data)
         guiInfo.AudioChannels = data ? ((sh_audio_t *)data)->channels : 0;
 
         if (data && !guiInfo.sh_video)
-            guiInfo.MovieWindow = False;
+            guiInfo.VideoWindow = False;
 
         gui(GUI_SET_MIXER, 0);
 
@@ -727,7 +727,7 @@ int gui(int what, void *data)
             }
         }
 
-        wsVisibleWindow(&guiApp.subWindow, (guiInfo.MovieWindow ? wsShowWindow : wsHideWindow));
+        wsVisibleWindow(&guiApp.subWindow, (guiInfo.VideoWindow ? wsShowWindow : wsHideWindow));
         break;
 
     case GUI_SET_MIXER:
@@ -763,8 +763,8 @@ int gui(int what, void *data)
             wsMoveWindow(&guiApp.subWindow, True, guiApp.sub.x, guiApp.sub.y);
         }
 
-        guiInfo.MovieWidth  = vo_dwidth;
-        guiInfo.MovieHeight = vo_dheight;
+        guiInfo.VideoWidth  = vo_dwidth;
+        guiInfo.VideoHeight = vo_dheight;
 
         if (guiWinID >= 0)
             wsMoveWindow(&guiApp.mainWindow, False, 0, vo_dheight);
@@ -799,7 +799,7 @@ int gui(int what, void *data)
             guiInfo.ElapsedTime   = 0;
             guiInfo.Position      = 0;
             guiInfo.AudioChannels = 0;
-            guiInfo.MovieWindow   = True;
+            guiInfo.VideoWindow   = True;
 
 #ifdef CONFIG_DVDREAD
             guiInfo.Track   = 1;

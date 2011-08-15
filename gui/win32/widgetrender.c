@@ -144,8 +144,8 @@ static char *generatetextfromlabel(widget *item)
     stringreplace(text, "$B", "%3.1f", guiInfo.Balance);
     stringreplace(text, "$t", "%.2i", guiInfo.Track);
     stringreplace(text, "$o", "%s", guiInfo.Filename);
-    stringreplace(text, "$x", "%i", guiInfo.MovieWidth);
-    stringreplace(text, "$y", "%i", guiInfo.MovieHeight);
+    stringreplace(text, "$x", "%i", guiInfo.VideoWidth);
+    stringreplace(text, "$y", "%i", guiInfo.VideoHeight);
     stringreplace(text, "$C", "%s", guiInfo.sh_video ? codecname : "");
     stringreplace(text, "$$", "$");
 

@@ -262,7 +262,7 @@ NoPause:
    case evStop:
 	guiInfo.Playing=GUI_STOP;
 	uiState();
-	guiInfo.MovieWindow=True;
+	guiInfo.VideoWindow=True;
 	break;
 
    case evLoadPlay:
@@ -338,10 +338,10 @@ set_volume:
            {
             uiFullScreen();
            }
-          wsResizeWindow( &guiApp.subWindow, guiInfo.MovieWidth / 2, guiInfo.MovieHeight / 2 );
+          wsResizeWindow( &guiApp.subWindow, guiInfo.VideoWidth / 2, guiInfo.VideoHeight / 2 );
           wsMoveWindow( &guiApp.subWindow, False,
-                        ( wsMaxX - guiInfo.MovieWidth/2  )/2 + wsOrgX,
-                        ( wsMaxY - guiInfo.MovieHeight/2 )/2 + wsOrgY  );
+                        ( wsMaxX - guiInfo.VideoWidth/2  )/2 + wsOrgX,
+                        ( wsMaxY - guiInfo.VideoHeight/2 )/2 + wsOrgY  );
          }
         break;
    case evDoubleSize:
@@ -352,10 +352,10 @@ set_volume:
            {
             uiFullScreen();
            }
-          wsResizeWindow( &guiApp.subWindow, guiInfo.MovieWidth * 2, guiInfo.MovieHeight * 2 );
+          wsResizeWindow( &guiApp.subWindow, guiInfo.VideoWidth * 2, guiInfo.VideoHeight * 2 );
           wsMoveWindow( &guiApp.subWindow, False,
-                        ( wsMaxX - guiInfo.MovieWidth*2  )/2 + wsOrgX,
-                        ( wsMaxY - guiInfo.MovieHeight*2 )/2 + wsOrgY  );
+                        ( wsMaxX - guiInfo.VideoWidth*2  )/2 + wsOrgX,
+                        ( wsMaxY - guiInfo.VideoHeight*2 )/2 + wsOrgY  );
          }
         break;
    case evNormalSize:
@@ -366,10 +366,10 @@ set_volume:
            {
             uiFullScreen();
            }
-          wsResizeWindow( &guiApp.subWindow, guiInfo.MovieWidth, guiInfo.MovieHeight );
+          wsResizeWindow( &guiApp.subWindow, guiInfo.VideoWidth, guiInfo.VideoHeight );
           wsMoveWindow( &guiApp.subWindow, False,
-                        ( wsMaxX - guiInfo.MovieWidth  )/2 + wsOrgX,
-                        ( wsMaxY - guiInfo.MovieHeight )/2 + wsOrgY  );
+                        ( wsMaxX - guiInfo.VideoWidth  )/2 + wsOrgX,
+                        ( wsMaxY - guiInfo.VideoHeight )/2 + wsOrgY  );
 	  break;
          } else if ( !guiApp.subWindow.isFullScreen ) break;
    case evFullScreen:

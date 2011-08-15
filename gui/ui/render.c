@@ -210,12 +210,12 @@ calclengthmmmmss:
                 break;
 
             case 'x':
-                snprintf(tmp, sizeof(tmp), "%d", guiInfo.MovieWidth);
+                snprintf(tmp, sizeof(tmp), "%d", guiInfo.VideoWidth);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
             case 'y':
-                snprintf(tmp, sizeof(tmp), "%d", guiInfo.MovieHeight);
+                snprintf(tmp, sizeof(tmp), "%d", guiInfo.VideoHeight);
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 

@@ -617,16 +617,16 @@ GtkWidget * create_PopUpMenu( void )
   AddMenuItem( window1, (const char*)prefs_xpm, Menu,MSGTR_MENU_Preferences, evPreferences );
   AddMenuItem( window1, (const char*)equalizer_xpm, Menu,MSGTR_Equalizer, evEqualizer );
 
-  if ( guiInfo.MovieWindow )
+  if ( guiInfo.VideoWindow )
    {
     int b1 = 0, b2 = 0, b_half = 0;
     AddSeparator( Menu );
     if ( !guiApp.subWindow.isFullScreen && guiInfo.Playing )
      {
-      if ( ( guiApp.subWindow.Width == guiInfo.MovieWidth * 2 )&&
-           ( guiApp.subWindow.Height == guiInfo.MovieHeight * 2 ) ) b2=1;
-      else if ( ( guiApp.subWindow.Width == guiInfo.MovieWidth / 2 ) &&
-                ( guiApp.subWindow.Height == guiInfo.MovieHeight / 2 ) ) b_half=1;
+      if ( ( guiApp.subWindow.Width == guiInfo.VideoWidth * 2 )&&
+           ( guiApp.subWindow.Height == guiInfo.VideoHeight * 2 ) ) b2=1;
+      else if ( ( guiApp.subWindow.Width == guiInfo.VideoWidth / 2 ) &&
+                ( guiApp.subWindow.Height == guiInfo.VideoHeight / 2 ) ) b_half=1;
       else b1=1;
      } else b1=!guiApp.subWindow.isFullScreen;
     H=AddMenuCheckItem( window1, (const char*)half_xpm, Menu,MSGTR_MENU_HalfSize,b_half,evHalfSize );

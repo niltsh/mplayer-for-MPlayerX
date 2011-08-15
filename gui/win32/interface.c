@@ -473,7 +473,7 @@ int gui(int what, void *data)
         }
         case GUI_SET_AUDIO:
         {
-            guiInfo.MovieWindow = (data && !guiInfo.sh_video);
+            guiInfo.VideoWindow = (data && !guiInfo.sh_video);
             // NOTE: This type doesn't mean (and never meant) that we have
             // *just* audio, so there probably should be a check before
             // hiding (see gui/interface.c).
@@ -503,10 +503,10 @@ int gui(int what, void *data)
         }
         case GUI_SETUP_VIDEO_WINDOW:
         {
-            guiInfo.MovieWidth = vo_dwidth;
-            guiInfo.MovieHeight = vo_dheight;
+            guiInfo.VideoWidth = vo_dwidth;
+            guiInfo.VideoHeight = vo_dheight;
 
-            sub_aspect = (float)guiInfo.MovieWidth/guiInfo.MovieHeight;
+            sub_aspect = (float)guiInfo.VideoWidth/guiInfo.VideoHeight;
             if(WinID != -1)
                update_subwindow();
             break;
@@ -794,13 +794,13 @@ static int update_subwindow(void)
             ShowWindow(mygui->subwindow, SW_HIDE);
             return 0;
         }
-        else if(!guiInfo.MovieWindow)
+        else if(!guiInfo.VideoWindow)
             return 0;
         else ShowWindow(mygui->subwindow, SW_SHOW);
     }
 
     /* we've come out of fullscreen at the end of file */
-    if((!IsWindowVisible(mygui->subwindow) || IsIconic(mygui->subwindow)) && guiInfo.MovieWindow)
+    if((!IsWindowVisible(mygui->subwindow) || IsIconic(mygui->subwindow)) && guiInfo.VideoWindow)
         ShowWindow(mygui->subwindow, SW_SHOWNORMAL);
 
     /* get our current window coordinates */
@@ -828,8 +828,8 @@ static int update_subwindow(void)
     }
     else
     {
-        rd.right = rd.left+guiInfo.MovieWidth;
-        rd.bottom = rd.top+guiInfo.MovieHeight;
+        rd.right = rd.left+guiInfo.VideoWidth;
+        rd.bottom = rd.top+guiInfo.VideoHeight;
 
         if (movie_aspect > 0.0)       // forced aspect from the cmdline
             sub_aspect = movie_aspect;
