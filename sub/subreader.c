@@ -557,6 +557,34 @@ static subtitle *sub_read_line_vplayer(stream_t *st,subtitle *current, int utf16
 	return current;
 }
 
+static subtitle *sub_read_line_google(stream_t *st, subtitle *current, int utf16)
+{
+    uint8_t part[LINE_LEN+1];
+    uint8_t *p;
+    double start, duration;
+    do {
+        if (!stream_read_until(st, part, LINE_LEN, '>', utf16)) return NULL;
+    } while (sscanf(part, "<text start=\"%lf\" dur=\"%lf\"", &start, &duration) != 2);
+
+    current->start = start * 100;
+    current->end = current->start + duration * 100;
+
+    // find start of end tag
+    if (!stream_read_until(st, part, LINE_LEN, '<', utf16)) return NULL;
+
+    // discard end tag opening
+    p = strchr(part, '<');
+    if (p) *p = 0;
+
+    // This is the actual text.
+    if (set_multiline_text(current, part, 0) == ERR)
+        return ERR;
+
+    // discard rest of closing tag
+    if (!stream_read_until(st, part, LINE_LEN, '>', utf16)) return NULL;
+    return current;
+}
+
 static subtitle *sub_read_line_rt(stream_t *st,subtitle *current, int utf16) {
 	//TODO: This format uses quite rich (sub/super)set of xhtml
 	// I couldn't check it since DTD is not included.
@@ -1119,6 +1147,8 @@ static int sub_autodetect (stream_t* st, int *uses_time, int utf16) {
 		{*uses_time=0; return SUB_AQTITLE;}
 	if (sscanf (line, "[%d:%d:%d]", &i, &i, &i)==3)
 		{*uses_time=1;return SUB_SUBRIP09;}
+	if (strstr (line, "<?xml version=\"1.0\" encoding=\"utf-8\" ?><transcript>"))
+		{*uses_time=1; return SUB_GOOGLE;}
     }
 
     return SUB_INVALID;  // too many bad lines
@@ -1421,7 +1451,8 @@ sub_data* sub_read_file (const char *filename, float fps) {
 	    { sub_read_line_subviewer2, NULL, "subviewer 2.0" },
 	    { sub_read_line_subrip09, NULL, "subrip 0.9" },
 	    { sub_read_line_jacosub, NULL, "jacosub" },
-	    { sub_read_line_mpl2, NULL, "mpl2" }
+	    { sub_read_line_mpl2, NULL, "mpl2" },
+	    { sub_read_line_google, NULL, "google" },
     };
     const struct subreader *srp;
 
