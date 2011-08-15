@@ -87,13 +87,6 @@ enum {
 };
 
 typedef struct {
-    int nr_of_audio_channels;
-    stream_language_t audio_streams[32];
-    int nr_of_subtitles;
-    stream_language_t subtitles[32];
-} guiDVDStruct;
-
-typedef struct {
     MPContext *mpcontext;
     sh_video_t *sh_video;
     af_stream_t *afilter;
@@ -104,6 +97,14 @@ typedef struct {
 
     int StreamType;           // public, read access by MPlayer
     int AudioChannels;
+
+#ifdef CONFIG_DVDREAD
+    int AudioStreams;
+    stream_language_t AudioStream[32];
+
+    int Subtitles;
+    stream_language_t Subtitle[32];
+#endif
 
     char *Filename;           // public, read access by MPlayer
     char *AudioFilename;
@@ -116,7 +117,6 @@ typedef struct {
     int Track;                // public, read access by MPlayer
 
 #ifdef CONFIG_DVDREAD
-    guiDVDStruct DVD;
     int Chapters;
     int Chapter;              // public, write access by MPlayer
     int Angles;

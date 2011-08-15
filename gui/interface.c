@@ -657,10 +657,10 @@ int gui(int what, void *data)
             guiInfo.Tracks   = dvd->vmg_file->tt_srpt->nr_of_srpts;
             guiInfo.Chapters = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
             guiInfo.Angles   = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
-            guiInfo.DVD.nr_of_audio_channels = dvd->nr_of_channels;
-            memcpy(guiInfo.DVD.audio_streams, dvd->audio_streams, sizeof(dvd->audio_streams));
-            guiInfo.DVD.nr_of_subtitles = dvd->nr_of_subtitles;
-            memcpy(guiInfo.DVD.subtitles, dvd->subtitles, sizeof(dvd->subtitles));
+            guiInfo.AudioStreams = dvd->nr_of_channels;
+            memcpy(guiInfo.AudioStream, dvd->audio_streams, sizeof(dvd->audio_streams));
+            guiInfo.Subtitles = dvd->nr_of_subtitles;
+            memcpy(guiInfo.Subtitle, dvd->subtitles, sizeof(dvd->subtitles));
             guiInfo.Track   = dvd_title + 1;
             guiInfo.Chapter = dvd_chapter + 1;
             guiInfo.Angle   = dvd_angle + 1;

@@ -510,18 +510,18 @@ GtkWidget * create_PopUpMenu( void )
         gtk_widget_set_sensitive( MenuItem,FALSE );
        }
     DVDAudioLanguageMenu=AddSubMenu( window1, (const char*)audiolang_xpm, DVDSubMenu,MSGTR_MENU_AudioLanguages );
-     if ( guiInfo.DVD.nr_of_audio_channels )
+     if ( guiInfo.AudioStreams )
       {
        char tmp[64]; int i, id = demuxer ? demuxer->audio->id : audio_id;
-       for ( i=0;i < guiInfo.DVD.nr_of_audio_channels;i++ )
+       for ( i=0;i < guiInfo.AudioStreams;i++ )
         {
-	 snprintf( tmp,64,"%s - %s %s",GetLanguage( guiInfo.DVD.audio_streams[i].language ),
-	   ChannelTypes[ guiInfo.DVD.audio_streams[i].type ],
-	   ChannelNumbers[ guiInfo.DVD.audio_streams[i].channels ] );
-//	 if ( id == -1 ) id=audio_id; //guiInfo.DVD.audio_streams[i].id;
+	 snprintf( tmp,64,"%s - %s %s",GetLanguage( guiInfo.AudioStream[i].language ),
+	   ChannelTypes[ guiInfo.AudioStream[i].type ],
+	   ChannelNumbers[ guiInfo.AudioStream[i].channels ] );
+//	 if ( id == -1 ) id=audio_id; //guiInfo.AudioStream[i].id;
          AddMenuCheckItem( window1, (const char*)dolby_xpm, DVDAudioLanguageMenu,tmp,
-			   id == guiInfo.DVD.audio_streams[i].id,
-			   ( guiInfo.DVD.audio_streams[i].id << 16 ) + evSetDVDAudio );
+			   id == guiInfo.AudioStream[i].id,
+			   ( guiInfo.AudioStream[i].id << 16 ) + evSetDVDAudio );
         }
       }
       else
@@ -530,16 +530,16 @@ GtkWidget * create_PopUpMenu( void )
         gtk_widget_set_sensitive( MenuItem,FALSE );
        }
     DVDSubtitleLanguageMenu=AddSubMenu( window1, (const char*)sublang_xpm, DVDSubMenu,MSGTR_MENU_SubtitleLanguages );
-     if ( guiInfo.DVD.nr_of_subtitles )
+     if ( guiInfo.Subtitles )
       {
        char tmp[64]; int i;
        AddMenuItem( window1, (const char*)empty1px_xpm, DVDSubtitleLanguageMenu,MSGTR_MENU_None,( (unsigned short)-1 << 16 ) + evSetDVDSubtitle );
-       for ( i=0;i < guiInfo.DVD.nr_of_subtitles;i++ )
+       for ( i=0;i < guiInfo.Subtitles;i++ )
         {
-         av_strlcpy( tmp,GetLanguage( guiInfo.DVD.subtitles[i].language ),sizeof(tmp) );
+         av_strlcpy( tmp,GetLanguage( guiInfo.Subtitle[i].language ),sizeof(tmp) );
          AddMenuCheckItem( window1, (const char*)empty1px_xpm, DVDSubtitleLanguageMenu,tmp,
-			   dvdsub_id == guiInfo.DVD.subtitles[i].id,
-			   ( guiInfo.DVD.subtitles[i].id << 16 ) + evSetDVDSubtitle );
+			   dvdsub_id == guiInfo.Subtitle[i].id,
+			   ( guiInfo.Subtitle[i].id << 16 ) + evSetDVDSubtitle );
         }
       }
       else

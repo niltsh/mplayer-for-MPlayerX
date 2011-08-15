@@ -116,7 +116,8 @@ static void guiInfoMediumClear (int what)
 #ifdef CONFIG_DVDREAD
   if (what & CLEAR_DVD)
   {
-    memset(&guiInfo.DVD, 0, sizeof(guiDVDStruct));
+    guiInfo.AudioStreams = 0;
+    guiInfo.Subtitles = 0;
     guiInfo.Tracks = 0;
     guiInfo.Chapters = 0;
     guiInfo.Angles = 0;
