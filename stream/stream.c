@@ -588,30 +588,30 @@ static uint16_t get_be16_inc(const uint8_t **buf)
 }
 
 /**
- * Find a newline character in buffer
+ * Find a termination character in buffer
  * \param buf buffer to search
  * \param len amount of bytes to search in buffer, may not overread
  * \param utf16 chose between UTF-8/ASCII/other and LE and BE UTF-16
  *              0 = UTF-8/ASCII/other, 1 = UTF-16-LE, 2 = UTF-16-BE
  */
-static const uint8_t *find_newline(const uint8_t *buf, int len, int utf16)
+static const uint8_t *find_term_char(const uint8_t *buf, int len, uint8_t term, int utf16)
 {
   uint32_t c;
   const uint8_t *end = buf + len;
   switch (utf16) {
   case 0:
-    return (uint8_t *)memchr(buf, '\n', len);
+    return (uint8_t *)memchr(buf, term, len);
   case 1:
     while (buf < end - 1) {
       GET_UTF16(c, buf < end - 1 ? get_le16_inc(&buf) : 0, return NULL;)
-      if (buf <= end && c == '\n')
+      if (buf <= end && c == term)
         return buf - 1;
     }
     break;
   case 2:
     while (buf < end - 1) {
       GET_UTF16(c, buf < end - 1 ? get_be16_inc(&buf) : 0, return NULL;)
-      if (buf <= end && c == '\n')
+      if (buf <= end && c == term)
         return buf - 1;
     }
     break;
@@ -660,7 +660,9 @@ static int copy_characters(uint8_t *dst, int dstsize,
   return 0;
 }
 
-unsigned char* stream_read_line(stream_t *s,unsigned char* mem, int max, int utf16) {
+uint8_t *stream_read_until(stream_t *s, uint8_t *mem, int max,
+                           uint8_t term, int utf16)
+{
   int len;
   const unsigned char *end;
   unsigned char *ptr = mem;
@@ -672,7 +674,7 @@ unsigned char* stream_read_line(stream_t *s,unsigned char* mem, int max, int utf
     if(len <= 0 &&
        (!cache_stream_fill_buffer(s) ||
         (len = s->buf_len-s->buf_pos) <= 0)) break;
-    end = find_newline(s->buffer+s->buf_pos, len, utf16);
+    end = find_term_char(s->buffer+s->buf_pos, len, term, utf16);
     if(end) len = end - (s->buffer+s->buf_pos) + 1;
     if(len > 0 && max > 0) {
       int l = copy_characters(ptr, max, s->buffer+s->buf_pos, &len, utf16);

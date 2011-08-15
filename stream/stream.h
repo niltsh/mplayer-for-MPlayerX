@@ -278,7 +278,11 @@ inline static int stream_read(stream_t *s,char* mem,int total){
   return total;
 }
 
-unsigned char* stream_read_line(stream_t *s,unsigned char* mem, int max, int utf16);
+uint8_t *stream_read_until(stream_t *s, uint8_t *mem, int max, uint8_t term, int utf16);
+inline static uint8_t *stream_read_line(stream_t *s, uint8_t *mem, int max, int utf16)
+{
+  return stream_read_until(s, mem, max, '\n', utf16);
+}
 
 inline static int stream_eof(stream_t *s){
   return s->eof;
