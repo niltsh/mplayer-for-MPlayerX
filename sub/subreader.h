@@ -50,6 +50,7 @@ extern char *sub_cp;
 #define SUB_SUBRIP09 11
 #define SUB_JACOSUB  12
 #define SUB_MPL2     13
+#define SUB_GOOGLE   14
 
 #define MAX_SUBTITLE_FILES 128
 
