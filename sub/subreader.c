@@ -790,6 +790,7 @@ subtitle *previous_aqt_sub = NULL;
 static subtitle *sub_read_line_aqt(stream_t *st,subtitle *current, int utf16) {
     char line[LINE_LEN+1];
 
+retry:
     while (1) {
     // try to locate next subtitle
         if (!stream_read_line (st, line, LINE_LEN, utf16))
@@ -799,6 +800,7 @@ static subtitle *sub_read_line_aqt(stream_t *st,subtitle *current, int utf16) {
     }
 
 #ifdef CONFIG_SORTSUB
+    if (!previous_sub_end)
     previous_sub_end = (current->start) ? current->start - 1 : 0;
 #else
     if (previous_aqt_sub != NULL)
@@ -821,13 +823,11 @@ static subtitle *sub_read_line_aqt(stream_t *st,subtitle *current, int utf16) {
         return ERR;
 
     if (!strlen(current->text[0]) && !strlen(current->text[1])) {
-#ifdef CONFIG_SORTSUB
-	previous_sub_end = 0;
-#else
+#ifndef CONFIG_SORTSUB
 	// void subtitle -> end of previous marked and exit
 	previous_aqt_sub = NULL;
 #endif
-	return NULL;
+	goto retry;
 	}
 
     return current;
@@ -842,6 +842,7 @@ static subtitle *sub_read_line_subrip09(stream_t *st,subtitle *current, int utf1
     int a1,a2,a3;
     int len;
 
+retry:
     while (1) {
     // try to locate next subtitle
         if (!stream_read_line (st, line, LINE_LEN, utf16))
@@ -853,6 +854,7 @@ static subtitle *sub_read_line_subrip09(stream_t *st,subtitle *current, int utf1
     current->start = a1*360000+a2*6000+a3*100;
 
 #ifdef CONFIG_SORTSUB
+    if (!previous_sub_end)
     previous_sub_end = (current->start) ? current->start - 1 : 0;
 #else
     if (previous_subrip09_sub != NULL)
@@ -870,13 +872,11 @@ static subtitle *sub_read_line_subrip09(stream_t *st,subtitle *current, int utf1
         return ERR;
 
     if (!strlen(current->text[0]) && current->lines <= 1) {
-#ifdef CONFIG_SORTSUB
-	previous_sub_end = 0;
-#else
+#ifndef CONFIG_SORTSUB
 	// void subtitle -> end of previous marked and exit
 	previous_subrip09_sub = NULL;
 #endif
-	return NULL;
+	goto retry;
 	}
 
     return current;
