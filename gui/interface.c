@@ -384,13 +384,14 @@ int gui(int what, void *data)
 
 // if ( guiInfo.Playing == 1 && guiInfo.NewPlay == GUI_FILE_NEW )
         if (guiInfo.NewPlay == GUI_FILE_NEW) {
+            dvd_title = 0;
             audio_id  = -1;
             video_id  = -1;
             dvdsub_id = -1;
             vobsub_id = -1;
+
             stream_cache_size = -1;
             autosync  = 0;
-            dvd_title = 0;
             force_fps = 0;
         }
 
