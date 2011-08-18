@@ -593,6 +593,7 @@ void ds_add_packet(demux_stream_t *ds, demux_packet_t *dp)
             ds_add_packet_internal(ds, dp);
         } else if (parsed_len) {
             demux_packet_t *dp2 = new_demux_packet(parsed_len);
+            if (!dp2) return;
             dp2->pos = dp->pos;
             dp2->pts = dp->pts; // should be parser->pts but that works badly
             memcpy(dp2->buffer, parsed_start, parsed_len);
@@ -608,6 +609,7 @@ void ds_read_packet(demux_stream_t *ds, stream_t *stream, int len,
                     double pts, off_t pos, int flags)
 {
     demux_packet_t *dp = new_demux_packet(len);
+    if (!dp) return;
     len = stream_read(stream, dp->buffer, len);
     resize_demux_packet(dp, len);
     dp->pts = pts;
@@ -713,6 +715,7 @@ int ds_fill_buffer(demux_stream_t *ds)
             ds_parse(ds->sh, &parsed_start, &parsed_len, MP_NOPTS_VALUE, 0);
             if (parsed_len) {
                 demux_packet_t *dp2 = new_demux_packet(parsed_len);
+                if (!dp2) continue;
                 dp2->pts = MP_NOPTS_VALUE;
                 memcpy(dp2->buffer, parsed_start, parsed_len);
                 ds_add_packet_internal(ds, dp2);
