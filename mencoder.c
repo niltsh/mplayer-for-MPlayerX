@@ -551,6 +551,8 @@ off_t muxer_f_size=0;
 
 double v_pts_corr=0;
 double v_timer_corr=0;
+double sub_offset=0;
+int did_seek=0;
 
 m_entry_t* filelist = NULL;
 char* filename=NULL;
@@ -1210,6 +1212,9 @@ if (edl_filename) {
 
 if (sh_audio && audio_delay != 0.) fixdelay(d_video, d_audio, mux_a, &frame_data, mux_v->codec==VCODEC_COPY);
 
+// Just assume a seek. Also works if time stamps do not start with 0
+did_seek = 1;
+
 while(!at_eof){
 
     int blit_frame=0;
@@ -1249,6 +1254,7 @@ goto_redo_edl:
             if (result == 2) { at_eof=1; break; } // EOF
             else if (result == 0) edl_seeking = 0; // no seeking
             else { // sucess
+                did_seek = 1;
                 edl_muted = 0;
                 if (last_pos >= sh_video->pts) {
                     // backwards seek detected!! Forget about this EDL skip altogether.
@@ -1456,11 +1462,17 @@ default:
                       ((vf_instance_t *)sh_video->vfilter)->control(sh_video->vfilter, VFCTRL_SKIP_NEXT_FRAME, 0) != CONTROL_TRUE);
     void *decoded_frame = decode_video(sh_video,frame_data.start,frame_data.in_size,
                                        drop_frame, MP_NOPTS_VALUE, NULL);
-    // NOTE: sh_video->pts is not really correct, but it allows -ass to work mostly
+    if (did_seek && sh_video->pts != MP_NOPTS_VALUE) {
+        did_seek = 0;
+        sub_offset = sh_video->pts;
+    }
+    // NOTE: this is not really correct, but it allows -ass to work mostly
     // v_muxer_time was tried before, but it is completely off when -ss is used
     // (see bug #1960).
-    // If you change this please not the reason here!
-    blit_frame = decoded_frame && filter_video(sh_video, decoded_frame, sh_video->pts);}
+    // sh_video->pts causes flickering with subtitles and complaints from MPEG-4
+    // encoder due to not being monotonic.
+    // If you change this please note the reason here!
+    blit_frame = decoded_frame && filter_video(sh_video, decoded_frame, v_muxer_time + sub_offset);}
     v_muxer_time = adjusted_muxer_time(mux_v); // update after muxing
 
     if (sh_video->vf_initialized < 0) mencoder_exit(1, NULL);
