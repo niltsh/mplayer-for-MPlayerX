@@ -1456,8 +1456,11 @@ default:
                       ((vf_instance_t *)sh_video->vfilter)->control(sh_video->vfilter, VFCTRL_SKIP_NEXT_FRAME, 0) != CONTROL_TRUE);
     void *decoded_frame = decode_video(sh_video,frame_data.start,frame_data.in_size,
                                        drop_frame, MP_NOPTS_VALUE, NULL);
-    // NOTE: v_muxer_time is not really correct, but it allows -ass to work mostly
-    blit_frame = decoded_frame && filter_video(sh_video, decoded_frame, v_muxer_time);}
+    // NOTE: sh_video->pts is not really correct, but it allows -ass to work mostly
+    // v_muxer_time was tried before, but it is completely off when -ss is used
+    // (see bug #1960).
+    // If you change this please not the reason here!
+    blit_frame = decoded_frame && filter_video(sh_video, decoded_frame, sh_video->pts);}
     v_muxer_time = adjusted_muxer_time(mux_v); // update after muxing
 
     if (sh_video->vf_initialized < 0) mencoder_exit(1, NULL);
