@@ -853,6 +853,7 @@ static int ty_check_file(demuxer_t* demuxer)
 {
   TiVoInfo *tivo = calloc(1, sizeof(TiVoInfo));
   demuxer->priv = tivo;
+  demuxer->filepos = stream_tell( demuxer->stream );
   return ds_fill_buffer(demuxer->video) ? DEMUXER_TYPE_MPEG_TY : 0;
 }
 
