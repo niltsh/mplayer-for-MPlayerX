@@ -2429,29 +2429,6 @@ static double update_video(int *blit_frame)
 
             if (full_frame) {
                 sh_video->timer += frame_time;
-
-                // Time-based PTS recalculation.
-                // The key to maintaining A-V sync is to not touch PTS until the proper frame is reached
-                if (sh_video->pts != MP_NOPTS_VALUE) {
-                    if (sh_video->last_pts != MP_NOPTS_VALUE) {
-                        double pts     = sh_video->last_pts + frame_time;
-                        double ptsdiff = fabs(pts - sh_video->pts);
-
-                        // Allow starting PTS recalculation at the appropriate frame only
-                        mpctx->framestep_found |= (ptsdiff <= frame_time * 1.5);
-
-                        // replace PTS only if we're not too close and not too far
-                        // and a correctly timed frame has been found, otherwise
-                        // keep pts to eliminate rounding errors or catch up with stream
-                        if (ptsdiff > frame_time * 20)
-                            mpctx->framestep_found = 0;
-                        if (ptsdiff * 10 > frame_time && mpctx->framestep_found)
-                            sh_video->pts = pts;
-                        else
-                            mp_dbg(MSGT_AVSYNC, MSGL_DBG2, "Keeping PTS at %6.2f\n", sh_video->pts);
-                    }
-                    sh_video->last_pts = sh_video->pts;
-                }
                 if (mpctx->sh_audio)
                     mpctx->delay -= frame_time;
                 // video_read_frame can change fps (e.g. for ASF video)
@@ -2695,7 +2672,6 @@ static int seek(MPContext *mpctx, double amount, int style)
         mpctx->num_buffered_frames = 0;
         mpctx->delay           = 0;
         mpctx->time_frame      = 0;
-        mpctx->framestep_found = 0;
         // Not all demuxers set d_video->pts during seek, so this value
         // (which is used by at least vobsub and edl code below) may
         // be completely wrong (probably 0).
@@ -3596,7 +3572,6 @@ goto_enable_cache:
 
     {
         mpctx->num_buffered_frames = 0;
-        mpctx->framestep_found     = 0;
 
         // Make sure old OSD does not stay around,
         // e.g. with -fixed-vo and same-resolution files
