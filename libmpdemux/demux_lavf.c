@@ -363,6 +363,9 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
                         codec->codec_tag= MKTAG(24, 'R', 'G', 'B');
                 }
             }
+            // mp4v is sometimes also used for files containing e.g. mjpeg
+            if(codec->codec_tag == MKTAG('m', 'p', '4', 'v'))
+                codec->codec_tag= 0;
             if(!codec->codec_tag)
                 codec->codec_tag= av_codec_get_tag(mp_bmp_taglists, codec->codec_id);
             bih->biSize= sizeof(*bih) + codec->extradata_size;
