@@ -308,8 +308,8 @@ int glFindFormat(uint32_t fmt, int *bpp, GLint *gl_texfmt,
     // we do not support palettized formats, although the format the
     // swscale produces works
     case IMGFMT_RGB8:
-      gl_format = GL_RGB;
-      gl_type = GL_UNSIGNED_BYTE_2_3_3_REV;
+      *gl_format = GL_RGB;
+      *gl_type = GL_UNSIGNED_BYTE_2_3_3_REV;
       break;
 #endif
     case IMGFMT_RGB15:
@@ -326,8 +326,8 @@ int glFindFormat(uint32_t fmt, int *bpp, GLint *gl_texfmt,
       // GL_BGR and GL_UNSIGNED_BYTE_3_3_2 isn't supported at least
       // by nVidia drivers, and in addition would give more bits to
       // blue than to red, which isn't wanted
-      gl_format = GL_RGB;
-      gl_type = GL_UNSIGNED_BYTE_3_3_2;
+      *gl_format = GL_RGB;
+      *gl_type = GL_UNSIGNED_BYTE_3_3_2;
       break;
 #endif
     case IMGFMT_BGR15:
