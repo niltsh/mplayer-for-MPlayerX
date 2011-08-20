@@ -322,7 +322,7 @@ int glFindFormat(uint32_t fmt, int *bpp, GLint *gl_texfmt,
       break;
 #if 0
     case IMGFMT_BGR8:
-      // special case as red and blue have a differen number of bits.
+      // special case as red and blue have a different number of bits.
       // GL_BGR and GL_UNSIGNED_BYTE_3_3_2 isn't supported at least
       // by nVidia drivers, and in addition would give more bits to
       // blue than to red, which isn't wanted
