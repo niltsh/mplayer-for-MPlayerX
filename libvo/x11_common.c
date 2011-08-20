@@ -729,12 +729,18 @@ void vo_x11_classhint(Display * display, Window window, const char *name)
 {
     XClassHint wmClass;
     pid_t pid = getpid();
+    long prop = pid & 0x7FFFFFFF;
 
     wmClass.res_name = vo_winname ? vo_winname : name;
     wmClass.res_class = "MPlayer";
     XSetClassHint(display, window, &wmClass);
+
+    /* PID sizes other than 32-bit are not handled by the EWMH spec */
+    if ((pid_t)prop != pid)
+        return;
+
     XChangeProperty(display, window, XA_NET_WM_PID, XA_CARDINAL, 32,
-                    PropModeReplace, (unsigned char *) &pid, 1);
+                    PropModeReplace, (unsigned char *)&prop, 1);
 }
 
 Window vo_window = None;
