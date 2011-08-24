@@ -57,11 +57,23 @@ float udp_seek_threshold = 1.0;   // how far off before we seek
 // how far off is still considered equal
 #define UDP_TIMING_TOLERANCE 0.02
 
+static void startup(void)
+{
+#if HAVE_WINSOCK2_H
+    static int wsa_started;
+    if (!wsa_started) {
+        WSADATA wd;
+        WSAStartup(0x0202, &wd);
+        wsa_started = 1;
+    }
+#endif
+}
+
 static void set_blocking(int fd, int blocking)
 {
     long sock_flags;
 #if HAVE_WINSOCK2_H
-    sock_flags = blocking;
+    sock_flags = !blocking;
     ioctlsocket(fd, FIONBIO, &sock_flags);
 #else
     sock_flags = fcntl(fd, F_GETFL, 0);
@@ -86,6 +98,7 @@ static int get_udp(int blocking, double *master_position)
         struct timeval tv = { .tv_sec = 30 };
         struct sockaddr_in servaddr = { 0 };
 
+        startup();
         sockfd = socket(AF_INET, SOCK_DGRAM, 0);
         if (sockfd == -1)
             return -1;
@@ -133,6 +146,7 @@ void send_udp(const char *send_to_ip, int port, char *mesg)
         static const int one = 1;
         int ip_valid = 0;
 
+        startup();
         sockfd = socket(AF_INET, SOCK_DGRAM, 0);
         if (sockfd == -1)
             exit_player(EXIT_ERROR);
