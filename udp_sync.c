@@ -95,7 +95,11 @@ static int get_udp(int blocking, double *master_position)
 
     static int sockfd = -1;
     if (sockfd == -1) {
+#if HAVE_WINSOCK2_H
+        DWORD tv = 30000;
+#else
         struct timeval tv = { .tv_sec = 30 };
+#endif
         struct sockaddr_in servaddr = { 0 };
 
         startup();
