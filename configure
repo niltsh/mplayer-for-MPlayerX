@@ -6761,10 +6761,10 @@ if test "$_librtmp" = auto  && test "$networking" = yes ; then
     _librtmp=yes && extra_ldflags="$extra_ldflags -lrtmp"
   if test "$_librtmp" != yes && $_pkg_config --exists librtmp ; then
     inc_tmp=$($_pkg_config --cflags librtmp)
-	ld_tmp=$($_pkg_config --libs librtmp)
-	cc_check $inc_tmp $ld_tmp && _librtmp=yes &&
-	  extra_ldflags="$extra_ldflags $ld_tmp" &&
-	  extra_cflags="$extra_cflags $inc_tmp"
+    ld_tmp=$($_pkg_config --libs librtmp)
+    cc_check $inc_tmp $ld_tmp && _librtmp=yes &&
+      extra_ldflags="$extra_ldflags $ld_tmp" &&
+      extra_cflags="$extra_cflags $inc_tmp"
   fi
 fi
 if test "$_librtmp" = yes && test "$networking" = yes; then
