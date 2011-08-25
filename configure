@@ -6037,8 +6037,6 @@ echores "$_ass"
 
 
 echocheck "fribidi with charsets"
-inc_tmp=""
-ld_tmp=""
 if test "$_fribidi" = auto ; then
     cat > $TMPC << EOF
 #include <stdlib.h>
@@ -6052,20 +6050,18 @@ int main(void) {
 }
 EOF
     _fribidi=no
-    inc_tmp=""
-    ld_tmp="-lfribidi"
-    cc_check $inc_tmp $ld_tmp && _fribidi=yes
+    cc_check -lfribidi && _fribidi=yes && extra_ldflags="$extra_ldflags -lfribidi"
     if $_pkg_config --exists fribidi > /dev/null 2>&1 &&
        test "$_fribidi" = no ; then
         inc_tmp="$($_pkg_config --cflags fribidi)"
         ld_tmp="$($_pkg_config --libs fribidi)"
-        cc_check $inc_tmp $ld_tmp && _fribidi=yes
+        cc_check $inc_tmp $ld_tmp && _fribidi=yes &&
+            extra_cflags="$extra_cflags $inc_tmp" &&
+            extra_ldflags="$extra_ldflags $ld_tmp"
     fi
 fi
 if test "$_fribidi" = yes ; then
     def_fribidi='#define CONFIG_FRIBIDI 1'
-    extra_cflags="$extra_cflags $inc_tmp"
-    extra_ldflags="$extra_ldflags $ld_tmp"
 else
     def_fribidi='#undef CONFIG_FRIBIDI'
 fi
