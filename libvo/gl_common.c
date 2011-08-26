@@ -897,6 +897,36 @@ static void gen_spline_lookup_tex(GLenum unit) {
   free(tex);
 }
 
+#define NOISE_RES 2048
+
+/**
+ * \brief creates the 1D lookup texture needed to generate pseudo-random numbers.
+ * \param unit texture unit to attach texture to
+ */
+static void gen_noise_lookup_tex(GLenum unit) {
+  GLfloat *tex = calloc(NOISE_RES, sizeof(*tex));
+  uint32_t lcg = 0x79381c11;
+  int i;
+  for (i = 0; i < NOISE_RES; i++)
+    tex[i] = (double)i / (NOISE_RES - 1);
+  for (i = 0; i < NOISE_RES - 1; i++) {
+    int remain = NOISE_RES - i;
+    int idx = i + (lcg >> 16) % remain;
+    GLfloat tmp = tex[i];
+    tex[i] = tex[idx];
+    tex[idx] = tmp;
+    lcg = lcg * 1664525 + 1013904223;
+  }
+  mpglActiveTexture(unit);
+  mpglTexImage1D(GL_TEXTURE_1D, 0, 1, NOISE_RES, 0, GL_RED, GL_FLOAT, tex);
+  mpglTexParameterf(GL_TEXTURE_1D, GL_TEXTURE_PRIORITY, 1.0);
+  mpglTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+  mpglTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  mpglTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  mpglActiveTexture(GL_TEXTURE0);
+  free(tex);
+}
+
 static const char *bilin_filt_template =
   "TEX yuv.%c, fragment.texcoord[%c], texture[%c], %s;\n";
 
@@ -1024,8 +1054,7 @@ static const char *yuv_prog_template =
   "TEMP res;\n"
   "MAD res.rgb, yuv.rrrr, ycoef, offsets;\n"
   "MAD res.rgb, yuv.gggg, ucoef, res;\n"
-  "MAD result.color.rgb, yuv.bbbb, vcoef, res;\n"
-  "END";
+  "MAD res.rgb, yuv.bbbb, vcoef, res;\n";
 
 static const char *yuv_pow_prog_template =
   "PARAM ycoef = {%e, %e, %e};\n"
@@ -1037,10 +1066,9 @@ static const char *yuv_pow_prog_template =
   "MAD res.rgb, yuv.rrrr, ycoef, offsets;\n"
   "MAD res.rgb, yuv.gggg, ucoef, res;\n"
   "MAD_SAT res.rgb, yuv.bbbb, vcoef, res;\n"
-  "POW result.color.r, res.r, gamma.r;\n"
-  "POW result.color.g, res.g, gamma.g;\n"
-  "POW result.color.b, res.b, gamma.b;\n"
-  "END";
+  "POW res.r, res.r, gamma.r;\n"
+  "POW res.g, res.g, gamma.g;\n"
+  "POW res.b, res.b, gamma.b;\n";
 
 static const char *yuv_lookup_prog_template =
   "PARAM ycoef = {%e, %e, %e, 0};\n"
@@ -1051,16 +1079,23 @@ static const char *yuv_lookup_prog_template =
   "MAD res, yuv.rrrr, ycoef, offsets;\n"
   "MAD res.rgb, yuv.gggg, ucoef, res;\n"
   "MAD res.rgb, yuv.bbbb, vcoef, res;\n"
-  "TEX result.color.r, res.raaa, texture[%c], 2D;\n"
+  "TEX res.r, res.raaa, texture[%c], 2D;\n"
   "ADD res.a, res.a, 0.25;\n"
-  "TEX result.color.g, res.gaaa, texture[%c], 2D;\n"
+  "TEX res.g, res.gaaa, texture[%c], 2D;\n"
   "ADD res.a, res.a, 0.25;\n"
-  "TEX result.color.b, res.baaa, texture[%c], 2D;\n"
-  "END";
+  "TEX res.b, res.baaa, texture[%c], 2D;\n";
 
 static const char *yuv_lookup3d_prog_template =
-  "TEX result.color, yuv, texture[%c], 3D;\n"
-  "END";
+  "TEMP res;\n"
+  "TEX res, yuv, texture[%c], 3D;\n";
+
+static const char *noise_filt_template =
+  "MUL coord.xy, fragment.texcoord[0], {%e, %e};\n"
+  "TEMP rand;\n"
+  "TEX rand.r, coord.x, texture[%c], 1D;\n"
+  "ADD rand.r, rand.r, coord.y;\n"
+  "TEX rand.r, rand.r, texture[%c], 1D;\n"
+  "MAD res.rgb, rand.rrrr, {%e, %e, %e}, res;\n";
 
 /**
  * \brief creates and initializes helper textures needed for scaling texture read
@@ -1306,16 +1341,24 @@ static void glSetupYUVFragprog(gl_conversion_params_t *params) {
   char lum_scale_texs[1];
   char chrom_scale_texs[1];
   char conv_texs[1];
+  char filt_texs[1];
   GLint i;
   // this is the conversion matrix, with y, u, v factors
   // for red, green, blue and the constant offsets
   float yuv2rgb[3][4];
+  int noise = 0;
   create_conv_textures(params, &cur_texu, conv_texs);
   create_scaler_textures(YUV_LUM_SCALER(type), &cur_texu, lum_scale_texs);
   if (YUV_CHROM_SCALER(type) == YUV_LUM_SCALER(type))
     memcpy(chrom_scale_texs, lum_scale_texs, sizeof(chrom_scale_texs));
   else
     create_scaler_textures(YUV_CHROM_SCALER(type), &cur_texu, chrom_scale_texs);
+
+  if (noise) {
+    gen_noise_lookup_tex(cur_texu);
+    filt_texs[0] = '0' + cur_texu++;
+  }
+
   mpglGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &i);
   if (i < cur_texu)
     mp_msg(MSGT_VO, MSGL_ERR,
@@ -1367,6 +1410,26 @@ static void glSetupYUVFragprog(gl_conversion_params_t *params) {
       mp_msg(MSGT_VO, MSGL_ERR, "[gl] unknown conversion type %i\n", YUV_CONVERSION(type));
       break;
   }
+  prog_remain -= strlen(prog_pos);
+  prog_pos    += strlen(prog_pos);
+
+  if (noise) {
+    double str = 1.0 / 8;
+    double scale_x = (double)NOISE_RES / texw;
+    double scale_y = (double)NOISE_RES / texh;
+    if (rect) {
+      scale_x /= texw;
+      scale_y /= texh;
+    }
+    snprintf(prog_pos, prog_remain, noise_filt_template,
+             scale_x, scale_y,
+             filt_texs[0], filt_texs[0],
+             str, str, str);
+    prog_remain -= strlen(prog_pos);
+    prog_pos    += strlen(prog_pos);
+  }
+  snprintf(prog_pos, prog_remain, "MOV result.color.rgb, res;\nEND");
+
   mp_msg(MSGT_VO, MSGL_DBG2, "[gl] generated fragment program:\n%s\n", yuv_prog);
   loadGPUProgram(GL_FRAGMENT_PROGRAM, yuv_prog);
   free(yuv_prog);
