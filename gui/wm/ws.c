@@ -1536,7 +1536,7 @@ void wsSetIcon(Display *dsp, Window win, guiIcon_t *icon)
 {
     XWMHints *wm;
     Atom iconatom;
-    CARD32 data[2];
+    long data[2];
 
     if (icon->normal) {
         wm = XGetWMHints(dsp, win);

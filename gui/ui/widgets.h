@@ -59,7 +59,7 @@ typedef struct {
     Pixmap normal;
     Pixmap normal_mask;
     int collection_size;
-    CARD32 *collection;
+    long *collection;
 } guiIcon_t;
 
 extern guiIcon_t guiIcon;
