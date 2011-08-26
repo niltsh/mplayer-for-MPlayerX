@@ -927,7 +927,7 @@ static void gen_noise_lookup_tex(GLenum unit) {
   free(tex);
 }
 
-static const char *bilin_filt_template =
+static const char bilin_filt_template[] =
   "TEX yuv.%c, fragment.texcoord[%c], texture[%c], %s;\n";
 
 #define BICUB_FILT_MAIN(textype) \
@@ -944,7 +944,7 @@ static const char *bilin_filt_template =
   /* x-interpolation */ \
   "LRP yuv.%c, parmx.b, a.bbbb, a.aaaa;\n"
 
-static const char *bicub_filt_template_2D =
+static const char bicub_filt_template_2D[] =
   "MAD coord.xy, fragment.texcoord[%c], {%e, %e}, {0.5, 0.5};\n"
   "TEX parmx, coord.x, texture[%c], 1D;\n"
   "MUL cdelta.xz, parmx.rrgg, {-%e, 0, %e, 0};\n"
@@ -952,7 +952,7 @@ static const char *bicub_filt_template_2D =
   "MUL cdelta.yw, parmy.rrgg, {0, -%e, 0, %e};\n"
   BICUB_FILT_MAIN("2D");
 
-static const char *bicub_filt_template_RECT =
+static const char bicub_filt_template_RECT[] =
   "ADD coord, fragment.texcoord[%c], {0.5, 0.5};\n"
   "TEX parmx, coord.x, texture[%c], 1D;\n"
   "MUL cdelta.xz, parmx.rrgg, {-1, 0, 1, 0};\n"
@@ -970,7 +970,7 @@ static const char *bicub_filt_template_RECT =
   "ADD "t".x, "t".xxxx, "s";\n" \
   "SUB "t".y, "t".yyyy, "s";\n"
 
-static const char *bicub_notex_filt_template_2D =
+static const char bicub_notex_filt_template_2D[] =
   "MAD coord.xy, fragment.texcoord[%c], {%e, %e}, {0.5, 0.5};\n"
   "FRC coord.xy, coord.xyxy;\n"
   CALCWEIGHTS("parmx", "coord.xxxx")
@@ -979,7 +979,7 @@ static const char *bicub_notex_filt_template_2D =
   "MUL cdelta.yw, parmy.rrgg, {0, -%e, 0, %e};\n"
   BICUB_FILT_MAIN("2D");
 
-static const char *bicub_notex_filt_template_RECT =
+static const char bicub_notex_filt_template_RECT[] =
   "ADD coord, fragment.texcoord[%c], {0.5, 0.5};\n"
   "FRC coord.xy, coord.xyxy;\n"
   CALCWEIGHTS("parmx", "coord.xxxx")
@@ -996,19 +996,19 @@ static const char *bicub_notex_filt_template_RECT =
   /* x-interpolation */ \
   "LRP yuv.%c, parmx.b, a.rrrr, b.rrrr;\n"
 
-static const char *bicub_x_filt_template_2D =
+static const char bicub_x_filt_template_2D[] =
   "MAD coord.x, fragment.texcoord[%c], {%e}, {0.5};\n"
   "TEX parmx, coord, texture[%c], 1D;\n"
   "MUL cdelta.xyz, parmx.rrgg, {-%e, 0, %e};\n"
   BICUB_X_FILT_MAIN("2D");
 
-static const char *bicub_x_filt_template_RECT =
+static const char bicub_x_filt_template_RECT[] =
   "ADD coord.x, fragment.texcoord[%c], {0.5};\n"
   "TEX parmx, coord, texture[%c], 1D;\n"
   "MUL cdelta.xyz, parmx.rrgg, {-1, 0, 1};\n"
   BICUB_X_FILT_MAIN("RECT");
 
-static const char *unsharp_filt_template =
+static const char unsharp_filt_template[] =
   "PARAM dcoord%c = {%e, %e, %e, %e};\n"
   "ADD coord, fragment.texcoord[%c].xyxy, dcoord%c;\n"
   "SUB coord2, fragment.texcoord[%c].xyxy, dcoord%c;\n"
@@ -1022,7 +1022,7 @@ static const char *unsharp_filt_template =
   "SUB b.r, a.r, b.r;\n"
   "MAD yuv.%c, b.r, {%e}, a.r;\n";
 
-static const char *unsharp_filt_template2 =
+static const char unsharp_filt_template2[] =
   "PARAM dcoord%c = {%e, %e, %e, %e};\n"
   "PARAM dcoord2%c = {%e, 0, 0, %e};\n"
   "ADD coord, fragment.texcoord[%c].xyxy, dcoord%c;\n"
@@ -1046,7 +1046,7 @@ static const char *unsharp_filt_template2 =
   "MAD b.r, a.r, {0.859375}, b.r;\n"
   "MAD yuv.%c, b.r, {%e}, a.r;\n";
 
-static const char *yuv_prog_template =
+static const char yuv_prog_template[] =
   "PARAM ycoef = {%e, %e, %e};\n"
   "PARAM ucoef = {%e, %e, %e};\n"
   "PARAM vcoef = {%e, %e, %e};\n"
@@ -1056,7 +1056,7 @@ static const char *yuv_prog_template =
   "MAD res.rgb, yuv.gggg, ucoef, res;\n"
   "MAD res.rgb, yuv.bbbb, vcoef, res;\n";
 
-static const char *yuv_pow_prog_template =
+static const char yuv_pow_prog_template[] =
   "PARAM ycoef = {%e, %e, %e};\n"
   "PARAM ucoef = {%e, %e, %e};\n"
   "PARAM vcoef = {%e, %e, %e};\n"
@@ -1070,7 +1070,7 @@ static const char *yuv_pow_prog_template =
   "POW res.g, res.g, gamma.g;\n"
   "POW res.b, res.b, gamma.b;\n";
 
-static const char *yuv_lookup_prog_template =
+static const char yuv_lookup_prog_template[] =
   "PARAM ycoef = {%e, %e, %e, 0};\n"
   "PARAM ucoef = {%e, %e, %e, 0};\n"
   "PARAM vcoef = {%e, %e, %e, 0};\n"
@@ -1085,11 +1085,11 @@ static const char *yuv_lookup_prog_template =
   "ADD res.a, res.a, 0.25;\n"
   "TEX res.b, res.baaa, texture[%c], 2D;\n";
 
-static const char *yuv_lookup3d_prog_template =
+static const char yuv_lookup3d_prog_template[] =
   "TEMP res;\n"
   "TEX res, yuv, texture[%c], 3D;\n";
 
-static const char *noise_filt_template =
+static const char noise_filt_template[] =
   "MUL coord.xy, fragment.texcoord[0], {%e, %e};\n"
   "TEMP rand;\n"
   "TEX rand.r, coord.x, texture[%c], 1D;\n"
