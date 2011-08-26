@@ -13,6 +13,7 @@ MPlayer (1.0)
     * delogo: allow to change the rectangle based on the time.
 
     Other:
+    * support adding noise at output resolution with -vo gl:noise-strength=8
     * experimental support for PGS (BluRay-compatible), DVB and XSUB subtitles.
     * experimental af_cmdline slave command to change e.g. audio equalizer options at runtime.
 

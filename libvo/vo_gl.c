@@ -118,6 +118,7 @@ static int is_yuv;
 static int lscale;
 static int cscale;
 static float filter_strength;
+static float noise_strength;
 static int yuvconvtype;
 static int use_rectangle;
 static int err_shown;
@@ -240,7 +241,7 @@ static void update_yuvconv(void) {
   float bgamma = exp(log(8.0) * eq_bgamma / 100.0);
   gl_conversion_params_t params = {gl_target, yuvconvtype,
       {colorspace, levelconv, bri, cont, hue, sat, rgamma, ggamma, bgamma, 0},
-      texture_width, texture_height, 0, 0, filter_strength};
+      texture_width, texture_height, 0, 0, filter_strength, noise_strength};
   mp_get_chroma_shift(image_format, &xs, &ys, &depth);
   params.chrom_texw = params.texw >> xs;
   params.chrom_texh = params.texh >> ys;
@@ -1139,6 +1140,7 @@ static const opt_t subopts[] = {
   {"lscale",       OPT_ARG_INT,  &lscale,       int_non_neg},
   {"cscale",       OPT_ARG_INT,  &cscale,       int_non_neg},
   {"filter-strength", OPT_ARG_FLOAT, &filter_strength, NULL},
+  {"noise-strength", OPT_ARG_FLOAT, &noise_strength, NULL},
   {"ati-hack",     OPT_ARG_BOOL, &ati_hack,     NULL},
   {"force-pbo",    OPT_ARG_BOOL, &force_pbo,    NULL},
   {"mesa-buffer",  OPT_ARG_BOOL, &mesa_buffer,  NULL},
@@ -1169,6 +1171,7 @@ static int preinit_internal(const char *arg, int allow_sw)
     lscale = 0;
     cscale = 0;
     filter_strength = 0.5;
+    noise_strength = 0.0;
     use_rectangle = -1;
     use_glFinish = 0;
     ati_hack = -1;
@@ -1244,6 +1247,8 @@ static int preinit_internal(const char *arg, int allow_sw)
               "    as lscale but for chroma (2x slower with little visible effect).\n"
               "  filter-strength=<value>\n"
               "    set the effect strength for some lscale/cscale filters\n"
+              "  noise-strength=<value>\n"
+              "    set how much noise to add. 1.0 is suitable for dithering to 6 bit.\n"
               "  customprog=<filename>\n"
               "    use a custom YUV conversion program\n"
               "  customtex=<filename>\n"

@@ -1341,12 +1341,12 @@ static void glSetupYUVFragprog(gl_conversion_params_t *params) {
   char lum_scale_texs[1];
   char chrom_scale_texs[1];
   char conv_texs[1];
-  char filt_texs[1];
+  char filt_texs[1] = {0};
   GLint i;
   // this is the conversion matrix, with y, u, v factors
   // for red, green, blue and the constant offsets
   float yuv2rgb[3][4];
-  int noise = 0;
+  int noise = params->noise_strength != 0;
   create_conv_textures(params, &cur_texu, conv_texs);
   create_scaler_textures(YUV_LUM_SCALER(type), &cur_texu, lum_scale_texs);
   if (YUV_CHROM_SCALER(type) == YUV_LUM_SCALER(type))
@@ -1414,7 +1414,8 @@ static void glSetupYUVFragprog(gl_conversion_params_t *params) {
   prog_pos    += strlen(prog_pos);
 
   if (noise) {
-    double str = 1.0 / 8;
+    // 1.0 strength is suitable for dithering 8 to 6 bit
+    double str = params->noise_strength * (1.0 / 64);
     double scale_x = (double)NOISE_RES / texw;
     double scale_y = (double)NOISE_RES / texh;
     if (rect) {
