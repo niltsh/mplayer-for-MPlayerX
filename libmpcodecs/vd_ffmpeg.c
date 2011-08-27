@@ -240,11 +240,9 @@ static int init(sh_video_t *sh){
     ctx->ip_count= ctx->b_count= 0;
 
     ctx->pic = avcodec_alloc_frame();
-    ctx->avctx = avcodec_alloc_context();
+    ctx->avctx = avcodec_alloc_context3(lavc_codec);
     avctx = ctx->avctx;
-    avcodec_get_context_defaults3(avctx, lavc_codec);
     avctx->opaque = sh;
-    avctx->codec_type = AVMEDIA_TYPE_VIDEO;
     avctx->codec_id = lavc_codec->id;
 
     avctx->get_format = get_format;
@@ -390,7 +388,7 @@ static int init(sh_video_t *sh){
         set_format_params(avctx, PIX_FMT_XVMC_MPEG2_IDCT);
 
     /* open it */
-    if (avcodec_open(avctx, lavc_codec) < 0) {
+    if (avcodec_open2(avctx, lavc_codec, NULL) < 0) {
         mp_msg(MSGT_DECVIDEO, MSGL_ERR, MSGTR_CantOpenCodec);
         uninit(sh);
         return 0;
