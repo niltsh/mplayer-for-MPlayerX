@@ -686,7 +686,7 @@ static int config(struct vf_instance *vf,
     lavc_venc_context->thread_count = lavc_param_threads;
     lavc_venc_context->thread_type = FF_THREAD_FRAME | FF_THREAD_SLICE;
 
-    if (avcodec_open(lavc_venc_context, vf->priv->codec) != 0) {
+    if (avcodec_open2(lavc_venc_context, vf->priv->codec, NULL) != 0) {
 	mp_msg(MSGT_MENCODER,MSGL_ERR,MSGTR_CantOpenCodec);
 	return 0;
     }
@@ -1037,8 +1037,7 @@ static int vf_open(vf_instance_t *vf, char* args){
     }
 
     vf->priv->pic = avcodec_alloc_frame();
-    vf->priv->context = avcodec_alloc_context();
-    vf->priv->context->codec_type = AVMEDIA_TYPE_VIDEO;
+    vf->priv->context = avcodec_alloc_context3(vf->priv->codec);
     vf->priv->context->codec_id = vf->priv->codec->id;
 
     return 1;

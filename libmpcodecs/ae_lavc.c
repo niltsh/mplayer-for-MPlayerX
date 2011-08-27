@@ -178,14 +178,13 @@ int mpae_init_lavc(audio_encoder_t *encoder)
 		}
 	}
 
-	lavc_actx = avcodec_alloc_context();
+	lavc_actx = avcodec_alloc_context3(lavc_acodec);
 	if(lavc_actx == NULL)
 	{
 		mp_msg(MSGT_MENCODER, MSGL_FATAL, MSGTR_CouldntAllocateLavcContext);
 		return 0;
 	}
 
-	lavc_actx->codec_type = AVMEDIA_TYPE_AUDIO;
 	lavc_actx->codec_id = lavc_acodec->id;
 	// put sample parameters
 	lavc_actx->sample_fmt = AV_SAMPLE_FMT_S16;
@@ -238,7 +237,7 @@ int mpae_init_lavc(audio_encoder_t *encoder)
                 lavc_actx->flags2 |= CODEC_FLAG2_LOCAL_HEADER;
         }
 
-	if(avcodec_open(lavc_actx, lavc_acodec) < 0)
+	if(avcodec_open2(lavc_actx, lavc_acodec, NULL) < 0)
 	{
 		mp_msg(MSGT_MENCODER, MSGL_FATAL, MSGTR_CouldntOpenCodec, lavc_param_acodec, lavc_param_abitrate);
 		return 0;
