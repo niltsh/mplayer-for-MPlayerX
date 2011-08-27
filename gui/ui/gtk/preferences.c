@@ -392,11 +392,6 @@ void ShowPreferences( void )
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBLoadFullscreen ),gtkLoadFullscreen );
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBSaveWinPos ),gui_save_pos );
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBShowVideoWindow ),gtkShowVideoWindow );
- if ( !gtkShowVideoWindow )
-  {
-   gtk_widget_set_sensitive( CBLoadFullscreen,FALSE );
-   gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBLoadFullscreen ),0 );
-  }
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBStopXScreenSaver ),stop_xscreensaver );
  gtk_adjustment_set_value( HSPPQualityadj,auto_quality );
 
