@@ -90,7 +90,7 @@ void vo_x11_clearwindow_part(Display *mDisplay, Window vo_window,
 void vo_x11_clearwindow( Display *mDisplay, Window vo_window );
 void vo_x11_ontop(void);
 void vo_x11_border(void);
-void vo_x11_ewmh_fullscreen( int action );
+void vo_x11_ewmh_fullscreen( Window win, int action );
 
 #endif
 

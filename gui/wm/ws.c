@@ -890,7 +890,7 @@ void wsFullScreen(wsTWindow *win)
     int decoration = 0;
 
     if (win->isFullScreen) {
-        vo_x11_ewmh_fullscreen(_NET_WM_STATE_REMOVE); // removes fullscreen state if wm supports EWMH
+        vo_x11_ewmh_fullscreen(win->WindowID, _NET_WM_STATE_REMOVE); // removes fullscreen state if wm supports EWMH
 
         if (!(vo_fs_type & vo_wm_FULLSCREEN)) { // shouldn't be needed with EWMH fs
             win->X      = win->OldX;
@@ -935,7 +935,7 @@ void wsFullScreen(wsTWindow *win)
         wsScreenSaverOff(wsDisplay);
 #endif
 
-        vo_x11_ewmh_fullscreen(_NET_WM_STATE_ADD); // adds fullscreen state if wm supports EWMH
+        vo_x11_ewmh_fullscreen(win->WindowID, _NET_WM_STATE_ADD); // adds fullscreen state if wm supports EWMH
     }
 
     if (!(vo_fs_type & vo_wm_FULLSCREEN)) { // shouldn't be needed with EWMH fs
