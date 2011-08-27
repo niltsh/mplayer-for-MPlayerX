@@ -100,7 +100,7 @@ static int init(sh_audio_t *sh_audio)
 	return 0;
     }
 
-    lavc_context = avcodec_alloc_context();
+    lavc_context = avcodec_alloc_context3(lavc_codec);
     sh_audio->context=lavc_context;
 
     lavc_context->drc_scale = drc_level;
@@ -115,7 +115,6 @@ static int init(sh_audio_t *sh_audio)
     }
     lavc_context->request_channels = audio_output_channels;
     lavc_context->codec_tag = sh_audio->format; //FOURCC
-    lavc_context->codec_type = AVMEDIA_TYPE_AUDIO;
     lavc_context->codec_id = lavc_codec->id; // not sure if required, imho not --A'rpi
 
     /* alloc extra data */
@@ -136,7 +135,7 @@ static int init(sh_audio_t *sh_audio)
     }
 
     /* open it */
-    if (avcodec_open(lavc_context, lavc_codec) < 0) {
+    if (avcodec_open2(lavc_context, lavc_codec, NULL) < 0) {
         mp_msg(MSGT_DECAUDIO,MSGL_ERR, MSGTR_CantOpenCodec);
         return 0;
     }
@@ -236,8 +235,8 @@ static int decode_audio(sh_audio_t *sh_audio,unsigned char *buf,int minlen,int m
 	    sh_audio->ds->buffer_pos+=y-x;  // put back data (HACK!)
 	if(len2>0){
 	  if (((AVCodecContext *)sh_audio->context)->channels >= 5) {
-            int samplesize = av_get_bits_per_sample_fmt(((AVCodecContext *)
-                                    sh_audio->context)->sample_fmt) / 8;
+            int samplesize = av_get_bytes_per_sample(((AVCodecContext *)
+                                    sh_audio->context)->sample_fmt);
             reorder_channel_nch(buf, AF_CHANNEL_LAYOUT_LAVC_DEFAULT,
                                 AF_CHANNEL_LAYOUT_MPLAYER_DEFAULT,
                                 ((AVCodecContext *)sh_audio->context)->channels,
