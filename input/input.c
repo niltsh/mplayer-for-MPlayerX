@@ -1269,7 +1269,8 @@ static mp_cmd_t *read_events(int time, int paused)
 			    strerror(errno));
 		FD_ZERO(&fds);
 	    }
-	}
+	} else if (time)
+	    usec_sleep(time * 1000);
     }
 #else
     if (!got_cmd && time)
