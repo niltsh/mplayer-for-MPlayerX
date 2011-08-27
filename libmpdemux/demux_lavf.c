@@ -488,14 +488,11 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
 
 static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
     AVFormatContext *avfc;
-    AVFormatParameters ap;
     const AVOption *opt;
     AVDictionaryEntry *t = NULL;
     lavf_priv_t *priv= demuxer->priv;
     int i;
     char mp_filename[256]="mp:";
-
-    memset(&ap, 0, sizeof(AVFormatParameters));
 
     stream_seek(demuxer->stream, 0);
 
@@ -508,7 +505,6 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
     if (index_mode == 0)
         avfc->flags |= AVFMT_FLAG_IGNIDX;
 
-    ap.prealloced_context = 1;
     if(opt_probesize) {
         opt = av_set_int(avfc, "probesize", opt_probesize);
         if(!opt) mp_msg(MSGT_HEADER,MSGL_ERR, "demux_lavf, couldn't set option probesize to %u\n", opt_probesize);
@@ -539,9 +535,10 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
         priv->pb->read_seek = mp_read_seek;
         priv->pb->is_streamed = !demuxer->stream->end_pos || (demuxer->stream->flags & MP_STREAM_SEEK) != MP_STREAM_SEEK;
         priv->pb->seekable = priv->pb->is_streamed ? 0 : AVIO_SEEKABLE_NORMAL;
+        avfc->pb = priv->pb;
     }
 
-    if(av_open_input_stream(&avfc, priv->pb, mp_filename, priv->avif, &ap)<0){
+    if(avformat_open_input(&avfc, mp_filename, priv->avif, NULL)<0){
         mp_msg(MSGT_HEADER,MSGL_ERR,"LAVF_header: av_open_input_stream() failed\n");
         return NULL;
     }
