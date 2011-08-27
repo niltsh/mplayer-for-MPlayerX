@@ -69,7 +69,7 @@ const m_option_t lavfdopts_conf[] = {
 typedef struct lavf_priv {
     AVInputFormat *avif;
     AVFormatContext *avfc;
-    ByteIOContext *pb;
+    AVIOContext *pb;
     uint8_t buffer[BIO_BUFFER_SIZE];
     int audio_streams;
     int video_streams;
@@ -263,8 +263,8 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
     AVCodecContext *codec= st->codec;
     char *stream_type = NULL;
     int stream_id;
-    AVMetadataTag *lang = av_metadata_get(st->metadata, "language", NULL, 0);
-    AVMetadataTag *title= av_metadata_get(st->metadata, "title",    NULL, 0);
+    AVDictionaryEntry *lang = av_dict_get(st->metadata, "language", NULL, 0);
+    AVDictionaryEntry *title= av_dict_get(st->metadata, "title",    NULL, 0);
     int g, override_tag = av_codec_get_tag(mp_codecid_override_taglists,
                                            codec->codec_id);
     // For some formats (like PCM) always trust CODEC_ID_* more than codec_tag
@@ -462,7 +462,7 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
         }
         case AVMEDIA_TYPE_ATTACHMENT:{
             if (st->codec->codec_id == CODEC_ID_TTF) {
-                AVMetadataTag *fnametag = av_metadata_get(st->metadata, "filename", NULL, 0);
+                AVDictionaryEntry *fnametag = av_dict_get(st->metadata, "filename", NULL, 0);
                 demuxer_add_attachment(demuxer, fnametag ? fnametag->value : NULL,
                                        "application/x-truetype-font",
                                        codec->extradata, codec->extradata_size);
@@ -490,7 +490,7 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
     AVFormatContext *avfc;
     AVFormatParameters ap;
     const AVOption *opt;
-    AVMetadataTag *t = NULL;
+    AVDictionaryEntry *t = NULL;
     lavf_priv_t *priv= demuxer->priv;
     int i;
     char mp_filename[256]="mp:";
@@ -534,10 +534,11 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
         av_strlcat(mp_filename, "foobar.dummy", sizeof(mp_filename));
 
     if (!(priv->avif->flags & AVFMT_NOFILE)) {
-        priv->pb = av_alloc_put_byte(priv->buffer, BIO_BUFFER_SIZE, 0,
-                                     demuxer, mp_read, NULL, mp_seek);
+        priv->pb = avio_alloc_context(priv->buffer, BIO_BUFFER_SIZE, 0,
+                                      demuxer, mp_read, NULL, mp_seek);
         priv->pb->read_seek = mp_read_seek;
         priv->pb->is_streamed = !demuxer->stream->end_pos || (demuxer->stream->flags & MP_STREAM_SEEK) != MP_STREAM_SEEK;
+        priv->pb->seekable = priv->pb->is_streamed ? 0 : AVIO_SEEKABLE_NORMAL;
     }
 
     if(av_open_input_stream(&avfc, priv->pb, mp_filename, priv->avif, &ap)<0){
@@ -547,20 +548,20 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
 
     priv->avfc= avfc;
 
-    if(av_find_stream_info(avfc) < 0){
+    if(avformat_find_stream_info(avfc) < 0){
         mp_msg(MSGT_HEADER,MSGL_ERR,"LAVF_header: av_find_stream_info() failed\n");
         return NULL;
     }
 
     /* Add metadata. */
-    while((t = av_metadata_get(avfc->metadata, "", t, AV_METADATA_IGNORE_SUFFIX)))
+    while((t = av_dict_get(avfc->metadata, "", t, AV_METADATA_IGNORE_SUFFIX)))
         demux_info_add(demuxer, t->key, t->value);
 
     for(i=0; i < avfc->nb_chapters; i++) {
         AVChapter *c = avfc->chapters[i];
         uint64_t start = av_rescale_q(c->start, c->time_base, (AVRational){1,1000});
         uint64_t end   = av_rescale_q(c->end, c->time_base, (AVRational){1,1000});
-        t = av_metadata_get(c->metadata, "title", NULL, 0);
+        t = av_dict_get(c->metadata, "title", NULL, 0);
         demuxer_add_chapter(demuxer, t ? t->value : NULL, start, end);
     }
 
@@ -572,7 +573,7 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
         int p;
         for (p = 0; p < avfc->nb_programs; p++) {
             AVProgram *program = avfc->programs[p];
-            t = av_metadata_get(program->metadata, "title", NULL, 0);
+            t = av_dict_get(program->metadata, "title", NULL, 0);
             mp_msg(MSGT_HEADER,MSGL_INFO,"LAVF: Program %d %s\n", program->id, t ? t->value : "");
             mp_msg(MSGT_IDENTIFY, MSGL_V, "PROGRAM_ID=%d\n", program->id);
         }
