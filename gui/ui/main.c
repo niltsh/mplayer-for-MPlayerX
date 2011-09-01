@@ -366,9 +366,7 @@ set_volume:
             uiFullScreen();
            }
           wsResizeWindow( &guiApp.subWindow, guiInfo.VideoWidth, guiInfo.VideoHeight );
-          wsMoveWindow( &guiApp.subWindow, False,
-                        ( wsMaxX - guiInfo.VideoWidth  )/2 + wsOrgX,
-                        ( wsMaxY - guiInfo.VideoHeight )/2 + wsOrgY  );
+          wsMoveWindow( &guiApp.subWindow, True, guiApp.sub.x, guiApp.sub.y );
           btnSet( evFullScreen,btnReleased );
 	  break;
          } else if ( !guiApp.subWindow.isFullScreen ) break;
