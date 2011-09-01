@@ -915,23 +915,23 @@ void wsFullScreen(wsTWindow *win)
             win->OldHeight = win->Height;
         }
 
-            vo_dx           = win->X;
-            vo_dy           = win->Y;
-            vo_dwidth       = win->Width;
-            vo_dheight      = win->Height;
-            vo_screenwidth  = wsMaxX;
-            vo_screenheight = wsMaxY;
-            xinerama_x      = wsOrgX;
-            xinerama_y      = wsOrgY;
-            update_xinerama_info();
-            wsMaxX      = vo_screenwidth;
-            wsMaxY      = vo_screenheight;
-            wsOrgX      = xinerama_x;
-            wsOrgY      = xinerama_y;
-            win->X      = wsOrgX;
-            win->Y      = wsOrgY;
-            win->Width  = wsMaxX;
-            win->Height = wsMaxY;
+        vo_dx           = win->X;
+        vo_dy           = win->Y;
+        vo_dwidth       = win->Width;
+        vo_dheight      = win->Height;
+        vo_screenwidth  = wsMaxX;
+        vo_screenheight = wsMaxY;
+        xinerama_x      = wsOrgX;
+        xinerama_y      = wsOrgY;
+        update_xinerama_info();
+        wsMaxX      = vo_screenwidth;
+        wsMaxY      = vo_screenheight;
+        wsOrgX      = xinerama_x;
+        wsOrgY      = xinerama_y;
+        win->X      = wsOrgX;
+        win->Y      = wsOrgY;
+        win->Width  = wsMaxX;
+        win->Height = wsMaxY;
 
         win->isFullScreen = True;
 
