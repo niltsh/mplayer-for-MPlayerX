@@ -288,8 +288,8 @@ void guiDone(void)
         if (gui_save_pos) {
             gui_main_pos_x = guiApp.mainWindow.X;
             gui_main_pos_y = guiApp.mainWindow.Y;
-            gui_sub_pos_x  = guiApp.subWindow.X;
-            gui_sub_pos_y  = guiApp.subWindow.Y;
+            gui_sub_pos_x  = guiApp.sub.x;
+            gui_sub_pos_y  = guiApp.sub.y;
         }
 
 #ifdef CONFIG_ASS
