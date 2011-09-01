@@ -263,7 +263,6 @@ NoPause:
    case evStop:
 	guiInfo.Playing=GUI_STOP;
 	uiState();
-	guiInfo.VideoWindow=True;
 	break;
 
    case evLoadPlay:

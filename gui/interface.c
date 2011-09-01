@@ -799,7 +799,6 @@ int gui(int what, void *data)
             guiInfo.ElapsedTime   = 0;
             guiInfo.Position      = 0;
             guiInfo.AudioChannels = 0;
-            guiInfo.VideoWindow   = True;
 
 #ifdef CONFIG_DVDREAD
             guiInfo.Track   = 1;
