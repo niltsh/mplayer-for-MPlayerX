@@ -580,7 +580,7 @@ void uiMainKeyHandle( int KeyCode,int Type,int Key )
       case wsXF86Next:         msg=evNext; break;
       case wsXF86Media:        msg=evLoad; break;
       case wsEscape:
-    	    if ( guiApp.subWindow.isFullScreen )
+    	    if ( guiInfo.VideoWindow && guiInfo.Playing && guiApp.subWindow.isFullScreen )
 	     {
 	      uiEventHandling( evNormalSize,0 );
 	      return;
