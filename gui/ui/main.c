@@ -341,7 +341,7 @@ set_volume:
           wsMoveWindow( &guiApp.subWindow, False,
                         ( wsMaxX - guiInfo.VideoWidth/2  )/2 + wsOrgX,
                         ( wsMaxY - guiInfo.VideoHeight/2 )/2 + wsOrgY  );
-         btnSet( evFullScreen,btnReleased );
+          btnSet( evFullScreen,btnReleased );
          }
         break;
    case evDoubleSize:
@@ -355,7 +355,7 @@ set_volume:
           wsMoveWindow( &guiApp.subWindow, False,
                         ( wsMaxX - guiInfo.VideoWidth*2  )/2 + wsOrgX,
                         ( wsMaxY - guiInfo.VideoHeight*2 )/2 + wsOrgY  );
-         btnSet( evFullScreen,btnReleased );
+          btnSet( evFullScreen,btnReleased );
          }
         break;
    case evNormalSize:
@@ -373,12 +373,12 @@ set_volume:
    case evFullScreen:
         if ( guiInfo.VideoWindow && guiInfo.Playing )
          {
-        uiFullScreen();
-        if ( !guiApp.subWindow.isFullScreen )
-         {
-          wsResizeWindow( &guiApp.subWindow, guiInfo.VideoWidth, guiInfo.VideoHeight );
-          wsMoveWindow( &guiApp.subWindow, True, guiApp.sub.x, guiApp.sub.y );
-         }
+          uiFullScreen();
+          if ( !guiApp.subWindow.isFullScreen )
+           {
+            wsResizeWindow( &guiApp.subWindow, guiInfo.VideoWidth, guiInfo.VideoHeight );
+            wsMoveWindow( &guiApp.subWindow, True, guiApp.sub.x, guiApp.sub.y );
+           }
          }
 	if ( guiApp.subWindow.isFullScreen ) btnSet( evFullScreen,btnPressed );
 	 else btnSet( evFullScreen,btnReleased );
