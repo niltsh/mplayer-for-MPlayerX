@@ -57,8 +57,8 @@
 #endif
 
 guiInterface_t guiInfo = {
-    .StreamType  = STREAMTYPE_DUMMY,
-    .Balance     = 50.0f
+    .StreamType = STREAMTYPE_DUMMY,
+    .Balance    = 50.0f
 };
 
 static int initialized;
