@@ -246,7 +246,7 @@ void uiChangeSkin(char *name)
     btnModify(evSetVolume, guiInfo.Volume);
     btnModify(evSetBalance, guiInfo.Balance);
     btnModify(evSetMoviePosition, guiInfo.Position);
-    btnModify(evFullScreen, !guiApp.subWindow.isFullScreen);
+    btnModify(evFullScreen, guiApp.subWindow.isFullScreen ? btnPressed : btnReleased);
 
     wsSetLayer(wsDisplay, guiApp.mainWindow.WindowID, guiApp.subWindow.isFullScreen);
     wsSetLayer(wsDisplay, guiApp.menuWindow.WindowID, guiApp.subWindow.isFullScreen);
