@@ -164,6 +164,8 @@ void guiInit(void)
     wsCreateImage(&guiApp.subWindow, guiApp.sub.Bitmap.Width, guiApp.sub.Bitmap.Height);
     wsXDNDMakeAwareness(&guiApp.subWindow);
 
+    WinID = guiApp.subWindow.WindowID;
+
     uiMenuInit();
     uiPlaybarInit();
 
@@ -769,7 +771,6 @@ int gui(int what, void *data)
         if (guiWinID >= 0)
             wsMoveWindow(&guiApp.mainWindow, False, 0, vo_dheight);
 
-        WinID = guiApp.subWindow.WindowID;
         break;
 
     case GUI_HANDLE_X_EVENT:
