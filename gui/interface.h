@@ -91,9 +91,9 @@ typedef struct {
     sh_video_t *sh_video;
     af_stream_t *afilter;
 
+    int VideoWindow;
     int VideoWidth;
     int VideoHeight;
-    int VideoWindow;
 
     int StreamType;           // public, read access by MPlayer
     int AudioChannels;
