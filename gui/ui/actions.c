@@ -43,46 +43,13 @@ int uiGotoTheNext = 1;
 
 void uiFullScreen(void)
 {
-    if (!guiInfo.VideoWindow && guiInfo.Playing)
+    if (!guiInfo.VideoWindow)
         return;
 
-    if (guiInfo.Playing && guiApp.subWindow.isFullScreen) {
-        guiApp.subWindow.OldWidth  = guiInfo.VideoWidth;
-        guiApp.subWindow.OldHeight = guiInfo.VideoHeight;
+    wsFullScreen(&guiApp.subWindow);
 
-        switch (guiApp.sub.x) {
-        case -1:
-            guiApp.subWindow.OldX = wsMaxX / 2 - guiApp.subWindow.OldWidth / 2 + wsOrgX;
-            break;
+    vo_fs = guiApp.subWindow.isFullScreen;
 
-        case -2:
-            guiApp.subWindow.OldX = wsMaxX - guiApp.subWindow.OldWidth + wsOrgX;
-            break;
-
-        default:
-            guiApp.subWindow.OldX = guiApp.sub.x;
-            break;
-        }
-
-        switch (guiApp.sub.y) {
-        case -1:
-            guiApp.subWindow.OldY = wsMaxY / 2 - guiApp.subWindow.OldHeight / 2 + wsOrgY;
-            break;
-
-        case -2:
-            guiApp.subWindow.OldY = wsMaxY - guiApp.subWindow.OldHeight + wsOrgY;
-            break;
-
-        default:
-            guiApp.subWindow.OldY = guiApp.sub.y;
-            break;
-        }
-    }
-
-    if (guiInfo.Playing || gtkShowVideoWindow)
-        wsFullScreen(&guiApp.subWindow);
-
-    fullscreen = vo_fs = guiApp.subWindow.isFullScreen;
     wsSetLayer(wsDisplay, guiApp.mainWindow.WindowID, guiApp.subWindow.isFullScreen);
 
     if (guiApp.menuIsPresent)
