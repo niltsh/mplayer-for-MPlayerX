@@ -374,6 +374,11 @@ set_volume:
         if ( guiInfo.VideoWindow && guiInfo.Playing )
          {
         uiFullScreen();
+        if ( !guiApp.subWindow.isFullScreen )
+         {
+          wsResizeWindow( &guiApp.subWindow, guiInfo.VideoWidth, guiInfo.VideoHeight );
+          wsMoveWindow( &guiApp.subWindow, True, guiApp.sub.x, guiApp.sub.y );
+         }
          }
 	if ( guiApp.subWindow.isFullScreen ) btnSet( evFullScreen,btnPressed );
 	 else btnSet( evFullScreen,btnReleased );
