@@ -1326,6 +1326,8 @@ void wsVisibleWindow(wsTWindow *win, int show)
     switch (show) {
     case wsShowWindow:
         XMapRaised(wsDisplay, win->WindowID);
+        if (vo_fs_type & vo_wm_FULLSCREEN)
+            win->isFullScreen = False;
         break;
 
     case wsHideWindow:
