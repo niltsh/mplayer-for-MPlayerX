@@ -913,6 +913,8 @@ void wsFullScreen(wsTWindow *win)
             win->OldY      = win->Y;
             win->OldWidth  = win->Width;
             win->OldHeight = win->Height;
+        }
+
             vo_dx           = win->X;
             vo_dy           = win->Y;
             vo_dwidth       = win->Width;
@@ -930,7 +932,6 @@ void wsFullScreen(wsTWindow *win)
             win->Y      = wsOrgY;
             win->Width  = wsMaxX;
             win->Height = wsMaxY;
-        }
 
         win->isFullScreen = True;
 
