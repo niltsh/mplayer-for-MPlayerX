@@ -814,6 +814,8 @@ int gui(int what, void *data)
                 wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
 
             gui(GUI_SET_STATE, (void *)GUI_STOP);
+
+            wsHandleEvents();
             uiSubRender = 1;
             wsSetBackgroundRGB(&guiApp.subWindow, guiApp.sub.R, guiApp.sub.G, guiApp.sub.B);
             wsClearWindow(guiApp.subWindow);
