@@ -1123,7 +1123,6 @@ void wsResizeWindow(wsTWindow *win, int sx, int sy)
 
     XSetWMNormalHints(wsDisplay, win->WindowID, &win->SizeHint);
     XResizeWindow(wsDisplay, win->WindowID, sx, sy);
-    XMapRaised(wsDisplay, win->WindowID);
 
     if (win->ReSize)
         win->ReSize(win->X, win->Y, win->Width, win->Height);
