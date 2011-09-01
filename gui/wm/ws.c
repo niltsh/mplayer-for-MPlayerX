@@ -900,12 +900,14 @@ void wsFullScreen(wsTWindow *win)
             decoration  = win->Decorations;
         }
 
+        win->isFullScreen = False;
+
 #ifdef ENABLE_DPMS
         wsScreenSaverOn(wsDisplay);
 #endif
-
-        win->isFullScreen = False;
     } else {
+        vo_x11_ewmh_fullscreen(win->WindowID, _NET_WM_STATE_ADD); // adds fullscreen state if wm supports EWMH
+
         if (!(vo_fs_type & vo_wm_FULLSCREEN)) { // shouldn't be needed with EWMH fs
             win->OldX      = win->X;
             win->OldY      = win->Y;
@@ -931,11 +933,10 @@ void wsFullScreen(wsTWindow *win)
         }
 
         win->isFullScreen = True;
+
 #ifdef ENABLE_DPMS
         wsScreenSaverOff(wsDisplay);
 #endif
-
-        vo_x11_ewmh_fullscreen(win->WindowID, _NET_WM_STATE_ADD); // adds fullscreen state if wm supports EWMH
     }
 
     if (!(vo_fs_type & vo_wm_FULLSCREEN)) { // shouldn't be needed with EWMH fs
