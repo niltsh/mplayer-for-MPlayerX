@@ -968,11 +968,11 @@ static const char help_text[]=
 "Neuere Versionen von aRts sind mit GTK 1.x nicht kompatibel und bringen \n"\
 "GMPlayer zum Absturz!"
 
-#define MSGTR_ABOUT_UHU "GUI-Entwicklung wurde von UHU Linux gesponsert.\n"
-#define MSGTR_ABOUT_Contributors "Mitwirkende am Programm und der Dokumentation\n"
-#define MSGTR_ABOUT_Codecs_libs_contributions "Codecs und externe Bibliotheken\n"
-#define MSGTR_ABOUT_Translations "Übersetzungen\n"
-#define MSGTR_ABOUT_Skins "Skins\n"
+#define MSGTR_ABOUT_UHU "Die GUI-Entwicklung wurde von UHU-Linux gesponsert.\n"
+#define MSGTR_ABOUT_Contributors "Mitwirkende am Programm und der Dokumentation:\n"
+#define MSGTR_ABOUT_Codecs_libs_contributions "Codecs und externe Bibliotheken:\n"
+#define MSGTR_ABOUT_Translations "Übersetzungen:\n"
+#define MSGTR_ABOUT_Skins "Skins:\n"
 
 // --- messagebox
 #define MSGTR_MSGBOX_LABEL_FatalError "Fataler Fehler!"
