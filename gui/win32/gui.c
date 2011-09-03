@@ -46,6 +46,7 @@
 #include "gui/util/mem.h"
 #include "gui.h"
 #include "dialogs.h"
+#include "version.h"
 
 // HACK around bug in old mingw
 #undef INVALID_FILE_ATTRIBUTES
@@ -128,6 +129,12 @@ void capitalize(char *filename)
             filename[i] = tolower(filename[i]);
     }
 }
+static void display_about_box(HWND hWnd)
+{
+    char about_msg[512];
+    snprintf(about_msg, sizeof(about_msg), MP_TITLE "\n" COPYRIGHT, "MPlayer");
+    MessageBox(hWnd, about_msg, "About", MB_OK);
+}
 
 static image *get_drawground(HWND hwnd)
 {
@@ -202,7 +209,7 @@ static void handlemsg(HWND hWnd, int msg)
             display_eqwindow(gui);
             break;
         case evAbout:
-            MessageBox(hWnd, COPYRIGHT, "About", MB_OK);
+            display_about_box(hWnd);
             break;
         case evIconify:
             ShowWindow(hWnd, SW_MINIMIZE);
@@ -989,6 +996,9 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                 case ID_ONLINEHELP:
                     ShellExecute(NULL, "open", ONLINE_HELP_URL, NULL, NULL, SW_SHOWNORMAL);
                     break;
+                case IDHELP_ABOUT:
+                    handlemsg(hWnd, evAbout);
+                    break;
             }
             if((IDPLAYDISK <= LOWORD(wParam)) && (LOWORD(wParam) < (IDPLAYDISK + 100)))
             {
@@ -1158,6 +1168,7 @@ static void create_menu(gui_t *gui)
     AppendMenu(gui->menu, MF_STRING, ID_PREFS, "Preferences");
     AppendMenu(gui->menu, MF_STRING, ID_CONSOLE, "Debug Console");
     AppendMenu(gui->menu, MF_STRING, ID_ONLINEHELP, "Online Help");
+    AppendMenu(gui->menu, MF_STRING, IDHELP_ABOUT, "About");
     AppendMenu(gui->menu, MF_SEPARATOR, 0, 0);
     AppendMenu(gui->menu, MF_STRING, IDEXIT, "&Exit");
 }
@@ -1186,6 +1197,7 @@ static void create_traymenu(gui_t *gui)
     AppendMenu(gui->traymenu, MF_STRING, ID_PREFS, "Preferences");
     AppendMenu(gui->traymenu, MF_STRING, ID_CONSOLE, "Debug Console");
     AppendMenu(gui->traymenu, MF_STRING, ID_ONLINEHELP, "Online Help");
+    AppendMenu(gui->traymenu, MF_STRING, IDHELP_ABOUT, "About");
     AppendMenu(gui->traymenu, MF_SEPARATOR, 0, 0);
     AppendMenu(gui->traymenu, MF_STRING, IDEXIT, "&Exit");
 }

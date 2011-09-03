@@ -824,7 +824,7 @@ checkheaders: $(ALLHEADERS:.h=.ho)
 # Make sure all generated header files are created.
 codec-cfg.o: codecs.conf.h
 $(DEP_FILES) $(MENCODER_DEPS) $(MPLAYER_DEPS): help_mp.h
-mpcommon.o osdep/mplayer-rc.o gui/ui/gtk/about.o: version.h
+mpcommon.o osdep/mplayer-rc.o gui/ui/gtk/about.o gui/win32/gui.o: version.h
 
 osdep/mplayer-rc.o: osdep/mplayer.exe.manifest
 

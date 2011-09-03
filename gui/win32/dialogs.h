@@ -36,10 +36,10 @@
 
 #define MAXFILE 1024
 
-#define COPYRIGHT   "               MPlayer GUI for Windows\n\n" \
-                    "     Copyright (c) 2003 Sascha Sommer\n" \
-                    "     Copyright (c) 2006 Erik Augustson\n" \
-                    "     Copyright (c) 2006 Gianluigi Tiesi"
+#define COPYRIGHT   "MPlayer GUI for Windows\n\n" \
+                    "Copyright (c) 2003 Sascha Sommer\n" \
+                    "Copyright (c) 2006 Erik Augustson\n" \
+                    "Copyright (c) 2006 Gianluigi Tiesi"
 
 #define ONLINE_HELP_URL      "http://www.mplayerhq.hu/DOCS/HTML/en/index.html"
 
