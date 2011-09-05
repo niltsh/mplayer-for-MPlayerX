@@ -24,7 +24,7 @@
 extern char *skinDirInHome;
 extern char *skinMPlayerDir;
 
-int skinImageRead(char *fname, guiImage *bf);
+int skinImageRead(char *fname, guiImage *img);
 int skinRead(char *dname);
 
 #endif /* MPLAYER_GUI_SKIN_H */
