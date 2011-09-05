@@ -178,7 +178,7 @@ void vo_x11_ewmh_fullscreen(Window win, int action)
     }
 }
 
-void vo_hidecursor(Display * disp, Window win)
+static void vo_hidecursor(Display * disp, Window win)
 {
     Cursor no_ptr;
     Pixmap bm_no;
@@ -203,7 +203,7 @@ void vo_hidecursor(Display * disp, Window win)
     XFreeColors(disp,colormap,&black.pixel,1,0);
 }
 
-void vo_showcursor(Display * disp, Window win)
+static void vo_showcursor(Display * disp, Window win)
 {
     if (WinID == 0)
         return;
