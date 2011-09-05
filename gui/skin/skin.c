@@ -129,7 +129,7 @@ static int in_window(char *name)
  * @brief Read a skin @a image file.
  *
  * @param fname filename (with path)
- * @param bf pointer suitable to store the image data
+ * @param img pointer suitable to store the image data
  *
  * @return return code of #bpRead()
  */
