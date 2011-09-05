@@ -133,9 +133,9 @@ static int in_window(char *name)
  *
  * @return return code of #bpRead()
  */
-int skinBPRead(char *fname, guiImage *bf)
+int skinImageRead(char *fname, guiImage *img)
 {
-    int i = bpRead(fname, bf);
+    int i = bpRead(fname, img);
 
     switch (i) {
     case -1:
@@ -340,7 +340,7 @@ static int item_base(char *in)
     av_strlcpy(file, path, sizeof(file));
     av_strlcat(file, fname, sizeof(file));
 
-    if (skinBPRead(file, &currWin->Bitmap) != 0)
+    if (skinImageRead(file, &currWin->Bitmap) != 0)
         return 1;
 
     currWin->width  = currWin->Bitmap.Width;
@@ -470,7 +470,7 @@ static int item_button(char *in)
         av_strlcpy(file, path, sizeof(file));
         av_strlcat(file, fname, sizeof(file));
 
-        if (skinBPRead(file, &item->Bitmap) != 0)
+        if (skinImageRead(file, &item->Bitmap) != 0)
             return 1;
 
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     (bitmap: %lux%lu)\n", item->Bitmap.Width, item->Bitmap.Height);
@@ -511,7 +511,7 @@ static int item_selected(char *in)
     av_strlcpy(file, path, sizeof(file));
     av_strlcat(file, in, sizeof(file));
 
-    if (skinBPRead(file, &currItem->Bitmap) != 0)
+    if (skinImageRead(file, &currItem->Bitmap) != 0)
         return 1;
 
     currItem->width  = currItem->Bitmap.Width;
@@ -652,7 +652,7 @@ static int item_hpotmeter(char *in)
         av_strlcpy(buf, path, sizeof(buf));
         av_strlcat(buf, phfname, sizeof(buf));
 
-        if (skinBPRead(buf, &item->Bitmap) != 0)
+        if (skinImageRead(buf, &item->Bitmap) != 0)
             return 1;
 
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     (potmeter bitmap: %lux%lu)\n", item->Bitmap.Width, item->Bitmap.Height);
@@ -664,7 +664,7 @@ static int item_hpotmeter(char *in)
         av_strlcpy(buf, path, sizeof(buf));
         av_strlcat(buf, pfname, sizeof(buf));
 
-        if (skinBPRead(buf, &item->Mask) != 0)
+        if (skinImageRead(buf, &item->Mask) != 0)
             return 1;
 
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     (button bitmap: %lux%lu)\n", item->Mask.Width, item->Mask.Height);
@@ -761,7 +761,7 @@ static int item_potmeter(char *in)
         av_strlcpy(buf, path, sizeof(buf));
         av_strlcat(buf, phfname, sizeof(buf));
 
-        if (skinBPRead(buf, &item->Bitmap) != 0)
+        if (skinImageRead(buf, &item->Bitmap) != 0)
             return 1;
 
         mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     (bitmap: %lux%lu)\n", item->Bitmap.Width, item->Bitmap.Height);

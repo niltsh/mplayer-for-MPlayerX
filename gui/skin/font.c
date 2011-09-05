@@ -156,7 +156,7 @@ int fntRead(char *path, char *fname)
 
             mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[font] image file: %s\n", buf);
 
-            if (skinBPRead(buf, &Fonts[id]->Bitmap) != 0) {
+            if (skinImageRead(buf, &Fonts[id]->Bitmap) != 0) {
                 bpFree(&Fonts[id]->Bitmap);
                 nfree(Fonts[id]);
                 fclose(f);
