@@ -270,7 +270,7 @@ static int fntTextHeight(int id, char *str)
     return max;
 }
 
-guiImage *fntRender(wItem *item, int px, char *txt)
+guiImage *fntTextRender(wItem *item, int px, char *txt)
 {
     unsigned char *u;
     unsigned int i;
