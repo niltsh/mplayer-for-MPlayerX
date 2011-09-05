@@ -16,6 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+/**
+ * @file
+ * @brief Skin parser
+ */
+
 #include <stdio.h>
 #include <string.h>
 
@@ -51,6 +56,12 @@ static wItem *currWin;
 static int *currWinItemIdx;
 static wItem *currWinItems;
 
+/**
+ * @brief Display a skin error message.
+ *
+ * @param format format string
+ * @param ... arguments
+ */
 static void skin_error(const char *format, ...)
 {
     char p[512];
@@ -63,6 +74,13 @@ static void skin_error(const char *format, ...)
     gmp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_ERRORMESSAGE, linenumber, p);
 }
 
+/**
+ * @brief Check whether a @a section definition has started.
+ *
+ * @param item name of the item to be put in a message in case of an error
+ *
+ * @return 1 (ok) or 0 (error)
+ */
 static int section_item(char *item)
 {
     if (!skin) {
@@ -73,6 +91,13 @@ static int section_item(char *item)
     return 1;
 }
 
+/**
+ * @brief Check whether a @a window definition has started.
+ *
+ * @param item name of the item to be put in a message in case of an error
+ *
+ * @return 1 (ok) or 0 (error)
+ */
 static int window_item(char *item)
 {
     if (!currWinName[0]) {
@@ -83,6 +108,13 @@ static int window_item(char *item)
     return 1;
 }
 
+/**
+ * @brief Check whether a specific @a window definition has started.
+ *
+ * @param name name of the window to be checked
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int in_window(char *name)
 {
     if (strcmp(currWinName, name) == 0) {
@@ -93,6 +125,14 @@ static int in_window(char *name)
     return 0;
 }
 
+/**
+ * @brief Read a skin @a image file.
+ *
+ * @param fname filename (with path)
+ * @param bf pointer suitable to store the image data
+ *
+ * @return return code of #bpRead()
+ */
 int skinBPRead(char *fname, guiImage *bf)
 {
     int i = bpRead(fname, bf);
@@ -118,6 +158,11 @@ int skinBPRead(char *fname, guiImage *bf)
     return i;
 }
 
+/**
+ * @brief Get next free item in current @a window.
+ *
+ * @return pointer to next free item (ok) or NULL (error)
+ */
 static wItem *next_item(void)
 {
     wItem *item = NULL;
@@ -131,7 +176,15 @@ static wItem *next_item(void)
     return item;
 }
 
-// section=movieplayer
+/**
+ * @brief Parse a @a section definition.
+ *
+ *        Syntax: section=movieplayer
+ *
+ * @param in definition to be analyzed
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int item_section(char *in)
 {
     if (skin) {
@@ -151,7 +204,15 @@ static int item_section(char *in)
     return 0;
 }
 
-// end
+/**
+ * @brief Parse an @a end definition.
+ *
+ *        Syntax: end
+ *
+ * @param in definition to be analyzed
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int item_end(char *in)
 {
     char *space, *name;
@@ -184,7 +245,15 @@ static int item_end(char *in)
     return 0;
 }
 
-// window=main|sub|playbar|menu
+/**
+ * @brief Parse a @a window definition.
+ *
+ *        Syntax: window=main|sub|playbar|menu
+ *
+ * @param in definition to be analyzed
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int item_window(char *in)
 {
     if (!section_item("window"))
@@ -225,7 +294,15 @@ static int item_window(char *in)
     return 0;
 }
 
-// base=image,x,y[,width,height]
+/**
+ * @brief Parse a @a base definition.
+ *
+ *        Syntax: base=image,x,y[,width,height]
+ *
+ * @param in definition to be analyzed
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int item_base(char *in)
 {
     unsigned char fname[256];
@@ -298,7 +375,15 @@ static int item_base(char *in)
     return 0;
 }
 
-// background=R,G,B
+/**
+ * @brief Parse a @a background definition.
+ *
+ *        Syntax: background=R,G,B
+ *
+ * @param in definition to be analyzed
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int item_background(char *in)
 {
     if (!window_item("background"))
@@ -320,7 +405,15 @@ static int item_background(char *in)
     return 0;
 }
 
-// button=image,x,y,width,height,message
+/**
+ * @brief Parse a @a button definition.
+ *
+ *        Syntax: button=image,x,y,width,height,message
+ *
+ * @param in definition to be analyzed
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int item_button(char *in)
 {
     unsigned char fname[256];
@@ -386,7 +479,15 @@ static int item_button(char *in)
     return 0;
 }
 
-// selected=image
+/**
+ * @brief Parse a @a selected definition.
+ *
+ *        Syntax: selected=image
+ *
+ * @param in definition to be analyzed
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int item_selected(char *in)
 {
     unsigned char file[512];
@@ -421,7 +522,15 @@ static int item_selected(char *in)
     return 0;
 }
 
-// menu=x,y,width,height,message
+/**
+ * @brief Parse a @a menu definition.
+ *
+ *        Syntax: menu=x,y,width,height,message
+ *
+ * @param in definition to be analyzed
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int item_menu(char *in)
 {
     int x, y, w, h, message;
@@ -471,7 +580,15 @@ static int item_menu(char *in)
     return 0;
 }
 
-// hpotmeter=button,bwidth,bheight,phases,numphases,default,x,y,width,height,message
+/**
+ * @brief Parse a @a hpotmeter definition.
+ *
+ *        Syntax: hpotmeter=button,bwidth,bheight,phases,numphases,default,x,y,width,height,message
+ *
+ * @param in definition to be analyzed
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int item_hpotmeter(char *in)
 {
     unsigned char pfname[256];
@@ -556,7 +673,15 @@ static int item_hpotmeter(char *in)
     return 0;
 }
 
-// vpotmeter=button,bwidth,bheight,phases,numphases,default,x,y,width,height,message
+/**
+ * @brief Parse a @a vpotmeter definition.
+ *
+ *        Syntax: vpotmeter=button,bwidth,bheight,phases,numphases,default,x,y,width,height,message
+ *
+ * @param in definition to be analyzed
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int item_vpotmeter(char *in)
 {
     int r;
@@ -572,7 +697,15 @@ static int item_vpotmeter(char *in)
     return r;
 }
 
-// potmeter=phases,numphases,default,x,y,width,height,message
+/**
+ * @brief Parse a @a potmeter definition.
+ *
+ *        Syntax: potmeter=phases,numphases,default,x,y,width,height,message
+ *
+ * @param in definition to be analyzed
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int item_potmeter(char *in)
 {
     unsigned char phfname[256];
@@ -637,7 +770,15 @@ static int item_potmeter(char *in)
     return 0;
 }
 
-// font=fontfile
+/**
+ * @brief Parse a @a font definition.
+ *
+ *        Syntax: font=fontfile
+ *
+ * @param in definition to be analyzed
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int item_font(char *in)
 {
     char fnt[256];
@@ -675,7 +816,15 @@ static int item_font(char *in)
     return 0;
 }
 
-// slabel=x,y,fontfile,"text"
+/**
+ * @brief Parse a @a slabel definition.
+ *
+ *        Syntax: slabel=x,y,fontfile,"text"
+ *
+ * @param in definition to be analyzed
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int item_slabel(char *in)
 {
     int x, y, id;
@@ -730,7 +879,15 @@ static int item_slabel(char *in)
     return 0;
 }
 
-// dlabel=x,y,width,align,fontfile,"text"
+/**
+ * @brief Parse a @a dlabel definition.
+ *
+ *        Syntax: dlabel=x,y,width,align,fontfile,"text"
+ *
+ * @param in definition to be analyzed
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int item_dlabel(char *in)
 {
     int x, y, w, a, id;
@@ -789,7 +946,15 @@ static int item_dlabel(char *in)
     return 0;
 }
 
-// decoration=enable|disable
+/**
+ * @brief Parse a @a decoration definition.
+ *
+ *        Syntax: decoration=enable|disable
+ *
+ * @param in definition to be analyzed
+ *
+ * @return 0 (ok) or 1 (error)
+ */
 static int item_decoration(char *in)
 {
     if (!window_item("decoration"))
@@ -816,6 +981,9 @@ static int item_decoration(char *in)
     return 0;
 }
 
+/**
+ * @brief Parsing functions responsible for skin item definitions.
+ */
 static _item skinItem[] = {
     { "background", item_background },
     { "base",       item_base       },
@@ -834,6 +1002,16 @@ static _item skinItem[] = {
     { "window",     item_window     }
 };
 
+/**
+ * @brief Build the skin file path for a skin name.
+ *
+ * @param dir skins directory
+ * @param sname name of the skin
+ *
+ * @return skin file path
+ *
+ * @note As a side effect, variable #path gets set to the skin path.
+ */
 static char *setname(char *dir, char *sname)
 {
     static char skinfname[512];
@@ -848,6 +1026,13 @@ static char *setname(char *dir, char *sname)
     return skinfname;
 }
 
+/**
+ * @brief Read and parse a skin.
+ *
+ * @param sname name of the skin
+ *
+ * @return 0 (ok), -1 (skin file not found or not readable) or -2 (parsing error)
+ */
 int skinRead(char *sname)
 {
     char *skinfname;
