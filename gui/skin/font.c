@@ -16,6 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+/**
+ * @file
+ * @brief Font file parser and font rendering
+ */
+
 #include <gtk/gtk.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -38,6 +43,13 @@
 
 static bmpFont *Fonts[MAX_FONTS];
 
+/**
+ * @brief Add a font to #Fonts.
+ *
+ * @param name name of the font
+ *
+ * @return an identification >= 0 (ok), -1 (out of memory) or -2 (#MAX_FONTS exceeded)
+ */
 static int fntAddNewFont(char *name)
 {
     int id, i;
@@ -66,6 +78,9 @@ static int fntAddNewFont(char *name)
     return id;
 }
 
+/**
+ * @brief Free all memory allocated to fonts.
+ */
 void fntFreeFont(void)
 {
     int i;
@@ -78,6 +93,15 @@ void fntFreeFont(void)
     }
 }
 
+/**
+ * @brief Read and parse a font file.
+ *
+ * @param path directory the font file is in
+ * @param fname name of the font
+ *
+ * @return 0 (ok), -1 or -2 (return code of #fntAddNewFont()),
+ *                 -3 (file error) or -4 (#skinImageRead() error)
+ */
 int fntRead(char *path, char *fname)
 {
     FILE *f;
@@ -170,6 +194,13 @@ int fntRead(char *path, char *fname)
     return 0;
 }
 
+/**
+ * @brief Find the ID of a font by its name.
+ *
+ * @param name name of the font
+ *
+ * @return an identification >= 0 (ok) or -1 (not found)
+ */
 int fntFindID(char *name)
 {
     int i;
@@ -182,8 +213,19 @@ int fntFindID(char *name)
     return -1;
 }
 
-// get Fnt index of character (utf8 or normal one) *str points to,
-// then move pointer to next/previous character
+/**
+ * @brief Get the #bmpFont::Fnt index of the character @a *str points to.
+ *
+ *        Move pointer @a *str to the character according to @a direction
+ *        afterwards.
+ *
+ * @param id font ID
+ * @param str pointer to the string
+ * @param uft8 flag indicating whether @a str contains UTF-8 characters
+ * @param direction +1 (forward) or -1 (backward)
+ *
+ * @return index >= 0 (ok) or -1 (not found)
+ */
 static int fntGetCharIndex(int id, unsigned char **str, gboolean utf8, int direction)
 {
     unsigned char *p, uchar[6] = "";   // glib implements 31-bit UTF-8
@@ -224,6 +266,14 @@ static int fntGetCharIndex(int id, unsigned char **str, gboolean utf8, int direc
     return c;
 }
 
+/**
+ * @brief Get the rendering width of a text.
+ *
+ * @param id font ID
+ * @param str string to be examined
+ *
+ * @return width of the rendered string (in pixels)
+ */
 int fntTextWidth(int id, char *str)
 {
     int size = 0, c;
@@ -246,6 +296,14 @@ int fntTextWidth(int id, char *str)
     return size;
 }
 
+/**
+ * @brief Get the rendering height of a text.
+ *
+ * @param id font ID
+ * @param str string to be examined
+ *
+ * @return height of the rendered string (in pixels)
+ */
 static int fntTextHeight(int id, char *str)
 {
     int max = 0, c, h;
@@ -270,6 +328,15 @@ static int fntTextHeight(int id, char *str)
     return max;
 }
 
+/**
+ * @brief Render a text on an item.
+ *
+ * @param item item the text shall be placed on
+ * @param px x position for the text in case it is wider than the item width
+ * @param txt text to be rendered
+ *
+ * @return image containing the rendered text
+ */
 guiImage *fntTextRender(wItem *item, int px, char *txt)
 {
     unsigned char *u;
