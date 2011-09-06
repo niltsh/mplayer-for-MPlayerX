@@ -1523,7 +1523,7 @@ void saver_off(Display * mDisplay)
 {
     int nothing;
 
-    if (screensaver_off)
+    if (!stop_xscreensaver || screensaver_off)
         return;
     screensaver_off = 1;
     if (xss_suspend(True))
