@@ -96,11 +96,11 @@ void uiPause(void)
 void uiState(void)
 {
     if (guiInfo.Playing == GUI_STOP || guiInfo.Playing == GUI_PAUSE) {
-        btnModify(evPlaySwitchToPause, btnReleased);
-        btnModify(evPauseSwitchToPlay, btnDisabled);
+        btnSet(evPlaySwitchToPause, btnReleased);
+        btnSet(evPauseSwitchToPlay, btnDisabled);
     } else {
-        btnModify(evPlaySwitchToPause, btnDisabled);
-        btnModify(evPauseSwitchToPlay, btnReleased);
+        btnSet(evPlaySwitchToPause, btnDisabled);
+        btnSet(evPauseSwitchToPlay, btnReleased);
     }
 }
 
@@ -213,7 +213,7 @@ void uiChangeSkin(char *name)
     btnModify(evSetVolume, guiInfo.Volume);
     btnModify(evSetBalance, guiInfo.Balance);
     btnModify(evSetMoviePosition, guiInfo.Position);
-    btnModify(evFullScreen, guiApp.subWindow.isFullScreen ? btnPressed : btnReleased);
+    btnSet(evFullScreen, (guiApp.subWindow.isFullScreen ? btnPressed : btnReleased));
 
     wsSetLayer(wsDisplay, guiApp.mainWindow.WindowID, guiApp.subWindow.isFullScreen);
     wsSetLayer(wsDisplay, guiApp.menuWindow.WindowID, guiApp.subWindow.isFullScreen);

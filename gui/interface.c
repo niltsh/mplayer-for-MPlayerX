@@ -227,7 +227,7 @@ void guiInit(void)
         wsSetBackgroundRGB(&guiApp.subWindow, 0, 0, 0);
 
     if (gtkLoadFullscreen)
-        btnModify(evFullScreen, btnPressed);
+        btnSet(evFullScreen, btnPressed);
 
     guiInfo.Playing = GUI_STOP;
 
@@ -697,7 +697,7 @@ int gui(int what, void *data)
         // ...without video there will be no call to GUI_SETUP_VIDEO_WINDOW
         if (!guiInfo.VideoWindow) {
             wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
-            btnModify(evFullScreen, gtkLoadFullscreen ? btnPressed : btnReleased);
+            btnSet(evFullScreen, (gtkLoadFullscreen ? btnPressed : btnReleased));
         }
 
         // ...option variable fullscreen determines whether MPlayer will handle
@@ -808,7 +808,7 @@ int gui(int what, void *data)
             } else {
                 wsVisibleWindow(&guiApp.subWindow, wsHideWindow);
                 guiInfo.VideoWindow = False;
-                btnModify(evFullScreen, gtkLoadFullscreen ? btnPressed : btnReleased);
+                btnSet(evFullScreen, (gtkLoadFullscreen ? btnPressed : btnReleased));
             }
 
             gui(GUI_SET_STATE, (void *)GUI_STOP);
