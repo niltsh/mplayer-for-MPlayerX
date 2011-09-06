@@ -16,11 +16,20 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+/**
+ * @file
+ * @brief Memory management helpers
+ */
+
 #ifndef MPLAYER_GUI_MEM_H
 #define MPLAYER_GUI_MEM_H
 
 #include <stdlib.h>
 
+/**
+ * @def nfree(p)
+ * Free @a p and set it to NULL.
+ */
 #define nfree(p) do { free(p); p = NULL; } while (0)
 
 #endif /* MPLAYER_GUI_MEM_H */
