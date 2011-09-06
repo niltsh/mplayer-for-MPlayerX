@@ -1535,6 +1535,16 @@ void wsSetShape(wsTWindow *win, char *data)
 #endif
 }
 
+/**
+ * @brief Set differently sized icons to a @a window.
+ *
+ *        This function sets the X icon hint as well as
+ *        the properties KWM_WIN_ICON and _NET_WM_ICON.
+ *
+ * @param dsp display
+ * @param win window
+ * @param icon pointer to the icons
+ */
 void wsSetIcon(Display *dsp, Window win, guiIcon_t *icon)
 {
     XWMHints *wm;
