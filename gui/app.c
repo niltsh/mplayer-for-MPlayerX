@@ -21,12 +21,18 @@
 
 #include "libavutil/common.h"
 
+/**
+ * @brief Initialize item counters.
+ */
 guiItems guiApp = {
     .IndexOfMainItems    = -1,
     .IndexOfPlaybarItems = -1,
     .IndexOfMenuItems    = -1
 };
 
+/**
+ * @brief Events belonging to event names.
+ */
 static const evName evNames[] = {
     { evNone,              "evNone"              },
     { evPlay,              "evPlay"              },
@@ -77,6 +83,11 @@ static const evName evNames[] = {
     { evSetAspect,         "evSetAspect"         }
 };
 
+/**
+ * @brief Free all memory allocated to an item and set all its pointers to NULL.
+ *
+ * @param item item to be freed
+ */
 static void appClearItem(wItem *item)
 {
     bpFree(&item->Bitmap);
@@ -86,6 +97,9 @@ static void appClearItem(wItem *item)
     memset(item, 0, sizeof(*item));
 }
 
+/**
+ * @brief Free all memory allocated to all GUI items and reset all item counters.
+ */
 void appFreeStruct(void)
 {
     int i;
@@ -116,6 +130,13 @@ void appFreeStruct(void)
     fntFreeFont();
 }
 
+/**
+ * @brief Find the event belonging to an event name.
+ *
+ * @param str event name
+ *
+ * @return event >= 0 (ok) or -1 (not found)
+ */
 int appFindMessage(unsigned char *str)
 {
     unsigned int i;
@@ -127,6 +148,12 @@ int appFindMessage(unsigned char *str)
     return -1;
 }
 
+/**
+ * @brief Modify the state (i.e. set a new value) to the item belonging to an event.
+ *
+ * @param event event
+ * @param state new value
+ */
 void btnModify(int event, float state)
 {
     int i;
@@ -172,6 +199,12 @@ void btnModify(int event, float state)
     }
 }
 
+/**
+ * @brief Set the @a pressed state (i.e. a new value) to the item belonging to an event.
+ *
+ * @param event event
+ * @param set new value
+ */
 void btnSet(int event, int set)
 {
     int i;
