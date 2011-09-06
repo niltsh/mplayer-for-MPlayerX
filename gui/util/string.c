@@ -22,6 +22,15 @@
 
 #include "string.h"
 
+/**
+ * @brief Convert a string to lower case.
+ *
+ * @param string to be converted
+ *
+ * @return converted string
+ *
+ * @note Only characters from A to Z will be converted and this is an in-place conversion.
+ */
 char *strlower(char *in)
 {
     char *p = in;
@@ -36,6 +45,17 @@ char *strlower(char *in)
     return in;
 }
 
+/**
+ * @brief Swap characters in a string.
+ *
+ * @param in string to be processed
+ * @param from character to be swapped
+ * @param to character to swap in
+ *
+ * @return processed string
+ *
+ * @note All occurrences will be swapped and this is an in-place processing.
+ */
 char *strswap(char *in, char from, char to)
 {
     char *p = in;
@@ -50,6 +70,16 @@ char *strswap(char *in, char from, char to)
     return in;
 }
 
+/**
+ * @brief Remove all space characters from a string,
+ *        but leave text enclosed in quotation marks untouched.
+ *
+ * @param in string to be processed
+ *
+ * @return processed string
+ *
+ * @note This is an in-place processing.
+ */
 char *trim(char *in)
 {
     char *src, *dest;
@@ -72,6 +102,19 @@ char *trim(char *in)
     return in;
 }
 
+/**
+ * @brief Remove a comment from a string,
+ *        but leave text enclosed in quotation marks untouched.
+ *
+ *        A comment starts either with a semicolon anywhere in the string
+ *        or with a number sign character at the very beginning.
+ *
+ * @param in string to be processed
+ *
+ * @return string without comment
+ *
+ * @note This is an in-place processing, i.e. @a in will be shortened.
+ */
 char *decomment(char *in)
 {
     char *p;
@@ -135,6 +178,16 @@ int gstrncmp(const char *a, const char *b, int n)
     return strncmp(a, b, n);
 }
 
+/**
+ * @brief Duplicate a string.
+ *
+ *        If @a str is NULL, it returns NULL.
+ *        The string is duplicated by calling strdup().
+ *
+ * @param str string to be duplicated
+ *
+ * @return duplicated string (newly allocated)
+ */
 char *gstrdup(const char *str)
 {
     if (!str)
@@ -143,12 +196,32 @@ char *gstrdup(const char *str)
     return strdup(str);
 }
 
+/**
+ * @brief Assign a duplicated string.
+ *
+ *        The string is duplicated by calling #gstrdup().
+ *
+ * @note @a *old is freed prior to the assignment.
+ *
+ * @param old pointer to a variable suitable to store the new pointer
+ * @param str string to be duplicated
+ */
 void setdup(char **old, const char *str)
 {
     free(*old);
     *old = gstrdup(str);
 }
 
+/**
+ * @brief Assign a newly allocated string
+ *        containing the path created from a directory and a filename.
+ *
+ * @note @a *old is freed prior to the assignment.
+ *
+ * @param old pointer to a variable suitable to store the new pointer
+ * @param dir directory
+ * @param name filename
+ */
 void setddup(char **old, const char *dir, const char *name)
 {
     free(*old);
