@@ -16,6 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+/**
+ * @file
+ * @brief Image loader and bitmap mask rendering
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,6 +35,15 @@
 #include "libvo/fastmemcpy.h"
 #include "mp_msg.h"
 
+/**
+ * @brief Read and decode a PNG file into bitmap data.
+ *
+ * @param fname filename (with path)
+ * @param img pointer suitable to store the image data
+ *
+ * @return 0 (ok), 1 (decoding error), 2 (open error), 3 (file too big),
+ *                 4 (out of memory), 5 (avcodec alloc error)
+ */
 static int pngRead(const char *fname, guiImage *img)
 {
     FILE *file;
@@ -136,6 +150,15 @@ static int pngRead(const char *fname, guiImage *img)
     return !(decode_ok && img->Bpp);
 }
 
+/**
+ * @brief Convert a 24-bit color depth image into an 32-bit one.
+ *
+ * @param img image to be converted
+ *
+ * @return 1 (ok) or 0 (error)
+ *
+ * @note This is an in-place conversion, new memory will be allocated for @a img.
+ */
 static int Convert24to32(guiImage *img)
 {
     char *orgImage;
@@ -165,6 +188,13 @@ static int Convert24to32(guiImage *img)
     return 1;
 }
 
+/**
+ * @brief Check whether a (PNG) file exists.
+ *
+ * @param fname filename (with path, but may lack extension)
+ *
+ * @return path including extension (ok) or NULL (not accessible)
+ */
 static const char *fExist(const char *fname)
 {
     static const char ext[][4] = { "png", "PNG" };
@@ -184,6 +214,15 @@ static const char *fExist(const char *fname)
     return NULL;
 }
 
+/**
+ * @brief Read a PNG file.
+ *
+ * @param fname filename (with path, but may lack extension)
+ * @param img pointer suitable to store the image data
+ *
+ * @return 0 (ok), -1 (color depth too low), -2 (not accessible),
+ *                 -5 (#pngRead() error) or -8 (#Convert24to32() error)
+ */
 int bpRead(const char *fname, guiImage *img)
 {
     int r;
@@ -211,12 +250,25 @@ int bpRead(const char *fname, guiImage *img)
     return 0;
 }
 
+/**
+ * @brief Free all memory allocated to an image and set all its pointers to NULL.
+ *
+ * @param img image to be freed
+ */
 void bpFree(guiImage *img)
 {
     free(img->Image);
     memset(img, 0, sizeof(*img));
 }
 
+/**
+ * @brief Render a bitmap mask for an image.
+ *
+ * @param in image to render a bitmap mask from
+ * @param out bitmap mask
+ *
+ * @return 1 (ok) or 0 (error)
+ */
 int bpRenderMask(const guiImage *in, guiImage *out)
 {
     uint32_t *buf;

@@ -19,7 +19,11 @@
 #ifndef MPLAYER_GUI_BITMAP_H
 #define MPLAYER_GUI_BITMAP_H
 
-#define GUI_TRANSPARENT 0xffff00ff   // transparent color (opaque fuchsia/magenta)
+/**
+ * @def GUI_TRANSPARENT
+ * transparent color (opaque fuchsia/magenta)
+ */
+#define GUI_TRANSPARENT 0xffff00ff
 #define ALPHA_OPAQUE    0xff000000
 
 // for legacy reasons, we must treat all kind of fuchsia/magenta as transparent
