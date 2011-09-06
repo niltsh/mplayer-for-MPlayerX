@@ -16,11 +16,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+/**
+ * @file
+ * @brief Parser helpers
+ */
+
 #include <stdlib.h>
 #include <string.h>
 
 #include "cut.h"
 
+/**
+ * @brief Extract a part of a string delimited by a separator character.
+ *
+ * @param in string to be analyzed
+ * @param out pointer suitable to store the extracted part
+ * @param sep separator character
+ * @param num number of separator characters to be skipped before extraction starts
+ * @param maxout maximum length of extracted part (including the trailing null byte)
+ */
 void cutItemString(char *in, char *out, char sep, int num, size_t maxout)
 {
     int n;
@@ -39,6 +53,15 @@ void cutItemString(char *in, char *out, char sep, int num, size_t maxout)
         out[c] = 0;
 }
 
+/**
+ * @brief Extract a numeric part of a string delimited by a separator character.
+ *
+ * @param in string to be analyzed
+ * @param sep separator character
+ * @param num number of separator characters to be skipped before extraction starts
+ *
+ * @return extracted number (numeric part)
+ */
 int cutItemToInt(char *in, char sep, int num)
 {
     char tmp[64];

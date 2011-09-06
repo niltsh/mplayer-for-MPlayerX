@@ -21,6 +21,11 @@
 
 #include <stddef.h>
 
+/**
+ * @def cutItem(in, out, sep, num)
+ * Wraps #cutItemString():
+ * Extract a part of a string delimited by a separator character at most the size of @a out.
+ */
 #define cutItem(in, out, sep, num) cutItemString(in, out, sep, num, sizeof(out))
 
 void cutItemString(char *in, char *out, char sep, int num, size_t maxout);
