@@ -104,8 +104,8 @@ void guiInit(void)
     skinDirInHome  = get_path("skins");
     skinMPlayerDir = MPLAYER_DATADIR "/skins";
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] skin directory #1: %s\n", skinDirInHome);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] skin directory #2: %s\n", skinMPlayerDir);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] skin directory #1: %s\n", skinDirInHome);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] skin directory #2: %s\n", skinMPlayerDir);
 
     if (!skinName)
         skinName = strdup("default");
@@ -175,9 +175,9 @@ void guiInit(void)
     wsSetShape(&guiApp.mainWindow, guiApp.main.Mask.Image);
     wsXDNDMakeAwareness(&guiApp.mainWindow);
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] screen depth: %d\n", wsDepthOnScreen);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] mainWindow ID: 0x%x\n", (int)guiApp.mainWindow.WindowID);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] subWindow ID: 0x%x\n", (int)guiApp.subWindow.WindowID);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] screen depth: %d\n", wsDepthOnScreen);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] mainWindow ID: 0x%x\n", (int)guiApp.mainWindow.WindowID);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] subWindow ID: 0x%x\n", (int)guiApp.subWindow.WindowID);
 
     guiApp.mainWindow.ReDraw       = (void *)uiMainDraw;
     guiApp.mainWindow.MouseHandler = uiMainMouseHandle;
@@ -372,7 +372,7 @@ int gui(int what, void *data)
 
     case GUI_RUN_COMMAND:
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] GUI_RUN_COMMAND: %d\n", (int)data);
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] GUI_RUN_COMMAND: %d\n", (int)data);
 
         switch ((int)data) {
         case MP_CMD_VO_FULLSCREEN:
@@ -840,7 +840,7 @@ static int import_file_into_gui(char *temp, int insert)
     else
         pathname[strlen(pathname) - strlen(filename)] = 0;
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[interface] playtree, add: %s/%s\n", pathname, filename);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] playtree, add: %s/%s\n", pathname, filename);
 
     item = calloc(1, sizeof(plItem));
 

@@ -225,7 +225,7 @@ void wsXInit(Display *mDisplay)
             wsUseXShm = 0;
         }
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws] display name: %s => %s display.\n", dispname, localdisp ? "local" : "REMOTE");
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] display name: %s => %s display.\n", dispname, localdisp ? "local" : "REMOTE");
 
         if (!localdisp)
             mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_WS_RemoteDisplay);
@@ -282,23 +282,23 @@ void wsXInit(Display *mDisplay)
 
     wsGetDepthOnScreen();
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws] Screen depth: %d\n", wsDepthOnScreen);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  size: %dx%d\n", wsMaxX, wsMaxY);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] Screen depth: %d\n", wsDepthOnScreen);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  size: %dx%d\n", wsMaxX, wsMaxY);
 
 #ifdef CONFIG_XINERAMA
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  origin: +%d+%d\n", wsOrgX, wsOrgY);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  origin: +%d+%d\n", wsOrgX, wsOrgY);
 #endif
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  red mask: 0x%x\n", wsRedMask);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  green mask: 0x%x\n", wsGreenMask);
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  blue mask: 0x%x\n", wsBlueMask);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  red mask: 0x%x\n", wsRedMask);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  green mask: 0x%x\n", wsGreenMask);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  blue mask: 0x%x\n", wsBlueMask);
 
 #ifdef MP_DEBUG
     if (wsUseXShm) {
         int minor, major, shp;
 
         XShmQueryVersion(wsDisplay, &major, &minor, &shp);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws] XShm version is %d.%d\n", major, minor);
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] XShm version is %d.%d\n", major, minor);
     }
 
 #ifdef CONFIG_XSHAPE
@@ -306,7 +306,7 @@ void wsXInit(Display *mDisplay)
         int minor, major;
 
         XShapeQueryVersion(wsDisplay, &major, &minor);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws] XShape version is %d.%d\n", major, minor);
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] XShape version is %d.%d\n", major, minor);
     }
 #endif
 #endif
@@ -564,7 +564,7 @@ void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV
     win->Idle         = NULL;
     win->MouseHandler = NULL;
     win->KeyHandler   = NULL;
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[ws] window is created. ( %s ).\n", label);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] window is created. ( %s ).\n", label);
 }
 
 void wsDestroyWindow(wsTWindow *win)
@@ -1502,10 +1502,10 @@ void wsScreenSaverOff(Display *mDisplay)
 
         if (onoff) {
             Status stat;
-            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "Disabling DPMS.\n");
+            mp_msg(MSGT_GPLAYER, MSGL_DBG2, "Disabling DPMS.\n");
             dpms_disabled = 1;
             stat = DPMSDisable(mDisplay); // monitor powersave off
-            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "stat: %d.\n", stat);
+            mp_msg(MSGT_GPLAYER, MSGL_DBG2, "stat: %d.\n", stat);
         }
     }
 

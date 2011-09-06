@@ -274,7 +274,7 @@ int cfg_read(void)
 
     cfg = get_path("gui.conf");
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[cfg] file: %s\n", cfg);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[cfg] file: %s\n", cfg);
 
     gui_conf = m_config_new();
 

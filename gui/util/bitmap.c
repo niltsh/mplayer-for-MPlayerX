@@ -130,9 +130,9 @@ static int pngRead(const char *fname, guiImage *img)
         bpl = img->Width * (img->Bpp / 8);
         img->ImageSize = bpl * img->Height;
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] file: %s\n", fname);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap]  size: %lux%lu, color depth: %u\n", img->Width, img->Height, img->Bpp);
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap]  image size: %lu\n", img->ImageSize);
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] file: %s\n", fname);
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap]  size: %lux%lu, color depth: %u\n", img->Width, img->Height, img->Bpp);
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap]  image size: %lu\n", img->ImageSize);
 
         img->Image = malloc(img->ImageSize);
 
@@ -173,11 +173,11 @@ static int Convert24to32(guiImage *img)
 
         if (!img->Image) {
             free(orgImage);
-            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", img->ImageSize);
+            mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", img->ImageSize);
             return 0;
         }
 
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 32 bpp conversion size: %lu\n", img->ImageSize);
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 32 bpp conversion size: %lu\n", img->ImageSize);
 
         for (c = 0, i = 0; c < img->ImageSize; c += 4, i += 3)
             *(uint32_t *)&img->Image[c] = ALPHA_OPAQUE | AV_RB24(&orgImage[i]);
@@ -235,12 +235,12 @@ int bpRead(const char *fname, guiImage *img)
     r = pngRead(fname, img);
 
     if (r != 0) {
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] read error #%d: %s\n", r, fname);
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] read error #%d: %s\n", r, fname);
         return -5;
     }
 
     if (img->Bpp < 24) {
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] bpp too low: %u\n", img->Bpp);
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] bpp too low: %u\n", img->Bpp);
         return -1;
     }
 
@@ -284,7 +284,7 @@ int bpRenderMask(const guiImage *in, guiImage *out)
     out->Image     = calloc(1, out->ImageSize);
 
     if (!out->Image) {
-        mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", out->ImageSize);
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", out->ImageSize);
         return 0;
     }
 
@@ -312,7 +312,7 @@ int bpRenderMask(const guiImage *in, guiImage *out)
     if (!shaped)
         bpFree(out);
 
-    mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 1 bpp conversion size: %lu\n", out->ImageSize);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 1 bpp conversion size: %lu\n", out->ImageSize);
 
     return 1;
 }

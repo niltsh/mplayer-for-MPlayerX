@@ -173,12 +173,12 @@ int fntRead(char *path, char *fname)
             cutItem(param, buf, ',', 3);
             Fonts[id]->Fnt[i].sy = atoi(buf);
 
-            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[font]  char: '%s' params: %d,%d %dx%d\n", item, Fonts[id]->Fnt[i].x, Fonts[id]->Fnt[i].y, Fonts[id]->Fnt[i].sx, Fonts[id]->Fnt[i].sy);
+            mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[font]  char: '%s' params: %d,%d %dx%d\n", item, Fonts[id]->Fnt[i].x, Fonts[id]->Fnt[i].y, Fonts[id]->Fnt[i].sx, Fonts[id]->Fnt[i].sy);
         } else if (!strcmp(item, "image")) {
             av_strlcpy(buf, path, sizeof(buf));
             av_strlcat(buf, param, sizeof(buf));
 
-            mp_dbg(MSGT_GPLAYER, MSGL_DBG2, "[font] image file: %s\n", buf);
+            mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[font] image file: %s\n", buf);
 
             if (skinImageRead(buf, &Fonts[id]->Bitmap) != 0) {
                 bpFree(&Fonts[id]->Bitmap);
