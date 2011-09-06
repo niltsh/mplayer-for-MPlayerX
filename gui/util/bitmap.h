@@ -33,8 +33,8 @@ typedef struct {
     char *Image;
 } guiImage;
 
-void bpFree(guiImage *bf);
-int bpRead(const char *fname, guiImage *bf);
+void bpFree(guiImage *img);
+int bpRead(const char *fname, guiImage *img);
 int bpRenderMask(const guiImage *in, guiImage *out);
 
 #endif /* MPLAYER_GUI_BITMAP_H */
