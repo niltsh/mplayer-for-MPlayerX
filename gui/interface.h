@@ -37,7 +37,7 @@ extern int use_gui;             // this is defined in mplayer.c
 
 #define GMPlayer "gmplayer"
 
-// gui() instructions
+/// gui() instructions
 enum {
     GUI_END_FILE,
     GUI_HANDLE_EVENTS,
@@ -56,16 +56,20 @@ enum {
     GUI_SET_VIDEO
 };
 
-// Playing states
+//@{
+/// Playing state
 #define GUI_STOP  0
 #define GUI_PLAY  1
 #define GUI_PAUSE 2
+//@}
 
-// NewPlay reasons
+//@{
+/// NewPlay reason
 #define GUI_FILE_SAME 1
 #define GUI_FILE_NEW  2
+//@}
 
-// mplayer() instructions
+/// mplayer() instructions
 enum {
     MPLAYER_EXIT_GUI,
     MPLAYER_SET_AUTO_QUALITY,
@@ -137,19 +141,21 @@ typedef struct {
 
 extern guiInterface_t guiInfo;
 
-/* MPlayer -> GUI */
-
+/// @name MPlayer -> GUI
+//@{
 int gui(int what, void *data);
 void guiDone(void);
 void guiInit(void);
 int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config);
 int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqueue);
+//@}
 
-/* GUI -> MPlayer */
-
+/// @name GUI -> MPlayer
+//@{
 void mplayer(int what, float value, void *data);
 void mplayerLoadFont(void);
 void mplayerLoadSubtitle(const char *name);
 void gmp_msg(int mod, int lev, const char *format, ...);
+//@}
 
 #endif /* MPLAYER_GUI_INTERFACE_H */
