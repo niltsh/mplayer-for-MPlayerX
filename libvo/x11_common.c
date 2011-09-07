@@ -89,7 +89,7 @@ int fs_layer = WIN_LAYER_ABOVE_DOCK;
 static int orig_layer = 0;
 static int old_gravity = NorthWestGravity;
 
-int stop_xscreensaver = 0;
+int stop_xscreensaver = 1;
 
 static int dpms_disabled = 0;
 
