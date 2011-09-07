@@ -918,12 +918,12 @@ uninstall:
 	rm -f $(foreach lang,$(MAN_LANGS),$(foreach man,mplayer.1 mencoder.1,$(MANDIR)/$(lang)/man1/$(man)))
 
 clean:
-	$(MAKE) -C ffmpeg $@
+	-$(MAKE) -C ffmpeg $@
 	-rm -f $(call ADD_ALL_DIRS,/*.o /*.a /*.ho /*~)
 	-rm -f $(call ADD_ALL_EXESUFS,mplayer mencoder)
 
 distclean: clean testsclean toolsclean driversclean dhahelperclean
-	$(MAKE) -C ffmpeg $@
+	-$(MAKE) -C ffmpeg $@
 	-rm -rf DOCS/tech/doxygen
 	-rm -f $(call ADD_ALL_DIRS,/*.d)
 	-rm -f config.* codecs.conf.h help_mp.h version.h TAGS tags
