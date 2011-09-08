@@ -1085,6 +1085,41 @@ void wsMoveWindow(wsTWindow *win, Bool abs, int x, int y)
         win->ReSize(win->X, win->Y, win->Width, win->Height);
 }
 
+/**
+ * @brief Move the window to the x and y position, but if it no longer fits
+ *        into the screen, reposition it towards the upper left.
+ *
+ * @param win pointer to a ws window structure
+ * @param abs flag whether the position is real/absolute (True) or mock (False)
+ * @param x x position of the window (real/absolute or mock)
+ * @param y y position of the window (real/absolute or mock)
+ */
+void wsMoveWindowWithin(wsTWindow *win, Bool abs, int x, int y)
+{
+    Bool fitting = True;
+
+    wsMoveWindow(win, abs, x, y);
+
+    if (win->X + win->Width + 1 > wsMaxX) {
+        fitting = False;
+        win->X  = wsMaxX - win->Width;
+
+        if (win->X < 0)
+            win->X = 0;
+    }
+
+    if (win->Y + win->Height + 1 > wsMaxY) {
+        fitting = False;
+        win->Y  = wsMaxY - win->Height;
+
+        if (win->Y < 0)
+            win->Y = 0;
+    }
+
+    if (!fitting)
+        wsMoveWindow(win, True, win->X, win->Y);
+}
+
 // ----------------------------------------------------------------------------------------------
 //    Resize window to sx, sy.
 // ----------------------------------------------------------------------------------------------

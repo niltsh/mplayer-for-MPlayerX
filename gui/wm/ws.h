@@ -230,6 +230,7 @@ void wsHandleEvents(void);
 void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV, unsigned char D, char *label);
 void wsDestroyWindow(wsTWindow *win);
 void wsMoveWindow(wsTWindow *win, Bool abs, int x, int y);
+void wsMoveWindowWithin(wsTWindow *win, Bool abs, int x, int y);
 void wsResizeWindow(wsTWindow *win, int sx, int sy);
 void wsIconify(wsTWindow win);
 void wsRaiseWindowTop(Display *dsp, Window win);
