@@ -955,8 +955,7 @@ void wsFullScreen(wsTWindow *win)
         XWithdrawWindow(wsDisplay, win->WindowID, wsScreen);
     }
 
-    XMapRaised(wsDisplay, win->WindowID);
-    XRaiseWindow(wsDisplay, win->WindowID);
+    wsRaiseWindowTop(wsDisplay, win->WindowID);
     XFlush(wsDisplay);
 }
 
