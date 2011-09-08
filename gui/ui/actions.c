@@ -160,7 +160,7 @@ void uiChangeSkin(char *name)
 
     if (!guiApp.subWindow.isFullScreen && !guiInfo.Playing) {
         wsResizeWindow(&guiApp.subWindow, guiApp.sub.width, guiApp.sub.height);
-        wsMoveWindow(&guiApp.subWindow, True, guiApp.sub.x, guiApp.sub.y);
+        wsMoveWindow(&guiApp.subWindow, False, guiApp.sub.x, guiApp.sub.y);
     }
 
     if (guiApp.sub.Bitmap.Image)

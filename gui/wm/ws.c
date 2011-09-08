@@ -1042,9 +1042,12 @@ void wsPutImage(wsTWindow *win)
 // ----------------------------------------------------------------------------------------------
 //    Move window to x, y.
 // ----------------------------------------------------------------------------------------------
-void wsMoveWindow(wsTWindow *win, int b, int x, int y)
+void wsMoveWindow(wsTWindow *win, Bool abs, int x, int y)
 {
-    if (b) {
+    if (abs) {
+        win->X = x;
+        win->Y = y;
+    } else {
         switch (x) {
         case -1:
             win->X = (wsMaxX / 2) - (win->Width / 2) + wsOrgX;
@@ -1072,9 +1075,6 @@ void wsMoveWindow(wsTWindow *win, int b, int x, int y)
             win->Y = y;
             break;
         }
-    } else {
-        win->X = x;
-        win->Y = y;
     }
 
     win->SizeHint.flags       = PPosition | PWinGravity;

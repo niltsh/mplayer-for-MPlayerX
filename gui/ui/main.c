@@ -338,7 +338,7 @@ set_volume:
             uiFullScreen();
            }
           wsResizeWindow( &guiApp.subWindow, guiInfo.VideoWidth / 2, guiInfo.VideoHeight / 2 );
-          wsMoveWindow( &guiApp.subWindow, False,
+          wsMoveWindow( &guiApp.subWindow, True,
                         ( wsMaxX - guiInfo.VideoWidth/2  )/2 + wsOrgX,
                         ( wsMaxY - guiInfo.VideoHeight/2 )/2 + wsOrgY  );
           btnSet( evFullScreen,btnReleased );
@@ -352,7 +352,7 @@ set_volume:
             uiFullScreen();
            }
           wsResizeWindow( &guiApp.subWindow, guiInfo.VideoWidth * 2, guiInfo.VideoHeight * 2 );
-          wsMoveWindow( &guiApp.subWindow, False,
+          wsMoveWindow( &guiApp.subWindow, True,
                         ( wsMaxX - guiInfo.VideoWidth*2  )/2 + wsOrgX,
                         ( wsMaxY - guiInfo.VideoHeight*2 )/2 + wsOrgY  );
           btnSet( evFullScreen,btnReleased );
@@ -366,7 +366,7 @@ set_volume:
             uiFullScreen();
            }
           wsResizeWindow( &guiApp.subWindow, guiInfo.VideoWidth, guiInfo.VideoHeight );
-          wsMoveWindow( &guiApp.subWindow, True, guiApp.sub.x, guiApp.sub.y );
+          wsMoveWindow( &guiApp.subWindow, False, guiApp.sub.x, guiApp.sub.y );
           btnSet( evFullScreen,btnReleased );
 	  break;
          } else if ( !guiApp.subWindow.isFullScreen ) break;
@@ -377,7 +377,7 @@ set_volume:
           if ( !guiApp.subWindow.isFullScreen )
            {
             wsResizeWindow( &guiApp.subWindow, guiInfo.VideoWidth, guiInfo.VideoHeight );
-            wsMoveWindow( &guiApp.subWindow, True, guiApp.sub.x, guiApp.sub.y );
+            wsMoveWindow( &guiApp.subWindow, False, guiApp.sub.x, guiApp.sub.y );
            }
          }
 	if ( guiApp.subWindow.isFullScreen ) btnSet( evFullScreen,btnPressed );
@@ -523,7 +523,7 @@ rollerhandled:
           switch ( itemtype )
            {
             case itPLMButton:
-                 wsMoveWindow( &guiApp.mainWindow,False,RX - abs( sx ),RY - abs( sy ) );
+                 wsMoveWindow( &guiApp.mainWindow,True,RX - abs( sx ),RY - abs( sy ) );
                  uiMainRender=0;
                  break;
             case itPRMButton:

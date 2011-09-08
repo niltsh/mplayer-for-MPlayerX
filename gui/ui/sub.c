@@ -87,7 +87,7 @@ void uiSubMouseHandle( int Button,int X,int Y,int RX,int RY )
                    mplSubMoved=1;
                    if ( !guiApp.subWindow.isFullScreen )
                     {
-                     wsMoveWindow( &guiApp.subWindow,False,RX - sx,RY - sy );
+                     wsMoveWindow( &guiApp.subWindow,True,RX - sx,RY - sy );
                      guiApp.sub.x = guiApp.subWindow.X;
                      guiApp.sub.y = guiApp.subWindow.Y;
                      // NOTE TO MYSELF: dragging the title bar goes unnoticed?

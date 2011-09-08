@@ -742,7 +742,7 @@ int gui(int what, void *data)
             if (!guiApp.subWindow.isFullScreen)
                 wsResizeWindow(&guiApp.subWindow, guiInfo.VideoWidth, guiInfo.VideoHeight);
 
-            wsMoveWindow(&guiApp.subWindow, True, guiApp.sub.x, guiApp.sub.y);
+            wsMoveWindow(&guiApp.subWindow, False, guiApp.sub.x, guiApp.sub.y);
 
             if (!guiApp.subWindow.Mapped)
                 wsVisibleWindow(&guiApp.subWindow, wsShowWindow);
@@ -752,7 +752,7 @@ int gui(int what, void *data)
             uiEventHandling(evFullScreen, 0);
 
         if (guiWinID >= 0)
-            wsMoveWindow(&guiApp.mainWindow, False, 0, guiInfo.VideoHeight);
+            wsMoveWindow(&guiApp.mainWindow, True, 0, guiInfo.VideoHeight);
 
         break;
 
@@ -797,7 +797,7 @@ int gui(int what, void *data)
 
                 if (!guiApp.subWindow.isFullScreen) {
                     wsResizeWindow(&guiApp.subWindow, guiInfo.VideoWidth, guiInfo.VideoHeight);
-                    wsMoveWindow(&guiApp.subWindow, True, guiApp.sub.x, guiApp.sub.y);
+                    wsMoveWindow(&guiApp.subWindow, False, guiApp.sub.x, guiApp.sub.y);
                 }
 
                 if (!guiApp.subWindow.Mapped)
