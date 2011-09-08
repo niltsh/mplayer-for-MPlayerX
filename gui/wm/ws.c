@@ -1141,12 +1141,10 @@ void wsIconify(wsTWindow win)
 // ----------------------------------------------------------------------------------------------
 //    Move top the window.
 // ----------------------------------------------------------------------------------------------
-void wsMoveTopWindow(Display *wsDisplay, Window win)
+void wsRaiseWindowTop(Display *dsp, Window win)
 {
-// XUnmapWindow( wsDisplay,win );
-// XMapWindow( wsDisplay,win );
-    XMapRaised(wsDisplay, win);
-    XRaiseWindow(wsDisplay, win);
+    XMapRaised(dsp, win);
+    XRaiseWindow(dsp, win);
 }
 
 // ----------------------------------------------------------------------------------------------

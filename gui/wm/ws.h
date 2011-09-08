@@ -232,7 +232,7 @@ void wsDestroyWindow(wsTWindow *win);
 void wsMoveWindow(wsTWindow *win, int b, int x, int y);
 void wsResizeWindow(wsTWindow *win, int sx, int sy);
 void wsIconify(wsTWindow win);
-void wsMoveTopWindow(Display *wsDisplay, Window win);
+void wsRaiseWindowTop(Display *dsp, Window win);
 void wsSetBackground(wsTWindow *win, int color);
 void wsSetForegroundRGB(wsTWindow *win, int r, int g, int b);
 void wsSetBackgroundRGB(wsTWindow *win, int r, int g, int b);

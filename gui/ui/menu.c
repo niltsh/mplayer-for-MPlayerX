@@ -108,7 +108,7 @@ void uiShowMenu( int mx,int my )
  menuItem = 0;
 
  wsMoveWindow( &guiApp.menuWindow,False,x,y );
- wsMoveTopWindow( wsDisplay,guiApp.menuWindow.WindowID );
+ wsRaiseWindowTop( wsDisplay,guiApp.menuWindow.WindowID );
  wsSetLayer( wsDisplay,guiApp.menuWindow.WindowID,1 );
  menuRender=1;
  wsVisibleWindow( &guiApp.menuWindow,wsShowWindow );

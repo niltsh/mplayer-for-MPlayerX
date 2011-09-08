@@ -223,7 +223,7 @@ void gtkSetLayer(GtkWidget *wdg)
 
 void gtkActive(GtkWidget *wdg)
 {
-    wsMoveTopWindow(gdk_display, GDK_WINDOW_XWINDOW(wdg->window));
+    wsRaiseWindowTop(gdk_display, GDK_WINDOW_XWINDOW(wdg->window));
 }
 
 void gtkShow(int type, char *param)
