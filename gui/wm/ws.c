@@ -929,8 +929,6 @@ void wsSetLayer(Display *wsDisplay, Window win, int layer)
 // ----------------------------------------------------------------------------------------------
 void wsFullScreen(wsTWindow *win)
 {
-    int decoration = 0;
-
     if (win->isFullScreen) {
         vo_x11_ewmh_fullscreen(win->WindowID, _NET_WM_STATE_REMOVE); // removes fullscreen state if wm supports EWMH
 
@@ -939,7 +937,6 @@ void wsFullScreen(wsTWindow *win)
             win->Y      = win->OldY;
             win->Width  = win->OldWidth;
             win->Height = win->OldHeight;
-            decoration  = win->Decorations;
         }
 
         win->isFullScreen = False;
@@ -967,7 +964,7 @@ void wsFullScreen(wsTWindow *win)
     }
 
     if (!(vo_fs_type & vo_wm_FULLSCREEN)) { // shouldn't be needed with EWMH fs
-        vo_x11_decoration(wsDisplay, win->WindowID, decoration);
+        vo_x11_decoration(wsDisplay, win->WindowID, win->Decorations && !win->isFullScreen);
         vo_x11_sizehint(win->X, win->Y, win->Width, win->Height, 0);
         vo_x11_setlayer(wsDisplay, win->WindowID, win->isFullScreen);
 
