@@ -203,6 +203,42 @@ static int wsErrorHandler(Display *dpy, XErrorEvent *Event)
     return 0;
 }
 
+/**
+ * @brief Update screen width, screen height and screen origin x and y
+ *        from xinerama information.
+ *
+ *        Set wsOrgX, wsOrgY, wsMaxX and wsMaxY as well as
+ *        win->X, win->Y, win->Width and win->Height.
+ *
+ * @param win pointer to a ws window structure or NULL
+ */
+static void wsUpdateXineramaInfo(wsTWindow *win)
+{
+    if (win) {
+        vo_dx      = win->X;
+        vo_dy      = win->Y;
+        vo_dwidth  = win->Width;
+        vo_dheight = win->Height;
+    }
+
+    vo_screenwidth  = wsMaxX;
+    vo_screenheight = wsMaxY;
+
+    update_xinerama_info();
+
+    wsMaxX = vo_screenwidth;
+    wsMaxY = vo_screenheight;
+    wsOrgX = xinerama_x;
+    wsOrgY = xinerama_y;
+
+    if (win) {
+        win->X      = wsOrgX;
+        win->Y      = wsOrgY;
+        win->Width  = wsMaxX;
+        win->Height = wsMaxY;
+    }
+}
+
 void wsXInit(Display *mDisplay)
 {
     int eventbase;
@@ -270,15 +306,8 @@ void wsXInit(Display *mDisplay)
         if (!wsMaxY)
             wsMaxY = DisplayHeight(wsDisplay, wsScreen);
     }
-    vo_screenwidth  = wsMaxX;
-    vo_screenheight = wsMaxY;
-    xinerama_x      = wsOrgX;
-    xinerama_y      = wsOrgY;
-    update_xinerama_info();
-    wsMaxX = vo_screenwidth;
-    wsMaxY = vo_screenheight;
-    wsOrgX = xinerama_x;
-    wsOrgY = xinerama_y;
+
+    wsUpdateXineramaInfo(NULL);
 
     wsGetDepthOnScreen();
 
@@ -915,23 +944,7 @@ void wsFullScreen(wsTWindow *win)
             win->OldHeight = win->Height;
         }
 
-        vo_dx           = win->X;
-        vo_dy           = win->Y;
-        vo_dwidth       = win->Width;
-        vo_dheight      = win->Height;
-        vo_screenwidth  = wsMaxX;
-        vo_screenheight = wsMaxY;
-        xinerama_x      = wsOrgX;
-        xinerama_y      = wsOrgY;
-        update_xinerama_info();
-        wsMaxX      = vo_screenwidth;
-        wsMaxY      = vo_screenheight;
-        wsOrgX      = xinerama_x;
-        wsOrgY      = xinerama_y;
-        win->X      = wsOrgX;
-        win->Y      = wsOrgY;
-        win->Width  = wsMaxX;
-        win->Height = wsMaxY;
+        wsUpdateXineramaInfo(win);
 
         win->isFullScreen = True;
 
