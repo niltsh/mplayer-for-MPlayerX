@@ -377,6 +377,46 @@ void wsXInit(Display *mDisplay)
     }
 }
 
+/**
+ * @brief Calculate and store the x and y position for a window.
+ *
+ * @param win pointer to a ws window structure
+ * @param x x position of the window (real/absolute or mock)
+ * @param y y position of the window (real/absolute or mock)
+ * @param width width of the area to place the window in
+ * @param height height of the area to place the window in
+ */
+static void wsWindowPosition(wsTWindow *win, int x, int y, int width, int height)
+{
+    switch (x) {
+    case -1:
+        win->X = wsOrgX + (wsMaxX - width) / 2;
+        break;
+
+    case -2:
+        win->X = wsOrgX + wsMaxX - width;
+        break;
+
+    default:
+        win->X = x;
+        break;
+    }
+
+    switch (y) {
+    case -1:
+        win->Y = wsOrgY + (wsMaxY - height) / 2;
+        break;
+
+    case -2:
+        win->Y = wsOrgY + wsMaxY - height;
+        break;
+
+    default:
+        win->Y = y;
+        break;
+    }
+}
+
 // ----------------------------------------------------------------------------------------------
 //   Create window.
 //     X,Y   : window position
@@ -402,34 +442,7 @@ void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV
 
     wsHGC = DefaultGC(wsDisplay, wsScreen);
 
-// The window position and size.
-    switch (X) {
-    case -1:
-        win->X = (wsMaxX / 2) - (wX / 2) + wsOrgX;
-        break;
-
-    case -2:
-        win->X = wsMaxX - wX - 1 + wsOrgX;
-        break;
-
-    default:
-        win->X = X;
-        break;
-    }
-
-    switch (Y) {
-    case -1:
-        win->Y = (wsMaxY / 2) - (hY / 2) + wsOrgY;
-        break;
-
-    case -2:
-        win->Y = wsMaxY - hY - 1 + wsOrgY;
-        break;
-
-    default:
-        win->Y = Y;
-        break;
-    }
+    wsWindowPosition(win, X, Y, wX, hY);
 
     win->Width     = wX;
     win->Height    = hY;
@@ -1060,35 +1073,8 @@ void wsMoveWindow(wsTWindow *win, Bool abs, int x, int y)
     if (abs) {
         win->X = x;
         win->Y = y;
-    } else {
-        switch (x) {
-        case -1:
-            win->X = (wsMaxX / 2) - (win->Width / 2) + wsOrgX;
-            break;
-
-        case -2:
-            win->X = wsMaxX - win->Width + wsOrgX;
-            break;
-
-        default:
-            win->X = x;
-            break;
-        }
-
-        switch (y) {
-        case -1:
-            win->Y = (wsMaxY / 2) - (win->Height / 2) + wsOrgY;
-            break;
-
-        case -2:
-            win->Y = wsMaxY - win->Height + wsOrgY;
-            break;
-
-        default:
-            win->Y = y;
-            break;
-        }
-    }
+    } else
+        wsWindowPosition(win, x, y, win->Width, win->Height);
 
     win->SizeHint.flags       = PPosition | PWinGravity;
     win->SizeHint.x           = win->X;
