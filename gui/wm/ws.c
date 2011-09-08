@@ -1138,9 +1138,12 @@ void wsIconify(wsTWindow win)
     XIconifyWindow(wsDisplay, win.WindowID, 0);
 }
 
-// ----------------------------------------------------------------------------------------------
-//    Move top the window.
-// ----------------------------------------------------------------------------------------------
+/**
+ * @brief Map a window and raise it to the top.
+ *
+ * @param dsp display
+ * @param win window
+ */
 void wsRaiseWindowTop(Display *dsp, Window win)
 {
     XMapRaised(dsp, win);
