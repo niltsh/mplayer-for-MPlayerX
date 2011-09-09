@@ -963,6 +963,11 @@ void wsFullScreen(wsTWindow *win)
 #endif
     }
 
+    /* unknown window manager and obsolete option -fsmode used */
+    if (vo_wm_type == 0 && !(vo_fsmode & 16)) {
+        XWithdrawWindow(wsDisplay, win->WindowID, wsScreen);
+    }
+
     if (!(vo_fs_type & vo_wm_FULLSCREEN)) { // shouldn't be needed with EWMH fs
         vo_x11_decoration(wsDisplay, win->WindowID, win->Decorations && !win->isFullScreen);
         vo_x11_sizehint(win->X, win->Y, win->Width, win->Height, 0);
@@ -972,10 +977,6 @@ void wsFullScreen(wsTWindow *win)
             vo_x11_setlayer(wsDisplay, win->WindowID, 1);
 
         XMoveResizeWindow(wsDisplay, win->WindowID, win->X, win->Y, win->Width, win->Height);
-    }
-
-    if (vo_wm_type == 0 && !(vo_fsmode & 16)) {
-        XWithdrawWindow(wsDisplay, win->WindowID, wsScreen);
     }
 
     wsRaiseWindowTop(wsDisplay, win->WindowID);
