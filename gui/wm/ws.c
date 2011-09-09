@@ -65,8 +65,6 @@
 #include <sys/ipc.h>
 #include <sys/shm.h>
 
-#undef ENABLE_DPMS
-
 typedef struct {
     unsigned long flags;
     unsigned long functions;
@@ -940,10 +938,6 @@ void wsFullScreen(wsTWindow *win)
         }
 
         win->isFullScreen = False;
-
-#ifdef ENABLE_DPMS
-        wsScreenSaverOn(wsDisplay);
-#endif
     } else {
         vo_x11_ewmh_fullscreen(win->WindowID, _NET_WM_STATE_ADD); // adds fullscreen state if wm supports EWMH
 
@@ -957,10 +951,6 @@ void wsFullScreen(wsTWindow *win)
         win->isFullScreen = True;
 
         wsUpdateXineramaInfo(win);
-
-#ifdef ENABLE_DPMS
-        wsScreenSaverOff(wsDisplay);
-#endif
     }
 
     /* unknown window manager and obsolete option -fsmode used */
@@ -1483,73 +1473,6 @@ void wsSetMousePosition(wsTWindow *win, int x, int y)
 {
     XWarpPointer(wsDisplay, wsRootWin, win->WindowID, 0, 0, 0, 0, x, y);
 }
-
-#ifdef ENABLE_DPMS
-static int dpms_disabled = 0;
-static int timeout_save  = 0;
-
-void wsScreenSaverOn(Display *mDisplay)
-{
-    int nothing;
-
-#ifdef CONFIG_XDPMS
-
-    if (dpms_disabled) {
-        if (DPMSQueryExtension(mDisplay, &nothing, &nothing)) {
-            if (!DPMSEnable(mDisplay))
-                mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_WS_DpmsUnavailable);                     // restoring power saving settings
-            else {
-                // DPMS does not seem to be enabled unless we call DPMSInfo
-                BOOL onoff;
-                CARD16 state;
-                DPMSInfo(mDisplay, &state, &onoff);
-
-                if (onoff)
-                    mp_msg(MSGT_GPLAYER, MSGL_V, "Successfully enabled DPMS.\n");
-                else
-                    mp_msg(MSGT_GPLAYER, MSGL_STATUS, MSGTR_WS_DpmsNotEnabled);
-            }
-        }
-    }
-
-#endif
-
-    if (timeout_save) {
-        int dummy, interval, prefer_blank, allow_exp;
-        XGetScreenSaver(mDisplay, &dummy, &interval, &prefer_blank, &allow_exp);
-        XSetScreenSaver(mDisplay, timeout_save, interval, prefer_blank, allow_exp);
-        XGetScreenSaver(mDisplay, &timeout_save, &interval, &prefer_blank, &allow_exp);
-    }
-}
-
-void wsScreenSaverOff(Display *mDisplay)
-{
-    int interval, prefer_blank, allow_exp, nothing;
-
-#ifdef CONFIG_XDPMS
-
-    if (DPMSQueryExtension(mDisplay, &nothing, &nothing)) {
-        BOOL onoff;
-        CARD16 state;
-        DPMSInfo(mDisplay, &state, &onoff);
-
-        if (onoff) {
-            Status stat;
-            mp_msg(MSGT_GPLAYER, MSGL_DBG2, "Disabling DPMS.\n");
-            dpms_disabled = 1;
-            stat = DPMSDisable(mDisplay); // monitor powersave off
-            mp_msg(MSGT_GPLAYER, MSGL_DBG2, "stat: %d.\n", stat);
-        }
-    }
-
-#endif
-    XGetScreenSaver(mDisplay, &timeout_save, &interval, &prefer_blank, &allow_exp);
-
-    if (timeout_save)
-        XSetScreenSaver(mDisplay, 0, interval, prefer_blank, allow_exp);              // turning off screensaver
-}
-
-#endif
 
 void wsSetShape(wsTWindow *win, char *data)
 {
