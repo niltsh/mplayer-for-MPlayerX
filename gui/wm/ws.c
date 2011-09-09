@@ -972,13 +972,13 @@ void wsFullScreen(wsTWindow *win)
     if (!(vo_fs_type & vo_wm_FULLSCREEN)) { // shouldn't be needed with EWMH fs
         vo_x11_decoration(wsDisplay, win->WindowID, win->Decorations && !win->isFullScreen);
         vo_x11_sizehint(win->X, win->Y, win->Width, win->Height, 0);
-        vo_x11_setlayer(wsDisplay, win->WindowID, win->isFullScreen);
+        wsSetLayer(wsDisplay, win->WindowID, win->isFullScreen);
         XMoveResizeWindow(wsDisplay, win->WindowID, win->X, win->Y, win->Width, win->Height);
     }
 
     /* some window managers lose ontop after fullscreen */
     if (!win->isFullScreen & vo_ontop)
-        vo_x11_setlayer(wsDisplay, win->WindowID, vo_ontop);
+        wsSetLayer(wsDisplay, win->WindowID, vo_ontop);
 
     wsRaiseWindowTop(wsDisplay, win->WindowID);
     XFlush(wsDisplay);
