@@ -954,9 +954,9 @@ void wsFullScreen(wsTWindow *win)
             win->OldHeight = win->Height;
         }
 
-        wsUpdateXineramaInfo(win);
-
         win->isFullScreen = True;
+
+        wsUpdateXineramaInfo(win);
 
 #ifdef ENABLE_DPMS
         wsScreenSaverOff(wsDisplay);
