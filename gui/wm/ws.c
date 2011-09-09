@@ -922,9 +922,13 @@ void wsSetLayer(Display *wsDisplay, Window win, int layer)
     vo_x11_setlayer(wsDisplay, win, layer);
 }
 
-// ----------------------------------------------------------------------------------------------
-//    Switch to fullscreen.
-// ----------------------------------------------------------------------------------------------
+/**
+ * @brief Switch window fullscreen state.
+ *
+ *        Switch normal window to fullscreen and fullscreen window to normal.
+ *
+ * @param win pointer to a ws window structure
+ */
 void wsFullScreen(wsTWindow *win)
 {
     if (win->isFullScreen) {
