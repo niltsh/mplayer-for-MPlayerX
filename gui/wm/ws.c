@@ -1171,13 +1171,13 @@ void wsIconify(wsTWindow win)
 /**
  * @brief Map a window and raise it to the top.
  *
- * @param dsp display
+ * @param dpy display
  * @param win window
  */
-void wsRaiseWindowTop(Display *dsp, Window win)
+void wsRaiseWindowTop(Display *dpy, Window win)
 {
-    XMapRaised(dsp, win);
-    XRaiseWindow(dsp, win);
+    XMapRaised(dpy, win);
+    XRaiseWindow(dpy, win);
 }
 
 // ----------------------------------------------------------------------------------------------
@@ -1572,18 +1572,18 @@ void wsSetShape(wsTWindow *win, char *data)
  *        This function sets the X icon hint as well as
  *        the properties KWM_WIN_ICON and _NET_WM_ICON.
  *
- * @param dsp display
+ * @param dpy display
  * @param win window
  * @param icon pointer to the icons
  */
-void wsSetIcon(Display *dsp, Window win, guiIcon_t *icon)
+void wsSetIcon(Display *dpy, Window win, guiIcon_t *icon)
 {
     XWMHints *wm;
     Atom iconatom;
     long data[2];
 
     if (icon->normal) {
-        wm = XGetWMHints(dsp, win);
+        wm = XGetWMHints(dpy, win);
 
         if (!wm)
             wm = XAllocWMHints();
@@ -1592,20 +1592,20 @@ void wsSetIcon(Display *dsp, Window win, guiIcon_t *icon)
         wm->icon_mask   = icon->normal_mask;
         wm->flags      |= IconPixmapHint | IconMaskHint;
 
-        XSetWMHints(dsp, win, wm);
+        XSetWMHints(dpy, win, wm);
         XFree(wm);
     }
 
     if (icon->small || icon->normal) {
-        iconatom = XInternAtom(dsp, "KWM_WIN_ICON", False);
+        iconatom = XInternAtom(dpy, "KWM_WIN_ICON", False);
         data[0]  = (icon->small ? icon->small : icon->normal);
         data[1]  = (icon->small ? icon->small_mask : icon->normal_mask);
 
-        XChangeProperty(dsp, win, iconatom, iconatom, 32, PropModeReplace, (unsigned char *)data, 2);
+        XChangeProperty(dpy, win, iconatom, iconatom, 32, PropModeReplace, (unsigned char *)data, 2);
     }
 
     if (icon->collection) {
-        iconatom = XInternAtom(dsp, "_NET_WM_ICON", False);
-        XChangeProperty(dsp, win, iconatom, XA_CARDINAL, 32, PropModeReplace, (unsigned char *)icon->collection, icon->collection_size);
+        iconatom = XInternAtom(dpy, "_NET_WM_ICON", False);
+        XChangeProperty(dpy, win, iconatom, XA_CARDINAL, 32, PropModeReplace, (unsigned char *)icon->collection, icon->collection_size);
     }
 }

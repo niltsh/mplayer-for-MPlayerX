@@ -233,7 +233,7 @@ void wsMoveWindow(wsTWindow *win, Bool abs, int x, int y);
 void wsMoveWindowWithin(wsTWindow *win, Bool abs, int x, int y);
 void wsResizeWindow(wsTWindow *win, int sx, int sy);
 void wsIconify(wsTWindow win);
-void wsRaiseWindowTop(Display *dsp, Window win);
+void wsRaiseWindowTop(Display *dpy, Window win);
 void wsSetBackground(wsTWindow *win, int color);
 void wsSetForegroundRGB(wsTWindow *win, int r, int g, int b);
 void wsSetBackgroundRGB(wsTWindow *win, int r, int g, int b);
@@ -245,7 +245,7 @@ void wsSetLayer(Display *wsDisplay, Window win, int layer);
 void wsFullScreen(wsTWindow *win);
 void wsPostRedisplay(wsTWindow *win);
 void wsSetShape(wsTWindow *win, char *data);
-void wsSetIcon(Display *dsp, Window win, guiIcon_t *icon);
+void wsSetIcon(Display *dpy, Window win, guiIcon_t *icon);
 
 // ----------------------------------------------------------------------------------------------
 //    Draw string at x,y with fc ( foreground color ) and bc ( background color ).
