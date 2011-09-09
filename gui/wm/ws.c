@@ -965,6 +965,7 @@ void wsFullScreen(wsTWindow *win)
 
     /* unknown window manager and obsolete option -fsmode used */
     if (vo_wm_type == 0 && !(vo_fsmode & 16)) {
+        XUnmapWindow(wsDisplay, win->WindowID); // required for MWM
         XWithdrawWindow(wsDisplay, win->WindowID, wsScreen);
     }
 
