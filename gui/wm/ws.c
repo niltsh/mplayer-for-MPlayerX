@@ -976,8 +976,9 @@ void wsFullScreen(wsTWindow *win)
         XMoveResizeWindow(wsDisplay, win->WindowID, win->X, win->Y, win->Width, win->Height);
     }
 
-    if ((!(win->isFullScreen)) & vo_ontop)
-        vo_x11_setlayer(wsDisplay, win->WindowID, 1);
+    /* some window managers lose ontop after fullscreen */
+    if (!win->isFullScreen & vo_ontop)
+        vo_x11_setlayer(wsDisplay, win->WindowID, vo_ontop);
 
     wsRaiseWindowTop(wsDisplay, win->WindowID);
     XFlush(wsDisplay);
