@@ -25,9 +25,7 @@
 #include <string.h>
 
 #include "stream/stream.h"
-#ifdef CONFIG_ASS
 #include "sub/ass_mp.h"
-#endif
 #include "m_option.h"
 
 #ifdef HAVE_BUILTIN_EXPECT
