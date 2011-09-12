@@ -46,7 +46,6 @@
 #include "libmpcodecs/dec_teletext.h"
 
 #ifdef CONFIG_ASS
-#include "libass/ass.h"
 #include "sub/ass_mp.h"
 #endif
 
