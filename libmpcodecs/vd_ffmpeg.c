@@ -70,6 +70,7 @@ typedef struct {
     int ip_count;
     int b_count;
     AVRational last_sample_aspect_ratio;
+    int palette_sent;
 } vd_ffmpeg_ctx;
 
 #include "m_option.h"
@@ -364,19 +365,6 @@ static int init(sh_video_t *sh){
         memcpy(avctx->extradata, sh->bih+1, avctx->extradata_size);
         break;
     }
-    /* Pass palette to codec */
-    if (sh->bih && (sh->bih->biBitCount <= 8)) {
-        avctx->palctrl = av_mallocz(sizeof(AVPaletteControl));
-        avctx->palctrl->palette_changed = 1;
-        if (sh->bih->biSize-sizeof(*sh->bih))
-            /* Palette size in biSize */
-            memcpy(avctx->palctrl->palette, sh->bih+1,
-                   FFMIN(sh->bih->biSize-sizeof(*sh->bih), AVPALETTE_SIZE));
-        else
-            /* Palette size in biClrUsed */
-            memcpy(avctx->palctrl->palette, sh->bih+1,
-                   FFMIN(sh->bih->biClrUsed * 4, AVPALETTE_SIZE));
-        }
 
     if(sh->bih)
         avctx->bits_per_coded_sample= sh->bih->biBitCount;
@@ -791,7 +779,21 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
     pkt.size = len;
     // HACK: make PNGs decode normally instead of as CorePNG delta frames
     pkt.flags = AV_PKT_FLAG_KEY;
+    if (!ctx->palette_sent && sh->bih && sh->bih->biBitCount <= 8) {
+        /* Pass palette to codec */
+        uint8_t *pal = av_packet_new_side_data(&pkt, AV_PKT_DATA_PALETTE, AVPALETTE_SIZE);
+        unsigned palsize = sh->bih->biSize - sizeof(*sh->bih);
+	if (palsize == 0) {
+            /* Palette size in biClrUsed */
+            palsize = sh->bih->biClrUsed * 4;
+        }
+        memcpy(pal, sh->bih+1, FFMIN(palsize, AVPALETTE_SIZE));
+        ctx->palette_sent = 1;
+    }
     ret = avcodec_decode_video2(avctx, pic, &got_picture, &pkt);
+    pkt.data = NULL;
+    pkt.size = 0;
+    av_destruct_packet(&pkt);
 
     dr1= ctx->do_dr1;
     if(ret<0) mp_msg(MSGT_DECVIDEO, MSGL_WARN, "Error while decoding frame!\n");
