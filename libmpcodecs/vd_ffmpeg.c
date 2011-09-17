@@ -783,7 +783,7 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
         /* Pass palette to codec */
         uint8_t *pal = av_packet_new_side_data(&pkt, AV_PKT_DATA_PALETTE, AVPALETTE_SIZE);
         unsigned palsize = sh->bih->biSize - sizeof(*sh->bih);
-	if (palsize == 0) {
+        if (palsize == 0) {
             /* Palette size in biClrUsed */
             palsize = sh->bih->biClrUsed * 4;
         }
