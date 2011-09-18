@@ -6867,6 +6867,15 @@ else
 fi
 echores "$_libopencore_amrwb"
 
+
+if test "$_libopencore_amrnb" = no && test "$_libopencore_amrwb" = no ; then
+  libavdecoders="$libavdecoders PRORES_DECODER"
+  def_ffmpeg_license='#define FFMPEG_LICENSE "GPL version 2"'
+else
+  def_ffmpeg_license='#define FFMPEG_LICENSE "GPL version 2 or later"'
+fi
+
+
 echocheck "libdv-0.9.5+"
 if test "$_libdv" = auto ; then
   _libdv=no
@@ -8603,7 +8612,7 @@ $def_yasm
 #endif
 
 #define FFMPEG_CONFIGURATION "--enable-gpl --enable-postproc"
-#define FFMPEG_LICENSE "GPL version 2 or later"
+$def_ffmpeg_license
 
 #define LIBAV_CONFIGURATION FFMPEG_CONFIGURATION
 #define LIBAV_LICENSE FFMPEG_LICENSE
