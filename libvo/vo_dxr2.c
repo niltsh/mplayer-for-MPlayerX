@@ -805,7 +805,6 @@ static void check_events(void)
 {
   // I'd like to have this done in an x11 independent way
   // It's because of this that we are limited to vo_x11 for windowed overlay :-(
-#ifdef X11_FULLSCREEN
   if(sub_vo && sub_vo_win) {
     int e=vo_x11_check_events(mDisplay);
     if ( !(e&VO_EVENT_RESIZE) && !(e&VO_EVENT_EXPOSE) ) return;
@@ -813,7 +812,6 @@ static void check_events(void)
     XClearWindow(mDisplay, vo_window);
     dxr2_set_overlay_window();
   }
-#endif
 }
 
 static int preinit(const char *arg) {

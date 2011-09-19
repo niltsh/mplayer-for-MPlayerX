@@ -25,12 +25,6 @@
 
 #include "config.h"
 
-#if defined(CONFIG_GL) || defined(CONFIG_X11) || defined(CONFIG_XV)
-#define X11_FULLSCREEN 1
-#endif
-
-#ifdef X11_FULLSCREEN
-
 #define vo_wm_LAYER 1
 #define vo_wm_FULLSCREEN 2
 #define vo_wm_STAYS_ON_TOP 4
@@ -90,7 +84,6 @@ void vo_x11_ontop(void);
 void vo_x11_border(void);
 void vo_x11_ewmh_fullscreen( Window win, int action );
 
-#endif
 
 extern Window     vo_window;
 extern GC         vo_gc;

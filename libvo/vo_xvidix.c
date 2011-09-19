@@ -110,7 +110,6 @@ static void set_window(int force_update)
         drwHeight = vo_dheight;
     }
 
-#if X11_FULLSCREEN
     if (vo_fs)
     {
         aspect(&dwidth, &dheight, A_ZOOM);
@@ -129,7 +128,6 @@ static void set_window(int force_update)
                "[xvidix-fs] dcx: %d dcy: %d dx: %d dy: %d dw: %d dh: %d\n",
                drwcX, drwcY, drwX, drwY, drwWidth, drwHeight);
     }
-#endif
 
     vo_dwidth = drwWidth;
     vo_dheight = drwHeight;
@@ -247,10 +245,8 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
     }
     mp_msg(MSGT_VO, MSGL_V, "Using colorkey: %x\n", colorkey);
 
-#ifdef X11_FULLSCREEN
         if ((flags & VOFLAG_FULLSCREEN) || (flags & VOFLAG_SWSCALE))
             aspect(&d_width, &d_height, A_ZOOM);
-#endif
         dwidth = d_width;
         dheight = d_height;
         /* Make the window */

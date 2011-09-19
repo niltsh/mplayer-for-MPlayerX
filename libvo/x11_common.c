@@ -28,8 +28,6 @@
 #include "libavutil/common.h"
 #include "x11_common.h"
 
-#ifdef X11_FULLSCREEN
-
 #include <string.h>
 #include <unistd.h>
 #include <assert.h>
@@ -1687,8 +1685,6 @@ void vo_vm_close(void)
     }
 }
 #endif
-
-#endif                          /* X11_FULLSCREEN */
 
 
 /*
