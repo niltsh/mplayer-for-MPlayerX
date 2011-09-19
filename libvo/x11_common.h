@@ -96,8 +96,9 @@ extern Window     vo_window;
 extern GC         vo_gc;
 extern XSizeHints vo_hint;
 
-#ifdef CONFIG_XV
-//XvPortID xv_port;
+
+
+// XVideo related declarations
 extern unsigned int xv_port;
 
 int vo_xv_set_eq(uint32_t xv_port, const char * name, int value);
@@ -132,7 +133,8 @@ void xv_setup_colorkeyhandling(char const * ck_method_str, char const * ck_str);
 /*** test functions for common suboptions ***/
 int xv_test_ck( void * arg );
 int xv_test_ckm( void * arg );
-#endif
+
+
 
 void vo_setwindow( Window w,GC g );
 void vo_x11_putkey(int key);
@@ -141,10 +143,13 @@ void xscreensaver_heartbeat(void);
 void saver_off( Display * );
 void saver_on( Display * );
 
-#ifdef CONFIG_XF86VM
+
+
+// XF86VM-related functions
 void vo_vm_switch(void);
 void vo_vm_close(void);
-#endif
+
+
 
 void update_xinerama_info(void);
 
