@@ -15,7 +15,7 @@ license details are listed below:
 Name:       FFmpeg
 Version:    Subversion HEAD
 URL:        http://www.ffmpeg.org
-Directory:  libavcodec, libavformat, libavutil, libpostproc
+Directory:  ffmpeg
 Copyright:  Many, see individual files for copyright notices.
 License:    GNU Lesser General Public License, some parts GNU General Public
             License, GNU General Public License when combined
