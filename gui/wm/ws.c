@@ -46,6 +46,7 @@
 #include "help_mp.h"
 #include "mplayer.h"
 #include "mpbswap.h"
+#include "osdep/timer.h"
 #include "ws.h"
 #include "wsxdnd.h"
 
@@ -642,6 +643,8 @@ void wsDestroyWindow(wsTWindow *win)
 
 Bool wsEvents(Display *display, XEvent *Event)
 {
+    static Bool mouse_hide;
+    static unsigned int mouse_time;
     unsigned long i = 0;
     int l;
     int x, y;
@@ -653,6 +656,11 @@ Bool wsEvents(Display *display, XEvent *Event)
         return !wsTrue;
 
     wsWindowList[l]->State = 0;
+
+    if (mouse_hide && (GetTimerMS() - mouse_time >= 1000)) {
+        wsVisibleMouse(wsWindowList[l], wsHideMouseCursor);
+        mouse_hide = False;
+    }
 
     switch (Event->type) {
     case ClientMessage:
@@ -839,14 +847,23 @@ keypressed:
                 }
             }
         }
+        wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
+        mouse_hide = True;
+        mouse_time = GetTimerMS();
         goto buttonreleased;
 
     case ButtonRelease:
         i = Event->xbutton.button + 128;
+        wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
+        mouse_hide = True;
+        mouse_time = GetTimerMS();
         goto buttonreleased;
 
     case ButtonPress:
         i = Event->xbutton.button;
+        wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
+        mouse_hide = True;
+        mouse_time = GetTimerMS();
         goto buttonreleased;
 
     case EnterNotify:
