@@ -403,7 +403,7 @@ set_volume:
           unsigned now = GetTimerMS();
           if ((now > last_redraw_time) &&
               (now < last_redraw_time + GUI_REDRAW_WAIT) &&
-              !uiPlaybarFade)
+              !uiPlaybarFade && (iparam == 0))
             break;
           last_redraw_time = now;
         }

@@ -765,6 +765,8 @@ int gui(int what, void *data)
 
     case GUI_END_FILE:
 
+        uiEventHandling(evRedraw, 1);
+
         if (!uiGotoTheNext && guiInfo.Playing) {
             uiGotoTheNext = 1;
             break;
