@@ -66,6 +66,8 @@
 #include <sys/ipc.h>
 #include <sys/shm.h>
 
+#define MOUSEHIDE_DELAY 1000   // in milliseconds
+
 typedef struct {
     unsigned long flags;
     unsigned long functions;
@@ -657,7 +659,7 @@ Bool wsEvents(Display *display, XEvent *Event)
 
     wsWindowList[l]->State = 0;
 
-    if (mouse_hide && (GetTimerMS() - mouse_time >= 1000)) {
+    if (mouse_hide && (GetTimerMS() - mouse_time >= MOUSEHIDE_DELAY)) {
         wsVisibleMouse(wsWindowList[l], wsHideMouseCursor);
         mouse_hide = False;
     }
