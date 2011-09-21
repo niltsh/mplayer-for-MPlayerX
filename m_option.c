@@ -1052,6 +1052,8 @@ static struct {
 } mp_imgfmt_list[] = {
   {"444p16le", IMGFMT_444P16_LE},
   {"444p16be", IMGFMT_444P16_BE},
+  {"444p10le", IMGFMT_444P10_LE},
+  {"444p10be", IMGFMT_444P10_BE},
   {"422p16le", IMGFMT_422P16_LE},
   {"422p16be", IMGFMT_422P16_BE},
   {"422p10le", IMGFMT_422P10_LE},
