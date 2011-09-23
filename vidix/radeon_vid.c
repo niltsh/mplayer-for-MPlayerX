@@ -345,6 +345,8 @@ static const ati_card_ids_t ati_card_ids[] =
  { DEVICE_ATI_RAGE_128_PRO2, 0 },
  { DEVICE_ATI_RAGE_128_PRO3, 0 },
 /* these seem to be based on rage 128 instead of mach64 */
+ { DEVICE_ATI_RAGE_MOBILITY_M4, 0 },
+ { DEVICE_ATI_RAGE_MOBILITY_M42, 0 },
  { DEVICE_ATI_RAGE_MOBILITY_M3, 0 },
  { DEVICE_ATI_RAGE_MOBILITY_M32, 0 },
 #else
