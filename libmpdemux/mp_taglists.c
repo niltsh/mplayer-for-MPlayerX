@@ -69,6 +69,7 @@ static const AVCodecTag mp_codecid_override_tags[] = {
     { CODEC_ID_DTS,               0x2001},
     { CODEC_ID_DVVIDEO,           MKTAG('d', 'v', 's', 'd')},
     { CODEC_ID_EAC3,              MKTAG('E', 'A', 'C', '3')},
+    { CODEC_ID_FLV1,              MKTAG('F', 'L', 'V', '1')},
     { CODEC_ID_G729,              MKTAG('G', '7', '2', '9')},
     { CODEC_ID_H264,              MKTAG('H', '2', '6', '4')},
     { CODEC_ID_MPEG4,             MKTAG('M', 'P', '4', 'V')},
