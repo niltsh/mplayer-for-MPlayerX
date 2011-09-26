@@ -2653,16 +2653,8 @@ fi #if x86_32
 echocheck "PIC"
 def_pic='#define CONFIG_PIC 0'
 pic=no
-cat > $TMPC << EOF
-int main(void) {
-#if !(defined(__PIC__) || defined(__pic__) || defined(PIC))
-#error PIC not enabled
-#endif
-    return 0;
-}
-EOF
-cc_check && pic=yes && extra_cflags="$extra_cflags -DPIC" &&
-  def_pic='#define CONFIG_PIC 1'
+cpp_condition_check 'defined(__PIC__) || defined(__pic__) || defined(PIC)' &&
+  pic=yes && extra_cflags="$extra_cflags -DPIC" && def_pic='#define CONFIG_PIC 1'
 echores $pic
 
 
