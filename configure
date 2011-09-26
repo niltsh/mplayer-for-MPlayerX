@@ -95,6 +95,7 @@ cpp_condition_check() {
 #if !($2)
 #error condition not true: $2
 #endif
+int main(void) { return 0; }
 EOF
   shift 2
   compile_check $TMPC $@
