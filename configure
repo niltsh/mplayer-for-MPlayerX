@@ -91,8 +91,9 @@ cxx_check() {
 
 cpp_condition_check() {
   cat > $TMPC << EOF
-#if !($1)
-#error condition not true: $1
+#include <$1>
+#if !($2)
+#error condition not true: $2
 #endif
 EOF
   compile_check $TMPC $@
@@ -2653,7 +2654,7 @@ fi #if x86_32
 echocheck "PIC"
 def_pic='#define CONFIG_PIC 0'
 pic=no
-cpp_condition_check 'defined(__PIC__) || defined(__pic__) || defined(PIC)' &&
+cpp_condition_check '' 'defined(__PIC__) || defined(__pic__) || defined(PIC)' &&
   pic=yes && extra_cflags="$extra_cflags -DPIC" && def_pic='#define CONFIG_PIC 1'
 echores $pic
 
@@ -2872,7 +2873,7 @@ if arm ; then
 
   echocheck "softfloat ABI"
   softfloat=yes
-  cpp_condition_check 'defined(__ARM_PCS_VFP) || (!defined(__ARM_PCS) && !defined(__SOFTFP__))' && softfloat=no
+  cpp_condition_check '' 'defined(__ARM_PCS_VFP) || (!defined(__ARM_PCS) && !defined(__SOFTFP__))' && softfloat=no
   if test $softfloat = "yes" ; then
     def_vfp_args='#define HAVE_VFP_ARGS 0'
   else
@@ -5332,16 +5333,9 @@ fi
 if test "$_ossaudio" = yes ; then
   def_ossaudio='#define CONFIG_OSS_AUDIO 1'
   aomodules="oss $aomodules"
-  cat > $TMPC << EOF
-#include <$_soundcard_header>
-#ifdef OPEN_SOUND_SYSTEM
-int main(void) { return 0; }
-#else
-#error Not the real thing
-#endif
-EOF
   _real_ossaudio=no
-  cc_check && _real_ossaudio=yes
+  cpp_condition_check "$_soundcard_header" OPEN_SOUND_SYSTEM &&
+      _real_ossaudio=yes
   if test "$_real_ossaudio" = yes; then
       def_ossaudio_devdsp='#define PATH_DEV_DSP "/dev/dsp"'
   elif netbsd || openbsd ; then
@@ -5500,48 +5494,11 @@ if test "$_alloca" != yes ; then
 fi
 if test "$_alsa" != no ; then
   _alsa=no
-  cat > $TMPC << EOF
-#include <sys/asoundlib.h>
-#if !((SND_LIB_MAJOR == 0) && (SND_LIB_MINOR == 5))
-#error "alsa version != 0.5.x"
-#endif
-int main(void) { return 0; }
-EOF
-  cc_check -lasound $ld_dl $ld_pthread && _alsaver='0.5.x'
-
-  cat > $TMPC << EOF
-#include <sys/asoundlib.h>
-#if !((SND_LIB_MAJOR == 0) && (SND_LIB_MINOR == 9))
-#error "alsa version != 0.9.x"
-#endif
-int main(void) { return 0; }
-EOF
-  cc_check -lasound $ld_dl $ld_pthread && _alsaver='0.9.x-sys'
-  cat > $TMPC << EOF
-#include <alsa/asoundlib.h>
-#if !((SND_LIB_MAJOR == 0) && (SND_LIB_MINOR == 9))
-#error "alsa version != 0.9.x"
-#endif
-int main(void) { return 0; }
-EOF
-  cc_check -lasound $ld_dl $ld_pthread && _alsaver='0.9.x-alsa'
-
-  cat > $TMPC << EOF
-#include <sys/asoundlib.h>
-#if !((SND_LIB_MAJOR == 1) && (SND_LIB_MINOR == 0))
-#error "alsa version != 1.0.x"
-#endif
-int main(void) { return 0; }
-EOF
-  cc_check -lasound $ld_dl $ld_pthread && _alsaver='1.0.x-sys'
-  cat > $TMPC << EOF
-#include <alsa/asoundlib.h>
-#if !((SND_LIB_MAJOR == 1) && (SND_LIB_MINOR == 0))
-#error "alsa version != 1.0.x"
-#endif
-int main(void) { return 0; }
-EOF
-  cc_check -lasound $ld_dl $ld_pthread && _alsaver='1.0.x-alsa'
+  cpp_condition_check 'sys/asoundlib.h'  '(SND_LIB_MAJOR == 0) && (SND_LIB_MINOR == 5)' -lasound $ld_dl $ld_pthread && _alsaver='0.5.x'
+  cpp_condition_check 'sys/asoundlib.h'  '(SND_LIB_MAJOR == 0) && (SND_LIB_MINOR == 9)' -lasound $ld_dl $ld_pthread && _alsaver='0.9.x-sys'
+  cpp_condition_check 'alsa/asoundlib.h' '(SND_LIB_MAJOR == 0) && (SND_LIB_MINOR == 9)' -lasound $ld_dl $ld_pthread && _alsaver='0.9.x-alsa'
+  cpp_condition_check 'sys/asoundlib.h'  '(SND_LIB_MAJOR == 1) && (SND_LIB_MINOR == 0)' -lasound $ld_dl $ld_pthread && _alsaver='1.0.x-sys'
+  cpp_condition_check 'alsa/asoundlib.h' '(SND_LIB_MAJOR == 1) && (SND_LIB_MINOR == 0)' -lasound $ld_dl $ld_pthread && _alsaver='1.0.x-alsa'
 fi
 def_alsa='#undef CONFIG_ALSA'
 def_alsa5='#undef CONFIG_ALSA5'
