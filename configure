@@ -2662,7 +2662,7 @@ int main(void) {
 }
 EOF
 cc_check && pic=yes && extra_cflags="$extra_cflags -DPIC" &&
-  def_pic='#define CONFIG_PIC 0'
+  def_pic='#define CONFIG_PIC 1'
 echores $pic
 
 
