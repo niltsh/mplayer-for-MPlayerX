@@ -8310,14 +8310,14 @@ $def_pthread_cache
 
 /* CPU stuff */
 #define __CPU__ $iproc
-$def_ebx_available
-$def_words_endian
+$def_armthumb
 $def_bigendian
+$def_ebx_available
+$def_vfp_args
+$def_words_endian
 $(ff_config_enable "$arch_all" "$arch" "#" "ARCH")
 $(ff_config_enable "$subarch_all" "$subarch" "#" "ARCH")
 $(ff_config_enable "$cpuexts_all" "$cpuexts" "#" "HAVE")
-$def_armthumb
-$def_vfp_args
 
 
 /* Blu-ray/DVD/VCD/CD */
