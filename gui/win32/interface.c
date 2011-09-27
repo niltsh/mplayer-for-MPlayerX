@@ -446,7 +446,28 @@ int gui(int what, void *data)
     {
         case GUI_PREPARE:
         {
-            gui(GUI_SET_FILE, 0);
+            audio_id = -1;
+            video_id = -1;
+            dvdsub_id = -1;
+            vobsub_id = -1;
+            stream_cache_size = -1;
+            autosync = 0;
+            dvd_title = 0;
+            force_fps = 0;
+            if(!mygui->playlist->tracks) return 0;
+            filename = guiInfo.Filename = mygui->playlist->tracks[mygui->playlist->current]->filename;
+            guiInfo.Track = mygui->playlist->current + 1;
+            if(gtkAONorm) greplace(&af_cfg.list, "volnorm", "volnorm");
+            if(gtkAOExtraStereo)
+            {
+                char *name = malloc(12 + 20 + 1);
+                snprintf(name, 12 + 20, "extrastereo=%f", gtkAOExtraStereoMul);
+                name[12 + 20] = 0;
+                greplace(&af_cfg.list, "extrastereo", name);
+                free(name);
+            }
+            if(gtkCacheOn) stream_cache_size = gtkCacheSize;
+            if(gtkAutoSyncOn) autosync = gtkAutoSync;
             guiInfo.NewPlay = 0;
             switch(guiInfo.StreamType)
             {
@@ -592,32 +613,6 @@ int gui(int what, void *data)
                 default:
                     break;
             }
-            break;
-        }
-        case GUI_SET_FILE:
-        {
-            audio_id = -1;
-            video_id = -1;
-            dvdsub_id = -1;
-            vobsub_id = -1;
-            stream_cache_size = -1;
-            autosync = 0;
-            dvd_title = 0;
-            force_fps = 0;
-            if(!mygui->playlist->tracks) return 0;
-            filename = guiInfo.Filename = mygui->playlist->tracks[mygui->playlist->current]->filename;
-            guiInfo.Track = mygui->playlist->current + 1;
-            if(gtkAONorm) greplace(&af_cfg.list, "volnorm", "volnorm");
-            if(gtkAOExtraStereo)
-            {
-                char *name = malloc(12 + 20 + 1);
-                snprintf(name, 12 + 20, "extrastereo=%f", gtkAOExtraStereoMul);
-                name[12 + 20] = 0;
-                greplace(&af_cfg.list, "extrastereo", name);
-                free(name);
-            }
-            if(gtkCacheOn) stream_cache_size = gtkCacheSize;
-            if(gtkAutoSyncOn) autosync = gtkAutoSync;
             break;
         }
         case GUI_HANDLE_EVENTS:

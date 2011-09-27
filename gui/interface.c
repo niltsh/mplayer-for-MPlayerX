@@ -344,26 +344,6 @@ int gui(int what, void *data)
         uiState();
         break;
 
-    case GUI_SET_FILE:
-
-// if ( guiInfo.Playing == 1 && guiInfo.NewPlay == GUI_FILE_NEW )
-        if (guiInfo.NewPlay == GUI_FILE_NEW) {
-            dvd_title = 0;
-            audio_id  = -1;
-            video_id  = -1;
-            dvdsub_id = -1;
-            vobsub_id = -1;
-
-            stream_cache_size = -1;
-            autosync  = 0;
-            force_fps = 0;
-        }
-
-        guiInfo.sh_video = NULL;
-        wsPostRedisplay(&guiApp.subWindow);
-
-        break;
-
     case GUI_HANDLE_EVENTS:
         if (!guiInfo.Playing || !guiInfo.VideoWindow)
             wsHandleEvents();
@@ -400,9 +380,19 @@ int gui(int what, void *data)
 
     case GUI_PREPARE:
 
-        gui(GUI_SET_FILE, 0);
-
         wsVisibleMouse(&guiApp.subWindow, wsHideMouseCursor);
+
+        if (guiInfo.NewPlay == GUI_FILE_NEW) {
+            dvd_title = 0;
+            audio_id  = -1;
+            video_id  = -1;
+            dvdsub_id = -1;
+            vobsub_id = -1;
+
+            stream_cache_size = -1;
+            autosync  = 0;
+            force_fps = 0;
+        }
 
         switch (guiInfo.StreamType) {
         case STREAMTYPE_PLAYLIST:
@@ -766,6 +756,8 @@ int gui(int what, void *data)
     case GUI_END_FILE:
 
         uiEventHandling(evRedraw, 1);
+
+        guiInfo.sh_video = NULL;
 
         if (!uiGotoTheNext && guiInfo.Playing) {
             uiGotoTheNext = 1;

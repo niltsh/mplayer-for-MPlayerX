@@ -3042,7 +3042,6 @@ play_next_file:
 #ifdef CONFIG_GUI
     if (use_gui) {
         mpctx->file_format = DEMUXER_TYPE_UNKNOWN;
-        gui(GUI_SET_FILE, 0);
         while (guiInfo.Playing != GUI_PLAY) {
             mp_cmd_t *cmd;
             usec_sleep(20000);
