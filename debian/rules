@@ -182,10 +182,6 @@ binary-arch: install-arch
 
 binary: binary-indep binary-arch
 
-get-orig-source:
-	dh_testdir
-	sh debian/get-orig-source.sh -d $(SVN_VERSION)
-
 PHONY += build clean binary-indep binary-arch binary-common binary
 PHONY += install binary binary-arch binary-indep clean checkroot get-orig-source
 PHONY += autocontrol fix-orig-source copy-orig-from-svn download-and-unpack-orig
