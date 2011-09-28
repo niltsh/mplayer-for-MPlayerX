@@ -858,7 +858,7 @@ def_dos_paths="#define HAVE_DOS_PATHS 0"
 def_stream_cache="#define CONFIG_STREAM_CACHE 1"
 def_priority="#undef CONFIG_PRIORITY"
 def_pthread_cache="#undef PTHREAD_CACHE"
-need_shmem=yes
+shmem=no
 for ac_option do
   case "$ac_option" in
   --help|-help|-h)
@@ -1555,7 +1555,7 @@ fi
 
 if mingw32 ; then
   _getch=getch2-win.c
-  need_shmem=no
+  shmem=yes
 fi
 
 if amigaos ; then
@@ -1573,7 +1573,7 @@ fi
 if os2 ; then
   _exesuf=".exe"
   _getch=getch2-os2.c
-  need_shmem=no
+  shmem=yes
   _priority=yes
   def_dos_paths="#define HAVE_DOS_PATHS 1"
   def_priority="#define CONFIG_PRIORITY 1"
@@ -3498,7 +3498,7 @@ if test "$_mman" = yes ; then
 else
   def_mmap='#define HAVE_MMAP 0'
   def_mman_h='#define HAVE_SYS_MMAN_H 0'
-  os2 && need_mmap=yes
+  os2 && mmap=no
 fi
 echores "$_mman"
 
@@ -3809,35 +3809,24 @@ echores "$_shm"
 
 
 echocheck "strsep()"
-_strsep=no
-statement_check string.h 'char *s = "Hello, world!"; strsep(&s, ",")' && _strsep=yes
-if test "$_strsep" = yes ; then
-  def_strsep='#define HAVE_STRSEP 1'
- need_strsep=no
-else
-  def_strsep='#undef HAVE_STRSEP'
- need_strsep=yes
-fi
-echores "$_strsep"
+strsep=yes
+def_strsep='#define HAVE_STRSEP 1'
+statement_check string.h 'char *s = "Hello, world!"; strsep(&s, ",")' ||
+    { strsep=no ; def_strsep='#undef HAVE_STRSEP' ; }
+echores "$strsep"
 
 
 echocheck "vsscanf()"
+vsscanf=yes
+def_vsscanf='#define HAVE_VSSCANF 1'
 cat > $TMPC << EOF
 #define _ISOC99_SOURCE
 #include <stdarg.h>
 #include <stdio.h>
 int main(void) { va_list ap = { 0 }; vsscanf("foo", "bar", ap); return 0; }
 EOF
-_vsscanf=no
-cc_check && _vsscanf=yes
-if test "$_vsscanf" = yes ; then
-  def_vsscanf='#define HAVE_VSSCANF 1'
-  need_vsscanf=no
-else
-  def_vsscanf='#undef HAVE_VSSCANF'
-  need_vsscanf=yes
-fi
-echores "$_vsscanf"
+cc_check || { vsscanf=no ; def_vsscanf='#undef HAVE_VSSCANF' ; }
+echores "$vsscanf"
 
 
 echocheck "POSIX select()"
@@ -3868,45 +3857,27 @@ echores "$_select"
 
 
 echocheck "gettimeofday()"
-_gettimeofday=no
-statement_check sys/time.h 'struct timeval tv; struct timezone tz; gettimeofday(&tv, &tz)' && _gettimeofday=yes
-if test "$_gettimeofday" = yes ; then
-  def_gettimeofday='#define HAVE_GETTIMEOFDAY 1'
-  need_gettimeofday=no
-else
-  def_gettimeofday='#undef HAVE_GETTIMEOFDAY'
-  need_gettimeofday=yes
-fi
-echores "$_gettimeofday"
+gettimeofday=yes
+def_gettimeofday='#define HAVE_GETTIMEOFDAY 1'
+statement_check sys/time.h 'struct timeval tv; struct timezone tz; gettimeofday(&tv, &tz)' ||
+    { gettimeofday=no ; def_gettimeofday='#undef HAVE_GETTIMEOFDAY' ; }
+echores "$gettimeofday"
 
 
 echocheck "glob()"
-_glob=no
-statement_check glob.h 'glob("filename", 0, 0, 0)' && _glob=yes
-need_glob=no
-if test "$_glob" = yes ; then
-  def_glob='#define HAVE_GLOB 1'
-else
-  def_glob='#undef HAVE_GLOB'
-  # HACK! need_glob currently enables compilation of a
-  # win32-specific glob()-replacement.
-  # Other OS neither need it nor can they use it (mf:// is disabled for them).
-  win32 && need_glob=yes
-fi
-echores "$_glob"
+glob=yes
+def_glob='#define HAVE_GLOB 1'
+statement_check glob.h 'glob("filename", 0, 0, 0)' ||
+    { glob=no ; def_glob='#undef HAVE_GLOB' ; }
+echores "$glob"
 
 
 echocheck "setenv()"
-_setenv=no
-statement_check stdlib.h 'setenv("", "", 0)' && _setenv=yes
-if test "$_setenv" = yes ; then
-  def_setenv='#define HAVE_SETENV 1'
-  need_setenv=no
-else
-  def_setenv='#undef HAVE_SETENV'
-  need_setenv=yes
-fi
-echores "$_setenv"
+setenv=yes
+def_setenv='#define HAVE_SETENV 1'
+statement_check stdlib.h 'setenv("", "", 0)' ||
+    { setenv=no ; def_setenv='#undef HAVE_SETENV' ; }
+echores "$setenv"
 
 
 echocheck "setmode()"
@@ -7856,13 +7827,14 @@ $(mak_enable "$cpuexts_all" "$cpuexts" HAVE)
 MENCODER = $_mencoder
 MPLAYER  = $_mplayer
 
-NEED_GETTIMEOFDAY = $need_gettimeofday
-NEED_GLOB         = $need_glob
-NEED_MMAP         = $need_mmap
-NEED_SETENV       = $need_setenv
-NEED_SHMEM        = $need_shmem
-NEED_STRSEP       = $need_strsep
-NEED_VSSCANF      = $need_vsscanf
+# operating system features which have local fallbacks
+GETTIMEOFDAY = $gettimeofday
+GLOB         = $glob
+MMAP         = $mmap
+SETENV       = $setenv
+SHMEM        = $shmem
+STRSEP       = $strsep
+VSSCANF      = $vsscanf
 
 # features
 3DFX = $_3dfx

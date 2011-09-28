@@ -23,6 +23,16 @@ include config.mak
 
 ###### variable declarations #######
 
+# local fallbacks for missing operating system features
+OS_FEATURE-$(GETTIMEOFDAY)           += osdep/gettimeofday.c
+OS_FEATURE-$(GLOB)                   += osdep/glob-win.c
+OS_FEATURE-$(MMAP)                   += osdep/mmap-os2.c
+OS_FEATURE-$(SETENV)                 += osdep/setenv.c
+OS_FEATURE-$(SHMEM)                  += osdep/shmem.c
+OS_FEATURE-$(STRSEP)                 += osdep/strsep.c
+OS_FEATURE-$(VSSCANF)                += osdep/vsscanf.c
+
+# conditional source declarations
 SRCS_AUDIO_INPUT-$(ALSA1X)           += stream/ai_alsa1x.c
 SRCS_AUDIO_INPUT-$(ALSA9)            += stream/ai_alsa.c
 SRCS_AUDIO_INPUT-$(OSS)              += stream/ai_oss.c
@@ -177,13 +187,6 @@ SRCS_COMMON-$(NATIVE_RTSP)           += stream/stream_rtsp.c \
                                         stream/librtsp/rtsp_rtp.c \
                                         stream/librtsp/rtsp_session.c \
 
-SRCS_COMMON-$(NEED_GETTIMEOFDAY)     += osdep/gettimeofday.c
-SRCS_COMMON-$(NEED_GLOB)             += osdep/glob-win.c
-SRCS_COMMON-$(NEED_MMAP)             += osdep/mmap-os2.c
-SRCS_COMMON-$(NEED_SETENV)           += osdep/setenv.c
-SRCS_COMMON-$(NEED_SHMEM)            += osdep/shmem.c
-SRCS_COMMON-$(NEED_STRSEP)           += osdep/strsep.c
-SRCS_COMMON-$(NEED_VSSCANF)          += osdep/vsscanf.c
 SRCS_COMMON-$(NETWORKING)            += stream/stream_netstream.c \
                                         stream/asf_mmst_streaming.c \
                                         stream/asf_streaming.c \
@@ -484,7 +487,8 @@ SRCS_COMMON = asxparser.c \
               sub/sub_cc.c \
               sub/subreader.c \
               sub/vobsub.c \
-              $(SRCS_COMMON-yes)
+              $(SRCS_COMMON-yes) \
+              $(OS_FEATURE-no)
 
 
 SRCS_MPLAYER-$(3DFX)         += libvo/vo_3dfx.c
