@@ -382,7 +382,7 @@ static void drawTextureDisplay (void)
   struct TexSquare *square = texgrid;
   int x, y;
 
-  glColor3f(1.0,1.0,1.0);
+  glColor4f(1.0,1.0,1.0,1.0);
 
   if (is_yuv)
     glEnableYUVConversion(GL_TEXTURE_2D, use_yuv);

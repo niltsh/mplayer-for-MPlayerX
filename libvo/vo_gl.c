@@ -820,7 +820,7 @@ static void do_render(void) {
 //  Enable(GL_TEXTURE_2D);
 //  BindTexture(GL_TEXTURE_2D, texture_id);
 
-  mpglColor3f(1,1,1);
+  mpglColor4f(1,1,1,1);
   if (is_yuv || custom_prog)
     glEnableYUVConversion(gl_target, yuvconvtype);
   if (stereo_mode) {
