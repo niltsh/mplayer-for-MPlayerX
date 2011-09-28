@@ -50,8 +50,8 @@ static const uint8_t flare[4][4] = {
 #define MAX_TEXT_Y 0x4000
 static int text_x = 0;
 static int text_y = 0;
-#define _text_x text_x/2
-#define _text_y text_y/2
+#define _text_x (text_x/2)
+#define _text_y (text_y/2)
 
 // Scene position
 #define Z_Off -128.0f
