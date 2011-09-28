@@ -2801,7 +2801,7 @@ int main(int argc, char *argv[])
 #endif
     if (use_gui && mpctx->playtree_iter) {
         char cwd[PATH_MAX + 2];
-        // Free Playtree and Playtree-Iter as it's not used by the GUI.
+        // Free playtree_iter as it's not used in connection with the GUI.
         play_tree_iter_free(mpctx->playtree_iter);
         mpctx->playtree_iter = NULL;
 
