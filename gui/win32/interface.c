@@ -455,7 +455,7 @@ int gui(int what, void *data)
             dvd_title = 0;
             force_fps = 0;
             if(!mygui->playlist->tracks) return 0;
-            filename = guiInfo.Filename = mygui->playlist->tracks[mygui->playlist->current]->filename;
+            setdup(&guiInfo.Filename, mygui->playlist->tracks[mygui->playlist->current]->filename);
             guiInfo.Track = mygui->playlist->current + 1;
             if(gtkAONorm) greplace(&af_cfg.list, "volnorm", "volnorm");
             if(gtkAOExtraStereo)
@@ -486,10 +486,7 @@ int gui(int what, void *data)
                 }
 #endif
             }
-            if(guiInfo.Filename)
-                filename = strdup(guiInfo.Filename);
-            else if(filename)
-                strcpy(guiInfo.Filename, filename);
+            filename = guiInfo.Filename;
             break;
         }
         case GUI_SET_AUDIO:
@@ -741,6 +738,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
     {
         mygui->playlist->current = 0;
         filename = mygui->playlist->tracks[0]->filename;
+        uiSetFileName(NULL, filename, STREAMTYPE_FILE);
     }
     return result;
 }
