@@ -916,7 +916,6 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
         listSet(gtkDelCurrPlItem, NULL);
 
     uiCurr();   // update filename
-    filename = NULL;
 
     return result;
 }

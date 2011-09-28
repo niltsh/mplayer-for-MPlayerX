@@ -759,7 +759,6 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
                 result = 1;
         pt_iter_destroy(&my_pt_iter);
     }
-    filename = NULL;
     return result;
 }
 
