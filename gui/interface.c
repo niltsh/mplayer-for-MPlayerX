@@ -406,7 +406,7 @@ int gui(int what, void *data)
             char tmp[512];
 
             sprintf(tmp, "vcd://%d", guiInfo.Track);
-            setdup(&guiInfo.Filename, tmp);
+            uiSetFileName(NULL, tmp, STREAMTYPE_VCD);
         }
         break;
 #endif
@@ -417,7 +417,7 @@ int gui(int what, void *data)
             char tmp[512];
 
             sprintf(tmp, "dvd://%d", guiInfo.Track);
-            setdup(&guiInfo.Filename, tmp);
+            uiSetFileName(NULL, tmp, STREAMTYPE_DVD);
         }
 
             dvd_chapter = guiInfo.Chapter;
@@ -768,11 +768,8 @@ int gui(int what, void *data)
 
         if (guiInfo.Playing && (next = listSet(gtkGetNextPlItem, NULL)) && (plLastPlayed != next)) {
             plLastPlayed = next;
-            setddup(&guiInfo.Filename, next->path, next->name);
-            guiInfo.StreamType = STREAMTYPE_FILE;
+            uiSetFileName(next->path, next->name, STREAMTYPE_FILE);
             guiInfo.NewPlay    = GUI_FILE_NEW;
-            nfree(guiInfo.AudioFilename);
-            nfree(guiInfo.SubtitleFilename);
             guiInfo.Track++;
         } else {
             if (guiInfo.NewPlay == GUI_FILE_NEW)

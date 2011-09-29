@@ -457,7 +457,7 @@ int gui(int what, void *data)
             dvd_title = 0;
             force_fps = 0;
             if(!mygui->playlist->tracks) return 0;
-            setdup(&guiInfo.Filename, mygui->playlist->tracks[mygui->playlist->current]->filename);
+            uiSetFileName(NULL, mygui->playlist->tracks[mygui->playlist->current]->filename, STREAMTYPE_FILE);
             guiInfo.Track = mygui->playlist->current + 1;
             if(gtkAONorm) greplace(&af_cfg.list, "volnorm", "volnorm");
             if(gtkAOExtraStereo)
@@ -483,7 +483,7 @@ int gui(int what, void *data)
                     dvd_chapter = guiInfo.Chapter;
                     dvd_angle = guiInfo.Angle;
                     sprintf(tmp,"dvd://%d", guiInfo.Track);
-                    setdup(&guiInfo.Filename, tmp);
+                    uiSetFileName(NULL, tmp, STREAMTYPE_DVD);
                     break;
                 }
 #endif
