@@ -876,7 +876,8 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
 
 // This function imports and inserts an playtree, that is created "on the fly",
 // for example by parsing some MOV-Reference-File; or by loading an playlist
-// with "File Open".
+// with "File Open". (The latter, actually, isn't allowed in MPlayer and thus
+// not working which is why this function won't get called for that reason.)
 // The file which contained the playlist is thereby replaced with it's contents.
 int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
 {
