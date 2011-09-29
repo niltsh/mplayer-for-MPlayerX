@@ -769,7 +769,7 @@ int gui(int what, void *data)
         if (guiInfo.Playing && (next = listSet(gtkGetNextPlItem, NULL)) && (plLastPlayed != next)) {
             plLastPlayed = next;
             uiSetFileName(next->path, next->name, STREAMTYPE_FILE);
-            guiInfo.NewPlay    = GUI_FILE_NEW;
+            guiInfo.NewPlay = GUI_FILE_NEW;
             guiInfo.Track++;
         } else {
             if (guiInfo.NewPlay == GUI_FILE_NEW)
