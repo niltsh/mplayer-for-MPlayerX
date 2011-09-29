@@ -488,7 +488,6 @@ int gui(int what, void *data)
                 }
 #endif
             }
-            filename = guiInfo.Filename;
             break;
         }
         case GUI_SET_AUDIO:
@@ -739,8 +738,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
     if (result)
     {
         mygui->playlist->current = 0;
-        filename = mygui->playlist->tracks[0]->filename;
-        uiSetFileName(NULL, filename, STREAMTYPE_FILE);
+        uiSetFileName(NULL, mygui->playlist->tracks[0]->filename, STREAMTYPE_FILE);
     }
     return result;
 }

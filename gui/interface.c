@@ -427,14 +427,6 @@ int gui(int what, void *data)
 #endif
         }
 
-// if ( guiInfo.StreamType != STREAMTYPE_PLAYLIST ) // Does not make problems anymore!
-        {
-            if (guiInfo.Filename)
-                filename = gstrdup(guiInfo.Filename);
-            else if (filename)
-                setdup(&guiInfo.Filename, filename);
-        }
-
         // video opts
 
         if (!video_driver_list) {
