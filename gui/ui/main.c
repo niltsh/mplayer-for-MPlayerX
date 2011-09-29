@@ -143,11 +143,6 @@ void uiEventHandling( int msg,float param )
         mplayer( MPLAYER_EXIT_GUI, EXIT_QUIT, 0 );
         break;
 
-   case evPlayNetwork:
-        nfree( guiInfo.SubtitleFilename );
-	nfree( guiInfo.AudioFilename );
-	guiInfo.StreamType=STREAMTYPE_STREAM;
-        goto play;
    case evSetURL:
         gtkShow( evPlayNetwork,NULL );
 	break;
