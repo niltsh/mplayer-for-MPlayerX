@@ -868,11 +868,8 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
     uiCurr();   // update filename
     uiGotoTheNext = 1;
 
-    if (!enqueue)
-        filename = guiInfo.Filename;             // Backward compatibility; if file is specified on commandline,
-                                                 // gmplayer does directly start in Play-Mode.
-    else
-        filename = NULL;
+    if (enqueue)
+        filename = NULL;            // don't start playing
 
     return result;
 }
