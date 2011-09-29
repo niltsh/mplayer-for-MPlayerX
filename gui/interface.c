@@ -233,8 +233,10 @@ void guiInit(void)
 
     uiSubRender = 1;
 
-    if (plCurrent && !filename)
+    if (plCurrent && !filename) {
         uiSetFileName(plCurrent->path, plCurrent->name, STREAMTYPE_FILE);
+        filename = NULL; // don't start playing
+    }
 
     if (subdata)
         setdup(&guiInfo.SubtitleFilename, subdata->filename);

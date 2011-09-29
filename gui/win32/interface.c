@@ -340,7 +340,9 @@ void uiSetFileName(char *dir, char *name, int type)
     else
         setddup(&guiInfo.Filename, dir, name);
 
+    filename = guiInfo.Filename;
     guiInfo.StreamType = type;
+
     nfree(guiInfo.AudioFilename);
     nfree(guiInfo.SubtitleFilename);
 }
