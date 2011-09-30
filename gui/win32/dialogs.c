@@ -523,7 +523,7 @@ static LRESULT CALLBACK PlayListWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPA
                     {
                 case ID_PLAY:
                         if(selected) pl->current = selected - 1;
-                        uiSetFileName(NULL, pl->tracks[pl->current]->filename, STREAMTYPE_STREAM);
+                        uiSetFileName(NULL, pl->tracks[pl->current]->filename, STREAMTYPE_FILE);
                         gui->startplay(gui);
                     }
                     return 0;

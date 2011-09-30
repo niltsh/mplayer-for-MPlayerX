@@ -304,7 +304,7 @@ void uiNext(void)
             if(mygui->playlist->current == (mygui->playlist->trackcount - 1))
                 return;
             uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename,
-                           STREAMTYPE_STREAM);
+                           STREAMTYPE_FILE);
             break;
     }
     mygui->startplay(mygui);
@@ -326,7 +326,7 @@ void uiPrev(void)
             if(mygui->playlist->current == 0)
                 return;
             uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)--]->filename,
-                           STREAMTYPE_STREAM);
+                           STREAMTYPE_FILE);
             break;
     }
     mygui->startplay(mygui);
@@ -651,7 +651,7 @@ int gui(int what, void *data)
 
               uiGotoTheNext = 1;
               guiInfo.NewPlay = GUI_FILE_NEW;
-              uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename, STREAMTYPE_STREAM);
+              uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename, STREAMTYPE_FILE);
               //sprintf(guiInfo.Filename, mygui->playlist->tracks[(mygui->playlist->current)++]->filename);
           }
 
