@@ -323,6 +323,7 @@ int gui(int what, void *data)
     dvd_priv_t *dvd;
 #endif
     plItem *next;
+    int state;
 
     if (guiInfo.mpcontext)
         mixer = mpctx_get_mixer(guiInfo.mpcontext);
@@ -641,10 +642,14 @@ int gui(int what, void *data)
 
         guiInfo.sh_video = data;
 
-        if (guiInfo.StreamType == STREAMTYPE_STREAM)
-            btnSet(evSetMoviePosition, btnDisabled);
-        else
-            btnSet(evSetMoviePosition, btnReleased);
+        state = (guiInfo.StreamType == STREAMTYPE_STREAM ? btnDisabled : btnReleased);
+        btnSet(evForward10sec, state);
+        btnSet(evBackward10sec, state);
+        btnSet(evForward1min, state);
+        btnSet(evBackward1min, state);
+        btnSet(evForward10min, state);
+        btnSet(evBackward10min, state);
+        btnSet(evSetMoviePosition, state);
 
 #ifdef CONFIG_DXR3
         if (video_driver_list && !gstrcmp(video_driver_list[0], "dxr3") && (((demuxer_t *)mpctx_get_demuxer(guiInfo.mpcontext))->file_format != DEMUXER_TYPE_MPEG_PS) && !gtkVfLAVC) {

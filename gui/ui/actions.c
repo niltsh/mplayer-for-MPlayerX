@@ -112,9 +112,6 @@ void uiRelSeek(float sec)
 
 void uiAbsSeek(float percent)
 {
-    if (guiInfo.StreamType == STREAMTYPE_STREAM)
-        return;
-
     rel_seek_secs = percent / 100.0;
     abs_seek_pos  = 3;
 }
