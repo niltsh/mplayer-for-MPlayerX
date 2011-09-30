@@ -473,7 +473,8 @@ int gui(int what, void *data)
             guiInfo.NewPlay = 0;
             switch(guiInfo.StreamType)
             {
-                case STREAMTYPE_PLAYLIST:
+                case STREAMTYPE_FILE:
+                case STREAMTYPE_STREAM:
                     break;
 #ifdef CONFIG_DVDREAD
                 case STREAMTYPE_DVD:

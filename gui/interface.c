@@ -397,7 +397,8 @@ int gui(int what, void *data)
         }
 
         switch (guiInfo.StreamType) {
-        case STREAMTYPE_PLAYLIST:
+        case STREAMTYPE_FILE:
+        case STREAMTYPE_STREAM:
             break;
 
 #ifdef CONFIG_VCD
