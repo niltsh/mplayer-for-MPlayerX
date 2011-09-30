@@ -3053,25 +3053,6 @@ play_next_file:
             }
         }
         gui(GUI_PREPARE, 0);
-        if (guiInfo.StreamType == STREAMTYPE_STREAM) {
-            play_tree_t *entry = play_tree_new();
-            play_tree_add_file(entry, guiInfo.Filename);
-            if (mpctx->playtree)
-                play_tree_free_list(mpctx->playtree->child, 1);
-            else
-                mpctx->playtree = play_tree_new();
-            play_tree_set_child(mpctx->playtree, entry);
-            if (mpctx->playtree) {
-                mpctx->playtree_iter = play_tree_iter_new(mpctx->playtree, mconfig);
-                if (mpctx->playtree_iter) {
-                    if (play_tree_iter_step(mpctx->playtree_iter, 0, 0) != PLAY_TREE_ITER_ENTRY) {
-                        play_tree_iter_free(mpctx->playtree_iter);
-                        mpctx->playtree_iter = NULL;
-                    }
-                    filename = play_tree_iter_get_file(mpctx->playtree_iter, 1);
-                }
-            }
-        }
     }
 #endif /* CONFIG_GUI */
 

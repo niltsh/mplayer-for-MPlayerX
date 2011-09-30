@@ -98,7 +98,7 @@ typedef struct {
     int VideoWidth;
     int VideoHeight;
 
-    int StreamType;           // public, read access by MPlayer
+    int StreamType;
     int AudioChannels;
 
 #ifdef CONFIG_DVDREAD
