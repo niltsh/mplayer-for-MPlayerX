@@ -603,6 +603,13 @@ int gui(int what, void *data)
         guiInfo.StreamType = stream->type;
 
         switch (guiInfo.StreamType) {
+#ifdef CONFIG_VCD
+        case STREAMTYPE_VCD:
+            guiInfo.Tracks = 0;
+            stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiInfo.Tracks);
+            break;
+#endif
+
 #ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
             dvd = stream->priv;
@@ -616,13 +623,6 @@ int gui(int what, void *data)
             guiInfo.Track   = dvd_title + 1;
             guiInfo.Chapter = dvd_chapter + 1;
             guiInfo.Angle   = dvd_angle + 1;
-            break;
-#endif
-
-#ifdef CONFIG_VCD
-        case STREAMTYPE_VCD:
-            guiInfo.Tracks = 0;
-            stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiInfo.Tracks);
             break;
 #endif
 

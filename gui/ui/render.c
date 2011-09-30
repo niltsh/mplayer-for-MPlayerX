@@ -47,10 +47,6 @@ static void TranslateFilename(int c, char *tmp, size_t tmplen)
     size_t len;
 
     switch (guiInfo.StreamType) {
-    case STREAMTYPE_STREAM:
-        av_strlcpy(tmp, guiInfo.Filename, tmplen);
-        break;
-
     case STREAMTYPE_FILE:
         if (guiInfo.Filename && guiInfo.Filename[0]) {
             p = strrchr(guiInfo.Filename, '/');
@@ -72,18 +68,22 @@ static void TranslateFilename(int c, char *tmp, size_t tmplen)
             av_strlcpy(tmp, MSGTR_NoFileLoaded, tmplen);
         break;
 
+    case STREAMTYPE_STREAM:
+        av_strlcpy(tmp, guiInfo.Filename, tmplen);
+        break;
+
+#ifdef CONFIG_VCD
+    case STREAMTYPE_VCD:
+        snprintf(tmp, tmplen, MSGTR_Title, guiInfo.Track - 1);
+        break;
+#endif
+
 #ifdef CONFIG_DVDREAD
     case STREAMTYPE_DVD:
         if (guiInfo.Chapter)
             snprintf(tmp, tmplen, MSGTR_Chapter, guiInfo.Chapter);
         else
             av_strlcat(tmp, MSGTR_NoChapter, tmplen);
-        break;
-#endif
-
-#ifdef CONFIG_VCD
-    case STREAMTYPE_VCD:
-        snprintf(tmp, tmplen, MSGTR_Title, guiInfo.Track - 1);
         break;
 #endif
 
@@ -271,15 +271,15 @@ calclengthmmmmss:
                     av_strlcat(trbuf, "f", sizeof(trbuf));
                     break;
 
+                case STREAMTYPE_STREAM:
+                    av_strlcat(trbuf, "u", sizeof(trbuf));
+                    break;
+
 #ifdef CONFIG_VCD
                 case STREAMTYPE_VCD:
                     av_strlcat(trbuf, "v", sizeof(trbuf));
                     break;
 #endif
-
-                case STREAMTYPE_STREAM:
-                    av_strlcat(trbuf, "u", sizeof(trbuf));
-                    break;
 
 #ifdef CONFIG_DVDREAD
                 case STREAMTYPE_DVD:

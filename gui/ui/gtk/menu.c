@@ -66,6 +66,10 @@
 #include "gui/ui/pixmaps/empty.xpm"
 #include "gui/ui/pixmaps/loadeaf.xpm"
 #include "gui/ui/pixmaps/title.xpm"
+#ifdef CONFIG_VCD
+#include "gui/ui/pixmaps/vcd.xpm"
+#include "gui/ui/pixmaps/playvcd.xpm"
+#endif
 #ifdef CONFIG_DVDREAD
 #include "gui/ui/pixmaps/dvd.xpm"
 #include "gui/ui/pixmaps/playdvd.xpm"
@@ -74,10 +78,6 @@
 #include "gui/ui/pixmaps/audiolang.xpm"
 #include "gui/ui/pixmaps/sublang.xpm"
 #include "gui/ui/pixmaps/empty1px.xpm"
-#endif
-#ifdef CONFIG_VCD
-#include "gui/ui/pixmaps/vcd.xpm"
-#include "gui/ui/pixmaps/playvcd.xpm"
 #endif
 
 static void ActivateMenuItem( int Item )

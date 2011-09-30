@@ -56,9 +56,9 @@
 #include "mpcommon.h"
 
 #define CLEAR_FILE 1
-#define CLEAR_DVD  2
-#define CLEAR_VCD  4
-#define CLEAR_ALL  (CLEAR_FILE + CLEAR_DVD + CLEAR_VCD)
+#define CLEAR_VCD  2
+#define CLEAR_DVD  4
+#define CLEAR_ALL  (CLEAR_FILE + CLEAR_VCD + CLEAR_DVD)
 
 #define GUI_REDRAW_WAIT 375
 
@@ -113,6 +113,10 @@ static void guiInfoMediumClear (int what)
     listSet(gtkDelPl, NULL);
   }
 
+#ifdef CONFIG_VCD
+  if (what & CLEAR_VCD) guiInfo.Tracks = 0;
+#endif
+
 #ifdef CONFIG_DVDREAD
   if (what & CLEAR_DVD)
   {
@@ -122,10 +126,6 @@ static void guiInfoMediumClear (int what)
     guiInfo.Chapters = 0;
     guiInfo.Angles = 0;
   }
-#endif
-
-#ifdef CONFIG_VCD
-  if (what & CLEAR_VCD) guiInfo.Tracks = 0;
 #endif
 }
 
@@ -194,8 +194,8 @@ play:
 
         switch ( guiInfo.StreamType )
          {
-	  case STREAMTYPE_STREAM:
 	  case STREAMTYPE_FILE:
+	  case STREAMTYPE_STREAM:
 	       guiInfoMediumClear( CLEAR_ALL - CLEAR_FILE );
 	       if ( !guiInfo.Track )
 	         guiInfo.Track=1;
@@ -386,7 +386,7 @@ set_volume:
 	 }
 	wsClearWindow( guiApp.subWindow );
 #ifdef CONFIG_DVDREAD
-	if ( guiInfo.StreamType == STREAMTYPE_DVD || guiInfo.StreamType == STREAMTYPE_VCD ) goto play_dvd_2;
+	if ( guiInfo.StreamType == STREAMTYPE_VCD || guiInfo.StreamType == STREAMTYPE_DVD ) goto play_dvd_2;
 	 else
 #endif
 	 guiInfo.NewPlay=GUI_FILE_NEW;
