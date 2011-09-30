@@ -90,8 +90,12 @@ cxx_check() {
 }
 
 cpp_condition_check() {
+  inc=""
+  if test -n "$1" ; then
+    inc="#include <$1>"
+  fi
   cat > $TMPC << EOF
-#include <$1>
+$inc
 #if !($2)
 #error condition not true: $2
 #endif
