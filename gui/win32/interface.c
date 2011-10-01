@@ -741,6 +741,9 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
         mygui->playlist->current = 0;
         uiSetFileName(NULL, mygui->playlist->tracks[0]->filename, STREAMTYPE_FILE);
     }
+
+    if (enqueue) filename = NULL;
+
     return result;
 }
 
