@@ -861,27 +861,27 @@ keypressed:
             }
         }
         if (wsWindowList[l]->wsCursor != None) {
-        wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
-        mouse_hide = True;
-        mouse_time = GetTimerMS();
+            wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
+            mouse_hide = True;
+            mouse_time = GetTimerMS();
         }
         goto buttonreleased;
 
     case ButtonRelease:
         i = Event->xbutton.button + 128;
         if (wsWindowList[l]->wsCursor != None) {
-        wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
-        mouse_hide = True;
-        mouse_time = GetTimerMS();
+            wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
+            mouse_hide = True;
+            mouse_time = GetTimerMS();
         }
         goto buttonreleased;
 
     case ButtonPress:
         i = Event->xbutton.button;
         if (wsWindowList[l]->wsCursor != None) {
-        wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
-        mouse_hide = True;
-        mouse_time = GetTimerMS();
+            wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
+            mouse_hide = True;
+            mouse_time = GetTimerMS();
         }
         goto buttonreleased;
 
