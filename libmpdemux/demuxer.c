@@ -473,9 +473,11 @@ static void allocate_parser(AVCodecContext **avctx, AVCodecParserContext **parse
     init_avcodec();
 
     switch (format) {
+    case 0x1600:
     case MKTAG('M', 'P', '4', 'A'):
         codec_id = CODEC_ID_AAC;
         break;
+    case 0x1602:
     case MKTAG('M', 'P', '4', 'L'):
         codec_id = CODEC_ID_AAC_LATM;
         break;
@@ -495,6 +497,10 @@ static void allocate_parser(AVCodecContext **avctx, AVCodecParserContext **parse
         break;
     case 0x2001:
     case 0x86:
+    case MKTAG('D', 'T', 'S', ' '):
+    case MKTAG('d', 't', 's', ' '):
+    case MKTAG('d', 't', 's', 'b'):
+    case MKTAG('d', 't', 's', 'c'):
         codec_id = CODEC_ID_DTS;
         break;
     case MKTAG('f', 'L', 'a', 'C'):
