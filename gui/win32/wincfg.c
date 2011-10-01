@@ -84,6 +84,7 @@ static const m_option_t gui_opts[] =
     {   "gui_sub_pos_y", &gui_sub_pos_y, CONF_TYPE_INT, 0, 0, 0, NULL },
     {   "sub_window", &sub_window, CONF_TYPE_FLAG, 0, 0, 1, NULL},
     {   "console", &console, CONF_TYPE_FLAG, 0, 0, 1, NULL},
+    {   "idle", &player_idle_mode, CONF_TYPE_FLAG, CONF_GLOBAL, 0, 1, NULL},
     {   NULL, NULL, 0, 0, 0, 0, NULL }
 };
 
@@ -97,6 +98,8 @@ int cfg_gui_include(m_option_t *conf, const char *filename)
 int cfg_read(void)
 {
     char *cfg = get_path("gui.conf");
+
+    player_idle_mode = 1;   // GUI is in idle mode by default
 
     /* read configuration */
     mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] [cfg] reading config file: %s\n", cfg);
