@@ -68,6 +68,9 @@
 
 #define MOUSEHIDE_DELAY 1000   // in milliseconds
 
+static Bool mouse_hide;
+static unsigned int mouse_time;
+
 typedef struct {
     unsigned long flags;
     unsigned long functions;
@@ -639,14 +642,27 @@ void wsDestroyWindow(wsTWindow *win)
 #endif
 }
 
+/**
+ * @brief Handle automatic hiding of the cursor.
+ *
+ * @param win pointer to a ws window structure
+ *
+ * @note Only one window will be handled at a time.
+ */
+void wsAutohideCursor(wsTWindow *win)
+{
+    if (mouse_hide && (GetTimerMS() - mouse_time >= MOUSEHIDE_DELAY)) {
+        wsVisibleMouse(win, wsHideMouseCursor);
+        mouse_hide = False;
+    }
+}
+
 // ----------------------------------------------------------------------------------------------
 //   Handle events.
 // ----------------------------------------------------------------------------------------------
 
 Bool wsEvents(Display *display, XEvent *Event)
 {
-    static Bool mouse_hide;
-    static unsigned int mouse_time;
     unsigned long i = 0;
     int l;
     int x, y;
@@ -658,11 +674,6 @@ Bool wsEvents(Display *display, XEvent *Event)
         return !wsTrue;
 
     wsWindowList[l]->State = 0;
-
-    if (mouse_hide && (GetTimerMS() - mouse_time >= MOUSEHIDE_DELAY)) {
-        wsVisibleMouse(wsWindowList[l], wsHideMouseCursor);
-        mouse_hide = False;
-    }
 
     switch (Event->type) {
     case ClientMessage:
@@ -849,23 +860,29 @@ keypressed:
                 }
             }
         }
+        if (wsWindowList[l]->wsCursor != None) {
         wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
         mouse_hide = True;
         mouse_time = GetTimerMS();
+        }
         goto buttonreleased;
 
     case ButtonRelease:
         i = Event->xbutton.button + 128;
+        if (wsWindowList[l]->wsCursor != None) {
         wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
         mouse_hide = True;
         mouse_time = GetTimerMS();
+        }
         goto buttonreleased;
 
     case ButtonPress:
         i = Event->xbutton.button;
+        if (wsWindowList[l]->wsCursor != None) {
         wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
         mouse_hide = True;
         mouse_time = GetTimerMS();
+        }
         goto buttonreleased;
 
     case EnterNotify:
