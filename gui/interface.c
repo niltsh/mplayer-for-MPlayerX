@@ -350,7 +350,7 @@ int gui(int what, void *data)
     case GUI_HANDLE_EVENTS:
         if (!guiInfo.Playing || !guiInfo.VideoWindow)
             wsHandleEvents();
-        wsAutohideCursor(&guiApp.subWindow);
+        wsAutohideCursor();
         gtkEventHandling();
         break;
 

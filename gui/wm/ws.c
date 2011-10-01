@@ -68,7 +68,7 @@
 
 #define MOUSEHIDE_DELAY 1000   // in milliseconds
 
-static Bool mouse_hide;
+static wsTWindow *mouse_win;
 static unsigned int mouse_time;
 
 typedef struct {
@@ -644,16 +644,12 @@ void wsDestroyWindow(wsTWindow *win)
 
 /**
  * @brief Handle automatic hiding of the cursor.
- *
- * @param win pointer to a ws window structure
- *
- * @note Only one window will be handled at a time.
  */
-void wsAutohideCursor(wsTWindow *win)
+void wsAutohideCursor(void)
 {
-    if (mouse_hide && (GetTimerMS() - mouse_time >= MOUSEHIDE_DELAY)) {
-        wsVisibleMouse(win, wsHideMouseCursor);
-        mouse_hide = False;
+    if (mouse_win && (GetTimerMS() - mouse_time >= MOUSEHIDE_DELAY)) {
+        wsVisibleMouse(mouse_win, wsHideMouseCursor);
+        mouse_win = NULL;
     }
 }
 
@@ -862,7 +858,7 @@ keypressed:
         }
         if (wsWindowList[l]->wsCursor != None) {
             wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
-            mouse_hide = True;
+            mouse_win  = wsWindowList[l];
             mouse_time = GetTimerMS();
         }
         goto buttonreleased;
@@ -871,7 +867,7 @@ keypressed:
         i = Event->xbutton.button + 128;
         if (wsWindowList[l]->wsCursor != None) {
             wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
-            mouse_hide = True;
+            mouse_win  = wsWindowList[l];
             mouse_time = GetTimerMS();
         }
         goto buttonreleased;
@@ -880,7 +876,7 @@ keypressed:
         i = Event->xbutton.button;
         if (wsWindowList[l]->wsCursor != None) {
             wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
-            mouse_hide = True;
+            mouse_win  = wsWindowList[l];
             mouse_time = GetTimerMS();
         }
         goto buttonreleased;
