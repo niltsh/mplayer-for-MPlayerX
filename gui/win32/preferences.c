@@ -244,7 +244,7 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
             SendMessage(btn, WM_SETFONT, (WPARAM) GetStockObject(DEFAULT_GUI_FONT), 0);
 
             /* osd level */
-            btn = CreateWindow("button", "None",
+            btn = CreateWindow("button", "Subtitles only",
                                WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON,
                                95, 282, 100, 25, hwnd,
                                (HMENU) ID_NONE,
@@ -252,7 +252,7 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
                                NULL);
             SendMessage(btn, WM_SETFONT, (WPARAM) GetStockObject(DEFAULT_GUI_FONT), 0);
 
-            btn = CreateWindow("button", "Timer and indicators",
+            btn = CreateWindow("button", "Volume and seek",
                                WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON,
                                95, 302, 180, 25, hwnd,
                                (HMENU) ID_OSD1,
@@ -260,17 +260,17 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
                                NULL);
             SendMessage(btn, WM_SETFONT, (WPARAM) GetStockObject(DEFAULT_GUI_FONT), 0);
 
-            btn = CreateWindow("button", "Progress bar only",
+            btn = CreateWindow("button", "Volume, seek, timer and percentage",
                                WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON,
-                               95, 322, 180, 25, hwnd,
+                               95, 322, 250, 25, hwnd,
                                (HMENU) ID_OSD2,
                                ((LPCREATESTRUCT) lParam) -> hInstance,
                                NULL);
             SendMessage(btn, WM_SETFONT, (WPARAM) GetStockObject(DEFAULT_GUI_FONT), 0);
 
-            btn = CreateWindow("button", "Timer, percentage, and total time",
+            btn = CreateWindow("button", "Volume, seek, timer, percentage and total time",
                                WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON,
-                               95, 342, 180, 25, hwnd,
+                               95, 342, 250, 25, hwnd,
                                (HMENU) ID_OSD3,
                                ((LPCREATESTRUCT) lParam) -> hInstance,
                                NULL);
