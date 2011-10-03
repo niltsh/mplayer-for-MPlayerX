@@ -122,6 +122,7 @@
 #define ID_TIMER             88
 #define ID_MUTE              89
 #define ID_FULLSCREEN        90
+#define ID_IDLE              91
 
 /* gtk emulation */
 #define GTK_MB_FATAL         0x1
