@@ -127,10 +127,13 @@ int display_openfilewindow(gui_t *gui, int add)
         do
         {
             filespec = &fileopen.lpstrFile[fileopen.nFileOffset];
-            filename[0] = 0;
-            strcat(filename, directory);
+            strcpy(filename, directory);
+
+            if (*filespec)
+            {
             strcat(filename, "/");
             strcat(filename, filespec);
+            }
 
             if (GetFileAttributes(filename) & FILE_ATTRIBUTE_DIRECTORY)
                 mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] %s is a directory, skipping...\n", filename);
