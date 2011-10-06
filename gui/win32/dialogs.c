@@ -131,8 +131,8 @@ int display_openfilewindow(gui_t *gui, int add)
 
             if (*filespec)
             {
-            strcat(filename, "/");
-            strcat(filename, filespec);
+                strcat(filename, "/");
+                strcat(filename, filespec);
             }
 
             if (GetFileAttributes(filename) & FILE_ATTRIBUTE_DIRECTORY)
