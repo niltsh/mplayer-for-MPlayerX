@@ -129,7 +129,7 @@ int display_openfilewindow(gui_t *gui, int add)
             filespec = &fileopen.lpstrFile[fileopen.nFileOffset];
             filename[0] = 0;
             strcat(filename, directory);
-            strcat(filename, "\\");
+            strcat(filename, "/");
             strcat(filename, filespec);
 
             if (GetFileAttributes(filename) & FILE_ATTRIBUTE_DIRECTORY)
@@ -712,7 +712,7 @@ static LRESULT CALLBACK SkinBrowserWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, 
                         SendMessage(listbox, LB_GETTEXT, (WPARAM) index, (LPARAM) skinName);
                         /* fill out the full pathname to the skin */
                         strcpy(skinspath, get_path("skins"));
-                        strcat(skinspath, "\\");
+                        strcat(skinspath, "/");
                         strcat(skinspath, skinName);
                         ShowWindow(hwnd, SW_HIDE);
                         Shell_NotifyIcon(NIM_DELETE, &nid);

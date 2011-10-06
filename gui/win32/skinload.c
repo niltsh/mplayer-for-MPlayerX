@@ -120,7 +120,7 @@ static image *pngRead(skin_t *skin, const char *fname)
     if(!(fp = fopen(fname, "rb")))
     {
         filename = calloc(1, strlen(skin->skindir) + strlen(fname) + 6);
-        sprintf(filename, "%s\\%s.png", skin->skindir, fname);
+        sprintf(filename, "%s/%s.png", skin->skindir, fname);
         if(!(fp = fopen(filename, "rb")))
         {
             mp_msg(MSGT_GPLAYER, MSGL_ERR, "[png] cannot find image %s\n", filename);
@@ -509,7 +509,7 @@ static void loadfonts(skin_t* skin)
         char *tmp = calloc(1, MAX_LINESIZE);
         char *desc = calloc(1, MAX_LINESIZE);
         filename = calloc(1, strlen(skin->skindir) + strlen(skin->fonts[x]->name) + 6);
-        sprintf(filename, "%s\\%s.fnt", skin->skindir, skin->fonts[x]->name);
+        sprintf(filename, "%s/%s.fnt", skin->skindir, skin->fonts[x]->name);
         if(!(fp = fopen(filename,"rb")))
         {
             mp_msg(MSGT_GPLAYER, MSGL_ERR, "[FONT LOAD] Font not found \"%s\"\n", skin->fonts[x]->name);
@@ -601,7 +601,7 @@ skin_t* loadskin(char* skindir, int desktopbpp)
     skin->skindir = strdup(skindir);
 
     filename = calloc(1, strlen(skin->skindir) + strlen("skin") + 2);
-    sprintf(filename, "%s\\skin", skin->skindir);
+    sprintf(filename, "%s/skin", skin->skindir);
     if(!(fp = fopen(filename, "rb")))
     {
         mp_msg(MSGT_GPLAYER, MSGL_FATAL, "[SKIN LOAD] Skin \"%s\" not found\n", skindir);

@@ -36,7 +36,7 @@ int adddirtoplaylist(playlist_t *playlist, const char *path, int recursive)
     char findpath[MAX_PATH], filename[MAX_PATH];
     char *filepart;
 
-    sprintf(findpath, "%s\\*.*", path);
+    sprintf(findpath, "%s/*.*", path);
 
     findHandle = FindFirstFile(findpath, &finddata);
 
@@ -44,7 +44,7 @@ int adddirtoplaylist(playlist_t *playlist, const char *path, int recursive)
     do
     {
         if (finddata.cFileName[0] == '.' || strstr(finddata.cFileName, "Thumbs.db")) continue;
-        sprintf(findpath, "%s\\%s", path, finddata.cFileName);
+        sprintf(findpath, "%s/%s", path, finddata.cFileName);
 
         if (GetFileAttributes(findpath) & FILE_ATTRIBUTE_DIRECTORY)
         {

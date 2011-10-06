@@ -1036,14 +1036,14 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                             } else {
                                 HANDLE searchhndl;
                                 WIN32_FIND_DATA finddata;
-                                sprintf(searchpath, "%smpegav\\*.dat", device + pos);
+                                sprintf(searchpath, "%smpegav/*.dat", device + pos);
                                 if((searchhndl=FindFirstFile(searchpath, &finddata)) != INVALID_HANDLE_VALUE)
                                 {
                                     mp_msg(MSGT_GPLAYER,MSGL_V, "Opening VCD/SVCD\n");
                                     gui->playlist->clear_playlist(gui->playlist);
                                     do
                                     {
-                                        sprintf(filename, "%smpegav\\%s", device + pos, finddata.cFileName);
+                                        sprintf(filename, "%smpegav/%s", device + pos, finddata.cFileName);
                                         gui->playlist->add_track(gui->playlist, filename, NULL, NULL, 0);
                                     }
                                     while(FindNextFile(searchhndl, &finddata));
@@ -1552,7 +1552,7 @@ gui_t *create_gui(char *skindir, void (*playercontrol)(int event))
     /* create playlist */
     gui->playlist = create_playlist();
 
-    sprintf(temp, "%s\\%s", skindir, skinName);
+    sprintf(temp, "%s/%s", skindir, skinName);
     if(create_window(gui, temp)) return NULL;
     if(create_subwindow(gui)) return NULL;
     if(console) console_toggle();
