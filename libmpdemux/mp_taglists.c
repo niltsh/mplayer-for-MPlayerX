@@ -76,6 +76,7 @@ static const AVCodecTag mp_codecid_override_tags[] = {
     { CODEC_ID_FLV1,              MKTAG('F', 'L', 'V', '1')},
     { CODEC_ID_G729,              MKTAG('G', '7', '2', '9')},
     { CODEC_ID_H264,              MKTAG('H', '2', '6', '4')},
+    { CODEC_ID_MP3,               0x55},
     { CODEC_ID_MPEG4,             MKTAG('M', 'P', '4', 'V')},
     { CODEC_ID_PCM_BLURAY,        MKTAG('B', 'P', 'C', 'M')},
     { CODEC_ID_PCM_S8,            MKTAG('t', 'w', 'o', 's')},
