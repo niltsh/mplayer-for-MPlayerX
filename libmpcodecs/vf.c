@@ -82,6 +82,7 @@ extern const vf_info_t vf_info_ivtc;
 extern const vf_info_t vf_info_kerndeint;
 extern const vf_info_t vf_info_lavc;
 extern const vf_info_t vf_info_lavcdeint;
+extern const vf_info_t vf_info_lavfi;
 extern const vf_info_t vf_info_mcdeint;
 extern const vf_info_t vf_info_mirror;
 extern const vf_info_t vf_info_noformat;
@@ -142,6 +143,9 @@ static const vf_info_t* const filter_list[]={
     &vf_info_pp,
     &vf_info_lavc,
     &vf_info_lavcdeint,
+#ifdef CONFIG_VF_LAVFI
+    &vf_info_lavfi,
+#endif
     &vf_info_screenshot,
     &vf_info_geq,
 #endif

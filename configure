@@ -414,6 +414,7 @@ Codecs:
   --disable-libnut          disable libnut [autodetect]
   --disable-ffmpeg_a        disable static FFmpeg [autodetect]
   --disable-ffmpeg_so       disable shared FFmpeg [autodetect]
+  --enable-vf-lavfi         enable libavfilter wrapper [disabled]
   --disable-libavcodec_mpegaudio_hp disable high precision audio decoding
                                     in libavcodec [enabled]
   --disable-tremor-internal disable internal Tremor [enabled]
@@ -647,6 +648,7 @@ _cross_compile=auto
 _prefix="/usr/local"
 ffmpeg_a=auto
 ffmpeg_so=auto
+_vf_lavfi=no
 _libavcodec_mpegaudio_hp=yes
 _libopencore_amrnb=auto
 _libopencore_amrwb=auto
@@ -1278,6 +1280,8 @@ for ac_option do
   --disable-ffmpeg_a)   ffmpeg_a=no     ;;
   --enable-ffmpeg_so)   ffmpeg_so=yes   ;;
   --disable-ffmpeg_so)  ffmpeg_so=no    ;;
+  --enable-vf-lavfi)    _vf_lavfi=yes   ;;
+  --disable-vf-lavfi)   _vf_lavfi=no    ;;
   --enable-libavcodec_mpegaudio_hp)     _libavcodec_mpegaudio_hp=yes    ;;
   --disable-libavcodec_mpegaudio_hp)    _libavcodec_mpegaudio_hp=no     ;;
 
@@ -6773,6 +6777,7 @@ else
   def_ffmpeg_so='#undef CONFIG_FFMPEG_SO'
   nocodecmodules="ffmpeg $nocodecmodules"
 fi
+test "$_vf_lavfi" = yes && def_vf_lavfi='#define CONFIG_VF_LAVFI 1'
 test "$_libavcodec_mpegaudio_hp" = yes &&
   def_libavcodec_mpegaudio_hp='#define CONFIG_MPEGAUDIO_HP 1' &&
   mak_libavcodec_mpegaudio_hp='CONFIG_MPEGAUDIO_HP = yes'
@@ -8070,6 +8075,7 @@ CONFIG_GPL      = yes
 CONFIG_MLIB     = $_mlib
 CONFIG_MUXERS   = $_mencoder
 CONFIG_RTPDEC   = $networking
+CONFIG_VF_LAVFI = $_vf_lavfi
 CONFIG_VDPAU    = $_vdpau
 CONFIG_XVMC     = $_xvmc
 CONFIG_ZLIB     = $_zlib
@@ -8522,6 +8528,7 @@ $def_roundf
 $def_threads
 $def_trunc
 $def_truncf
+$def_vf_lavfi
 $def_xform_asm
 $def_xmm_clobbers
 $def_yasm

@@ -6991,6 +6991,26 @@ drop the frame (default: 0.15).
 FFmpeg deinterlacing filter, same as \-vf pp=fd
 .
 .TP
+.B lavfi=filtergraph
+FFmpeg libavfilter wrapper.
+\fIfiltergraph\fR defines a whole libavfilter graph with one input and one output.
+See http://www.ffmpeg.org/\:libavfilter.html#SEC4 for details.
+.sp 1
+As a special case, if \fIfiltergraph\fR is \fB$\fIword\fR then the value of
+the \fIword\fR environment variable is used; this is necessary if commas are
+present in the graph description, as mplayer uses them as a delimiter
+between filters.
+.sp 1
+.I NOTE:
+This filter is considered experimental, it may interact strangely with other
+filters.
+.sp 1
+.I EXAMPLE:
+.br
+overlay="movie=$small_video, scale=160:120 [ca]; [in] [ca] overlay=16:8"
+mplayer -vf lavfi='$overlay' $big_video
+.
+.TP
 .B kerndeint[=thresh[:map[:order[:sharp[:twoway]]]]]
 Donald Graft's adaptive kernel deinterlacer.
 Deinterlaces parts of a video if a configurable threshold is exceeded.

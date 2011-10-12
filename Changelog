@@ -11,6 +11,7 @@ MPlayer (1.0)
 
     Filters:
     * delogo: allow to change the rectangle based on the time.
+    * lavfi: libavfilter filter graphs (experimental).
 
     Other:
     * support adding noise at output resolution with -vo gl:noise-strength=8

@@ -83,6 +83,8 @@ SRCS_COMMON-$(FFMPEG)                += av_helpers.c                \
                                         stream/stream_ffmpeg.c      \
                                         sub/av_sub.c                \
 
+SRCS_COMMON-$(CONFIG_VF_LAVFI)      +=  libmpcodecs/vf_lavfi.c
+
 # These filters use private headers and do not work with shared FFmpeg.
 SRCS_COMMON-$(FFMPEG_A)              += libaf/af_lavcac3enc.c    \
                                         libmpcodecs/vf_fspp.c    \
