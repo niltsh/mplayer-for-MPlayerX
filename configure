@@ -654,7 +654,7 @@ _libopencore_amrnb=auto
 _libopencore_amrwb=auto
 libopenjpeg=auto
 libavdecoders_all=$(sed -n 's/^[^#]*DEC.*(.*, *\(.*\)).*/\1_decoder/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
-libavdecoders=$(echo $libavdecoders_all | sed -e 's/ LIB[A-Z0-9_]*_DECODER//g' -e s/PRORES_GPL_DECODER//)
+libavdecoders=$(echo $libavdecoders_all | sed -e 's/ LIB[A-Z0-9_]*_DECODER//g')
 libavencoders_all=$(sed -n 's/^[^#]*ENC.*(.*, *\(.*\)).*/\1_encoder/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
 libavencoders=$(echo $libavencoders_all | sed -e 's/ LIB[A-Z0-9_]*_ENCODER//g')
 libavparsers_all=$(sed -n 's/^[^#]*PARSER.*(.*, *\(.*\)).*/\1_parser/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
@@ -6830,14 +6830,6 @@ fi
 echores "$_libopencore_amrwb"
 
 
-if test "$_libopencore_amrnb" = no && test "$_libopencore_amrwb" = no ; then
-  libavdecoders="$libavdecoders PRORES_GPL_DECODER"
-  def_ffmpeg_license='#define FFMPEG_LICENSE "GPL version 2"'
-else
-  def_ffmpeg_license='#define FFMPEG_LICENSE "GPL version 2 or later"'
-fi
-
-
 echocheck "libdv-0.9.5+"
 if test "$_libdv" = auto ; then
   _libdv=no
@@ -8583,7 +8575,7 @@ $def_yasm
 #endif
 
 #define FFMPEG_CONFIGURATION "--enable-gpl --enable-postproc"
-$def_ffmpeg_license
+#define FFMPEG_LICENSE "GPL version 2 or later"
 
 #define LIBAV_CONFIGURATION FFMPEG_CONFIGURATION
 #define LIBAV_LICENSE FFMPEG_LICENSE
