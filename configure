@@ -668,6 +668,8 @@ libavmuxers_all=$(sed -n 's/^[^#]*_MUX.*(.*, *\(.*\)).*/\1_muxer/p' ffmpeg/libav
 libavmuxers=$(echo $libavmuxers_all | sed -e 's/ LIB[A-Z0-9_]*_MUXER//g' -e s/RTP_MUXER// -e s/RTSP_MUXER// -e s/SAP_MUXER//)
 libavprotocols_all=$(sed -n 's/^[^#]*PROTOCOL.*(.*, *\(.*\)).*/\1_protocol/p' ffmpeg/libavformat/allformats.c | tr '[a-z]' '[A-Z]')
 libavprotocols=$libavprotocols_all
+libavfilters_all=$(sed -n 's/^[^#]*FILTER.*(.*, *\(.*\),.*).*/\1_filter/p' ffmpeg/libavfilter/allfilters.c | tr '[a-z]' '[A-Z]')
+libavfilters=$(echo $libavfilters_all | sed -e 's/ LIB[A-Z0-9_]*_FILTER//g' -e 's/ FREI0R[A-Z0-9_]*_FILTER//g' -e 's/ OCV_FILTER//g' -e 's/ MP_FILTER//g')
 _mencoder=yes
 _mplayer=yes
 _x11=auto
@@ -1270,6 +1272,8 @@ for ac_option do
   --disable-demuxer=*) libavdemuxers=$(echo $libavdemuxers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
   --enable-muxer=*)    libavmuxers="$libavmuxers $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
   --disable-muxer=*)    libavmuxers=$(echo $libavmuxers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
+  --enable-filter=*)    libavfilters="$libavfilters $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
+  --disable-filter=*)    libavfilters=$(echo $libavfilters | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
   --enable-ffmpeg_a)    ffmpeg_a=yes    ;;
   --disable-ffmpeg_a)   ffmpeg_a=no     ;;
   --enable-ffmpeg_so)   ffmpeg_so=yes   ;;
@@ -8006,6 +8010,7 @@ FFMPEG     = $ffmpeg
 FFMPEG_A   = $ffmpeg_a
 
 CONFIG_AVCODEC  = $ffmpeg_a
+CONFIG_AVFILTER = $ffmpeg_a
 CONFIG_AVFORMAT = $ffmpeg_a
 CONFIG_AVUTIL   = $ffmpeg_a
 CONFIG_POSTPROC = $ffmpeg_a
@@ -8083,6 +8088,7 @@ $(echo $libavmuxers    | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
 $(echo $libavprotocols | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
 $(echo $libavbsfs      | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
 $(echo $libavhwaccels  | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
+$(echo $libavfilters   | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
 EOF
 
 #############################################################################
@@ -8538,6 +8544,7 @@ $def_yasm
 #define HAVE_INLINE_ASM 1
 #define HAVE_ISATTY 0
 #define HAVE_LDBRX 0
+#define HAVE_LOCALTIME_R 0
 #define HAVE_MAPVIEWOFFILE 0
 #define HAVE_PPC4XX 0
 #define HAVE_STRERROR_R 0
@@ -8594,6 +8601,7 @@ $(ff_config_enable "$libavmuxers_all"    "$libavmuxers" "#")
 $(ff_config_enable "$libavprotocols_all" "$libavprotocols" "#")
 $(ff_config_enable "$libavbsfs_all"      "$libavbsfs" "#")
 $(ff_config_enable "$libavhwaccels_all"  "$libavhwaccels" "#")
+$(ff_config_enable "$libavfilters_all"   "$libavfilters" "#")
 
 #endif /* MPLAYER_CONFIG_H */
 EOF
