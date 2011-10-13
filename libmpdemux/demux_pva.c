@@ -27,7 +27,6 @@
  * played back correctly. If it breaks anything else, just comment out
  * the #define below and it will not be compiled in. */
 #define DEMUX_PVA_MULTIDEC_HACK
-#define PVA_NEW_PREBYTES_CODE
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -62,11 +61,9 @@ typedef struct {
 typedef struct {
 	float last_audio_pts;
 	float last_video_pts;
-#ifdef PVA_NEW_PREBYTES_CODE
 	float video_pts_after_prebytes;
 	long video_size_after_prebytes;
 	uint8_t prebytes_delivered;
-#endif
 	uint8_t just_synced;
 	uint8_t synced_stream_id;
 } pva_priv_t;
@@ -201,9 +198,7 @@ static int pva_get_payload(demuxer_t *d, pva_payload_t *payload)
 	uint16_t pack_size;
 	off_t pva_payload_start;
 	unsigned char buffer[256];
-#ifndef PVA_NEW_PREBYTES_CODE
 	demux_packet_t * dp; 	//hack to deliver the preBytes (see PVA doc)
-#endif
 	pva_priv_t * priv;
 
 
@@ -227,7 +222,6 @@ static int pva_get_payload(demuxer_t *d, pva_payload_t *payload)
 
 	//printf("priv->just_synced %s\n",priv->just_synced?"SET":"UNSET");
 
-#ifdef PVA_NEW_PREBYTES_CODE
 	if(priv->prebytes_delivered)
 		/* The previous call to this fn has delivered the preBytes. Then we are already inside
 		 * the payload. Let's just deliver the video along with its right PTS, the one we stored
@@ -243,7 +237,6 @@ static int pva_get_payload(demuxer_t *d, pva_payload_t *payload)
 		priv->prebytes_delivered = 0;
 		return 1;
 	}
-#endif
 	if(!priv->just_synced)
 	{
 		if(stream_read_word(d->stream) != (('A'<<8)|'V'))
@@ -313,16 +306,9 @@ static int pva_get_payload(demuxer_t *d, pva_payload_t *payload)
 				payload->pts=(float)(stream_read_dword(d->stream))/90000;
 				//printf("Video PTS: %f\n",payload->pts);
 				if((flags&0x03)
-#ifdef PVA_NEW_PREBYTES_CODE
 						&& !priv->prebytes_delivered
-#endif
 						)
 				{
-#ifndef PVA_NEW_PREBYTES_CODE
-					dp=new_demux_packet(flags&0x03);
-					stream_read(d->stream,dp->buffer,flags & 0x03); //read PreBytes
-					ds_add_packet(d->video,dp);
-#else
 					//printf("Delivering prebytes. Setting prebytes_delivered.");
 					payload->offset=stream_tell(d->stream);
 					payload->size = flags & 0x03;
@@ -332,7 +318,6 @@ static int pva_get_payload(demuxer_t *d, pva_payload_t *payload)
 					payload->is_packet_start=0;
 					priv->prebytes_delivered=1;
 					return 1;
-#endif
 				}
 
 
