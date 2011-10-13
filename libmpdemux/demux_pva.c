@@ -51,7 +51,7 @@
 
 typedef struct {
 	off_t offset;
-	long size;
+	int size;
 	uint8_t type;
 	uint8_t is_packet_start;
 	float pts;
@@ -62,7 +62,7 @@ typedef struct {
 	float last_audio_pts;
 	float last_video_pts;
 	float video_pts_after_prebytes;
-	long video_size_after_prebytes;
+	int video_size_after_prebytes;
 	uint8_t prebytes_delivered;
 	uint8_t just_synced;
 	uint8_t synced_stream_id;
