@@ -198,7 +198,6 @@ static int pva_get_payload(demuxer_t *d, pva_payload_t *payload)
 	uint16_t pack_size;
 	off_t pva_payload_start;
 	unsigned char buffer[256];
-	demux_packet_t * dp; 	//hack to deliver the preBytes (see PVA doc)
 	pva_priv_t * priv;
 
 
