@@ -1,6 +1,6 @@
-.\" sync with en/mplayer.1 rev. 34076
+.\" sync with en/mplayer.1 rev. 34190
 .\" This man page was/is done by Gabucino, Diego Biurrun, Jonas Jermann
-.\" translation by JRaSH<jrash06 at 163.com>, currently fixed up to (10016)
+.\" translation by JRaSH<jrash06 at 163.com>
 .
 .\" --------------------------------------------------------------------------
 .\" Macro definitions
@@ -6989,6 +6989,26 @@ softskip 将编码中跳过（丢弃）帧的步骤从过滤器序列之前\
 .TP
 .B lavcdeint（不推荐使用）
 FFmpeg 的解除隔行扫描过滤器，与 \-vf pp=fd 相同
+.
+.TP
+.B lavfi=filtergraph
+包装 FFmpeg libavfilter 接口的过滤器。\
+\fIfiltergraph\fR 定义的是具有单个输入和单个输出的 libavfilter 流程图。\
+参见 http://www.ffmpeg.org/\:libavfilter.html#SEC4 以了解详细信息。
+.sp 1
+有一种特殊情况，如果 \fIfiltergraph\fR 为 \fB$\fIword\fR，那么将\
+使用环境变量 \fIword\fR 的值；当逗号出现在流程图的描述中时，\
+这是有必要的，因为 mplayer 使用这些符号作为过滤器之间的\
+分隔符。
+.sp 1
+.I 注意：
+一般认为该过滤器只用于实验，因为其与其它过滤器交换\
+可能不正常。
+.sp 1
+.I 示例：
+.br
+overlay="movie=$small_video, scale=160:120 [ca]; [in] [ca] overlay=16:8"
+mplayer -vf lavfi='$overlay' $big_video
 .
 .TP
 .B kerndeint[=阈值[:映射[:次序[:锐化[:双向]]]]]
