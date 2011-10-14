@@ -6777,7 +6777,7 @@ else
   def_ffmpeg_so='#undef CONFIG_FFMPEG_SO'
   nocodecmodules="ffmpeg $nocodecmodules"
 fi
-test "$_vf_lavfi" = yes && def_vf_lavfi='#define CONFIG_VF_LAVFI 1'
+test "$_vf_lavfi" = yes && def_vf_lavfi='#define CONFIG_VF_LAVFI 1'|| libavfilters=''
 test "$_libavcodec_mpegaudio_hp" = yes &&
   def_libavcodec_mpegaudio_hp='#define CONFIG_MPEGAUDIO_HP 1' &&
   mak_libavcodec_mpegaudio_hp='CONFIG_MPEGAUDIO_HP = yes'
