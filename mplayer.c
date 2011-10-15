@@ -990,6 +990,17 @@ static void load_per_file_config(m_config_t *conf, const char *const file)
     }
 }
 
+static int load_profile_config(m_config_t *conf, const char *const file)
+{
+    if (file) {
+        load_per_protocol_config(conf, file);
+        load_per_extension_config(conf, file);
+        load_per_file_config(conf, file);
+    }
+
+    return file != NULL;
+}
+
 /* When libmpdemux performs a blocking operation (network connection or
  * cache filling) if the operation fails we use this function to check
  * if it was interrupted by the user.
@@ -2719,6 +2730,7 @@ static int seek(MPContext *mpctx, double amount, int style)
 int main(int argc, char *argv[])
 {
     int opt_exit = 0; // Flag indicating whether MPlayer should exit without playing anything.
+    int profile_config_loaded;
     int i;
 
     common_preinit();
@@ -3016,11 +3028,7 @@ play_next_file:
     mpctx->global_sub_size = 0;
     memset(mpctx->sub_counts, 0, sizeof(mpctx->sub_counts));
 
-    if (filename) {
-        load_per_protocol_config(mconfig, filename);
-        load_per_extension_config(mconfig, filename);
-        load_per_file_config(mconfig, filename);
-    }
+    profile_config_loaded = load_profile_config(mconfig, filename);
 
     if (video_driver_list)
         load_per_output_config(mconfig, PROFILE_CFG_VO, video_driver_list[0]);
@@ -3115,6 +3123,8 @@ play_next_file:
             filename = play_tree_iter_get_file(mpctx->playtree_iter, 1);
         }
     }
+
+    if (!profile_config_loaded) load_profile_config(mconfig, filename);
 //---------------------------------------------------------------------------
 
     if (mpctx->video_out && vo_config_count)
