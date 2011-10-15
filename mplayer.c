@@ -3002,7 +3002,9 @@ int main(int argc, char *argv[])
 #ifdef CONFIG_SIGHANDLER
     // fatal errors:
     signal(SIGBUS, exit_sighandler); // bus error
+#ifndef __WINE__
     signal(SIGSEGV, exit_sighandler); // segfault
+#endif
     signal(SIGILL, exit_sighandler); // illegal instruction
     signal(SIGFPE, exit_sighandler); // floating point exc.
     signal(SIGABRT, exit_sighandler); // abort()

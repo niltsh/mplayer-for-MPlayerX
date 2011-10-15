@@ -19,6 +19,9 @@ MPlayer (1.0)
     * experimental af_cmdline slave command to change e.g. audio equalizer options at runtime.
     * vo x11: don't hide or show cursor any more if attached to an existing window (-wid)
 
+    Ports:
+    * Wine (see DOCS/tech/crosscompile.txt)
+
     MEncoder:
     * -force-key-frames option to set explicit seek points.
 

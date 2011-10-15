@@ -1,6 +1,10 @@
 Due to a lack of Windows developers, it is a good idea to allow Linux
 developers to do at least some basic check of their code.
-This HOWTO explains how to set up MinGW cross-compilation under Debian.
+This HOWTO explains how to set up cross-compilation.
+
+
+MinGW under Debian
+==================
 
 First, you need to install the "mingw32" package and get a MPlayer SVN
 checkout.
@@ -30,3 +34,20 @@ wget http://natsuki.mplayerhq.hu/~reimar/mpl_mingw32.tar.bz2
 tar -xjf mpl_mingw32.tar.bz2
 sh linux-mingw.sh
 make
+
+
+Wine
+====
+
+First, you need to install the "Wine" package and get a MPlayer SVN
+checkout.
+
+You don't need any dependencies other than those you already have for
+your Linux build, because the Wine and Linux build will use them together.
+
+Configure with
+
+  ./configure --target=$(uname -m)-wine --cc=winegcc --windres=wrc
+
+and add any options you normally use for your Linux build (such as
+--enable-gui), then run make.

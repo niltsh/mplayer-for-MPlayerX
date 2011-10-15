@@ -240,7 +240,8 @@ openbsd()   { issystem "OpenBSD"; }
 os2()       { issystem "OS/2"; }
 qnx()       { issystem "QNX"; }
 sunos()     { issystem "SunOS"; }
-win32()     { cygwin || mingw32; }
+wine()      { issystem "Wine"; }
+win32()     { cygwin || mingw32 || wine; }
 
 # arch test boolean functions
 # x86/x86pc is used by QNX
@@ -1522,6 +1523,7 @@ else # if test -z "$_target"
     morphos) system_name=MorphOS ;;
     amigaos) system_name=AmigaOS ;;
     mingw32*) system_name=MINGW32 ;;
+    wine) system_name=Wine ;;
   esac
   # We need to convert underscores so that values like k6-2 and pentium-mmx can be passed
   host_arch=$(echo $_target | cut -d '-' -f 1)
@@ -1589,6 +1591,10 @@ if os2 ; then
   _priority=yes
   def_dos_paths="#define HAVE_DOS_PATHS 1"
   def_priority="#define CONFIG_PRIORITY 1"
+fi
+
+if wine ; then
+  extra_cflags="-fno-pic -UWIN32 -U_WIN32 -U__WIN32 -U__WIN32__ -DWINE_NOWINSOCK -Dstricmp=strcasecmp $extra_cflags"
 fi
 
 for tmpdir in "$TMPDIR" "$TEMPDIR" "/tmp" ; do
@@ -2720,7 +2726,7 @@ echocheck "yasm"
 if test -z "$YASMFLAGS" ; then
   if darwin ; then
     x86_64 && objformat="macho64" || objformat="macho"
-  elif win32 ; then
+  elif win32 && ! wine ; then
     objformat="win32"
   elif os2 ; then
     _yasm=nasm
@@ -5760,7 +5766,7 @@ if test "$_libdvdcss_internal" = auto && test "$_dvdread_internal" = yes ; then
   hpux && test "$_hpux_scsi_h" = no && _libdvdcss_internal=no
 fi
 if test "$_libdvdcss_internal" = yes ; then
-  if linux || netbsd || openbsd || bsdos ; then
+  if linux || netbsd || openbsd || bsdos || wine ; then
     def_dvd_linux='#define HAVE_LINUX_DVD_STRUCT 1'
     openbsd && def_dvd_openbsd='#define HAVE_OPENBSD_DVD_STRUCT 1'
   elif freebsd || dragonfly ; then

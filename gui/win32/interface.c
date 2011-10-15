@@ -23,7 +23,7 @@
 
 #include <windows.h>
 
-#if defined(__CYGWIN__)
+#if defined(__CYGWIN__) || defined(__WINE__)
 #define _beginthreadex CreateThread
 #else
 #include <process.h>
@@ -332,6 +332,44 @@ void uiPrev(void)
     mygui->startplay(mygui);
 }
 
+#ifdef __WINE__
+/**
+ * @brief Convert a Windows style file name into an Unix style one.
+ *
+ * @param filename pointer to the file name to be converted
+ *
+ * @return pointer to the converted file name
+ */
+static char *unix_name (char *filename)
+{
+    static char *unix_filename;
+    LPSTR (*CDECL wine_get_unix_file_name_ptr)(LPCWSTR);
+    int wchar_conv;
+
+    if (*filename && (filename[1] == ':'))
+    {
+        wine_get_unix_file_name_ptr = (void *) GetProcAddress(GetModuleHandleA("KERNEL32"), "wine_get_unix_file_name");
+        wchar_conv = MultiByteToWideChar(CP_UNIXCP, 0, filename, -1, NULL, 0);
+
+        if (wine_get_unix_file_name_ptr && wchar_conv)
+        {
+            WCHAR *ntpath;
+            char *unix_name;
+
+            ntpath = HeapAlloc(GetProcessHeap(), 0, sizeof(*ntpath) * (wchar_conv + 1));
+            MultiByteToWideChar(CP_UNIXCP, 0, filename, -1, ntpath, wchar_conv);
+            unix_name = wine_get_unix_file_name_ptr(ntpath);
+            setdup(&unix_filename, unix_name);
+            filename = unix_filename;
+            HeapFree(GetProcessHeap(), 0, unix_name);
+            HeapFree(GetProcessHeap(), 0, ntpath);
+        }
+    }
+
+    return filename;
+}
+#endif
+
 void uiSetFileName(char *dir, char *name, int type)
 {
     if(!name) return;
@@ -341,6 +379,9 @@ void uiSetFileName(char *dir, char *name, int type)
         setddup(&guiInfo.Filename, dir, name);
 
     filename = guiInfo.Filename;
+#ifdef __WINE__
+    filename = unix_name(filename);
+#endif
     guiInfo.StreamType = type;
 
     nfree(guiInfo.AudioFilename);

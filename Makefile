@@ -779,7 +779,7 @@ all: $(ALL_PRG-yes)
 	$(CC) $(CC_DEPFLAGS) $(CFLAGS) -c -o $@ $<
 
 %-rc.o: %.rc
-	$(WINDRES) -I. $< $@
+	$(WINDRES) -I. $< -o $@
 
 $(FFMPEGLIBS): $(FFMPEGFILES) config.h
 	$(MAKE) -C ffmpeg $(@:ffmpeg/%=%)
