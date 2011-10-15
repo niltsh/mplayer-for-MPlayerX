@@ -4040,7 +4040,7 @@ goto_next_file:  // don't jump here after ao/vo/getch initialization!
         (use_gui && guiInfo.Playing) ||
 #endif
                                         mpctx->playtree_iter != NULL || player_idle_mode) {
-        if (!mpctx->playtree_iter)
+        if (!mpctx->playtree_iter && !use_gui)
             filename = NULL;
         mpctx->eof = 0;
         goto play_next_file;

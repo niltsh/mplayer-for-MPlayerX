@@ -774,6 +774,8 @@ int gui(int what, void *data)
             if (guiInfo.NewPlay == GUI_FILE_NEW)
                 break;
 
+            filename = NULL;
+
             guiInfo.ElapsedTime   = 0;
             guiInfo.Position      = 0;
             guiInfo.AudioChannels = 0;
