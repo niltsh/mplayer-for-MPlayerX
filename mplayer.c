@@ -3002,7 +3002,7 @@ int main(int argc, char *argv[])
 #ifdef CONFIG_SIGHANDLER
     // fatal errors:
     signal(SIGBUS, exit_sighandler); // bus error
-#ifndef __WINE__
+#ifndef __WINE__                      // hack: the Wine executable will crash else
     signal(SIGSEGV, exit_sighandler); // segfault
 #endif
     signal(SIGILL, exit_sighandler); // illegal instruction
