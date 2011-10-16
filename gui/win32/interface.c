@@ -334,11 +334,11 @@ void uiPrev(void)
 
 #ifdef __WINE__
 /**
- * @brief Convert a Windows style file name into an Unix style one.
+ * @brief Convert a Windows style path to a file name into an Unix style one.
  *
- * @param filename pointer to the file name to be converted
+ * @param filename pointer to the file path to be converted
  *
- * @return pointer to the converted file name
+ * @return pointer to the converted file path
  */
 static char *unix_name (char *filename)
 {
@@ -380,7 +380,7 @@ void uiSetFileName(char *dir, char *name, int type)
 
     filename = guiInfo.Filename;
 #ifdef __WINE__
-    filename = unix_name(filename);
+    filename = unix_name(filename);    // passed file arguments may be in Windows format
 #endif
     guiInfo.StreamType = type;
 
