@@ -29,7 +29,7 @@ typedef struct
 } GUID;
 #endif
 
-// hack: use copies of the IIDs
+// use copies of the IIDs to avoid symbol collisions
 #define IID_IUnknown MP_IID_IUnknown
 #define IID_IClassFactory MP_IID_IClassFactory
 extern const GUID IID_IUnknown;
