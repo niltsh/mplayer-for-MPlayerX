@@ -1189,6 +1189,9 @@ void wsResizeWindow(wsTWindow *win, int sx, int sy)
 
     if (win->ReSize)
         win->ReSize(win->X, win->Y, win->Width, win->Height);
+
+    if (vo_wm_type == 0)
+        XMapWindow(wsDisplay, win->WindowID);
 }
 
 // ----------------------------------------------------------------------------------------------
