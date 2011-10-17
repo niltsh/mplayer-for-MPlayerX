@@ -380,7 +380,9 @@ void uiSetFileName(char *dir, char *name, int type)
 
     filename = guiInfo.Filename;
 #ifdef __WINE__
-    filename = unix_name(filename);    // passed file arguments may be in Windows format
+    // if filename is in Windows format, convert it
+    // so that MPlayer will find it in the Linux filesystem
+    filename = unix_name(filename);
 #endif
     guiInfo.StreamType = type;
 
