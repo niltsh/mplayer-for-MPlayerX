@@ -47,7 +47,6 @@ your Linux build, because the Wine and Linux build will use them together.
 
 Configure with
 
-  ./configure --target=$(uname -m)-wine --cc=winegcc --windres=wrc
+  ./configure --target=i686-wine --cc="winegcc -m32" --windres=wrc --enable-gui
 
-and add any options you normally use for your Linux build (such as
---enable-gui), then run make.
+and add any options you normally use for your Linux build, then run make.
