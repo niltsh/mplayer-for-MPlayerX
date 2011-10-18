@@ -502,6 +502,7 @@ int gui(int what, void *data)
             if(!mygui->playlist->tracks) return 0;
             uiSetFileName(NULL, mygui->playlist->tracks[mygui->playlist->current]->filename, STREAMTYPE_FILE);
             guiInfo.Track = mygui->playlist->current + 1;
+            guiInfo.VideoWindow = 1;
             if(gtkAONorm) greplace(&af_cfg.list, "volnorm", "volnorm");
             if(gtkAOExtraStereo)
             {
@@ -536,11 +537,8 @@ int gui(int what, void *data)
         }
         case GUI_SET_AUDIO:
         {
-            guiInfo.VideoWindow = (data && !guiInfo.sh_video);
-            // NOTE: This type doesn't mean (and never meant) that we have
-            // *just* audio, so there probably should be a check before
-            // hiding (see gui/interface.c).
-            if(IsWindowVisible(mygui->subwindow))
+            if (data && !guiInfo.sh_video) guiInfo.VideoWindow = 0;
+            if(IsWindowVisible(mygui->subwindow) && !guiInfo.VideoWindow)
                 ShowWindow(mygui->subwindow, SW_HIDE);
             break;
         }
