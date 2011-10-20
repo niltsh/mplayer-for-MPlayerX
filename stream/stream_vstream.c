@@ -153,7 +153,7 @@ static int open_s(stream_t *stream, int mode, void* opts, int* file_format) {
 
   stream->start_pos = 0;
   stream->end_pos = vstream_streamsize();
-  mp_msg(MSGT_OPEN, MSGL_DBG2, "Tivo stream size is %d\n", stream->end_pos);
+  mp_msg(MSGT_OPEN, MSGL_DBG2, "Tivo stream size is %"PRIu64"d\n", stream->end_pos);
 
   stream->priv = p;
   stream->fill_buffer = fill_buffer;

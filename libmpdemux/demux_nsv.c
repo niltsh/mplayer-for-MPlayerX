@@ -23,6 +23,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -75,7 +76,8 @@ static int demux_nsv_fill_buffer ( demuxer_t *demuxer, demux_stream_t *ds )
     // sometimes instead of 0xBEEF as described for the next audio/video chunk we get
     // a whole new header
 
-    mp_dbg(MSGT_DEMUX,MSGL_DBG2,"demux_nsv: %08X %08X\n",hdr[0]<<8|hdr[1],stream_tell(demuxer->stream));
+    mp_dbg(MSGT_DEMUX, MSGL_DBG2, "demux_nsv: %08X %08"PRIu64"X\n",
+           hdr[0] << 8 | hdr[1], stream_tell(demuxer->stream));
     switch(hdr[0]<<8|hdr[1]) {
         case 0x4E53:
             if(hdr[2]==0x56 && hdr[3]==0x73){

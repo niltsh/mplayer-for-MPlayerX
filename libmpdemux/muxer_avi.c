@@ -486,7 +486,9 @@ info[i].id=0;
   } else {
     if (stream_tell(muxer->stream) != MOVIALIGN) {
 	mp_msg(MSGT_MUXER, MSGL_ERR, "Opendml superindex is too big for reserved space!\n");
-	mp_msg(MSGT_MUXER, MSGL_ERR, "Expected filepos %d, real filepos %ld, missing space %ld\n", MOVIALIGN, stream_tell(muxer->stream), stream_tell(muxer->stream)-MOVIALIGN);
+        mp_msg(MSGT_MUXER, MSGL_ERR,
+               "Expected filepos %d, real filepos %"PRIu64"d, missing space %"PRIu64"d\n",
+               MOVIALIGN, stream_tell(muxer->stream), stream_tell(muxer->stream) - MOVIALIGN);
 	mp_msg(MSGT_MUXER, MSGL_ERR, "Try increasing MOVIALIGN in libmpdemux/muxer_avi.c\n");
     }
     write_avi_list(muxer->stream,listtypeAVIMOVIE,muxer->movi_end-stream_tell(muxer->stream)-12);
