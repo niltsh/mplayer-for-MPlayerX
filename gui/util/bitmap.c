@@ -291,29 +291,29 @@ int bpRenderMask(const guiImage *in, guiImage *out)
     buf = (uint32_t *)in->Image;
 
     for (y = 0; y < in->Height; y++) {
-    for (x = 0; x < in->Width; x++) {
-        if (!IS_TRANSPARENT(buf[i]))
-            tmp |= b;
-        else {
-            buf[i] = 0;
-            shaped = 1;
+        for (x = 0; x < in->Width; x++) {
+            if (!IS_TRANSPARENT(buf[i]))
+                tmp |= b;
+            else {
+                buf[i] = 0;
+                shaped = 1;
+            }
+
+            i++;
+            b <<= 1;
+
+            if (b == 0) {
+                out->Image[c++] = tmp;
+                tmp = 0;
+                b   = 1;
+            }
         }
 
-        i++;
-        b <<= 1;
-
-        if (b == 0) {
+        if (b != 1) {
             out->Image[c++] = tmp;
             tmp = 0;
             b   = 1;
         }
-    }
-
-    if (b != 1) {
-        out->Image[c++] = tmp;
-        tmp = 0;
-        b   = 1;
-    }
     }
 
     if (!shaped)
