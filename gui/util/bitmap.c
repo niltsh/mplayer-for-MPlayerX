@@ -272,15 +272,15 @@ void bpFree(guiImage *img)
 int bpRenderMask(const guiImage *in, guiImage *out)
 {
     uint32_t *buf;
-    unsigned long i;
-    int b = 0, c = 0;
-    unsigned char tmp = 0;
+    unsigned long x, y;
+    unsigned long i = 0, c = 0;
+    unsigned char tmp = 0, b = 1;
     int shaped = 0;
 
     out->Width     = in->Width;
     out->Height    = in->Height;
     out->Bpp       = 1;
-    out->ImageSize = (out->Width * out->Height + 7) / 8;
+    out->ImageSize = ((out->Width + 7) / 8) * out->Height;
     out->Image     = calloc(1, out->ImageSize);
 
     if (!out->Image) {
@@ -290,24 +290,31 @@ int bpRenderMask(const guiImage *in, guiImage *out)
 
     buf = (uint32_t *)in->Image;
 
-    for (i = 0; i < out->Width * out->Height; i++) {
-        tmp >>= 1;
-
+    for (y = 0; y < in->Height; y++) {
+    for (x = 0; x < in->Width; x++) {
         if (!IS_TRANSPARENT(buf[i]))
-            tmp |= 0x80;
+            tmp |= b;
         else {
             buf[i] = 0;
             shaped = 1;
         }
 
-        if (++b == 8) {
+        i++;
+        b <<= 1;
+
+        if (b == 0) {
             out->Image[c++] = tmp;
-            tmp = b = 0;
+            tmp = 0;
+            b   = 1;
         }
     }
 
-    if (b)
-        out->Image[c] = tmp;
+    if (b != 1) {
+        out->Image[c++] = tmp;
+        tmp = 0;
+        b   = 1;
+    }
+    }
 
     if (!shaped)
         bpFree(out);
