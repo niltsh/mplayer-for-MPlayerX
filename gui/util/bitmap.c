@@ -268,6 +268,8 @@ void bpFree(guiImage *img)
  * @param out bitmap mask
  *
  * @return 1 (ok) or 0 (error)
+ *
+ * @note As a side effect, transparent pixels of @a in will be rendered black.
  */
 int bpRenderMask(const guiImage *in, guiImage *out)
 {
@@ -295,7 +297,7 @@ int bpRenderMask(const guiImage *in, guiImage *out)
             if (!IS_TRANSPARENT(buf[i]))
                 tmp |= b;
             else {
-                buf[i] = 0;
+                buf[i] = 0; // pixel should be black (if transparency isn't supported)
                 shaped = 1;
             }
 
