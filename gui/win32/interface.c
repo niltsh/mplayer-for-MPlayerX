@@ -380,8 +380,11 @@ void uiSetFileName(char *dir, char *name, int type)
 
     filename = guiInfo.Filename;
 #ifdef __WINE__
-    // if filename is in Windows format, convert it
-    // so that MPlayer will find it in the Linux filesystem
+    // When the GUI receives the files to be played in guiPlaylistInitialize()
+    // and guiPlaylistAdd(), it calls import_file_into_gui() where the call of
+    // Wine's GetFullPathName() converts each file name into the Windows style
+    // (C:\path\to\file), which needs to be reconverted for MPlayer, so that
+    // it will find the filename in the Linux filesystem.
     filename = unix_name(filename);
 #endif
     guiInfo.StreamType = type;
