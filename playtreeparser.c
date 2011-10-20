@@ -838,6 +838,8 @@ play_tree_add_basepath(play_tree_t* pt, char* bp) {
     if(fl <= 0 || strstr(pt->files[i],"://") || (pt->files[i][0] == '/')
 #if HAVE_DOS_PATHS
                || (strstr(pt->files[i],":\\") == pt->files[i] + 1)
+               // the X:/ format is allowed as well
+               || (strstr(pt->files[i],":/") == pt->files[i] + 1)
 #endif
                                                                         )
       continue;
