@@ -835,7 +835,11 @@ play_tree_add_basepath(play_tree_t* pt, char* bp) {
     fl = strlen(pt->files[i]);
     // if we find a full unix path, url:// or X:\ at the beginning,
     // don't mangle it.
-    if(fl <= 0 || strstr(pt->files[i],"://") || (strstr(pt->files[i],":\\") == pt->files[i] + 1) || (pt->files[i][0] == '/') )
+    if(fl <= 0 || strstr(pt->files[i],"://") || (pt->files[i][0] == '/')
+#if HAVE_DOS_PATHS
+               || (strstr(pt->files[i],":\\") == pt->files[i] + 1)
+#endif
+                                                                        )
       continue;
     // if the path begins with \ then prepend drive letter to it.
     if (pt->files[i][0] == '\\') {
