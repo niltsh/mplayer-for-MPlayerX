@@ -8534,6 +8534,7 @@ $def_xmm_clobbers
 $def_yasm
 
 #define CONFIG_AUDIO_FLOAT 0
+#define CONFIG_AVSERVER 0
 #define CONFIG_FASTDIV 0
 #define CONFIG_FFSERVER 0
 #define CONFIG_GPL 1
@@ -8555,6 +8556,7 @@ $def_yasm
 #define HAVE_MAPVIEWOFFILE 0
 #define HAVE_PPC4XX 0
 #define HAVE_STRERROR_R 0
+#define HAVE_STRPTIME 0
 #define HAVE_SYMVER_ASM_LABEL 0
 #define HAVE_SYMVER_GNU_ASM 0
 #define HAVE_SYS_SELECT_H 0
