@@ -35,28 +35,28 @@
 #
 #############################################################################
 
-  if test -e ffmpeg/.svn ; then
+if test -e ffmpeg/.svn ; then
     echo "You have an outdated FFmpeg SVN checkout in ffmpeg/, please (re)move or replace it"
     exit 1
-  fi
+fi
 
-  if test -e ffmpeg/mp_auto_pull ; then
+if test -e ffmpeg/mp_auto_pull ; then
     if ! (cd ffmpeg && git pull --rebase --ff-only) ; then
-      echo "git pull failed, (re)move ffmpeg/mp_auto_pull to disable pulling"
-      exit 1
+        echo "git pull failed, (re)move ffmpeg/mp_auto_pull to disable pulling"
+        exit 1
     fi
-  fi
+fi
 
-  if ! test -e ffmpeg ; then
+if ! test -e ffmpeg ; then
     echo "No FFmpeg checkout, press enter to download one with git or CTRL+C to abort"
     read tmp
     if ! git clone --depth 1 git://git.videolan.org/ffmpeg.git ffmpeg ; then
-      rm -rf ffmpeg
-      echo "Failed to get a FFmpeg checkout"
-      exit 1
+        rm -rf ffmpeg
+        echo "Failed to get a FFmpeg checkout"
+        exit 1
     fi
     touch ffmpeg/mp_auto_pull
-  fi
+fi
 
 # Prevent locale nonsense from breaking basic text processing utilities
 export LC_ALL=C
@@ -5973,7 +5973,7 @@ EOF
     if test "$_ass" = no ; then
         res_comment="FreeType >= 2.2.1 needed"
     elif test "$ass_internal" != yes ; then
-    cat > $TMPC << EOF
+        cat > $TMPC << EOF
 #include <ass/ass.h>
 int main(void) {
 #if !defined(LIBASS_VERSION) || LIBASS_VERSION < 0x00910000
