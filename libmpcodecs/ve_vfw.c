@@ -147,7 +147,7 @@ mp_msg(MSGT_WIN32,MSGL_INFO,"\n");
         return NULL;
       }
       fclose(fd);
-      mp_msg(MSGT_WIN32,MSGL_ERR,"Compressor data %"PRIu64"d bytes\n", st.st_size);
+      mp_msg(MSGT_WIN32,MSGL_ERR,"Compressor data %"PRIu64" bytes\n", st.st_size);
       if (!(temp_len = (unsigned int) ICSendMessage(encoder_hic, ICM_SETSTATE, (LPARAM) drvdata, (int) st.st_size))){
         mp_msg(MSGT_WIN32,MSGL_ERR,"ICSetState failed!\n");
         free(drvdata);

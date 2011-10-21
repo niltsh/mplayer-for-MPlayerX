@@ -294,11 +294,11 @@ inline static off_t stream_tell(stream_t *s){
 
 inline static int stream_seek(stream_t *s,off_t pos){
 
-  mp_dbg(MSGT_DEMUX, MSGL_DBG3, "seek to 0x%llX\n", (long long)pos);
+  mp_dbg(MSGT_DEMUX, MSGL_DBG3, "seek to 0x%"PRIX64"\n", pos);
 
   if (pos < 0) {
-    mp_msg(MSGT_DEMUX, MSGL_ERR, "Invalid seek to negative position %llx!\n",
-           (long long)pos);
+    mp_msg(MSGT_DEMUX, MSGL_ERR,
+           "Invalid seek to negative position %"PRIx64"!\n", pos);
     pos = 0;
   }
   if(pos<s->pos){
