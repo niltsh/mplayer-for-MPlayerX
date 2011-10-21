@@ -493,6 +493,7 @@ static void allocate_parser(AVCodecContext **avctx, AVCodecParserContext **parse
         //codec_id = CODEC_ID_DNET;
         break;
     case MKTAG('E', 'A', 'C', '3'):
+    case MKTAG('e', 'c', '-', '3'):
         codec_id = CODEC_ID_EAC3;
         break;
     case 0x2001:
