@@ -3554,6 +3554,8 @@ echores "$_dynamic_plugins"
 
 
 def_threads='#define HAVE_THREADS 0'
+def_pthreads='#define HAVE_PTHREADS 0'
+def_w32threads='#define HAVE_W32THREADS 0'
 
 echocheck "pthread"
 if linux ; then
@@ -3606,7 +3608,7 @@ if test "$_w32threads" = auto ; then
   _w32threads=no
   mingw32 && _w32threads=yes
 fi
-test "$_w32threads" = yes && def_threads='#define HAVE_THREADS 1'
+test "$_w32threads" = yes && def_threads='#define HAVE_THREADS 1' && def_w32threads='#define HAVE_W32THREADS 1'
 echores "$_w32threads"
 
 echocheck "rpath"
@@ -8529,6 +8531,7 @@ $def_threads
 $def_trunc
 $def_truncf
 $def_vf_lavfi
+$def_w32threads
 $def_xform_asm
 $def_xmm_clobbers
 $def_yasm
