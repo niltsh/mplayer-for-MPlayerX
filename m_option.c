@@ -888,6 +888,8 @@ static int parse_print(const m_option_t* opt,const char *name, const char *param
 
   if(opt->priv == NULL)
     return M_OPT_EXIT;
+  if(opt->priv == PRIV_NO_EXIT)
+    return 0;
   return 1;
 }
 

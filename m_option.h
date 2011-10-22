@@ -305,6 +305,12 @@ struct m_option {
 };
 
 
+/// \defgroup PrivFlags Private data
+/// @{
+/// Don't exit after printing a CONF_TYPE_PRINT option.
+#define PRIV_NO_EXIT (void *)-1
+///@}
+
 /// \defgroup OptionFlags Option flags
 ///@{
 
