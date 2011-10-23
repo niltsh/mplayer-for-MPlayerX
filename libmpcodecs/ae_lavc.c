@@ -170,7 +170,7 @@ int mpae_init_lavc(audio_encoder_t *encoder)
 	}
 	if(lavc_param_atag == 0)
 	{
-		lavc_param_atag = av_codec_get_tag(mp_wav_taglists, lavc_acodec->id);
+		lavc_param_atag = mp_codec_id2tag(lavc_acodec->id, 0, 1);
 		if(!lavc_param_atag)
 		{
 			mp_msg(MSGT_MENCODER, MSGL_FATAL, "Couldn't find wav tag for specified codec, exit\n");

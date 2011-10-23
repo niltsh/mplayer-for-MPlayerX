@@ -266,11 +266,7 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
     int stream_id;
     AVDictionaryEntry *lang = av_dict_get(st->metadata, "language", NULL, 0);
     AVDictionaryEntry *title= av_dict_get(st->metadata, "title",    NULL, 0);
-    int g, override_tag = av_codec_get_tag(mp_codecid_override_taglists,
-                                           codec->codec_id);
-    // For some formats (like PCM) always trust CODEC_ID_* more than codec_tag
-    if (override_tag)
-        codec->codec_tag = override_tag;
+    int g;
 
     switch(codec->codec_type){
         case AVMEDIA_TYPE_AUDIO:{
@@ -282,11 +278,7 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
             stream_type = "audio";
             priv->astreams[priv->audio_streams] = i;
             wf= calloc(sizeof(*wf) + codec->extradata_size, 1);
-            // mp4a tag is used for all mp4 files no matter what they actually contain
-            if(codec->codec_tag == MKTAG('m', 'p', '4', 'a'))
-                codec->codec_tag= 0;
-            if(!codec->codec_tag)
-                codec->codec_tag= av_codec_get_tag(mp_wav_taglists, codec->codec_id);
+            codec->codec_tag = mp_codec_id2tag(codec->codec_id, codec->codec_tag, 1);
             wf->wFormatTag= codec->codec_tag;
             wf->nChannels= codec->channels;
             wf->nSamplesPerSec= codec->sample_rate;
@@ -364,11 +356,7 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
                         codec->codec_tag= MKTAG(24, 'R', 'G', 'B');
                 }
             }
-            // mp4v is sometimes also used for files containing e.g. mjpeg
-            if(codec->codec_tag == MKTAG('m', 'p', '4', 'v'))
-                codec->codec_tag= 0;
-            if(!codec->codec_tag)
-                codec->codec_tag= av_codec_get_tag(mp_bmp_taglists, codec->codec_id);
+            codec->codec_tag = mp_codec_id2tag(codec->codec_id, codec->codec_tag, 0);
             bih->biSize= sizeof(*bih) + codec->extradata_size;
             bih->biWidth= codec->width;
             bih->biHeight= codec->height;

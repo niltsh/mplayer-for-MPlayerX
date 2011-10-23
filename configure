@@ -7112,7 +7112,8 @@ if test "$_mencoder" = yes ; then
 else
   # mpeg1video for vf_lavc, snow for vf_uspp / vf_mcdeint,
   libavencoders="$mplayer_encoders MPEG1VIDEO_ENCODER SNOW_ENCODER"
-  libavmuxers=""
+  # needed for codec id -> tag conversion
+  libavmuxers="AVI_MUXER"
   def_muxers='#define CONFIG_MUXERS 0'
 fi
 echores "$_mencoder"
