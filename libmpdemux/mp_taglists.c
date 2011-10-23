@@ -25,7 +25,7 @@
 // for AVCodecTag
 #include "libavformat/internal.h"
 
-static const AVCodecTag mp_wav_tags[] = {
+static const struct AVCodecTag mp_wav_tags[] = {
     { CODEC_ID_ADPCM_4XM,         MKTAG('4', 'X', 'M', 'A')},
     { CODEC_ID_ADPCM_ADX,         MKTAG('S', 'a', 'd', 'x')},
     { CODEC_ID_ADPCM_EA,          MKTAG('A', 'D', 'E', 'A')},
@@ -65,7 +65,7 @@ static const AVCodecTag mp_wav_tags[] = {
 
 static const struct AVCodecTag * const mp_wav_taglists[] = {mp_wav_tags, 0};
 
-static const AVCodecTag mp_codecid_override_tags[] = {
+static const struct AVCodecTag mp_codecid_override_tags[] = {
     { CODEC_ID_8SVX_EXP,          MKTAG('8', 'e', 'x', 'p')},
     { CODEC_ID_8SVX_FIB,          MKTAG('8', 'f', 'i', 'b')},
     { CODEC_ID_8SVX_RAW,          MKTAG('8', 'r', 'a', 'w')},
@@ -99,7 +99,7 @@ static const AVCodecTag mp_codecid_override_tags[] = {
 static const struct AVCodecTag * const mp_codecid_override_taglists[] =
                         {mp_codecid_override_tags, 0};
 
-static const AVCodecTag mp_bmp_tags[] = {
+static const struct AVCodecTag mp_bmp_tags[] = {
     { CODEC_ID_AMV,               MKTAG('A', 'M', 'V', 'V')},
     { CODEC_ID_ANM,               MKTAG('A', 'N', 'M', ' ')},
     { CODEC_ID_ANSI,              MKTAG('T', 'X', 'T', '4')},
