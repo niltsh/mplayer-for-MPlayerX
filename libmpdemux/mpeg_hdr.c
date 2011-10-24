@@ -206,7 +206,7 @@ static int read_timeinc(mp_mpeg_header_t * picture, const unsigned char * buffer
 
 int mp4_header_process_vol(mp_mpeg_header_t * picture, const unsigned char * buffer)
 {
-    unsigned int n, aspect=0, aspectw=0, aspecth=0,  x=1, v;
+    unsigned int n, aspect,  x=1, v;
 
     //begins with 0x0000012x
     picture->fps = 0;
@@ -218,10 +218,8 @@ int mp4_header_process_vol(mp_mpeg_header_t * picture, const unsigned char * buf
     aspect=getbits(buffer, n, 4);
     n += 4;
     if(aspect == 0x0f) {
-      aspectw = getbits(buffer, n, 8);
-      n += 8;
-      aspecth = getbits(buffer, n, 8);
-      n += 8;
+      // custom aspect w and h, 8 bit each
+      n += 16;
     }
 
     if(getbits(buffer, n, 1)) {
