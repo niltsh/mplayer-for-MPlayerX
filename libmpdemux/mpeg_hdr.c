@@ -370,12 +370,10 @@ static int h264_parse_vui(mp_mpeg_header_t * picture, unsigned char * buf, unsig
   return n;
 }
 
-static int mp_unescape03(unsigned char *buf, int len)
+static int mp_unescape03(uint8_t *dest, const uint8_t *buf, int len)
 {
-  unsigned char *dest;
   int i, j, skip;
 
-  dest = malloc(len);
   if(! dest)
     return 0;
 
@@ -399,18 +397,17 @@ static int mp_unescape03(unsigned char *buf, int len)
   dest[j] = buf[len-2];
   dest[j+1] = buf[len-1];
   len -= skip;
-  memcpy(buf, dest, len);
-  free(dest);
 
   return len;
 }
 
-int h264_parse_sps(mp_mpeg_header_t * picture, unsigned char * buf, int len)
+int h264_parse_sps(mp_mpeg_header_t * picture, const unsigned char * inbuf, int len)
 {
   unsigned int n = 0, v, i, k, mbh;
   int frame_mbs_only;
+  uint8_t *buf = malloc(len);
 
-  len = mp_unescape03(buf, len);
+  len = mp_unescape03(buf, inbuf, len);
 
   picture->fps = picture->timeinc_unit = picture->timeinc_resolution = 0;
   n = 24;
@@ -465,14 +462,17 @@ int h264_parse_sps(mp_mpeg_header_t * picture, unsigned char * buf, int len)
   if(getbits(buf, n++, 1))
     n = h264_parse_vui(picture, buf, n);
 
+  free(buf);
+
   return n;
 }
 
-int mp_vc1_decode_sequence_header(mp_mpeg_header_t * picture, unsigned char * buf, int len)
+int mp_vc1_decode_sequence_header(mp_mpeg_header_t * picture, const unsigned char * inbuf, int len)
 {
   int n, x;
+  uint8_t *buf = malloc(len);
 
-  len = mp_unescape03(buf, len);
+  len = mp_unescape03(buf, inbuf, len);
 
   picture->display_picture_width = picture->display_picture_height = 0;
   picture->fps = 0;
@@ -480,7 +480,7 @@ int mp_vc1_decode_sequence_header(mp_mpeg_header_t * picture, unsigned char * bu
   x = getbits(buf, n, 2);
   n += 2;
   if(x != 3) //not advanced profile
-    return 0;
+    goto err_out;
 
   getbits16(buf, n, 14);
   n += 14;
@@ -534,6 +534,10 @@ int mp_vc1_decode_sequence_header(mp_mpeg_header_t * picture, unsigned char * bu
     }
   }
 
-  //free(dest);
+  free(buf);
   return 1;
+
+err_out:
+  free(buf);
+  return 0;
 }
