@@ -859,7 +859,7 @@ static void parse_cfgfiles(m_config_t *conf)
     char *conffile;
     int conffile_fd;
     if (!disable_system_conf &&
-        m_config_parse_config_file(conf, MPLAYER_CONFDIR "/mplayer.conf") < 0)
+        m_config_parse_config_file(conf, MPLAYER_CONFDIR "/mplayer.conf", 1) < 0)
         exit_player(EXIT_NONE);
     if ((conffile = get_path("")) == NULL) {
         mp_msg(MSGT_CPLAYER, MSGL_WARN, MSGTR_NoHomeDir);
@@ -879,7 +879,7 @@ static void parse_cfgfiles(m_config_t *conf)
                 close(conffile_fd);
             }
             if (!disable_user_conf &&
-                m_config_parse_config_file(conf, conffile) < 0)
+                m_config_parse_config_file(conf, conffile, 1) < 0)
                 exit_player(EXIT_NONE);
             free(conffile);
         }
@@ -956,7 +956,7 @@ static int try_load_config(m_config_t *conf, const char *file)
     if (stat(file, &st))
         return 0;
     mp_msg(MSGT_CPLAYER, MSGL_INFO, MSGTR_LoadingConfig, file);
-    m_config_parse_config_file(conf, file);
+    m_config_parse_config_file(conf, file, 0);
     return 1;
 }
 

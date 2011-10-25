@@ -50,9 +50,10 @@ static int recursion_depth = 0;
 /// Setup the \ref Config from a config file.
 /** \param config The config object.
  *  \param conffile Path to the config file.
+ *  \param silent print message when failing to open file only at verbose level
  *  \return 1 on sucess, -1 on error.
  */
-int m_config_parse_config_file(m_config_t* config, const char *conffile)
+int m_config_parse_config_file(m_config_t* config, const char *conffile, int silent)
 {
 #define PRINT_LINENUM	mp_msg(MSGT_CFGPARSER,MSGL_V,"%s(%d): ", conffile, line_num)
 #define MAX_LINE_LEN	10000
@@ -96,9 +97,9 @@ int m_config_parse_config_file(m_config_t* config, const char *conffile)
 	mp_msg(MSGT_CFGPARSER,MSGL_V,"\n");
 
 	if ((fp = fopen(conffile, "r")) == NULL) {
-	  mp_msg(MSGT_CFGPARSER,MSGL_V,": %s\n", strerror(errno));
+	  mp_msg(MSGT_CFGPARSER,silent?MSGL_V:MSGL_ERR,"Failed to read %s: %s\n", conffile, strerror(errno));
 		free(line);
-		ret = 0;
+		ret = silent ? 0 : -1;
 		goto out;
 	}
 

@@ -260,7 +260,7 @@ int cfg_gui_include(m_option_t *conf, const char *filename)
 {
     (void)conf;
 
-    return m_config_parse_config_file(gui_conf, filename);
+    return m_config_parse_config_file(gui_conf, filename, 0);
 }
 
 int cfg_read(void)
@@ -285,7 +285,7 @@ int cfg_read(void)
 
     m_config_register_options(gui_conf, gui_opts);
 
-    if (!disable_gui_conf && (m_config_parse_config_file(gui_conf, cfg) < 0)) {
+    if (!disable_gui_conf && (m_config_parse_config_file(gui_conf, cfg, 1) < 0)) {
         gmp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_ConfigFileError);
 // mplayer(MPLAYER_EXIT_GUI, 1, 0);
     }

@@ -418,7 +418,7 @@ int cfg_inc_verbose(m_option_t *conf)
 
 int cfg_include(m_option_t *conf, const char *filename)
 {
-    return m_config_parse_config_file(mconfig, filename);
+    return m_config_parse_config_file(mconfig, filename, 0);
 }
 
 const m_option_t noconfig_opts[] = {
