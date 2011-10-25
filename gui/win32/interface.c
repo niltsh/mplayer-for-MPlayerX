@@ -810,15 +810,6 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
     return result;
 }
 
-static inline void gtkMessageBox(int type, const char *str)
-{
-    if (type & GTK_MB_FATAL)
-        MessageBox(NULL, str, "MPlayer GUI for Windows Error", MB_OK | MB_ICONERROR);
-
-    fprintf(stderr, "[GUI] MessageBox: %s\n", str);
-    fflush(stderr);
-}
-
 static int update_subwindow(void)
 {
     int x,y;
