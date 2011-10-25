@@ -718,7 +718,7 @@ static const char help_text[]=
 #define MSGTR_MENU_PlayList "Playlist"
 #define MSGTR_MENU_SkinBrowser "Prehliadač tém"
 #define MSGTR_MENU_Preferences MSGTR_Preferences
-#define MSGTR_MENU_Exit "Koniec..."
+#define MSGTR_MENU_Exit "Koniec"
 #define MSGTR_MENU_Mute "Stlmiť zvuk"
 #define MSGTR_MENU_Original "Originál"
 #define MSGTR_MENU_AspectRatio "Pomer strán obrazu"

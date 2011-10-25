@@ -619,7 +619,7 @@ static const char help_text[]=
 #define MSGTR_MENU_PlayList MSGTR_PlayList
 #define MSGTR_MENU_SkinBrowser "Navegador de skins"
 #define MSGTR_MENU_Preferences MSGTR_Preferences
-#define MSGTR_MENU_Exit "Salir..."
+#define MSGTR_MENU_Exit "Salir"
 #define MSGTR_MENU_Mute "Mudo"
 #define MSGTR_MENU_Original "Original"
 #define MSGTR_MENU_AspectRatio "Relación de aspecto"

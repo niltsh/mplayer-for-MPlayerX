@@ -330,7 +330,7 @@ static const char help_text[]=
 #define MSGTR_MENU_AudioLanguages "音声言語"
 #define MSGTR_MENU_SubtitleLanguages "サブタイトル言語"
 #define MSGTR_MENU_SkinBrowser "スキンブラウザ"
-#define MSGTR_MENU_Exit "終了 ..."
+#define MSGTR_MENU_Exit "終了 "
 #define MSGTR_MENU_Mute "消音"
 #define MSGTR_MENU_Original "オリジナル"
 #define MSGTR_MENU_Track "トラック %d"

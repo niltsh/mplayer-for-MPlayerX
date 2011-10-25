@@ -600,7 +600,7 @@ static const char help_text[]=
 #define MSGTR_MENU_PlayList MSGTR_PlayList
 #define MSGTR_MENU_SkinBrowser "Prohlížeč témat"
 #define MSGTR_MENU_Preferences MSGTR_Preferences
-#define MSGTR_MENU_Exit "Konec..."
+#define MSGTR_MENU_Exit "Konec"
 #define MSGTR_MENU_Mute "Ztlumit"
 #define MSGTR_MENU_Original "Původní"
 #define MSGTR_MENU_AspectRatio "Poměr stran"

@@ -608,7 +608,7 @@ static const char help_text[]=
 // TODO: Why is this different from MSGTR_PlayList?
 #define MSGTR_MENU_PlayList "Playlist"
 #define MSGTR_MENU_SkinBrowser "Skin browser"
-#define MSGTR_MENU_Exit "Afsluiten..."
+#define MSGTR_MENU_Exit "Afsluiten"
 #define MSGTR_MENU_Mute "Mute"
 #define MSGTR_MENU_Original "Origineel"
 #define MSGTR_MENU_AspectRatio "Aspect ratio"

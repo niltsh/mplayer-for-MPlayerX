@@ -398,7 +398,7 @@ static const char help_text[]=
 #define MSGTR_MENU_AudioLanguages "Аудио јазици"
 #define MSGTR_MENU_SubtitleLanguages "Јазици на преводите"
 #define MSGTR_MENU_SkinBrowser "Разгледувач на скинови"
-#define MSGTR_MENU_Exit "Излези ..."
+#define MSGTR_MENU_Exit "Излези "
 #define MSGTR_MENU_Mute "Мутирај"
 #define MSGTR_MENU_Original "Оригинал"
 #define MSGTR_MENU_AspectRatio "Пропорционалност"

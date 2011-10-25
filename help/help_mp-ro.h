@@ -347,7 +347,7 @@ static const char help_text[]=
 #define MSGTR_MENU_AudioLanguages "Limbi pentru audio"
 #define MSGTR_MENU_SubtitleLanguages "Limbi pentru subtitrãri"
 #define MSGTR_MENU_SkinBrowser "Alegere skin"
-#define MSGTR_MENU_Exit "Ieºire..."
+#define MSGTR_MENU_Exit "Ieºire"
 #define MSGTR_MENU_Mute "Fãrã sunet"
 #define MSGTR_MENU_Original "Original"
 #define MSGTR_MENU_AspectRatio "Raport dimensiuni"

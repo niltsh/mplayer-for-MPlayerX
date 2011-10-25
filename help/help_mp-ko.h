@@ -400,7 +400,7 @@ static const char help_text[]=
 #define MSGTR_MENU_AudioLanguages "오디오 언어"
 #define MSGTR_MENU_SubtitleLanguages "자막 언어"
 #define MSGTR_MENU_SkinBrowser "스킨선택"
-#define MSGTR_MENU_Exit "종료..."
+#define MSGTR_MENU_Exit "종료"
 #define MSGTR_MENU_Mute "음소거"
 #define MSGTR_MENU_Original "원래대로"
 #define MSGTR_MENU_AspectRatio "화면비율"

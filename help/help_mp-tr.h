@@ -779,7 +779,7 @@ static const char help_text[]=
 #define MSGTR_MENU_PlayList MSGTR_PlayList
 #define MSGTR_MENU_SkinBrowser "Arayüz seçici"
 #define MSGTR_MENU_Preferences MSGTR_Preferences
-#define MSGTR_MENU_Exit "Çık..."
+#define MSGTR_MENU_Exit "Çık"
 #define MSGTR_MENU_Mute "Sessiz"
 #define MSGTR_MENU_Original "Normal"
 #define MSGTR_MENU_AspectRatio "Görünüm Oranı"

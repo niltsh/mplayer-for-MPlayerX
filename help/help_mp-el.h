@@ -407,7 +407,7 @@ static const char help_text[]=
 #define MSGTR_MENU_SkinBrowser "Λίστα skins"
 // TODO: Why is this different from MSGTR_Preferences?
 #define MSGTR_MENU_Preferences "Ρυθμίσεις"
-#define MSGTR_MENU_Exit "Έξοδος..."
+#define MSGTR_MENU_Exit "Έξοδος"
 #define MSGTR_MENU_Mute "Απενεργοποίηση ήχου"
 #define MSGTR_MENU_Original "Αρχικό"
 #define MSGTR_MENU_AspectRatio "Αναλογία εμφάνισης"

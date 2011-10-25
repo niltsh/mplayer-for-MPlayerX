@@ -752,7 +752,7 @@ static const char help_text[]=
 #define MSGTR_MENU_PlayList MSGTR_PlayList
 #define MSGTR_MENU_SkinBrowser "皮膚瀏覽器"
 #define MSGTR_MENU_Preferences MSGTR_Preferences
-#define MSGTR_MENU_Exit "退出..."
+#define MSGTR_MENU_Exit "退出"
 #define MSGTR_MENU_Mute "靜音"
 #define MSGTR_MENU_Original "原始的"
 #define MSGTR_MENU_AspectRatio "寬高比"

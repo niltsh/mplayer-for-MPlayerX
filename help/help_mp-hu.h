@@ -613,7 +613,7 @@ static const char help_text[]=
 #define MSGTR_MENU_PlayList MSGTR_PlayList
 #define MSGTR_MENU_SkinBrowser "Skin böngésző"
 #define MSGTR_MENU_Preferences MSGTR_Preferences
-#define MSGTR_MENU_Exit "Kilépés..."
+#define MSGTR_MENU_Exit "Kilépés"
 #define MSGTR_MENU_Mute "Néma"
 #define MSGTR_MENU_Original "Eredeti"
 #define MSGTR_MENU_AspectRatio "Képarány"

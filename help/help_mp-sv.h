@@ -621,7 +621,7 @@ static const char help_text[]=
 #define MSGTR_MENU_AudioLanguages "Audiospråk"
 #define MSGTR_MENU_SubtitleLanguages "Textningsspråk"
 #define MSGTR_MENU_SkinBrowser "Skinläsare"
-#define MSGTR_MENU_Exit "Avsluta..."
+#define MSGTR_MENU_Exit "Avsluta"
 #define MSGTR_MENU_Mute "Dämpa"
 #define MSGTR_MENU_Original "Orginal"
 #define MSGTR_MENU_AspectRatio "Aspect ratio" // FIXME translate?

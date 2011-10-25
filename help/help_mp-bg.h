@@ -628,7 +628,7 @@ static const char help_text[]=
 #define MSGTR_MENU_SkinBrowser "Избор на Skin"
 // TODO: Why is this different from MSGTR_Preferences?
 #define MSGTR_MENU_Preferences "Настройки"
-#define MSGTR_MENU_Exit "Изход..."
+#define MSGTR_MENU_Exit "Изход"
 #define MSGTR_MENU_Mute "Без звук"
 #define MSGTR_MENU_Original "Без промяна"
 #define MSGTR_MENU_AspectRatio "Съотношение"

@@ -403,7 +403,7 @@ static const char help_text[]=
 #define MSGTR_MENU_AudioLanguages "Idiomas do audio"
 #define MSGTR_MENU_SubtitleLanguages "Idiomas da legenda"
 #define MSGTR_MENU_SkinBrowser "Skins"
-#define MSGTR_MENU_Exit "Sair..."
+#define MSGTR_MENU_Exit "Sair"
 #define MSGTR_MENU_Mute "Mudo"
 #define MSGTR_MENU_Original "Original"
 #define MSGTR_MENU_AspectRatio "Aspecto"

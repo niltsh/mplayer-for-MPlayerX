@@ -596,7 +596,7 @@ static const char help_text[]=
 #define MSGTR_MENU_PlayList MSGTR_PlayList
 #define MSGTR_MENU_SkinBrowser "Переглядач жупанів"
 #define MSGTR_MENU_Preferences MSGTR_Preferences
-#define MSGTR_MENU_Exit "Вихід..."
+#define MSGTR_MENU_Exit "Вихід"
 #define MSGTR_MENU_Mute "Тиша"
 #define MSGTR_MENU_Original "Вихідний"
 #define MSGTR_MENU_AspectRatio "Відношення сторін"

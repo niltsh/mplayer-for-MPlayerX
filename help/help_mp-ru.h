@@ -602,7 +602,7 @@ static const char help_text[]=
 #define MSGTR_MENU_PlayList MSGTR_PlayList
 #define MSGTR_MENU_SkinBrowser "Просмотр шкур"
 #define MSGTR_MENU_Preferences MSGTR_Preferences
-#define MSGTR_MENU_Exit "Выход..."
+#define MSGTR_MENU_Exit "Выход"
 #define MSGTR_MENU_Mute "Приглушить"
 #define MSGTR_MENU_Original "Исходный"
 #define MSGTR_MENU_AspectRatio "Соотношение сторон"
