@@ -79,7 +79,7 @@ int m_config_parse_config_file(m_config_t* config, const char *conffile)
 #endif
 	mp_msg(MSGT_CFGPARSER,MSGL_V,"Reading config file %s", conffile);
 
-	if (recursion_depth > MAX_RECURSION_DEPTH) {
+	if (++recursion_depth > MAX_RECURSION_DEPTH) {
 		mp_msg(MSGT_CFGPARSER,MSGL_ERR,": too deep 'include'. check your configfiles\n");
 		ret = -1;
 		goto out;
