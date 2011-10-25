@@ -29,6 +29,7 @@
 #include "gui/interface.h"
 #include "gui.h"
 
+#include "help_mp.h"
 #include "libavutil/avstring.h"
 
 #define MAX_LABELSIZE 250
@@ -138,7 +139,7 @@ static char *TranslateFilename (int c, char *tmp, size_t tmplen)
                 else if (len > 4 && tmp[len - 4] == '.') tmp[len - 4] = 0;
                 else if (len > 5 && tmp[len - 5] == '.') tmp[len - 5] = 0;
             }
-            else av_strlcpy(tmp, "No file loaded.", tmplen);
+            else av_strlcpy(tmp, MSGTR_NoFileLoaded, tmplen);
             break;
 
         case STREAMTYPE_STREAM:
@@ -147,13 +148,13 @@ static char *TranslateFilename (int c, char *tmp, size_t tmplen)
 
 #ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
-            if (guiInfo.Chapter) snprintf(tmp, tmplen, "Chapter %d", guiInfo.Chapter);
-            else av_strlcat(tmp, "No chapter", tmplen);
+            if (guiInfo.Chapter) snprintf(tmp, tmplen, MSGTR_Chapter, guiInfo.Chapter);
+            else av_strlcat(tmp, MSGTR_NoChapter, tmplen);
             break;
 #endif
 
         default:
-            av_strlcpy(tmp, "No media opened.", tmplen);
+            av_strlcpy(tmp, MSGTR_NoMediaOpened, tmplen);
             break;
     }
 
@@ -205,7 +206,7 @@ static char *generatetextfromlabel(widget *item)
     stringreplace(text, "$b", "%3.2f", guiInfo.Balance);
     stringreplace(text, "$B", "%3.1f", guiInfo.Balance);
     stringreplace(text, "$t", "%.2i", guiInfo.Track);
-    stringreplace(text, "$o", "%s", TranslateFilename(0, tmp, sizeof(tmp)));
+    stringreplace(text, "$o", "%s", acp(TranslateFilename(0, tmp, sizeof(tmp))));
     stringreplace(text, "$x", "%i", guiInfo.VideoWidth);
     stringreplace(text, "$y", "%i", guiInfo.VideoHeight);
     stringreplace(text, "$C", "%s", guiInfo.sh_video ? codecname : "");
@@ -230,8 +231,8 @@ static char *generatetextfromlabel(widget *item)
 #endif
     else stringreplace(text, "$T", "u");
 
-    stringreplace(text, "$f", TranslateFilename(1, tmp, sizeof(tmp)));
-    stringreplace(text, "$F", TranslateFilename(2, tmp, sizeof(tmp)));
+    stringreplace(text, "$f", acp(TranslateFilename(1, tmp, sizeof(tmp))));
+    stringreplace(text, "$F", acp(TranslateFilename(2, tmp, sizeof(tmp))));
 
     return text;
 }

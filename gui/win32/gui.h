@@ -104,6 +104,7 @@ int create_window(gui_t *gui, char *skindir);
 int create_subwindow(gui_t *gui);
 int parse_filename(char *file, play_tree_t *playtree, m_config_t *mconfig, int clear);
 void capitalize(char *filename);
+LPSTR acp(LPCSTR utf8);
 
 void renderinfobox(skin_t *skin, window_priv_t *priv);
 void renderwidget(skin_t *skin, image *dest, widget *item, int state);

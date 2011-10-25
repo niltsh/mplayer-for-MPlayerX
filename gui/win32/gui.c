@@ -69,6 +69,53 @@ play_tree_t *playtree = NULL;
 static HBRUSH    colorbrush = NULL;           //Handle to colorkey brush
 static COLORREF windowcolor = RGB(255,0,255); //Windowcolor == colorkey
 
+/**
+ * @brief Convert an UTF-8 encoded string into ANSI codepage encoding.
+ *
+ * @param utf8 UTF-8 encoded string
+ *
+ * @return string containing ANSI codepage encoding of @a utf8 (or, in case
+ *         of error, a string containing the question mark character)
+ */
+LPSTR acp (LPCSTR utf8)
+{
+    static LPSTR acp_str = NULL;
+    int chars;
+    LPWSTR uc_str;
+
+    chars = MultiByteToWideChar(CP_UTF8, 0, utf8, -1, NULL, 0);
+
+    if (chars)
+    {
+        uc_str = malloc(sizeof(*uc_str) * (chars + 1));
+
+        if (uc_str)
+        {
+            MultiByteToWideChar(CP_UTF8, 0, utf8, -1, uc_str, chars);
+
+            chars = WideCharToMultiByte(CP_ACP, 0, uc_str, -1, NULL, 0, NULL, 0);
+
+            if (chars)
+            {
+                free(acp_str);
+                acp_str = malloc(sizeof(*acp_str) * (chars + 1));
+
+                if (acp_str)
+                {
+                    WideCharToMultiByte(CP_ACP, 0, uc_str, -1, acp_str, chars, NULL, 0);
+                    free(uc_str);
+
+                    return acp_str;
+                }
+            }
+
+            free(uc_str);
+        }
+    }
+
+    return "?";
+}
+
 static void console_toggle(void)
 {
     if (console_state)
@@ -133,7 +180,7 @@ static void display_about_box(HWND hWnd)
 {
     char about_msg[512];
     snprintf(about_msg, sizeof(about_msg), MP_TITLE "\n" COPYRIGHT, "MPlayer");
-    MessageBox(hWnd, about_msg, "About", MB_OK);
+    MessageBox(hWnd, about_msg, acp(MSGTR_About), MB_OK);
 }
 
 static image *get_drawground(HWND hwnd)
@@ -376,7 +423,7 @@ static LRESULT CALLBACK SubProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
                     BROWSEINFO bi;
                     LPITEMIDLIST pidl;
                     memset(&bi, 0, sizeof(BROWSEINFO));
-                    bi.lpszTitle = "Choose a Directory...";
+                    bi.lpszTitle = acp(MSGTR_DirectorySelect);
                     pidl = SHBrowseForFolder(&bi);
                     if (SHGetPathFromIDList(pidl, path))
                     {
@@ -927,7 +974,7 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                     BROWSEINFO bi;
                     LPITEMIDLIST pidl;
                     memset(&bi, 0, sizeof(BROWSEINFO));
-                    bi.lpszTitle = "Choose a Directory...";
+                    bi.lpszTitle = acp(MSGTR_DirectorySelect);
                     pidl = SHBrowseForFolder(&bi);
                     if (SHGetPathFromIDList(pidl, path))
                     {
@@ -1144,51 +1191,51 @@ static void create_menu(gui_t *gui)
     gui->diskmenu = CreatePopupMenu();
     gui->menu=CreatePopupMenu();
     gui->trayplaymenu = CreatePopupMenu();
-    AppendMenu(gui->menu, MF_STRING | MF_POPUP, (UINT_PTR) gui->trayplaymenu, "Open...");
-    AppendMenu(gui->trayplaymenu, MF_STRING, IDFILE_OPEN, "File...");
-    AppendMenu(gui->trayplaymenu, MF_STRING, IDURL_OPEN, "Url...");
-    AppendMenu(gui->trayplaymenu, MF_STRING, IDDIR_OPEN, "Directory...");
+    AppendMenu(gui->menu, MF_STRING | MF_POPUP, (UINT_PTR) gui->trayplaymenu, acp(MSGTR_MENU_Open));
+    AppendMenu(gui->trayplaymenu, MF_STRING, IDFILE_OPEN, acp(MSGTR_MENU_PlayFile));
+    AppendMenu(gui->trayplaymenu, MF_STRING, IDURL_OPEN, acp(MSGTR_MENU_PlayURL));
+    AppendMenu(gui->trayplaymenu, MF_STRING, IDDIR_OPEN, acp(MSGTR_MENU_PlayDirectory));
     AppendMenu(gui->menu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->menu, MF_STRING | MF_POPUP, (UINT_PTR) gui->diskmenu, "Play &CD/DVD/VCD/SVCD");
+    AppendMenu(gui->menu, MF_STRING | MF_POPUP, (UINT_PTR) gui->diskmenu, acp(MSGTR_MENU_PlayDisc));
     AppendMenu(gui->menu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->menu, MF_STRING, IDSUBTITLE_OPEN, "Open Subtitle");
-    AppendMenu(gui->menu, MF_STRING, ID_SKINBROWSER, "Skin Browser");
+    AppendMenu(gui->menu, MF_STRING, IDSUBTITLE_OPEN, acp(MSGTR_MENU_LoadSubtitle));
+    AppendMenu(gui->menu, MF_STRING, ID_SKINBROWSER, acp(MSGTR_MENU_SkinBrowser));
     AppendMenu(gui->menu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->menu, MF_STRING, ID_PREFS, "Preferences");
-    AppendMenu(gui->menu, MF_STRING, ID_CONSOLE, "Debug Console");
-    AppendMenu(gui->menu, MF_STRING, ID_ONLINEHELP, "Online Help");
-    AppendMenu(gui->menu, MF_STRING, IDHELP_ABOUT, "About");
+    AppendMenu(gui->menu, MF_STRING, ID_PREFS, acp(MSGTR_MENU_Preferences));
+    AppendMenu(gui->menu, MF_STRING, ID_CONSOLE, acp(MSGTR_MENU_DebugConsole));
+    AppendMenu(gui->menu, MF_STRING, ID_ONLINEHELP, acp(MSGTR_MENU_OnlineHelp));
+    AppendMenu(gui->menu, MF_STRING, IDHELP_ABOUT, acp(MSGTR_MENU_AboutMPlayer));
     AppendMenu(gui->menu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->menu, MF_STRING, IDEXIT, "&Exit");
+    AppendMenu(gui->menu, MF_STRING, IDEXIT, acp(MSGTR_MENU_Exit));
 }
 
 static void create_traymenu(gui_t *gui)
 {
     gui->traymenu = CreatePopupMenu();
     gui->trayplaybackmenu = CreatePopupMenu();
-    AppendMenu(gui->traymenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->trayplaymenu, "Open...");
+    AppendMenu(gui->traymenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->trayplaymenu, acp(MSGTR_MENU_Open));
     AppendMenu(gui->traymenu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->traymenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->trayplaybackmenu, "Playback");
-    AppendMenu(gui->trayplaybackmenu, MF_STRING, ID_SEEKB, "Seek Backwards");
-    AppendMenu(gui->trayplaybackmenu, MF_STRING, ID_PTRACK, "Previous Track");
-    AppendMenu(gui->trayplaybackmenu, MF_STRING, ID_PLAY, "Play/Pause");
-    AppendMenu(gui->trayplaybackmenu, MF_STRING, ID_STOP, "Stop");
-    AppendMenu(gui->trayplaybackmenu, MF_STRING, ID_NTRACK, "Next Track");
-    AppendMenu(gui->trayplaybackmenu, MF_STRING, ID_SEEKF, "Seek Forwards");
+    AppendMenu(gui->traymenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->trayplaybackmenu, acp(MSGTR_MENU_Playing));
+    AppendMenu(gui->trayplaybackmenu, MF_STRING, ID_SEEKB, acp(MSGTR_MENU_SeekBack));
+    AppendMenu(gui->trayplaybackmenu, MF_STRING, ID_PTRACK, acp(MSGTR_MENU_PrevStream));
+    AppendMenu(gui->trayplaybackmenu, MF_STRING, ID_PLAY, acp(MSGTR_MENU_Play "/" MSGTR_MENU_Pause));
+    AppendMenu(gui->trayplaybackmenu, MF_STRING, ID_STOP, acp(MSGTR_MENU_Stop));
+    AppendMenu(gui->trayplaybackmenu, MF_STRING, ID_NTRACK, acp(MSGTR_MENU_NextStream));
+    AppendMenu(gui->trayplaybackmenu, MF_STRING, ID_SEEKF, acp(MSGTR_MENU_SeekForw));
     AppendMenu(gui->traymenu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->traymenu, MF_STRING, ID_MUTE, "Toggle Mute");
+    AppendMenu(gui->traymenu, MF_STRING, ID_MUTE, acp(MSGTR_MENU_Mute));
     AppendMenu(gui->traymenu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->traymenu, MF_STRING, IDSUBTITLE_OPEN, "Open Subtitle");
-    AppendMenu(gui->traymenu, MF_STRING, ID_PLAYLIST, "Playlist");
+    AppendMenu(gui->traymenu, MF_STRING, IDSUBTITLE_OPEN, acp(MSGTR_MENU_LoadSubtitle));
+    AppendMenu(gui->traymenu, MF_STRING, ID_PLAYLIST, acp(MSGTR_MENU_PlayList));
     AppendMenu(gui->traymenu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->traymenu, MF_STRING, ID_SHOWHIDE, "Show/Hide");
+    AppendMenu(gui->traymenu, MF_STRING, ID_SHOWHIDE, acp(MSGTR_MENU_ShowHide));
     AppendMenu(gui->traymenu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->traymenu, MF_STRING, ID_PREFS, "Preferences");
-    AppendMenu(gui->traymenu, MF_STRING, ID_CONSOLE, "Debug Console");
-    AppendMenu(gui->traymenu, MF_STRING, ID_ONLINEHELP, "Online Help");
-    AppendMenu(gui->traymenu, MF_STRING, IDHELP_ABOUT, "About");
+    AppendMenu(gui->traymenu, MF_STRING, ID_PREFS, acp(MSGTR_MENU_Preferences));
+    AppendMenu(gui->traymenu, MF_STRING, ID_CONSOLE, acp(MSGTR_MENU_DebugConsole));
+    AppendMenu(gui->traymenu, MF_STRING, ID_ONLINEHELP, acp(MSGTR_MENU_OnlineHelp));
+    AppendMenu(gui->traymenu, MF_STRING, IDHELP_ABOUT, acp(MSGTR_MENU_AboutMPlayer));
     AppendMenu(gui->traymenu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->traymenu, MF_STRING, IDEXIT, "&Exit");
+    AppendMenu(gui->traymenu, MF_STRING, IDEXIT, acp(MSGTR_MENU_Exit));
 }
 
 static void create_submenu(gui_t *gui)
@@ -1197,33 +1244,33 @@ static void create_submenu(gui_t *gui)
     gui->dvdmenu = CreatePopupMenu();
     gui->aspectmenu = CreatePopupMenu();
     gui->subtitlemenu = CreatePopupMenu();
-    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->trayplaymenu, "Open...");
+    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->trayplaymenu, acp(MSGTR_MENU_Open));
     AppendMenu(gui->submenu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->submenu, MF_STRING, ID_SEEKB, "Seek Backwards");
-    AppendMenu(gui->submenu, MF_STRING, ID_PTRACK, "Previous Track");
-    AppendMenu(gui->submenu, MF_STRING, ID_PLAY, "Play/Pause");
-    AppendMenu(gui->submenu, MF_STRING, ID_STOP, "Stop");
-    AppendMenu(gui->submenu, MF_STRING, ID_NTRACK, "Next Track");
-    AppendMenu(gui->submenu, MF_STRING, ID_SEEKF, "Seek Forwards");
+    AppendMenu(gui->submenu, MF_STRING, ID_SEEKB, acp(MSGTR_MENU_SeekBack));
+    AppendMenu(gui->submenu, MF_STRING, ID_PTRACK, acp(MSGTR_MENU_PrevStream));
+    AppendMenu(gui->submenu, MF_STRING, ID_PLAY, acp(MSGTR_MENU_Play "/" MSGTR_MENU_Pause));
+    AppendMenu(gui->submenu, MF_STRING, ID_STOP, acp(MSGTR_MENU_Stop));
+    AppendMenu(gui->submenu, MF_STRING, ID_NTRACK, acp(MSGTR_MENU_NextStream));
+    AppendMenu(gui->submenu, MF_STRING, ID_SEEKF, acp(MSGTR_MENU_SeekForw));
     AppendMenu(gui->submenu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->submenu, MF_STRING, ID_FULLSCREEN, "Toggle Fullscreen");
-    AppendMenu(gui->submenu, MF_STRING, ID_MUTE, "Toggle Mute");
+    AppendMenu(gui->submenu, MF_STRING, ID_FULLSCREEN, acp(MSGTR_MENU_FullScreen));
+    AppendMenu(gui->submenu, MF_STRING, ID_MUTE, acp(MSGTR_MENU_Mute));
     AppendMenu(gui->submenu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->aspectmenu, "Aspect Ratio");
-    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->subtitlemenu, "Subtitle Options");
-    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->dvdmenu, "DVD Options");
+    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->aspectmenu, acp(MSGTR_MENU_AspectRatio));
+    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->subtitlemenu, acp(MSGTR_MENU_Subtitles));
+    AppendMenu(gui->submenu, MF_STRING | MF_POPUP, (UINT_PTR) gui->dvdmenu, acp(MSGTR_MENU_DVD));
 #ifdef CONFIG_DVDREAD
-    AppendMenu(gui->dvdmenu, MF_STRING | MF_GRAYED, ID_CHAPTERSEL, "Select Title/Chapter...");
+    AppendMenu(gui->dvdmenu, MF_STRING | MF_GRAYED, ID_CHAPTERSEL, acp(MSGTR_SelectChapter));
 #endif
-    AppendMenu(gui->subtitlemenu, MF_STRING, IDSUB_TOGGLE, "Subtitle Visibility On/Off");
-    AppendMenu(gui->subtitlemenu, MF_STRING, IDSUB_CYCLE, "Cycle Subtitle Languages");
-    AppendMenu(gui->aspectmenu, MF_STRING, ID_ASPECT1, "Set 16:9");
-    AppendMenu(gui->aspectmenu, MF_STRING, ID_ASPECT2, "Set 4:3");
-    AppendMenu(gui->aspectmenu, MF_STRING, ID_ASPECT3, "Set 2.35");
+    AppendMenu(gui->subtitlemenu, MF_STRING, IDSUB_TOGGLE, acp(MSGTR_MENU_SubtitlesOnOff));
+    AppendMenu(gui->subtitlemenu, MF_STRING, IDSUB_CYCLE, acp(MSGTR_MENU_SubtitleLanguages));
+    AppendMenu(gui->aspectmenu, MF_STRING, ID_ASPECT1, "16:9");
+    AppendMenu(gui->aspectmenu, MF_STRING, ID_ASPECT2, "4:3");
+    AppendMenu(gui->aspectmenu, MF_STRING, ID_ASPECT3, "2.35");
     AppendMenu(gui->aspectmenu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->aspectmenu, MF_STRING, ID_ASPECT4, "Original Aspect");
+    AppendMenu(gui->aspectmenu, MF_STRING, ID_ASPECT4, acp(MSGTR_MENU_Original));
     AppendMenu(gui->submenu, MF_SEPARATOR, 0, 0);
-    AppendMenu(gui->submenu, MF_STRING, IDEXIT, "&Exit");
+    AppendMenu(gui->submenu, MF_STRING, IDEXIT, acp(MSGTR_MENU_Exit));
 }
 
 static void maketransparent(HWND hwnd, COLORREF crTransparent)

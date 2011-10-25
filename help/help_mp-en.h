@@ -810,6 +810,35 @@ static const char help_text[]=
 #define MSGTR_WS_NotAFile "This does not seem to be a file...\n"
 #define MSGTR_WS_DDNothing "D&D: Nothing returned!\n"
 
+// Win32 GUI
+#define MSGTR_Close "Close"
+#define MSGTR_Default "Defaults"
+#define MSGTR_Down "Down"
+#define MSGTR_Load "Load"
+#define MSGTR_Save "Save"
+#define MSGTR_Up "Up"
+#define MSGTR_DirectorySelect "Select directory..."
+#define MSGTR_PlaylistSave "Save playlist..."
+#define MSGTR_PlaylistSelect "Select playlist..."
+#define MSGTR_SelectChapter "Select chapter..."
+#define MSGTR_MENU_DebugConsole "Debug Console"
+#define MSGTR_MENU_OnlineHelp "Online Help"
+#define MSGTR_MENU_PlayDirectory "Play directory..."
+#define MSGTR_MENU_SeekBack "Seek Backwards"
+#define MSGTR_MENU_SeekForw "Seek Forwards"
+#define MSGTR_MENU_ShowHide "Show/Hide"
+#define MSGTR_MENU_SubtitlesOnOff "Subtitle Visibility On/Off"
+#define MSGTR_PLAYLIST_AddFile "Add File..."
+#define MSGTR_PLAYLIST_AddURL "Add URL..."
+#define MSGTR_PREFERENCES_Priority "Priority:"
+#define MSGTR_PREFERENCES_PriorityHigh "high"
+#define MSGTR_PREFERENCES_PriorityLow "low"
+#define MSGTR_PREFERENCES_PriorityNormal "normal"
+#define MSGTR_PREFERENCES_PriorityNormalAbove "above normal"
+#define MSGTR_PREFERENCES_PriorityNormalBelow "below normal"
+#define MSGTR_PREFERENCES_VideoInSubwin "Display videos in the sub window (DirectX only)"
+
+
 // ======================= video output drivers ========================
 
 #define MSGTR_VOincompCodec "The selected video_out device is incompatible with this codec.\n"\
