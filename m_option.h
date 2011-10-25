@@ -62,6 +62,7 @@ extern const m_option_type_t m_option_type_afmt;
 // Func-based types
 extern const m_option_type_t m_option_type_func_full;
 extern const m_option_type_t m_option_type_func_param;
+extern const m_option_type_t m_option_type_func_param_immediate;
 extern const m_option_type_t m_option_type_func;
 
 /// Callback used to reset func options.
@@ -177,6 +178,7 @@ extern const m_obj_params_t m_span_params_def;
 #define CONF_TYPE_STRING	(&m_option_type_string)
 #define CONF_TYPE_FUNC		(&m_option_type_func)
 #define CONF_TYPE_FUNC_PARAM	(&m_option_type_func_param)
+#define CONF_TYPE_FUNC_PARAM_IMMEDIATE (&m_option_type_func_param_immediate)
 #define CONF_TYPE_PRINT		(&m_option_type_print)
 #define CONF_TYPE_PRINT_INDIRECT (&m_option_type_print_indirect)
 #define CONF_TYPE_PRINT_FUNC	(&m_option_type_print_func)

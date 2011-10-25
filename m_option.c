@@ -715,6 +715,25 @@ const m_option_type_t m_option_type_string_list = {
 
 ///////////////////  Func based options
 
+static int parse_call_func(const m_option_t* opt,const char *name, const char *param, void* dst, int src) {
+  ((m_opt_func_param_t) opt->p)(opt,param);
+}
+
+// special variant, will not have a history/be able to
+// be used as per-file option etc.
+const m_option_type_t m_option_type_func_param_immediate = {
+  "Func param once",
+  "",
+  0,
+  M_OPT_TYPE_INDIRECT,
+  parse_call_func,
+  NULL,
+  NULL, // Nothing to do on save
+  NULL,
+  NULL,
+  NULL
+};
+
 // A chained list to save the various calls for func_param and func_full
 typedef struct m_func_save m_func_save_t;
 struct m_func_save {
