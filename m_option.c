@@ -716,7 +716,9 @@ const m_option_type_t m_option_type_string_list = {
 ///////////////////  Func based options
 
 static int parse_call_func(const m_option_t* opt,const char *name, const char *param, void* dst, int src) {
-  ((m_opt_func_param_t) opt->p)(opt,param);
+  int res = ((m_opt_func_param_t) opt->p)(opt,param);
+  if (res < 0)
+    return res;
   return 1;
 }
 
