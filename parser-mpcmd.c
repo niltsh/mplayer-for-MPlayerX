@@ -38,7 +38,6 @@
 #include "parser-mpcmd.h"
 #include "osdep/macosx_finder_args.h"
 
-static int recursion_depth = 0;
 static int mode = 0;
 
 #define GLOBAL 0
@@ -108,8 +107,6 @@ m_config_parse_mp_command_line(m_config_t *config, int argc, char **argv)
 #endif
 
   last_parent = root = play_tree_new();
-  /* in order to work recursion detection properly in parse_config_file */
-  ++recursion_depth;
 
   for (i = 1; i < argc; i++) {
     //next:
@@ -281,13 +278,11 @@ m_config_parse_mp_command_line(m_config_t *config, int argc, char **argv)
 
   if (opt_exit)
     goto err_out;
-  --recursion_depth;
   if(last_parent != root)
     mp_msg(MSGT_CFGPARSER, MSGL_ERR,"Missing }- ?\n");
   return root;
 
  err_out:
-  --recursion_depth;
   play_tree_free(root,1);
   return NULL;
 }
