@@ -1369,7 +1369,7 @@ int create_subwindow(gui_t *gui)
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     wc.hIcon = gui->icon;
     wc.hbrBackground = NULL; //WM_PAINT will handle background color switching;
-    wc.lpszClassName = "MPlayer Sub for Windows";
+    wc.lpszClassName = "MPlayer - Video";
     wc.lpszMenuName = NULL;
     RegisterClass(&wc);
 
@@ -1397,7 +1397,7 @@ int create_subwindow(gui_t *gui)
     if (y <= -1 || (y+(rect.bottom-rect.top) > GetSystemMetrics(SM_CYSCREEN)))
         y = x;
 
-    hWnd = CreateWindowEx(0, "MPlayer Sub for Windows", "MPlayer for Windows", style,
+    hWnd = CreateWindowEx(0, "MPlayer - Video", "MPlayer - Video", style,
                           x, y, rect.right-rect.left, rect.bottom-rect.top,
                           gui->subwindow, NULL, instance, NULL);
 
@@ -1476,7 +1476,7 @@ int create_window(gui_t *gui, char *skindir)
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     wc.hIcon = gui->icon;
     wc.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));
-    wc.lpszClassName = gui->classname = "MPlayer GUI for Windows";
+    wc.lpszClassName = gui->classname = "MPlayer";
     wc.lpszMenuName = NULL;
     RegisterClass(&wc);
 
@@ -1512,7 +1512,7 @@ int create_window(gui_t *gui, char *skindir)
         gui_main_pos_y = y;
     }
 
-    hwnd = CreateWindowEx(0, gui->classname, "MPlayer for Windows", style,
+    hwnd = CreateWindowEx(0, gui->classname, "MPlayer", style,
                           x, y, rect.right-rect.left, rect.bottom-rect.top,
                           gui->mainwindow, NULL, instance, NULL);
 
@@ -1523,7 +1523,7 @@ int create_window(gui_t *gui, char *skindir)
     nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
     nid.uCallbackMessage = WM_SYSTRAY;
     nid.hIcon = gui->icon;
-    strcpy(nid.szTip, "MPlayer for Windows");
+    strcpy(nid.szTip, "MPlayer");
 
     /* register the systray icon */
     Shell_NotifyIcon(NIM_ADD, &nid);
@@ -1548,7 +1548,7 @@ gui_t *create_gui(char *skindir, void (*playercontrol)(int event))
 {
     gui_t *gui = calloc(1, sizeof(gui_t));
     char temp[MAX_PATH];
-    HWND runningmplayer = FindWindow("MPlayer GUI for Windows", "MPlayer for Windows");
+    HWND runningmplayer = FindWindow("MPlayer", "MPlayer");
 
     if(runningmplayer)
     {
