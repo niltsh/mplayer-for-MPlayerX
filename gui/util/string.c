@@ -236,7 +236,18 @@ void setddup(char **old, const char *dir, const char *name)
         sprintf(*old, "%s/%s", dir, name);
 }
 
-char *TranslateFilename(int c, char *tmp, size_t tmplen)
+/**
+ * @brief Convert #guiInfo member Filename.
+ *
+ * @param how 0 (cut file path and extension),
+ *            1 (additionally, convert lower case) or
+ *            2 (additionally, convert upper case)
+ * @param fname pointer to a buffer to receive the converted Filename
+ * @param maxlen size of @a fname buffer
+ *
+ * @return pointer to @a fname buffer
+ */
+char *TranslateFilename(int how, char *fname, size_t maxlen)
 {
     int i;
     char *p;
@@ -244,7 +255,7 @@ char *TranslateFilename(int c, char *tmp, size_t tmplen)
 
     switch (guiInfo.StreamType) {
     case STREAMTYPE_FILE:
-        if (guiInfo.Filename && guiInfo.Filename[0]) {
+        if (guiInfo.Filename && *guiInfo.Filename) {
             p = strrchr(guiInfo.Filename,
 #if HAVE_DOS_PATHS
                         '\\');
@@ -253,61 +264,61 @@ char *TranslateFilename(int c, char *tmp, size_t tmplen)
 #endif
 
             if (p)
-                av_strlcpy(tmp, p + 1, tmplen);
+                av_strlcpy(fname, p + 1, maxlen);
             else
-                av_strlcpy(tmp, guiInfo.Filename, tmplen);
+                av_strlcpy(fname, guiInfo.Filename, maxlen);
 
-            len = strlen(tmp);
+            len = strlen(fname);
 
-            if (len > 3 && tmp[len - 3] == '.')
-                tmp[len - 3] = 0;
-            else if (len > 4 && tmp[len - 4] == '.')
-                tmp[len - 4] = 0;
-            else if (len > 5 && tmp[len - 5] == '.')
-                tmp[len - 5] = 0;
+            if (len > 3 && fname[len - 3] == '.')
+                fname[len - 3] = 0;
+            else if (len > 4 && fname[len - 4] == '.')
+                fname[len - 4] = 0;
+            else if (len > 5 && fname[len - 5] == '.')
+                fname[len - 5] = 0;
         } else
-            av_strlcpy(tmp, MSGTR_NoFileLoaded, tmplen);
+            av_strlcpy(fname, MSGTR_NoFileLoaded, maxlen);
         break;
 
     case STREAMTYPE_STREAM:
-        av_strlcpy(tmp, guiInfo.Filename, tmplen);
+        av_strlcpy(fname, guiInfo.Filename, maxlen);
         break;
 
 #ifdef CONFIG_VCD
     case STREAMTYPE_VCD:
-        snprintf(tmp, tmplen, MSGTR_Title, guiInfo.Track - 1);
+        snprintf(fname, maxlen, MSGTR_Title, guiInfo.Track - 1);
         break;
 #endif
 
 #ifdef CONFIG_DVDREAD
     case STREAMTYPE_DVD:
         if (guiInfo.Chapter)
-            snprintf(tmp, tmplen, MSGTR_Chapter, guiInfo.Chapter);
+            snprintf(fname, maxlen, MSGTR_Chapter, guiInfo.Chapter);
         else
-            av_strlcat(tmp, MSGTR_NoChapter, tmplen);
+            av_strlcat(fname, MSGTR_NoChapter, maxlen);
         break;
 #endif
 
     default:
-        av_strlcpy(tmp, MSGTR_NoMediaOpened, tmplen);
+        av_strlcpy(fname, MSGTR_NoMediaOpened, maxlen);
         break;
     }
 
-    if (c) {
-        for (i = 0; tmp[i]; i++) {
+    if (how) {
+        for (i = 0; fname[i]; i++) {
             int t = 0;
 
-            if (c == 1)
-                if (tmp[i] >= 'A' && tmp[i] <= 'Z')
+            if (how == 1)
+                if (fname[i] >= 'A' && fname[i] <= 'Z')
                     t = 32;
 
-            if (c == 2)
-                if (tmp[i] >= 'a' && tmp[i] <= 'z')
+            if (how == 2)
+                if (fname[i] >= 'a' && fname[i] <= 'z')
                     t = -32;
 
-            tmp[i] = (char)(tmp[i] + t);
+            fname[i] = (char)(fname[i] + t);
         }
     }
 
-    return tmp;
+    return fname;
 }
