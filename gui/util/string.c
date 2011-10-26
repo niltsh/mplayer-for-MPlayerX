@@ -249,7 +249,6 @@ void setddup(char **old, const char *dir, const char *name)
  */
 char *TranslateFilename(int how, char *fname, size_t maxlen)
 {
-    int i;
     char *p;
     size_t len;
 
@@ -305,18 +304,18 @@ char *TranslateFilename(int how, char *fname, size_t maxlen)
     }
 
     if (how) {
-        for (i = 0; fname[i]; i++) {
-            int t = 0;
+        p = fname;
 
-            if (how == 1)
-                if (fname[i] >= 'A' && fname[i] <= 'Z')
-                    t = 32;
+        while (*p) {
+            char t = 0;
 
-            if (how == 2)
-                if (fname[i] >= 'a' && fname[i] <= 'z')
-                    t = -32;
+            if (how == 1 && *p >= 'A' && *p <= 'Z')
+                t = 32;
+            if (how == 2 && *p >= 'a' && *p <= 'z')
+                t = -32;
 
-            fname[i] = (char)(fname[i] + t);
+            *p = *p + t;
+            p++;
         }
     }
 
