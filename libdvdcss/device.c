@@ -511,7 +511,7 @@ static int libc_open ( dvdcss_t dvdcss, char const *psz_device )
 static int win2k_open ( dvdcss_t dvdcss, char const *psz_device )
 {
     char psz_dvd[7];
-    _snprintf( psz_dvd, 7, "\\\\.\\%c:", psz_device[0] );
+    snprintf( psz_dvd, 7, "\\\\.\\%c:", psz_device[0] );
 
     /* To work around an M$ bug in IOCTL_DVD_READ_STRUCTURE, we need read
      * _and_ write access to the device (so we can make SCSI Pass Through
