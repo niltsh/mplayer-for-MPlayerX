@@ -28,6 +28,7 @@
 #include <unistd.h>
 
 #include "config.h"
+#include "mp_msg.h"
 #include "ad_internal.h"
 #include "libaf/af_format.h"
 #include "libvo/fastmemcpy.h"

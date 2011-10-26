@@ -26,8 +26,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "af.h"
+#include "mp_msg.h"
 #include "subopt-helper.h"
+#include "af.h"
 
 /// Internal specific data of the filter
 struct af_bs2b {

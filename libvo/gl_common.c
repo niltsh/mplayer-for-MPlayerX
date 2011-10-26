@@ -37,6 +37,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
+
+#include "mp_msg.h"
 #include "gl_common.h"
 #include "csputils.h"
 #include "aspect.h"

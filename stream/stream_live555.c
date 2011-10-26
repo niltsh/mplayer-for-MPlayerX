@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "mp_msg.h"
 #include "stream.h"
 #include "network.h"
 #include "libmpdemux/demuxer.h"

@@ -22,8 +22,7 @@
 #include <inttypes.h>
 
 #include "config.h"
-
-// for avi_stream_id():
+#include "mp_msg.h"
 #include "stream/stream.h"
 #include "demuxer.h"
 

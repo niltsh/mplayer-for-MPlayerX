@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "mp_msg.h"
 #include "network.h"
 #include "stream.h"
 #include "url.h"

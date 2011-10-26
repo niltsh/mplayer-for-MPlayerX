@@ -44,6 +44,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 #include "help_mp.h"
 #include "m_option.h"
 #include "m_struct.h"
+#include "mp_msg.h"
 #include "path.h"
 #include "libavutil/avstring.h"
 

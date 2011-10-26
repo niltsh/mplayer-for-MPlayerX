@@ -29,6 +29,7 @@
 #include "libavutil/intreadwrite.h"
 #include "m_struct.h"
 #include "m_option.h"
+#include "mp_msg.h"
 #include "stream.h"
 #include "stream_bd.h"
 

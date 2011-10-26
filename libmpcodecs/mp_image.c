@@ -28,9 +28,9 @@
 
 #include "libmpcodecs/img_format.h"
 #include "libmpcodecs/mp_image.h"
-
 #include "libvo/fastmemcpy.h"
 #include "libavutil/mem.h"
+#include "mp_msg.h"
 
 void mp_image_alloc_planes(mp_image_t *mpi) {
   // IF09 - allocate space for 4. plane delta info - unused

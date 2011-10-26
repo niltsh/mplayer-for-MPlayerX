@@ -21,11 +21,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "config.h"
 #include <stdlib.h>
 #include <speex/speex.h>
 #include <speex/speex_stereo.h>
 #include <speex/speex_header.h>
+
+#include "config.h"
+#include "mp_msg.h"
 #include "ad_internal.h"
 
 static const ad_info_t info = {

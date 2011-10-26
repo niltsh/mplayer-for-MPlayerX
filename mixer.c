@@ -28,7 +28,7 @@
 #include "libao2/audio_out.h"
 #include "libaf/af.h"
 #include "mixer.h"
-
+#include "mp_msg.h"
 #include "help_mp.h"
 
 char * mixer_device=NULL;

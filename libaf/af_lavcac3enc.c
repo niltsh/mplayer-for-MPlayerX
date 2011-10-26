@@ -28,6 +28,7 @@
 #include "config.h"
 #include "af.h"
 #include "help_mp.h"
+#include "mp_msg.h"
 #include "reorder_ch.h"
 #include "av_helpers.h"
 

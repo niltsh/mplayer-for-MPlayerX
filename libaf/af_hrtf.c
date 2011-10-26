@@ -27,6 +27,7 @@
 
 #include <math.h>
 
+#include "mp_msg.h"
 #include "af.h"
 #include "dsp.h"
 

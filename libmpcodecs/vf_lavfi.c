@@ -21,6 +21,7 @@
 #include "vf.h"
 #include "m_struct.h"
 #include "fmt-conversion.h"
+#include "mp_msg.h"
 #include "libavfilter/avfilter.h"
 #include "libavfilter/avfiltergraph.h"
 #include "libavutil/pixdesc.h"

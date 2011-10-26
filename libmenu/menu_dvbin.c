@@ -32,6 +32,7 @@
 
 #include "m_struct.h"
 #include "m_option.h"
+#include "mp_msg.h"
 
 #include "libmpcodecs/img_format.h"
 #include "libmpcodecs/mp_image.h"

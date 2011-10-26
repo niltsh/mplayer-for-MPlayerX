@@ -37,6 +37,7 @@
 
 #include "af.h"
 #include "libavutil/common.h"
+#include "mp_msg.h"
 #include "subopt-helper.h"
 #include "help_mp.h"
 

@@ -25,7 +25,7 @@
 #include <string.h>
 
 #include "config.h"
-
+#include "mp_msg.h"
 #include "video_out.h"
 #include "video_out_internal.h"
 

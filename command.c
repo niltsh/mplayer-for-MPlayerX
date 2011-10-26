@@ -28,6 +28,7 @@
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"
 #include "codec-cfg.h"
+#include "mp_msg.h"
 #include "mplayer.h"
 #include "sub/sub.h"
 #include "m_option.h"

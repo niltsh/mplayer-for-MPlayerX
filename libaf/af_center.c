@@ -29,6 +29,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "mp_msg.h"
 #include "af.h"
 
 // Data for specific instances of this filter

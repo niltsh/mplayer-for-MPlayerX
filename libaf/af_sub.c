@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "mp_msg.h"
 #include "af.h"
 #include "dsp.h"
 

@@ -24,7 +24,7 @@
 #include <string.h>
 
 #include "m_option.h"
-
+#include "mp_msg.h"
 #include "stream/stream.h"
 #include "demuxer.h"
 #include "stheader.h"

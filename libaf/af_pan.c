@@ -25,6 +25,7 @@
 #include <math.h>
 #include <limits.h>
 
+#include "mp_msg.h"
 #include "af.h"
 
 // Data for specific instances of this filter

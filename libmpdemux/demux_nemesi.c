@@ -17,10 +17,13 @@
  * with MPlayer; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "stream/stream.h"
 #include "mpcommon.h"
+#include "mp_msg.h"
 #include "demuxer.h"
 #include "stheader.h"
 #include "nemesi/rtsp.h"

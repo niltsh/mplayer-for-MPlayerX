@@ -19,8 +19,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "config.h"
 
+#include "config.h"
+#include "mp_msg.h"
 #include "ad_internal.h"
 #include "vqf.h"
 #include "libmpdemux/aviprint.h"

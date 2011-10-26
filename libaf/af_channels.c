@@ -25,6 +25,7 @@
 #include <string.h>
 #include <inttypes.h>
 
+#include "mp_msg.h"
 #include "af.h"
 
 #define FR 0

@@ -20,9 +20,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "osdep/strsep.h"
 #include "libmpcodecs/dec_audio.h"
-
+#include "mp_msg.h"
 #include "af.h"
 
 // Static list of filters

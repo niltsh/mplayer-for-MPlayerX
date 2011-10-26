@@ -23,6 +23,7 @@
 #include <math.h>
 
 #include "config.h"
+#include "mp_msg.h"
 #include "ad_internal.h"
 #include "libaf/reorder_ch.h"
 

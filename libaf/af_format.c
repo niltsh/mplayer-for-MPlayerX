@@ -29,6 +29,7 @@
 
 #include "config.h"
 #include "af.h"
+#include "mp_msg.h"
 #include "mpbswap.h"
 #include "libvo/fastmemcpy.h"
 

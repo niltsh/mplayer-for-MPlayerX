@@ -26,7 +26,6 @@
 #include "af_format.h"
 #include "control.h"
 #include "cpudetect.h"
-#include "mp_msg.h"
 
 struct af_instance_s;
 

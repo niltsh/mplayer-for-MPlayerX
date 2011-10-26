@@ -28,8 +28,6 @@
 #include <stdint.h>
 
 #include "config.h"
-#include "mp_msg.h"
-
 #include "video_out.h"
 #include "csputils.h"
 

@@ -22,7 +22,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "mp_msg.h"
 
 //--------- codec's requirements (filled by the codec/vf) ---------
 

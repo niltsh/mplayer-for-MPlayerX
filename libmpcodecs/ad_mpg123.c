@@ -23,7 +23,7 @@
 #include <unistd.h>
 
 #include "config.h"
-
+#include "mp_msg.h"
 #include "ad_internal.h"
 #include "dec_audio.h"
 
