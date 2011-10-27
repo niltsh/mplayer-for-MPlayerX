@@ -8,6 +8,7 @@ MPlayer (1.0)
 
     Demuxers:
     * experimental support for using binary Quicktime codecs with -demuxer lavf.
+    * correct runtime and average bitrate for VBR (variable bitrate) MP3
 
     Filters:
     * delogo: allow to change the rectangle based on the time.
