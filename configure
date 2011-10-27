@@ -3885,10 +3885,13 @@ echores "$gettimeofday"
 
 
 echocheck "glob()"
+# glob_win enables a Windows-specific glob() replacement
 glob=yes
+glob_win=yes
 def_glob='#define HAVE_GLOB 1'
 statement_check glob.h 'glob("filename", 0, 0, 0)' ||
-    { glob=no ; def_glob='#undef HAVE_GLOB' ; }
+    { glob=no ; def_glob='#undef HAVE_GLOB' ;
+      mingw32 && glob_win=no ; }
 echores "$glob"
 
 
@@ -7844,6 +7847,7 @@ MPLAYER  = $_mplayer
 # operating system features which have local fallbacks
 GETTIMEOFDAY = $gettimeofday
 GLOB         = $glob
+GLOB_WIN     = $glob_win
 MMAP         = $mmap
 SETENV       = $setenv
 SHMEM        = $shmem

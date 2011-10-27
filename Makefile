@@ -25,7 +25,7 @@ include config.mak
 
 # local fallbacks for missing operating system features
 OS_FEATURE-$(GETTIMEOFDAY)           += osdep/gettimeofday.c
-OS_FEATURE-$(GLOB)                   += osdep/glob-win.c
+OS_FEATURE-$(GLOB_WIN)               += osdep/glob-win.c
 OS_FEATURE-$(MMAP)                   += osdep/mmap-os2.c
 OS_FEATURE-$(SETENV)                 += osdep/setenv.c
 OS_FEATURE-$(SHMEM)                  += osdep/shmem.c
