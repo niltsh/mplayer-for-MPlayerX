@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 33962
+// Synced with help_mp-en.h rev. 34253
 //
 // Translated by JRaSH <jrash06@163.com>
 
@@ -809,6 +809,35 @@ static const char help_text[]=
 // wsxdnd.c
 #define MSGTR_WS_NotAFile "这好像不是一个文件...\n"
 #define MSGTR_WS_DDNothing "D&D：未返回任何东西！\n"
+
+// Win32 GUI
+#define MSGTR_Close "关闭"
+#define MSGTR_Default "默认值"
+#define MSGTR_Down "向下"
+#define MSGTR_Load "加载"
+#define MSGTR_Save "保存"
+#define MSGTR_Up "向上"
+#define MSGTR_DirectorySelect "选择目录..."
+#define MSGTR_PlaylistSave "保存播放列表..."
+#define MSGTR_PlaylistSelect "选择播放列表..."
+#define MSGTR_SelectChapter "选择章节..."
+#define MSGTR_MENU_DebugConsole "调试控制终端"
+#define MSGTR_MENU_OnlineHelp "线上帮助内容"
+#define MSGTR_MENU_PlayDirectory "播放目录内容..."
+#define MSGTR_MENU_SeekBack "向后定位"
+#define MSGTR_MENU_SeekForw "向前定位"
+#define MSGTR_MENU_ShowHide "显示/隐藏"
+#define MSGTR_MENU_SubtitlesOnOff "显示字幕开/关"
+#define MSGTR_PLAYLIST_AddFile "添加文件..."
+#define MSGTR_PLAYLIST_AddURL "添加 URL..."
+#define MSGTR_PREFERENCES_Priority "进程优先级："
+#define MSGTR_PREFERENCES_PriorityHigh "高"
+#define MSGTR_PREFERENCES_PriorityLow "低"
+#define MSGTR_PREFERENCES_PriorityNormal "标准"
+#define MSGTR_PREFERENCES_PriorityNormalAbove "高于标准"
+#define MSGTR_PREFERENCES_PriorityNormalBelow "低于标准"
+#define MSGTR_PREFERENCES_VideoInSubwin "在子窗口中显示视频（仅用于 DirectX）"
+
 
 // ======================= video output drivers ========================
 
