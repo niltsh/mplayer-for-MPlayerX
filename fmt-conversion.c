@@ -90,6 +90,8 @@ static const struct {
     {IMGFMT_444P16_BE,  PIX_FMT_YUV444P16BE},
     {IMGFMT_444P10_LE,  PIX_FMT_YUV444P10LE},
     {IMGFMT_444P10_BE,  PIX_FMT_YUV444P10BE},
+    {IMGFMT_444P9_LE,  PIX_FMT_YUV444P9LE},
+    {IMGFMT_444P9_BE,  PIX_FMT_YUV444P9BE},
 
     // YUVJ are YUV formats that use the full Y range and not just
     // 16 - 235 (see colorspaces.txt).
