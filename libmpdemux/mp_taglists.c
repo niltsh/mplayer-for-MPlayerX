@@ -21,6 +21,7 @@
 #include <stdint.h>
 #include "mp_msg.h"
 #include "mp_taglists.h"
+#include "libavutil/common.h"
 #include "libavformat/avformat.h"
 // for AVCodecTag
 #include "libavformat/internal.h"
@@ -68,7 +69,7 @@ static const struct AVCodecTag * const mp_wav_taglists[] = {mp_wav_tags, 0};
 static const struct AVCodecTag mp_codecid_override_tags[] = {
     { CODEC_ID_8SVX_EXP,          MKTAG('8', 'e', 'x', 'p')},
     { CODEC_ID_8SVX_FIB,          MKTAG('8', 'f', 'i', 'b')},
-    { CODEC_ID_8SVX_RAW,          MKTAG('8', 'r', 'a', 'w')},
+    { MKBETAG('8','S','V','X'),   MKTAG('8', 'r', 'a', 'w')},
     { CODEC_ID_AAC,               MKTAG('M', 'P', '4', 'A')},
     { CODEC_ID_AAC_LATM,          MKTAG('M', 'P', '4', 'L')},
     { CODEC_ID_AC3,               0x2000},
