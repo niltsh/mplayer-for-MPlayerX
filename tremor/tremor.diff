@@ -130,7 +130,8 @@
    int ret=0;
 --- os.h	(revision 25873)
 +++ os.h	(working copy)
-@@ -20,18 +20,8 @@
+@@ -20,2 +20,3 @@
++#include "config.h"
  #include <math.h>
  #include "os_types.h"
 
