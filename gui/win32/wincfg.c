@@ -92,7 +92,7 @@ int cfg_gui_include(m_option_t *conf, const char *filename)
 {
     (void)conf;
 
-    return m_config_parse_config_file(gui_conf, filename);
+    return m_config_parse_config_file(gui_conf, filename, 0);
 }
 
 int cfg_read(void)
