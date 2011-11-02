@@ -3885,7 +3885,7 @@ echores "$gettimeofday"
 
 
 echocheck "glob()"
-# glob_win enables a Windows-specific glob() replacement
+# glob_win disables a Windows-specific glob() replacement.
 glob=yes
 glob_win=yes
 def_glob='#define HAVE_GLOB 1'
