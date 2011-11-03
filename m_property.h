@@ -21,7 +21,7 @@
 
 #include "m_option.h"
 
-/// \defgroup Properties
+/// \defgroup properties Properties
 ///
 /// Properties provide an interface to query and set the state of various
 /// things in MPlayer. The API is based on the \ref Options API like the

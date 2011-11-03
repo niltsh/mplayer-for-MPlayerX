@@ -61,7 +61,7 @@ struct m_config;
 #define PLAY_TREE_ITER_RND 1
 ///@}
 
-/// \defgroup Playtree
+/// \defgroup playtree Playtree
 ///@{
 
 typedef struct play_tree play_tree_t;

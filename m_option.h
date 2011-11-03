@@ -21,7 +21,7 @@
 
 #include <string.h>
 
-/// \defgroup Options
+/// \defgroup options Options
 /// m_option allows to parse, print and copy data of various types.
 /// It is the base of the \ref OptionsStruct, \ref Config and
 /// \ref Properties APIs.
