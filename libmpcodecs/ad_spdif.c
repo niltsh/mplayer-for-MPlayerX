@@ -117,7 +117,7 @@ static int init(sh_audio_t *sh)
                             read_packet, write_packet, seek);
     if (!lavf_ctx->pb)
         goto fail;
-    stream = av_new_stream(lavf_ctx, 0);
+    stream = avformat_new_stream(lavf_ctx, 0);
     if (!stream)
         goto fail;
     lavf_ctx->duration   = AV_NOPTS_VALUE;
