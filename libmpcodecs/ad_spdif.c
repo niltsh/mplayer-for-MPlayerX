@@ -21,6 +21,7 @@
 #include "config.h"
 #include "mp_msg.h"
 #include "ad_internal.h"
+#include "av_helpers.h"
 #include "libavformat/avformat.h"
 #include "libavcodec/avcodec.h"
 #include "libavutil/opt.h"
@@ -106,7 +107,7 @@ static int init(sh_audio_t *sh)
     sh->context = spdif_ctx;
     lavf_ctx    = spdif_ctx->lavf_ctx;
 
-    av_register_all();
+    init_avformat();
     lavf_ctx->oformat = av_guess_format(FILENAME_SPDIFENC, NULL, NULL);
     if (!lavf_ctx->oformat)
         goto fail;
