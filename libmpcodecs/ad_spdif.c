@@ -106,6 +106,7 @@ static int init(sh_audio_t *sh)
     sh->context = spdif_ctx;
     lavf_ctx    = spdif_ctx->lavf_ctx;
 
+    av_register_all();
     lavf_ctx->oformat = av_guess_format(FILENAME_SPDIFENC, NULL, NULL);
     if (!lavf_ctx->oformat)
         goto fail;
