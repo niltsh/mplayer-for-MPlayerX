@@ -3843,7 +3843,7 @@ cat > $TMPC << EOF
 #define _ISOC99_SOURCE
 #include <stdarg.h>
 #include <stdio.h>
-int main(void) { va_list ap = { 0 }; vsscanf("foo", "bar", ap); return 0; }
+int main(void) { va_list ap = { { 0 } }; vsscanf("foo", "bar", ap); return 0; }
 EOF
 cc_check || { vsscanf=no ; def_vsscanf='#undef HAVE_VSSCANF' ; }
 echores "$vsscanf"
