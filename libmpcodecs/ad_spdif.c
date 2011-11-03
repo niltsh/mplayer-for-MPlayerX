@@ -157,8 +157,6 @@ static int init(sh_audio_t *sh)
         } else
             srate = sh->avctx->sample_rate;
         bps = sh->avctx->bit_rate/8;
-    } else {
-        ;
     }
     sh->ds->buffer_pos -= in_size;
 
