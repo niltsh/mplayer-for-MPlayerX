@@ -53,6 +53,7 @@
 
 #undef malloc
 #undef free
+#undef strcasecmp
 
 /* some convenient #define's, is this portable enough? */
 /// Printout  with vf_zrmjpeg: prefix at VERBOSE level
