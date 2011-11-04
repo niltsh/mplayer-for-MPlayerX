@@ -5498,8 +5498,6 @@ if test "$_alsa" != no ; then
 fi
 def_alsa='#undef CONFIG_ALSA'
 def_alsa5='#undef CONFIG_ALSA5'
-def_alsa9='#undef CONFIG_ALSA9'
-def_alsa1x='#undef CONFIG_ALSA1X'
 def_sys_asoundlib_h='#undef HAVE_SYS_ASOUNDLIB_H'
 def_alsa_asoundlib_h='#undef HAVE_ALSA_ASOUNDLIB_H'
 if test "$_alsaver" ; then
@@ -5514,28 +5512,24 @@ if test "$_alsaver" ; then
     _alsa9=yes
     aomodules="alsa $aomodules"
     def_alsa='#define CONFIG_ALSA 1'
-    def_alsa9='#define CONFIG_ALSA9 1'
     def_sys_asoundlib_h='#define HAVE_SYS_ASOUNDLIB_H 1'
     res_comment="using alsa 0.9.x and sys/asoundlib.h"
   elif test "$_alsaver" = '0.9.x-alsa' ; then
     _alsa9=yes
     aomodules="alsa $aomodules"
     def_alsa='#define CONFIG_ALSA 1'
-    def_alsa9='#define CONFIG_ALSA9 1'
     def_alsa_asoundlib_h='#define HAVE_ALSA_ASOUNDLIB_H 1'
     res_comment="using alsa 0.9.x and alsa/asoundlib.h"
   elif test "$_alsaver" = '1.0.x-sys' ; then
     _alsa1x=yes
     aomodules="alsa $aomodules"
     def_alsa='#define CONFIG_ALSA 1'
-    def_alsa1x="#define CONFIG_ALSA1X 1"
     def_alsa_asoundlib_h='#define HAVE_SYS_ASOUNDLIB_H 1'
     res_comment="using alsa 1.0.x and sys/asoundlib.h"
   elif test "$_alsaver" = '1.0.x-alsa' ; then
     _alsa1x=yes
     aomodules="alsa $aomodules"
     def_alsa='#define CONFIG_ALSA 1'
-    def_alsa1x="#define CONFIG_ALSA1X 1"
     def_alsa_asoundlib_h='#define HAVE_ALSA_ASOUNDLIB_H 1'
     res_comment="using alsa 1.0.x and alsa/asoundlib.h"
   else
@@ -8511,9 +8505,7 @@ $def_xshape
 
 /* Audio output drivers */
 $def_alsa
-$def_alsa1x
 $def_alsa5
-$def_alsa9
 $def_arts
 $def_coreaudio
 $def_dart
