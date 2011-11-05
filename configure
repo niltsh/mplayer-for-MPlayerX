@@ -2761,15 +2761,6 @@ if test "$_yasm" ; then
     yasm_check || die "yasm not found, use --yasm='' if you really want to compile without"
   fi
 fi
-if test $_yasm ; then
-  def_yasm='#define HAVE_YASM 1'
-  have_yasm="yes"
-  echores "$_yasm"
-else
-  def_yasm='#define HAVE_YASM 0'
-  have_yasm="no"
-  echores "no"
-fi
 
 echocheck "bswap"
 echo 'bswap %eax' > $TMPS
@@ -2783,8 +2774,19 @@ inline_asm_check '"":::"%xmm0"' &&
   xmm_clobbers=yes || xmm_clobbers=no
 echores "$xmm_clobbers"
 
+else
+  _yasm=''
 fi #if x86
 
+if test $_yasm ; then
+  def_yasm='#define HAVE_YASM 1'
+  have_yasm="yes"
+  echores "$_yasm"
+else
+  def_yasm='#define HAVE_YASM 0'
+  have_yasm="no"
+  echores "no"
+fi
 
 #FIXME: This should happen before the check for CFLAGS..
 def_altivec_h='#define HAVE_ALTIVEC_H 0'
