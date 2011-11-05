@@ -529,8 +529,8 @@ static int get_buffer(AVCodecContext *avctx, AVFrame *pic){
     int type= MP_IMGTYPE_IPB;
     int width= avctx->width;
     int height= avctx->height;
-    // special case to handle reget_buffer without buffer hints
-    if (pic->opaque && pic->data[0] && !pic->buffer_hints)
+    // special case to handle reget_buffer
+    if (pic->opaque && pic->data[0] && (!pic->buffer_hints || pic->buffer_hints & FF_BUFFER_HINTS_REUSABLE))
         return 0;
     avcodec_align_dimensions(avctx, &width, &height);
 //printf("get_buffer %d %d %d\n", pic->reference, ctx->ip_count, ctx->b_count);
@@ -541,16 +541,16 @@ static int get_buffer(AVCodecContext *avctx, AVFrame *pic){
         if (pic->buffer_hints & FF_BUFFER_HINTS_READABLE)
             flags |= MP_IMGFLAG_READABLE;
         if (pic->buffer_hints & FF_BUFFER_HINTS_PRESERVE) {
-            type = MP_IMGTYPE_STATIC;
+            type = MP_IMGTYPE_IP;
             flags |= MP_IMGFLAG_PRESERVE;
         }
         if (pic->buffer_hints & FF_BUFFER_HINTS_REUSABLE) {
-            type = MP_IMGTYPE_STATIC;
+            type = MP_IMGTYPE_IP;
             flags |= MP_IMGFLAG_PRESERVE;
         }
         flags|=(avctx->skip_idct<=AVDISCARD_DEFAULT && avctx->skip_frame<=AVDISCARD_DEFAULT && ctx->do_slices) ?
                  MP_IMGFLAG_DRAW_CALLBACK:0;
-        mp_msg(MSGT_DECVIDEO, MSGL_DBG2, type == MP_IMGTYPE_STATIC ? "using STATIC\n" : "using TEMP\n");
+        mp_msg(MSGT_DECVIDEO, MSGL_DBG2, type == MP_IMGTYPE_IP ? "using IP\n" : "using TEMP\n");
     } else {
         if(!pic->reference){
             ctx->b_count++;
