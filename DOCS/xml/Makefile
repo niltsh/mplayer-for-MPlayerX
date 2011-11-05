@@ -1,7 +1,6 @@
 # Makefile for generating the HTML documentation
 
 include ../../config.mak
-include xml.mak
 
 # Generated HTML files go here.
 HTML = ../HTML

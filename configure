@@ -7930,12 +7930,6 @@ if xsltproc --version > /dev/null 2>&1; then
   fi
 fi
 
-cat > DOCS/xml/xml.mak << EOF
-CATALOG = $catalog
-XMLLINT_COMMAND = xmllint --noout --noent --postvalid $catalog_opts \$*
-XSLT_COMMAND = $xsltcommand
-EOF
-
 #############################################################################
 
 mak_enable () {
@@ -7964,6 +7958,10 @@ DOC_LANGS = $language_doc
 DOC_LANG_ALL = $doc_lang_all
 MAN_LANGS = $language_man
 MAN_LANG_ALL = $man_lang_all
+
+CATALOG = $catalog
+XMLLINT_COMMAND = xmllint --noout --noent --postvalid $catalog_opts \$*
+XSLT_COMMAND = $xsltcommand
 
 prefix  = \$(DESTDIR)$_prefix
 BINDIR  = \$(DESTDIR)$_bindir
