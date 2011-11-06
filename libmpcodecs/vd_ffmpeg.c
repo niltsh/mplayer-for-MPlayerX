@@ -785,13 +785,16 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
     pkt.flags = AV_PKT_FLAG_KEY;
     if (!ctx->palette_sent && sh->bih && sh->bih->biBitCount <= 8) {
         /* Pass palette to codec */
-        uint8_t *pal = av_packet_new_side_data(&pkt, AV_PKT_DATA_PALETTE, AVPALETTE_SIZE);
         unsigned palsize = sh->bih->biSize - sizeof(*sh->bih);
         if (palsize == 0) {
             /* Palette size in biClrUsed */
             palsize = sh->bih->biClrUsed * 4;
         }
-        memcpy(pal, sh->bih+1, FFMIN(palsize, AVPALETTE_SIZE));
+        // if still 0, we simply have no palette in extradata.
+        if (palsize) {
+            uint8_t *pal = av_packet_new_side_data(&pkt, AV_PKT_DATA_PALETTE, AVPALETTE_SIZE);
+            memcpy(pal, sh->bih+1, FFMIN(palsize, AVPALETTE_SIZE));
+        }
         ctx->palette_sent = 1;
     }
     ret = avcodec_decode_video2(avctx, pic, &got_picture, &pkt);
