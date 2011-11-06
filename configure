@@ -7108,14 +7108,11 @@ echores "$_mp3lame"
 
 
 echocheck "mencoder"
-if test "$_mencoder" = yes ; then
-  def_muxers='#define CONFIG_MUXERS 1'
-else
+if test "$_mencoder" = no ; then
   # mpeg1video for vf_lavc, snow for vf_uspp / vf_mcdeint,
   libavencoders="$mplayer_encoders MPEG1VIDEO_ENCODER SNOW_ENCODER"
   # needed for codec id -> tag conversion
   libavmuxers="AVI_MUXER"
-  def_muxers='#define CONFIG_MUXERS 0'
 fi
 echores "$_mencoder"
 
@@ -8261,7 +8258,7 @@ CONFIG_CRYSTALHD= $crystalhd
 CONFIG_ENCODERS = yes
 CONFIG_GPL      = yes
 CONFIG_MLIB     = $_mlib
-CONFIG_MUXERS   = $_mencoder
+CONFIG_MUXERS   = yes
 CONFIG_NETWORK  = $networking
 CONFIG_RTPDEC   = $networking
 CONFIG_VF_LAVFI = $_vf_lavfi
@@ -8681,7 +8678,7 @@ $def_ffmpeg_so
 #define CONFIG_DECODERS 1
 #define CONFIG_ENCODERS 1
 #define CONFIG_DEMUXERS 1
-$def_muxers
+#define CONFIG_MUXERS 1
 $def_rtpdec
 
 $def_arpa_inet_h
