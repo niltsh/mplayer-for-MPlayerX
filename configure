@@ -7930,6 +7930,8 @@ if xsltproc --version > /dev/null 2>&1; then
     echores "Found xsltproc but no stylesheets on your system."
     echores "xsltproc is unusable without stylesheets."
   fi
+else
+  echores "xsltproc not found"
 fi
 
 #############################################################################
