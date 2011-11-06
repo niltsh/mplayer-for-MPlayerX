@@ -7906,16 +7906,28 @@ for lang in $language_doc; do
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
     "$dtd"
 [
-EOF
-
-  for file in $(find DOCS/xml/en -name \*.xml -exec basename \{\} \;); do
-    echo '<!ENTITY '$file' SYSTEM "'$file'">' >> DOCS/xml/$lang/main.xml
-  done
-
-  cat >> DOCS/xml/$lang/main.xml << EOF
+<!ENTITY bugreports.xml SYSTEM "bugreports.xml">
+<!ENTITY documentation.xml SYSTEM "documentation.xml">
+<!ENTITY encoding-guide.xml SYSTEM "encoding-guide.xml">
+<!ENTITY faq.xml SYSTEM "faq.xml">
+<!ENTITY install.xml SYSTEM "install.xml">
+<!ENTITY mencoder.xml SYSTEM "mencoder.xml">
+<!ENTITY ports.xml SYSTEM "ports.xml">
+<!ENTITY skin.xml SYSTEM "skin.xml">
+<!ENTITY usage.xml SYSTEM "usage.xml">
+<!ENTITY video.xml SYSTEM "video.xml">
 ]>
 <book id="index" lang="$lang">
 &documentation.xml;
+&install.xml;
+&usage.xml;
+&video.xml;
+&ports.xml;
+&mencoder.xml;
+&encoding-guide.xml;
+&faq.xml;
+&bugreports.xml;
+&skin.xml;
 </book>
 EOF
 

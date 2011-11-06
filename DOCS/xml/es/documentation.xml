@@ -180,12 +180,3 @@ License Version 2 (GPL v.2).
 </para>
 
 </chapter>
-
-&install.xml;
-&usage.xml;
-&video.xml;
-&ports.xml;
-&mencoder.xml;
-&faq.xml;
-&bugreports.xml;
-&skin.xml;
