@@ -203,7 +203,6 @@
         </listitem>
       </itemizedlist>
 
-      <!-- FIXME: Lizenz sollte in bookinfo sein -->
       <para>
         <application>MPlayer</application> und <application>MEncoder</application> können
         weitergegeben werden unter den Bedingungen der GNU General Public License Version 2.

@@ -163,7 +163,6 @@ et de décodeurs de <application>MPlayer</application></para></listitem>
 </para></listitem>
 </itemizedlist>
 
-<!-- FIXME: the license should be in bookinfo -->
 <para>
 <application>MPlayer</application> et <application>MEncoder</application>
 peuvent être distribués selon les termes de la GNU General Public License Version 2.

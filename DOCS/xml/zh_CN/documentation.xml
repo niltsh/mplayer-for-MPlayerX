@@ -167,7 +167,6 @@ It can encode with various codecs, like
 </para></listitem>
 </itemizedlist>
 
-<!-- FIXME: the license should be in bookinfo -->
 <para>
 <application>MPlayer</application>及<application>MEncoder</application>
 可以在遵循GNU通用公用协议第2版的前提下被发布。

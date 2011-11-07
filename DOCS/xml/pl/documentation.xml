@@ -178,7 +178,6 @@ oraz audio <emphasis role="bold">PCM/MP3/VBR MP3</emphasis>.
 </para></listitem>
 </itemizedlist>
 
-<!-- FIXME: the license should be in bookinfo -->
 <para>
 <application>MPlayer</application> i <application>MEncoder</application>
 mogą być rozprowadzane zgodnie z warunkami GNU General Public License Version 2.

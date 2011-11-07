@@ -160,7 +160,6 @@ alkotó codec-ekkel, audiót tekintve pedig PCM/MP3/VBR MP3 a választék.
 </para></listitem>
 </itemizedlist>
 
-<!-- FIXME: the license should be in bookinfo -->
 <para>
 Az <application>MPlayer</application> és <application>MEncoder</application>
 a GNU General Public License v2 értelmében terjeszthető.
