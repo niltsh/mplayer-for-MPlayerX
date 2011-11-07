@@ -27,7 +27,6 @@
 #include <string.h>
 #include "cpudetect.h"
 #include "fastmemcpy.h"
-#include "libavutil/x86_cpu.h"
 #undef memcpy
 
 #define BLOCK_SIZE 4096
