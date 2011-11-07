@@ -23,14 +23,6 @@ docbook-xml, docbook-xsl, xsltproc, libxml2-utils
 Building the documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Before trying to build the documentation, run
-
-  make help
-
-to see all available build targets and make your choice. If something goes
-wrong, check the Configuration section of the toplevel Makefile and adjust
-the variables.
-
 The documentation and its translations reside in subdirectories.
 When building the documentation, the generated HTML files are
 placed in subdirectories of the 'HTML' directory.
