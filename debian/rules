@@ -131,7 +131,6 @@ install-arch: build-arch
 ###### build-indep
 DOCS/HTML/en/index.html:
 	sh debian/all-lang-config-mak.sh > config.mak
-	cd DOCS/xml && ./configure
 	$(MAKE) -C DOCS/xml html-chunked
 
 build-indep:

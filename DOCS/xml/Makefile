@@ -15,9 +15,6 @@ html-single:  $(addprefix html-single-,$(DOC_LANGS))
 
 xmllint: $(addprefix xmllint-,$(DOC_LANGS))
 
-$(CONFIGURE_GENERATED) $(MAIN_XML_ALL):
-	./configure
-
 define lang-def
 html-chunked-$(lang): $(HTML)/$(lang)/dummy.html
 html-single-$(lang):  $(HTML)/$(lang)/MPlayer.html
