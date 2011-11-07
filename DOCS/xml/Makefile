@@ -39,12 +39,8 @@ $(foreach lang, $(DOC_LANG_ALL),$(eval $(lang-def)))
 clean:
 	-rm -rf $(HTML)
 
-# Remove generated files but keep the HTML (for release tarballs).
-releaseclean:
-	-rm -f $(CONFIGURE_GENERATED)
-	-rm -f $(MAIN_XML_ALL)
-
-distclean: clean releaseclean
+distclean: clean
+	-rm -f $(CONFIGURE_GENERATED) $(MAIN_XML_ALL)
 
 .PHONY: all html-chunked html-single xmllint
 .PHONY: html-chunked-* html-single-* xmllint-* *clean

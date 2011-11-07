@@ -18,8 +18,7 @@ create the release tree:
 - check out FFmpeg subdirs
 - remove obsolete DOCS translations, help files
 
-- build the HTML docs from XML sources, then clean up:
-    make html-chunked; make releaseclean
+- build the HTML docs from XML sources, then clean up
 
 release the tree:
     cd ..
