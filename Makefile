@@ -958,6 +958,7 @@ uninstall:
 
 clean:
 	-$(MAKE) -C ffmpeg $@
+	-$(MAKE) -C tests clean
 	-rm -f $(call ADD_ALL_DIRS,/*.o /*.a /*.ho /*~)
 	-rm -f $(call ADD_ALL_EXESUFS,mplayer mencoder)
 
@@ -1120,12 +1121,14 @@ dhahelperclean:
 	-rm -f vidix/dhahelper/*.o vidix/dhahelper/*~ vidix/dhahelper/test
 	-rm -f $(addprefix vidix/dhahelperwin/,*.o *~ dhahelper.sys dhasetup.exe base.tmp temp.exp)
 
+fatetest: mplayer$(EXESUF)
+	$(MAKE) -C tests fatetest
 
 
 -include $(DEP_FILES) $(DRIVER_DEP_FILES) $(TESTS_DEP_FILES) $(TOOLS_DEP_FILES) $(DHAHELPER_DEP_FILES)
 
 .PHONY: all doxygen *install* *tools drivers dhahelper*
-.PHONY: checkheaders *clean tests check_checksums
+.PHONY: checkheaders *clean tests check_checksums fatetest
 .PHONY: doc html-chunked* html-single* xmllint*
 
 # Disable suffix rules.  Most of the builtin rules are suffix rules,
