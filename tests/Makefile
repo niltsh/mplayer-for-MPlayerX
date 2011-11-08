@@ -11,7 +11,6 @@ BROKEN_SAMPLES= \
 ALLSAMPLES_FULLPATH=$(wildcard $(FATE_SAMPLES)/*/*.*)
 ALLSAMPLES=$(patsubst $(FATE_SAMPLES)/%,%,$(ALLSAMPLES_FULLPATH))
 SAMPLES=$(filter-out $(BROKEN_SAMPLES),$(ALLSAMPLES))
-REFS=$(patsubst %,ref/%.md5,$(SAMPLES))
 RESULTS=$(patsubst %,res/%.md5,$(SAMPLES))
 
 fatetest: $(RESULTS)
