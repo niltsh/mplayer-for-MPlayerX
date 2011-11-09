@@ -1198,31 +1198,6 @@ static const char help_text[]=
 "Kompiliere MPlayer mit #undef HAVE_AUDIO_SELECT in der Datei config.h !\n\n"
 #define MSGTR_AO_SUN_CantReopenReset "[AO SUN]\nKritischer Fehler: *** KANN AUDIO-GERÄT NICHT ERNEUT ÖFFNEN / ZURÜCKSETZEN *** %s\n"
 
-// ao_alsa5.c
-#define MSGTR_AO_ALSA5_InitInfo "[AO ALSA5] alsa-init: angefordertes Format: %d Hz, %d Kanäle, %s\n"
-#define MSGTR_AO_ALSA5_SoundCardNotFound "[AO ALSA5] alsa-init: Keine Soundkarten gefunden.\n"
-#define MSGTR_AO_ALSA5_InvalidFormatReq "[AO ALSA5] alsa-init: ungültiges Format (%s) angefordert - Ausgabe deaktiviert.\n"
-#define MSGTR_AO_ALSA5_PlayBackError "[AO ALSA5] alsa-init: Fehler beim Öffnen der Wiedergabe: %s\n"
-#define MSGTR_AO_ALSA5_PcmInfoError "[AO ALSA5] alsa-init: PCM-Informatationsfehler: %s\n"
-#define MSGTR_AO_ALSA5_SoundcardsFound "[AO ALSA5] alsa-init: %d Soundkarte(n) gefunden, benutze: %s\n"
-#define MSGTR_AO_ALSA5_PcmChanInfoError "[AO ALSA5] alsa-init: PCM-Kanal-Informationsfehler: %s\n"
-#define MSGTR_AO_ALSA5_CantSetParms "[AO ALSA5] alsa-init: Fehler beim Setzen der Parameter: %s\n"
-#define MSGTR_AO_ALSA5_CantSetChan "[AO ALSA5] alsa-init: Fehler beim Setzen des Kanals: %s\n"
-#define MSGTR_AO_ALSA5_ChanPrepareError "[AO ALSA5] alsa-init: Fehler beim Vorbereiten des Kanals: %s\n"
-#define MSGTR_AO_ALSA5_DrainError "[AO ALSA5] alsa-uninit: Fehler beim Ablauf der Wiedergabe: %s\n"
-#define MSGTR_AO_ALSA5_FlushError "[AO ALSA5] alsa-uninit: Wiedergabe-Flush-Fehler: %s\n"
-#define MSGTR_AO_ALSA5_PcmCloseError "[AO ALSA5] alsa-uninit: Fehler beim Schließen von PCM: %s\n"
-#define MSGTR_AO_ALSA5_ResetDrainError "[AO ALSA5] alsa-reset: Fehler beim Ablauf der Wiedergabe: %s\n"
-#define MSGTR_AO_ALSA5_ResetFlushError "[AO ALSA5] alsa-reset: Wiedergabe-Flush-Fehler: %s\n"
-#define MSGTR_AO_ALSA5_ResetChanPrepareError "[AO ALSA5] alsa-reset: Fehler beim Vorbereiten des Kanals: %s\n"
-#define MSGTR_AO_ALSA5_PauseDrainError "[AO ALSA5] alsa-pause: Fehler beim Ablauf der Wiedergabe: %s\n"
-#define MSGTR_AO_ALSA5_PauseFlushError "[AO ALSA5] alsa-pause: Wiedergabe-Flush-Fehler: %s\n"
-#define MSGTR_AO_ALSA5_ResumePrepareError "[AO ALSA5] alsa-resume: Fehler beim Vorbereiten des Kanals: %s\n"
-#define MSGTR_AO_ALSA5_Underrun "[AO ALSA5] alsa-play: Alsa-Underrun, setze Stream zurück.\n"
-#define MSGTR_AO_ALSA5_PlaybackPrepareError "[AO ALSA5] alsa-play: Fehler beim Vorbereiten der Wiedergabe: %s\n"
-#define MSGTR_AO_ALSA5_WriteErrorAfterReset "[AO ALSA5] alsa-play: Schreibfehler nach Rücksetzen: %s - gebe auf.\n"
-#define MSGTR_AO_ALSA5_OutPutError "[AO ALSA5] alsa-play: Ausgabefehler: %s\n"
-
 // ao_alsa.c
 #define MSGTR_AO_ALSA_InvalidMixerIndexDefaultingToZero "[AO_ALSA] Ungültiger Mixerindex. Verwende Standardwert 0.\n"
 #define MSGTR_AO_ALSA_MixerOpenError "[AO_ALSA] Fehler beim Öffnen des Mixers: %s\n"
@@ -1349,10 +1324,10 @@ static const char help_text[]=
 // url.c
 #define MSGTR_MPDEMUX_URL_StringAlreadyEscaped "Zeichenkette scheint bereits im URL-Format %c%c1%c2 'escaped' zu sein.\n"
 
-// ai_alsa1x.c
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetSamplerate "Konnte Samplingrate nicht setzen.\n"
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetBufferTime "Konnte Pufferzeit nicht setzen.\n"
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetPeriodTime "Konnte Periode nicht setzen.\n"
+// ai_alsa.c
+#define MSGTR_MPDEMUX_AIALSA_CannotSetSamplerate "Konnte Samplingrate nicht setzen.\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetBufferTime "Konnte Pufferzeit nicht setzen.\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetPeriodTime "Konnte Periode nicht setzen.\n"
 
 // ai_alsa.c
 #define MSGTR_MPDEMUX_AIALSA_PcmBrokenConfig "Kaputte Konfiguration für diesen PCM-Kanal: Keine Konfiguration verfügbar.\n"

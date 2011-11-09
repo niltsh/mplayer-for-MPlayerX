@@ -1188,31 +1188,6 @@ static const char help_text[]=
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   ***  A hangkártyád NEM támogatja a select()-et ***\nFordítsd újra az MPlayer-t az #undef HAVE_AUDIO_SELECT sorral a config.h-ban !\n\n"
 #define MSGTR_AO_SUN_CantReopenReset "[AO SUN]\nVégzetes hiba: *** NEM LEHET ÚJRA MEGNYITNI / BEÁLLÍTANI AZ AUDIO ESZKÖZT (%s) ***\n"
 
-// ao_alsa5.c
-#define MSGTR_AO_ALSA5_InitInfo "[AO ALSA5] alsa-init: kért formátum: %d Hz, %d csatorna, %s\n"
-#define MSGTR_AO_ALSA5_SoundCardNotFound "[AO ALSA5] alsa-init: nem találtam hangkártyát.\n"
-#define MSGTR_AO_ALSA5_InvalidFormatReq "[AO ALSA5] alsa-init: hibás formátumot (%s) kértél - kimenet letiltva.\n"
-#define MSGTR_AO_ALSA5_PlayBackError "[AO ALSA5] alsa-init: playback megnyitási hiba: %s\n"
-#define MSGTR_AO_ALSA5_PcmInfoError "[AO ALSA5] alsa-init: PCM info hiba: %s\n"
-#define MSGTR_AO_ALSA5_SoundcardsFound "[AO ALSA5] alsa-init: %d hangkártyát találtam, ezt használom: %s\n"
-#define MSGTR_AO_ALSA5_PcmChanInfoError "[AO ALSA5] alsa-init: PCM csatorna info hiba: %s\n"
-#define MSGTR_AO_ALSA5_CantSetParms "[AO ALSA5] alsa-init: hiba a paraméterek beállításakor: %s\n"
-#define MSGTR_AO_ALSA5_CantSetChan "[AO ALSA5] alsa-init: hiba a csatorna beállításakor: %s\n"
-#define MSGTR_AO_ALSA5_ChanPrepareError "[AO ALSA5] alsa-init: csatorna előkészítési hiba: %s\n"
-#define MSGTR_AO_ALSA5_DrainError "[AO ALSA5] alsa-uninit: lejátszás drain hiba: %s\n"
-#define MSGTR_AO_ALSA5_FlushError "[AO ALSA5] alsa-uninit: lejátszás ürítési hiba: %s\n"
-#define MSGTR_AO_ALSA5_PcmCloseError "[AO ALSA5] alsa-uninit: PCM lezárási hiba: %s\n"
-#define MSGTR_AO_ALSA5_ResetDrainError "[AO ALSA5] alsa-reset: lejátszás drain hiba: %s\n"
-#define MSGTR_AO_ALSA5_ResetFlushError "[AO ALSA5] alsa-reset: lejátszás ürítési hiba: %s\n"
-#define MSGTR_AO_ALSA5_ResetChanPrepareError "[AO ALSA5] alsa-reset: csatorna előkészítési hiba: %s\n"
-#define MSGTR_AO_ALSA5_PauseDrainError "[AO ALSA5] alsa-pause: lejátszás drain hiba: %s\n"
-#define MSGTR_AO_ALSA5_PauseFlushError "[AO ALSA5] alsa-pause: lejátszás ürítési hiba: %s\n"
-#define MSGTR_AO_ALSA5_ResumePrepareError "[AO ALSA5] alsa-resume: csatorna előkészítési hiba: %s\n"
-#define MSGTR_AO_ALSA5_Underrun "[AO ALSA5] alsa-play: alsa underrun, folyam beállítása.\n"
-#define MSGTR_AO_ALSA5_PlaybackPrepareError "[AO ALSA5] alsa-play: lejátszás előkészítési hiba: %s\n"
-#define MSGTR_AO_ALSA5_WriteErrorAfterReset "[AO ALSA5] alsa-play: írási hiba a beállítás után: %s - feladom.\n"
-#define MSGTR_AO_ALSA5_OutPutError "[AO ALSA5] alsa-play: kimeneti hiba: %s\n"
-
 // ao_alsa.c
 #define MSGTR_AO_ALSA_InvalidMixerIndexDefaultingToZero "[AO_ALSA] Hibás mixer index. Alapértelmezés 0-ra.\n"
 #define MSGTR_AO_ALSA_MixerOpenError "[AO_ALSA] Mixer megnyitási hiba: %s\n"
@@ -1704,12 +1679,12 @@ static const char help_text[]=
 
 // ================================== stream ====================================
 
-// ai_alsa1x.c
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetSamplerate "Nem állítható be a mintavételi ráta.\n"
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetBufferTime "Nem állítható be a buffer idő.\n"
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetPeriodTime "Nem állítható be a periódus idő.\n"
+// ai_alsa.c
+#define MSGTR_MPDEMUX_AIALSA_CannotSetSamplerate "Nem állítható be a mintavételi ráta.\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetBufferTime "Nem állítható be a buffer idő.\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetPeriodTime "Nem állítható be a periódus idő.\n"
 
-// ai_alsa1x.c / ai_alsa.c
+// ai_alsa.c
 #define MSGTR_MPDEMUX_AIALSA_PcmBrokenConfig "Hibás konfiguráció ehhez a PCM-hez: nincs elérhető konfiguráció.\n"
 #define MSGTR_MPDEMUX_AIALSA_UnavailableAccessType "Elérési típus nem használható.\n"
 #define MSGTR_MPDEMUX_AIALSA_UnavailableSampleFmt "Minta formátum nem elérhető.\n"

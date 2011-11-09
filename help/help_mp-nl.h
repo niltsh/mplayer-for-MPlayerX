@@ -861,31 +861,6 @@ static const char help_text[]=
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   ***  Your audio driver DOES NOT support select()  ***\nRecompile MPlayer with #undef HAVE_AUDIO_SELECT in config.h !\n\n"
 #define MSGTR_AO_SUN_CantReopenReset "[AO SUN]\nFatal error: *** CANNOT RE-OPEN / RESET AUDIO DEVICE (%s) ***\n"
 
-// ao_alsa5.c
-#define MSGTR_AO_ALSA5_InitInfo "[AO ALSA5] alsa-init: gevraagd formaat: %d Hz, %d channels, %s\n"
-#define MSGTR_AO_ALSA5_SoundCardNotFound "[AO ALSA5] alsa-init: geen geluidskaart gevonden.\n"
-#define MSGTR_AO_ALSA5_InvalidFormatReq "[AO ALSA5] alsa-init: ongeldig formaat (%s) gevraagd - output uitgeschakeld.\n"
-#define MSGTR_AO_ALSA5_PlayBackError "[AO ALSA5] alsa-init: fout bij het afspelen : %s\n"
-#define MSGTR_AO_ALSA5_PcmInfoError "[AO ALSA5] alsa-init: pcm info fout: %s\n"
-#define MSGTR_AO_ALSA5_SoundcardsFound "[AO ALSA5] alsa-init: %d geluidskaart(en) gevonden, in gebruik: %s\n"
-#define MSGTR_AO_ALSA5_PcmChanInfoError "[AO ALSA5] alsa-init: pcm kanaal info fout: %s\n"
-#define MSGTR_AO_ALSA5_CantSetParms "[AO ALSA5] alsa-init: fout bij het instellen van de parameters: %s\n"
-#define MSGTR_AO_ALSA5_CantSetChan "[AO ALSA5] alsa-init: fout bij het instellen van het kanaal: %s\n"
-#define MSGTR_AO_ALSA5_ChanPrepareError "[AO ALSA5] alsa-init: fout bij het voorbereiden van het kanaal: %s\n"
-#define MSGTR_AO_ALSA5_DrainError "[AO ALSA5] alsa-uninit: playback drain fout: %s\n"
-#define MSGTR_AO_ALSA5_FlushError "[AO ALSA5] alsa-uninit: playback flush fout: %s\n"
-#define MSGTR_AO_ALSA5_PcmCloseError "[AO ALSA5] alsa-uninit: fout bij het sluiten van de pcm : %s\n"
-#define MSGTR_AO_ALSA5_ResetDrainError "[AO ALSA5] alsa-reset: playback drain fout: %s\n"
-#define MSGTR_AO_ALSA5_ResetFlushError "[AO ALSA5] alsa-reset: playback flush fout: %s\n"
-#define MSGTR_AO_ALSA5_ResetChanPrepareError "[AO ALSA5] alsa-reset: fout bij het voorbereiden van het kanaal: %s\n"
-#define MSGTR_AO_ALSA5_PauseDrainError "[AO ALSA5] alsa-pause: playback drain fout: %s\n"
-#define MSGTR_AO_ALSA5_PauseFlushError "[AO ALSA5] alsa-pause: playback flush fout: %s\n"
-#define MSGTR_AO_ALSA5_ResumePrepareError "[AO ALSA5] alsa-resume: fout bij het voorbereiden van het kanaal: %s\n"
-#define MSGTR_AO_ALSA5_Underrun "[AO ALSA5] alsa-play: alsa buffer leeg, de stream wordt gereset.\n"
-#define MSGTR_AO_ALSA5_PlaybackPrepareError "[AO ALSA5] alsa-play: fout bij het voorbereiden van het afspelen: %s\n"
-#define MSGTR_AO_ALSA5_WriteErrorAfterReset "[AO ALSA5] alsa-play: schrijffout na reset: %s -  we geven op.\n"
-#define MSGTR_AO_ALSA5_OutPutError "[AO ALSA5] alsa-play: output fout: %s\n"
-
 // ao_plugin.c
 
 #define MSGTR_AO_PLUGIN_InvalidPlugin "[AO PLUGIN] ongeldige plugin: %s\n"

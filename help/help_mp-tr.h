@@ -1115,31 +1115,6 @@ static const char help_text[]=
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   *** Ses sürücünüzün select() desteği YOK ***\nconfig.h dosyasında #undef HAVE_AUDIO_SELECT ile Mplayer'ı yeniden derleyiniz!\n\n"
 #define MSGTR_AO_SUN_CantReopenReset "[AO SUN]\nÖnemli Hata: ***SES AYGITI TEKRAR AÇILAMIYOR (%s) ***\n"
 
-// ao_alsa5.c
-#define MSGTR_AO_ALSA5_InitInfo "[AO ALSA5] alsa-açılış: istenen biçim: %d Hz, %d kanalları, %s\n"
-#define MSGTR_AO_ALSA5_SoundCardNotFound "[AO ALSA5] alsa-açılış: ses kartı bulunamadı.\n"
-#define MSGTR_AO_ALSA5_InvalidFormatReq "[AO ALSA5] alsa-açılış: geçersiz biçim (%s) istenen - çıktı devredışı.\n"
-#define MSGTR_AO_ALSA5_PlayBackError "[AO ALSA5] alsa-açılış: playback açma hatası: %s\n"
-#define MSGTR_AO_ALSA5_PcmInfoError "[AO ALSA5] alsa-açılış: pcm bilgi hatası: %s\n"
-#define MSGTR_AO_ALSA5_SoundcardsFound "[AO ALSA5] alsa-açılış: %d ses kart(lar)ı bulundu, kullanılan: %s\n"
-#define MSGTR_AO_ALSA5_PcmChanInfoError "[AO ALSA5] alsa-açılış: pcm kanal bilgi hatası: %s\n"
-#define MSGTR_AO_ALSA5_CantSetParms "[AO ALSA5] alsa-açılış: parametre ayarlama hatası: %s\n"
-#define MSGTR_AO_ALSA5_CantSetChan "[AO ALSA5] alsa-açılış: kanal kurulum hatası: %s\n"
-#define MSGTR_AO_ALSA5_ChanPrepareError "[AO ALSA5] alsa-açılış: kanal hazırlama hatası: %s\n"
-#define MSGTR_AO_ALSA5_DrainError "[AO ALSA5] alsa-kapanış: playback drain hatası: %s\n"
-#define MSGTR_AO_ALSA5_FlushError "[AO ALSA5] alsa-kapanış: playback flush hatası: %s\n"
-#define MSGTR_AO_ALSA5_PcmCloseError "[AO ALSA5] alsa-kapanış: pcm kapanış hatası: %s\n"
-#define MSGTR_AO_ALSA5_ResetDrainError "[AO ALSA5] alsa-sıfırla: playback drain hatası: %s\n"
-#define MSGTR_AO_ALSA5_ResetFlushError "[AO ALSA5] alsa-sıfırla: playback yayın flush hatası: %s\n"
-#define MSGTR_AO_ALSA5_ResetChanPrepareError "[AO ALSA5] alsa-sıfırla: kanal hazırlama hatası: %s\n"
-#define MSGTR_AO_ALSA5_PauseDrainError "[AO ALSA5] alsa-duraklat: playback drain hatası: %s\n"
-#define MSGTR_AO_ALSA5_PauseFlushError "[AO ALSA5] alsa-duraklat: playback flush hatası: %s\n"
-#define MSGTR_AO_ALSA5_ResumePrepareError "[AO ALSA5] alsa-sürdür: kanal hazırlama hatası: %s\n"
-#define MSGTR_AO_ALSA5_Underrun "[AO ALSA5] alsa-oynat: alsa underrun, yayın tekrar ayarlanıyor.\n"
-#define MSGTR_AO_ALSA5_PlaybackPrepareError "[AO ALSA5] alsa-oynat: playback hazırlama hatası: %s\n"
-#define MSGTR_AO_ALSA5_WriteErrorAfterReset "[AO ALSA5] alsa-oynat: yeniden başlatma sonrası yazma hatası: %s - vazgeçiliyor.\n"
-#define MSGTR_AO_ALSA5_OutPutError "[AO ALSA5] alsa-oynat: çıktı hatası: %s\n"
-
 // ao_alsa.c
 #define MSGTR_AO_ALSA_InvalidMixerIndexDefaultingToZero "[AO_ALSA] Geçersiz karıştırıcı içeriği. Varsayılan olarak 0. yapılıyor\n"
 #define MSGTR_AO_ALSA_MixerOpenError "[AO_ALSA] Karıştırıcı açma hatası: %s\n"
@@ -1265,13 +1240,13 @@ static const char help_text[]=
 
 #define MSGTR_MPDEMUX_URL_StringAlreadyEscaped "%c%c1%c2 url_atlamasında dizgi zaten atlatılmış görünüyor.\n"
 
-// ai_alsa1x.c
+// ai_alsa.c
 
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetSamplerate "Örnekleme oranı ayarlanamıyor\n"
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetBufferTime "Tampon zamanı ayarlanamıyor\n"
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetPeriodTime "Zaman aralığı ayarlanamıyor\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetSamplerate "Örnekleme oranı ayarlanamıyor\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetBufferTime "Tampon zamanı ayarlanamıyor\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetPeriodTime "Zaman aralığı ayarlanamıyor\n"
 
-// ai_alsa1x.c / ai_alsa.c
+// ai_alsa.c
 
 #define MSGTR_MPDEMUX_AIALSA_PcmBrokenConfig "Bu PCM için bozuk ayar: kullanılabilir ayar yok\n"
 #define MSGTR_MPDEMUX_AIALSA_UnavailableAccessType "Erişim türü kullanılabilir değil\n"

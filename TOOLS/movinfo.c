@@ -182,8 +182,10 @@ static void lschunks(FILE *f,int level,unsigned int endpos){
 
   if(atom_size<8) break; // error
 
-  printf("%08X:  %*s %.4s (%08X) %05d [%s] (begin: %08X)\n",pos,level*2,"",&atom_type,atom_type,atom_size,
-    atom2human_type(atom_type), pos+8); // 8: atom_size fields (4) + atom_type fields (4)
+  printf("%08X:  %*s %.4s (%08X) %05d [%s] (begin: %08X)\n",
+         pos, level * 2, "", &atom_type, atom_type,
+         atom_size, atom2human_type(atom_type),
+         pos + 8); // 8: atom_size fields (4) + atom_type fields (4)
 
 #ifndef NO_SPECIAL
 //  if (atom_type == 0x61746475)

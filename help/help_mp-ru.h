@@ -1176,31 +1176,6 @@ static const char help_text[]=
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   ***  Ваш аудиодрайвер НЕ поддерживает select()  ***\nПерекомпилируйте MPlayer с #undef HAVE_AUDIO_SELECT в config.h !\n\n"
 #define MSGTR_AO_SUN_CantReopenReset "[AO SUN] Фатальная ошибка:\n*** НЕ МОГУ ПОВТОРНО ОТКРЫТЬ / СБРОСИТЬ АУДИОУСТРОЙСТВО (%s) ***\n"
 
-// ao_alsa5.c
-#define MSGTR_AO_ALSA5_InitInfo "[AO ALSA5] инициализация alsa: запрошенный формат: %d Гц, %d каналов, %s\n"
-#define MSGTR_AO_ALSA5_SoundCardNotFound "[AO ALSA5] инициализация alsa: не найдено звуковых карт.\n"
-#define MSGTR_AO_ALSA5_InvalidFormatReq "[AO ALSA5] инициализация alsa: запрошен неверный формат (%s) - вывод отключен.\n"
-#define MSGTR_AO_ALSA5_PlayBackError "[AO ALSA5] инициализация alsa: ошибка открытия потока воспроизведения: %s\n"
-#define MSGTR_AO_ALSA5_PcmInfoError "[AO ALSA5] инициализация alsa: ошибка получения pcm информации: %s\n"
-#define MSGTR_AO_ALSA5_SoundcardsFound "[AO ALSA5] инициализация alsa: найдена(о) %d звуковая(ых) карт(а), использую: %s\n"
-#define MSGTR_AO_ALSA5_PcmChanInfoError "[AO ALSA5] инициализация alsa: ошибка получения информации pcm канала: %s\n"
-#define MSGTR_AO_ALSA5_CantSetParms "[AO ALSA5] инициализация alsa: ошибка установки параметров: %s\n"
-#define MSGTR_AO_ALSA5_CantSetChan "[AO ALSA5] инициализация alsa: ошибка установки канала: %s\n"
-#define MSGTR_AO_ALSA5_ChanPrepareError "[AO ALSA5] инициализация alsa: ошибка подготовки канала: %s\n"
-#define MSGTR_AO_ALSA5_DrainError "[AO ALSA5] деинициализация alsa: ошибка очистки потока воспроизведения: %s\n"
-#define MSGTR_AO_ALSA5_FlushError "[AO ALSA5] деинициализация alsa: ошибка сброса буферов потока воспроизведения: %s\n"
-#define MSGTR_AO_ALSA5_PcmCloseError "[AO ALSA5] деинициализация alsa: ошибка закрытия pcm: %s\n"
-#define MSGTR_AO_ALSA5_ResetDrainError "[AO ALSA5] сброс alsa: ошибка очистки потока воспроизведения: %s\n"
-#define MSGTR_AO_ALSA5_ResetFlushError "[AO ALSA5] сброс alsa: ошибка сброса буферов потока воспроизведения: %s\n"
-#define MSGTR_AO_ALSA5_ResetChanPrepareError "[AO ALSA5] сброс alsa: ошибка подготовки канала: %s\n"
-#define MSGTR_AO_ALSA5_PauseDrainError "[AO ALSA5] пауза alsa: ошибка очистки потока воспроизведения: %s\n"
-#define MSGTR_AO_ALSA5_PauseFlushError "[AO ALSA5] пауза alsa: ошибка сброса буферов потока воспроизведения: %s\n"
-#define MSGTR_AO_ALSA5_ResumePrepareError "[AO ALSA5] возобновление alsa: ошибка подготовки канала: %s\n"
-#define MSGTR_AO_ALSA5_Underrun "[AO ALSA5] воспроизведение alsa: alsa недогружена, сбрасываю поток.\n"
-#define MSGTR_AO_ALSA5_PlaybackPrepareError "[AO ALSA5] воспроизведение alsa: ошибка подготовки потока воспроизведения: %s\n"
-#define MSGTR_AO_ALSA5_WriteErrorAfterReset "[AO ALSA5] воспроизведение alsa: ошибка записи после сброса: %s - безнадёжно.\n"
-#define MSGTR_AO_ALSA5_OutPutError "[AO ALSA5] воспроизведение alsa: ошибка вывода: %s\n"
-
 // ao_alsa.c
 #define MSGTR_AO_ALSA_InvalidMixerIndexDefaultingToZero "[AO_ALSA] Неверный индекс микшера. Возврат к 0.\n"
 #define MSGTR_AO_ALSA_MixerOpenError "[AO_ALSA] Ошибка открытия микшера: %s\n"
@@ -1732,12 +1707,12 @@ static const char help_text[]=
 
 // ================================== stream ====================================
 
-// ai_alsa1x.c
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetSamplerate "Не могу задать частоту дискретизации.\n"
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetBufferTime "Не могу задать время буферизации.\n"
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetPeriodTime "Не могу задать время периода.\n"
+// ai_alsa.c
+#define MSGTR_MPDEMUX_AIALSA_CannotSetSamplerate "Не могу задать частоту дискретизации.\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetBufferTime "Не могу задать время буферизации.\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetPeriodTime "Не могу задать время периода.\n"
 
-// ai_alsa1x.c / ai_alsa.c
+// ai_alsa.c
 #define MSGTR_MPDEMUX_AIALSA_PcmBrokenConfig "Некорректная конфигурация для данного PCM: нет доступных конфигураций.\n"
 #define MSGTR_MPDEMUX_AIALSA_UnavailableAccessType "Тип доступа не доступен.\n"
 #define MSGTR_MPDEMUX_AIALSA_UnavailableSampleFmt "Формат образца не доступен.\n"

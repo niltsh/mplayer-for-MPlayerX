@@ -201,7 +201,6 @@ libvo drivers:
     * w32_common.c - Reimar Döffinger
 
 libao2 drivers:
-    * ao_alsa5.c - None
     * ao_alsa.c - Clemens Ladisch
     * ao_arts.c - None
     * ao_coreaudio.c - None

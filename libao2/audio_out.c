@@ -39,7 +39,6 @@ extern const ao_functions_t audio_out_pulse;
 extern const ao_functions_t audio_out_jack;
 extern const ao_functions_t audio_out_openal;
 extern const ao_functions_t audio_out_null;
-extern const ao_functions_t audio_out_alsa5;
 extern const ao_functions_t audio_out_alsa;
 extern const ao_functions_t audio_out_nas;
 extern const ao_functions_t audio_out_sdl;
@@ -79,9 +78,6 @@ const ao_functions_t* const audio_out_drivers[] =
 #endif
 #ifdef CONFIG_ALSA
         &audio_out_alsa,
-#endif
-#ifdef CONFIG_ALSA5
-        &audio_out_alsa5,
 #endif
 #ifdef CONFIG_SGI_AUDIO
         &audio_out_sgi,

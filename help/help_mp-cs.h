@@ -1175,31 +1175,6 @@ static const char help_text[]=
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   ***  Ovladač Vaší zvukové karty NEPODPORUJE select()  ***\n Překompilujte MPlayer s #undef HAVE_AUDIO_SELECT v config.h !\n\n"
 #define MSGTR_AO_SUN_CantReopenReset "[AO SUN]\nKritická chyba: *** NELZE ZNOVUOTEVŘÍT / RESTARTOVAT ZVUKOVÉ ZAŘÍZENÍ (%s) ***\n"
 
-// ao_alsa5.c
-#define MSGTR_AO_ALSA5_InitInfo "[AO ALSA5] alsa-init: požadovaný formát: %d Hz, %d kanál(ů), %s\n"
-#define MSGTR_AO_ALSA5_SoundCardNotFound "[AO ALSA5] alsa-init: žádná zvuková karta nebyla nalezena.\n"
-#define MSGTR_AO_ALSA5_InvalidFormatReq "[AO ALSA5] alsa-init: požadován neplatný formát (%s) - výstup odpojen.\n"
-#define MSGTR_AO_ALSA5_PlayBackError "[AO ALSA5] alsa-init: chyba otevření přehrávání zvuku: %s\n"
-#define MSGTR_AO_ALSA5_PcmInfoError "[AO ALSA5] alsa-init: chyba v PCM info: %s\n"
-#define MSGTR_AO_ALSA5_SoundcardsFound "[AO ALSA5] alsa-init: nalezeno %d zvukových karet, používám: %s\n"
-#define MSGTR_AO_ALSA5_PcmChanInfoError "[AO ALSA5] alsa-init: chyba info v PCM kanálu: %s\n"
-#define MSGTR_AO_ALSA5_CantSetParms "[AO ALSA5] alsa-init: chyba při nastavování parametrů: %s\n"
-#define MSGTR_AO_ALSA5_CantSetChan "[AO ALSA5] alsa-init: chyba při nastavování kanálu: %s\n"
-#define MSGTR_AO_ALSA5_ChanPrepareError "[AO ALSA5] alsa-init: chyba při přípravě kanálu: %s\n"
-#define MSGTR_AO_ALSA5_DrainError "[AO ALSA5] alsa-uninit: chyba playback drain: %s\n"
-#define MSGTR_AO_ALSA5_FlushError "[AO ALSA5] alsa-uninit: chyba playback flush: %s\n" //to jsou názvy že by jeden pad
-#define MSGTR_AO_ALSA5_PcmCloseError "[AO ALSA5] alsa-uninit: chyba uzavření PCM: %s\n"
-#define MSGTR_AO_ALSA5_ResetDrainError "[AO ALSA5] alsa-reset: chyba playback drain: %s\n"
-#define MSGTR_AO_ALSA5_ResetFlushError "[AO ALSA5] alsa-reset: chyba playback flush: %s\n"
-#define MSGTR_AO_ALSA5_ResetChanPrepareError "[AO ALSA5] alsa-reset: chyba při přípravě kanálů: %s\n"
-#define MSGTR_AO_ALSA5_PauseDrainError "[AO ALSA5] alsa-pause: chyba playback drain: %s\n"
-#define MSGTR_AO_ALSA5_PauseFlushError "[AO ALSA5] alsa-pause: chyba playback flush: %s\n"
-#define MSGTR_AO_ALSA5_ResumePrepareError "[AO ALSA5] alsa-resume: chyba při přípravě kanálů: %s\n"
-#define MSGTR_AO_ALSA5_Underrun "[AO ALSA5] alsa-play: podtečení v alsa, restartuji proud.\n"
-#define MSGTR_AO_ALSA5_PlaybackPrepareError "[AO ALSA5] alsa-play: chyba přípravy přehrávání zvuku: %s\n"
-#define MSGTR_AO_ALSA5_WriteErrorAfterReset "[AO ALSA5] alsa-play: chyba při zápisu po restartu: %s - vzdávám to.\n"
-#define MSGTR_AO_ALSA5_OutPutError "[AO ALSA5] alsa-play: chyba výstupu: %s\n"
-
 // ao_alsa.c
 #define MSGTR_AO_ALSA_InvalidMixerIndexDefaultingToZero "[AO_ALSA] Neplatný index směšovačů. Používám výchozí 0.\n"
 #define MSGTR_AO_ALSA_MixerOpenError "[AO_ALSA] Chyba otevření směšovače: %s\n"
@@ -1691,12 +1666,12 @@ static const char help_text[]=
 
 // ================================== stream ====================================
 
-// ai_alsa1x.c
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetSamplerate "Nelze nastavit vzorkovací kmitočet.\n"
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetBufferTime "Nelze nastavit čas bufferu.\n"
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetPeriodTime "Nelze nastavit čas periody.\n"
+// ai_alsa.c
+#define MSGTR_MPDEMUX_AIALSA_CannotSetSamplerate "Nelze nastavit vzorkovací kmitočet.\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetBufferTime "Nelze nastavit čas bufferu.\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetPeriodTime "Nelze nastavit čas periody.\n"
 
-// ai_alsa1x.c / ai_alsa.c
+// ai_alsa.c
 #define MSGTR_MPDEMUX_AIALSA_PcmBrokenConfig "Vadná konfigurace pro toto PCM: žádná dostupná konfigurace.\n"
 #define MSGTR_MPDEMUX_AIALSA_UnavailableAccessType "Nedostupný typ přístupu.\n"
 #define MSGTR_MPDEMUX_AIALSA_UnavailableSampleFmt "Nedostupný formát vzorku.\n"

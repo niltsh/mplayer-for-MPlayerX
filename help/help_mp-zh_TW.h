@@ -1086,31 +1086,6 @@ static const char help_text[]=
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   ***  你的音頻驅動不支持 select()  ***\n用 config.h 中的 #undef HAVE_AUDIO_SELECT 重新編譯 MPlayer!\n\n"
 #define MSGTR_AO_SUN_CantReopenReset "[AO SUN]\n致命錯誤: *** 無法重新打開或重設音頻設備 (%s) ***\n"
 
-// ao_alsa5.c
-#define MSGTR_AO_ALSA5_InitInfo "[AO ALSA5] alsa-初始: 請求的格式: %d Hz, %d 通道, %s\n"
-#define MSGTR_AO_ALSA5_SoundCardNotFound "[AO ALSA5] alsa-初始: 找不到聲卡。\n"
-#define MSGTR_AO_ALSA5_InvalidFormatReq "[AO ALSA5] alsa-初始: 請求無效的格式 (%s) - 停用輸出。\n"
-#define MSGTR_AO_ALSA5_PlayBackError "[AO ALSA5] alsa-初始: 回放打開錯誤: %s\n"
-#define MSGTR_AO_ALSA5_PcmInfoError "[AO ALSA5] alsa-初始: PCM 信息錯誤: %s\n"
-#define MSGTR_AO_ALSA5_SoundcardsFound "[AO ALSA5] alsa-初始: 找到 %d 聲卡, 使用: %s\n"
-#define MSGTR_AO_ALSA5_PcmChanInfoError "[AO ALSA5] alsa-初始: PCM 通道信息錯誤: %s\n"
-#define MSGTR_AO_ALSA5_CantSetParms "[AO ALSA5] alsa-初始: 設定參數錯誤: %s\n"
-#define MSGTR_AO_ALSA5_CantSetChan "[AO ALSA5] alsa-初始: 設定通道錯誤: %s\n"
-#define MSGTR_AO_ALSA5_ChanPrepareError "[AO ALSA5] alsa-初始: 通道凖備錯誤: %s\n"
-#define MSGTR_AO_ALSA5_DrainError "[AO ALSA5] alsa-反初始: 回放排出(drain)錯誤: %s\n"
-#define MSGTR_AO_ALSA5_FlushError "[AO ALSA5] alsa-反初始: 回放清空(flush)錯誤: %s\n"
-#define MSGTR_AO_ALSA5_PcmCloseError "[AO ALSA5] alsa-反初始: PCM 關閉錯誤: %s\n"
-#define MSGTR_AO_ALSA5_ResetDrainError "[AO ALSA5] alsa-重置: 回放排出(drain)錯誤: %s\n"
-#define MSGTR_AO_ALSA5_ResetFlushError "[AO ALSA5] alsa-重置: 回放清空(flush)錯誤: %s\n"
-#define MSGTR_AO_ALSA5_ResetChanPrepareError "[AO ALSA5] alsa-重置: 通道凖備錯誤: %s\n"
-#define MSGTR_AO_ALSA5_PauseDrainError "[AO ALSA5] alsa-暫停: 回放排出(drain)錯誤: %s\n"
-#define MSGTR_AO_ALSA5_PauseFlushError "[AO ALSA5] alsa-暫停: 回放清空(flush)錯誤: %s\n"
-#define MSGTR_AO_ALSA5_ResumePrepareError "[AO ALSA5] alsa-恢複: 通道凖備錯誤: %s\n"
-#define MSGTR_AO_ALSA5_Underrun "[AO ALSA5] alsa-play: alsa 未運行, 重新啟動流。\n"
-#define MSGTR_AO_ALSA5_PlaybackPrepareError "[AO ALSA5] alsa-播放: 回放凖備錯誤: %s\n"
-#define MSGTR_AO_ALSA5_WriteErrorAfterReset "[AO ALSA5] alsa-播放: 重啟後寫錯誤: %s - 放棄。\n"
-#define MSGTR_AO_ALSA5_OutPutError "[AO ALSA5] alsa-播放: 輸出錯誤: %s\n"
-
 // ao_alsa.c
 #define MSGTR_AO_ALSA_InvalidMixerIndexDefaultingToZero "[AO_ALSA] 無效的混音索引。取默認值 0。\n"
 #define MSGTR_AO_ALSA_MixerOpenError "[AO_ALSA] 混音打開錯誤: %s\n"
@@ -1235,13 +1210,13 @@ static const char help_text[]=
 
 #define MSGTR_MPDEMUX_URL_StringAlreadyEscaped "字符轉義好像已發生在 url_escape %c%c1%c2\n"
 
-// ai_alsa1x.c
+// ai_alsa.c
 
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetSamplerate "無法設置采様率。\n"
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetBufferTime "無法設置緩衝時間。\n"
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetPeriodTime "無法設置間隔時間。\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetSamplerate "無法設置采様率。\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetBufferTime "無法設置緩衝時間。\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetPeriodTime "無法設置間隔時間。\n"
 
-// ai_alsa1x.c / ai_alsa.c
+// ai_alsa.c
 
 #define MSGTR_MPDEMUX_AIALSA_PcmBrokenConfig "此 PCM 的配置文件損壞: 配置不可用。\n"
 #define MSGTR_MPDEMUX_AIALSA_UnavailableAccessType "訪問類型不可用。\n"

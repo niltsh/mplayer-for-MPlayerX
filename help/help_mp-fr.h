@@ -1101,31 +1101,6 @@ static const char help_text[]=
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   ***  Votre pilote audio ne supporte PAS select()  ***\nRecompiler MPlayer avec #undef HAVE_AUDIO_SELECT dans config.h !\n\n"
 #define MSGTR_AO_SUN_CantReopenReset "[AO SUN]\nÉrreur fatale : *** IMPOSSIBLE DE RÉOUVRIR/REPARTIR PÉRIPHÉRIQUE AUDIO (%s) ***\n"
 
-// ao_alsa5.c
-#define MSGTR_AO_ALSA5_InitInfo "[AO ALSA5] alsa-init : format requis : %d Hz, %d canaux, %s\n"
-#define MSGTR_AO_ALSA5_SoundCardNotFound "[AO ALSA5] alsa-init : aucune carte son trouvée.\n"
-#define MSGTR_AO_ALSA5_InvalidFormatReq "[AO ALSA5] alsa-init : format invalide (%s) requis - sortie désactivée.\n"
-#define MSGTR_AO_ALSA5_PlayBackError "[AO ALSA5] alsa-init : erreur ouverture lecture : %s\n"
-#define MSGTR_AO_ALSA5_PcmInfoError "[AO ALSA5] alsa-init : erreur pcm info : %s\n"
-#define MSGTR_AO_ALSA5_SoundcardsFound "[AO ALSA5] alsa-init : %d carte(s) son trouvée(s), utilise : %s\n"
-#define MSGTR_AO_ALSA5_PcmChanInfoError "[AO ALSA5] alsa-init : erreur info canal pcm : %s\n"
-#define MSGTR_AO_ALSA5_CantSetParms "[AO ALSA5] alsa-init : erreur parametrage : %s\n"
-#define MSGTR_AO_ALSA5_CantSetChan "[AO ALSA5] alsa-init : erreur ouverture canal : %s\n"
-#define MSGTR_AO_ALSA5_ChanPrepareError "[AO ALSA5] alsa-init : erreur préparation canal : %s\n"
-#define MSGTR_AO_ALSA5_DrainError "[AO ALSA5] alsa-uninit : erreur drain de lecture : %s\n"
-#define MSGTR_AO_ALSA5_FlushError "[AO ALSA5] alsa-uninit : erreur vidage de lecture : %s\n"
-#define MSGTR_AO_ALSA5_PcmCloseError "[AO ALSA5] alsa-uninit : erreur fermeture pcm : %s\n"
-#define MSGTR_AO_ALSA5_ResetDrainError "[AO ALSA5] alsa-reset : erreur drain de lecture : %s\n"
-#define MSGTR_AO_ALSA5_ResetFlushError "[AO ALSA5] alsa-reset : erreur vidage de lecture : %s\n"
-#define MSGTR_AO_ALSA5_ResetChanPrepareError "[AO ALSA5] alsa-reset : erreur préparation canal : %s\n"
-#define MSGTR_AO_ALSA5_PauseDrainError "[AO ALSA5] alsa-pause : erreur drain de lecture : %s\n"
-#define MSGTR_AO_ALSA5_PauseFlushError "[AO ALSA5] alsa-pause : erreur vidage de lecture : %s\n"
-#define MSGTR_AO_ALSA5_ResumePrepareError "[AO ALSA5] alsa-resume : erreur préparation canal : %s\n"
-#define MSGTR_AO_ALSA5_Underrun "[AO ALSA5] alsa-play : sous-passement alsa, réinit flux.\n"
-#define MSGTR_AO_ALSA5_PlaybackPrepareError "[AO ALSA5] alsa-play : erreur préparation lecture : %s\n"
-#define MSGTR_AO_ALSA5_WriteErrorAfterReset "[AO ALSA5] alsa-play : erreur écriture après réinit : %s - abandon.\n"
-#define MSGTR_AO_ALSA5_OutPutError "[AO ALSA5] alsa-play : erreur de sortie : %s\n"
-
 // ao_alsa.c
 #define MSGTR_AO_ALSA_InvalidMixerIndexDefaultingToZero "[AO_ALSA] Index du mixeur invalide. Défaut à 0.\n"
 #define MSGTR_AO_ALSA_MixerOpenError "[AO_ALSA] Erreur ouverture mixeur : %s\n"
@@ -1256,13 +1231,13 @@ static const char help_text[]=
 
 #define MSGTR_MPDEMUX_URL_StringAlreadyEscaped "La chaîne semble déjà échappée dans url_escape %c%c1%c2\n"
 
-// ai_alsa1x.c
+// ai_alsa.c
 
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetSamplerate "Impossible de régler taux échantillon\n"
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetBufferTime "Impossible de régler heure tampon\n"
-#define MSGTR_MPDEMUX_AIALSA1X_CannotSetPeriodTime "Impossible de régler heure période\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetSamplerate "Impossible de régler taux échantillon\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetBufferTime "Impossible de régler heure tampon\n"
+#define MSGTR_MPDEMUX_AIALSA_CannotSetPeriodTime "Impossible de régler heure période\n"
 
-// ai_alsa1x.c / ai_alsa.c
+// ai_alsa.c
 
 #define MSGTR_MPDEMUX_AIALSA_PcmBrokenConfig "Configuration brisée pour ce PCM : aucune configuration disponible\n"
 #define MSGTR_MPDEMUX_AIALSA_UnavailableAccessType "Type d'accès non disponible\n"

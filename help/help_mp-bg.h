@@ -928,38 +928,11 @@ static const char help_text[]=
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   ***  Вашият аудио драйвер НЕ поддържа функцията select()  ***\nРекомпилирайте MPlayer с #undef HAVE_AUDIO_SELECT в config.h !\n\n"
 #define MSGTR_AO_SUN_CantReopenReset "[AO SUN]Фатална грешка:\n *** АУДИО УСТРОЙСТВОТО (%s) НЕ МОЖЕ ДА БЪДЕ ПРЕ-ОТВОРЕНО/РЕСТАРТИРАНО ***\n"
 
-// ao_alsa5.c
-#define MSGTR_AO_ALSA5_InitInfo "[AO ALSA5] alsa-init: заявен формат: %d Hz, %d канала, %s\n"
-#define MSGTR_AO_ALSA5_SoundCardNotFound "[AO ALSA5] alsa-init: не са открити звукови карти.\n"
-#define MSGTR_AO_ALSA5_InvalidFormatReq "[AO ALSA5] alsa-init: заявен е невалиден формат (%s) - отхвърлен.\n"
-#define MSGTR_AO_ALSA5_PlayBackError "[AO ALSA5] alsa-init: грешка при отваряне за възпроизвеждане: %s\n"
-#define MSGTR_AO_ALSA5_PcmInfoError "[AO ALSA5] alsa-init: pcm info грешка: %s\n"
-#define MSGTR_AO_ALSA5_SoundcardsFound "[AO ALSA5] alsa-init: %d звукови карти са открити, ползва се: %s\n"
-#define MSGTR_AO_ALSA5_PcmChanInfoError "[AO ALSA5] alsa-init: pcm channel info грешка: %s\n"
-#define MSGTR_AO_ALSA5_CantSetParms "[AO ALSA5] alsa-init: грешка при настройване на параметрите: %s\n"
-#define MSGTR_AO_ALSA5_CantSetChan "[AO ALSA5] alsa-init: грешка при настройка на канал: %s\n"
-#define MSGTR_AO_ALSA5_ChanPrepareError "[AO ALSA5] alsa-init: грешка при подготовка на канал: %s\n"
-#define MSGTR_AO_ALSA5_DrainError "[AO ALSA5] alsa-uninit: грешка при изчистване потока за възпроизвеждане: %s\n"
-#define MSGTR_AO_ALSA5_FlushError "[AO ALSA5] alsa-uninit: грешка при възстановяване на буферите за възпроизвеждане: %s\n"
-#define MSGTR_AO_ALSA5_PcmCloseError "[AO ALSA5] alsa-uninit: грешка при затваряне на pcm: %s\n"
-#define MSGTR_AO_ALSA5_ResetDrainError "[AO ALSA5] alsa-reset: грешка при изчистване на потока за възпроизвеждане: %s\n"
-#define MSGTR_AO_ALSA5_ResetFlushError "[AO ALSA5] alsa-reset: грешка при възстановяване на буферите за възпроизвеждане: %s\n"
-#define MSGTR_AO_ALSA5_ResetChanPrepareError "[AO ALSA5] alsa-reset: грешка при подготовка на канал: %s\n"
-#define MSGTR_AO_ALSA5_PauseDrainError "[AO ALSA5] alsa-pause: грешка при изчистване на потока за възпроизвеждане: %s\n"
-#define MSGTR_AO_ALSA5_PauseFlushError "[AO ALSA5] alsa-pause: грешка при възстановяване на буферите за възпроизвеждане: %s\n"
-#define MSGTR_AO_ALSA5_ResumePrepareError "[AO ALSA5] alsa-resume: грешка при подготовка на канал: %s\n"
-#define MSGTR_AO_ALSA5_Underrun "[AO ALSA5] alsa-play: претоварване на alsa, рестартиране на потока.\n"
-#define MSGTR_AO_ALSA5_PlaybackPrepareError "[AO ALSA5] alsa-play: грешка при подготовка за възпроизвеждане: %s\n"
-#define MSGTR_AO_ALSA5_WriteErrorAfterReset "[AO ALSA5] alsa-play: грешка при запис след рестартиране: %s - отказ от операцията.\n"
-#define MSGTR_AO_ALSA5_OutPutError "[AO ALSA5] alsa-play: грешка на изхода: %s\n"
-
 // ao_plugin.c
 
 #define MSGTR_AO_PLUGIN_InvalidPlugin "[AO PLUGIN] невалиден плъгин: %s\n"
 
 // ======================= AF Audio Filters ================================
-
-// libaf
 
 // af_ladspa.c
 
