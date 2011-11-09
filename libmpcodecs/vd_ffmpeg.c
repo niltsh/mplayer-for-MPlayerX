@@ -91,7 +91,9 @@ static int lavc_param_vstats=0;
 static int lavc_param_idct_algo=0;
 static int lavc_param_debug=0;
 static int lavc_param_vismv=0;
+#ifdef CODEC_FLAG2_SHOW_ALL
 static int lavc_param_wait_keyframe=0;
+#endif
 static int lavc_param_skip_top=0;
 static int lavc_param_skip_bottom=0;
 static int lavc_param_fast=0;
