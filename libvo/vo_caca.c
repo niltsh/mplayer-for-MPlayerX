@@ -31,6 +31,7 @@
 #include <string.h>
 #include <time.h>
 #include <errno.h>
+#include <caca.h>
 
 #include "config.h"
 #include "video_out.h"
@@ -40,16 +41,6 @@
 #include "osdep/keycodes.h"
 #include "mp_msg.h"
 #include "mp_fifo.h"
-
-#include <caca.h>
-#ifdef CACA_API_VERSION_1
-/* Include the pre-1.x compatibility header.
- * Once libcaca 1.x is widespread, vo_caca should be fully
- * converted to the new API. A patch exists:
- * http://lists.mplayerhq.hu/pipermail/mplayer-dev-eng/2006-July/044669.html
- */
-#include <caca0.h>
-#endif
 
 static const vo_info_t info = {
     "libcaca",
@@ -61,7 +52,13 @@ static const vo_info_t info = {
 const LIBVO_EXTERN(caca)
 
 /* caca stuff */
-static struct caca_bitmap *cbitmap = NULL;
+static caca_canvas_t  *canvas;
+static caca_display_t *display;
+static caca_dither_t  *dither           = NULL;
+static const char     *dither_antialias = "default";
+static const char     *dither_charset   = "default";
+static const char     *dither_color     = "default";
+static const char     *dither_algo      = "none";
 
 /* image infos */
 static int image_format;
@@ -137,18 +134,24 @@ static void osdpercent(int duration, int min, int max, int val,
 
 static int resize(void)
 {
-    screen_w = caca_get_width();
-    screen_h = caca_get_height();
+    screen_w = caca_get_canvas_width(canvas);
+    screen_h = caca_get_canvas_height(canvas);
 
-    if (cbitmap)
-        caca_free_bitmap(cbitmap);
+    caca_free_dither(dither);
 
-    cbitmap = caca_create_bitmap(bpp, image_width, image_height,
-                                 depth * image_width, rmask, gmask, bmask,
-                                 amask);
+    dither = caca_create_dither(bpp, image_width, image_height,
+                                depth * image_width,
+                                rmask, gmask, bmask, amask);
+    if (dither == NULL) {
+        mp_msg(MSGT_VO, MSGL_FATAL, "vo_caca: caca_create_dither failed!\n");
+        return ENOSYS;
+    }
 
-    if (!cbitmap)
-        mp_msg(MSGT_VO, MSGL_FATAL, "vo_caca: caca_create_bitmap failed!\n");
+    /* Default libcaca features */
+    caca_set_dither_antialias(dither, dither_antialias);
+    caca_set_dither_charset(dither, dither_charset);
+    caca_set_dither_color(dither, dither_color);
+    caca_set_dither_algorithm(dither, dither_algo);
 
     return 0;
 }
@@ -169,7 +172,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
 
 static int draw_frame(uint8_t *src[])
 {
-    caca_draw_bitmap(0, 0, screen_w, screen_h, cbitmap, src[0]);
+    caca_dither_bitmap(canvas, 0, 0, screen_w, screen_h, dither, src[0]);
     return 0;
 }
 
@@ -186,102 +189,127 @@ static void flip_page(void)
             if (*posbar)
                 posbar[0] = '\0';
         } else {
-            caca_putstr(osdx, osdy, osdmessagetext);
+            caca_put_str(canvas, osdx, osdy, osdmessagetext);
             if (*posbar)
-                caca_putstr(0, posbary, posbar);
+                caca_put_str(canvas, 0, posbary, posbar);
         }
     }
 
-    caca_refresh();
+    caca_refresh_display(display);
+}
+
+static void set_next_str(const char * const *list, const char **str,
+                         const char **msg)
+{
+    int ind;
+    for (ind = 0; list[ind]; ind += 2) {
+        if (strcmp(list[ind], *str) == 0) {
+            if (list[ind + 2] == NULL)
+                ind = -2;
+            *str = list[ind + 2];
+            *msg = list[ind + 3];
+            return;
+        }
+    }
+
+    *str = list[0];
+    *msg = list[1];
 }
 
 static void check_events(void)
 {
-    unsigned int cev;
+    caca_event_t cev;
+    if (!caca_get_event(display, CACA_EVENT_ANY, &cev, 1))
+        return;
 
-    if ((cev = caca_get_event(CACA_EVENT_ANY))) {
-        if (cev & CACA_EVENT_RESIZE) {
-            caca_refresh();
-            resize();
-        } else if (cev & CACA_EVENT_KEY_RELEASE) {
-            int key = (cev & 0x00ffffff);
-            enum caca_feature cf;
+    switch (cev.type) {
+    case CACA_EVENT_RESIZE:
+        caca_refresh_display(display);
+        resize();
+        break;
+    case CACA_EVENT_KEY_RELEASE:
+    {
+        int key = cev.data.key.ch;
+        const char *msg_name;
 
-            switch (key) {
-            case 'd':
-            case 'D':
-                /* Toggle dithering method */
-                cf = 1 + caca_get_feature(CACA_DITHERING);
-                if (cf > CACA_DITHERING_MAX)
-                    cf = CACA_DITHERING_MIN;
-                caca_set_feature(cf);
-                osdmessage(MESSAGE_DURATION, "Using %s", caca_get_feature_name(cf));
-                break;
+        switch (key) {
+        case 'd':
+        case 'D':
+            /* Toggle dithering algorithm */
+            set_next_str(caca_get_dither_algorithm_list(dither), &dither_algo, &msg_name);
+            caca_set_dither_algorithm(dither, dither_algo);
+            osdmessage(MESSAGE_DURATION, "Using %s", msg_name);
+            break;
 
-            case 'a':
-            case 'A':
-                /* Toggle antialiasing method */
-                cf = 1 + caca_get_feature(CACA_ANTIALIASING);
-                if (cf > CACA_ANTIALIASING_MAX)
-                    cf = CACA_ANTIALIASING_MIN;
-                caca_set_feature(cf);
-                osdmessage(MESSAGE_DURATION, "Using %s", caca_get_feature_name(cf));
-                break;
+        case 'a':
+        case 'A':
+            /* Toggle antialiasing method */
+            set_next_str(caca_get_dither_antialias_list(dither), &dither_antialias, &msg_name);
+            caca_set_dither_antialias(dither, dither_antialias);
+            osdmessage(MESSAGE_DURATION, "Using %s", msg_name);
+            break;
 
-            case 'b':
-            case 'B':
-                /* Toggle background method */
-                cf = 1 + caca_get_feature(CACA_BACKGROUND);
-                if (cf > CACA_BACKGROUND_MAX)
-                    cf = CACA_BACKGROUND_MIN;
-                caca_set_feature(cf);
-                osdmessage(MESSAGE_DURATION, "Using %s", caca_get_feature_name(cf));
-                break;
+        case 'h':
+        case 'H':
+            /* Toggle charset method */
+            set_next_str(caca_get_dither_charset_list(dither), &dither_charset, &msg_name);
+            caca_set_dither_charset(dither, dither_charset);
+            osdmessage(MESSAGE_DURATION, "Using %s", msg_name);
+            break;
 
-            case CACA_KEY_UP:
-                mplayer_put_key(KEY_UP);
-                break;
-            case CACA_KEY_DOWN:
-                mplayer_put_key(KEY_DOWN);
-                break;
-            case CACA_KEY_LEFT:
-                mplayer_put_key(KEY_LEFT);
-                break;
-            case CACA_KEY_RIGHT:
-                mplayer_put_key(KEY_RIGHT);
-                break;
-            case CACA_KEY_ESCAPE:
-                mplayer_put_key(KEY_ESC);
-                break;
-            case CACA_KEY_PAGEUP:
-                mplayer_put_key(KEY_PAGE_UP);
-                break;
-            case CACA_KEY_PAGEDOWN:
-                mplayer_put_key(KEY_PAGE_DOWN);
-                break;
-            case CACA_KEY_RETURN:
-                mplayer_put_key(KEY_ENTER);
-                break;
-            case CACA_KEY_HOME:
-                mplayer_put_key(KEY_HOME);
-                break;
-            case CACA_KEY_END:
-                mplayer_put_key(KEY_END);
-                break;
-            default:
-                if (key <= 255)
-                    mplayer_put_key(key);
-                break;
-            }
+        case 'c':
+        case 'C':
+            /* Toggle color method */
+            set_next_str(caca_get_dither_color_list(dither), &dither_color, &msg_name);
+            caca_set_dither_color(dither, dither_color);
+            osdmessage(MESSAGE_DURATION, "Using %s", msg_name);
+            break;
+
+        case CACA_KEY_UP:
+            mplayer_put_key(KEY_UP);
+            break;
+        case CACA_KEY_DOWN:
+            mplayer_put_key(KEY_DOWN);
+            break;
+        case CACA_KEY_LEFT:
+            mplayer_put_key(KEY_LEFT);
+            break;
+        case CACA_KEY_RIGHT:
+            mplayer_put_key(KEY_RIGHT);
+            break;
+        case CACA_KEY_ESCAPE:
+            mplayer_put_key(KEY_ESC);
+            break;
+        case CACA_KEY_PAGEUP:
+            mplayer_put_key(KEY_PAGE_UP);
+            break;
+        case CACA_KEY_PAGEDOWN:
+            mplayer_put_key(KEY_PAGE_DOWN);
+            break;
+        case CACA_KEY_RETURN:
+            mplayer_put_key(KEY_ENTER);
+            break;
+        case CACA_KEY_HOME:
+            mplayer_put_key(KEY_HOME);
+            break;
+        case CACA_KEY_END:
+            mplayer_put_key(KEY_END);
+            break;
+        default:
+            if (key <= 255)
+                mplayer_put_key(key);
+            break;
         }
+    }
     }
 }
 
 static void uninit(void)
 {
-    caca_free_bitmap(cbitmap);
-    cbitmap = NULL;
-    caca_end();
+    caca_free_dither(dither);
+    dither = NULL;
+    caca_free_display(display);
+    caca_free_canvas(canvas);
 }
 
 
@@ -299,16 +327,21 @@ static int preinit(const char *arg)
         return ENOSYS;
     }
 
-    if (caca_init()) {
-        mp_msg(MSGT_VO, MSGL_ERR, "vo_caca: failed to initialize\n");
+    canvas = caca_create_canvas(0, 0);
+    if (canvas == NULL) {
+        mp_msg(MSGT_VO, MSGL_ERR, "vo_caca: failed to create canvas\n");
         return ENOSYS;
     }
 
-    caca_set_window_title("MPlayer");
+    display = caca_create_display(canvas);
 
-    /* Default libcaca features */
-    caca_set_feature(CACA_ANTIALIASING_PREFILTER);
-    caca_set_feature(CACA_DITHERING_RANDOM);
+    if (display == NULL) {
+        mp_msg(MSGT_VO, MSGL_ERR, "vo_caca: failed to create display\n");
+        caca_free_canvas(canvas);
+        return ENOSYS;
+    }
+
+    caca_set_display_title(display, "MPlayer");
 
     return 0;
 }
