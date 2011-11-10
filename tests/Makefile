@@ -5,7 +5,6 @@ BROKEN_SAMPLES= \
     h264-conformance/CAPA1_TOSHIBA_B.264 \
     h264-conformance/CI1_FT_B.264 \
     h264-conformance/FM1_FT_E.264 \
-    lmlm4/LMLM4_CIFat30fps.divx \
     pva/PVA_test-partial.pva \
 
 AUDIO_ONLY_SAMPLES = \
