@@ -220,6 +220,7 @@ static const char * const preferred_list[] = {
     "mxf",
     "ogg",
     "pva",
+    "qcp",
     "swf",
     "vqf",
     "w64",
