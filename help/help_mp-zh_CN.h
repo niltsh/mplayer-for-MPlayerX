@@ -1,6 +1,6 @@
-// Synced with help_mp-en.h rev. 34253
+// Synced with help_mp-en.h rev. 34335
 //
-// Translated by JRaSH <jrash06@163.com>
+// Translated by JRaSH <jrash06@gmail.com>
 
 
 
