@@ -34,25 +34,15 @@
 #include <math.h>
 #include <string.h>
 #include <alloca.h>
+#define ALSA_PCM_NEW_HW_PARAMS_API
+#define ALSA_PCM_NEW_SW_PARAMS_API
+#include <alsa/asoundlib.h>
 
 #include "config.h"
 #include "subopt-helper.h"
 #include "mixer.h"
 #include "mp_msg.h"
 #include "help_mp.h"
-
-#define ALSA_PCM_NEW_HW_PARAMS_API
-#define ALSA_PCM_NEW_SW_PARAMS_API
-
-#ifdef HAVE_SYS_ASOUNDLIB_H
-#include <sys/asoundlib.h>
-#elif defined(HAVE_ALSA_ASOUNDLIB_H)
-#include <alsa/asoundlib.h>
-#else
-#error "asoundlib.h is not in sys/ or alsa/ - please bugreport"
-#endif
-
-
 #include "audio_out.h"
 #include "audio_out_internal.h"
 #include "libaf/af_format.h"
