@@ -20,10 +20,11 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <alloca.h>
+#define ALSA_PCM_NEW_HW_PARAMS_API
+#define ALSA_PCM_NEW_SW_PARAMS_API
+#include <alsa/asoundlib.h>
 
 #include "config.h"
-
-#include <alsa/asoundlib.h>
 #include "audio_in.h"
 #include "mp_msg.h"
 #include "help_mp.h"
