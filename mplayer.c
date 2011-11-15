@@ -1597,8 +1597,7 @@ static void update_osd_msg(void)
             if (osd_fractions == 1) {
                 // print fractions as sub-second timestamp
                 snprintf(fractions_text, sizeof(fractions_text), ".%02d",
-                         (int)((mpctx->sh_video->pts - pts) * 100 + 0.5)
-                         % 100);
+                         (int)((mpctx->sh_video->pts - pts) * 100) % 100);
             } else if (osd_fractions == 2) {
                 // print fractions by estimating the frame count within the
                 // second
