@@ -37,8 +37,8 @@ static const ao_info_t info =
 
 LIBAO_EXTERN(null)
 
-struct	timeval last_tv;
-int	buffer;
+static struct	timeval last_tv;
+static int	buffer;
 
 static void drain(void){
 
