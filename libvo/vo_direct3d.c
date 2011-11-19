@@ -237,6 +237,12 @@ static int create_d3d_surfaces(void)
         return 0;
     }
 
+    if (!tex_width || !tex_height) {
+      mp_msg(MSGT_VO, MSGL_V,
+             "<vo_direct3d>Deferring surface creation because width or height is 0.\n");
+      return 0;
+    }
+
     /* calculate the best size for the OSD depending on the factors from the device */
     if (priv->device_caps_power2_only) {
         tex_width  = 1;
@@ -1029,7 +1035,8 @@ static void draw_alpha(int x0, int y0, int w, int h, unsigned char *src,
 static void draw_osd(void)
 {
     // we can not render OSD if we lost the device e.g. because it was uncooperative
-    if (!priv->d3d_device)
+    // or if the OSD textures are not allocated (e.g. the window is minimized)
+    if (!priv->d3d_device || !priv->d3d_texture_osd)
         return;
 
     if (vo_osd_changed(0)) {
