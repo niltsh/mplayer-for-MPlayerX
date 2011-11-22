@@ -550,22 +550,23 @@ void vo_uninit(void)
 #include "osdep/keycodes.h"
 #include "wskeys.h"
 
-#ifdef XF86XK_AudioPause
 static const struct mp_keymap keysym_map[] = {
+#ifdef XF86XK_AudioPause
     {XF86XK_MenuKB, KEY_MENU},
     {XF86XK_AudioPlay, KEY_PLAY}, {XF86XK_AudioPause, KEY_PAUSE}, {XF86XK_AudioStop, KEY_STOP},
     {XF86XK_AudioPrev, KEY_PREV}, {XF86XK_AudioNext, KEY_NEXT},
     {XF86XK_AudioMute, KEY_MUTE}, {XF86XK_AudioLowerVolume, KEY_VOLUME_DOWN}, {XF86XK_AudioRaiseVolume, KEY_VOLUME_UP},
+#endif
     {0, 0}
 };
 
-static void vo_x11_putkey_ext(int keysym)
+static int vo_x11_putkey_ext(int keysym)
 {
     int mpkey = lookup_keymap_table(keysym_map, keysym);
     if (mpkey)
         mplayer_put_key(mpkey);
+    return mpkey != 0;
 }
-#endif
 
 static const struct mp_keymap keymap[] = {
     // special keys
@@ -852,13 +853,12 @@ int vo_x11_check_events(Display * mydisplay)
 
                     XLookupString(&Event.xkey, buf, sizeof(buf), &keySym,
                                   &stat);
-#ifdef XF86XK_AudioPause
-                    vo_x11_putkey_ext(keySym);
-#endif
-                    key =
-                        ((keySym & 0xff00) !=
-                         0 ? ((keySym & 0x00ff) + 256) : (keySym));
-                    vo_x11_putkey(key);
+                    if (!vo_x11_putkey_ext(keySym)) {
+                        key =
+                            ((keySym & 0xff00) !=
+                             0 ? ((keySym & 0x00ff) + 256) : (keySym));
+                        vo_x11_putkey(key);
+                    }
                     ret |= VO_EVENT_KEYPRESS;
                 }
                 break;
