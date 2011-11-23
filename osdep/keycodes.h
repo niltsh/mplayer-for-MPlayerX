@@ -58,7 +58,7 @@
 #define KEY_UP (KEY_CRSR+3)
 
 /* Multimedia keyboard/remote keys */
-#define KEY_MM_BASE (0x100+384)
+#define KEY_MM_BASE (KEY_BASE+384)
 #define KEY_POWER (KEY_MM_BASE+0)
 #define KEY_MENU (KEY_MM_BASE+1)
 #define KEY_PLAY (KEY_MM_BASE+2)
