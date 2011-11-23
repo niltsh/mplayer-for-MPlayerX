@@ -243,7 +243,7 @@ static void check_events(void)
         if (!vo_nomouse_input)
             mplayer_put_key(MOUSE_BTN0 + cev.data.mouse.button - 1);
         break;
-    case CACA_EVENT_KEY_RELEASE:
+    case CACA_EVENT_KEY_PRESS:
     {
         int key = cev.data.key.ch;
         const char *msg_name;
