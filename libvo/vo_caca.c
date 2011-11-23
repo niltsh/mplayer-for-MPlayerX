@@ -39,6 +39,8 @@
 #include "sub/sub.h"
 
 #include "osdep/keycodes.h"
+#include "input/input.h"
+#include "input/mouse.h"
 #include "mp_msg.h"
 #include "mp_fifo.h"
 
@@ -227,6 +229,20 @@ static void check_events(void)
         caca_refresh_display(display);
         resize();
         break;
+    case CACA_EVENT_QUIT:
+        mplayer_put_key(KEY_CLOSE_WIN);
+        break;
+    case CACA_EVENT_MOUSE_MOTION:
+        vo_mouse_movement(cev.data.mouse.x, cev.data.mouse.y);
+        break;
+    case CACA_EVENT_MOUSE_PRESS:
+        if (!vo_nomouse_input)
+            mplayer_put_key((MOUSE_BTN0 + cev.data.mouse.button - 1) | MP_KEY_DOWN);
+        break;
+    case CACA_EVENT_MOUSE_RELEASE:
+        if (!vo_nomouse_input)
+            mplayer_put_key(MOUSE_BTN0 + cev.data.mouse.button - 1);
+        break;
     case CACA_EVENT_KEY_RELEASE:
     {
         int key = cev.data.key.ch;
@@ -294,6 +310,38 @@ static void check_events(void)
             break;
         case CACA_KEY_END:
             mplayer_put_key(KEY_END);
+            break;
+        case CACA_KEY_DELETE:
+            mplayer_put_key(KEY_DELETE);
+            break;
+        case CACA_KEY_INSERT:
+            mplayer_put_key(KEY_INSERT);
+            break;
+        case CACA_KEY_BACKSPACE:
+            mplayer_put_key(KEY_BACKSPACE);
+            break;
+        case CACA_KEY_TAB:
+            mplayer_put_key(KEY_TAB);
+            break;
+        case CACA_KEY_PAUSE:
+            mplayer_put_key(KEY_PAUSE);
+            break;
+        case CACA_KEY_F1:
+        case CACA_KEY_F2:
+        case CACA_KEY_F3:
+        case CACA_KEY_F4:
+        case CACA_KEY_F5:
+        case CACA_KEY_F6:
+        case CACA_KEY_F7:
+        case CACA_KEY_F8:
+        case CACA_KEY_F9:
+        case CACA_KEY_F10:
+        case CACA_KEY_F11:
+        case CACA_KEY_F12:
+        case CACA_KEY_F13:
+        case CACA_KEY_F14:
+        case CACA_KEY_F15:
+            mplayer_put_key(KEY_F + 1 + key - CACA_KEY_F1);
             break;
         default:
             if (key <= 255)
