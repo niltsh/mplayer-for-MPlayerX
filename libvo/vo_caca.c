@@ -223,132 +223,132 @@ static void check_events(void)
     caca_event_t cev;
     while (caca_get_event(display, CACA_EVENT_ANY, &cev, 0)) {
 
-    switch (cev.type) {
-    case CACA_EVENT_RESIZE:
-        caca_refresh_display(display);
-        resize();
-        break;
-    case CACA_EVENT_QUIT:
-        mplayer_put_key(KEY_CLOSE_WIN);
-        break;
-    case CACA_EVENT_MOUSE_MOTION:
-        vo_mouse_movement(cev.data.mouse.x, cev.data.mouse.y);
-        break;
-    case CACA_EVENT_MOUSE_PRESS:
-        if (!vo_nomouse_input)
-            mplayer_put_key((MOUSE_BTN0 + cev.data.mouse.button - 1) | MP_KEY_DOWN);
-        break;
-    case CACA_EVENT_MOUSE_RELEASE:
-        if (!vo_nomouse_input)
-            mplayer_put_key(MOUSE_BTN0 + cev.data.mouse.button - 1);
-        break;
-    case CACA_EVENT_KEY_PRESS:
-    {
-        int key = cev.data.key.ch;
-        const char *msg_name;
+        switch (cev.type) {
+        case CACA_EVENT_RESIZE:
+            caca_refresh_display(display);
+            resize();
+            break;
+        case CACA_EVENT_QUIT:
+            mplayer_put_key(KEY_CLOSE_WIN);
+            break;
+        case CACA_EVENT_MOUSE_MOTION:
+            vo_mouse_movement(cev.data.mouse.x, cev.data.mouse.y);
+            break;
+        case CACA_EVENT_MOUSE_PRESS:
+            if (!vo_nomouse_input)
+                mplayer_put_key((MOUSE_BTN0 + cev.data.mouse.button - 1) | MP_KEY_DOWN);
+            break;
+        case CACA_EVENT_MOUSE_RELEASE:
+            if (!vo_nomouse_input)
+                mplayer_put_key(MOUSE_BTN0 + cev.data.mouse.button - 1);
+            break;
+        case CACA_EVENT_KEY_PRESS:
+        {
+            int key = cev.data.key.ch;
+            const char *msg_name;
 
-        switch (key) {
-        case 'd':
-        case 'D':
-            /* Toggle dithering algorithm */
-            set_next_str(caca_get_dither_algorithm_list(dither), &dither_algo, &msg_name);
-            caca_set_dither_algorithm(dither, dither_algo);
-            osdmessage(MESSAGE_DURATION, "Using %s", msg_name);
-            break;
+            switch (key) {
+            case 'd':
+            case 'D':
+                /* Toggle dithering algorithm */
+                set_next_str(caca_get_dither_algorithm_list(dither), &dither_algo, &msg_name);
+                caca_set_dither_algorithm(dither, dither_algo);
+                osdmessage(MESSAGE_DURATION, "Using %s", msg_name);
+                break;
 
-        case 'a':
-        case 'A':
-            /* Toggle antialiasing method */
-            set_next_str(caca_get_dither_antialias_list(dither), &dither_antialias, &msg_name);
-            caca_set_dither_antialias(dither, dither_antialias);
-            osdmessage(MESSAGE_DURATION, "Using %s", msg_name);
-            break;
+            case 'a':
+            case 'A':
+                /* Toggle antialiasing method */
+                set_next_str(caca_get_dither_antialias_list(dither), &dither_antialias, &msg_name);
+                caca_set_dither_antialias(dither, dither_antialias);
+                osdmessage(MESSAGE_DURATION, "Using %s", msg_name);
+                break;
 
-        case 'h':
-        case 'H':
-            /* Toggle charset method */
-            set_next_str(caca_get_dither_charset_list(dither), &dither_charset, &msg_name);
-            caca_set_dither_charset(dither, dither_charset);
-            osdmessage(MESSAGE_DURATION, "Using %s", msg_name);
-            break;
+            case 'h':
+            case 'H':
+                /* Toggle charset method */
+                set_next_str(caca_get_dither_charset_list(dither), &dither_charset, &msg_name);
+                caca_set_dither_charset(dither, dither_charset);
+                osdmessage(MESSAGE_DURATION, "Using %s", msg_name);
+                break;
 
-        case 'c':
-        case 'C':
-            /* Toggle color method */
-            set_next_str(caca_get_dither_color_list(dither), &dither_color, &msg_name);
-            caca_set_dither_color(dither, dither_color);
-            osdmessage(MESSAGE_DURATION, "Using %s", msg_name);
-            break;
+            case 'c':
+            case 'C':
+                /* Toggle color method */
+                set_next_str(caca_get_dither_color_list(dither), &dither_color, &msg_name);
+                caca_set_dither_color(dither, dither_color);
+                osdmessage(MESSAGE_DURATION, "Using %s", msg_name);
+                break;
 
-        case CACA_KEY_UP:
-            mplayer_put_key(KEY_UP);
-            break;
-        case CACA_KEY_DOWN:
-            mplayer_put_key(KEY_DOWN);
-            break;
-        case CACA_KEY_LEFT:
-            mplayer_put_key(KEY_LEFT);
-            break;
-        case CACA_KEY_RIGHT:
-            mplayer_put_key(KEY_RIGHT);
-            break;
-        case CACA_KEY_ESCAPE:
-            mplayer_put_key(KEY_ESC);
-            break;
-        case CACA_KEY_PAGEUP:
-            mplayer_put_key(KEY_PAGE_UP);
-            break;
-        case CACA_KEY_PAGEDOWN:
-            mplayer_put_key(KEY_PAGE_DOWN);
-            break;
-        case CACA_KEY_RETURN:
-            mplayer_put_key(KEY_ENTER);
-            break;
-        case CACA_KEY_HOME:
-            mplayer_put_key(KEY_HOME);
-            break;
-        case CACA_KEY_END:
-            mplayer_put_key(KEY_END);
-            break;
-        case CACA_KEY_DELETE:
-            mplayer_put_key(KEY_DELETE);
-            break;
-        case CACA_KEY_INSERT:
-            mplayer_put_key(KEY_INSERT);
-            break;
-        case CACA_KEY_BACKSPACE:
-            mplayer_put_key(KEY_BACKSPACE);
-            break;
-        case CACA_KEY_TAB:
-            mplayer_put_key(KEY_TAB);
-            break;
-        case CACA_KEY_PAUSE:
-            mplayer_put_key(KEY_PAUSE);
-            break;
-        case CACA_KEY_F1:
-        case CACA_KEY_F2:
-        case CACA_KEY_F3:
-        case CACA_KEY_F4:
-        case CACA_KEY_F5:
-        case CACA_KEY_F6:
-        case CACA_KEY_F7:
-        case CACA_KEY_F8:
-        case CACA_KEY_F9:
-        case CACA_KEY_F10:
-        case CACA_KEY_F11:
-        case CACA_KEY_F12:
-        case CACA_KEY_F13:
-        case CACA_KEY_F14:
-        case CACA_KEY_F15:
-            mplayer_put_key(KEY_F + 1 + key - CACA_KEY_F1);
-            break;
-        default:
-            if (key <= 255)
-                mplayer_put_key(key);
-            break;
+            case CACA_KEY_UP:
+                mplayer_put_key(KEY_UP);
+                break;
+            case CACA_KEY_DOWN:
+                mplayer_put_key(KEY_DOWN);
+                break;
+            case CACA_KEY_LEFT:
+                mplayer_put_key(KEY_LEFT);
+                break;
+            case CACA_KEY_RIGHT:
+                mplayer_put_key(KEY_RIGHT);
+                break;
+            case CACA_KEY_ESCAPE:
+                mplayer_put_key(KEY_ESC);
+                break;
+            case CACA_KEY_PAGEUP:
+                mplayer_put_key(KEY_PAGE_UP);
+                break;
+            case CACA_KEY_PAGEDOWN:
+                mplayer_put_key(KEY_PAGE_DOWN);
+                break;
+            case CACA_KEY_RETURN:
+                mplayer_put_key(KEY_ENTER);
+                break;
+            case CACA_KEY_HOME:
+                mplayer_put_key(KEY_HOME);
+                break;
+            case CACA_KEY_END:
+                mplayer_put_key(KEY_END);
+                break;
+            case CACA_KEY_DELETE:
+                mplayer_put_key(KEY_DELETE);
+                break;
+            case CACA_KEY_INSERT:
+                mplayer_put_key(KEY_INSERT);
+                break;
+            case CACA_KEY_BACKSPACE:
+                mplayer_put_key(KEY_BACKSPACE);
+                break;
+            case CACA_KEY_TAB:
+                mplayer_put_key(KEY_TAB);
+                break;
+            case CACA_KEY_PAUSE:
+                mplayer_put_key(KEY_PAUSE);
+                break;
+            case CACA_KEY_F1:
+            case CACA_KEY_F2:
+            case CACA_KEY_F3:
+            case CACA_KEY_F4:
+            case CACA_KEY_F5:
+            case CACA_KEY_F6:
+            case CACA_KEY_F7:
+            case CACA_KEY_F8:
+            case CACA_KEY_F9:
+            case CACA_KEY_F10:
+            case CACA_KEY_F11:
+            case CACA_KEY_F12:
+            case CACA_KEY_F13:
+            case CACA_KEY_F14:
+            case CACA_KEY_F15:
+                mplayer_put_key(KEY_F + 1 + key - CACA_KEY_F1);
+                break;
+            default:
+                if (key <= 255)
+                    mplayer_put_key(key);
+                break;
+            }
         }
-    }
-    }
+        }
     }
 }
 
