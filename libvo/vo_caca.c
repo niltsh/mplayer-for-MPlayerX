@@ -221,8 +221,7 @@ static void set_next_str(const char * const *list, const char **str,
 static void check_events(void)
 {
     caca_event_t cev;
-    if (!caca_get_event(display, CACA_EVENT_ANY, &cev, 1))
-        return;
+    while (caca_get_event(display, CACA_EVENT_ANY, &cev, 0)) {
 
     switch (cev.type) {
     case CACA_EVENT_RESIZE:
@@ -348,6 +347,7 @@ static void check_events(void)
                 mplayer_put_key(key);
             break;
         }
+    }
     }
     }
 }
