@@ -218,6 +218,26 @@ static void set_next_str(const char * const *list, const char **str,
     *msg = list[1];
 }
 
+static const struct mp_keymap keysym_map[] = {
+    {CACA_KEY_RETURN, KEY_ENTER}, {CACA_KEY_ESCAPE, KEY_ESC},
+    {CACA_KEY_UP, KEY_DOWN}, {CACA_KEY_DOWN, KEY_DOWN},
+    {CACA_KEY_LEFT, KEY_LEFT}, {CACA_KEY_RIGHT, KEY_RIGHT},
+    {CACA_KEY_PAGEUP, KEY_PAGE_UP}, {CACA_KEY_PAGEDOWN, KEY_PAGE_DOWN},
+    {CACA_KEY_HOME, KEY_HOME}, {CACA_KEY_END, KEY_END},
+    {CACA_KEY_INSERT, KEY_INSERT}, {CACA_KEY_DELETE, KEY_DELETE},
+    {CACA_KEY_BACKSPACE, KEY_BACKSPACE}, {CACA_KEY_TAB, KEY_TAB},
+    {CACA_KEY_PAUSE, KEY_PAUSE},
+    {CACA_KEY_F1, KEY_F+1}, {CACA_KEY_F2, KEY_F+2},
+    {CACA_KEY_F3, KEY_F+3}, {CACA_KEY_F4, KEY_F+4},
+    {CACA_KEY_F5, KEY_F+5}, {CACA_KEY_F6, KEY_F+6},
+    {CACA_KEY_F7, KEY_F+7}, {CACA_KEY_F8, KEY_F+8},
+    {CACA_KEY_F9, KEY_F+9}, {CACA_KEY_F10, KEY_F+10},
+    {CACA_KEY_F11, KEY_F+11}, {CACA_KEY_F12, KEY_F+12},
+    {CACA_KEY_F13, KEY_F+13}, {CACA_KEY_F14, KEY_F+14},
+    {CACA_KEY_F15, KEY_F+15},
+    {0, 0}
+};
+
 static void check_events(void)
 {
     caca_event_t cev;
@@ -245,8 +265,12 @@ static void check_events(void)
         case CACA_EVENT_KEY_PRESS:
         {
             int key = cev.data.key.ch;
+            int mpkey = lookup_keymap_table(keysym_map, key);
             const char *msg_name;
 
+            if (mpkey)
+                mplayer_put_key(mpkey);
+            else
             switch (key) {
             case 'd':
             case 'D':
@@ -280,68 +304,6 @@ static void check_events(void)
                 osdmessage(MESSAGE_DURATION, "Using %s", msg_name);
                 break;
 
-            case CACA_KEY_UP:
-                mplayer_put_key(KEY_UP);
-                break;
-            case CACA_KEY_DOWN:
-                mplayer_put_key(KEY_DOWN);
-                break;
-            case CACA_KEY_LEFT:
-                mplayer_put_key(KEY_LEFT);
-                break;
-            case CACA_KEY_RIGHT:
-                mplayer_put_key(KEY_RIGHT);
-                break;
-            case CACA_KEY_ESCAPE:
-                mplayer_put_key(KEY_ESC);
-                break;
-            case CACA_KEY_PAGEUP:
-                mplayer_put_key(KEY_PAGE_UP);
-                break;
-            case CACA_KEY_PAGEDOWN:
-                mplayer_put_key(KEY_PAGE_DOWN);
-                break;
-            case CACA_KEY_RETURN:
-                mplayer_put_key(KEY_ENTER);
-                break;
-            case CACA_KEY_HOME:
-                mplayer_put_key(KEY_HOME);
-                break;
-            case CACA_KEY_END:
-                mplayer_put_key(KEY_END);
-                break;
-            case CACA_KEY_DELETE:
-                mplayer_put_key(KEY_DELETE);
-                break;
-            case CACA_KEY_INSERT:
-                mplayer_put_key(KEY_INSERT);
-                break;
-            case CACA_KEY_BACKSPACE:
-                mplayer_put_key(KEY_BACKSPACE);
-                break;
-            case CACA_KEY_TAB:
-                mplayer_put_key(KEY_TAB);
-                break;
-            case CACA_KEY_PAUSE:
-                mplayer_put_key(KEY_PAUSE);
-                break;
-            case CACA_KEY_F1:
-            case CACA_KEY_F2:
-            case CACA_KEY_F3:
-            case CACA_KEY_F4:
-            case CACA_KEY_F5:
-            case CACA_KEY_F6:
-            case CACA_KEY_F7:
-            case CACA_KEY_F8:
-            case CACA_KEY_F9:
-            case CACA_KEY_F10:
-            case CACA_KEY_F11:
-            case CACA_KEY_F12:
-            case CACA_KEY_F13:
-            case CACA_KEY_F14:
-            case CACA_KEY_F15:
-                mplayer_put_key(KEY_F + 1 + key - CACA_KEY_F1);
-                break;
             default:
                 if (key <= 255)
                     mplayer_put_key(key);
