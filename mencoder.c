@@ -238,7 +238,7 @@ static edl_record_ptr edl_records = NULL; ///< EDL entries memory area
 static edl_record_ptr next_edl_record = NULL; ///< only for traversing edl_records
 static short edl_muted; ///< Stores whether EDL is currently in muted mode.
 static short edl_seeking; ///< When non-zero, stream is seekable.
-static short edl_seek_type; ///< When non-zero, frames are discarded instead of seeking.
+static int edl_seek_type; ///< When non-zero, frames are discarded instead of seeking.
 
 /* This header requires all the global variable declarations. */
 #include "cfg-mencoder.h"
