@@ -130,8 +130,7 @@ install-arch: build-arch
 
 ###### build-indep
 DOCS/HTML/en/index.html:
-	sh debian/all-lang-config-mak.sh > config.mak
-	$(MAKE) -C DOCS/xml html-chunked
+	$(MAKE) html-chunked
 
 build-indep:
 	dh_testdir
