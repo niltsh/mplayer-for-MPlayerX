@@ -89,7 +89,7 @@ static const char *aspect_ratios[] = {
 };
 
 static char *conf_mux = "mpeg2";
-static uint16_t conf_packet_size = 0;		//dvd
+static uint32_t conf_packet_size = 0;		//dvd
 static uint32_t conf_muxrate = 0;		//kb/s
 static float conf_vaspect = 0;
 static float conf_vframerate = 0;
