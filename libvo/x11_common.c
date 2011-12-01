@@ -844,6 +844,7 @@ int vo_x11_check_events(Display * mydisplay)
                 ret |= check_resize();
                 break;
             case KeyPress:
+            case KeyRelease:
                 {
                     int key;
 
@@ -853,10 +854,15 @@ int vo_x11_check_events(Display * mydisplay)
 
                     XLookupString(&Event.xkey, buf, sizeof(buf), &keySym,
                                   &stat);
-                    if (!vo_x11_putkey_ext(keySym)) {
-                        key =
-                            ((keySym & 0xff00) !=
-                             0 ? ((keySym & 0x00ff) + 256) : (keySym));
+                    key =
+                        ((keySym & 0xff00) !=
+                         0 ? ((keySym & 0x00ff) + 256) : (keySym));
+                    if (key == wsLeftCtrl || key == wsRightCtrl) {
+                        mplayer_put_key(KEY_CTRL |
+                            (Event.type == KeyPress ? MP_KEY_DOWN : 0));
+                    } else if (Event.type == KeyRelease) {
+                        break;
+                    } else if (!vo_x11_putkey_ext(keySym)) {
                         vo_x11_putkey(key);
                     }
                     ret |= VO_EVENT_KEYPRESS;
@@ -1095,7 +1101,7 @@ void vo_x11_create_vo_window(XVisualInfo *vis, int x, int y,
       // if it relies on events being forwarded to the parent of WinID.
       // It also is consistent with the w32_common.c code.
       vo_x11_selectinput_witherr(mDisplay, vo_window,
-          StructureNotifyMask | KeyPressMask | PointerMotionMask |
+          StructureNotifyMask | KeyPressMask | KeyReleaseMask | PointerMotionMask |
           ButtonPressMask | ButtonReleaseMask | ExposureMask);
 
     vo_x11_update_geometry();
@@ -1136,7 +1142,7 @@ void vo_x11_create_vo_window(XVisualInfo *vis, int x, int y,
     XSelectInput(mDisplay, vo_window, NoEventMask);
     XSync(mDisplay, False);
     vo_x11_selectinput_witherr(mDisplay, vo_window,
-          StructureNotifyMask | KeyPressMask | PointerMotionMask |
+          StructureNotifyMask | KeyPressMask | KeyReleaseMask | PointerMotionMask |
           ButtonPressMask | ButtonReleaseMask | ExposureMask);
   }
   if (vo_ontop) vo_x11_setlayer(mDisplay, vo_window, vo_ontop);
