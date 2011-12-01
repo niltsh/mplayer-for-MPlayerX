@@ -1456,7 +1456,7 @@ mp_input_get_key_name(int key) {
       return key_names[i].name;
   }
 
-  if(isascii(key)) {
+  if(isprint(key)) {
     snprintf(key_str,12,"%c",(char)key);
     return key_str;
   }
