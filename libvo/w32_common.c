@@ -433,6 +433,8 @@ int vo_w32_config(uint32_t width, uint32_t height, uint32_t flags) {
         prev_height = vo_dheight = height;
         prev_x = vo_dx;
         prev_y = vo_dy;
+        if (vo_wintitle)
+            SetWindowText(vo_w32_window, vo_wintitle);
     }
 
     vo_fs = flags & VOFLAG_FULLSCREEN;
