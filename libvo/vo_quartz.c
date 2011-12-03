@@ -471,7 +471,6 @@ static void quartz_CreateWindow(uint32_t d_width, uint32_t d_height, WindowAttri
 {
     CFStringRef titleKey;
     CFStringRef windowTitle;
-    OSStatus result;
 
     MenuItemIndex index;
     CFStringRef movMenuTitle;
@@ -556,7 +555,7 @@ static void quartz_CreateWindow(uint32_t d_width, uint32_t d_height, WindowAttri
     // Set window title
     titleKey = CFSTR("MPlayer - The Movie Player");
     windowTitle = CFCopyLocalizedString(titleKey, NULL);
-    result = SetWindowTitleWithCFString(theWindow, windowTitle);
+    SetWindowTitleWithCFString(theWindow, windowTitle);
     CFRelease(titleKey);
     CFRelease(windowTitle);
 
