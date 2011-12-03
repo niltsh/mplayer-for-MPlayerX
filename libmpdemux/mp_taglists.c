@@ -149,7 +149,16 @@ static const struct AVCodecTag * const mp_bmp_taglists[] = {mp_bmp_tags, 0};
 
 enum CodecID mp_tag2codec_id(uint32_t tag, int audio)
 {
-    return av_codec_get_id(audio ? mp_wav_taglists : mp_bmp_taglists, tag);
+    AVOutputFormat *avi_format;
+    enum CodecID id = av_codec_get_id(audio ? mp_wav_taglists : mp_bmp_taglists, tag);
+    if (id != CODEC_ID_NONE)
+        return id;
+    avi_format = av_guess_format("avi", NULL, NULL);
+    if (!avi_format) {
+        mp_msg(MSGT_DEMUXER, MSGL_FATAL, "MPlayer cannot work properly without AVI muxer in libavformat!\n");
+        return 0;
+    }
+    return av_codec_get_id(avi_format->codec_tag, tag);
 }
 
 uint32_t mp_codec_id2tag(enum CodecID codec_id, uint32_t old_tag, int audio)
