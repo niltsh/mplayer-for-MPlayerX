@@ -1079,6 +1079,8 @@ void vo_x11_create_vo_window(XVisualInfo *vis, int x, int y,
                              Colormap col_map,
                              const char *classname, const char *title)
 {
+  if (vo_wintitle)
+    title = vo_wintitle;
   if (WinID >= 0) {
     vo_fs = flags & VOFLAG_FULLSCREEN;
     vo_window = WinID ? (Window)WinID : mRootWin;
@@ -1117,12 +1119,12 @@ void vo_x11_create_vo_window(XVisualInfo *vis, int x, int y,
   }
   if (flags & VOFLAG_HIDDEN)
     goto final;
+  XStoreName(mDisplay, vo_window, title);
   if (window_state & VOFLAG_HIDDEN) {
     XSizeHints hint;
     XEvent xev;
     window_state &= ~VOFLAG_HIDDEN;
     vo_x11_classhint(mDisplay, vo_window, classname);
-    XStoreName(mDisplay, vo_window, title);
     vo_hidecursor(mDisplay, vo_window);
     XSelectInput(mDisplay, vo_window, StructureNotifyMask);
     hint.x = x; hint.y = y;
@@ -1351,8 +1353,6 @@ int vo_x11_update_geometry(void) {
     if (w <= INT_MAX && h <= INT_MAX) { vo_dwidth = w; vo_dheight = h; }
     XTranslateCoordinates(mDisplay, vo_window, mRootWin, 0, 0, &vo_dx, &vo_dy,
                           &dummy_win);
-    if (vo_wintitle)
-        XStoreName(mDisplay, vo_window, vo_wintitle);
 
     return depth <= INT_MAX ? depth : 0;
 }
