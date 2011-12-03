@@ -115,6 +115,7 @@ SRCS_COMMON-$(LIBASS_INTERNAL)       += libass/ass.c \
                                         libass/ass_parse.c \
                                         libass/ass_render.c \
                                         libass/ass_render_api.c \
+                                        libass/ass_shaper.c \
                                         libass/ass_strtod.c \
                                         libass/ass_utils.c \
 
