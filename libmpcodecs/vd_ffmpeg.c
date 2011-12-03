@@ -180,7 +180,7 @@ static int control(sh_video_t *sh, int cmd, void *arg, ...){
         avcodec_flush_buffers(avctx);
         return CONTROL_TRUE;
     case VDCTRL_QUERY_UNSEEN_FRAMES:
-        // "has_b_frames" contains the (e.g. reorder) delay as sepcified
+        // "has_b_frames" contains the (e.g. reorder) delay as specified
         // in the standard. "delay" contains the libavcodec-specific delay
         // e.g. due to frame multithreading
         return avctx->has_b_frames + avctx->delay + 10;
