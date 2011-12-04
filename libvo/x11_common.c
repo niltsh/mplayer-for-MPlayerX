@@ -812,6 +812,7 @@ int vo_x11_check_events(Display * mydisplay)
     char buf[100];
     KeySym keySym;
     static XComposeStatus stat;
+    static int ctrl_state;
 
     if (vo_mouse_autohide && mouse_waiting_hide &&
                                  (GetTimerMS() - mouse_timer >= 1000)) {
@@ -858,11 +859,22 @@ int vo_x11_check_events(Display * mydisplay)
                         ((keySym & 0xff00) !=
                          0 ? ((keySym & 0x00ff) + 256) : (keySym));
                     if (key == wsLeftCtrl || key == wsRightCtrl) {
+                        ctrl_state = Event.type == KeyPress;
                         mplayer_put_key(KEY_CTRL |
-                            (Event.type == KeyPress ? MP_KEY_DOWN : 0));
+                            (ctrl_state ? MP_KEY_DOWN : 0));
                     } else if (Event.type == KeyRelease) {
                         break;
-                    } else if (!vo_x11_putkey_ext(keySym)) {
+                    }
+                    // Attempt to fix if somehow our state got out of
+                    // sync with reality.
+                    // This usually happens when a shortcut involving CTRL
+                    // was used to switch to a different window/workspace.
+                    if (ctrl_state != !!(Event.xkey.state & 4)) {
+                        ctrl_state = !!(Event.xkey.state & 4);
+                        mplayer_put_key(KEY_CTRL |
+                            (ctrl_state ? MP_KEY_DOWN : 0));
+                    }
+                    if (!vo_x11_putkey_ext(keySym)) {
                         vo_x11_putkey(key);
                     }
                     ret |= VO_EVENT_KEYPRESS;
