@@ -62,6 +62,7 @@ static const struct AVCodecTag mp_wav_tags[] = {
     { CODEC_ID_SPEEX,             MKTAG('s', 'p', 'x', ' ')},
     { CODEC_ID_TTA,               MKTAG('T', 'T', 'A', '1')},
     { CODEC_ID_TWINVQ,            MKTAG('T', 'W', 'I', '2')},
+    { CODEC_ID_VMDAUDIO,          MKTAG('V', 'M', 'D', 'A')},
     { CODEC_ID_WAVPACK,           MKTAG('W', 'V', 'P', 'K')},
     { CODEC_ID_WESTWOOD_SND1,     MKTAG('S', 'N', 'D', '1')},
     { CODEC_ID_XAN_DPCM,          MKTAG('A', 'x', 'a', 'n')},
