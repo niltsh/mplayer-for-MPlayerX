@@ -673,6 +673,9 @@ static int config(uint32_t width, uint32_t height,
 {
     RECTL   rcl;
 
+    if (vo_wintitle)
+        title = vo_wintitle;
+
     mp_msg(MSGT_VO, MSGL_V,
            "KVA: Using 0x%X (%s) image format, vo_config_count = %d\n",
            format, vo_format_name(format), vo_config_count);
