@@ -1171,6 +1171,7 @@ static const char help_text[]=
 
 // ao_sun.c
 #define MSGTR_AO_SUN_RtscSetinfoFailed "[AO SUN] rtsc: Выполнить SETINFO не удалось.\n"
+#define MSGTR_AO_SUN_RtscWriteFailed "[AO SUN] rtsc: запись не удалась."
 #define MSGTR_AO_SUN_CantOpenAudioDev "[AO SUN] Не могу открыть аудиоустройство %s, %s -> нет звука.\n"
 #define MSGTR_AO_SUN_UnsupSampleRate "[AO SUN] инициализация аудио: ваша карта не поддерживает канал %d,\n%s, частоту дискретизации %d Гц.\n"
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   ***  Ваш аудиодрайвер НЕ поддерживает select()  ***\nПерекомпилируйте MPlayer с #undef HAVE_AUDIO_SELECT в config.h !\n\n"

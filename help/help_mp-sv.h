@@ -876,6 +876,7 @@ static const char help_text[]=
 
 // ao_sun.c
 #define MSGTR_AO_SUN_RtscSetinfoFailed "[AO SUN] rtsc: SETINFO misslyckades.\n"
+#define MSGTR_AO_SUN_RtscWriteFailed "[AO SUN] rtsc: skrivning misslyckades."
 #define MSGTR_AO_SUN_CantOpenAudioDev "[AO SUN] Kan inte öppna audioenhet %s, %s  -> inget ljud.\n"
 #define MSGTR_AO_SUN_UnsupSampleRate "[AO SUN] audio_setup: ditt kort hanterar inte %d kanaler, %s, %d Hz samplerate.\n" // FIXME samplerate
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   ***  Din ljudkortsenhet hanterar inte select()  ***\nKompilera om med '#undef HAVE_AUDIO_SELECT' i config.h !\n\n"

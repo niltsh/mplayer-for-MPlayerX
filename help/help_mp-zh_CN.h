@@ -1229,6 +1229,7 @@ static const char help_text[]=
 
 // ao_sun.c
 #define MSGTR_AO_SUN_RtscSetinfoFailed "[AO SUN] rtsc：SETINFO 失败。\n"
+#define MSGTR_AO_SUN_RtscWriteFailed "[AO SUN] rtsc：写入失败。\n"
 #define MSGTR_AO_SUN_CantOpenAudioDev "[AO SUN] 无法打开音频设备 %s，%s  -> nosound。\n"
 #define MSGTR_AO_SUN_UnsupSampleRate "[AO SUN] 音频设置：你的声卡不支持 %d 声道，%s，%d Hz 采样率。\n"
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   ***  你的音频驱动不支持 select()  ***\n需要在 config.h 中设置 #undef HAVE_AUDIO_SELECT 并重新编译 MPlayer！\n\n"

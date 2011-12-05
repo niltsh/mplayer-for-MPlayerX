@@ -1062,6 +1062,7 @@ static const char help_text[]=
 
 // ao_sun.c
 #define MSGTR_AO_SUN_RtscSetinfoFailed "[AO SUN] rtsc: SETINFO nie powiodło się.\n"
+#define MSGTR_AO_SUN_RtscWriteFailed "[AO SUN] rtsc: zapis nie powiódł się.\n"
 #define MSGTR_AO_SUN_CantOpenAudioDev "[AO SUN] Nie mogę otworzyć urządzenia audio %s, %s  -> brak dźwięku.\n"
 #define MSGTR_AO_SUN_UnsupSampleRate "[AO SUN] audio_setup: Twoja karta nie obsługuje %d kanałów, %s, częstotliwości próbkowania %d Hz.\n"
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   ***  Twój sterownik dźwięku NIE OBSŁUGUJE select()  ***\nPrzekompiluj MPlayer z opcją #undef HAVE_AUDIO_SELECT w config.h !\n\n"

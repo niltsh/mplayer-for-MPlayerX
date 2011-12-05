@@ -1110,6 +1110,7 @@ static const char help_text[]=
 
 // ao_sun.c
 #define MSGTR_AO_SUN_RtscSetinfoFailed "[AO SUN] rtsc: SETINFO başarısız.\n"
+#define MSGTR_AO_SUN_RtscWriteFailed "[AO SUN] rtsc: yazılamadı.\n"
 #define MSGTR_AO_SUN_CantOpenAudioDev "[AO SUN] %s ses aygıtı açılamıyor, %s  -> ses yok.\n"
 #define MSGTR_AO_SUN_UnsupSampleRate "[AO SUN] ses_kurulumu: ses kartınız %d kanalını, %s, %d Hz  örnekleme oranını desteklemiyor.\n"
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   *** Ses sürücünüzün select() desteği YOK ***\nconfig.h dosyasında #undef HAVE_AUDIO_SELECT ile Mplayer'ı yeniden derleyiniz!\n\n"

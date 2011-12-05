@@ -1183,6 +1183,7 @@ static const char help_text[]=
 
 // ao_sun.c
 #define MSGTR_AO_SUN_RtscSetinfoFailed "[AO SUN] rtsc: SETINFO sikertelen.\n"
+#define MSGTR_AO_SUN_RtscWriteFailed "[AO SUN] rtsc: írás sikertelen.\n"
 #define MSGTR_AO_SUN_CantOpenAudioDev "[AO SUN] %s audio eszköz nem elérhető, %s  -> nincs hang.\n"
 #define MSGTR_AO_SUN_UnsupSampleRate "[AO SUN] audio_setup: a kártyád nem támogat %d csatornát, %s, %d Hz samplerate-t.\n"
 #define MSGTR_AO_SUN_CantUseSelect "[AO SUN]\n   ***  A hangkártyád NEM támogatja a select()-et ***\nFordítsd újra az MPlayer-t az #undef HAVE_AUDIO_SELECT sorral a config.h-ban !\n\n"
