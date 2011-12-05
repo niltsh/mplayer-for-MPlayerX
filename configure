@@ -5911,12 +5911,44 @@ fi
 echores "$_fontconfig"
 
 
+echocheck "fribidi with charsets"
+if test "$_fribidi" = auto ; then
+    cat > $TMPC << EOF
+#include <stdlib.h>
+/* workaround for fribidi 0.10.4 and below */
+#define FRIBIDI_CHARSET_UTF8 FRIBIDI_CHAR_SET_UTF8
+#include <fribidi/fribidi.h>
+int main(void) {
+    if (fribidi_parse_charset("UTF-8") != FRIBIDI_CHAR_SET_UTF8)
+       exit(1);
+    return 0;
+}
+EOF
+    _fribidi=no
+    cc_check -lfribidi && _fribidi=yes && extra_ldflags="$extra_ldflags -lfribidi"
+    if $_pkg_config --exists fribidi > /dev/null 2>&1 &&
+       test "$_fribidi" = no ; then
+        inc_tmp="$($_pkg_config --cflags fribidi)"
+        ld_tmp="$($_pkg_config --libs fribidi)"
+        cc_check $inc_tmp $ld_tmp && _fribidi=yes &&
+            extra_cflags="$extra_cflags $inc_tmp" &&
+            extra_ldflags="$extra_ldflags $ld_tmp"
+    fi
+fi
+if test "$_fribidi" = yes ; then
+    def_fribidi='#define CONFIG_FRIBIDI 1'
+else
+    def_fribidi='#undef CONFIG_FRIBIDI'
+fi
+echores "$_fribidi"
+
+
 echocheck "SSA/ASS support"
-# libass depends on FreeType
-if test "$_freetype" = no ; then
+# libass depends on FreeType and FriBiDi
+if test "$_freetype" = no || test "$_fribidi" = no ; then
     _ass=no
     ass_internal=no
-    res_comment="FreeType support needed"
+    res_comment="FreeType and FriBiDi support needed"
 fi
 
 if test "$_ass" = auto ; then
@@ -5965,38 +5997,6 @@ else
     ass_internal=no
 fi
 echores "$_ass"
-
-
-echocheck "fribidi with charsets"
-if test "$_fribidi" = auto ; then
-    cat > $TMPC << EOF
-#include <stdlib.h>
-/* workaround for fribidi 0.10.4 and below */
-#define FRIBIDI_CHARSET_UTF8 FRIBIDI_CHAR_SET_UTF8
-#include <fribidi/fribidi.h>
-int main(void) {
-    if (fribidi_parse_charset("UTF-8") != FRIBIDI_CHAR_SET_UTF8)
-       exit(1);
-    return 0;
-}
-EOF
-    _fribidi=no
-    cc_check -lfribidi && _fribidi=yes && extra_ldflags="$extra_ldflags -lfribidi"
-    if $_pkg_config --exists fribidi > /dev/null 2>&1 &&
-       test "$_fribidi" = no ; then
-        inc_tmp="$($_pkg_config --cflags fribidi)"
-        ld_tmp="$($_pkg_config --libs fribidi)"
-        cc_check $inc_tmp $ld_tmp && _fribidi=yes &&
-            extra_cflags="$extra_cflags $inc_tmp" &&
-            extra_ldflags="$extra_ldflags $ld_tmp"
-    fi
-fi
-if test "$_fribidi" = yes ; then
-    def_fribidi='#define CONFIG_FRIBIDI 1'
-else
-    def_fribidi='#undef CONFIG_FRIBIDI'
-fi
-echores "$_fribidi"
 
 
 echocheck "ENCA"
