@@ -267,7 +267,8 @@ while(1){
       break; }
     case ckidSTREAMFORMAT: {      // read 'strf'
       if(last_fccType==streamtypeVIDEO){
-        sh_video->bih=calloc(FFMAX(chunksize, sizeof(*sh_video->bih)), 1);
+        sh_video->bih_size = FFMAX(chunksize, sizeof(*sh_video->bih));
+        sh_video->bih=calloc(sh_video->bih_size, 1);
 //        sh_video->bih=malloc(chunksize); memset(sh_video->bih,0,chunksize);
         mp_msg(MSGT_HEADER, MSGL_V, "Found 'bih', %u bytes of %zu\n",
                chunksize, sizeof(*sh_video->bih));

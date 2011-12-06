@@ -116,6 +116,7 @@ typedef struct sh_video {
   // win32-compatible codec parameters:
   AVIStreamHeader video;
   BITMAPINFOHEADER* bih;
+  int bih_size;
   void* ImageDesc; // for quicktime codecs
 } sh_video_t;
 
