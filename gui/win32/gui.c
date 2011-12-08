@@ -238,7 +238,7 @@ static void handlemsg(HWND hWnd, int msg)
         case evLoadPlay:
         case evLoad:
             if(display_openfilewindow(gui, 0) && (msg == evLoadPlay))
-                handlemsg(hWnd, evLoadPlay);
+                gui->playercontrol(evLoadPlay);
             return;
         case evLoadSubtitle:
             display_opensubtitlewindow(gui);
@@ -501,13 +501,13 @@ static LRESULT CALLBACK SubProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
                         gui->playlist->add_track(gui->playlist, file, NULL, NULL, 0);
                 }
                 DragFinish((HDROP) wParam);
-                handlemsg(hWnd, evLoadPlay);
+                gui->playercontrol(evLoadPlay);
             }
             else
             {
                 gui->playlist->clear_playlist(gui->playlist);
                 gui->playlist->add_track(gui->playlist, (const char *) wParam, NULL, NULL, 0);
-                handlemsg(hWnd, evLoadPlay);
+                gui->playercontrol(evLoadPlay);
             }
             SetForegroundWindow(gui->subwindow);
             return 0;
@@ -790,13 +790,13 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                         gui->playlist->add_track(gui->playlist, file, NULL, NULL, 0);
                 }
                 DragFinish((HDROP) wParam);
-                handlemsg(hWnd, evLoadPlay);
+                gui->playercontrol(evLoadPlay);
             }
             else
             {
                 gui->playlist->clear_playlist(gui->playlist);
                 gui->playlist->add_track(gui->playlist, (const char *) wParam, NULL, NULL, 0);
-                handlemsg(hWnd, evLoadPlay);
+                gui->playercontrol(evLoadPlay);
             }
             SetForegroundWindow(gui->mainwindow);
             return 0;
@@ -1118,7 +1118,7 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
 
 static void startplay(gui_t *gui)
 {
-    handlemsg(gui->mainwindow, evLoadPlay);
+    gui->playercontrol(evLoadPlay);
 }
 
 /* returns the bits per pixel of the desktop */
