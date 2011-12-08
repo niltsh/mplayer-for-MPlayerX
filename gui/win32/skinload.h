@@ -158,6 +158,7 @@ skin_t *loadskin(char *skindir, int desktopbpp);
 #define evForward10min      23
 #define evSetMoviePosition  27
 
+#define evHalfSize          301
 #define evDoubleSize        25
 #define evFullScreen        26
 #define evNormalSize        24
