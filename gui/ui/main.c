@@ -277,7 +277,7 @@ NoPause:
    case evPrev: uiPrev(); break;
    case evNext: uiNext(); break;
 
-   case evPlayList:    gtkShow( evPlayList,NULL );        break;
+   case evPlaylist:    gtkShow( evPlaylist,NULL );        break;
    case evSkinBrowser: gtkShow( evSkinBrowser,skinName ); break;
    case evAbout:       gtkShow( evAbout,NULL );           break;
    case evPreferences: gtkShow( evPreferences,NULL );     break;

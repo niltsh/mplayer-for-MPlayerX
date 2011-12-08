@@ -56,7 +56,7 @@ static const evName evNames[] =
     {   evLoadAudioFile,        "evLoadAudioFile"       },
     {   evLoadSubtitle,         "evLoadSubtitle"        },
     {   evDropSubtitle,         "evDropSubtitle"        },
-    {   evPlayList,             "evPlaylist"            },
+    {   evPlaylist,             "evPlaylist"            },
     {   evPlayVCD,              "evPlayVCD"             },
     {   evPlayDVD,              "evPlayDVD"             },
     {   evSetURL,               "evSetURL"              },

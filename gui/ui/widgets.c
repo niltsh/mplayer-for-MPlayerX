@@ -255,7 +255,7 @@ void gtkShow(int type, char *param)
         ShowPreferences();
         break;
 
-    case evPlayList:
+    case evPlaylist:
         ShowPlayList();
         gtkSetLayer(PlayList);
         break;

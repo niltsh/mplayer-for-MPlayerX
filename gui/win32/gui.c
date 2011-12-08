@@ -246,7 +246,7 @@ static void handlemsg(HWND hWnd, int msg)
         case evPreferences:
             display_prefswindow(gui);
             return;
-        case evPlayList:
+        case evPlaylist:
             display_playlistwindow(gui);
             return;
         case evSkinBrowser:
@@ -1021,7 +1021,7 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                     break;
                 }
                 case ID_PLAYLIST:
-                    handlemsg(hWnd, evPlayList);
+                    handlemsg(hWnd, evPlaylist);
                     break;
                 case ID_PREFS:
                     handlemsg(hWnd, evPreferences);

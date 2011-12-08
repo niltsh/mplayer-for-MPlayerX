@@ -143,7 +143,7 @@ skin_t *loadskin(char *skindir, int desktopbpp);
 #define evLoadAudioFile     42
 #define evLoadSubtitle      38
 #define evDropSubtitle      43
-#define evPlayList          10
+#define evPlaylist          10
 #define evPlayVCD           40
 #define evPlayDVD           39
 #define evSetURL          5013

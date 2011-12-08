@@ -612,7 +612,7 @@ GtkWidget * create_PopUpMenu( void )
   AddSeparator( Menu );
   MenuItem=AddMenuCheckItem( window1, (const char*)sound_xpm, Menu,MSGTR_MENU_Mute,mixer->muted,evMute );
   if ( !guiInfo.AudioChannels ) gtk_widget_set_sensitive( MenuItem,FALSE );
-  AddMenuItem( window1, (const char*)playlist_xpm, Menu,MSGTR_MENU_PlayList, evPlayList );
+  AddMenuItem( window1, (const char*)playlist_xpm, Menu,MSGTR_MENU_PlayList, evPlaylist );
   AddMenuItem( window1, (const char*)skin_xpm, Menu,MSGTR_MENU_SkinBrowser, evSkinBrowser );
   AddMenuItem( window1, (const char*)prefs_xpm, Menu,MSGTR_MENU_Preferences, evPreferences );
   AddMenuItem( window1, (const char*)equalizer_xpm, Menu,MSGTR_Equalizer, evEqualizer );
