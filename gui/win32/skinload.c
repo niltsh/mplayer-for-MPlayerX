@@ -47,7 +47,6 @@ static const evName evNames[] =
 {
     {   evNone,                 "evNone"                },
     {   evPlay,                 "evPlay"                },
-    {   evDropFile,             "evDropFile"            },
     {   evStop,                 "evStop"                },
     {   evPause,                "evPause"               },
     {   evPrev,                 "evPrev"                },

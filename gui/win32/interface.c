@@ -227,7 +227,6 @@ static void guiSetEvent(int event)
             mp_input_queue_cmd(cmd);
             break;
         }
-        case evDropFile:
         case evLoadPlay:
         {
             switch(guiInfo.StreamType)

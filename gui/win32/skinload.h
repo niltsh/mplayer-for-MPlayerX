@@ -183,7 +183,6 @@ skin_t *loadskin(char *skindir, int desktopbpp);
 #define evSetAspect         44
 #define evSetAudio          45
 #define evSetVideo          46
-#define evDropFile          47
 #define evPlayCD            48
 
 #define evExit              1000
