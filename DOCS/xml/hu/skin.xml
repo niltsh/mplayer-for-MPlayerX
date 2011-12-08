@@ -810,7 +810,42 @@ Az alábbi üzeneteket generálják a gombok, potméterek és menüpontok.
 </para>
 
 <variablelist>
+<varlistentry>
+  <term><emphasis role="bold">evNone</emphasis></term>
+  <listitem><para>
+  Üres üzenet, nincs hatása (kivéve talán a Subversion verziót :-)).
+  </para></listitem>
+</varlistentry>
+
 <title>Lejátszás vezérlése:</title>
+<varlistentry>
+  <term><emphasis role="bold">evPlay</emphasis></term>
+  <listitem><para>
+  Lejátszás elindítása.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evStop</emphasis></term>
+  <listitem><para>
+  Lejátszás megállítása.
+  </para></listitem>
+</varlistentry>
+</variablelist>
+
+<varlistentry>
+  <term><emphasis role="bold">evPause</emphasis></term>
+  <listitem><para>
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPrev</emphasis></term>
+  <listitem><para>
+  Az előző sávra ugrik a lejátszási listában.
+  </para></listitem>
+</varlistentry>
+
 <varlistentry>
   <term><emphasis role="bold">evNext</emphasis></term>
   <listitem><para>
@@ -819,21 +854,66 @@ Az alábbi üzeneteket generálják a gombok, potméterek és menüpontok.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPause</emphasis></term>
+  <term><emphasis role="bold">evLoad</emphasis></term>
   <listitem><para>
-  Párt alkot az <literal>evPlaySwitchToPause</literal>-val. Egy általános
-  lejátszás/szünet gomb készítéséhez használhatóak fel. Mind a két üzenetet
-  egy olyan gombhoz kell hozzárendelni, ami teljesen ugyan ott jelenik meg az
-  ablakban. Ez az üzenet megállítja a lejátszást és megjelenteti az
-  <literal>evPlaySwitchToPause</literal> gombhoz tartozó képet (jelezve
-  ezzel, hogy a gombot meg lehet nyomni a lejátszás folytatásához).
+  Fájl betöltése (a fájl böngésző ablak megnyitásával, ahol kiválaszthatod a fájlt).
   </para></listitem>
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPlay</emphasis></term>
+  <term><emphasis role="bold">evLoadPlay</emphasis></term>
   <listitem><para>
-  Lejátszás elindítása.
+  Ugyan azt csinálja, mint az <literal>evLoad</literal>, de automatikusan elkezdi
+  lejátszani a fájlt, miután betöltötte.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evLoadAudioFile</emphasis></term>
+  <listitem><para>
+  Audió fájl betöltése (a fájl választóval)
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evLoadSubtitle</emphasis></term>
+  <listitem><para>
+  Felirat fájl betöltése (a fájl választóval)
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evDropSubtitle</emphasis></term>
+  <listitem><para>
+  Aktuálisan használt felirat letiltása.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlaylist</emphasis></term>
+  <listitem><para>
+  Lejátszási lista ablak megnyitása/becsukása.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlayVCD</emphasis></term>
+  <listitem><para>
+  Megpróbálja megnyitni az adott CD-ROM meghajtóban lévő lemezt.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlayDVD</emphasis></term>
+  <listitem><para>
+  Megpróbálja megnyitni az adott DVD-ROM meghajtóban lévő lemezt.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evSetURL</emphasis></term>
+  <listitem><para>
+  Megjeleníti az URL dialógus ablakot.
   </para></listitem>
 </varlistentry>
 
@@ -847,19 +927,16 @@ Az alábbi üzeneteket generálják a gombok, potméterek és menüpontok.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPrev</emphasis></term>
+  <term><emphasis role="bold">evPauseSwitchToPlay</emphasis></term>
   <listitem><para>
-  Az előző sávra ugrik a lejátszási listában.
+  Párt alkot az <literal>evPlaySwitchToPause</literal>-val. Egy általános
+  lejátszás/szünet gomb készítéséhez használhatóak fel. Mind a két üzenetet
+  egy olyan gombhoz kell hozzárendelni, ami teljesen ugyan ott jelenik meg az
+  ablakban. Ez az üzenet megállítja a lejátszást és megjelenteti az
+  <literal>evPlaySwitchToPause</literal> gombhoz tartozó képet (jelezve
+  ezzel, hogy a gombot meg lehet nyomni a lejátszás folytatásához).
   </para></listitem>
 </varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evStop</emphasis></term>
-  <listitem><para>
-  Lejátszás megállítása.
-  </para></listitem>
-</varlistentry>
-</variablelist>
 
 <variablelist>
 <title>Seeking:</title>
@@ -945,20 +1022,6 @@ Az alábbi üzeneteket generálják a gombok, potméterek és menüpontok.
 <variablelist>
 <title>Audió vezérlés:</title>
 <varlistentry>
-  <term><emphasis role="bold">evDecAudioBufDelay</emphasis></term>
-  <listitem><para>
-  Audió buffer késleltetésének csökkentése.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evDecBalance</emphasis></term>
-  <listitem><para>
-  Balansz csökkentése.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
   <term><emphasis role="bold">evDecVolume</emphasis></term>
   <listitem><para>
   Hangerő csökkentése.
@@ -966,23 +1029,17 @@ Az alábbi üzeneteket generálják a gombok, potméterek és menüpontok.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evIncAudioBufDelay</emphasis></term>
-  <listitem><para>
-  Audió buffer késleltetésének növelése.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evIncBalance</emphasis></term>
-  <listitem><para>
-  Balansz növelése.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
   <term><emphasis role="bold">evIncVolume</emphasis></term>
   <listitem><para>
   Hangerő növelése.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evSetVolume</emphasis></term>
+  <listitem><para>
+  Hangerő beállítása (potméter tudja használni; a
+  potméter relatív értékét (0-100%) használja).
   </para></listitem>
 </varlistentry>
 
@@ -1002,10 +1059,9 @@ Az alábbi üzeneteket generálják a gombok, potméterek és menüpontok.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evSetVolume</emphasis></term>
+  <term><emphasis role="bold">evEqualizer</emphasis></term>
   <listitem><para>
-  Hangerő beállítása (potméter tudja használni; a
-  potméter relatív értékét (0-100%) használja).
+  Equalizer be-/kikapcsolása.
   </para></listitem>
 </varlistentry>
 </variablelist>
@@ -1020,23 +1076,16 @@ Az alábbi üzeneteket generálják a gombok, potméterek és menüpontok.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evDropSubtitle</emphasis></term>
+  <term><emphasis role="bold">evPreferences</emphasis></term>
   <listitem><para>
-  Aktuálisan használt felirat letiltása.
+  Megnyitja a beállítások ablakot.
   </para></listitem>
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evEqualizer</emphasis></term>
+  <term><emphasis role="bold">evSkinBrowser</emphasis></term>
   <listitem><para>
-  Equalizer be-/kikapcsolása.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evExit</emphasis></term>
-  <listitem><para>
-  Kilépés a programból.
+  Megnyitja a skin böngésző ablakot.
   </para></listitem>
 </varlistentry>
 
@@ -1048,87 +1097,9 @@ Az alábbi üzeneteket generálják a gombok, potméterek és menüpontok.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evLoad</emphasis></term>
+  <term><emphasis role="bold">evExit</emphasis></term>
   <listitem><para>
-  Fájl betöltése (a fájl böngésző ablak megnyitásával, ahol kiválaszthatod a fájlt).
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadPlay</emphasis></term>
-  <listitem><para>
-  Ugyan azt csinálja, mint az <literal>evLoad</literal>, de automatikusan elkezdi
-  lejátszani a fájlt, miután betöltötte.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadSubtitle</emphasis></term>
-  <listitem><para>
-  Felirat fájl betöltése (a fájl választóval)
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadAudioFile</emphasis></term>
-  <listitem><para>
-  Audió fájl betöltése (a fájl választóval)
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evNone</emphasis></term>
-  <listitem><para>
-  Üres üzenet, nincs hatása (kivéve talán a Subversion verziót :-)).
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlaylist</emphasis></term>
-  <listitem><para>
-  Lejátszási lista ablak megnyitása/becsukása.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlayDVD</emphasis></term>
-  <listitem><para>
-  Megpróbálja megnyitni az adott DVD-ROM meghajtóban lévő lemezt.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlayVCD</emphasis></term>
-  <listitem><para>
-  Megpróbálja megnyitni az adott CD-ROM meghajtóban lévő lemezt.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPreferences</emphasis></term>
-  <listitem><para>
-  Megnyitja a beállítások ablakot.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSetAspect</emphasis></term>
-  <listitem><para>
-  Beállítja a megjelenített kép arányát.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSetURL</emphasis></term>
-  <listitem><para>
-  Megjeleníti az URL dialógus ablakot.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSkinBrowser</emphasis></term>
-  <listitem><para>
-  Megnyitja a skin böngésző ablakot.
+  Kilépés a programból.
   </para></listitem>
 </varlistentry>
 </variablelist>

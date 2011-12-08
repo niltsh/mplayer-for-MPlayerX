@@ -839,7 +839,42 @@ image = font.png
 </para>
 
 <variablelist>
+<varlistentry>
+  <term><emphasis role="bold">evNone</emphasis></term>
+  <listitem><para>
+  Пустое сообщение, не имеет действий (за исключением, возможно, Subversion версий :-)).
+  </para></listitem>
+</varlistentry>
+
 <title>Управление воспроизведением:</title>
+<varlistentry>
+  <term><emphasis role="bold">evPlay</emphasis></term>
+  <listitem><para>
+  Старт воспроизведения.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evStop</emphasis></term>
+  <listitem><para>
+  Останавливает воспроизведение.
+  </para></listitem>
+</varlistentry>
+</variablelist>
+
+<varlistentry>
+  <term><emphasis role="bold">evPause</emphasis></term>
+  <listitem><para>
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPrev</emphasis></term>
+  <listitem><para>
+  Переход к предыдущему элементу списка воспроизведения.
+  </para></listitem>
+</varlistentry>
+
 <varlistentry>
   <term><emphasis role="bold">evNext</emphasis></term>
   <listitem><para>
@@ -848,21 +883,66 @@ image = font.png
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPause</emphasis></term>
+  <term><emphasis role="bold">evLoad</emphasis></term>
   <listitem><para>
-  Вместе с <literal>evPlaySwitchToPause</literal> формирует переключатель паузы.
-  Может быть использовано для общей кнопки воспроизведение/пауза. Оба сообщения
-  должны быть назначены кнопкам, находящимся практически в одной точке окна.
-  Это сообщение ставит воспроизведение на паузу и показывает изображение кнопки с
-  назначенным сообщением <literal>evPlaySwitchToPause</literal>
-  (чтобы показать, что кнопка может быть нажата для продолжения воспроизведения).
+  Открывает файл (открывая окно навигации, в котором вы можете выбрать файл).
   </para></listitem>
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPlay</emphasis></term>
+  <term><emphasis role="bold">evLoadPlay</emphasis></term>
   <listitem><para>
-  Старт воспроизведения.
+  Делает то же, что и <literal>evLoad</literal>, но запускает вопроизведение файла
+  автоматически после его загрузки.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evLoadAudioFile</emphasis></term>
+  <listitem><para>
+  Загружает звуковой файл (с диалогом выбора файла).
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evLoadSubtitle</emphasis></term>
+  <listitem><para>
+  Загружает файл с субтитрами (с диалогом выбора файла).
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evDropSubtitle</emphasis></term>
+  <listitem><para>
+  Отключает субтитры, использующиеся в данный момент.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlaylist</emphasis></term>
+  <listitem><para>
+  Открывае/закрывает окно со списком воспроизведения.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlayVCD</emphasis></term>
+  <listitem><para>
+  Пытается открыть диск в указанном устройстве CD-ROM.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlayDVD</emphasis></term>
+  <listitem><para>
+  Пытается открыть диск в указанном устройстве DVD-ROM.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evSetURL</emphasis></term>
+  <listitem><para>
+  Отображает диалог ввода URL.
   </para></listitem>
 </varlistentry>
 
@@ -877,19 +957,16 @@ image = font.png
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPrev</emphasis></term>
+  <term><emphasis role="bold">evPauseSwitchToPlay</emphasis></term>
   <listitem><para>
-  Переход к предыдущему элементу списка воспроизведения.
+  Вместе с <literal>evPlaySwitchToPause</literal> формирует переключатель паузы.
+  Может быть использовано для общей кнопки воспроизведение/пауза. Оба сообщения
+  должны быть назначены кнопкам, находящимся практически в одной точке окна.
+  Это сообщение ставит воспроизведение на паузу и показывает изображение кнопки с
+  назначенным сообщением <literal>evPlaySwitchToPause</literal>
+  (чтобы показать, что кнопка может быть нажата для продолжения воспроизведения).
   </para></listitem>
 </varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evStop</emphasis></term>
-  <listitem><para>
-  Останавливает воспроизведение.
-  </para></listitem>
-</varlistentry>
-</variablelist>
 
 <variablelist>
 <title>Перемещение:</title>
@@ -975,20 +1052,6 @@ image = font.png
 <variablelist>
 <title>Управление звуком:</title>
 <varlistentry>
-  <term><emphasis role="bold">evDecAudioBufDelay</emphasis></term>
-  <listitem><para>
-  Уменьшить задержку буфера звука.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evDecBalance</emphasis></term>
-  <listitem><para>
-  Уменьшить баланс.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
   <term><emphasis role="bold">evDecVolume</emphasis></term>
   <listitem><para>
   Уменьшить громкость.
@@ -996,23 +1059,17 @@ image = font.png
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evIncAudioBufDelay</emphasis></term>
-  <listitem><para>
-  Увеличить задержку буфера звука.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evIncBalance</emphasis></term>
-  <listitem><para>
-  Увеличить баланс.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
   <term><emphasis role="bold">evIncVolume</emphasis></term>
   <listitem><para>
   Увеличить громкость.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evSetVolume</emphasis></term>
+  <listitem><para>
+  Установить громкость (может использоваться ползунком;
+  используется относительное (0-100%) значение ползунка),
   </para></listitem>
 </varlistentry>
 
@@ -1032,10 +1089,9 @@ image = font.png
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evSetVolume</emphasis></term>
+  <term><emphasis role="bold">evEqualizer</emphasis></term>
   <listitem><para>
-  Установить громкость (может использоваться ползунком;
-  используется относительное (0-100%) значение ползунка),
+  Включает/выключает эквалайзер.
   </para></listitem>
 </varlistentry>
 </variablelist>
@@ -1050,23 +1106,16 @@ image = font.png
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evDropSubtitle</emphasis></term>
+  <term><emphasis role="bold">evPreferences</emphasis></term>
   <listitem><para>
-  Отключает субтитры, использующиеся в данный момент.
+  Открывает окно с настройками.
   </para></listitem>
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evEqualizer</emphasis></term>
+  <term><emphasis role="bold">evSkinBrowser</emphasis></term>
   <listitem><para>
-  Включает/выключает эквалайзер.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evExit</emphasis></term>
-  <listitem><para>
-  Выход из программы.
+  Открывает окно навигации по скинам.
   </para></listitem>
 </varlistentry>
 
@@ -1078,87 +1127,9 @@ image = font.png
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evLoad</emphasis></term>
+  <term><emphasis role="bold">evExit</emphasis></term>
   <listitem><para>
-  Открывает файл (открывая окно навигации, в котором вы можете выбрать файл).
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadPlay</emphasis></term>
-  <listitem><para>
-  Делает то же, что и <literal>evLoad</literal>, но запускает вопроизведение файла
-  автоматически после его загрузки.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadSubtitle</emphasis></term>
-  <listitem><para>
-  Загружает файл с субтитрами (с диалогом выбора файла).
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadAudioFile</emphasis></term>
-  <listitem><para>
-  Загружает звуковой файл (с диалогом выбора файла).
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evNone</emphasis></term>
-  <listitem><para>
-  Пустое сообщение, не имеет действий (за исключением, возможно, Subversion версий :-)).
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlaylist</emphasis></term>
-  <listitem><para>
-  Открывае/закрывает окно со списком воспроизведения.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlayDVD</emphasis></term>
-  <listitem><para>
-  Пытается открыть диск в указанном устройстве DVD-ROM.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlayVCD</emphasis></term>
-  <listitem><para>
-  Пытается открыть диск в указанном устройстве CD-ROM.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPreferences</emphasis></term>
-  <listitem><para>
-  Открывает окно с настройками.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSetAspect</emphasis></term>
-  <listitem><para>
-  Включает показ пропорций изображения.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSetURL</emphasis></term>
-  <listitem><para>
-  Отображает диалог ввода URL.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSkinBrowser</emphasis></term>
-  <listitem><para>
-  Открывает окно навигации по скинам.
+  Выход из программы.
   </para></listitem>
 </varlistentry>
 </variablelist>

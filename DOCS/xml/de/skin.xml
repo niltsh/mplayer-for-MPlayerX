@@ -931,7 +931,51 @@ image = font.png
     </para>
 
     <variablelist>
+      <varlistentry>
+        <term><emphasis role="bold">evNone</emphasis></term>
+        <listitem>
+          <para>
+            Inhaltslose Nachricht, die nichts bewirkt.
+          </para>
+        </listitem>
+      </varlistentry>
+
       <title>Playback-Kontrolle:</title>
+      <varlistentry>
+        <term>
+          <emphasis role="bold">evPlay</emphasis>
+        </term>
+        <listitem>
+          <para>
+            Starte das Abspielen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><emphasis role="bold">evStop</emphasis></term>
+        <listitem>
+          <para>Stoppe das Abspielen.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
+      <varlistentry>
+        <term><emphasis role="bold">evPause</emphasis></term>
+        <listitem>
+          <para>Halte das Abspielen an.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><emphasis role="bold">evPrev</emphasis></term>
+        <listitem>
+          <para>
+            Springe zum vorherigen Track in der Playliste.
+          </para>
+        </listitem>
+      </varlistentry>
+
       <varlistentry>
         <term><emphasis role="bold">evNext</emphasis></term>
         <listitem>
@@ -940,26 +984,84 @@ image = font.png
       </varlistentry>
 
       <varlistentry>
-        <term><emphasis role="bold">evPause</emphasis></term>
-        <listitem><para>
-            Formt einen Schalter zusammen mit <literal>evPlaySwitchToPause</literal>.
-            Sie können dazu benutzt werden, einen gebräuchlichen Play/Pause-Button
-            zu bekommen. Beide Nachrichten sollten den Buttons zugewiesen werden, die
-            an genau derselben Position innerhalb des Fensters dargestellt werden.
-            Diese Nachricht pausiert das Abspielen und die Grafik für den
-            <literal>evPlaySwitchToPause</literal>-Button wird gezeigt
-            (um anzudeuten, dass der Button zum Fortsetzen des Abspielens gedrückt
-            werden kann).
-          </para></listitem>
+        <term><emphasis role="bold">evLoad</emphasis></term>
+        <listitem>
+          <para>
+            Lade eine Datei (durch Öffnen des Datei-Browser-Fensters,
+            in dem du die Datei wählen kannst).
+          </para>
+        </listitem>
       </varlistentry>
 
       <varlistentry>
-        <term>
-          <emphasis role="bold">evPlay</emphasis>
-        </term>
+        <term><emphasis role="bold">evLoadPlay</emphasis></term>
         <listitem>
           <para>
-            Starte das Abspielen.
+            Macht dasselbe wie <literal>evLoad</literal>, es startet jedoch
+            das Abspielen nach dem Laden der Datei automatisch.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><emphasis role="bold">evLoadAudioFile</emphasis></term>
+        <listitem>
+          <para>
+            Lädt eine Audio-Datei (mit dem Dateiwähler)
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><emphasis role="bold">evLoadSubtitle</emphasis></term>
+        <listitem>
+          <para>
+            Lädt eine Untertiteldatei (mit dem Dateiwähler)
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><emphasis role="bold">evDropSubtitle</emphasis></term>
+        <listitem>
+          <para>
+            Deaktiviert den aktuell verwendeten Untertitel.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><emphasis role="bold">evPlaylist</emphasis></term>
+        <listitem>
+          <para>
+            Öffne/schließe das Playlisten-Fenster.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><emphasis role="bold">evPlayVCD</emphasis></term>
+        <listitem>
+          <para>
+            Versucht die VCD im angegebenen CD-ROM-Laufwerk zu öffnen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><emphasis role="bold">evPlayDVD</emphasis></term>
+        <listitem>
+          <para>
+            Versucht die DVD im angegebenen DVD-ROM-Laufwerk zu öffnen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><emphasis role="bold">evSetURL</emphasis></term>
+        <listitem>
+          <para>
+            Zeigt das URL-Dialog-Fenster.
           </para>
         </listitem>
       </varlistentry>
@@ -978,21 +1080,20 @@ image = font.png
       </varlistentry>
 
       <varlistentry>
-        <term><emphasis role="bold">evPrev</emphasis></term>
+        <term><emphasis role="bold">evPauseSwitchToPlay</emphasis></term>
         <listitem>
           <para>
-            Springe zum vorherigen Track in der Playliste.
+            Formt einen Schalter zusammen mit <literal>evPlaySwitchToPause</literal>.
+            Sie können dazu benutzt werden, einen gebräuchlichen Play/Pause-Button
+            zu bekommen. Beide Nachrichten sollten den Buttons zugewiesen werden, die
+            an genau derselben Position innerhalb des Fensters dargestellt werden.
+            Diese Nachricht pausiert das Abspielen und die Grafik für den
+            <literal>evPlaySwitchToPause</literal>-Button wird gezeigt
+            (um anzudeuten, dass der Button zum Fortsetzen des Abspielens gedrückt
+            werden kann).
           </para>
         </listitem>
       </varlistentry>
-
-      <varlistentry>
-        <term><emphasis role="bold">evStop</emphasis></term>
-        <listitem>
-          <para>Stoppe das Abspielen.</para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
 
     <variablelist>
       <title>Springen:</title>
@@ -1098,24 +1199,6 @@ image = font.png
     <variablelist>
       <title>Audio-Kontrolle:</title>
       <varlistentry>
-        <term><emphasis role="bold">evDecAudioBufDelay</emphasis></term>
-        <listitem>
-          <para>
-            Verringere die Verzögerung des Audiopuffers.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term><emphasis role="bold">evDecBalance</emphasis></term>
-        <listitem>
-          <para>
-            Verringere die Balance.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
         <term><emphasis role="bold">evDecVolume</emphasis></term>
         <listitem><para>
             Verringere die Lautstärke.
@@ -1123,28 +1206,20 @@ image = font.png
       </varlistentry>
 
       <varlistentry>
-        <term><emphasis role="bold">evIncAudioBufDelay</emphasis></term>
-        <listitem>
-          <para>
-            Erhöhe die Verzögerung des Audiopuffers.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term><emphasis role="bold">evIncBalance</emphasis></term>
-        <listitem>
-          <para>
-            Erhöhe die Balance.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
         <term><emphasis role="bold">evIncVolume</emphasis></term>
         <listitem>
           <para>
             Erhöhe die Lautstärke.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><emphasis role="bold">evSetVolume</emphasis></term>
+        <listitem>
+          <para>
+            Setze die Lautstärke(kann von einem Potentiometer genutzt werden;
+            mit dem relativen Wert (0-100%) des Potentiometers).
           </para>
         </listitem>
       </varlistentry>
@@ -1169,11 +1244,10 @@ image = font.png
       </varlistentry>
 
       <varlistentry>
-        <term><emphasis role="bold">evSetVolume</emphasis></term>
+        <term><emphasis role="bold">evEqualizer</emphasis></term>
         <listitem>
           <para>
-            Setze die Lautstärke(kann von einem Potentiometer genutzt werden;
-            mit dem relativen Wert (0-100%) des Potentiometers).
+            Schaltet den Equalizer an/aus.
           </para>
         </listitem>
       </varlistentry>
@@ -1191,28 +1265,19 @@ image = font.png
       </varlistentry>
 
       <varlistentry>
-        <term><emphasis role="bold">evDropSubtitle</emphasis></term>
+        <term><emphasis role="bold">evPreferences</emphasis></term>
         <listitem>
           <para>
-            Deaktiviert den aktuell verwendeten Untertitel.
+            Öffne das Einstellungsfenster.
           </para>
         </listitem>
       </varlistentry>
 
       <varlistentry>
-        <term><emphasis role="bold">evEqualizer</emphasis></term>
+        <term><emphasis role="bold">evSkinBrowser</emphasis></term>
         <listitem>
           <para>
-            Schaltet den Equalizer an/aus.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term><emphasis role="bold">evExit</emphasis></term>
-        <listitem>
-          <para>
-            Schließe das Programm.
+            Öffne das Skin-Browser-Fenster.
           </para>
         </listitem>
       </varlistentry>
@@ -1227,111 +1292,10 @@ image = font.png
       </varlistentry>
 
       <varlistentry>
-        <term><emphasis role="bold">evLoad</emphasis></term>
+        <term><emphasis role="bold">evExit</emphasis></term>
         <listitem>
           <para>
-            Lade eine Datei (durch Öffnen des Datei-Browser-Fensters,
-            in dem du die Datei wählen kannst).
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term><emphasis role="bold">evLoadPlay</emphasis></term>
-        <listitem>
-          <para>
-            Macht dasselbe wie <literal>evLoad</literal>, es startet jedoch
-            das Abspielen nach dem Laden der Datei automatisch.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term><emphasis role="bold">evLoadSubtitle</emphasis></term>
-        <listitem>
-          <para>
-            Lädt eine Untertiteldatei (mit dem Dateiwähler)
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term><emphasis role="bold">evLoadAudioFile</emphasis></term>
-        <listitem>
-          <para>
-            Lädt eine Audio-Datei (mit dem Dateiwähler)
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term><emphasis role="bold">evNone</emphasis></term>
-        <listitem>
-          <para>
-            Inhaltslose Nachricht, die nichts bewirkt.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term><emphasis role="bold">evPlaylist</emphasis></term>
-        <listitem>
-          <para>
-            Öffne/schließe das Playlisten-Fenster.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term><emphasis role="bold">evPlayDVD</emphasis></term>
-        <listitem>
-          <para>
-            Versucht die DVD im angegebenen DVD-ROM-Laufwerk zu öffnen.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term><emphasis role="bold">evPlayVCD</emphasis></term>
-        <listitem>
-          <para>
-            Versucht die VCD im angegebenen CD-ROM-Laufwerk zu öffnen.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term><emphasis role="bold">evPreferences</emphasis></term>
-        <listitem>
-          <para>
-            Öffne das Einstellungsfenster.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term><emphasis role="bold">evSetAspect</emphasis></term>
-        <listitem>
-          <para>
-            Setzt das angezeigte Grafikseitenverhältnis.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term><emphasis role="bold">evSetURL</emphasis></term>
-        <listitem>
-          <para>
-            Zeigt das URL-Dialog-Fenster.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry>
-        <term><emphasis role="bold">evSkinBrowser</emphasis></term>
-        <listitem>
-          <para>
-            Öffne das Skin-Browser-Fenster.
+            Schließe das Programm.
           </para>
         </listitem>
       </varlistentry>

@@ -781,7 +781,42 @@ entrées du menu.
 </para>
 
 <variablelist>
+<varlistentry>
+  <term><emphasis role="bold">evNone</emphasis></term>
+  <listitem><para>
+Message vide, sans effet. (à part peut-être dans les versions CVS :-)).
+    </para></listitem>
+</varlistentry>
+
 <title>Contrôle de lecture:</title>
+<varlistentry>
+  <term><emphasis role="bold">evPlay</emphasis></term>
+  <listitem><para>
+Commence la lecture.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evStop</emphasis></term>
+  <listitem><para>
+Stoppe la lecture.
+    </para></listitem>
+</varlistentry>
+</variablelist>
+
+<varlistentry>
+  <term><emphasis role="bold">evPause</emphasis></term>
+  <listitem><para>
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPrev</emphasis></term>
+  <listitem><para>
+Saute à la piste précédente dans la playlist.
+    </para></listitem>
+</varlistentry>
+
 <varlistentry>
   <term><emphasis role="bold">evNext</emphasis></term>
   <listitem><para>
@@ -790,20 +825,67 @@ Saute à la prochaine piste dans la playlist.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPause</emphasis></term>
+  <term><emphasis role="bold">evLoad</emphasis></term>
   <listitem><para>
-Associé à la commande <literal>evPlaySwitchToPause</literal>. Ils s'utilisent pour
-avoir un bouton play/pause commun. Les deux messages peuvent être assignés aux
-boutons affichés exactement à la même position dans la fenêtre. Ces messages mettent
-la lecture en pause et le bouton <literal>evPlaySwitchToPause</literal> s'affiche
-(pour indiquer que le bouton peut être pressé pour continuer la lecture).
+Charge un fichier (en ouvrant un mini navigateur de fichiers, où vous pouvez
+choisir un fichier).
     </para></listitem>
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPlay</emphasis></term>
+  <term><emphasis role="bold">evLoadPlay</emphasis></term>
   <listitem><para>
-Commence la lecture.
+Fait la même chose que <literal>evLoad</literal>, mais démarre la lecture
+automatiquement après le chargement du fichier.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evLoadAudioFile</emphasis></term>
+  <listitem><para>
+Charge un fichier audio (avec un sélecteur de fichier)
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evLoadSubtitle</emphasis></term>
+  <listitem><para>
+Charge un fichier de sous-titres (avec un sélecteur de fichier)
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evDropSubtitle</emphasis></term>
+  <listitem><para>
+Désactive le sous-titre actuellement utilisé.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlaylist</emphasis></term>
+  <listitem><para>
+Ouvre/ferme la playlist.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlayVCD</emphasis></term>
+  <listitem><para>
+Essaie d'ouvrir le disque dans le lecteur CD-ROM indiqué.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlayDVD</emphasis></term>
+  <listitem><para>
+Essaie d'ouvrir le disque dans le lecteur DVD-ROM indiqué.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evSetURL</emphasis></term>
+  <listitem><para>
+Ouvre la fenêtre de saisie d'URL.
     </para></listitem>
 </varlistentry>
 
@@ -817,19 +899,15 @@ s'affiche (pour indiquer que le bouton peut être pressé pour mettre en pause l
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPrev</emphasis></term>
+  <term><emphasis role="bold">evPauseSwitchToPlay</emphasis></term>
   <listitem><para>
-Saute à la piste précédente dans la playlist.
+Associé à la commande <literal>evPlaySwitchToPause</literal>. Ils s'utilisent pour
+avoir un bouton play/pause commun. Les deux messages peuvent être assignés aux
+boutons affichés exactement à la même position dans la fenêtre. Ces messages mettent
+la lecture en pause et le bouton <literal>evPlaySwitchToPause</literal> s'affiche
+(pour indiquer que le bouton peut être pressé pour continuer la lecture).
     </para></listitem>
 </varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evStop</emphasis></term>
-  <listitem><para>
-Stoppe la lecture.
-    </para></listitem>
-</varlistentry>
-</variablelist>
 
 <variablelist>
 <title>Déplacement dans le flux:</title>
@@ -915,20 +993,6 @@ Met la vidéo à sa taille réelle.
 <variablelist>
 <title>Contrôle audio:</title>
 <varlistentry>
-  <term><emphasis role="bold">evDecAudioBufDelay</emphasis></term>
-  <listitem><para>
-Diminue le délai du tampon audio.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evDecBalance</emphasis></term>
-  <listitem><para>
-Diminue la balance.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
   <term><emphasis role="bold">evDecVolume</emphasis></term>
   <listitem><para>
 Diminue le volume.
@@ -936,23 +1000,17 @@ Diminue le volume.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evIncAudioBufDelay</emphasis></term>
-  <listitem><para>
-Augmente le délai du tampon audio.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evIncBalance</emphasis></term>
-  <listitem><para>
-Augmente la balance.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
   <term><emphasis role="bold">evIncVolume</emphasis></term>
   <listitem><para>
 Augmente le volume.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evSetVolume</emphasis></term>
+  <listitem><para>
+Fixe le volume (utilisable avec un podomètre; utilise la valeur relative (0-100%)
+du podomètre).
     </para></listitem>
 </varlistentry>
 
@@ -972,10 +1030,9 @@ du podomètre).
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evSetVolume</emphasis></term>
+  <term><emphasis role="bold">evEqualizer</emphasis></term>
   <listitem><para>
-Fixe le volume (utilisable avec un podomètre; utilise la valeur relative (0-100%)
-du podomètre).
+Active/désactive l'équalizer.
     </para></listitem>
 </varlistentry>
 </variablelist>
@@ -990,23 +1047,16 @@ Ouvre la fenêtre 'A Propos'.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evDropSubtitle</emphasis></term>
+  <term><emphasis role="bold">evPreferences</emphasis></term>
   <listitem><para>
-Désactive le sous-titre actuellement utilisé.
+Ouvre la fenêtre de préférences.
     </para></listitem>
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evEqualizer</emphasis></term>
+  <term><emphasis role="bold">evSkinBrowser</emphasis></term>
   <listitem><para>
-Active/désactive l'équalizer.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evExit</emphasis></term>
-  <listitem><para>
-Quitte le programme.
+Ouvre le navigateur de skins.
     </para></listitem>
 </varlistentry>
 
@@ -1018,88 +1068,9 @@ Iconifie la fenêtre.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evLoad</emphasis></term>
+  <term><emphasis role="bold">evExit</emphasis></term>
   <listitem><para>
-Charge un fichier (en ouvrant un mini navigateur de fichiers, où vous pouvez
-choisir un fichier).
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadPlay</emphasis></term>
-  <listitem><para>
-Fait la même chose que <literal>evLoad</literal>, mais démarre la lecture
-automatiquement après le chargement du fichier.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadSubtitle</emphasis></term>
-  <listitem><para>
-Charge un fichier de sous-titres (avec un sélecteur de fichier)
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadAudioFile</emphasis></term>
-  <listitem><para>
-Charge un fichier audio (avec un sélecteur de fichier)
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evNone</emphasis></term>
-  <listitem><para>
-Message vide, sans effet. (à part peut-être dans les versions CVS :-)).
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlaylist</emphasis></term>
-  <listitem><para>
-Ouvre/ferme la playlist.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlayDVD</emphasis></term>
-  <listitem><para>
-Essaie d'ouvrir le disque dans le lecteur DVD-ROM indiqué.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlayVCD</emphasis></term>
-  <listitem><para>
-Essaie d'ouvrir le disque dans le lecteur CD-ROM indiqué.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPreferences</emphasis></term>
-  <listitem><para>
-Ouvre la fenêtre de préférences.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSetAspect</emphasis></term>
-  <listitem><para>
-Fixe l'aspect de l'image.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSetURL</emphasis></term>
-  <listitem><para>
-Ouvre la fenêtre de saisie d'URL.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSkinBrowser</emphasis></term>
-  <listitem><para>
-Ouvre le navigateur de skins.
+Quitte le programme.
     </para></listitem>
 </varlistentry>
 </variablelist>

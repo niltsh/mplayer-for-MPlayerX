@@ -803,7 +803,42 @@ Como ya sabe, el GUI está bajo desarrollo.
 </para></note>
 
 <variablelist>
+<varlistentry>
+  <term><emphasis role="bold">evNone</emphasis></term>
+  <listitem><para>
+Mensaje vacío, no tiene efecto (excepto quizá en las versiones CVS :-)).
+    </para></listitem>
+</varlistentry>
+
 <title>Control de reproducción:</title>
+<varlistentry>
+  <term><emphasis role="bold">evPlay</emphasis></term>
+  <listitem><para>
+Inicia la reproducción.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evStop</emphasis></term>
+  <listitem><para>
+Detiene la reproducción.
+    </para></listitem>
+</varlistentry>
+</variablelist>
+
+<varlistentry>
+  <term><emphasis role="bold">evPause</emphasis></term>
+  <listitem><para>
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPrev</emphasis></term>
+  <listitem><para>
+Salta a la pista previa en la lista de reproducción.
+    </para></listitem>
+</varlistentry>
+
 <varlistentry>
   <term><emphasis role="bold">evNext</emphasis></term>
   <listitem><para>
@@ -812,21 +847,66 @@ Salta a la siguiente pista en la lista de reproducción.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPause</emphasis></term>
+  <term><emphasis role="bold">evLoad</emphasis></term>
   <listitem><para>
-Forma un cambio junto con <literal>evPlaySwitchToPause</literal>. Puede ser
-usado para tener un botón normal de play/pausa. Ambos mensajes deben ser asignados
-a botones que se muestren exactamente en la misma posición en la ventana. Este mensaje
-pausa la reproducción y la imagen para el botón <literal>evPlaySwitchToPause</literal>
-es mostrada (para indicar que el botón puede ser pulsado de nuevo para continuar
-la reproducción).
+Carga un archivo (abriendo una ventana del navegador de archivos, para que pueda elegir uno).
     </para></listitem>
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPlay</emphasis></term>
+  <term><emphasis role="bold">evLoadPlay</emphasis></term>
   <listitem><para>
-Inicia la reproducción.
+Hace lo mismo que <literal>evLoad</literal>, pero inicia automáticamente la reproducción
+después de cargar el archivo.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evLoadAudioFile</emphasis></term>
+  <listitem><para>
+Carga un archivo de audio (con el selector de archivos)
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evLoadSubtitle</emphasis></term>
+  <listitem><para>
+Carga un archivo de subtítulos (con el selector de archivos)
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evDropSubtitle</emphasis></term>
+  <listitem><para>
+Desactiva el uso de subtítulos actual.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlaylist</emphasis></term>
+  <listitem><para>
+Abre/cierra la ventana de lista de reproducción.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlayVCD</emphasis></term>
+  <listitem><para>
+Intenta abrir el disco en la unidad de CD-ROM dada.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlayDVD</emphasis></term>
+  <listitem><para>
+Intenta abrir el disco en la unidad de DVD-ROM dada.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evSetURL</emphasis></term>
+  <listitem><para>
+Muestra la ventana de diálogo para URL.
     </para></listitem>
 </varlistentry>
 
@@ -841,19 +921,16 @@ volver a pausar la reproducción).
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPrev</emphasis></term>
+  <term><emphasis role="bold">evPauseSwitchToPlay</emphasis></term>
   <listitem><para>
-Salta a la pista previa en la lista de reproducción.
+Forma un cambio junto con <literal>evPlaySwitchToPause</literal>. Puede ser
+usado para tener un botón normal de play/pausa. Ambos mensajes deben ser asignados
+a botones que se muestren exactamente en la misma posición en la ventana. Este mensaje
+pausa la reproducción y la imagen para el botón <literal>evPlaySwitchToPause</literal>
+es mostrada (para indicar que el botón puede ser pulsado de nuevo para continuar
+la reproducción).
     </para></listitem>
 </varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evStop</emphasis></term>
-  <listitem><para>
-Detiene la reproducción.
-    </para></listitem>
-</varlistentry>
-</variablelist>
 
 <variablelist>
 <title>Búsqueda:</title>
@@ -911,6 +988,11 @@ valor relativo (0-100%) del potmetro será el que se use).
 <variablelist>
 <title>Control de video:</title>
 <varlistentry>
+  <term><emphasis role="bold">evHalfSize</emphasis></term>
+  <listitem><para>
+    </para></listitem>
+</varlistentry>
+<varlistentry>
   <term><emphasis role="bold">evDoubleSize</emphasis></term>
   <listitem><para>
 Establece doble tamaño para la ventana de la película.
@@ -933,20 +1015,6 @@ Establece la ventana de video a tu tamaño normal
 <variablelist>
 <title>Control de audio:</title>
 <varlistentry>
-  <term><emphasis role="bold">evDecAudioBufDelay</emphasis></term>
-  <listitem><para>
-Decrementa el retardo en el buffer de audio.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evDecBalance</emphasis></term>
-  <listitem><para>
-Decrementa el balance.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
   <term><emphasis role="bold">evDecVolume</emphasis></term>
   <listitem><para>
 Decrementa el volumen.
@@ -954,23 +1022,17 @@ Decrementa el volumen.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evIncAudioBufDelay</emphasis></term>
-  <listitem><para>
-Incrementa el retardo en el buffer de audio.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evIncBalance</emphasis></term>
-  <listitem><para>
-Incrementa el balance.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
   <term><emphasis role="bold">evIncVolume</emphasis></term>
   <listitem><para>
 Incrementa el volumen.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evSetVolume</emphasis></term>
+  <listitem><para>
+Establece el volumen (puede ser usado por un potmetro; el
+valor relativo (0-100%) del potmetro será el que se use).
     </para></listitem>
 </varlistentry>
 
@@ -990,10 +1052,9 @@ valor relativo (0-100%) del potmetro será el que se use).
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evSetVolume</emphasis></term>
+  <term><emphasis role="bold">evEqualizer</emphasis></term>
   <listitem><para>
-Establece el volumen (puede ser usado por un potmetro; el
-valor relativo (0-100%) del potmetro será el que se use).
+Activa/desactiva el ecualizador.
     </para></listitem>
 </varlistentry>
 </variablelist>
@@ -1008,23 +1069,16 @@ Abre la ventana de acerca de.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evDropSubtitle</emphasis></term>
+  <term><emphasis role="bold">evPreferences</emphasis></term>
   <listitem><para>
-Desactiva el uso de subtítulos actual.
+Abre la ventana de preferencias.
     </para></listitem>
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evEqualizer</emphasis></term>
+  <term><emphasis role="bold">evSkinBrowser</emphasis></term>
   <listitem><para>
-Activa/desactiva el ecualizador.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evExit</emphasis></term>
-  <listitem><para>
-Sale del programa.
+Abre la ventana del navegador de skins.
     </para></listitem>
 </varlistentry>
 
@@ -1036,87 +1090,9 @@ Iconifica la ventana.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evLoad</emphasis></term>
+  <term><emphasis role="bold">evExit</emphasis></term>
   <listitem><para>
-Carga un archivo (abriendo una ventana del navegador de archivos, para que pueda elegir uno).
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadPlay</emphasis></term>
-  <listitem><para>
-Hace lo mismo que <literal>evLoad</literal>, pero inicia automáticamente la reproducción
-después de cargar el archivo.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadSubtitle</emphasis></term>
-  <listitem><para>
-Carga un archivo de subtítulos (con el selector de archivos)
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadAudioFile</emphasis></term>
-  <listitem><para>
-Carga un archivo de audio (con el selector de archivos)
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evNone</emphasis></term>
-  <listitem><para>
-Mensaje vacío, no tiene efecto (excepto quizá en las versiones CVS :-)).
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlaylist</emphasis></term>
-  <listitem><para>
-Abre/cierra la ventana de lista de reproducción.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlayDVD</emphasis></term>
-  <listitem><para>
-Intenta abrir el disco en la unidad de DVD-ROM dada.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlayVCD</emphasis></term>
-  <listitem><para>
-Intenta abrir el disco en la unidad de CD-ROM dada.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPreferences</emphasis></term>
-  <listitem><para>
-Abre la ventana de preferencias.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSetAspect</emphasis></term>
-  <listitem><para>
-Establece el aspecto de la imagen mostrada.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSetURL</emphasis></term>
-  <listitem><para>
-Muestra la ventana de diálogo para URL.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSkinBrowser</emphasis></term>
-  <listitem><para>
-Abre la ventana del navegador de skins.
+Sale del programa.
     </para></listitem>
 </varlistentry>
 </variablelist>

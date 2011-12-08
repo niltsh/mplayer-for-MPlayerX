@@ -837,7 +837,42 @@ nabídky.
 </para>
 
 <variablelist>
+<varlistentry>
+  <term><emphasis role="bold">evNone</emphasis></term>
+  <listitem><para>
+  Prázdná zpráva, nemá žádný efekt (možná s výjimkou Subversion verzí :-)).
+  </para></listitem>
+</varlistentry>
+
 <title>Ovládání přehrávání:</title>
+<varlistentry>
+  <term><emphasis role="bold">evPlay</emphasis></term>
+  <listitem><para>
+  Zahájí přehrávání.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evStop</emphasis></term>
+  <listitem><para>
+  Zastaví přehrávání.
+  </para></listitem>
+</varlistentry>
+</variablelist>
+
+<varlistentry>
+  <term><emphasis role="bold">evPause</emphasis></term>
+  <listitem><para>
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPrev</emphasis></term>
+  <listitem><para>
+  Skočí na předchozí stopu v playlistu.
+  </para></listitem>
+</varlistentry>
+
 <varlistentry>
   <term><emphasis role="bold">evNext</emphasis></term>
   <listitem><para>
@@ -846,21 +881,66 @@ nabídky.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPause</emphasis></term>
+  <term><emphasis role="bold">evLoad</emphasis></term>
   <listitem><para>
-  Tvoří přepínač společně s <literal>evPlaySwitchToPause</literal>. Ty mohou
-  být použity k vytvoření tradičního play/pauza tlačítka. Obě zprávy by měly
-  být přiřazeny tlačítkům umístěným na stejné pozici v okně. Tato zpráva
-  pozastaví přehrávání a zobrazen bude obrázek pro
-  <literal>evPlaySwitchToPause</literal> talčítko (pro indikaci, že tlačítko
-  může být stisknuto pro obnovení přehrávání).
+  Otevře soubor (otevřením okna prohlížeče souborů, kde si soubor vyberete).
   </para></listitem>
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPlay</emphasis></term>
+  <term><emphasis role="bold">evLoadPlay</emphasis></term>
   <listitem><para>
-  Zahájí přehrávání.
+  Stejné jako <literal>evLoad</literal>, ale navíc se okamžitě spustí přehrávání
+  otevřeného souboru.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evLoadAudioFile</emphasis></term>
+  <listitem><para>
+  Otevře soubor se zvukem (pomocí prohlížeče souborů)
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evLoadSubtitle</emphasis></term>
+  <listitem><para>
+  Otevře soubor s titulky (pomocí prohlížeče souborů)
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evDropSubtitle</emphasis></term>
+  <listitem><para>
+  Vypne aktuálně použité titulky.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlaylist</emphasis></term>
+  <listitem><para>
+  Otevře/zavře okno playlistu.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlayVCD</emphasis></term>
+  <listitem><para>
+  Zkusí otevřít disk v zadané CD-ROM mechanice.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlayDVD</emphasis></term>
+  <listitem><para>
+  Zkusí otevřít disk v zadané DVD-ROM mechanice.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evSetURL</emphasis></term>
+  <listitem><para>
+  Zobrazí dialogové okno pro volbu URL.
   </para></listitem>
 </varlistentry>
 
@@ -874,19 +954,16 @@ nabídky.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPrev</emphasis></term>
+  <term><emphasis role="bold">evPauseSwitchToPlay</emphasis></term>
   <listitem><para>
-  Skočí na předchozí stopu v playlistu.
+  Tvoří přepínač společně s <literal>evPlaySwitchToPause</literal>. Ty mohou
+  být použity k vytvoření tradičního play/pauza tlačítka. Obě zprávy by měly
+  být přiřazeny tlačítkům umístěným na stejné pozici v okně. Tato zpráva
+  pozastaví přehrávání a zobrazen bude obrázek pro
+  <literal>evPlaySwitchToPause</literal> talčítko (pro indikaci, že tlačítko
+  může být stisknuto pro obnovení přehrávání).
   </para></listitem>
 </varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evStop</emphasis></term>
-  <listitem><para>
-  Zastaví přehrávání.
-  </para></listitem>
-</varlistentry>
-</variablelist>
 
 <variablelist>
 <title>Převíjení:</title>
@@ -972,20 +1049,6 @@ nabídky.
 <variablelist>
 <title>Ovládání zvuku:</title>
 <varlistentry>
-  <term><emphasis role="bold">evDecAudioBufDelay</emphasis></term>
-  <listitem><para>
-  Sníží zpoždění vyrovnávací paměti zvuku.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evDecBalance</emphasis></term>
-  <listitem><para>
-  Sníží hodnotu stereováhy.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
   <term><emphasis role="bold">evDecVolume</emphasis></term>
   <listitem><para>
   Sníží hlasitost.
@@ -993,23 +1056,17 @@ nabídky.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evIncAudioBufDelay</emphasis></term>
-  <listitem><para>
-  Zvýší zpoždění vyrovnávací paměti zvuku.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evIncBalance</emphasis></term>
-  <listitem><para>
-  Zvýší hodnotu stereováhy.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
   <term><emphasis role="bold">evIncVolume</emphasis></term>
   <listitem><para>
   Zvýší hlasitost.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evSetVolume</emphasis></term>
+  <listitem><para>
+  Nastaví hlasitost (může být sdruženo s potenciometrem; použije se
+  relativní hodnota potenciometru (0-100%)).
   </para></listitem>
 </varlistentry>
 
@@ -1029,10 +1086,9 @@ nabídky.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evSetVolume</emphasis></term>
+  <term><emphasis role="bold">evEqualizer</emphasis></term>
   <listitem><para>
-  Nastaví hlasitost (může být sdruženo s potenciometrem; použije se
-  relativní hodnota potenciometru (0-100%)).
+  Zapne/vypne ekvalizér.
   </para></listitem>
 </varlistentry>
 </variablelist>
@@ -1047,23 +1103,16 @@ nabídky.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evDropSubtitle</emphasis></term>
+  <term><emphasis role="bold">evPreferences</emphasis></term>
   <listitem><para>
-  Vypne aktuálně použité titulky.
+  Otevře okno předvoleb.
   </para></listitem>
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evEqualizer</emphasis></term>
+  <term><emphasis role="bold">evSkinBrowser</emphasis></term>
   <listitem><para>
-  Zapne/vypne ekvalizér.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evExit</emphasis></term>
-  <listitem><para>
-  Ukončí program.
+  Otevře okno voliče skinů.
   </para></listitem>
 </varlistentry>
 
@@ -1075,87 +1124,9 @@ nabídky.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evLoad</emphasis></term>
+  <term><emphasis role="bold">evExit</emphasis></term>
   <listitem><para>
-  Otevře soubor (otevřením okna prohlížeče souborů, kde si soubor vyberete).
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadPlay</emphasis></term>
-  <listitem><para>
-  Stejné jako <literal>evLoad</literal>, ale navíc se okamžitě spustí přehrávání
-  otevřeného souboru.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadSubtitle</emphasis></term>
-  <listitem><para>
-  Otevře soubor s titulky (pomocí prohlížeče souborů)
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadAudioFile</emphasis></term>
-  <listitem><para>
-  Otevře soubor se zvukem (pomocí prohlížeče souborů)
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evNone</emphasis></term>
-  <listitem><para>
-  Prázdná zpráva, nemá žádný efekt (možná s výjimkou Subversion verzí :-)).
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlaylist</emphasis></term>
-  <listitem><para>
-  Otevře/zavře okno playlistu.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlayDVD</emphasis></term>
-  <listitem><para>
-  Zkusí otevřít disk v zadané DVD-ROM mechanice.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlayVCD</emphasis></term>
-  <listitem><para>
-  Zkusí otevřít disk v zadané CD-ROM mechanice.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPreferences</emphasis></term>
-  <listitem><para>
-  Otevře okno předvoleb.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSetAspect</emphasis></term>
-  <listitem><para>
-  Nastaví poměr stran zobrazovaného obrázku.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSetURL</emphasis></term>
-  <listitem><para>
-  Zobrazí dialogové okno pro volbu URL.
-  </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSkinBrowser</emphasis></term>
-  <listitem><para>
-  Otevře okno voliče skinů.
+  Ukončí program.
   </para></listitem>
 </varlistentry>
 </variablelist>

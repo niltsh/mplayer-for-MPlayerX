@@ -790,7 +790,42 @@ i elementy menu.
 </para>
 
 <variablelist>
+<varlistentry>
+  <term><emphasis role="bold">evNone</emphasis></term>
+  <listitem><para>
+Sygnał pusty - nic nie robi (może za wyjątkiem wersji z Subversion:-)).
+    </para></listitem>
+</varlistentry>
+
 <title>Kontrola odtwarzania :</title>
+<varlistentry>
+  <term><emphasis role="bold">evPlay</emphasis></term>
+  <listitem><para>
+Rozpocznij odtwarzanie.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evStop</emphasis></term>
+  <listitem><para>
+Zatrzymaj odtwarzanie.
+    </para></listitem>
+</varlistentry>
+</variablelist>
+
+<varlistentry>
+  <term><emphasis role="bold">evPause</emphasis></term>
+  <listitem><para>
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPrev</emphasis></term>
+  <listitem><para>
+Przejdź do poprzedniej pozycji na liście odtwarzania.
+    </para></listitem>
+</varlistentry>
+
 <varlistentry>
   <term><emphasis role="bold">evNext</emphasis></term>
   <listitem><para>
@@ -799,21 +834,67 @@ Przejdź do następnej pozycji na liście odtwarzania.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPause</emphasis></term>
+  <term><emphasis role="bold">evLoad</emphasis></term>
   <listitem><para>
-  Tworzy przełącznik razem z <literal>evPlaySwitchToPause</literal>.
-  Mogą być użyte do utworzenia wspólnego przycisku odtwarzania/pauzy.
-  Oba sygnały powinny być powiązane z przyciskami wyświetlonymi na tej samej
-  pozycji w oknie. Sygnał ten wstrzymuje odtwarzanie i wyświetla  obrazek dla
-  przycisku <literal>evPlaySwitchToPause</literal> (aby zaznaczyć,
-  że przycisk ten może być użyty do kontynuowania odtwarzania).
+Wczytaj plik (poprzez otwarcie okna przeglądarki plików, gdzie możesz wybrać
+plik).
     </para></listitem>
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPlay</emphasis></term>
+  <term><emphasis role="bold">evLoadPlay</emphasis></term>
   <listitem><para>
-Rozpocznij odtwarzanie.
+Tto samo co <literal>evLoad</literal>, ale zacznij automatycznie odtwarzać
+zaraz po wyborze pliku.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evLoadAudioFile</emphasis></term>
+  <listitem><para>
+Wczytaj plik dźwiękowy (z przeglądarki plików).
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evLoadSubtitle</emphasis></term>
+  <listitem><para>
+Wczytaj plik z napisami (z przeglądarki plików).
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evDropSubtitle</emphasis></term>
+  <listitem><para>
+Wyłącz aktualnie używane napisy.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlaylist</emphasis></term>
+  <listitem><para>
+Otwórz/zamknij okno listy odtwarzania.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlayVCD</emphasis></term>
+  <listitem><para>
+Spróbuj odczytać płytę ze wskazanego czytnika CD.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlayDVD</emphasis></term>
+  <listitem><para>
+Spróbuj odczytać płytę ze wskazanego czytnika DVD.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evSetURL</emphasis></term>
+  <listitem><para>
+Wyświetl okienko dialogowe URL.
     </para></listitem>
 </varlistentry>
 
@@ -828,19 +909,16 @@ użyty ponownie do wstrzymania odtwarzania).
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evPrev</emphasis></term>
+  <term><emphasis role="bold">evPauseSwitchToPlay</emphasis></term>
   <listitem><para>
-Przejdź do poprzedniej pozycji na liście odtwarzania.
+  Tworzy przełącznik razem z <literal>evPlaySwitchToPause</literal>.
+  Mogą być użyte do utworzenia wspólnego przycisku odtwarzania/pauzy.
+  Oba sygnały powinny być powiązane z przyciskami wyświetlonymi na tej samej
+  pozycji w oknie. Sygnał ten wstrzymuje odtwarzanie i wyświetla  obrazek dla
+  przycisku <literal>evPlaySwitchToPause</literal> (aby zaznaczyć,
+  że przycisk ten może być użyty do kontynuowania odtwarzania).
     </para></listitem>
 </varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evStop</emphasis></term>
-  <listitem><para>
-Zatrzymaj odtwarzanie.
-    </para></listitem>
-</varlistentry>
-</variablelist>
 
 <variablelist>
 <title>Przewijanie:</title>
@@ -926,20 +1004,6 @@ Ustaw typowy rozmiar okna z filmem.
 <variablelist>
 <title>Kontrola dźwięku:</title>
 <varlistentry>
-  <term><emphasis role="bold">evDecAudioBufDelay</emphasis></term>
-  <listitem><para>
-Zmniejsz opóźnienie bufora dźwięku.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evDecBalance</emphasis></term>
-  <listitem><para>
-Zmniejsz balans.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
   <term><emphasis role="bold">evDecVolume</emphasis></term>
   <listitem><para>
 Zmniejsz głośność
@@ -947,23 +1011,17 @@ Zmniejsz głośność
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evIncAudioBufDelay</emphasis></term>
-  <listitem><para>
-Zwiększ opóźnienie bufora dźwięku.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evIncBalance</emphasis></term>
-  <listitem><para>
-Zwiększ balans.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
   <term><emphasis role="bold">evIncVolume</emphasis></term>
   <listitem><para>
 Zwiększ głośność.
+    </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evSetVolume</emphasis></term>
+  <listitem><para>
+Ustaw głośność (może być używane przez suwak;
+używana jest wartość względna (0-100%)).
     </para></listitem>
 </varlistentry>
 
@@ -983,10 +1041,9 @@ używana jest wartość względna (0-100%)).
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evSetVolume</emphasis></term>
+  <term><emphasis role="bold">evEqualizer</emphasis></term>
   <listitem><para>
-Ustaw głośność (może być używane przez suwak;
-używana jest wartość względna (0-100%)).
+Włącz/wyłącz korektor.
     </para></listitem>
 </varlistentry>
 </variablelist>
@@ -1001,23 +1058,16 @@ Otwórz okno "o programie".
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evDropSubtitle</emphasis></term>
+  <term><emphasis role="bold">evPreferences</emphasis></term>
   <listitem><para>
-Wyłącz aktualnie używane napisy.
+Otwórz okno z ustawieniami.
     </para></listitem>
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evEqualizer</emphasis></term>
+  <term><emphasis role="bold">evSkinBrowser</emphasis></term>
   <listitem><para>
-Włącz/wyłącz korektor.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evExit</emphasis></term>
-  <listitem><para>
-Wyłącz program.
+Otwórz okno przeglądarki skórek.
     </para></listitem>
 </varlistentry>
 
@@ -1029,88 +1079,9 @@ Minimalizuj okno.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evLoad</emphasis></term>
+  <term><emphasis role="bold">evExit</emphasis></term>
   <listitem><para>
-Wczytaj plik (poprzez otwarcie okna przeglądarki plików, gdzie możesz wybrać
-plik).
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadPlay</emphasis></term>
-  <listitem><para>
-Tto samo co <literal>evLoad</literal>, ale zacznij automatycznie odtwarzać
-zaraz po wyborze pliku.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadSubtitle</emphasis></term>
-  <listitem><para>
-Wczytaj plik z napisami (z przeglądarki plików).
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evLoadAudioFile</emphasis></term>
-  <listitem><para>
-Wczytaj plik dźwiękowy (z przeglądarki plików).
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evNone</emphasis></term>
-  <listitem><para>
-Sygnał pusty - nic nie robi (może za wyjątkiem wersji z Subversion:-)).
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlaylist</emphasis></term>
-  <listitem><para>
-Otwórz/zamknij okno listy odtwarzania.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlayDVD</emphasis></term>
-  <listitem><para>
-Spróbuj odczytać płytę ze wskazanego czytnika DVD.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPlayVCD</emphasis></term>
-  <listitem><para>
-Spróbuj odczytać płytę ze wskazanego czytnika CD.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evPreferences</emphasis></term>
-  <listitem><para>
-Otwórz okno z ustawieniami.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSetAspect</emphasis></term>
-  <listitem><para>
-Ustaw proporcje obrazu.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSetURL</emphasis></term>
-  <listitem><para>
-Wyświetl okienko dialogowe URL.
-    </para></listitem>
-</varlistentry>
-
-<varlistentry>
-  <term><emphasis role="bold">evSkinBrowser</emphasis></term>
-  <listitem><para>
-Otwórz okno przeglądarki skórek.
+Wyłącz program.
     </para></listitem>
 </varlistentry>
 </variablelist>
