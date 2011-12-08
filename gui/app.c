@@ -58,7 +58,7 @@ static const evName evNames[] = {
     { evBackward10min,     "evBackward10min"     },
     { evForward10min,      "evForward10min"      },
     { evSetMoviePosition,  "evSetMoviePosition"  },
-    { evNormalSize,        "evHalfSize"          },
+    { evHalfSize,          "evHalfSize"          },
     { evDoubleSize,        "evDoubleSize"        },
     { evFullScreen,        "evFullScreen"        },
     { evNormalSize,        "evNormalSize"        },
