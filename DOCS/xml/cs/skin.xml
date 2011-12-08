@@ -938,7 +938,7 @@ nabídky.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evSetURL</emphasis></term>
+  <term><emphasis role="bold">evLoadURL</emphasis></term>
   <listitem><para>
   Zobrazí dialogové okno pro volbu URL.
   </para></listitem>

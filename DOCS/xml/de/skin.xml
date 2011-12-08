@@ -1058,7 +1058,7 @@ image = font.png
       </varlistentry>
 
       <varlistentry>
-        <term><emphasis role="bold">evSetURL</emphasis></term>
+        <term><emphasis role="bold">evLoadURL</emphasis></term>
         <listitem>
           <para>
             Zeigt das URL-Dialog-Fenster.

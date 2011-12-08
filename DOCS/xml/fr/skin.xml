@@ -883,7 +883,7 @@ Essaie d'ouvrir le disque dans le lecteur DVD-ROM indiqué.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evSetURL</emphasis></term>
+  <term><emphasis role="bold">evLoadURL</emphasis></term>
   <listitem><para>
 Ouvre la fenêtre de saisie d'URL.
     </para></listitem>

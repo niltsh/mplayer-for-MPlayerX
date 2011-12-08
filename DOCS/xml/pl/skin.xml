@@ -892,7 +892,7 @@ Spróbuj odczytać płytę ze wskazanego czytnika DVD.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evSetURL</emphasis></term>
+  <term><emphasis role="bold">evLoadURL</emphasis></term>
   <listitem><para>
 Wyświetl okienko dialogowe URL.
     </para></listitem>

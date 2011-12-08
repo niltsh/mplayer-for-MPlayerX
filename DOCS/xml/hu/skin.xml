@@ -911,7 +911,7 @@ Az alábbi üzeneteket generálják a gombok, potméterek és menüpontok.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evSetURL</emphasis></term>
+  <term><emphasis role="bold">evLoadURL</emphasis></term>
   <listitem><para>
   Megjeleníti az URL dialógus ablakot.
   </para></listitem>

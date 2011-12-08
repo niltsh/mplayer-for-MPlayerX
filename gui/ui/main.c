@@ -144,7 +144,7 @@ void uiEventHandling( int msg,float param )
         mplayer( MPLAYER_EXIT_GUI, EXIT_QUIT, 0 );
         break;
 
-   case evSetURL:
+   case evLoadURL:
         gtkShow( evPlayNetwork,NULL );
 	break;
 

@@ -146,7 +146,7 @@ skin_t *loadskin(char *skindir, int desktopbpp);
 #define evPlaylist          10
 #define evPlayVCD           40
 #define evPlayDVD           39
-#define evSetURL          5013
+#define evLoadURL         5013
 #define evPlaySwitchToPause 16
 #define evPauseSwitchToPlay 17
 

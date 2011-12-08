@@ -904,7 +904,7 @@ Intenta abrir el disco en la unidad de DVD-ROM dada.
 </varlistentry>
 
 <varlistentry>
-  <term><emphasis role="bold">evSetURL</emphasis></term>
+  <term><emphasis role="bold">evLoadURL</emphasis></term>
   <listitem><para>
 Muestra la ventana de diálogo para URL.
     </para></listitem>
