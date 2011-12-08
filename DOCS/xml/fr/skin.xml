@@ -988,6 +988,11 @@ Passe en mode plein écran.
 Met la vidéo à sa taille réelle.
     </para></listitem>
 </varlistentry>
+<varlistentry>
+  <term><emphasis role="bold">evSetAspect</emphasis></term>
+  <listitem><para>
+    </para></listitem>
+</varlistentry>
 </variablelist>
 
 <variablelist>

@@ -1194,6 +1194,14 @@ image = font.png
           </para>
         </listitem>
       </varlistentry>
+      <varlistentry>
+        <term><emphasis role="bold">evSetAspect</emphasis></term>
+        <listitem>
+          <para>
+            Setze das Videofenster auf das Originalverhältnis.
+          </para>
+        </listitem>
+      </varlistentry>
     </variablelist>
 
     <variablelist>

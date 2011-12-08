@@ -1044,6 +1044,11 @@ nabídky.
   Nastaví velikost okna na normální velikost.
   </para></listitem>
 </varlistentry>
+<varlistentry>
+  <term><emphasis role="bold">evSetAspect</emphasis></term>
+  <listitem><para>
+  </para></listitem>
+</varlistentry>
 </variablelist>
 
 <variablelist>

@@ -1047,6 +1047,11 @@ image = font.png
   Установить нормальный размер окна.
   </para></listitem>
 </varlistentry>
+<varlistentry>
+  <term><emphasis role="bold">evSetAspect</emphasis></term>
+  <listitem><para>
+  </para></listitem>
+</varlistentry>
 </variablelist>
 
 <variablelist>

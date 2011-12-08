@@ -1010,6 +1010,11 @@ Cambia el modo pantalla completa activado/desactivado.
 Establece la ventana de video a tu tamaño normal
     </para></listitem>
 </varlistentry>
+<varlistentry>
+  <term><emphasis role="bold">evSetAspect</emphasis></term>
+  <listitem><para>
+    </para></listitem>
+</varlistentry>
 </variablelist>
 
 <variablelist>
