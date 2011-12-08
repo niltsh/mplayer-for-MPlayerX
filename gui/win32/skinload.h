@@ -162,6 +162,7 @@ skin_t *loadskin(char *skindir, int desktopbpp);
 #define evDoubleSize        25
 #define evFullScreen        26
 #define evNormalSize        24
+#define evSetAspect         44
 
 #define evIncVolume         31
 #define evDecVolume         32
@@ -187,7 +188,6 @@ skin_t *loadskin(char *skindir, int desktopbpp);
 #define evHelp              37
 
 #define evPlayNetwork       41
-#define evSetAspect         44
 #define evSetAudio          45
 #define evSetVideo          46
 #define evPlayCD            48
