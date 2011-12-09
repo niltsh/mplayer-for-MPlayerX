@@ -144,6 +144,7 @@ skin_t *loadskin(char *skindir, int desktopbpp);
 #define evLoadSubtitle      38
 #define evDropSubtitle      43
 #define evPlaylist          10
+#define evPlayCD            48
 #define evPlayVCD           40
 #define evPlayDVD           39
 #define evLoadURL         5013
@@ -182,7 +183,7 @@ skin_t *loadskin(char *skindir, int desktopbpp);
 
 #define evSetAudio          45
 #define evSetVideo          46
-#define evPlayCD            48
+#define evSetSubtitle       47
 
 // --- General events ---
 
