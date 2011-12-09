@@ -186,23 +186,15 @@ skin_t *loadskin(char *skindir, int desktopbpp);
 
 // --- General events ---
 
-#define evFileLoaded      5000
-#define evHideMouseCursor 5001
-#define evMessageBox      5002
-#define evGeneralTimer    5003
-#define evGtkIsOk         5004
 #define evShowPopUpMenu   5005
 #define evHidePopUpMenu   5006
 #define evSetDVDAudio     5007
 #define evSetDVDSubtitle  5008
 #define evSetDVDTitle     5009
 #define evSetDVDChapter   5010
-#define evSubtitleLoaded  5011
 #define evSetVCDTrack     5012
 
 #define evRedraw          7002
-#define evHideWindow      7003
-#define evShowWindow      7004
 #define evFirstLoad       7005
 
 #endif /* MPLAYER_GUI_SKINLOAD_H */
