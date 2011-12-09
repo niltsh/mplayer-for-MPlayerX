@@ -16,6 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+/**
+ * @file
+ * @brief GUI application helpers
+ */
+
 #include "app.h"
 #include "skin/font.h"
 
@@ -31,7 +36,7 @@ guiItems guiApp = {
 };
 
 /**
- * @brief Events belonging to event names.
+ * @brief Event messages belonging to event names.
  */
 static const evName evNames[] = {
     { evNone,              "evNone"              },
