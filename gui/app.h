@@ -88,7 +88,6 @@
 #define evSetVCDTrack     5012
 
 #define evRedraw          7002
-#define evFirstLoad       7005
 
 typedef struct {
     int message;

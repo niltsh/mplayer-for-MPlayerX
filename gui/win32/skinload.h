@@ -195,6 +195,5 @@ skin_t *loadskin(char *skindir, int desktopbpp);
 #define evSetVCDTrack     5012
 
 #define evRedraw          7002
-#define evFirstLoad       7005
 
 #endif /* MPLAYER_GUI_SKINLOAD_H */

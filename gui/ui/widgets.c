@@ -265,11 +265,6 @@ void gtkShow(int type, char *param)
         gtkSetLayer(fsFileSelect);
         break;
 
-    case evFirstLoad:
-        ShowFileSelect(fsVideoSelector, 0);
-        gtkSetLayer(fsFileSelect);
-        break;
-
     case evLoadSubtitle:
         ShowFileSelect(fsSubtitleSelector, 0);
         gtkSetLayer(fsFileSelect);
