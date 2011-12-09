@@ -187,7 +187,7 @@ typedef struct {
 
 extern guiItems guiApp;
 
-int appFindMessage(unsigned char *str);
+int appFindMessage(const char *name);
 void appFreeStruct(void);
 void btnModify(int event, float state);
 void btnSet(int event, int set);

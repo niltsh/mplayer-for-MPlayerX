@@ -132,16 +132,16 @@ void appFreeStruct(void)
 /**
  * @brief Find the event belonging to an event name.
  *
- * @param str event name
+ * @param name event name
  *
  * @return event >= 0 (ok) or -1 (not found)
  */
-int appFindMessage(unsigned char *str)
+int appFindMessage(const char *name)
 {
     unsigned int i;
 
     for (i = 0; i < FF_ARRAY_ELEMS(evNames); i++)
-        if (!strcmp(evNames[i].name, str))
+        if (!strcmp(evNames[i].name, name))
             return evNames[i].message;
 
     return -1;
