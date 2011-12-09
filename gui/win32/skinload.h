@@ -180,7 +180,6 @@ skin_t *loadskin(char *skindir, int desktopbpp);
 
 // --- Internal events ---
 
-#define evPlayNetwork       41
 #define evSetAudio          45
 #define evSetVideo          46
 #define evPlayCD            48

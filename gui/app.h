@@ -73,7 +73,6 @@
 
 // Internal events
 
-#define evPlayNetwork       41
 #define evSetAudio          45
 #define evSetVideo          46
 #define evSetSubtitle       47

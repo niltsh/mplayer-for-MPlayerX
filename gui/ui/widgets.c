@@ -308,7 +308,7 @@ void gtkShow(int type, char *param)
 
         break;
 
-    case evPlayNetwork:
+    case evLoadURL:
         ShowURLDialogBox();
         gtkSetLayer(URL);
         break;

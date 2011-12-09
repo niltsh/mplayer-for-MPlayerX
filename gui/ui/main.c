@@ -145,7 +145,7 @@ void uiEventHandling( int msg,float param )
         break;
 
    case evLoadURL:
-        gtkShow( evPlayNetwork,NULL );
+        gtkShow( evLoadURL,NULL );
 	break;
 
    case evSetAudio:
