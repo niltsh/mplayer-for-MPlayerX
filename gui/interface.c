@@ -723,7 +723,7 @@ int gui(int what, void *data)
         break;
 
     case GUI_REDRAW:
-        uiEventHandling(evRedraw, 0);
+        uiEventHandling(ivRedraw, 0);
         break;
 
     case GUI_SETUP_VIDEO_WINDOW:
@@ -756,7 +756,7 @@ int gui(int what, void *data)
 
     case GUI_END_FILE:
 
-        uiEventHandling(evRedraw, 1);
+        uiEventHandling(ivRedraw, 1);
 
         guiInfo.sh_video = NULL;
 

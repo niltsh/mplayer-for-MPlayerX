@@ -132,18 +132,18 @@ static void uiPlaybarMouseHandle( int Button, int X, int Y, int RX, int RY )
  switch ( Button )
   {
    case wsPMMouseButton:
-        gtkShow( evHidePopUpMenu,NULL );
+        gtkShow( ivHidePopUpMenu,NULL );
         uiShowMenu( RX,RY );
         break;
    case wsRMMouseButton:
         uiHideMenu( RX,RY,0 );
         break;
    case wsRRMouseButton:
-        gtkShow( evShowPopUpMenu,NULL );
+        gtkShow( ivShowPopUpMenu,NULL );
 	break;
 // ---
    case wsPLMouseButton:
-	gtkShow( evHidePopUpMenu,NULL );
+	gtkShow( ivHidePopUpMenu,NULL );
         SelectedItem=currentselected;
         if ( SelectedItem == -1 ) break; // yeees, i'm move the fucking window
         item=&guiApp.playbarItems[SelectedItem];

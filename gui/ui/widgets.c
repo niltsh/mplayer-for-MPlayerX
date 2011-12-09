@@ -280,7 +280,7 @@ void gtkShow(int type, char *param)
         gtkSetLayer(About);
         break;
 
-    case evShowPopUpMenu:
+    case ivShowPopUpMenu:
         gtkPopupMenu      = evNone;
         gtkPopupMenuParam = 0;
 
@@ -293,7 +293,7 @@ void gtkShow(int type, char *param)
         gtk_menu_popup(GTK_MENU(PopUpMenu), NULL, NULL, NULL, NULL, 0, 0);
         break;
 
-    case evHidePopUpMenu:
+    case ivHidePopUpMenu:
 
         if (PopUpMenu) {
             gtk_widget_hide(PopUpMenu);

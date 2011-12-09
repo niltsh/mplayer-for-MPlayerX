@@ -181,20 +181,18 @@ skin_t *loadskin(char *skindir, int desktopbpp);
 
 // --- Internal events ---
 
-#define evSetAudio          45
-#define evSetVideo          46
-#define evSetSubtitle       47
+#define ivSetAudio          45
+#define ivSetVideo          46
+#define ivSetSubtitle       47
 
-// --- General events ---
+#define ivShowPopUpMenu   5005
+#define ivHidePopUpMenu   5006
+#define ivSetDVDAudio     5007
+#define ivSetDVDSubtitle  5008
+#define ivSetDVDTitle     5009
+#define ivSetDVDChapter   5010
+#define ivSetVCDTrack     5012
 
-#define evShowPopUpMenu   5005
-#define evHidePopUpMenu   5006
-#define evSetDVDAudio     5007
-#define evSetDVDSubtitle  5008
-#define evSetDVDTitle     5009
-#define evSetDVDChapter   5010
-#define evSetVCDTrack     5012
-
-#define evRedraw          7002
+#define ivRedraw          7002
 
 #endif /* MPLAYER_GUI_SKINLOAD_H */
