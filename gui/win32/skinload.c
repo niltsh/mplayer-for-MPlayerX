@@ -85,14 +85,7 @@ static const evName evNames[] =
     {   evPreferences,          "evPreferences"         },
     {   evSkinBrowser,          "evSkinBrowser"         },
     {   evIconify,              "evIconify"             },
-    {   evExit,                 "evExit"                },
-    {   evIncBalance,           "evIncBalance"          },
-    {   evDecBalance,           "evDecBalance"          },
-    {   evFName,                "evFName"               },
-    {   evMovieTime,            "evMovieTime"           },
-    {   evIncAudioBufDelay,     "evIncAudioBufDelay"    },
-    {   evDecAudioBufDelay,     "evDecAudioBufDelay"    },
-    {   evHelp,                 "evHelp"                }
+    {   evExit,                 "evExit"                }
 };
 
 static const int evBoxs = sizeof(evNames) / sizeof(evName);

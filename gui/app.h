@@ -73,13 +73,6 @@
 
 // Internal events
 
-#define evIncAudioBufDelay  33   // NOTE TO MYSELF: not all of these events
-#define evDecAudioBufDelay  34   // are actually implemented, and update doc
-#define evIncBalance        35
-#define evDecBalance        36
-
-#define evHelp              37
-
 #define evPlayNetwork       41
 #define evSetAudio          45
 #define evSetVideo          46
@@ -101,8 +94,6 @@
 #define evSubtitleLoaded  5011
 #define evSetVCDTrack     5012
 
-#define evFName           7000
-#define evMovieTime       7001
 #define evRedraw          7002
 #define evHideWindow      7003
 #define evShowWindow      7004

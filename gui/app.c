@@ -74,14 +74,7 @@ static const evName evNames[] = {
     { evPreferences,       "evPreferences"       },
     { evSkinBrowser,       "evSkinBrowser"       },
     { evIconify,           "evIconify"           },
-    { evExit,              "evExit"              },
-    { evIncBalance,        "evIncBalance"        }, // NOTE TO MYSELF: not all of these events
-    { evDecBalance,        "evDecBalance"        }, // are actually implemented, and update doc
-    { evFName,             "evFName"             },
-    { evMovieTime,         "evMovieTime"         },
-    { evIncAudioBufDelay,  "evIncAudioBufDelay"  },
-    { evDecAudioBufDelay,  "evDecAudioBufDelay"  },
-    { evHelp,              "evHelp"              }
+    { evExit,              "evExit"              }
 };
 
 /**
