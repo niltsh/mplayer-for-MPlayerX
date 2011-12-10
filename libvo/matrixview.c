@@ -310,15 +310,23 @@ void matrixview_init(int w, int h)
 
 void matrixview_reshape(int w, int h)
 {
+    double nearplane = -Z_Off - Z_Depth;
+    // perspective projection, also adjusting vertex position
+    // by Z_Off and with simplified Z equation since the absolute
+    // Z value does not matter, only relative to other pixels
+    float matrix[16] = {
+      nearplane / _text_x, 0, 0, 0,
+      0, nearplane / _text_y, 0, 0,
+      0, 0,  1, -1,
+      0, 0,  0, -Z_Off
+    };
     mpglViewport(0, 0, w, h);
 
     mpglMatrixMode(GL_PROJECTION);
-    mpglLoadIdentity();
-    mpglFrustum(-_text_x, _text_x, -_text_y, _text_y, -Z_Off - Z_Depth, -Z_Off);
+    mpglLoadMatrixf(matrix);
 
     mpglMatrixMode(GL_MODELVIEW);
     mpglLoadIdentity();
-    mpglTranslated(0.0f, 0.0f, Z_Off);
 }
 
 

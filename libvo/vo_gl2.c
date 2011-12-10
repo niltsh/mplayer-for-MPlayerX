@@ -423,6 +423,13 @@ static void drawTextureDisplay (void)
 
 
 static void resize(int x,int y){
+  // simple orthogonal projection for 0-1;0-1
+  static const float matrix[16] = {
+     2,  0, 0, 0,
+     0, -2, 0, 0,
+     0,  0, 0, 0,
+    -1,  1, 0, 1,
+  };
   mp_msg(MSGT_VO,MSGL_V,"[gl2] Resize: %dx%d\n",x,y);
   if(aspect_scaling()) {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -443,8 +450,7 @@ static void resize(int x,int y){
   }
 
   glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glOrtho (0, 1, 1, 0, -1.0, 1.0);
+  glLoadMatrixf(matrix);
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();

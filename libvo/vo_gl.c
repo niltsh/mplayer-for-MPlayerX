@@ -172,6 +172,13 @@ static unsigned int slice_height = 1;
 static void redraw(void);
 
 static void resize(int x,int y){
+  // simple orthogonal projection for 0-image_width;0-image_height
+  float matrix[16] = {
+    2.0/image_width,   0, 0, 0,
+    0, -2.0/image_height, 0, 0,
+    0, 0, 0, 0,
+    -1, 1, 0, 1
+  };
   mp_msg(MSGT_VO, MSGL_V, "[gl] Resize: %dx%d\n",x,y);
   if (WinID >= 0) {
     int left = 0, top = 0, w = x, h = y;
@@ -182,7 +189,6 @@ static void resize(int x,int y){
     mpglViewport( 0, 0, x, y );
 
   mpglMatrixMode(GL_PROJECTION);
-  mpglLoadIdentity();
   ass_border_x = ass_border_y = 0;
   if (aspect_scaling() && use_aspect) {
     int new_w, new_h;
@@ -193,11 +199,14 @@ static void resize(int x,int y){
     new_h += vo_panscan_y;
     scale_x = (GLdouble)new_w / (GLdouble)x;
     scale_y = (GLdouble)new_h / (GLdouble)y;
-    mpglScaled(scale_x, scale_y, 1);
+    matrix[0]  *= scale_x;
+    matrix[12] *= scale_x;
+    matrix[5]  *= scale_y;
+    matrix[13] *= scale_y;
     ass_border_x = (vo_dwidth - new_w) / 2;
     ass_border_y = (vo_dheight - new_h) / 2;
   }
-  mpglOrtho(0, image_width, image_height, 0, -1,1);
+  mpglLoadMatrixf(matrix);
 
   mpglMatrixMode(GL_MODELVIEW);
   mpglLoadIdentity();
@@ -775,10 +784,16 @@ static void do_render_osd(int type) {
     return;
   // set special rendering parameters
   if (!scaled_osd) {
+    // simple orthogonal projection for 0-vo_dwidth;0-vo_dheight
+    float matrix[16] = {
+      2.0/vo_dwidth,   0, 0, 0,
+      0, -2.0/vo_dheight, 0, 0,
+      0,  0, 0, 0,
+      -1, 1, 0, 1
+    };
     mpglMatrixMode(GL_PROJECTION);
     mpglPushMatrix();
-    mpglLoadIdentity();
-    mpglOrtho(0, vo_dwidth, vo_dheight, 0, -1, 1);
+    mpglLoadMatrixf(matrix);
   }
   mpglEnable(GL_BLEND);
   if (draw_eosd) {
