@@ -547,7 +547,8 @@ static int initGl(uint32_t d_width, uint32_t d_height) {
   mpglDepthMask(GL_FALSE);
   mpglDisable(GL_CULL_FACE);
   mpglEnable(gl_target);
-  mpglDrawBuffer(vo_doublebuffering?GL_BACK:GL_FRONT);
+  if (mpglDrawBuffer)
+    mpglDrawBuffer(vo_doublebuffering?GL_BACK:GL_FRONT);
   mpglTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
   mp_msg(MSGT_VO, MSGL_V, "[gl] Creating %dx%d texture...\n",
@@ -617,6 +618,13 @@ static int create_window(uint32_t d_width, uint32_t d_height, uint32_t flags, co
 #ifdef CONFIG_GL_WIN32
   if (glctx.type == GLTYPE_W32 && !vo_w32_config(d_width, d_height, flags))
     return -1;
+#endif
+#ifdef CONFIG_GL_EGL_X11
+  if (glctx.type == GLTYPE_EGL_X11) {
+    XVisualInfo vinfo = { .visual = CopyFromParent, .depth = CopyFromParent };
+    vo_x11_create_vo_window(&vinfo, vo_dx, vo_dy, d_width, d_height, flags,
+            CopyFromParent, "gl", title);
+  }
 #endif
 #ifdef CONFIG_GL_X11
   if (glctx.type == GLTYPE_X11) {

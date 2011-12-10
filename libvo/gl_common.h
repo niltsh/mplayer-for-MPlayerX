@@ -40,6 +40,10 @@
 #include <GL/glx.h>
 #include "x11_common.h"
 #endif
+#ifdef CONFIG_GL_EGL_X11
+#include <EGL/egl.h>
+#include "x11_common.h"
+#endif
 #include <GL/gl.h>
 
 // workaround for some gl.h headers
@@ -405,6 +409,7 @@ enum MPGLType {
   GLTYPE_W32,
   GLTYPE_X11,
   GLTYPE_SDL,
+  GLTYPE_EGL_X11,
 };
 
 typedef struct MPGLContext {
@@ -421,6 +426,9 @@ typedef struct MPGLContext {
 #endif
 #ifdef CONFIG_GL_X11
     GLXContext x11;
+#endif
+#ifdef CONFIG_GL_EGL_X11
+    EGLContext egl;
 #endif
   } context;
   int (*setGlWindow)(struct MPGLContext *);

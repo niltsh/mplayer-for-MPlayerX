@@ -5064,6 +5064,10 @@ if (test "$_x11" = yes || test "$_sdl" = yes || win32) && test "$_gl" != no ; th
 // we allow SDL hacking our main() only on OSX
 #undef main
 #endif
+#elif defined(GL_EGL_X11)
+#include <GL/gl.h>
+#include <X11/Xlib.h>
+#include <EGL/egl.h>
 #else
 #include <GL/gl.h>
 #include <X11/Xlib.h>
@@ -5075,10 +5079,15 @@ int main(int argc, char *argv[]) {
   wglCreateContext(dc);
 #elif defined(GL_SDL)
   SDL_GL_SwapBuffers();
+#elif defined(GL_EGL_X11)
+  EGLDisplay eglDisplay = EGL_NO_DISPLAY;
+  eglInitialize(eglDisplay, NULL, NULL);
 #else
   glXCreateContext(NULL, NULL, NULL, True);
 #endif
+#ifndef GL_EGL_X11
   glFinish();
+#endif
   return 0;
 }
 EOF
@@ -5091,6 +5100,11 @@ EOF
       break
     fi
   done
+  if cc_check -DGL_EGL_X11 -lEGL ; then
+    _gl=yes
+    _gl_egl_x11=yes
+    libs_mplayer="$libs_mplayer -lEGL $ld_dl"
+  fi
   if cc_check -DGL_WIN32 -lopengl32 ; then
     _gl=yes
     _gl_win32=yes
@@ -5123,6 +5137,10 @@ if test "$_gl" = yes ; then
     def_gl_x11='#define CONFIG_GL_X11 1'
     res_comment="$res_comment x11"
   fi
+  if test "$_gl_egl_x11" = yes ; then
+    def_gl_egl_x11='#define CONFIG_GL_EGL_X11 1'
+    res_comment="$res_comment egl_x11"
+  fi
   if test "$_gl_sdl" = yes ; then
     def_gl_sdl='#define CONFIG_GL_SDL 1'
     res_comment="$res_comment sdl"
@@ -5132,6 +5150,7 @@ else
   def_gl='#undef CONFIG_GL'
   def_gl_win32='#undef CONFIG_GL_WIN32'
   def_gl_x11='#undef CONFIG_GL_X11'
+  def_gl_egl_x11='#undef CONFIG_GL_EGL_X11'
   def_gl_sdl='#undef CONFIG_GL_SDL'
   novomodules="opengl $novomodules"
 fi
@@ -8030,6 +8049,7 @@ GGI = $_ggi
 GL = $_gl
 GL_WIN32 = $_gl_win32
 GL_X11 = $_gl_x11
+GL_EGL_X11 = $_gl_egl_x11
 GL_SDL = $_gl_sdl
 MATRIXVIEW = $matrixview
 GUI = $_gui
@@ -8569,6 +8589,7 @@ $def_gif_tvt_hack
 $def_gl
 $def_gl_win32
 $def_gl_x11
+$def_gl_egl_x11
 $def_gl_sdl
 $def_matrixview
 $def_ivtv
