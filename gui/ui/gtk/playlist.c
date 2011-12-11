@@ -494,6 +494,8 @@ GtkWidget * create_PlayList( void )
   gtk_clist_set_column_widget( GTK_CLIST( CTDirTree ),0,
     AddLabel( MSGTR_PLAYLIST_DirectoryTree,NULL ) );
 
+  gtk_clist_column_title_passive( GTK_CLIST( CTDirTree ),0 );
+
   vbox2=AddVBox(
     AddFrame( NULL,1,hbox1,1 ),0 );
 
@@ -512,6 +514,8 @@ GtkWidget * create_PlayList( void )
 
   gtk_clist_set_column_widget( GTK_CLIST( CLFiles ),0,
     AddLabel( MSGTR_PLAYLIST_Files,NULL ) );
+
+  gtk_clist_column_title_passive( GTK_CLIST( CLFiles ),0 );
 
   AddHSeparator( vbox2 );
 
@@ -534,6 +538,8 @@ GtkWidget * create_PlayList( void )
 
   gtk_clist_set_column_widget( GTK_CLIST( CLSelected ),1,
     AddLabel( MSGTR_PLAYLIST_Path,NULL ) );
+
+  gtk_clist_column_title_passive( GTK_CLIST( CLSelected ),0 );
 
   AddHSeparator( vbox1 );
 
