@@ -3061,7 +3061,7 @@ play_next_file:
                 if (cmd->id == MP_CMD_GUI)
                     gui(GUI_RUN_MESSAGE, cmd->args[0].v.s);
                 else
-                gui(GUI_RUN_COMMAND, (void *)cmd->id);
+                    gui(GUI_RUN_COMMAND, (void *)cmd->id);
                 mp_cmd_free(cmd);
             }
         }
