@@ -4119,6 +4119,19 @@ even if you do not get any error message.
 Use glxinfo or a similar tool to display the supported OpenGL extensions.
 .PD 0
 .RSs
+.IPs backend=<n>
+Select the backend/OpenGL implementation to use (default: -1).
+.RSss
+-1: Autoselect
+.br
+0: Win32/WGL
+.br
+1: X11/GLX
+.br
+2: SDL
+.br
+3: X11/EGL (highly experimental)
+.RE
 .IPs (no)ati\-hack
 ATI drivers may give a corrupted image when PBOs are used (when using \-dr
 or force\-pbo).

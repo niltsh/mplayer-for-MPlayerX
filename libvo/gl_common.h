@@ -405,11 +405,12 @@ void glDisable3D(int type);
 /** \} */
 
 enum MPGLType {
-  GLTYPE_AUTO,
+  GLTYPE_AUTO = -1,
   GLTYPE_W32,
   GLTYPE_X11,
   GLTYPE_SDL,
   GLTYPE_EGL_X11,
+  GLTYPE_COUNT
 };
 
 typedef struct MPGLContext {

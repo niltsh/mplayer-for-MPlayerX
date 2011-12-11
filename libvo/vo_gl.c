@@ -151,6 +151,7 @@ static int custom_tlin;
 static int custom_trect;
 static int mipmap_gen;
 static int stereo_mode;
+static enum MPGLType backend;
 
 static int int_pause;
 static int eq_bri = 0;
@@ -1137,6 +1138,12 @@ uninit(void)
   uninit_mpglcontext(&glctx);
 }
 
+static int valid_backend(void *p)
+{
+  int *backend = p;
+  return *backend >= GLTYPE_AUTO && *backend < GLTYPE_COUNT;
+}
+
 static int valid_csp(void *p)
 {
   int *csp = p;
@@ -1176,13 +1183,14 @@ static const opt_t subopts[] = {
   {"mipmapgen",    OPT_ARG_BOOL, &mipmap_gen,   NULL},
   {"osdcolor",     OPT_ARG_INT,  &osd_color,    NULL},
   {"stereo",       OPT_ARG_INT,  &stereo_mode,  NULL},
+  {"backend",      OPT_ARG_INT,  &backend,      valid_backend},
   {NULL}
 };
 
 static int preinit_internal(const char *arg, int allow_sw)
 {
     // set defaults
-    enum MPGLType gltype = GLTYPE_AUTO;
+    backend = GLTYPE_AUTO;
     many_fmts = 1;
     use_osd = -1;
     scaled_osd = 0;
@@ -1289,10 +1297,16 @@ static int preinit_internal(const char *arg, int allow_sw)
               "    1: side-by-side to red-cyan stereo\n"
               "    2: side-by-side to green-magenta stereo\n"
               "    3: side-by-side to quadbuffer stereo\n"
+              "  backend=<n>\n"
+              "   -1: auto-select\n"
+              "    0: Win32/WGL\n"
+              "    1: X11/GLX\n"
+              "    2: SDL\n"
+              "    3: X11/EGL (experimental)\n"
               "\n" );
       return -1;
     }
-    if (!init_mpglcontext(&glctx, gltype))
+    if (!init_mpglcontext(&glctx, backend))
       goto err_out;
     if (use_yuv == -1 || !allow_sw) {
       if (create_window(320, 200, VOFLAG_HIDDEN, NULL) < 0)
