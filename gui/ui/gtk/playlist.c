@@ -275,6 +275,14 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
  }
 }
 
+static gboolean plKeyReleased( GtkWidget * widget,
+                               GdkEventKey * event,
+                               gpointer user_data )
+{
+ if (event->keyval == GDK_Return) plButtonReleased( NULL, user_data );
+ return FALSE;
+}
+
 static gboolean plEvent ( GtkWidget * widget,
                           GdkEvent * event,
                           gpointer user_data )
@@ -563,10 +571,14 @@ GtkWidget * create_PlayList( void )
   sigUnsel=gtk_signal_connect( GTK_OBJECT( CLSelected ),"unselect_row",GTK_SIGNAL_FUNC( plUnRowSelect ),(void*)1 );
   sigEvent=gtk_signal_connect( GTK_OBJECT( CLSelected ),"event",GTK_SIGNAL_FUNC( plEvent ),(void *)1 );
 
-  gtk_signal_connect( GTK_OBJECT( Add ),"clicked",GTK_SIGNAL_FUNC( plButtonReleased ),(void*)3 );
-  gtk_signal_connect( GTK_OBJECT( Remove ),"clicked",GTK_SIGNAL_FUNC( plButtonReleased ),(void*)2 );
-  gtk_signal_connect( GTK_OBJECT( Ok ),"clicked",GTK_SIGNAL_FUNC( plButtonReleased ),(void*)1 );
-  gtk_signal_connect( GTK_OBJECT( Cancel ),"clicked",GTK_SIGNAL_FUNC( plButtonReleased ),(void*)0 );
+  gtk_signal_connect( GTK_OBJECT( Add ),"released",GTK_SIGNAL_FUNC( plButtonReleased ),(void*)3 );
+  gtk_signal_connect( GTK_OBJECT( Add ),"key_release_event",GTK_SIGNAL_FUNC( plKeyReleased ),(void*)3 );
+  gtk_signal_connect( GTK_OBJECT( Remove ),"released",GTK_SIGNAL_FUNC( plButtonReleased ),(void*)2 );
+  gtk_signal_connect( GTK_OBJECT( Remove ),"key_release_event",GTK_SIGNAL_FUNC( plKeyReleased ),(void*)2 );
+  gtk_signal_connect( GTK_OBJECT( Ok ),"released",GTK_SIGNAL_FUNC( plButtonReleased ),(void*)1 );
+  gtk_signal_connect( GTK_OBJECT( Ok ),"key_release_event",GTK_SIGNAL_FUNC( plKeyReleased ),(void*)1 );
+  gtk_signal_connect( GTK_OBJECT( Cancel ),"released",GTK_SIGNAL_FUNC( plButtonReleased ),(void*)0 );
+  gtk_signal_connect( GTK_OBJECT( Cancel ),"key_release_event",GTK_SIGNAL_FUNC( plKeyReleased ),(void*)0 );
 
   gtk_window_add_accel_group( GTK_WINDOW( PlayList ),accel_group );
 
