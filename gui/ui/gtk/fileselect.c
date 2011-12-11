@@ -549,18 +549,18 @@ static gboolean on_FileSelect_key_release_event( GtkWidget * widget,
  }
  else
  {
- switch ( event->keyval )
-  {
-   case GDK_Escape:
-        gtk_button_released( GTK_BUTTON( fsCancel ) );
-        break;
-   case GDK_Return:
-        gtk_button_released( GTK_BUTTON( fsOk ) );
-        break;
-   case GDK_BackSpace:
-        gtk_button_released( GTK_BUTTON( fsUp ) );
-        break;
-  }
+  switch ( event->keyval )
+   {
+    case GDK_Escape:
+         gtk_button_released( GTK_BUTTON( fsCancel ) );
+         break;
+    case GDK_Return:
+         gtk_button_released( GTK_BUTTON( fsOk ) );
+         break;
+    case GDK_BackSpace:
+         gtk_button_released( GTK_BUTTON( fsUp ) );
+         break;
+   }
  }
  return FALSE;
 }
