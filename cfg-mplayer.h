@@ -301,7 +301,7 @@ const m_option_t mplayer_opts[]={
     {"noenqueue", &enqueue, CONF_TYPE_FLAG, 0, 1, 0, NULL},
     {"guiwid", "-guiwid has been removed, use -gui-wid instead.\n", CONF_TYPE_PRINT, 0, 0, 0, NULL},
     {"gui-wid", &guiWinID, CONF_TYPE_INT, 0, 0, 0, NULL},
-    {"gui-include", cfg_gui_include, CONF_TYPE_FUNC_PARAM, CONF_NOSAVE, 0, 0, NULL},
+    {"gui-include", cfg_gui_include, CONF_TYPE_FUNC_PARAM, CONF_NOCFG|CONF_NOSAVE, 0, 0, NULL},
 #endif
 
     {"noloop", &mpctx_s.loop_times, CONF_TYPE_FLAG, 0, 0, -1, NULL},
