@@ -323,7 +323,7 @@ int gui(int what, void *data)
     dvd_priv_t *dvd;
 #endif
     plItem *next;
-    int state;
+    int msg, state;
 
     if (guiInfo.mpcontext)
         mixer = mpctx_get_mixer(guiInfo.mpcontext);
@@ -380,6 +380,13 @@ int gui(int what, void *data)
             break;
         }
 
+        break;
+
+    case GUI_RUN_MESSAGE:
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] GUI_RUN_MESSAGE: %s\n", (const char *)data);
+        msg = appFindMessage((const char *)data);
+        if (appFindItem(msg))
+            uiEventHandling(msg, 0);
         break;
 
     case GUI_PREPARE:

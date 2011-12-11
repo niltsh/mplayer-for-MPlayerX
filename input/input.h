@@ -162,6 +162,9 @@ typedef enum {
   MP_CMD_AF_CLR,
   MP_CMD_AF_CMDLINE,
 
+  /// GUI command
+  MP_CMD_GUI,
+
 } mp_command_type;
 
 // The arg types

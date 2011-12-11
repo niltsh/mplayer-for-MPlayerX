@@ -148,6 +148,33 @@ int appFindMessage(const char *name)
 }
 
 /**
+ * @brief Find the item belonging to an event.
+ *
+ * @param event event
+ *
+ * @return pointer to the item (ok) or NULL (not found)
+ */
+wItem *appFindItem(int event)
+{
+    wItem *item;
+    int i, n;
+
+    if (guiApp.subWindow.isFullScreen && guiApp.playbarIsPresent) {
+        item = guiApp.playbarItems;
+        n    = guiApp.IndexOfPlaybarItems;
+    } else {
+        item = guiApp.mainItems;
+        n    = guiApp.IndexOfMainItems;
+    }
+
+    for (i = 0; i <= n; i++)
+        if (item[i].message == event)
+            return item;
+
+    return NULL;
+}
+
+/**
  * @brief Modify the state (i.e. set a new value) to the item belonging to an event.
  *
  * @param event event

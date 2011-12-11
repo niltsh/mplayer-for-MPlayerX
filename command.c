@@ -3511,6 +3511,11 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
         break;
 
         default:
+#ifdef CONFIG_GUI
+                if (use_gui && cmd->id == MP_CMD_GUI)
+                    gui(GUI_RUN_MESSAGE, cmd->args[0].v.s);
+                else
+#endif
                 mp_msg(MSGT_CPLAYER, MSGL_V,
                        "Received unknown cmd %s\n", cmd->name);
         }

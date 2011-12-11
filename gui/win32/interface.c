@@ -657,6 +657,8 @@ int gui(int what, void *data)
             }
             break;
         }
+        case GUI_RUN_MESSAGE:
+          break;
         case GUI_HANDLE_EVENTS:
           break;
         case GUI_SET_MIXER:

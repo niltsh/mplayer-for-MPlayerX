@@ -181,6 +181,10 @@ get_video_codec
 get_video_resolution
     Print out the video resolution of the current file.
 
+gui <message>
+    Send GUI skin message <message>. (See the skin documentation on GUI
+    messages for details.)
+
 screenshot <value>
     Take a screenshot. Requires the screenshot filter to be loaded.
         0 Take a single screenshot.

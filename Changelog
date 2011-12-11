@@ -20,6 +20,9 @@ MPlayer (1.0)
     * experimental af_cmdline slave command to change e.g. audio equalizer options at runtime.
     * vo x11: don't hide or show cursor any more if attached to an existing window (-wid)
 
+    GUI:
+    * all skin messages available as slave commands (gui <message>)
+
     Ports:
     * Wine (see DOCS/tech/crosscompile.txt)
 
