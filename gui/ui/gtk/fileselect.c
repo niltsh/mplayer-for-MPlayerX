@@ -358,6 +358,8 @@ void ShowFileSelect( int type,int modal )
  fsTopList_items=g_list_append( fsTopList_items,"/" );
  gtk_combo_set_popdown_strings( GTK_COMBO( fsCombo4 ),fsTopList_items );
 
+ gtk_widget_grab_focus( fsFNameList );
+
  gtk_window_set_modal( GTK_WINDOW( fsFileSelect ),modal );
 
  gtk_widget_show( fsFileSelect );
@@ -725,8 +727,6 @@ GtkWidget * create_FileSelect( void )
  gtk_signal_connect( GTK_OBJECT( fsCancel ),"key_release_event",GTK_SIGNAL_FUNC( on_FileSelect_key_release_event ),NULL );
  gtk_signal_connect( GTK_OBJECT( fsFNameList ),"select_row",(GtkSignalFunc)fs_fsFNameList_select_row,NULL );
  gtk_signal_connect( GTK_OBJECT( fsFNameList ),"event", (GtkSignalFunc)fs_fsFNameList_event,NULL );
-
- gtk_widget_grab_focus( fsFNameList );
 
  return fsFileSelect;
 }
