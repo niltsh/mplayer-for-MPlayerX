@@ -558,9 +558,11 @@ static gboolean on_FileSelect_key_release_event( GtkWidget * widget,
          break;
     case GDK_Return:
          gtk_button_released( GTK_BUTTON( fsOk ) );
+         gtk_widget_grab_focus( fsFNameList );
          break;
     case GDK_BackSpace:
          gtk_button_released( GTK_BUTTON( fsUp ) );
+         gtk_widget_grab_focus( fsFNameList );
          break;
    }
  }
