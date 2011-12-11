@@ -5963,8 +5963,8 @@ echores "$_fribidi"
 
 
 echocheck "SSA/ASS support"
-# libass depends on FreeType and FriBiDi
-if test "$_freetype" = no || test "$_fribidi" = no ; then
+# libass depends on FreeType
+if test "$_freetype" = no ; then
     _ass=no
     ass_internal=no
     res_comment="FreeType and FriBiDi support needed"

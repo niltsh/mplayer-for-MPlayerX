@@ -21,7 +21,12 @@
 
 #include "config.h"
 
+#ifdef CONFIG_FRIBIDI
 #include <fribidi/fribidi.h>
+#else
+typedef int FriBidiParType;
+typedef int FriBidiStrIndex;
+#endif
 #include "ass_render.h"
 
 void ass_shaper_info(ASS_Library *lib);

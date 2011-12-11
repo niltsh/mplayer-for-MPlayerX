@@ -18,7 +18,9 @@
 
 #include "config.h"
 
+#ifdef CONFIG_FRIBIDI
 #include <fribidi/fribidi.h>
+#endif
 
 #include "ass_shaper.h"
 #include "ass_render.h"
@@ -43,9 +45,11 @@ struct ass_shaper {
 
     // FriBidi log2vis
     int n_glyphs;
+#ifdef CONFIG_FRIBIDI
     FriBidiChar *event_text;
     FriBidiCharType *ctypes;
     FriBidiLevel *emblevels;
+#endif
     FriBidiStrIndex *cmap;
     FriBidiParType base_direction;
 
@@ -79,8 +83,10 @@ struct ass_shaper_font_data {
  */
 void ass_shaper_info(ASS_Library *lib)
 {
-    ass_msg(lib, MSGL_V, "Shaper: FriBidi "
-            FRIBIDI_VERSION " (SIMPLE)"
+    ass_msg(lib, MSGL_V, "Shaper:"
+#ifdef CONFIG_FRIBIDI
+            " FriBidi " FRIBIDI_VERSION " (SIMPLE)"
+#endif
 #ifdef CONFIG_HARFBUZZ
             " HarfBuzz-ng %s (COMPLEX)", hb_version_string()
 #endif
@@ -94,9 +100,11 @@ void ass_shaper_info(ASS_Library *lib)
 static void check_allocations(ASS_Shaper *shaper, size_t new_size)
 {
     if (new_size > shaper->n_glyphs) {
+#ifdef CONFIG_FRIBIDI
         shaper->event_text = realloc(shaper->event_text, sizeof(FriBidiChar) * new_size);
         shaper->ctypes     = realloc(shaper->ctypes, sizeof(FriBidiCharType) * new_size);
         shaper->emblevels  = realloc(shaper->emblevels, sizeof(FriBidiLevel) * new_size);
+#endif
         shaper->cmap       = realloc(shaper->cmap, sizeof(FriBidiStrIndex) * new_size);
     }
 }
@@ -110,9 +118,11 @@ void ass_shaper_free(ASS_Shaper *shaper)
     ass_cache_done(shaper->metrics_cache);
     free(shaper->features);
 #endif
+#ifdef CONFIG_FRIBIDI
     free(shaper->event_text);
     free(shaper->ctypes);
     free(shaper->emblevels);
+#endif
     free(shaper->cmap);
     free(shaper);
 }
@@ -493,6 +503,7 @@ static void shape_harfbuzz(ASS_Shaper *shaper, GlyphInfo *glyphs, size_t len)
 }
 #endif
 
+#ifdef CONFIG_FRIBIDI
 /**
  * \brief Shape event text with FriBidi. Does mirroring and simple
  * Arabic shaping.
@@ -519,6 +530,7 @@ static void shape_fribidi(ASS_Shaper *shaper, GlyphInfo *glyphs, size_t len)
 
     free(joins);
 }
+#endif
 
 /**
  * \brief Toggle kerning for HarfBuzz shaping.
@@ -595,6 +607,9 @@ void ass_shaper_set_level(ASS_Shaper *shaper, ASS_ShapingLevel level)
  */
 void ass_shaper_shape(ASS_Shaper *shaper, TextInfo *text_info)
 {
+#ifndef CONFIG_FRIBIDI
+    check_allocations(shaper, text_info->length);
+#else
     int i, last_break;
     FriBidiParType dir;
     GlyphInfo *glyphs = text_info->glyphs;
@@ -645,6 +660,7 @@ void ass_shaper_shape(ASS_Shaper *shaper, TextInfo *text_info)
             glyphs[i].skip++;
         }
     }
+#endif
 }
 
 /**
@@ -655,7 +671,9 @@ ASS_Shaper *ass_shaper_new(size_t prealloc)
 {
     ASS_Shaper *shaper = calloc(sizeof(*shaper), 1);
 
+#ifdef CONFIG_FRIBIDI
     shaper->base_direction = FRIBIDI_PAR_ON;
+#endif
     check_allocations(shaper, prealloc);
 
 #ifdef CONFIG_HARFBUZZ
@@ -697,6 +715,7 @@ FriBidiStrIndex *ass_shaper_reorder(ASS_Shaper *shaper, TextInfo *text_info)
     for (i = 0; i < text_info->length; i++)
         shaper->cmap[i] = i;
 
+#ifdef CONFIG_FRIBIDI
     // Create reorder map line-by-line
     for (i = 0; i < text_info->n_lines; i++) {
         LineInfo *line = text_info->lines + i;
@@ -708,6 +727,7 @@ FriBidiStrIndex *ass_shaper_reorder(ASS_Shaper *shaper, TextInfo *text_info)
                 shaper->emblevels + line->offset, NULL,
                 shaper->cmap + line->offset);
     }
+#endif
 
     return shaper->cmap;
 }
@@ -721,6 +741,7 @@ FriBidiStrIndex *ass_shaper_reorder(ASS_Shaper *shaper, TextInfo *text_info)
  */
 FriBidiParType resolve_base_direction(int enc)
 {
+#ifdef CONFIG_FRIBIDI
     switch (enc) {
         case 1:
             return FRIBIDI_PAR_ON;
@@ -730,4 +751,7 @@ FriBidiParType resolve_base_direction(int enc)
         default:
             return FRIBIDI_PAR_LTR;
     }
+#else
+    return 0;
+#endif
 }
