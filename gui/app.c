@@ -169,7 +169,7 @@ wItem *appFindItem(int event)
 
     for (i = 0; i <= n; i++)
         if (item[i].message == event)
-            return item;
+            return &item[i];
 
     return NULL;
 }
