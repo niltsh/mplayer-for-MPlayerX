@@ -807,7 +807,7 @@ static const char help_text[]=
 #define MSGTR_MENU_FullScreen "Vollbild"
 #define MSGTR_MENU_DVD "DVD"
 #define MSGTR_MENU_VCD "VCD"
-#define MSGTR_MENU_PlayDisc "Öffne CD/DVD..."
+#define MSGTR_MENU_PlayDisc "Öffne Disc..."
 #define MSGTR_MENU_ShowDVDMenu "Zeige DVD Menü"
 #define MSGTR_MENU_Titles "Titel"
 #define MSGTR_MENU_Title "Titel %2d"
