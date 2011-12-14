@@ -129,6 +129,7 @@ static const struct AVCodecTag mp_bmp_tags[] = {
     { CODEC_ID_JV,                MKTAG('F', 'F', 'J', 'V')},
     { CODEC_ID_MAD,               MKTAG('M', 'A', 'D', 'k')},
     { CODEC_ID_MDEC,              MKTAG('M', 'D', 'E', 'C')},
+    { CODEC_ID_MMVIDEO,           MKTAG('M', 'M', 'V', ' ')},
     { CODEC_ID_MOTIONPIXELS,      MKTAG('M', 'V', 'I', '1')},
     { CODEC_ID_MXPEG,             MKTAG('M', 'X', 'P', 'G')},
     { CODEC_ID_NUV,               MKTAG('N', 'U', 'V', '1')},
