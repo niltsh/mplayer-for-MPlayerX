@@ -907,7 +907,7 @@ image = font.png
             <row><entry>Buchstabe</entry><entry>Symbol</entry></row>
           </thead>
           <tbody>
-            <row><entry><keycap>l</keycap></entry><entry>Play</entry></row>
+            <row><entry><keycap>p</keycap></entry><entry>Play</entry></row>
             <row><entry><keycap>s</keycap></entry><entry>Stop</entry></row>
             <row><entry><keycap>e</keycap></entry><entry>Pause</entry></row>
             <row><entry><keycap>n</keycap></entry><entry>Kein Sound</entry></row>
