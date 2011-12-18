@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 34249
+.\" sync with en/mplayer.1 rev. 34438
 .\" This man page was/is done by Gabucino, Diego Biurrun, Jonas Jermann
 .\" translation by JRaSH<jrash06 at 163.com>
 .
@@ -4119,6 +4119,19 @@ OpenGL 视频输出驱动，简单版本。\
 可使用 glxinfo 或类似的工具显示已支持的 OpenGL 扩展功能。
 .PD 0
 .RSs
+.IPs backend=<n>
+选择要使用的后端/OpenGL的实现方式（默认值：-1）。
+.RSss
+-1：自动选择
+.br
+0：Win32/WGL
+.br
+1：X11/GLX
+.br
+2：SDL
+.br
+3：X11/EGL（高度处于实验阶段）
+.RE
 .IPs (no)ati\-hack
 当使用了 PBO 时（当使用了 \-dr 或强制使用 \-pbo 时），\
 AIT 驱动可能输出损坏的图像。\
