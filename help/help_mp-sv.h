@@ -99,7 +99,6 @@ static const char help_text[]=
 #define MSGTR_Playing "Spelar %s.\n"
 #define MSGTR_NoSound "Audio: inget ljud\n"
 #define MSGTR_FPSforced "FPS forcerad att vara %5.3f  (ftime: %5.3f).\n"
-    "För att få bäst prestanda, omkompilera med '--disable-runtime-cpudetection'.\n"
 #define MSGTR_AvailableVideoOutputDrivers "Tillgängliga video-ut-drivrutiner:\n"
 #define MSGTR_AvailableAudioOutputDrivers "Tillgängliga audio-ut-drivrutiner:\n"
 #define MSGTR_AvailableAudioCodecs "Tillgängliga audiocodec:\n"
