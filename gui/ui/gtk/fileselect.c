@@ -354,7 +354,7 @@ void ShowFileSelect( int type,int modal )
  }
  free( dir );
  if ( getenv( "HOME" ) ) fsTopList_items=g_list_append( fsTopList_items,getenv( "HOME" ) );
- fsTopList_items=g_list_append( fsTopList_items,"/home" );
+ else fsTopList_items=g_list_append( fsTopList_items,"/home" );
  if (stat( "/media",&f ) == 0) fsTopList_items=g_list_append( fsTopList_items,"/media" );
  if (stat( "/mnt",&f ) == 0) fsTopList_items=g_list_append( fsTopList_items,"/mnt" );
  fsTopList_items=g_list_append( fsTopList_items,"/" );
