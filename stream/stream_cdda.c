@@ -182,6 +182,7 @@ static int seek(stream_t* s,off_t newpos) {
   sec = s->pos/CD_FRAMESIZE_RAW;
   if (s->pos < 0 || sec > p->end_sector) {
     s->eof = 1;
+    p->sector = p->end_sector + 1;
     return 0;
   }
 
@@ -258,7 +259,7 @@ static int control(stream_t *stream, int cmd, void *arg) {
       int seek_sector;
       track += start_track;
       if (track > end_track) {
-        stream->eof = 1;
+        seek(stream, (p->end_sector + 1) * CD_FRAMESIZE_RAW);
         return STREAM_ERROR;
       }
       seek_sector = track <= 0 ? p->start_sector
