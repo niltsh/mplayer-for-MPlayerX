@@ -8693,6 +8693,7 @@ $def_xmm_clobbers
 $def_yasm
 
 #define CONFIG_AUDIO_FLOAT 0
+#define CONFIG_AVCODEC 1
 #define CONFIG_AVSERVER 0
 #define CONFIG_FASTDIV 0
 #define CONFIG_FFSERVER 0
@@ -8703,6 +8704,8 @@ $def_yasm
 #define CONFIG_LIBVORBIS 0
 #define CONFIG_OPENSSL 0
 #define CONFIG_POWERPC_PERF 0
+/* For now prefer speed over avoiding potential invalid reads */
+#define CONFIG_SAFE_BITSTREAM_READER 0
 #define CONFIG_SHARED 0
 #define CONFIG_SMALL 0
 #define CONFIG_SWSCALE_ALPHA 1
