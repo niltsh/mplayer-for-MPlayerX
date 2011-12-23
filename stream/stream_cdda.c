@@ -88,7 +88,7 @@ static const m_option_t cdda_params_fields[] = {
   { "paranoia", ST_OFF(paranoia_mode), CONF_TYPE_INT,M_OPT_RANGE, 0, 2, NULL },
   { "generic-dev", ST_OFF(generic_dev), CONF_TYPE_STRING, 0, 0, 0, NULL },
   { "sector-size", ST_OFF(sector_size), CONF_TYPE_INT, M_OPT_RANGE,1,100, NULL },
-  { "overlap", ST_OFF(search_overlap), CONF_TYPE_INT, M_OPT_RANGE,0,75, NULL },
+  { "overlap", ST_OFF(search_overlap), CONF_TYPE_INT, M_OPT_RANGE,-1,75, NULL },
   { "toc-bias", ST_OFF(toc_bias), CONF_TYPE_INT, 0, 0, 0, NULL },
   { "toc-offset", ST_OFF(toc_offset), CONF_TYPE_INT, 0, 0, 0, NULL },
   { "noskip", ST_OFF(no_skip), CONF_TYPE_FLAG, 0 , 0, 1, NULL },
@@ -418,18 +418,22 @@ static int open_cdda(stream_t *st,int m, void* opts, int* file_format) {
 
   if(p->no_skip)
     mode |= PARANOIA_MODE_NEVERSKIP;
+  if(p->search_overlap > 0)
+    mode |= PARANOIA_MODE_OVERLAP;
+  else if(p->search_overlap == 0)
+    mode &= ~PARANOIA_MODE_OVERLAP;
 #ifndef CONFIG_LIBCDIO
   // HACK against libcdparanoia's stupid caching model that
   // queues up a huge number of requests leading to stuttering
   paranoia_cachemodel_size(priv->cdp, 24);
   paranoia_modeset(cdd, mode);
 
-  if(p->search_overlap >= 0)
+  if(p->search_overlap > 0)
     paranoia_overlapset(cdd,p->search_overlap);
 #else
   paranoia_modeset(priv->cdp, mode);
 
-  if(p->search_overlap >= 0)
+  if(p->search_overlap > 0)
     paranoia_overlapset(priv->cdp,p->search_overlap);
 #endif
 
