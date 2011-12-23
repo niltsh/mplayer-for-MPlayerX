@@ -1292,7 +1292,7 @@ static int preinit_internal(const char *arg, int allow_sw)
               "    generate mipmaps for the video image (use with TXB in customprog)\n"
               "  osdcolor=<0xAARRGGBB>\n"
               "    use the given color for the OSD\n"
-              "  stereo=<n>\n"
+              "  stereo=<n> (add 32 to swap left and right)\n"
               "    0: normal display\n"
               "    1: side-by-side to red-cyan stereo\n"
               "    2: side-by-side to green-magenta stereo\n"

@@ -386,6 +386,7 @@ void glSetupYUVConversion(gl_conversion_params_t *params);
 void glEnableYUVConversion(GLenum target, int type);
 void glDisableYUVConversion(GLenum target, int type);
 
+#define GL_3D_SWAP           32
 #define GL_3D_RED_CYAN        1
 #define GL_3D_GREEN_MAGENTA   2
 #define GL_3D_QUADBUFFER      3
