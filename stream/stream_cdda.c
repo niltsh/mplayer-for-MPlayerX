@@ -254,9 +254,10 @@ static int control(stream_t *stream, int cmd, void *arg) {
       int r;
       unsigned int track = *(unsigned int *)arg;
       int start_track = get_track_by_sector(p, p->start_sector);
+      int end_track = get_track_by_sector(p, p->end_sector);
       int seek_sector;
       track += start_track;
-      if (track >= p->cd->tracks) {
+      if (track > end_track) {
         stream->eof = 1;
         return STREAM_ERROR;
       }
