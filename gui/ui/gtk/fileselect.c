@@ -252,6 +252,7 @@ void ShowFileSelect( int type,int modal )
 {
  int i, k, fsMedium;
  char * tmp = NULL, * dir = NULL;
+ struct stat f;
 
  if ( fsFileSelect ) gtkActive( fsFileSelect );
   else fsFileSelect=create_FileSelect();
@@ -321,7 +322,6 @@ void ShowFileSelect( int type,int modal )
 
  if ( tmp && tmp[0] )
   {
-   struct stat f;
    dir = strdup( tmp );
 
    do
@@ -355,7 +355,8 @@ void ShowFileSelect( int type,int modal )
  free( dir );
  if ( getenv( "HOME" ) ) fsTopList_items=g_list_append( fsTopList_items,getenv( "HOME" ) );
  fsTopList_items=g_list_append( fsTopList_items,"/home" );
- fsTopList_items=g_list_append( fsTopList_items,"/mnt" );
+ if (stat( "/mnt",&f ) == 0) fsTopList_items=g_list_append( fsTopList_items,"/mnt" );
+ if (stat( "/media",&f ) == 0) fsTopList_items=g_list_append( fsTopList_items,"/media" );
  fsTopList_items=g_list_append( fsTopList_items,"/" );
  gtk_combo_set_popdown_strings( GTK_COMBO( fsCombo4 ),fsTopList_items );
 
