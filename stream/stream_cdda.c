@@ -70,7 +70,7 @@ static struct cdda_params {
   char* device;
   m_span_t span;
 } cdda_dflts = {
-  -1,
+  0,
   0,
   NULL,
   0,
@@ -84,7 +84,7 @@ static struct cdda_params {
 
 #define ST_OFF(f) M_ST_OFF(struct cdda_params,f)
 static const m_option_t cdda_params_fields[] = {
-  { "speed", ST_OFF(speed), CONF_TYPE_INT, M_OPT_RANGE,1,100, NULL },
+  { "speed", ST_OFF(speed), CONF_TYPE_INT, M_OPT_RANGE,0,100, NULL },
   { "paranoia", ST_OFF(paranoia_mode), CONF_TYPE_INT,M_OPT_RANGE, 0, 2, NULL },
   { "generic-dev", ST_OFF(generic_dev), CONF_TYPE_STRING, 0, 0, 0, NULL },
   { "sector-size", ST_OFF(sector_size), CONF_TYPE_INT, M_OPT_RANGE,1,100, NULL },
@@ -382,7 +382,7 @@ static int open_cdda(stream_t *st,int m, void* opts, int* file_format) {
       cdd->disc_toc[i].dwStartSector += offset;
   }
 
-  if(p->speed)
+  if(p->speed > 0)
     cdda_speed_set(cdd,p->speed);
 
   last_track = cdda_tracks(cdd);
