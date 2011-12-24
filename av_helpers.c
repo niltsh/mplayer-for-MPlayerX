@@ -79,7 +79,6 @@ static void mp_msp_av_log_callback(void *ptr, int level, const char *fmt,
 void init_avcodec(void)
 {
     if (!avcodec_initialized) {
-        avcodec_init();
         avcodec_register_all();
         avcodec_initialized = 1;
         av_log_set_callback(mp_msp_av_log_callback);
