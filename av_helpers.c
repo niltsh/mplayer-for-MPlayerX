@@ -76,9 +76,27 @@ static void mp_msp_av_log_callback(void *ptr, int level, const char *fmt,
     mp_msg_va(type, mp_level, fmt, vl);
 }
 
+static void show_av_version(int type, const char *name,
+                            int header_ver, int ver, const char *conf)
+{
+#ifdef CONFIG_FFMPEG_SO
+#define FFMPEG_TYPE "external"
+#else
+#define FFMPEG_TYPE "internal"
+#endif
+    mp_msg(type, MSGL_INFO, "%s version %d.%d.%d (" FFMPEG_TYPE ")\n",
+           name, ver >> 16, (ver >> 8) & 0xFF, ver & 0xFF);
+    if (header_ver != ver)
+        mp_msg(type, MSGL_INFO, "Mismatching header version %d.%d.%d\n",
+               header_ver >> 16, (header_ver >> 8) & 0xFF, header_ver & 0xFF);
+    mp_msg(type, MSGL_V, "Configuration: %s\n", conf);
+}
+
 void init_avcodec(void)
 {
     if (!avcodec_initialized) {
+        show_av_version(MSGT_DECVIDEO, "libavcodec", LIBAVCODEC_VERSION_INT,
+                        avcodec_version(), avcodec_configuration());
         avcodec_register_all();
         avcodec_initialized = 1;
         av_log_set_callback(mp_msp_av_log_callback);
@@ -88,6 +106,8 @@ void init_avcodec(void)
 void init_avformat(void)
 {
     if (!avformat_initialized) {
+        show_av_version(MSGT_DEMUX, "libavformat", LIBAVFORMAT_VERSION_INT,
+                        avformat_version(), avformat_configuration());
         av_register_all();
         avformat_initialized = 1;
         av_log_set_callback(mp_msp_av_log_callback);
