@@ -431,7 +431,7 @@ static int open_cdda(stream_t *st,int m, void* opts, int* file_format) {
   // HACK against libcdparanoia's stupid caching model that
   // queues up a huge number of requests leading to stuttering
   paranoia_cachemodel_size(priv->cdp, 24);
-  paranoia_modeset(cdd, mode);
+  if (mode != PARANOIA_MODE_DISABLE) paranoia_modeset(cdd, mode);
 
   if(p->search_overlap > 0)
     paranoia_overlapset(cdd,p->search_overlap);
