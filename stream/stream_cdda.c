@@ -420,6 +420,9 @@ static int open_cdda(stream_t *st,int m, void* opts, int* file_format) {
 
   if(p->no_skip)
     mode |= PARANOIA_MODE_NEVERSKIP;
+  else
+    mode &= ~PARANOIA_MODE_NEVERSKIP;
+
   if(p->search_overlap > 0)
     mode |= PARANOIA_MODE_OVERLAP;
   else if(p->search_overlap == 0)
