@@ -5767,24 +5767,8 @@ fi
 echores "$_libdvdcss_internal"
 
 
-echocheck "cdparanoia"
-if test "$_cdparanoia" = auto ; then
-    _cdparanoia=no
-    for inc_tmp in "" "-I/usr/include/cdda" "-I/usr/local/include/cdda" ; do
-      statement_check_broken cdda_interface.h cdda_paranoia.h 'paranoia_cachemodel_size(NULL, 0)' $inc_tmp -lcdda_interface -lcdda_paranoia &&
-        _cdparanoia=yes && extra_cflags="$extra_cflags $inc_tmp" && break
-    done
-fi
-if test "$_cdparanoia" = yes ; then
-    _cdda='yes'
-    extra_ldflags="$extra_ldflags -lcdda_interface -lcdda_paranoia"
-    openbsd && extra_ldflags="$extra_ldflags -lutil"
-fi
-echores "$_cdparanoia"
-
-
 echocheck "libcdio"
-if test "$_libcdio" = auto && test "$_cdparanoia" = no ; then
+if test "$_libcdio" = auto ; then
         cat > $TMPC << EOF
 #include <stdio.h>
 #include <cdio/version.h>
@@ -5809,19 +5793,35 @@ EOF
         extra_ldflags="$extra_ldflags $ld_tmp" && extra_cflags="$extra_cflags $inc_tmp"
     fi
 fi
-if test "$_libcdio" = yes && test "$_cdparanoia" = no ; then
+if test "$_libcdio" = yes ; then
     _cdda='yes'
+    _cdparanoia=no
     def_libcdio='#define CONFIG_LIBCDIO 1'
     def_havelibcdio='yes'
 else
     _libcdio=no
-    if test "$_cdparanoia" = yes ; then
-       res_comment="using cdparanoia"
-    fi
     def_libcdio='#undef CONFIG_LIBCDIO'
     def_havelibcdio='no'
 fi
 echores "$_libcdio"
+
+echocheck "cdparanoia"
+if test "$_cdparanoia" = auto ; then
+    _cdparanoia=no
+    for inc_tmp in "" "-I/usr/include/cdda" "-I/usr/local/include/cdda" ; do
+      statement_check_broken cdda_interface.h cdda_paranoia.h 'paranoia_cachemodel_size(NULL, 0)' $inc_tmp -lcdda_interface -lcdda_paranoia &&
+        _cdparanoia=yes && extra_cflags="$extra_cflags $inc_tmp" && break
+    done
+fi
+if test "$_cdparanoia" = yes ; then
+    _cdda='yes'
+    extra_ldflags="$extra_ldflags -lcdda_interface -lcdda_paranoia"
+    openbsd && extra_ldflags="$extra_ldflags -lutil"
+elif test "$_libcdio" = yes ; then
+    res_comment='using libcdio'
+fi
+echores "$_cdparanoia"
+
 
 if test "$_cdda" = yes ; then
     test $_cddb = auto && test $networking = yes && _cddb=yes
