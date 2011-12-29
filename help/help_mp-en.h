@@ -820,7 +820,7 @@ static const char help_text[]=
 #define MSGTR_DirectorySelect "Select directory..."
 #define MSGTR_PlaylistSave "Save playlist..."
 #define MSGTR_PlaylistSelect "Select playlist..."
-#define MSGTR_SelectChapter "Select chapter..."
+#define MSGTR_SelectTitleChapter "Select title/chapter..."
 #define MSGTR_MENU_DebugConsole "Debug Console"
 #define MSGTR_MENU_OnlineHelp "Online Help"
 #define MSGTR_MENU_PlayDirectory "Play directory..."

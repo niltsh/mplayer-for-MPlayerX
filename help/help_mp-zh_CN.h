@@ -820,7 +820,6 @@ static const char help_text[]=
 #define MSGTR_DirectorySelect "选择目录..."
 #define MSGTR_PlaylistSave "保存播放列表..."
 #define MSGTR_PlaylistSelect "选择播放列表..."
-#define MSGTR_SelectChapter "选择章节..."
 #define MSGTR_MENU_DebugConsole "调试控制终端"
 #define MSGTR_MENU_OnlineHelp "线上帮助内容"
 #define MSGTR_MENU_PlayDirectory "播放目录内容..."

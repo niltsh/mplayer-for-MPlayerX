@@ -1015,7 +1015,7 @@ static const char help_text[]=
 #define MSGTR_DirectorySelect "Wähle ein Verzeichnis ..."
 #define MSGTR_PlaylistSave "Speichere Wiedergabeliste ..."
 #define MSGTR_PlaylistSelect "Wähle Wiedergabeliste ..."
-#define MSGTR_SelectChapter "Wähle Kapitel ..."
+#define MSGTR_SelectTitleChapter "Wähle Titel/Kapitel ..."
 #define MSGTR_MENU_DebugConsole "Debugging-Konsole"
 #define MSGTR_MENU_OnlineHelp "Online-Hilfe"
 #define MSGTR_MENU_PlayDirectory "Spiele ein Verzeichnis..."

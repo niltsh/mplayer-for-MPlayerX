@@ -872,7 +872,7 @@ void display_chapterselwindow(gui_t *gui)
     int x, y;
 
     if (guiInfo.StreamType != STREAMTYPE_DVD) return;
-    if (FindWindow(NULL, acp(MSGTR_SelectChapter))) return;
+    if (FindWindow(NULL, acp(MSGTR_SelectTitleChapter))) return;
 
     wc.style         = CS_HREDRAW | CS_VREDRAW;
     wc.lpfnWndProc   = TitleChapterWndProc;
@@ -882,13 +882,13 @@ void display_chapterselwindow(gui_t *gui)
     wc.hCursor       = LoadCursor(NULL,IDC_ARROW);
     wc.hIcon         = gui->icon;
     wc.hbrBackground = SOLID_GREY2;
-    wc.lpszClassName = acp(MSGTR_SelectChapter);
+    wc.lpszClassName = acp(MSGTR_SelectTitleChapter);
     wc.lpszMenuName  = NULL;
     RegisterClass(&wc);
     x = (GetSystemMetrics(SM_CXSCREEN) / 2) - (180 / 2);
     y = (GetSystemMetrics(SM_CYSCREEN) / 2) - (100 / 2);
-    hWnd = CreateWindow(acp(MSGTR_SelectChapter),
-                        acp(MSGTR_SelectChapter),
+    hWnd = CreateWindow(acp(MSGTR_SelectTitleChapter),
+                        acp(MSGTR_SelectTitleChapter),
                         WS_POPUPWINDOW | WS_CAPTION,
                         x,
                         y,
