@@ -61,11 +61,9 @@ static void set_defaults(void)
 
 static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
-    HWND btn, label, edit1, edit2, edit3, updown1, updown2, track1, track2;
+    HWND btn, label, edit1, edit2, updown1, updown2, track1, track2;
     static HWND vo_driver, ao_driver, prio;
     int i = 0, j = 0;
-    char dvddevice[MAX_PATH];
-    char cdromdevice[MAX_PATH];
     char procprio[11];
     float x = 10.0, y = 100.0, stereopos, delaypos;
     stereopos = gtkAOExtraStereoMul * x;
@@ -107,20 +105,6 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
             label = CreateWindow("static", acp(MSGTR_PREFERENCES_FRAME_OSD_Level),
                                  WS_CHILD | WS_VISIBLE,
                                  10, 286, 115, 15, hwnd,
-                                 NULL, ((LPCREATESTRUCT) lParam) -> hInstance,
-                                 NULL);
-            SendMessage(label, WM_SETFONT, (WPARAM) GetStockObject(DEFAULT_GUI_FONT), 0);
-
-            label = CreateWindow("static", acp(MSGTR_PREFERENCES_DVDDevice),
-                                 WS_CHILD | WS_VISIBLE | SS_RIGHT,
-                                 55, 387, 100, 15, hwnd,
-                                 NULL, ((LPCREATESTRUCT) lParam) -> hInstance,
-                                 NULL);
-            SendMessage(label, WM_SETFONT, (WPARAM) GetStockObject(DEFAULT_GUI_FONT), 0);
-
-            label = CreateWindow("static", acp(MSGTR_PREFERENCES_CDROMDevice),
-                                 WS_CHILD | WS_VISIBLE | SS_RIGHT,
-                                 185, 387, 100, 15, hwnd,
                                  NULL, ((LPCREATESTRUCT) lParam) -> hInstance,
                                  NULL);
             SendMessage(label, WM_SETFONT, (WPARAM) GetStockObject(DEFAULT_GUI_FONT), 0);
@@ -360,25 +344,6 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
                                           (HWND)edit2, 0, 0, 0);
             SendDlgItemMessage(hwnd, ID_UPDOWN2, UDM_SETRANGE32, (WPARAM)0, (LPARAM)10000);
 
-            /* dvd and cd devices */
-            edit3 = CreateWindowEx(WS_EX_CLIENTEDGE, "edit", NULL,
-                                   WS_CHILD | WS_VISIBLE |
-                                   ES_LEFT | ES_AUTOHSCROLL,
-                                   165, 384, 20, 20, hwnd,
-                                   (HMENU) ID_DVDDEVICE,
-                                   ((LPCREATESTRUCT) lParam) -> hInstance,
-                                   NULL);
-            SendMessage(edit3, WM_SETFONT, (WPARAM) GetStockObject(DEFAULT_GUI_FONT), 0);
-
-            edit3 = CreateWindowEx(WS_EX_CLIENTEDGE, "edit", NULL,
-                                   WS_CHILD | WS_VISIBLE |
-                                   ES_LEFT| ES_AUTOHSCROLL,
-                                   295, 384, 20, 20, hwnd,
-                                   (HMENU) ID_CDDEVICE,
-                                   ((LPCREATESTRUCT) lParam) -> hInstance,
-                                   NULL);
-            SendMessage(edit3, WM_SETFONT, (WPARAM) GetStockObject(DEFAULT_GUI_FONT), 0);
-
             while(video_out_drivers[i])
             {
                 const vo_info_t *info = video_out_drivers[i++]->info;
@@ -476,14 +441,6 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
             else if(osd_level == 3)
                 SendDlgItemMessage(hwnd, ID_OSD3, BM_SETCHECK, 1, 0);
 
-            if(dvd_device)
-                SendDlgItemMessage(hwnd, ID_DVDDEVICE, WM_SETTEXT, 0, (LPARAM)dvd_device);
-            else SendDlgItemMessage(hwnd, ID_DVDDEVICE, WM_SETTEXT, 0, (LPARAM)"D:");
-
-            if(cdrom_device)
-                SendDlgItemMessage(hwnd, ID_CDDEVICE, WM_SETTEXT, 0, (LPARAM)cdrom_device);
-            else SendDlgItemMessage(hwnd, ID_CDDEVICE, WM_SETTEXT, 0, (LPARAM)"D:");
-
             if(proc_priority)
                 SendDlgItemMessage(hwnd, ID_PRIO, CB_SETCURSEL,
                                    (WPARAM)SendMessage(prio, CB_FINDSTRING, -1,
@@ -577,8 +534,6 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
                     SendDlgItemMessage(hwnd, ID_OSD1, BM_SETCHECK, 1, 0);
                     SendDlgItemMessage(hwnd, ID_OSD2, BM_SETCHECK, 0, 0);
                     SendDlgItemMessage(hwnd, ID_OSD3, BM_SETCHECK, 0, 0);
-                    SendDlgItemMessage(hwnd, ID_DVDDEVICE, WM_SETTEXT, 0, (LPARAM)"D:");
-                    SendDlgItemMessage(hwnd, ID_CDDEVICE, WM_SETTEXT, 0, (LPARAM)"D:");
                     SendMessage(hwnd, WM_COMMAND, (WPARAM)ID_APPLY, 0);
                     break;
                 }
@@ -676,12 +631,6 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
                         osd_level = 2;
                     else if(SendDlgItemMessage(hwnd, ID_OSD3, BM_GETCHECK, 0, 0) == BST_CHECKED)
                         osd_level = 3;
-
-                    /* dvd and cd devices */
-                    SendDlgItemMessage(hwnd, ID_DVDDEVICE, WM_GETTEXT, MAX_PATH, (LPARAM)dvddevice);
-                    dvd_device = strdup(dvddevice);
-                    SendDlgItemMessage(hwnd, ID_CDDEVICE, WM_GETTEXT, MAX_PATH, (LPARAM)cdromdevice);
-                    cdrom_device = strdup(cdromdevice);
 
                     MessageBox(hwnd, acp(MSGTR_PREFERENCES_Message), acp(MSGTR_MSGBOX_LABEL_Warning), MB_OK);
                     DestroyWindow(hwnd);

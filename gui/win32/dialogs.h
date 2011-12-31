@@ -68,8 +68,6 @@
 #define ID_OSD1              34
 #define ID_OSD2              35
 #define ID_OSD3              36
-#define ID_DVDDEVICE         37
-#define ID_CDDEVICE          38
 #define ID_PRIO              39
 #define ID_URL               40
 #define ID_TITLESEL          41

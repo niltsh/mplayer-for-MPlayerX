@@ -70,8 +70,6 @@ static const m_option_t gui_opts[] =
     {   "ao_extra_stereo", &gtkAOExtraStereo, CONF_TYPE_FLAG, 0, 0, 1, NULL },
     {   "ao_extra_stereo_coefficient", &gtkAOExtraStereoMul, CONF_TYPE_FLOAT, CONF_RANGE, -10, 10, NULL },
     {   "delay", &audio_delay, CONF_TYPE_FLOAT, CONF_RANGE, -100.0, 100.0, NULL},
-    {   "dvd_device", &dvd_device, CONF_TYPE_STRING, 0, 0, 0, NULL },
-    {   "cdrom_device", &cdrom_device, CONF_TYPE_STRING, 0, 0, 0, NULL },
     {   "osd_level", &osd_level, CONF_TYPE_INT, CONF_RANGE, 0, 3, NULL },
     {   "cache", &gtkCacheOn, CONF_TYPE_FLAG, 0, 0, 1, NULL },
     {   "cache_size", &gtkCacheSize, CONF_TYPE_INT, CONF_RANGE, -1, 65535, NULL },
