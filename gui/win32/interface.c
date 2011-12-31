@@ -114,9 +114,9 @@ static void guiSetEvent(int event)
         case evPlayDVD:
         {
             static char dvdname[MAX_PATH];
-            guiInfo.Track = dvd_title;
-            guiInfo.Chapter = dvd_chapter;
-            guiInfo.Angle = dvd_angle;
+            guiInfo.Track = 1;
+            guiInfo.Chapter = 1;
+            guiInfo.Angle = 1;
             guiInfo.NewPlay = GUI_FILE_SAME;
 
             uiSetFileName(NULL, dvd_device, STREAMTYPE_DVD);
@@ -125,10 +125,9 @@ static void guiSetEvent(int event)
             GetVolumeInformation(dvd_device, dvdname, MAX_PATH, NULL, NULL, NULL, NULL, 0);
             capitalize(dvdname);
             mp_msg(MSGT_GPLAYER, MSGL_V, "Opening DVD %s -> %s\n", dvd_device, dvdname);
-            gui(GUI_PREPARE, (void *) STREAMTYPE_DVD);
             mygui->playlist->clear_playlist(mygui->playlist);
             mygui->playlist->add_track(mygui->playlist, filename, NULL, dvdname, 0);
-            mygui->startplay(mygui);
+            uiPlay();
             break;
         }
 #endif
@@ -502,8 +501,25 @@ int gui(int what, void *data)
             dvd_title = 0;
             force_fps = 0;
             if(!mygui->playlist->tracks) return 0;
-            uiSetFileName(NULL, mygui->playlist->tracks[mygui->playlist->current]->filename, STREAMTYPE_FILE);
-            guiInfo.Track = mygui->playlist->current + 1;
+            switch(guiInfo.StreamType)
+            {
+                case STREAMTYPE_FILE:
+                case STREAMTYPE_STREAM:
+                    uiSetFileName(NULL, mygui->playlist->tracks[mygui->playlist->current]->filename, STREAMTYPE_FILE);
+                    guiInfo.Track = mygui->playlist->current + 1;
+                    break;
+#ifdef CONFIG_DVDREAD
+                case STREAMTYPE_DVD:
+                {
+                    char tmp[512];
+                    dvd_chapter = guiInfo.Chapter;
+                    dvd_angle = guiInfo.Angle;
+                    sprintf(tmp,"dvd://%d", guiInfo.Track);
+                    uiSetFileName(NULL, tmp, STREAMTYPE_DVD);
+                    break;
+                }
+#endif
+            }
             guiInfo.VideoWindow = 1;
             if(gtkAONorm) greplace(&af_cfg.list, "volnorm", "volnorm");
             if(gtkAOExtraStereo)
@@ -517,24 +533,6 @@ int gui(int what, void *data)
             if(gtkCacheOn) stream_cache_size = gtkCacheSize;
             if(gtkAutoSyncOn) autosync = gtkAutoSync;
             guiInfo.NewPlay = 0;
-            switch(guiInfo.StreamType)
-            {
-                case STREAMTYPE_FILE:
-                case STREAMTYPE_STREAM:
-                    break;
-#ifdef CONFIG_DVDREAD
-                case STREAMTYPE_DVD:
-                {
-                    char tmp[512];
-                    dvd_title = guiInfo.Track;
-                    dvd_chapter = guiInfo.Chapter;
-                    dvd_angle = guiInfo.Angle;
-                    sprintf(tmp,"dvd://%d", guiInfo.Track);
-                    uiSetFileName(NULL, tmp, STREAMTYPE_DVD);
-                    break;
-                }
-#endif
-            }
             break;
         }
         case GUI_SET_AUDIO:

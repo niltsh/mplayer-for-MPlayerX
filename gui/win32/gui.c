@@ -1055,7 +1055,6 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
 #ifdef CONFIG_DVDREAD
                                 free(dvd_device);
                                 dvd_device = strdup(device + pos);
-                                dvd_title = dvd_chapter = dvd_angle = 1;
                                 handlemsg(hWnd, evPlayDVD);
 #endif
                             }
