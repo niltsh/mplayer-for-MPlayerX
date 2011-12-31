@@ -559,7 +559,7 @@ blocks.
   </row>
   <row>
     <entry>$t</entry>
-    <entry>track number (DVD, VCD or playlist)</entry>
+    <entry>track number (DVD, VCD, CD or playlist)</entry>
   </row>
   <row>
     <entry>$o</entry>
@@ -577,7 +577,7 @@ blocks.
     <entry>$T</entry>
     <entry>
     a character according to the stream type (file: <keycap>f</keycap>,
-    Video CD: <keycap>v</keycap>, DVD: <keycap>d</keycap>,
+    CD: <keycap>a</keycap>, Video CD: <keycap>v</keycap>, DVD: <keycap>d</keycap>,
     URL: <keycap>u</keycap>)
     </entry>
   </row>
@@ -784,6 +784,7 @@ symbols (and thus require a different font).
   <row><entry><keycap>m</keycap></entry><entry>mono sound</entry></row>
   <row><entry><keycap>t</keycap></entry><entry>stereo sound</entry></row>
   <row><entry><keycap>f</keycap></entry><entry>stream is a file</entry></row>
+  <row><entry><keycap>a</keycap></entry><entry>stream is a CD</entry></row>
   <row><entry><keycap>v</keycap></entry><entry>stream is a Video CD</entry></row>
   <row><entry><keycap>d</keycap></entry><entry>stream is a DVD</entry></row>
   <row><entry><keycap>u</keycap></entry><entry>stream is a URL</entry></row>
@@ -890,6 +891,13 @@ menu entries.
   <term><emphasis role="bold">evPlaylist</emphasis></term>
   <listitem><para>
   Open/close the playlist window.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><emphasis role="bold">evPlayCD</emphasis></term>
+  <listitem><para>
+  Tries to open the disc in the given CD-ROM drive.
   </para></listitem>
 </varlistentry>
 

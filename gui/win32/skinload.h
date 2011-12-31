@@ -192,6 +192,7 @@ skin_t *loadskin(char *skindir, int desktopbpp);
 #define ivSetDVDTitle     5009
 #define ivSetDVDChapter   5010
 #define ivSetVCDTrack     5012
+#define ivSetCDTrack      5014
 
 #define ivRedraw          7002
 

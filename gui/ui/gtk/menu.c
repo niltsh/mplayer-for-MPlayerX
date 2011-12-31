@@ -66,6 +66,10 @@
 #include "gui/ui/pixmaps/empty.xpm"
 #include "gui/ui/pixmaps/loadeaf.xpm"
 #include "gui/ui/pixmaps/title.xpm"
+#ifdef CONFIG_CDDA
+#include "gui/ui/pixmaps/cd.xpm"
+#include "gui/ui/pixmaps/playcd.xpm"
+#endif
 #ifdef CONFIG_VCD
 #include "gui/ui/pixmaps/vcd.xpm"
 #include "gui/ui/pixmaps/playvcd.xpm"
@@ -404,6 +408,8 @@ GtkWidget * DVDSubtitleLanguageMenu;
 GtkWidget * AspectMenu;
 GtkWidget * VCDSubMenu;
 GtkWidget * VCDTitleMenu;
+GtkWidget * CDSubMenu;
+GtkWidget * CDTitleMenu;
 
 GtkWidget * create_PopUpMenu( void )
 {
@@ -425,6 +431,9 @@ GtkWidget * create_PopUpMenu( void )
   AddSeparator( Menu );
    SubMenu=AddSubMenu( window1, (const char*)open_xpm, Menu,MSGTR_MENU_Open );
     AddMenuItem( window1, (const char*)file2_xpm, SubMenu,MSGTR_MENU_PlayFile"    ", evLoadPlay );
+#ifdef CONFIG_CDDA
+    AddMenuItem( window1, (const char*)playcd_xpm, SubMenu,MSGTR_MENU_PlayCD, evPlayCD );
+#endif
 #ifdef CONFIG_VCD
     AddMenuItem( window1, (const char*)playvcd_xpm, SubMenu,MSGTR_MENU_PlayVCD, evPlayVCD );
 #endif
@@ -450,6 +459,27 @@ GtkWidget * create_PopUpMenu( void )
 //    AddMenuItem( SubMenu,MSGTR_MENU_NormalSize"      ", evNormalSize );
 //    AddMenuItem( SubMenu,MSGTR_MENU_DoubleSize, evDoubleSize );
 //    AddMenuItem( SubMenu,MSGTR_MENU_FullScreen, evFullScreen );
+#ifdef CONFIG_CDDA
+   CDSubMenu=AddSubMenu( window1, (const char*)cd_xpm, Menu,MSGTR_MENU_CD );
+    AddMenuItem( window1, (const char*)playcd_xpm, CDSubMenu,MSGTR_MENU_PlayDisc,evPlayCD );
+    AddSeparator( CDSubMenu );
+    CDTitleMenu=AddSubMenu( window1, (const char*)title_xpm, CDSubMenu,MSGTR_MENU_Titles );
+    if ( guiInfo.Tracks )
+     {
+      char tmp[32]; int i;
+      for ( i=1;i <= guiInfo.Tracks;i++ )
+       {
+        snprintf( tmp,32,MSGTR_MENU_Title,i );
+    //AddMenuItem( CDTitleMenu,tmp,( i << 16 ) + ivSetCDTrack );
+        AddMenuItem(window1, (const char*)empty_xpm, CDTitleMenu,tmp,( i << 16 ) + ivSetCDTrack );
+       }
+     }
+     else
+      {
+       MenuItem=AddMenuItem( window1, (const char*)empty_xpm, CDTitleMenu,MSGTR_MENU_None,evNone );
+       gtk_widget_set_sensitive( MenuItem,FALSE );
+      }
+#endif
 #ifdef CONFIG_VCD
    VCDSubMenu=AddSubMenu( window1, (const char*)vcd_xpm, Menu,MSGTR_MENU_VCD );
     AddMenuItem( window1, (const char*)playvcd_xpm, VCDSubMenu,MSGTR_MENU_PlayDisc,evPlayVCD );

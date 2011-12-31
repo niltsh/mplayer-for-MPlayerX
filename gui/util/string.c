@@ -283,6 +283,12 @@ char *TranslateFilename(int how, char *fname, size_t maxlen)
         av_strlcpy(fname, guiInfo.Filename, maxlen);
         break;
 
+#ifdef CONFIG_CDDA
+    case STREAMTYPE_CDDA:
+        snprintf(fname, maxlen, MSGTR_Title, guiInfo.Track);
+        break;
+#endif
+
 #ifdef CONFIG_VCD
     case STREAMTYPE_VCD:
         snprintf(fname, maxlen, MSGTR_Title, guiInfo.Track - 1);

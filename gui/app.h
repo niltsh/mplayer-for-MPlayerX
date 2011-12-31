@@ -37,6 +37,7 @@
 #define evLoadSubtitle      38
 #define evDropSubtitle      43
 #define evPlaylist          10
+#define evPlayCD            48
 #define evPlayVCD           40
 #define evPlayDVD           39
 #define evLoadURL         5013
@@ -84,6 +85,7 @@
 #define ivSetDVDTitle     5009
 #define ivSetDVDChapter   5010
 #define ivSetVCDTrack     5012
+#define ivSetCDTrack      5014
 
 #define ivRedraw          7002
 

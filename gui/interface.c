@@ -410,6 +410,17 @@ int gui(int what, void *data)
         case STREAMTYPE_STREAM:
             break;
 
+#ifdef CONFIG_CDDA
+        case STREAMTYPE_CDDA:
+        {
+            char tmp[512];
+
+            sprintf(tmp, "cdda://%d", guiInfo.Track);
+            uiSetFileName(NULL, tmp, STREAMTYPE_CDDA);
+        }
+        break;
+#endif
+
 #ifdef CONFIG_VCD
         case STREAMTYPE_VCD:
         {
@@ -611,6 +622,13 @@ int gui(int what, void *data)
         guiInfo.StreamType = stream->type;
 
         switch (guiInfo.StreamType) {
+#ifdef CONFIG_CDDA
+        case STREAMTYPE_CDDA:
+            guiInfo.Tracks = 0;
+            stream_control(stream, STREAM_CTRL_GET_NUM_TITLES, &guiInfo.Tracks);
+            break;
+#endif
+
 #ifdef CONFIG_VCD
         case STREAMTYPE_VCD:
             guiInfo.Tracks = 0;
@@ -771,6 +789,15 @@ int gui(int what, void *data)
             uiGotoTheNext = 1;
             break;
         }
+
+#ifdef CONFIG_CDDA
+        if (guiInfo.StreamType == STREAMTYPE_CDDA) {
+            uiNext();
+
+            if (guiInfo.Playing)
+                break;
+        }
+#endif
 
         if (guiInfo.Playing && (next = listSet(gtkGetNextPlItem, NULL)) && (plLastPlayed != next)) {
             plLastPlayed = next;
