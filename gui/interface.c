@@ -632,7 +632,7 @@ int gui(int what, void *data)
 #ifdef CONFIG_VCD
         case STREAMTYPE_VCD:
             guiInfo.Tracks = 0;
-            stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiInfo.Tracks);
+            stream_control(stream, STREAM_CTRL_GET_NUM_TITLES, &guiInfo.Tracks);
             break;
 #endif
 
