@@ -638,10 +638,13 @@ int gui(int what, void *data)
 
 #ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
+            guiInfo.Tracks = 0;
+            stream_control(stream, STREAM_CTRL_GET_NUM_TITLES, &guiInfo.Tracks);
+            guiInfo.Chapters = 0;
+            stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiInfo.Chapters);
+            guiInfo.Angles = 0;
+            stream_control(stream, STREAM_CTRL_GET_NUM_ANGLES, &guiInfo.Angles);
             dvd = stream->priv;
-            guiInfo.Tracks       = dvd->vmg_file->tt_srpt->nr_of_srpts;
-            guiInfo.Chapters     = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_ptts;
-            guiInfo.Angles       = dvd->vmg_file->tt_srpt->title[dvd_title].nr_of_angles;
             guiInfo.AudioStreams = dvd->nr_of_channels;
             memcpy(guiInfo.AudioStream, dvd->audio_streams, sizeof(dvd->audio_streams));
             guiInfo.Subtitles = dvd->nr_of_subtitles;
