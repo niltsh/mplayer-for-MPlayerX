@@ -25,6 +25,11 @@
 
 #if defined(__CYGWIN__) || defined(__WINE__)
 #define _beginthreadex CreateThread
+#ifdef __WINE__
+#include <winioctl.h>
+#define WINE_MOUNTMGR_EXTENSIONS
+#include <ddk/mountmgr.h>
+#endif
 #else
 #include <process.h>
 #endif
@@ -76,6 +81,53 @@ const ao_functions_t *audio_out = NULL;
 const vo_functions_t *video_out = NULL;
 mixer_t *mixer = NULL;
 
+#ifdef __WINE__
+/**
+ * @brief Convert a Windows style device name into an Unix style one.
+ *
+ * @param device pointer to the device name to be converted
+ *
+ * @return pointer to the converted device name
+ */
+static char *unix_device (char *device)
+{
+    static char *unix_devname;
+    HANDLE mgr;
+    DWORD size = 1024;
+
+    mgr = CreateFileW(MOUNTMGR_DOS_DEVICE_NAME, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, 0);
+
+    if (mgr != INVALID_HANDLE_VALUE)
+    {
+        struct mountmgr_unix_drive input;
+        struct mountmgr_unix_drive *data;
+
+        data = HeapAlloc(GetProcessHeap(), 0, size);
+
+        if (data)
+        {
+            memset(&input, 0, sizeof(input));
+            input.letter = *device;
+
+            if (DeviceIoControl(mgr, IOCTL_MOUNTMGR_QUERY_UNIX_DRIVE, &input, sizeof(input), data, size, NULL, NULL))
+            {
+                if (data->device_offset)
+                {
+                    setdup(&unix_devname, (char *) data + data->device_offset);
+                    device = unix_devname;
+                }
+            }
+
+            HeapFree(GetProcessHeap(), 0, data);
+        }
+
+        CloseHandle(mgr);
+    }
+
+    return device;
+}
+#endif
+
 /* test for playlist files, no need to specify -playlist on the commandline.
  * add any conceivable playlist extensions here.
  * - Erik
@@ -119,6 +171,12 @@ static void guiSetEvent(int event)
             guiInfo.Angle = 1;
             guiInfo.NewPlay = GUI_FILE_SAME;
 
+#ifdef __WINE__
+            // dvd_device is in the Windows style (D:\), which needs to be
+            // converted for MPlayer, so that it will find the device in the
+            // Linux filesystem.
+            dvd_device = unix_device(dvd_device);
+#endif
             uiSetFileName(NULL, dvd_device, STREAMTYPE_DVD);
             dvdname[0] = 0;
             strcat(dvdname, "DVD Movie");
