@@ -83,6 +83,42 @@ mixer_t *mixer = NULL;
 
 #ifdef __WINE__
 /**
+ * @brief Convert a Windows style path to a file name into an Unix style one.
+ *
+ * @param filename pointer to the file path to be converted
+ *
+ * @return pointer to the converted file path
+ */
+static char *unix_name (char *filename)
+{
+    static char *unix_filename;
+    LPSTR (*CDECL wine_get_unix_file_name_ptr)(LPCWSTR);
+    int wchar_conv;
+
+    if (*filename && (filename[1] == ':'))
+    {
+        wine_get_unix_file_name_ptr = (void *) GetProcAddress(GetModuleHandleA("KERNEL32"), "wine_get_unix_file_name");
+        wchar_conv = MultiByteToWideChar(CP_UNIXCP, 0, filename, -1, NULL, 0);
+
+        if (wine_get_unix_file_name_ptr && wchar_conv)
+        {
+            WCHAR *ntpath;
+            char *unix_name;
+
+            ntpath = HeapAlloc(GetProcessHeap(), 0, sizeof(*ntpath) * (wchar_conv + 1));
+            MultiByteToWideChar(CP_UNIXCP, 0, filename, -1, ntpath, wchar_conv);
+            unix_name = wine_get_unix_file_name_ptr(ntpath);
+            setdup(&unix_filename, unix_name);
+            filename = unix_filename;
+            HeapFree(GetProcessHeap(), 0, unix_name);
+            HeapFree(GetProcessHeap(), 0, ntpath);
+        }
+    }
+
+    return filename;
+}
+
+/**
  * @brief Convert a Windows style device name into an Unix style one.
  *
  * @param device pointer to the device name to be converted
@@ -387,44 +423,6 @@ void uiPrev(void)
     }
     mygui->startplay(mygui);
 }
-
-#ifdef __WINE__
-/**
- * @brief Convert a Windows style path to a file name into an Unix style one.
- *
- * @param filename pointer to the file path to be converted
- *
- * @return pointer to the converted file path
- */
-static char *unix_name (char *filename)
-{
-    static char *unix_filename;
-    LPSTR (*CDECL wine_get_unix_file_name_ptr)(LPCWSTR);
-    int wchar_conv;
-
-    if (*filename && (filename[1] == ':'))
-    {
-        wine_get_unix_file_name_ptr = (void *) GetProcAddress(GetModuleHandleA("KERNEL32"), "wine_get_unix_file_name");
-        wchar_conv = MultiByteToWideChar(CP_UNIXCP, 0, filename, -1, NULL, 0);
-
-        if (wine_get_unix_file_name_ptr && wchar_conv)
-        {
-            WCHAR *ntpath;
-            char *unix_name;
-
-            ntpath = HeapAlloc(GetProcessHeap(), 0, sizeof(*ntpath) * (wchar_conv + 1));
-            MultiByteToWideChar(CP_UNIXCP, 0, filename, -1, ntpath, wchar_conv);
-            unix_name = wine_get_unix_file_name_ptr(ntpath);
-            setdup(&unix_filename, unix_name);
-            filename = unix_filename;
-            HeapFree(GetProcessHeap(), 0, unix_name);
-            HeapFree(GetProcessHeap(), 0, ntpath);
-        }
-    }
-
-    return filename;
-}
-#endif
 
 void uiSetFileName(char *dir, char *name, int type)
 {
