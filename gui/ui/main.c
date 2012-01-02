@@ -198,7 +198,7 @@ play:
 	 {
 	  plItem * next = listSet( gtkGetCurrPlItem,NULL );
 	  plLastPlayed=next;
-	  uiSetFileName( next->path,next->name,STREAMTYPE_FILE );
+	  uiSetFileName( next->path,next->name,SAME_STREAMTYPE );
 	 }
 
         switch ( guiInfo.StreamType )
@@ -214,7 +214,7 @@ play:
           case STREAMTYPE_CDDA:
 	       guiInfoMediumClear( CLEAR_ALL - CLEAR_VCD - CLEAR_FILE );
 	       if ( !cdrom_device ) cdrom_device=gstrdup( DEFAULT_CDROM_DEVICE );
-	       uiSetFileName( NULL,cdrom_device,STREAMTYPE_CDDA );
+	       uiSetFileName( NULL,cdrom_device,SAME_STREAMTYPE );
 	       if ( guiInfo.Playing != GUI_PAUSE )
 	        {
 		 if ( !guiInfo.Track )
@@ -227,7 +227,7 @@ play:
           case STREAMTYPE_VCD:
 	       guiInfoMediumClear( CLEAR_ALL - CLEAR_VCD - CLEAR_FILE );
 	       if ( !cdrom_device ) cdrom_device=gstrdup( DEFAULT_CDROM_DEVICE );
-	       uiSetFileName( NULL,cdrom_device,STREAMTYPE_VCD );
+	       uiSetFileName( NULL,cdrom_device,SAME_STREAMTYPE );
 	       if ( guiInfo.Playing != GUI_PAUSE )
 	        {
 		 if ( !guiInfo.Track )
@@ -240,7 +240,7 @@ play:
           case STREAMTYPE_DVD:
 	       guiInfoMediumClear( CLEAR_ALL - CLEAR_DVD - CLEAR_FILE );
 	       if ( !dvd_device ) dvd_device=gstrdup( DEFAULT_DVD_DEVICE );
-	       uiSetFileName( NULL,dvd_device,STREAMTYPE_DVD );
+	       uiSetFileName( NULL,dvd_device,SAME_STREAMTYPE );
 	       if ( guiInfo.Playing != GUI_PAUSE )
 	        {
                  guiInfo.NewPlay=GUI_FILE_SAME;

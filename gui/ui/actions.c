@@ -37,7 +37,6 @@
 #include "libmpcodecs/vd.h"
 #include "libvo/video_out.h"
 #include "mp_core.h"
-#include "stream/stream.h"
 
 int uiGotoTheNext = 1;
 
@@ -227,6 +226,8 @@ void uiSetFileName(char *dir, char *name, int type)
         setddup(&guiInfo.Filename, dir, name);
 
     filename = guiInfo.Filename;
+
+    if (type != SAME_STREAMTYPE)
     guiInfo.StreamType = type;
 
     nfree(guiInfo.AudioFilename);

@@ -66,6 +66,8 @@
 #include <cdio/cdio.h>
 #endif
 
+#define SAME_STREAMTYPE (STREAMTYPE_DUMMY - 1)
+
 int guiWinID = 0;
 
 char *skinName = NULL;
@@ -441,6 +443,8 @@ void uiSetFileName(char *dir, char *name, int type)
     // it will find the filename in the Linux filesystem.
     filename = unix_name(filename);
 #endif
+
+    if (type != SAME_STREAMTYPE)
     guiInfo.StreamType = type;
 
     nfree(guiInfo.AudioFilename);
@@ -561,7 +565,7 @@ int gui(int what, void *data)
             {
                 case STREAMTYPE_FILE:
                 case STREAMTYPE_STREAM:
-                    uiSetFileName(NULL, mygui->playlist->tracks[mygui->playlist->current]->filename, STREAMTYPE_FILE);
+                    uiSetFileName(NULL, mygui->playlist->tracks[mygui->playlist->current]->filename, SAME_STREAMTYPE);
                     guiInfo.Track = mygui->playlist->current + 1;
                     break;
 #ifdef CONFIG_DVDREAD
@@ -571,7 +575,7 @@ int gui(int what, void *data)
                     dvd_chapter = guiInfo.Chapter;
                     dvd_angle = guiInfo.Angle;
                     sprintf(tmp,"dvd://%d", guiInfo.Track);
-                    uiSetFileName(NULL, tmp, STREAMTYPE_DVD);
+                    uiSetFileName(NULL, tmp, SAME_STREAMTYPE);
                     break;
                 }
 #endif

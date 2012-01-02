@@ -416,7 +416,7 @@ int gui(int what, void *data)
             char tmp[512];
 
             sprintf(tmp, "cdda://%d", guiInfo.Track);
-            uiSetFileName(NULL, tmp, STREAMTYPE_CDDA);
+            uiSetFileName(NULL, tmp, SAME_STREAMTYPE);
         }
         break;
 #endif
@@ -427,7 +427,7 @@ int gui(int what, void *data)
             char tmp[512];
 
             sprintf(tmp, "vcd://%d", guiInfo.Track);
-            uiSetFileName(NULL, tmp, STREAMTYPE_VCD);
+            uiSetFileName(NULL, tmp, SAME_STREAMTYPE);
         }
         break;
 #endif
@@ -438,7 +438,7 @@ int gui(int what, void *data)
             char tmp[512];
 
             sprintf(tmp, "dvd://%d", guiInfo.Track);
-            uiSetFileName(NULL, tmp, STREAMTYPE_DVD);
+            uiSetFileName(NULL, tmp, SAME_STREAMTYPE);
         }
 
             dvd_chapter = guiInfo.Chapter;
