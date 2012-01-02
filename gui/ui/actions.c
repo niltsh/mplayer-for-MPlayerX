@@ -228,7 +228,7 @@ void uiSetFileName(char *dir, char *name, int type)
     filename = guiInfo.Filename;
 
     if (type != SAME_STREAMTYPE)
-    guiInfo.StreamType = type;
+        guiInfo.StreamType = type;
 
     nfree(guiInfo.AudioFilename);
     nfree(guiInfo.SubtitleFilename);
