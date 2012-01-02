@@ -380,6 +380,15 @@ lzo_fail:
             }
             *size = dstlen - out_avail;
         }
+      else if (track->encodings[i].comp_algo == 3)
+        {
+          *dest = malloc (*size + track->encodings[i].comp_settings_len);
+          memcpy(*dest, track->encodings[i].comp_settings,
+                 track->encodings[i].comp_settings_len);
+          memcpy(*dest + track->encodings[i].comp_settings_len, src, *size);
+          *size += track->encodings[i].comp_settings_len;
+          modified = 1;
+        }
     }
 
     return modified;
@@ -542,7 +551,7 @@ static int demux_mkv_read_trackencodings(demuxer_t *demuxer,
                                track->tnum);
                     }
 
-                    if (e.comp_algo != 0 && e.comp_algo != 2) {
+                    if (e.comp_algo != 0 && e.comp_algo != 2 && e.comp_algo != 3) {
                         mp_msg(MSGT_DEMUX, MSGL_WARN,
                                MSGTR_MPDEMUX_MKV_UnknownCompression,
                                track->tnum, e.comp_algo);
