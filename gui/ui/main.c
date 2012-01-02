@@ -213,7 +213,6 @@ play:
 #ifdef CONFIG_CDDA
           case STREAMTYPE_CDDA:
 	       guiInfoMediumClear( CLEAR_ALL - CLEAR_VCD - CLEAR_FILE );
-	       if ( !cdrom_device ) cdrom_device=gstrdup( DEFAULT_CDROM_DEVICE );
 	       if ( guiInfo.Playing != GUI_PAUSE )
 	        {
 		 if ( !guiInfo.Track )
@@ -225,7 +224,6 @@ play:
 #ifdef CONFIG_VCD
           case STREAMTYPE_VCD:
 	       guiInfoMediumClear( CLEAR_ALL - CLEAR_VCD - CLEAR_FILE );
-	       if ( !cdrom_device ) cdrom_device=gstrdup( DEFAULT_CDROM_DEVICE );
 	       if ( guiInfo.Playing != GUI_PAUSE )
 	        {
 		 if ( !guiInfo.Track )
@@ -237,7 +235,6 @@ play:
 #ifdef CONFIG_DVDREAD
           case STREAMTYPE_DVD:
 	       guiInfoMediumClear( CLEAR_ALL - CLEAR_DVD - CLEAR_FILE );
-	       if ( !dvd_device ) dvd_device=gstrdup( DEFAULT_DVD_DEVICE );
 	       if ( guiInfo.Playing != GUI_PAUSE )
 	        {
                  guiInfo.NewPlay=GUI_FILE_SAME;

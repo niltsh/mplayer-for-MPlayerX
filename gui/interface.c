@@ -71,6 +71,11 @@ void guiInit(void)
 
     mp_msg(MSGT_GPLAYER, MSGL_V, "GUI init.\n");
 
+    if (!cdrom_device)
+        cdrom_device = strdup(DEFAULT_CDROM_DEVICE);
+    if (!dvd_device)
+        dvd_device = strdup(DEFAULT_DVD_DEVICE);
+
 #ifdef CONFIG_DXR3
     if (!gtkDXR3Device)
         gtkDXR3Device = strdup("/dev/em8300-0");
