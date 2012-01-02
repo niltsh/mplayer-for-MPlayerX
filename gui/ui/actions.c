@@ -62,9 +62,13 @@ void uiFullScreen(void)
 
 void uiPlay(void)
 {
-    if (!guiInfo.Filename ||
-        (guiInfo.Filename[0] == 0) ||
-        (guiInfo.Playing == GUI_PLAY))
+    if (guiInfo.Playing == GUI_PLAY)
+        return;
+
+    if (guiInfo.StreamType != STREAMTYPE_CDDA &&
+        guiInfo.StreamType != STREAMTYPE_VCD &&
+        guiInfo.StreamType != STREAMTYPE_DVD &&
+        (!guiInfo.Filename || (guiInfo.Filename[0] == 0)))
         return;
 
     if (guiInfo.Playing == GUI_PAUSE) {
