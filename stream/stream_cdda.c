@@ -252,6 +252,7 @@ static int control(stream_t *stream, int cmd, void *arg) {
     {
       int start_track = get_track_by_sector(p, p->start_sector);
       int end_track = get_track_by_sector(p, p->end_sector);
+      if (start_track == -1 || end_track == -1) return STREAM_ERROR;
       *(unsigned int *)arg = end_track + 1 - start_track;
       return STREAM_OK;
     }
@@ -262,6 +263,7 @@ static int control(stream_t *stream, int cmd, void *arg) {
       int start_track = get_track_by_sector(p, p->start_sector);
       int end_track = get_track_by_sector(p, p->end_sector);
       int seek_sector;
+      if (start_track == -1 || end_track == -1) return STREAM_ERROR;
       track += start_track;
       if (track > end_track) {
         seek(stream, (p->end_sector + 1) * CD_FRAMESIZE_RAW);
@@ -278,6 +280,7 @@ static int control(stream_t *stream, int cmd, void *arg) {
     {
       int start_track = get_track_by_sector(p, p->start_sector);
       int cur_track = get_track_by_sector(p, p->sector);
+      if (start_track == -1 || cur_track == -1) return STREAM_ERROR;
       *(unsigned int *)arg = cur_track - start_track;
       return STREAM_OK;
     }
