@@ -43,7 +43,9 @@ static const struct AVCodecTag mp_wav_tags[] = {
     { CODEC_ID_COOK,              MKTAG('c', 'o', 'o', 'k')},
     { CODEC_ID_DSICINAUDIO,       MKTAG('D', 'C', 'I', 'A')},
     { CODEC_ID_EAC3,              MKTAG('E', 'A', 'C', '3')},
+#ifdef CONFIG_FFWAVESYNTH_DECODER
     { CODEC_ID_FFWAVESYNTH,       MKTAG('F', 'F', 'W', 'S')},
+#endif
     { CODEC_ID_G723_1,            MKTAG('7', '2', '3', '1')},
     { CODEC_ID_INTERPLAY_DPCM,    MKTAG('I', 'N', 'P', 'A')},
     { CODEC_ID_MLP,               MKTAG('M', 'L', 'P', ' ')},
@@ -85,7 +87,9 @@ static const struct AVCodecTag mp_codecid_override_tags[] = {
     { CODEC_ID_DVVIDEO,           MKTAG('d', 'v', 's', 'd')},
     { CODEC_ID_EAC3,              MKTAG('E', 'A', 'C', '3')},
     { CODEC_ID_ESCAPE124,         MKTAG('E', '1', '2', '4')},
+#ifdef CONFIG_ESCAPE130_DECODER
     { CODEC_ID_ESCAPE130,         MKTAG('E', '1', '3', '0')},
+#endif
     { CODEC_ID_FLV1,              MKTAG('F', 'L', 'V', '1')},
     { CODEC_ID_G729,              MKTAG('G', '7', '2', '9')},
     { CODEC_ID_H264,              MKTAG('H', '2', '6', '4')},
