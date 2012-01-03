@@ -50,7 +50,6 @@
 #include "ws.h"
 #include "wsxdnd.h"
 
-#include <X11/extensions/XShm.h>
 #ifdef CONFIG_XSHAPE
 #include <X11/extensions/shape.h>
 #endif
