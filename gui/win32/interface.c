@@ -245,6 +245,12 @@ static void guiSetEvent(int event)
 #endif
             int i_tracks;
 
+#ifdef __WINE__
+            // cdrom_device is in the Windows style (D:\), which needs to be
+            // converted for MPlayer, so that it will find the device in the
+            // Linux filesystem.
+            cdrom_device = unix_device(cdrom_device);
+#endif
             cd = cdda_identify(cdrom_device, 0, NULL);
             if (cd)
             {
