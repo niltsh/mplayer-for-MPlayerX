@@ -6233,13 +6233,13 @@ echores "$_libgsm"
 echocheck "OggTheora support"
 if test "$_theora" = auto ; then
   _theora=no
-  ld_theora="-ltheora -logg"
-  statement_check theora/theora.h 'theora_info_init(NULL)' $ld_theora &&
+  ld_theora="-ltheoradec -logg"
+  statement_check theora/theoradec.h 'theora_info_init(NULL)' $ld_theora &&
     extra_ldflags="$extra_ldflags $ld_theora" && _theora=yes
   if test _theora = no; then
-    ld_theora=$($_pkg_config --silence-errors --libs theora)
-    inc_theora=$($_pkg_config --silence-errors --cflags theora)
-    statement_check theora/theora.h 'theora_info_init(NULL)' $inc_theora $ld_theora &&
+    ld_theora=$($_pkg_config --silence-errors --libs theoradec)
+    inc_theora=$($_pkg_config --silence-errors --cflags theoradec)
+    statement_check theora/theoradec.h 'theora_info_init(NULL)' $inc_theora $ld_theora &&
       extra_ldflags="$extra_ldflags $ld_theora" &&
       extra_cflags="$extra_cflags $inc_theora" && _theora=yes
   fi
@@ -6249,7 +6249,7 @@ if test "$_theora" = yes ; then
   codecmodules="libtheora $codecmodules"
   # when --enable-theora is forced, we'd better provide a probably sane
   # $ld_theora than nothing
-  test -z "$ld_theora" && extra_ldflags="$extra_ldflags -ltheora -logg"
+  test -z "$ld_theora" && extra_ldflags="$extra_ldflags -ltheoradec -logg"
 else
   def_theora='#undef CONFIG_OGGTHEORA'
   nocodecmodules="libtheora $nocodecmodules"
