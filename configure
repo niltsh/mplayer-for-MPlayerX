@@ -6233,57 +6233,15 @@ echores "$_libgsm"
 echocheck "OggTheora support"
 if test "$_theora" = auto ; then
   _theora=no
-    cat > $TMPC << EOF
-#include <theora/theora.h>
-#include <string.h>
-int main(void) {
-  /* Theora is in flux, make sure that all interface routines and datatypes
-   * exist and work the way we expect it, so we don't break MPlayer. */
-  ogg_packet op;
-  theora_comment tc;
-  theora_info inf;
-  theora_state st;
-  yuv_buffer yuv;
-  int r;
-  double t;
-
-  theora_info_init(&inf);
-  theora_comment_init(&tc);
-
-  return 0;
-
-  /* we don't want to execute this kind of nonsense; just for making sure
-   * that compilation works... */
-  memset(&op, 0, sizeof(op));
-  r = theora_decode_header(&inf, &tc, &op);
-  r = theora_decode_init(&st, &inf);
-  t = theora_granule_time(&st, op.granulepos);
-  r = theora_decode_packetin(&st, &op);
-  r = theora_decode_YUVout(&st, &yuv);
-  theora_clear(&st);
-
-  return 0;
-}
-EOF
-  ld_theora=$($_pkg_config --silence-errors --libs theora)
-  inc_theora=$($_pkg_config --silence-errors --cflags theora)
-  cc_check $inc_theora $ld_theora && extra_ldflags="$extra_ldflags $ld_theora" &&
-    extra_cflags="$extra_cflags $inc_theora" && _theora=yes
+  ld_theora="-ltheora -logg"
+  statement_check theora/theora.h 'theora_info_init(NULL)' $ld_theora &&
+    extra_ldflags="$extra_ldflags $ld_theora" && _theora=yes
   if test _theora = no; then
-    ld_theora="-ltheora -logg"
-    cc_check $ld_theora && extra_ldflags="$extra_ldflags $ld_theora" && _theora=yes
-  fi
-  if test "$_theora" = no && test "$_tremor_internal" = yes; then
     ld_theora=$($_pkg_config --silence-errors --libs theora)
     inc_theora=$($_pkg_config --silence-errors --cflags theora)
-    cc_check tremor/bitwise.c $inc_theora $ld_theora &&
+    statement_check theora/theora.h 'theora_info_init(NULL)' $inc_theora $ld_theora &&
       extra_ldflags="$extra_ldflags $ld_theora" &&
       extra_cflags="$extra_cflags $inc_theora" && _theora=yes
-    if test _theora = no; then
-      ld_theora="-ltheora -logg"
-      cc_check tremor/bitwise.c $ld_theora &&
-        extra_ldflags="$extra_ldflags $ld_theora" && _theora=yes
-    fi
   fi
 fi
 if test "$_theora" = yes ; then
