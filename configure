@@ -6234,12 +6234,12 @@ echocheck "OggTheora support"
 if test "$_theora" = auto ; then
   _theora=no
   ld_theora="-ltheoradec -logg"
-  statement_check theora/theoradec.h 'theora_info_init(NULL)' $ld_theora &&
+  statement_check theora/theoradec.h 'th_info_init(NULL)' $ld_theora &&
     extra_ldflags="$extra_ldflags $ld_theora" && _theora=yes
   if test _theora = no; then
     ld_theora=$($_pkg_config --silence-errors --libs theoradec)
     inc_theora=$($_pkg_config --silence-errors --cflags theoradec)
-    statement_check theora/theoradec.h 'theora_info_init(NULL)' $inc_theora $ld_theora &&
+    statement_check theora/theoradec.h 'th_info_init(NULL)' $inc_theora $ld_theora &&
       extra_ldflags="$extra_ldflags $ld_theora" &&
       extra_cflags="$extra_cflags $inc_theora" && _theora=yes
   fi
