@@ -257,7 +257,7 @@ static int demux_ogg_get_page_stream(ogg_demuxer_t *ogg_d,
 }
 
 static unsigned char *demux_ogg_read_packet(ogg_stream_t *os, ogg_packet *pack,
-                                            float *pts, int *flags,
+                                            double *pts, int *flags,
                                             int samplesize)
 {
     unsigned char *data = pack->packet;
@@ -479,7 +479,7 @@ static int demux_ogg_add_packet(demux_stream_t *ds, ogg_stream_t *os,
     demuxer_t *d = ds->demuxer;
     demux_packet_t *dp;
     unsigned char *data;
-    float pts = 0;
+    double pts = 0;
     int flags = 0;
     int samplesize = 1;
 
@@ -608,7 +608,7 @@ static void demux_ogg_scan_stream(demuxer_t *demuxer)
         }
         p = 0;
         while (ogg_stream_packetout(oss, &op) == 1) {
-            float pts;
+            double pts;
             int flags;
 
             demux_ogg_read_packet(os, &op, &pts, &flags, samplesize);
@@ -1419,7 +1419,7 @@ static void demux_ogg_seek(demuxer_t *demuxer, float rel_seek_secs,
     off_t pos, old_pos;
     int np;
     int is_gp_valid;
-    float pts;
+    double pts;
     int is_keyframe;
     int samplesize = 1;
     ogg_int64_t granulepos_orig;
