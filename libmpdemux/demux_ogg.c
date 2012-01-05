@@ -202,12 +202,12 @@ static void demux_ogg_add_sub(ogg_stream_t *os, ogg_packet *pack)
             duration  |= (unsigned char)packet[i];
         }
         if (hdrlen > 0 && duration > 0) {
-            float pts;
+            double pts;
 
             if (pack->granulepos == -1)
                 pack->granulepos = os->lastpos + os->lastsize;
-            pts    = (float)pack->granulepos / (float)os->samplerate;
-            endpts = 1.0 + pts + (float)duration / 1000.0;
+            pts    = (double)pack->granulepos / (double)os->samplerate;
+            endpts = 1.0 + pts + (double)duration / 1000.0;
         }
         sub_clear_text(&ogg_sub, MP_NOPTS_VALUE);
         sub_add_text(&ogg_sub, &packet[lcv], pack->bytes - lcv, endpts, 1);
