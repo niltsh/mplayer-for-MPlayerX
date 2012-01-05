@@ -988,6 +988,7 @@ BROKEN_SAMPLES =                         \
     h264-conformance/CI1_FT_B.264        \
     h264-conformance/FM1_FT_E.264        \
     pva/PVA_test-partial.pva             \
+    wmv8/wmv_drm.wmv                     \
 
 AUDIO_ONLY_SAMPLES =                                               \
     aac/% ac3/% amrnb/% amrwb/% atrac1/% atrac3/% bink/binkaudio%  \
