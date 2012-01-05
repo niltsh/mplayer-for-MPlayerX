@@ -284,7 +284,7 @@ static unsigned char *demux_ogg_read_packet(ogg_stream_t *os, ogg_packet *pack,
             } else
                 *flags = 1;
             if (vi)
-                *pts = pack->granulepos / (float)vi->rate;
+                *pts = pack->granulepos / (double)vi->rate;
             os->lastsize = blocksize;
             os->lastpos  = pack->granulepos;
         }
@@ -1412,7 +1412,7 @@ static void demux_ogg_seek(demuxer_t *demuxer, float rel_seek_secs,
     ogg_stream_t *os;
     demux_stream_t *ds;
     ogg_packet op;
-    float rate;
+    double rate;
     int i, sp, first, precision = 1, do_seek = 1;
     vorbis_info *vi = NULL;
     int64_t gp = 0, old_gp;
@@ -1620,7 +1620,7 @@ static int demux_ogg_control(demuxer_t *demuxer, int cmd, void *arg)
 {
     ogg_demuxer_t *ogg_d = demuxer->priv;
     ogg_stream_t *os;
-    float rate;
+    double rate;
 
     if (demuxer->video->id >= 0) {
         os = &ogg_d->subs[demuxer->video->id];
