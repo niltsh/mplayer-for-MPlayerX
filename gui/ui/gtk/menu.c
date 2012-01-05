@@ -444,7 +444,7 @@ GtkWidget * create_PopUpMenu( void )
        {
         snprintf( tmp,32,MSGTR_MENU_Title,i );
     //AddMenuItem( CDTitleMenu,tmp,( i << 16 ) + ivSetCDTrack );
-        AddMenuItem(window1, (const char*)empty_xpm, CDTitleMenu,tmp,( i << 16 ) + ivSetCDTrack );
+        AddMenuCheckItem(window1, (const char*)empty_xpm, CDTitleMenu,tmp, guiInfo.Track == i, ( i << 16 ) + ivSetCDTrack );
        }
      }
      else
@@ -466,7 +466,7 @@ GtkWidget * create_PopUpMenu( void )
        {
         snprintf( tmp,32,MSGTR_MENU_Title,i );
     //AddMenuItem( VCDTitleMenu,tmp,( i << 16 ) + ivSetVCDTrack );
-        AddMenuItem(window1, (const char*)empty_xpm, VCDTitleMenu,tmp,( ( i + 1 ) << 16 ) + ivSetVCDTrack );
+        AddMenuCheckItem(window1, (const char*)empty_xpm, VCDTitleMenu,tmp, guiInfo.Track == i + 1, ( ( i + 1 ) << 16 ) + ivSetVCDTrack );
        }
      }
      else
