@@ -423,14 +423,12 @@ set_volume:
 	wsPostRedisplay( &guiApp.playbarWindow );
         break;
 // --- system events
-#ifdef MP_DEBUG
    case evNone:
-        mp_msg( MSGT_GPLAYER,MSGL_STATUS,"[mw] event none received.\n" );
+        mp_msg( MSGT_GPLAYER,MSGL_DBG2,"[main] uiEventHandling: evNone\n" );
         break;
    default:
-        mp_msg( MSGT_GPLAYER,MSGL_STATUS,"[mw] unknown event received ( %d,%.2f ).\n",msg,param );
+        mp_msg( MSGT_GPLAYER,MSGL_DBG2,"[main] uiEventHandling: unknown event %d, param %.2f\n", msg, param );
         break;
-#endif
   }
 }
 
