@@ -1431,7 +1431,7 @@ static void demux_ogg_seek(demuxer_t *demuxer, float rel_seek_secs,
         ds         = demuxer->audio;
         os         = &ogg_d->subs[ds->id];
         vi         = &(os->vi);
-        rate       = (float)vi->rate;
+        rate       = vi->rate;
         samplesize = ((sh_audio_t*)ds->sh)->samplesize;
     }
 
