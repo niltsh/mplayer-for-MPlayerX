@@ -437,7 +437,7 @@ GtkWidget * create_PopUpMenu( void )
     AddMenuItem( window1, (const char*)playcd_xpm, CDSubMenu,MSGTR_MENU_PlayDisc,evPlayCD );
     AddSeparator( CDSubMenu );
     CDTitleMenu=AddSubMenu( window1, (const char*)title_xpm, CDSubMenu,MSGTR_MENU_Titles );
-    if ( guiInfo.Tracks )
+    if ( guiInfo.Tracks && ( guiInfo.StreamType == STREAMTYPE_CDDA ) )
      {
       char tmp[32]; int i;
       for ( i=1;i <= guiInfo.Tracks;i++ )
@@ -459,7 +459,7 @@ GtkWidget * create_PopUpMenu( void )
     AddMenuItem( window1, (const char*)playvcd_xpm, VCDSubMenu,MSGTR_MENU_PlayDisc,evPlayVCD );
     AddSeparator( VCDSubMenu );
     VCDTitleMenu=AddSubMenu( window1, (const char*)title_xpm, VCDSubMenu,MSGTR_MENU_Titles );
-    if ( guiInfo.Tracks )
+    if ( guiInfo.Tracks && ( guiInfo.StreamType == STREAMTYPE_VCD ) )
      {
       char tmp[32]; int i;
       for ( i=1;i < guiInfo.Tracks;i++ )
@@ -482,7 +482,7 @@ GtkWidget * create_PopUpMenu( void )
 //    AddMenuItem( DVDSubMenu,MSGTR_MENU_ShowDVDMenu, evNone );
     AddSeparator( DVDSubMenu );
     DVDTitleMenu=AddSubMenu( window1, (const char*)title_xpm, DVDSubMenu,MSGTR_MENU_Titles );
-     if ( guiInfo.Tracks )
+     if ( guiInfo.Tracks && ( guiInfo.StreamType == STREAMTYPE_DVD ) )
       {
        char tmp[32]; int i;
        for ( i=1 ; i<= guiInfo.Tracks;i++ )
@@ -499,7 +499,7 @@ GtkWidget * create_PopUpMenu( void )
         gtk_widget_set_sensitive( MenuItem,FALSE );
        }
     DVDChapterMenu=AddSubMenu( window1, (const char*)chapter_xpm, DVDSubMenu,MSGTR_MENU_Chapters );
-     if ( guiInfo.Chapters )
+     if ( guiInfo.Chapters && ( guiInfo.StreamType == STREAMTYPE_DVD ) )
       {
        char tmp[32]; int i;
        for ( i=1;i <= guiInfo.Chapters;i++ )
@@ -515,7 +515,7 @@ GtkWidget * create_PopUpMenu( void )
         gtk_widget_set_sensitive( MenuItem,FALSE );
        }
     DVDAudioLanguageMenu=AddSubMenu( window1, (const char*)audiolang_xpm, DVDSubMenu,MSGTR_MENU_AudioLanguages );
-     if ( guiInfo.AudioStreams )
+     if ( guiInfo.AudioStreams && ( guiInfo.StreamType == STREAMTYPE_DVD ) )
       {
        char tmp[64]; int i, id = demuxer ? demuxer->audio->id : audio_id;
        for ( i=0;i < guiInfo.AudioStreams;i++ )
@@ -535,7 +535,7 @@ GtkWidget * create_PopUpMenu( void )
         gtk_widget_set_sensitive( MenuItem,FALSE );
        }
     DVDSubtitleLanguageMenu=AddSubMenu( window1, (const char*)sublang_xpm, DVDSubMenu,MSGTR_MENU_SubtitleLanguages );
-     if ( guiInfo.Subtitles )
+     if ( guiInfo.Subtitles && ( guiInfo.StreamType == STREAMTYPE_DVD ) )
       {
        char tmp[64]; int i;
        AddMenuItem( window1, (const char*)empty1px_xpm, DVDSubtitleLanguageMenu,MSGTR_MENU_None,( (unsigned short)-1 << 16 ) + ivSetDVDSubtitle );
