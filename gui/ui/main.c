@@ -179,6 +179,24 @@ void uiEventHandling( int msg,float param )
 	goto play;
 #endif
 #ifdef CONFIG_DVDREAD
+   case ivSetDVDSubtitle:
+        dvdsub_id=iparam;
+        goto play_dvd_2;
+        break;
+   case ivSetDVDAudio:
+        audio_id=iparam;
+        goto play_dvd_2;
+        break;
+   case ivSetDVDChapter:
+        guiInfo.Chapter=iparam;
+        goto play_dvd_2;
+        break;
+   case ivSetDVDTitle:
+        guiInfo.Track=iparam;
+        guiInfo.Chapter=1;
+        guiInfo.Angle=1;
+        goto play_dvd_2;
+        break;
    case evPlayDVD:
         guiInfo.Track=1;
         guiInfo.Chapter=1;
@@ -244,26 +262,6 @@ play:
          }
         uiPlay();
         break;
-#ifdef CONFIG_DVDREAD
-   case ivSetDVDSubtitle:
-        dvdsub_id=iparam;
-        goto play_dvd_2;
-        break;
-   case ivSetDVDAudio:
-        audio_id=iparam;
-        goto play_dvd_2;
-        break;
-   case ivSetDVDChapter:
-        guiInfo.Chapter=iparam;
-        goto play_dvd_2;
-        break;
-   case ivSetDVDTitle:
-        guiInfo.Track=iparam;
-	guiInfo.Chapter=1;
-	guiInfo.Angle=1;
-        goto play_dvd_2;
-        break;
-#endif
 
    case evPause:
    case evPauseSwitchToPlay:
