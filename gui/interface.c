@@ -627,6 +627,10 @@ int gui(int what, void *data)
         guiInfo.StreamType = stream->type;
 
         switch (guiInfo.StreamType) {
+        case STREAMTYPE_FILE:
+        case STREAMTYPE_STREAM:
+            break;
+
 #ifdef CONFIG_CDDA
         case STREAMTYPE_CDDA:
             guiInfo.Tracks = 0;
@@ -659,9 +663,6 @@ int gui(int what, void *data)
             guiInfo.Angle   = dvd_angle + 1;
             break;
 #endif
-
-        default:
-            break;
         }
 
         break;
