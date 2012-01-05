@@ -993,6 +993,7 @@ AUDIO_ONLY_SAMPLES =                                               \
     aac/% ac3/% amrnb/% amrwb/% atrac1/% atrac3/% bink/binkaudio%  \
     creative/% dts/% duck/%-audio-only.avi eac3/% gsm/% imc/%      \
     lossless-audio/% mp3-conformance/% musepack/% nellymoser/%     \
+    qcp/%                                                          \
     qt-surge-suite/% real/ra% sipr/% truespeech/% vorbis/%         \
     vqf/% w64/% wmapro/% wmavoice/%                                \
 
