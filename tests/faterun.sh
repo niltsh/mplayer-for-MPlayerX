@@ -7,12 +7,17 @@ fi
 sample="$1"
 md5out="tests/res/$sample.md5"
 ref_file="tests/ref/$sample.md5"
+options="-noconfig all -lavdopts threads=4:bitexact -really-quiet -noconsolecontrols -nosound -benchmark"
+if [ -z ${sample##h264-conformance/*} ] ; then
+  # these files generally only work when a fps is given explicitly
+  options="$options -fps 25"
+fi
 echo "testing $sample"
 
 # create necessary files and run
 mkdir -p $(dirname "$md5out")
 touch "$md5out"
-./mplayer -noconfig all -lavdopts threads=4:bitexact -really-quiet -noconsolecontrols -nosound -benchmark -vo md5sum:outfile="$md5out" "$FATE_SAMPLES/$sample"
+./mplayer $options -vo md5sum:outfile="$md5out" "$FATE_SAMPLES/$sample"
 
 # check result
 if ! [ -e "$ref_file" ] ; then

@@ -983,12 +983,12 @@ tags:
 ###### regression tests #######
 
 BROKEN_SAMPLES =                         \
-    h264-conformance/CABA3_TOSHIBA_E.264 \
-    h264-conformance/CAPA1_TOSHIBA_B.264 \
-    h264-conformance/CI1_FT_B.264        \
+    h264-conformance/FM1_BT_B.h264       \
     h264-conformance/FM1_FT_E.264        \
+    h264-conformance/FM2_SVA_B.264       \
     pva/PVA_test-partial.pva             \
     wmv8/wmv_drm.wmv                     \
+    wtv/law-and-order-partial.wtv        \
 
 AUDIO_ONLY_SAMPLES =                                               \
     aac/% ac3/% amrnb/% amrwb/% atrac1/% atrac3/% bink/binkaudio%  \
