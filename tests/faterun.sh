@@ -7,7 +7,7 @@ fi
 sample="$1"
 md5out="tests/res/$sample.md5"
 ref_file="tests/ref/$sample.md5"
-options="-noconfig all -lavdopts threads=4:bitexact -really-quiet -noconsolecontrols -nosound -benchmark"
+options="-noconfig all -lavdopts threads=4:bitexact:idct=2 -really-quiet -noconsolecontrols -nosound -benchmark"
 if [ -z ${sample##h264-conformance/*} ] ; then
   # these files generally only work when a fps is given explicitly
   options="$options -fps 25"
