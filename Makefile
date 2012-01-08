@@ -1010,6 +1010,9 @@ fatetest: $(RESULTS)
 
 tests/res/%.md5: mplayer$(EXESUF) $(FATE_SAMPLES)/%
 	@tests/faterun.sh $*
+else
+fatetest:
+	@echo "You need to set FATE_SAMPLES for fatetest to work"
 endif
 
 
