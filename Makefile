@@ -998,6 +998,8 @@ AUDIO_ONLY_SAMPLES =                                               \
     qt-surge-suite/% real/ra% sipr/% truespeech/% vorbis/%         \
     vqf/% w64/% wmapro/% wmavoice/%                                \
 
+# running wildcard with empty FATE_SAMPLES seems to cause a lot of issues
+ifdef FATE_SAMPLES
 ALLSAMPLES_FULLPATH = $(wildcard $(FATE_SAMPLES)/*/*.*)
 ALLSAMPLES          = $(patsubst $(FATE_SAMPLES)/%,%,$(ALLSAMPLES_FULLPATH))
 SAMPLES := $(filter-out $(BROKEN_SAMPLES),$(ALLSAMPLES))
@@ -1008,6 +1010,7 @@ fatetest: $(RESULTS)
 
 tests/res/%.md5: mplayer$(EXESUF) $(FATE_SAMPLES)/%
 	@tests/faterun.sh $*
+endif
 
 
 
