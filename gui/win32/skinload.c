@@ -128,9 +128,7 @@ static image *pngRead(skin_t *skin, const char *fname)
     for (i=0; i < skin->imagecount; i++)
         if(!strcmp(fname, skin->images[i]->name))
         {
-#ifdef DEBUG
-            mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[png] skinfile %s already exists\n", fname);
-#endif
+            mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[png] skinfile %s already exists\n", fname);
             free(filename);
             return skin->images[i];
         }
@@ -183,14 +181,12 @@ static void freeimages(skin_t *skin)
     free(skin->images);
 }
 
-#ifdef DEBUG
 static void dumpwidgets(skin_t *skin)
 {
     unsigned int i;
     for (i=0; i<skin->widgetcount; i++)
-        mp_msg(MSGT_GPLAYER, MSGL_V, "widget %p id %i\n", skin->widgets[i], skin->widgets[i]->id);
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "widget %p id %i\n", skin->widgets[i], skin->widgets[i]->id);
 }
-#endif
 
 static int counttonextchar(const char *s1, char c)
 {
@@ -245,9 +241,7 @@ static void freeskin(skin_t *skin)
         nfree(skin->fonts[i]);
     }
     nfree(skin->fonts);
-#ifdef DEBUG
-    mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN FREE] skin freed\n");
-#endif
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN FREE] skin freed\n");
     nfree(skin);
 }
 
@@ -275,9 +269,7 @@ static void removewidget(skin_t *skin, int id)
         (skin->widgetcount)--;
         free(skin->widgets);
         skin->widgets = temp;
-#ifdef DEBUG
-        mp_msg(MSGT_GPLAYER, MSGL_DBG4, "removed widget %i\n", id);
-#endif
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "removed widget %i\n", id);
         return;
     }
     free(temp);
@@ -305,11 +297,9 @@ static void addwidget(skin_t *skin, window *win, const char *desc)
         mywidget->wwidth = mywidget->width = atoi(findnextstring(temp, desc, &base));
         mywidget->wheight = mywidget->height = atoi(findnextstring(temp, desc, &base));
         win->base = mywidget;
-#ifdef DEBUG
-        mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN] [ITEM] [BASE] %s %i %i %i %i\n",
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN] [ITEM] [BASE] %s %i %i %i %i\n",
               (mywidget->bitmap[0]) ? mywidget->bitmap[0]->name : NULL,
                mywidget->x, mywidget->y, mywidget->width, mywidget->height);
-#endif
     }
     else if(!strncmp(desc, "button", 6))
     {
@@ -334,11 +324,9 @@ static void addwidget(skin_t *skin, window *win, const char *desc)
             }
         }
 
-#ifdef DEBUG
-        mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN] [ITEM] [BUTTON] %s %i %i %i %i msg %i\n",
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN] [ITEM] [BUTTON] %s %i %i %i %i msg %i\n",
               (mywidget->bitmap[0]) ? mywidget->bitmap[0]->name : NULL,
                mywidget->x, mywidget->y, mywidget->width, mywidget->height, mywidget->msg);
-#endif
     }
     else if(!strncmp(desc, "hpotmeter", 9) || !strncmp(desc, "vpotmeter", 9))
     {
@@ -367,8 +355,7 @@ static void addwidget(skin_t *skin, window *win, const char *desc)
                 break;
             }
         }
-#ifdef DEBUG
-        mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN] [ITEM] %s %s %i %i %s %i %f %i %i %i %i msg %i\n",
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN] [ITEM] %s %s %i %i %s %i %f %i %i %i %i msg %i\n",
                 (mywidget->type == tyHpotmeter) ? "[HPOTMETER]" : "[VPOTMETER]",
                 (mywidget->bitmap[0]) ? mywidget->bitmap[0]->name : NULL,
                 mywidget->width, mywidget->height,
@@ -376,7 +363,6 @@ static void addwidget(skin_t *skin, window *win, const char *desc)
                 mywidget->phases, mywidget->value,
                 mywidget->wx, mywidget->wy, mywidget->wwidth, mywidget->wwidth,
                 mywidget->msg);
-#endif
     }
     else if(!strncmp(desc, "potmeter", 8))
     {
@@ -401,14 +387,12 @@ static void addwidget(skin_t *skin, window *win, const char *desc)
                 break;
             }
         }
-#ifdef DEBUG
-        mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN] [ITEM] [POTMETER] %s %i %i %i %f %i %i msg %i\n",
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN] [ITEM] [POTMETER] %s %i %i %i %f %i %i msg %i\n",
                 (mywidget->bitmap[0]) ? mywidget->bitmap[0]->name : NULL,
                 mywidget->width, mywidget->height,
                 mywidget->phases, mywidget->value,
                 mywidget->x, mywidget->y,
                 mywidget->msg);
-#endif
     }
     else if(!strncmp(desc, "menu", 4))
     {
@@ -430,17 +414,13 @@ static void addwidget(skin_t *skin, window *win, const char *desc)
                 break;
             }
         }
-#ifdef DEBUG
-        mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN] [ITEM] [MENU] %i %i %i %i msg %i\n",
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN] [ITEM] [MENU] %i %i %i %i msg %i\n",
                mywidget->x, mywidget->y, mywidget->width, mywidget->height, mywidget->msg);
-#endif
     }
     else if(!strncmp(desc, "selected", 8))
     {
         win->base->bitmap[1] = pngRead(skin, (char *) desc + 9);
-#ifdef DEBUG
-        mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN] [ITEM] [BASE] added image %s\n", win->base->bitmap[1]->name);
-#endif
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN] [ITEM] [BASE] added image %s\n", win->base->bitmap[1]->name);
     }
     else if(!strncmp(desc, "slabel",6))
     {
@@ -460,10 +440,8 @@ static void addwidget(skin_t *skin, window *win, const char *desc)
             }
         }
         mywidget->label = strdup(findnextstring(temp, desc, &base));
-#ifdef DEBUG
-        mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN] [ITEM] [SLABEL] %i %i %s %s\n",
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN] [ITEM] [SLABEL] %i %i %s %s\n",
                mywidget->x, mywidget->y, mywidget->font->name, mywidget->label);
-#endif
     }
     else if(!strncmp(desc, "dlabel", 6))
     {
@@ -485,10 +463,8 @@ static void addwidget(skin_t *skin, window *win, const char *desc)
             }
         }
         mywidget->label=strdup(findnextstring(temp, desc, &base));
-#ifdef DEBUG
-        mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN] [ITEM] [DLABEL] %i %i %i %i %s \"%s\"\n",
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN] [ITEM] [DLABEL] %i %i %i %i %s \"%s\"\n",
                mywidget->x, mywidget->y, mywidget->length, mywidget->align, mywidget->font->name, mywidget->label);
-#endif
     }
     free(temp);
 }
@@ -527,9 +503,7 @@ static void loadfonts(skin_t* skin)
                 /* remove comments */
                 if((tmp[i] == ';') &&  ((i < 1) || (tmp[i-1] != '\"')))
                 {
-#ifdef DEBUG
-                    mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[FONT LOAD] Comment: %s", tmp + i + 1);
-#endif
+                    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[FONT LOAD] Comment: %s", tmp + i + 1);
                     break;
                 }
                 desc[pos] = tmp[i];
@@ -540,9 +514,7 @@ static void loadfonts(skin_t* skin)
             if(!strncmp(desc, "image", 5))
             {
                 skin->fonts[x]->image = pngRead(skin, desc + 6);
-#ifdef DEBUG
-                mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[FONT] [IMAGE] \"%s\"\n", desc + 6);
-#endif
+                mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[FONT] [IMAGE] \"%s\"\n", desc + 6);
             }
             else
             {
@@ -558,14 +530,12 @@ static void loadfonts(skin_t* skin)
                 skin->fonts[x]->chars[skin->fonts[x]->charcount - 1]->y = atoi(findnextstring(tmp, desc, &base));
                 skin->fonts[x]->chars[skin->fonts[x]->charcount - 1]->width = atoi(findnextstring(tmp, desc, &base));
                 skin->fonts[x]->chars[skin->fonts[x]->charcount - 1]->height = atoi(findnextstring(tmp, desc, &base));
-#ifdef DEBUG
-                mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[FONT] [CHAR] %c %i %i %i %i\n",
+                mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[FONT] [CHAR] %c %i %i %i %i\n",
                         skin->fonts[x]->chars[skin->fonts[x]->charcount - 1]->c,
                         skin->fonts[x]->chars[skin->fonts[x]->charcount - 1]->x,
                         skin->fonts[x]->chars[skin->fonts[x]->charcount - 1]->y,
                         skin->fonts[x]->chars[skin->fonts[x]->charcount - 1]->width,
                         skin->fonts[x]->chars[skin->fonts[x]->charcount - 1]->height);
-#endif
             }
         }
         free(desc);
@@ -624,9 +594,7 @@ skin_t* loadskin(char* skindir, int desktopbpp)
             /* remove comments */
             else if(tmp[i] == ';')
             {
-#ifdef DEBUG
-                mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN LOAD] Comment: %s", tmp + i + 1);
-#endif
+                mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN LOAD] Comment: %s", tmp + i + 1);
                 break;
             }
             desc[pos] = tmp[i];
@@ -638,15 +606,11 @@ skin_t* loadskin(char* skindir, int desktopbpp)
         /* parse window specific info */
         if(!strncmp(desc, "section", 7))
         {
-#ifdef DEBUG
-            mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN] [SECTION] \"%s\"\n", desc + 8);
-#endif
+            mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN] [SECTION] \"%s\"\n", desc + 8);
         }
         else if(!strncmp(desc, "window", 6))
         {
-#ifdef DEBUG
-            mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN] [WINDOW] \"%s\"\n", desc + 7);
-#endif
+            mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN] [WINDOW] \"%s\"\n", desc + 7);
             reachedendofwindow = 0;
             (skin->windowcount)++;
             skin->windows = realloc(skin->windows, sizeof(window *) * skin->windowcount);
@@ -665,9 +629,7 @@ skin_t* loadskin(char* skindir, int desktopbpp)
         else if(!strncmp(desc, "decoration", 10) && !strncmp(desc + 11, "enable", 6))
         {
             mywindow->decoration = 1;
-#ifdef DEBUG
-            mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN] [DECORATION] enabled decoration for window \"%s\"\n", mywindow->name);
-#endif
+            mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN] [DECORATION] enabled decoration for window \"%s\"\n", mywindow->name);
         }
         else if(!strncmp(desc, "background", 10))
         {
@@ -676,27 +638,21 @@ skin_t* loadskin(char* skindir, int desktopbpp)
             mywindow->backgroundcolor[0] = atoi(findnextstring(temp, desc, &base));
             mywindow->backgroundcolor[1] = atoi(findnextstring(temp, desc, &base));
             mywindow->backgroundcolor[2] = atoi(findnextstring(temp, desc, &base));
-#ifdef DEBUG
-            mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN] [BACKGROUND] window \"%s\" has backgroundcolor (%i,%i,%i)\n", mywindow->name,
+            mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN] [BACKGROUND] window \"%s\" has backgroundcolor (%i,%i,%i)\n", mywindow->name,
                     mywindow->backgroundcolor[0],
                     mywindow->backgroundcolor[1],
                     mywindow->backgroundcolor[2]);
-#endif
         }
         else if(!strncmp(desc, "end", 3))
         {
             if(reachedendofwindow)
             {
-#ifdef DEBUG
-                mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN] [END] of section\n");
-#endif
+                mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN] [END] of section\n");
             }
             else
             {
                 reachedendofwindow = 1;
-#ifdef DEBUG
-                mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN] [END] of window \"%s\"\n", mywindow->name);
-#endif
+                mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN] [END] of window \"%s\"\n", mywindow->name);
             }
         }
         else if(!strncmp(desc, "font", 4))
@@ -724,9 +680,7 @@ skin_t* loadskin(char* skindir, int desktopbpp)
                 skin->fonts[id]->name = strdup(temp);
                 skin->fonts[id]->id = strdup(findnextstring(temp, desc, &base));
             }
-#ifdef DEBUG
-            mp_msg(MSGT_GPLAYER, MSGL_DBG4, "[SKIN] [FONT] id  \"%s\" name \"%s\"\n", skin->fonts[id]->name, skin->fonts[id]->id);
-#endif
+            mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[SKIN] [FONT] id  \"%s\" name \"%s\"\n", skin->fonts[id]->name, skin->fonts[id]->id);
         }
         else
             skin->addwidget(skin, mywindow, desc);
@@ -738,6 +692,6 @@ skin_t* loadskin(char* skindir, int desktopbpp)
     fclose(fp);
     loadfonts(skin);
     mp_msg(MSGT_GPLAYER, MSGL_V, "[SKIN LOAD] loaded skin \"%s\"\n", skin->skindir);
-    /* dumpwidgets(skin); */
+    dumpwidgets(skin);
     return skin;
 }
