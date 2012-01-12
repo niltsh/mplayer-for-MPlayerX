@@ -54,10 +54,6 @@
 #include <X11/extensions/shape.h>
 #endif
 
-#ifdef CONFIG_XINERAMA
-#include <X11/extensions/Xinerama.h>
-#endif
-
 #ifdef CONFIG_XF86VM
 #include <X11/extensions/xf86vmode.h>
 #endif
