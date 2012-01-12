@@ -354,15 +354,11 @@ static int item_base(char *in)
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", currWin->width, currWin->height);
 
     if (!is_sub) {
-#ifdef CONFIG_XSHAPE
         if (!bpRenderMask(&currWin->Bitmap, &currWin->Mask)) {
             skin_error(MSGTR_SKIN_NotEnoughMemory);
             return 1;
         }
         mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     mask: %lux%lu\n", currWin->Mask.Width, currWin->Mask.Height);
-#else
-        currWin->Mask.Image = NULL;
-#endif
     }
 
     if (is_bar)
