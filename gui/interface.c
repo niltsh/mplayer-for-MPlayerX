@@ -75,11 +75,8 @@ void guiInit(void)
         cdrom_device = strdup(DEFAULT_CDROM_DEVICE);
     if (!dvd_device)
         dvd_device = strdup(DEFAULT_DVD_DEVICE);
-
-#ifdef CONFIG_DXR3
     if (!gtkDXR3Device)
         gtkDXR3Device = strdup("/dev/em8300-0");
-#endif
 
     if (stream_cache_size > 0) {
         gtkCacheOn   = 1;
@@ -92,12 +89,10 @@ void guiInit(void)
         gtkAutoSync   = autosync;
     }
 
-#ifdef CONFIG_ASS
     gtkASS.enabled       = ass_enabled;
     gtkASS.use_margins   = ass_use_margins;
     gtkASS.top_margin    = ass_top_margin;
     gtkASS.bottom_margin = ass_bottom_margin;
-#endif
 
     gtkInit();
 
@@ -263,12 +258,10 @@ void guiDone(void)
             gui_sub_pos_y  = guiApp.sub.y;
         }
 
-#ifdef CONFIG_ASS
         ass_enabled       = gtkASS.enabled;
         ass_use_margins   = gtkASS.use_margins;
         ass_top_margin    = gtkASS.top_margin;
         ass_bottom_margin = gtkASS.bottom_margin;
-#endif
 
         cfg_write();
         wsXDone();
@@ -415,7 +408,6 @@ int gui(int what, void *data)
         case STREAMTYPE_STREAM:
             break;
 
-#ifdef CONFIG_CDDA
         case STREAMTYPE_CDDA:
         {
             char tmp[512];
@@ -424,9 +416,7 @@ int gui(int what, void *data)
             uiSetFileName(NULL, tmp, SAME_STREAMTYPE);
         }
         break;
-#endif
 
-#ifdef CONFIG_VCD
         case STREAMTYPE_VCD:
         {
             char tmp[512];
@@ -435,9 +425,7 @@ int gui(int what, void *data)
             uiSetFileName(NULL, tmp, SAME_STREAMTYPE);
         }
         break;
-#endif
 
-#ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
         {
             char tmp[512];
@@ -450,7 +438,6 @@ int gui(int what, void *data)
             dvd_angle   = guiInfo.Angle;
 
             break;
-#endif
         }
 
         // video opts
@@ -486,12 +473,10 @@ int gui(int what, void *data)
             }
         }
 
-#ifdef CONFIG_DXR3
         if (video_driver_list && !gstrcmp(video_driver_list[0], "dxr3"))
             if (guiInfo.StreamType != STREAMTYPE_DVD && guiInfo.StreamType != STREAMTYPE_VCD)
                 if (gtkVfLAVC)
                     add_vf("lavc");
-#endif
 
         if (gtkVfPP)
             add_vf("pp");
@@ -515,7 +500,6 @@ int gui(int what, void *data)
             free(name);
         }
 
-#ifdef CONFIG_OSS_AUDIO
         if (audio_driver_list && !gstrncmp(audio_driver_list[0], "oss", 3)) {
             char *tmp;
 
@@ -531,9 +515,7 @@ int gui(int what, void *data)
             gaddlist(&audio_driver_list, tmp);
             free(tmp);
         }
-#endif
 
-#ifdef CONFIG_ALSA
         if (audio_driver_list && !gstrncmp(audio_driver_list[0], "alsa", 4)) {
             char *tmp;
 
@@ -549,9 +531,7 @@ int gui(int what, void *data)
             gaddlist(&audio_driver_list, tmp);
             free(tmp);
         }
-#endif
 
-#ifdef CONFIG_SDL
         if (audio_driver_list && !gstrncmp(audio_driver_list[0], "sdl", 3)) {
             char *tmp;
 
@@ -564,9 +544,7 @@ int gui(int what, void *data)
             gaddlist(&audio_driver_list, tmp);
             free(tmp);
         }
-#endif
 
-#ifdef CONFIG_ESD
         if (audio_driver_list && !gstrncmp(audio_driver_list[0], "esd", 3)) {
             char *tmp;
 
@@ -579,7 +557,6 @@ int gui(int what, void *data)
             gaddlist(&audio_driver_list, tmp);
             free(tmp);
         }
-#endif
 
         // subtitle
 
@@ -612,12 +589,10 @@ int gui(int what, void *data)
 
         guiInfo.NewPlay = 0;
 
-#ifdef CONFIG_ASS
         ass_enabled       = gtkASS.enabled;
         ass_use_margins   = gtkASS.use_margins;
         ass_top_margin    = gtkASS.top_margin;
         ass_bottom_margin = gtkASS.bottom_margin;
-#endif
 
         break;
 
@@ -631,21 +606,16 @@ int gui(int what, void *data)
         case STREAMTYPE_STREAM:
             break;
 
-#ifdef CONFIG_CDDA
         case STREAMTYPE_CDDA:
             guiInfo.Tracks = 0;
             stream_control(stream, STREAM_CTRL_GET_NUM_TITLES, &guiInfo.Tracks);
             break;
-#endif
 
-#ifdef CONFIG_VCD
         case STREAMTYPE_VCD:
             guiInfo.Tracks = 0;
             stream_control(stream, STREAM_CTRL_GET_NUM_TITLES, &guiInfo.Tracks);
             break;
-#endif
 
-#ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
             guiInfo.Tracks = 0;
             stream_control(stream, STREAM_CTRL_GET_NUM_TITLES, &guiInfo.Tracks);
@@ -653,16 +623,17 @@ int gui(int what, void *data)
             stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiInfo.Chapters);
             guiInfo.Angles = 0;
             stream_control(stream, STREAM_CTRL_GET_NUM_ANGLES, &guiInfo.Angles);
+#ifdef CONFIG_DVDREAD
             dvd = stream->priv;
             guiInfo.AudioStreams = dvd->nr_of_channels;
             memcpy(guiInfo.AudioStream, dvd->audio_streams, sizeof(dvd->audio_streams));
             guiInfo.Subtitles = dvd->nr_of_subtitles;
             memcpy(guiInfo.Subtitle, dvd->subtitles, sizeof(dvd->subtitles));
+#endif
             guiInfo.Track   = dvd_title + 1;
             guiInfo.Chapter = dvd_chapter + 1;
             guiInfo.Angle   = dvd_angle + 1;
             break;
-#endif
         }
 
         break;
@@ -686,12 +657,10 @@ int gui(int what, void *data)
         btnSet(evBackward10min, state);
         btnSet(evSetMoviePosition, state);
 
-#ifdef CONFIG_DXR3
         if (video_driver_list && !gstrcmp(video_driver_list[0], "dxr3") && (((demuxer_t *)mpctx_get_demuxer(guiInfo.mpcontext))->file_format != DEMUXER_TYPE_MPEG_PS) && !gtkVfLAVC) {
             gtkMessageBox(GTK_MB_FATAL, MSGTR_NEEDLAVC);
             return False;
         }
-#endif
 
         break;
 
@@ -799,14 +768,12 @@ int gui(int what, void *data)
             break;
         }
 
-#ifdef CONFIG_CDDA
         if (guiInfo.StreamType == STREAMTYPE_CDDA) {
             uiNext();
 
             if (guiInfo.Playing)
                 break;
         }
-#endif
 
         if (guiInfo.Playing && (next = listSet(gtkGetNextPlItem, NULL)) && (plLastPlayed != next)) {
             plLastPlayed = next;
@@ -823,11 +790,9 @@ int gui(int what, void *data)
             guiInfo.Position      = 0;
             guiInfo.AudioChannels = 0;
 
-#ifdef CONFIG_DVDREAD
             guiInfo.Track   = 1;
             guiInfo.Chapter = 1;
             guiInfo.Angle   = 1;
-#endif
 
             if (gtkShowVideoWindow) {
                 guiInfo.VideoWindow = True;
@@ -970,12 +935,11 @@ void mplayer(int what, float value, void *data)
     switch (what) {
         // subtitle
 
-#ifndef CONFIG_FREETYPE
     case MPLAYER_SET_FONT_FACTOR:
         font_factor = value;
         mplayerLoadFont();
         break;
-#else
+
     case MPLAYER_SET_FONT_OUTLINE:
         subtitle_font_thickness = (8.0f / 100.0f) * value;
         mplayerLoadFont();
@@ -1006,14 +970,11 @@ void mplayer(int what, float value, void *data)
         subtitle_autoscale = (int)value;
         mplayerLoadFont();
         break;
-#endif
 
-#ifdef CONFIG_ICONV
     case MPLAYER_SET_SUB_ENCODING:
         nfree(sub_cp);
         sub_cp = gstrdup((char *)data);
         break;
-#endif
 
     case MPLAYER_SET_EXTRA_STEREO:
         gtkAOExtraStereoMul = value;

@@ -114,11 +114,8 @@ static void guiInfoMediumClear (int what)
     listSet(gtkDelPl, NULL);
   }
 
-#ifdef CONFIG_VCD
   if (what & CLEAR_VCD) guiInfo.Tracks = 0;
-#endif
 
-#ifdef CONFIG_DVDREAD
   if (what & CLEAR_DVD)
   {
     guiInfo.AudioStreams = 0;
@@ -127,7 +124,6 @@ static void guiInfoMediumClear (int what)
     guiInfo.Chapters = 0;
     guiInfo.Angles = 0;
   }
-#endif
 }
 
 static unsigned last_redraw_time = 0;
@@ -228,7 +224,7 @@ play:
 	         guiInfo.Track=1;
 	       guiInfo.NewPlay=GUI_FILE_NEW;
 	       break;
-#ifdef CONFIG_CDDA
+
           case STREAMTYPE_CDDA:
 	       guiInfoMediumClear( CLEAR_ALL - CLEAR_VCD - CLEAR_FILE );
 	       if ( guiInfo.Playing != GUI_PAUSE )
@@ -238,8 +234,7 @@ play:
                  guiInfo.NewPlay=GUI_FILE_SAME;
 		}
 	       break;
-#endif
-#ifdef CONFIG_VCD
+
           case STREAMTYPE_VCD:
 	       guiInfoMediumClear( CLEAR_ALL - CLEAR_VCD - CLEAR_FILE );
 	       if ( guiInfo.Playing != GUI_PAUSE )
@@ -249,8 +244,7 @@ play:
                  guiInfo.NewPlay=GUI_FILE_SAME;
 		}
 	       break;
-#endif
-#ifdef CONFIG_DVDREAD
+
           case STREAMTYPE_DVD:
 	       guiInfoMediumClear( CLEAR_ALL - CLEAR_DVD - CLEAR_FILE );
 	       if ( guiInfo.Playing != GUI_PAUSE )
@@ -258,7 +252,6 @@ play:
                  guiInfo.NewPlay=GUI_FILE_SAME;
 		}
                break;
-#endif
          }
         uiPlay();
         break;

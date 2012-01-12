@@ -207,6 +207,7 @@ typedef struct
  const char * name;
 } Languages_t;
 
+#ifdef CONFIG_DVDREAD
 #define lng( a,b ) ( (int)(a) * 256 + b )
 static Languages_t Languages[] =
          {
@@ -384,12 +385,10 @@ static Languages_t Languages[] =
          };
 #undef lng
 
-#ifdef CONFIG_DVDREAD
 static char * ChannelTypes[] =
 	{ "Dolby Digital","","Mpeg1","Mpeg2","PCM","","Digital Theatre System" };
 static char * ChannelNumbers[] =
 	{ "","Stereo","","","","5.1" };
-#endif
 
 static const char * GetLanguage( int language )
 {
@@ -398,6 +397,7 @@ static const char * GetLanguage( int language )
   if ( Languages[i].id == language ) return Languages[i].name;
  return NULL;
 }
+#endif
 
 
 GtkWidget * DVDSubMenu;

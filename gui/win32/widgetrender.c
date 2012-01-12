@@ -163,10 +163,8 @@ static char *generatetextfromlabel(widget *item)
 
     if(guiInfo.StreamType == 0)
         stringreplace(text, "$T", "f");
-#ifdef CONFIG_DVDREAD
     else if(guiInfo.StreamType == STREAMTYPE_DVD || guiInfo.StreamType == STREAMTYPE_DVDNAV)
         stringreplace(text, "$T", "d");
-#endif
     else stringreplace(text, "$T", "u");
 
     stringreplace(text, "$f", acp(TranslateFilename(1, tmp, sizeof(tmp))));

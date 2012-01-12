@@ -354,14 +354,12 @@ static void guiSetEvent(int event)
         {
             switch(guiInfo.StreamType)
             {
-#ifdef CONFIG_DVDREAD
                 case STREAMTYPE_DVD:
                 {
                     guiInfo.NewPlay = GUI_FILE_SAME;
                     gui(GUI_SET_STATE, (void *) GUI_PLAY);
                     break;
                 }
-#endif
                 default:
                 {
                     guiInfo.NewPlay = GUI_FILE_NEW;
@@ -415,13 +413,11 @@ void uiNext(void)
     if(guiInfo.Playing == GUI_PAUSE) return;
     switch(guiInfo.StreamType)
     {
-#ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
             if(guiInfo.Chapter == (guiInfo.Chapters - 1))
                 return;
             guiInfo.Chapter++;
             break;
-#endif
         default:
             if(mygui->playlist->current == (mygui->playlist->trackcount - 1))
                 return;
@@ -437,13 +433,11 @@ void uiPrev(void)
     if(guiInfo.Playing == GUI_PAUSE) return;
     switch(guiInfo.StreamType)
     {
-#ifdef CONFIG_DVDREAD
         case STREAMTYPE_DVD:
             if(guiInfo.Chapter == 1)
                 return;
             guiInfo.Chapter--;
             break;
-#endif
         default:
             if(mygui->playlist->current == 0)
                 return;
@@ -596,7 +590,6 @@ int gui(int what, void *data)
                     uiSetFileName(NULL, mygui->playlist->tracks[mygui->playlist->current]->filename, SAME_STREAMTYPE);
                     guiInfo.Track = mygui->playlist->current + 1;
                     break;
-#ifdef CONFIG_DVDREAD
                 case STREAMTYPE_DVD:
                 {
                     char tmp[512];
@@ -606,7 +599,6 @@ int gui(int what, void *data)
                     uiSetFileName(NULL, tmp, SAME_STREAMTYPE);
                     break;
                 }
-#endif
             }
             guiInfo.VideoWindow = 1;
             if(gtkAONorm) greplace(&af_cfg.list, "volnorm", "volnorm");
@@ -665,7 +657,6 @@ int gui(int what, void *data)
             guiInfo.StreamType = stream->type;
             switch(stream->type)
             {
-#ifdef CONFIG_DVDREAD
                 case STREAMTYPE_DVD:
                     guiInfo.Tracks = 0;
                     stream_control(stream, STREAM_CTRL_GET_NUM_TITLES, &guiInfo.Tracks);
@@ -673,16 +664,17 @@ int gui(int what, void *data)
                     stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiInfo.Chapters);
                     guiInfo.Angles = 0;
                     stream_control(stream, STREAM_CTRL_GET_NUM_ANGLES, &guiInfo.Angles);
+#ifdef CONFIG_DVDREAD
                     dvdp = stream->priv;
                     guiInfo.AudioStreams = dvdp->nr_of_channels;
                     memcpy(guiInfo.AudioStream, dvdp->audio_streams, sizeof(dvdp->audio_streams));
                     guiInfo.Subtitles = dvdp->nr_of_subtitles;
                     memcpy(guiInfo.Subtitle, dvdp->subtitles, sizeof(dvdp->subtitles));
+#endif
                     guiInfo.Chapter = dvd_chapter + 1;
                     guiInfo.Angle = dvd_angle + 1;
                     guiInfo.Track = dvd_title + 1;
                     break;
-#endif
             }
             break;
         }
@@ -796,11 +788,9 @@ int gui(int what, void *data)
           guiInfo.Position = 0;
           guiInfo.AudioChannels = 0;
 
-#ifdef CONFIG_DVDREAD
           guiInfo.Track = 1;
           guiInfo.Chapter = 1;
           guiInfo.Angle = 1;
-#endif
 
           if (mygui->playlist->current == (mygui->playlist->trackcount - 1))
               mygui->playlist->current = 0;

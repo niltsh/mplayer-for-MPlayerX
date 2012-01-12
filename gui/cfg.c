@@ -47,10 +47,8 @@ int gtkCacheSize = 2048;
 
 int gtkVfPP;
 
-#ifdef CONFIG_DXR3
 int gtkVfLAVC;
 char *gtkDXR3Device;
-#endif
 
 int gtkAutoSyncOn;
 int gtkAutoSync;
@@ -60,25 +58,17 @@ int gtkAOSurround;
 int gtkAOExtraStereo;
 float gtkAOExtraStereoMul = 1.0f;
 
-#ifdef CONFIG_ALSA
 char *gtkAOALSAMixer;
 char *gtkAOALSAMixerChannel;
 char *gtkAOALSADevice;
-#endif
 
-#ifdef CONFIG_OSS_AUDIO
 char *gtkAOOSSMixer;
 char *gtkAOOSSMixerChannel;
 char *gtkAOOSSDevice;
-#endif
 
-#ifdef CONFIG_ESD
 char *gtkAOESDDevice;
-#endif
 
-#ifdef CONFIG_SDL
 char *gtkAOSDLDriver;
-#endif
 
 int gtkEnableAudioEqualizer;
 float gtkEquChannels[6][10];
@@ -86,9 +76,7 @@ float gtkEquChannels[6][10];
 int gtkSubDumpMPSub;
 int gtkSubDumpSrt;
 
-#ifdef CONFIG_ASS
 gtkASS_t gtkASS;
-#endif
 
 int gtkEnablePlayBar = 1;
 int gtkLoadFullscreen;

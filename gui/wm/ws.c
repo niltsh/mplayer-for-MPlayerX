@@ -325,7 +325,6 @@ void wsXInit(Display *mDisplay)
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  green mask: 0x%x\n", wsGreenMask);
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  blue mask: 0x%x\n", wsBlueMask);
 
-#ifdef MP_DEBUG
     if (wsUseXShm) {
         int minor, major, shp;
 
@@ -340,7 +339,6 @@ void wsXInit(Display *mDisplay)
         XShapeQueryVersion(wsDisplay, &major, &minor);
         mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] XShape version is %d.%d\n", major, minor);
     }
-#endif
 #endif
 
     wsOutMask = wsGetOutMask();

@@ -206,23 +206,17 @@ calclengthmmmmss:
                     av_strlcat(trbuf, "u", sizeof(trbuf));
                     break;
 
-#ifdef CONFIG_CDDA
                 case STREAMTYPE_CDDA:
                     av_strlcat(trbuf, "a", sizeof(trbuf));
                     break;
-#endif
 
-#ifdef CONFIG_VCD
                 case STREAMTYPE_VCD:
                     av_strlcat(trbuf, "v", sizeof(trbuf));
                     break;
-#endif
 
-#ifdef CONFIG_DVDREAD
                 case STREAMTYPE_DVD:
                     av_strlcat(trbuf, "d", sizeof(trbuf));
                     break;
-#endif
 
                 default:
                     av_strlcat(trbuf, " ", sizeof(trbuf));
