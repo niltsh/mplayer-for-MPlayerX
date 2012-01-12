@@ -28,7 +28,9 @@
 #include <X11/Xutil.h>
 #include <X11/keysym.h>
 #include <X11/Xatom.h>
+#ifdef HAVE_SHM
 #include <X11/extensions/XShm.h>
+#endif
 
 #define  wsKeyReleased   0
 #define  wsKeyPressed    1
@@ -158,7 +160,9 @@ typedef struct {
     Atom AtomWMSizeHint;
     Atom AtomWMNormalHint;
 
+#ifdef HAVE_SHM
     XShmSegmentInfo Shminfo;
+#endif
     unsigned char *ImageData;
     unsigned short int *ImageDataw;
     unsigned int *ImageDatadw;
