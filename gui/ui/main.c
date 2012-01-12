@@ -392,10 +392,9 @@ set_volume:
 	  default: movie_aspect=-1;
 	 }
 	wsClearWindow( guiApp.subWindow );
-#ifdef CONFIG_DVDREAD
-	if ( guiInfo.StreamType == STREAMTYPE_VCD || guiInfo.StreamType == STREAMTYPE_DVD ) uiEventHandling( ivPlayDVD, 0 );
+	if ( guiInfo.StreamType == STREAMTYPE_VCD ) uiEventHandling( evPlayVCD, 0 );
+	 else if ( guiInfo.StreamType == STREAMTYPE_DVD ) uiEventHandling( ivPlayDVD, 0 );
 	 else
-#endif
 	 guiInfo.NewPlay=GUI_FILE_NEW;
 	break;
 
