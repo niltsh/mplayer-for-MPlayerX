@@ -115,7 +115,7 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
 
     dmpi->planes[0]=(unsigned char*)&vf->priv->pes;
 
-    return vf_next_put_image(vf,dmpi, MP_NOPTS_VALUE);
+    return vf_next_put_image(vf,dmpi, pts);
 }
 
 //===========================================================================//
