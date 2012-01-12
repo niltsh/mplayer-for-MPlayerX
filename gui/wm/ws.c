@@ -273,13 +273,9 @@ void wsXInit(Display *mDisplay)
         mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_WS_NoXshm);
 
 #ifdef CONFIG_XSHAPE
-
     if (!XShapeQueryExtension(wsDisplay, &eventbase, &errorbase))
-        wsUseXShape = 0;
-
-#else
-    wsUseXShape = 0;
 #endif
+    wsUseXShape = 0;
 
     if (!wsUseXShape)
         mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_WS_NoXshape);
