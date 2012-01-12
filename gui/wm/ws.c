@@ -266,18 +266,16 @@ void wsXInit(Display *mDisplay)
             mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_WS_RemoteDisplay);
     }
 
-    if (!XShmQueryExtension(wsDisplay)) {
+    if (!XShmQueryExtension(wsDisplay))
         wsUseXShm = 0;
-    }
 
     if (!wsUseXShm)
         mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_WS_NoXshm);
 
 #ifdef CONFIG_XSHAPE
 
-    if (!XShapeQueryExtension(wsDisplay, &eventbase, &errorbase)) {
+    if (!XShapeQueryExtension(wsDisplay, &eventbase, &errorbase))
         wsUseXShape = 0;
-    }
 
 #else
     wsUseXShape = 0;
