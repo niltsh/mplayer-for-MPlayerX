@@ -50,8 +50,8 @@
 
 #ifdef CONFIG_ICONV
 #include <iconv.h>
-char *sub_cp=NULL;
 #endif
+char *sub_cp=NULL;
 #ifdef CONFIG_FRIBIDI
 #include <fribidi/fribidi.h>
 char *fribidi_charset = NULL;   ///character set that will be passed to FriBiDi
