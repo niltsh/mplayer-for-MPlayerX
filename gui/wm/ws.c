@@ -267,20 +267,24 @@ void wsXInit(Display *mDisplay)
     }
 
     if (!XShmQueryExtension(wsDisplay)) {
-        mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_WS_NoXshm);
         wsUseXShm = 0;
     }
+
+    if (!wsUseXShm)
+        mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_WS_NoXshm);
 
 #ifdef CONFIG_XSHAPE
 
     if (!XShapeQueryExtension(wsDisplay, &eventbase, &errorbase)) {
-        mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_WS_NoXshape);
         wsUseXShape = 0;
     }
 
 #else
     wsUseXShape = 0;
 #endif
+
+    if (!wsUseXShape)
+        mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_WS_NoXshape);
 
     XSynchronize(wsDisplay, True);
 
