@@ -1510,7 +1510,6 @@ void wsSetMousePosition(wsTWindow *win, int x, int y)
 void wsSetShape(wsTWindow *win, char *data)
 {
 #ifdef CONFIG_XSHAPE
-
     if (!wsUseXShape)
         return;
 
@@ -1520,7 +1519,6 @@ void wsSetShape(wsTWindow *win, char *data)
         XFreePixmap(wsDisplay, win->Mask);
     } else
         XShapeCombineMask(wsDisplay, win->WindowID, ShapeBounding, 0, 0, None, ShapeSet);
-
 #endif
 }
 
