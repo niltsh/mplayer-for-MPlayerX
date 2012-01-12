@@ -195,5 +195,6 @@ skin_t *loadskin(char *skindir, int desktopbpp);
 #define ivSetCDTrack      5014
 
 #define ivRedraw          7002
+#define ivPlayDVD         7003
 
 #endif /* MPLAYER_GUI_SKINLOAD_H */

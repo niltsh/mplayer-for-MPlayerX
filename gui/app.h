@@ -88,6 +88,7 @@
 #define ivSetCDTrack      5014
 
 #define ivRedraw          7002
+#define ivPlayDVD         7003
 
 typedef struct {
     int message;

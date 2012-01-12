@@ -177,27 +177,27 @@ void uiEventHandling( int msg,float param )
 #ifdef CONFIG_DVDREAD
    case ivSetDVDSubtitle:
         dvdsub_id=iparam;
-        goto play_dvd_2;
+        uiEventHandling( ivPlayDVD, 0 );
         break;
    case ivSetDVDAudio:
         audio_id=iparam;
-        goto play_dvd_2;
+        uiEventHandling( ivPlayDVD, 0 );
         break;
    case ivSetDVDChapter:
         guiInfo.Chapter=iparam;
-        goto play_dvd_2;
+        uiEventHandling( ivPlayDVD, 0 );
         break;
    case ivSetDVDTitle:
         guiInfo.Track=iparam;
         guiInfo.Chapter=1;
         guiInfo.Angle=1;
-        goto play_dvd_2;
+        uiEventHandling( ivPlayDVD, 0 );
         break;
    case evPlayDVD:
         guiInfo.Track=1;
         guiInfo.Chapter=1;
         guiInfo.Angle=1;
-play_dvd_2:
+   case ivPlayDVD:
  	guiInfoMediumClear( CLEAR_ALL - CLEAR_DVD );
         guiInfo.StreamType=STREAMTYPE_DVD;
 	goto play;
@@ -393,7 +393,7 @@ set_volume:
 	 }
 	wsClearWindow( guiApp.subWindow );
 #ifdef CONFIG_DVDREAD
-	if ( guiInfo.StreamType == STREAMTYPE_VCD || guiInfo.StreamType == STREAMTYPE_DVD ) goto play_dvd_2;
+	if ( guiInfo.StreamType == STREAMTYPE_VCD || guiInfo.StreamType == STREAMTYPE_DVD ) uiEventHandling( ivPlayDVD, 0 );
 	 else
 #endif
 	 guiInfo.NewPlay=GUI_FILE_NEW;
