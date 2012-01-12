@@ -68,6 +68,7 @@
 #define evAbout             12
 #define evPreferences       14
 #define evSkinBrowser       15
+#define evMenu              33
 
 #define evIconify           11
 #define evExit              1000

@@ -79,6 +79,7 @@ static const evName evNames[] = {
     { evAbout,             "evAbout"             },
     { evPreferences,       "evPreferences"       },
     { evSkinBrowser,       "evSkinBrowser"       },
+    { evMenu,              "evMenu"              },
     { evIconify,           "evIconify"           },
     { evExit,              "evExit"              }
 };

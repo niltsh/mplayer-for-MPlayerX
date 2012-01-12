@@ -1301,6 +1301,15 @@ image = font.png
       </varlistentry>
 
       <varlistentry>
+        <term><emphasis role="bold">evMenu</emphasis></term>
+        <listitem>
+          <para>
+            Öffne das (Standard-)Menü.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
         <term><emphasis role="bold">evIconify</emphasis></term>
         <listitem>
           <para>

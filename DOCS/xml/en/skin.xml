@@ -1101,6 +1101,13 @@ menu entries.
 </varlistentry>
 
 <varlistentry>
+  <term><emphasis role="bold">evMenu</emphasis></term>
+  <listitem><para>
+  Open the (default) menu.
+  </para></listitem>
+</varlistentry>
+
+<varlistentry>
   <term><emphasis role="bold">evIconify</emphasis></term>
   <listitem><para>
   Iconify the window.

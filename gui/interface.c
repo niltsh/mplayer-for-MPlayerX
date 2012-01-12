@@ -383,7 +383,7 @@ int gui(int what, void *data)
     case GUI_RUN_MESSAGE:
         mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] GUI_RUN_MESSAGE: %s\n", (const char *)data);
         msg = appFindMessage((const char *)data);
-        if (appFindItem(msg))
+        if ((msg == evMenu) || appFindItem(msg))
             uiEventHandling(msg, 0);
         break;
 

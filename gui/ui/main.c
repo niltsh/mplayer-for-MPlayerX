@@ -325,6 +325,15 @@ set_volume:
         break;
 
 
+   case evMenu:
+        /*if (guiApp.menuIsPresent)   NOTE TO MYSELF: Not before mouse over and
+         {                                            cursor keys will work there.
+          gtkShow( ivHidePopUpMenu,NULL );
+          uiShowMenu( 0,0 );
+         }
+        else*/ gtkShow( ivShowPopUpMenu,NULL );
+        break;
+
    case evIconify:
         switch ( iparam )
          {
