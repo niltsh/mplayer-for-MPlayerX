@@ -688,7 +688,7 @@ Bool wsEvents(Display *display, XEvent *Event)
             }
         } else {
             /* try to process DND events */
-            wsXDNDProcessClientMessage(wsWindowList[l], &Event->xclient);
+            wsXDNDProcessClientMessage(&Event->xclient);
         }
 
         break;

@@ -23,7 +23,7 @@
 
 void wsXDNDInitialize(void);
 Bool wsXDNDProcessSelection(wsTWindow* wnd,XEvent *event);
-Bool wsXDNDProcessClientMessage(wsTWindow* wnd, XClientMessageEvent *event);
+Bool wsXDNDProcessClientMessage(XClientMessageEvent *event);
 void wsXDNDMakeAwareness(wsTWindow* window);
 void wsXDNDClearAwareness(wsTWindow* window);
 

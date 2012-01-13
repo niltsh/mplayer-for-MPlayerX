@@ -150,7 +150,7 @@ wsXDNDProcessSelection(wsTWindow* wnd, XEvent *event)
 }
 
 Bool
-wsXDNDProcessClientMessage(wsTWindow* wnd, XClientMessageEvent *event)
+wsXDNDProcessClientMessage(XClientMessageEvent *event)
 {
   /* test */
   /*{
