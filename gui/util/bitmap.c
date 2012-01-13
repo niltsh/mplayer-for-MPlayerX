@@ -78,7 +78,7 @@ static int pngRead(const char *fname, guiImage *img)
     fread(data, len, 1, file);
     fclose(file);
 
-    avctx = avcodec_alloc_context();
+    avctx = avcodec_alloc_context3(NULL);
     frame = avcodec_alloc_frame();
 
     if (!(avctx && frame)) {
@@ -89,7 +89,7 @@ static int pngRead(const char *fname, guiImage *img)
     }
 
     avcodec_register_all();
-    avcodec_open(avctx, avcodec_find_decoder(CODEC_ID_PNG));
+    avcodec_open2(avctx, avcodec_find_decoder(CODEC_ID_PNG), NULL);
 
     av_init_packet(&pkt);
     pkt.data = data;
