@@ -397,7 +397,7 @@ static void fs_PersistantHistory( char * subject )
 }
 //-----------------------------------------------
 
-static void fs_fsFilterCombo_activate( GtkEditable * editable,
+static void fs_fsFilterCombo_activate( GtkEntry * entry,
                                        gpointer user_data )
 {
  fsFilter=gtk_entry_get_text( GTK_ENTRY( user_data ) );
@@ -444,7 +444,7 @@ static void fs_fsFilterCombo_changed( GtkEditable * editable,
  CheckDir( fsFNameList );
 }
 
-static void fs_fsPathCombo_activate( GtkEditable * editable,
+static void fs_fsPathCombo_activate( GtkEntry * entry,
                                      gpointer user_data )
 {
  const unsigned char * str;
@@ -538,28 +538,28 @@ static void fs_Cancel_released( GtkButton * button,gpointer user_data )
  fs_PersistantHistory( get_current_dir_name_utf8() );      //totem, write into history file
 }
 
-static void fs_fsFNameList_select_row( GtkWidget * widget, gint row, gint column,
-                                       GdkEventButton *bevent, gpointer user_data)
+static void fs_fsFNameList_select_row( GtkCList * clist, gint row, gint column,
+                                       GdkEvent * event, gpointer user_data)
 {
  fsCurrFNameListSelected = row;
- gtk_clist_get_text( GTK_CLIST(widget ),row,1,&fsSelectedFile );
+ gtk_clist_get_text( clist,row,1,&fsSelectedFile );
  g_free( fsSelectedFileUtf8 );
  fsSelectedFileUtf8 = g_filename_from_utf8( fsSelectedFile, -1, NULL, NULL, NULL );
  if ( fsSelectedFileUtf8 ) fsSelectedFile = fsSelectedFileUtf8;
- if( bevent && bevent->type == GDK_BUTTON_PRESS )  gtk_button_released( GTK_BUTTON( fsOk ) );
+ if( event && event->type == GDK_BUTTON_PRESS )  gtk_button_released( GTK_BUTTON( fsOk ) );
 }
 
 static gboolean on_FileSelect_key_release_event( GtkWidget * widget,
-                                                 GdkEventKey * event,
+                                                 GdkEvent * event,
                                                  gpointer user_data )
 {
  if ( GTK_WIDGET_TYPE( widget ) == GTK_TYPE_BUTTON )
  {
-  if (event->keyval == GDK_Return) gtk_button_released( GTK_BUTTON( widget ) );
+  if (event->key.keyval == GDK_Return) gtk_button_released( GTK_BUTTON( widget ) );
  }
  else
  {
-  switch ( event->keyval )
+  switch ( event->key.keyval )
    {
     case GDK_Escape:
          gtk_button_released( GTK_BUTTON( fsCancel ) );
@@ -582,8 +582,6 @@ static gboolean fs_fsFNameList_event( GtkWidget * widget,
 {
   GdkEventButton *bevent;
   gint row, col;
-
-  (void) user_data;
 
   bevent = (GdkEventButton *) event;
 

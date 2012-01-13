@@ -249,8 +249,11 @@ static void eqButtonReleased( GtkButton * button,gpointer user_data )
   }
 }
 
-static void eqFocus( GtkWindow * window,GtkWidget * widget,gpointer user_data )
-{ eqSetBands( Channel ); }
+static gboolean eqFocus( GtkWidget * widget,GdkEvent * event,gpointer user_data )
+{
+ eqSetBands( Channel );
+ return FALSE;
+}
 
 static void eqSelectChannelsListRow( GtkCList * clist,gint row,gint column,GdkEvent * event,gpointer user_data )
 {
@@ -265,8 +268,8 @@ static void eqSelectChannelsListRow( GtkCList * clist,gint row,gint column,GdkEv
   }
 }
 
-static void eqNotebook( GtkNotebook * notebook, GtkNotebookPage * page,
-                        gint page_num, gpointer user_data )
+static void eqNotebook( GtkNotebook * notebook, gpointer page,
+                        guint page_num, gpointer user_data )
 {
  if ( page_num ) gtk_widget_hide( Config );
    else gtk_widget_show( Config );

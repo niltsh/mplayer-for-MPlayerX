@@ -189,11 +189,11 @@ static int    old_video_driver = 0;
  void ShowAudioConfig( void );
  void HideAudioConfig( void );
 
-static gboolean prHScaler( GtkWidget * widget,GdkEventMotion  * event,gpointer user_data );
+static gboolean prHScaler( GtkWidget * widget,GdkEvent * event,gpointer user_data );
 static void prToggled( GtkToggleButton * togglebutton,gpointer user_data );
 static void prCListRow( GtkCList * clist,gint row,gint column,GdkEvent * event,gpointer user_data );
 #if defined(CONFIG_FREETYPE) || defined(CONFIG_ICONV)
-static void prEntry( GtkContainer * container,gpointer user_data );
+static void prEntry( GtkEditable * editable,gpointer user_data );
 #endif
 
 void ShowPreferences( void )
@@ -489,7 +489,7 @@ static void HidePreferences( void )
 }
 
 #if defined(CONFIG_FREETYPE) || defined(CONFIG_ICONV)
-static void prEntry( GtkContainer * container,gpointer user_data )
+static void prEntry( GtkEditable * editable,gpointer user_data )
 {
  const char * comment;
  int    i;
@@ -661,7 +661,7 @@ static void prButton( GtkButton * button, gpointer user_data )
   }
 }
 
-static gboolean prHScaler( GtkWidget * widget,GdkEventMotion  * event,gpointer user_data )
+static gboolean prHScaler( GtkWidget * widget,GdkEvent * event,gpointer user_data )
 {
  switch ( (int)user_data )
   {

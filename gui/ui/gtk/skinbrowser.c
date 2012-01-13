@@ -90,7 +90,7 @@ int gtkFillSkinList( gchar * mdir )
  return 1;
 }
 
-static void prButton( GtkObject * object,gpointer user_data )
+static void prButton( GtkButton * button,gpointer user_data )
 {
  if ( sbSelectedSkin )
  {
@@ -109,7 +109,7 @@ static void prButton( GtkObject * object,gpointer user_data )
  HideSkinBrowser();
 }
 
-static void on_SkinList_select_row( GtkCList * clist,gint row,gint column,GdkEvent * bevent,gpointer user_data )
+static void on_SkinList_select_row( GtkCList * clist,gint row,gint column,GdkEvent * event,gpointer user_data )
 {
  gtk_clist_get_text( clist,row,0,&sbSelectedSkin );
  if ( strcmp( prev,sbSelectedSkin ) )
@@ -118,8 +118,8 @@ static void on_SkinList_select_row( GtkCList * clist,gint row,gint column,GdkEve
    uiChangeSkin( sbSelectedSkin );
    gtkActive( SkinBrowser );
   }
- if( !bevent ) return;
- if( bevent->type == GDK_2BUTTON_PRESS )
+ if( !event ) return;
+ if( event->type == GDK_2BUTTON_PRESS )
   {
    free( skinName );
    skinName=strdup( sbSelectedSkin );

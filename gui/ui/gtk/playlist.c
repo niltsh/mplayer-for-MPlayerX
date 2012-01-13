@@ -305,8 +305,6 @@ static gboolean plEvent ( GtkWidget * widget,
   GdkEventButton *bevent;
   gint row, col;
 
-  (void) user_data;
-
   bevent = (GdkEventButton *) event;
 
   if ( event->type == GDK_BUTTON_RELEASE && bevent->button == 2 )
@@ -439,14 +437,14 @@ static void scan_dir( char * path )
   }
 }
 
-static void plCTRow(GtkWidget * widget, gint row, gint column, GdkEventButton * bevent, gpointer data)
+static void plCTRow(GtkCList * clist, gint row, gint column, GdkEvent * event, gpointer user_data)
 {
  DirNodeType  * DirNode;
  GtkCTreeNode * node;
- node=gtk_ctree_node_nth( GTK_CTREE( widget ),row );
- DirNode=gtk_ctree_node_get_row_data( GTK_CTREE( widget ),node );
+ node=gtk_ctree_node_nth( GTK_CTREE( clist ),row );
+ DirNode=gtk_ctree_node_get_row_data( GTK_CTREE( clist ),node );
  current_path=DirNode->path;
- gtk_ctree_expand( GTK_CTREE( widget ),node );
+ gtk_ctree_expand( GTK_CTREE( clist ),node );
  scan_dir( DirNode->path );
  free( CLFileSelected );
  CLFileSelected=calloc( 1,NrOfEntrys * sizeof( int ) );
