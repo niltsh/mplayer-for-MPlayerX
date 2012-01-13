@@ -328,10 +328,10 @@ set_volume:
 
 
    case evMenu:
-        /*if (guiApp.menuIsPresent)   NOTE TO MYSELF: Not before mouse over and
-         {                                            cursor keys will work there.
-          gtkShow( ivHidePopUpMenu,NULL );
-          uiShowMenu( 0,0 );
+        /*if (guiApp.menuIsPresent)   NOTE TO MYSELF: Uncomment only after mouse
+         {                                            pointer and cursor keys work
+          gtkShow( ivHidePopUpMenu,NULL );            with this menu from skin as
+          uiShowMenu( 0,0 );                          they do with normal menus.
          }
         else*/ gtkShow( ivShowPopUpMenu,NULL );
         break;
