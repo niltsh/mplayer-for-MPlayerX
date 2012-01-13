@@ -146,13 +146,15 @@ void uiEventHandling( int msg,float param )
 
    case ivSetAudio:
         if ( !mpctx_get_demuxer(guiInfo.mpcontext) || audio_id == iparam ) break;
+	mp_property_do("switch_audio",M_PROPERTY_SET,&iparam,guiInfo.mpcontext);
 	audio_id=iparam;
-	goto play;
+	break;
 
    case ivSetVideo:
         if ( !mpctx_get_demuxer(guiInfo.mpcontext) || video_id == iparam ) break;
+	mp_property_do("switch_video",M_PROPERTY_SET,&iparam,guiInfo.mpcontext);
 	video_id=iparam;
-	goto play;
+	break;
 
    case ivSetSubtitle:
         mp_property_do("sub",M_PROPERTY_SET,&iparam,guiInfo.mpcontext);
