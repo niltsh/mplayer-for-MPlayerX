@@ -49,6 +49,6 @@ void uiShowMenu( int mx, int my );
 void uiMenuMouseHandle( int X, int Y, int RX, int RY );
 
 void uiPlaybarInit( void );
-void uiPlaybarShow( int x, int y );
+void uiPlaybarShow( int y );
 
 #endif /* MPLAYER_GUI_GMPLAYER_H */

@@ -227,7 +227,7 @@ potihandled:
   }
 }
 
-void uiPlaybarShow( int x, int y )
+void uiPlaybarShow( int y )
 {
  if ( !guiApp.playbarIsPresent || !gtkEnablePlayBar ) return;
  if ( !guiApp.subWindow.isFullScreen ) return;
