@@ -94,7 +94,7 @@ void uiSubMouseHandle( int Button,int X,int Y,int RX,int RY )
                     }
                    break;
             case wsPMMouseButton:
-                   uiMenuMouseHandle( X,Y,RX,RY );
+                   uiMenuMouseHandle( RX,RY );
                    break;
 	    default: uiPlaybarShow( Y ); break;
            }

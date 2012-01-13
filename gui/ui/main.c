@@ -533,7 +533,7 @@ rollerhandled:
                  uiMainRender=0;
                  break;
             case itPRMButton:
-                 uiMenuMouseHandle( X,Y,RX,RY );
+                 uiMenuMouseHandle( RX,RY );
                  break;
             case itPotmeter:
                  item->value=(float)( X - item->x ) / item->width * 100.0f;

@@ -68,7 +68,7 @@ static void uiMenuDraw( void )
  wsPutImage( &guiApp.menuWindow );
 }
 
-void uiMenuMouseHandle( int X,int Y,int RX,int RY )
+void uiMenuMouseHandle( int RX,int RY )
 {
  int x,y,i;
 
