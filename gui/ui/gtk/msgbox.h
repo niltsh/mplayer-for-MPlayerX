@@ -23,7 +23,7 @@
 
 extern GtkWidget * MessageBox;
 
-GtkWidget * create_MessageBox( int type );
+GtkWidget * create_MessageBox( void );
 void ShowMessageBox( const char * msg );
 
 #endif /* MPLAYER_GUI_MSGBOX_H */
