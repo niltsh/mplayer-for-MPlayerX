@@ -1034,7 +1034,9 @@ static const char unsharp_filt_template[] =
   "TEX b.g, coord2.zwzw, texture[%c], %s;\n"
   "DP3 b, b, {0.25, 0.25, 0.25};\n"
   "SUB b.r, a.r, b.r;\n"
-  "MAD yuv.%c, b.r, {%e}, a.r;\n";
+  // NOTE: destination component is only write mask, not swizzle
+  // so calculate result in all three components
+  "MAD yuv.%c, b.rrrr, {%e, %e, %e}, a.rrrr;\n";
 
 static const char unsharp_filt_template2[] =
   "PARAM dcoord%c = {%e, %e, %e, %e};\n"
@@ -1058,7 +1060,9 @@ static const char unsharp_filt_template2[] =
   "TEX b.g, coord2.zwzw, texture[%c], %s;\n"
   "DP4 b.r, b, {-0.1171875, -0.1171875, -0.1171875, -0.09765625};\n"
   "MAD b.r, a.r, {0.859375}, b.r;\n"
-  "MAD yuv.%c, b.r, {%e}, a.r;\n";
+  // NOTE: destination component is only write mask, not swizzle
+  // so calculate result in all three components
+  "MAD yuv.%c, b.rrrr, {%e, %e, %e}, a.rrrr;\n";
 
 static const char yuv_prog_template[] =
   "PARAM ycoef = {%e, %e, %e};\n"
@@ -1258,7 +1262,7 @@ static void add_scaler(int scaler, char **prog_pos, int *remain, char *texs,
                out_comp, 0.5 * ptw, 0.5 * pth, 0.5 * ptw, -0.5 * pth,
                in_tex, out_comp, in_tex, out_comp, in_tex,
                in_tex, ttype, in_tex, ttype, in_tex, ttype, in_tex, ttype,
-               in_tex, ttype, out_comp, strength);
+               in_tex, ttype, out_comp, strength, strength, strength);
       break;
     case YUV_SCALER_UNSHARP2:
       snprintf(*prog_pos, *remain, unsharp_filt_template2,
@@ -1268,7 +1272,7 @@ static void add_scaler(int scaler, char **prog_pos, int *remain, char *texs,
                in_tex, ttype, in_tex, ttype, in_tex, ttype, in_tex, ttype,
                in_tex, ttype, in_tex, out_comp, in_tex, out_comp,
                in_tex, ttype, in_tex, ttype, in_tex, ttype,
-               in_tex, ttype, out_comp, strength);
+               in_tex, ttype, out_comp, strength, strength, strength);
       break;
   }
   *remain -= strlen(*prog_pos);
