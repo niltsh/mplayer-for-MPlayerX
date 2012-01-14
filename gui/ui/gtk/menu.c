@@ -598,7 +598,7 @@ GtkWidget * create_PopUpMenu( void )
          int aid = ((sh_audio_t *)demuxer->a_streams[i])->aid;
          char tmp[32];
          snprintf( tmp,32,MSGTR_MENU_Track,aid );
-         AddMenuItem( window1, (const char*)empty1px_xpm, SubMenu,tmp,( aid << 16 ) + ivSetAudio );
+         AddMenuCheckItem( window1, (const char*)empty1px_xpm, SubMenu,tmp,audio_id == aid,( aid << 16 ) + ivSetAudio );
         }
      }
 
@@ -614,7 +614,7 @@ GtkWidget * create_PopUpMenu( void )
          int vid = ((sh_video_t *)demuxer->v_streams[i])->vid;
          char tmp[32];
          snprintf( tmp,32,MSGTR_MENU_Track,vid );
-         AddMenuItem( window1, (const char*)empty1px_xpm, SubMenu,tmp,( vid << 16 ) + ivSetVideo );
+         AddMenuCheckItem( window1, (const char*)empty1px_xpm, SubMenu,tmp,video_id == vid,( vid << 16 ) + ivSetVideo );
         }
      }
    }
@@ -628,7 +628,7 @@ GtkWidget * create_PopUpMenu( void )
      {
       char tmp[32];
       snprintf( tmp, 32, MSGTR_MENU_Track, i );
-      AddMenuItem( window1,(const char*)empty1px_xpm,SubMenu,tmp,( i << 16 ) + ivSetSubtitle );
+      AddMenuCheckItem( window1,(const char*)empty1px_xpm,SubMenu,tmp,guiInfo.mpcontext->global_sub_pos == i,( i << 16 ) + ivSetSubtitle );
      }
    }
 
