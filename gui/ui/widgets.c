@@ -105,7 +105,7 @@ static void gtkLoadIcon(GtkIconTheme *theme, gint size, GdkPixmap **gdkIcon, Gdk
 
         g_object_unref(pixbuf);
     } else
-        mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_ICONERROR, GUI_ICON_NAME);
+        mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_ICONERROR, GUI_ICON_NAME, size);
 
     // start up GTK which realizes the pixmaps
     gtk_main_iteration_do(FALSE);
