@@ -97,12 +97,21 @@ ASS_Track* ass_default_track(ASS_Library* library) {
 	track->PlayResY = 288;
 	track->WrapStyle = 0;
 
+	if (track->n_styles == 0) {
+		// stupid hack to stop libass to add a default track
+		// in front in ass_read_styles - this makes it impossible
+		// to completely override the "Default" track.
+		int sid = ass_alloc_style(track);
+		init_style(track->styles + sid, "MPlayerDummy", track->PlayResY);
+	}
+
 	if (ass_styles_file)
 		ass_read_styles(track, ass_styles_file, sub_cp);
 
-	if (track->n_styles == 0) {
+	if (track->default_style <= 0) {
 		int sid = ass_alloc_style(track);
 		init_style(track->styles + sid, "Default", track->PlayResY);
+		track->default_style = sid;
 	}
 
 	ass_process_force_style(track);
@@ -143,7 +152,7 @@ int ass_process_subtitle(ASS_Track* track, subtitle* sub)
 
 	event->Start = sub->start * 10;
 	event->Duration = (sub->end - sub->start) * 10;
-	event->Style = 0;
+	event->Style = track->default_style;
 
 	for (j = 0; j < sub->lines; ++j)
 		len += sub->text[j] ? strlen(sub->text[j]) : 0;
