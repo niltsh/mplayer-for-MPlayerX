@@ -31,6 +31,26 @@ static int old_h;
 static int mode_flags;
 static int reinit;
 
+/**
+ * Update vo_screenwidth and vo_screenheight.
+ *
+ * This function only works with SDL since 1.2.10 and
+ * even then only when called before the first
+ * SDL_SetVideoMode.
+ * Once there's a better way available implement an
+ * update_xinerama_info function.
+ */
+static void get_screensize(void) {
+    const SDL_VideoInfo *vi;
+    // TODO: better to use a check that gets the runtime version instead?
+    if (!SDL_VERSION_ATLEAST(1, 2, 10)) return;
+    // Keep user-provided settings
+    if (vo_screenwidth > 0 || vo_screenheight > 0) return;
+    vi = SDL_GetVideoInfo();
+    vo_screenwidth  = vi->current_w;
+    vo_screenheight = vi->current_h;
+}
+
 int vo_sdl_init(void)
 {
     reinit = 0;
@@ -49,6 +69,9 @@ int vo_sdl_init(void)
     SDL_EventState(SDL_ACTIVEEVENT, SDL_IGNORE);
     SDL_EventState(SDL_SYSWMEVENT, SDL_IGNORE);
     SDL_EventState(SDL_USEREVENT, SDL_IGNORE);
+
+    // Try to get a sensible default for fullscreen.
+    get_screensize();
 
     return 1;
 }
