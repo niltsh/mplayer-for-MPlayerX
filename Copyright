@@ -178,3 +178,10 @@ Directory:  libass/
 Copyright:  2006 Evgeniy Stepanov <eugeni.stepanov@gmail.com>
             2009 Grigori Goronzy <greg@geekmind.org>
 License:    GNU General Public License
+
+Name:       Icons
+Version:    2012-01-07
+URL:        http://www.andreasn.se
+Directory:  etc/
+Copyright:  Andreas Nilsson <andreas@andreasn.se>
+License:    GNU General Public License

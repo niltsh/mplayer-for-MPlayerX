@@ -253,9 +253,24 @@ tar xjC $RPM_BUILD_ROOT%{_datadir}/mplayer/skins --exclude=.svn -f %{SOURCE1}
 ln -s Blue $RPM_BUILD_ROOT%{_datadir}/mplayer/skins/default
 
 # Icons
+install -dm 755 $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
+install -pm 644 etc/mplayer16x16.png \
+    $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps/mplayer.png
+install -dm 755 $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/22x22/apps
+install -pm 644 etc/mplayer22x22.png \
+    $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/22x22/apps/mplayer.png
+install -dm 755 $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/24x24/apps
+install -pm 644 etc/mplayer24x24.png \
+    $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/24x24/apps/mplayer.png
+install -dm 755 $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
+install -pm 644 etc/mplayer32x32.png \
+    $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps/mplayer.png
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
-install -pm 644 etc/mplayer.png \
-    $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
+install -pm 644 etc/mplayer48x48.png \
+    $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/mplayer.png
+install -dm 755 $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/256x256/apps
+install -pm 644 etc/mplayer256x256.png \
+    $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/256x256/apps/mplayer.png
 
 # Desktop file
 desktop-file-install \
@@ -306,7 +321,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-, root, root, -)
 %{_bindir}/gmplayer
 %{_datadir}/applications/*mplayer.desktop
+%{_datadir}/icons/hicolor/16x16/apps/mplayer.png
+%{_datadir}/icons/hicolor/22x22/apps/mplayer.png
+%{_datadir}/icons/hicolor/24x24/apps/mplayer.png
+%{_datadir}/icons/hicolor/32x32/apps/mplayer.png
 %{_datadir}/icons/hicolor/48x48/apps/mplayer.png
+%{_datadir}/icons/hicolor/256x256/apps/mplayer.png
 %{_datadir}/mplayer/skins/
 
 %files -n mencoder

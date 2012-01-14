@@ -121,8 +121,18 @@ debian/mplayer-gui/usr/bin/gmplayer:
 	install -D -m 755 mplayer $(CURDIR)/debian/mplayer-gui/usr/bin/gmplayer
 	install -D -m 644 etc/mplayer.desktop \
 	                  $(CURDIR)/debian/mplayer-gui/usr/share/applications/mplayer.desktop
-	install -D -m 644 etc/mplayer.png \
-	                  $(CURDIR)/debian/mplayer-gui/usr/share/pixmaps/mplayer.png
+	install -D -m 644 etc/mplayer16x16.png \
+	                  $(CURDIR)/debian/mplayer-gui/usr/share/icons/hicolor/16x16/apps/mplayer.png
+	install -D -m 644 etc/mplayer22x22.png \
+	                  $(CURDIR)/debian/mplayer-gui/usr/share/icons/hicolor/22x22/apps/mplayer.png
+	install -D -m 644 etc/mplayer24x24.png \
+	                  $(CURDIR)/debian/mplayer-gui/usr/share/icons/hicolor/24x24/apps/mplayer.png
+	install -D -m 644 etc/mplayer32x32.png \
+	                  $(CURDIR)/debian/mplayer-gui/usr/share/icons/hicolor/32x32/apps/mplayer.png
+	install -D -m 644 etc/mplayer48x48.png \
+	                  $(CURDIR)/debian/mplayer-gui/usr/share/icons/hicolor/48x48/apps/mplayer.png
+	install -D -m 644 etc/mplayer256x256.png \
+	                  $(CURDIR)/debian/mplayer-gui/usr/share/icons/hicolor/256x256/apps/mplayer.png
 
 
 # binaries already installed via build rules as we have to build several flavors
