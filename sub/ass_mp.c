@@ -54,6 +54,41 @@ char* ass_border_color = NULL;
 char* ass_styles_file = NULL;
 int ass_hinting = ASS_HINTING_NATIVE + 4; // native hinting for unscaled osd
 
+static void init_style(ASS_Style *style, const char *name, double playres)
+{
+	double fs;
+	uint32_t c1, c2;
+	style->Name = strdup(name);
+	style->FontName = (font_fontconfig >= 0 && sub_font_name) ? strdup(sub_font_name) : (font_fontconfig >= 0 && font_name) ? strdup(font_name) : strdup("Sans");
+	style->treat_fontname_as_pattern = 1;
+
+	fs = playres * text_font_scale_factor / 100.;
+	// approximate autoscale coefficients
+	if (subtitle_autoscale == 2)
+		fs *= 1.3;
+	else if (subtitle_autoscale == 3)
+		fs *= 1.4;
+	style->FontSize = fs;
+
+	if (ass_color) c1 = strtoll(ass_color, NULL, 16);
+	else c1 = 0xFFFF0000;
+	if (ass_border_color) c2 = strtoll(ass_border_color, NULL, 16);
+	else c2 = 0x00000000;
+
+	style->PrimaryColour = c1;
+	style->SecondaryColour = c1;
+	style->OutlineColour = c2;
+	style->BackColour = 0x00000000;
+	style->BorderStyle = 1;
+	style->Alignment = 2;
+	style->Outline = 2;
+	style->MarginL = 10;
+	style->MarginR = 10;
+	style->MarginV = 5;
+	style->ScaleX = 1.;
+	style->ScaleY = 1.;
+}
+
 ASS_Track* ass_default_track(ASS_Library* library) {
 	ASS_Track* track = ass_new_track(library);
 
@@ -66,42 +101,8 @@ ASS_Track* ass_default_track(ASS_Library* library) {
 		ass_read_styles(track, ass_styles_file, sub_cp);
 
 	if (track->n_styles == 0) {
-		ASS_Style* style;
-		int sid;
-		double fs;
-		uint32_t c1, c2;
-
-		sid = ass_alloc_style(track);
-		style = track->styles + sid;
-		style->Name = strdup("Default");
-		style->FontName = (font_fontconfig >= 0 && sub_font_name) ? strdup(sub_font_name) : (font_fontconfig >= 0 && font_name) ? strdup(font_name) : strdup("Sans");
-		style->treat_fontname_as_pattern = 1;
-
-		fs = track->PlayResY * text_font_scale_factor / 100.;
-		// approximate autoscale coefficients
-		if (subtitle_autoscale == 2)
-			fs *= 1.3;
-		else if (subtitle_autoscale == 3)
-			fs *= 1.4;
-		style->FontSize = fs;
-
-		if (ass_color) c1 = strtoll(ass_color, NULL, 16);
-		else c1 = 0xFFFF0000;
-		if (ass_border_color) c2 = strtoll(ass_border_color, NULL, 16);
-		else c2 = 0x00000000;
-
-		style->PrimaryColour = c1;
-		style->SecondaryColour = c1;
-		style->OutlineColour = c2;
-		style->BackColour = 0x00000000;
-		style->BorderStyle = 1;
-		style->Alignment = 2;
-		style->Outline = 2;
-		style->MarginL = 10;
-		style->MarginR = 10;
-		style->MarginV = 5;
-		style->ScaleX = 1.;
-		style->ScaleY = 1.;
+		int sid = ass_alloc_style(track);
+		init_style(track->styles + sid, "Default", track->PlayResY);
 	}
 
 	ass_process_force_style(track);
