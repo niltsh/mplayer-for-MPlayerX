@@ -267,7 +267,10 @@ static int control(stream_t *stream, int cmd, void *arg) {
       track += start_track;
       if (track > end_track) {
         seek(stream, (p->end_sector + 1) * CD_FRAMESIZE_RAW);
-        return STREAM_ERROR;
+        // seeking beyond EOF should not be an error,
+        // the cache cannot handle changing stream pos and
+        // returning error.
+        return STREAM_OK;
       }
       seek_sector = track <= 0 ? p->start_sector
                                : p->cd->disc_toc[track].dwStartSector;
