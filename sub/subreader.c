@@ -652,6 +652,7 @@ static subtitle *sub_read_line_ssa(stream_t *st,subtitle *current, int utf16) {
 	     line3[LINE_LEN+1],
 	     *line2;
 	char *tmp;
+	const char *brace;
 
 	do {
 		if (!stream_read_line (st, line, LINE_LEN, utf16)) return NULL;
@@ -669,11 +670,13 @@ static subtitle *sub_read_line_ssa(stream_t *st,subtitle *current, int utf16) {
 
         line2=strchr(line3, ',');
         if (!line2) return NULL;
+        brace = strchr(line2, '{');
 
         for (comma = 4; comma < max_comma; comma ++)
           {
             tmp = line2;
             if(!(tmp=strchr(++tmp, ','))) break;
+            if(brace && brace < tmp) break; // comma inside command
             if(*(++tmp) == ' ') break;
                   /* a space after a comma means we're already in a sentence */
             line2 = tmp;
