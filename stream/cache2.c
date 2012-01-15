@@ -269,6 +269,8 @@ static int cache_execute_control(cache_vars_t *s) {
   int needs_flush = 0;
   static unsigned last;
   int quit = s->control == -2;
+  uint64_t old_pos = s->stream->pos;
+  int old_eof = s->stream->eof;
   if (quit || !s->stream->control) {
     s->stream_time_length = 0;
     s->stream_time_pos = MP_NOPTS_VALUE;
@@ -324,7 +326,9 @@ static int cache_execute_control(cache_vars_t *s) {
     s->read_filepos = s->stream->pos;
     s->eof = s->stream->eof;
     cache_flush(s);
-  }
+  } else if (needs_flush &&
+             (old_pos != s->stream->pos || old_eof != s->stream->eof))
+    mp_msg(MSGT_STREAM, MSGL_ERR, "STREAM_CTRL changed stream pos but returned error, this is not allowed!\n");
   s->control = -1;
   return 1;
 }
