@@ -389,6 +389,7 @@ Optional features:
   --disable-vstream      disable TiVo vstream client support [autodetect]
   --disable-pthreads     disable Posix threads support [autodetect]
   --disable-w32threads   disable Win32 threads support [autodetect]
+  --disable-os2threads   disable OS/2 threads support [autodetect]
   --enable-ass-internal  enable internal SSA/ASS subtitle support [autodetect]
   --disable-ass          disable SSA/ASS subtitle support [autodetect]
   --enable-rpath         enable runtime linker path for extra libs [disabled]
@@ -858,6 +859,7 @@ _musepack=no
 _vstream=auto
 _pthreads=auto
 _w32threads=auto
+_os2threads=auto
 _ass=auto
 ass_internal=auto
 _rpath=no
@@ -1351,6 +1353,8 @@ for ac_option do
   --disable-pthreads)   _pthreads=no    ;;
   --enable-w32threads)  _w32threads=yes ;;
   --disable-w32threads) _w32threads=no  ;;
+  --enable-os2threads)  _os2threads=yes ;;
+  --disable-os2threads) _os2threads=no  ;;
   --enable-ass)         _ass=yes        ;;
   --disable-ass)        _ass=no         ;;
   --enable-ass-internal)  ass_internal=yes ;;
@@ -3560,6 +3564,7 @@ echores "$_dynamic_plugins"
 def_threads='#define HAVE_THREADS 0'
 def_pthreads='#define HAVE_PTHREADS 0'
 def_w32threads='#define HAVE_W32THREADS 0'
+def_os2threads='#define HAVE_OS2THREADS 0'
 
 echocheck "pthread"
 if linux ; then
@@ -3614,6 +3619,20 @@ if test "$_w32threads" = auto ; then
 fi
 test "$_w32threads" = yes && def_threads='#define HAVE_THREADS 1' && def_w32threads='#define HAVE_W32THREADS 1'
 echores "$_w32threads"
+
+if os2 ; then
+echocheck "os2threads"
+if test "$_pthreads" = yes ; then
+  res_comment="using pthread instead"
+  _os2threads=no
+fi
+if test "$_os2threads" = auto ; then
+  _os2threads=no
+  os2 && _os2threads=yes
+fi
+test "$_os2threads" = yes && def_threads='#define HAVE_THREADS 1' && def_os2threads='#define HAVE_OS2THREADS 1'
+echores "$_os2threads"
+fi #if os2
 
 echocheck "rpath"
 if test "$_rpath" = yes ; then
@@ -8200,6 +8219,7 @@ CONFIG_XVMC     = $_xvmc
 CONFIG_ZLIB     = $_zlib
 
 HAVE_GNU_AS     = $gnu_as
+HAVE_OS2THREADS = $_os2threads
 HAVE_PTHREADS   = $_pthreads
 HAVE_SHM        = $_shm
 HAVE_W32THREADS = $_w32threads
@@ -8635,6 +8655,7 @@ $def_mlib
 $def_mkstemp
 $def_mmap
 $def_network
+$def_os2threads
 $def_pic
 $def_poll_h
 $def_posix_memalign
@@ -8677,7 +8698,6 @@ $def_yasm
 #define HAVE_LDBRX 0
 #define HAVE_LOCALTIME_R 0
 #define HAVE_MAPVIEWOFFILE 0
-#define HAVE_OS2THREADS 0
 #define HAVE_PPC4XX 0
 #define HAVE_STRERROR_R 0
 #define HAVE_STRPTIME 0
