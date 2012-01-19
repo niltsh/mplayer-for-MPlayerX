@@ -3608,6 +3608,8 @@ if cygwin ; then
   fi
 fi
 
+
+if win32; then
 echocheck "w32threads"
 if test "$_pthreads" = yes ; then
   res_comment="using pthread instead"
@@ -3619,6 +3621,8 @@ if test "$_w32threads" = auto ; then
 fi
 test "$_w32threads" = yes && def_threads='#define HAVE_THREADS 1' && def_w32threads='#define HAVE_W32THREADS 1'
 echores "$_w32threads"
+fi #if win32; then
+
 
 if os2 ; then
 echocheck "os2threads"
