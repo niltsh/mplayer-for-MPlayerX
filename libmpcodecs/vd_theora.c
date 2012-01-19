@@ -48,6 +48,7 @@ typedef struct theora_struct_st {
     th_dec_ctx    *tctx;
     th_comment     tc;
     th_info        ti;
+    th_ycbcr_buffer ycbcrbuf;
 } theora_struct_t;
 
 /** Convert Theora pixelformat to the corresponding IMGFMT_ */
@@ -169,7 +170,6 @@ static mp_image_t* decode(sh_video_t *sh,void* data,int len,int flags)
    theora_struct_t *context = sh->context;
    int errorCode = 0;
    ogg_packet op;
-   th_ycbcr_buffer ycbcrbuf;
    mp_image_t* mpi;
 
    // no delayed frames
@@ -189,23 +189,26 @@ static mp_image_t* decode(sh_video_t *sh,void* data,int len,int flags)
       return NULL;
    }
 
-   errorCode = th_decode_ycbcr_out (context->tctx, ycbcrbuf);
-   if (errorCode < 0)
-   {
-      mp_msg(MSGT_DECVIDEO,MSGL_ERR,"Theora decode YUVout failed: %i \n",
-	     errorCode);
-      return NULL;
-   }
+    if (errorCode != TH_DUPFRAME) {
+        errorCode = th_decode_ycbcr_out(context->tctx, context->ycbcrbuf);
+        if (errorCode != 0) {
+            mp_msg(MSGT_DECVIDEO, MSGL_ERR,
+                   "Theora decode YUVout failed: %i \n", errorCode);
+            return NULL;
+        }
+    }
 
-    mpi = mpcodecs_get_image(sh, MP_IMGTYPE_EXPORT, 0, ycbcrbuf[0].width, ycbcrbuf[0].height);
+    mpi = mpcodecs_get_image(sh, MP_IMGTYPE_EXPORT, 0,
+                             context->ycbcrbuf[0].width,
+                             context->ycbcrbuf[0].height);
     if(!mpi) return NULL;
 
-    mpi->planes[0]=ycbcrbuf[0].data;
-    mpi->stride[0]=ycbcrbuf[0].stride;
-    mpi->planes[1]=ycbcrbuf[1].data;
-    mpi->stride[1]=ycbcrbuf[1].stride;
-    mpi->planes[2]=ycbcrbuf[2].data;
-    mpi->stride[2]=ycbcrbuf[2].stride;
+    mpi->planes[0] = context->ycbcrbuf[0].data;
+    mpi->stride[0] = context->ycbcrbuf[0].stride;
+    mpi->planes[1] = context->ycbcrbuf[1].data;
+    mpi->stride[1] = context->ycbcrbuf[1].stride;
+    mpi->planes[2] = context->ycbcrbuf[2].data;
+    mpi->stride[2] = context->ycbcrbuf[2].stride;
 
     return mpi;
 }
