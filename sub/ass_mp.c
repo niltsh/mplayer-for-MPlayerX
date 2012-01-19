@@ -303,14 +303,22 @@ static void message_callback(int level, const char *format, va_list va, void *ct
 	}
 }
 
+/**
+ * Reset all per-file settings for next file.
+ */
+void ass_mp_reset_config(ASS_Library *l) {
+	ass_set_extract_fonts(l, extract_embedded_fonts);
+	ass_set_style_overrides(l, ass_force_style_list);
+	ass_force_reload = 1;
+}
+
 ASS_Library* ass_init(void) {
 	ASS_Library* priv;
 	char* path = get_path("fonts");
 	priv = ass_library_init();
 	ass_set_message_cb(priv, message_callback, NULL);
 	ass_set_fonts_dir(priv, path);
-	ass_set_extract_fonts(priv, extract_embedded_fonts);
-	ass_set_style_overrides(priv, ass_force_style_list);
+	ass_mp_reset_config(priv);
 	free(path);
 	return priv;
 }

@@ -52,6 +52,7 @@ ASS_Track* ass_read_stream(ASS_Library* library, const char *fname, char *charse
 
 void ass_configure(ASS_Renderer* priv, int w, int h, int hinting);
 void ass_configure_fonts(ASS_Renderer* priv);
+void ass_mp_reset_config(ASS_Library *l);
 ASS_Library* ass_init(void);
 
 typedef struct {

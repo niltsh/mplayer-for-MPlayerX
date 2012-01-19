@@ -638,6 +638,16 @@ play_next_file:
 	mp_msg(MSGT_CPLAYER, MSGL_FATAL, MSGTR_MissingFilename);
 	mencoder_exit(1,NULL);
   }
+
+  if (vobsub_name)
+    vo_vobsub = vobsub_open(vobsub_name, spudec_ifo, 1, &vo_spudec);
+#ifdef CONFIG_ASS
+  // must be before demuxer open, since the settings are
+  // used in generating the ASSTrack
+  if (ass_enabled && ass_library)
+    ass_mp_reset_config(ass_library);
+#endif
+
   stream=open_stream(filename,0,&file_format);
 
   if(!stream){
@@ -768,9 +778,6 @@ if(sh_audio && (out_audio_codec || seek_to_sec || !sh_audio->wf || playback_spee
         playback_speed = (float)new_srate / (float)sh_audio->samplerate;
     }
   }
-
-  if (vobsub_name)
-    vo_vobsub = vobsub_open(vobsub_name, spudec_ifo, 1, &vo_spudec);
 
 // set up video encoder:
 
