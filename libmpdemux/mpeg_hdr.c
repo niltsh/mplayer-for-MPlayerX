@@ -309,7 +309,7 @@ static unsigned int read_golomb(unsigned char *buffer, unsigned int *init)
   return v2;
 }
 
-inline static int read_golomb_s(unsigned char *buffer, unsigned int *init)
+static inline int read_golomb_s(unsigned char *buffer, unsigned int *init)
 {
   unsigned int v = read_golomb(buffer, init);
   return (v & 1) ? ((v + 1) >> 1) : -(v >> 1);

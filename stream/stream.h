@@ -191,7 +191,8 @@ int cache_stream_seek_long(stream_t *s,off_t pos);
 #endif
 int stream_write_buffer(stream_t *s, unsigned char *buf, int len);
 
-inline static int stream_read_char(stream_t *s){
+static inline int stream_read_char(stream_t *s)
+{
   return (s->buf_pos<s->buf_len)?s->buffer[s->buf_pos++]:
     (cache_stream_fill_buffer(s)?s->buffer[s->buf_pos++]:-256);
 //  if(s->buf_pos<s->buf_len) return s->buffer[s->buf_pos++];
@@ -200,14 +201,16 @@ inline static int stream_read_char(stream_t *s){
 //  return 0; // EOF
 }
 
-inline static unsigned int stream_read_word(stream_t *s){
+static inline unsigned int stream_read_word(stream_t *s)
+{
   int x,y;
   x=stream_read_char(s);
   y=stream_read_char(s);
   return (x<<8)|y;
 }
 
-inline static unsigned int stream_read_dword(stream_t *s){
+static inline unsigned int stream_read_dword(stream_t *s)
+{
   unsigned int y;
   y=stream_read_char(s);
   y=(y<<8)|stream_read_char(s);
@@ -218,14 +221,16 @@ inline static unsigned int stream_read_dword(stream_t *s){
 
 #define stream_read_fourcc stream_read_dword_le
 
-inline static unsigned int stream_read_word_le(stream_t *s){
+static inline unsigned int stream_read_word_le(stream_t *s)
+{
   int x,y;
   x=stream_read_char(s);
   y=stream_read_char(s);
   return (y<<8)|x;
 }
 
-inline static unsigned int stream_read_dword_le(stream_t *s){
+static inline unsigned int stream_read_dword_le(stream_t *s)
+{
   unsigned int y;
   y=stream_read_char(s);
   y|=stream_read_char(s)<<8;
@@ -234,7 +239,8 @@ inline static unsigned int stream_read_dword_le(stream_t *s){
   return y;
 }
 
-inline static uint64_t stream_read_qword(stream_t *s){
+static inline uint64_t stream_read_qword(stream_t *s)
+{
   uint64_t y;
   y = stream_read_char(s);
   y=(y<<8)|stream_read_char(s);
@@ -247,14 +253,16 @@ inline static uint64_t stream_read_qword(stream_t *s){
   return y;
 }
 
-inline static uint64_t stream_read_qword_le(stream_t *s){
+static inline uint64_t stream_read_qword_le(stream_t *s)
+{
   uint64_t y;
   y = stream_read_dword_le(s);
   y|=(uint64_t)stream_read_dword_le(s)<<32;
   return y;
 }
 
-inline static unsigned int stream_read_int24(stream_t *s){
+static inline unsigned int stream_read_int24(stream_t *s)
+{
   unsigned int y;
   y = stream_read_char(s);
   y=(y<<8)|stream_read_char(s);
@@ -262,7 +270,8 @@ inline static unsigned int stream_read_int24(stream_t *s){
   return y;
 }
 
-inline static int stream_read(stream_t *s,char* mem,int total){
+static inline int stream_read(stream_t *s, char *mem, int total)
+{
   int len=total;
   while(len>0){
     int x;
@@ -280,20 +289,24 @@ inline static int stream_read(stream_t *s,char* mem,int total){
 }
 
 uint8_t *stream_read_until(stream_t *s, uint8_t *mem, int max, uint8_t term, int utf16);
-inline static uint8_t *stream_read_line(stream_t *s, uint8_t *mem, int max, int utf16)
+static inline uint8_t *stream_read_line(stream_t *s, uint8_t *mem,
+                                        int max, int utf16)
 {
   return stream_read_until(s, mem, max, '\n', utf16);
 }
 
-inline static int stream_eof(stream_t *s){
+static inline int stream_eof(stream_t *s)
+{
   return s->eof;
 }
 
-inline static off_t stream_tell(stream_t *s){
+static inline off_t stream_tell(stream_t *s)
+{
   return s->pos+s->buf_pos-s->buf_len;
 }
 
-inline static int stream_seek(stream_t *s,off_t pos){
+static inline int stream_seek(stream_t *s, off_t pos)
+{
 
   mp_dbg(MSGT_DEMUX, MSGL_DBG3, "seek to 0x%"PRIX64"\n", pos);
 
@@ -314,7 +327,8 @@ inline static int stream_seek(stream_t *s,off_t pos){
   return cache_stream_seek_long(s,pos);
 }
 
-inline static int stream_skip(stream_t *s,off_t len){
+static inline int stream_skip(stream_t *s, off_t len)
+{
   if( len<0 || (len>2*STREAM_BUFFER_SIZE && (s->flags & MP_STREAM_SEEK_FW)) ) {
     // negative or big skip!
     return stream_seek(s,stream_tell(s)+len);

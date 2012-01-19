@@ -351,7 +351,7 @@ static void tdfx_vid_get_config(tdfx_vid_config_t* cfg) {
   cfg->screen_start = tdfx_inl(VIDDESKSTART);
 }
 
-inline static u32 tdfx_vid_make_format(int src,u16 stride,u32 fmt) {
+static inline u32 tdfx_vid_make_format(int src, u16 stride, u32 fmt) {
   u32 r = stride & 0xFFF3;
   u32 tdfx_fmt = 0;
 

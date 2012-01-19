@@ -982,7 +982,7 @@ static int nv_get_caps(vidix_capability_t *to){
     return 0;
 }
 
-inline static int is_supported_fourcc(uint32_t fourcc)
+static inline int is_supported_fourcc(uint32_t fourcc)
 {
 	if	(fourcc == IMGFMT_UYVY || fourcc == IMGFMT_YUY2)
 		return 1;

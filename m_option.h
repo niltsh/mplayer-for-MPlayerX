@@ -490,13 +490,13 @@ struct m_option {
 const m_option_t* m_option_list_find(const m_option_t* list,const char* name);
 
 /// Helper to parse options, see \ref m_option_type::parse.
-inline static int
+static inline int
 m_option_parse(const m_option_t* opt,const char *name, const char *param, void* dst, int src) {
   return opt->type->parse(opt,name,param,dst,src);
 }
 
 /// Helper to print options, see \ref m_option_type::print.
-inline static  char*
+static inline  char*
 m_option_print(const m_option_t* opt, const void* val_ptr) {
   if(opt->type->print)
     return opt->type->print(opt,val_ptr);
@@ -505,14 +505,14 @@ m_option_print(const m_option_t* opt, const void* val_ptr) {
 }
 
 /// Helper around \ref m_option_type::save.
-inline static  void
+static inline  void
 m_option_save(const m_option_t* opt,void* dst, const void* src) {
   if(opt->type->save)
     opt->type->save(opt,dst,src);
 }
 
 /// Helper around \ref m_option_type::set.
-inline static  void
+static inline  void
 m_option_set(const m_option_t* opt,void* dst, const void* src) {
   if(opt->type->set)
     opt->type->set(opt,dst,src);
@@ -528,7 +528,7 @@ m_option_copy(const m_option_t* opt,void* dst, const void* src) {
 }
 
 /// Helper around \ref m_option_type::free.
-inline static void
+static inline void
 m_option_free(const m_option_t* opt,void* dst) {
   if(opt->type->free)
     opt->type->free(dst);

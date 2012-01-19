@@ -374,7 +374,7 @@ int menu_read_key(menu_t* menu,int cmd) {
 
 typedef void (*draw_alpha_f)(int w,int h, unsigned char* src, unsigned char *srca, int srcstride, unsigned char* dstbase,int dststride);
 
-inline static draw_alpha_f get_draw_alpha(uint32_t fmt) {
+static inline draw_alpha_f get_draw_alpha(uint32_t fmt) {
   switch(fmt) {
   case IMGFMT_BGR12:
   case IMGFMT_RGB12:
