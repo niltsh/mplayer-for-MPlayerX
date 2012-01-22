@@ -83,8 +83,10 @@ static const struct {
 } type2format[] = {
   { "bmp",  mmioFOURCC('b', 'm', 'p', ' ') },
   { "dpx",  mmioFOURCC('d', 'p', 'x', ' ') },
+  { "j2c",  mmioFOURCC('M', 'J', '2', 'C') },
   { "j2k",  mmioFOURCC('M', 'J', '2', 'C') },
   { "jp2",  mmioFOURCC('M', 'J', '2', 'C') },
+  { "jpc",  mmioFOURCC('M', 'J', '2', 'C') },
   { "jpeg", mmioFOURCC('I', 'J', 'P', 'G') },
   { "jpg",  mmioFOURCC('I', 'J', 'P', 'G') },
   { "jls",  mmioFOURCC('I', 'J', 'P', 'G') },
@@ -95,6 +97,7 @@ static const struct {
   { "ptx",  mmioFOURCC('p', 't', 'x', ' ') },
   { "tga",  mmioFOURCC('M', 'T', 'G', 'A') },
   { "tif",  mmioFOURCC('t', 'i', 'f', 'f') },
+  { "tiff",  mmioFOURCC('t', 'i', 'f', 'f') },
   { "sgi",  mmioFOURCC('S', 'G', 'I', '1') },
   { "sun",  mmioFOURCC('s', 'u', 'n', ' ') },
   { "ras",  mmioFOURCC('s', 'u', 'n', ' ') },
