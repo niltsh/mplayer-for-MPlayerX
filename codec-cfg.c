@@ -213,6 +213,7 @@ static const struct {
     {"BGR16",       IMGFMT_BGR16},
     {"BGR24",       IMGFMT_BGR24},
     {"BGR32",       IMGFMT_BGR32},
+    {"BGRA",        IMGFMT_BGRA},
     {"RGB1",        IMGFMT_RGB1},
     {"BGR1",        IMGFMT_BGR1},
     {"GBR24P",      IMGFMT_GBR24P},
