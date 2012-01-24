@@ -61,6 +61,8 @@ static const struct {
 //     note that most other PIX_FMT values are enums
 #ifdef PIX_FMT_0RGB32
     {IMGFMT_BGR32,   PIX_FMT_0RGB32},
+    {IMGFMT_BGRA,    PIX_FMT_BGR0},
+    {IMGFMT_RGBA,    PIX_FMT_RGB0},
 #endif
 #if LIBAVUTIL_VERSION_INT >= AV_VERSION_INT(51, 20, 1)
     {IMGFMT_GBR24P,  PIX_FMT_GBRP},
