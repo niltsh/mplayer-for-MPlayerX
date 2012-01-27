@@ -179,8 +179,8 @@ static int convert_ARGB(guiImage *img)
 
         mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 32 bpp conversion size: %lu\n", img->ImageSize);
 
-        for (c = 0, i = 0; c < img->ImageSize; c += 4, i += 3)
-            *(uint32_t *)&img->Image[c] = ALPHA_OPAQUE | AV_RB24(&orgImage[i]);
+        for (i = 0, c = 0; i < img->ImageSize; i += 4, c += 3)
+            *(uint32_t *)&img->Image[i] = ALPHA_OPAQUE | AV_RB24(&orgImage[c]);
 
         free(orgImage);
     } else if (img->Bpp == 32) {
