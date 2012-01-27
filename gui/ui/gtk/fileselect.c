@@ -361,6 +361,7 @@ void ShowFileSelect( int type,int modal )
  gtk_combo_set_popdown_strings( GTK_COMBO( fsCombo4 ),fsTopList_items );
 
  gtk_widget_grab_focus( fsFNameList );
+ if (fsLastFNameListSelected + 1 > ((GtkCList *)fsFNameList)->rows) fsLastFNameListSelected = 0;
  ((GtkCList *)fsFNameList)->focus_row = fsLastFNameListSelected;
  gtk_clist_select_row( GTK_CLIST( fsFNameList ),fsLastFNameListSelected,1 );
  fsLastFNameListSelected = 0;
