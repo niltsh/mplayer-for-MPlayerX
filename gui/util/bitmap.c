@@ -114,8 +114,7 @@ static int pngRead(const char *fname, guiImage *img)
         img->Bpp = 24;
         break;
 
-    case PIX_FMT_BGRA:
-    case PIX_FMT_ARGB:
+    case PIX_FMT_RGBA:
         img->Bpp = 32;
         break;
 
@@ -151,15 +150,16 @@ static int pngRead(const char *fname, guiImage *img)
 }
 
 /**
- * @brief Convert a 24-bit color depth image into an 32-bit one.
+ * @brief Convert a 24-bit RGB or 32-bit RGBA image into a 32-bit ARGB image.
  *
  * @param img image to be converted
  *
  * @return 1 (ok) or 0 (error)
  *
- * @note This is an in-place conversion, new memory will be allocated for @a img.
+ * @note This is an in-place conversion,
+ *       new memory will be allocated for @a img if necessary.
  */
-static int Convert24to32(guiImage *img)
+static int convert_ARGB(guiImage *img)
 {
     char *orgImage;
     unsigned long i, c;
@@ -183,7 +183,13 @@ static int Convert24to32(guiImage *img)
             *(uint32_t *)&img->Image[c] = ALPHA_OPAQUE | AV_RB24(&orgImage[i]);
 
         free(orgImage);
-    }
+    } else if (img->Bpp == 32) {
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 32 bpp ARGB conversion\n");
+
+        for (i = 0; i < img->ImageSize; i += 4)
+            *(uint32_t *)&img->Image[i] = (img->Image[i + 3] << 24) | AV_RB24(&img->Image[i]);
+    } else
+        return 0;
 
     return 1;
 }
@@ -221,7 +227,7 @@ static const char *fExist(const char *fname)
  * @param img pointer suitable to store the image data
  *
  * @return 0 (ok), -1 (color depth too low), -2 (not accessible),
- *                 -5 (#pngRead() error) or -8 (#Convert24to32() error)
+ *                 -5 (#pngRead() error) or -8 (#convert_ARGB() error)
  */
 int bpRead(const char *fname, guiImage *img)
 {
@@ -244,7 +250,7 @@ int bpRead(const char *fname, guiImage *img)
         return -1;
     }
 
-    if (!Convert24to32(img))
+    if (!convert_ARGB(img))
         return -8;
 
     return 0;
