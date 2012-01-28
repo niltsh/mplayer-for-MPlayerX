@@ -214,7 +214,7 @@ const m_option_t lavcopts_conf[]={
 	{"vcelim", &lavc_param_chroma_elim_threshold, CONF_TYPE_INT, CONF_RANGE, -99, 99, NULL},
 	{"vpsize", &lavc_param_packet_size, CONF_TYPE_INT, CONF_RANGE, 0, 100000000, NULL},
 	{"vstrict", &lavc_param_strict, CONF_TYPE_INT, CONF_RANGE, -99, 99, NULL},
-	{"vdpart", &lavc_param_data_partitioning, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_PART, NULL},
+	{"vdpart", &lavc_param_data_partitioning, CONF_TYPE_FLAG, 0, 0, 1, NULL},
 	{"keyint", &lavc_param_keyint, CONF_TYPE_INT, 0, 0, 0, NULL},
 	{"gray", &lavc_param_gray, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_PART, NULL},
 	{"mpeg_quant", &lavc_param_mpeg_quant, CONF_TYPE_FLAG, 0, 0, 1, NULL},
@@ -349,6 +349,7 @@ static int config(struct vf_instance *vf,
 	unsigned int flags, unsigned int outfmt){
     int size, i;
     char *p;
+    AVDictionary *opts = NULL;
 
     mux_v->bih->biWidth=width;
     mux_v->bih->biHeight=height;
@@ -567,7 +568,8 @@ static int config(struct vf_instance *vf,
     lavc_venc_context->flags|= lavc_param_obmc;
     lavc_venc_context->flags|= lavc_param_loop;
     lavc_venc_context->flags|= lavc_param_v4mv ? CODEC_FLAG_4MV : 0;
-    lavc_venc_context->flags|= lavc_param_data_partitioning;
+    if (lavc_param_data_partitioning)
+        av_dict_set(&opts, "data_partitioning", "1", 0);
     lavc_venc_context->flags|= lavc_param_cbp;
     lavc_venc_context->flags|= lavc_param_mv0;
     lavc_venc_context->flags|= lavc_param_qp_rd;
@@ -686,10 +688,11 @@ static int config(struct vf_instance *vf,
     lavc_venc_context->thread_count = lavc_param_threads;
     lavc_venc_context->thread_type = FF_THREAD_FRAME | FF_THREAD_SLICE;
 
-    if (avcodec_open2(lavc_venc_context, vf->priv->codec, NULL) != 0) {
+    if (avcodec_open2(lavc_venc_context, vf->priv->codec, &opts) != 0) {
 	mp_msg(MSGT_MENCODER,MSGL_ERR,MSGTR_CantOpenCodec);
 	return 0;
     }
+    av_dict_free(&opts);
 
     if (lavc_venc_context->codec->encode == NULL) {
 	mp_msg(MSGT_MENCODER,MSGL_ERR,"avcodec init failed (ctx->codec->encode == NULL)!\n");
