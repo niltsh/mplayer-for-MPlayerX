@@ -825,16 +825,16 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
            all_frametime, (double)(len*8)/sh->frametime/1000.0,
            (double)(all_len*8)/all_frametime/1000.0);
         switch(pic->pict_type){
-        case FF_I_TYPE:
+        case AV_PICTURE_TYPE_I:
             fprintf(fvstats, "type= I\n");
             break;
-        case FF_P_TYPE:
+        case AV_PICTURE_TYPE_P:
             fprintf(fvstats, "type= P\n");
             break;
-        case FF_S_TYPE:
+        case AV_PICTURE_TYPE_S:
             fprintf(fvstats, "type= S\n");
             break;
-        case FF_B_TYPE:
+        case AV_PICTURE_TYPE_B:
             fprintf(fvstats, "type= B\n");
             break;
         default:
