@@ -26,6 +26,16 @@
 #include "m_struct.h"
 #include "av_helpers.h"
 
+#ifndef URL_RDONLY
+#include "libavformat/url.h"
+#define url_read_complete ffurl_read_complete
+#define url_write ffurl_write
+#define url_seek ffurl_seek
+#define url_filesize ffurl_size
+#define url_close ffurl_close
+#define url_open(c, n, f) ffurl_open(c, n, f, NULL, NULL)
+#endif
+
 static int fill_buffer(stream_t *s, char *buffer, int max_len)
 {
     int r = url_read_complete(s->priv, buffer, max_len);
@@ -51,6 +61,7 @@ static int seek(stream_t *s, off_t newpos)
 
 static int control(stream_t *s, int cmd, void *arg)
 {
+    URLContext *ctx = s->priv;
     int64_t size, ts;
     double pts;
     switch(cmd) {
@@ -64,7 +75,13 @@ static int control(stream_t *s, int cmd, void *arg)
     case STREAM_CTRL_SEEK_TO_TIME:
         pts = *(double *)arg;
         ts = pts * AV_TIME_BASE;
+#ifdef URL_RDONLY
         ts = av_url_read_seek(s->priv, -1, ts, 0);
+#else
+        if (!ctx->prot->url_read_seek)
+            break;
+        ts = ctx->prot->url_read_seek(s->priv, -1, ts, 0);
+#endif
         if (ts >= 0)
             return 1;
         break;
@@ -90,9 +107,9 @@ static int open_f(stream_t *stream, int mode, void *opts, int *file_format)
 
     init_avformat();
     if (mode == STREAM_READ)
-        flags = URL_RDONLY;
+        flags = AVIO_FLAG_READ;
     else if (mode == STREAM_WRITE)
-        flags = URL_WRONLY;
+        flags = AVIO_FLAG_WRITE;
     else {
         mp_msg(MSGT_OPEN, MSGL_ERR, "[ffmpeg] Unknown open mode %d\n", mode);
         res = STREAM_UNSUPPORTED;
