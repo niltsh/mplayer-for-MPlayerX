@@ -769,7 +769,7 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
     pic->linesize[0]=mpi->stride[0];
     pic->linesize[1]=mpi->stride[1];
     pic->linesize[2]=mpi->stride[2];
-    pic->pict_type = is_forced_key_frame(pts) ? FF_I_TYPE : 0;
+    pic->pict_type = is_forced_key_frame(pts) ? AV_PICTURE_TYPE_I : 0;
 
     if(lavc_param_interlaced_dct){
         if((mpi->fields & MP_IMGFIELD_ORDERED) && (mpi->fields & MP_IMGFIELD_INTERLACED))
