@@ -378,7 +378,7 @@ int muxer_init_muxer_lavf(muxer_t *muxer)
 
 	priv->oc->pb = avio_alloc_context(priv->buffer, BIO_BUFFER_SIZE, 1, muxer, NULL, mp_write, mp_seek);
 	if ((muxer->stream->flags & MP_STREAM_SEEK) != MP_STREAM_SEEK)
-            priv->oc->pb->is_streamed = 1;
+            priv->oc->pb->seekable = 0;
 
 	muxer->priv = (void *) priv;
 	muxer->cont_new_stream = &lavf_new_stream;
