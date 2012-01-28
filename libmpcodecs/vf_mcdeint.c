@@ -186,6 +186,7 @@ static int config(struct vf_instance *vf,
 
         for(i=0; i<3; i++){
             AVCodecContext *avctx_enc;
+            AVDictionary *opts;
 #if 0
             int is_chroma= !!i;
             int w= ((width  + 31) & (~31))>>is_chroma;
@@ -206,7 +207,7 @@ static int config(struct vf_instance *vf,
             avctx_enc->flags = CODEC_FLAG_QSCALE | CODEC_FLAG_LOW_DELAY;
             avctx_enc->strict_std_compliance = FF_COMPLIANCE_EXPERIMENTAL;
             avctx_enc->global_quality= 1;
-            avctx_enc->flags2= CODEC_FLAG2_MEMC_ONLY;
+            av_dict_set(&opts, "memc_only", "1", 0);
             avctx_enc->me_cmp=
             avctx_enc->me_sub_cmp= FF_CMP_SAD; //SSE;
             avctx_enc->mb_cmp= FF_CMP_SSE;
@@ -224,7 +225,8 @@ static int config(struct vf_instance *vf,
                 avctx_enc->flags |= CODEC_FLAG_QPEL;
             }
 
-            avcodec_open(avctx_enc, enc);
+            avcodec_open2(avctx_enc, enc, &opts);
+            av_dict_free(&opts);
 
         }
         vf->priv->frame= avcodec_alloc_frame();
