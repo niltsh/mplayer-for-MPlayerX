@@ -147,12 +147,13 @@ static muxer_stream_t* lavf_new_stream(muxer_t *muxer, int type)
 	}
 	stream->priv = spriv;
 
-	spriv->avstream = av_new_stream(priv->oc, 1);
+	spriv->avstream = avformat_new_stream(priv->oc, NULL);
 	if(!spriv->avstream)
 	{
 		mp_msg(MSGT_MUXER, MSGL_ERR, "Could not allocate avstream, EXIT.\n");
 		return NULL;
 	}
+	spriv->avstream->id = 1;
 
 	ctx = spriv->avstream->codec;
 	ctx->codec_id = CODEC_ID_NONE;
