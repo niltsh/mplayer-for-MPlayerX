@@ -478,7 +478,6 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
 
 static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
     AVFormatContext *avfc;
-    const AVOption *opt;
     AVDictionaryEntry *t = NULL;
     lavf_priv_t *priv= demuxer->priv;
     int i;
@@ -496,12 +495,12 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
         avfc->flags |= AVFMT_FLAG_IGNIDX;
 
     if(opt_probesize) {
-        opt = av_set_int(avfc, "probesize", opt_probesize);
-        if(!opt) mp_msg(MSGT_HEADER,MSGL_ERR, "demux_lavf, couldn't set option probesize to %u\n", opt_probesize);
+        if (av_opt_set_int(avfc, "probesize", opt_probesize, 0) < 0)
+            mp_msg(MSGT_HEADER,MSGL_ERR, "demux_lavf, couldn't set option probesize to %u\n", opt_probesize);
     }
     if(opt_analyzeduration) {
-        opt = av_set_int(avfc, "analyzeduration", opt_analyzeduration * AV_TIME_BASE);
-        if(!opt) mp_msg(MSGT_HEADER,MSGL_ERR, "demux_lavf, couldn't set option analyzeduration to %u\n", opt_analyzeduration);
+        if (av_opt_set_int(avfc, "analyzeduration", opt_analyzeduration * AV_TIME_BASE, 0) < 0)
+            mp_msg(MSGT_HEADER,MSGL_ERR, "demux_lavf, couldn't set option analyzeduration to %u\n", opt_analyzeduration);
     }
 
     if(opt_avopt){
