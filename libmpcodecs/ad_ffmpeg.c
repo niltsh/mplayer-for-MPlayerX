@@ -139,7 +139,7 @@ static int init(sh_audio_t *sh_audio)
     }
 
     /* open it */
-    if (avcodec_open2(lavc_context, lavc_codec, opts) < 0) {
+    if (avcodec_open2(lavc_context, lavc_codec, &opts) < 0) {
         mp_msg(MSGT_DECAUDIO,MSGL_ERR, MSGTR_CantOpenCodec);
         return 0;
     }
