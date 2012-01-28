@@ -266,7 +266,20 @@ static int init(sh_video_t *sh){
     avctx->coded_width = sh->disp_w;
     avctx->coded_height= sh->disp_h;
     avctx->workaround_bugs= lavc_param_workaround_bugs;
-    avctx->error_recognition= lavc_param_error_resilience;
+    switch (lavc_param_error_resilience) {
+    case 5:
+        avctx->err_recognition |= AV_EF_EXPLODE | AV_EF_COMPLIANT | AV_EF_CAREFUL;
+        break;
+    case 4:
+    case 3:
+        avctx->err_recognition |= AV_EF_AGGRESSIVE;
+        // Fallthrough
+    case 2:
+        avctx->err_recognition |= AV_EF_COMPLIANT;
+        // Fallthrough
+    case 1:
+        avctx->err_recognition |= AV_EF_CAREFUL;
+    }
     lavc_param_gray|= CODEC_FLAG_GRAY;
 #ifdef CODEC_FLAG2_SHOW_ALL
     if(!lavc_param_wait_keyframe) avctx->flags2 |= CODEC_FLAG2_SHOW_ALL;
