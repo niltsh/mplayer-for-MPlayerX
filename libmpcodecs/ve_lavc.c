@@ -264,19 +264,11 @@ const m_option_t lavcopts_conf[]={
 	{"preme", &lavc_param_pre_me, CONF_TYPE_INT, CONF_RANGE, 0, 2000, NULL},
 	{"subq", &lavc_param_me_subpel_quality, CONF_TYPE_INT, CONF_RANGE, 0, 8, NULL},
 	{"me_range", &lavc_param_me_range, CONF_TYPE_INT, CONF_RANGE, 0, 16000, NULL},
-#ifdef CODEC_FLAG_AC_PRED
 	{"aic", &lavc_param_aic, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_AC_PRED, NULL},
 	{"umv", &lavc_param_umv, CONF_TYPE_FLAG, 0, 0, 1, NULL},
-#endif
-#ifdef CODEC_FLAG_H263P_AIV
-	{"aiv", &lavc_param_aiv, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_H263P_AIV, NULL},
-#endif
-#ifdef CODEC_FLAG_OBMC
-	{"obmc", &lavc_param_obmc, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_OBMC, NULL},
-#endif
-#ifdef CODEC_FLAG_LOOP_FILTER
+	{"aiv", &lavc_param_aiv, CONF_TYPE_FLAG, 0, 0, 1, NULL},
+	{"obmc", &lavc_param_obmc, CONF_TYPE_FLAG, 0, 0, 1, NULL},
 	{"loop", &lavc_param_loop, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_LOOP_FILTER, NULL},
-#endif
 	{"ibias", &lavc_param_ibias, CONF_TYPE_INT, CONF_RANGE, -512, 512, NULL},
 	{"pbias", &lavc_param_pbias, CONF_TYPE_INT, CONF_RANGE, -512, 512, NULL},
 	{"coder", &lavc_param_coder, CONF_TYPE_INT, CONF_RANGE, 0, 10, NULL},
@@ -286,24 +278,12 @@ const m_option_t lavcopts_conf[]={
 	{"cbp", &lavc_param_cbp, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_CBP_RD, NULL},
 	{"mv0", &lavc_param_mv0, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_MV0, NULL},
 	{"nr", &lavc_param_noise_reduction, CONF_TYPE_INT, CONF_RANGE, 0, 1000000, NULL},
-#ifdef CODEC_FLAG_QP_RD
 	{"qprd", &lavc_param_qp_rd, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_QP_RD, NULL},
-#endif
-#ifdef CODEC_FLAG_H263P_SLICE_STRUCT
-	{"ss", &lavc_param_ss, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_H263P_SLICE_STRUCT, NULL},
-#endif
-#ifdef CODEC_FLAG_ALT_SCAN
-	{"alt", &lavc_param_alt, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_ALT_SCAN, NULL},
-#endif
-#ifdef CODEC_FLAG_INTERLACED_ME
+	{"ss", &lavc_param_ss, CONF_TYPE_FLAG, 0, 0, 1, NULL},
+	{"alt", &lavc_param_alt, CONF_TYPE_FLAG, 0, 0, 1, NULL},
 	{"ilme", &lavc_param_ilme, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_INTERLACED_ME, NULL},
-#endif
-#ifdef CODEC_FLAG_CLOSED_GOP
 	{"cgop", &lavc_param_closed_gop, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_CLOSED_GOP, NULL},
-#endif
-#ifdef CODEC_FLAG_GMC
 	{"gmc", &lavc_param_gmc, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_GMC, NULL},
-#endif
 	{"dc", &lavc_param_dc_precision, CONF_TYPE_INT, CONF_RANGE, 8, 11, NULL},
 	{"border_mask", &lavc_param_border_masking, CONF_TYPE_FLOAT, CONF_RANGE, 0.0, 1.0, NULL},
 	{"inter_threshold", &lavc_param_inter_threshold, CONF_TYPE_INT, CONF_RANGE, -1000000, 1000000, NULL},
@@ -563,10 +543,12 @@ static int config(struct vf_instance *vf,
     lavc_venc_context->flags|= lavc_param_lowdelay;
     lavc_venc_context->flags|= lavc_param_bit_exact;
     lavc_venc_context->flags|= lavc_param_aic;
-    lavc_venc_context->flags|= lavc_param_aiv;
+    if (lavc_param_aiv)
+        av_dict_set(&opts, "aiv", "1", 0);
     if (lavc_param_umv)
         av_dict_set(&opts, "umv", "1", 0);
-    lavc_venc_context->flags|= lavc_param_obmc;
+    if (lavc_param_obmc)
+        av_dict_set(&opts, "obmc", "1", 0);
     lavc_venc_context->flags|= lavc_param_loop;
     lavc_venc_context->flags|= lavc_param_v4mv ? CODEC_FLAG_4MV : 0;
     if (lavc_param_data_partitioning)
@@ -574,8 +556,10 @@ static int config(struct vf_instance *vf,
     lavc_venc_context->flags|= lavc_param_cbp;
     lavc_venc_context->flags|= lavc_param_mv0;
     lavc_venc_context->flags|= lavc_param_qp_rd;
-    lavc_venc_context->flags|= lavc_param_ss;
-    lavc_venc_context->flags|= lavc_param_alt;
+    if (lavc_param_ss)
+        av_dict_set(&opts, "structured_slices", "1", 0);
+    if (lavc_param_alt)
+        av_dict_set(&opts, "alternate_scan", "1", 0);
     lavc_venc_context->flags|= lavc_param_ilme;
     lavc_venc_context->flags|= lavc_param_gmc;
 #ifdef CODEC_FLAG_CLOSED_GOP
