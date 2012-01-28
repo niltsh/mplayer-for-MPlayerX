@@ -62,8 +62,6 @@ typedef struct {
     int do_dr1;
     int vo_initialized;
     int best_csp;
-    int b_age;
-    int ip_age[2];
     int qp_stat[32];
     double qp_sum;
     double inv_qp_sum;
@@ -245,7 +243,6 @@ static int init(sh_video_t *sh){
 
     if(lavc_codec->capabilities&CODEC_CAP_DR1 && !do_vis_debug && lavc_codec->id != CODEC_ID_H264 && lavc_codec->id != CODEC_ID_INTERPLAY_VIDEO && lavc_codec->id != CODEC_ID_VP8 && lavc_codec->id != CODEC_ID_LAGARITH)
         ctx->do_dr1=1;
-    ctx->b_age= ctx->ip_age[0]= ctx->ip_age[1]= 256*256*256*64;
     ctx->ip_count= ctx->b_count= 0;
 
     ctx->pic = avcodec_alloc_frame();
@@ -435,28 +432,6 @@ static void draw_slice(struct AVCodecContext *s,
     sh_video_t *sh = s->opaque;
     uint8_t *source[MP_MAX_PLANES]= {src->data[0] + offset[0], src->data[1] + offset[1], src->data[2] + offset[2]};
     int strides[MP_MAX_PLANES] = {src->linesize[0], src->linesize[1], src->linesize[2]};
-#if 0
-    int start=0, i;
-    int width= s->width;
-    int skip_stride= ((width<<lavc_param_lowres)+15)>>4;
-    uint8_t *skip= &s->coded_frame->mbskip_table[(y>>4)*skip_stride];
-    int threshold= s->coded_frame->age;
-    if(s->pict_type!=B_TYPE){
-        for(i=0; i*16<width+16; i++){
-            if(i*16>=width || skip[i]>=threshold){
-                if(start==i) start++;
-                else{
-                    uint8_t *src2[3]= {src[0] + start*16,
-                                     src[1] + start*8,
-                                     src[2] + start*8};
-//printf("%2d-%2d x %d\n", start, i, y);
-                    mpcodecs_draw_slice (sh, src2, stride, (i-start)*16, height, start*16, y);
-                    start= i+1;
-                }
-            }
-        }
-    }else
-#endif
     if (height < 0)
     {
         int i;
@@ -678,19 +653,6 @@ else if(mpi->flags&MP_IMGFLAG_DRAW_CALLBACK)
 else
     printf(".");
 #endif
-    if(pic->reference){
-        pic->age= ctx->ip_age[0];
-
-        ctx->ip_age[0]= ctx->ip_age[1]+1;
-        ctx->ip_age[1]= 1;
-        ctx->b_age++;
-    }else{
-        pic->age= ctx->b_age;
-
-        ctx->ip_age[0]++;
-        ctx->ip_age[1]++;
-        ctx->b_age=1;
-    }
     pic->type= FF_BUFFER_TYPE_USER;
     return 0;
 }
