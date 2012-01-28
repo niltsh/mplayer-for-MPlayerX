@@ -380,7 +380,7 @@ int muxer_init_muxer_lavf(muxer_t *muxer)
 	if ((muxer->stream->flags & MP_STREAM_SEEK) != MP_STREAM_SEEK)
             priv->oc->pb->seekable = 0;
 
-	muxer->priv = (void *) priv;
+	muxer->priv = priv;
 	muxer->cont_new_stream = &lavf_new_stream;
 	muxer->cont_write_chunk = &write_chunk;
 	muxer->cont_write_header = &write_header;
