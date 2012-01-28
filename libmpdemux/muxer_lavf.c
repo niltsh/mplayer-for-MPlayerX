@@ -281,9 +281,20 @@ static void write_chunk(muxer_stream_t *stream, size_t len, unsigned int flags, 
 static void write_header(muxer_t *muxer)
 {
 	muxer_priv_t *priv = muxer->priv;
+	AVDictionary *opts = NULL;
+	char tmpstr[50];
 
 	mp_msg(MSGT_MUXER, MSGL_INFO, MSGTR_WritingHeader);
-	avformat_write_header(priv->oc, NULL);
+	if (mux_rate) {
+		snprintf(tmpstr, sizeof(tmpstr), "%i", mux_rate);
+		av_dict_set(&opts, "muxrate", tmpstr, 0);
+	}
+	if (mux_preload) {
+		snprintf(tmpstr, sizeof(tmpstr), "%i", (int)(mux_preload * AV_TIME_BASE));
+		av_dict_set(&opts, "preload", tmpstr, 0);
+	}
+	avformat_write_header(priv->oc, &opts);
+	av_dict_free(&opts);
 	muxer->cont_write_header = NULL;
 }
 
@@ -355,8 +366,6 @@ int muxer_init_muxer_lavf(muxer_t *muxer)
 
 
 	priv->oc->packet_size= mux_packet_size;
-        priv->oc->mux_rate= mux_rate;
-        priv->oc->preload= (int)(mux_preload*AV_TIME_BASE);
         priv->oc->max_delay= (int)(mux_max_delay*AV_TIME_BASE);
         if (info_name)
             av_dict_set(&priv->oc->metadata, "title",     info_name,      0);
