@@ -522,8 +522,8 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
         priv->pb = avio_alloc_context(priv->buffer, BIO_BUFFER_SIZE, 0,
                                       demuxer, mp_read, NULL, mp_seek);
         priv->pb->read_seek = mp_read_seek;
-        priv->pb->is_streamed = !demuxer->stream->end_pos || (demuxer->stream->flags & MP_STREAM_SEEK) != MP_STREAM_SEEK;
-        priv->pb->seekable = priv->pb->is_streamed ? 0 : AVIO_SEEKABLE_NORMAL;
+        if (!demuxer->stream->end_pos || (demuxer->stream->flags & MP_STREAM_SEEK) != MP_STREAM_SEEK)
+            priv->pb->seekable = 0;
         avfc->pb = priv->pb;
     }
 
