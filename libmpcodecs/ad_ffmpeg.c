@@ -44,6 +44,7 @@ LIBAD_EXTERN(ffmpeg)
 #define assert(x)
 
 #include "libavcodec/avcodec.h"
+#include "libavutil/dict.h"
 
 
 static int preinit(sh_audio_t *sh)
@@ -90,6 +91,8 @@ static int init(sh_audio_t *sh_audio)
     int x;
     AVCodecContext *lavc_context;
     AVCodec *lavc_codec;
+    AVDictionary *opts = NULL;
+    char tmpstr[50];
 
     mp_msg(MSGT_DECAUDIO,MSGL_V,"FFmpeg's libavcodec audio codec\n");
     init_avcodec();
@@ -103,7 +106,8 @@ static int init(sh_audio_t *sh_audio)
     lavc_context = avcodec_alloc_context3(lavc_codec);
     sh_audio->context=lavc_context;
 
-    lavc_context->drc_scale = drc_level;
+    snprintf(tmpstr, sizeof(tmpstr), "%i", drc_level);
+    av_dict_set(&opts, "drc_scale", tmpstr, 0);
     lavc_context->sample_rate = sh_audio->samplerate;
     lavc_context->bit_rate = sh_audio->i_bps * 8;
     if(sh_audio->wf){
@@ -135,10 +139,11 @@ static int init(sh_audio_t *sh_audio)
     }
 
     /* open it */
-    if (avcodec_open2(lavc_context, lavc_codec, NULL) < 0) {
+    if (avcodec_open2(lavc_context, lavc_codec, opts) < 0) {
         mp_msg(MSGT_DECAUDIO,MSGL_ERR, MSGTR_CantOpenCodec);
         return 0;
     }
+    av_dict_free(&opts);
    mp_msg(MSGT_DECAUDIO,MSGL_V,"INFO: libavcodec \"%s\" init OK!\n", lavc_codec->name);
 
 //   printf("\nFOURCC: 0x%X\n",sh_audio->format);

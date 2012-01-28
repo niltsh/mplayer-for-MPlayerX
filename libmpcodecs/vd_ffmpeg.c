@@ -28,6 +28,7 @@
 #include "av_helpers.h"
 
 #include "libavutil/common.h"
+#include "libavutil/dict.h"
 #include "libavutil/intreadwrite.h"
 #include "mpbswap.h"
 #include "fmt-conversion.h"
@@ -223,6 +224,7 @@ static int init(sh_video_t *sh){
     // slice is rather broken with threads, so disable that combination unless
     // explicitly requested
     int use_slices = vd_use_slices > 0 || (vd_use_slices <  0 && lavc_param_threads <= 1);
+    AVDictionary *opts = NULL;
 
     init_avcodec();
 
@@ -325,7 +327,7 @@ static int init(sh_video_t *sh){
        MJPG fourcc :( */
         if (!sh->bih || sh->bih->biSize <= sizeof(*sh->bih))
             break;
-        avctx->flags |= CODEC_FLAG_EXTERN_HUFF;
+        av_dict_set(&opts, "extern_huff", "1", 0);
         avctx->extradata_size = sh->bih->biSize-sizeof(*sh->bih);
         avctx->extradata = av_mallocz(avctx->extradata_size + FF_INPUT_BUFFER_PADDING_SIZE);
         memcpy(avctx->extradata, sh->bih+1, avctx->extradata_size);
@@ -384,11 +386,12 @@ static int init(sh_video_t *sh){
         set_format_params(avctx, PIX_FMT_XVMC_MPEG2_IDCT);
 
     /* open it */
-    if (avcodec_open2(avctx, lavc_codec, NULL) < 0) {
+    if (avcodec_open2(avctx, lavc_codec, &opts) < 0) {
         mp_msg(MSGT_DECVIDEO, MSGL_ERR, MSGTR_CantOpenCodec);
         uninit(sh);
         return 0;
     }
+    av_dict_free(&opts);
     // this is necessary in case get_format was never called and init_vo is
     // too late e.g. for H.264 VDPAU
     set_format_params(avctx, avctx->pix_fmt);
