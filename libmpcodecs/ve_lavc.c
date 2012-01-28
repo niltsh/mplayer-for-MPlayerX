@@ -266,7 +266,7 @@ const m_option_t lavcopts_conf[]={
 	{"me_range", &lavc_param_me_range, CONF_TYPE_INT, CONF_RANGE, 0, 16000, NULL},
 #ifdef CODEC_FLAG_AC_PRED
 	{"aic", &lavc_param_aic, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_AC_PRED, NULL},
-	{"umv", &lavc_param_umv, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_H263P_UMV, NULL},
+	{"umv", &lavc_param_umv, CONF_TYPE_FLAG, 0, 0, 1, NULL},
 #endif
 #ifdef CODEC_FLAG_H263P_AIV
 	{"aiv", &lavc_param_aiv, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_H263P_AIV, NULL},
@@ -564,7 +564,8 @@ static int config(struct vf_instance *vf,
     lavc_venc_context->flags|= lavc_param_bit_exact;
     lavc_venc_context->flags|= lavc_param_aic;
     lavc_venc_context->flags|= lavc_param_aiv;
-    lavc_venc_context->flags|= lavc_param_umv;
+    if (lavc_param_umv)
+        av_dict_set(&opts, "umv", "1", 0);
     lavc_venc_context->flags|= lavc_param_obmc;
     lavc_venc_context->flags|= lavc_param_loop;
     lavc_venc_context->flags|= lavc_param_v4mv ? CODEC_FLAG_4MV : 0;
