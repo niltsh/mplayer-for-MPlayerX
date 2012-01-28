@@ -541,7 +541,7 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
     }
 
     /* Add metadata. */
-    while((t = av_dict_get(avfc->metadata, "", t, AV_METADATA_IGNORE_SUFFIX)))
+    while((t = av_dict_get(avfc->metadata, "", t, AV_DICT_IGNORE_SUFFIX)))
         demux_info_add(demuxer, t->key, t->value);
 
     for(i=0; i < avfc->nb_chapters; i++) {
