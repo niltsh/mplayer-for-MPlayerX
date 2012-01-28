@@ -2937,7 +2937,7 @@ if arm ; then
   echores "$_iwmmxt"
 fi
 
-cpuexts_all='ALTIVEC MMX MMX2 AMD3DNOW AMD3DNOWEXT SSE SSE2 SSSE3 FAST_CMOV CMOV FAST_CLZ ARMV5TE ARMV6 ARMV6T2 ARMVFP VFPV3 NEON IWMMXT MMI VIS MVI'
+cpuexts_all='ALTIVEC AVX MMX MMX2 AMD3DNOW AMD3DNOWEXT SSE SSE2 SSSE3 FAST_CMOV CMOV FAST_CLZ ARMV5TE ARMV6 ARMV6T2 ARMVFP VFPV3 NEON IWMMXT MMI VIS MVI'
 test "$_altivec"   = yes && cpuexts="ALTIVEC $cpuexts"
 test "$_mmx"       = yes && cpuexts="MMX $cpuexts"
 test "$_mmxext"    = yes && cpuexts="MMX2 $cpuexts"
@@ -8786,11 +8786,9 @@ cmp -s "$TMPH" ffmpeg/libavutil/avconfig.h || mv -f "$TMPH" ffmpeg/libavutil/avc
 if x86; then
 # Create a skeleton config.asm with just the ARCH_ definitions for FFmpeg.
 > "$TMPS"
-echo "%define CONFIG_GPL" >> "$TMPS"
-for part in $arch $subarch; do
-  part=$(echo $part | tr '[a-z]' '[A-Z]')
-  echo "%define ARCH_${part}" >> "$TMPS"
-done
+echo "%define CONFIG_GPL 1" >> "$TMPS"
+echo "$(ff_config_enable "$arch_all" "$arch" "%" "ARCH")" >> "$TMPS"
+echo "$(ff_config_enable "$subarch_all" "$subarch" "%" "ARCH")" >> "$TMPS"
 echo "$(ff_config_enable "$cpuexts_all" "$cpuexts" "%" "HAVE")" >> "$TMPS"
 
 cmp -s "$TMPS" ffmpeg/config.asm || mv -f "$TMPS" ffmpeg/config.asm
