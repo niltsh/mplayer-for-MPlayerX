@@ -197,7 +197,7 @@ static int config(struct vf_instance *vf,
             vf->priv->src [i]= malloc(vf->priv->temp_stride[i]*h*sizeof(uint8_t));
 #endif
             avctx_enc=
-            vf->priv->avctx_enc= avcodec_alloc_context();
+            vf->priv->avctx_enc= avcodec_alloc_context3(enc);
             avctx_enc->width = width;
             avctx_enc->height = height;
             avctx_enc->time_base= (AVRational){1,25};  // meaningless
