@@ -21,6 +21,7 @@
 #include "mp_msg.h"
 #include "sub.h"
 #include "spudec.h"
+#include "av_helpers.h"
 #include "av_sub.h"
 
 void reset_avsub(struct sh_sub *sh)
@@ -63,8 +64,7 @@ int decode_avsub(struct sh_sub *sh, uint8_t **data, int *size,
         pkt.convergence_duration = (*endpts - *pts) * 1000;
     if (!ctx) {
         AVCodec *sub_codec;
-        avcodec_init();
-        avcodec_register_all();
+        init_avcodec();
         ctx = avcodec_alloc_context();
         sub_codec = avcodec_find_decoder(cid);
         if (!ctx || !sub_codec || avcodec_open(ctx, sub_codec) < 0) {
