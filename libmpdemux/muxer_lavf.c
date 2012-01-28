@@ -247,8 +247,8 @@ static void fix_parameters(muxer_stream_t *stream)
 
 static void write_chunk(muxer_stream_t *stream, size_t len, unsigned int flags, double dts, double pts)
 {
-	muxer_t *muxer = (muxer_t*) stream->muxer;
-	muxer_priv_t *priv = (muxer_priv_t *) muxer->priv;
+	muxer_t *muxer = stream->muxer;
+	muxer_priv_t *priv = muxer->priv;
 	muxer_stream_priv_t *spriv = (muxer_stream_priv_t *) stream->priv;
 	AVPacket pkt;
 
@@ -280,7 +280,7 @@ static void write_chunk(muxer_stream_t *stream, size_t len, unsigned int flags, 
 
 static void write_header(muxer_t *muxer)
 {
-	muxer_priv_t *priv = (muxer_priv_t *) muxer->priv;
+	muxer_priv_t *priv = muxer->priv;
 
 	mp_msg(MSGT_MUXER, MSGL_INFO, MSGTR_WritingHeader);
 	avformat_write_header(priv->oc, NULL);
@@ -291,7 +291,7 @@ static void write_header(muxer_t *muxer)
 static void write_trailer(muxer_t *muxer)
 {
 	int i;
-	muxer_priv_t *priv = (muxer_priv_t *) muxer->priv;
+	muxer_priv_t *priv = muxer->priv;
 
 	mp_msg(MSGT_MUXER, MSGL_INFO, MSGTR_WritingTrailer);
 	av_write_trailer(priv->oc);
