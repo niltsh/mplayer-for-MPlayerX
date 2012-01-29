@@ -765,9 +765,11 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
 	if (sdl_open(NULL, NULL) != 0)
 	    return -1;
 
+    if (WinID < 0) {
 	/* Set output window title */
 	SDL_WM_SetCaption (".: MPlayer : F = Fullscreen/Windowed : C = Cycle Fullscreen Resolutions :.", title);
 	//SDL_WM_SetCaption (title, title);
+    }
 
     if(priv->X) {
 	aspect_save_screenres(priv->XWidth,priv->XHeight);
