@@ -55,9 +55,18 @@ int vo_sdl_init(void)
 {
     reinit = 0;
 
-    if (!SDL_WasInit(SDL_INIT_VIDEO) &&
-        SDL_Init(SDL_INIT_VIDEO|SDL_INIT_NOPARACHUTE) < 0)
-        return 0;
+    if (!SDL_WasInit(SDL_INIT_VIDEO)) {
+        // Unfortunately SDL_WINDOWID must be set at SDL_Init
+        // and is ignored afterwards, thus it cannot work per-file.
+        // Also, a value of 0 does not work for selecting the root window.
+        if (WinID > 0) {
+            char envstr[20];
+            snprintf(envstr, sizeof(envstr), "0x%"PRIx64, WinID);
+            setenv("SDL_WINDOWID", envstr, 1);
+        }
+        if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_NOPARACHUTE) < 0)
+            return 0;
+    }
 
     // Setup Keyrepeats (500/30 are defaults)
     SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, 100 /*SDL_DEFAULT_REPEAT_INTERVAL*/);
