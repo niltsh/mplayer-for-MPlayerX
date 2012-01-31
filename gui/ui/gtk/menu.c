@@ -596,9 +596,10 @@ GtkWidget * create_PopUpMenu( void )
        if ( demuxer->a_streams[i] )
         {
          int aid = ((sh_audio_t *)demuxer->a_streams[i])->aid;
+         int selected_id = (audio_id == aid || (audio_id == -1 && aid == demuxer_default_audio_track(mpctx_get_demuxer(guiInfo.mpcontext))));
          char tmp[32];
          snprintf( tmp,32,MSGTR_MENU_Track,aid );
-         AddMenuCheckItem( window1, (const char*)empty1px_xpm, SubMenu,tmp,audio_id == aid,( aid << 16 ) + ivSetAudio );
+         AddMenuCheckItem( window1, (const char*)empty1px_xpm, SubMenu,tmp,selected_id,( aid << 16 ) + ivSetAudio );
         }
      }
 
