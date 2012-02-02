@@ -56,7 +56,7 @@
 #include "libmpcodecs/vf_scale.h"
 
 static const vo_info_t info = {
-    "SNAP/WarpOverlay!/DIVE video output",
+    "SNAP/WarpOverlay!/VMAN/DIVE video output",
     "kva",
     "KO Myung-Hun <komh@chollian.net>",
     ""
@@ -552,18 +552,20 @@ static int preinit(const char *arg)
 
     int     fUseSnap = 0;
     int     fUseWO   = 0;
+    int     fUseVman = 0;
     int     fUseDive = 0;
     int     fFixT23  = 0;
 
     const opt_t subopts[] = {
         {"snap", OPT_ARG_BOOL, &fUseSnap, NULL},
         {"wo",   OPT_ARG_BOOL, &fUseWO,   NULL},
+        {"vman", OPT_ARG_BOOL, &fUseVman, NULL},
         {"dive", OPT_ARG_BOOL, &fUseDive, NULL},
         {"t23",  OPT_ARG_BOOL, &fFixT23,  NULL},
         {NULL,              0, NULL,      NULL}
     };
 
-    PCSZ pcszVideoModeStr[3] = {"DIVE", "WarpOverlay!", "SNAP"};
+    PCSZ pcszVideoModeStr[3] = {"DIVE", "WarpOverlay!", "SNAP", "VMAN"};
 
     if (subopt_parse(arg, subopts) != 0)
         return -1;
@@ -620,13 +622,15 @@ static int preinit(const char *arg)
         m_int.pfnwpOldFrame = WinSubclassWindow(m_int.hwndFrame,
                                                 NewFrameWndProc);
 
-    if (!!fUseSnap + !!fUseWO + !!fUseDive > 1)
+    if (!!fUseSnap + !!fUseWO + !!fUseVman + !!fUseDive > 1)
         mp_msg(MSGT_VO, MSGL_WARN,"KVA: Multiple mode specified!!!\n");
 
     if (fUseSnap)
         kvaMode = KVAM_SNAP;
     else if (fUseWO)
         kvaMode = KVAM_WO;
+    else if (fUseVman)
+        kvaMode = KVAM_VMAN;
     else if (fUseDive)
         kvaMode = KVAM_DIVE;
     else
