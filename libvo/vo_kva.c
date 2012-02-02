@@ -184,6 +184,13 @@ static int query_format_info(int format, PBOOL pfHWAccel, PFOURCC pfcc,
         nChromaShift    = 2;
         break;
 
+    case IMGFMT_BGR32:
+        fHWAccel        = m_int.kvac.ulInputFormatFlags & KVAF_BGR32;
+        fcc             = FOURCC_BGR4;
+        bpp             = 3;
+        nChromaShift    = 0;
+        break;
+
     case IMGFMT_BGR24:
         fHWAccel        = m_int.kvac.ulInputFormatFlags & KVAF_BGR24;
         fcc             = FOURCC_BGR3;
@@ -701,6 +708,8 @@ static int config(uint32_t width, uint32_t height,
             dstFormat = IMGFMT_YUY2;
         else if (m_int.kvac.ulInputFormatFlags & KVAF_YVU9)
             dstFormat = IMGFMT_YVU9;
+        else if (m_int.kvac.ulInputFormatFlags & KVAF_BGR32)
+            dstFormat = IMGFMT_BGR32;
         else if (m_int.kvac.ulInputFormatFlags & KVAF_BGR24)
             dstFormat = IMGFMT_BGR24;
         else if (m_int.kvac.ulInputFormatFlags & KVAF_BGR16)
