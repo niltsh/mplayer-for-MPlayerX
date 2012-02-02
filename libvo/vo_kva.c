@@ -187,7 +187,7 @@ static int query_format_info(int format, PBOOL pfHWAccel, PFOURCC pfcc,
     case IMGFMT_BGR32:
         fHWAccel        = m_int.kvac.ulInputFormatFlags & KVAF_BGR32;
         fcc             = FOURCC_BGR4;
-        bpp             = 3;
+        bpp             = 4;
         nChromaShift    = 0;
         break;
 
