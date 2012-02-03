@@ -223,27 +223,6 @@ static const m_option_t gui_opts[] = {
     { NULL,                          NULL,                     0,                     0,           0,     0,       NULL }
 };
 
-static char *gfgets(char *str, int size, FILE *f)
-{
-    char *s, c;
-
-    s = fgets(str, size, f);
-
-    if (s) {
-        c = s[strlen(s) - 1];
-
-        if (c == '\n' || c == '\r')
-            s[strlen(s) - 1] = 0;
-
-        c = s[strlen(s) - 1];
-
-        if (c == '\n' || c == '\r')
-            s[strlen(s) - 1] = 0;
-    }
-
-    return s;
-}
-
 int cfg_gui_include(m_option_t *conf, const char *filename)
 {
     (void)conf;
@@ -290,12 +269,12 @@ int cfg_read(void)
             char tmp[512];
             plItem *item;
 
-            if (gfgets(tmp, 512, f) == NULL)
+            if (fgetstr(tmp, 512, f) == NULL)
                 continue;
 
             item       = calloc(1, sizeof(plItem));
             item->path = strdup(tmp);
-            gfgets(tmp, 512, f);
+            fgetstr(tmp, 512, f);
             item->name = strdup(tmp);
             listSet(gtkAddPlItem, item);
         }
@@ -315,7 +294,7 @@ int cfg_read(void)
             char tmp[512];
             urlItem *item;
 
-            if (gfgets(tmp, 512, f) == NULL)
+            if (fgetstr(tmp, 512, f) == NULL)
                 continue;
 
             item      = calloc(1, sizeof(urlItem));
@@ -339,7 +318,7 @@ int cfg_read(void)
         while (!feof(f)) {
             char tmp[512];
 
-            if (gfgets(tmp, 512, f) == NULL)
+            if (fgetstr(tmp, 512, f) == NULL)
                 continue;
 
             fsHistory[i++] = gstrdup(tmp);

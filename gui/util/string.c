@@ -16,7 +16,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -320,4 +319,27 @@ char *TranslateFilename(int how, char *fname, size_t maxlen)
     }
 
     return fname;
+}
+
+/**
+ * @brief Read characters from @a file.
+ *
+ * @note Reading stops with '\\r', '\\n' or EOF.
+ *
+ * @param str pointer to a buffer to receive the read characters
+ * @param size number of characters read at the most (including a terminating null-character)
+ * @param file file to read from
+ *
+ * @return str (success) or NULL (error)
+ */
+char *fgetstr(char *str, int size, FILE *file)
+{
+    char *s;
+
+    s = fgets(str, size, file);
+
+    if (s)
+        s[strcspn(s, "\n\r")] = 0;
+
+    return s;
 }

@@ -125,8 +125,7 @@ int fntRead(char *path, char *fname)
         return -3;
     }
 
-    while (fgets(buf, sizeof(buf), f)) {
-        buf[strcspn(buf, "\n\r")] = 0; // remove any kind of newline, if any
+    while (fgetstr(buf, sizeof(buf), f)) {
         strswap(buf, '\t', ' ');
         trim(buf);
         decomment(buf);

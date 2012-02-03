@@ -1055,10 +1055,9 @@ int skinRead(char *sname)
     currWinName[0] = 0;
     linenumber     = 0;
 
-    while (fgets(line, sizeof(line), skinFile)) {
+    while (fgetstr(line, sizeof(line), skinFile)) {
         linenumber++;
 
-        line[strcspn(line, "\n\r")] = 0; // remove any kind of newline, if any
         strswap(line, '\t', ' ');
         trim(line);
         decomment(line);
