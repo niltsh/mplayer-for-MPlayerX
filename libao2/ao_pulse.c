@@ -26,6 +26,7 @@
 
 #include "config.h"
 #include "libaf/af_format.h"
+#include "osdep/timer.h"
 #include "mp_msg.h"
 #include "audio_out.h"
 #include "audio_out_internal.h"
@@ -249,6 +250,10 @@ fail:
 /** Destroy libao driver */
 static void uninit(int immed) {
     if (stream && !immed) {
+            /* Workaround the bug in pa_stream_drain that causes
+               a delay of 2 second if the buffer is not empty    */
+            usec_sleep(get_delay() * 1000 * 1000);
+
             pa_threaded_mainloop_lock(mainloop);
             waitop(pa_stream_drain(stream, success_cb, NULL));
     }
