@@ -106,7 +106,7 @@ static int init(sh_audio_t *sh_audio)
     lavc_context = avcodec_alloc_context3(lavc_codec);
     sh_audio->context=lavc_context;
 
-    snprintf(tmpstr, sizeof(tmpstr), "%i", drc_level);
+    snprintf(tmpstr, sizeof(tmpstr), "%f", drc_level);
     av_dict_set(&opts, "drc_scale", tmpstr, 0);
     lavc_context->sample_rate = sh_audio->samplerate;
     lavc_context->bit_rate = sh_audio->i_bps * 8;
