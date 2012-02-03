@@ -16,8 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "cfg.h"
@@ -28,6 +28,7 @@
 #include "config.h"
 #include "help_mp.h"
 #include "libmpcodecs/vd.h"
+#include "libmpdemux/demuxer.h"
 #include "libvo/video_out.h"
 #include "libvo/x11_common.h"
 #include "mixer.h"
@@ -37,6 +38,8 @@
 #include "mplayer.h"
 #include "parser-cfg.h"
 #include "path.h"
+#include "stream/stream.h"
+#include "sub/ass_mp.h"
 #include "sub/font_load.h"
 #include "sub/sub.h"
 
