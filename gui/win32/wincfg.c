@@ -93,7 +93,7 @@ int cfg_gui_include(m_option_t *conf, const char *filename)
     return m_config_parse_config_file(gui_conf, filename, 0);
 }
 
-int cfg_read(void)
+void cfg_read(void)
 {
     char *cfg = get_path("gui.conf");
 
@@ -106,10 +106,9 @@ int cfg_read(void)
     if (m_config_parse_config_file(gui_conf, cfg, 1) < 0)
         mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_ConfigFileError);
     free(cfg);
-    return 0;
 }
 
-int cfg_write(void)
+void cfg_write(void)
 {
     char *cfg = get_path("gui.conf");
     FILE *f;
@@ -134,5 +133,4 @@ int cfg_write(void)
         fclose(f);
     }
     free(cfg);
-    return 0;
 }

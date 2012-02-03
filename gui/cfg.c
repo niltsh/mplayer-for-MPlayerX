@@ -230,7 +230,7 @@ int cfg_gui_include(m_option_t *conf, const char *filename)
     return m_config_parse_config_file(gui_conf, filename, 0);
 }
 
-int cfg_read(void)
+void cfg_read(void)
 {
     char *cfg;
     FILE *f;
@@ -328,11 +328,9 @@ int cfg_read(void)
     }
 
     free(cfg);
-
-    return 0;
 }
 
-int cfg_write(void)
+void cfg_write(void)
 {
     char *cfg;
     FILE *f;
@@ -420,6 +418,4 @@ int cfg_write(void)
     }
 
     free(cfg);
-
-    return 0;
 }

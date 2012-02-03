@@ -90,7 +90,7 @@ extern char *skinName;
 extern char *fsHistory[5];
 
 int cfg_gui_include(m_option_t *conf, const char *filename);
-int cfg_read(void);
-int cfg_write(void);
+void cfg_read(void);
+void cfg_write(void);
 
 #endif /* MPLAYER_GUI_CFG_H */
