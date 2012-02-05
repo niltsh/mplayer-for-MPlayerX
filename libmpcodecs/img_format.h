@@ -122,6 +122,8 @@
 
 // 4:2:0 planar with alpha
 #define IMGFMT_420A 0x41303234
+// 4:4:4 planar with alpha
+#define IMGFMT_444A 0x41343434
 
 #define IMGFMT_444P16_LE 0x51343434
 #define IMGFMT_444P16_BE 0x34343451
