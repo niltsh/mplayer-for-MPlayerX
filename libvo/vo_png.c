@@ -232,8 +232,8 @@ static int preinit(const char *arg)
         return -1;
     }
     avcodec_register_all();
-    avctx = avcodec_alloc_context();
-    if (avcodec_open(avctx, avcodec_find_encoder(CODEC_ID_PNG)) < 0) {
+    avctx = avcodec_alloc_context3(NULL);
+    if (avcodec_open2(avctx, avcodec_find_encoder(CODEC_ID_PNG), NULL) < 0) {
         uninit();
         return -1;
     }

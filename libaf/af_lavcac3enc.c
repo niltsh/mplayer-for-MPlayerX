@@ -99,7 +99,7 @@ static int control(struct af_instance_s *af, int cmd, void *arg)
             s->lavc_actx->sample_fmt  = AV_SAMPLE_FMT_S16;
             s->lavc_actx->bit_rate = bit_rate;
 
-            if(avcodec_open(s->lavc_actx, s->lavc_acodec) < 0) {
+            if(avcodec_open2(s->lavc_actx, s->lavc_acodec, NULL) < 0) {
                 mp_msg(MSGT_AFILTER, MSGL_ERR, MSGTR_CouldntOpenCodec, "ac3", bit_rate);
                 return AF_ERROR;
             }
@@ -282,7 +282,7 @@ static int af_open(af_instance_t* af){
         return AF_ERROR;
     }
 
-    s->lavc_actx = avcodec_alloc_context();
+    s->lavc_actx = avcodec_alloc_context3(NULL);
     if (!s->lavc_actx) {
         mp_msg(MSGT_AFILTER, MSGL_ERR, MSGTR_CouldntAllocateLavcContext);
         return AF_ERROR;

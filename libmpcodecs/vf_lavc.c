@@ -74,7 +74,7 @@ static int config(struct vf_instance *vf,
     vf->priv->outbuf_size=10000+width*height;  // must be enough!
     vf->priv->outbuf = malloc(vf->priv->outbuf_size);
 
-    if (avcodec_open(&lavc_venc_context, vf->priv->codec) != 0) {
+    if (avcodec_open2(&lavc_venc_context, vf->priv->codec, NULL) != 0) {
 	mp_msg(MSGT_MENCODER,MSGL_ERR,MSGTR_CantOpenCodec);
 	return 0;
     }
@@ -148,7 +148,7 @@ static int vf_open(vf_instance_t *vf, char *args){
 	return 0;
     }
 
-    vf->priv->context=avcodec_alloc_context();
+    vf->priv->context=avcodec_alloc_context3(vf->priv->codec);
     vf->priv->pic = avcodec_alloc_frame();
 
     // TODO: parse args ->

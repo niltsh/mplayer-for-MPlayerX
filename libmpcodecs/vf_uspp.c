@@ -224,7 +224,7 @@ static int config(struct vf_instance *vf,
             AVCodecContext *avctx_enc;
 
             avctx_enc=
-            vf->priv->avctx_enc[i]= avcodec_alloc_context();
+            vf->priv->avctx_enc[i]= avcodec_alloc_context3(NULL);
             avctx_enc->width = width + BLOCK;
             avctx_enc->height = height + BLOCK;
             avctx_enc->time_base= (AVRational){1,25};  // meaningless
@@ -234,7 +234,7 @@ static int config(struct vf_instance *vf,
             avctx_enc->flags = CODEC_FLAG_QSCALE | CODEC_FLAG_LOW_DELAY;
             avctx_enc->strict_std_compliance = FF_COMPLIANCE_EXPERIMENTAL;
             avctx_enc->global_quality= 123;
-            avcodec_open(avctx_enc, enc);
+            avcodec_open2(avctx_enc, enc, NULL);
             assert(avctx_enc->codec);
         }
         vf->priv->frame= avcodec_alloc_frame();

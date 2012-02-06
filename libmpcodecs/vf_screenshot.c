@@ -300,9 +300,9 @@ static int vf_open(vf_instance_t *vf, char *args)
     vf->priv->buffer=0;
     vf->priv->outbuffer=0;
     vf->priv->ctx=0;
-    vf->priv->avctx = avcodec_alloc_context();
+    vf->priv->avctx = avcodec_alloc_context3(NULL);
     avcodec_register_all();
-    if (avcodec_open(vf->priv->avctx, avcodec_find_encoder(CODEC_ID_PNG))) {
+    if (avcodec_open2(vf->priv->avctx, avcodec_find_encoder(CODEC_ID_PNG), NULL)) {
         mp_msg(MSGT_VFILTER, MSGL_FATAL, "Could not open libavcodec PNG encoder\n");
         return 0;
     }
