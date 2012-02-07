@@ -44,6 +44,7 @@ CONFIGURE_FLAGS = \
 	--confdir=/etc/mplayer \
 	--enable-xvmc \
 	--enable-menu \
+	--enable-radio --enable-radio-capture \
 	--disable-arts \
 	--language=all \
 	$(archconf)
