@@ -24,6 +24,7 @@
 #include "mp_msg.h"
 #include "libavfilter/avfilter.h"
 #include "libavfilter/avfiltergraph.h"
+#include "libavutil/mathematics.h"
 #include "libavutil/pixdesc.h"
 
 struct vf_priv_s {
