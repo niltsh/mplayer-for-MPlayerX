@@ -689,7 +689,8 @@ SRCS_MENCODER = mencoder.c \
                 $(SRCS_MENCODER-yes)
 
 # (linking) order matters for these libraries
-FFMPEGPARTS = libpostproc libswscale libavfilter libavformat libavcodec libavutil
+FFMPEGPARTS_ALL = libpostproc libavfilter libavformat libavcodec libswscale libswresample libavutil
+FFMPEGPARTS = $(foreach part, $(FFMPEGPARTS_ALL), $(if $(wildcard ffmpeg/$(part)), $(part)))
 FFMPEGLIBS  = $(foreach part, $(FFMPEGPARTS), ffmpeg/$(part)/$(part).a)
 FFMPEGFILES = $(foreach part, $(FFMPEGPARTS), $(wildcard $(addprefix ffmpeg/$(part)/,*.[chS] /*/*.[chS] /*/*.asm)))
 
