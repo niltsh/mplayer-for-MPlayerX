@@ -272,6 +272,8 @@ int glFindFormat(uint32_t fmt, int *bpp, GLint *gl_texfmt,
   *bpp = IMGFMT_IS_BGR(fmt)?IMGFMT_BGR_DEPTH(fmt):IMGFMT_RGB_DEPTH(fmt);
   *gl_texfmt = 3;
   switch (fmt) {
+    case IMGFMT_RGB64NE:
+      *gl_texfmt = 4;
     case IMGFMT_RGB48NE:
       *gl_format = GL_RGB;
       *gl_type = GL_UNSIGNED_SHORT;

@@ -1127,6 +1127,8 @@ static struct {
   {"bgr4", IMGFMT_BGR4},
   {"bg4b", IMGFMT_BG4B},
   {"bgr1", IMGFMT_BGR1},
+  {"rgb64be", IMGFMT_RGB64BE},
+  {"rgb64le", IMGFMT_RGB64LE},
   {"rgb48be", IMGFMT_RGB48BE},
   {"rgb48le", IMGFMT_RGB48LE},
   {"rgb48ne", IMGFMT_RGB48NE},
