@@ -318,7 +318,7 @@ void cfg_read(void)
     // directory history
 
     fname = get_path(GUI_HISTORY);
-    file  = fopen(fname, "rt+");
+    file  = fopen(fname, "rt");
 
     if (file) {
         int i = 0;
