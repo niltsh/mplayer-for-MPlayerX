@@ -240,7 +240,7 @@ int cfg_gui_include(m_option_t *conf, const char *filename)
 
 void cfg_read(void)
 {
-    char *fname;
+    char *fname, line[512];
     FILE *file;
 
     player_idle_mode = 1;   // GUI is in idle mode by default
@@ -274,16 +274,15 @@ void cfg_read(void)
 
     if (file) {
         while (!feof(file)) {
-            char tmp[512];
             plItem *item;
 
-            if (fgetstr(tmp, 512, file) == NULL)
+            if (fgetstr(line, sizeof(line), file) == NULL)
                 continue;
 
             item       = calloc(1, sizeof(plItem));
-            item->path = strdup(tmp);
-            fgetstr(tmp, 512, file);
-            item->name = strdup(tmp);
+            item->path = strdup(line);
+            fgetstr(line, sizeof(line), file);
+            item->name = strdup(line);
             listSet(gtkAddPlItem, item);
         }
 
@@ -299,14 +298,13 @@ void cfg_read(void)
 
     if (file) {
         while (!feof(file)) {
-            char tmp[512];
             urlItem *item;
 
-            if (fgetstr(tmp, 512, file) == NULL)
+            if (fgetstr(line, sizeof(line), file) == NULL)
                 continue;
 
             item      = calloc(1, sizeof(urlItem));
-            item->url = strdup(tmp);
+            item->url = strdup(line);
             listSet(gtkAddURLItem, item);
         }
 
@@ -324,12 +322,10 @@ void cfg_read(void)
         int i = 0;
 
         while (!feof(file)) {
-            char tmp[512];
-
-            if (fgetstr(tmp, 512, file) == NULL)
+            if (fgetstr(line, sizeof(line), file) == NULL)
                 continue;
 
-            fsHistory[i++] = gstrdup(tmp);
+            fsHistory[i++] = gstrdup(line);
         }
 
         fclose(file);
