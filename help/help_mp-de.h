@@ -412,7 +412,7 @@ static const char help_text[]=
 #define MSGTR_ForcingInputFPS "Input-Framerate wird als statt dessen als %5.3f interpretiert.\n"
 #define MSGTR_RawvideoDoesNotSupportAudio "Ausgabedateiformat RAWVIDEO unterstützt kein Audio - Audio wird deaktiviert.\n"
 #define MSGTR_DemuxerDoesntSupportNosound "Dieser Demuxer unterstützt -nosound noch nicht.\n"
-#define MSGTR_MemAllocFailed "Speicherreservierung fehlgeschlagen."
+#define MSGTR_MemAllocFailed "Speicherreservierung fehlgeschlagen.\n"
 #define MSGTR_NoMatchingFilter "Konnte passenden Filter/passendes ao-Format nicht finden!\n"
 #define MSGTR_MP3WaveFormatSizeNot30 "sizeof(MPEGLAYER3WAVEFORMAT)==%d!=30, vielleicht fehlerhafter C-Compiler?\n"
 #define MSGTR_NoLavcAudioCodecName "Audio LAVC, Fehlender Codecname!\n"
