@@ -277,6 +277,9 @@ void cfg_read(void)
         while (fgetstr(line, sizeof(line), file)) {
             plItem *item;
 
+            if (!*line)
+                continue;
+
             item = calloc(1, sizeof(plItem));
 
             if (!item) {
@@ -286,7 +289,7 @@ void cfg_read(void)
 
             item->path = strdup(line);
 
-            if (fgetstr(line, sizeof(line), file)) {
+            if (fgetstr(line, sizeof(line), file) && *line) {
                 item->name = strdup(line);
                 listSet(gtkAddPlItem, item);
             } else {
@@ -308,6 +311,9 @@ void cfg_read(void)
     if (file) {
         while (fgetstr(line, sizeof(line), file)) {
             urlItem *item;
+
+            if (!*line)
+                continue;
 
             item = calloc(1, sizeof(urlItem));
 
@@ -334,7 +340,7 @@ void cfg_read(void)
         unsigned int i = 0;
 
         while (fgetstr(line, sizeof(line), file))
-            if (i < FF_ARRAY_ELEMS(fsHistory))
+            if (*line && (i < FF_ARRAY_ELEMS(fsHistory)))
                 fsHistory[i++] = gstrdup(line);
 
         fclose(file);
