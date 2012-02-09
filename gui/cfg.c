@@ -286,8 +286,8 @@ void cfg_read(void)
             item->path = strdup(line);
 
             if (fgetstr(line, sizeof(line), file)) {
-            item->name = strdup(line);
-            listSet(gtkAddPlItem, item);
+                item->name = strdup(line);
+                listSet(gtkAddPlItem, item);
             } else {
                 free(item->path);
                 free(item);
