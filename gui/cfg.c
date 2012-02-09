@@ -335,7 +335,7 @@ void cfg_read(void)
 
         while (fgetstr(line, sizeof(line), file))
             if (i < FF_ARRAY_ELEMS(fsHistory))
-            fsHistory[i++] = gstrdup(line);
+                fsHistory[i++] = gstrdup(line);
 
         fclose(file);
     }
