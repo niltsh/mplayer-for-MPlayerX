@@ -276,7 +276,7 @@ void cfg_read(void)
         while (fgetstr(line, sizeof(line), file)) {
             plItem *item;
 
-            item       = calloc(1, sizeof(plItem));
+            item = calloc(1, sizeof(plItem));
 
             if (!item) {
                 gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_MemAllocFailed);
@@ -303,7 +303,7 @@ void cfg_read(void)
         while (fgetstr(line, sizeof(line), file)) {
             urlItem *item;
 
-            item      = calloc(1, sizeof(urlItem));
+            item = calloc(1, sizeof(urlItem));
 
             if (!item) {
                 gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_MemAllocFailed);
