@@ -27,6 +27,7 @@
 
 #include "config.h"
 #include "help_mp.h"
+#include "libavutil/common.h"
 #include "libmpcodecs/vd.h"
 #include "libmpdemux/demuxer.h"
 #include "libvo/video_out.h"
@@ -330,9 +331,10 @@ void cfg_read(void)
     file  = fopen(fname, "rt");
 
     if (file) {
-        int i = 0;
+        unsigned int i = 0;
 
         while (fgetstr(line, sizeof(line), file))
+            if (i < FF_ARRAY_ELEMS(fsHistory))
             fsHistory[i++] = gstrdup(line);
 
         fclose(file);
