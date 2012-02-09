@@ -277,6 +277,12 @@ void cfg_read(void)
             plItem *item;
 
             item       = calloc(1, sizeof(plItem));
+
+            if (!item) {
+                gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_MemAllocFailed);
+                mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
+            }
+
             item->path = strdup(line);
             fgetstr(line, sizeof(line), file);
             item->name = strdup(line);
@@ -298,6 +304,12 @@ void cfg_read(void)
             urlItem *item;
 
             item      = calloc(1, sizeof(urlItem));
+
+            if (!item) {
+                gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_MemAllocFailed);
+                mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
+            }
+
             item->url = strdup(line);
             listSet(gtkAddURLItem, item);
         }
