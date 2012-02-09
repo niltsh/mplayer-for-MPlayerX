@@ -273,11 +273,8 @@ void cfg_read(void)
     file  = fopen(fname, "rt");
 
     if (file) {
-        while (!feof(file)) {
+        while (fgetstr(line, sizeof(line), file)) {
             plItem *item;
-
-            if (fgetstr(line, sizeof(line), file) == NULL)
-                continue;
 
             item       = calloc(1, sizeof(plItem));
             item->path = strdup(line);
@@ -297,11 +294,8 @@ void cfg_read(void)
     file  = fopen(fname, "rt");
 
     if (file) {
-        while (!feof(file)) {
+        while (fgetstr(line, sizeof(line), file)) {
             urlItem *item;
-
-            if (fgetstr(line, sizeof(line), file) == NULL)
-                continue;
 
             item      = calloc(1, sizeof(urlItem));
             item->url = strdup(line);
@@ -321,12 +315,8 @@ void cfg_read(void)
     if (file) {
         int i = 0;
 
-        while (!feof(file)) {
-            if (fgetstr(line, sizeof(line), file) == NULL)
-                continue;
-
+        while (fgetstr(line, sizeof(line), file))
             fsHistory[i++] = gstrdup(line);
-        }
 
         fclose(file);
     }
