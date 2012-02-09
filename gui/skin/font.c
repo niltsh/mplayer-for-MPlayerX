@@ -104,7 +104,7 @@ void fntFreeFont(void)
  */
 int fntRead(char *path, char *fname)
 {
-    FILE *f;
+    FILE *file;
     unsigned char buf[512];
     unsigned char item[32];
     unsigned char param[256];
@@ -118,14 +118,14 @@ int fntRead(char *path, char *fname)
     av_strlcpy(buf, path, sizeof(buf));
     av_strlcat(buf, fname, sizeof(buf));
     av_strlcat(buf, ".fnt", sizeof(buf));
-    f = fopen(buf, "rt");
+    file = fopen(buf, "rt");
 
-    if (!f) {
+    if (!file) {
         nfree(Fonts[id]);
         return -3;
     }
 
-    while (fgetstr(buf, sizeof(buf), f)) {
+    while (fgetstr(buf, sizeof(buf), file)) {
         strswap(buf, '\t', ' ');
         trim(buf);
         decomment(buf);
@@ -182,13 +182,13 @@ int fntRead(char *path, char *fname)
             if (skinImageRead(buf, &Fonts[id]->Bitmap) != 0) {
                 bpFree(&Fonts[id]->Bitmap);
                 nfree(Fonts[id]);
-                fclose(f);
+                fclose(file);
                 return -4;
             }
         }
     }
 
-    fclose(f);
+    fclose(file);
 
     return 0;
 }

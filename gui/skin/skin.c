@@ -1030,7 +1030,7 @@ static char *setname(char *dir, char *sname)
 int skinRead(char *sname)
 {
     char *skinfname;
-    FILE *skinFile;
+    FILE *skinfile;
     unsigned char line[256];
     unsigned char item[32];
     unsigned char param[256];
@@ -1038,10 +1038,10 @@ int skinRead(char *sname)
 
     skinfname = setname(skinDirInHome, sname);
 
-    if ((skinFile = fopen(skinfname, "rt")) == NULL) {
+    if ((skinfile = fopen(skinfname, "rt")) == NULL) {
         skinfname = setname(skinMPlayerDir, sname);
 
-        if ((skinFile = fopen(skinfname, "rt")) == NULL) {
+        if ((skinfile = fopen(skinfname, "rt")) == NULL) {
             mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_SkinFileNotFound, skinfname);
             return -1;
         }
@@ -1055,7 +1055,7 @@ int skinRead(char *sname)
     currWinName[0] = 0;
     linenumber     = 0;
 
-    while (fgetstr(line, sizeof(line), skinFile)) {
+    while (fgetstr(line, sizeof(line), skinfile)) {
         linenumber++;
 
         strswap(line, '\t', ' ');
