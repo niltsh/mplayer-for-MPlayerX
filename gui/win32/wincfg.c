@@ -106,7 +106,7 @@ void cfg_read(void)
     gui_conf = m_config_new();
     m_config_register_options(gui_conf, gui_opts);
     if (m_config_parse_config_file(gui_conf, cfg, 1) < 0)
-        mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_ConfigFileError);
+        mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_ConfigFileError "\n");
     free(cfg);
 }
 
