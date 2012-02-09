@@ -43,6 +43,11 @@
 #include "sub/font_load.h"
 #include "sub/sub.h"
 
+#define GUI_CONFIGURATION "gui.conf"
+#define GUI_HISTORY       "gui.history"
+#define GUI_PLAYLIST      "gui.pl"
+#define GUI_URLLIST       "gui.url"
+
 m_config_t *gui_conf;
 
 int gtkCacheOn;
@@ -242,7 +247,7 @@ void cfg_read(void)
 
     // configuration
 
-    cfg = get_path("gui.conf");
+    cfg = get_path(GUI_CONFIGURATION);
 
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[cfg] file: %s\n", cfg);
 
@@ -264,7 +269,7 @@ void cfg_read(void)
 
     // playlist
 
-    cfg = get_path("gui.pl");
+    cfg = get_path(GUI_PLAYLIST);
     f   = fopen(cfg, "rt");
 
     if (f) {
@@ -289,7 +294,7 @@ void cfg_read(void)
 
     // URL list
 
-    cfg = get_path("gui.url");
+    cfg = get_path(GUI_URLLIST);
     f   = fopen(cfg, "rt");
 
     if (f) {
@@ -312,7 +317,7 @@ void cfg_read(void)
 
     // directory history
 
-    cfg = get_path("gui.history");
+    cfg = get_path(GUI_HISTORY);
     f   = fopen(cfg, "rt+");
 
     if (f) {
@@ -341,7 +346,7 @@ void cfg_write(void)
 
     // configuration
 
-    cfg = get_path("gui.conf");
+    cfg = get_path(GUI_CONFIGURATION);
     f   = fopen(cfg, "wt+");
 
     if (f) {
@@ -366,7 +371,7 @@ void cfg_write(void)
 
     // playlist
 
-    cfg = get_path("gui.pl");
+    cfg = get_path(GUI_PLAYLIST);
     f   = fopen(cfg, "wt+");
 
     if (f) {
@@ -388,7 +393,7 @@ void cfg_write(void)
 
     // URL list
 
-    cfg = get_path("gui.url");
+    cfg = get_path(GUI_URLLIST);
     f   = fopen(cfg, "wt+");
 
     if (f) {
@@ -406,7 +411,7 @@ void cfg_write(void)
 
     // directory history
 
-    cfg = get_path("gui.history");
+    cfg = get_path(GUI_HISTORY);
     f   = fopen(cfg, "wt+");
 
     if (f) {
