@@ -365,7 +365,7 @@ void cfg_write(void)
             char *val = m_option_print(&gui_opts[i], gui_opts[i].p);
 
             if (val == (char *)-1) {
-                mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_UnableToSaveOption, gui_opts[i].name);
+                gmp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_UnableToSaveOption, gui_opts[i].name);
                 val = NULL;
             }
 
