@@ -391,15 +391,15 @@ void cfg_write(void)
     file  = fopen(fname, "wt+");
 
     if (file) {
-        plCurrent = plList;
+        plItem *item = plList;
 
-        while (plCurrent) {
-            if (plCurrent->path && plCurrent->name) {
-                fprintf(file, "%s\n", plCurrent->path);
-                fprintf(file, "%s\n", plCurrent->name);
+        while (item) {
+            if (item->path && item->name) {
+                fprintf(file, "%s\n", item->path);
+                fprintf(file, "%s\n", item->name);
             }
 
-            plCurrent = plCurrent->next;
+            item = item->next;
         }
 
         fclose(file);
@@ -413,11 +413,13 @@ void cfg_write(void)
     file  = fopen(fname, "wt+");
 
     if (file) {
-        while (urlList) {
-            if (urlList->url)
-                fprintf(file, "%s\n", urlList->url);
+        urlItem *item = urlList;
 
-            urlList = urlList->next;
+        while (item) {
+            if (item->url)
+                fprintf(file, "%s\n", item->url);
+
+            item = item->next;
         }
 
         fclose(file);
