@@ -38,7 +38,7 @@
 #include "gui/interface.h"
 #include "gui.h"
 
-#define GUI_CONFIGURATION "gui.conf"
+static const char gui_configuration[] =  "gui.conf";
 
 /* params */
 int   gtkAONorm = 0;
@@ -97,7 +97,7 @@ int cfg_gui_include(m_option_t *conf, const char *filename)
 
 void cfg_read(void)
 {
-    char *cfg = get_path(GUI_CONFIGURATION);
+    char *cfg = get_path(gui_configuration);
 
     player_idle_mode = 1;   // GUI is in idle mode by default
 
@@ -112,7 +112,7 @@ void cfg_read(void)
 
 void cfg_write(void)
 {
-    char *cfg = get_path(GUI_CONFIGURATION);
+    char *cfg = get_path(gui_configuration);
     FILE *f;
     int i;
 

@@ -44,11 +44,6 @@
 #include "sub/font_load.h"
 #include "sub/sub.h"
 
-#define GUI_CONFIGURATION "gui.conf"
-#define GUI_HISTORY       "gui.history"
-#define GUI_PLAYLIST      "gui.pl"
-#define GUI_URLLIST       "gui.url"
-
 m_config_t *gui_conf;
 
 int gtkCacheOn;
@@ -102,6 +97,11 @@ int guiWinID = -1;
 char *skinName;
 
 char *fsHistory[5];
+
+static const char gui_configuration[] = "gui.conf";
+static const char gui_history[]       = "gui.history";
+static const char gui_playlist[]      = "gui.pl";
+static const char gui_urllist[]       = "gui.url";
 
 static const m_option_t gui_opts[] = {
     { "cache",                       &gtkCacheOn,              CONF_TYPE_FLAG,        0,           0,     1,       NULL },
@@ -248,7 +248,7 @@ void cfg_read(void)
 
     // configuration
 
-    fname = get_path(GUI_CONFIGURATION);
+    fname = get_path(gui_configuration);
 
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[cfg] file: %s\n", fname);
 
@@ -270,7 +270,7 @@ void cfg_read(void)
 
     // playlist
 
-    fname = get_path(GUI_PLAYLIST);
+    fname = get_path(gui_playlist);
     file  = fopen(fname, "rt");
 
     if (file) {
@@ -305,7 +305,7 @@ void cfg_read(void)
 
     // URL list
 
-    fname = get_path(GUI_URLLIST);
+    fname = get_path(gui_urllist);
     file  = fopen(fname, "rt");
 
     if (file) {
@@ -333,7 +333,7 @@ void cfg_read(void)
 
     // directory history
 
-    fname = get_path(GUI_HISTORY);
+    fname = get_path(gui_history);
     file  = fopen(fname, "rt");
 
     if (file) {
@@ -357,7 +357,7 @@ void cfg_write(void)
 
     // configuration
 
-    fname = get_path(GUI_CONFIGURATION);
+    fname = get_path(gui_configuration);
     file  = fopen(fname, "wt+");
 
     if (file) {
@@ -387,7 +387,7 @@ void cfg_write(void)
 
     // playlist
 
-    fname = get_path(GUI_PLAYLIST);
+    fname = get_path(gui_playlist);
     file  = fopen(fname, "wt+");
 
     if (file) {
@@ -409,7 +409,7 @@ void cfg_write(void)
 
     // URL list
 
-    fname = get_path(GUI_URLLIST);
+    fname = get_path(gui_urllist);
     file  = fopen(fname, "wt+");
 
     if (file) {
@@ -429,7 +429,7 @@ void cfg_write(void)
 
     // directory history
 
-    fname = get_path(GUI_HISTORY);
+    fname = get_path(gui_history);
     file  = fopen(fname, "wt+");
 
     if (file) {
