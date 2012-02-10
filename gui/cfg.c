@@ -370,7 +370,12 @@ void cfg_write(void)
             }
 
             if (val) {
-                fprintf(file, "%s = \"%s\"\n", gui_opts[i].name, val);
+                char delim[] = { "\"" };
+
+                if (!strchr(val, ' '))
+                    *delim = 0;
+
+                fprintf(file, "%s=%s%s%s\n", gui_opts[i].name, delim, val, delim);
                 free(val);
             }
         }

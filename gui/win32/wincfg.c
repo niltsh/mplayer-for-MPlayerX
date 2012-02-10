@@ -128,7 +128,11 @@ void cfg_write(void)
             }
             if(v)
             {
-                fprintf(f, "%s = \"%s\"\n", gui_opts[i].name, v);
+                char delim[] = {"\""};
+
+                if (!strchr(val, ' ')) *delim = 0;
+
+                fprintf(f, "%s=%s%s%s\n", gui_opts[i].name, v);
                 free(v);
             }
         }
