@@ -426,9 +426,6 @@ void cfg_write(void)
     file  = fopen(fname, "wt+");
 
     if (file) {
-        int i = 0;
-
-// while (fsHistory[i] != NULL)
         for (i = 0; i < 5; i++)
             if (fsHistory[i])
                 fprintf(file, "%s\n", fsHistory[i]);
