@@ -128,7 +128,7 @@ void cfg_write(void)
             }
             if(v)
             {
-                char delim[] = {"\""};
+                char delim[] = "\"";
 
                 if (!strchr(val, ' ')) *delim = 0;
 
