@@ -12,7 +12,7 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-mplayer -vo null -ao null -frames 0 -identify "$@" 2>/dev/null |
+mplayer -noconfig all -cache-min 0 -vo null -ao null -frames 0 -identify "$@" 2>/dev/null |
 	sed -ne '/^ID_/ {
 	                  s/[]()|&;<>`'"'"'\\!$" []/\\&/g;p
 	                }'
