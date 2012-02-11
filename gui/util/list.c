@@ -190,8 +190,12 @@ void *listSet(int cmd, void *vparam)
 
     case gtkDelURL:
         while (urlList) {
+            urlItem *next = urlList->next;
+
             free(urlList->url);
-            urlList = urlList->next;
+            free(urlList);
+
+            urlList = next;
         }
         return NULL;
     }
