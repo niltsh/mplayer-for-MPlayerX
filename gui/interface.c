@@ -268,6 +268,8 @@ void guiDone(void)
     }
 
     appFreeStruct();
+    listSet(gtkDelPl, NULL);
+    listSet(gtkDelURL, NULL);
     free(guiIcon.collection);
 
     if (gui_conf) {
