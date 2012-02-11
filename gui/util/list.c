@@ -187,6 +187,13 @@ void *listSet(int cmd, void *vparam)
             urlList = url_item;
         }
         return NULL;
+
+    case gtkDelURL:
+        while (urlList) {
+            free(urlList->url);
+            urlList = urlList->next;
+        }
+        return NULL;
     }
 
     return NULL;

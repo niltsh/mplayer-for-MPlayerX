@@ -24,6 +24,7 @@
 #define gtkGetPrevPlItem 7
 #define gtkGetCurrPlItem 8
 #define gtkDelPl         9
+#define gtkDelURL        10
 #define gtkDelCurrPlItem 23
 #define gtkInsertPlItem  24
 #define gtkSetCurrPlItem 25
