@@ -117,6 +117,8 @@ int sdl_set_mode(int bpp, uint32_t flags)
     // doublebuf with opengl creates flickering
     if (vo_doublebuffering && !(flags & SDL_OPENGL))
         flags |= SDL_DOUBLEBUF;
+    if (!vo_border)
+        flags |= SDL_NOFRAME;
     s = SDL_SetVideoMode(vo_dwidth, vo_dheight, bpp, flags);
     if (!s) {
       mp_msg(MSGT_VO, MSGL_FATAL, "SDL SetVideoMode failed: %s\n", SDL_GetError());

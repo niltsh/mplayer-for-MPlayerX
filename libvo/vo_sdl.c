@@ -396,6 +396,8 @@ static int sdl_open (void *plugin, void *name)
 	if (vo_doublebuffering)
 	    priv->sdlflags |= SDL_DOUBLEBUF;
 #endif
+        if (!vo_border)
+            priv->sdlflags |= SDL_NOFRAME;
 
 	/* get information about the graphics adapter */
 	vidInfo = SDL_GetVideoInfo ();
