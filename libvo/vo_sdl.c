@@ -393,11 +393,7 @@ static int sdl_open (void *plugin, void *name)
 
 #if !defined( __AMIGAOS4__ ) && !defined( __APPLE__ )
 	priv->sdlfullflags |= SDL_DOUBLEBUF;
-	if (vo_doublebuffering)
-	    priv->sdlflags |= SDL_DOUBLEBUF;
 #endif
-        if (!vo_border)
-            priv->sdlflags |= SDL_NOFRAME;
 
 	/* get information about the graphics adapter */
 	vidInfo = SDL_GetVideoInfo ();
@@ -499,7 +495,9 @@ static void set_video_mode(int width, int height, int bpp, uint32_t sdlflags)
     priv->rgbsurface = NULL;
     priv->overlay = NULL;
 
-    newsurface = SDL_SetVideoMode(width, height, bpp, sdlflags);
+    vo_dwidth  = width;
+    vo_dheight = height;
+    newsurface = sdl_set_mode(bpp, sdlflags);
 
     if(newsurface) {
 
@@ -510,13 +508,9 @@ static void set_video_mode(int width, int height, int bpp, uint32_t sdlflags)
         priv->surface = newsurface;
         priv->dstwidth = width;
         priv->dstheight = height;
-        vo_dwidth  = width;
-        vo_dheight = height;
 
         setup_surfaces();
     }
-    else
-        mp_msg(MSGT_VO,MSGL_WARN, "set_video_mode: SDL_SetVideoMode failed: %s\n", SDL_GetError());
 }
 
 static void set_fullmode (int mode) {
@@ -577,8 +571,9 @@ static void set_fullmode (int mode) {
 	}
 
 	/* try to change to given fullscreenmode */
-	newsurface = SDL_SetVideoMode(priv->dstwidth, screen_surface_h, priv->bpp,
-                                  priv->sdlfullflags);
+        vo_dwidth  = priv->dstwidth;
+        vo_dheight = screen_surface_h;
+        newsurface = sdl_set_mode(priv->bpp, priv->sdlfullflags);
 
 	/*
 	 * In Mac OS X (and possibly others?) SDL_SetVideoMode() appears to
@@ -614,8 +609,6 @@ static void set_fullmode (int mode) {
         SDL_SRF_UNLOCK(priv->surface)
         setup_surfaces();
 	}
-    else
-        mp_msg(MSGT_VO,MSGL_INFO, MSGTR_LIBVO_SDL_SetVideoModeFailedFull, SDL_GetError());
 }
 
 

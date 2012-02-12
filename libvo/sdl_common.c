@@ -109,24 +109,26 @@ void vo_sdl_fullscreen(void)
     reinit = 1;
 }
 
-int sdl_set_mode(int bpp, uint32_t flags)
+SDL_Surface *sdl_set_mode(int bpp, uint32_t flags)
 {
     SDL_Surface *s;
     mode_flags = flags;
     if (vo_fs) flags |= SDL_FULLSCREEN;
     // doublebuf with opengl creates flickering
+#if !defined( __AMIGAOS4__ ) && !defined( __APPLE__ )
     if (vo_doublebuffering && !(flags & SDL_OPENGL))
         flags |= SDL_DOUBLEBUF;
+#endif
     if (!vo_border)
         flags |= SDL_NOFRAME;
     s = SDL_SetVideoMode(vo_dwidth, vo_dheight, bpp, flags);
     if (!s) {
       mp_msg(MSGT_VO, MSGL_FATAL, "SDL SetVideoMode failed: %s\n", SDL_GetError());
-      return -1;
+      return NULL;
     }
     vo_dwidth  = s->w;
     vo_dheight = s->h;
-    return 0;
+    return s;
 }
 
 static const struct mp_keymap keysym_map[] = {
