@@ -552,13 +552,9 @@ static void set_fullmode (int mode) {
 		  }
 		mp_msg(MSGT_VO,MSGL_V, "SET SDL Mode: %d:  %d x %d\n", mode, priv->fullmodes[mode]->w, priv->fullmodes[mode]->h);
 		priv->fullmode = mode;
-        screen_surface_h = priv->fullmodes[mode]->h;
-        screen_surface_w = priv->fullmodes[mode]->w;
 	}
-    else {
        screen_surface_h = priv->fullmodes[mode]->h;
        screen_surface_w = priv->fullmodes[mode]->w;
-	}
 
 	aspect_save_screenres(screen_surface_w, screen_surface_h);
 
