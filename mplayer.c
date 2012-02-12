@@ -2119,6 +2119,7 @@ static int fill_audio_out_buffers(void)
     int audio_eof = 0;
     int bytes_to_write;
     int format_change = 0;
+    int timeout = 0;
     sh_audio_t *const sh_audio = mpctx->sh_audio;
 
     current_module = "play_audio";
@@ -2132,6 +2133,10 @@ static int fill_audio_out_buffers(void)
         bytes_to_write = mpctx->audio_out->get_space();
         if (mpctx->sh_video || bytes_to_write >= ao_data.outburst)
             break;
+        if (timeout++ > 10) {
+            mp_msg(MSGT_CPLAYER, MSGL_WARN, "Audio device got stuck!\n");
+            break;
+        }
 
         // handle audio-only case:
         // this is where mplayer sleeps during audio-only playback
