@@ -47,8 +47,13 @@ extern plItem *plLastPlayed;
 
 extern urlItem *urlList;
 
-void gaddlist(char ***list, const char *entry);
-void greplace(char ***list, const char *search, const char *replace);
-void *listSet(int cmd, void *vparam);
+/// list manager (playlist, URL list)
+void *listMgr(int cmd, void *data);
+
+//@{
+/// char pointer list operations
+void listRepl(char ***list, const char *search, const char *replace);
+void listSet(char ***list, const char *entry);
+//@}
 
 #endif /* MPLAYER_GUI_LIST_H */

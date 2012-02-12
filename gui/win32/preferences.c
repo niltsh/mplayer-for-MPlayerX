@@ -347,7 +347,7 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
             while(video_out_drivers[i])
             {
                 const vo_info_t *info = video_out_drivers[i++]->info;
-                if(!video_driver_list) gaddlist(&video_driver_list, (char *)info->short_name);
+                if(!video_driver_list) listSet(&video_driver_list, (char *)info->short_name);
                     SendDlgItemMessage(hwnd, ID_VO_DRIVER, CB_ADDSTRING, 0, (LPARAM) info->short_name);
             }
             /* Special case for directx:noaccel */
@@ -361,7 +361,7 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
                 {
                     // FIXME: default priority (i.e. order in audio_out_drivers) should be fixed instead
                     // if win32 as default is really desirable
-                    gaddlist(&audio_driver_list, "win32"/*(char *)info->short_name*/);
+                    listSet(&audio_driver_list, "win32"/*(char *)info->short_name*/);
                 }
                 SendDlgItemMessage(hwnd, ID_AO_DRIVER, CB_ADDSTRING, 0, (LPARAM) info->short_name);
             }

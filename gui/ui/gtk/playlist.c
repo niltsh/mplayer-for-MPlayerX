@@ -191,7 +191,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
   case 1: // ok
        {
         int i;
-	if ( plList ) listSet( gtkDelPl,NULL );
+	if ( plList ) listMgr( gtkDelPl,NULL );
 	for ( i=0;i<NrOfSelected;i++ )
 	 {
 	  plItem * item;
@@ -203,7 +203,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	  if ( !item->name ) item->name = strdup( text[0] );
 	  item->path=g_filename_from_utf8( text[1], -1, NULL, NULL, NULL );
 	  if ( !item->path ) item->path = strdup( text[1] );
-	  listSet( gtkAddPlItem,item );
+	  listMgr( gtkAddPlItem,item );
 	 }
 	if ( plCurrent )
 	 {

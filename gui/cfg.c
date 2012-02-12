@@ -291,7 +291,7 @@ void cfg_read(void)
 
             if (fgetstr(line, sizeof(line), file) && *line) {
                 item->name = strdup(line);
-                listSet(gtkAddPlItem, item);
+                listMgr(gtkAddPlItem, item);
             } else {
                 free(item->path);
                 free(item);
@@ -323,7 +323,7 @@ void cfg_read(void)
             }
 
             item->url = strdup(line);
-            listSet(gtkAddURLItem, item);
+            listMgr(gtkAddURLItem, item);
         }
 
         fclose(file);

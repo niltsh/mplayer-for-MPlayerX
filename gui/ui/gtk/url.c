@@ -101,7 +101,7 @@ static void on_Button_pressed( GtkButton * button,gpointer user_data )
 
      item=calloc( 1,sizeof( urlItem ) );
      item->url=gstrdup( str );
-     listSet( gtkAddURLItem,item );
+     listMgr( gtkAddURLItem,item );
 
      uiSetFileName( NULL,str,STREAMTYPE_STREAM ); guiInfo.NewPlay=GUI_FILE_NEW;
      uiEventHandling( evPlay,0 );

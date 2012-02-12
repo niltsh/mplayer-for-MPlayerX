@@ -254,7 +254,7 @@ void uiCurr(void)
 
     default:
 
-        curr = listSet(gtkGetCurrPlItem, NULL);
+        curr = listMgr(gtkGetCurrPlItem, NULL);
 
         if (curr) {
             uiSetFileName(curr->path, curr->name, STREAMTYPE_FILE);
@@ -310,7 +310,7 @@ void uiPrev(void)
 
     default:
 
-        prev = listSet(gtkGetPrevPlItem, NULL);
+        prev = listMgr(gtkGetPrevPlItem, NULL);
 
         if (prev) {
             uiSetFileName(prev->path, prev->name, STREAMTYPE_FILE);
@@ -371,7 +371,7 @@ void uiNext(void)
 
     default:
 
-        next = listSet(gtkGetNextPlItem, NULL);
+        next = listMgr(gtkGetNextPlItem, NULL);
 
         if (next) {
             uiSetFileName(next->path, next->name, STREAMTYPE_FILE);

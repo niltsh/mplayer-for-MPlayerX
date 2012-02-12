@@ -537,8 +537,8 @@ static void prButton( GtkButton * button, gpointer user_data )
 	mplayer( MPLAYER_SET_EXTRA_STEREO,HSExtraStereoMuladj->value,0 );
 	audio_delay=HSAudioDelayadj->value;
 
-	gaddlist( &audio_driver_list,ao_driver[0] );
-	gaddlist( &video_driver_list,vo_driver[0] );
+	listSet( &audio_driver_list,ao_driver[0] );
+	listSet( &video_driver_list,vo_driver[0] );
 
 	// -- 2. page
 	vo_doublebuffering=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBDoubleBuffer ) );
@@ -599,7 +599,7 @@ static void prButton( GtkButton * button, gpointer user_data )
 	 const char * tmp = gtk_entry_get_text( GTK_ENTRY( EVFM ) );
          for( i=0;mpcodecs_vd_drivers[i];i++ )
           if ( !gstrcmp( tmp,(char *)mpcodecs_vd_drivers[i]->info->name ) )
-	   { gaddlist( &video_fm_list,(char *)mpcodecs_vd_drivers[i]->info->short_name ); break; }
+	   { listSet( &video_fm_list,(char *)mpcodecs_vd_drivers[i]->info->short_name ); break; }
 	}
 
 	{
@@ -607,7 +607,7 @@ static void prButton( GtkButton * button, gpointer user_data )
 	 const char * tmp = gtk_entry_get_text( GTK_ENTRY( EAFM ) );
          for( i=0;mpcodecs_ad_drivers[i];i++ )
           if ( !gstrcmp( tmp,(char *)mpcodecs_ad_drivers[i]->info->name ) )
-	   { gaddlist( &audio_fm_list,(char *)mpcodecs_ad_drivers[i]->info->short_name ); break; }
+	   { listSet( &audio_fm_list,(char *)mpcodecs_ad_drivers[i]->info->short_name ); break; }
 	}
 
 	// --- 6. page

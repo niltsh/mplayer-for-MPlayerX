@@ -601,13 +601,13 @@ int gui(int what, void *data)
                 }
             }
             guiInfo.VideoWindow = 1;
-            if(gtkAONorm) greplace(&af_cfg.list, "volnorm", "volnorm");
+            if(gtkAONorm) listRepl(&af_cfg.list, "volnorm", "volnorm");
             if(gtkAOExtraStereo)
             {
                 char *name = malloc(12 + 20 + 1);
                 snprintf(name, 12 + 20, "extrastereo=%f", gtkAOExtraStereoMul);
                 name[12 + 20] = 0;
-                greplace(&af_cfg.list, "extrastereo", name);
+                listRepl(&af_cfg.list, "extrastereo", name);
                 free(name);
             }
             if(gtkCacheOn) stream_cache_size = gtkCacheSize;

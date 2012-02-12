@@ -268,8 +268,8 @@ void guiDone(void)
     }
 
     appFreeStruct();
-    listSet(gtkDelPl, NULL);
-    listSet(gtkDelURL, NULL);
+    listMgr(gtkDelPl, NULL);
+    listMgr(gtkDelURL, NULL);
     free(guiIcon.collection);
 
     if (gui_conf) {
@@ -449,7 +449,7 @@ int gui(int what, void *data)
 
             while (video_out_drivers[i++]) {
                 if (video_out_drivers[i - 1]->control(VOCTRL_GUISUPPORT, NULL) == VO_TRUE) {
-                    gaddlist(&video_driver_list, (char *)video_out_drivers[i - 1]->info->short_name);
+                    listSet(&video_driver_list, (char *)video_out_drivers[i - 1]->info->short_name);
                     break;
                 }
             }
@@ -487,10 +487,10 @@ int gui(int what, void *data)
 
 // if ( ao_plugin_cfg.plugin_list ) { free( ao_plugin_cfg.plugin_list ); ao_plugin_cfg.plugin_list=NULL; }
         if (gtkAONorm)
-            greplace(&af_cfg.list, "volnorm", "volnorm");
+            listRepl(&af_cfg.list, "volnorm", "volnorm");
 
         if (gtkEnableAudioEqualizer)
-            greplace(&af_cfg.list, "equalizer", "equalizer");
+            listRepl(&af_cfg.list, "equalizer", "equalizer");
 
         if (gtkAOExtraStereo) {
             char *name;
@@ -498,7 +498,7 @@ int gui(int what, void *data)
             name = malloc(12 + 20 + 1);
             snprintf(name, 12 + 20, "extrastereo=%f", gtkAOExtraStereoMul);
             name[12 + 20] = 0;
-            greplace(&af_cfg.list, "extrastereo", name);
+            listRepl(&af_cfg.list, "extrastereo", name);
             free(name);
         }
 
@@ -514,7 +514,7 @@ int gui(int what, void *data)
             } else
                 tmp = strdup("oss");
 
-            gaddlist(&audio_driver_list, tmp);
+            listSet(&audio_driver_list, tmp);
             free(tmp);
         }
 
@@ -530,7 +530,7 @@ int gui(int what, void *data)
             } else
                 tmp = strdup("alsa");
 
-            gaddlist(&audio_driver_list, tmp);
+            listSet(&audio_driver_list, tmp);
             free(tmp);
         }
 
@@ -543,7 +543,7 @@ int gui(int what, void *data)
             } else
                 tmp = strdup("sdl");
 
-            gaddlist(&audio_driver_list, tmp);
+            listSet(&audio_driver_list, tmp);
             free(tmp);
         }
 
@@ -556,7 +556,7 @@ int gui(int what, void *data)
             } else
                 tmp = strdup("esd");
 
-            gaddlist(&audio_driver_list, tmp);
+            listSet(&audio_driver_list, tmp);
             free(tmp);
         }
 
@@ -777,7 +777,7 @@ int gui(int what, void *data)
                 break;
         }
 
-        if (guiInfo.Playing && (next = listSet(gtkGetNextPlItem, NULL)) && (plLastPlayed != next)) {
+        if (guiInfo.Playing && (next = listMgr(gtkGetNextPlItem, NULL)) && (plLastPlayed != next)) {
             plLastPlayed = next;
             uiSetFileName(next->path, next->name, STREAMTYPE_FILE);
             guiInfo.NewPlay = GUI_FILE_NEW;
@@ -858,9 +858,9 @@ static int import_file_into_gui(char *temp, int insert)
     item->path = pathname;
 
     if (insert)
-        listSet(gtkInsertPlItem, item);           // inserts the item after current, and makes current=item
+        listMgr(gtkInsertPlItem, item);           // inserts the item after current, and makes current=item
     else
-        listSet(gtkAddPlItem, item);
+        listMgr(gtkAddPlItem, item);
 
     return 1;
 }
@@ -875,7 +875,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
     int result = 0;
 
     if (!enqueue)
-        listSet(gtkDelPl, NULL);             // delete playlist before "appending"
+        listMgr(gtkDelPl, NULL);             // delete playlist before "appending"
 
     if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
@@ -904,7 +904,7 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
     int result = 0;
     plItem *save;
 
-    save = (plItem *)listSet(gtkGetCurrPlItem, NULL);    // save current item
+    save = (plItem *)listMgr(gtkGetCurrPlItem, NULL);    // save current item
 
     if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
@@ -916,12 +916,12 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
     }
 
     if (save)
-        listSet(gtkSetCurrPlItem, save);
+        listMgr(gtkSetCurrPlItem, save);
     else
-        listSet(gtkSetCurrPlItem, plList);    // go to head, if plList was empty before
+        listMgr(gtkSetCurrPlItem, plList);    // go to head, if plList was empty before
 
     if (save && result)
-        listSet(gtkDelCurrPlItem, NULL);
+        listMgr(gtkDelCurrPlItem, NULL);
 
     uiCurr();   // update filename
 

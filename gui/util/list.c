@@ -28,10 +28,10 @@ plItem *plLastPlayed;
 
 urlItem *urlList;
 
-void *listSet(int cmd, void *vparam)
+void *listMgr(int cmd, void *data)
 {
-    plItem *item      = (plItem *)vparam;
-    urlItem *url_item = (urlItem *)vparam;
+    plItem *item      = (plItem *)data;
+    urlItem *url_item = (urlItem *)data;
     int is_added      = 1;
 
     switch (cmd) {
@@ -72,7 +72,7 @@ void *listSet(int cmd, void *vparam)
 
             return plCurrent;
         } else
-            return listSet(gtkAddPlItem, item);
+            return listMgr(gtkAddPlItem, item);
 
     // get next item from playlist
     case gtkGetNextPlItem:
@@ -192,7 +192,7 @@ void *listSet(int cmd, void *vparam)
 /**
  * \brief This actually creates a new list containing only one element...
  */
-void gaddlist(char ***list, const char *entry)
+void listSet(char ***list, const char *entry)
 {
     int i;
 
@@ -212,7 +212,7 @@ void gaddlist(char ***list, const char *entry)
  * \brief This replaces a string starting with search by replace.
  * If not found, replace is appended.
  */
-void greplace(char ***list, const char *search, const char *replace)
+void listRepl(char ***list, const char *search, const char *replace)
 {
     int i   = 0;
     int len = (search ? strlen(search) : 0);
