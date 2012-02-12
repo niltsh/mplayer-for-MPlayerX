@@ -11,7 +11,7 @@ To try slave mode out by hand, run
 
 and type slave commands into the console window.
 
-You can also use a fifo file (named pipe):
+You can also use a FIFO file (named pipe):
 
   mkfifo </tmp/fifofile>
   mplayer -slave -input file=</tmp/fifofile> <movie>
@@ -362,21 +362,21 @@ sub_source [source]
     of each currently available source (forward or backward respectively).
 
 sub_file [value]
-    Display subtitle specifid by [value] for file subs. The [value] is
+    Display subtitle specified by [value] for file subs. The [value] is
     corresponding to ID_FILE_SUB_ID values reported by '-identify'.
     If [value] is -1, will turn off subtitle display.
     If [value] is omitted or less than -1, will cycle all file subs
     (forward or backward respectively).
 
 sub_vob [value]
-    Display subtitle specifid by [value] for vobsubs. The [value] is
+    Display subtitle specified by [value] for VOBsubs. The [value] is
     corresponding to ID_VOBSUB_ID values reported by '-identify'.
     If [value] is -1, will turn off subtitle display.
-    If [value] is omitted or less than -1, will cycle all vobsubs
+    If [value] is omitted or less than -1, will cycle all VOBsubs
     (forward or backward respectively).
 
 sub_demux [value]
-    Display subtitle specifid by [value] for subtitles from DVD or embedded
+    Display subtitle specified by [value] for subtitles from DVD or embedded
     in media file. The [value] is corresponding to ID_SUBTITLE_ID values
     reported by '-identify'. If [value] is -1, will turn off subtitle display.
     If [value] is omitted or less than -1, will cycle all DVD subs or embedded subs
@@ -423,7 +423,7 @@ switch_vsync [value]
 teletext_add_digit <value>
     Enter/leave teletext page number editing mode and append given digit to
     previously entered one.
-    0..9 - Append apropriate digit. (Enables editing mode if called from normal
+    0..9 - Append appropriate digit. (Enables editing mode if called from normal
            mode, and switches to normal mode when third digit is entered.)
     -    - Delete last digit from page number. (Backspace emulation, works only
            in page number editing mode.)
@@ -522,7 +522,7 @@ osdlevel           int       0       3       X   X   X    as -osdlevel
 speed              float     0.01    100     X   X   X    as -speed
 loop               int       -1              X   X   X    as -loop
 pause              flag      0       1       X            1 if paused, use with pausing_keep_force
-filename           string                    X            file playing wo path
+filename           string                    X            file playing w/o path
 path               string                    X            file playing
 demuxer            string                    X            demuxer used
 stream_pos         pos       0               X   X        position in stream
@@ -573,11 +573,11 @@ height             int                       X            "display" height
 fps                float                     X
 aspect             float                     X
 switch_video       int       -2      255     X   X   X    select video stream
-switch_program     int       -1      65535   X   X   X    (see TAB default keybind)
+switch_program     int       -1      65535   X   X   X    (see TAB default keybinding)
 sub                int       -1              X   X   X    select subtitle stream
 sub_source         int       -1      2       X   X   X    select subtitle source
 sub_file           int       -1              X   X   X    select file subtitles
-sub_vob            int       -1              X   X   X    select vobsubs
+sub_vob            int       -1              X   X   X    select VOBsubs
 sub_demux          int       -1              X   X   X    select subs from demux
 sub_delay          float                     X   X   X
 sub_pos            int       0       100     X   X   X    subtitle position
@@ -595,6 +595,6 @@ teletext_mode      flag      0       1       X   X   X    0 - off, 1 - on
 teletext_format    int       0       3       X   X   X    0 - opaque,
                                                           1 - transparent,
                                                           2 - opaque inverted,
-                                                          3 - transp. inv.
+                                                          3 - transparency inverted,
 teletext_half_page int       0       2       X   X   X    0 - off, 1 - top half,
                                                           2- bottom half
