@@ -186,9 +186,23 @@ static const char help_text[]=
 #define MSGTR_DvdnavNavSpuClutChange "DVDNAV-Ereignis: Nav SPU CLUT-Änderung\n"
 #define MSGTR_DvdnavNavSeekDone "DVDNAV-Ereignis: Nav Suche beendet.\n"
 #define MSGTR_MenuCall "Menü-Aufruf\n"
+#define MSGTR_MasterQuit "Option -udp-slave: Ende, weil Master endete\n"
+#define MSGTR_InvalidIP "Option -udp-ip: ungültige IP-Adresse\n"
+#define MSGTR_Forking "Fork wird ausgeführt ...\n"
+#define MSGTR_Forked "Fork wurde ausgeführt...\n"
+#define MSGTR_CouldntStartGdb "gdb konnte nicht gestartet werden\n"
+#define MSGTR_CouldntFork "Fork war nicht möglich\n"
+#define MSGTR_FilenameTooLong "Dateiname ist zu lang, datei- oder verzeichnisspezifische Konfigurationsdateien können nicht geladen werden\n"
+#define MSGTR_AudioDeviceStuck "Audio-Device hat sich aufgehängt!\n"
+#define MSGTR_AudioOutputTruncated "Audio-Ausgabe ist am Ende abgeschnitten.\n"
+#define MSGTR_ASSCannotAddVideoFilter "ASS: Video-Filter kann nicht hinzugefügt werden\n"
+#define MSGTR_PtsAfterFiltersMissing "PTS nach Filter FEHLT\n"
+#define MSGTR_CommandLine "Kommandozeile:"
+#define MSGTR_MenuInitFailed "Initialisierung des Menüs fehlgeschlagen.\n"
 
 // --- edit decision lists
-#define MSGTR_EdlOutOfMem "Kann nicht genug Speicher für EDL-Daten reservieren.\n"
+#define MSGTR_EdlOutOfMem "Es kann nicht genug Speicher für EDL-Daten reserviert werden.\n"
+#define MSGTR_EdlOutOfMemFile "Es kann nicht genug Speicher für den EDL-Dateinamen [%s] reserviert werden.\n"
 #define MSGTR_EdlRecordsNo "%d EDL-Aktionen gelesen.\n"
 #define MSGTR_EdlQueueEmpty "Es gibt keine auszuführenden EDL-Aktionen.\n"
 #define MSGTR_EdlCantOpenForWrite "Kann EDL-Datei [%s] nicht zum Schreiben öffnen.\n"
@@ -214,6 +228,9 @@ static const char help_text[]=
 #define MSGTR_OSDosd "OSD: %s"
 #define MSGTR_OSDChapter "Kapitel: (%d) %s"
 #define MSGTR_OSDAngle "Winkel: %d/%d"
+#define MSGTR_OSDDeinterlace "Deinterlace: %s"
+#define MSGTR_OSDCapturing "Mitschnitt: %s"
+#define MSGTR_OSDCapturingFailure "Mitschnitt fehlgeschlagen"
 
 // Werte für Eigenschaften
 #define MSGTR_Enabled "aktiviert"
@@ -542,7 +559,8 @@ static const char help_text[]=
 #define MSGTR_SMBFileNotFound "Konnte '%s' nicht über das Netzwerk öffnen.\n"
 #define MSGTR_SMBNotCompiled "MPlayer wurde ohne SMB-Unterstützung kompiliert.\n"
 
-#define MSGTR_CantOpenDVD "Kann DVD-Laufwerk nicht öffnen: %s (%s)\n"
+#define MSGTR_CantOpenBluray "Blu-ray-Laufwerk kann nicht geöffnet werden: %s\n"
+#define MSGTR_CantOpenDVD "DVD-Laufwerk kann nicht geöffnet werden: %s (%s)\n"
 
 #define MSGTR_URLParsingFailed "Fehler bei der Analyse der URL %s\n"
 #define MSGTR_FailedSetStreamOption "Datenstrom-Option %s=%s konnte nicht gesetzt werden.\n"
@@ -581,6 +599,10 @@ static const char help_text[]=
 #define MSGTR_DVDsubtitleChannel "Ausgewählte DVD-Untertitelspur: %d Sprache: %c%c\n"
 #define MSGTR_DVDsubtitleLanguage "Untertitel ( sid ): %d Sprache: %s\n"
 #define MSGTR_DVDnumSubtitles "Anzahl der Untertitel auf der Disc: %d\n"
+
+// stream_bluray.c
+#define MSGTR_BlurayNoDevice "Es wurde kein Blu-ray-Laufwerk/-Pfad angegeben ...\n"
+#define MSGTR_BlurayNoTitles "Es sind hier keine Blu-ray-kompatibele Titel vorhanden.\n"
 
 // muxer.c, muxer_*.c
 #define MSGTR_TooManyStreams "Zu viele Streams!"
@@ -1341,6 +1363,7 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_AIALSA_PeriodEqualsBufferSize "Periode darf nicht gleich der Puffergröße sein (%u == %lu).\n"
 #define MSGTR_MPDEMUX_AIALSA_CannotInstallSWParams "Konnte Softwareparameter nicht einrichten:\n"
 #define MSGTR_MPDEMUX_AIALSA_ErrorOpeningAudio "Konnte Audio nicht öffnen: %s\n"
+#define MSGTR_MPDEMUX_AIALSA_AlsaStatusError "ALSA Statusfehler: %s"
 #define MSGTR_MPDEMUX_AIALSA_AlsaXRUN "ALSA xrun!!! (mindestens %.3f ms lang)\n"
 #define MSGTR_MPDEMUX_AIALSA_AlsaXRUNPrepareError "ALSA xrun: Fehler bei Vorbereitung: %s"
 #define MSGTR_MPDEMUX_AIALSA_AlsaReadWriteError "ALSA-Ein/Ausgabefehler."
@@ -1766,6 +1789,7 @@ static const char help_text[]=
 #define MSGTR_LIBVO_FONT_LOAD_FT_CannotPrepareOSDFont "Kann OSD-Schrift nicht vorbereiten.\n"
 #define MSGTR_LIBVO_FONT_LOAD_FT_CannotGenerateTables "Kann Tabellen nicht generieren..\n"
 #define MSGTR_LIBVO_FONT_LOAD_FT_DoneFreeTypeFailed "FT_Done_FreeType fehlgeschlagen.\n"
+#define MSGTR_LIBVO_FONT_LOAD_FT_FontconfigNoMatch "Fontconfig konnte keine Schrift auswählen. Versuch ohne fontconfig ...\n"
 
 // libvo/vo_mga.c
 #define MSGTR_LIBVO_MGA_AspectResized "[VO_MGA] aspect(): Größe geändert auf %dx%d.\n"
@@ -2123,3 +2147,5 @@ static const char help_text[]=
 #define MSGTR_TVI_DS_NoAudioCaptureDevice "tvi_dshow: Kein Gerät für Audioerfassung gefunden\n"
 #define MSGTR_TVI_DS_GetActualMediatypeFailed "tvi_dshow: Kann eigentlichen Medientyp nicht ermitteln (Fehler:0x%x).\nNehme an, dieser entspricht dem angeforderten.\n"
 
+// subtitles
+#define MSGTR_SUBTITLES_SubRip_UnknownFontColor "SubRip: Unbekannte Schriftfarbe im Untertitel: %s\n"
