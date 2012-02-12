@@ -169,9 +169,6 @@ static struct sdl_priv_s {
 	/* is X running (0/1) */
 	int X;
 
-	/* X11 Resolution */
-	int XWidth, XHeight;
-
         /* original image dimensions */
 	int width, height;
 
@@ -529,8 +526,8 @@ static void set_fullmode (int mode) {
 	/* if we haven't set a fullmode yet, default to the lowest res fullmode first */
 	/* But select a mode where the full video enter */
 	if(priv->X && priv->fulltype & VOFLAG_FULLSCREEN) {
-		screen_surface_w = priv->XWidth;
-		screen_surface_h = priv->XHeight;
+		screen_surface_w = vo_screenwidth;
+		screen_surface_h = vo_screenheight;
 	}
 	else if (mode < 0) {
         int i,j,imax;
@@ -561,8 +558,6 @@ static void set_fullmode (int mode) {
 	/* calculate new video size/aspect */
 	if(priv->mode == YUV) {
         if(priv->fulltype&VOFLAG_FULLSCREEN)
-		aspect_save_screenres(priv->XWidth, priv->XHeight);
-
         aspect(&priv->dstwidth, &priv->dstheight, A_ZOOM);
 	}
 
@@ -667,14 +662,12 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
         d_height = height;
     }
 
-    aspect_save_orig(width,height);
-	aspect_save_prescale(d_width ? d_width : width, d_height ? d_height : height);
-
 	/* Save the original Image size */
     priv->width  = width;
     priv->height = height;
-    priv->dstwidth  = d_width ? d_width : width;
-    priv->dstheight = d_height ? d_height : height;
+    priv->dstwidth  = vo_dwidth;
+    priv->dstheight = vo_dheight;
+printf("w/h: %i %i\n", vo_dwidth, vo_dheight);
 
     priv->format = format;
 
@@ -685,11 +678,6 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
 	/* Set output window title */
 	SDL_WM_SetCaption (".: MPlayer : F = Fullscreen/Windowed : C = Cycle Fullscreen Resolutions :.", title);
 	//SDL_WM_SetCaption (title, title);
-    }
-
-    if(priv->X) {
-	aspect_save_screenres(priv->XWidth,priv->XHeight);
-	aspect(&priv->dstwidth,&priv->dstheight,A_NOZOOM);
     }
 
 	priv->windowsize.w = priv->dstwidth;
@@ -1377,10 +1365,8 @@ static int preinit(const char *arg)
 #ifdef CONFIG_X11
     if(vo_init()) {
 		mp_msg(MSGT_VO,MSGL_V, "SDL: deactivating XScreensaver/DPMS\n");
-		priv->XWidth = vo_screenwidth;
-		priv->XHeight = vo_screenheight;
 		priv->X = 1;
-		mp_msg(MSGT_VO,MSGL_V, "SDL: X11 Resolution %ix%i\n", priv->XWidth, priv->XHeight);
+		mp_msg(MSGT_VO,MSGL_V, "SDL: X11 Resolution %ix%i\n", vo_screenwidth, vo_screenheight);
 	}
 #endif
 
@@ -1450,6 +1436,13 @@ static int control(uint32_t request, void *data)
       set_fullmode(priv->fullmode);
       mp_msg(MSGT_VO,MSGL_DBG2, "SDL: Set fullscreen mode\n");
     }
+    return VO_TRUE;
+  case VOCTRL_UPDATE_SCREENINFO:
+    if (!vo_screenwidth || !vo_screenheight) {
+        vo_screenwidth  = 1024;
+        vo_screenheight = 768;
+    }
+    aspect_save_screenres(vo_screenwidth, vo_screenheight);
     return VO_TRUE;
   }
 
