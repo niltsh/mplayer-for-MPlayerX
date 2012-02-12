@@ -528,7 +528,7 @@ static void print_file_properties(const MPContext *mpctx, const char *filename)
     if (start_pts != MP_NOPTS_VALUE)
         mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_START_TIME=%.2f\n", start_pts);
     else
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_START_TIME=%s\n", MSGTR_Unknown);
+        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_START_TIME=unknown\n");
     mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_LENGTH=%.2f\n", demuxer_get_time_length(mpctx->demuxer));
     mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_SEEKABLE=%d\n",
            mpctx->stream->seek && (!mpctx->demuxer || mpctx->demuxer->seekable));
