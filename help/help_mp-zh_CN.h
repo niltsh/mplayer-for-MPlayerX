@@ -994,7 +994,6 @@ static const char help_text[]=
 // vo_sdl.c
 #define MSGTR_LIBVO_SDL_CouldntGetAnyAcceptableSDLModeForOutput "[VO_SDL] 无法获得可接受的 SDL 模式以用于输出。\n"
 #define MSGTR_LIBVO_SDL_SetVideoModeFailed "[VO_SDL] set_video_mode：SDL_SetVideoMode 失败：%s。\n"
-#define MSGTR_LIBVO_SDL_SetVideoModeFailedFull "[VO_SDL] Set_fullmode：SDL_SetVideoMode 失败：%s。\n"
 #define MSGTR_LIBVO_SDL_MappingI420ToIYUV "[VO_SDL] 将 I420 映射到 IYUV。\n"
 #define MSGTR_LIBVO_SDL_UnsupportedImageFormat "[VO_SDL] 不支持的图像格式（0x%X）。\n"
 #define MSGTR_LIBVO_SDL_InfoPleaseUseVmOrZoom "[VO_SDL] 信息 - 请使用 -vm 或 -zoom 切换到最佳分辨率。\n"
