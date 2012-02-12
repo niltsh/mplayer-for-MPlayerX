@@ -177,6 +177,17 @@ static const char help_text[]=
 #define MSGTR_MenuCall "Menu call\n"
 #define MSGTR_MasterQuit "Option -udp-slave: exiting because master exited\n"
 #define MSGTR_InvalidIP "Option -udp-ip: invalid IP address\n"
+#define MSGTR_Forking "Forking...\n"
+#define MSGTR_Forked "Forked...\n"
+#define MSGTR_CouldntStartGdb "Couldn't start gdb\n"
+#define MSGTR_CouldntFork "Couldn't fork\n"
+#define MSGTR_FilenameTooLong "Filename is too long, can not load file or directory specific config files\n"
+#define MSGTR_AudioDeviceStuck "Audio device got stuck!\n"
+#define MSGTR_AudioOutputTruncated "Audio output truncated at end.\n"
+#define MSGTR_ASSCannotAddVideoFilter "ASS: cannot add video filter\n"
+#define MSGTR_PtsAfterFiltersMissing "pts after filters MISSING\n"
+#define MSGTR_CommandLine "CommandLine:"
+#define MSGTR_MenuInitFailed "Menu init failed.\n"
 
 // --- edit decision lists
 #define MSGTR_EdlOutOfMem "Can't allocate enough memory to hold EDL data.\n"
