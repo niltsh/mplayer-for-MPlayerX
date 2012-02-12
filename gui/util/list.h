@@ -31,14 +31,14 @@
 #define gtkAddURLItem    15
 
 typedef struct plItem {
-    struct plItem *prev, *next;
     char *path;
     char *name;
+    struct plItem *prev, *next;
 } plItem;
 
 typedef struct urlItem {
-    struct urlItem *next;
     char *url;
+    struct urlItem *next;
 } urlItem;
 
 extern plItem *plList;
