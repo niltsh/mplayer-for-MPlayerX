@@ -333,7 +333,7 @@ char *TranslateFilename(int how, char *fname, size_t maxlen)
 /**
  * @brief Read characters from @a file.
  *
- * @note Reading stops with '\\r', '\\n' or EOF.
+ * @note Reading stops with an end-of-line character or at end of file.
  *
  * @param str pointer to a buffer to receive the read characters
  * @param size number of characters read at the most (including a terminating null-character)
