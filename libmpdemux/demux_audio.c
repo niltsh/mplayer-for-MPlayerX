@@ -415,11 +415,9 @@ static int demux_audio_open(demuxer_t* demuxer) {
     free(mp3_found);
     mp3_found = NULL;
     if(s->end_pos && (s->flags & MP_STREAM_SEEK) == MP_STREAM_SEEK) {
-      char tag[4];
       stream_seek(s,s->end_pos-128);
-      stream_read(s,tag,3);
-      tag[3] = '\0';
-      if(!strcmp(tag,"TAG")) {
+      stream_read(s,hdr,3);
+      if(!memcmp(hdr,"TAG",3)) {
 	char buf[31];
 	uint8_t g;
 	demuxer->movi_end = stream_tell(s)-3;
