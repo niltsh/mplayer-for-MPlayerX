@@ -507,12 +507,12 @@ int gui(int what, void *data)
             mixer_channel = gtkAOOSSMixerChannel;
 
             if (gtkAOOSSDevice) {
-            char *tmp;
+                char *tmp;
 
                 tmp = calloc(1, strlen(gtkAOOSSDevice) + 7);
                 sprintf(tmp, "oss:%s", gtkAOOSSDevice);
-            listSet(&audio_driver_list, tmp);
-            free(tmp);
+                listSet(&audio_driver_list, tmp);
+                free(tmp);
             }
         }
 
@@ -521,34 +521,34 @@ int gui(int what, void *data)
             mixer_channel = gtkAOALSAMixerChannel;
 
             if (gtkAOALSADevice) {
-            char *tmp;
+                char *tmp;
 
                 tmp = calloc(1, strlen(gtkAOALSADevice) + 14);
                 sprintf(tmp, "alsa:device=%s", gtkAOALSADevice);
-            listSet(&audio_driver_list, tmp);
-            free(tmp);
+                listSet(&audio_driver_list, tmp);
+                free(tmp);
             }
         }
 
         if (audio_driver_list && !gstrncmp(audio_driver_list[0], "sdl", 3)) {
             if (gtkAOSDLDriver) {
-            char *tmp;
+                char *tmp;
 
                 tmp = calloc(1, strlen(gtkAOSDLDriver) + 10);
                 sprintf(tmp, "sdl:%s", gtkAOSDLDriver);
-            listSet(&audio_driver_list, tmp);
-            free(tmp);
+                listSet(&audio_driver_list, tmp);
+                free(tmp);
             }
         }
 
         if (audio_driver_list && !gstrncmp(audio_driver_list[0], "esd", 3)) {
             if (gtkAOESDDevice) {
-            char *tmp;
+                char *tmp;
 
                 tmp = calloc(1, strlen(gtkAOESDDevice) + 10);
                 sprintf(tmp, "esd:%s", gtkAOESDDevice);
-            listSet(&audio_driver_list, tmp);
-            free(tmp);
+                listSet(&audio_driver_list, tmp);
+                free(tmp);
             }
         }
 
