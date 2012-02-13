@@ -173,7 +173,16 @@ int gstrcasecmp(const char *a, const char *b)
     return strcasecmp(a, b);
 }
 
-int gstrncmp(const char *a, const char *b, int n)
+/**
+ * @brief A strncmp() that can handle NULL pointers.
+ *
+ * @param a string to be compared
+ * @param b string which is compared
+ * @param n number of characters compared at the most
+ *
+ * @return return value of strncmp() or -1, if a or b are NULL
+ */
+int gstrncmp(const char *a, const char *b, size_t n)
 {
     if (!a && !b)
         return 0;
