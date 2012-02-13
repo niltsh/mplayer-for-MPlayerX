@@ -325,10 +325,8 @@ static int h264_parse_vui(mp_mpeg_header_t * picture, unsigned char * buf, unsig
     n += 8;
     if(picture->aspect_ratio_information == 255)
     {
-      picture->display_picture_width = (getbits(buf, n, 8) << 8) | getbits(buf, n + 8, 8);
+      // aspect numerator and denominator
       n += 16;
-
-      picture->display_picture_height = (getbits(buf, n, 8) << 8) | getbits(buf, n + 8, 8);
       n += 16;
     }
   }
