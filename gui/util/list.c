@@ -219,19 +219,29 @@ void listSet(char ***list, const char *entry)
 }
 
 /**
- * \brief This replaces a string starting with search by replace.
- * If not found, replace is appended.
+ * @brief Replace the first element in list that starts with @a search.
+ *
+ * @note If no such element is found, @a replace will be appended.
+ *
+ * @param list pointer to the char pointer list
+ * @param search element to search
+ * @param replace replacement element
  */
 void listRepl(char ***list, const char *search, const char *replace)
 {
-    int i   = 0;
-    int len = (search ? strlen(search) : 0);
+    int i      = 0;
+    char **org = *list;
+
+    if (!replace)
+        return;
 
     if (*list) {
+        size_t len = (search ? strlen(search) : 0);
+
         for (i = 0; (*list)[i]; i++) {
-            if (search && (strncmp((*list)[i], search, len) == 0)) {
+            if (gstrncmp((*list)[i], search, len) == 0) {
                 free((*list)[i]);
-                (*list)[i] = gstrdup(replace);
+                (*list)[i] = strdup(replace);
                 return;
             }
         }
@@ -240,6 +250,11 @@ void listRepl(char ***list, const char *search, const char *replace)
     } else
         *list = malloc(2 * sizeof(char *));
 
-    (*list)[i]     = gstrdup(replace);
+    if (!*list) {
+        *list = org;
+        return;
+    }
+
+    (*list)[i]     = strdup(replace);
     (*list)[i + 1] = NULL;
 }
