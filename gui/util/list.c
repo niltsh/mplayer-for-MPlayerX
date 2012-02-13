@@ -210,11 +210,11 @@ void listSet(char ***list, const char *entry)
         free(*list);
     }
 
-    *list      = malloc(2 * sizeof(char *));
+    *list = malloc(2 * sizeof(char *));
 
     if (*list) {
-    (*list)[0] = gstrdup(entry);
-    (*list)[1] = NULL;
+        (*list)[0] = gstrdup(entry);
+        (*list)[1] = NULL;
     }
 }
 
