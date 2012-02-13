@@ -503,61 +503,53 @@ int gui(int what, void *data)
         }
 
         if (audio_driver_list && !gstrncmp(audio_driver_list[0], "oss", 3)) {
-            char *tmp;
-
             mixer_device  = gtkAOOSSMixer;
             mixer_channel = gtkAOOSSMixerChannel;
 
             if (gtkAOOSSDevice) {
+            char *tmp;
+
                 tmp = calloc(1, strlen(gtkAOOSSDevice) + 7);
                 sprintf(tmp, "oss:%s", gtkAOOSSDevice);
-            } else
-                tmp = strdup("oss");
-
             listSet(&audio_driver_list, tmp);
             free(tmp);
+            }
         }
 
         if (audio_driver_list && !gstrncmp(audio_driver_list[0], "alsa", 4)) {
-            char *tmp;
-
             mixer_device  = gtkAOALSAMixer;
             mixer_channel = gtkAOALSAMixerChannel;
 
             if (gtkAOALSADevice) {
+            char *tmp;
+
                 tmp = calloc(1, strlen(gtkAOALSADevice) + 14);
                 sprintf(tmp, "alsa:device=%s", gtkAOALSADevice);
-            } else
-                tmp = strdup("alsa");
-
             listSet(&audio_driver_list, tmp);
             free(tmp);
+            }
         }
 
         if (audio_driver_list && !gstrncmp(audio_driver_list[0], "sdl", 3)) {
+            if (gtkAOSDLDriver) {
             char *tmp;
 
-            if (gtkAOSDLDriver) {
                 tmp = calloc(1, strlen(gtkAOSDLDriver) + 10);
                 sprintf(tmp, "sdl:%s", gtkAOSDLDriver);
-            } else
-                tmp = strdup("sdl");
-
             listSet(&audio_driver_list, tmp);
             free(tmp);
+            }
         }
 
         if (audio_driver_list && !gstrncmp(audio_driver_list[0], "esd", 3)) {
+            if (gtkAOESDDevice) {
             char *tmp;
 
-            if (gtkAOESDDevice) {
                 tmp = calloc(1, strlen(gtkAOESDDevice) + 10);
                 sprintf(tmp, "esd:%s", gtkAOESDDevice);
-            } else
-                tmp = strdup("esd");
-
             listSet(&audio_driver_list, tmp);
             free(tmp);
+            }
         }
 
         // subtitle
