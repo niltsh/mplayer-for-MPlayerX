@@ -190,22 +190,32 @@ void *listMgr(int cmd, void *data)
 }
 
 /**
- * \brief This actually creates a new list containing only one element...
+ * @brief Set list to @a entry.
+ *
+ * @param list pointer to the char pointer list
+ * @param entry the new (and only) element of the list
+ *
+ * @note Actually, a new list will be created and the old list will be freed.
  */
 void listSet(char ***list, const char *entry)
 {
-    int i;
-
     if (*list) {
-        for (i = 0; (*list)[i]; i++)
-            free((*list)[i]);
+        char **l = *list;
+
+        while (*l) {
+            free(*l);
+            l++;
+        }
 
         free(*list);
     }
 
-    *list      = malloc(2 * sizeof(char **));
+    *list      = malloc(2 * sizeof(char *));
+
+    if (*list) {
     (*list)[0] = gstrdup(entry);
     (*list)[1] = NULL;
+    }
 }
 
 /**
