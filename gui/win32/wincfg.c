@@ -130,9 +130,9 @@ void cfg_write(void)
             {
                 char delim[] = "\"";
 
-                if (!strchr(val, ' ')) *delim = 0;
+                if (!strchr(v, ' ')) *delim = 0;
 
-                fprintf(f, "%s=%s%s%s\n", gui_opts[i].name, v);
+                fprintf(f, "%s=%s%s%s\n", gui_opts[i].name, delim, v, delim);
                 free(v);
             }
         }
