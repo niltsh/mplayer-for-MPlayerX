@@ -47,11 +47,11 @@ extern plItem *plLastPlayed;
 
 extern urlItem *urlList;
 
-/// list manager (playlist, URL list)
+/// @name list manager (playlist, URL list)
 void *listMgr(int cmd, void *data);
 
+/// @name char pointer list operations
 //@{
-/// char pointer list operations
 void listRepl(char ***list, const char *search, const char *replace);
 void listSet(char ***list, const char *entry);
 //@}
