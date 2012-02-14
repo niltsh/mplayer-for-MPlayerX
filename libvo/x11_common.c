@@ -115,11 +115,13 @@ static Atom XA_NET_WM_STATE_ABOVE;
 static Atom XA_NET_WM_STATE_STAYS_ON_TOP;
 static Atom XA_NET_WM_STATE_BELOW;
 static Atom XA_NET_WM_PID;
+static Atom XA_NET_WM_NAME;
 static Atom XA_WIN_PROTOCOLS;
 static Atom XA_WIN_LAYER;
 static Atom XA_WIN_HINTS;
 static Atom XAWM_PROTOCOLS;
 static Atom XAWM_DELETE_WINDOW;
+static Atom XAUTF8_STRING;
 
 #define XA_INIT(x) XA##x = XInternAtom(mDisplay, #x, False)
 
@@ -357,11 +359,13 @@ static void init_atoms(void)
     XA_INIT(_NET_WM_STATE_STAYS_ON_TOP);
     XA_INIT(_NET_WM_STATE_BELOW);
     XA_INIT(_NET_WM_PID);
+    XA_INIT(_NET_WM_NAME);
     XA_INIT(_WIN_PROTOCOLS);
     XA_INIT(_WIN_LAYER);
     XA_INIT(_WIN_HINTS);
     XA_INIT(WM_PROTOCOLS);
     XA_INIT(WM_DELETE_WINDOW);
+    XA_INIT(UTF8_STRING);
 }
 
 void update_xinerama_info(void) {
@@ -1132,6 +1136,8 @@ void vo_x11_create_vo_window(XVisualInfo *vis, int x, int y,
   if (flags & VOFLAG_HIDDEN)
     goto final;
   XStoreName(mDisplay, vo_window, title);
+  XChangeProperty(mDisplay, vo_window, XA_NET_WM_NAME, XAUTF8_STRING,
+                  8, PropModeReplace, title, strlen(title));
   if (window_state & VOFLAG_HIDDEN) {
     XSizeHints hint;
     XEvent xev;
