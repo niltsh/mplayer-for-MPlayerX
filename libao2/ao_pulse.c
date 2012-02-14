@@ -166,6 +166,7 @@ static int init(int rate_hz, int channels, int format, int flags) {
 
     ao_data.samplerate = rate_hz;
     ao_data.channels = channels;
+    ao_data.outburst = 8 * channels * (rate_hz / 64);
 
     fmt_map = format_maps;
     while (fmt_map->mp_format != format) {
