@@ -6702,7 +6702,7 @@ else
   _librtmp=no
   def_librtmp='#define CONFIG_LIBRTMP 0'
   noinputmodules="librtmp $noinputmodules"
-  libavprotocols=$(echo $libavprotocols | sed -e s/RTMPE_PROTOCOL// -e s/RTMPS_PROTOCOL// -e s/RTMPT_PROTOCOL// -e s/RTMPTE_PROTOCOL// )
+  libavprotocols=$(echo $libavprotocols | sed -e s/LIBRTMP_PROTOCOL// -e s/LIBRTMPE_PROTOCOL// -e s/LIBRTMPS_PROTOCOL// -e s/LIBRTMPT_PROTOCOL// -e s/LIBRTMPTE_PROTOCOL// )
 fi
 echores "$_librtmp"
 
