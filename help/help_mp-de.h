@@ -1539,6 +1539,8 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_NW_CacheSizeSetTo "Cache-Größe auf %d KByte gesetzt.\n"
 
 // demux_audio.c
+#define MSGTR_MPDEMUX_AUDIO_BadID3v2TagSize "Audiodemuxer: ungültige ID3v2-Tag-Größe: größer als der Stream (%u).\n"
+#define MSGTR_MPDEMUX_AUDIO_DamagedAppendedID3v2Tag "Audiodemuxer: beschädigtes angehängtes ID3v2-Tag gefunden.\n"
 #define MSGTR_MPDEMUX_AUDIO_UnknownFormat "Audiodemuxer: unbekanntes Format %d.\n"
 
 // demux_demuxers.c
