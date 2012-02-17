@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 34569
+// Synced with help_mp-en.h rev. 34719
 //
 // Translated by JRaSH <jrash06@gmail.com>
 
@@ -177,6 +177,17 @@ static const char help_text[]=
 #define MSGTR_MenuCall "菜单调用\n"
 #define MSGTR_MasterQuit "选项 -udp-slave：因主动方中止而中止\n"
 #define MSGTR_InvalidIP "选项 -udp-ip：无效的 IP 地址\n"
+#define MSGTR_Forking "正在创建子进程...\n"
+#define MSGTR_Forked "已经创建子进程...\n"
+#define MSGTR_CouldntStartGdb "无法启动 gdb\n"
+#define MSGTR_CouldntFork "无法创建子进程\n"
+#define MSGTR_FilenameTooLong "文件名太长，无法加载用于特定文件或目录的配置文件\n"
+#define MSGTR_AudioDeviceStuck "音频设备已堵塞！\n"
+#define MSGTR_AudioOutputTruncated "音频输入信号在尾端截断。\n"
+#define MSGTR_ASSCannotAddVideoFilter "ASS：无法添加视频过滤器\n"
+#define MSGTR_PtsAfterFiltersMissing "缺失过滤器后的 PTS\n"
+#define MSGTR_CommandLine "命令行："
+#define MSGTR_MenuInitFailed "菜单初始化失败。\n"
 
 // --- edit decision lists
 #define MSGTR_EdlOutOfMem "无法分配足够的内存以存放 EDL 数据。\n"
@@ -1459,6 +1470,8 @@ static const char help_text[]=
 #define MSGTR_MPDEMUX_AVIHDR_IdxFileSaved "已保存索引文件：%s\n"
 
 // demux_audio.c
+#define MSGTR_MPDEMUX_AUDIO_BadID3v2TagSize "音频分离器：ID3v2 标签大小异常：大于流的长度（%u）。\n"
+#define MSGTR_MPDEMUX_AUDIO_DamagedAppendedID3v2Tag "音频分离器：检测到末尾中的 ID3v2 标签已损坏。\n"
 #define MSGTR_MPDEMUX_AUDIO_UnknownFormat "音频流分解器：未知格式 %d。\n"
 
 // demux_demuxers.c
