@@ -121,6 +121,7 @@ static const struct AVCodecTag mp_bmp_tags[] = {
     { CODEC_ID_BMV_VIDEO,         MKTAG('B', 'M', 'V', 'V')},
     { CODEC_ID_C93,               MKTAG('C', '9', '3', 'V')},
     { CODEC_ID_CDGRAPHICS,        MKTAG('C', 'D', 'G', 'R')},
+    { CODEC_ID_CDXL,              MKTAG('C', 'D', 'X', 'L')},
     { CODEC_ID_CMV,               MKTAG('M', 'V', 'I', 'f')},
     { CODEC_ID_DFA,               MKTAG('C', 'D', 'F', 'A')},
     { CODEC_ID_DNXHD,             MKTAG('A', 'V', 'd', 'n')},
