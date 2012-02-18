@@ -123,7 +123,7 @@ static void convert_matrix(MpegEncContext *s, int (*qmat)[64],
 					(QMAT_SHIFT-3))/
 					(qscale*quant_matrix[j]));
 			}
-		} else if (s->dsp.fdct == fdct_ifast) {
+		} else if (s->dsp.fdct == ff_fdct_ifast) {
 			for (i = 0; i < 64; i++) {
 				const int j = s->dsp.idct_permutation[i];
 /* 16 <= qscale * quant_matrix[i] <= 7905
@@ -447,7 +447,7 @@ static jpeg_enc_t *jpeg_enc_init(int w, int h, int y_rsize,
 	j->s->out_format = FMT_MJPEG;
 	j->s->intra_only = 1;		// Generate only intra pictures for jpeg
 	j->s->encoding = 1;		// Set mode to encode
-	j->s->pict_type = FF_I_TYPE;
+	j->s->pict_type = AV_PICTURE_TYPE_I;
 	j->s->y_dc_scale = 8;
 	j->s->c_dc_scale = 8;
 
@@ -500,7 +500,7 @@ static jpeg_enc_t *jpeg_enc_init(int w, int h, int y_rsize,
 
 	/* make MPV_common_init allocate important buffers, like s->block
 	 * Also initializes dsputil */
-	if (MPV_common_init(j->s) < 0) {
+	if (ff_MPV_common_init(j->s) < 0) {
 		av_free(j->s);
 		av_free(j);
 		return NULL;
