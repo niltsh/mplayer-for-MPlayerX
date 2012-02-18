@@ -22,6 +22,7 @@
 #include "mp_msg.h"
 #include "mp_fifo.h"
 #include "osdep/keycodes.h"
+#include "osdep/setenv.h"
 #include "input/input.h"
 #include "input/mouse.h"
 #include "video_out.h"

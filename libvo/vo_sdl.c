@@ -67,6 +67,7 @@
 #include "sub/sub.h"
 #include "aspect.h"
 #include "libmpcodecs/vfcap.h"
+#include "osdep/setenv.h"
 
 #ifdef CONFIG_X11
 #include <X11/Xlib.h>

@@ -37,6 +37,7 @@
 #include <SDL.h>
 #endif
 #include "osdep/timer.h"
+#include "osdep/setenv.h"
 
 #include "libavutil/fifo.h"
 

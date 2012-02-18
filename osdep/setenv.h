@@ -1,6 +1,4 @@
 /*
- * setenv implementation for systems lacking it.
- *
  * This file is part of MPlayer.
  *
  * MPlayer is free software; you can redistribute it and/or modify
@@ -18,29 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#ifndef MPLAYER_SETENV_H
+#define MPLAYER_SETENV_H
+
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-#ifndef MP_DEBUG
-  #define NDEBUG
+#if !HAVE_SETENV
+int setenv(const char *name, const char *val, int overwrite);
 #endif
-#include <assert.h>
 
-#include "setenv.h"
-
-int setenv(const char *name, const char *val, int overwrite)
-{
-  int len  = strlen(name) + strlen(val) + 2;
-  char *env = malloc(len);
-  if (!env) { return -1; }
-
-  assert(overwrite != 0);
-
-  strcpy(env, name);
-  strcat(env, "=");
-  strcat(env, val);
-  putenv(env);
-
-  return 0;
-}
+#endif /* MPLAYER_SETENV_H */
