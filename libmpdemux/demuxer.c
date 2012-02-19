@@ -53,6 +53,7 @@
 #endif
 #include "av_helpers.h"
 #endif
+#include "libavutil/avstring.h"
 
 // This is quite experimental, in particular it will mess up the pts values
 // in the queue - on the other hand it might fix some issues like generating
@@ -1783,6 +1784,50 @@ int demuxer_set_angle(demuxer_t *demuxer, int angle)
     demux_resync(demuxer);
 
     return angle;
+}
+
+int demuxer_audio_lang(demuxer_t *d, int id, char *buf, int buf_len)
+{
+    struct stream_lang_req req;
+    sh_audio_t *sh;
+    if (id < 0 || id >= MAX_A_STREAMS)
+        return -1;
+    sh = d->a_streams[id];
+    if (!sh)
+        return -1;
+    if (sh->lang) {
+        av_strlcpy(buf, sh->lang, buf_len);
+        return 0;
+    }
+    req.type = stream_ctrl_audio;
+    req.id = sh->aid;
+    if (stream_control(d->stream, STREAM_CTRL_GET_LANG, &req) == STREAM_OK) {
+        av_strlcpy(buf, req.buf, buf_len);
+        return 0;
+    }
+    return -1;
+}
+
+int demuxer_sub_lang(demuxer_t *d, int id, char *buf, int buf_len)
+{
+    struct stream_lang_req req;
+    sh_sub_t *sh;
+    if (id < 0 || id >= MAX_S_STREAMS)
+        return -1;
+    sh = d->s_streams[id];
+    if (!sh)
+        return -1;
+    if (sh->lang) {
+        av_strlcpy(buf, sh->lang, buf_len);
+        return 0;
+    }
+    req.type = stream_ctrl_sub;
+    req.id = sh->sid;
+    if (stream_control(d->stream, STREAM_CTRL_GET_LANG, &req) == STREAM_OK) {
+        av_strlcpy(buf, req.buf, buf_len);
+        return 0;
+    }
+    return -1;
 }
 
 int demuxer_audio_track_by_lang(demuxer_t *d, char *lang)
