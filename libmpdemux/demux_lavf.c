@@ -208,6 +208,7 @@ static int lavf_check_file(demuxer_t *demuxer){
 }
 
 static const char * const preferred_list[] = {
+    "cdxl",
     "dxa",
     "flv",
     "gxf",
