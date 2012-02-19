@@ -21,7 +21,6 @@
 
 #include "stream.h"
 
-const char *bd_lang_from_id(stream_t *s, int id);
 int bd_aid_from_lang(stream_t *s, const char *lang);
 int bd_sid_from_lang(stream_t *s, const char *lang);
 
