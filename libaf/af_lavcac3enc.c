@@ -33,8 +33,17 @@
 #include "av_helpers.h"
 
 #include "libavcodec/avcodec.h"
-#include "libavcodec/ac3.h"
 #include "libavutil/intreadwrite.h"
+
+#define AC3_MAX_CHANNELS            6
+#define AC3_FRAME_SIZE           1536
+#define AC3_MAX_CODED_FRAME_SIZE 3840
+//#define AC3_BIT_RATES_COUNT        19
+
+static const int ac3_bit_rates[] = {
+    32000, 40000, 48000, 56000, 64000, 80000, 96000, 112000, 128000, 160000,
+    192000, 224000, 256000, 320000, 384000, 448000, 512000, 576000, 640000
+};
 
 // Data for specific instances of this filter
 typedef struct af_ac3enc_s {
@@ -117,10 +126,10 @@ static int control(struct af_instance_s *af, int cmd, void *arg)
         if (s->bit_rate < 1000)
             s->bit_rate *= 1000;
         if (s->bit_rate) {
-            for (i = 0; i < 19; ++i)
-                if (ff_ac3_bitrate_tab[i] * 1000 == s->bit_rate)
+            for (i = 0; i < FF_ARRAY_ELEMS(ac3_bit_rates); ++i)
+                if (ac3_bit_rates[i] == s->bit_rate)
                     break;
-            if (i >= 19) {
+            if (i >= FF_ARRAY_ELEMS(ac3_bit_rates)) {
                 mp_msg(MSGT_AFILTER, MSGL_WARN, "af_lavcac3enc unable set unsupported "
                        "bitrate %d, use default bitrate (check manpage to see "
                        "supported bitrates).\n", s->bit_rate);

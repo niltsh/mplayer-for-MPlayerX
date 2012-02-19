@@ -70,6 +70,7 @@ SRCS_COMMON-$(FAAD)                  += libmpcodecs/ad_faad.c
 SRCS_COMMON-$(FASTMEMCPY)            += libvo/aclib.c
 SRCS_COMMON-$(FFMPEG)                += av_helpers.c                \
                                         av_opts.c                   \
+                                        libaf/af_lavcac3enc.c       \
                                         libaf/af_lavcresample.c     \
                                         libmpcodecs/ad_ffmpeg.c     \
                                         libmpcodecs/ad_spdif.c      \
@@ -86,8 +87,7 @@ SRCS_COMMON-$(FFMPEG)                += av_helpers.c                \
 SRCS_COMMON-$(CONFIG_VF_LAVFI)      +=  libmpcodecs/vf_lavfi.c
 
 # These filters use private headers and do not work with shared FFmpeg.
-SRCS_COMMON-$(FFMPEG_A)              += libaf/af_lavcac3enc.c    \
-                                        libmpcodecs/vf_fspp.c    \
+SRCS_COMMON-$(FFMPEG_A)              += libmpcodecs/vf_fspp.c    \
                                         libmpcodecs/vf_mcdeint.c \
                                         libmpcodecs/vf_qp.c      \
                                         libmpcodecs/vf_spp.c     \
