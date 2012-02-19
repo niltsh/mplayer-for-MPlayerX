@@ -207,6 +207,14 @@ static int lavf_check_file(demuxer_t *demuxer){
     return DEMUXER_TYPE_LAVF;
 }
 
+/* Before adding anything to this list please stop and consider why.
+ * There are two good reasons
+ * 1) to reduce startup time when streaming these file types
+ * 2) workarounds around bugs in our native demuxers that are not reasonable to
+ *    fix
+ * For the case 2) that means the issue should be understood well
+ * enough to be able to decide that a fix is not reasonable.
+ */
 static const char * const preferred_list[] = {
     "cdxl",
     "dxa",
