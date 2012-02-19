@@ -104,7 +104,7 @@
 
 static unsigned char *pciConfBase;
 
-static __inline__ unsigned long
+static inline unsigned long
 static swapl(unsigned long val)
 {
 	unsigned char *p = (unsigned char *)&val;

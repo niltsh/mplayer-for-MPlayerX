@@ -66,41 +66,41 @@
 
 extern unsigned char *ioBase;
 
-static __inline__ volatile void eieio(void)
+static inline volatile void eieio(void)
 {
 	__asm__ volatile ("eieio");
 }
 
-static __inline__ void outb(short port, unsigned char value)
+static inline void outb(short port, unsigned char value)
 {
 	*(unsigned char *)(ioBase + port) = value; eieio();
 }
 
-static __inline__ void outw(short port, unsigned short value)
+static inline void outw(short port, unsigned short value)
 {
 	*(unsigned short *)(ioBase + port) = value; eieio();
 }
 
-static __inline__ void outl(short port, unsigned short value)
+static inline void outl(short port, unsigned short value)
 {
 	*(unsigned long *)(ioBase + port) = value; eieio();
 }
 
-static __inline__ unsigned char inb(short port)
+static inline unsigned char inb(short port)
 {
 	unsigned char val;
 	val = *((unsigned char *)(ioBase + port)); eieio();
 	return val;
 }
 
-static __inline__ unsigned short inw(short port)
+static inline unsigned short inw(short port)
 {
 	unsigned short val;
 	val = *((unsigned short *)(ioBase + port)); eieio();
 	return val;
 }
 
-static __inline__ unsigned long inl(short port)
+static inline unsigned long inl(short port)
 {
 	unsigned long val;
 	val = *((unsigned long *)(ioBase + port)); eieio();

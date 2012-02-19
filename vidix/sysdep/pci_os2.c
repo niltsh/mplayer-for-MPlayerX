@@ -31,7 +31,7 @@
 
 static USHORT callgate[3] = {0,0,0};
 
-static __inline__ int enable_os_io(void)
+static inline int enable_os_io(void)
 {
 	HFILE hfd;
 	ULONG dlen,action;
@@ -71,7 +71,7 @@ static __inline__ int enable_os_io(void)
 	return 0;
 }
 
-static __inline__ int disable_os_io(void)
+static inline int disable_os_io(void)
 {
 /* Nothing to do */
         return 0;

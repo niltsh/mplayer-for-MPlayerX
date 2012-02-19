@@ -146,7 +146,7 @@ avs_err:
 
 /* Implement RGB MODES ?? */
 #if 0
-static __inline int get_mmioFOURCC(const AVS_VideoInfo *v)
+static inline int get_mmioFOURCC(const AVS_VideoInfo *v)
 {
     if (avs_is_rgb(v)) return mmioFOURCC(8, 'R', 'G', 'B');
     if (avs_is_rgb24(v)) return mmioFOURCC(24, 'R', 'G', 'B');

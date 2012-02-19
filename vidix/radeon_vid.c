@@ -547,7 +547,7 @@ static inline uint32_t INREG (uint32_t addr) {
 		OUTREG(addr, _tmp);					\
 	} while (0)
 
-static __inline__ uint32_t INPLL(uint32_t addr)
+static inline uint32_t INPLL(uint32_t addr)
 {
 	OUTREG8(CLOCK_CNTL_INDEX, addr & 0x0000001f);
 	return INREG(CLOCK_CNTL_DATA);
@@ -712,7 +712,7 @@ static void _radeon_fifo_wait(unsigned);
 #define radeon_engine_idle()		_radeon_engine_idle()
 #define radeon_fifo_wait(entries)	_radeon_fifo_wait(entries)
 /* Flush all dirty data in the Pixel Cache to memory. */
-static __inline__ void radeon_engine_flush ( void )
+static inline void radeon_engine_flush(void)
 {
     unsigned i;
 
@@ -750,7 +750,7 @@ static void radeon_engine_reset( void )
 }
 #else
 
-static __inline__ void radeon_engine_flush ( void )
+static inline void radeon_engine_flush(void)
 {
 	int i;
 
@@ -1434,7 +1434,7 @@ static const fourcc_desc_t supported_fourcc[] =
   { IMGFMT_BGR32, 775 }
 };
 
-__inline__ static int is_supported_fourcc(uint32_t fourcc)
+static inline int is_supported_fourcc(uint32_t fourcc)
 {
   unsigned i;
   for(i=0;i<sizeof(supported_fourcc)/sizeof(fourcc_desc_t);i++)

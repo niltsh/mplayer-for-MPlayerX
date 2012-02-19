@@ -64,37 +64,37 @@
 
 unsigned int IOPortBase;  /* Memory mapped I/O port area */
 
-static __inline__ void outb(short port,char val)
+static inline void outb(short port, char val)
 {
 	 if ((unsigned short)port >= 0x400) return;
 	*(volatile unsigned char*)(((unsigned short)(port))+IOPortBase) = val;
 }
 
-static __inline__ void outw(short port,short val)
+static inline void outw(short port, short val)
 {
 	 if ((unsigned short)port >= 0x400) return;
 	*(volatile unsigned short*)(((unsigned short)(port))+IOPortBase) = val;
 }
 
-static __inline__ void outl(short port,int val)
+static inline void outl(short port, int val)
 {
 	 if ((unsigned short)port >= 0x400) return;
 	*(volatile unsigned long*)(((unsigned short)(port))+IOPortBase) = val;
 }
 
-static __inline__ unsigned int inb(short port)
+static inline unsigned int inb(short port)
 {
 	if ((unsigned short)port >= 0x400) return (unsigned int)-1;
 	return *(volatile unsigned char*)(((unsigned short)(port))+IOPortBase);
 }
 
-static __inline__ unsigned int inw(short port)
+static inline unsigned int inw(short port)
 {
 	if ((unsigned short)port >= 0x400) return (unsigned int)-1;
 	return *(volatile unsigned short*)(((unsigned short)(port))+IOPortBase);
 }
 
-static __inline__ unsigned int inl(short port)
+static inline unsigned int inl(short port)
 {
 	if ((unsigned short)port >= 0x400) return (unsigned int)-1;
 	return *(volatile unsigned long*)(((unsigned short)(port))+IOPortBase);

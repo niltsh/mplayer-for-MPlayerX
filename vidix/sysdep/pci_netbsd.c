@@ -36,7 +36,7 @@
 
 static int io_fd;
 
-static __inline__ int enable_os_io(void)
+static inline int enable_os_io(void)
 {
     io_fd = -1 ;
 #if !defined(USE_I386_IOPL)
@@ -53,7 +53,7 @@ static __inline__ int enable_os_io(void)
     return 0;
 }
 
-static __inline__ int disable_os_io(void)
+static inline int disable_os_io(void)
 {
 #if !defined(USE_I386_IOPL)
     close(io_fd);

@@ -66,36 +66,36 @@
 #define ASI_PL 0x88
 #endif
 
-static __inline__ void outb(unsigned long port, char val)
+static inline void outb(unsigned long port, char val)
 {
   __asm__ volatile("stba %0, [%1] %2" : : "r" (val), "r" (port), "i" (ASI_PL));
 }
 
-static __inline__ void outw(unsigned long port, char val)
+static inline void outw(unsigned long port, char val)
 {
   __asm__ volatile("stha %0, [%1] %2" : : "r" (val), "r" (port), "i" (ASI_PL));
 }
 
-static __inline__ void outl(unsigned long port, char val)
+static inline void outl(unsigned long port, char val)
 {
   __asm__ volatile("sta %0, [%1] %2" : : "r" (val), "r" (port), "i" (ASI_PL));
 }
 
-static __inline__ unsigned int inb(unsigned long port)
+static inline unsigned int inb(unsigned long port)
 {
    unsigned char ret;
    __asm__ volatile("lduba [%1] %2, %0" : "=r" (ret) : "r" (port), "i" (ASI_PL));
    return ret;
 }
 
-static __inline__ unsigned int inw(unsigned long port)
+static inline unsigned int inw(unsigned long port)
 {
    unsigned char ret;
    __asm__ volatile("lduha [%1] %2, %0" : "=r" (ret) : "r" (port), "i" (ASI_PL));
    return ret;
 }
 
-static __inline__ unsigned int inl(unsigned long port)
+static inline unsigned int inl(unsigned long port)
 {
    unsigned char ret;
    __asm__ volatile("lda [%1] %2, %0" : "=r" (ret) : "r" (port), "i" (ASI_PL));

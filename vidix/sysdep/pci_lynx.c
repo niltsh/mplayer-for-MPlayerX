@@ -38,7 +38,7 @@
 
 static unsigned char *pciConfBase;
 
-static __inline__ void enable_os_io(void)
+static inline void enable_os_io(void)
 {
     pciConfBase = (unsigned char *) smem_create("PCI-CONF",
     	    (char *)0x80800000, 64*1024, SM_READ|SM_WRITE);
@@ -46,7 +46,7 @@ static __inline__ void enable_os_io(void)
         exit(1);
 }
 
-static __inline__ void disable_os_io(void)
+static inline void disable_os_io(void)
 {
     smem_create(NULL, (char *) pciConfBase, 0, SM_DETACH);
     smem_remove("PCI-CONF");
@@ -57,7 +57,7 @@ static __inline__ void disable_os_io(void)
 
 static unsigned char *pciConfBase;
 
-static __inline__ unsigned long
+static inline unsigned long
 static swapl(unsigned long val)
 {
 	unsigned char *p = (unsigned char *)&val;

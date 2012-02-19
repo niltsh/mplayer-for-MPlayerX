@@ -160,13 +160,13 @@ static inline uint32_t INREG (uint32_t addr) {
 		OUTREG(addr, _tmp);					\
 	} while (0)
 
-static __inline__ int ATIGetMach64LCDReg(int _Index)
+static inline int ATIGetMach64LCDReg(int _Index)
 {
         OUTREG8(LCD_INDEX, _Index);
         return INREG(LCD_DATA);
 }
 
-static __inline__ uint32_t INPLL(uint32_t addr)
+static inline uint32_t INPLL(uint32_t addr)
 {
     uint32_t res;
     uint32_t in;
@@ -180,7 +180,7 @@ static __inline__ uint32_t INPLL(uint32_t addr)
     return res;
 }
 
-static __inline__ void OUTPLL(uint32_t addr,uint32_t val)
+static inline void OUTPLL(uint32_t addr, uint32_t val)
 {
 //FIXME buggy but its not used
     /* write addr byte */

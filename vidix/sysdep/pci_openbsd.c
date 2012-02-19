@@ -32,7 +32,7 @@
 #include <sys/types.h>
 #include <machine/sysarch.h>
 
-static __inline__ int enable_os_io(void)
+static inline int enable_os_io(void)
 {
     if (i386_iopl(1) < 0) {
 	perror("i386_iopl");
@@ -41,7 +41,7 @@ static __inline__ int enable_os_io(void)
     return 0;
 }
 
-static __inline__ int disable_os_io(void)
+static inline int disable_os_io(void)
 {
  /* Nothing to do */
     return 0;

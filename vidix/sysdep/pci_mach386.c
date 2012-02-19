@@ -30,7 +30,7 @@
 
 static int io_fd;
 
-static __inline__ int enable_os_io(void)
+static inline int enable_os_io(void)
 {
     io_fd = -1 ;
     if ((io_fd = open("/dev/iopl", O_RDWR, 0)) < 0) {
@@ -40,7 +40,7 @@ static __inline__ int enable_os_io(void)
     return 0;
 }
 
-static __inline__ int disable_os_io(void)
+static inline int disable_os_io(void)
 {
     close(io_fd);
     return 0;

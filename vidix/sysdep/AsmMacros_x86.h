@@ -89,7 +89,7 @@ extern int dhahelper_initialized;
 extern int svgahelper_fd;
 extern int svgahelper_initialized;
 
-static __inline__ void svga_outb(short port, char value)
+static inline void svga_outb(short port, char value)
 {
     io_t iov;
 
@@ -98,7 +98,7 @@ static __inline__ void svga_outb(short port, char value)
     ioctl(svgahelper_fd, SVGALIB_HELPER_IOCSOUTB, &iov);
 }
 
-static __inline__ void svga_outw(short port, char value)
+static inline void svga_outw(short port, char value)
 {
     io_t iov;
 
@@ -107,7 +107,7 @@ static __inline__ void svga_outw(short port, char value)
     ioctl(svgahelper_fd, SVGALIB_HELPER_IOCSOUTW, &iov);
 }
 
-static __inline__ void svga_outl(short port, unsigned int value)
+static inline void svga_outl(short port, unsigned int value)
 {
     io_t iov;
 
@@ -116,7 +116,7 @@ static __inline__ void svga_outl(short port, unsigned int value)
     ioctl(svgahelper_fd, SVGALIB_HELPER_IOCSOUTL, &iov);
 }
 
-static __inline__ unsigned int svga_inb(short port)
+static inline unsigned int svga_inb(short port)
 {
     io_t iov;
 
@@ -126,7 +126,7 @@ static __inline__ unsigned int svga_inb(short port)
     return iov.val;
 }
 
-static __inline__ unsigned int svga_inw(short port)
+static inline unsigned int svga_inw(short port)
 {
     io_t iov;
 
@@ -136,7 +136,7 @@ static __inline__ unsigned int svga_inw(short port)
     return iov.val;
 }
 
-static __inline__ unsigned int svga_inl(short port)
+static inline unsigned int svga_inl(short port)
 {
     io_t iov;
 
@@ -147,7 +147,7 @@ static __inline__ unsigned int svga_inl(short port)
 }
 #endif /* CONIFG_SVGAHELPER */
 
-static __inline__ void outb(short port,char val)
+static inline void outb(short port, char val)
 {
 #ifdef CONFIG_SVGAHELPER
     if (svgahelper_initialized == 1)
@@ -175,7 +175,7 @@ static __inline__ void outb(short port,char val)
     return;
 }
 
-static __inline__ void outw(short port,short val)
+static inline void outw(short port, short val)
 {
 #ifdef CONFIG_SVGAHELPER
     if (svgahelper_initialized == 1)
@@ -203,7 +203,7 @@ static __inline__ void outw(short port,short val)
     return;
 }
 
-static __inline__ void outl(short port,unsigned int val)
+static inline void outl(short port, unsigned int val)
 {
 #ifdef CONFIG_SVGAHELPER
     if (svgahelper_initialized == 1)
@@ -231,7 +231,7 @@ static __inline__ void outl(short port,unsigned int val)
     return;
 }
 
-static __inline__ unsigned int inb(short port)
+static inline unsigned int inb(short port)
 {
    unsigned char ret = 0;
 
@@ -261,7 +261,7 @@ static __inline__ unsigned int inb(short port)
    return ret;
 }
 
-static __inline__ unsigned int inw(short port)
+static inline unsigned int inw(short port)
 {
    unsigned short ret = 0;
 
@@ -291,7 +291,7 @@ static __inline__ unsigned int inw(short port)
    return ret;
 }
 
-static __inline__ unsigned int inl(short port)
+static inline unsigned int inl(short port)
 {
    unsigned int ret = 0;
 
@@ -321,7 +321,7 @@ static __inline__ unsigned int inl(short port)
    return ret;
 }
 
-static __inline__ void intr_disable(void)
+static inline void intr_disable(void)
 {
 #ifdef CONFIG_SVGAHELPER
     if (svgahelper_initialized == 1)
@@ -330,7 +330,7 @@ static __inline__ void intr_disable(void)
   __asm__ volatile("cli");
 }
 
-static __inline__ void intr_enable(void)
+static inline void intr_enable(void)
 {
 #ifdef CONFIG_SVGAHELPER
     if (svgahelper_initialized == 1)

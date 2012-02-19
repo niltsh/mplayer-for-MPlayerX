@@ -421,7 +421,7 @@ static int radeon_is_interlace( void )
   return (INREG(CRTC_GEN_CNTL))&CRTC_INTERLACE_EN;
 }
 
-static __inline__ void radeon_engine_flush ( void )
+static inline void radeon_engine_flush(void)
 {
 	int i;
 
@@ -436,7 +436,7 @@ static __inline__ void radeon_engine_flush ( void )
 }
 
 
-static __inline__ void radeon_fifo_wait (int entries)
+static inline void radeon_fifo_wait(int entries)
 {
 	int i;
 
@@ -446,7 +446,7 @@ static __inline__ void radeon_fifo_wait (int entries)
 }
 
 
-static __inline__ void radeon_engine_idle ( void )
+static inline void radeon_engine_idle(void)
 {
 	int i;
 

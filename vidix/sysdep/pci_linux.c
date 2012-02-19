@@ -88,7 +88,7 @@ static int pci_get_vendor(
 }
 #endif /* CONFIG_SVGAHELPER */
 
-static __inline__ int enable_os_io(void)
+static inline int enable_os_io(void)
 {
 #ifdef CONFIG_SVGAHELPER
     svgahelper_fd = open(DEV_SVGA, O_RDWR);
@@ -119,7 +119,7 @@ static __inline__ int enable_os_io(void)
     return 0;
 }
 
-static __inline__ int disable_os_io(void)
+static inline int disable_os_io(void)
 {
 #ifdef CONFIG_SVGAHELPER
     if (svgahelper_initialized == 1)
