@@ -7891,7 +7891,7 @@ echocheck "valid XSLT processor"
 if xsltproc --version > /dev/null 2>&1; then
   if test -z "$fake_chunk_xsl"; then
     echores "xsltproc"
-    xsltcommand="xsltproc $catalog_opts -o \$\$1 \$\$2 \$\$3"
+    xsltcommand="xsltproc $catalog_opts -o"
   else
     echores "Found xsltproc but no stylesheets on your system."
     echores "xsltproc is unusable without stylesheets."
@@ -7930,7 +7930,7 @@ MAN_LANGS = $language_man
 MAN_LANG_ALL = $man_lang_all
 
 CATALOG = $catalog
-XMLLINT_COMMAND = xmllint --noout --noent --postvalid $catalog_opts \$*
+XMLLINT_COMMAND = xmllint --noout --noent --postvalid $catalog_opts
 XSLT_COMMAND = $xsltcommand
 
 prefix  = \$(DESTDIR)$_prefix
