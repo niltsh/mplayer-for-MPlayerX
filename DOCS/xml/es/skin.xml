@@ -809,7 +809,9 @@ Como ya sabe, el GUI está bajo desarrollo.
 Mensaje vacío, no tiene efecto (excepto quizá en las versiones CVS :-)).
     </para></listitem>
 </varlistentry>
+</variablelist>
 
+<variablelist>
 <title>Control de reproducción:</title>
 <varlistentry>
   <term><emphasis role="bold">evPlay</emphasis></term>
@@ -824,7 +826,6 @@ Inicia la reproducción.
 Detiene la reproducción.
     </para></listitem>
 </varlistentry>
-</variablelist>
 
 <varlistentry>
   <term><emphasis role="bold">evPause</emphasis></term>
@@ -931,6 +932,7 @@ es mostrada (para indicar que el botón puede ser pulsado de nuevo para continua
 la reproducción).
     </para></listitem>
 </varlistentry>
+</variablelist>
 
 <variablelist>
 <title>Búsqueda:</title>

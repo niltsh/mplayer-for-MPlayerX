@@ -796,7 +796,9 @@ i elementy menu.
 Sygnał pusty - nic nie robi (może za wyjątkiem wersji z Subversion:-)).
     </para></listitem>
 </varlistentry>
+</variablelist>
 
+<variablelist>
 <title>Kontrola odtwarzania :</title>
 <varlistentry>
   <term><emphasis role="bold">evPlay</emphasis></term>
@@ -811,7 +813,6 @@ Rozpocznij odtwarzanie.
 Zatrzymaj odtwarzanie.
     </para></listitem>
 </varlistentry>
-</variablelist>
 
 <varlistentry>
   <term><emphasis role="bold">evPause</emphasis></term>
@@ -919,6 +920,7 @@ użyty ponownie do wstrzymania odtwarzania).
   że przycisk ten może być użyty do kontynuowania odtwarzania).
     </para></listitem>
 </varlistentry>
+</variablelist>
 
 <variablelist>
 <title>Przewijanie:</title>

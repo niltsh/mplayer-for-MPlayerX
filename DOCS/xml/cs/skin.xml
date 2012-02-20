@@ -843,7 +843,9 @@ nabídky.
   Prázdná zpráva, nemá žádný efekt (možná s výjimkou Subversion verzí :-)).
   </para></listitem>
 </varlistentry>
+</variablelist>
 
+<variablelist>
 <title>Ovládání přehrávání:</title>
 <varlistentry>
   <term><emphasis role="bold">evPlay</emphasis></term>
@@ -858,7 +860,6 @@ nabídky.
   Zastaví přehrávání.
   </para></listitem>
 </varlistentry>
-</variablelist>
 
 <varlistentry>
   <term><emphasis role="bold">evPause</emphasis></term>
@@ -964,6 +965,7 @@ nabídky.
   může být stisknuto pro obnovení přehrávání).
   </para></listitem>
 </varlistentry>
+</variablelist>
 
 <variablelist>
 <title>Převíjení:</title>

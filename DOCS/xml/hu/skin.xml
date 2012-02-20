@@ -816,7 +816,9 @@ Az alábbi üzeneteket generálják a gombok, potméterek és menüpontok.
   Üres üzenet, nincs hatása (kivéve talán a Subversion verziót :-)).
   </para></listitem>
 </varlistentry>
+</variablelist>
 
+<variablelist>
 <title>Lejátszás vezérlése:</title>
 <varlistentry>
   <term><emphasis role="bold">evPlay</emphasis></term>
@@ -831,7 +833,6 @@ Az alábbi üzeneteket generálják a gombok, potméterek és menüpontok.
   Lejátszás megállítása.
   </para></listitem>
 </varlistentry>
-</variablelist>
 
 <varlistentry>
   <term><emphasis role="bold">evPause</emphasis></term>
@@ -937,6 +938,7 @@ Az alábbi üzeneteket generálják a gombok, potméterek és menüpontok.
   ezzel, hogy a gombot meg lehet nyomni a lejátszás folytatásához).
   </para></listitem>
 </varlistentry>
+</variablelist>
 
 <variablelist>
 <title>Seeking:</title>

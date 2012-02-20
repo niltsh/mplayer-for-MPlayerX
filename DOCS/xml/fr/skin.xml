@@ -787,7 +787,9 @@ entrées du menu.
 Message vide, sans effet. (à part peut-être dans les versions CVS :-)).
     </para></listitem>
 </varlistentry>
+</variablelist>
 
+<variablelist>
 <title>Contrôle de lecture:</title>
 <varlistentry>
   <term><emphasis role="bold">evPlay</emphasis></term>
@@ -802,7 +804,6 @@ Commence la lecture.
 Stoppe la lecture.
     </para></listitem>
 </varlistentry>
-</variablelist>
 
 <varlistentry>
   <term><emphasis role="bold">evPause</emphasis></term>
@@ -908,6 +909,7 @@ la lecture en pause et le bouton <literal>evPlaySwitchToPause</literal> s'affich
 (pour indiquer que le bouton peut être pressé pour continuer la lecture).
     </para></listitem>
 </varlistentry>
+</variablelist>
 
 <variablelist>
 <title>Déplacement dans le flux:</title>

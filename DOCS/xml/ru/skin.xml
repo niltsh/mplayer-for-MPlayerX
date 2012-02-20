@@ -845,7 +845,9 @@ image = font.png
   Пустое сообщение, не имеет действий (за исключением, возможно, Subversion версий :-)).
   </para></listitem>
 </varlistentry>
+</variablelist>
 
+<variablelist>
 <title>Управление воспроизведением:</title>
 <varlistentry>
   <term><emphasis role="bold">evPlay</emphasis></term>
@@ -860,7 +862,6 @@ image = font.png
   Останавливает воспроизведение.
   </para></listitem>
 </varlistentry>
-</variablelist>
 
 <varlistentry>
   <term><emphasis role="bold">evPause</emphasis></term>
@@ -967,6 +968,7 @@ image = font.png
   (чтобы показать, что кнопка может быть нажата для продолжения воспроизведения).
   </para></listitem>
 </varlistentry>
+</variablelist>
 
 <variablelist>
 <title>Перемещение:</title>
