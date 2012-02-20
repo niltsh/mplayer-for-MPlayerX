@@ -940,7 +940,9 @@ image = font.png
           </para>
         </listitem>
       </varlistentry>
+    </variablelist>
 
+    <variablelist>
       <title>Playback-Kontrolle:</title>
       <varlistentry>
         <term>
@@ -959,7 +961,6 @@ image = font.png
           <para>Stoppe das Abspielen.</para>
         </listitem>
       </varlistentry>
-    </variablelist>
 
       <varlistentry>
         <term><emphasis role="bold">evPause</emphasis></term>
@@ -1104,6 +1105,7 @@ image = font.png
           </para>
         </listitem>
       </varlistentry>
+    </variablelist>
 
     <variablelist>
       <title>Springen:</title>

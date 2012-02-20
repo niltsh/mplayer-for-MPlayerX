@@ -813,7 +813,9 @@ menu entries.
   Empty message, it has no effect.
   </para></listitem>
 </varlistentry>
+</variablelist>
 
+<variablelist>
 <title>Playback control:</title>
 <varlistentry>
   <term><emphasis role="bold">evPlay</emphasis></term>
@@ -828,7 +830,6 @@ menu entries.
   Stop playing.
   </para></listitem>
 </varlistentry>
-</variablelist>
 
 <varlistentry>
   <term><emphasis role="bold">evPause</emphasis></term>
@@ -942,6 +943,7 @@ menu entries.
   playing).
   </para></listitem>
 </varlistentry>
+</variablelist>
 
 <variablelist>
 <title>Seeking:</title>
