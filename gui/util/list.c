@@ -23,7 +23,7 @@
 #include "string.h"
 
 plItem *plList;
-plItem *plCurrent;
+static plItem *plCurrent;
 plItem *plLastPlayed;
 
 urlItem *urlList;

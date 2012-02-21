@@ -45,7 +45,6 @@ typedef struct urlItem {
 } urlItem;
 
 extern plItem *plList;
-extern plItem *plCurrent;
 extern plItem *plLastPlayed;
 
 extern urlItem *urlList;

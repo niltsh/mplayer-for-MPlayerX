@@ -191,10 +191,10 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
   case 1: // ok
        {
         int i;
+        plItem * item;
 	if ( plList ) listMgr( PLAYLIST_DELETE,0 );
 	for ( i=0;i<NrOfSelected;i++ )
 	 {
-	  plItem * item;
 	  char * text[3];
 	  item=calloc( 1,sizeof( plItem ) );
 	  gtk_clist_get_text( GTK_CLIST( CLSelected ),i,0,&text[0] );
@@ -205,10 +205,11 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	  if ( !item->path ) item->path = strdup( text[1] );
 	  listMgr( PLAYLIST_ITEM_ADD,item );
 	 }
-	if ( plCurrent )
+	item = listMgr( PLAYLIST_ITEM_GET_CURR,0 );
+	if ( item )
 	 {
-	  uiSetFileName( plCurrent->path,plCurrent->name,STREAMTYPE_FILE );
-//	  setddup( &guiInfo.Filename,plCurrent->path,plCurrent->name );
+	  uiSetFileName( item->path,item->name,STREAMTYPE_FILE );
+//	  setddup( &guiInfo.Filename,item->path,item->name );
 //	  guiInfo.NewPlay=GUI_FILE_NEW;
 //	  guiInfo.StreamType=STREAMTYPE_FILE;
 	 }

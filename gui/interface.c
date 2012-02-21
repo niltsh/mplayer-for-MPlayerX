@@ -68,6 +68,7 @@ static int initialized;
 void guiInit(void)
 {
     int i;
+    plItem *playlist;
 
     mp_msg(MSGT_GPLAYER, MSGL_V, "GUI init.\n");
 
@@ -233,8 +234,10 @@ void guiInit(void)
 
     uiSubRender = 1;
 
-    if (plCurrent && !filename) {
-        uiSetFileName(plCurrent->path, plCurrent->name, STREAMTYPE_FILE);
+    playlist = listMgr(PLAYLIST_ITEM_GET_CURR, 0);
+
+    if (playlist && !filename) {
+        uiSetFileName(playlist->path, playlist->name, STREAMTYPE_FILE);
         filename = NULL; // don't start playing
     }
 
