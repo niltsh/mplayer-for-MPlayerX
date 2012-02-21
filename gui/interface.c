@@ -268,8 +268,8 @@ void guiDone(void)
     }
 
     appFreeStruct();
-    listMgr(gtkDelPl, NULL);
-    listMgr(gtkDelURL, NULL);
+    listMgr(PLAYLIST_DELETE, 0);
+    listMgr(URLLIST_DELETE, 0);
     free(guiIcon.collection);
 
     if (gui_conf) {
@@ -769,7 +769,7 @@ int gui(int what, void *data)
                 break;
         }
 
-        if (guiInfo.Playing && (next = listMgr(gtkGetNextPlItem, NULL)) && (plLastPlayed != next)) {
+        if (guiInfo.Playing && (next = listMgr(PLAYLIST_ITEM_GET_NEXT, 0)) && (plLastPlayed != next)) {
             plLastPlayed = next;
             uiSetFileName(next->path, next->name, STREAMTYPE_FILE);
             guiInfo.NewPlay = GUI_FILE_NEW;
@@ -850,9 +850,9 @@ static int import_file_into_gui(char *temp, int insert)
     item->path = pathname;
 
     if (insert)
-        listMgr(gtkInsertPlItem, item);           // inserts the item after current, and makes current=item
+        listMgr(PLAYLIST_ITEM_INSERT, item);           // inserts the item after current, and makes current=item
     else
-        listMgr(gtkAddPlItem, item);
+        listMgr(PLAYLIST_ITEM_ADD, item);
 
     return 1;
 }
@@ -867,7 +867,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
     int result = 0;
 
     if (!enqueue)
-        listMgr(gtkDelPl, NULL);             // delete playlist before "appending"
+        listMgr(PLAYLIST_DELETE, 0);             // delete playlist before "appending"
 
     if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
@@ -896,7 +896,7 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
     int result = 0;
     plItem *save;
 
-    save = (plItem *)listMgr(gtkGetCurrPlItem, NULL);    // save current item
+    save = (plItem *)listMgr(PLAYLIST_ITEM_GET_CURR, 0);    // save current item
 
     if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
@@ -908,12 +908,12 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
     }
 
     if (save)
-        listMgr(gtkSetCurrPlItem, save);
+        listMgr(PLAYLIST_ITEM_SET_CURR, save);
     else
-        listMgr(gtkSetCurrPlItem, plList);    // go to head, if plList was empty before
+        listMgr(PLAYLIST_ITEM_SET_CURR, plList);    // go to head, if plList was empty before
 
     if (save && result)
-        listMgr(gtkDelCurrPlItem, NULL);
+        listMgr(PLAYLIST_ITEM_DEL_CURR, 0);
 
     uiCurr();   // update filename
 

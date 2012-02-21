@@ -19,16 +19,19 @@
 #ifndef MPLAYER_GUI_LIST_H
 #define MPLAYER_GUI_LIST_H
 
-#define gtkAddPlItem     5
-#define gtkGetNextPlItem 6
-#define gtkGetPrevPlItem 7
-#define gtkGetCurrPlItem 8
-#define gtkDelPl         9
-#define gtkDelURL        10
-#define gtkDelCurrPlItem 23
-#define gtkInsertPlItem  24
-#define gtkSetCurrPlItem 25
-#define gtkAddURLItem    15
+/// listMgr() commands
+enum {
+    PLAYLIST_ITEM_ADD,
+    PLAYLIST_ITEM_INSERT,
+    PLAYLIST_ITEM_SET_CURR,
+    PLAYLIST_ITEM_GET_CURR,
+    PLAYLIST_ITEM_GET_PREV,
+    PLAYLIST_ITEM_GET_NEXT,
+    PLAYLIST_ITEM_DEL_CURR,
+    PLAYLIST_DELETE,
+    URLLIST_ITEM_ADD,
+    URLLIST_DELETE
+};
 
 typedef struct plItem {
     char *path;

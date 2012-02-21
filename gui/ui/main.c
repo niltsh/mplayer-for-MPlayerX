@@ -111,7 +111,7 @@ static void guiInfoMediumClear (int what)
     nfree(guiInfo.Filename);
     nfree(guiInfo.SubtitleFilename);
     nfree(guiInfo.AudioFilename);
-    listMgr(gtkDelPl, NULL);
+    listMgr(PLAYLIST_DELETE, 0);
   }
 
   if (what & CLEAR_VCD) guiInfo.Tracks = 0;
@@ -208,9 +208,9 @@ play:
 
         if ( ( msg == evPlaySwitchToPause )&&( guiInfo.Playing == GUI_PAUSE ) ) goto NoPause;
 
-	if ( listMgr( gtkGetCurrPlItem,NULL ) &&( guiInfo.StreamType == STREAMTYPE_FILE ) )
+	if ( listMgr( PLAYLIST_ITEM_GET_CURR,0 ) &&( guiInfo.StreamType == STREAMTYPE_FILE ) )
 	 {
-	  plItem * next = listMgr( gtkGetCurrPlItem,NULL );
+	  plItem * next = listMgr( PLAYLIST_ITEM_GET_CURR,0 );
 	  plLastPlayed=next;
 	  uiSetFileName( next->path,next->name,SAME_STREAMTYPE );
 	 }
@@ -271,7 +271,7 @@ NoPause:
         uiMainAutoPlay=1;
 //	guiInfo.StreamType=STREAMTYPE_FILE;
    case evLoad:
-	listMgr( gtkDelPl,NULL );
+	listMgr( PLAYLIST_DELETE,0 );
         gtkShow( evLoad,NULL );
         break;
    case evLoadSubtitle:  gtkShow( evLoadSubtitle,NULL );  break;
@@ -643,7 +643,7 @@ void uiDandDHandler(int num,char** files)
       /* clear playlist */
       if (filename == NULL) {
 	filename = files[f];
-	listMgr(gtkDelPl,NULL);
+	listMgr(PLAYLIST_DELETE,0);
       }
 
       item = calloc(1,sizeof(plItem));
@@ -658,7 +658,7 @@ void uiDandDHandler(int num,char** files)
 	item->name = strdup(str);
 	item->path = strdup("");
       }
-      listMgr(gtkAddPlItem,item);
+      listMgr(PLAYLIST_ITEM_ADD,item);
     } else {
       mp_msg( MSGT_GPLAYER,MSGL_WARN,MSGTR_NotAFile,str );
     }

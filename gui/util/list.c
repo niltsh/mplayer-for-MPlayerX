@@ -38,7 +38,7 @@ void *listMgr(int cmd, void *data)
     // handle playlist
 
     // add item to playlist
-    case gtkAddPlItem:
+    case PLAYLIST_ITEM_ADD:
         if (plList) {
             plItem *next = plList;
 
@@ -58,7 +58,7 @@ void *listMgr(int cmd, void *data)
         return NULL;
 
     // add item into playlist after current
-    case gtkInsertPlItem:
+    case PLAYLIST_ITEM_INSERT:
         if (plCurrent) {
             plItem *curr = plCurrent;
             item->next = curr->next;
@@ -72,10 +72,10 @@ void *listMgr(int cmd, void *data)
 
             return plCurrent;
         } else
-            return listMgr(gtkAddPlItem, item);
+            return listMgr(PLAYLIST_ITEM_ADD, item);
 
     // get next item from playlist
-    case gtkGetNextPlItem:
+    case PLAYLIST_ITEM_GET_NEXT:
         if (plCurrent && plCurrent->next) {
             plCurrent = plCurrent->next;
 // if (!plCurrent && plList)
@@ -95,7 +95,7 @@ void *listMgr(int cmd, void *data)
         return NULL;
 
     // get previous item from playlist
-    case gtkGetPrevPlItem:
+    case PLAYLIST_ITEM_GET_PREV:
         if (plCurrent && plCurrent->prev) {
             plCurrent = plCurrent->prev;
 // if ( !plCurrent && plList ) plCurrent=plList;
@@ -104,16 +104,16 @@ void *listMgr(int cmd, void *data)
         return NULL;
 
     // set current item
-    case gtkSetCurrPlItem:
+    case PLAYLIST_ITEM_SET_CURR:
         plCurrent = item;
         return plCurrent;
 
     // get current item
-    case gtkGetCurrPlItem:
+    case PLAYLIST_ITEM_GET_CURR:
         return plCurrent;
 
     // delete current item
-    case gtkDelCurrPlItem:
+    case PLAYLIST_ITEM_DEL_CURR:
     {
         plItem *curr = plCurrent;
 
@@ -138,7 +138,7 @@ void *listMgr(int cmd, void *data)
         return plCurrent;
 
     // delete list
-    case gtkDelPl:
+    case PLAYLIST_DELETE:
         while (plList) {
             plItem *next = plList->next;
 
@@ -152,7 +152,7 @@ void *listMgr(int cmd, void *data)
         return NULL;
 
     // handle url
-    case gtkAddURLItem:
+    case URLLIST_ITEM_ADD:
         if (urlList) {
             urlItem *next_url = urlList;
             is_added = 0;
@@ -174,7 +174,7 @@ void *listMgr(int cmd, void *data)
         }
         return NULL;
 
-    case gtkDelURL:
+    case URLLIST_DELETE:
         while (urlList) {
             urlItem *next = urlList->next;
 
