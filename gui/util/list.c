@@ -24,7 +24,6 @@
 
 static plItem *plList;
 static plItem *plCurrent;
-plItem *plLastPlayed;
 
 static urlItem *urlList;
 

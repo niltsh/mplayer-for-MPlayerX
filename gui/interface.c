@@ -772,8 +772,9 @@ int gui(int what, void *data)
                 break;
         }
 
-        if (guiInfo.Playing && (next = listMgr(PLAYLIST_ITEM_GET_NEXT, 0)) && (plLastPlayed != next)) {
-            plLastPlayed = next;
+        next = listMgr(PLAYLIST_ITEM_GET_NEXT, 0);
+
+        if (guiInfo.Playing && next) {
             uiSetFileName(next->path, next->name, STREAMTYPE_FILE);
             guiInfo.NewPlay = GUI_FILE_NEW;
             guiInfo.Track++;

@@ -46,8 +46,6 @@ typedef struct urlItem {
     struct urlItem *next;
 } urlItem;
 
-extern plItem *plLastPlayed;
-
 /// @name list manager (playlist, URL list)
 void *listMgr(int cmd, void *data);
 

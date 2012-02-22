@@ -211,7 +211,6 @@ play:
 	if ( listMgr( PLAYLIST_ITEM_GET_CURR,0 ) &&( guiInfo.StreamType == STREAMTYPE_FILE ) )
 	 {
 	  plItem * next = listMgr( PLAYLIST_ITEM_GET_CURR,0 );
-	  plLastPlayed=next;
 	  uiSetFileName( next->path,next->name,SAME_STREAMTYPE );
 	 }
 
