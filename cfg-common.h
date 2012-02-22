@@ -525,7 +525,7 @@ const m_option_t common_opts[] = {
     {"vc", &video_codec_list, CONF_TYPE_STRING_LIST, 0, 0, 0, NULL},
 
     // postprocessing:
-#ifdef CONFIG_FFMPEG
+#ifdef CONFIG_POSTPROC
     {"pp", &divx_quality, CONF_TYPE_INT, 0, 0, 0, NULL},
     {"pphelp", pp_help, CONF_TYPE_PRINT, CONF_NOCFG, 0, 0, NULL},
 #endif

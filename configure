@@ -416,6 +416,7 @@ Codecs:
   --disable-libnut          disable libnut [autodetect]
   --disable-ffmpeg_a        disable static FFmpeg [autodetect]
   --disable-ffmpeg_so       disable shared FFmpeg [autodetect]
+  --disable-postproc        disable libpostproc [autodetect]
   --enable-vf-lavfi         enable libavfilter wrapper [disabled]
   --disable-libavcodec_mpegaudio_hp disable high precision audio decoding
                                     in libavcodec [enabled]
@@ -650,6 +651,7 @@ _cross_compile=auto
 _prefix="/usr/local"
 ffmpeg_a=auto
 ffmpeg_so=auto
+postproc=auto
 _vf_lavfi=no
 _libavcodec_mpegaudio_hp=yes
 _libopencore_amrnb=auto
@@ -1284,6 +1286,8 @@ for ac_option do
   --disable-ffmpeg_a)   ffmpeg_a=no     ;;
   --enable-ffmpeg_so)   ffmpeg_so=yes   ;;
   --disable-ffmpeg_so)  ffmpeg_so=no    ;;
+  --enable-postproc)    postproc=yes    ;;
+  --disable-postproc)   postproc=no     ;;
   --enable-vf-lavfi)    _vf_lavfi=yes   ;;
   --disable-vf-lavfi)   _vf_lavfi=no    ;;
   --enable-libavcodec_mpegaudio_hp)     _libavcodec_mpegaudio_hp=yes    ;;
@@ -6718,12 +6722,12 @@ if test "$ffmpeg_a" = auto ; then
 elif test "$ffmpeg_so" = auto ; then
   ffmpeg_so=no
   if $_pkg_config --exists libavutil ; then
-    inc_ffmpeg=$($_pkg_config --cflags libpostproc libswscale libavformat libavcodec libavutil)
-    ld_tmp=$($_pkg_config --libs libpostproc libswscale libavformat libavcodec libavutil)
+    inc_ffmpeg=$($_pkg_config --cflags libswscale libavformat libavcodec libavutil)
+    ld_tmp=$($_pkg_config --libs libswscale libavformat libavcodec libavutil)
     header_check libavutil/avutil.h $inc_ffmpeg $ld_tmp &&
       extra_ldflags="$extra_ldflags $ld_tmp" && ffmpeg_so=yes && ffmpeg=yes
-  elif header_check libavutil/avutil.h -lpostproc -lswscale -lavformat -lavcodec -lavutil ; then
-    extra_ldflags="$extra_ldflags -lpostproc -lswscale -lavformat -lavcodec -lavutil"
+  elif header_check libavutil/avutil.h -lswscale -lavformat -lavcodec -lavutil ; then
+    extra_ldflags="$extra_ldflags -lswscale -lavformat -lavcodec -lavutil"
     ffmpeg_so=yes
     ffmpeg=yes
   fi
@@ -6751,6 +6755,28 @@ test "$_libavcodec_mpegaudio_hp" = yes &&
   mak_libavcodec_mpegaudio_hp='CONFIG_MPEGAUDIO_HP = yes'
 echores "$ffmpeg"
 
+
+echocheck "libpostproc"
+if test "$postproc" = auto ; then
+  postproc=no
+  if test "$ffmpeg_a" = yes ; then
+    postproc=yes
+  elif $_pkg_config --exists libpostproc ; then
+    inc_postproc=$($_pkg_config --cflags libpostproc)
+    ld_tmp=$($_pkg_config --libs libpostproc)
+    header_check libpostproc/postprocess.h $inc_postproc $ld_tmp &&
+      extra_ldflags="$extra_ldflags $ld_tmp" && postproc=yes
+  elif header_check libpostproc/postprocess.h -lpostproc ; then
+    extra_ldflags="$extra_ldflags -lpostproc"
+    postproc=yes
+  fi
+fi
+if test "$postproc" = yes; then
+  def_postproc='#define CONFIG_POSTPROC 1'
+else
+  def_postproc='#undef CONFIG_POSTPROC'
+fi
+echores "$postproc"
 
 
 echocheck "libopencore_amr narrowband"
@@ -8081,6 +8107,7 @@ OSS = $_ossaudio
 PE_EXECUTABLE = $_pe_executable
 PNG = $_png
 PNM = $_pnm
+POSTPROC = $postproc
 PRIORITY = $_priority
 PULSE = $_pulse
 PVR = $_pvr
@@ -8582,6 +8609,7 @@ $def_kva
 $def_md5sum
 $def_mga
 $def_mng
+$def_postproc
 $def_png
 $def_pnm
 $def_quartz

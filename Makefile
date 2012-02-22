@@ -78,7 +78,6 @@ SRCS_COMMON-$(FFMPEG)                += av_helpers.c                \
                                         libmpcodecs/vf_geq.c        \
                                         libmpcodecs/vf_lavc.c       \
                                         libmpcodecs/vf_lavcdeint.c  \
-                                        libmpcodecs/vf_pp.c         \
                                         libmpcodecs/vf_screenshot.c \
                                         libmpdemux/demux_lavf.c     \
                                         stream/stream_ffmpeg.c      \
@@ -210,6 +209,7 @@ SRCS_COMMON-$(NETWORKING)            += stream/stream_netstream.c \
                                         stream/realrtsp/xbuffer.c \
 
 SRCS_COMMON-$(PNG)                   += libmpcodecs/vd_mpng.c
+SRCS_COMMON-$(POSTPROC)              += libmpcodecs/vf_pp.c
 SRCS_COMMON-$(PRIORITY)              += osdep/priority.c
 SRCS_COMMON-$(PVR)                   += stream/stream_pvr.c
 SRCS_COMMON-$(QTX_CODECS)            += libmpcodecs/ad_qtaudio.c \

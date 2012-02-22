@@ -140,7 +140,6 @@ static const vf_info_t* const filter_list[]={
     &vf_info_palette,
     &vf_info_pp7,
 #ifdef CONFIG_FFMPEG
-    &vf_info_pp,
     &vf_info_lavc,
     &vf_info_lavcdeint,
 #ifdef CONFIG_VF_LAVFI
@@ -148,6 +147,9 @@ static const vf_info_t* const filter_list[]={
 #endif
     &vf_info_screenshot,
     &vf_info_geq,
+#endif
+#ifdef CONFIG_POSTPROC
+    &vf_info_pp,
 #endif
 #ifdef CONFIG_ZR
     &vf_info_zrmjpeg,
