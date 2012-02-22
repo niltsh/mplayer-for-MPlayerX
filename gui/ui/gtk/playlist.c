@@ -192,7 +192,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
        {
         int i;
         plItem * item;
-	if ( plList ) listMgr( PLAYLIST_DELETE,0 );
+	listMgr( PLAYLIST_DELETE,0 );
 	for ( i=0;i<NrOfSelected;i++ )
 	 {
 	  char * text[3];
