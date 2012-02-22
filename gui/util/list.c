@@ -34,22 +34,18 @@ void *listMgr(int cmd, void *data)
     int is_added      = 1;
 
     switch (cmd) {
-    // handle playlist
+    // playlist
 
     case PLAYLIST_GET:
 
         return plList;
 
-    // add item to playlist
     case PLAYLIST_ITEM_ADD:
         if (plList) {
             plItem *next = plList;
 
             while (next->next)
-// {
-// printf( "%s\n",next->name );
                 next = next->next;
-// }
 
             next->next = item;
             item->prev = next;
@@ -60,7 +56,6 @@ void *listMgr(int cmd, void *data)
         }
         return NULL;
 
-    // add item into playlist after current
     case PLAYLIST_ITEM_INSERT:
         if (plCurrent) {
             plItem *curr = plCurrent;
@@ -77,7 +72,6 @@ void *listMgr(int cmd, void *data)
         } else
             return listMgr(PLAYLIST_ITEM_ADD, item);
 
-    // get next item from playlist
     case PLAYLIST_ITEM_GET_NEXT:
         if (plCurrent && plCurrent->next) {
             plCurrent = plCurrent->next;
@@ -97,7 +91,6 @@ void *listMgr(int cmd, void *data)
         }
         return NULL;
 
-    // get previous item from playlist
     case PLAYLIST_ITEM_GET_PREV:
         if (plCurrent && plCurrent->prev) {
             plCurrent = plCurrent->prev;
@@ -106,16 +99,13 @@ void *listMgr(int cmd, void *data)
         }
         return NULL;
 
-    // set current item
     case PLAYLIST_ITEM_SET_CURR:
         plCurrent = item;
         return plCurrent;
 
-    // get current item
     case PLAYLIST_ITEM_GET_CURR:
         return plCurrent;
 
-    // delete current item
     case PLAYLIST_ITEM_DEL_CURR:
     {
         plItem *curr = plCurrent;
@@ -132,7 +122,6 @@ void *listMgr(int cmd, void *data)
 
         plCurrent = curr->next;
 
-        // free it
         free(curr->path);
         free(curr->name);
         free(curr);
@@ -140,7 +129,6 @@ void *listMgr(int cmd, void *data)
         //uiCurr();     // instead of using uiNext && uiPrev
         return plCurrent;
 
-    // delete list
     case PLAYLIST_DELETE:
         while (plList) {
             plItem *next = plList->next;
@@ -154,7 +142,7 @@ void *listMgr(int cmd, void *data)
         plCurrent = NULL;
         return NULL;
 
-    // handle url
+    // url list
 
     case URLLIST_GET:
 
