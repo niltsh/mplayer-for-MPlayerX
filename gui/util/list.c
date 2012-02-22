@@ -26,7 +26,7 @@ static plItem *plList;
 static plItem *plCurrent;
 plItem *plLastPlayed;
 
-urlItem *urlList;
+static urlItem *urlList;
 
 void *listMgr(int cmd, void *data)
 {
@@ -156,6 +156,11 @@ void *listMgr(int cmd, void *data)
         return NULL;
 
     // handle url
+
+    case URLLIST_GET:
+
+        return urlList;
+
     case URLLIST_ITEM_ADD:
         if (urlList) {
             urlItem *next_url = urlList;

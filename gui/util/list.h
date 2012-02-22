@@ -30,6 +30,7 @@ enum {
     PLAYLIST_ITEM_GET_NEXT,
     PLAYLIST_ITEM_DEL_CURR,
     PLAYLIST_DELETE,
+    URLLIST_GET,
     URLLIST_ITEM_ADD,
     URLLIST_DELETE
 };
@@ -46,8 +47,6 @@ typedef struct urlItem {
 } urlItem;
 
 extern plItem *plLastPlayed;
-
-extern urlItem *urlList;
 
 /// @name list manager (playlist, URL list)
 void *listMgr(int cmd, void *data);

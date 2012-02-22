@@ -416,7 +416,7 @@ void cfg_write(void)
     file  = fopen(fname, "wt+");
 
     if (file) {
-        urlItem *item = urlList;
+        urlItem *item = listMgr(URLLIST_GET, 0);
 
         while (item) {
             if (item->url)

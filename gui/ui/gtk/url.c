@@ -44,12 +44,15 @@ static GList     * URLComboEntrys = NULL;
 
 void ShowURLDialogBox( void )
 {
+ urlItem * item;
+
  if ( URL ) gtkActive( URL );
    else URL=create_URL();
 
- if ( urlList )
+ item = listMgr( URLLIST_GET,0 );
+
+ if ( item )
   {
-   urlItem * item = urlList;
    g_list_free( URLComboEntrys );
    URLComboEntrys=NULL;
    while( item )
