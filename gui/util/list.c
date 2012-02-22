@@ -22,7 +22,7 @@
 #include "list.h"
 #include "string.h"
 
-plItem *plList;
+static plItem *plList;
 static plItem *plCurrent;
 plItem *plLastPlayed;
 
@@ -36,6 +36,10 @@ void *listMgr(int cmd, void *data)
 
     switch (cmd) {
     // handle playlist
+
+    case PLAYLIST_GET:
+
+        return plList;
 
     // add item to playlist
     case PLAYLIST_ITEM_ADD:

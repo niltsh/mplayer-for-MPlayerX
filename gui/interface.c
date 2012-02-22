@@ -913,7 +913,7 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
     if (save)
         listMgr(PLAYLIST_ITEM_SET_CURR, save);
     else
-        listMgr(PLAYLIST_ITEM_SET_CURR, plList);    // go to head, if plList was empty before
+        listMgr(PLAYLIST_ITEM_SET_CURR, listMgr(PLAYLIST_GET, 0));    // go to head, if plList was empty before
 
     if (save && result)
         listMgr(PLAYLIST_ITEM_DEL_CURR, 0);

@@ -394,7 +394,7 @@ void cfg_write(void)
     file  = fopen(fname, "wt+");
 
     if (file) {
-        plItem *item = plList;
+        plItem *item = listMgr(PLAYLIST_GET, 0);
 
         while (item) {
             if (item->path && item->name) {

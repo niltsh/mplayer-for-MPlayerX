@@ -21,6 +21,7 @@
 
 /// listMgr() commands
 enum {
+    PLAYLIST_GET,
     PLAYLIST_ITEM_ADD,
     PLAYLIST_ITEM_INSERT,
     PLAYLIST_ITEM_SET_CURR,
@@ -44,7 +45,6 @@ typedef struct urlItem {
     struct urlItem *next;
 } urlItem;
 
-extern plItem *plList;
 extern plItem *plLastPlayed;
 
 extern urlItem *urlList;

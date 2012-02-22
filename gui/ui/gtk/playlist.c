@@ -89,6 +89,8 @@ static void scan_dir( char * path );
 
 void ShowPlayList( void )
 {
+ plItem * next;
+
  if ( PlayList ) gtkActive( PlayList );
   else PlayList=create_PlayList();
 
@@ -130,10 +132,10 @@ void ShowPlayList( void )
 
  gtk_clist_freeze( GTK_CLIST( CLSelected ) );
  gtk_clist_clear( GTK_CLIST( CLSelected ) );
- if ( plList )
+ next = listMgr( PLAYLIST_GET,0 );
+ if ( next )
   {
    gchar * name, * path;
-   plItem * next = plList;
    while ( next || next->next )
     {
      char * text[1][3]; text[0][2]="";
