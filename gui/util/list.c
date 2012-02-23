@@ -76,37 +76,30 @@ void *listMgr(int cmd, void *data)
             return listMgr(PLAYLIST_ITEM_ADD, pdat);
 
     case PLAYLIST_ITEM_GET_NEXT:
+
         if (plCurrent && plCurrent->next) {
             plCurrent = plCurrent->next;
-// if (!plCurrent && plList)
-// {
-// plItem *next = plList;
-//
-// while (next->next)
-// {
-// if (!next->next) break;
-// next = next->next;
-// }
-//
-// plCurrent = next;
-// }
             return plCurrent;
         }
+
         return NULL;
 
     case PLAYLIST_ITEM_GET_PREV:
+
         if (plCurrent && plCurrent->prev) {
             plCurrent = plCurrent->prev;
-// if ( !plCurrent && plList ) plCurrent=plList;
             return plCurrent;
         }
+
         return NULL;
 
     case PLAYLIST_ITEM_SET_CURR:
+
         plCurrent = pdat;
         return plCurrent;
 
     case PLAYLIST_ITEM_GET_CURR:
+
         return plCurrent;
 
     case PLAYLIST_ITEM_DEL_CURR:
@@ -133,6 +126,7 @@ void *listMgr(int cmd, void *data)
         return plCurrent;
 
     case PLAYLIST_DELETE:
+
         while (plList) {
             plItem *item = plList->next;
 
@@ -142,6 +136,7 @@ void *listMgr(int cmd, void *data)
 
             plList = item;
         }
+
         plCurrent = NULL;
         return NULL;
 
@@ -174,6 +169,7 @@ void *listMgr(int cmd, void *data)
         return NULL;
 
     case URLLIST_DELETE:
+
         while (urlList) {
             urlItem *item = urlList->next;
 
@@ -182,6 +178,7 @@ void *listMgr(int cmd, void *data)
 
             urlList = item;
         }
+
         return NULL;
     }
 
