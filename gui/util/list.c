@@ -29,9 +29,9 @@ static urlItem *urlList;
 
 void *listMgr(int cmd, void *data)
 {
-    plItem *item      = (plItem *)data;
-    urlItem *url_item = (urlItem *)data;
-    int is_added      = 1;
+    plItem *pdat  = (plItem *)data;
+    urlItem *udat = (urlItem *)data;
+    int is_added  = 1;
 
     switch (cmd) {
     // playlist
@@ -42,35 +42,35 @@ void *listMgr(int cmd, void *data)
 
     case PLAYLIST_ITEM_ADD:
         if (plList) {
-            plItem *next = plList;
+            plItem *item = plList;
 
-            while (next->next)
-                next = next->next;
+            while (item->next)
+                item = item->next;
 
-            next->next = item;
-            item->prev = next;
-            item->next = NULL;
+            item->next = pdat;
+            pdat->prev = item;
+            pdat->next = NULL;
         } else {
-            item->prev = item->next = NULL;
-            plCurrent  = plList = item;
+            pdat->prev = pdat->next = NULL;
+            plCurrent  = plList = pdat;
         }
         return NULL;
 
     case PLAYLIST_ITEM_INSERT:
         if (plCurrent) {
             plItem *curr = plCurrent;
-            item->next = curr->next;
+            pdat->next = curr->next;
 
-            if (item->next)
-                item->next->prev = item;
+            if (pdat->next)
+                pdat->next->prev = pdat;
 
-            item->prev = curr;
-            curr->next = item;
+            pdat->prev = curr;
+            curr->next = pdat;
             plCurrent  = plCurrent->next;
 
             return plCurrent;
         } else
-            return listMgr(PLAYLIST_ITEM_ADD, item);
+            return listMgr(PLAYLIST_ITEM_ADD, pdat);
 
     case PLAYLIST_ITEM_GET_NEXT:
         if (plCurrent && plCurrent->next) {
@@ -100,7 +100,7 @@ void *listMgr(int cmd, void *data)
         return NULL;
 
     case PLAYLIST_ITEM_SET_CURR:
-        plCurrent = item;
+        plCurrent = pdat;
         return plCurrent;
 
     case PLAYLIST_ITEM_GET_CURR:
@@ -131,13 +131,13 @@ void *listMgr(int cmd, void *data)
 
     case PLAYLIST_DELETE:
         while (plList) {
-            plItem *next = plList->next;
+            plItem *item = plList->next;
 
             free(plList->path);
             free(plList->name);
             free(plList);
 
-            plList = next;
+            plList = item;
         }
         plCurrent = NULL;
         return NULL;
@@ -150,34 +150,34 @@ void *listMgr(int cmd, void *data)
 
     case URLLIST_ITEM_ADD:
         if (urlList) {
-            urlItem *next_url = urlList;
+            urlItem *item = urlList;
             is_added = 0;
 
-            while (next_url->next) {
-                if (!gstrcmp(next_url->url, url_item->url)) {
+            while (item->next) {
+                if (!gstrcmp(item->url, udat->url)) {
                     is_added = 1;
                     break;
                 }
 
-                next_url = next_url->next;
+                item = item->next;
             }
 
-            if (!is_added && gstrcmp(next_url->url, url_item->url))
-                next_url->next = url_item;
+            if (!is_added && gstrcmp(item->url, udat->url))
+                item->next = udat;
         } else {
-            url_item->next = NULL;
-            urlList = url_item;
+            udat->next = NULL;
+            urlList    = udat;
         }
         return NULL;
 
     case URLLIST_DELETE:
         while (urlList) {
-            urlItem *next = urlList->next;
+            urlItem *item = urlList->next;
 
             free(urlList->url);
             free(urlList);
 
-            urlList = next;
+            urlList = item;
         }
         return NULL;
     }
