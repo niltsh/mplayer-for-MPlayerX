@@ -105,22 +105,22 @@ void *listMgr(int cmd, void *data)
     case PLAYLIST_ITEM_DEL_CURR:
 
         if (plCurrent) {
-        plItem *curr = plCurrent;
+            plItem *curr = plCurrent;
 
-        if (curr->prev)
-            curr->prev->next = curr->next;
-        if (curr->next)
-            curr->next->prev = curr->prev;
+            if (curr->prev)
+                curr->prev->next = curr->next;
+            if (curr->next)
+                curr->next->prev = curr->prev;
 
-        plCurrent = curr->next;
+            plCurrent = curr->next;
 
-        if (curr == plList)
-            plList = plCurrent;
+            if (curr == plList)
+                plList = plCurrent;
 
-        free(curr->path);
-        free(curr->name);
-        free(curr);
-    }
+            free(curr->path);
+            free(curr->name);
+            free(curr);
+        }
 
         return plCurrent;
 
