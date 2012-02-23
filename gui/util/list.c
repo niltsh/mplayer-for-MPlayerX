@@ -31,7 +31,6 @@ void *listMgr(int cmd, void *data)
 {
     plItem *pdat  = (plItem *)data;
     urlItem *udat = (urlItem *)data;
-    int is_added  = 1;
 
     switch (cmd) {
     // playlist
@@ -146,26 +145,31 @@ void *listMgr(int cmd, void *data)
         return urlList;
 
     case URLLIST_ITEM_ADD:
+
         if (urlList) {
             urlItem *item = urlList;
-            is_added = 0;
 
-            while (item->next) {
-                if (!gstrcmp(item->url, udat->url)) {
-                    is_added = 1;
-                    break;
+            while (item) {
+                if (strcmp(udat->url, item->url) == 0) {
+                    free(udat->url);
+                    free(udat);
+                    return NULL;
                 }
 
-                item = item->next;
+                if (item->next)
+                    item = item->next;
+                else {
+                    item->next = udat;
+                    udat->next = NULL;
+                    break;
+                }
             }
-
-            if (!is_added && gstrcmp(item->url, udat->url))
-                item->next = udat;
         } else {
             udat->next = NULL;
             urlList    = udat;
         }
-        return NULL;
+
+        return udat;
 
     case URLLIST_DELETE:
 
