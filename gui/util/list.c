@@ -16,6 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+/**
+ * @file
+ * @brief List management
+ */
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -27,6 +32,17 @@ static plItem *plCurrent;
 
 static urlItem *urlList;
 
+/**
+ * @brief Manage playlists and URL lists.
+ *
+ * @param cmd task to be performed
+ * @param data list item for the task
+ *
+ * @return pointer to top of list (GET command),
+ *         pointer to current list item (ITEM command) or
+ *         NULL (DELETE or unknown command)
+ *
+ */
 void *listMgr(int cmd, void *data)
 {
     plItem *pdat  = (plItem *)data;
