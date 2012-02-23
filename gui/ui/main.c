@@ -657,7 +657,7 @@ void uiDandDHandler(int num,char** files)
 	item->name = strdup(str);
 	item->path = strdup("");
       }
-      listMgr(PLAYLIST_ITEM_ADD,item);
+      listMgr(PLAYLIST_ITEM_APPEND,item);
     } else {
       mp_msg( MSGT_GPLAYER,MSGL_WARN,MSGTR_NotAFile,str );
     }

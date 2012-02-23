@@ -856,7 +856,7 @@ static int import_file_into_gui(char *temp, int insert)
     if (insert)
         listMgr(PLAYLIST_ITEM_INSERT, item);           // inserts the item after current, and makes current=item
     else
-        listMgr(PLAYLIST_ITEM_ADD, item);
+        listMgr(PLAYLIST_ITEM_APPEND, item);
 
     return 1;
 }

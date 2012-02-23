@@ -205,7 +205,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	  if ( !item->name ) item->name = strdup( text[0] );
 	  item->path=g_filename_from_utf8( text[1], -1, NULL, NULL, NULL );
 	  if ( !item->path ) item->path = strdup( text[1] );
-	  listMgr( PLAYLIST_ITEM_ADD,item );
+	  listMgr( PLAYLIST_ITEM_APPEND,item );
 	 }
 	item = listMgr( PLAYLIST_ITEM_GET_CURR,0 );
 	if ( item )

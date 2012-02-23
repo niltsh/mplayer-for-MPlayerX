@@ -291,7 +291,7 @@ void cfg_read(void)
 
             if (fgetstr(line, sizeof(line), file) && *line) {
                 item->name = strdup(line);
-                listMgr(PLAYLIST_ITEM_ADD, item);
+                listMgr(PLAYLIST_ITEM_APPEND, item);
             } else {
                 free(item->path);
                 free(item);

@@ -39,7 +39,7 @@ void *listMgr(int cmd, void *data)
 
         return plList;
 
-    case PLAYLIST_ITEM_ADD:
+    case PLAYLIST_ITEM_APPEND:
 
         if (plList) {
             plItem *item = plList;
@@ -72,7 +72,7 @@ void *listMgr(int cmd, void *data)
 
             return plCurrent;
         } else
-            return listMgr(PLAYLIST_ITEM_ADD, pdat);
+            return listMgr(PLAYLIST_ITEM_APPEND, pdat);
 
     case PLAYLIST_ITEM_GET_NEXT:
 
