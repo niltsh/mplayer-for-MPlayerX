@@ -183,9 +183,11 @@ void *listMgr(int cmd, void *data)
         }
 
         return NULL;
-    }
 
-    return NULL;
+    default:
+
+        return NULL;
+    }
 }
 
 /**
