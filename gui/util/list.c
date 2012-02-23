@@ -103,26 +103,25 @@ void *listMgr(int cmd, void *data)
         return plCurrent;
 
     case PLAYLIST_ITEM_DEL_CURR:
-    {
-        plItem *curr = plCurrent;
 
-        if (!curr)
-            return NULL;
+        if (plCurrent) {
+        plItem *curr = plCurrent;
 
         if (curr->prev)
             curr->prev->next = curr->next;
         if (curr->next)
             curr->next->prev = curr->prev;
-        if (curr == plList)
-            plList = curr->next;
 
         plCurrent = curr->next;
+
+        if (curr == plList)
+            plList = plCurrent;
 
         free(curr->path);
         free(curr->name);
         free(curr);
     }
-        //uiCurr();     // instead of using uiNext && uiPrev
+
         return plCurrent;
 
     case PLAYLIST_DELETE:
