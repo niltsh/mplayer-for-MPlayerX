@@ -59,16 +59,17 @@ void *listMgr(int cmd, void *data)
         return plCurrent;
 
     case PLAYLIST_ITEM_INSERT:
+
         if (plCurrent) {
-            plItem *curr = plCurrent;
-            pdat->next = curr->next;
+            pdat->next = plCurrent->next;
 
             if (pdat->next)
                 pdat->next->prev = pdat;
 
-            pdat->prev = curr;
-            curr->next = pdat;
-            plCurrent  = plCurrent->next;
+            pdat->prev      = plCurrent;
+            plCurrent->next = pdat;
+
+            plCurrent = pdat;
 
             return plCurrent;
         } else
