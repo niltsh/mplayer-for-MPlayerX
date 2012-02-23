@@ -74,14 +74,14 @@ void *listMgr(int cmd, void *data)
         } else
             return listMgr(PLAYLIST_ITEM_APPEND, pdat);
 
-    case PLAYLIST_ITEM_GET_NEXT:
+    case PLAYLIST_ITEM_SET_CURR:
 
-        if (plCurrent && plCurrent->next) {
-            plCurrent = plCurrent->next;
-            return plCurrent;
-        }
+        plCurrent = pdat;
+        return plCurrent;
 
-        return NULL;
+    case PLAYLIST_ITEM_GET_CURR:
+
+        return plCurrent;
 
     case PLAYLIST_ITEM_GET_PREV:
 
@@ -92,14 +92,14 @@ void *listMgr(int cmd, void *data)
 
         return NULL;
 
-    case PLAYLIST_ITEM_SET_CURR:
+    case PLAYLIST_ITEM_GET_NEXT:
 
-        plCurrent = pdat;
-        return plCurrent;
+        if (plCurrent && plCurrent->next) {
+            plCurrent = plCurrent->next;
+            return plCurrent;
+        }
 
-    case PLAYLIST_ITEM_GET_CURR:
-
-        return plCurrent;
+        return NULL;
 
     case PLAYLIST_ITEM_DEL_CURR:
 
