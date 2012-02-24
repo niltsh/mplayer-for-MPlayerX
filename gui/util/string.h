@@ -23,7 +23,6 @@
 
 char *decomment(char *in);
 char *fgetstr(char *str, int size, FILE *file);
-int gstrcasecmp(const char *a, const char *b);
 char *gstrchr(const char *str, int c);
 int gstrcmp(const char *a, const char *b);
 char *gstrdup(const char *str);
