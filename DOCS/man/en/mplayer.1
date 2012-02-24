@@ -533,6 +533,8 @@ flip=yes
 mf=type=png:fps=25
 # Eerie negative images are cool.
 vf=eq2=1.0:\-0.8
+# OSD progress bar vertical alignment
+progbar-align=50
 .fi
 .PP
 .I "EXAMPLE MENCODER CONFIGURATION FILE:"
@@ -2607,6 +2609,11 @@ volume + seek + timer + percentage + total time
 Allows the next subtitle to be displayed while the current one is
 still visible (default is to enable the support only for specific
 formats).
+.
+.TP
+.B \-progbar\-align <0-100>
+Specify the vertical alignment of the progress bar
+(0: top, 100: bottom, default is 50, i.e. centered).
 .
 .TP
 .B \-sid <ID> (also see \-slang, \-vobsubid)

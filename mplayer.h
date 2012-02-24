@@ -36,6 +36,7 @@ extern int use_menu;
 
 extern float  audio_delay;
 extern double start_pts;
+extern int progbar_align;
 
 /* for the GUI */
 extern int auto_quality;
