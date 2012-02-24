@@ -33,7 +33,7 @@
 .\" Titel
 .\" --------------------------------------------------------------------------
 .
-.TH MPlayer 1 "09.11.2011" "Das MPlayer Projekt"
+.TH MPlayer 1 "24.02.2012" "Das MPlayer Projekt"
 .
 .SH NAME
 mplayer  \- Movie Player
@@ -547,6 +547,8 @@ flip=yes
 mf=type=png:fps=25
 # Unheimliche Negativbilder sind cool.
 vf=eq2=1.0:\-0.8
+# Vertikale Positionierung der OSD-Fortschrittsanzeige
+progbar-align=50
 .fi
 .PP
 .I "BEISPIEL FÜR DIE MENCODER-KONFIGURATIONSDATEI:"
@@ -2572,6 +2574,11 @@ Erlaubt die Anzeige des nächsten Untertitels, während der aktuelle noch
 sichtbar ist.
 (Standardverhalten ist, diese Unterstützung nur bei bestimmten Formaten zu
 aktivieren).
+.
+.TP
+.B \-progbar\-align <0-100>
+Gibt die vertikale Positionierung der OSD-Fortschrittsanzeige an.
+(0: oben, 100: unten, Standard ist 50, d. h. Mitte).
 .
 .TP
 .B \-sid <ID> (siehe auch \-slang, \-vobsubid)
