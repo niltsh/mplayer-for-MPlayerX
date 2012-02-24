@@ -94,7 +94,7 @@ static int pngRead(const char *fname, guiImage *img)
     av_init_packet(&pkt);
     pkt.data = data;
     pkt.size = len;
-    // HACK: make PNGs decode normally instead of as CorePNG delta frames
+    /* HACK: Make PNGs decode normally instead of as CorePNG delta frames. */
     pkt.flags = AV_PKT_FLAG_KEY;
 
     avcodec_decode_video2(avctx, frame, &decode_ok, &pkt);

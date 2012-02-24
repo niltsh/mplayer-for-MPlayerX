@@ -121,7 +121,7 @@ static int wsSearch(Window win)
     return -1;
 }
 
-// ---
+/* --- */
 
 #define PACK_RGB16(r, g, b, pixel) pixel = (b >> 3); \
     pixel <<= 6; \
@@ -138,7 +138,7 @@ static int wsSearch(Window win)
 struct SwsContext *sws_ctx   = NULL;
 enum PixelFormat out_pix_fmt = PIX_FMT_NONE;
 
-// ---
+/* --- */
 
 #define MWM_HINTS_FUNCTIONS     (1L << 0)
 #define MWM_HINTS_DECORATIONS   (1L << 1)
@@ -452,9 +452,9 @@ void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV
     win->OldWidth  = win->Width;
     win->OldHeight = win->Height;
 
-// Border size for window.
+/* Border size for window. */
     win->BorderWidth = bW;
-// Hide Mouse Cursor
+/* Hide Mouse Cursor */
     win->wsCursor = None;
     win->wsMouseEventType = cV;
     win->wsCursorData[0]  = 0;
@@ -472,7 +472,7 @@ void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV
 
     XMatchVisualInfo(wsDisplay, wsScreen, depth, TrueColor, &win->VisualInfo);
 
-// ---
+/* --- */
     win->AtomLeaderClient = XInternAtom(wsDisplay, "WM_CLIENT_LEADER", False);
     win->AtomDeleteWindow = XInternAtom(wsDisplay, "WM_DELETE_WINDOW", False);
     win->AtomTakeFocus    = XInternAtom(wsDisplay, "WM_TAKE_FOCUS", False);
@@ -483,7 +483,7 @@ void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV
     win->AtomsProtocols[0] = win->AtomDeleteWindow;
     win->AtomsProtocols[1] = win->AtomTakeFocus;
     win->AtomsProtocols[2] = win->AtomRolle;
-// ---
+/* --- */
 
     win->WindowAttrib.background_pixel = BlackPixel(wsDisplay, wsScreen);
     win->WindowAttrib.border_pixel     = WhitePixel(wsDisplay, wsScreen);
@@ -582,7 +582,7 @@ void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV
         XMapWindow(wsDisplay, win->WindowID);
 
     wsCreateImage(win, win->Width, win->Height);
-// --- End of creating --------------------------------------------------------------------------
+/* End of creating -------------------------------------------------------------------------- */
 
     {
         int i;
@@ -904,7 +904,7 @@ buttonreleased:
 
 void wsHandleEvents(void)
 {
-    // handle pending events
+    /* handle pending events */
     while (XPending(wsDisplay)) {
         XNextEvent(wsDisplay, &wsEvent);
 //   printf("### X event: %d  [%d]\n",wsEvent.type,delay);
@@ -922,7 +922,7 @@ void wsMainLoop(void)
 // XIfEvent( wsDisplay,&wsEvent,wsEvents );
 
     while (wsTrue) {
-        // handle pending events
+        /* handle pending events */
         while (XPending(wsDisplay)) {
             XNextEvent(wsDisplay, &wsEvent);
             wsEvents(wsDisplay, &wsEvent);

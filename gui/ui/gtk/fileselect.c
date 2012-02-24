@@ -396,7 +396,7 @@ static void fs_PersistantHistory( char * subject )
  for ( i=FF_ARRAY_ELEMS(fsHistory) - 1;i;i-- ) fsHistory[i]=fsHistory[i - 1];
  fsHistory[0]=gstrdup( subject );
 }
-//-----------------------------------------------
+/* ----------------------------------------------- */
 
 static void fs_fsFilterCombo_activate( GtkEntry * entry,
                                        gpointer user_data )

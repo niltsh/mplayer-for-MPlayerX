@@ -22,7 +22,7 @@
 #include "util/bitmap.h"
 #include "wm/ws.h"
 
-// User events
+/* User events */
 
 #define evNone              0
 
@@ -73,7 +73,7 @@
 #define evIconify           11
 #define evExit              1000
 
-// Internal events
+/* Internal events */
 
 #define ivSetAudio          45
 #define ivSetVideo          46
@@ -96,7 +96,7 @@ typedef struct {
     const char *name;
 } evName;
 
-// Skin items
+/* Skin items */
 
 #define itNone      0
 #define itButton    101
@@ -111,13 +111,13 @@ typedef struct {
 #define itPLMButton (itNone - 1)
 #define itPRMButton (itNone - 2)
 
-// Button states
+/* Button states */
 
 #define btnDisabled 0
 #define btnReleased 1
 #define btnPressed  2
 
-// Item definition
+/* Item definition */
 
 #define MAX_ITEMS 64
 

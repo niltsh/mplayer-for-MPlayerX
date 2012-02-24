@@ -51,7 +51,7 @@
 #include "fileselect.h"
 #include "tools.h"
 
-// for mpcodecs_[av]d_drivers:
+/* for mpcodecs_[av]d_drivers: */
 #include "libmpcodecs/vd.h"
 #include "libmpcodecs/ad.h"
 
@@ -201,7 +201,7 @@ void ShowPreferences( void )
  if ( Preferences ) gtkActive( Preferences );
    else Preferences=create_Preferences();
 
-// -- 1. page
+/* 1st page */
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBAudioEqualizer ),gtkEnableAudioEqualizer );
 #if 0
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBSurround ),gtkAOSurround );
@@ -242,7 +242,7 @@ void ShowPreferences( void )
    }
  }
 
-// -- 2. page
+/* 2nd page */
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBDoubleBuffer ),vo_doublebuffering );
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBDR ),vo_directrendering );
 
@@ -280,7 +280,7 @@ void ShowPreferences( void )
 
   gtk_adjustment_set_value( HSFPSadj,force_fps );
 
-// -- 3. page
+/* 3rd page */
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBSubOverlap ),suboverlap_enabled );
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBNoAutoSub ),!sub_auto );
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBDumpMPSub ),gtkSubDumpMPSub );
@@ -324,8 +324,8 @@ void ShowPreferences( void )
   }
 #endif
 
-// --- 4. page
- // font ...
+/* 4th page */
+ /* font ... */
  if ( font_name ) gtk_entry_set_text( GTK_ENTRY( prEFontName ),font_name );
 #ifndef CONFIG_FREETYPE
  gtk_adjustment_set_value( HSFontFactoradj,font_factor );
@@ -350,7 +350,7 @@ void ShowPreferences( void )
   }
 #endif
 
-// -- 5. page
+/* 5th page */
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBNonInterlaved ),force_ni );
  if ( index_mode == 1 ) gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBIndex ),1 );
  {
@@ -385,7 +385,7 @@ void ShowPreferences( void )
   if ( name ) gtk_entry_set_text( GTK_ENTRY( EAFM ),name );
  }
 
-// --- 6. page
+/* 6th page */
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBPostprocess ),gtkVfPP );
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBLoadFullscreen ),gtkLoadFullscreen );
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBSaveWinPos ),gui_save_pos );
@@ -416,7 +416,7 @@ void ShowPreferences( void )
  if ( cdrom_device ) gtk_entry_set_text( GTK_ENTRY( prECDRomDevice ),cdrom_device );
   else gtk_entry_set_text( GTK_ENTRY( prECDRomDevice ),DEFAULT_CDROM_DEVICE );
 
-// -- disables
+/* disables */
 #ifndef CONFIG_ASS
  gtk_widget_set_sensitive( CBUseASS,FALSE );
  gtk_widget_set_sensitive( CBASSUseMargins,FALSE );
@@ -424,7 +424,7 @@ void ShowPreferences( void )
  gtk_widget_set_sensitive( SBASSBottomMargin,FALSE );
 #endif
 
-// -- signals
+/* signals */
  gtk_signal_connect( GTK_OBJECT( CBExtraStereo ),"toggled",GTK_SIGNAL_FUNC( prToggled ),(void*)0 );
  gtk_signal_connect( GTK_OBJECT( CBNormalize ),"toggled",GTK_SIGNAL_FUNC( prToggled ),(void*)1 );
  gtk_signal_connect( GTK_OBJECT( CBSoftwareMixer ),"toggled",GTK_SIGNAL_FUNC( prToggled ),(void*)1 );
@@ -529,7 +529,7 @@ static void prButton( GtkButton * button, gpointer user_data )
  switch ( (int)user_data )
   {
    case bOk:
-	// -- 1. page
+	/* 1st page */
         gtkEnableAudioEqualizer=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBAudioEqualizer ) );
 	gtkAOExtraStereo=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBExtraStereo ) );
 	gtkAONorm=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBNormalize ) );
@@ -540,7 +540,7 @@ static void prButton( GtkButton * button, gpointer user_data )
 	listSet( &audio_driver_list,ao_driver[0] );
 	listSet( &video_driver_list,vo_driver[0] );
 
-	// -- 2. page
+	/* 2nd page */
 	vo_doublebuffering=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBDoubleBuffer ) );
 	vo_directrendering=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBDR ) );
 
@@ -553,7 +553,7 @@ static void prButton( GtkButton * button, gpointer user_data )
 
 	force_fps=HSFPSadj->value;
 
-	// -- 3. page
+	/* 3rd page */
 	suboverlap_enabled=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBSubOverlap ) );
 	sub_auto=!gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBNoAutoSub ) );
 	gtkSubDumpMPSub=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBDumpMPSub ) );
@@ -574,7 +574,7 @@ static void prButton( GtkButton * button, gpointer user_data )
 	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( RBOSDTPTT ) ) ) osd_level=3;
 
 
-        // --- 4. page
+        /* 4th page */
 	setdup( &font_name,gtk_entry_get_text( GTK_ENTRY( prEFontName ) ) );
 #ifndef CONFIG_FREETYPE
 	mplayer( MPLAYER_SET_FONT_FACTOR,HSFontFactoradj->value,0 );
@@ -589,7 +589,7 @@ static void prButton( GtkButton * button, gpointer user_data )
 	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( RBFontAutoScaleDiagonal ) ) ) mplayer( MPLAYER_SET_FONT_AUTOSCALE,3,0 );
 #endif
 
-	// -- 5. page
+	/* -- 5th page */
 	force_ni=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBNonInterlaved ) );
 	index_mode=-1;
 	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBIndex ) ) ) index_mode=1;
@@ -610,7 +610,7 @@ static void prButton( GtkButton * button, gpointer user_data )
 	   { listSet( &audio_fm_list,(char *)mpcodecs_ad_drivers[i]->info->short_name ); break; }
 	}
 
-	// --- 6. page
+	/* 6th page */
 	gtkVfPP=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBPostprocess ) );
 	gtkLoadFullscreen=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBLoadFullscreen ) );
 	gui_save_pos=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBSaveWinPos ) );
@@ -857,7 +857,7 @@ GtkWidget * create_Preferences( void )
   frame=AddFrame( NULL,GTK_SHADOW_ETCHED_OUT,hbox1,1 );
   frame=AddFrame( NULL,GTK_SHADOW_NONE,frame,1 );
 
-// --- 1. page
+/* 1st page */
 
   vbox2=AddVBox( frame,0 );
 
@@ -910,7 +910,7 @@ GtkWidget * create_Preferences( void )
   label=AddLabel( MSGTR_PREFERENCES_Audio,NULL );
     gtk_notebook_set_tab_label( GTK_NOTEBOOK( notebook1 ),gtk_notebook_get_nth_page( GTK_NOTEBOOK( notebook1 ),0 ),label );
 
-// --- 2. page
+/* 2nd page */
 
   hbox2=AddVBox( notebook1,0 );
 
@@ -975,7 +975,7 @@ GtkWidget * create_Preferences( void )
   label=AddLabel( MSGTR_PREFERENCES_Video,NULL );
     gtk_notebook_set_tab_label( GTK_NOTEBOOK( notebook1 ),gtk_notebook_get_nth_page( GTK_NOTEBOOK( notebook1 ),1 ),label );
 
-// --- 3. page
+/* 3rd page */
 
   vbox6=AddVBox( notebook1,0 );
 
@@ -1094,7 +1094,7 @@ GtkWidget * create_Preferences( void )
     gtk_notebook_set_tab_label( GTK_NOTEBOOK( notebook1 ),gtk_notebook_get_nth_page( GTK_NOTEBOOK( notebook1 ),2 ),label );
   vbox601=AddVBox( notebook1,0 );
 
-// --- 4. page
+/* 4th page */
 
   vbox603=AddVBox(
     AddFrame( NULL,GTK_SHADOW_NONE,
@@ -1178,7 +1178,7 @@ GtkWidget * create_Preferences( void )
   label=AddLabel( MSGTR_PREFERENCES_FRAME_Font,NULL );
     gtk_notebook_set_tab_label( GTK_NOTEBOOK( notebook1 ),gtk_notebook_get_nth_page( GTK_NOTEBOOK( notebook1 ),3 ),label );
 
-// --- 5. page
+/* 5th page */
 
   vbox601=AddVBox( notebook1,0 );
 
@@ -1222,7 +1222,7 @@ GtkWidget * create_Preferences( void )
 
   vbox601=AddVBox( notebook1,0 );
 
-// --- 6. page
+/* 6th page */
 
   vbox602=AddVBox(
     AddFrame( NULL,GTK_SHADOW_NONE,
@@ -1300,7 +1300,7 @@ GtkWidget * create_Preferences( void )
   label=AddLabel( MSGTR_PREFERENCES_Misc,NULL );
     gtk_notebook_set_tab_label( GTK_NOTEBOOK( notebook1 ),gtk_notebook_get_nth_page( GTK_NOTEBOOK( notebook1 ),5 ),label );
 
-// ---
+/* --- */
 
   AddHSeparator( vbox1 );
 
@@ -1370,7 +1370,7 @@ GtkWidget * create_Preferences( void )
 #ifdef CONFIG_OSS_AUDIO
 static GList *appendOSSDevices(GList *l)
 {
-  // careful! the current implementation allows only string constants!
+  /* careful! the current implementation allows only string constants! */
   l = g_list_append(l, (gpointer)"/dev/dsp");
   if (gtkAOOSSDevice && strncmp(gtkAOOSSDevice, "/dev/sound", 10) == 0) {
     l = g_list_append(l, (gpointer)"/dev/sound/dsp0");
@@ -1395,7 +1395,7 @@ static GList *appendOSSDevices(GList *l)
 
 static GList *appendOSSMixers(GList *l)
 {
-  // careful! the current implementation allows only string constants!
+  /* careful! the current implementation allows only string constants! */
   l = g_list_append(l, (gpointer)"/dev/mixer");
   if (gtkAOOSSMixer && strncmp(gtkAOOSSMixer, "/dev/sound", 10) == 0) {
     l = g_list_append(l, (gpointer)"/dev/sound/mixer0");
@@ -1706,7 +1706,7 @@ GtkWidget *create_AudioConfig( void ) {
   return AudioConfig;
 }
 
-// --- dxr3 config box
+/* dxr3 config box */
 
 static GtkWidget * DXR3Config;
 static GtkWidget * CBDevice;

@@ -73,7 +73,7 @@ void uiSubMouseHandle( int Button,int X,int Y,int RX,int RY )
           uiHideMenu( RX,RY,1 );
           msButton=0;
           break;
-// ---
+/* --- */
    case wsPLMouseButton:
           gtkShow( ivHidePopUpMenu,NULL );
           sx=X; sy=Y;

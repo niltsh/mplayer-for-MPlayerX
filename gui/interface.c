@@ -97,10 +97,10 @@ void guiInit(void)
 
     gtkInit();
 
-    // initialize X
+    /* initialize X */
     wsXInit(mDisplay);
 
-    // load skin
+    /* load skin */
 
     skinDirInHome  = get_path("skins");
     skinMPlayerDir = MPLAYER_DATADIR "/skins";
@@ -130,7 +130,7 @@ void guiInit(void)
         mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
     }
 
-    // initialize windows
+    /* initialize windows */
 
     mainDrawBuffer = malloc(guiApp.main.Bitmap.ImageSize);
 
@@ -445,7 +445,7 @@ int gui(int what, void *data)
             break;
         }
 
-        // video opts
+        /* video opts */
 
         if (!video_driver_list) {
             int i = 0;
@@ -486,7 +486,7 @@ int gui(int what, void *data)
         if (gtkVfPP)
             add_vf("pp");
 
-        // audio opts
+        /* audio opts */
 
 // if ( ao_plugin_cfg.plugin_list ) { free( ao_plugin_cfg.plugin_list ); ao_plugin_cfg.plugin_list=NULL; }
         if (gtkAONorm)
@@ -555,7 +555,7 @@ int gui(int what, void *data)
             }
         }
 
-        // subtitle
+        /* subtitle */
 
 // subdata->filename=gstrdup( guiInfo.SubtitleFilename );
         stream_dump_type = 0;
@@ -569,7 +569,7 @@ int gui(int what, void *data)
         gtkSubDumpMPSub = gtkSubDumpSrt = 0;
         mplayerLoadFont();
 
-        // misc
+        /* misc */
 
         if (gtkCacheOn)
             stream_cache_size = gtkCacheSize;
@@ -641,7 +641,7 @@ int gui(int what, void *data)
 
     case GUI_SET_VIDEO:
 
-        // video
+        /* video */
 
         guiInfo.sh_video = data;
 
@@ -875,7 +875,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
 
     if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
-            // add it to end of list
+            /* add it to end of list */
             if (import_file_into_gui(filename, 0))
                 result = 1;
     }
@@ -904,7 +904,7 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
 
     if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
-            // insert it into the list and set plCurrent=new item
+            /* insert it into the list and set plCurrent=new item */
             if (import_file_into_gui(filename, 1))
                 result = 1;
 
@@ -931,7 +931,7 @@ void mplayer(int what, float value, void *data)
     equalizer_t *eq = (equalizer_t *)data;
 
     switch (what) {
-        // subtitle
+    /* subtitle */
 
     case MPLAYER_SET_FONT_FACTOR:
         font_factor = value;
@@ -997,7 +997,7 @@ void mplayer(int what, float value, void *data)
         auto_quality = (int)value;
         break;
 
-    // set equalizers
+    /* set equalizers */
 
     case MPLAYER_SET_CONTRAST:
         if (guiInfo.sh_video)

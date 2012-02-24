@@ -246,7 +246,7 @@ void cfg_read(void)
 
     player_idle_mode = 1;   // GUI is in idle mode by default
 
-    // configuration
+    /* configuration */
 
     fname = get_path(gui_configuration);
 
@@ -268,7 +268,7 @@ void cfg_read(void)
 
     free(fname);
 
-    // playlist
+    /* playlist */
 
     fname = get_path(gui_playlist);
     file  = fopen(fname, "rt");
@@ -303,7 +303,7 @@ void cfg_read(void)
 
     free(fname);
 
-    // URL list
+    /* URL list */
 
     fname = get_path(gui_urllist);
     file  = fopen(fname, "rt");
@@ -331,7 +331,7 @@ void cfg_read(void)
 
     free(fname);
 
-    // directory history
+    /* directory history */
 
     fname = get_path(gui_history);
     file  = fopen(fname, "rt");
@@ -354,7 +354,7 @@ void cfg_write(void)
     char *fname;
     FILE *file;
 
-    // configuration
+    /* configuration */
 
     fname = get_path(gui_configuration);
     file  = fopen(fname, "wt+");
@@ -388,7 +388,7 @@ void cfg_write(void)
 
     free(fname);
 
-    // playlist
+    /* playlist */
 
     fname = get_path(gui_playlist);
     file  = fopen(fname, "wt+");
@@ -410,7 +410,7 @@ void cfg_write(void)
 
     free(fname);
 
-    // URL list
+    /* URL list */
 
     fname = get_path(gui_urllist);
     file  = fopen(fname, "wt+");
@@ -430,7 +430,7 @@ void cfg_write(void)
 
     free(fname);
 
-    // directory history
+    /* directory history */
 
     fname = get_path(gui_history);
     file  = fopen(fname, "wt+");

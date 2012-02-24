@@ -501,7 +501,7 @@ GtkWidget * create_Equalizer( void )
   return Equalizer;
 }
 
-// --- equalizer config dialog box
+/* equalizer config dialog box */
 
 static GtkWidget * CBChannel1;
 static GtkWidget * CEChannel1;

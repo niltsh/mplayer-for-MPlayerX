@@ -99,7 +99,7 @@ static void uiPlaybarDraw( void )
 	break;
   }
 
-// --- render
+/* render */
  if ( guiApp.playbarWindow.State == wsWindowExpose )
   {
    btnModify( evSetMoviePosition,guiInfo.Position );
@@ -141,7 +141,7 @@ static void uiPlaybarMouseHandle( int Button, int X, int Y, int RX, int RY )
    case wsRRMouseButton:
         gtkShow( ivShowPopUpMenu,NULL );
 	break;
-// ---
+/* --- */
    case wsPLMouseButton:
 	gtkShow( ivHidePopUpMenu,NULL );
         SelectedItem=currentselected;
@@ -189,7 +189,7 @@ static void uiPlaybarMouseHandle( int Button, int X, int Y, int RX, int RY )
 
 	itemtype=0;
 	break;
-// ---
+/* --- */
    case wsP5MouseButton: value=-2.5f; goto rollerhandled;
    case wsP4MouseButton: value= 2.5f;
 rollerhandled:
@@ -201,7 +201,7 @@ rollerhandled:
 	  uiEventHandling( item->message,item->value );
 	 }
 	break;
-// ---
+/* --- */
    case wsMoveMouse:
         item=&guiApp.playbarItems[SelectedItem];
 	switch ( itemtype )

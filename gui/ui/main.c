@@ -135,7 +135,7 @@ void uiEventHandling( int msg,float param )
 
  switch( msg )
   {
-// --- user events
+/* user events */
    case evExit:
         mplayer( MPLAYER_EXIT_GUI, EXIT_QUIT, 0 );
         break;
@@ -406,7 +406,7 @@ set_volume:
 	 guiInfo.NewPlay=GUI_FILE_NEW;
 	break;
 
-// --- timer events
+/* timer events */
    case ivRedraw:
         {
           unsigned now = GetTimerMS();
@@ -420,7 +420,7 @@ set_volume:
         wsPostRedisplay( &guiApp.mainWindow );
 	wsPostRedisplay( &guiApp.playbarWindow );
         break;
-// --- system events
+/* system events */
    case evNone:
         mp_msg( MSGT_GPLAYER,MSGL_DBG2,"[main] uiEventHandling: evNone\n" );
         break;
@@ -507,7 +507,7 @@ void uiMainMouseHandle( int Button,int X,int Y,int RX,int RY )
         gtkShow( ivShowPopUpMenu,NULL );
         break;
 
-// --- rolled mouse ... de szar :)))
+/* rolled mouse ... de szar :))) */
    case wsP5MouseButton: value=-2.5f; goto rollerhandled;
    case wsP4MouseButton: value= 2.5f;
 rollerhandled:
@@ -520,7 +520,7 @@ rollerhandled:
            }
           break;
 
-// --- moving
+/* moving */
    case wsMoveMouse:
           item=&guiApp.mainItems[SelectedItem];
           switch ( itemtype )

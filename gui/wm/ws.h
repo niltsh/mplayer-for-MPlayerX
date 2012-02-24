@@ -148,7 +148,7 @@ typedef struct {
     int Control;
     int NumLock;
     int CapsLock;
-// --- Misc -------------------------------------------------------------------------------------
+/* Misc ------------------------------------------------------------------------------------- */
 
     Atom AtomDeleteWindow;
     Atom AtomTakeFocus;

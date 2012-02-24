@@ -48,7 +48,7 @@
 #include "dialogs.h"
 #include "version.h"
 
-// HACK around bug in old mingw
+/* HACK around bug in old mingw */
 #undef INVALID_FILE_ATTRIBUTES
 #define INVALID_FILE_ATTRIBUTES ((DWORD)-1)
 

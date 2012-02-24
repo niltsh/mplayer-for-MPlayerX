@@ -69,7 +69,7 @@ static const char gui_icon_name[] = "mplayer";
 #define THRESHOLD 128   // transparency values equal to or above this will become
                         // opaque, all values below this will become transparent
 
-// --- init & close gtk
+/* init & close gtk */
 
 guiIcon_t guiIcon;
 
@@ -107,7 +107,7 @@ static void gtkLoadIcon(GtkIconTheme *theme, gint size, GdkPixmap **gdkIcon, Gdk
     } else
         mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_ICONERROR, gui_icon_name, size);
 
-    // start up GTK which realizes the pixmaps
+    /* start up GTK which realizes the pixmaps */
     gtk_main_iteration_do(FALSE);
 }
 
@@ -190,7 +190,7 @@ void gtkEventHandling(void)
         gtk_main_iteration_do(0);
 }
 
-// --- funcs
+/* funcs */
 
 void gtkMessageBox(int type, const gchar *str)
 {

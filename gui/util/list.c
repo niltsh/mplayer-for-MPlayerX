@@ -49,7 +49,7 @@ void *listMgr(int cmd, void *data)
     urlItem *udat = (urlItem *)data;
 
     switch (cmd) {
-    // playlist
+    /* playlist */
 
     case PLAYLIST_GET:
 
@@ -154,7 +154,7 @@ void *listMgr(int cmd, void *data)
         plCurrent = NULL;
         return NULL;
 
-    // url list
+    /* URL list */
 
     case URLLIST_GET:
 

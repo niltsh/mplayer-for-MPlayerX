@@ -26,7 +26,7 @@
 #define GUI_TRANSPARENT 0xffff00ff
 #define ALPHA_OPAQUE    0xff000000
 
-// for legacy reasons, we must treat all kind of fuchsia/magenta as transparent
+/* for legacy reasons, we must treat all kind of fuchsia/magenta as transparent */
 #define IS_TRANSPARENT(c) ((ALPHA_OPAQUE | (c)) == GUI_TRANSPARENT)
 
 typedef struct {
