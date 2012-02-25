@@ -1815,14 +1815,14 @@ int demuxer_sub_lang(demuxer_t *d, int id, char *buf, int buf_len)
     if (id < 0 || id >= MAX_S_STREAMS)
         return -1;
     sh = d->s_streams[id];
-    if (!sh)
-        return -1;
-    if (sh->lang) {
+    if (sh && sh->lang) {
         av_strlcpy(buf, sh->lang, buf_len);
         return 0;
     }
     req.type = stream_ctrl_sub;
-    req.id = sh->sid;
+    // assume 1:1 mapping so we can show the language of
+    // DVD subs even when we have not yet created the stream.
+    req.id = sh ? sh->sid : id;
     if (stream_control(d->stream, STREAM_CTRL_GET_LANG, &req) == STREAM_OK) {
         av_strlcpy(buf, req.buf, buf_len);
         return 0;
