@@ -258,7 +258,7 @@ void uiCurr(void)
 
         if (curr) {
             uiSetFileName(curr->path, curr->name, STREAMTYPE_FILE);
-            uiGotoTheNext = 0;
+            uiGotoTheNext = (guiInfo.Playing ? 0 : 1);
             break;
         }
 
@@ -314,7 +314,7 @@ void uiPrev(void)
 
         if (prev) {
             uiSetFileName(prev->path, prev->name, STREAMTYPE_FILE);
-            uiGotoTheNext = 0;
+            uiGotoTheNext = (guiInfo.Playing ? 0 : 1);
             guiInfo.Track--;
             break;
         }
@@ -375,7 +375,7 @@ void uiNext(void)
 
         if (next) {
             uiSetFileName(next->path, next->name, STREAMTYPE_FILE);
-            uiGotoTheNext = 0;
+            uiGotoTheNext = (guiInfo.Playing ? 0 : 1);
             guiInfo.Track++;
             break;
         }
