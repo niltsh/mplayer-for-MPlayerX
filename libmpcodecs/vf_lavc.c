@@ -142,7 +142,7 @@ static int vf_open(vf_instance_t *vf, char *args){
 
     init_avcodec();
 
-    vf->priv->codec = (AVCodec *)avcodec_find_encoder_by_name("mpeg1video");
+    vf->priv->codec = avcodec_find_encoder_by_name("mpeg1video");
     if (!vf->priv->codec) {
 	mp_msg(MSGT_MENCODER,MSGL_ERR,MSGTR_MissingLAVCcodec, "mpeg1video");
 	return 0;
