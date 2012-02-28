@@ -679,11 +679,6 @@ static int config(struct vf_instance *vf,
     }
     av_dict_free(&opts);
 
-    if (lavc_venc_context->codec->encode == NULL) {
-	mp_msg(MSGT_MENCODER,MSGL_ERR,"avcodec init failed (ctx->codec->encode == NULL)!\n");
-	return 0;
-    }
-
     /* free second pass buffer, its not needed anymore */
     av_freep(&lavc_venc_context->stats_in);
     if(lavc_venc_context->bits_per_coded_sample)
