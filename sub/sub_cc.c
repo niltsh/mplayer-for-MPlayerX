@@ -65,16 +65,16 @@ static void build_char_table(void)
   for (i = 0; i < 128; i++)
     chartbl[i] = (char) i;
   /* now the special codes */
-  chartbl[0x2a] = 'á';
-  chartbl[0x5c] = 'é';
-  chartbl[0x5e] = 'í';
-  chartbl[0x5f] = 'ó';
-  chartbl[0x60] = 'ú';
-  chartbl[0x7b] = 'ç';
-  chartbl[0x7c] = '÷';
-  chartbl[0x7d] = 'Ñ';
-  chartbl[0x7e] = 'ñ';
-  chartbl[0x7f] = '¤';    /* FIXME: this should be a solid block */
+  chartbl[0x2a] = '0xe1';
+  chartbl[0x5c] = '0xe9';
+  chartbl[0x5e] = '0xed';
+  chartbl[0x5f] = '0xf3';
+  chartbl[0x60] = '0xfa';
+  chartbl[0x7b] = '0xe7';
+  chartbl[0x7c] = '0xf7';
+  chartbl[0x7d] = '0xd1';
+  chartbl[0x7e] = '0xf1';
+  chartbl[0x7f] = '0xa4';    /* FIXME: this should be a solid block */
 }
 
 static void clear_buffer(subtitle *buf)
