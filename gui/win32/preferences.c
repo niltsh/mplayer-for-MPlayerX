@@ -51,7 +51,7 @@ static void set_defaults(void)
     gtkAOExtraStereo = 0;
     gtkAOExtraStereoMul = 1.0;
     audio_delay = 0.0;
-    sub_window = 1;
+    video_window = 1;
     gtkCacheOn = 0;
     gtkCacheSize = 2048;
     gtkAutoSyncOn = 0;
@@ -219,10 +219,10 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
                                NULL);
             SendMessage(btn, WM_SETFONT, (WPARAM) GetStockObject(DEFAULT_GUI_FONT), 0);
 
-            btn = CreateWindow("button", acp(MSGTR_PREFERENCES_VideoInSubwin),
+            btn = CreateWindow("button", acp(MSGTR_PREFERENCES_ShowInVideoWin),
                                WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX,
                                10, 249, 250, 25,
-                               hwnd, (HMENU) ID_SUBWINDOW,
+                               hwnd, (HMENU) ID_VIDEOWINDOW,
                                ((LPCREATESTRUCT) lParam) -> hInstance,
                                NULL);
             SendMessage(btn, WM_SETFONT, (WPARAM) GetStockObject(DEFAULT_GUI_FONT), 0);
@@ -429,8 +429,8 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
             else gtkAutoSync = 0;
             SendDlgItemMessage(hwnd, ID_UPDOWN2, UDM_SETPOS32, 0, (LPARAM)gtkAutoSync);
 
-            if(sub_window)
-                SendDlgItemMessage(hwnd, ID_SUBWINDOW, BM_SETCHECK, 1, 0);
+            if(video_window)
+                SendDlgItemMessage(hwnd, ID_VIDEOWINDOW, BM_SETCHECK, 1, 0);
 
             if(!osd_level)
                 SendDlgItemMessage(hwnd, ID_NONE, BM_SETCHECK, 1, 0);
@@ -529,7 +529,7 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
                     SendDlgItemMessage(hwnd, ID_EXTRASTEREO, BM_SETCHECK, 0, 0);
                     SendDlgItemMessage(hwnd, ID_CACHE, BM_SETCHECK, 0, 0);
                     SendDlgItemMessage(hwnd, ID_AUTOSYNC, BM_SETCHECK, 0, 0);
-                    SendDlgItemMessage(hwnd, ID_SUBWINDOW, BM_SETCHECK, 1, 0);
+                    SendDlgItemMessage(hwnd, ID_VIDEOWINDOW, BM_SETCHECK, 1, 0);
                     SendDlgItemMessage(hwnd, ID_NONE, BM_SETCHECK, 0, 0);
                     SendDlgItemMessage(hwnd, ID_OSD1, BM_SETCHECK, 1, 0);
                     SendDlgItemMessage(hwnd, ID_OSD2, BM_SETCHECK, 0, 0);
@@ -617,10 +617,10 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
                     else gtkAutoSyncOn = 0;
                     gtkAutoSync = SendDlgItemMessage(hwnd, ID_UPDOWN2, UDM_GETPOS32, 0, 0);
 
-                    /* sub window */
-                    if(SendDlgItemMessage(hwnd, ID_SUBWINDOW, BM_GETCHECK, 0, 0) == BST_CHECKED)
-                        sub_window = 1;
-                    else sub_window = 0;
+                    /* video window */
+                    if(SendDlgItemMessage(hwnd, ID_VIDEOWINDOW, BM_GETCHECK, 0, 0) == BST_CHECKED)
+                        video_window = 1;
+                    else video_window = 0;
 
                     /* osd level */
                     if(SendDlgItemMessage(hwnd, ID_NONE, BM_GETCHECK, 0, 0) == BST_CHECKED)

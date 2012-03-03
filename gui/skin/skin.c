@@ -246,7 +246,7 @@ static int item_end(char *in)
 /**
  * @brief Parse a @a window definition.
  *
- *        Syntax: window=main|sub|playbar|menu
+ *        Syntax: window=main|video|playbar|menu
  *
  * @param in definition to be analyzed
  *
@@ -264,12 +264,15 @@ static int item_window(char *in)
 
     strlower(in);
 
+    if (strcmp(in, "sub") == 0)
+        strcpy(in, "video");                           // legacy
+
     if (strcmp(in, "main") == 0) {
         currWin = &skin->main;
         currWinItemIdx = &skin->IndexOfMainItems;
         currWinItems   = skin->mainItems;
-    } else if (strcmp(in, "sub") == 0) {
-        currWin = &skin->sub;
+    } else if (strcmp(in, "video") == 0) {
+        currWin = &skin->video;
         currWinItemIdx = NULL;
         currWinItems   = NULL;
     } else if (strcmp(in, "playbar") == 0) {
@@ -307,12 +310,12 @@ static int item_base(char *in)
     unsigned char file[512];
     int x, y;
     int w = 0, h = 0;
-    int is_sub, is_bar, is_menu;
+    int is_video, is_bar, is_menu;
 
     if (!window_item("base"))
         return 1;
 
-    is_sub  = (strcmp(currWinName, "sub") == 0);
+    is_video = (strcmp(currWinName, "video") == 0);
     is_bar  = (strcmp(currWinName, "playbar") == 0);
     is_menu = (strcmp(currWinName, "menu") == 0);
 
@@ -344,7 +347,7 @@ static int item_base(char *in)
     currWin->width  = currWin->Bitmap.Width;
     currWin->height = currWin->Bitmap.Height;
 
-    if (is_sub) {
+    if (is_video) {
         if (w && h) {
             currWin->width  = w;
             currWin->height = h;
@@ -353,7 +356,7 @@ static int item_base(char *in)
 
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[skin]     bitmap: %dx%d\n", currWin->width, currWin->height);
 
-    if (!is_sub) {
+    if (!is_video) {
         if (!bpRenderMask(&currWin->Bitmap, &currWin->Mask)) {
             skin_error(MSGTR_SKIN_NotEnoughMemory);
             return 1;
@@ -419,7 +422,7 @@ static int item_button(char *in)
     if (!window_item("button"))
         return 1;
 
-    if (in_window("sub"))
+    if (in_window("video"))
         return 1;
     if (in_window("menu"))
         return 1;
@@ -492,7 +495,7 @@ static int item_selected(char *in)
 
     if (in_window("main"))
         return 1;
-    if (in_window("sub"))
+    if (in_window("video"))
         return 1;
     if (in_window("playbar"))
         return 1;
@@ -536,7 +539,7 @@ static int item_menu(char *in)
 
     if (in_window("main"))
         return 1;
-    if (in_window("sub"))
+    if (in_window("video"))
         return 1;
     if (in_window("playbar"))
         return 1;
@@ -594,7 +597,7 @@ static int item_hpotmeter(char *in)
     if (!window_item("h/v potmeter"))
         return 1;
 
-    if (in_window("sub"))
+    if (in_window("video"))
         return 1;
     if (in_window("menu"))
         return 1;
@@ -710,7 +713,7 @@ static int item_potmeter(char *in)
     if (!window_item("potmeter"))
         return 1;
 
-    if (in_window("sub"))
+    if (in_window("video"))
         return 1;
     if (in_window("menu"))
         return 1;
@@ -780,7 +783,7 @@ static int item_font(char *in)
     if (!window_item("font"))
         return 1;
 
-    if (in_window("sub"))
+    if (in_window("video"))
         return 1;
     if (in_window("menu"))
         return 1;
@@ -829,7 +832,7 @@ static int item_slabel(char *in)
     if (!window_item("slabel"))
         return 1;
 
-    if (in_window("sub"))
+    if (in_window("video"))
         return 1;
     if (in_window("menu"))
         return 1;
@@ -892,7 +895,7 @@ static int item_dlabel(char *in)
     if (!window_item("dlabel"))
         return 1;
 
-    if (in_window("sub"))
+    if (in_window("video"))
         return 1;
     if (in_window("menu"))
         return 1;
@@ -954,7 +957,7 @@ static int item_decoration(char *in)
     if (!window_item("decoration"))
         return 1;
 
-    if (in_window("sub"))
+    if (in_window("video"))
         return 1;
     if (in_window("playbar"))
         return 1;

@@ -1,5 +1,5 @@
 /*
- * sub window
+ * video window
  *
  * This file is part of MPlayer.
  *
@@ -30,31 +30,31 @@
 #include "gui/interface.h"
 #include "widgets.h"
 
-int             uiSubRender = 0;
-int             subVisible = 0;
+int             uiVideoRender = 0;
+int             videoVisible = 0;
 
-void uiSubDraw( void )
+void uiVideoDraw( void )
 {
- if ( guiApp.subWindow.State == wsWindowClosed ) mplayer( MPLAYER_EXIT_GUI, EXIT_QUIT, 0 );
+ if ( guiApp.videoWindow.State == wsWindowClosed ) mplayer( MPLAYER_EXIT_GUI, EXIT_QUIT, 0 );
 
- if ( guiApp.subWindow.State == wsWindowFocusIn ) subVisible++;
- if ( guiApp.subWindow.State == wsWindowFocusOut && metacity_hack != 3 ) subVisible--;
+ if ( guiApp.videoWindow.State == wsWindowFocusIn ) videoVisible++;
+ if ( guiApp.videoWindow.State == wsWindowFocusOut && metacity_hack != 3 ) videoVisible--;
 
- if ( !guiApp.subWindow.Mapped ||
-      guiApp.subWindow.Visible == wsWindowNotVisible ) return;
+ if ( !guiApp.videoWindow.Mapped ||
+      guiApp.videoWindow.Visible == wsWindowNotVisible ) return;
 
- if ( guiInfo.Playing ) uiSubRender=0;
+ if ( guiInfo.Playing ) uiVideoRender=0;
 
- if ( uiSubRender && guiApp.subWindow.State == wsWindowExpose )
+ if ( uiVideoRender && guiApp.videoWindow.State == wsWindowExpose )
   {
-   if ( guiApp.sub.Bitmap.Image ) wsPutImage( &guiApp.subWindow );
+   if ( guiApp.video.Bitmap.Image ) wsPutImage( &guiApp.videoWindow );
   }
- guiApp.subWindow.State=0;
+ guiApp.videoWindow.State=0;
 }
 
-void uiSubMouseHandle( int Button,int X,int Y,int RX,int RY )
+void uiVideoMouseHandle( int Button,int X,int Y,int RX,int RY )
 {
- static int mplSubMoved = 0;
+ static int mplVideoMoved = 0;
  static int msButton = 0;
 
  uiPlaybarShow( Y );
@@ -78,18 +78,18 @@ void uiSubMouseHandle( int Button,int X,int Y,int RX,int RY )
           gtkShow( ivHidePopUpMenu,NULL );
           sx=X; sy=Y;
           msButton=wsPLMouseButton;
-          mplSubMoved=0;
+          mplVideoMoved=0;
           break;
    case wsMoveMouse:
           switch ( msButton )
            {
             case wsPLMouseButton:
-                   mplSubMoved=1;
-                   if ( !guiApp.subWindow.isFullScreen )
+                   mplVideoMoved=1;
+                   if ( !guiApp.videoWindow.isFullScreen )
                     {
-                     wsMoveWindow( &guiApp.subWindow,True,RX - sx,RY - sy );
-                     guiApp.sub.x = guiApp.subWindow.X;
-                     guiApp.sub.y = guiApp.subWindow.Y;
+                     wsMoveWindow( &guiApp.videoWindow,True,RX - sx,RY - sy );
+                     guiApp.video.x = guiApp.videoWindow.X;
+                     guiApp.video.y = guiApp.videoWindow.Y;
                      // NOTE TO MYSELF: dragging the title bar goes unnoticed?
                     }
                    break;
@@ -100,13 +100,13 @@ void uiSubMouseHandle( int Button,int X,int Y,int RX,int RY )
            }
           break;
    case wsRLMouseButton:
-          if ( ( !mplSubMoved )&&( guiApp.subWindow.isFullScreen ) )
+          if ( ( !mplVideoMoved )&&( guiApp.videoWindow.isFullScreen ) )
            {
-            if( subVisible++%2 ) wsRaiseWindowTop( wsDisplay,guiApp.mainWindow.WindowID );
-             else wsRaiseWindowTop( wsDisplay,guiApp.subWindow.WindowID );
+            if( videoVisible++%2 ) wsRaiseWindowTop( wsDisplay,guiApp.mainWindow.WindowID );
+             else wsRaiseWindowTop( wsDisplay,guiApp.videoWindow.WindowID );
 	   }
           msButton=0;
-          mplSubMoved=0;
+          mplVideoMoved=0;
           break;
   }
 }

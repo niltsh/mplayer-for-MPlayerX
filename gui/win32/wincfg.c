@@ -49,14 +49,14 @@ int   gtkCacheSize = 2048;
 int   gtkAutoSyncOn = 0;
 int   gtkAutoSync = 0;
 
-int sub_window = 1;
+int video_window = 1;
 int console = 0;
 
 int gui_save_pos = 1;
 int gui_main_pos_x = -2;
 int gui_main_pos_y = -2;
-int gui_sub_pos_x = -1;
-int gui_sub_pos_y = -1;
+int gui_video_pos_x = -1;
+int gui_video_pos_y = -1;
 
 m_config_t *gui_conf;
 static const m_option_t gui_opts[] =
@@ -80,9 +80,9 @@ static const m_option_t gui_opts[] =
     {   "gui_skin", &skinName, CONF_TYPE_STRING, 0, 0, 0, NULL },
     {   "gui_main_pos_x", &gui_main_pos_x, CONF_TYPE_INT, 0, 0, 0, NULL },
     {   "gui_main_pos_y", &gui_main_pos_y, CONF_TYPE_INT, 0, 0, 0, NULL },
-    {   "gui_sub_pos_x", &gui_sub_pos_x, CONF_TYPE_INT, 0, 0, 0, NULL },
-    {   "gui_sub_pos_y", &gui_sub_pos_y, CONF_TYPE_INT, 0, 0, 0, NULL },
-    {   "sub_window", &sub_window, CONF_TYPE_FLAG, 0, 0, 1, NULL},
+    {   "gui_sub_pos_x", &gui_video_pos_x, CONF_TYPE_INT, 0, 0, 0, NULL },
+    {   "gui_sub_pos_y", &gui_video_pos_y, CONF_TYPE_INT, 0, 0, 0, NULL },
+    {   "sub_window", &video_window, CONF_TYPE_FLAG, 0, 0, 1, NULL},
     {   "console", &console, CONF_TYPE_FLAG, 0, 0, 1, NULL},
     {   "idle", &player_idle_mode, CONF_TYPE_FLAG, CONF_GLOBAL, 0, 1, NULL},
     {   NULL, NULL, 0, 0, 0, 0, NULL }

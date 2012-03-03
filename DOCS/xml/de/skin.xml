@@ -71,7 +71,7 @@
       <para>
         Zur Zeit sind vier Fenster zu dekorieren: das
         <link linkend="skin-file-main">Hauptfenster</link>, das
-        <link linkend="skin-file-subwindow">Unterfenster</link>, die
+        <link linkend="skin-file-subwindow">Videofenster</link>, die
         <link linkend="skin-file-main">Abspielleiste</link> und das
         <link linkend="skin-file-menu">Skin-Menü</link>.
 
@@ -129,7 +129,7 @@
 
           <listitem>
             <para>
-              Im <emphasis role="bold">Unterfenster</emphasis> erscheint das Video.
+              Im <emphasis role="bold">Videofenster</emphasis> erscheint das Video.
               Es kann eine festgelegte Grafik anzeigen, wenn kein Film geladen
               ist (es ist ziemlich langweilig, ein leeres Fenster vor sich zu haben :-))
               <emphasis role="bold">Beachte:</emphasis> Transparenz ist hier
@@ -194,7 +194,7 @@
             </para></listitem>
           <listitem>
             <para>
-              Die Grafik, die im Unterfenster angezeigt werden soll (optional).
+              Die Grafik, die im Videofenster angezeigt werden soll (optional).
             </para>
           </listitem>
           <listitem>
@@ -255,15 +255,15 @@ end
       wobei <replaceable>Fenstername</replaceable> einer dieser Zeichenketten sein kann:
       <itemizedlist>
         <listitem><para><emphasis role="bold">main</emphasis> - für das Hauptfenster</para></listitem>
-        <listitem><para><emphasis role="bold">sub</emphasis> - für das Unterfenster</para></listitem>
+        <listitem><para><emphasis role="bold">video</emphasis> - für das Videofenster</para></listitem>
         <listitem><para><emphasis role="bold">playbar</emphasis> - für die Abspielleiste</para></listitem>
         <listitem><para><emphasis role="bold">menu</emphasis> - für das Skin-Menü</para></listitem>
       </itemizedlist>
     </para>
 
     <para>
-      (Die sub-, playbar- und menu-Blöcke sind optional - es ist nicht
-      nötig, das Unterfenster zu dekorieren, eine Abspielleiste zu haben
+      (Die video-, playbar- und menu-Blöcke sind optional - es ist nicht
+      nötig, das Videofenster zu dekorieren, eine Abspielleiste zu haben
       oder ein Menü zu erzeugen. Ein Standard-Menü steht immer über die
       rechte Maustaste zur Verfügung.)
     </para>
@@ -285,8 +285,8 @@ window = main
 ; ... Elemente für das Hauptfenster ...
 end
 
-window = sub
-; ... Elemente für das Unterfenster ...
+window = video
+; ... Elemente für das Videofenster ...
 end
 
 window = menu
@@ -314,7 +314,7 @@ end
 
     <para>
       Zum Schluss einige Worte zur Positionierung.
-      Hauptfenster und Unterfenster können in verschiedenen Ecken des Bilschirms
+      Hauptfenster und Videofenster können in verschiedenen Ecken des Bilschirms
       über die <literal>X</literal>- und <literal>Y</literal>-Koordinaten
       platziert werden. <literal>0</literal> ist oben oder links,
       <literal>-1</literal> bedeutet zentriert und <literal>-2</literal> ist
@@ -748,10 +748,10 @@ end
     </sect2>
 
     <sect2 id="skin-file-subwindow">
-      <title>Unterfenster</title>
+      <title>Videofenster</title>
       <para>
         Die folgenden Einträge können in diesem Block verwendet werden
-        '<literal>window = sub</literal>' . . . '<literal>end</literal>'.
+        '<literal>window = video</literal>' . . . '<literal>end</literal>'.
       </para>
 
       <variablelist>

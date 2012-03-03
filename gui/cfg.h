@@ -80,8 +80,8 @@ extern int gtkShowVideoWindow;
 extern int gui_save_pos;
 extern int gui_main_pos_x;
 extern int gui_main_pos_y;
-extern int gui_sub_pos_x;
-extern int gui_sub_pos_y;
+extern int gui_video_pos_x;
+extern int gui_video_pos_y;
 
 extern int guiWinID;
 

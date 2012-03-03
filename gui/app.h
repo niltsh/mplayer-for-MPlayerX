@@ -155,8 +155,8 @@ typedef struct {
     wsTWindow mainWindow;
     int mainDecoration;
 
-    wItem sub;
-    wsTWindow subWindow;
+    wItem video;
+    wsTWindow videoWindow;
 
     wItem playbar;
     wsTWindow playbarWindow;

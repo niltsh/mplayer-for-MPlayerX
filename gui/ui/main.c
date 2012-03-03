@@ -337,56 +337,56 @@ set_volume:
         switch ( iparam )
          {
           case 0: wsIconify( guiApp.mainWindow ); break;
-          case 1: wsIconify( guiApp.subWindow ); break;
+          case 1: wsIconify( guiApp.videoWindow ); break;
          }
         break;
    case evHalfSize:
         if ( guiInfo.VideoWindow && guiInfo.Playing )
          {
-          if ( guiApp.subWindow.isFullScreen )
+          if ( guiApp.videoWindow.isFullScreen )
            {
             uiFullScreen();
            }
-          wsResizeWindow( &guiApp.subWindow, guiInfo.VideoWidth / 2, guiInfo.VideoHeight / 2 );
-          wsMoveWindow( &guiApp.subWindow, False, guiApp.sub.x, guiApp.sub.y );
+          wsResizeWindow( &guiApp.videoWindow, guiInfo.VideoWidth / 2, guiInfo.VideoHeight / 2 );
+          wsMoveWindow( &guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y );
           btnSet( evFullScreen,btnReleased );
          }
         break;
    case evDoubleSize:
         if ( guiInfo.VideoWindow && guiInfo.Playing )
          {
-          if ( guiApp.subWindow.isFullScreen )
+          if ( guiApp.videoWindow.isFullScreen )
            {
             uiFullScreen();
            }
-          wsResizeWindow( &guiApp.subWindow, guiInfo.VideoWidth * 2, guiInfo.VideoHeight * 2 );
-          wsMoveWindowWithin( &guiApp.subWindow, False, guiApp.sub.x, guiApp.sub.y );
+          wsResizeWindow( &guiApp.videoWindow, guiInfo.VideoWidth * 2, guiInfo.VideoHeight * 2 );
+          wsMoveWindowWithin( &guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y );
           btnSet( evFullScreen,btnReleased );
          }
         break;
    case evNormalSize:
         if ( guiInfo.VideoWindow && guiInfo.Playing )
          {
-          if ( guiApp.subWindow.isFullScreen )
+          if ( guiApp.videoWindow.isFullScreen )
            {
             uiFullScreen();
            }
-          wsResizeWindow( &guiApp.subWindow, guiInfo.VideoWidth, guiInfo.VideoHeight );
-          wsMoveWindow( &guiApp.subWindow, False, guiApp.sub.x, guiApp.sub.y );
+          wsResizeWindow( &guiApp.videoWindow, guiInfo.VideoWidth, guiInfo.VideoHeight );
+          wsMoveWindow( &guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y );
           btnSet( evFullScreen,btnReleased );
 	  break;
-         } else if ( !guiApp.subWindow.isFullScreen ) break;
+         } else if ( !guiApp.videoWindow.isFullScreen ) break;
    case evFullScreen:
         if ( guiInfo.VideoWindow && guiInfo.Playing )
          {
           uiFullScreen();
-          if ( !guiApp.subWindow.isFullScreen )
+          if ( !guiApp.videoWindow.isFullScreen )
            {
-            wsResizeWindow( &guiApp.subWindow, guiInfo.VideoWidth, guiInfo.VideoHeight );
-            wsMoveWindow( &guiApp.subWindow, False, guiApp.sub.x, guiApp.sub.y );
+            wsResizeWindow( &guiApp.videoWindow, guiInfo.VideoWidth, guiInfo.VideoHeight );
+            wsMoveWindow( &guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y );
            }
          }
-	if ( guiApp.subWindow.isFullScreen ) btnSet( evFullScreen,btnPressed );
+	if ( guiApp.videoWindow.isFullScreen ) btnSet( evFullScreen,btnPressed );
 	 else btnSet( evFullScreen,btnReleased );
         break;
 
@@ -399,7 +399,7 @@ set_volume:
 	  case 1:
 	  default: movie_aspect=-1;
 	 }
-	wsClearWindow( guiApp.subWindow );
+	wsClearWindow( guiApp.videoWindow );
 	if ( guiInfo.StreamType == STREAMTYPE_VCD ) uiEventHandling( evPlayVCD, 0 );
 	 else if ( guiInfo.StreamType == STREAMTYPE_DVD ) uiEventHandling( ivPlayDVD, 0 );
 	 else
@@ -587,7 +587,7 @@ void uiMainKeyHandle( int KeyCode,int Type,int Key )
       case wsXF86Next:         msg=evNext; break;
       case wsXF86Media:        msg=evLoad; break;
       case wsEscape:
-    	    if ( guiInfo.VideoWindow && guiInfo.Playing && guiApp.subWindow.isFullScreen )
+    	    if ( guiInfo.VideoWindow && guiInfo.Playing && guiApp.videoWindow.isFullScreen )
 	     {
 	      uiEventHandling( evNormalSize,0 );
 	      return;

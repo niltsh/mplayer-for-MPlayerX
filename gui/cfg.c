@@ -89,8 +89,8 @@ int gtkShowVideoWindow = 1;
 int gui_save_pos   = 1;
 int gui_main_pos_x = -3;
 int gui_main_pos_y = -3;
-int gui_sub_pos_x  = -3;
-int gui_sub_pos_y  = -3;
+int gui_video_pos_x = -3;
+int gui_video_pos_y = -3;
 
 int guiWinID = -1;
 
@@ -168,8 +168,8 @@ static const m_option_t gui_opts[] = {
     { "gui_save_pos",                &gui_save_pos,            CONF_TYPE_FLAG,        0,           0,     1,       NULL },
     { "gui_main_pos_x",              &gui_main_pos_x,          CONF_TYPE_INT,         0,           0,     0,       NULL },
     { "gui_main_pos_y",              &gui_main_pos_y,          CONF_TYPE_INT,         0,           0,     0,       NULL },
-    { "gui_video_out_pos_x",         &gui_sub_pos_x,           CONF_TYPE_INT,         0,           0,     0,       NULL },
-    { "gui_video_out_pos_y",         &gui_sub_pos_y,           CONF_TYPE_INT,         0,           0,     0,       NULL },
+    { "gui_video_out_pos_x",         &gui_video_pos_x,         CONF_TYPE_INT,         0,           0,     0,       NULL },
+    { "gui_video_out_pos_y",         &gui_video_pos_y,         CONF_TYPE_INT,         0,           0,     0,       NULL },
 
     { "idle",                        &player_idle_mode,        CONF_TYPE_FLAG,        CONF_GLOBAL, 0,     1,       NULL },
 

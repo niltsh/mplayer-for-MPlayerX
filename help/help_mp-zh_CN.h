@@ -849,7 +849,6 @@ static const char help_text[]=
 #define MSGTR_PREFERENCES_PriorityNormal "标准"
 #define MSGTR_PREFERENCES_PriorityNormalAbove "高于标准"
 #define MSGTR_PREFERENCES_PriorityNormalBelow "低于标准"
-#define MSGTR_PREFERENCES_VideoInSubwin "在子窗口中显示视频（仅用于 DirectX）"
 
 
 // ======================= video output drivers ========================

@@ -1055,7 +1055,7 @@ static const char help_text[]=
 #define MSGTR_PREFERENCES_PriorityNormal "normal"
 #define MSGTR_PREFERENCES_PriorityNormalAbove "höher als normal"
 #define MSGTR_PREFERENCES_PriorityNormalBelow "niedriger als normal"
-#define MSGTR_PREFERENCES_VideoInSubwin "Video in Unterfenster anzeigen (nur DirectX)"
+#define MSGTR_PREFERENCES_ShowInVideoWin "Im Videofenster anzeigen (nur DirectX)"
 
 
 // ======================= Videoausgabetreiber ========================

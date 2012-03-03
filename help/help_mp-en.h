@@ -849,7 +849,7 @@ static const char help_text[]=
 #define MSGTR_PREFERENCES_PriorityNormal "normal"
 #define MSGTR_PREFERENCES_PriorityNormalAbove "above normal"
 #define MSGTR_PREFERENCES_PriorityNormalBelow "below normal"
-#define MSGTR_PREFERENCES_VideoInSubwin "Display videos in the sub window (DirectX only)"
+#define MSGTR_PREFERENCES_ShowInVideoWin "Display in the video window (DirectX only)"
 
 
 // ======================= video output drivers ========================

@@ -645,18 +645,18 @@ GtkWidget * create_PopUpMenu( void )
    {
     int b1 = 0, b2 = 0, b_half = 0;
     AddSeparator( Menu );
-    if ( !guiApp.subWindow.isFullScreen && guiInfo.Playing )
+    if ( !guiApp.videoWindow.isFullScreen && guiInfo.Playing )
      {
-      if ( ( guiApp.subWindow.Width == guiInfo.VideoWidth * 2 )&&
-           ( guiApp.subWindow.Height == guiInfo.VideoHeight * 2 ) ) b2=1;
-      else if ( ( guiApp.subWindow.Width == guiInfo.VideoWidth / 2 ) &&
-                ( guiApp.subWindow.Height == guiInfo.VideoHeight / 2 ) ) b_half=1;
+      if ( ( guiApp.videoWindow.Width == guiInfo.VideoWidth * 2 )&&
+           ( guiApp.videoWindow.Height == guiInfo.VideoHeight * 2 ) ) b2=1;
+      else if ( ( guiApp.videoWindow.Width == guiInfo.VideoWidth / 2 ) &&
+                ( guiApp.videoWindow.Height == guiInfo.VideoHeight / 2 ) ) b_half=1;
       else b1=1;
-     } else b1=!guiApp.subWindow.isFullScreen;
+     } else b1=!guiApp.videoWindow.isFullScreen;
     H=AddMenuCheckItem( window1, (const char*)half_xpm, Menu,MSGTR_MENU_HalfSize,b_half,evHalfSize );
     N=AddMenuCheckItem( window1, (const char*)normal_xpm, Menu,MSGTR_MENU_NormalSize"      ",b1,evNormalSize );
     D=AddMenuCheckItem( window1, (const char*)double_xpm, Menu,MSGTR_MENU_DoubleSize,b2,evDoubleSize );
-    F=AddMenuCheckItem( window1, (const char*)full_xpm, Menu,MSGTR_MENU_FullScreen,guiApp.subWindow.isFullScreen,evFullScreen );
+    F=AddMenuCheckItem( window1, (const char*)full_xpm, Menu,MSGTR_MENU_FullScreen,guiApp.videoWindow.isFullScreen,evFullScreen );
   if ( !guiInfo.Playing )
    {
     gtk_widget_set_sensitive( H,FALSE );

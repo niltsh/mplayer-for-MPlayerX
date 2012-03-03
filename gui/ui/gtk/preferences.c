@@ -726,7 +726,7 @@ static void prToggled( GtkToggleButton * togglebutton,gpointer user_data )
 	  gtkActive( Preferences );
 	 } else window=wsHideWindow;
 	// NOTE TO MYSELF: doesn't work with a fullscreen window
-	if ( !guiInfo.Playing ) wsVisibleWindow( &guiApp.subWindow,window );
+	if ( !guiInfo.Playing ) wsVisibleWindow( &guiApp.videoWindow,window );
 	break;
    case 4:
    case 5:

@@ -618,9 +618,9 @@ skin_t* loadskin(char* skindir, int desktopbpp)
             mywindow = skin->windows[(skin->windowcount) - 1] = calloc(1, sizeof(window));
             mywindow->name = strdup(desc + 7);
             if(!strncmp(desc + 7, "main", 4)) mywindow->type = wiMain;
-            else if(!strncmp(desc+7, "sub", 3))
+            else if(!strncmp(desc+7, "video", 5) || !strncmp(desc+7, "sub", 3))   // legacy
             {
-                mywindow->type = wiSub;
+                mywindow->type = wiVideo;
                 mywindow->decoration = 1;
             }
             else if(!strncmp(desc + 7, "menu", 4)) mywindow->type = wiMenu;

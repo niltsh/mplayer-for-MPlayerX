@@ -116,7 +116,7 @@
 #define ID_ASPECT2           84
 #define ID_ASPECT3           85
 #define ID_ASPECT4           86
-#define ID_SUBWINDOW         87
+#define ID_VIDEOWINDOW       87
 #define ID_TIMER             88
 #define ID_MUTE              89
 #define ID_FULLSCREEN        90

@@ -126,7 +126,7 @@ skin_t *loadskin(char *skindir, int desktopbpp);
 /* --- Window types --- */
 
 #define wiMain          1
-#define wiSub           2
+#define wiVideo         2
 #define wiMenu          3
 #define wiPlaybar       4
 
