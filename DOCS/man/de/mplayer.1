@@ -33,7 +33,7 @@
 .\" Titel
 .\" --------------------------------------------------------------------------
 .
-.TH MPlayer 1 "24.02.2012" "Das MPlayer Projekt"
+.TH MPlayer 1 "03.03.2012" "Das MPlayer Projekt"
 .
 .SH NAME
 mplayer  \- Movie Player
@@ -3057,10 +3057,13 @@ Experimenteller OpenAL-Audioausgabetreiber
 PulseAudio-Audioausgabetreiber
 .PD 0
 .RSs
-.IPs "[<Host>][:<Ausgabesenke>]"
+.IPs "[<Host>[:<Ausgabesenke>[:Pausenproblem]]]"
 Gib den Host und optional die zu verwendende Ausgabesenke an.
 Leere Angabe von <Host> verwendet eine lokale Verbindung, "localhost" verwendet
 Netzwerkverbindungen (höchstwahrscheinlich nicht, was du willst).
+Der Behelf zur Umgehung des Pausenproblems lässt sich explizit erzwingen
+(Standard: automatische Erkennung). Um nur diesen ohne Host und Ausgabesenke
+anzugeben, lautet die Syntax: \-ao pulse:::Pausenproblem
 .RE
 .PD 1
 .
