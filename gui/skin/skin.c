@@ -316,8 +316,8 @@ static int item_base(char *in)
         return 1;
 
     is_video = (strcmp(currWinName, "video") == 0);
-    is_bar  = (strcmp(currWinName, "playbar") == 0);
-    is_menu = (strcmp(currWinName, "menu") == 0);
+    is_bar   = (strcmp(currWinName, "playbar") == 0);
+    is_menu  = (strcmp(currWinName, "menu") == 0);
 
     cutItem(in, fname, ',', 0);
     x = cutItemToInt(in, ',', 1);

@@ -86,9 +86,9 @@ int gtkEnablePlayBar = 1;
 int gtkLoadFullscreen;
 int gtkShowVideoWindow = 1;
 
-int gui_save_pos   = 1;
-int gui_main_pos_x = -3;
-int gui_main_pos_y = -3;
+int gui_save_pos    = 1;
+int gui_main_pos_x  = -3;
+int gui_main_pos_y  = -3;
 int gui_video_pos_x = -3;
 int gui_video_pos_y = -3;
 

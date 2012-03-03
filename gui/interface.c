@@ -219,7 +219,7 @@ void guiInit(void)
             while (xev.type != MapNotify || xev.xmap.event != guiApp.videoWindow.WindowID);
 
             guiApp.videoWindow.Mapped = wsMapped;
-            guiInfo.VideoWindow     = True;
+            guiInfo.VideoWindow       = True;
         }
 
         if (gtkLoadFullscreen)
@@ -255,8 +255,8 @@ void guiDone(void)
         uiMainRender = 0;
 
         if (gui_save_pos) {
-            gui_main_pos_x = guiApp.mainWindow.X;
-            gui_main_pos_y = guiApp.mainWindow.Y;
+            gui_main_pos_x  = guiApp.mainWindow.X;
+            gui_main_pos_y  = guiApp.mainWindow.Y;
             gui_video_pos_x = guiApp.video.x;
             gui_video_pos_y = guiApp.video.y;
         }
