@@ -65,16 +65,16 @@ static void build_char_table(void)
   for (i = 0; i < 128; i++)
     chartbl[i] = (char) i;
   /* now the special codes */
-  chartbl[0x2a] = '0xe1';
-  chartbl[0x5c] = '0xe9';
-  chartbl[0x5e] = '0xed';
-  chartbl[0x5f] = '0xf3';
-  chartbl[0x60] = '0xfa';
-  chartbl[0x7b] = '0xe7';
-  chartbl[0x7c] = '0xf7';
-  chartbl[0x7d] = '0xd1';
-  chartbl[0x7e] = '0xf1';
-  chartbl[0x7f] = '0xa4';    /* FIXME: this should be a solid block */
+  chartbl[0x2a] = 0xe1; /* Latin Small Letter A with acute */
+  chartbl[0x5c] = 0xe9; /* Latin Small Letter E with acute */
+  chartbl[0x5e] = 0xed; /* Latin Small Letter I with acute */
+  chartbl[0x5f] = 0xf3; /* Latin Small Letter O with acute */
+  chartbl[0x60] = 0xfa; /* Latin Small Letter U with acute */
+  chartbl[0x7b] = 0xe7; /* Latin Small Letter C with cedilla */
+  chartbl[0x7c] = 0xf7; /* Division sign */
+  chartbl[0x7d] = 0xd1; /* Latin Capital letter N with tilde */
+  chartbl[0x7e] = 0xf1; /* Latin Small Letter N with tilde */
+  chartbl[0x7f] = 0xa4; /* Currency sign FIXME: this should be a solid block */
 }
 
 static void clear_buffer(subtitle *buf)
