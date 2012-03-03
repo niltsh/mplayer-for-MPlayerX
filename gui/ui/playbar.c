@@ -1,6 +1,4 @@
 /*
- * main window
- *
  * This file is part of MPlayer.
  *
  * MPlayer is free software; you can redistribute it and/or modify
@@ -17,6 +15,8 @@
  * with MPlayer; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
+/* playbar window */
 
 #include <stdlib.h>
 #include <stdio.h>

@@ -16,6 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+/* menu window */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
