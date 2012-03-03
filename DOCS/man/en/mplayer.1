@@ -3115,10 +3115,14 @@ Experimental OpenAL audio output driver
 PulseAudio audio output driver
 .PD 0
 .RSs
-.IPs "[<host>][:<output sink>]"
+.IPs "[<host>[:<output sink>[:broken_pause]]]"
 Specify the host and optionally output sink to use.
 An empty <host> string uses a local connection, "localhost"
 uses network transfer (most likely not what you want).
+You can also explicitly force the workaround for broken
+pause functionality (default: autodetected).
+To only enable that without specifying a host/sink the
+syntax is \-ao pulse:::broken_pause
 .RE
 .PD 1
 .
