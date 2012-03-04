@@ -678,7 +678,7 @@ if(stream->type==STREAMTYPE_DVDNAV){
 
   stream->start_pos+=seek_to_byte;
 
-  if(stream_cache_size>0) stream_enable_cache(stream,stream_cache_size*1024,0,0);
+  if(stream_cache_size>0) stream_enable_cache(stream,stream_cache_size*1024ull,0,0);
 
   if(demuxer2) audio_id=-2; /* do NOT read audio packets... */
 
