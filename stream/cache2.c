@@ -99,8 +99,6 @@ typedef struct {
   volatile double stream_time_pos;
 } cache_vars_t;
 
-static int min_fill=0;
-
 static void cache_wakeup(stream_t *s)
 {
 #if FORKED_CACHE
@@ -145,7 +143,6 @@ static int cache_read(cache_vars_t *s, unsigned char *buf, int size)
     sleep_count = 0;
 
     newb=s->max_filepos-s->read_filepos; // new bytes in the buffer
-    if(newb<min_fill) min_fill=newb; // statistics...
 
 //    printf("*** newb: %d bytes ***\n",newb);
 
