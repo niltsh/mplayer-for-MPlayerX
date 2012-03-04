@@ -310,7 +310,7 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
             edit1 = CreateWindowEx(WS_EX_CLIENTEDGE, "edit", "cache",
                                    WS_CHILD | WS_VISIBLE | WS_DISABLED |
                                    ES_LEFT | ES_AUTOHSCROLL,
-                                   105, 225, 40, 20, hwnd,
+                                   105, 225, 60, 20, hwnd,
                                    (HMENU) ID_EDIT1,
                                    ((LPCREATESTRUCT) lParam) -> hInstance,
                                    NULL);
@@ -319,7 +319,7 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
             updown1 = CreateUpDownControl(WS_CHILD | WS_VISIBLE |
                                           WS_DISABLED | UDS_SETBUDDYINT |
                                           UDS_ARROWKEYS | UDS_NOTHOUSANDS,
-                                          145, 225, 20, 20, hwnd,
+                                          165, 225, 20, 20, hwnd,
                                           ID_UPDOWN1,
                                           ((LPCREATESTRUCT) lParam) -> hInstance,
                                           (HWND)edit1, 0, 0, 0);
