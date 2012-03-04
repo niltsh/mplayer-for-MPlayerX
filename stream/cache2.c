@@ -180,7 +180,7 @@ static int cache_fill(cache_vars_t *s)
 
   if(read<s->min_filepos || read>s->max_filepos){
       // seek...
-      mp_msg(MSGT_CACHE,MSGL_DBG2,"Out of boundaries... seeking to 0x%"PRIX64"  \n",(int64_t)read);
+      mp_msg(MSGT_CACHE,MSGL_DBG2,"Out of boundaries... seeking to 0x%"PRIX64"  \n",read);
       // drop cache contents only if seeking backward or too much fwd.
       // This is also done for on-disk files, since it loses the backseek cache.
       // That in turn can cause major bandwidth increase and performance
@@ -503,11 +503,11 @@ int stream_enable_cache(stream_t *stream,int64_t size,int64_t min,int64_t seek_l
     }
     // wait until cache is filled at least prefill_init %
     mp_msg(MSGT_CACHE,MSGL_V,"CACHE_PRE_INIT: %"PRId64" [%"PRId64"] %"PRId64"  pre:%"PRId64"  eof:%d  \n",
-	(int64_t)s->min_filepos,(int64_t)s->read_filepos,(int64_t)s->max_filepos,min,s->eof);
+	s->min_filepos,s->read_filepos,s->max_filepos,min,s->eof);
     while(s->read_filepos<s->min_filepos || s->max_filepos-s->read_filepos<min){
 	mp_msg(MSGT_CACHE,MSGL_STATUS,MSGTR_CacheFill,
 	    100.0*(float)(s->max_filepos-s->read_filepos)/(float)(s->buffer_size),
-	    (int64_t)s->max_filepos-s->read_filepos
+	    s->max_filepos-s->read_filepos
 	);
 	if(s->eof) break; // file is smaller than prefill size
 	if(stream_check_interrupt(PREFILL_SLEEP_TIME)) {
@@ -606,7 +606,7 @@ int cache_stream_seek_long(stream_t *stream,int64_t pos){
 //  stream->buf_pos=stream->buf_len=0;
 //  return 1;
 
-  mp_msg(MSGT_CACHE,MSGL_V,"cache_stream_seek: WARNING! Can't seek to 0x%"PRIX64" !\n",(int64_t)(pos+newpos));
+  mp_msg(MSGT_CACHE,MSGL_V,"cache_stream_seek: WARNING! Can't seek to 0x%"PRIX64" !\n",pos+newpos);
   return 0;
 }
 
