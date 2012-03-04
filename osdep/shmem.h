@@ -19,7 +19,7 @@
 #ifndef MPLAYER_SHMEM_H
 #define MPLAYER_SHMEM_H
 
-#include <inttypes.h>
+#include <stdint.h>
 
 void* shmem_alloc(int64_t size);
 void shmem_free(void* p,int64_t size);
