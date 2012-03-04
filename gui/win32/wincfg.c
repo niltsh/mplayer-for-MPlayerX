@@ -74,7 +74,7 @@ static const m_option_t gui_opts[] =
     {   "delay", &audio_delay, CONF_TYPE_FLOAT, CONF_RANGE, -100.0, 100.0, NULL},
     {   "osd_level", &osd_level, CONF_TYPE_INT, CONF_RANGE, 0, 3, NULL },
     {   "cache", &gtkCacheOn, CONF_TYPE_FLAG, 0, 0, 1, NULL },
-    {   "cache_size", &gtkCacheSize, CONF_TYPE_INT, CONF_RANGE, -1, 65535, NULL },
+    {   "cache_size", &gtkCacheSize, CONF_TYPE_INT, CONF_RANGE, 32, 0x7fffffff, NULL },
     {   "autosync", &gtkAutoSyncOn, CONF_TYPE_FLAG, 0, 0, 1, NULL },
     {   "autosync_size", &gtkAutoSync, CONF_TYPE_INT, CONF_RANGE, 0, 10000, NULL },
     {   "gui_skin", &skinName, CONF_TYPE_STRING, 0, 0, 0, NULL },

@@ -105,7 +105,7 @@ static const char gui_urllist[]       = "gui.url";
 
 static const m_option_t gui_opts[] = {
     { "cache",                       &gtkCacheOn,              CONF_TYPE_FLAG,        0,           0,     1,       NULL },
-    { "cache_size",                  &gtkCacheSize,            CONF_TYPE_INT,         CONF_RANGE,  32,    1048576, NULL },
+    { "cache_size",                  &gtkCacheSize,            CONF_TYPE_INT,         CONF_RANGE,  32,    0x7fffffff, NULL },
 
     { "vf_pp",                       &gtkVfPP,                 CONF_TYPE_FLAG,        0,           0,     1,       NULL },
 

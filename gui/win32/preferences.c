@@ -323,7 +323,7 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
                                           ID_UPDOWN1,
                                           ((LPCREATESTRUCT) lParam) -> hInstance,
                                           (HWND)edit1, 0, 0, 0);
-            SendDlgItemMessage(hwnd, ID_UPDOWN1, UDM_SETRANGE32, (WPARAM)0, (LPARAM)65535);
+            SendDlgItemMessage(hwnd, ID_UPDOWN1, UDM_SETRANGE32, (WPARAM)32, (LPARAM)0x7fffffff);
 
             /* autosync */
             edit2 = CreateWindowEx(WS_EX_CLIENTEDGE, "edit", "autosync",
