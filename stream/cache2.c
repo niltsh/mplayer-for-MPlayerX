@@ -80,11 +80,11 @@ typedef struct {
 #endif
   // filler's pointers:
   int eof;
-  off_t min_filepos; // buffer contain only a part of the file, from min-max pos
-  off_t max_filepos;
-  off_t offset;      // filepos <-> bufferpos  offset value (filepos of the buffer's first byte)
+  int64_t min_filepos; // buffer contain only a part of the file, from min-max pos
+  int64_t max_filepos;
+  int64_t offset;      // filepos <-> bufferpos  offset value (filepos of the buffer's first byte)
   // reader's pointers:
-  off_t read_filepos;
+  int64_t read_filepos;
   // commands/locking:
 //  int seek_lock;   // 1 if we will seek/reset buffer, 2 if we are ready for cmd
 //  int fifo_flag;  // 1 if we should use FIFO to notice cache about buffer reads.
@@ -174,7 +174,7 @@ static int cache_read(cache_vars_t *s, unsigned char *buf, int size)
 static int cache_fill(cache_vars_t *s)
 {
   int64_t back,back2,newb,space,len,pos;
-  off_t read=s->read_filepos;
+  int64_t read=s->read_filepos;
   int read_chunk;
   int wraparound_copy = 0;
 
@@ -580,9 +580,9 @@ int cache_fill_status(stream_t *s) {
   return (cv->max_filepos-cv->read_filepos)/(cv->buffer_size / 100);
 }
 
-int cache_stream_seek_long(stream_t *stream,off_t pos){
+int cache_stream_seek_long(stream_t *stream,int64_t pos){
   cache_vars_t* s;
-  off_t newpos;
+  int64_t newpos;
   if(!stream->cache_pid) return stream_seek_long(stream,pos);
 
   s=stream->cache_data;
