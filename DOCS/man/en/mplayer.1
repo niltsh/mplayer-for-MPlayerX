@@ -6105,7 +6105,17 @@ Changing playback speed, would change pitch, leaving audio tempo at 1.2x.
 Collects and prints statistics about the audio stream, especially the volume.
 These statistics are especially intended to help adjusting the volume while
 avoiding clipping.
-The volumes are printed in dB and compatible with the volume audio filter.
+The volumes are printed in dB and compatible with the volume audio filter,
+they are always rounded towards -0dB.
+.sp 1
+The 'n_samples' field is the total number of samples seen by the filter.
+The 'mean_volume' field is the root mean square.
+The 'max_volume' field is exactly what it says.
+The 'histogram_Xdb fields count how many samples were at -XdB, for X just
+below max_volume.
+.sp 1
+For example, if max_volume is -7dB and histogram_7dB is 19, 'volume=7' will
+not cause clipping and 'volume=8' will cause clipping on exactly 19 samples.
 .
 .
 .
