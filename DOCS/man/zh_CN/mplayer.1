@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 34775
+.\" sync with en/mplayer.1 rev. 34801
 .\" MPlayer (C) 2000-2012 MPlayer Team
 .\" This man page was/is translated by JRaSH<jrash06 at gmail.com>
 .
@@ -31,7 +31,7 @@
 .\" 标题
 .\" --------------------------------------------------------------------------
 .
-.TH MPlayer 1 "2012-02-24" "MPlayer 项目" "影视播放器"
+.TH MPlayer 1 "2012-03-03" "MPlayer 项目" "影视播放器"
 .
 .SH 名称
 mplayer  \- 影视播放器
@@ -3115,10 +3115,14 @@ Mac OS X 自带的音频输出驱动
 PulseAudio 音频输出驱动
 .PD 0
 .RSs
-.IPs "<主机>[:<输出泄漏值>]"
+.IPs "[<主机>[:<输出目标>[:broken_pause]]]"
 指定所使用的主机，并可指定所使用的输出泄漏值。\
 <主机> 字符串为空的话，则使用本地连接。指定“localhost”则使用网络传输\
-（很可能并非所希望的方式）。
+（很可能并非所希望的方式）。\
+还可以明确表明强制使用变通逻辑，以修复存在故障的暂停功能（broken_pause）。\
+（默认值：自动侦测）。\
+如果只需要启用该功能而不指定主机/输出目标，则\
+形式为 \-ao pulse:::broken_pause。
 .RE
 .PD 1
 .
@@ -6101,7 +6105,17 @@ unsigned long long counter   /*用于保持同步, 每当有新
 收集并打印音频流的统计信息，尤其是音量信息。\
 这些统计信息特别用于帮助调节音量\
 以防止削波。\
-音量以 dB 为单位打印并与用于音量的音频过滤器兼容。
+音量以 dB 为单位打印并与用于音量的音频过滤器相兼容，\
+这些数值总是向 -0dB 方向取整。
+.sp 1
+‘n_samples’字段是过滤器读到的采样总数。\
+‘mean_volume’字段是均方值的平方根。\
+‘max_volume’字段的含义与其名完全一致（最大音量）。\
+‘histogram_Xdb’字段统计的是有多少采样的值是 -XdB，其中 X 为\
+刚好低于最大音量的值。
+.sp 1
+例如，如果 max_volume 为 -7dB 并且 histogram_7dB 为 19，则‘volume=7’不会\
+导致削波，而‘volume=8’将在刚好 19 个采样中导致削波。
 .
 .
 .
