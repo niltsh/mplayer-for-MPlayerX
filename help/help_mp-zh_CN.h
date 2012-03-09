@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 34719
+// Synced with help_mp-en.h rev. 34785
 //
 // Translated by JRaSH <jrash06@gmail.com>
 
@@ -849,6 +849,7 @@ static const char help_text[]=
 #define MSGTR_PREFERENCES_PriorityNormal "标准"
 #define MSGTR_PREFERENCES_PriorityNormalAbove "高于标准"
 #define MSGTR_PREFERENCES_PriorityNormalBelow "低于标准"
+#define MSGTR_PREFERENCES_ShowInVideoWin "在视频窗口中显示（仅用于 DirectX）"
 
 
 // ======================= video output drivers ========================
