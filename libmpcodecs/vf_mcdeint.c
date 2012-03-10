@@ -186,7 +186,7 @@ static int config(struct vf_instance *vf,
 
         for(i=0; i<3; i++){
             AVCodecContext *avctx_enc;
-            AVDictionary *opts;
+            AVDictionary *opts = NULL;
 #if 0
             int is_chroma= !!i;
             int w= ((width  + 31) & (~31))>>is_chroma;
