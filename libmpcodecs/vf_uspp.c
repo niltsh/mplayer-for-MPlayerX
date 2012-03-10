@@ -224,6 +224,7 @@ static int config(struct vf_instance *vf,
         }
         for(i=0; i< (1<<vf->priv->log2_count); i++){
             AVCodecContext *avctx_enc;
+            AVDictionary *opts = NULL;
 
             avctx_enc=
             vf->priv->avctx_enc[i]= avcodec_alloc_context3(NULL);
@@ -236,7 +237,9 @@ static int config(struct vf_instance *vf,
             avctx_enc->flags = CODEC_FLAG_QSCALE | CODEC_FLAG_LOW_DELAY;
             avctx_enc->strict_std_compliance = FF_COMPLIANCE_EXPERIMENTAL;
             avctx_enc->global_quality= 123;
-            avcodec_open2(avctx_enc, enc, NULL);
+            av_dict_set(&opts, "no_bitstream", "1", 0);
+            avcodec_open2(avctx_enc, enc, &opts);
+            av_dict_free(&opts);
             assert(avctx_enc->codec);
         }
         vf->priv->frame= avcodec_alloc_frame();
