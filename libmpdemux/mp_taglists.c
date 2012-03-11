@@ -37,6 +37,7 @@ static const struct AVCodecTag mp_wav_tags[] = {
     { CODEC_ID_ADPCM_THP,         MKTAG('T', 'H', 'P', 'A')},
     { CODEC_ID_ADPCM_XA,          MKTAG('P', 'S', 'X', 'A')},
     { CODEC_ID_AMR_NB,            MKTAG('n', 'b',   0,   0)},
+    { CODEC_ID_ATRAC1,            MKTAG('A', 'T', 'R', '1')},
     { CODEC_ID_BINKAUDIO_DCT,     MKTAG('B', 'A', 'U', '1')},
     { CODEC_ID_BINKAUDIO_RDFT,    MKTAG('B', 'A', 'U', '2')},
     { CODEC_ID_BMV_AUDIO,         MKTAG('B', 'M', 'V', 'A')},
