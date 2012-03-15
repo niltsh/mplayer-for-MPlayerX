@@ -6761,7 +6761,7 @@ echores "$ffmpeg"
 echocheck "libpostproc"
 if test "$postproc" = auto ; then
   postproc=no
-  if test "$ffmpeg_a" = yes ; then
+  if test "$ffmpeg_a" = yes && test -d ffmpeg/libpostproc ; then
     postproc=yes
   elif $_pkg_config --exists libpostproc ; then
     inc_postproc=$($_pkg_config --cflags libpostproc)
