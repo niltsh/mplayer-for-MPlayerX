@@ -32,7 +32,6 @@
 #include "libmpdemux/demux_viv.h"
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/mf.h"
-#include "libpostproc/postprocess.h"
 #include "sub/sub.h"
 #include "sub/unrar_exec.h"
 #include "osdep/priority.h"
@@ -50,7 +49,9 @@
 #include "m_option.h"
 #include "mp_msg.h"
 #include "mpcommon.h"
-
+#ifdef CONFIG_POSTPROC
+#include "libpostproc/postprocess.h"
+#endif
 
 
 #ifdef CONFIG_RADIO
