@@ -328,12 +328,10 @@ static void check_events(void) {
 }
 
 static int draw_slice(uint8_t *srcimg[], int stride[],
-		int wf, int hf, int xf, int yf) {
-	int i, w, h, x, y;
-	uint8_t *dst;
+		int w, int h, int x, int y) {
+	int i;
+	uint8_t *dst = image + y * bl->width + x;
 	uint8_t *src=srcimg[0];
-	w = wf; h = hf; x = xf; y = yf;
-	dst = image + y * bl->width + x;
 	// copy Y:
 	for (i = 0; i < h; i++) {
 		fast_memcpy(dst,src,w);
