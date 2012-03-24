@@ -49,7 +49,7 @@ LIBAD_EXTERN(ffmpeg)
 
 static int preinit(sh_audio_t *sh)
 {
-  sh->audio_out_minsize=AVCODEC_MAX_AUDIO_FRAME_SIZE;
+  sh->audio_out_minsize=AF_NCH*AVCODEC_MAX_AUDIO_FRAME_SIZE;
   return 1;
 }
 
