@@ -333,7 +333,7 @@ static int draw_slice(uint8_t *srcimg[], int stride[],
 	uint8_t *dst;
 	uint8_t *src=srcimg[0];
 	w = wf; h = hf; x = xf; y = yf;
-	dst=image; /* + zr->off_y + zr->image_width*(y/zr->vdec)+x;*/
+	dst = image + y * bl->width + x;
 	// copy Y:
 	for (i = 0; i < h; i++) {
 		fast_memcpy(dst,src,w);
