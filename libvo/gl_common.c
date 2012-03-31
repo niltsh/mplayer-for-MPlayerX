@@ -499,7 +499,7 @@ static const extfunc_desc_t extfuncs[] = {
 static void getFunctions(void *(*getProcAddress)(const GLubyte *),
                          const char *ext2) {
   const extfunc_desc_t *dsc;
-  const char *extensions;
+  const char *extensions = NULL;
   char *allexts;
 
   if (!getProcAddress)
@@ -507,10 +507,13 @@ static void getFunctions(void *(*getProcAddress)(const GLubyte *),
 
   // special case, we need glGetString before starting to find the other functions
   mpglGetString = getProcAddress("glGetString");
+#if defined(CONFIG_GL_WIN32) || defined(CONFIG_GL_X11)
   if (!mpglGetString)
       mpglGetString = glGetString;
+#endif
 
-  extensions = (const char *)mpglGetString(GL_EXTENSIONS);
+  if (mpglGetString)
+    extensions = (const char *)mpglGetString(GL_EXTENSIONS);
   if (!extensions) extensions = "";
   if (!ext2) ext2 = "";
   allexts = malloc(strlen(extensions) + strlen(ext2) + 2);
