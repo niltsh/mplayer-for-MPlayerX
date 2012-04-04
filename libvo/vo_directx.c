@@ -464,10 +464,12 @@ static uint32_t Directx_ManageDisplay(void)
     width   = vo_dwidth;
     height  = vo_dheight;
 
-    aspect(&width, &height, A_WINZOOM);
-    panscan_calc_windowed();
-    width   += vo_panscan_x;
-    height  += vo_panscan_y;
+    if (aspect_scaling()) {
+        aspect(&width, &height, A_WINZOOM);
+        panscan_calc_windowed();
+        width   += vo_panscan_x;
+        height  += vo_panscan_y;
+    }
     width    = FFMIN(width, vo_screenwidth);
     height   = FFMIN(height, vo_screenheight);
     rd.left += (vo_dwidth - width) / 2;
