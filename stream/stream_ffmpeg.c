@@ -34,7 +34,11 @@ static int fill_buffer(stream_t *s, char *buffer, int max_len)
 
 static int write_buffer(stream_t *s, char *buffer, int len)
 {
+    AVIOContext *ctx = s->priv;
     avio_write(s->priv, buffer, len);
+    avio_flush(s->priv);
+    if (ctx->error)
+        return -1;
     return len;
 }
 
