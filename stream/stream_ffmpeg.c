@@ -101,6 +101,13 @@ static int open_f(stream_t *stream, int mode, void *opts, int *file_format)
         goto out;
     }
 
+#ifdef AVIO_FLAG_DIRECT
+    flags |= AVIO_FLAG_DIRECT;
+#else
+    mp_msg(MSGT_OPEN, MSGL_WARN, "[ffmpeg] No support for AVIO_FLAG_DIRECT, might cause performance and other issues.\n"
+                                 "Please update to and rebuild against an FFmpeg version supporting it.\n");
+#endif
+
     if (stream->url)
         filename = stream->url;
     else {
