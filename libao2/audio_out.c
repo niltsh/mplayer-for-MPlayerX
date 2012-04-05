@@ -189,3 +189,13 @@ const ao_functions_t* init_best_audio_out(char** ao_list,int use_plugin,int rate
     }
     return NULL;
 }
+
+void mp_ao_resume_refill(const ao_functions_t *ao, int prepause_space)
+{
+    int fillcnt = ao->get_space() - prepause_space;
+    if (fillcnt > 0 && !(ao_data.format & AF_FORMAT_SPECIAL_MASK)) {
+      void *silence = calloc(fillcnt, 1);
+      ao->play(silence, fillcnt, 0);
+      free(silence);
+    }
+}
