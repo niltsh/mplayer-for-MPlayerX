@@ -45,6 +45,4 @@ static void audio_resume(void);
 	audio_resume\
 };
 
-void mp_ao_resume_refill(const ao_functions_t *ao, int prepause_space);
-
 #endif /* MPLAYER_AUDIO_OUT_INTERNAL_H */
