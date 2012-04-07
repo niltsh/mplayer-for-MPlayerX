@@ -300,7 +300,7 @@ static char *microdvd_load_tags(struct microdvd_tag *tags, char *s)
     while (*s == '{') {
         char *start = s;
         char tag_char = *(s + 1);
-        struct microdvd_tag tag = {};
+        struct microdvd_tag tag = {0};
 
         if (!tag_char || *(s + 2) != ':')
             break;
@@ -498,7 +498,7 @@ void subassconvert_microdvd(const char *orig, char *dest, size_t dest_buffer_siz
         .buf     = dest,
         .bufsize = dest_buffer_size,
     };
-    struct microdvd_tag tags[sizeof(MICRODVD_TAGS) - 1] = {};
+    struct microdvd_tag tags[sizeof(MICRODVD_TAGS) - 1] = {{0}};
 
     while (*line) {
         line = microdvd_load_tags(tags, line);
