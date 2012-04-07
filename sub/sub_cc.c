@@ -33,12 +33,15 @@
 #include <string.h>
 
 #include "config.h"
+#include "mp_msg.h"
 #include "sub_cc.h"
 
 #include "subreader.h"
 
 #include "libvo/video_out.h"
 #include "sub.h"
+
+#include "libavutil/avutil.h"
 
 
 #define CC_MAX_LINE_LENGTH 64
@@ -337,11 +340,82 @@ static void subcc_decode(const uint8_t *inputbuffer, unsigned int inputlength)
   }
 }
 
+static const uint8_t mov_cc_signature_1[] = {0, 0, 0, 0xa, 'c', 'd', 'a', 't'};
+static const uint8_t mov_cc_signature_2[] = {0, 0, 0, 0xa, 'c', 'd', 't', '2'};
+/**
+ * MOV uses a vastly more verbose representation for EIA 608 CC data than DVDs.
+ * This function handles that case.
+ */
+static void mov_subcc_decode(const uint8_t *data, unsigned len)
+{
+    while (len >= 10) {
+        int channel = -1;
+        if (memcmp(data, mov_cc_signature_1, sizeof(mov_cc_signature_1)) == 0) {
+            channel = 0;
+        } else if (memcmp(data, mov_cc_signature_2, sizeof(mov_cc_signature_2)) == 0) {
+            channel = 1;
+        } else {
+            mp_msg(MSGT_OSD, MSGL_V, "Unknown MOV 608 CC formatting\n");
+            data++;
+            len--;
+            continue;
+        }
+        if (channel == selected_channel() >> 1)
+            cc_decode_EIA608(data[8] | (data[9] << 8));
+        data += 10;
+        len -= 10;
+    }
+}
 
 void subcc_process_data(const uint8_t *inputdata, unsigned int len)
 {
+	int mov_mode = len >= 10 &&
+	               memcmp(inputdata, mov_cc_signature_1, sizeof(mov_cc_signature_1)) == 0;
 	if(!subcc_enabled) return;
 	if(!initialized) subcc_init();
 
+	if (mov_mode) {
+		mov_subcc_decode(inputdata, len);
+		return;
+	}
 	subcc_decode(inputdata, len);
+}
+
+/**
+ * This processes CC captions in the format as found in ASTC broadcasts.
+ * Like DVD CC it is stored inside the MPEG-frame userdata, but with two
+ * differences:
+ * 1) It starts with "GA" instead of "CC"
+ * 2) It _must_ be reordered in the way the decoder reorders the video frames
+ * The latter makes things difficult and is the reason why there is no support
+ * for this yet beyond this function.
+ */
+void subcc_process_eia708(const uint8_t *data, int len)
+{
+    int cc_count;
+    if (!subcc_enabled)
+        return;
+    if (!initialized)
+        subcc_init();
+    if (len <= 5)
+        return;
+    if (data[0] != '9' || data[1] != '4' || data[2] != 3) {
+        mp_msg(MSGT_OSD, MSGL_ERR, "Unknown ATSC CC type "
+                                   "0x%"PRIx8" 0x%"PRIx8" 0x%"PRIx8"\n",
+                                   data[0], data[1], data[2]);
+        return;
+    }
+    // process_cc_data_flag
+    if (!(data[3] & 0x40))
+        return;
+    cc_count = data[3] & 0x1f;
+    data += 5;
+    len  -= 5;
+    cc_count = FFMIN(cc_count, len / 3);
+    while (cc_count--) {
+        // EAI-608 data
+        if ((data[0] & 0xfe) == 0xfc && (data[0] & 1) == selected_channel() >> 1)
+            cc_decode_EIA608(data[1] | (data[2] << 8));
+        data += 3;
+    }
 }
