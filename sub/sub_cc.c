@@ -382,7 +382,7 @@ void subcc_process_data(const uint8_t *inputdata, unsigned int len)
 }
 
 /**
- * This processes CC captions in the format as found in ASTC broadcasts.
+ * This processes CC captions in the format as found in ATSC broadcasts.
  * Like DVD CC it is stored inside the MPEG-frame userdata, but with two
  * differences:
  * 1) It starts with "GA" instead of "CC"
