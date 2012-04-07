@@ -126,6 +126,13 @@ void subcc_init(void)
 	initialized=1;
 }
 
+void subcc_reset(void)
+{
+    if (!initialized)
+        return;
+    clear_buffer(&buf1);
+    clear_buffer(&buf2);
+}
 
 static void display_buffer(subtitle *buf)
 {

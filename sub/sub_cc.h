@@ -24,6 +24,7 @@
 extern int subcc_enabled;
 
 void subcc_init(void);
+void subcc_reset(void);
 void subcc_process_data(const uint8_t *inputdata, unsigned int len);
 void subcc_process_eia708(const uint8_t *data, int len);
 

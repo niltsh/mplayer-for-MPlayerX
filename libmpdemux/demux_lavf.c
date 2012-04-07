@@ -439,6 +439,12 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
                 type = 'd';
             else if(codec->codec_id == CODEC_ID_HDMV_PGS_SUBTITLE)
                 type = 'p';
+#if LIBAVCODEC_VERSION_INT >= AV_VERSION_INT(54, 14, 100)
+            else if(codec->codec_id == CODEC_ID_EIA_608)
+                type = 'c';
+#endif
+            else if(codec->codec_tag == MKTAG('c', '6', '0', '8'))
+                type = 'c';
             else
                 break;
             sh_sub = new_sh_sub_sid(demuxer, i, priv->sub_streams, lang ? lang->value : NULL);
