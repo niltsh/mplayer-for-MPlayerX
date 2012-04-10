@@ -463,6 +463,7 @@ static int init(int rate_hz, int channels, int format, int flags)
       int open_mode = block ? 0 : SND_PCM_NONBLOCK;
       int isac3 =  AF_FORMAT_IS_AC3(format) || AF_FORMAT_IS_IEC61937(format);
       //modes = 0, SND_PCM_NONBLOCK, SND_PCM_ASYNC
+      mp_msg(MSGT_AO,MSGL_V,"alsa-init: opening device in %sblocking mode\n", block ? "" : "non-");
       if ((err = try_open_device(alsa_device, open_mode, isac3)) < 0)
 	{
 	  if (err != -EBUSY && !block) {
@@ -480,7 +481,7 @@ static int init(int rate_hz, int channels, int format, int flags)
       if ((err = snd_pcm_nonblock(alsa_handler, 0)) < 0) {
          mp_msg(MSGT_AO,MSGL_ERR,MSGTR_AO_ALSA_ErrorSetBlockMode, snd_strerror(err));
       } else {
-	mp_msg(MSGT_AO,MSGL_V,"alsa-init: pcm opened in blocking mode\n");
+	mp_msg(MSGT_AO,MSGL_V,"alsa-init: device reopened in blocking mode\n");
       }
 
       snd_pcm_hw_params_alloca(&alsa_hwparams);
