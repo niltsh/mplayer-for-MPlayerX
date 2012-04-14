@@ -8922,8 +8922,9 @@ but:
 
     *** ***  DO NOT REPORT BUGS IF IT DOES NOT COMPILE/WORK!  *** ***
 
-It is strongly recommended to let MPlayer choose the correct CFLAGS!
-To do so, execute 'CFLAGS= ./configure <options>'
+It is strongly recommended to let MPlayer choose the correct *FLAGS!
+To do so, remove *FLAGS from the environment an re-run configure.
+You can use --extra-*flags to add custom flags if necessary.
 
 EOF
 fi
