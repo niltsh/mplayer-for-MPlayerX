@@ -2441,14 +2441,14 @@ static double update_video(int *blit_frame)
                 if (mpctx->d_audio)
                     mpctx->d_audio->eof = 0;
                 mpctx->stream->eof = 0;
-            } else
+            }
 #endif
             flush = in_size < 0 && mpctx->d_video->eof;
             if (flush) {
                 start = NULL;
                 in_size = 0;
             }
-            if (in_size < 0)
+            if (mpctx->stream->type != STREAMTYPE_DVDNAV && in_size < 0)
                 return -1;
             if (in_size > max_framesize)
                 max_framesize = in_size;  // stats
