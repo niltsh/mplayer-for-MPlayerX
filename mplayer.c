@@ -2080,6 +2080,19 @@ static void adjust_sync_and_print_status(int between_frames, float timing_error)
                 ++drop_message;
                 mp_msg(MSGT_AVSYNC, MSGL_WARN, MSGTR_SystemTooSlow);
             }
+            if (AV_delay > 0.5 && correct_pts && mpctx->delay < -audio_delay - 30) {
+                // This case means that we are supposed to stop video for a long
+                // time, even though audio is already ahead.
+                // This happens e.g. when initial audio pts is 10000, video
+                // starts at 0 but suddenly jumps to match audio.
+                // This is common in ogg streams.
+                // Only check for -correct-pts since this case does not cause
+                // issues with -nocorrect-pts.
+                mp_msg(MSGT_AVSYNC, MSGL_WARN, "Timing looks severely broken, resetting\n");
+                AV_delay = 0;
+                timing_error = 0;
+                mpctx->delay = -audio_delay;
+            }
             if (autosync)
                 x = AV_delay * 0.1f;
             else
