@@ -132,7 +132,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
 	write_bytes = image_width * image_height * 3 / 2;
 	image = malloc(write_bytes);
 
-	yuv_out = fopen(yuv_filename, "wb");
+	yuv_out = strcmp(yuv_filename, "-") ? fopen(yuv_filename, "wb") : stdout;
 	if (!yuv_out || image == 0)
 	{
 		mp_msg(MSGT_VO,MSGL_FATAL,
@@ -238,7 +238,7 @@ static void uninit(void)
 	free(image);
 	image = NULL;
 
-	if(yuv_out)
+	if(yuv_out && yuv_out != stdout)
 		fclose(yuv_out);
 	yuv_out = NULL;
 
