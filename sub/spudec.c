@@ -273,11 +273,17 @@ static int apply_palette_crop(spudec_handle_t *this,
   uint8_t *src;
   uint16_t pal[4];
   unsigned stride = (crop_w + 7) & ~7;
+  int ret = 1;
   if (crop_x > this->pal_width || crop_y > this->pal_height ||
       crop_w > this->pal_width - crop_x || crop_h > this->pal_width - crop_y ||
       crop_w > 0x8000 || crop_h > 0x8000 ||
       stride * crop_h  > this->image_size) {
-    return 0;
+    // this might be an actual error or just signal that
+    // the highlight should be removed.
+    this->width = 0;
+    this->height = 0;
+    ret = 0;
+    goto out;
   }
   for (i = 0; i < 4; ++i) {
     int color;
@@ -304,6 +310,7 @@ static int apply_palette_crop(spudec_handle_t *this,
   this->start_row = this->pal_start_row + crop_y;
   spudec_cut_image(this);
 
+out:
   // reset scaled image
   this->scaled_frame_width = 0;
   this->scaled_frame_height = 0;
