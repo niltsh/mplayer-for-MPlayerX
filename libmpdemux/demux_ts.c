@@ -414,6 +414,8 @@ static void ts_add_stream(demuxer_t * demuxer, ES_stream_t *es)
 				sh->type = 'v'; break;
 			case SPU_PGS:
 				sh->type = 'p'; break;
+			case SPU_TELETEXT:
+				sh->type = 'd'; break;
         		}
 			priv->ts.streams[es->pid].id = priv->last_sid;
 			priv->ts.streams[es->pid].sh = sh;
