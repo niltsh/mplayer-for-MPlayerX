@@ -1798,6 +1798,7 @@ static int generate_video_frame(sh_video_t *sh_video, demux_stream_t *d_video)
         if (in_size < 0) {
             // try to extract last frames in case of decoder lag
             in_size = 0;
+            start   = NULL;
             pts     = MP_NOPTS_VALUE;
             hit_eof = 1;
         }
@@ -2425,6 +2426,7 @@ static double update_video(int *blit_frame)
         int full_frame;
 
         do {
+            int flush;
             current_module = "video_read_frame";
             frame_time     = sh_video->next_frame_time;
             in_size = video_read_frame(sh_video, &sh_video->next_frame_time,
@@ -2441,6 +2443,11 @@ static double update_video(int *blit_frame)
                 mpctx->stream->eof = 0;
             } else
 #endif
+            flush = in_size < 0 && mpctx->d_video->eof;
+            if (flush) {
+                start = NULL;
+                in_size = 0;
+            }
             if (in_size < 0)
                 return -1;
             if (in_size > max_framesize)
@@ -2450,11 +2457,14 @@ static double update_video(int *blit_frame)
 #ifdef CONFIG_DVDNAV
             full_frame    = 1;
             decoded_frame = mp_dvdnav_restore_smpi(&in_size, &start, decoded_frame);
-            // still frame has been reached, no need to decode
-            if (in_size > 0 && !decoded_frame)
 #endif
+            // still frame has been reached, no need to decode
+            if ((in_size > 0 || flush) && !decoded_frame)
             decoded_frame = decode_video(sh_video, start, in_size, drop_frame,
                                          sh_video->pts, &full_frame);
+
+            if (flush && !decoded_frame)
+                return -1;
 
             if (full_frame) {
                 sh_video->timer += frame_time;

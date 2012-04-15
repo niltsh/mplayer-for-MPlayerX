@@ -731,7 +731,7 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
     int dr1= ctx->do_dr1;
     AVPacket pkt;
 
-    if(len<=0) return NULL; // skipped frame
+    if(data && len<=0) return NULL; // skipped frame
 
 //ffmpeg interlace (mpeg2) bug have been fixed. no need of -noslices
     if (!dr1)
@@ -755,6 +755,7 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
             avctx->skip_idct = AVDISCARD_ALL;
     }
 
+    if (data)
     mp_msg(MSGT_DECVIDEO, MSGL_DBG2, "vd_ffmpeg data: %04x, %04x, %04x, %04x\n",
            ((int *)data)[0], ((int *)data)[1], ((int *)data)[2], ((int *)data)[3]);
     av_init_packet(&pkt);

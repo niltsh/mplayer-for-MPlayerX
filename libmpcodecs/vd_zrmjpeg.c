@@ -232,6 +232,8 @@ static mp_image_t* decode(sh_video_t *sh, void* data, int len, int flags) {
 	mp_image_t* mpi;
 	vd_zrmjpeg_ctx_t *ctx = sh->context;
 
+	if (len <= 0 && !data) return NULL; // delay flush
+
 	if (!ctx->vo_initialized) {
 		ctx->preferred_csp = guess_mjpeg_type(data, len, sh->disp_h);
 		if (ctx->preferred_csp == 0) return NULL;

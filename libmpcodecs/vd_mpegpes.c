@@ -61,6 +61,8 @@ static mp_image_t* decode(sh_video_t *sh,void* data,int len,int flags){
     mp_mpeg_header_t picture;
     const unsigned char *d = data;
 
+    if (len <= 0 && !data) return NULL; // delay flush
+
     if(len>10 && !d[0] && !d[1] && d[2]==1 && d[3]==0xB3) {
         float old_aspect = sh->aspect;
         int oldw = sh->disp_w, oldh = sh->disp_h;
