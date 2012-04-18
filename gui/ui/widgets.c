@@ -73,7 +73,7 @@ static const char gui_icon_name[] = "mplayer";
 
 guiIcon_t guiIcon;
 
-static void gtkLoadIcon(GtkIconTheme *theme, gint size, GdkPixmap **gdkIcon, GdkBitmap **gdkIconMask)
+static int gtkLoadIcon(GtkIconTheme *theme, gint size, GdkPixmap **gdkIcon, GdkBitmap **gdkIconMask)
 {
     GdkPixbuf *pixbuf;
     guchar *data;
@@ -109,6 +109,8 @@ static void gtkLoadIcon(GtkIconTheme *theme, gint size, GdkPixmap **gdkIcon, Gdk
 
     /* start up GTK which realizes the pixmaps */
     gtk_main_iteration_do(FALSE);
+
+    return (pixbuf != NULL);
 }
 
 void gtkInit(void)
@@ -136,13 +138,15 @@ void gtkInit(void)
 
     theme = gtk_icon_theme_get_default();
 
-    gtkLoadIcon(theme, 16, &gdkIcon, &gdkIconMask);
+    if (gtkLoadIcon(theme, 16, &gdkIcon, &gdkIconMask)) {
     guiIcon.small      = GDK_PIXMAP_XID(gdkIcon);
     guiIcon.small_mask = GDK_PIXMAP_XID(gdkIconMask);
+    }
 
-    gtkLoadIcon(theme, 32, &gdkIcon, &gdkIconMask);
+    if (gtkLoadIcon(theme, 32, &gdkIcon, &gdkIconMask)) {
     guiIcon.normal      = GDK_PIXMAP_XID(gdkIcon);
     guiIcon.normal_mask = GDK_PIXMAP_XID(gdkIconMask);
+    }
 
     gtkLoadIcon(theme, 48, &gdkIcon, &gdkIconMask);
 
