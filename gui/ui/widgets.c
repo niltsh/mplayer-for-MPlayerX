@@ -139,13 +139,13 @@ void gtkInit(void)
     theme = gtk_icon_theme_get_default();
 
     if (gtkLoadIcon(theme, 16, &gdkIcon, &gdkIconMask)) {
-    guiIcon.small      = GDK_PIXMAP_XID(gdkIcon);
-    guiIcon.small_mask = GDK_PIXMAP_XID(gdkIconMask);
+        guiIcon.small      = GDK_PIXMAP_XID(gdkIcon);
+        guiIcon.small_mask = GDK_PIXMAP_XID(gdkIconMask);
     }
 
     if (gtkLoadIcon(theme, 32, &gdkIcon, &gdkIconMask)) {
-    guiIcon.normal      = GDK_PIXMAP_XID(gdkIcon);
-    guiIcon.normal_mask = GDK_PIXMAP_XID(gdkIconMask);
+        guiIcon.normal      = GDK_PIXMAP_XID(gdkIcon);
+        guiIcon.normal_mask = GDK_PIXMAP_XID(gdkIconMask);
     }
 
     gtkLoadIcon(theme, 48, &gdkIcon, &gdkIconMask);
