@@ -17,8 +17,8 @@ MPlayer
     Other:
     * support adding noise at output resolution with -vo gl:noise-strength=8
     * experimental support for OpenGL ES 1.0 in -vo gl
-    * experimental support for PGS (BluRay-compatible), DVB and XSUB subtitles.
-    * experimental af_cmdline slave command to change e.g. audio equalizer options at runtime.
+    * support for PGS (BluRay-compatible), DVB and XSUB subtitles.
+    * af_cmdline slave command to change e.g. audio equalizer options at runtime.
     * vo x11: don't hide or show cursor any more if attached to an existing window (-wid)
     * try reconnecting network streams e.g. after network timeouts
     * lots of bug fixes as always (and surely a few new bugs, too :-( )
