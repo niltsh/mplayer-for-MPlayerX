@@ -170,6 +170,7 @@ static void vo_y4m_write(const void *ptr, const size_t num_bytes)
 	if (fwrite(ptr, 1, num_bytes, yuv_out) != num_bytes)
 		mp_msg(MSGT_VO,MSGL_ERR,
 			MSGTR_VO_YUV4MPEG_OutFileWriteError);
+	fflush(yuv_out);
 }
 
 static int write_last_frame(void)
