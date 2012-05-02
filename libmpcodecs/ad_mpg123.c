@@ -205,19 +205,6 @@ static void print_header_compact(struct mpg123_frameinfo *i)
            smodes[i->mode]);
 }
 
-/* return MPG123_OK if decoder is ready to produce output
- * the other usual return code would be MPG123_NEED_MORE. */
-static int have_initial_frame(mpg123_handle *mh)
-{
-    long rate;
-    int chan, enc;
-    /* Abusing the format query function.
-     * It returns MPG123_OK if an intial frame has been parsed.
-     * It returns MPG123_NEED_MORE if input data is needed.
-     * Not handing NULL pointers for compatibility with old libmpg123. */
-    return mpg123_getformat(mh, &rate, &chan, &enc);
-}
-
 /* This tries to extract a requested amount of decoded data.
  * Even when you request 0 bytes, it will feed enough input so that
  * the decoder _could_ have delivered something.
@@ -283,7 +270,7 @@ static int decode_a_bit(sh_audio_t *sh, unsigned char *buf, int count)
          * for the loop condition. */
 #ifdef AD_MPG123_FRAMEWISE
         if (!buf) { /* fake call just for feeding to get format */
-            ret = have_initial_frame(con->handle);
+            ret = mpg123_getformat(con->handle, NULL, NULL, NULL);
         } else { /* This is the decoding. One frame at a time. */
             ret = mpg123_replace_buffer(con->handle, buf, count);
             if (ret == MPG123_OK)
@@ -326,8 +313,7 @@ static int reopen_stream(sh_audio_t *sh)
     /* Open and make sure we have fed enough data to get stream properties. */
     if (MPG123_OK == mpg123_open_feed(con->handle) &&
         /* Feed data until mpg123 is ready (has found stream beginning). */
-        !decode_a_bit(sh, NULL, 0) &&
-        MPG123_OK == have_initial_frame(con->handle)) {
+        !decode_a_bit(sh, NULL, 0)) {
         return 1;
     } else {
         mp_msg(MSGT_DECAUDIO, MSGL_ERR,
@@ -492,6 +478,8 @@ static int control(sh_audio_t *sh, int cmd, void *arg, ...)
 #endif
             return CONTROL_TRUE;
         } else {
+            /* MPlayer ignores this case! It just keeps on decoding.
+             * So we have to make sure resync never fails ... */
             mp_msg(MSGT_DECAUDIO, MSGL_ERR,
                    "mpg123 cannot reopen stream for resync.\n");
             return CONTROL_FALSE;
