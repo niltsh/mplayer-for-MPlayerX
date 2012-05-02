@@ -1400,7 +1400,9 @@ if(sh_audio){
 
     if (!frame_data.already_read) {
         frame_data.in_size=video_read_frame(sh_video,&frame_data.frame_time,&frame_data.start,force_fps);
-        frame_data.flush = frame_data.in_size < 0 && d_video->eof;
+        frame_data.flush = frame_data.in_size < 0 && d_video->eof &&
+                           mux_v->codec != VCODEC_COPY &&
+                           mux_v->codec != VCODEC_FRAMENO;
         if (frame_data.flush) {
             frame_data.in_size = 0;
             frame_data.start = NULL;
