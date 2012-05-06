@@ -89,6 +89,7 @@ void mixer_setvolume(mixer_t *mixer, float l, float r)
               mp_msg(MSGT_GLOBAL, MSGL_ERR, MSGTR_NoVolume);
               return;
             }
+            soft_vol = 1;
           }
 	}
       }
