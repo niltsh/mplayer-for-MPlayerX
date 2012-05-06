@@ -867,7 +867,8 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
 //--
 
     if(!got_picture) {
-	if (avctx->codec->id == CODEC_ID_H264)
+	if (avctx->codec->id == CODEC_ID_H264 &&
+	    skip_frame == AVDISCARD_NONE)
 	    return &mpi_no_picture; // H.264 first field only
 	else
 	    return NULL;    // skipped image
