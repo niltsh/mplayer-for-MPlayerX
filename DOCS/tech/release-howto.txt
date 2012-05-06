@@ -8,13 +8,15 @@ preparations:
 - Identify regressions or other serious issues, fix or revert (on the branch)
   as needed so the release is of good quality.
 - Find a codename for the release
+- update osdep/mplayer.rc if necessary
+- possibly bump etc/codecs.conf "release" line
 
 create the release tree:
 - tag Subversion with release name
-- Add a VERSION file with the release version to the root of the source tree.
 - update release.sh script with version number
 ***the following steps are done automatically by release.sh script***
 - checkout the mplayer src tree
+- Add a VERSION file with the release version to the root of the source tree.
 - check out FFmpeg subdirs
 - remove obsolete DOCS translations, help files
 
