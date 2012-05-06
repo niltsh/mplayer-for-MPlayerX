@@ -22,6 +22,6 @@ rm -rf $dst-DOCS/
 
 # git archive unfortunately is refused
 git clone --depth 1 git://git.videolan.org/ffmpeg.git $dst/ffmpeg
-rm -rf $dst/ffmpeg/.git*
+rm -rf $dst/.git* $dst/ffmpeg/.git*
 
 tar --owner=0 --group=0 -cjf $dst.tar.bz2 $dst/
