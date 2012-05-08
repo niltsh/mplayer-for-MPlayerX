@@ -88,6 +88,7 @@ static const unsigned int outfmt_list[]={
     IMGFMT_420P9_LE,
     IMGFMT_420P9_BE,
     IMGFMT_420A,
+    IMGFMT_422A,
     IMGFMT_444A,
     IMGFMT_IYUV,
     IMGFMT_YVU9,

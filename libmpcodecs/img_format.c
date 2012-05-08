@@ -83,6 +83,7 @@ const char *vo_format_name(int format)
     case IMGFMT_444P: return "Planar 444P";
     case IMGFMT_444A: return "Planar 444P with alpha";
     case IMGFMT_422P: return "Planar 422P";
+    case IMGFMT_422A: return "Planar 422P with alpha";
     case IMGFMT_411P: return "Planar 411P";
     case IMGFMT_NV12: return "Planar NV12";
     case IMGFMT_NV21: return "Planar NV21";
@@ -179,6 +180,10 @@ int mp_get_chroma_shift(int format, int *x_shift, int *y_shift, int *component_b
         xs = 0;
         ys = 0;
         break;
+    case IMGFMT_422A:
+        xs = 1;
+        ys = 0;
+        break;
     case IMGFMT_420A:
     case IMGFMT_I420:
     case IMGFMT_IYUV:
@@ -204,7 +209,7 @@ int mp_get_chroma_shift(int format, int *x_shift, int *y_shift, int *component_b
     if (y_shift) *y_shift = ys;
     if (component_bits) *component_bits = bits;
     bpp = 8 + ((16 >> xs) >> ys);
-    if (format == IMGFMT_420A || format == IMGFMT_444A)
+    if (format == IMGFMT_420A || format == IMGFMT_422A || format == IMGFMT_444A)
         bpp += 8;
     bpp *= (bits + 7) >> 3;
     return err ? 0 : bpp;

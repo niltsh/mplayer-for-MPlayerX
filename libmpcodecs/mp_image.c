@@ -141,6 +141,7 @@ void mp_image_setfmt(mp_image_t* mpi,unsigned int out_fmt){
     case IMGFMT_YV12:
         return;
     case IMGFMT_420A:
+    case IMGFMT_422A:
     case IMGFMT_444A:
     case IMGFMT_IF09:
         mpi->num_planes=4;
