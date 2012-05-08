@@ -205,7 +205,7 @@ query_format(uint32_t format)
     switch(format){
     case IMGFMT_RGB24:
         return use_alpha ? 0 : supported_flags;
-    case IMGFMT_BGR32:
+    case IMGFMT_RGBA:
         return use_alpha ? supported_flags : 0;
     }
     return 0;
