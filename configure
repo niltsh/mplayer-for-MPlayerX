@@ -384,6 +384,7 @@ Optional features:
                          parsing [disabled]
   --enable-macosx-bundle enable Mac OS X bundle file locations [autodetect]
   --disable-inet6        disable IPv6 support [autodetect]
+  --disable-sctp         disable SCTP support [autodetect]
   --disable-gethostbyname2  gethostbyname2 part of the C library [autodetect]
   --disable-ftp          disable FTP support [enabled]
   --disable-vstream      disable TiVo vstream client support [autodetect]
@@ -855,6 +856,7 @@ _freetypeconfig='freetype-config'
 _fribidi=auto
 _enca=auto
 _inet6=auto
+_sctp=auto
 _gethostbyname2=auto
 _ftp=auto
 _musepack=no
@@ -1374,6 +1376,9 @@ for ac_option do
 
   --enable-inet6)       _inet6=yes      ;;
   --disable-inet6)      _inet6=no       ;;
+
+  --enable-sctp)        _sctp=yes       ;;
+  --disable-sctp)       _sctp=no        ;;
 
   --enable-gethostbyname2)      _gethostbyname2=yes     ;;
   --disable-gethostbyname2)     _gethostbyname2=no      ;;
@@ -3364,7 +3369,7 @@ else
   def_network='#define CONFIG_NETWORK 0'
   def_networking='#undef CONFIG_NETWORKING'
   def_rtpdec='#define CONFIG_RTPDEC 0'
-  libavprotocols=$(echo $libavprotocols | sed -e s/GOPHER_PROTOCOL// -e s/HTTP_PROTOCOL// -e s/RTMP_PROTOCOL// -e s/RTP_PROTOCOL// -e s/TCP_PROTOCOL// -e s/UDP_PROTOCOL// -e s/MMSH_PROTOCOL// -e s/MMST_PROTOCOL//)
+  libavprotocols=$(echo $libavprotocols | sed -e s/GOPHER_PROTOCOL// -e s/HTTP_PROTOCOL// -e s/RTMP_PROTOCOL// -e s/RTP_PROTOCOL// -e s/TCP_PROTOCOL// -e s/UDP_PROTOCOL// -e s/MMSH_PROTOCOL// -e s/MMST_PROTOCOL// -e s/SCTP_PROTOCOL//)
   libavdemuxers=$(echo $libavdemuxers | sed -e s/RTSP_DEMUXER// -e s/SDP_DEMUXER// -e s/SAP_DEMUXER// -e s/RTP_DEMUXER//)
 fi
 echores "$networking"
@@ -3415,6 +3420,17 @@ else
 fi
 echores "$_gethostbyname2"
 
+echocheck "SCTP"
+if test "$_sctp" = auto ; then
+  _sctp=no
+  if header_check netinet/sctp.h; then
+    _sctp=yes
+  fi
+fi
+if test "$_sctp" = no ; then
+  libavprotocols=$(echo $libavprotocols | sed -e s/SCTP_PROTOCOL//)
+fi
+echores "$_sctp"
 
 echocheck "sys/poll.h"
 poll_h=no
