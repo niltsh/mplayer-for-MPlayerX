@@ -93,6 +93,19 @@ void vo_sdl_uninit(void)
         SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 
+int vo_sdl_config(int w, int h, int flags, const char *title)
+{
+    SDL_WM_SetCaption(title, NULL);
+    vo_dwidth  = old_w = w;
+    vo_dheight = old_h = h;
+    vo_fs = !!(flags & VOFLAG_FULLSCREEN);
+    if (vo_fs) {
+        vo_dwidth  = vo_screenwidth;
+        vo_dheight = vo_screenheight;
+    }
+    return 1;
+}
+
 void vo_sdl_fullscreen(void)
 {
     if (vo_fs) {

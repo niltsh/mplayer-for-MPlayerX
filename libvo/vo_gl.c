@@ -42,11 +42,7 @@
 #include "sub/eosd.h"
 
 #ifdef CONFIG_GL_SDL
-#ifdef CONFIG_SDL_SDL_H
-#include <SDL/SDL.h>
-#else
-#include <SDL.h>
-#endif
+#include "sdl_common.h"
 #endif
 
 static const vo_info_t info =
@@ -659,9 +655,8 @@ static int create_window(uint32_t d_width, uint32_t d_height, uint32_t flags, co
 #endif
 #ifdef CONFIG_GL_SDL
   if (glctx.type == GLTYPE_SDL) {
-    SDL_WM_SetCaption(title, NULL);
-    vo_dwidth  = d_width;
-    vo_dheight = d_height;
+    if (!vo_sdl_config(d_width, d_height, flags, title))
+        return -1;
   }
 #endif
   return 0;
