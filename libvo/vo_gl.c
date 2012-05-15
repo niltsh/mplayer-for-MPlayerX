@@ -496,7 +496,8 @@ static void autodetectGlExtensions(void) {
   if (ati_hack      == -1) ati_hack      = ati_broken_pbo;
   if (force_pbo     == -1) {
     force_pbo = 0;
-    if (extensions && strstr(extensions, "_pixel_buffer_object"))
+    // memcpy is just too slow at least on PPC.
+    if (ARCH_X86 && extensions && strstr(extensions, "_pixel_buffer_object"))
       force_pbo = is_ati;
   }
   if (use_rectangle == -1) {
