@@ -798,7 +798,10 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
     pkt.size = 0;
     av_destruct_packet(&pkt);
 
-    dr1= ctx->do_dr1;
+    // even when we do dr we might actually get a buffer we had
+    // FFmpeg allocate - this mostly happens with nonref_dr.
+    // Ensure we treat it correctly.
+    dr1= ctx->do_dr1 && pic->type == FF_BUFFER_TYPE_USER;
     if(ret<0) mp_msg(MSGT_DECVIDEO, MSGL_WARN, "Error while decoding frame!\n");
 //printf("repeat: %d\n", pic->repeat_pict);
 //-- vstats generation
