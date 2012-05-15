@@ -563,8 +563,10 @@ static int get_buffer(AVCodecContext *avctx, AVFrame *pic){
     }
 
     if (ctx->nonref_dr) {
-        if (flags & MP_IMGFLAG_PRESERVE)
+        if (flags & MP_IMGFLAG_PRESERVE || ctx->b_count > 1) {
+            if (!(flags & MP_IMGFLAG_PRESERVE)) ctx->b_count--;
             return avcodec_default_get_buffer(avctx, pic);
+        }
         type = MP_IMGTYPE_TEMP;
     }
 
