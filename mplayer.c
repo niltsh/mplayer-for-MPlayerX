@@ -586,10 +586,8 @@ void uninit_player(unsigned int mask)
     if (mask & INITIALIZED_DEMUXER) {
         initialized_flags &= ~INITIALIZED_DEMUXER;
         current_module     = "free_demuxer";
-        if (mpctx->demuxer) {
-            mpctx->stream = mpctx->demuxer->stream;
+        if (mpctx->demuxer)
             free_demuxer(mpctx->demuxer);
-        }
         mpctx->demuxer = NULL;
     }
 
