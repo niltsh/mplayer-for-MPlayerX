@@ -3295,6 +3295,8 @@ on.
 Turns on direct rendering (not supported by all codecs and video outputs).
 This can result in significantly faster blitting on some systems, on most
 the difference will be minimal.
+In some cases, particularly with decoders specifying their buffer requirements
+badly, it can be vastly slower.
 .br
 .I WARNING:
 May cause OSD/SUB corruption!
