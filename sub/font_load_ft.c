@@ -1130,7 +1130,7 @@ void load_font_ft(int width, int height, font_desc_t** fontp, const char *font_n
     FcChar8 *s;
     int face_index;
     FcBool scalable;
-    FcResult result;
+    FcResult result = FcResultMatch;
 #endif
     font_desc_t *vo_font = *fontp;
     vo_image_width = width;
