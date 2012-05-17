@@ -75,7 +75,6 @@ static unsigned char *image_datas[2];
 
 static uint32_t image_width;
 static uint32_t image_height;
-static uint32_t image_depth;
 static uint32_t image_bytes;
 static uint32_t image_format;
 
@@ -85,7 +84,6 @@ static int isOntop;
 static int isRootwin;
 
 static float winAlpha = 1;
-static int int_pause = 0;
 
 static BOOL isLeopardOrLater;
 
@@ -173,17 +171,16 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_
 	switch (image_format)
 	{
 		case IMGFMT_RGB24:
-			image_depth = 24;
+			image_bytes = 3;
 			break;
 		case IMGFMT_ARGB:
 		case IMGFMT_BGRA:
-			image_depth = 32;
+			image_bytes = 4;
 			break;
 		case IMGFMT_YUY2:
-			image_depth = 16;
+			image_bytes = 2;
 			break;
 	}
-	image_bytes = (image_depth + 7) / 8;
 
 	if(!shared_buffer)
 	{
@@ -424,8 +421,9 @@ static int control(uint32_t request, void *data)
 	switch (request)
 	{
 		case VOCTRL_DRAW_IMAGE: return draw_image(data);
-		case VOCTRL_PAUSE: return int_pause = 1;
-		case VOCTRL_RESUME: return int_pause = 0;
+		case VOCTRL_PAUSE:
+		case VOCTRL_RESUME:
+			return VO_TRUE;
 		case VOCTRL_QUERY_FORMAT: return query_format(*(uint32_t*)data);
 		case VOCTRL_ONTOP: vo_ontop = !vo_ontop; if(!shared_buffer){ [mpGLView ontop]; } else { [mplayerosxProto ontop]; } return VO_TRUE;
 		case VOCTRL_ROOTWIN: vo_rootwin = !vo_rootwin; [mpGLView rootwin]; return VO_TRUE;
