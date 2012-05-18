@@ -17,6 +17,7 @@
  */
 
 #include <stdio.h>
+#include <stdint.h>
 
 #include "config.h"
 #include "mp_msg.h"
@@ -24,7 +25,7 @@
 
 //----------------------- mp3 audio frame header parser -----------------------
 
-static int tabsel_123[2][3][16] = {
+static const uint16_t tabsel_123[2][3][16] = {
    { {0,32,64,96,128,160,192,224,256,288,320,352,384,416,448,0},
      {0,32,48,56, 64, 80, 96,112,128,160,192,224,256,320,384,0},
      {0,32,40,48, 56, 64, 80, 96,112,128,160,192,224,256,320,0} },
@@ -34,7 +35,7 @@ static int tabsel_123[2][3][16] = {
      {0,8,16,24,32,40,48,56,64,80,96,112,128,144,160,0} }
 };
 
-static long freqs[9] = { 44100, 48000, 32000,	// MPEG 1.0
+static const int freqs[9] = { 44100, 48000, 32000,	// MPEG 1.0
 			 22050, 24000, 16000,   // MPEG 2.0
 			 11025, 12000,  8000};  // MPEG 2.5
 
@@ -44,7 +45,8 @@ static long freqs[9] = { 44100, 48000, 32000,	// MPEG 1.0
 int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int* mpa_layer, int* br){
     int stereo,ssize,lsf,framesize,padding,bitrate_index,sampling_frequency, divisor;
     int bitrate;
-    int layer, mult[3] = { 12000, 144000, 144000 };
+    int layer;
+    static const int mult[3] = { 12000, 144000, 144000 };
     unsigned long newhead =
       hbuf[0] << 24 |
       hbuf[1] << 16 |
