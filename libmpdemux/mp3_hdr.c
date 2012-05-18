@@ -47,7 +47,7 @@ int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int*
     int bitrate;
     int layer;
     static const int mult[3] = { 12000, 144000, 144000 };
-    unsigned long newhead =
+    uint32_t newhead =
       hbuf[0] << 24 |
       hbuf[1] << 16 |
       hbuf[2] <<  8 |
@@ -73,9 +73,9 @@ int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int*
 	return -1;
     }
 
-    if( newhead & ((long)1<<20) ) {
+    if( newhead & (1<<20) ) {
       // MPEG 1.0 (lsf==0) or MPEG 2.0 (lsf==1)
-      lsf = (newhead & ((long)1<<19)) ? 0x0 : 0x1;
+      lsf = (newhead & (1<<19)) ? 0x0 : 0x1;
       sampling_frequency += (lsf*3);
     } else {
       // MPEG 2.5
