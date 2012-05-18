@@ -43,7 +43,7 @@ static const int freqs[9] = { 44100, 48000, 32000,   // MPEG 1.0
  * return frame size or -1 (bad frame)
  */
 int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int* mpa_layer, int* br){
-    int stereo,ssize,lsf,framesize,padding,bitrate_index,sampling_frequency, divisor;
+    int stereo,lsf,framesize,padding,bitrate_index,sampling_frequency, divisor;
     int bitrate;
     int layer;
     static const int mult[3] = { 12000, 144000, 144000 };
@@ -52,8 +52,6 @@ int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int*
       hbuf[1] << 16 |
       hbuf[2] <<  8 |
       hbuf[3];
-
-//    printf("head=0x%08X\n",newhead);
 
     // head_check:
     if( (newhead & 0xffe00000) != 0xffe00000 ){
@@ -83,29 +81,10 @@ int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int*
       sampling_frequency += 6;
     }
 
-//    crc = ((newhead>>16)&0x1)^0x1;
     bitrate_index = (newhead>>12)&0xf;  // valid: 1..14
     padding   = (newhead>>9)&0x1;
-//    fr->extension = (newhead>>8)&0x1;
-//    fr->mode      = (newhead>>6)&0x3;
-//    fr->mode_ext  = (newhead>>4)&0x3;
-//    fr->copyright = (newhead>>3)&0x1;
-//    fr->original  = (newhead>>2)&0x1;
-//    fr->emphasis  = newhead & 0x3;
 
     stereo    = ( ((newhead>>6)&0x3) == 3) ? 1 : 2;
-
-// !checked later through tabsel_123[]!
-//    if(!bitrate_index || bitrate_index==15){
-//      mp_msg(MSGT_DEMUXER,MSGL_DBG2,"Free format not supported.\n");
-//      return -1;
-//    }
-
-    if(lsf)
-      ssize = (stereo == 1) ? 9 : 17;
-    else
-      ssize = (stereo == 1) ? 17 : 32;
-    if(!(newhead & (1 << 16))) ssize += 2; // CRC
 
     bitrate = tabsel_123[lsf][layer-1][bitrate_index];
     framesize = bitrate * mult[layer-1];
@@ -123,7 +102,6 @@ int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int*
     if(layer==1)
       framesize *= 4;
 
-//    if(framesize<=0 || framesize>MAXFRAMESIZE) return FALSE;
     if(srate)
       *srate = freqs[sampling_frequency];
     if(spf) {
