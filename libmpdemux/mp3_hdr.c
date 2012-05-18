@@ -123,19 +123,18 @@ int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int*
       framesize += padding;
 
 //    if(framesize<=0 || framesize>MAXFRAMESIZE) return FALSE;
-    if(srate) {
+    if(srate)
       *srate = freqs[sampling_frequency];
       if(spf) {
         if(layer == 1)
 	  *spf = 384;
         else if(layer == 2)
 	  *spf = 1152;
-        else if(*srate < 32000)
+        else if(sampling_frequency > 2) // not 1.0
           *spf = 576;
         else
 	  *spf = 1152;
       }
-    }
     if(mpa_layer) *mpa_layer = layer;
     if(chans) *chans = stereo;
     if(br) *br = bitrate;
