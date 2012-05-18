@@ -35,9 +35,9 @@ static const uint16_t tabsel_123[2][3][16] = {
      {0,8,16,24,32,40,48,56,64,80,96,112,128,144,160,0} }
 };
 
-static const int freqs[9] = { 44100, 48000, 32000,	// MPEG 1.0
-			 22050, 24000, 16000,   // MPEG 2.0
-			 11025, 12000,  8000};  // MPEG 2.5
+static const int freqs[9] = { 44100, 48000, 32000,   // MPEG 1.0
+                              22050, 24000, 16000,   // MPEG 2.0
+                              11025, 12000,  8000};  // MPEG 2.5
 
 /*
  * return frame size or -1 (bad frame)
@@ -57,8 +57,8 @@ int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int*
 
     // head_check:
     if( (newhead & 0xffe00000) != 0xffe00000 ){
-	mp_msg(MSGT_DEMUXER,MSGL_DBG2,"head_check failed\n");
-	return -1;
+      mp_msg(MSGT_DEMUXER,MSGL_DBG2,"head_check failed\n");
+      return -1;
     }
 
     layer = 4-((newhead>>17)&3);
@@ -69,8 +69,8 @@ int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int*
 
     sampling_frequency = (newhead>>10)&0x3;  // valid: 0..2
     if(sampling_frequency==3){
-	mp_msg(MSGT_DEMUXER,MSGL_DBG2,"invalid sampling_frequency\n");
-	return -1;
+      mp_msg(MSGT_DEMUXER,MSGL_DBG2,"invalid sampling_frequency\n");
+      return -1;
     }
 
     if( newhead & (1<<20) ) {
@@ -111,10 +111,10 @@ int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int*
     framesize = bitrate * mult[layer-1];
 
     mp_msg(MSGT_DEMUXER,MSGL_DBG2,"FRAMESIZE: %d, layer: %d, bitrate: %d, mult: %d\n",
-    	framesize, layer, tabsel_123[lsf][layer-1][bitrate_index], mult[layer-1]);
+           framesize, layer, tabsel_123[lsf][layer-1][bitrate_index], mult[layer-1]);
     if(!framesize){
-	mp_msg(MSGT_DEMUXER,MSGL_DBG2,"invalid framesize/bitrate_index\n");
-	return -1;
+      mp_msg(MSGT_DEMUXER,MSGL_DBG2,"invalid framesize/bitrate_index\n");
+      return -1;
     }
 
     divisor = layer == 3 ? (freqs[sampling_frequency] << lsf) : freqs[sampling_frequency];
@@ -126,16 +126,16 @@ int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int*
 //    if(framesize<=0 || framesize>MAXFRAMESIZE) return FALSE;
     if(srate)
       *srate = freqs[sampling_frequency];
-      if(spf) {
-        if(layer == 1)
-	  *spf = 384;
-        else if(layer == 2)
-	  *spf = 1152;
-        else if(sampling_frequency > 2) // not 1.0
-          *spf = 576;
-        else
-	  *spf = 1152;
-      }
+    if(spf) {
+      if(layer == 1)
+        *spf = 384;
+      else if(layer == 2)
+        *spf = 1152;
+      else if(sampling_frequency > 2) // not 1.0
+        *spf = 576;
+      else
+        *spf = 1152;
+    }
     if(mpa_layer) *mpa_layer = layer;
     if(chans) *chans = stereo;
     if(br) *br = bitrate;
