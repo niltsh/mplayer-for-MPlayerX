@@ -67,7 +67,7 @@ int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int*
       return -1;
     }
 
-    sampling_frequency = ((newhead>>10)&0x3);  // valid: 0..2
+    sampling_frequency = (newhead>>10)&0x3;  // valid: 0..2
     if(sampling_frequency==3){
 	mp_msg(MSGT_DEMUXER,MSGL_DBG2,"invalid sampling_frequency\n");
 	return -1;
@@ -75,8 +75,8 @@ int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int*
 
     if( newhead & (1<<20) ) {
       // MPEG 1.0 (lsf==0) or MPEG 2.0 (lsf==1)
-      lsf = (newhead & (1<<19)) ? 0x0 : 0x1;
-      sampling_frequency += (lsf*3);
+      lsf = !(newhead & (1<<19));
+      sampling_frequency += lsf*3;
     } else {
       // MPEG 2.5
       lsf = 1;
@@ -84,16 +84,16 @@ int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int*
     }
 
 //    crc = ((newhead>>16)&0x1)^0x1;
-    bitrate_index = ((newhead>>12)&0xf);  // valid: 1..14
-    padding   = ((newhead>>9)&0x1);
-//    fr->extension = ((newhead>>8)&0x1);
-//    fr->mode      = ((newhead>>6)&0x3);
-//    fr->mode_ext  = ((newhead>>4)&0x3);
-//    fr->copyright = ((newhead>>3)&0x1);
-//    fr->original  = ((newhead>>2)&0x1);
+    bitrate_index = (newhead>>12)&0xf;  // valid: 1..14
+    padding   = (newhead>>9)&0x1;
+//    fr->extension = (newhead>>8)&0x1;
+//    fr->mode      = (newhead>>6)&0x3;
+//    fr->mode_ext  = (newhead>>4)&0x3;
+//    fr->copyright = (newhead>>3)&0x1;
+//    fr->original  = (newhead>>2)&0x1;
 //    fr->emphasis  = newhead & 0x3;
 
-    stereo    = ( (((newhead>>6)&0x3)) == 3) ? 1 : 2;
+    stereo    = ( ((newhead>>6)&0x3) == 3) ? 1 : 2;
 
 // !checked later through tabsel_123[]!
 //    if(!bitrate_index || bitrate_index==15){
@@ -105,7 +105,7 @@ int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int*
       ssize = (stereo == 1) ? 9 : 17;
     else
       ssize = (stereo == 1) ? 17 : 32;
-    if(!((newhead>>16)&0x1)) ssize += 2; // CRC
+    if(!(newhead & (1 << 16))) ssize += 2; // CRC
 
     bitrate = tabsel_123[lsf][layer-1][bitrate_index];
     framesize = bitrate * mult[layer-1];
@@ -117,12 +117,11 @@ int mp_get_mp3_header(unsigned char* hbuf,int* chans, int* srate, int* spf, int*
 	return -1;
     }
 
-    divisor = (layer == 3 ? (freqs[sampling_frequency] << lsf) : freqs[sampling_frequency]);
+    divisor = layer == 3 ? (freqs[sampling_frequency] << lsf) : freqs[sampling_frequency];
     framesize /= divisor;
+    framesize += padding;
     if(layer==1)
-      framesize = (framesize+padding)*4;
-    else
-      framesize += padding;
+      framesize *= 4;
 
 //    if(framesize<=0 || framesize>MAXFRAMESIZE) return FALSE;
     if(srate)
