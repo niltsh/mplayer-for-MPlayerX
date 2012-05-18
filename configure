@@ -5147,19 +5147,19 @@ int main(int argc, char *argv[]) {
 EOF
   _gl=no
   for ld_tmp in "" -lGL "-lGL -lXdamage" "-lGL $ld_pthread" ; do
-    if cc_check $ld_tmp ; then
+    if test "$_x11" = yes && cc_check $ld_tmp ; then
       _gl=yes
       _gl_x11=yes
       libs_mplayer="$libs_mplayer $ld_tmp $ld_dl"
       break
     fi
   done
-  if cc_check -DGL_EGL_X11 -lEGL ; then
+  if test "$_x11" = yes && cc_check -DGL_EGL_X11 -lEGL ; then
     _gl=yes
     _gl_egl_x11=yes
     libs_mplayer="$libs_mplayer -lEGL $ld_dl"
   fi
-  if cc_check -DGL_WIN32 -lopengl32 ; then
+  if win32 && cc_check -DGL_WIN32 -lopengl32 ; then
     _gl=yes
     _gl_win32=yes
     libs_mplayer="$libs_mplayer -lopengl32 -lgdi32"
