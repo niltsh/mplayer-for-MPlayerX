@@ -270,6 +270,13 @@ ppc() {
   esac
 }
 
+sparc() {
+  case "$host_arch" in
+    sparc*) return 0;;
+    *) return 1;;
+  esac
+}
+
 alpha() {
   case "$host_arch" in
     alpha*) return 0;;
@@ -1510,8 +1517,7 @@ if test -z "$_target" ; then
       ia64) host_arch=ia64 ;;
       macppc|ppc*|Power*) host_arch=ppc ;;
       alpha) host_arch=alpha ;;
-      sparc) host_arch=sparc ;;
-      sparc64) host_arch=sparc64 ;;
+      sun4*|sparc*) host_arch=sparc ;;
       parisc*|hppa*|9000*) host_arch=hppa ;;
       arm*|zaurus|cats) host_arch=arm ;;
       sh3|sh4|sh4a) host_arch=sh ;;
@@ -1719,6 +1725,9 @@ if x86 ; then
 fi
 if ppc ; then
   cc_check && host_arch=ppc64 || host_arch=ppc
+fi
+if sparc ; then
+  cc_check && host_arch=sparc64 || host_arch=sparc
 fi
 fi
 
