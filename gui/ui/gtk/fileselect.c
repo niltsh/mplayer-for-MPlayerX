@@ -172,19 +172,6 @@ static char * get_current_dir_name_utf8( void )
  return utf8dir;
 }
 
-static char * Filter( const char * name )
-{
- static char tmp[32];
- unsigned int  i,c;
- for ( i=0,c=0;i < strlen( name );i++ )
-  {
-   if ( ( name[i] >='a' )&&( name[i] <= 'z' ) ) { tmp[c++]='['; tmp[c++]=name[i]; tmp[c++]=name[i] - 32; tmp[c++]=']'; }
-    else tmp[c++]=name[i];
-  }
- tmp[c]=0;
- return tmp;
-}
-
 static void clist_append_fname(GtkWidget * list, char *fname,
                                GdkPixmap *pixmap, GdkPixmap *mask) {
   gint pos;
@@ -200,8 +187,9 @@ static void clist_append_fname(GtkWidget * list, char *fname,
 static void CheckDir( GtkWidget * list )
 {
  struct stat     fs;
- int             i;
+ int             i, j, fn;
  glob_t          gg;
+ gchar          *filter, **fext;
 
  if ( !fsFilter[0] ) return;
 
@@ -218,30 +206,51 @@ static void CheckDir( GtkWidget * list )
    if( !S_ISDIR( fs.st_mode ) ) continue;
    clist_append_fname(list, gg.gl_pathv[i], dpixmap, dmask);
   }
- globfree( &gg );
 
- if ( strchr( fsFilter,',' ) )
-  {
-   char tmp[8];
-   int  i,c,glob_param = 0;
-   for ( i=0,c=0;i<(int)strlen( fsFilter ) + 1;i++,c++ )
-    {
-     tmp[c]=fsFilter[i];
-     if ( ( tmp[c] == ',' )||( tmp[c] == '\0' ) )
-      {
-       tmp[c]=0; c=-1;
-       glob( Filter( tmp ),glob_param,NULL,&gg );
-       glob_param=GLOB_APPEND;
-      }
-    }
-  } else glob( Filter( fsFilter ),0,NULL,&gg );
+ for (fn = 1, i = 0; fsFilter[i]; i++)
+   if (fsFilter[i] == ',') fn++;
+
+ filter = g_strdup(fsFilter);
+ fext = calloc(fn, sizeof(gchar *));
+
+ if (filter && fext)
+ {
+   for (j = 0, i = 0; filter[i]; i++)
+   {
+     if (filter[i] == '.') fext[j] = filter + i;
+
+     if (filter[i] == ',')
+     {
+       filter[i] = 0;
+       j++;
+     }
+   }
 
  for(  i=0;(unsigned)i<gg.gl_pathc;i++ )
   {
+     char *ext;
+
    stat( gg.gl_pathv[i],&fs );
    if(  S_ISDIR( fs.st_mode ) ) continue;
+
+     ext = strrchr(gg.gl_pathv[i], '.');
+
+     if (ext || !fext[0])
+     {
+       for (j = 0; j < fn; j++)
+       {
+         if (fext[j] == NULL || strcasecmp(fext[j], ext) == 0)
+         {
    clist_append_fname(list, gg.gl_pathv[i], fpixmap, fmask);
+           break;
+         }
+       }
+     }
   }
+ }
+
+ free(fext);
+ g_free(filter);
  globfree( &gg );
 
  gtk_clist_set_column_width( GTK_CLIST( list ),0,17 );
