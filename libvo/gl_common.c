@@ -44,6 +44,7 @@
 #include "aspect.h"
 #include "pnm_loader.h"
 
+GLenum (GLAPIENTRY *mpglGetError)(void);
 void (GLAPIENTRY *mpglBegin)(GLenum);
 void (GLAPIENTRY *mpglEnd)(void);
 void (GLAPIENTRY *mpglViewport)(GLint, GLint, GLsizei, GLsizei);
@@ -402,6 +403,7 @@ typedef struct {
 static const extfunc_desc_t extfuncs[] = {
   // these aren't extension functions but we query them anyway to allow
   // different "backends" with one binary
+  DEF_FUNC_DESC(GetError),
   DEF_FUNC_DESC(Begin),
   DEF_FUNC_DESC(End),
   DEF_FUNC_DESC(Viewport),

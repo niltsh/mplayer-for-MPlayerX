@@ -446,6 +446,7 @@ typedef struct MPGLContext {
 int init_mpglcontext(MPGLContext *ctx, enum MPGLType type);
 void uninit_mpglcontext(MPGLContext *ctx);
 
+extern GLenum (GLAPIENTRY *mpglGetError)(void);
 extern void (GLAPIENTRY *mpglBegin)(GLenum);
 extern void (GLAPIENTRY *mpglEnd)(void);
 extern void (GLAPIENTRY *mpglViewport)(GLint, GLint, GLsizei, GLsizei);
