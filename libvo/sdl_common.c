@@ -104,6 +104,7 @@ int vo_sdl_config(int w, int h, int flags, const char *title)
         vo_dwidth  = vo_screenwidth;
         vo_dheight = vo_screenheight;
     }
+    SDL_GL_SetAttribute(SDL_GL_STEREO, !!(flags & VOFLAG_STEREO));
     return 1;
 }
 
