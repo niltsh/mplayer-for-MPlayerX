@@ -552,7 +552,7 @@ static int initGl(uint32_t d_width, uint32_t d_height) {
   mpglEnable(gl_target);
   if (mpglDrawBuffer)
     mpglDrawBuffer(vo_doublebuffering?GL_BACK:GL_FRONT);
-  mpglTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+  mpglTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
   mp_msg(MSGT_VO, MSGL_V, "[gl] Creating %dx%d texture...\n",
           texture_width, texture_height);
@@ -805,6 +805,8 @@ static void do_render_osd(int type) {
     mpglPushMatrix();
     mpglLoadMatrixf(matrix);
   }
+  if (osd_color != 0xffffff)
+    mpglTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
   mpglEnable(GL_BLEND);
   if (draw_eosd) {
     mpglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -822,6 +824,8 @@ static void do_render_osd(int type) {
   }
   // set rendering parameters back to defaults
   mpglDisable(GL_BLEND);
+  if (osd_color != 0xffffff)
+    mpglTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
   if (!scaled_osd)
     mpglPopMatrix();
   mpglBindTexture(gl_target, 0);
