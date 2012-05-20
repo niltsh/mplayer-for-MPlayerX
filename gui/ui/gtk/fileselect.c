@@ -226,12 +226,12 @@ static void CheckDir( GtkWidget * list )
      }
    }
 
- for(  i=0;(unsigned)i<gg.gl_pathc;i++ )
-  {
+   for(  i=0;(unsigned)i<gg.gl_pathc;i++ )
+   {
      char *ext;
 
-   stat( gg.gl_pathv[i],&fs );
-   if(  S_ISDIR( fs.st_mode ) ) continue;
+     stat( gg.gl_pathv[i],&fs );
+     if(  S_ISDIR( fs.st_mode ) ) continue;
 
      ext = strrchr(gg.gl_pathv[i], '.');
 
@@ -241,12 +241,12 @@ static void CheckDir( GtkWidget * list )
        {
          if (fext[j] == NULL || strcasecmp(fext[j], ext) == 0)
          {
-   clist_append_fname(list, gg.gl_pathv[i], fpixmap, fmask);
+           clist_append_fname(list, gg.gl_pathv[i], fpixmap, fmask);
            break;
          }
        }
      }
-  }
+   }
  }
 
  free(fext);
