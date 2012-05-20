@@ -846,9 +846,6 @@ static void draw_osd(void)
 }
 
 static void do_render(void) {
-//  Enable(GL_TEXTURE_2D);
-//  BindTexture(GL_TEXTURE_2D, texture_id);
-
   mpglColor4f(1,1,1,1);
   if (is_yuv || custom_prog)
     glEnableYUVConversion(gl_target, yuvconvtype);
