@@ -661,6 +661,10 @@ static int create_window(uint32_t d_width, uint32_t d_height, uint32_t flags, co
 #endif
 #ifdef CONFIG_GL_SDL
   if (glctx.type == GLTYPE_SDL) {
+#if SDL_VERSION_ATLEAST(1, 2, 10)
+    // Ugly to do this here, but SDL ignores it if set later
+    SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, swap_interval);
+#endif
     if (!vo_sdl_config(d_width, d_height, flags, title))
         return -1;
   }
