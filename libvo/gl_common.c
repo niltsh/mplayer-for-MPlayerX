@@ -271,10 +271,10 @@ int glFindFormat(uint32_t fmt, int *bpp, GLint *gl_texfmt,
   }
 
   *bpp = IMGFMT_IS_BGR(fmt)?IMGFMT_BGR_DEPTH(fmt):IMGFMT_RGB_DEPTH(fmt);
-  *gl_texfmt = 3;
+  *gl_texfmt = GL_RGB;
   switch (fmt) {
     case IMGFMT_RGB64NE:
-      *gl_texfmt = 4;
+      *gl_texfmt = GL_RGBA16;
     case IMGFMT_RGB48NE:
       *gl_format = GL_RGB;
       *gl_type = GL_UNSIGNED_SHORT;
@@ -284,7 +284,7 @@ int glFindFormat(uint32_t fmt, int *bpp, GLint *gl_texfmt,
       *gl_type = GL_UNSIGNED_BYTE;
       break;
     case IMGFMT_RGBA:
-      *gl_texfmt = 4;
+      *gl_texfmt = GL_RGBA;
       *gl_format = GL_RGBA;
       *gl_type = GL_UNSIGNED_BYTE;
       break;
@@ -299,7 +299,7 @@ int glFindFormat(uint32_t fmt, int *bpp, GLint *gl_texfmt,
       supported = 0; // no native YV12 support
     case IMGFMT_Y800:
     case IMGFMT_Y8:
-      *gl_texfmt = 1;
+      *gl_texfmt = GL_LUMINANCE;
       *bpp = 8;
       *gl_format = GL_LUMINANCE;
       *gl_type = GL_UNSIGNED_BYTE;
@@ -352,12 +352,12 @@ int glFindFormat(uint32_t fmt, int *bpp, GLint *gl_texfmt,
       *gl_type = GL_UNSIGNED_BYTE;
       break;
     case IMGFMT_BGRA:
-      *gl_texfmt = 4;
+      *gl_texfmt = GL_RGBA;
       *gl_format = GL_BGRA;
       *gl_type = GL_UNSIGNED_BYTE;
       break;
     default:
-      *gl_texfmt = 4;
+      *gl_texfmt = GL_RGBA;
       *gl_format = GL_RGBA;
       *gl_type = GL_UNSIGNED_BYTE;
       supported = 0;
