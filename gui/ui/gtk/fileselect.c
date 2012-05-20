@@ -187,7 +187,7 @@ static void clist_append_fname(GtkWidget * list, char *fname,
 static void CheckDir( GtkWidget * list )
 {
  struct stat     fs;
- int             i, j, fn;
+ unsigned int    i, j, fn;
  glob_t          gg;
  gchar          *filter, **fext;
 
@@ -200,7 +200,7 @@ static void CheckDir( GtkWidget * list )
  clist_append_fname(list, "..", dpixmap, dmask);
 
  glob( "*",0,NULL,&gg );
- for(  i=0;(unsigned)i<gg.gl_pathc;i++ )
+ for(  i=0;i<gg.gl_pathc;i++ )
   {
    stat( gg.gl_pathv[i],&fs );
    if( !S_ISDIR( fs.st_mode ) ) continue;
@@ -226,7 +226,7 @@ static void CheckDir( GtkWidget * list )
      }
    }
 
-   for(  i=0;(unsigned)i<gg.gl_pathc;i++ )
+   for(  i=0;i<gg.gl_pathc;i++ )
    {
      char *ext;
 
