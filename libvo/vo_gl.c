@@ -926,9 +926,11 @@ static uint32_t get_image(mp_image_t *mpi) {
     err_shown = 1;
     return VO_FALSE;
   }
+  if (gl_bufferptr) return VO_FALSE;
   if (mpi->flags & MP_IMGFLAG_READABLE) return VO_FALSE;
   if (mpi->type != MP_IMGTYPE_STATIC && mpi->type != MP_IMGTYPE_TEMP &&
-      (mpi->type != MP_IMGTYPE_NUMBERED || mpi->number))
+      mpi->type != MP_IMGTYPE_IPB &&
+      mpi->type != MP_IMGTYPE_NUMBERED)
     return VO_FALSE;
   if (mesa_buffer) mpi->width = texture_width;
   else if (ati_hack) {
