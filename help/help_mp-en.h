@@ -570,6 +570,22 @@ static const char help_text[]=
 #define MSGTR_Filter_WAVAudio "WAV audio (*.wav)"
 #define MSGTR_Filter_WMAAudio "Windows Media audio (*.wma)"
 #define MSGTR_Filter_AllAudioFiles "All audio files"
+#define MSGTR_Filter_AllVideoFiles "All video files"
+#define MSGTR_Filter_AVIFiles "AVI files"
+#define MSGTR_Filter_DivXFiles "DivX files"
+#define MSGTR_Filter_FlashVideo "Flash Video"
+#define MSGTR_Filter_MP3Files "MP3 files"
+#define MSGTR_Filter_MP4Files "MP4 files
+#define MSGTR_Filter_MPEGFiles "MPEG files"
+#define MSGTR_Filter_MP2TS "MPEG-2 transport streams"
+#define MSGTR_Filter_MatroskaMedia "Matroska media"
+#define MSGTR_Filter_OGGMedia "Ogg media"
+#define MSGTR_Filter_QTMedia "QuickTime media"
+#define MSGTR_Filter_RNMedia "RealNetworks media"
+#define MSGTR_Filter_VideoCDImages "VCD/SVCD images"
+#define MSGTR_Filter_WAVFiles "WAV files"
+#define MSGTR_Filter_WindowsMedia "Windows media"
+#define MSGTR_Filter_Playlists "Playlists"
 
 // --- buttons ---
 #define MSGTR_Ok "OK"
