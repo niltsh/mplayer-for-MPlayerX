@@ -557,6 +557,8 @@ static const char help_text[]=
 #define MSGTR_NoChapter "No chapter"
 #define MSGTR_Chapter "Chapter %d"
 #define MSGTR_NoFileLoaded "No file loaded."
+#define MSGTR_Filter_AllSubtitles "All subtitles"
+#define MSGTR_Filter_AllFiles "All files"
 
 // --- buttons ---
 #define MSGTR_Ok "OK"

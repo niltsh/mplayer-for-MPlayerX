@@ -104,8 +104,8 @@ char * fsSubtitleFilterNames[][2] =
            { "MicroDVD (*.sub)",                  "*.sub" },
            { "Text (*.txt)",                      "*.txt" },
            { "UTF (*.utf)",                       "*.utf" },
-           { "All subtitles",                     "*.aqt,*.ass,*.jss,*.rt,*.smi,*.srt,*.ssa,*.sub,*.txt,*.utf" },
-           { "All files",                         "*" },
+           { MSGTR_Filter_AllSubtitles,           "*.aqt,*.ass,*.jss,*.rt,*.smi,*.srt,*.ssa,*.sub,*.txt,*.utf" },
+           { MSGTR_Filter_AllFiles,               "*" },
 	   { NULL,NULL }
 	 };
 int fsLastSubtitleFilterSelected = -1;
