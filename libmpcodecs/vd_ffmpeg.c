@@ -581,7 +581,7 @@ static int get_buffer(AVCodecContext *avctx, AVFrame *pic){
     }
 
     if (IMGFMT_IS_HWACCEL(ctx->best_csp)) {
-        type =  MP_IMGTYPE_NUMBERED | (0xffff << 16);
+        type =  MP_IMGTYPE_NUMBERED;
     } else
     if (type == MP_IMGTYPE_IP || type == MP_IMGTYPE_IPB) {
         if(ctx->b_count>1 || ctx->ip_count>2){

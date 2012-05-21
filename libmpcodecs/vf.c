@@ -278,7 +278,7 @@ void vf_mpi_clear(mp_image_t* mpi,int x0,int y0,int w,int h){
 mp_image_t* vf_get_image(vf_instance_t* vf, unsigned int outfmt, int mp_imgtype, int mp_imgflag, int w, int h){
   mp_image_t* mpi=NULL;
   int w2;
-  int number = mp_imgtype >> 16;
+  int number = (mp_imgtype >> 16) - 1;
 
 #ifdef MP_DEBUG
   assert(w == -1 || w >= vf->w);
@@ -333,7 +333,10 @@ mp_image_t* vf_get_image(vf_instance_t* vf, unsigned int outfmt, int mp_imgtype,
           break;
       number = i;
     }
-    if (number < 0 || number >= NUM_NUMBERED_MPI) return NULL;
+    if (number < 0 || number >= NUM_NUMBERED_MPI) {
+      mp_msg(MSGT_VFILTER, MSGL_FATAL, "Ran out of numbered images, expect crash. Filter before %s is broken.\n", vf->info->name);
+      return NULL;
+    }
     if (!vf->imgctx.numbered_images[number]) vf->imgctx.numbered_images[number] = new_mp_image(w2,h);
     mpi = vf->imgctx.numbered_images[number];
     mpi->number = number;
