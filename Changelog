@@ -24,8 +24,11 @@ MPlayer
     * try reconnecting network streams e.g. after network timeouts
     * lots of bug fixes as always (and surely a few new bugs, too :-( )
 
-    GUI:
+    GUI: Support for the GUI continues.
+    * numerous fixes, improvements and updates
+    * UTF-8 support
     * all skin messages available as slave commands (gui <message>)
+    * fancy new icon
 
     Ports:
     * Wine (see DOCS/tech/crosscompile.txt)
