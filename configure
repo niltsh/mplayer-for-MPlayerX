@@ -6671,7 +6671,7 @@ if test "$_live" = auto  && test "$networking" = yes ; then
 #error Please upgrade to version 2006.03.03 or later of the "LIVE555 Streaming Media" libraries - available from <www.live555.com/liveMedia/>
 #endif
 #include "BasicUsageEnvironment.hh"
-int main(void) { BasicTaskScheduler::createNew(); return 0; }
+int main(void) { RTSPClient::createNew(*BasicUsageEnvironment::createNew(*BasicTaskScheduler::createNew()), 0, "", 0); return 0; }
 EOF
 
   _live=no
