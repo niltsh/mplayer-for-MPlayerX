@@ -102,6 +102,7 @@ const mime_struct_t mime_type_table[] = {
 	// Real Media
 //	{ "audio/x-pn-realaudio", DEMUXER_TYPE_REAL },
 	// OGG Streaming
+	{ "application/ogg", DEMUXER_TYPE_OGG },
 	{ "application/x-ogg", DEMUXER_TYPE_OGG },
 	// NullSoft Streaming Video
 	{ "video/nsv", DEMUXER_TYPE_NSV},
