@@ -564,11 +564,11 @@ static int get_buffer(AVCodecContext *avctx, AVFrame *pic){
     }
 
     if (ctx->nonref_dr) {
-        if (flags & MP_IMGFLAG_PRESERVE || ctx->b_count > 1) {
-            if (!(flags & MP_IMGFLAG_PRESERVE)) ctx->b_count--;
+        if (flags & MP_IMGFLAG_PRESERVE)
             return avcodec_default_get_buffer(avctx, pic);
-        }
-        type = MP_IMGTYPE_TEMP;
+        // Use NUMBERED since for e.g. TEMP vos assume there will
+        // be no other frames between the get_image and matching put_image.
+        type = MP_IMGTYPE_NUMBERED;
     }
 
     if(init_vo(sh, avctx->pix_fmt) < 0){
