@@ -94,17 +94,18 @@ int fsLastVideoFilterSelected = -1;
 
 char * fsSubtitleFilterNames[][2] =
          {
-           { "AQT (*.aqt)",						"*.aqt" },
-           { "ASS (*.ass)",						"*.ass" },
-           { "RT  (*.rt) ",						"*.rt"  },
-           { "SMI (*.smi)",						"*.smi" },
-           { "SRT (*.srt)",						"*.srt" },
-           { "SSA (*.ssa)",						"*.ssa" },
-           { "SUB (*.sub)",						"*.sub" },
-           { "TXT (*.txt)",						"*.txt" },
-           { "UTF (*.utf)",						"*.utf" },
-           { "Subtitles",						"*.aqt,*.ass,*.rt,*.smi,*.srt,*.ssa,*.sub,*.txt,*.utf" },
-           { "All files",						"*" },
+           { "AQTitle (*.aqt)",                   "*.aqt" },
+           { "Advanced SubStation Alpha (*.ass)", "*.ass" },
+           { "JACOSub (*.jss) ",                  "*.jss" },
+           { "RealText (*.rt) ",                  "*.rt"  },
+           { "SAMI (*.smi)",                      "*.smi" },
+           { "SubRip (*.srt)",                    "*.srt" },
+           { "SubStation Alpha (*.ssa)",          "*.ssa" },
+           { "MicroDVD (*.sub)",                  "*.sub" },
+           { "Text (*.txt)",                      "*.txt" },
+           { "UTF (*.utf)",                       "*.utf" },
+           { "All subtitles",                     "*.aqt,*.ass,*.jss,*.rt,*.smi,*.srt,*.ssa,*.sub,*.txt,*.utf" },
+           { "All files",                         "*" },
 	   { NULL,NULL }
 	 };
 int fsLastSubtitleFilterSelected = -1;
