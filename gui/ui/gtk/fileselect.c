@@ -112,12 +112,12 @@ char * fsOtherFilterNames[][2] =
 char * fsAudioFileNames[][2] =
 	 {
 	   { MSGTR_Filter_DDRawAudio,    "*.ac3,*.pcm" },
-	   { MSGTR_Filter_MPEGAudio,     "*.mp2,*.mp3,*.mpga,*.m4a,*.aac,*.f4a" },
+	   { MSGTR_Filter_MPEGAudio,     "*.aac,*.f4a,*.m4a,*.mp2,*.mp3,*.mpga" },
 	   { MSGTR_Filter_MatroskaAudio, "*.mka" },
 	   { MSGTR_Filter_OGGAudio,      "*.oga,*.ogg,*.spx" },
 	   { MSGTR_Filter_WAVAudio,      "*.wav" },
 	   { MSGTR_Filter_WMAAudio,      "*.wma" },
-	   { MSGTR_Filter_AllAudioFiles, "*.ac3,*.pcm,*.mp2,*.mp3,*.mpga,*.m4a,*.aac,*.f4a,*.mka,*.oga,*.ogg,*.spx,*.wav,*.wma" },
+	   { MSGTR_Filter_AllAudioFiles, "*.aac,*.ac3,*.f4a,*.m4a,*.mka,*.mp2,*.mp3,*.mpga,*.oga,*.ogg,*.pcm,*.spx,*.wav,*.wma" },
 	   { MSGTR_Filter_AllFiles,      "*" },
 	   { NULL, NULL }
 	 };
@@ -128,7 +128,7 @@ char * fsFontFileNames[][2] =
 #ifdef CONFIG_FREETYPE
 	   { MSGTR_Filter_TTF,       "*.ttf" },
 	   { MSGTR_Filter_Type1,     "*.pfb" },
-	   { MSGTR_Filter_AllFonts,  "*.ttf,*.pfb" },
+	   { MSGTR_Filter_AllFonts,  "*.pfb,*.ttf" },
 #else
 	   { MSGTR_Filter_FontFiles, "*.desc" },
 #endif
