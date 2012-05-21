@@ -112,7 +112,7 @@ int fsLastSubtitleFilterSelected = -1;
 
 char * fsOtherFilterNames[][2] =
          {
-	   { "All files",						"*" },
+	   { MSGTR_Filter_AllFiles, "*" },
 	   { NULL,NULL }
 	 };
 
