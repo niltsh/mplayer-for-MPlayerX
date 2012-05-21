@@ -559,6 +559,10 @@ static const char help_text[]=
 #define MSGTR_NoFileLoaded "No file loaded."
 #define MSGTR_Filter_AllSubtitles "All subtitles"
 #define MSGTR_Filter_AllFiles "All files"
+#define MSGTR_Filter_TTF "True Type fonts (*.ttf)"
+#define MSGTR_Filter_Type1 "Type1 fonts (*.pfb)"
+#define MSGTR_Filter_AllFonts "All fonts"
+#define MSGTR_Filter_FontFiles "Font files (*.desc)"
 
 // --- buttons ---
 #define MSGTR_Ok "OK"
