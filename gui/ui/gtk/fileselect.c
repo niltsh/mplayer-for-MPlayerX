@@ -77,7 +77,7 @@ char * fsVideoFilterNames[][2] =
 	   { MSGTR_Filter_VideoCDImages, "*.bin" },
 	   { MSGTR_Filter_WAVFiles,      "*.wav" },
 	   { MSGTR_Filter_WindowsMedia,  "*.asf,*.wma,*.wmv" },
-	   { MSGTR_Filter_Playlists,     "*.asx,*.m3u,*.m3u8,*.pls,*.ram,*.smi,*.smil,*.sml,*.vlc,*.wax,*.wmx,*.wvx" },
+	   { MSGTR_Filter_Playlists,     "*.asx,*.m3u,*.m3u8,*.nsc,*.pls,*.ram,*.smi,*.smil,*.sml,*.vlc,*.wax,*.wmx,*.wvx" },
 	   { MSGTR_Filter_AllAudioFiles, "*.aac,*.ac3,*.aif,*.aifc,*.aiff,*.amr,*.ape,*.au,*.awb,*.cdg,*.f4a,*.f4b,*.flac,*.m4a,*.m4b,*.mka,*.mp+,*.mp2,*.mp3,*.mpc,*.mpga,*.mpp,*.nsa,*.oga,*.ogg,*.pcm,*.qcp,*.ra,*.snd,*.spx,*.voc,*.vqf,*.w64,*.wav,*.wma,*.wv,*.wvp" },
 	   { MSGTR_Filter_AllVideoFiles, "*.264,*.3g2,*.3ga,*.3gp,*.3gp2,*.3gpp,*.3gpp2,*.asf,*.avi,*.bdm,*.bdmv,*.bin,*.clpi,*.cpi,*.divx,*.dv,*.f4v,*.flc,*.fli,*.flv,*.m1v,*.m2t,*.m2ts,*.m2v,*.m4v,*.mkv,*.moov,*.mov,*.mp2,*.mp4,*.mpe,*.mpeg,*.mpg,*.mpl,*.mpls,*.mts,*.mxf,*.nsv,*.nuv,*.ogg,*.ogm,*.ogv,*.ogx,*.pva,*.qt,*.qtvr,*.rec,*.rm,*.rmvb,*.rv,*.spl,*.str,*.swf,*.trp,*.ts,*.ty,*.vdr,*.viv,*.vivo,*.vob,*.webm,*.wmv" },
 	   { MSGTR_Filter_AllFiles,      "*" },

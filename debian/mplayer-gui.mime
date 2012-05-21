@@ -1,4 +1,5 @@
 application/mxf; /usr/bin/gmplayer %s; description="MXF video"
+application/x-netshow-channel; /usr/bin/gmplayer %s; description="Windows Media Station file"
 application/ogg; /usr/bin/gmplayer %s; description="Ogg multimedia file"
 application/ram; /usr/bin/gmplayer %s; description="RealMedia Metafile"
 application/vnd.rn-realmedia; /usr/bin/gmplayer %s; description="RealMedia document"
