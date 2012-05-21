@@ -118,14 +118,14 @@ char * fsOtherFilterNames[][2] =
 
 char * fsAudioFileNames[][2] =
 	 {
-	   { "Dolby Digital / Raw audio (*.ac3, *.pcm)",               "*.ac3,*.pcm" },
-	   { "MPEG audio (*.mp2, *.mp3, *.mpga, *.m4a, *.aac, *.f4a)", "*.mp2,*.mp3,*.mpga,*.m4a,*.aac,*.f4a" },
-	   { "Matroska audio (*.mka)",                                 "*.mka" },
-	   { "Ogg audio (*.oga, *.ogg, *.spx)",                        "*.oga,*.ogg,*.spx" },
-	   { "WAV audio (*.wav)",                                      "*.wav" },
-	   { "Windows Media audio (*.wma)",                            "*.wma" },
-	   { "All audio files",                                        "*.ac3,*.pcm,*.mp2,*.mp3,*.mpga,*.m4a,*.aac,*.f4a,*.mka,*.oga,*.ogg,*.spx,*.wav,*.wma" },
-	   { "All files",                                              "*" },
+	   { MSGTR_Filter_DDRawAudio,    "*.ac3,*.pcm" },
+	   { MSGTR_Filter_MPEGAudio,     "*.mp2,*.mp3,*.mpga,*.m4a,*.aac,*.f4a" },
+	   { MSGTR_Filter_MatroskaAudio, "*.mka" },
+	   { MSGTR_Filter_OGGAudio,      "*.oga,*.ogg,*.spx" },
+	   { MSGTR_Filter_WAVAudio,      "*.wav" },
+	   { MSGTR_Filter_WMAAudio,      "*.wma" },
+	   { MSGTR_Filter_AllAudioFiles, "*.ac3,*.pcm,*.mp2,*.mp3,*.mpga,*.m4a,*.aac,*.f4a,*.mka,*.oga,*.ogg,*.spx,*.wav,*.wma" },
+	   { MSGTR_Filter_AllFiles,      "*" },
 	   { NULL, NULL }
 	 };
 int fsLastAudioFilterSelected = -1;

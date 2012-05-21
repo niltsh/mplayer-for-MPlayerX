@@ -563,6 +563,13 @@ static const char help_text[]=
 #define MSGTR_Filter_Type1 "Type1 fonts (*.pfb)"
 #define MSGTR_Filter_AllFonts "All fonts"
 #define MSGTR_Filter_FontFiles "Font files (*.desc)"
+#define MSGTR_Filter_DDRawAudio "Dolby Digital / PCM (*.ac3, *.pcm)"
+#define MSGTR_Filter_MPEGAudio "MPEG audio (*.mp2, *.mp3, *.mpga, *.m4a, *.aac, *.f4a)"
+#define MSGTR_Filter_MatroskaAudio "Matroska audio (*.mka)"
+#define MSGTR_Filter_OGGAudio "Ogg audio (*.oga, *.ogg, *.spx)"
+#define MSGTR_Filter_WAVAudio "WAV audio (*.wav)"
+#define MSGTR_Filter_WMAAudio "Windows Media audio (*.wma)"
+#define MSGTR_Filter_AllAudioFiles "All audio files"
 
 // --- buttons ---
 #define MSGTR_Ok "OK"
