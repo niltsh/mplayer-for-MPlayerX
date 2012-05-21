@@ -168,6 +168,8 @@ static int prepare_image(struct vf_instance *vf, mp_image_t *mpi)
             mp_msg(MSGT_ASS, MSGL_WARN, MSGTR_MPCODECS_FunWhydowegetNULL);
             return 0;
         }
+        // allow reusing it after this processing
+        vf->dmpi->usage_count--;
         mpi->priv = NULL;
         // we've used DR, so we're ready...
         if (ass_top_margin)
