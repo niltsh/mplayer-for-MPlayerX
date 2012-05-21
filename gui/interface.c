@@ -595,6 +595,9 @@ int gui(int what, void *data)
 
     case GUI_SET_STREAM:
 
+        if (guiInfo.StreamType == STREAMTYPE_PLAYLIST)
+            guiInfo.mpcontext->file_format = DEMUXER_TYPE_PLAYLIST;
+
         stream = data;
         guiInfo.StreamType = stream->type;
 

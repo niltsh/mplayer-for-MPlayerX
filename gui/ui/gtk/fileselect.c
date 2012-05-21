@@ -485,7 +485,7 @@ static void fs_Up_released( GtkButton * button, gpointer user_data )
 static void fs_Ok_released( GtkButton * button, gpointer user_data )
 {
  GList         * item;
- int             i = 1;
+ int             i = 1, l;
  struct stat     fs;
 
  stat( fsSelectedFile,&fs );
@@ -503,7 +503,9 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
  switch ( fsType )
   {
    case fsVideoSelector:
-          uiSetFileName( fsSelectedDirectory,fsSelectedFile,STREAMTYPE_FILE );
+          for (l = 0; fsVideoFilterNames[l][0]; l++)
+            if (strcmp(fsVideoFilterNames[l][0], MSGTR_Filter_Playlists) == 0) break;
+          uiSetFileName( fsSelectedDirectory,fsSelectedFile, fsLastVideoFilterSelected == l ? STREAMTYPE_PLAYLIST : STREAMTYPE_FILE );
           guiInfo.NewPlay=GUI_FILE_NEW; sub_fps=0;
           fs_PersistantHistory( get_current_dir_name_utf8() );      //totem, write into history
           break;

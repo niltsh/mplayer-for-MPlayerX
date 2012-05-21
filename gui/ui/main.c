@@ -218,6 +218,7 @@ play:
          {
 	  case STREAMTYPE_FILE:
 	  case STREAMTYPE_STREAM:
+	  case STREAMTYPE_PLAYLIST:
 	       guiInfoMediumClear( CLEAR_ALL - CLEAR_FILE );
 	       if ( !guiInfo.Track )
 	         guiInfo.Track=1;
