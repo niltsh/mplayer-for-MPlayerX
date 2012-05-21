@@ -96,7 +96,7 @@ char * fsSubtitleFilterNames[][2] =
            { "SubStation Alpha (*.ssa)",          "*.ssa" },
            { "MicroDVD (*.sub)",                  "*.sub" },
            { "Text (*.txt)",                      "*.txt" },
-           { "UTF (*.utf)",                       "*.utf" },
+           { MSGTR_Filter_UTF8Subtitles,          "*.utf,*.utf-8,*.utf8" },
            { MSGTR_Filter_AllSubtitles,           "*.aqt,*.ass,*.jss,*.rt,*.smi,*.srt,*.ssa,*.sub,*.txt,*.utf" },
            { MSGTR_Filter_AllFiles,               "*" },
 	   { NULL,NULL }
