@@ -576,7 +576,7 @@ static const char help_text[]=
 #define MSGTR_Filter_DivXFiles "DivX files"
 #define MSGTR_Filter_FlashVideo "Flash Video"
 #define MSGTR_Filter_MP3Files "MP3 files"
-#define MSGTR_Filter_MP4Files "MP4 files
+#define MSGTR_Filter_MP4Files "MP4 files"
 #define MSGTR_Filter_MPEGFiles "MPEG files"
 #define MSGTR_Filter_MP2TS "MPEG-2 transport streams"
 #define MSGTR_Filter_MatroskaMedia "Matroska media"
