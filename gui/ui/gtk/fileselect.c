@@ -716,6 +716,7 @@ GtkWidget * create_FileSelect( void )
  gtk_widget_set_name( fsFilterCombo,"fsFilterCombo" );
  gtk_widget_show( fsFilterCombo );
  gtk_entry_set_editable (GTK_ENTRY( fsFilterCombo ),FALSE );
+ gtk_widget_set_usize( fsFilterCombo,-2,20 );
 
  AddHSeparator( vbox4 );
 
