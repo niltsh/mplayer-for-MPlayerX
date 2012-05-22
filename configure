@@ -6693,11 +6693,10 @@ EOF
       _live=yes && break
   done
   if test "$_live" != yes ; then
-      ld_tmp="-lliveMedia -lgroupsock -lBasicUsageEnvironment -lUsageEnvironment -lstdc++"
-      inc_tmp="-I/usr/include/liveMedia -I/usr/include/UsageEnvironment -I/usr/include/BasicUsageEnvironment -I/usr/include/groupsock"
-      if cxx_check $inc_tmp $ld_tmp; then
-          _live_dist=yes
-      fi
+      for ld_tmp in "-lliveMedia -lgroupsock -lBasicUsageEnvironment -lUsageEnvironment -lstdc++" "-lliveMedia_pic -lgroupsock_pic -lBasicUsageEnvironment_pic -lUsageEnvironment_pic -lstdc++" ; do
+          inc_tmp="-I/usr/include/liveMedia -I/usr/include/UsageEnvironment -I/usr/include/BasicUsageEnvironment -I/usr/include/groupsock"
+          cxx_check $inc_tmp $ld_tmp && _live_dist=yes && break
+      done
   fi
 fi
 if test "$_live" = yes && test "$networking" = yes; then
