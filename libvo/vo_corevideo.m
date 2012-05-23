@@ -99,17 +99,19 @@ LIBVO_EXTERN(corevideo)
 
 static void draw_alpha(int x0, int y0, int w, int h, unsigned char *src, unsigned char *srca, int stride)
 {
+	unsigned char *dst = image_data + image_bytes * (y0 * image_width + x0);
+	int dststride = image_bytes * image_width;
 	switch (image_format)
 	{
 		case IMGFMT_RGB24:
-			vo_draw_alpha_rgb24(w,h,src,srca,stride,image_data+3*(y0*image_width+x0),3*image_width);
+			vo_draw_alpha_rgb24(w,h,src,srca,stride,dst,dststride);
 			break;
 		case IMGFMT_ARGB:
 		case IMGFMT_BGRA:
-			vo_draw_alpha_rgb32(w,h,src,srca,stride,image_data+4*(y0*image_width+x0),4*image_width);
+			vo_draw_alpha_rgb32(w,h,src,srca,stride,dst,dststride);
 			break;
 		case IMGFMT_YUY2:
-			vo_draw_alpha_yuy2(w,h,src,srca,stride,image_data + (x0 + y0 * image_width) * 2,image_width*2);
+			vo_draw_alpha_yuy2(w,h,src,srca,stride,dst,dststride);
 			break;
 	}
 }
