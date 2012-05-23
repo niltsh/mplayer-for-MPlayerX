@@ -76,6 +76,7 @@ static unsigned char *image_datas[2];
 static uint32_t image_width;
 static uint32_t image_height;
 static uint32_t image_bytes;
+static uint32_t image_stride;
 static uint32_t image_format;
 
 //vo
@@ -100,18 +101,17 @@ LIBVO_EXTERN(corevideo)
 static void draw_alpha(int x0, int y0, int w, int h, unsigned char *src, unsigned char *srca, int stride)
 {
 	unsigned char *dst = image_data + image_bytes * (y0 * image_width + x0);
-	int dststride = image_bytes * image_width;
 	switch (image_format)
 	{
 		case IMGFMT_RGB24:
-			vo_draw_alpha_rgb24(w,h,src,srca,stride,dst,dststride);
+			vo_draw_alpha_rgb24(w,h,src,srca,stride,dst,image_stride);
 			break;
 		case IMGFMT_ARGB:
 		case IMGFMT_BGRA:
-			vo_draw_alpha_rgb32(w,h,src,srca,stride,dst,dststride);
+			vo_draw_alpha_rgb32(w,h,src,srca,stride,dst,image_stride);
 			break;
 		case IMGFMT_YUY2:
-			vo_draw_alpha_yuy2(w,h,src,srca,stride,dst,dststride);
+			vo_draw_alpha_yuy2(w,h,src,srca,stride,dst,image_stride);
 			break;
 	}
 }
@@ -148,7 +148,7 @@ static void free_file_specific(void)
 		[mplayerosxProxy release];
 		mplayerosxProxy = nil;
 
-		if (munmap(image_data, image_width*image_height*image_bytes) == -1)
+		if (munmap(image_data, image_height*image_stride) == -1)
 			mp_msg(MSGT_VO, MSGL_FATAL, "[vo_corevideo] uninit: munmap failed. Error: %s\n", strerror(errno));
 
 		if (shm_unlink(buffer_name) == -1)
@@ -182,6 +182,8 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_
 			image_bytes = 2;
 			break;
 	}
+	// should be aligned, but that would break the shared buffer
+	image_stride = image_width * image_bytes;
 
 	if(!shared_buffer)
 	{
@@ -190,10 +192,10 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_
 		vo_dwidth  = d_width  *= mpGLView->winSizeMult;
 		vo_dheight = d_height *= mpGLView->winSizeMult;
 
-		image_data = malloc(image_width*image_height*image_bytes);
+		image_data = malloc(image_height*image_stride);
 		image_datas[0] = image_data;
 		if (vo_doublebuffering)
-			image_datas[1] = malloc(image_width*image_height*image_bytes);
+			image_datas[1] = malloc(image_height*image_stride);
 		image_page = 0;
 
 		vo_fs = flags & VOFLAG_FULLSCREEN;
@@ -219,7 +221,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_
 		}
 
 
-		if (ftruncate(shm_fd, image_width*image_height*image_bytes) == -1)
+		if (ftruncate(shm_fd, image_height*image_stride) == -1)
 		{
 			mp_msg(MSGT_VO, MSGL_FATAL,
 				   "[vo_corevideo] failed to size shared memory, possibly already in use. Error: %s\n", strerror(errno));
@@ -228,7 +230,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_
 			return 1;
 		}
 
-		image_data = mmap(NULL, image_width*image_height*image_bytes,
+		image_data = mmap(NULL, image_height*image_stride,
 					PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
 		close(shm_fd);
 
@@ -296,7 +298,7 @@ static int draw_frame(uint8_t *src[])
 
 static uint32_t draw_image(mp_image_t *mpi)
 {
-	memcpy_pic(image_data, mpi->planes[0], image_width*image_bytes, image_height, image_width*image_bytes, mpi->stride[0]);
+	memcpy_pic(image_data, mpi->planes[0], image_width*image_bytes, image_height, image_stride, mpi->stride[0]);
 
 	return 0;
 }
@@ -514,11 +516,11 @@ static int control(uint32_t request, void *data)
 		visibleFrame.origin.y + visibleFrame.size.height - vo_dy)];
 
 	[self releaseVideoSpecific];
-	error = CVPixelBufferCreateWithBytes(NULL, image_width, image_height, pixelFormat, image_datas[0], image_width*image_bytes, NULL, NULL, NULL, &frameBuffers[0]);
+	error = CVPixelBufferCreateWithBytes(NULL, image_width, image_height, pixelFormat, image_datas[0], image_stride, NULL, NULL, NULL, &frameBuffers[0]);
 	if(error != kCVReturnSuccess)
 		mp_msg(MSGT_VO, MSGL_ERR,"[vo_corevideo] Failed to create Pixel Buffer(%d)\n", error);
 	if (vo_doublebuffering) {
-		error = CVPixelBufferCreateWithBytes(NULL, image_width, image_height, pixelFormat, image_datas[1], image_width*image_bytes, NULL, NULL, NULL, &frameBuffers[1]);
+		error = CVPixelBufferCreateWithBytes(NULL, image_width, image_height, pixelFormat, image_datas[1], image_stride, NULL, NULL, NULL, &frameBuffers[1]);
 		if(error != kCVReturnSuccess)
 			mp_msg(MSGT_VO, MSGL_ERR,"[vo_corevideo] Failed to create Pixel Double Buffer(%d)\n", error);
 	}
