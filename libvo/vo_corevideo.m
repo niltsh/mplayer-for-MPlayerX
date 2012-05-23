@@ -153,8 +153,7 @@ static void free_file_specific(void)
 			mp_msg(MSGT_VO, MSGL_FATAL, "[vo_corevideo] uninit: shm_unlink failed. Error: %s\n", strerror(errno));
     } else {
         free(image_datas[0]);
-        if (vo_doublebuffering)
-            free(image_datas[1]);
+        free(image_datas[1]);
         image_datas[0] = NULL;
         image_datas[1] = NULL;
         image_data = NULL;
