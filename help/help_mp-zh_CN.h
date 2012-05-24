@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 34785
+// Synced with help_mp-en.h rev. 34958
 //
 // Translated by JRaSH <jrash06@gmail.com>
 
@@ -557,6 +557,36 @@ static const char help_text[]=
 #define MSGTR_NoChapter "无章节"
 #define MSGTR_Chapter "章节 %d"
 #define MSGTR_NoFileLoaded "未载入文件"
+#define MSGTR_Filter_UTF8Subtitles "UTF-8 编码的字幕（*.utf, *.utf-8, *.utf8）"
+#define MSGTR_Filter_AllSubtitles "所有字幕文件"
+#define MSGTR_Filter_AllFiles "所有文件"
+#define MSGTR_Filter_TTF "True Type 字体文件（*.ttf）"
+#define MSGTR_Filter_Type1 "Type1 字体文件（*.pfb）"
+#define MSGTR_Filter_AllFonts "所有字体"
+#define MSGTR_Filter_FontFiles "字体文件（*.desc）"
+#define MSGTR_Filter_DDRawAudio "Dolby 数字音频文件 / PCM 音频文件（*.ac3, *.pcm）"
+#define MSGTR_Filter_MPEGAudio "MPEG 音频文件（*.mp2, *.mp3, *.mpga, *.m4a, *.aac, *.f4a）"
+#define MSGTR_Filter_MatroskaAudio "Matroska 音频文件（*.mka）"
+#define MSGTR_Filter_OGGAudio "Ogg 音频文件（*.oga, *.ogg, *.spx）"
+#define MSGTR_Filter_WAVAudio "WAV 音频文件（*.wav）"
+#define MSGTR_Filter_WMAAudio "Windows Media 音频文件（*.wma）"
+#define MSGTR_Filter_AllAudioFiles "所有音频文件"
+#define MSGTR_Filter_AllVideoFiles "所有视频文件"
+#define MSGTR_Filter_AVIFiles "AVI 文件"
+#define MSGTR_Filter_DivXFiles "DivX 文件"
+#define MSGTR_Filter_FlashVideo "Flash 视频文件"
+#define MSGTR_Filter_MP3Files "MP3 文件"
+#define MSGTR_Filter_MP4Files "MP4 文件"
+#define MSGTR_Filter_MPEGFiles "MPEG 文件"
+#define MSGTR_Filter_MP2TS "MPEG-2 传输流"
+#define MSGTR_Filter_MatroskaMedia "Matroska 媒体文件"
+#define MSGTR_Filter_OGGMedia "Ogg 媒体文件"
+#define MSGTR_Filter_QTMedia "QuickTime 媒体文件"
+#define MSGTR_Filter_RNMedia "RealNetworks 媒体文件"
+#define MSGTR_Filter_VideoCDImages "VCD/SVCD 镜像文件"
+#define MSGTR_Filter_WAVFiles "WAV 文件"
+#define MSGTR_Filter_WindowsMedia "Windows 媒体文件"
+#define MSGTR_Filter_Playlists "播放列表文件"
 
 // --- buttons ---
 #define MSGTR_Ok "确定"
