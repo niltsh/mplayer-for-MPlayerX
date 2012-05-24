@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 34821
+.\" sync with en/mplayer.1 rev. 34909
 .\" MPlayer (C) 2000-2012 MPlayer Team
 .\" This man page was/is translated by JRaSH<jrash06 at gmail.com>
 .
@@ -3292,7 +3292,11 @@ IVTV 专用的 MPEG 音频输出驱动。\
 .
 .TP
 .B "\-dr \ \ \ "
-打开直接渲染功能（不是所有的编解码器和视频输出都支持）
+开启直接渲染功能（不是所有的编解码器和视频输出都支持）\
+在一系统上这能显著加快位块传输的速度，但在大多数情况下\
+差异非常小。\
+在某些情况下，尤其是当解码器不恰当地指定了所需的缓冲大小时，\
+该功能可能变得非常慢。
 .br
 .I 警告：
 可能导致 OSD/字幕功能异常！
