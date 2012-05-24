@@ -647,7 +647,7 @@ static const char help_text[]=
 #define MSGTR_MovieAspectUndefined "電影寬高比未定義 - 没使用預放大。\n"
 
 // vd_dshow.c, vd_dmo.c
-#define MSGTR_DownloadCodecPackage "你需要升級/安裝二進製編解碼器包。\n請訪問 http:\/\/www.mplayerhq.hu/dload.html\n"
+#define MSGTR_DownloadCodecPackage "你需要升級/安裝二進製編解碼器包。\n請訪問 http://www.mplayerhq.hu/dload.html\n"
 
 // x11_common.c
 #define MSGTR_EwmhFullscreenStateFailed "\nX11: 不能發送 EWMH 全屏事件!\n"

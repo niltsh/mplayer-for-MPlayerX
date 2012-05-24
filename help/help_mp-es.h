@@ -205,7 +205,7 @@ static const char help_text[]=
 #define MSGTR_EdlCantOpenForRead "No puedo abrir el fichero EDL [%s] para leer.\n"
 #define MSGTR_EdlNOsh_video "No puedo usar EDL sin video, desactivándolo.\n"
 #define MSGTR_EdlNOValidLine "La linea EDL %s no es válida\n"
-#define MSGTR_EdlBadlyFormattedLine "La linea EDL %s\ está mal formateada, la descarto.\n"
+#define MSGTR_EdlBadlyFormattedLine "La linea EDL [%d] está mal formateada, la descarto.\n"
 #define MSGTR_EdlBadLineOverlap "La última posición de paro fue [%f]; el próximo incicio "\
 "es [%f]. Las posiciones deben estar en orden cronológico y sin solaparse. Las descarto.\n"
 #define MSGTR_EdlBadLineBadStop "La hora de parada debe ser posterior a la de inicio.\n"
@@ -338,7 +338,7 @@ static const char help_text[]=
 #define MSGTR_LamePresetsLongInfo "\n"\
 "Las opciones de preconfiguración se han diseñado para dar la mayor calidad posible.\n"\
 "\n"\
-En su mayoría han sido ensayadas y ajustadas por medio de rigurosas pruebas de\n"\
+"En su mayoría han sido ensayadas y ajustadas por medio de rigurosas pruebas de\n"\
 "doble escucha ciega (double blind listening) para verificarlas y lograr este objetivo.\n"\
 "\n"\
 "Se actualizan continuamente con los últimos desarrollos y, en consecuencia, \n"\
@@ -355,7 +355,7 @@ En su mayoría han sido ensayadas y ajustadas por medio de rigurosas pruebas de\
 "     \"preset=extreme\"  Si tienes un oido extremademente bueno y un equipo\n"\
 "                             tan bueno como tu oído, esta preconfiguración te dará\n"\
 "                             una calidad levemente superior al modo \"standard\"\n"\
-                              la mayoría de veces.\n"\
+"                             la mayoría de veces.\n"\
 "\n"\
 "   Para 320kbps CBR (la mejor calidad posible desde las preconfiguraciones):\n"\
 "\n"\
@@ -372,7 +372,7 @@ En su mayoría han sido ensayadas y ajustadas por medio de rigurosas pruebas de\
 "                             el ajuste óptimo para esa situación particular.\n"\
 "                             Aunque funciona, esta configuración no es tan flexible\n"\
 "                             como VBR y, normalmente, no alcanza el mismo nivel de calidad \n"\
-                              que VBR a mayores tasas de bits.\n"\
+"                             que VBR a mayores tasas de bits.\n"\
 "\n"\
 "Cada perfil tiene también disponibles las opciones siguentes:\n"\
 "\n"\
@@ -382,11 +382,11 @@ En su mayoría han sido ensayadas y ajustadas por medio de rigurosas pruebas de\
 "   <cbr> (Modo ABR) - Asume el modo ABR. Para usarlo,\n"\
 "                      sólo indica una tasa de bits. Por ejemplo:\n"\
 "                      \"preset=185\" activa esta preconfiguración y usa \n"\
-                       185 como kbps promedio.\n"\
+"                      185 como kbps promedio.\n"\
 "\n"\
 "   \"fast\" - Activa el nuevo modo rápido VBR para un perfil en particular. La\n"\
 "            desventaja frente a la preconfiguración rápida es que, a menudo, la \n"\
-             tasa de bits es ligeramente más alta que en el modo normal y la calidad\n"\
+"            tasa de bits es ligeramente más alta que en el modo normal y la calidad\n"\
 "            puede llegar a ser un poco más baja también.\n"\
 "Advertencia: con la versión actual las preconfiguraciones rápidas pueden provocar\n"\
 "             tasas de bits demasiado altas comparadas con las normales.\n"\
