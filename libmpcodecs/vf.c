@@ -692,6 +692,7 @@ int vf_next_query_format(struct vf_instance *vf, unsigned int fmt){
 }
 
 int vf_next_put_image(struct vf_instance *vf,mp_image_t *mpi, double pts){
+    mpi->usage_count--;
     return vf->next->put_image(vf->next,mpi, pts);
 }
 

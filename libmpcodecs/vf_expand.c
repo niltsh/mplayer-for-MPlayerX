@@ -415,7 +415,6 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
     if(mpi->flags&MP_IMGFLAG_DIRECT || mpi->flags&MP_IMGFLAG_DRAW_CALLBACK){
 	vf->dmpi=mpi->priv;
 	if(!vf->dmpi) { mp_msg(MSGT_VFILTER, MSGL_WARN, MSGTR_MPCODECS_FunWhydowegetNULL); return 0; }
-	vf->dmpi->usage_count--;
 	mpi->priv=NULL;
 #ifdef OSD_SUPPORT
 	if(vf->priv->osd) draw_osd(vf,mpi->w,mpi->h);
