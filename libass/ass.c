@@ -174,7 +174,7 @@ static void rskip_spaces(char **str, char *limit)
 static void set_default_style(ASS_Style *style)
 {
     style->Name             = strdup("Default");
-    style->FontName         = strdup("Arial");
+    style->FontName         = strdup("Invalid");
     style->FontSize         = 18;
     style->PrimaryColour    = 0xffffff00;
     style->SecondaryColour  = 0x00ffff00;
@@ -202,8 +202,8 @@ static void set_default_style(ASS_Style *style)
 static int lookup_style(ASS_Track *track, char *name)
 {
     int i;
-    if (*name == '*')
-        ++name;                 // FIXME: what does '*' really mean ?
+    // if (*name == '*')
+    //     ++name;                 // FIXME: what does '*' really mean ?
     for (i = track->n_styles - 1; i >= 0; --i) {
         if (strcmp(track->styles[i].Name, name) == 0)
             return i;
@@ -561,7 +561,7 @@ static int process_style(ASS_Track *track, char *str)
     if (!style->Name)
         style->Name = strdup("Default");
     if (!style->FontName)
-        style->FontName = strdup("Arial");
+        style->FontName = strdup("Invalid");
     free(format);
     return 0;
 
