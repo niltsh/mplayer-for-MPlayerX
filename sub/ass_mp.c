@@ -61,7 +61,7 @@ static void init_style(ASS_Style *style, const char *name, double playres)
 	double fs;
 	uint32_t c1, c2;
 	style->Name = strdup(name);
-	style->FontName = (font_fontconfig >= 0 && sub_font_name) ? strdup(sub_font_name) : (font_fontconfig >= 0 && font_name) ? strdup(font_name) : strdup("Sans");
+	style->FontName = (font_fontconfig >= 0 && sub_font_name) ? strdup(sub_font_name) : (font_fontconfig >= 0 && font_name) ? strdup(font_name) : strdup("Invalid");
 	style->treat_fontname_as_pattern = 1;
 
 	fs = playres * text_font_scale_factor / 100.;
