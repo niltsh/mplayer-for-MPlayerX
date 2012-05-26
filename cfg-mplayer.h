@@ -353,6 +353,7 @@ const m_option_t mplayer_opts[]={
     {"vd", vd_conf, CONF_TYPE_SUBCONFIG, 0, 0, 0, NULL},
     {"progbar-align", &progbar_align, CONF_TYPE_INT, CONF_GLOBAL, 0, 100, NULL},
 	{"stpause", &mpx_startatpause, CONF_TYPE_FLAG, CONF_GLOBAL, 0, 1, NULL},
+	{"subid", &mpx_subid, CONF_TYPE_INT, CONF_RANGE, -1, 512, NULL},
 	{"nodispclog", &mpx_nodispclog, CONF_TYPE_FLAG, CONF_GLOBAL, 0, 1, NULL},
     {NULL, NULL, 0, 0, 0, 0, NULL}
 };

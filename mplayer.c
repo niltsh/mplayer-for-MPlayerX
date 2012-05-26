@@ -146,6 +146,7 @@ float start_volume = -1;
 double start_pts   = MP_NOPTS_VALUE;
 char *heartbeat_cmd;
 int mpx_startatpause = 0;
+int mpx_subid = 0;
 int mpx_nodispclog = 0;
 static int max_framesize;
 
@@ -499,31 +500,16 @@ char *get_metadata(metadata_t type)
 static void print_file_properties(const MPContext *mpctx, const char *filename)
 {
     double video_start_pts = MP_NOPTS_VALUE;
-    mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_FILENAME=%s\n",
-           filename_recode(filename));
-    mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_DEMUXER=%s\n", mpctx->demuxer->desc->name);
+  
+    mp_msg(MSGT_IDENTIFY,MSGL_INFO,"MPX_FILENAME=%s\n", filename);
+    mp_msg(MSGT_IDENTIFY,MSGL_INFO,"MPX_DEMUXER=%s\n", mpctx->demuxer->desc->name);
+    mp_msg(MSGT_IDENTIFY,MSGL_INFO,"MPX_LENGTH=%.2lf\n", demuxer_get_time_length(mpctx->demuxer));
+    mp_msg(MSGT_IDENTIFY,MSGL_INFO,"MPX_SEEKABLE=%d\n", mpctx->stream->seek && (!mpctx->demuxer || mpctx->demuxer->seekable));
+
     if (mpctx->sh_video) {
-        /* Assume FOURCC if all bytes >= 0x20 (' ') */
-        if (mpctx->sh_video->format >= 0x20202020)
-            mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_VIDEO_FORMAT=%.4s\n", (char *)&mpctx->sh_video->format);
-        else
-            mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_VIDEO_FORMAT=0x%08X\n", mpctx->sh_video->format);
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_VIDEO_BITRATE=%d\n",   mpctx->sh_video->i_bps * 8);
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_VIDEO_WIDTH=%d\n",     mpctx->sh_video->disp_w);
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_VIDEO_HEIGHT=%d\n",    mpctx->sh_video->disp_h);
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_VIDEO_FPS=%5.3f\n",    mpctx->sh_video->fps);
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_VIDEO_ASPECT=%1.4f\n", mpctx->sh_video->aspect);
         video_start_pts = ds_get_next_pts(mpctx->d_video);
     }
     if (mpctx->sh_audio) {
-        /* Assume FOURCC if all bytes >= 0x20 (' ') */
-        if (mpctx->sh_audio->format >= 0x20202020)
-            mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_AUDIO_FORMAT=%.4s\n", (char *)&mpctx->sh_audio->format);
-        else
-            mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_AUDIO_FORMAT=%d\n", mpctx->sh_audio->format);
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_AUDIO_BITRATE=%d\n", mpctx->sh_audio->i_bps * 8);
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_AUDIO_RATE=%d\n",    mpctx->sh_audio->samplerate);
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_AUDIO_NCH=%d\n",     mpctx->sh_audio->channels);
         start_pts = ds_get_next_pts(mpctx->d_audio);
     }
     if (video_start_pts != MP_NOPTS_VALUE) {
@@ -531,18 +517,12 @@ static void print_file_properties(const MPContext *mpctx, const char *filename)
             (mpctx->sh_video && video_start_pts < start_pts))
             start_pts = video_start_pts;
     }
-    if (start_pts != MP_NOPTS_VALUE)
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_START_TIME=%.2f\n", start_pts);
-    else
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_START_TIME=unknown\n");
-    mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_LENGTH=%.2f\n", demuxer_get_time_length(mpctx->demuxer));
-    mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_SEEKABLE=%d\n",
-           mpctx->stream->seek && (!mpctx->demuxer || mpctx->demuxer->seekable));
     if (mpctx->demuxer) {
         if (mpctx->demuxer->num_chapters == 0)
             stream_control(mpctx->demuxer->stream, STREAM_CTRL_GET_NUM_CHAPTERS, &mpctx->demuxer->num_chapters);
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_CHAPTERS=%d\n", mpctx->demuxer->num_chapters);
-    }
+        mp_msg(MSGT_IDENTIFY,MSGL_INFO,"MPX_CHAPTERS=%d\n", mpctx->demuxer->num_chapters);
+	    stream_control(mpctx->demuxer->stream, STREAM_CTRL_GET_CHAPTER_INFO, &mpctx->demuxer->num_chapters);
+	}
 }
 
 #ifdef CONFIG_DVDNAV
@@ -1103,12 +1083,11 @@ void add_subtitles(char *filename, float fps, int noerr)
         return;
 #endif
     mpctx->set_of_subtitles[mpctx->set_of_sub_size] = subd;
-    mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_FILE_SUB_ID=%d\n", mpctx->set_of_sub_size);
-    mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_FILE_SUB_FILENAME=%s\n",
-           filename_recode(filename));
+	
+	if (strcmp(current_module, "read_subtitles_file")) {
+		mp_msg(MSGT_IDENTIFY, MSGL_INFO, "MPX_MPXSUBFILEADD=%s\n", filename);
+	}
     ++mpctx->set_of_sub_size;
-    mp_msg(MSGT_CPLAYER, MSGL_INFO, MSGTR_AddedSubtitleFile, mpctx->set_of_sub_size,
-           filename_recode(filename));
 }
 
 static int add_vob_subtitle(const char *vobname, const char *const ifo, int force, void *spu)
@@ -1657,11 +1636,9 @@ void reinit_audio_chain(void)
         return;
     if (!(initialized_flags & INITIALIZED_ACODEC)) {
         current_module = "init_audio_codec";
-        mp_msg(MSGT_CPLAYER, MSGL_INFO, "==========================================================================\n");
         if (!init_best_audio_codec(mpctx->sh_audio, audio_codec_list, audio_fm_list))
             goto init_error;
         initialized_flags |= INITIALIZED_ACODEC;
-        mp_msg(MSGT_CPLAYER, MSGL_INFO, "==========================================================================\n");
     }
 
     if (!(initialized_flags & INITIALIZED_AO)) {
@@ -1698,6 +1675,28 @@ void reinit_audio_chain(void)
                mpctx->audio_out->info->name, mpctx->audio_out->info->author);
         if (strlen(mpctx->audio_out->info->comment) > 0)
             mp_msg(MSGT_CPLAYER, MSGL_V, "AO: Comment: %s\n", mpctx->audio_out->info->comment);
+		
+		if (mpctx->sh_audio) {
+			if (mpctx->sh_audio->format >= 0x20202020) {
+				mp_msg(MSGT_IDENTIFY,MSGL_INFO, "MPX_AUDIOINFO=%d:%.4s:%d:%d:%d:%d:%s\n",
+					   mpctx->sh_audio->aid,
+					   (char *)&mpctx->sh_audio->format,
+					   mpctx->sh_audio->i_bps*8,
+					   mpctx->sh_audio->samplerate,
+					   mpctx->sh_audio->samplesize,
+					   mpctx->sh_audio->channels,
+					   (mpctx->sh_audio->codec)?(mpctx->sh_audio->codec->name):("unknown"));
+			} else {
+				mp_msg(MSGT_IDENTIFY,MSGL_INFO, "MPX_AUDIOINFO=%d:0x%X:%d:%d:%d:%d:%s\n",
+					   mpctx->sh_audio->aid,
+					   mpctx->sh_audio->format,
+					   mpctx->sh_audio->i_bps*8,
+					   mpctx->sh_audio->samplerate,
+					   mpctx->sh_audio->samplesize,
+					   mpctx->sh_audio->channels,
+					   (mpctx->sh_audio->codec)?(mpctx->sh_audio->codec->name):("unknown"));		
+			}		
+		}
     }
 
     // init audio filters:
@@ -2375,9 +2374,7 @@ int reinit_video_chain(void)
 
     current_module = "init_video_codec";
 
-    mp_msg(MSGT_CPLAYER, MSGL_INFO, "==========================================================================\n");
     init_best_video_codec(sh_video, video_codec_list, video_fm_list);
-    mp_msg(MSGT_CPLAYER, MSGL_INFO, "==========================================================================\n");
 
     if (!sh_video->initialized) {
         if (!fixed_vo)
@@ -2389,6 +2386,27 @@ int reinit_video_chain(void)
 
     if (sh_video->codec)
         mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_VIDEO_CODEC=%s\n", sh_video->codec->name);
+	if (sh_video->format >= 0x20202020) {
+		mp_msg(MSGT_IDENTIFY,MSGL_INFO,"MPX_VIDEOINFO=%d:%.4s:%d:%d:%d:%5.3f:%1.4f:%s\n", 
+			   sh_video->vid,
+			   (char *)&sh_video->format,
+			   sh_video->i_bps*8,
+			   sh_video->disp_w,
+			   sh_video->disp_h,
+			   sh_video->fps,
+			   sh_video->aspect,
+			   (sh_video->codec)?(sh_video->codec->name):("unknown"));
+	} else {
+		mp_msg(MSGT_IDENTIFY,MSGL_INFO,"MPX_VIDEOINFO=%d:0x%X:%d:%d:%d:%5.3f:%1.4f:%s\n", 
+			   sh_video->vid,
+			   sh_video->format,
+			   sh_video->i_bps*8,
+			   sh_video->disp_w,
+			   sh_video->disp_h,
+			   sh_video->fps,
+			   sh_video->aspect,
+			   (sh_video->codec)?(sh_video->codec->name):("unknown"));
+	}
 
     sh_video->last_pts = MP_NOPTS_VALUE;
     sh_video->num_buffered_pts = 0;
@@ -3576,6 +3594,43 @@ goto_enable_cache:
 
     print_file_properties(mpctx, filename);
 
+	{// QZY
+		demuxer_t *dmx;
+		
+		if ((dmx = mpctx->demuxer) != NULL) {
+			sh_audio_t *audio;
+			sh_video_t *video;
+			
+			char *pout = (char*) malloc(2000);
+			char *digits = (char*) malloc(200);
+			*digits = 0;
+			
+			*pout = 0;
+			for (int i = 0; i < MAX_A_STREAMS; i++) {
+				if ((audio = (sh_audio_t*)dmx->a_streams[i]) != NULL) {
+					snprintf(digits, 200, ";;%d^^%s^^%s", audio->aid, (audio->name)?(audio->name):("noname"), (audio->lang)?audio->lang:"unknown");
+					strcat(pout, digits);
+				}
+			}
+			if (*pout) {
+				mp_msg(MSGT_IDENTIFY,MSGL_INFO, "MPX_AUDIO_IDS=%s\n", pout+2);
+			}
+			
+			*pout=0;
+			for (int i = 0; i < MAX_V_STREAMS; i++) {
+				if ((video = (sh_video_t*)dmx->v_streams[i]) != NULL) {
+					snprintf(digits, 200, ";;%d^^%s^^%s", video->vid, (video->name)?(video->name):("noname"), (video->lang)?video->lang:"unknown");
+					strcat(pout, digits);
+				}
+			}
+			if (*pout) {
+				mp_msg(MSGT_IDENTIFY,MSGL_INFO, "MPX_VIDEO_IDS=%s\n", pout+2);
+			}
+			free(digits);
+			free(pout);
+		}
+	}
+    
     // Adjust EDL positions with start_pts
     if (edl_start_pts && start_pts) {
         edl_record_ptr edl = edl_records;
@@ -3725,6 +3780,43 @@ goto_enable_cache:
         }
 #endif
 
+		{// QZY
+			int subIdx, valSize;
+			char *subName, *head, *val;
+			valSize = 2000;
+			val = malloc(valSize+1);
+			*val = 0;
+			
+			for (subIdx = 0; subIdx<mpctx->global_sub_size; subIdx++) {
+				mp_property_do("sub", M_PROPERTY_SET, &subIdx, mpctx);
+				mp_property_do("sub", M_PROPERTY_PRINT, &subName, mpctx);
+				head = strchr(subName, ')');
+				if (head) {
+					head += 2;
+				} else {
+					head = subName;
+				}
+				strncat(val, "^^", valSize);
+				valSize -= 2;
+				strncat(val, head, valSize);
+				valSize -= strlen(head);
+				free(subName);
+			}
+		
+			if (mpctx->global_sub_size) {
+				subIdx = mpx_subid;
+				mp_property_do("sub", M_PROPERTY_SET, &subIdx, mpctx);
+				mp_msg(MSGT_IDENTIFY,MSGL_INFO, "MPX_MPXSUBNAMES=%s;;%d\n", val+2, subIdx);
+			}
+			free(val);
+		}
+		// QZY
+	
+		if (mpx_startatpause == 1) {
+			mp_msg(MSGT_IDENTIFY,MSGL_INFO,"MPX_PBST=%d\n", 0x0101);
+		} else if (mpx_startatpause == 0) {
+			mp_msg(MSGT_IDENTIFY,MSGL_INFO,"MPX_PBST=%d\n", 0x0100);
+		}
         while (!mpctx->eof) {
             float aq_sleep_time = 0;
 
