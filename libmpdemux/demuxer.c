@@ -307,6 +307,7 @@ static void free_sh_sub(sh_sub_t *sh)
         ass_free_track(sh->ass_track);
 #endif
     free(sh->lang);
+	free(sh->name);
 #ifdef CONFIG_FFMPEG
     clear_parser((sh_common_t *)sh);
 #endif
@@ -355,6 +356,7 @@ void free_sh_audio(demuxer_t *demuxer, int id)
     free(sh->wf);
     free(sh->codecdata);
     free(sh->lang);
+	free(sh->name);
 #ifdef CONFIG_FFMPEG
     clear_parser((sh_common_t *)sh);
 #endif
@@ -390,6 +392,7 @@ void free_sh_video(sh_video_t *sh)
 {
     mp_msg(MSGT_DEMUXER, MSGL_DBG2, "DEMUXER: freeing sh_video at %p\n", sh);
     free(sh->bih);
+	free(sh->name);
 #ifdef CONFIG_FFMPEG
     clear_parser((sh_common_t *)sh);
 #endif

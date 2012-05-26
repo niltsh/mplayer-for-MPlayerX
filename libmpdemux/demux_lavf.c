@@ -334,8 +334,10 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
                     sh_audio->format = 0x7;
                     break;
             }
-            if (title && title->value)
+            if (title && title->value) {
                 mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_AID_%d_NAME=%s\n", priv->audio_streams, title->value);
+				sh_audio->name = strdup(title->value);
+            }
             if (st->disposition & AV_DISPOSITION_DEFAULT)
               sh_audio->default_track = 1;
             if(mp_msg_test(MSGT_HEADER,MSGL_V) ) print_wave_header(sh_audio->wf, MSGL_V);
@@ -393,8 +395,10 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
                 sh_video->aspect=codec->width  * codec->sample_aspect_ratio.num
                        / (float)(codec->height * codec->sample_aspect_ratio.den);
             sh_video->i_bps=codec->bit_rate/8;
-            if (title && title->value)
+            if (title && title->value) {
                 mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_VID_%d_NAME=%s\n", priv->video_streams, title->value);
+				sh_video->name = strdup(title->value);
+            }
             mp_msg(MSGT_DEMUX,MSGL_DBG2,"aspect= %d*%d/(%d*%d)\n",
                 codec->width, codec->sample_aspect_ratio.num,
                 codec->height, codec->sample_aspect_ratio.den);
@@ -457,8 +461,10 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
                 memcpy(sh_sub->extradata, codec->extradata, codec->extradata_size);
                 sh_sub->extradata_len = codec->extradata_size;
             }
-            if (title && title->value)
+            if (title && title->value) {
                 mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_SID_%d_NAME=%s\n", priv->sub_streams, title->value);
+				sh_sub->name = strdup(title->value);
+			}
             if (st->disposition & AV_DISPOSITION_DEFAULT)
               sh_sub->default_track = 1;
             stream_id = priv->sub_streams++;
