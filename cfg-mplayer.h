@@ -355,6 +355,7 @@ const m_option_t mplayer_opts[]={
 	{"stpause", &mpx_startatpause, CONF_TYPE_FLAG, CONF_GLOBAL, 0, 1, NULL},
 	{"subid", &mpx_subid, CONF_TYPE_INT, CONF_RANGE, -1, 512, NULL},
 	{"nodispclog", &mpx_nodispclog, CONF_TYPE_FLAG, CONF_GLOBAL, 0, 1, NULL},
+    {"font-fblist", &font_fblist, CONF_TYPE_STRING_LIST, 0, 0, 0, NULL},
     {NULL, NULL, 0, 0, 0, 0, NULL}
 };
 

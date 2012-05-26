@@ -39,6 +39,11 @@
 #include <fontconfig/fcfreetype.h>
 #endif
 
+#include <CoreFoundation/CoreFoundation.h>
+#include <ApplicationServices/ApplicationServices.h>
+
+char **font_fblist;
+
 struct fc_instance {
 #ifdef CONFIG_FONTCONFIG
     FcConfig *config;
@@ -105,6 +110,132 @@ match_fullname(ASS_Library *lib, FCInstance *priv, const char *family,
     return result;
 }
 
+inline static unsigned char fontFileHasChar(FT_Library ftlibrary, ASS_Library *library, const char* fontPath, uint32_t code)
+{
+    int error, idx;
+    FT_Face face;
+
+    idx = 0;
+    
+    error = FT_New_Face(ftlibrary, fontPath, 0, &face);
+    if (!error) {
+        idx = FT_Get_Char_Index(face, code);
+        FT_Done_Face(face);
+    }
+    return (idx != 0);
+}
+
+static char* copyFontPathBy(FT_Library ftlibrary, ASS_Library *library, FCInstance *priv, 
+                            const char *family, unsigned bold, unsigned italic, uint32_t code)
+{
+    char *ret = NULL;
+
+    CFStringRef fmRef = CFStringCreateWithCString(NULL, family, kCFStringEncodingUTF8);
+    
+    CTFontDescriptorRef fontDesc = CTFontDescriptorCreateWithNameAndSize(fmRef, 0.0);
+    
+    if (!fontDesc) {
+        ass_msg(library, MSGL_WARN, "CT Desc NULL, %s", family);
+        goto descFailed;
+    }
+    
+    if (bold || italic) {
+        CFMutableDictionaryRef attr = CFDictionaryCreateMutable(NULL, 1, NULL, NULL);
+        CFMutableDictionaryRef traits = CFDictionaryCreateMutable(NULL, 2, NULL, NULL);
+        
+        if (bold > 80) {
+            float w = 1.0;
+            CFNumberRef wRef = CFNumberCreate(NULL, kCFNumberFloatType, &w);
+            CFDictionaryAddValue(traits, kCTFontWeightTrait, wRef);
+            CFRelease(wRef);
+        }
+        
+        if (italic) {
+            float i = 1.0;
+            CFNumberRef iRef = CFNumberCreate(NULL, kCFNumberFloatType, &i);
+            CFDictionaryAddValue(traits, kCTFontSlantTrait, iRef);
+            CFRelease(iRef);
+        }
+        
+        CFDictionaryAddValue(attr, kCTFontTraitsAttribute, traits);
+        CFRelease(traits);
+        
+        CTFontDescriptorRef fontDesc2 = CTFontDescriptorCreateCopyWithAttributes(fontDesc, attr);
+        CFRelease(attr);
+        
+        if (fontDesc2) {
+            CFRelease(fontDesc);
+            fontDesc = fontDesc2;
+        } else {
+            ass_msg(library, MSGL_WARN, "no bold & italic");
+        }
+    }
+    
+    CFURLRef fontURL = CTFontDescriptorCopyAttribute(fontDesc, kCTFontURLAttribute);
+    
+    if (!fontURL) {
+        ass_msg(library, MSGL_WARN, "CT URL failed");
+        goto URLFailed;
+    }
+    
+    ret = (char*)malloc(PATH_MAX);
+    
+    if (!CFURLGetFileSystemRepresentation(fontURL, true, (UInt8*)ret, PATH_MAX-1)) {
+        free(ret);
+        ret = NULL;
+    }
+
+    if (ret) {
+        ass_msg(library, MSGL_V, "found CT font file:%s", ret);
+        
+        if ((!code) || fontFileHasChar(ftlibrary, library, ret, code)) {
+            // if code is 0, it is kind of probing
+            goto FoundFont;
+        } else {
+            // does not have the char
+            ass_msg(library, MSGL_WARN, "does not has the char:%X", code);
+            free(ret);
+            ret = NULL;
+        }
+    }
+    
+    CFRelease(fontURL);
+URLFailed:
+    CFRelease(fontDesc);
+descFailed:
+    CFRelease(fmRef);
+    
+    if ((!ret) && priv->path_default) {
+        ass_msg(library, MSGL_WARN, "CT use default font:%s", priv->path_default);
+        
+        if ((!code) || fontFileHasChar(ftlibrary, library, priv->path_default, code)) {
+            // does not have the char
+            ret = strdup(priv->path_default);
+            goto FoundFont;
+        } else {
+            ass_msg(library, MSGL_WARN, "does not has the char:%X", code);
+        }
+    }
+
+    if ((!ret) && font_fblist) {
+        char **p = font_fblist;
+        
+        while (*p) {
+            ass_msg(library, MSGL_WARN, "use fallback font:%s", *p);
+            
+            if ((!code) || fontFileHasChar(ftlibrary, library, *p, code)) {
+                ret = strdup(*p);
+                goto FoundFont;
+            } else {
+                ass_msg(library, MSGL_WARN, "does not has the char:%X", code);
+            }
+            p++;
+        }
+    }
+FoundFont:
+    return ret;
+}
+
 /**
  * \brief Low-level font selection.
  * \param priv private data
@@ -116,7 +247,7 @@ match_fullname(ASS_Library *lib, FCInstance *priv, const char *family,
  * \param code: the character that should be present in the font, can be 0
  * \return font file path
 */
-static char *select_font(ASS_Library *library, FCInstance *priv,
+static char *select_font(FT_Library ftlibrary, ASS_Library *library, FCInstance *priv,
                           const char *family, int treat_family_as_pattern,
                           unsigned bold, unsigned italic, int *index,
                           uint32_t code)
@@ -132,6 +263,7 @@ static char *select_font(ASS_Library *library, FCInstance *priv,
     int curf;
     char *retval = NULL;
     int family_cnt = 0;
+    bool useCT = 1;
 
     *index = 0;
 
@@ -249,11 +381,13 @@ static char *select_font(ASS_Library *library, FCInstance *priv,
 
     if (!treat_family_as_pattern &&
         !(r_family && strcasecmp((const char *) r_family, family) == 0) &&
-        !(r_fullname && strcasecmp((const char *) r_fullname, family) == 0))
+        !(r_fullname && strcasecmp((const char *) r_fullname, family) == 0)) {
         ass_msg(library, MSGL_WARN,
                "fontconfig: Selected font is not the requested one: "
                "'%s' != '%s'",
                (const char *) (r_fullname ? r_fullname : r_family), family);
+        goto error;
+    }
 
     result = FcPatternGetString(rpat, FC_STYLE, 0, &r_style);
     if (result != FcResultMatch)
@@ -276,8 +410,22 @@ static char *select_font(ASS_Library *library, FCInstance *priv,
            " slant %d, weight %d%s", (const char *) r_family,
            (const char *) r_style, (const char *) r_fullname, r_slant,
            r_weight, r_embolden ? ", embolden" : "");
+    
+    useCT = 0;
 
   error:
+    if (useCT) {
+        char *ctFind = copyFontPathBy(ftlibrary, library, priv, 
+                                      family, bold, italic, code);
+        if (ctFind) {
+            if (retval) {
+                free(retval);
+            }
+            retval = ctFind;
+            // I just set retval to ctFind, so dont have to release ctFind
+            // but that also means, ctFind must be able to be freed by free()
+        }
+    }
     if (pat)
         FcPatternDestroy(pat);
     if (rpat)
@@ -302,7 +450,7 @@ static char *select_font(ASS_Library *library, FCInstance *priv,
  * \param code: the character that should be present in the font, can be 0
  * \return font file path
 */
-char *fontconfig_select(ASS_Library *library, FCInstance *priv,
+char *fontconfig_select(FT_Library ftlibrary, ASS_Library *library, FCInstance *priv,
                         const char *family, int treat_family_as_pattern,
                         unsigned bold, unsigned italic, int *index,
                         uint32_t code)
@@ -315,11 +463,11 @@ char *fontconfig_select(ASS_Library *library, FCInstance *priv,
     }
     if (family && *family)
         res =
-            select_font(library, priv, family, treat_family_as_pattern,
+            select_font(ftlibrary, library, priv, family, treat_family_as_pattern,
                          bold, italic, index, code);
     if (!res && priv->family_default) {
         res =
-            select_font(library, priv, priv->family_default, 0, bold,
+            select_font(ftlibrary, library, priv, priv->family_default, 0, bold,
                          italic, index, code);
         if (res)
             ass_msg(library, MSGL_WARN, "fontconfig_select: Using default "
@@ -334,10 +482,10 @@ char *fontconfig_select(ASS_Library *library, FCInstance *priv,
                 res, *index);
     }
     if (!res) {
-        res = select_font(library, priv, "Arial", 0, bold, italic,
+        res = select_font(ftlibrary, library, priv, "ArialUnicodeMS", 0, bold, italic,
                            index, code);
         if (res)
-            ass_msg(library, MSGL_WARN, "fontconfig_select: Using 'Arial' "
+            ass_msg(library, MSGL_WARN, "fontconfig_select: Using 'ArialUnicodeMS' "
                     "font family: (%s, %d, %d) -> %s, %d", family, bold,
                     italic, res, *index);
     }

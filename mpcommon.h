@@ -48,6 +48,8 @@ extern char  *sub_font_name;
 extern char  *audio_lang;
 extern char  *dvdsub_lang;
 
+extern char **font_fblist;
+
 extern float  font_factor;
 extern double force_fps;
 extern double video_time_usage;
