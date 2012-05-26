@@ -1456,8 +1456,8 @@ static int mp_property_sub(m_option_t *prop, int action, void *arg,
     case M_PROPERTY_PRINT:
         if (!arg)
             return M_PROPERTY_ERROR;
-        *(char **) arg = malloc(64);
-        (*(char **) arg)[63] = 0;
+        *(char **) arg = malloc(512);
+        (*(char **) arg)[511] = 0;
         sub_name = 0;
         if (subdata)
             sub_name = subdata->filename;
@@ -1468,27 +1468,26 @@ static int mp_property_sub(m_option_t *prop, int action, void *arg,
         if (sub_name) {
             const char *tmp = mp_basename(sub_name);
 
-            snprintf(*(char **) arg, 63, "(%d) %s%s",
+            snprintf(*(char **) arg, 511, "(%d) %s",
                      mpctx->set_of_sub_pos + 1,
-                     strlen(tmp) < 20 ? "" : "...",
-                     strlen(tmp) < 20 ? tmp : tmp + strlen(tmp) - 19);
+                     tmp);
             return M_PROPERTY_OK;
         }
 
         if (vo_vobsub && vobsub_id >= 0) {
             const char *language = MSGTR_Unknown;
             language = vobsub_get_id(vo_vobsub, (unsigned int) vobsub_id);
-            snprintf(*(char **) arg, 63, "(%d) %s",
+            snprintf(*(char **) arg, 511, "(%d) %s",
                      vobsub_id, language ? language : MSGTR_Unknown);
             return M_PROPERTY_OK;
         }
         if (dvdsub_id >= 0) {
             char lang[40] = MSGTR_Unknown;
             demuxer_sub_lang(mpctx->demuxer, dvdsub_id, lang, sizeof(lang));
-            snprintf(*(char **) arg, 63, "(%d) %s", dvdsub_id, lang);
+            snprintf(*(char **) arg, 511, "(%d) %s", dvdsub_id, lang);
             return M_PROPERTY_OK;
         }
-        snprintf(*(char **) arg, 63, MSGTR_Disabled);
+        snprintf(*(char **) arg, 511, MSGTR_Disabled);
         return M_PROPERTY_OK;
 
     case M_PROPERTY_SET:
