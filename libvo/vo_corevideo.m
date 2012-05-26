@@ -68,10 +68,10 @@ NSScreen *screen_handle;
 NSArray *screen_array;
 
 //image
-unsigned char *image_data;
+unsigned char *image_data = NULL;
 // For double buffering
 static uint8_t image_page = 0;
-static unsigned char *image_datas[2];
+static unsigned char *image_datas[2] = { NULL, NULL };
 
 static uint32_t image_width;
 static uint32_t image_height;
@@ -148,11 +148,15 @@ static void free_file_specific(void)
 		[mplayerosxProxy release];
 		mplayerosxProxy = nil;
 
-		if (munmap(image_data, image_height*image_stride) == -1)
+		if (image_datas[0] && (munmap(image_datas[0], image_height*image_stride*2) == -1))
 			mp_msg(MSGT_VO, MSGL_FATAL, "[vo_corevideo] uninit: munmap failed. Error: %s\n", strerror(errno));
 
-		if (shm_unlink(buffer_name) == -1)
+		if (buffer_name && (shm_unlink(buffer_name) == -1))
 			mp_msg(MSGT_VO, MSGL_FATAL, "[vo_corevideo] uninit: shm_unlink failed. Error: %s\n", strerror(errno));
+
+		image_datas[0] = NULL;
+		image_datas[1] = NULL;
+		image_data = NULL;
     } else {
         free(image_datas[0]);
         free(image_datas[1]);
@@ -169,17 +173,24 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_
 	//misc mplayer setup
 	image_width = width;
 	image_height = height;
-	switch (image_format)
-	{
+	image_format = format;
+
+	switch (image_format) {
 		case IMGFMT_RGB24:
+			pixelFormat = k24RGBPixelFormat;
 			image_bytes = 3;
 			break;
-		case IMGFMT_ARGB:
 		case IMGFMT_BGRA:
+			pixelFormat = k32BGRAPixelFormat;
 			image_bytes = 4;
 			break;
 		case IMGFMT_YUY2:
+			pixelFormat = kYUVSPixelFormat;
 			image_bytes = 2;
+			break;
+		default: // case IMGFMT_ARGB:
+			pixelFormat = k32ARGBPixelFormat;
+			image_bytes = 4;
 			break;
 	}
 	// should be aligned, but that would break the shared buffer
@@ -221,7 +232,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_
 		}
 
 
-		if (ftruncate(shm_fd, image_height*image_stride) == -1)
+		if (ftruncate(shm_fd, image_height*image_stride*2) == -1)
 		{
 			mp_msg(MSGT_VO, MSGL_FATAL,
 				   "[vo_corevideo] failed to size shared memory, possibly already in use. Error: %s\n", strerror(errno));
@@ -230,24 +241,32 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_
 			return 1;
 		}
 
-		image_data = mmap(NULL, image_height*image_stride,
-					PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
+		image_datas[0] = mmap(NULL, image_height*image_stride*2,
+							 PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
 		close(shm_fd);
 
-		if (image_data == MAP_FAILED)
-		{
-			mp_msg(MSGT_VO, MSGL_FATAL,
-				   "[vo_corevideo] failed to map shared memory. Error: %s\n", strerror(errno));
+		if (image_datas[0] == MAP_FAILED) {
+			mp_msg(MSGT_VO, MSGL_FATAL, "[vo_corevideo] failed to map shared memory. Error: %s\n", strerror(errno));
+			image_datas[0] = NULL;
+			image_data = NULL;
 			shm_unlink(buffer_name);
 			return 1;
 		}
+		image_datas[1] = image_datas[0] + image_height*image_stride;
+		image_page = 0;
+		image_data = image_datas[0];
 
 		//connect to mplayerosx
-		mplayerosxProxy=[NSConnection rootProxyForConnectionWithRegisteredName:[NSString stringWithCString:buffer_name] host:nil];
+		mplayerosxProxy=[NSConnection rootProxyForConnectionWithRegisteredName:[NSString stringWithUTF8String:buffer_name] host:nil];
+		
 		if ([mplayerosxProxy conformsToProtocol:@protocol(MPlayerOSXVOProto)]) {
 			[mplayerosxProxy setProtocolForProxy:@protocol(MPlayerOSXVOProto)];
 			mplayerosxProto = (id <MPlayerOSXVOProto>)mplayerosxProxy;
-			[mplayerosxProto startWithWidth: image_width withHeight: image_height withBytes: image_bytes withAspect:d_width*100/d_height];
+			
+			[mplayerosxProto startWithWidth:image_width
+								 withHeight:image_height
+							withPixelFormat:pixelFormat
+								 withAspect:((float)d_width)/((float)d_height)];
 		}
 		else {
 			[mplayerosxProxy release];
@@ -272,9 +291,9 @@ static void draw_osd(void)
 static void flip_page(void)
 {
 	if(shared_buffer) {
-		NSAutoreleasePool *pool = [NSAutoreleasePool new];
-		[mplayerosxProto render];
-		[pool release];
+		[mplayerosxProto render:image_page];
+		image_page = 1 - image_page;
+		image_data = image_datas[image_page];
 	} else {
 		[mpGLView setCurrentTexture];
 		[mpGLView render];
@@ -305,26 +324,13 @@ static uint32_t draw_image(mp_image_t *mpi)
 
 static int query_format(uint32_t format)
 {
-    const int supportflags = VFCAP_CSP_SUPPORTED | VFCAP_CSP_SUPPORTED_BY_HW | VFCAP_OSD | VFCAP_HWSCALE_UP | VFCAP_HWSCALE_DOWN;
-	image_format = format;
-
     switch(format)
 	{
 		case IMGFMT_YUY2:
-			pixelFormat = kYUVSPixelFormat;
-			return supportflags;
-
 		case IMGFMT_RGB24:
-			pixelFormat = k24RGBPixelFormat;
-			return supportflags;
-
 		case IMGFMT_ARGB:
-			pixelFormat = k32ARGBPixelFormat;
-			return supportflags;
-
 		case IMGFMT_BGRA:
-			pixelFormat = k32BGRAPixelFormat;
-			return supportflags;
+			return VFCAP_CSP_SUPPORTED | VFCAP_CSP_SUPPORTED_BY_HW | VFCAP_OSD | VFCAP_HWSCALE_UP | VFCAP_HWSCALE_DOWN;
     }
     return 0;
 }
@@ -338,16 +344,13 @@ static void uninit(void)
 
     if(mpGLView)
     {
-        NSAutoreleasePool *finalPool;
         mpGLView = nil;
-        [autoreleasepool release];
-        finalPool = [[NSAutoreleasePool alloc] init];
         [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:nil inMode:NSDefaultRunLoopMode dequeue:YES];
-        [finalPool release];
     }
 
     free(buffer_name);
     buffer_name = NULL;
+	[autoreleasepool drain];
 }
 
 static const opt_t subopts[] = {
@@ -359,6 +362,8 @@ static const opt_t subopts[] = {
 
 static int preinit(const char *arg)
 {
+	NSApplicationLoad();
+	autoreleasepool = [[NSAutoreleasePool alloc] init];
 
 	// set defaults
 	screen_id = -1;
@@ -382,8 +387,6 @@ static int preinit(const char *arg)
 		return -1;
 	}
 
-	autoreleasepool = [[NSAutoreleasePool alloc] init];
-
 	if (!buffer_name)
 		buffer_name = strdup(DEFAULT_BUFFER_NAME);
 	else
@@ -391,7 +394,6 @@ static int preinit(const char *arg)
 
 	if(!shared_buffer)
 	{
-		NSApplicationLoad();
 		NSApp = [NSApplication sharedApplication];
 		isLeopardOrLater = floor(NSAppKitVersionNumber) > 824;
 
@@ -504,6 +506,8 @@ static int control(uint32_t request, void *data)
 	NSRect visibleFrame;
 	CVReturn error = kCVReturnSuccess;
 
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
 	//config window
 	[window setContentSize:NSMakeSize(vo_dwidth, vo_dheight)];
 
@@ -540,6 +544,8 @@ static int control(uint32_t request, void *data)
 
 	if(vo_ontop)
 		[mpGLView ontop];
+	
+	[pool drain];
 }
 
 /*
