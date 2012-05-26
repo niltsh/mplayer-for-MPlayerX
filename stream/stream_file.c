@@ -175,6 +175,10 @@ static int open_f(stream_t *stream,int mode, void* opts, int* file_format) {
       m_struct_free(&stream_opts,opts);
       return STREAM_ERROR;
     }
+	// turn os file caching off
+	fcntl( f, F_NOCACHE, 1 );
+	// enable read ahead
+	fcntl( f, F_RDAHEAD, 1 );
   }
 
   len=lseek(f,0,SEEK_END); lseek(f,0,SEEK_SET);
