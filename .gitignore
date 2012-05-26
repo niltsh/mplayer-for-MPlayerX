@@ -27,8 +27,6 @@ DOCS/xml/*/main.xml
 drivers/mga_vid_test
 drivers/tdfx_vid_test
 ffmpeg/
-libdvdnav/
-libdvdread4/
 libvo/aspecttest
 loader/qtx/list
 loader/qtx/qtxload
