@@ -1,0 +1,296 @@
+Checking for gcc-4.2 -m32 version ... 4.2.1 
+Checking for working compiler ... yes
+Detected operating system: Darwin
+Detected host architecture: i386
+Checking for cross compilation ... no 
+Checking for host cc ... gcc-4.2 -m32 
+Checking for CPU vendor ... GenuineIntel (6:42:7) 
+Checking for CPU type ...  Intel(R) Core(TM) i7-2720QM CPU @ 2.20GHz 
+Checking for kernel support of mmx ... yes 
+Checking for kernel support of mmxext ... yes 
+Checking for kernel support of sse ... yes 
+Checking for kernel support of sse2 ... yes 
+Checking for kernel support of ssse3 ... yes 
+Checking for kernel support of cmov ... yes 
+Checking for mtrr support ... yes 
+Checking for GCC & CPU optimization abilities ... core2 
+Checking for byte order ... little-endian 
+Checking for extern symbol prefix ... _ 
+Checking for assembler support of -pipe option ... yes 
+Checking for GCC support of -mstackrealign ... yes 
+Checking for assembler (/usr/libexec/gcc/i686-apple-darwin11/4.2.1/as 1.38) ... ok 
+Checking for PIC ... no 
+Checking for .align is a power of two ... yes 
+Checking for ebx availability ... yes 
+Checking for yasm ... yasm 
+Checking for bswap ... yes 
+Checking for xmm clobbers ... yes 
+Checking for langinfo ... yes 
+Checking for language ... messages: en - man pages: en - documentation: en 
+Checking for enable sighandler ... yes 
+Checking for runtime cpudetection ... no 
+Checking for restrict keyword ... restrict 
+Checking for __builtin_expect ... yes 
+Checking for kstat ... no 
+Checking for cbrtf ... yes 
+Checking for exp2 ... yes 
+Checking for exp2f ... yes 
+Checking for llrint ... yes 
+Checking for llrintf ... yes 
+Checking for log2 ... yes 
+Checking for log2f ... yes 
+Checking for lrint ... yes 
+Checking for lrintf ... yes 
+Checking for round ... yes 
+Checking for roundf ... yes 
+Checking for trunc ... yes 
+Checking for truncf ... yes 
+Checking for mkstemp ... yes 
+Checking for nanosleep ... yes 
+Checking for socklib ... yes 
+Checking for netdb.h, struct addrinfo ... yes 
+Checking for netdb.h, getaddrinfo() ... yes 
+Checking for sockaddr_storage ... yes 
+Checking for struct ipv6_mreq ... yes 
+Checking for struct sockaddr_in6 ... yes 
+Checking for struct sockaddr sa_len ... yes 
+Checking for arpa/inet.h ... yes 
+Checking for inet_pton() ... yes 
+Checking for inet_aton() ... yes 
+Checking for socklen_t ... yes 
+Checking for closesocket() ... no 
+Checking for networking ... yes 
+Checking for inet6 ... yes 
+Checking for gethostbyname2 ... yes 
+Checking for sys/poll.h ... yes 
+Checking for inttypes.h (required) ... yes 
+Checking for int_fastXY_t in inttypes.h ... yes 
+Checking for malloc.h ... no 
+Checking for memalign() ... no 
+Checking for posix_memalign() ... yes 
+Checking for alloca.h ... yes 
+Checking for fastmemcpy ... yes 
+Checking for hard-coded tables ... no 
+Checking for mman.h ... yes 
+Checking for dynamic loader ... yes 
+Checking for dynamic a/v plugins support ... no 
+Checking for pthread ... yes 
+Checking for rpath ... no 
+Checking for iconv ... yes 
+Checking for soundcard.h ... no 
+Checking for sys/dvdio.h ... no 
+Checking for sys/cdio.h ... no 
+Checking for linux/cdrom.h ... no 
+Checking for dvd.h ... no 
+Checking for termcap ... yes (using -lncurses)
+Checking for termios ... yes (using termios.h)
+Checking for shm ... yes 
+Checking for strsep() ... yes 
+Checking for vsscanf() ... yes 
+Checking for POSIX select() ... yes 
+Checking for audio select() ... yes 
+Checking for gettimeofday() ... yes 
+Checking for glob() ... yes 
+Checking for setenv() ... yes 
+Checking for setmode() ... no 
+Checking for sys/sysinfo.h ... no 
+Checking for Mac OS X Finder Support ... no 
+Checking for Mac OS X Bundle file locations ... no 
+Checking for Apple Remote ... no 
+Checking for pkg-config ... no 
+Checking for Samba support (libsmbclient) ... no 
+Checking for /dev/mga_vid ... no 
+Checking for tdfxfb ... no 
+Checking for s3fb ... no 
+Checking for wii ... no 
+Checking for tdfxvid ... no 
+Checking for xvr100 ... no 
+Checking for tga ... no 
+Checking for md5sum support ... no 
+Checking for yuv4mpeg support ... no 
+Checking for bl ... no 
+Checking for DirectFB ... no 
+Checking for X11 headers presence ... yes (using /usr/X11/include)
+Checking for X11 ... no (check if the dev(el) packages are installed)
+Checking for Xss screensaver extensions ... no 
+Checking for DPMS ... no 
+Checking for Xv ... no 
+Checking for XvMC ... no 
+Checking for VDPAU ... auto 
+Checking for Xinerama ... auto 
+Checking for Xxf86vm ... auto 
+Checking for XF86keysym ... auto 
+Checking for DGA ... no 
+Checking for xmga ... no 
+Checking for 3dfx ... no 
+Checking for VIDIX ... no 
+Checking for GGI ... no 
+Checking for GGI extension: libggiwmh ... no 
+Checking for AA ... no 
+Checking for CACA ... no 
+Checking for SVGAlib ... no 
+Checking for FBDev ... no 
+Checking for DVB ... no 
+Checking for QuickTime ... yes 
+Checking for Quartz ... no 
+Checking for CoreVideo ... yes 
+Checking for PNG support ... no 
+Checking for MNG support ... no 
+Checking for JPEG support ... no 
+Checking for OpenJPEG (JPEG 2000) support ... no 
+Checking for PNM support ... no 
+Checking for GIF support ... no 
+Checking for VESA support ... no 
+Checking for SDL ... no 
+Checking for OpenGL ... no 
+Checking for MatrixView ... no 
+Checking for DXR2 ... no 
+Checking for DXR3/H+ ... no 
+Checking for IVTV TV-Out (pre linux-2.6.24) ... no 
+Checking for V4L2 MPEG Decoder ... no 
+Checking for OSS Audio ... no 
+Checking for aRts ... no 
+Checking for EsounD ... no 
+Checking for NAS ... no 
+Checking for pulse ... no 
+Checking for JACK ... no 
+Checking for OpenAL ... no 
+Checking for ALSA audio ... no 
+Checking for Sun audio ... no 
+Checking for CoreAudio ... yes 
+Checking for VCD support ... yes 
+Checking for Blu-ray support ... no 
+Checking for dvdread ... yes (internal)
+Checking for internal libdvdcss ... yes 
+Checking for libcdio ... no 
+Checking for cdparanoia ... no 
+Checking for bitmap font support ... yes 
+Checking for freetype >= 2.0.9 ... yes 
+Checking for fontconfig ... yes 
+Checking for fribidi with charsets ... yes 
+Checking for SSA/ASS support ... yes 
+Checking for ENCA ... no 
+Checking for zlib ... yes 
+Checking for bzlib ... yes 
+Checking for RTC ... no 
+Checking for liblzo2 support ... no 
+Checking for mad support ... no 
+Checking for Twolame ... no 
+Checking for Toolame ... no 
+Checking for OggVorbis support ... no 
+Checking for libspeex (version >= 1.1 required) ... yes 
+Checking for libgsm ... no 
+Checking for OggTheora support ... no 
+Checking for mp3lib support ... yes 
+Checking for mpg123 support ... no 
+Checking for liba52 support ... no 
+Checking for libmpeg2 support ... yes (internal)
+Checking for libdca support ... no 
+Checking for libmpcdec (musepack, version >= 1.2.1 required) ... no 
+Checking for FAAC support ... no (in FFmpeg: no)
+Checking for FAAD2 support ... no 
+Checking for LADSPA plugin support ... no 
+Checking for libbs2b audio filter support ... no 
+Checking for Win32 codecs ... yes 
+Checking for XAnim codecs ... yes (dynamic loader support needed)
+Checking for RealPlayer codecs ... yes (dynamic loader support needed)
+Checking for QuickTime codecs ... no 
+Checking for Nemesi Streaming Media libraries ... no 
+Checking for LIVE555 Streaming Media libraries ... yes (using /usr/local/lib/live)
+Checking for RTMPDump Streaming Media library ... no 
+Checking for FFmpeg ... yes 
+Checking for libopencore_amr narrowband ... no 
+Checking for libopencore_amr wideband ... no 
+Checking for libdv-0.9.5+ ... no 
+Checking for CrystalHD ... no 
+Checking for Xvid ... no 
+Checking for Xvid two pass plugin ... no 
+Checking for x264 ... auto (in FFmpeg: no)
+Checking for libdirac ... no 
+Checking for libschroedinger ... no 
+Checking for libvpx ... yes 
+Checking for libnut ... no 
+Checking for zr ... no 
+Checking for libmp3lame ... auto (in FFmpeg: no)
+Checking for mencoder ... no 
+Checking for UnRAR executable ... no 
+Checking for TV interface ... no 
+Checking for DirectShow TV interface ... auto 
+Checking for Video 4 Linux TV interface ... auto 
+Checking for Video 4 Linux 2 TV interface ... auto 
+Checking for Radio interface ... no 
+Checking for Capture for Radio interface ... no 
+Checking for Video 4 Linux 2 Radio interface ... auto 
+Checking for Video 4 Linux Radio interface ... auto 
+Checking for Video 4 Linux 2 MPEG PVR interface ... auto 
+Checking for ftp ... yes 
+Checking for vstream client ... no 
+Checking for OSD menu ... no 
+Checking for Subtitles sorting ... yes 
+Checking for XMMS inputplugin support ... no 
+Checking for GUI ... no
+Checking for automatic gdb attach ... no 
+Checking for compiler support for noexecstack ... no 
+Checking for linker support for --nxcompat --no-seh --dynamicbase ... no 
+Checking for joystick ... no 
+Checking for lirc ... no 
+Checking for lircc ... no 
+Checking for DVD support (libdvdnav) ... yes (internal)
+Checking for XML catalogs ... No SGML catalog found. 
+Checking for XML chunked stylesheet ... not found, using default 
+Checking for XML monolithic stylesheet ... not found, using default 
+Checking for XML DTD ... not found, using default 
+Checking for valid XSLT processor ... Found xsltproc but no stylesheets on your system. 
+xsltproc is unusable without stylesheets. 
+Creating config.mak
+Creating config.h
+
+Config files successfully generated by ./configure --codecsdir=codecs --disable-mencoder --disable-gui --disable-apple-remote --disable-unrarexec --disable-pnm --disable-tga --disable-md5sum --disable-quartz --disable-openal --disable-tremor-internal --disable-jpeg --disable-png --disable-yuv4mpeg --disable-faac --disable-faad --disable-tv --disable-libdca --disable-liba52 --disable-libvorbis --disable-theora --disable-qtx --disable-gl --disable-matrixview --disable-x11 --disable-xv --disable-decoder=vda --extra-cflags=-mmacosx-version-min=10.6 --extra-ldflags=-mmacosx-version-min=10.6 -framework CoreFoundation -framework VideoDecodeAcceleration -framework QuartzCore !
+
+  Install prefix: /usr/local
+  Data directory: /usr/local/share/mplayer
+  Config direct.: /usr/local/etc/mplayer
+
+  Byte order: little-endian
+  Optimizing for: core2
+
+  Languages:
+    Messages/GUI: en
+    Manual pages: en
+    Documentation: en
+
+  Enabled optional drivers:
+    Input: dvdnav(internal) ftp live555 libdvdcss(internal) dvdread(internal) vcd networking 
+    Codecs: libvpx ffmpeg(internal) real xanim win32 libmpeg2(internal) mp3lib(internal) speex 
+    Audio output: coreaudio mpegpes(file) 
+    Video output: corevideo mpegpes(file) 
+
+  Disabled optional drivers:
+    Input: vstream pvr radio tv-v4l2 tv-v4l1 tv-dshow tv librtmp nemesi cddb cdda bluray dvb smb 
+    Codecs: libschroedinger libdirac x264 xvid crystalhd libdv libopencore_amrwb libopencore_amrnb qtx faad2 faac musepack libdca liba52 mpg123 libtheora libgsm libvorbis toolame twolame libmad liblzo gif OpenJPEG 
+    Audio output: sun alsa openal jack pulse nas esd arts oss v4l2 ivtv dxr2 sdl 
+    Video output: zr zr2 v4l2 ivtv dxr3 dxr2 matrixview opengl sdl vesa gif89a pnm jpeg mng quartz fbdev svga caca aa ggi xvidix winvidix cvidix 3dfx xmga dga vdpau xvmc xv x11 directfb dfbmga bl yuv4mpeg md5sum tga xvr100 tdfx_vid wii s3fb tdfxfb mga 
+
+'config.h' and 'config.mak' contain your configuration options.
+Note: If you alter theses files (for instance CFLAGS) MPlayer may no longer
+      compile *** DO NOT REPORT BUGS if you tweak these files ***
+
+'make' will now compile MPlayer and 'make install' will install it.
+Note: On non-Linux systems you might need to use 'gmake' instead of 'make'.
+
+Please check MTRR settings at /proc/mtrr (see DOCS/HTML/en/video.html#mtrr)
+
+Check config.log if you wonder why an autodetection failed (make sure
+development headers/packages are installed).
+
+NOTE: The --enable-* parameters unconditionally force options on, completely
+skipping autodetection. This behavior is unlike what you may be used to from
+autoconf-based configure scripts that can decide to override you. This greater
+level of control comes at a price. You may have to provide the correct compiler
+and linker flags yourself.
+If you used one of these options (except --enable-menu and similar ones that
+turn on internal features) and experience a compilation or linking failure,
+make sure you have passed the necessary compiler/linker flags to configure.
+
+If you suspect a bug, please read DOCS/HTML/en/bugreports.html.
+
