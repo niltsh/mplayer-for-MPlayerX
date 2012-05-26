@@ -123,7 +123,7 @@ static int add_face(void *fc_priv, ASS_Font *font, uint32_t ch)
         return -1;
 
     path =
-        fontconfig_select(font->library, fc_priv, font->desc.family,
+        fontconfig_select(font->ftlibrary, font->library, fc_priv, font->desc.family,
                           font->desc.treat_family_as_pattern,
                           font->desc.bold, font->desc.italic, &index, ch);
     if (!path)
