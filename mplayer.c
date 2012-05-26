@@ -3678,6 +3678,11 @@ goto_enable_cache:
 //================ SETUP AUDIO ==========================
 
         if (mpctx->sh_audio) {
+			if (audio_output_channels == 0) {
+				audio_output_channels = mpctx->sh_audio->channels;
+			}
+			mp_msg(MSGT_IDENTIFY, MSGL_INFO, "audio_output_channels: %d\n", audio_output_channels);
+			
             reinit_audio_chain();
             if (mpctx->sh_audio && mpctx->sh_audio->codec)
                 mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_AUDIO_CODEC=%s\n", mpctx->sh_audio->codec->name);
