@@ -1897,9 +1897,12 @@ static int mp_property_sub_scale(m_option_t *prop, int action, void *arg,
             if (ass_enabled) {
                 ass_font_scale = *(float *) arg;
                 ass_force_reload = 1;
+            } else {
+#endif
+				text_font_scale_factor = *(float *) arg;
+#ifdef CONFIG_ASS
             }
 #endif
-            text_font_scale_factor = *(float *) arg;
             force_load_font = 1;
             vo_osd_changed(OSDTYPE_SUBTITLE);
             return M_PROPERTY_OK;
@@ -1911,11 +1914,14 @@ static int mp_property_sub_scale(m_option_t *prop, int action, void *arg,
                   (action == M_PROPERTY_STEP_UP ? 1.0 : -1.0);
                 M_PROPERTY_CLAMP(prop, ass_font_scale);
                 ass_force_reload = 1;
+            } else {
+#endif
+				text_font_scale_factor += (arg ? *(float *) arg : 0.1)*
+				(action == M_PROPERTY_STEP_UP ? 1.0 : -1.0);
+				M_PROPERTY_CLAMP(prop, text_font_scale_factor);
+#ifdef CONFIG_ASS
             }
 #endif
-            text_font_scale_factor += (arg ? *(float *) arg : 0.1)*
-              (action == M_PROPERTY_STEP_UP ? 1.0 : -1.0);
-            M_PROPERTY_CLAMP(prop, text_font_scale_factor);
             force_load_font = 1;
             vo_osd_changed(OSDTYPE_SUBTITLE);
             return M_PROPERTY_OK;
