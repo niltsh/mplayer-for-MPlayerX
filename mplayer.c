@@ -2546,12 +2546,23 @@ static void pause_loop(void)
     if (mpctx->audio_out && mpctx->sh_audio)
         mpctx->audio_out->pause();  // pause audio, keep data if possible
 
-    while ((cmd = mp_input_get_cmd(20, 1, 1)) == NULL || cmd->pausing == 4) {
+    while ((cmd = mp_input_get_cmd(20, 1, 1)) == NULL || (cmd->pausing == 4) || (cmd->id == MP_CMD_PAUSE)) {
         if (cmd) {
-            cmd = mp_input_get_cmd(0, 1, 0);
-            run_command(mpctx, cmd);
-            mp_cmd_free(cmd);
-            continue;
+			if (cmd->id == MP_CMD_PAUSE) {
+				mp_msg(MSGT_IDENTIFY, MSGL_INFO, "pause args:%d\n", cmd->args[0].v.i);
+				
+				mp_input_get_cmd(0, 1, 0);
+				mp_cmd_free(cmd);
+				
+				if (cmd->args[0].v.i != 1) {
+					break;
+				}
+			} else {
+				cmd = mp_input_get_cmd(0, 1, 0);
+				run_command(mpctx, cmd);
+				mp_cmd_free(cmd);
+			}
+			continue;
         }
         if (mpctx->sh_video && mpctx->video_out && vo_config_count)
             mpctx->video_out->check_events();
@@ -2585,10 +2596,6 @@ static void pause_loop(void)
         if (mpctx->sh_video)
             handle_udp_master(mpctx->sh_video->pts);
         usec_sleep(20000);
-    }
-    if (cmd && cmd->id == MP_CMD_PAUSE) {
-        cmd = mp_input_get_cmd(0, 1, 0);
-        mp_cmd_free(cmd);
     }
     mpctx->osd_function = OSD_PLAY;
     if (mpctx->audio_out && mpctx->sh_audio) {

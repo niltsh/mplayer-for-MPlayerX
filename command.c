@@ -2737,9 +2737,11 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
 
         case MP_CMD_FRAME_STEP:
         case MP_CMD_PAUSE:
-            cmd->pausing = 1;
-            brk_cmd = 1;
-            break;
+				if (cmd->args[0].v.i != -1) {
+					cmd->pausing = 1;
+					brk_cmd = 1;
+				}
+				break;
 
         case MP_CMD_FILE_FILTER:
             file_filter = cmd->args[0].v.i;
