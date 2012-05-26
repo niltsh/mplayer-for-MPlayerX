@@ -147,6 +147,7 @@ float start_volume = -1;
 double start_pts   = MP_NOPTS_VALUE;
 char *heartbeat_cmd;
 float heartbeat_interval = 30.0;
+int mpx_startatpause = 0;
 int mpx_nodispclog = 0;
 static int max_framesize;
 
@@ -3660,8 +3661,14 @@ goto_enable_cache:
                 audio_delay += mpctx->sh_video->stream_delay;
         }
         if (mpctx->sh_audio) {
-            if (start_volume >= 0)
-                mixer_setvolume(&mpctx->mixer, start_volume, start_volume);
+            if (mpx_startatpause == 0) {
+                mp_msg(MSGT_IDENTIFY, MSGL_INFO, "[QZY] set volume:%f\n", start_volume);
+                if (start_volume >= 0)
+                    mixer_setvolume(&mpctx->mixer, start_volume, start_volume);                
+            } else if (mpx_startatpause == 1) {
+                mp_msg(MSGT_IDENTIFY, MSGL_INFO, "[QZY] set volume:0\n");
+                mixer_setvolume(&mpctx->mixer, 0.0f, 0.0f);
+            }
             if (!ignore_start)
                 audio_delay -= mpctx->sh_audio->stream_delay;
             mpctx->delay = -audio_delay;
@@ -3937,6 +3944,18 @@ goto_enable_cache:
 //============================ Handle PAUSE ===============================
 
             current_module = "pause";
+            
+            // it seams that push the command into the queue before playback
+            // wont work correctly, so here I proceed the pause command directly
+            if (mpx_startatpause == 1) {
+                run_command(mpctx, mp_input_parse_cmd("pause 1"));
+
+                if ((mpctx->sh_audio) && (start_volume >= 0)) {
+                    mp_msg(MSGT_IDENTIFY, MSGL_INFO, "[QZY] start vol:%f\n", start_volume);
+                    mixer_setvolume(&mpctx->mixer, start_volume, start_volume);
+                }
+                mpx_startatpause = -1;
+            }
 
             if (mpctx->osd_function == OSD_PAUSE) {
                 mpctx->was_paused = 1;
