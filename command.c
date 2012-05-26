@@ -3436,6 +3436,11 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
 		}
 		break;
 #endif
+    case MP_CMD_ABLOOP:
+        abloop_start = cmd->args[0].v.f;
+        abloop_stop = cmd->args[1].v.f;
+        abloop_firstentry = 0;
+        break;
     case MP_CMD_AF_ADD:
     case MP_CMD_AF_DEL:
         if (!sh_audio)

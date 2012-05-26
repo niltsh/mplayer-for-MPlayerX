@@ -46,6 +46,10 @@ extern int capture_dump;
 extern int stream_dump_type;
 extern char *stream_dump_name;
 
+extern double abloop_start;
+extern double abloop_stop;
+extern int abloop_firstentry;
+
 void update_set_of_subtitles(void);
 
 #endif /* MPLAYER_MPLAYER_H */

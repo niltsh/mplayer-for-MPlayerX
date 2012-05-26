@@ -323,6 +323,10 @@ static unsigned int initialized_flags;
 
 int volstep = 3; ///< step size of mixer changes
 
+double abloop_start = -1.0;
+double abloop_stop  = -1.0;
+int abloop_firstentry = 0;
+
 #ifdef CONFIG_CRASH_DEBUG
 static char *prog_path;
 static int crash_debug;
@@ -3952,6 +3956,34 @@ goto_enable_cache:
                 loop_seek     = 1;
             }
 
+            if ((abloop_start >= 0) && (abloop_stop >= 0)) {
+                // now in a abloop session
+                double nowpts = mpctx->sh_video ? mpctx->sh_video->pts :
+                                playing_audio_pts(mpctx->sh_audio,
+                                                  mpctx->d_audio,
+                                                  mpctx->audio_out);
+                if (nowpts >= 0) {
+                    // the pts is valid
+                    if (abloop_firstentry == 1) {
+                        abloop_firstentry = 2;
+                        // this is the really start point
+                        mp_msg(MSGT_GLOBAL, MSGL_V, "abloop: real start:%f\r\n", nowpts);
+                        if (abloop_stop <= nowpts) {
+                            abloop_stop = nowpts + 1;
+                        }
+                    }
+                    if ((nowpts >= abloop_stop) || (nowpts < abloop_start)){
+                        abs_seek_pos = SEEK_ABSOLUTE;
+                        rel_seek_secs = abloop_start;
+                        mp_msg(MSGT_GLOBAL, MSGL_V, "ablp: start:%f, stop:%f\r\n", abloop_start, abloop_stop);
+                        // first jump may not be accurate
+                        if (abloop_firstentry == 0) {
+                            abloop_firstentry = 1;
+                        }
+                    }
+                }
+            }
+            
             if (rel_seek_secs || abs_seek_pos) {
                 if (seek(mpctx, rel_seek_secs, abs_seek_pos) >= 0) {
                     // Set OSD:

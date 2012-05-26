@@ -213,6 +213,7 @@ static const mp_cmd_t mp_cmds[] = {
 #ifdef CONFIG_ASS
   { MP_ASS_MARGIN, "ass_margin", 3,  { {MP_CMD_ARG_FLOAT,{0}}, {MP_CMD_ARG_FLOAT,{0}},{MP_CMD_ARG_INT,{0}},{-1,{0}} } },
 #endif
+  { MP_CMD_ABLOOP, "abloop", 2, { {MP_CMD_ARG_FLOAT,{0}}, {MP_CMD_ARG_FLOAT,{0}}, {-1,{0}} }},
   { 0, NULL, 0, {} }
 };
 
