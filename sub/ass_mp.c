@@ -274,18 +274,21 @@ void ass_configure(ASS_Renderer* priv, int w, int h, int unscaled) {
 }
 
 void ass_configure_fonts(ASS_Renderer* priv) {
-	char *dir, *path, *family;
-	dir = get_path("fonts");
-	if (font_fontconfig < 0 && sub_font_name) path = strdup(sub_font_name);
-	else if (font_fontconfig < 0 && font_name) path = strdup(font_name);
-	else path = get_path("subfont.ttf");
-	if (font_fontconfig >= 0 && sub_font_name) family = strdup(sub_font_name);
-	else if (font_fontconfig >= 0 && font_name) family = strdup(font_name);
-	else family = 0;
+	char *path, *family;
+
+	if (sub_font_name) {
+		path = strdup(sub_font_name);
+		family = strdup(sub_font_name);
+	} else if (font_name) {
+		path = strdup(font_name);
+		family = strdup(font_name);
+	} else {
+		path = get_path("subfont.ttf");
+		family = 0;
+	}
 
         ass_set_fonts(priv, path, family, font_fontconfig, NULL, 1);
 
-	free(dir);
 	free(path);
 	free(family);
 }
