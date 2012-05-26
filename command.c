@@ -3421,6 +3421,21 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
             af_uninit(mpctx->mixer.afilter);
             af_init(mpctx->mixer.afilter);
         }
+#ifdef CONFIG_ASS
+	case MP_ASS_MARGIN:
+		if (mpctx->sh_video && 
+			((fabsf(ass_bottom_margin_ratio - cmd->args[0].v.f) > 0.001) || 
+			(fabsf(ass_top_margin_ratio - cmd->args[1].v.f) > 0.001) ||
+			(ass_use_margins != cmd->args[2].v.i))) {
+			ass_bottom_margin_ratio = cmd->args[0].v.f;
+			ass_top_margin_ratio = cmd->args[1].v.f;
+			ass_use_margins = cmd->args[2].v.i;
+			
+			uninit_player(INITIALIZED_VO);
+			reinit_video_chain();
+		}
+		break;
+#endif
     case MP_CMD_AF_ADD:
     case MP_CMD_AF_DEL:
         if (!sh_audio)

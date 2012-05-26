@@ -37,6 +37,9 @@ extern float ass_font_scale;
 extern float ass_line_spacing;
 extern int ass_top_margin;
 extern int ass_bottom_margin;
+extern float ass_bottom_margin_ratio;
+extern float ass_top_margin_ratio;
+
 extern int extract_embedded_fonts;
 extern char **ass_force_style_list;
 extern int ass_use_margins;

@@ -210,6 +210,9 @@ static const mp_cmd_t mp_cmds[] = {
 
   { MP_CMD_GUI, "gui", 1, { {MP_CMD_ARG_STRING, {0}}, {-1,{0}} } },
 
+#ifdef CONFIG_ASS
+  { MP_ASS_MARGIN, "ass_margin", 3,  { {MP_CMD_ARG_FLOAT,{0}}, {MP_CMD_ARG_FLOAT,{0}},{MP_CMD_ARG_INT,{0}},{-1,{0}} } },
+#endif
   { 0, NULL, 0, {} }
 };
 

@@ -53,6 +53,8 @@ char* ass_color = NULL;
 char* ass_border_color = NULL;
 char* ass_styles_file = NULL;
 int ass_hinting = ASS_HINTING_NATIVE + 4; // native hinting for unscaled osd
+float ass_bottom_margin_ratio = -1.0f;
+float ass_top_margin_ratio = -1.0f;
 
 static void init_style(ASS_Style *style, const char *name, double playres)
 {
