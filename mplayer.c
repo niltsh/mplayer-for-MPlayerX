@@ -147,6 +147,7 @@ float start_volume = -1;
 double start_pts   = MP_NOPTS_VALUE;
 char *heartbeat_cmd;
 float heartbeat_interval = 30.0;
+int mpx_nodispclog = 0;
 static int max_framesize;
 
 int noconsolecontrols;
