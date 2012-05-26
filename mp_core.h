@@ -46,9 +46,9 @@
 #define INITIALIZED_ALL     0xFFFF
 
 
-#define SUB_SOURCE_SUBS 0
-#define SUB_SOURCE_VOBSUB 1
-#define SUB_SOURCE_DEMUX 2
+#define SUB_SOURCE_SUBS 1
+#define SUB_SOURCE_VOBSUB 2
+#define SUB_SOURCE_DEMUX 0
 #define SUB_SOURCES 3
 
 
