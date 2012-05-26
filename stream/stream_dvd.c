@@ -551,7 +551,7 @@ static void list_chapters(ifo_handle_t *vts_file, tt_srpt_t *tt_srpt, int title_
        return;
     ptt = vts_file->vts_ptt_srpt->title[title_no].ptt;
 
-    mp_msg(MSGT_IDENTIFY, MSGL_INFO, "CHAPTERS: ");
+    mp_msg(MSGT_IDENTIFY, MSGL_INFO, "MPX_CHAPTERINFO=");
     for(i=0; i<vts_file->vts_ptt_srpt->title[title_no].nr_of_ptts; i++)
     {
         pgc = vts_file->vts_pgcit->pgci_srp[ptt[i].pgcn-1].pgc;
@@ -560,7 +560,13 @@ static void list_chapters(ifo_handle_t *vts_file, tt_srpt_t *tt_srpt, int title_
             last_cell = pgc->program_map[ptt[i].pgn];
         else
             last_cell = 0;
-        mp_msg(MSGT_IDENTIFY, MSGL_INFO, "%02d:%02d:%02d.%03d,", t/3600000, (t/60000)%60, (t/1000)%60, t%1000);
+        
+        if (i == 0) {
+            mp_msg(MSGT_IDENTIFY, MSGL_INFO, "%02d:%02d:%02d.%03d", t/3600000, (t/60000)%60, (t/1000)%60, t%1000);
+        } else {
+            mp_msg(MSGT_IDENTIFY, MSGL_INFO, ",%02d:%02d:%02d.%03d", t/3600000, (t/60000)%60, (t/1000)%60, t%1000);
+        }
+        
         do {
             if(!(pgc->cell_playback[cell-1].block_type == BLOCK_TYPE_ANGLE_BLOCK &&
                  pgc->cell_playback[cell-1].block_mode != BLOCK_MODE_FIRST_CELL)
@@ -676,6 +682,11 @@ static int control(stream_t *stream,int cmd,void* arg)
             r = get_num_chapter(d->vts_file, d->tt_srpt, d->cur_title-1);
             if(! r) return STREAM_UNSUPPORTED;
             *((unsigned int *)arg) = r;
+            return 1;
+        }
+        case STREAM_CTRL_GET_CHAPTER_INFO:
+        {
+            list_chapters(d->vts_file, d->tt_srpt, d->cur_title-1);
             return 1;
         }
         case STREAM_CTRL_SEEK_TO_CHAPTER:
@@ -1042,7 +1053,7 @@ static int open_s(stream_t *stream,int mode, void* opts, int* file_format) {
       return STREAM_UNSUPPORTED;
     for(k=0; k<d->cur_pgc->nr_of_cells; k++)
       d->cell_times_table[k] = mp_dvdtimetomsec(&d->cur_pgc->cell_playback[k].playback_time);
-    list_chapters(vts_file,tt_srpt,dvd_title);
+    //list_chapters(vts_file,tt_srpt,dvd_title);
 
     // ... (unimplemented)
     //    return NULL;

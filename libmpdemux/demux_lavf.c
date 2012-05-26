@@ -570,6 +570,26 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
         t = av_dict_get(c->metadata, "title", NULL, 0);
         demuxer_add_chapter(demuxer, t ? t->value : NULL, start, end);
     }
+    
+    { // QZY
+        char *pout = (char*)malloc(8000);
+        char *chptStr = (char*)malloc(200);
+        *pout = 0;
+        *chptStr = 0;
+        for (i=0; i < demuxer->num_chapters; ++i) {
+            snprintf(chptStr, 200, ";;%s^^%"PRIu64"^^%"PRIu64"", 
+                     demuxer->chapters[i].name,
+                     demuxer->chapters[i].start,
+                     demuxer->chapters[i].end);
+            strcat(pout, chptStr);
+        }
+
+        if (*pout) {
+            mp_msg(MSGT_IDENTIFY,MSGL_INFO, "MPX_CHAPTERSINFO=%s\n", pout+2);
+        }
+        free(chptStr);
+        free(pout);
+    }
 
     for(i=0; i<avfc->nb_streams; i++)
         handle_stream(demuxer, avfc, i);
