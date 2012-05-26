@@ -42,6 +42,7 @@
   void* context;   /* codec-specific stuff (usually HANDLE or struct pointer) */ \
   char* lang; /* track language */ \
   int default_track; \
+  char *name; \
 
 typedef struct sh_common {
   SH_COMMON
