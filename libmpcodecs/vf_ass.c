@@ -234,20 +234,23 @@ static void copy_from_image(struct vf_instance *vf, int first_row,
     unsigned char val;
     int chroma_rows;
 
-    first_row  -= (first_row % 2);
-    last_row   += (last_row  % 2);
-    chroma_rows = (last_row - first_row) / 2;
+    first_row  &= 0xFFFFFFFFFFFFFFFE;
+    last_row    = ((last_row + 1) & 0xFFFFFFFFFFFFFFFE);
+    chroma_rows = (last_row - first_row) >> 1;
 
-    assert(first_row >= 0);
+	assert(first_row >= 0);
     assert(first_row <= last_row);
-    assert(last_row  <= vf->priv->outh);
 
+	if (last_row > vf->priv->outh) {
+		last_row = vf->priv->outh;
+	}
+	
     for (pl = 1; pl < 3; ++pl) {
         int dst_stride = vf->priv->outw;
         int src_stride = vf->dmpi->stride[pl];
 
-        unsigned char *src      = vf->dmpi->planes[pl] + (first_row / 2) * src_stride;
-        unsigned char *dst      = vf->priv->planes[pl] +  first_row      * dst_stride;
+        unsigned char *src      = vf->dmpi->planes[pl] + (first_row >> 1) * src_stride;
+        unsigned char *dst      = vf->priv->planes[pl] +  first_row       * dst_stride;
         unsigned char *dst_next = dst + dst_stride;
         for (i = 0; i < chroma_rows; ++i) {
             if ((vf->priv->dirty_rows[first_row + i * 2    ] == 0) ||
