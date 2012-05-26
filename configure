@@ -2604,7 +2604,7 @@ elif test -z "$CFLAGS" ; then
   elif test "$cc_vendor" = "sun" ; then
     CFLAGS="-O2 $_march $_mcpu $_pipe -xc99 -xregs=frameptr"
   elif test "$cc_vendor" = "clang"; then
-    CFLAGS="-O2 $_march $_pipe"
+    CFLAGS="-O3 $_march $_pipe"
   elif test "$cc_vendor" != "gnu" ; then
     CFLAGS="-O2 $_march $_mcpu $_pipe"
   else
