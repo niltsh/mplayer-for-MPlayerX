@@ -1493,14 +1493,19 @@ static int mp_property_sub(m_option_t *prop, int action, void *arg,
             return M_PROPERTY_OK;
         }
         if (dvdsub_id >= 0) {
-            char lang[40] = MSGTR_Unknown;
-            int id = dvdsub_id;
-            // HACK: for DVDs sub->sh/id will be invalid until
-            // we actually get the first packet
-            if (d_sub && d_sub->sh)
-                id = d_sub->id;
-            demuxer_sub_lang(mpctx->demuxer, id, lang, sizeof(lang));
-            snprintf(*(char **) arg, 511, "(%d) %s", dvdsub_id, lang);
+            char lang[512] = MSGTR_Unknown;
+            char *name = NULL;
+            // dvdsub_id is actually the sid
+            // looking for id from dvdsub_id
+            for (int i = 0; i < MAX_S_STREAMS; i++) {
+                sh_sub_t *sh = mpctx->demuxer->s_streams[i];
+                if (sh && sh->sid == dvdsub_id) {
+                    demuxer_sub_lang(mpctx->demuxer, i, lang, sizeof(lang));
+                    name = sh->name;
+                    break;
+                }
+            }
+            snprintf(*(char **) arg, 511, "(%d) %s [%s]", dvdsub_id, (name)?(name):("noname"), lang);
             return M_PROPERTY_OK;
         }
         snprintf(*(char **) arg, 511, MSGTR_Disabled);
