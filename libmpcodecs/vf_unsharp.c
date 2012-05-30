@@ -165,6 +165,7 @@ static void get_image( struct vf_instance *vf, mp_image_t *mpi ) {
     if( mpi->imgfmt!=vf->priv->outfmt )
         return; // colorspace differ
 
+    mpi->priv =
     vf->dmpi = vf_get_image( vf->next, mpi->imgfmt, mpi->type, mpi->flags, mpi->w, mpi->h );
     mpi->planes[0] = vf->dmpi->planes[0];
     mpi->stride[0] = vf->dmpi->stride[0];
@@ -179,12 +180,11 @@ static void get_image( struct vf_instance *vf, mp_image_t *mpi ) {
 }
 
 static int put_image( struct vf_instance *vf, mp_image_t *mpi, double pts) {
-    mp_image_t *dmpi;
+    mp_image_t *dmpi = mpi->priv;
 
     if( !(mpi->flags & MP_IMGFLAG_DIRECT) )
         // no DR, so get a new image! hope we'll get DR buffer:
-        vf->dmpi = vf_get_image( vf->next,vf->priv->outfmt, MP_IMGTYPE_TEMP, MP_IMGFLAG_ACCEPT_STRIDE, mpi->w, mpi->h);
-    dmpi= vf->dmpi;
+        dmpi = vf->dmpi = vf_get_image( vf->next,vf->priv->outfmt, MP_IMGTYPE_TEMP, MP_IMGFLAG_ACCEPT_STRIDE, mpi->w, mpi->h);
 
     unsharp( dmpi->planes[0], mpi->planes[0], dmpi->stride[0], mpi->stride[0], mpi->w,   mpi->h,   &vf->priv->lumaParam );
     unsharp( dmpi->planes[1], mpi->planes[1], dmpi->stride[1], mpi->stride[1], mpi->w/2, mpi->h/2, &vf->priv->chromaParam );
