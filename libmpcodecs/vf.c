@@ -361,7 +361,8 @@ mp_image_t* vf_get_image(vf_instance_t* vf, unsigned int outfmt, int mp_imgtype,
                 if (mpi->flags & MP_IMGFLAG_RGB_PALETTE)
                     av_freep(&mpi->planes[1]);
                 mpi->flags&=~MP_IMGFLAG_ALLOCATED;
-                mp_msg(MSGT_VFILTER,MSGL_V,"vf.c: have to REALLOCATE buffer memory :(\n");
+                mp_msg(MSGT_VFILTER,MSGL_V,"vf.c: have to REALLOCATE buffer memory in vf_%s :(\n",
+                       vf->info->name);
             }
 //      } else {
         } {
@@ -428,6 +429,10 @@ mp_image_t* vf_get_image(vf_instance_t* vf, unsigned int outfmt, int mp_imgtype,
   mpi->qscale = NULL;
   }
   mpi->usage_count++;
+  // TODO: figure out what is going on with EXPORT types
+  if (mpi->usage_count > 1 && mpi->type != MP_IMGTYPE_EXPORT)
+      mp_msg(MSGT_VFILTER, MSGL_V, "Suspicious mp_image usage count %i in vf_%s (type %i)\n",
+             mpi->usage_count, vf->info->name, mpi->type);
 //  printf("\rVF_MPI: %p %p %p %d %d %d    \n",
 //      mpi->planes[0],mpi->planes[1],mpi->planes[2],
 //      mpi->stride[0],mpi->stride[1],mpi->stride[2]);
@@ -693,6 +698,11 @@ int vf_next_query_format(struct vf_instance *vf, unsigned int fmt){
 
 int vf_next_put_image(struct vf_instance *vf,mp_image_t *mpi, double pts){
     mpi->usage_count--;
+    if (mpi->usage_count < 0) {
+        mp_msg(MSGT_VFILTER, MSGL_V, "Bad mp_image usage count %i in vf_%s (type %i)\n",
+               mpi->usage_count, vf->info->name, mpi->type);
+        mpi->usage_count = 0;
+    }
     return vf->next->put_image(vf->next,mpi, pts);
 }
 
