@@ -3234,7 +3234,7 @@ play_next_file:
         current_module = "handle_playlist";
         mp_msg(MSGT_CPLAYER, MSGL_V, "Parsing playlist %s...\n",
                filename_recode(filename));
-        entry      = parse_playtree(mpctx->stream, 0);
+        entry      = parse_playtree(mpctx->stream, use_gui);
         mpctx->eof = playtree_add_playlist(entry);
         goto goto_next_file;
     }
