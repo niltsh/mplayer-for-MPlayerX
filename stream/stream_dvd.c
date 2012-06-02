@@ -26,8 +26,8 @@
 #include "config.h"
 #include "mp_msg.h"
 #include "help_mp.h"
+#include "path.h"
 
-#include <libgen.h>
 #include <errno.h>
 
 #define FIRST_AC3_AID 128
@@ -1082,10 +1082,10 @@ static int ifo_stream_open (stream_t *stream, int mode, void *opts, int *file_fo
 
     mp_msg(MSGT_DVD, MSGL_INFO, ".IFO detected. Redirecting to dvd://\n");
 
-    filename = strdup(basename(stream->url));
+    filename = strdup(mp_basename(stream->url));
 
     spriv=calloc(1, sizeof(struct stream_priv_s));
-    spriv->device = strdup(dirname(stream->url));
+    spriv->device = mp_dirname(stream->url);
     if(!strncasecmp(filename,"vts_",4))
     {
         if(sscanf(filename+3, "_%02d_", &spriv->title)!=1)
