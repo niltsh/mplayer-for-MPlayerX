@@ -7,8 +7,10 @@ svnurl=svn://svn.mplayerhq.hu/mplayer/trunk
 
 rm -rf $dst/ $dst-DOCS/
 
-svn export svn://svn.mplayerhq.hu/mplayer/trunk $dst/
-echo $ver > $dst/VERSION
+svn export $svnurl $dst/
+if ! test -e $dst/VERSION ; then
+  echo $ver > $dst/VERSION
+fi
 
 # create HTML docs
 cp -a $dst/ $dst-DOCS/
@@ -24,4 +26,6 @@ rm -rf $dst-DOCS/
 git clone --depth 1 git://git.videolan.org/ffmpeg.git $dst/ffmpeg
 rm -rf $dst/.git* $dst/ffmpeg/.git*
 
-tar --owner=0 --group=0 -cjf $dst.tar.bz2 $dst/
+tar --owner=0 --group=0 -cf $dst.tar $dst/
+xz -k $dst.tar
+gzip -9 $dst.tar
