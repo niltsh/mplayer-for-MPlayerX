@@ -45,6 +45,8 @@
 #include "osdep/osdep.h"
 
 char *get_path(const char *filename){
+	// temporary buffer that will be freed
+	char *tmp = 0;
 	char *homedir;
 	char *buff;
 #ifdef __MINGW32__
@@ -65,40 +67,33 @@ char *get_path(const char *filename){
 	if ((homedir = getenv("MPLAYER_HOME")) != NULL)
 		config_dir = "";
 	else if ((homedir = getenv("HOME")) == NULL)
-#if defined(__MINGW32__) || defined(__CYGWIN__)
-	/* Hack to get fonts etc. loaded outside of Cygwin environment. */
 	{
-		int i,imax=0;
-		char exedir[260];
-		GetModuleFileNameA(NULL, exedir, 260);
-		for (i=0; i< strlen(exedir); i++)
-			if (exedir[i] =='\\')
-				{exedir[i]='/'; imax=i;}
-		exedir[imax]='\0';
-		homedir = exedir;
-	}
-#elif defined(__OS2__)
-    {
-        PPIB ppib;
-        char path[260];
-
-        // Get process info blocks
-        DosGetInfoBlocks(NULL, &ppib);
-
-        // Get full path of the executable
-        DosQueryModuleName(ppib->pib_hmte, sizeof( path ), path);
-
-        // Truncate name part including last backslash
-        *strrchr(path, '\\') = 0;
-
-        // Convert backslash to slash
-        _fnslashify(path);
-
-        homedir = path;
-    }
+#if !defined(__MINGW32__) && !defined(__CYGWIN__) && !defined(__OS2__)
+		return NULL;
 #else
-	return NULL;
+		int i;
+		char path[260];
+#ifdef __OS2__
+		PPIB ppib;
+		// Get process info blocks
+		DosGetInfoBlocks(NULL, &ppib);
+		// Get full path of the executable
+		DosQueryModuleName(ppib->pib_hmte, sizeof( path ), path);
+#else
+		GetModuleFileNameA(NULL, path, 260);
 #endif
+		// Extract directory part
+		tmp = homedir = mp_dirname(path);
+		// Convert backslashes to slashes
+		for (i = 0; homedir[i]; i++)
+			if (homedir[i] == '\\') homedir[i] = '/';
+		// If there is a trailing slash remove it.
+		// If there isn't, remove the one from config dir (if homedir
+		// ends up e.g. c:)
+		if (i && homedir[i-1] == '/') homedir[i-1] = 0;
+		else config_dir++;
+#endif
+	}
 	len = strlen(homedir) + strlen(config_dir) + 1;
 	if (filename == NULL) {
 		if ((buff = malloc(len)) == NULL)
@@ -151,6 +146,7 @@ char *get_path(const char *filename){
 		}
 	}
 #endif
+	free(tmp);
 	mp_msg(MSGT_GLOBAL,MSGL_V,"get_path('%s') -> '%s'\n",filename,buff);
 	return buff;
 }
