@@ -48,9 +48,9 @@ char *get_path(const char *filename){
 	char *homedir;
 	char *buff;
 #ifdef __MINGW32__
-	static char *config_dir = "/mplayer";
+	const char *config_dir = "/mplayer";
 #else
-	static char *config_dir = "/.mplayer";
+	const char *config_dir = "/.mplayer";
 #endif
 	int len;
 #ifdef CONFIG_MACOSX_BUNDLE
