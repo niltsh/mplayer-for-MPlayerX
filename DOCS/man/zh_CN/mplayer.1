@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 34909
+.\" sync with en/mplayer.1 rev. 34993
 .\" MPlayer (C) 2000-2012 MPlayer Team
 .\" This man page was/is translated by JRaSH<jrash06 at gmail.com>
 .
@@ -2069,7 +2069,8 @@ radio://1, radio://104.4, radio_set_channel 1
 .TP
 .B \-speed <0.01\-100>
 以所给的参数因子减慢或加快播放速度。\
-与 \-oac copy 一起使用时不能保证正常起作用。
+与 \-oac copy 一起使用时不能保证正常起作用。\
+添加 \-af scaletempo 参数可以在播放时突破 4 倍速度限制。
 .
 .TP
 .B \-srate <Hz>
