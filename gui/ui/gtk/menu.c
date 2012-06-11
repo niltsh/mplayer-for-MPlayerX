@@ -625,6 +625,7 @@ GtkWidget * create_PopUpMenu( void )
    {
     int i;
     SubMenu=AddSubMenu( window1, (const char*)empty_xpm, Menu, MSGTR_MENU_Subtitles );
+    AddMenuCheckItem( window1, (const char*)empty1px_xpm, SubMenu, MSGTR_MENU_None, guiInfo.mpcontext->global_sub_pos == -1, (-1 << 16) + ivSetSubtitle );
     for ( i=0;i < global_sub_size;i++ )
      {
       char tmp[32];
