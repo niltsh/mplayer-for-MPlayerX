@@ -66,6 +66,7 @@
 #include "gui/ui/pixmaps/empty.xpm"
 #include "gui/ui/pixmaps/loadeaf.xpm"
 #include "gui/ui/pixmaps/title.xpm"
+#include "gui/ui/pixmaps/subtitle.xpm"
 #ifdef CONFIG_CDDA
 #include "gui/ui/pixmaps/cd.xpm"
 #include "gui/ui/pixmaps/playcd.xpm"
@@ -624,7 +625,7 @@ GtkWidget * create_PopUpMenu( void )
   if ( global_sub_size && guiInfo.StreamType != STREAMTYPE_DVD )
    {
     int i;
-    SubMenu=AddSubMenu( window1, (const char*)empty_xpm, Menu, MSGTR_MENU_Subtitles );
+    SubMenu=AddSubMenu( window1, (const char*)subtitle_xpm, Menu, MSGTR_MENU_Subtitles );
     AddMenuCheckItem( window1, (const char*)empty1px_xpm, SubMenu, MSGTR_MENU_None, guiInfo.mpcontext->global_sub_pos == -1, (-1 << 16) + ivSetSubtitle );
     for ( i=0;i < global_sub_size;i++ )
      {
