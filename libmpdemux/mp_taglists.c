@@ -69,6 +69,9 @@ static const struct AVCodecTag mp_wav_tags[] = {
     { CODEC_ID_SPEEX,             MKTAG('s', 'p', 'x', ' ')},
     { CODEC_ID_TTA,               MKTAG('T', 'T', 'A', '1')},
     { CODEC_ID_TWINVQ,            MKTAG('T', 'W', 'I', '2')},
+#if LIBAVUTIL_VERSION_MICRO >= 100
+    { CODEC_ID_VIMA,              MKTAG('V', 'I', 'M', 'A')},
+#endif
     { CODEC_ID_VMDAUDIO,          MKTAG('V', 'M', 'D', 'A')},
     { CODEC_ID_WAVPACK,           MKTAG('W', 'V', 'P', 'K')},
     { CODEC_ID_WESTWOOD_SND1,     MKTAG('S', 'N', 'D', '1')},
@@ -147,6 +150,9 @@ static const struct AVCodecTag mp_bmp_tags[] = {
     { CODEC_ID_RV20,              MKTAG('R', 'V', '2', '0')},
     { CODEC_ID_RV30,              MKTAG('R', 'V', '3', '0')},
     { CODEC_ID_RV40,              MKTAG('R', 'V', '4', '0')},
+#if LIBAVUTIL_VERSION_MICRO >= 100
+    { CODEC_ID_SANM,              MKTAG('S', 'A', 'N', 'M')},
+#endif
     { CODEC_ID_SVQ3,              MKTAG('S', 'V', 'Q', '3')},
     { CODEC_ID_TMV,               MKTAG('t', 'm', 'v', '8')},
     { CODEC_ID_TGV,               MKTAG('f', 'V', 'G', 'T')},
