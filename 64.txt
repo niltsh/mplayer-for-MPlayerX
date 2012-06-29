@@ -43,6 +43,8 @@ Checking for round ... yes
 Checking for roundf ... yes 
 Checking for trunc ... yes 
 Checking for truncf ... yes 
+Checking for isnan ... yes 
+Checking for isinf ... yes 
 Checking for mkstemp ... yes 
 Checking for nanosleep ... yes 
 Checking for socklib ... yes 
@@ -60,6 +62,7 @@ Checking for closesocket() ... no
 Checking for networking ... yes 
 Checking for inet6 ... yes 
 Checking for gethostbyname2 ... yes 
+Checking for SCTP ... no 
 Checking for sys/poll.h ... yes 
 Checking for inttypes.h (required) ... yes 
 Checking for int_fastXY_t in inttypes.h ... yes 
@@ -197,6 +200,7 @@ Checking for Nemesi Streaming Media libraries ... no
 Checking for LIVE555 Streaming Media libraries ... yes (using /usr/local/lib/live)
 Checking for RTMPDump Streaming Media library ... no 
 Checking for FFmpeg ... yes 
+Checking for libpostproc ... yes 
 Checking for libopencore_amr narrowband ... no 
 Checking for libopencore_amr wideband ... no 
 Checking for libdv-0.9.5+ ... no 
