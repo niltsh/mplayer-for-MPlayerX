@@ -8765,6 +8765,7 @@ $def_yasm
 #define HAVE_LDBRX 0
 #define HAVE_LOCALTIME_R 0
 #define HAVE_MAPVIEWOFFILE 0
+#define HAVE_MIPSDSPR1 0
 #define HAVE_MIPSFPU 0
 #define HAVE_PPC4XX 0
 #define HAVE_STRERROR_R 0
