@@ -100,6 +100,10 @@ static const struct AVCodecTag mp_codecid_override_tags[] = {
     { CODEC_ID_H264,              MKTAG('H', '2', '6', '4')},
     { CODEC_ID_MP3,               0x55},
     { CODEC_ID_MPEG4,             MKTAG('M', 'P', '4', 'V')},
+#if LIBAVUTIL_VERSION_MICRO >= 100
+    { CODEC_ID_PAF_AUDIO,         MKTAG('P', 'A', 'F', 'A')},
+    { CODEC_ID_PAF_VIDEO,         MKTAG('P', 'A', 'F', 'V')},
+#endif
     { CODEC_ID_PCM_BLURAY,        MKTAG('B', 'P', 'C', 'M')},
     { CODEC_ID_PCM_S8,            MKTAG('t', 'w', 'o', 's')},
     { CODEC_ID_PCM_U8,            1},
