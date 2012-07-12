@@ -3131,7 +3131,7 @@ fi
 echores "$_kstat"
 
 
-for func in cbrtf exp2 exp2f llrint llrintf log2 log2f lrint lrintf round roundf trunc truncf isnan isinf; do
+for func in cbrtf exp2 exp2f llrint llrintf log2 log2f lrint lrintf rint round roundf trunc truncf isnan isinf; do
 echocheck $func
 eval _$func=no
 statement_check math.h "${func}(2.0)" -D_ISOC99_SOURCE && eval _$func=yes
@@ -8727,6 +8727,7 @@ $def_pic
 $def_poll_h
 $def_posix_memalign
 $def_pthreads
+$def_rint
 $def_round
 $def_roundf
 $def_threads
