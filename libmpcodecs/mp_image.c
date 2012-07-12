@@ -126,6 +126,14 @@ void mp_image_setfmt(mp_image_t* mpi,unsigned int out_fmt){
         mpi->bpp=24;
         mpi->flags|=MP_IMGFLAG_PLANAR;
         return;
+    } else if (out_fmt == IMGFMT_GBR12P) {
+        mpi->bpp=36;
+        mpi->flags|=MP_IMGFLAG_PLANAR;
+        return;
+    } else if (out_fmt == IMGFMT_GBR14P) {
+        mpi->bpp=42;
+        mpi->flags|=MP_IMGFLAG_PLANAR;
+        return;
     }
     mpi->flags|=MP_IMGFLAG_YUV;
     if (mp_get_chroma_shift(out_fmt, NULL, NULL, NULL)) {
@@ -152,18 +160,30 @@ void mp_image_setfmt(mp_image_t* mpi,unsigned int out_fmt){
     case IMGFMT_440P:
     case IMGFMT_444P16_LE:
     case IMGFMT_444P16_BE:
+    case IMGFMT_444P14_LE:
+    case IMGFMT_444P14_BE:
+    case IMGFMT_444P12_LE:
+    case IMGFMT_444P12_BE:
     case IMGFMT_444P10_LE:
     case IMGFMT_444P10_BE:
     case IMGFMT_444P9_LE:
     case IMGFMT_444P9_BE:
     case IMGFMT_422P16_LE:
     case IMGFMT_422P16_BE:
+    case IMGFMT_422P14_LE:
+    case IMGFMT_422P14_BE:
+    case IMGFMT_422P12_LE:
+    case IMGFMT_422P12_BE:
     case IMGFMT_422P10_LE:
     case IMGFMT_422P10_BE:
     case IMGFMT_422P9_LE:
     case IMGFMT_422P9_BE:
     case IMGFMT_420P16_LE:
     case IMGFMT_420P16_BE:
+    case IMGFMT_420P14_LE:
+    case IMGFMT_420P14_BE:
+    case IMGFMT_420P12_LE:
+    case IMGFMT_420P12_BE:
     case IMGFMT_420P10_LE:
     case IMGFMT_420P10_BE:
     case IMGFMT_420P9_LE:
