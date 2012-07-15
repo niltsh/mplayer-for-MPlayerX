@@ -63,6 +63,9 @@ const char *vo_format_name(int format)
     case IMGFMT_CLPL:    return "Planar CLPL";
     case IMGFMT_Y800:    return "Planar Y800";
     case IMGFMT_Y8:      return "Planar Y8";
+    case IMGFMT_Y8A:     return "Planar Y8 with alpha";
+    case IMGFMT_Y16_LE:  return "Planar Y16 little-endian";
+    case IMGFMT_Y16_BE:  return "Planar Y16 big-endian";
     case IMGFMT_420P16_LE: return "Planar 420P 16-bit little-endian";
     case IMGFMT_420P16_BE: return "Planar 420P 16-bit big-endian";
     case IMGFMT_420P14_LE: return "Planar 420P 14-bit little-endian";

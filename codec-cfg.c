@@ -200,7 +200,11 @@ static const struct {
     {"411P",        IMGFMT_411P},
     {"440P",        IMGFMT_440P},
     {"Y800",        IMGFMT_Y800},
+    {"Y8A",         IMGFMT_Y8A},
     {"Y8",          IMGFMT_Y8},
+    {"Y16",         IMGFMT_Y16},
+    {"Y16LE",       IMGFMT_Y16_LE},
+    {"Y16BE",       IMGFMT_Y16_BE},
 
     {"YUY2",        IMGFMT_YUY2},
     {"UYVY",        IMGFMT_UYVY},

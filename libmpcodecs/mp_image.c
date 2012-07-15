@@ -189,11 +189,17 @@ void mp_image_setfmt(mp_image_t* mpi,unsigned int out_fmt){
     case IMGFMT_420P9_LE:
     case IMGFMT_420P9_BE:
         return;
+    case IMGFMT_Y16_LE:
+    case IMGFMT_Y16_BE:
+        mpi->bpp=16;
     case IMGFMT_Y800:
     case IMGFMT_Y8:
         /* they're planar ones, but for easier handling use them as packed */
         mpi->flags&=~MP_IMGFLAG_PLANAR;
         mpi->num_planes=1;
+        return;
+    case IMGFMT_Y8A:
+        mpi->num_planes=2;
         return;
     case IMGFMT_UYVY:
         mpi->flags|=MP_IMGFLAG_SWAPPED;
