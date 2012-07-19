@@ -29,6 +29,7 @@
 static const struct AVCodecTag mp_wav_tags[] = {
     { CODEC_ID_ADPCM_4XM,         MKTAG('4', 'X', 'M', 'A')},
     { CODEC_ID_ADPCM_ADX,         MKTAG('S', 'a', 'd', 'x')},
+    { CODEC_ID_ADPCM_IMA_APC,     MKTAG('A', 'P', 'C', 'A')},
     { CODEC_ID_ADPCM_EA,          MKTAG('A', 'D', 'E', 'A')},
     { CODEC_ID_ADPCM_EA_R1,       MKTAG('E', 'A', 'R', '1')},
     { CODEC_ID_ADPCM_EA_R2,       MKTAG('E', 'A', 'R', '2')},
