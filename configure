@@ -8770,6 +8770,7 @@ $def_yasm
 #define HAVE_MIPSDSPR1 0
 #define HAVE_MIPSFPU 0
 #define HAVE_MM_EMPTY 0
+#define HAVE_PTHREAD_CANCEL 0
 #define HAVE_PPC4XX 0
 #define HAVE_RDTSC 0
 #define HAVE_STRERROR_R 0
