@@ -778,8 +778,8 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
     av_init_packet(&pkt);
     pkt.data = data;
     pkt.size = len;
-    // HACK: make PNGs decode normally instead of as CorePNG delta frames
-    pkt.flags = AV_PKT_FLAG_KEY;
+    // Necessary to decode e.g. CorePNG and ZeroCodec correctly
+    pkt.flags = (sh->ds->flags & 1) ? AV_PKT_FLAG_KEY : 0;
     if (!ctx->palette_sent && sh->bih && sh->bih->biBitCount <= 8) {
         /* Pass palette to codec */
         uint8_t *pal_data = (uint8_t *)(sh->bih+1);
