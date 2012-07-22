@@ -441,6 +441,7 @@ Codecs:
   --disable-ladspa          disable LADSPA plugin support [autodetect]
   --disable-libbs2b         disable libbs2b audio filter support [autodetect]
   --disable-libdv           disable libdv 0.9.5 en/decoding support [autodetect]
+  --disable-libopus         disable libopus decoding support [autodetect]
   --disable-mpg123          disable libmpg123 MP3 decoding support [autodetect]
   --disable-mad             disable libmad (MPEG audio) support [autodetect]
   --disable-mp3lame         disable LAME MP3 encoding support [autodetect]
@@ -758,6 +759,7 @@ _faac=auto
 _faac_lavc=auto
 _ladspa=auto
 _libbs2b=auto
+_libopus=auto
 _xmms=no
 _vcd=auto
 _bluray=auto
@@ -1169,6 +1171,8 @@ for ac_option do
   --disable-ladspa)     _ladspa=no      ;;
   --enable-libbs2b)     _libbs2b=yes    ;;
   --disable-libbs2b)    _libbs2b=no     ;;
+  --enable-libopus)     _libopus=yes    ;;
+  --disable-libopus)    _libopus=no     ;;
   --enable-xmms)        _xmms=yes       ;;
   --disable-xmms)       _xmms=no        ;;
   --enable-vcd)         _vcd=yes        ;;
@@ -6497,6 +6501,27 @@ fi
 echores "$_faad"
 
 
+echocheck "libopus decoding support"
+if test "$_libopus" = auto ; then
+  _libopus=no
+  if $_pkg_config --exists 'opus' ; then
+    statement_check opus_multistream.h 'opus_multistream_decoder_create(0,0,0,0,0,0)' $($_pkg_config --libs --cflags opus) &&
+      _libopus=yes
+  fi
+fi
+if test "$_libopus" = yes ; then
+  def_libopus='#define CONFIG_LIBOPUS 1'
+  libavdecoders="$libavdecoders LIBOPUS_DECODER"
+  extra_cflags="$extra_cflags $($_pkg_config --cflags opus)"
+  extra_ldflags="$extra_ldflags $($_pkg_config --libs opus)"
+  codecmodules="libopus $codecmodules"
+else
+  nocodecmodules="libopus $nocodecmodules"
+  def_libopus='#undef CONFIG_LIBOPUS'
+fi
+echores "$_libopus"
+
+
 echocheck "LADSPA plugin support"
 if test "$_ladspa" = auto ; then
   _ladspa=no
@@ -8493,6 +8518,7 @@ $def_libdv
 $def_liblzo
 $def_libmpeg2
 $def_libmpeg2_internal
+$def_libopus
 $def_mad
 $def_mp3lame
 $def_mp3lame_preset

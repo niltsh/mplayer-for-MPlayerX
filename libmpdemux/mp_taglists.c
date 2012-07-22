@@ -59,6 +59,7 @@ static const struct AVCodecTag mp_wav_tags[] = {
     { CODEC_ID_MUSEPACK7,         MKTAG('M', 'P', 'C', ' ')},
     { CODEC_ID_MUSEPACK8,         MKTAG('M', 'P', 'C', '8')},
     { CODEC_ID_NELLYMOSER,        MKTAG('n', 'm', 'o', 's')},
+    { CODEC_ID_OPUS,              MKTAG('o', 'p', 'u', 's')},
     { CODEC_ID_PCM_LXF,           MKTAG('P', 'L', 'X', 'F')},
     { CODEC_ID_PCM_S16LE_PLANAR,  MKTAG('1', '6', 'P', 'L')},
     { CODEC_ID_QCELP,             MKTAG('Q', 'c', 'l', 'p')},
