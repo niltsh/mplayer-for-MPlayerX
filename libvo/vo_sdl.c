@@ -530,7 +530,8 @@ static void set_fullmode (int mode) {
 		screen_surface_w = vo_screenwidth;
 		screen_surface_h = vo_screenheight;
 	}
-	else if (mode < 0) {
+	else {
+	if (mode < 0) {
         int i,j,imax;
 		mode = 0; // Default to the biggest mode avaible
 		if ( mp_msg_test(MSGT_VO,MSGL_V) ) for(i=0;priv->fullmodes[i];++i)
@@ -553,6 +554,7 @@ static void set_fullmode (int mode) {
 	}
        screen_surface_h = priv->fullmodes[mode]->h;
        screen_surface_w = priv->fullmodes[mode]->w;
+       }
 
 	aspect_save_screenres(screen_surface_w, screen_surface_h);
 
