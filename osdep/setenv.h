@@ -23,6 +23,8 @@
 
 #if !HAVE_SETENV
 int setenv(const char *name, const char *val, int overwrite);
+#else
+#include <stdlib.h>
 #endif
 
 #endif /* MPLAYER_SETENV_H */
