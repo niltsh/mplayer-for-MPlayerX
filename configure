@@ -3961,7 +3961,7 @@ echocheck "setenv()"
 setenv=yes
 def_setenv='#define HAVE_SETENV 1'
 statement_check stdlib.h 'setenv("", "", 0)' ||
-    { setenv=no ; def_setenv='#undef HAVE_SETENV' ; }
+    { setenv=no ; def_setenv='#define HAVE_SETENV 0' ; }
 echores "$setenv"
 
 
