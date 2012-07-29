@@ -8256,7 +8256,7 @@ CC_C       = -c
 LD         = gcc
 RANLIB     = $_ranlib
 YASM       = $_yasm
-YASMDEP    = $_yasm
+DEPYASM    = $_yasm
 YASMFLAGS  = $YASMFLAGS
 
 CONFIG_STATIC = yes
