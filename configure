@@ -2961,10 +2961,11 @@ if arm ; then
   echores "$_iwmmxt"
 fi
 
-cpuexts_all='ALTIVEC AVX MMX MMX2 AMD3DNOW AMD3DNOWEXT SSE SSE2 SSSE3 FAST_CMOV CMOV FAST_CLZ ARMV5TE ARMV6 ARMV6T2 ARMVFP VFPV3 NEON IWMMXT MMI VIS MVI'
+cpuexts_all='ALTIVEC AVX MMX MMX2 MMXEXT AMD3DNOW AMD3DNOWEXT SSE SSE2 SSSE3 FAST_CMOV CMOV FAST_CLZ ARMV5TE ARMV6 ARMV6T2 ARMVFP VFPV3 NEON IWMMXT MMI VIS MVI'
 test "$_altivec"   = yes && cpuexts="ALTIVEC $cpuexts"
 test "$_mmx"       = yes && cpuexts="MMX $cpuexts"
 test "$_mmxext"    = yes && cpuexts="MMX2 $cpuexts"
+test "$_mmxext"    = yes && cpuexts="MMXEXT $cpuexts"
 test "$_3dnow"     = yes && cpuexts="AMD3DNOW $cpuexts"
 test "$_3dnowext"  = yes && cpuexts="AMD3DNOWEXT $cpuexts"
 test "$_sse"       = yes && cpuexts="SSE $cpuexts"
