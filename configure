@@ -72,9 +72,9 @@ compile_check() {
   echo >> "$TMPLOG"
   cat "$source" >> "$TMPLOG"
   echo >> "$TMPLOG"
-  echo "$_cc $WARNFLAGS $WARN_CFLAGS $CFLAGS $source $extra_cflags $ld_static $extra_ldflags $libs_mplayer $libs_mencoder -o $TMPEXE $@" >> "$TMPLOG"
+  echo "$_cc $WARNFLAGS $WARN_CFLAGS $CFLAGS $source $extra_cflags $ld_static $extra_ldflags $libs_mplayer $libs_mencoder -lm -o $TMPEXE $@" >> "$TMPLOG"
   rm -f "$TMPEXE"
-  $_cc $WARNFLAGS $WARN_CFLAGS $CFLAGS "$source" $extra_cflags $ld_static $extra_ldflags $libs_mplayer $libs_mencoder -o "$TMPEXE" "$@" >> "$TMPLOG" 2>&1
+  $_cc $WARNFLAGS $WARN_CFLAGS $CFLAGS "$source" $extra_cflags $ld_static $extra_ldflags $libs_mplayer $libs_mencoder -lm -o "$TMPEXE" "$@" >> "$TMPLOG" 2>&1
   TMPRES="$?"
   echo >> "$TMPLOG"
   echo >> "$TMPLOG"
@@ -1559,7 +1559,6 @@ else # if test -z "$_target"
 fi
 
 extra_cflags="-I. -Iffmpeg $extra_cflags"
-extra_ldflags="-lm $extra_ldflags"
 _timer=timer-linux.c
 _getch=getch2.c
 
@@ -7799,6 +7798,8 @@ else
   noinputmodules="dvdnav $noinputmodules"
 fi
 echores "$_dvdnav"
+
+extra_ldflags="$extra_ldflags -lm"
 
 # DO NOT ADD ANY TESTS THAT USE LINKER FLAGS HERE (like cc_check).
 # Read dvdnav comment above.
