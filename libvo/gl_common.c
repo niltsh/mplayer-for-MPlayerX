@@ -1466,11 +1466,14 @@ static void glSetupYUVFragprog(gl_conversion_params_t *params) {
  */
 int glAutodetectYUVConversion(void) {
   const char *extensions = mpglGetString(GL_EXTENSIONS);
+  const char *vendor     = mpglGetString(GL_VENDOR);
+  // Imagination cannot parse floats in exponential representation (%e)
+  int is_img = vendor && strstr(vendor, "Imagination") != NULL;
   if (!extensions || !mpglMultiTexCoord2f)
     return YUV_CONVERSION_NONE;
-  if (strstr(extensions, "GL_ARB_fragment_program"))
+  if (strstr(extensions, "GL_ARB_fragment_program") && !is_img)
     return YUV_CONVERSION_FRAGMENT;
-  if (strstr(extensions, "GL_ATI_text_fragment_shader"))
+  if (strstr(extensions, "GL_ATI_text_fragment_shader") && !is_img)
     return YUV_CONVERSION_TEXT_FRAGMENT;
   if (strstr(extensions, "GL_ATI_fragment_shader"))
     return YUV_CONVERSION_COMBINERS_ATI;
