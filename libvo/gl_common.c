@@ -575,6 +575,10 @@ void glCreateClearTex(GLenum target, GLenum fmt, GLenum format, GLenum type, GLi
   mpglTexParameteri(target, GL_TEXTURE_MAG_FILTER, filter);
   mpglTexParameteri(target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   mpglTexParameteri(target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  if (format == GL_DEPTH_COMPONENT) {
+      mpglTexParameteri(target, GL_TEXTURE_COMPARE_MODE, GL_NONE);
+      mpglTexParameteri(target, GL_DEPTH_TEXTURE_MODE, GL_LUMINANCE);
+  }
   // Border texels should not be used with CLAMP_TO_EDGE
   // We set a sane default anyway.
   mpglTexParameterfv(target, GL_TEXTURE_BORDER_COLOR, border);
@@ -648,6 +652,7 @@ int glFmt2bpp(GLenum format, GLenum type) {
   switch (format) {
     case GL_LUMINANCE:
     case GL_ALPHA:
+    case GL_DEPTH_COMPONENT:
       return component_size;
     case GL_YCBCR_MESA:
       return 2;
