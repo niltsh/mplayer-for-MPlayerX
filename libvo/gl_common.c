@@ -157,6 +157,7 @@ void (GLAPIENTRY *mpglDrawArrays)(GLenum, GLint, GLsizei);
 //! \defgroup glconversion OpenGL conversion helper functions
 
 static GLint hqtexfmt;
+static int use_depth_l16;
 
 /**
  * \brief adjusts the GL_UNPACK_ALIGNMENT to fit the stride.
@@ -570,6 +571,17 @@ void glCreateClearTex(GLenum target, GLenum fmt, GLenum format, GLenum type, GLi
   glAdjustAlignment(stride);
   mpglPixelStorei(GL_UNPACK_ROW_LENGTH, w);
   mpglTexImage2D(target, 0, fmt, w, h, 0, format, type, init);
+  if (format == GL_LUMINANCE && type == GL_UNSIGNED_SHORT) {
+    // ensure we get enough bits
+    GLint rs = 16;
+    glGetTexLevelParameteriv(target, 0, GL_TEXTURE_RED_SIZE, &rs);
+    use_depth_l16 = rs < 14;
+    if (use_depth_l16) {
+      fmt = GL_DEPTH_COMPONENT16;
+      format = GL_DEPTH_COMPONENT;
+      mpglTexImage2D(target, 0, fmt, w, h, 0, format, type, init);
+    }
+  }
   mpglTexParameterf(target, GL_TEXTURE_PRIORITY, 1.0);
   mpglTexParameteri(target, GL_TEXTURE_MIN_FILTER, filter);
   mpglTexParameteri(target, GL_TEXTURE_MAG_FILTER, filter);
@@ -692,6 +704,8 @@ void glUploadTex(GLenum target, GLenum format, GLenum type,
     data += (h - 1) * stride;
     stride = -stride;
   }
+  if (use_depth_l16 && format == GL_LUMINANCE && type == GL_UNSIGNED_SHORT)
+    format = GL_DEPTH_COMPONENT;
   // this is not always correct, but should work for MPlayer
   glAdjustAlignment(stride);
   mpglPixelStorei(GL_UNPACK_ROW_LENGTH, stride / glFmt2bpp(format, type));
