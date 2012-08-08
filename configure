@@ -2777,6 +2777,7 @@ else
 fi
 
 echo "pextrd [eax], xmm0, 1" > $TMPS
+yasm_features_all="cpunop"
 if test "$_yasm" ; then
   if ! yasm_check ; then
     if x86_64 ; then
@@ -2787,6 +2788,8 @@ if test "$_yasm" ; then
     fi
     YASMFLAGS="-f $objformat $yasmdefines"
     yasm_check || die "yasm not found, use --yasm='' if you really want to compile without"
+    echo "CPU amdnop" > $TMPS
+    yasm_check && yasm_features="cpunop"
   fi
 fi
 if test $_yasm ; then
@@ -8891,6 +8894,7 @@ echo "%define CONFIG_GPL 1" >> "$TMPS"
 echo "$(ff_config_enable "$arch_all" "$arch" "%" "ARCH")" >> "$TMPS"
 echo "$(ff_config_enable "$subarch_all" "$subarch" "%" "ARCH")" >> "$TMPS"
 echo "$(ff_config_enable "$cpuexts_all" "$cpuexts" "%" "HAVE")" >> "$TMPS"
+echo "$(ff_config_enable "$yasm_features_all" "$yasm_features" "%" "HAVE")" >> "$TMPS"
 
 cmp -s "$TMPS" ffmpeg/config.asm || mv -f "$TMPS" ffmpeg/config.asm
 fi
