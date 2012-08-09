@@ -573,9 +573,9 @@ void glCreateClearTex(GLenum target, GLenum fmt, GLenum format, GLenum type, GLi
   mpglTexImage2D(target, 0, fmt, w, h, 0, format, type, init);
   if (format == GL_LUMINANCE && type == GL_UNSIGNED_SHORT) {
     // ensure we get enough bits
-    GLint rs = 16;
-    glGetTexLevelParameteriv(target, 0, GL_TEXTURE_RED_SIZE, &rs);
-    use_depth_l16 = rs < 14;
+    GLint bits = 0;
+    glGetTexLevelParameteriv(target, 0, GL_TEXTURE_LUMINANCE_SIZE, &bits);
+    use_depth_l16 = bits > 0 && bits < 14;
     if (use_depth_l16) {
       fmt = GL_DEPTH_COMPONENT16;
       format = GL_DEPTH_COMPONENT;
