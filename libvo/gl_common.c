@@ -158,6 +158,7 @@ void (GLAPIENTRY *mpglDrawArrays)(GLenum, GLint, GLsizei);
 
 static GLint hqtexfmt;
 static int use_depth_l16;
+static GLenum l16_format;
 
 /**
  * \brief adjusts the GL_UNPACK_ALIGNMENT to fit the stride.
@@ -541,6 +542,8 @@ static void getFunctions(void *(*getProcAddress)(const GLubyte *),
     hqtexfmt = GL_FLOAT_RGB32_NV;
   else
     hqtexfmt = GL_RGB16;
+  use_depth_l16 = !!strstr(allexts, "GL_EXT_shadow") ||
+                  !!strstr(allexts, "GL_ARB_shadow");
   free(allexts);
 }
 
@@ -575,12 +578,18 @@ void glCreateClearTex(GLenum target, GLenum fmt, GLenum format, GLenum type, GLi
     // ensure we get enough bits
     GLint bits = 0;
     glGetTexLevelParameteriv(target, 0, GL_TEXTURE_LUMINANCE_SIZE, &bits);
-    use_depth_l16 = bits > 0 && bits < 14;
-    if (use_depth_l16) {
+    if (bits > 0 && bits < 14 && (use_depth_l16 || HAVE_BIGENDIAN)) {
       fmt = GL_DEPTH_COMPONENT16;
       format = GL_DEPTH_COMPONENT;
+      if (!use_depth_l16) {
+        // if we cannot get 16 bit anyway, we can fall back
+        // to L8A8 on big-endian, which is at least faster...
+        fmt = format = GL_LUMINANCE_ALPHA;
+        type = GL_UNSIGNED_BYTE;
+      }
       mpglTexImage2D(target, 0, fmt, w, h, 0, format, type, init);
     }
+    l16_format = format;
   }
   mpglTexParameterf(target, GL_TEXTURE_PRIORITY, 1.0);
   mpglTexParameteri(target, GL_TEXTURE_MIN_FILTER, filter);
@@ -666,6 +675,8 @@ int glFmt2bpp(GLenum format, GLenum type) {
     case GL_ALPHA:
     case GL_DEPTH_COMPONENT:
       return component_size;
+    case GL_LUMINANCE_ALPHA:
+      return 2 * component_size;
     case GL_YCBCR_MESA:
       return 2;
     case GL_RGB:
@@ -704,8 +715,10 @@ void glUploadTex(GLenum target, GLenum format, GLenum type,
     data += (h - 1) * stride;
     stride = -stride;
   }
-  if (use_depth_l16 && format == GL_LUMINANCE && type == GL_UNSIGNED_SHORT)
-    format = GL_DEPTH_COMPONENT;
+  if (format == GL_LUMINANCE && type == GL_UNSIGNED_SHORT) {
+    format = l16_format;
+    if (l16_format == GL_LUMINANCE_ALPHA) type = GL_UNSIGNED_BYTE;
+  }
   // this is not always correct, but should work for MPlayer
   glAdjustAlignment(stride);
   mpglPixelStorei(GL_UNPACK_ROW_LENGTH, stride / glFmt2bpp(format, type));
