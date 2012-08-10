@@ -8257,7 +8257,10 @@ HOSTCFLAGS = -D_ISOC99_SOURCE -D_POSIX_C_SOURCE=200112 -O3
 HOSTLIBS   = -lm
 AS_O       = -o \$@
 CC_O       = -o \$@
+CXX_O      = -o \$@
+AS_C       = -c
 CC_C       = -c
+CXX_C      = -c
 LD         = gcc
 RANLIB     = $_ranlib
 YASM       = $_yasm
