@@ -104,7 +104,6 @@
 #define IDFILE_SAVE          72
 #define IDHELP_ABOUT         73
 #define IDSUBTITLE_OPEN      74
-#define IDPLAYDISK           75
 #define ID_CONSOLE           76
 #define ID_EQ0               77
 #define ID_EQ1               78
@@ -121,6 +120,9 @@
 #define ID_MUTE              89
 #define ID_FULLSCREEN        90
 #define ID_IDLE              91
+/* support for 64 drives */
+#define IDPLAYDISK           100
+#define IDPLAYDISK_LIMIT     164
 
 /* gtk emulation */
 #define GTK_MB_FATAL         0x1

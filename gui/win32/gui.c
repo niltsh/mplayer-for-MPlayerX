@@ -887,7 +887,7 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                         strcat(menuitem, volname);
                     }
                     AppendMenu(gui->diskmenu, flags, IDPLAYDISK + cdromdrive, menuitem);
-                        cdromdrive++;
+                    if (++cdromdrive == IDPLAYDISK_LIMIT - IDPLAYDISK) break;
                 }
                 pos += strlen(device + pos) + 1;
             }
@@ -1029,7 +1029,7 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                     handlemsg(hWnd, evAbout);
                     break;
             }
-            if((IDPLAYDISK <= LOWORD(wParam)) && (LOWORD(wParam) < (IDPLAYDISK + 100)))
+            if(LOWORD(wParam) >= IDPLAYDISK && LOWORD(wParam) < IDPLAYDISK_LIMIT)
             {
                 char device[MAX_PATH];
                 char searchpath[MAX_PATH];
