@@ -1,5 +1,9 @@
 MPlayer
 
+    Other:
+    * "run" slave/keybinding command now supports expanding properties
+    * better support for > 8 bit formats in -vo gl
+
   1.1: "We gave up on 1.0"
 
     Decoders:
