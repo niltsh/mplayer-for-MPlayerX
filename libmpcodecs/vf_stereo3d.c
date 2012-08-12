@@ -74,7 +74,7 @@ typedef struct component {
 } component;
 
 //==global variables==//
-static const int ana_coeff[10][3][6] = {
+static const int ana_coeff[][3][6] = {
     {{19595, 38470,  7471,     0,     0,     0},    //ANAGLYPH_RC_GRAY
      {    0,     0,     0, 19595, 38470,  7471},
      {    0,     0,     0, 19595, 38470,  7471}},
