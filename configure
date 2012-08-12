@@ -597,6 +597,7 @@ Advanced options:
   --enable-debug[=1-3]      compile-in debugging information [disable]
   --enable-profile          compile-in profiling information [disable]
   --disable-sighandler      disable sighandler for crashes [enable]
+  --disable-relocatable     disable compiling as relocatable/PIE executable [autodetect]
   --enable-crash-debug      enable automatic gdb attach on crash [disable]
   --enable-dynamic-plugins  enable dynamic A/V plugins [disable]
 
@@ -844,6 +845,7 @@ _charset="UTF-8"
 _dynamic_plugins=no
 _crash_debug=no
 _sighandler=yes
+relocatable=auto
 _libdv=auto
 _cdparanoia=auto
 _cddb=auto
@@ -1426,6 +1428,8 @@ for ac_option do
   --disable-crash-debug) _crash_debug=no ;;
   --enable-sighandler)  _sighandler=yes  ;;
   --disable-sighandler) _sighandler=no   ;;
+  --enable-relocatable)  relocatable=yes  ;;
+  --disable-relocatable) relocatable=no   ;;
   --enable-win32dll) _win32dll=yes ;;
   --disable-win32dll) _win32dll=no ;;
 
@@ -2646,6 +2650,33 @@ if test -n "$CPPFLAGS" ; then
 fi
 
 
+# try to create a relocatable binary by default
+echocheck "relocatable binary"
+if test $relocatable = "auto" ; then
+  if x86_32 && cflag_check -pie ; then
+    extra_ldflags="$extra_ldflags -pie"
+    relocatable=yes
+    res_comment="non-PIC"
+  elif x86_64 && cflag_check -fpie -pie ; then
+    extra_ldflags="$extra_ldflags -fpie -pie"
+    extra_cflags="$extra_cflags -fpie"
+    relocatable=yes
+    res_comment="fast PIC"
+  else
+    relocatable=no
+    res_comment="unavailable or untested architecture"
+  fi
+elif test $relocatable = "yes" ; then
+  if return_check "stdint.h" '(intptr_t)"test" >> 16' -pie ; then
+    extra_ldflags="$extra_ldflags -pie"
+    res_comment="non-PIC"
+  else
+    extra_ldflags="$extra_ldflags -fpie -pie"
+    extra_cflags="$extra_cflags -fpie"
+    res_comment="possibly slow PIC!"
+  fi
+fi
+echores $relocatable
 
 if x86_32 ; then
   # Checking assembler (_as) compatibility...
