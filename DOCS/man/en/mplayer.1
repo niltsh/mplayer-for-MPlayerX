@@ -4301,7 +4301,16 @@ Convert side by side input to full-color green-magenta stereo.
 .IPs 3
 Convert side by side input to quadbuffered stereo.
 Only supported by very few OpenGL cards.
+.IPs 4
+Mix left and right in a pixel pattern.
+Pattern is given by stipple option.
 .RE
+.IPs stipple=<bit pattern>
+Lowest 16 bit give the 4x4 pattern to use (default: 0x0f0f).
+Examples to try:
+0x0f0f, 0xf0f0: horizontal lines;
+0xaaaa, 0x5555: vertical lines;
+0xa5a5, 0x5a5a: checkerboard pattern
 .RE
 .sp 1
 .RS

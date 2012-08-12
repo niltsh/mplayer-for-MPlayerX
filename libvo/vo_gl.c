@@ -147,6 +147,7 @@ static int custom_tlin;
 static int custom_trect;
 static int mipmap_gen;
 static int stereo_mode;
+static int stipple;
 static enum MPGLType backend;
 
 static int int_pause;
@@ -250,7 +251,8 @@ static void update_yuvconv(void) {
   float bgamma = exp(log(8.0) * eq_bgamma / 100.0);
   gl_conversion_params_t params = {gl_target, yuvconvtype,
       {colorspace, levelconv, bri, cont, hue, sat, rgamma, ggamma, bgamma, 0},
-      texture_width, texture_height, 0, 0, filter_strength, noise_strength};
+      texture_width, texture_height, 0, 0, filter_strength, noise_strength,
+      stereo_mode == GL_3D_STIPPLE};
   mp_get_chroma_shift(image_format, &xs, &ys, &depth);
   params.chrom_texw = params.texw >> xs;
   params.chrom_texh = params.texh >> ys;
@@ -436,7 +438,7 @@ skip_upload:
       texSize(i->w, i->h, &sx, &sy);
       mpglBindTexture(gl_target, *curtex++);
     }
-    glDrawTex(i->dst_x, i->dst_y, i->w, i->h, x, y, i->w, i->h, sx, sy, use_rectangle == 1, 0, 0);
+    glDrawTex(i->dst_x, i->dst_y, i->w, i->h, x, y, i->w, i->h, sx, sy, use_rectangle == 1, 0, 0, 0);
   }
   mpglEndList();
   mpglBindTexture(gl_target, 0);
@@ -515,8 +517,12 @@ static void autodetectGlExtensions(void) {
   }
   if (use_osd == -1)
     use_osd = mpglBindTexture != NULL;
-  if (use_yuv == -1)
+  if (use_yuv == -1) {
     use_yuv = glAutodetectYUVConversion();
+    if (stereo_mode == GL_3D_STIPPLE &&
+        !glYUVSupportsAlphaTex(use_yuv))
+      use_yuv = 0;
+  }
   if (is_ati && (lscale == 1 || lscale == 2 || cscale == 1 || cscale == 2))
     mp_msg(MSGT_VO, MSGL_WARN, "[gl] Selected scaling mode may be broken on ATI cards.\n"
              "Tell _them_ to fix GL_REPEAT if you have issues.\n");
@@ -562,13 +568,8 @@ static int initGl(uint32_t d_width, uint32_t d_height) {
   if (mipmap_gen)
     mpglTexParameteri(gl_target, GL_GENERATE_MIPMAP, GL_TRUE);
 
-  if (is_yuv) {
+  if (is_yuv || stereo_mode == GL_3D_STIPPLE) {
     int i;
-    int xs, ys, depth;
-    int chroma_clear_val = 128;
-    scale_type = get_scale_type(1);
-    mp_get_chroma_shift(image_format, &xs, &ys, &depth);
-    chroma_clear_val >>= -depth & 7;
     mpglGenTextures(21, default_texs);
     default_texs[21] = 0;
     for (i = 0; i < 7; i++) {
@@ -577,6 +578,15 @@ static int initGl(uint32_t d_width, uint32_t d_height) {
       mpglBindTexture(GL_TEXTURE_RECTANGLE, default_texs[i + 7]);
       mpglBindTexture(GL_TEXTURE_3D, default_texs[i + 14]);
     }
+  }
+  if (stereo_mode == GL_3D_STIPPLE)
+    glSetupAlphaStippleTex(stipple);
+  if (is_yuv) {
+    int xs, ys, depth;
+    int chroma_clear_val = 128;
+    scale_type = get_scale_type(1);
+    mp_get_chroma_shift(image_format, &xs, &ys, &depth);
+    chroma_clear_val >>= -depth & 7;
     mpglActiveTexture(GL_TEXTURE1);
     glCreateClearTex(gl_target, gl_texfmt, gl_format, gl_type, scale_type,
                      texture_width >> xs, texture_height >> ys,
@@ -776,14 +786,14 @@ static void create_osd_texture(int x0, int y0, int w, int h,
   mpglNewList(osdaDispList[osdtexCnt], GL_COMPILE);
   // render alpha
   mpglBindTexture(gl_target, osdatex[osdtexCnt]);
-  glDrawTex(x0, y0, w, h, 0, 0, w, h, sx, sy, use_rectangle == 1, 0, 0);
+  glDrawTex(x0, y0, w, h, 0, 0, w, h, sx, sy, use_rectangle == 1, 0, 0, 0);
   mpglEndList();
 #endif
   osdDispList[osdtexCnt] = mpglGenLists(1);
   mpglNewList(osdDispList[osdtexCnt], GL_COMPILE);
   // render OSD
   mpglBindTexture(gl_target, osdtex[osdtexCnt]);
-  glDrawTex(x0, y0, w, h, 0, 0, w, h, sx, sy, use_rectangle == 1, 0, 0);
+  glDrawTex(x0, y0, w, h, 0, 0, w, h, sx, sy, use_rectangle == 1, 0, 0, 0);
   mpglEndList();
 
   osdtexCnt++;
@@ -863,20 +873,20 @@ static void do_render(void) {
               0, 0, image_width >> 1, image_height,
               texture_width, texture_height,
               use_rectangle == 1, is_yuv,
-              mpi_flipped ^ vo_flipped);
+              mpi_flipped ^ vo_flipped, stereo_mode == GL_3D_STIPPLE);
     glEnable3DRight(stereo_mode);
     glDrawTex(0, 0, image_width, image_height,
               image_width >> 1, 0, image_width >> 1, image_height,
               texture_width, texture_height,
               use_rectangle == 1, is_yuv,
-              mpi_flipped ^ vo_flipped);
+              mpi_flipped ^ vo_flipped, stereo_mode == GL_3D_STIPPLE);
     glDisable3D(stereo_mode);
   } else {
     glDrawTex(0, 0, image_width, image_height,
               0, 0, image_width, image_height,
               texture_width, texture_height,
               use_rectangle == 1, is_yuv,
-              mpi_flipped ^ vo_flipped);
+              mpi_flipped ^ vo_flipped, 0);
   }
   if (is_yuv || custom_prog)
     glDisableYUVConversion(gl_target, yuvconvtype);
@@ -1206,6 +1216,7 @@ static const opt_t subopts[] = {
   {"mipmapgen",    OPT_ARG_BOOL, &mipmap_gen,   NULL},
   {"osdcolor",     OPT_ARG_INT,  &osd_color,    NULL},
   {"stereo",       OPT_ARG_INT,  &stereo_mode,  NULL},
+  {"stipple",      OPT_ARG_INT,  &stipple,      NULL},
   {"backend",      OPT_ARG_INT,  &backend,      valid_backend},
   {NULL}
 };
@@ -1240,6 +1251,7 @@ static int preinit_internal(const char *arg, int allow_sw)
     mipmap_gen = 0;
     osd_color = 0xffffff;
     stereo_mode = 0;
+    stipple = 0x0f0f;
     if (subopt_parse(arg, subopts) != 0) {
       mp_msg(MSGT_VO, MSGL_FATAL,
               "\n-vo gl command line help:\n"
@@ -1320,6 +1332,9 @@ static int preinit_internal(const char *arg, int allow_sw)
               "    1: side-by-side to red-cyan stereo\n"
               "    2: side-by-side to green-magenta stereo\n"
               "    3: side-by-side to quadbuffer stereo\n"
+              "    4: side-by-side to pixel pattern\n"
+              "  stipple=<0xBBBB>\n"
+              "    16 bits representing 4x4 pattern to use for stereo=4\n"
               "  backend=<n>\n"
               "   -1: auto-select\n"
               "    0: Win32/WGL\n"

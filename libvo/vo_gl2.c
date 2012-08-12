@@ -412,7 +412,7 @@ static void drawTextureDisplay (void)
       glDrawTex(square->fx, square->fy, square->fw, square->fh,
                 0, 0, texture_width, texture_height,
                 texture_width, texture_height,
-                0, is_yuv, 0);
+                0, is_yuv, 0, 0);
       square++;
     } /* for all texnumx */
   } /* for all texnumy */
