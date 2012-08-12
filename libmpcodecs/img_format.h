@@ -215,6 +215,18 @@
 #define IMGFMT_IS_YUVP16_BE(fmt) (((fmt - 0x34000051) & 0xff0000fc) == 0)
 #define IMGFMT_IS_YUVP16(fmt)    (IMGFMT_IS_YUVP16_LE(fmt) || IMGFMT_IS_YUVP16_BE(fmt))
 
+/**
+ * \brief Find the corresponding full 16 bit format, i.e. IMGFMT_420P10_LE -> IMGFMT_420P16_LE
+ * \return normalized format ID or 0 if none exists.
+ */
+static inline int normalize_yuvp16(int fmt) {
+    if (IMGFMT_IS_YUVP16_LE(fmt))
+        return (fmt & 0x00ffffff) | 0x51000000;
+    if (IMGFMT_IS_YUVP16_LE(fmt))
+        return (fmt & 0xffffff00) | 0x00000051;
+    return 0;
+}
+
 /* Packed YUV Formats */
 
 #define IMGFMT_IUYV 0x56595549 // Interlaced UYVY

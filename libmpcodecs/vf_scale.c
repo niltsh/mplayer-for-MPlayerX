@@ -168,15 +168,16 @@ static int preferred_conversions[][2] = {
 static unsigned int find_best_out(vf_instance_t *vf, int in_format){
     unsigned int best=0;
     int i = -1;
-    int j = -1;
+    int normalized_format = normalize_yuvp16(in_format);
+    int j = normalized_format ? -2 : -1;
     int format = 0;
 
     // find the best outfmt:
     while (1) {
         int ret;
         if (j < 0) {
-            format = in_format;
-            j = 0;
+            format = j == -1 && normalized_format ? normalized_format : in_format;
+            j++;
         } else if (i < 0) {
             while (preferred_conversions[j][0] &&
                    preferred_conversions[j][0] != in_format)
