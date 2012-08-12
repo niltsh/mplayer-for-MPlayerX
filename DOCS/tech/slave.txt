@@ -508,9 +508,18 @@ hide
     Hides the OSD menu console. Clicking a menu command unhides it. Other
     keybindings act as usual.
 
-run <value>
-    Run <value> as shell command. In OSD menu console mode stdout and stdin
-    are through the video output driver.
+run <string>
+    Run <string> with properties expanded as shell command. In OSD menu
+    console mode stdout and stdin are through the video output driver.
+    Property expansion happens in the same way as for osd_show_property_text.
+    Note: MPlayer will do property expansion on anything of the form
+    ${somevar} before it is passed to the shell.
+    This means that you cannot use this syntax for anything you actually
+    want the shell to handle, though any other form like $somevar will
+    be passed on to and processed by the shell.
+
+    Example:
+    run "echo ${filename} ${stream_pos} >> <path_to_file>"
 
 
 Available properties:
