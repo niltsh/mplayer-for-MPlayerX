@@ -222,7 +222,7 @@
 static inline int normalize_yuvp16(int fmt) {
     if (IMGFMT_IS_YUVP16_LE(fmt))
         return (fmt & 0x00ffffff) | 0x51000000;
-    if (IMGFMT_IS_YUVP16_LE(fmt))
+    if (IMGFMT_IS_YUVP16_BE(fmt))
         return (fmt & 0xffffff00) | 0x00000051;
     return 0;
 }
