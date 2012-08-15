@@ -116,7 +116,7 @@ LPSTR acp (LPCSTR utf8)
     return "?";
 }
 
-static void console_toggle(void)
+static void console_toggle(gui_t *gui)
 {
     if (console_state)
     {
@@ -157,6 +157,10 @@ static void console_toggle(void)
         print_version("MPlayer");
         console_state = 1;
     }
+    if (gui == NULL)
+        return;
+    CheckMenuItem(gui->traymenu, ID_CONSOLE, MF_BYCOMMAND | (console ? MF_CHECKED : MF_UNCHECKED));
+    CheckMenuItem(gui->menu, ID_CONSOLE, MF_BYCOMMAND | (console ? MF_CHECKED : MF_UNCHECKED));
 }
 
 void capitalize(char *filename)
@@ -1020,7 +1024,7 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                     handlemsg(hWnd, evPreferences);
                     break;
                 case ID_CONSOLE:
-                    console_toggle();
+                    console_toggle(gui);
                     break;
                 case ID_ONLINEHELP:
                     ShellExecute(NULL, "open", ONLINE_HELP_URL, NULL, NULL, SW_SHOWNORMAL);
@@ -1599,6 +1603,6 @@ gui_t *create_gui(char *skindir, void (*playercontrol)(int event))
     sprintf(temp, "%s/%s", skindir, skinName);
     if(create_window(gui, temp)) return NULL;
     if(create_videowindow(gui)) return NULL;
-    if(console) console_toggle();
+    if(console) console_toggle(gui);
     return gui;
 }
