@@ -2653,7 +2653,10 @@ fi
 # try to create a relocatable binary by default
 echocheck "relocatable binary"
 if test $relocatable = "auto" ; then
-  if x86_32 && cflag_check -pie ; then
+  if test -n "$ld_static" ; then
+    relocatable=no
+    res_comment="PIE + static assumed to be broken"
+  elif x86_32 && cflag_check -pie ; then
     extra_ldflags="$extra_ldflags -pie"
     relocatable=yes
     res_comment="non-PIC"
