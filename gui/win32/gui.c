@@ -1375,7 +1375,6 @@ int create_videowindow(gui_t *gui)
     HINSTANCE instance = GetModuleHandle(NULL);
     WNDCLASS wc;
     RECT rect;
-    HWND hWnd;
     DWORD style = 0;
     HDC hdc = NULL;
     BITMAPINFO binfo;
@@ -1432,17 +1431,16 @@ int create_videowindow(gui_t *gui)
     if (y <= -1 || (y+(rect.bottom-rect.top) > GetSystemMetrics(SM_CYSCREEN)))
         y = x;
 
-    hWnd = CreateWindowEx(0, "MPlayer - Video", "MPlayer - Video", style,
+    gui->videowindow = CreateWindowEx(0, "MPlayer - Video", "MPlayer - Video", style,
                           x, y, rect.right-rect.left, rect.bottom-rect.top,
                           NULL, NULL, instance, NULL);
 
     /* load all the window images */
-    window_render(gui, hWnd, hdc, priv, desc, binfo);
+    window_render(gui, gui->videowindow, hdc, priv, desc, binfo);
 
     /* enable drag and drop support */
-    DragAcceptFiles(hWnd, TRUE);
+    DragAcceptFiles(gui->videowindow, TRUE);
 
-    gui->videowindow = hWnd;
     if(video_window)
         WinID = gui->videowindow;
     ShowWindow(gui->videowindow, SW_SHOW);
@@ -1457,7 +1455,6 @@ int create_window(gui_t *gui, char *skindir)
     WNDCLASS wc;
     RECT rect;
     DWORD style = 0;
-    HWND hwnd;
     HDC hdc = NULL;
     BITMAPINFO binfo;
     window_priv_t *priv = NULL;
@@ -1547,13 +1544,13 @@ int create_window(gui_t *gui, char *skindir)
         gui_main_pos_y = y;
     }
 
-    hwnd = CreateWindowEx(0, gui->classname, "MPlayer", style,
+    gui->mainwindow = CreateWindowEx(0, gui->classname, "MPlayer", style,
                           x, y, rect.right-rect.left, rect.bottom-rect.top,
                           NULL, NULL, instance, NULL);
 
     /* set the systray icon properties */
     nid.cbSize = sizeof(NOTIFYICONDATA);
-    nid.hWnd = hwnd;
+    nid.hWnd = gui->mainwindow;
     nid.uID = 1;
     nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
     nid.uCallbackMessage = WM_SYSTRAY;
@@ -1564,13 +1561,12 @@ int create_window(gui_t *gui, char *skindir)
     Shell_NotifyIcon(NIM_ADD, &nid);
 
     /* load all the window images */
-    window_render(gui, hwnd, hdc, priv, desc, binfo);
+    window_render(gui, gui->mainwindow, hdc, priv, desc, binfo);
 
     /* enable drag and drop support */
-    DragAcceptFiles(hwnd, TRUE);
+    DragAcceptFiles(gui->mainwindow, TRUE);
 
-    updatedisplay(gui, hwnd);
-    gui->mainwindow = hwnd;
+    updatedisplay(gui, gui->mainwindow);
 
     /* display */
     ShowWindow(gui->mainwindow, SW_SHOW);
