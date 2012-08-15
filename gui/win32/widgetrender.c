@@ -120,7 +120,6 @@ static char *generatetextfromlabel(widget *item)
 {
     char *text = malloc(MAX_LABELSIZE);
     char tmp[MAX_LABELSIZE];
-    unsigned int i;
     if(!item)
     {
         free(text);
