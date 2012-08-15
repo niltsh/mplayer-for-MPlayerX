@@ -157,10 +157,12 @@ static void console_toggle(gui_t *gui)
         print_version("MPlayer");
         console_state = 1;
     }
-    if (gui == NULL)
-        return;
-    CheckMenuItem(gui->traymenu, ID_CONSOLE, MF_BYCOMMAND | (console ? MF_CHECKED : MF_UNCHECKED));
-    CheckMenuItem(gui->menu, ID_CONSOLE, MF_BYCOMMAND | (console ? MF_CHECKED : MF_UNCHECKED));
+
+    if (gui)
+    {
+        CheckMenuItem(gui->traymenu, ID_CONSOLE, MF_BYCOMMAND | (console_state ? MF_CHECKED : MF_UNCHECKED));
+        CheckMenuItem(gui->menu, ID_CONSOLE, MF_BYCOMMAND | (console_state ? MF_CHECKED : MF_UNCHECKED));
+    }
 }
 
 void capitalize(char *filename)
