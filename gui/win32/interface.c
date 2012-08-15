@@ -796,7 +796,7 @@ int gui(int what, void *data)
               mygui->playlist->current = 0;
 
           fullscreen = 0;
-          if(style == WS_VISIBLE | WS_POPUP)
+          if(style == (WS_VISIBLE | WS_POPUP))
           {
               style = WS_OVERLAPPEDWINDOW | WS_SIZEBOX;
               SetWindowLong(mygui->videowindow, GWL_STYLE, style);
