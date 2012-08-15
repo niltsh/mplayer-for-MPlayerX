@@ -597,7 +597,7 @@ Advanced options:
   --enable-debug[=1-3]      compile-in debugging information [disable]
   --enable-profile          compile-in profiling information [disable]
   --disable-sighandler      disable sighandler for crashes [enable]
-  --disable-relocatable     disable compiling as relocatable/PIE executable [autodetect]
+  --enable-relocatable      enable compiling as relocatable/PIE executable [disable]
   --enable-crash-debug      enable automatic gdb attach on crash [disable]
   --enable-dynamic-plugins  enable dynamic A/V plugins [disable]
 
@@ -845,7 +845,7 @@ _charset="UTF-8"
 _dynamic_plugins=no
 _crash_debug=no
 _sighandler=yes
-relocatable=auto
+relocatable=no
 _libdv=auto
 _cdparanoia=auto
 _cddb=auto
