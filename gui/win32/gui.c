@@ -596,7 +596,7 @@ static LRESULT CALLBACK VideoProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
         }
         case WM_WINDOWPOSCHANGED:
         {
-            int tmpheight=0;
+            uint32_t tmpheight=0;
             static uint32_t rect_width;
             static uint32_t rect_height;
             RECT rd;
@@ -652,7 +652,7 @@ static LRESULT CALLBACK VideoProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
             height = rect.bottom - rect.top;
             if(guiInfo.Playing == GUI_STOP)
             {
-                int i;
+                unsigned int i;
                 window *desc = NULL;
 
                 for (i=0; i<gui->skin->windowcount; i++)
@@ -1332,7 +1332,7 @@ static void maketransparent(HWND hwnd, COLORREF crTransparent)
 
 static int window_render(gui_t *gui, HWND hWnd, HDC hdc, window_priv_t *priv, window *desc, BITMAPINFO binfo)
 {
-    int i;
+    unsigned int i;
     SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR) gui);
     (gui->window_priv_count)++;
     gui->window_priv = realloc(gui->window_priv, sizeof(window_priv_t *) * gui->window_priv_count);
@@ -1380,7 +1380,8 @@ int create_videowindow(gui_t *gui)
     BITMAPINFO binfo;
     window_priv_t *priv = NULL;
     window *desc = NULL;
-    int i, x = -1, y = -1;
+    unsigned int i;
+    int x = -1, y = -1;
     vo_colorkey = 0xff00ff;
 
     for (i=0; i<gui->skin->windowcount; i++)

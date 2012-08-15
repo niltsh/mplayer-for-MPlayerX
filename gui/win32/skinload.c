@@ -104,7 +104,7 @@ static char *geteventname(int event)
 /* reads a complete image as is into image buffer */
 static image *pngRead(skin_t *skin, const char *fname)
 {
-    int i;
+    unsigned int i;
     guiImage bmp;
     image *bf;
     char *filename = NULL;

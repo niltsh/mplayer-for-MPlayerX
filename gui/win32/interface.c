@@ -927,7 +927,7 @@ static int update_videowindow(void)
     if(!guiInfo.Playing)
     {
         window *desc = NULL;
-        int i;
+        unsigned int i;
 
         for (i=0; i<mygui->skin->windowcount; i++)
             if(mygui->skin->windows[i]->type == wiVideo)
