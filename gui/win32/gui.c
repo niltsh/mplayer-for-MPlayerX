@@ -1434,7 +1434,7 @@ int create_videowindow(gui_t *gui)
 
     hWnd = CreateWindowEx(0, "MPlayer - Video", "MPlayer - Video", style,
                           x, y, rect.right-rect.left, rect.bottom-rect.top,
-                          gui->videowindow, NULL, instance, NULL);
+                          NULL, NULL, instance, NULL);
 
     /* load all the window images */
     window_render(gui, hWnd, hdc, priv, desc, binfo);
@@ -1549,7 +1549,7 @@ int create_window(gui_t *gui, char *skindir)
 
     hwnd = CreateWindowEx(0, gui->classname, "MPlayer", style,
                           x, y, rect.right-rect.left, rect.bottom-rect.top,
-                          gui->mainwindow, NULL, instance, NULL);
+                          NULL, NULL, instance, NULL);
 
     /* set the systray icon properties */
     nid.cbSize = sizeof(NOTIFYICONDATA);
