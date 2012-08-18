@@ -117,6 +117,7 @@ static float filter_strength;
 static float noise_strength;
 static int yuvconvtype;
 static int use_rectangle;
+static int using_tex_rect;
 static int err_shown;
 static uint32_t image_width;
 static uint32_t image_height;
@@ -438,7 +439,7 @@ skip_upload:
       texSize(i->w, i->h, &sx, &sy);
       mpglBindTexture(gl_target, *curtex++);
     }
-    glDrawTex(i->dst_x, i->dst_y, i->w, i->h, x, y, i->w, i->h, sx, sy, use_rectangle == 1, 0, 0, 0);
+    glDrawTex(i->dst_x, i->dst_y, i->w, i->h, x, y, i->w, i->h, sx, sy, using_tex_rect, 0, 0, 0);
   }
   mpglEndList();
   mpglBindTexture(gl_target, 0);
@@ -544,7 +545,8 @@ static GLint get_scale_type(int chroma) {
 static int initGl(uint32_t d_width, uint32_t d_height) {
   GLint scale_type = get_scale_type(0);
   autodetectGlExtensions();
-  gl_target = use_rectangle == 1 ? GL_TEXTURE_RECTANGLE : GL_TEXTURE_2D;
+  using_tex_rect = gl_format == GL_YCBCR_422_APPLE || use_rectangle == 1;
+  gl_target = using_tex_rect ? GL_TEXTURE_RECTANGLE : GL_TEXTURE_2D;
   yuvconvtype = SET_YUV_CONVERSION(use_yuv) |
                 SET_YUV_LUM_SCALER(lscale) |
                 SET_YUV_CHROM_SCALER(cscale);
@@ -786,14 +788,14 @@ static void create_osd_texture(int x0, int y0, int w, int h,
   mpglNewList(osdaDispList[osdtexCnt], GL_COMPILE);
   // render alpha
   mpglBindTexture(gl_target, osdatex[osdtexCnt]);
-  glDrawTex(x0, y0, w, h, 0, 0, w, h, sx, sy, use_rectangle == 1, 0, 0, 0);
+  glDrawTex(x0, y0, w, h, 0, 0, w, h, sx, sy, using_tex_rect, 0, 0, 0);
   mpglEndList();
 #endif
   osdDispList[osdtexCnt] = mpglGenLists(1);
   mpglNewList(osdDispList[osdtexCnt], GL_COMPILE);
   // render OSD
   mpglBindTexture(gl_target, osdtex[osdtexCnt]);
-  glDrawTex(x0, y0, w, h, 0, 0, w, h, sx, sy, use_rectangle == 1, 0, 0, 0);
+  glDrawTex(x0, y0, w, h, 0, 0, w, h, sx, sy, using_tex_rect, 0, 0, 0);
   mpglEndList();
 
   osdtexCnt++;
@@ -872,20 +874,20 @@ static void do_render(void) {
     glDrawTex(0, 0, image_width, image_height,
               0, 0, image_width >> 1, image_height,
               texture_width, texture_height,
-              use_rectangle == 1, is_yuv,
+              using_tex_rect, is_yuv,
               mpi_flipped ^ vo_flipped, stereo_mode == GL_3D_STIPPLE);
     glEnable3DRight(stereo_mode);
     glDrawTex(0, 0, image_width, image_height,
               image_width >> 1, 0, image_width >> 1, image_height,
               texture_width, texture_height,
-              use_rectangle == 1, is_yuv,
+              using_tex_rect, is_yuv,
               mpi_flipped ^ vo_flipped, stereo_mode == GL_3D_STIPPLE);
     glDisable3D(stereo_mode);
   } else {
     glDrawTex(0, 0, image_width, image_height,
               0, 0, image_width, image_height,
               texture_width, texture_height,
-              use_rectangle == 1, is_yuv,
+              using_tex_rect, is_yuv,
               mpi_flipped ^ vo_flipped, 0);
   }
   if (is_yuv || custom_prog)
@@ -1038,7 +1040,8 @@ static void clear_border(uint8_t *dst, int start, int stride, int height, int fu
 }
 
 static uint32_t draw_image(mp_image_t *mpi) {
-  int slice = slice_height;
+  // Ask for TexImage instead of TexSubImage for the rectangle + YCBCR + nodr special case.
+  int slice = gl_target == GL_TEXTURE_RECTANGLE && gl_format == GL_YCBCR_422_APPLE ? -1 : slice_height;
   int stride[3];
   unsigned char *planes[3];
   mp_image_t mpi2 = *mpi;
@@ -1151,7 +1154,7 @@ query_format(uint32_t format)
     // ideally MPlayer should be fixed instead not to use Y800 when it has the choice
     if (!use_yuv && (format == IMGFMT_Y8 || format == IMGFMT_Y800))
         return 0;
-    if (!use_ycbcr && (format == IMGFMT_UYVY || format == IMGFMT_YVYU))
+    if (!use_ycbcr && (format == IMGFMT_YUY2 || format == IMGFMT_UYVY))
         return 0;
     if (many_fmts &&
          glFindFormat(format, NULL, NULL, NULL, NULL))

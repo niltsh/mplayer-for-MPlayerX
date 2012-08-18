@@ -306,14 +306,12 @@ int glFindFormat(uint32_t fmt, int *bpp, GLint *gl_texfmt,
       *gl_format = GL_LUMINANCE;
       *gl_type = GL_UNSIGNED_BYTE;
       break;
+    case IMGFMT_YUY2:
     case IMGFMT_UYVY:
-    // IMGFMT_YUY2 would be more logical for the _REV format,
-    // but gives clearly swapped colors.
-    case IMGFMT_YVYU:
-      *gl_texfmt = GL_YCBCR_MESA;
+      *gl_texfmt = GL_RGB;
       *bpp = 16;
-      *gl_format = GL_YCBCR_MESA;
-      *gl_type = fmt == IMGFMT_UYVY ? GL_UNSIGNED_SHORT_8_8 : GL_UNSIGNED_SHORT_8_8_REV;
+      *gl_format = GL_YCBCR_422_APPLE;
+      *gl_type = fmt == IMGFMT_YUY2 ? GL_UNSIGNED_SHORT_8_8 : GL_UNSIGNED_SHORT_8_8_REV;
       break;
 #if 0
     // we do not support palettized formats, although the format the
@@ -573,6 +571,9 @@ void glCreateClearTex(GLenum target, GLenum fmt, GLenum format, GLenum type, GLi
   memset(init, val, stride * h);
   glAdjustAlignment(stride);
   mpglPixelStorei(GL_UNPACK_ROW_LENGTH, w);
+  // This needs to be here before the very first TexImage call to get
+  // best performance on PPC Mac Mini running OSX 10.5
+  mpglTexParameteri(target, GL_TEXTURE_STORAGE_HINT_APPLE, GL_STORAGE_CACHED_APPLE);
   mpglTexImage2D(target, 0, fmt, w, h, 0, format, type, init);
   if (format == GL_LUMINANCE && type == GL_UNSIGNED_SHORT) {
     // ensure we get enough bits
@@ -662,6 +663,8 @@ int glFmt2bpp(GLenum format, GLenum type) {
     case GL_UNSIGNED_SHORT_1_5_5_5_REV:
     case GL_UNSIGNED_SHORT_5_6_5:
     case GL_UNSIGNED_SHORT_5_6_5_REV:
+    case GL_UNSIGNED_SHORT_8_8:
+    case GL_UNSIGNED_SHORT_8_8_REV:
       return 2;
     case GL_UNSIGNED_BYTE:
       component_size = 1;
@@ -677,6 +680,7 @@ int glFmt2bpp(GLenum format, GLenum type) {
       return component_size;
     case GL_LUMINANCE_ALPHA:
       return 2 * component_size;
+    case GL_YCBCR_422_APPLE:
     case GL_YCBCR_MESA:
       return 2;
     case GL_RGB:
@@ -700,7 +704,8 @@ int glFmt2bpp(GLenum format, GLenum type) {
  * \param y y offset in texture
  * \param w width of the texture part to upload
  * \param h height of the texture part to upload
- * \param slice height of an upload slice, 0 for all at once
+ * \param slice height of an upload slice, 0 for all at once, -1 forces use of
+ *              TexImage instead of TexSubImage
  * \ingroup gltexture
  */
 void glUploadTex(GLenum target, GLenum format, GLenum type,
@@ -709,7 +714,7 @@ void glUploadTex(GLenum target, GLenum format, GLenum type,
   const uint8_t *data = dataptr;
   int y_max = y + h;
   if (w <= 0 || h <= 0) return;
-  if (slice <= 0)
+  if (slice == 0)
     slice = h;
   if (stride < 0) {
     data += (h - 1) * stride;
@@ -722,6 +727,12 @@ void glUploadTex(GLenum target, GLenum format, GLenum type,
   // this is not always correct, but should work for MPlayer
   glAdjustAlignment(stride);
   mpglPixelStorei(GL_UNPACK_ROW_LENGTH, stride / glFmt2bpp(format, type));
+  if (slice < 0) {
+    mpglPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
+    mpglTexImage2D(target, 0, GL_RGB, w, h, 0, format, type, data);
+    mpglPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_FALSE);
+    return;
+  }
   for (; y + slice <= y_max; y += slice) {
     mpglTexSubImage2D(target, 0, x, y, w, slice, format, type, data);
     data += stride * slice;
