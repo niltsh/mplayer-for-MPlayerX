@@ -1285,7 +1285,7 @@ static int preinit_internal(const char *arg, int allow_sw)
               "    1 is equivalent to enable VSYNC, 0 to disable VSYNC.\n"
               "    Requires GLX_SGI_swap_control support to work.\n"
               "  ycbcr\n"
-              "    also try to use the GL_MESA_ycbcr_texture extension\n"
+              "    also try to use the GL_APPLE_ycbcr_422 extension\n"
               "  yuv=<n>\n"
               "    0: use software YUV to RGB conversion.\n"
               "    1: use register combiners (nVidia only, for older cards).\n"
