@@ -352,7 +352,7 @@ int glFindFormat(uint32_t fmt, int *bpp, GLint *gl_texfmt,
       *gl_type = GL_UNSIGNED_BYTE;
       break;
     case IMGFMT_BGRA:
-      *gl_texfmt = GL_RGBA;
+      *gl_texfmt = GL_BGRA;
       *gl_format = GL_BGRA;
       *gl_type = GL_UNSIGNED_BYTE;
       break;
