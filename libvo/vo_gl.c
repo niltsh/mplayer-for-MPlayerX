@@ -524,11 +524,13 @@ static void autodetectGlExtensions(void) {
         !glYUVSupportsAlphaTex(use_yuv))
       use_yuv = 0;
   }
+  if (use_ycbcr == -1)
+    use_ycbcr = extensions && strstr(extensions, "ycbcr_422");
   if (is_ati && (lscale == 1 || lscale == 2 || cscale == 1 || cscale == 2))
     mp_msg(MSGT_VO, MSGL_WARN, "[gl] Selected scaling mode may be broken on ATI cards.\n"
              "Tell _them_ to fix GL_REPEAT if you have issues.\n");
-  mp_msg(MSGT_VO, MSGL_V, "[gl] Settings after autodetection: ati-hack = %i, force-pbo = %i, rectangle = %i, yuv = %i\n",
-         ati_hack, force_pbo, use_rectangle, use_yuv);
+  mp_msg(MSGT_VO, MSGL_V, "[gl] Settings after autodetection: ati-hack = %i, force-pbo = %i, rectangle = %i, yuv = %i, ycbcr = %i\n",
+         ati_hack, force_pbo, use_rectangle, use_yuv, use_ycbcr);
 }
 
 static GLint get_scale_type(int chroma) {
@@ -1232,7 +1234,7 @@ static int preinit_internal(const char *arg, int allow_sw)
     use_osd = -1;
     scaled_osd = 0;
     use_aspect = 1;
-    use_ycbcr = 0;
+    use_ycbcr = -1;
     use_yuv = -1;
     colorspace = -1;
     levelconv = -1;
@@ -1357,6 +1359,9 @@ static int preinit_internal(const char *arg, int allow_sw)
       if (!allow_sw && isSoftwareGl())
         goto err_out;
       autodetectGlExtensions();
+    } else if (use_ycbcr == -1) {
+      // rare feature, not worth creating a window to detect
+      use_ycbcr = 0;
     }
     if (many_fmts)
       mp_msg(MSGT_VO, MSGL_INFO, "[gl] using extended formats. "
