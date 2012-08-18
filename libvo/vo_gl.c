@@ -1294,7 +1294,7 @@ static int preinit_internal(const char *arg, int allow_sw)
               "    4: use fragment program with gamma correction via lookup.\n"
               "    5: use ATI-specific method (for older cards).\n"
               "    6: use lookup via 3D texture.\n"
-	      "  colorspace=<n>\n"
+              "  colorspace=<n>\n"
               "    0: MPlayer's default YUV to RGB conversion\n"
               "    1: YUV to RGB according to BT.601\n"
               "    2: YUV to RGB according to BT.709\n"
