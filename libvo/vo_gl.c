@@ -82,6 +82,10 @@ static GLuint osdtex[MAX_OSD_PARTS];
 //! Alpha textures for OSD
 static GLuint osdatex[MAX_OSD_PARTS];
 #endif
+//! Coordinates and texture sizes for OSD
+static struct osdcoords {
+  int x, y, w, h, sx, sy;
+} osdcoords[MAX_OSD_PARTS];
 static GLuint *eosdtex;
 #define LARGE_EOSD_TEX_SIZE 512
 #define TINYTEX_SIZE 16
@@ -91,11 +95,7 @@ static GLuint *eosdtex;
 #define SMALLTEX_COLS (LARGE_EOSD_TEX_SIZE/SMALLTEX_SIZE)
 #define SMALLTEX_MAX (SMALLTEX_COLS*SMALLTEX_COLS)
 static GLuint largeeosdtex[2];
-//! Display lists that draw the OSD parts
-static GLuint osdDispList[MAX_OSD_PARTS];
-#ifndef FAST_OSD
-static GLuint osdaDispList[MAX_OSD_PARTS];
-#endif
+//! Display list that draws the EOSD parts
 static GLuint eosdDispList;
 //! How many parts the OSD currently consists of
 static int osdtexCnt;
@@ -301,17 +301,12 @@ static void update_yuvconv(void) {
  * \brief remove all OSD textures and display-lists, thus clearing it.
  */
 static void clearOSD(void) {
-  int i;
   if (!osdtexCnt)
     return;
   mpglDeleteTextures(osdtexCnt, osdtex);
 #ifndef FAST_OSD
   mpglDeleteTextures(osdtexCnt, osdatex);
-  for (i = 0; i < osdtexCnt; i++)
-    mpglDeleteLists(osdaDispList[i], 1);
 #endif
-  for (i = 0; i < osdtexCnt; i++)
-    mpglDeleteLists(osdDispList[i], 1);
   osdtexCnt = 0;
 }
 
@@ -784,21 +779,7 @@ static void create_osd_texture(int x0, int y0, int w, int h,
 
   mpglBindTexture(gl_target, 0);
 
-  // Create a list for rendering this OSD part
-#ifndef FAST_OSD
-  osdaDispList[osdtexCnt] = mpglGenLists(1);
-  mpglNewList(osdaDispList[osdtexCnt], GL_COMPILE);
-  // render alpha
-  mpglBindTexture(gl_target, osdatex[osdtexCnt]);
-  glDrawTex(x0, y0, w, h, 0, 0, w, h, sx, sy, using_tex_rect, 0, 0, 0);
-  mpglEndList();
-#endif
-  osdDispList[osdtexCnt] = mpglGenLists(1);
-  mpglNewList(osdDispList[osdtexCnt], GL_COMPILE);
-  // render OSD
-  mpglBindTexture(gl_target, osdtex[osdtexCnt]);
-  glDrawTex(x0, y0, w, h, 0, 0, w, h, sx, sy, using_tex_rect, 0, 0, 0);
-  mpglEndList();
+  osdcoords[osdtexCnt] = (struct osdcoords){x0, y0, w, h, sx, sy};
 
   osdtexCnt++;
 }
@@ -810,6 +791,7 @@ static void create_osd_texture(int x0, int y0, int w, int h,
  * \param type bit 0: render OSD, bit 1: render EOSD
  */
 static void do_render_osd(int type) {
+  int i;
   int draw_osd  = (type & RENDER_OSD)  && osdtexCnt > 0;
   int draw_eosd = (type & RENDER_EOSD) && eosdDispList;
   if (!draw_osd && !draw_eosd)
@@ -838,11 +820,21 @@ static void do_render_osd(int type) {
     mpglColor4ub((osd_color >> 16) & 0xff, (osd_color >> 8) & 0xff, osd_color & 0xff, 0xff - (osd_color >> 24));
     // draw OSD
 #ifndef FAST_OSD
+    // render alpha
     mpglBlendFunc(GL_ZERO, GL_ONE_MINUS_SRC_ALPHA);
-    mpglCallLists(osdtexCnt, GL_UNSIGNED_INT, osdaDispList);
+    for (i = 0; i < osdtexCnt; i++) {
+      struct osdcoords *c = osdcoords + i;
+      mpglBindTexture(gl_target, osdatex[i]);
+      glDrawTex(c->x, c->y, c->w, c->h, 0, 0, c->w, c->h, c->sx, c->sy, using_tex_rect, 0, 0, 0);
+    }
 #endif
+    // render luminance OSD
     mpglBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    mpglCallLists(osdtexCnt, GL_UNSIGNED_INT, osdDispList);
+    for (i = 0; i < osdtexCnt; i++) {
+      struct osdcoords *c = osdcoords + i;
+      mpglBindTexture(gl_target, osdtex[i]);
+      glDrawTex(c->x, c->y, c->w, c->h, 0, 0, c->w, c->h, c->sx, c->sy, using_tex_rect, 0, 0, 0);
+    }
   }
   // set rendering parameters back to defaults
   mpglDisable(GL_BLEND);
