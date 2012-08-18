@@ -352,7 +352,7 @@ int glFindFormat(uint32_t fmt, int *bpp, GLint *gl_texfmt,
       *gl_type = GL_UNSIGNED_BYTE;
       break;
     case IMGFMT_BGRA:
-      *gl_texfmt = GL_BGRA;
+      *gl_texfmt = GL_RGBA;
       *gl_format = GL_BGRA;
       *gl_type = GL_UNSIGNED_BYTE;
       break;
@@ -567,6 +567,8 @@ void glCreateClearTex(GLenum target, GLenum fmt, GLenum format, GLenum type, GLi
   if (h == 0) h = 1;
   stride = w * glFmt2bpp(format, type);
   if (!stride) return;
+  // For BGRA internal format must be BGRA for GLES and RGBA for GL...
+  if (format == GL_BGRA && !mpglBegin) fmt = GL_BGRA;
   init = malloc(stride * h);
   memset(init, val, stride * h);
   glAdjustAlignment(stride);
