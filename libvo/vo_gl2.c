@@ -50,12 +50,12 @@
 static const vo_info_t info =
 {
   "X11 (OpenGL) - multiple textures version",
-  "gl2",
+  "gl_tiled",
   "Arpad Gereoffy & Sven Goethel",
   ""
 };
 
-const LIBVO_EXTERN(gl2)
+const LIBVO_EXTERN(gl_tiled)
 
 /* local data */
 static unsigned char *ImageData=NULL;
@@ -199,7 +199,7 @@ static int initTextures(void)
     if (w >= texture_width)
       break;
 
-    mp_msg (MSGT_VO, MSGL_V, "[gl2] Needed texture [%dx%d] too big, trying ",
+    mp_msg (MSGT_VO, MSGL_V, "[gl_tiled] Needed texture [%dx%d] too big, trying ",
             texture_width, texture_height);
 
     if (texture_width > texture_height)
@@ -210,7 +210,7 @@ static int initTextures(void)
     mp_msg (MSGT_VO, MSGL_V, "[%dx%d] !\n", texture_width, texture_height);
 
     if(texture_width < 64 || texture_height < 64) {
-      mp_msg (MSGT_VO, MSGL_FATAL, "[gl2] Give up .. usable texture size not available, or texture config error !\n");
+      mp_msg (MSGT_VO, MSGL_FATAL, "[gl_tiled] Give up .. usable texture size not available, or texture config error !\n");
       return -1;
     }
   } while (texture_width > 1 && texture_height > 1);
@@ -229,7 +229,7 @@ static int initTextures(void)
   if ((image_height % texture_height) > 0)
     texnumy++;
 
-  mp_msg(MSGT_VO, MSGL_V, "[gl2] Creating %dx%d textures of size %dx%d ...\n",
+  mp_msg(MSGT_VO, MSGL_V, "[gl_tiled] Creating %dx%d textures of size %dx%d ...\n",
          texnumx, texnumy, texture_width,texture_height);
 
   /* Allocate the texture memory */
@@ -242,7 +242,7 @@ static int initTextures(void)
 
   raw_line_len = image_width * image_bytes;
 
-  mp_msg (MSGT_VO, MSGL_DBG2, "[gl2] texture-usage %d*width=%d, %d*height=%d\n",
+  mp_msg (MSGT_VO, MSGL_DBG2, "[gl_tiled] texture-usage %d*width=%d, %d*height=%d\n",
           (int) texnumx, (int) texture_width, (int) texnumy,
           (int) texture_height);
 
@@ -335,22 +335,22 @@ static void gl_set_bilinear (int val)
         case 0:
           glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
           glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-          mp_msg(MSGT_VO, MSGL_INFO, "[gl2] bilinear off\n");
+          mp_msg(MSGT_VO, MSGL_INFO, "[gl_tiled] bilinear off\n");
           break;
         case 1:
           glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
           glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-          mp_msg(MSGT_VO, MSGL_INFO, "[gl2] bilinear linear\n");
+          mp_msg(MSGT_VO, MSGL_INFO, "[gl_tiled] bilinear linear\n");
           break;
         case 2:
           glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
           glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-          mp_msg(MSGT_VO, MSGL_INFO, "[gl2] bilinear mipmap nearest\n");
+          mp_msg(MSGT_VO, MSGL_INFO, "[gl_tiled] bilinear mipmap nearest\n");
           break;
         case 3:
           glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
           glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-          mp_msg(MSGT_VO, MSGL_INFO, "[gl2] bilinear mipmap linear\n");
+          mp_msg(MSGT_VO, MSGL_INFO, "[gl_tiled] bilinear mipmap linear\n");
           break;
       }
     }
@@ -366,13 +366,13 @@ static void gl_set_antialias (int val)
     glEnable (GL_POLYGON_SMOOTH);
     glEnable (GL_LINE_SMOOTH);
     glEnable (GL_POINT_SMOOTH);
-    mp_msg(MSGT_VO, MSGL_INFO, "[gl2] antialiasing on\n");
+    mp_msg(MSGT_VO, MSGL_INFO, "[gl_tiled] antialiasing on\n");
   } else {
     glShadeModel (GL_FLAT);
     glDisable (GL_POLYGON_SMOOTH);
     glDisable (GL_LINE_SMOOTH);
     glDisable (GL_POINT_SMOOTH);
-    mp_msg(MSGT_VO, MSGL_INFO, "[gl2] antialiasing off\n");
+    mp_msg(MSGT_VO, MSGL_INFO, "[gl_tiled] antialiasing off\n");
   }
 }
 
@@ -430,7 +430,7 @@ static void resize(int x,int y){
      0,  0, 0, 0,
     -1,  1, 0, 1,
   };
-  mp_msg(MSGT_VO,MSGL_V,"[gl2] Resize: %dx%d\n",x,y);
+  mp_msg(MSGT_VO,MSGL_V,"[gl_tiled] Resize: %dx%d\n",x,y);
   if(aspect_scaling()) {
     glClear(GL_COLOR_BUFFER_BIT);
     aspect(&x, &y, A_WINZOOM);
@@ -547,12 +547,12 @@ static int config_glx(uint32_t width, uint32_t height, uint32_t d_width, uint32_
   XVisualInfo *vinfo, vinfo_buf;
     vinfo = choose_glx_visual(mDisplay,mScreen,&vinfo_buf) < 0 ? NULL : &vinfo_buf;
     if (vinfo == NULL) {
-      mp_msg(MSGT_VO, MSGL_FATAL, "[gl2] no GLX support present\n");
+      mp_msg(MSGT_VO, MSGL_FATAL, "[gl_tiled] no GLX support present\n");
       return -1;
     }
 
   vo_x11_create_vo_window(vinfo, vo_dx, vo_dy, d_width, d_height,
-          flags, vo_x11_create_colormap(vinfo), "gl2", title);
+          flags, vo_x11_create_colormap(vinfo), "gl_tiled", title);
 
   return 0;
 }
@@ -601,7 +601,7 @@ static int initGl(uint32_t d_width, uint32_t d_height)
   gl_set_antialias(0);
   gl_set_bilinear(1);
 
-  mp_msg(MSGT_VO, MSGL_V, "[gl2] Using image_bpp=%d, image_bytes=%d, \n\tgl_bitmap_format=%s, gl_bitmap_type=%s, \n\trgb_size=%d (%d,%d,%d), a_sz=%d, \n\tgl_internal_format=%s\n",
+  mp_msg(MSGT_VO, MSGL_V, "[gl_tiled] Using image_bpp=%d, image_bytes=%d, \n\tgl_bitmap_format=%s, gl_bitmap_type=%s, \n\trgb_size=%d (%d,%d,%d), a_sz=%d, \n\tgl_internal_format=%s\n",
         image_bpp, image_bytes,
         glValName(gl_bitmap_format), glValName(gl_bitmap_type),
         rgb_sz, r_sz, g_sz, b_sz, a_sz, glValName(gl_internal_format));
@@ -646,7 +646,7 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
 
   glVersion = glGetString(GL_VERSION);
 
-  mp_msg(MSGT_VO, MSGL_V, "[gl2] OpenGL Driver Information:\n");
+  mp_msg(MSGT_VO, MSGL_V, "[gl_tiled] OpenGL Driver Information:\n");
   mp_msg(MSGT_VO, MSGL_V, "\tvendor: %s,\n\trenderer %s,\n\tversion %s\n",
          glGetString(GL_VENDOR), glGetString(GL_RENDERER), glVersion);
 
@@ -656,9 +656,9 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
     isGL12 = GL_FALSE;
 
   if(isGL12) {
-    mp_msg(MSGT_VO, MSGL_INFO, "[gl2] You have OpenGL >= 1.2 capable drivers, GOOD (16bpp and BGR is ok!)\n");
+    mp_msg(MSGT_VO, MSGL_INFO, "[gl_tiled] You have OpenGL >= 1.2 capable drivers, GOOD (16bpp and BGR is ok!)\n");
   } else {
-    mp_msg(MSGT_VO, MSGL_INFO, "[gl2] You have OpenGL < 1.2 drivers, BAD (16bpp and BGR may be damaged!)\n");
+    mp_msg(MSGT_VO, MSGL_INFO, "[gl_tiled] You have OpenGL < 1.2 drivers, BAD (16bpp and BGR may be damaged!)\n");
   }
 
   glFindFormat(format, &image_bpp, &gl_internal_format, &gl_bitmap_format, &gl_bitmap_type);
@@ -804,7 +804,7 @@ static int
 draw_frame(uint8_t *src[])
 {
   if (is_yuv) {
-    mp_msg(MSGT_VO, MSGL_ERR, "[gl2] error: draw_frame called for YV12!\n");
+    mp_msg(MSGT_VO, MSGL_ERR, "[gl_tiled] error: draw_frame called for YV12!\n");
     return 0;
   }
   ImageData=(unsigned char *)src[0];
@@ -863,8 +863,8 @@ static int preinit(const char *arg)
   use_glFinish = 1;
   if (subopt_parse(arg, subopts) != 0) {
     mp_msg(MSGT_VO, MSGL_FATAL,
-            "\n-vo gl2 command line help:\n"
-            "Example: mplayer -vo gl2:noglfinish\n"
+            "\n-vo gl_tiled command line help:\n"
+            "Example: mplayer -vo gl_tiled:noglfinish\n"
             "\nOptions:\n"
             "  noglfinish\n"
             "    Do not call glFinish() before swapping buffers\n"

@@ -98,7 +98,7 @@ extern const vo_functions_t video_out_vdpau;
 extern const vo_functions_t video_out_xv;
 extern const vo_functions_t video_out_gl_nosw;
 extern const vo_functions_t video_out_gl;
-extern const vo_functions_t video_out_gl2;
+extern const vo_functions_t video_out_gl_tiled;
 extern const vo_functions_t video_out_matrixview;
 extern const vo_functions_t video_out_dga;
 extern const vo_functions_t video_out_sdl;
@@ -208,7 +208,7 @@ const vo_functions_t* const video_out_drivers[] =
         &video_out_gl,
 #endif
 #if defined(CONFIG_GL_WIN32) || defined(CONFIG_GL_X11)
-        &video_out_gl2,
+        &video_out_gl_tiled,
 #endif
 #ifdef CONFIG_DGA
         &video_out_dga,
@@ -316,7 +316,8 @@ const vo_functions_t* init_best_video_out(char** vo_list){
     // first try the preferred drivers, with their optional subdevice param:
     if(vo_list && vo_list[0])
       while(vo_list[0][0]){
-        char* vo=strdup(vo_list[0]);
+        char* buffer=strdup(vo_list[0]);
+        char *vo = buffer;
 	vo_subdevice=strchr(vo,':');
 	if(vo_subdevice){
 	    vo_subdevice[0]=0;
@@ -326,6 +327,10 @@ const vo_functions_t* init_best_video_out(char** vo_list){
 	    mp_msg(MSGT_CPLAYER, MSGL_ERR, MSGTR_VO_PGM_HasBeenReplaced);
 	if (!strcmp(vo, "md5"))
 	    mp_msg(MSGT_CPLAYER, MSGL_ERR, MSGTR_VO_MD5_HasBeenReplaced);
+	if (!strcmp(vo, "gl2")) {
+	    mp_msg(MSGT_CPLAYER, MSGL_ERR, MSGTR_VO_GL2_HasBeenRenamed);
+	    vo = "gl_tiled";
+        }
 	for(i=0;video_out_drivers[i];i++){
 	    const vo_functions_t* video_driver=video_out_drivers[i];
 	    const vo_info_t *info = video_driver->info;
@@ -333,13 +338,13 @@ const vo_functions_t* init_best_video_out(char** vo_list){
 		// name matches, try it
 		if(!video_driver->preinit(vo_subdevice))
 		{
-		    free(vo);
+		    free(buffer);
 		    return video_driver; // success!
 		}
 	    }
 	}
         // continue...
-	free(vo);
+	free(buffer);
 	++vo_list;
 	if(!(vo_list[0])) return NULL; // do NOT fallback to others
       }

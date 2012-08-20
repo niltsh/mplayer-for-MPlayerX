@@ -1021,7 +1021,7 @@ immediately.
 Enforces a fixed video system for multiple files (one (un)initialization for
 all files).
 Therefore only one window will be opened for all files.
-Currently the following drivers are fixed-vo compliant: gl, gl2, mga, svga, x11,
+Currently the following drivers are fixed-vo compliant: gl, gl_tiled, mga, svga, x11,
 xmga, xv, xvidix and dfbmga.
 .
 .TP
@@ -1203,7 +1203,7 @@ Display the main menu at MPlayer startup.
 Permit MPlayer to receive pointer events reported by the video
 output driver.
 Necessary to select the buttons in DVD menus.
-Supported for X11-based VOs (x11, xv, xvmc, etc) and the gl, gl2, direct3d and
+Supported for X11-based VOs (x11, xv, xvmc, etc) and the gl, gl_tiled, direct3d and
 corevideo VOs.
 .
 .TP
@@ -3470,12 +3470,12 @@ If an external window is specified using the \-wid option, then the x and
 y coordinates are relative to the top-left corner of the window rather
 than the screen.
 The coordinates are relative to the screen given with \-xineramascreen for
-the video output drivers that fully support \-xineramascreen (direct3d, gl, gl2,
+the video output drivers that fully support \-xineramascreen (direct3d, gl, gl_tiled,
 vdpau, x11, xv, xvmc, corevideo).
 .br
 .I NOTE:
 This option is only supported by the x11, xmga, xv, xvmc, xvidix,
-gl, gl2, direct3d, directx, fbdev, sdl, dfxfb and corevideo
+gl, gl_tiled, direct3d, directx, fbdev, sdl, dfxfb and corevideo
 video output drivers.
 .sp 1
 .I EXAMPLE:
@@ -3563,14 +3563,14 @@ Furthermore under X11 your window manager has to honor window aspect hints.
 .B "\-ontop\ "
 Makes the player window stay on top of other windows.
 Supported by video output drivers which use X11, except SDL,
-as well as directx, corevideo, quartz, ggi and gl2.
+as well as directx, corevideo, quartz, ggi and gl_tiled.
 .
 .TP
 .B \-panscan <0.0\-1.0>
 Enables pan-and-scan functionality (cropping the sides of e.g.\& a 16:9
 movie to make it fit a 4:3 display without black bands).
 The range controls how much of the image is cropped.
-Only works with the xv, xmga, mga, gl, gl2, quartz, corevideo and xvidix
+Only works with the xv, xmga, mga, gl, gl_tiled, quartz, corevideo and xvidix
 video output drivers.
 .br
 .I NOTE:
@@ -3665,7 +3665,7 @@ This option is not suitable to only set the startup screen (because
 it will always display on the given screen in fullscreen mode),
 \-geometry is the best that is available for that purpose
 currently.
-Supported by at least the direct3d, gl, gl2, x11, xv and corevideo video output
+Supported by at least the direct3d, gl, gl_tiled, x11, xv and corevideo video output
 drivers.
 .
 .TP
@@ -4375,7 +4375,7 @@ Disabling might increase speed.
 .PD 1
 .
 .TP
-.B "gl2\ \ \ \ "
+.B gl_tiled
 Variant of the OpenGL video output driver.
 Supports videos larger than the maximum texture size but lacks many of the
 advanced features and optimizations of the gl driver and is unlikely to be
