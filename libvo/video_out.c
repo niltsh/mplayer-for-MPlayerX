@@ -318,14 +318,14 @@ const vo_functions_t* init_best_video_out(char** vo_list){
       while(vo_list[0][0]){
         char* vo=strdup(vo_list[0]);
 	vo_subdevice=strchr(vo,':');
-	if (!strcmp(vo, "pgm"))
-	    mp_msg(MSGT_CPLAYER, MSGL_ERR, MSGTR_VO_PGM_HasBeenReplaced);
-	if (!strcmp(vo, "md5"))
-	    mp_msg(MSGT_CPLAYER, MSGL_ERR, MSGTR_VO_MD5_HasBeenReplaced);
 	if(vo_subdevice){
 	    vo_subdevice[0]=0;
 	    ++vo_subdevice;
 	}
+	if (!strcmp(vo, "pgm"))
+	    mp_msg(MSGT_CPLAYER, MSGL_ERR, MSGTR_VO_PGM_HasBeenReplaced);
+	if (!strcmp(vo, "md5"))
+	    mp_msg(MSGT_CPLAYER, MSGL_ERR, MSGTR_VO_MD5_HasBeenReplaced);
 	for(i=0;video_out_drivers[i];i++){
 	    const vo_functions_t* video_driver=video_out_drivers[i];
 	    const vo_info_t *info = video_driver->info;
