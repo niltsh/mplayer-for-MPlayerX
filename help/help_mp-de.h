@@ -1168,6 +1168,7 @@ static const char help_text[]=
 // alte Videoausgabetreiber, die ersetzt wurden
 #define MSGTR_VO_PGM_HasBeenReplaced "Der pgm-Videoausgabetreiber wurde ersetzt durch -vo pnm:pgmyuv.\n"
 #define MSGTR_VO_MD5_HasBeenReplaced "Der md5-Videoausgabetreiber wurde ersetzt durch -vo md5sum.\n"
+#define MSGTR_VO_GL2_HasBeenRenamed "Der gl2-Videoausgabetreiber wurde in -vo gl_tiled umbenannt, aber es sollte stattdessen -vo gl verwendet werden.\n"
 
 
 // ======================= Audioausgabetreiber ========================
