@@ -113,6 +113,9 @@ static void draw_alpha(int x0, int y0, int w, int h, unsigned char *src, unsigne
 		case IMGFMT_YUY2:
 			vo_draw_alpha_yuy2(w,h,src,srca,stride,dst,image_stride);
 			break;
+		case IMGFMT_UYVY:
+			vo_draw_alpha_uyvy(w,h,src,srca,stride,dst,image_stride);
+			break;
 	}
 }
 
@@ -179,6 +182,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_
 			image_bytes = 4;
 			break;
 		case IMGFMT_YUY2:
+		case IMGFMT_UYVY:
 			image_bytes = 2;
 			break;
 	}
@@ -312,6 +316,10 @@ static int query_format(uint32_t format)
 	{
 		case IMGFMT_YUY2:
 			pixelFormat = kYUVSPixelFormat;
+			return supportflags;
+
+		case IMGFMT_UYVY:
+			pixelFormat = k2vuyPixelFormat;
 			return supportflags;
 
 		case IMGFMT_RGB24:
