@@ -238,7 +238,7 @@ demuxer_t *alloc_demuxer(stream_t *stream, int type, const char *filename)
         if (!(d->desc = get_demuxer_desc_from_type(type)))
             mp_msg(MSGT_DEMUXER, MSGL_ERR,
                    "BUG! Invalid demuxer type in new_demuxer(), "
-                   "big troubles ahead.");
+                   "big troubles ahead.\n");
     if (filename) // Filename hack for avs_check_file
         d->filename = strdup(filename);
     return d;
