@@ -748,10 +748,24 @@ void spudec_draw(void *this, void (*draw_alpha)(int x0,int y0, int w,int h, unsi
     }
 }
 
+static void validate_dimensions(spudec_handle_t *spu, unsigned dxs, unsigned dys)
+{
+    if (spu->orig_frame_width == 0 || spu->orig_frame_height == 0) {
+        spu->width  = FFMIN(spu->width,  dxs);
+        spu->height = FFMIN(spu->height, dys);
+        spu->start_col = FFMIN(spu->start_col, dxs - spu->width);
+        spu->start_row = FFMIN(spu->start_row, dys - spu->height);
+        return;
+    }
+    spu->orig_frame_width  = FFMAX(spu->orig_frame_width,  spu->start_col + spu->width);
+    spu->orig_frame_height = FFMAX(spu->orig_frame_height, spu->start_row + spu->height);
+}
+
 /* calc the bbox for spudec subs */
 void spudec_calc_bbox(void *me, unsigned int dxs, unsigned int dys, unsigned int* bbox)
 {
   spudec_handle_t *spu = me;
+  validate_dimensions(spu, dxs, dys);
   if (spu->orig_frame_width == 0 || spu->orig_frame_height == 0
   || (spu->orig_frame_width == dxs && spu->orig_frame_height == dys)) {
     // unscaled
@@ -896,6 +910,7 @@ void spudec_draw_scaled(void *me, unsigned int dxs, unsigned int dys, void (*dra
 	return;
     }
 
+    validate_dimensions(spu, dxs, dys);
     if (!(spu_aamode&16) && (spu->orig_frame_width == 0 || spu->orig_frame_height == 0
 	|| (spu->orig_frame_width == dxs && spu->orig_frame_height == dys))) {
       spudec_draw(spu, draw_alpha);
