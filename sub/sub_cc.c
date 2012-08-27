@@ -320,11 +320,20 @@ static void subcc_decode(const uint8_t *inputbuffer, unsigned int inputlength)
     data2 = current[2];
     current += 3; curbytes += 3;
 
+    // 0xfe/0xff are both used on plain EIA-608 CC and
+    // for extended EIA-708 (where 0xfc/0xfd is used for
+    // compatibility layer).
+    // Allow using channel bit 2 to select between which
+    // ones to look in.
     switch (cc_code) {
+    case 0xfc:
+    case 0xfd:
     case 0xfe:
     case 0xff:
+      if ((cc_code & 2) == (selected_channel() & 4) >> 1)
+          break;
       odd_offset ^= 1;
-      if (odd_offset != selected_channel() >> 1)
+      if (odd_offset != (selected_channel() & 2) >> 1)
           break;
       /* expect EIA-608 CC1/CC2 encoding */
       // FIXME check parity!
@@ -333,6 +342,7 @@ static void subcc_decode(const uint8_t *inputbuffer, unsigned int inputlength)
       cc_decode_EIA608(data1 | (data2 << 8));
       break;
 
+    case 0xfa:
     case 0x00:
       /* This seems to be just padding */
       break;
