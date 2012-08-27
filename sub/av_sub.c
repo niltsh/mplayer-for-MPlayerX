@@ -27,6 +27,9 @@
 void reset_avsub(struct sh_sub *sh)
 {
     if (sh->context) {
+        AVCodecContext *ctx = sh->context;
+        ctx->extradata = NULL;
+        ctx->extradata_size = 0;
         avcodec_close(sh->context);
         av_freep(&sh->context);
     }
@@ -107,6 +110,8 @@ int decode_avsub(struct sh_sub *sh, uint8_t **data, int *size,
         AVCodec *sub_codec;
         init_avcodec();
         ctx = avcodec_alloc_context3(NULL);
+        ctx->extradata_size = sh->extradata_len;
+        ctx->extradata = sh->extradata;
         sub_codec = avcodec_find_decoder(cid);
         if (!ctx || !sub_codec || avcodec_open2(ctx, sub_codec, NULL) < 0) {
             mp_msg(MSGT_SUBREADER, MSGL_FATAL,
