@@ -54,6 +54,7 @@ static subtitle *fb,*bb;
 static unsigned int cursor_pos=0;
 
 static int initialized=0;
+static int wtv_format;
 
 #define CC_ROLLON 1
 #define CC_ROLLUP 2
@@ -124,10 +125,12 @@ void subcc_init(void)
 	channel = -1;
 
 	initialized=1;
+	wtv_format = 0;
 }
 
 void subcc_reset(void)
 {
+    wtv_format = 0;
     if (!initialized)
         return;
     clear_buffer(&buf1);
@@ -385,6 +388,15 @@ void subcc_process_data(const uint8_t *inputdata, unsigned int len)
 		mov_subcc_decode(inputdata, len);
 		return;
 	}
+	if (len & 1) wtv_format = 0;
+	if (len == 2) {
+		// EIA-608 compatibility part.
+		// Full EIA-708 parts have length >= 4 (multiple of 2).
+		cc_decode_EIA608(inputdata[0] | (inputdata[1] << 8));
+		wtv_format = 1;
+	}
+	if (wtv_format)
+		return;
 	subcc_decode(inputdata, len);
 }
 
