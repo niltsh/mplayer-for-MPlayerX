@@ -503,6 +503,7 @@ Video output:
   --enable-xmga            enable mga_vid X11 video output [autodetect]
   --enable-xv              enable Xv video output [autodetect]
   --enable-xvmc            enable XvMC acceleration [disable]
+  --enable-vda             enable VDA acceleration [autodetect]
   --enable-vdpau           enable VDPAU acceleration [autodetect]
   --enable-vm              enable XF86VidMode support [autodetect]
   --enable-xinerama        enable Xinerama support [autodetect]
@@ -696,6 +697,7 @@ _dga1=auto
 _dga2=auto
 _xv=auto
 _xvmc=no  #auto when complete
+_vda=auto
 _vdpau=auto
 _sdl=auto
 _kva=auto
@@ -1039,6 +1041,8 @@ for ac_option do
   --disable-xv)         _xv=no          ;;
   --enable-xvmc)        _xvmc=yes       ;;
   --disable-xvmc)       _xvmc=no        ;;
+  --enable-vda)         _vda=yes        ;;
+  --disable-vda)        _vda=no         ;;
   --enable-vdpau)       _vdpau=yes      ;;
   --disable-vdpau)      _vdpau=no       ;;
   --enable-sdl)         _sdl=yes        ;;
@@ -4435,6 +4439,22 @@ else
   libavdecoders=$(echo $libavdecoders | sed -e s/MPEG_XVMC_DECODER//)
 fi
 echores "$_xvmc"
+
+
+echocheck "Video Decode Acceleration (VDA)"
+if test "$_vda" = auto ; then
+  _vda=no
+  header_check VideoDecodeAcceleration/VDADecoder.h && _vda=yes
+fi
+if test "$_vda" = yes ; then
+  def_vda='#define CONFIG_VDA 1'
+  extra_ldflags="$extra_ldflags -framework CoreFoundation -framework VideoDecodeAcceleration -framework QuartzCore"
+  libavhwaccels="H264_VDA_HWACCEL"
+else
+  def_vda='#define CONFIG_VDA 0'
+  libavdecoders=$(echo $libavdecoders | sed -e 's/[A-Z0-9]*_VDA_DECODER//g')
+fi
+echores "$_vda"
 
 
 echocheck "VDPAU"
@@ -8234,6 +8254,7 @@ TWOLAME=$_twolame
 UNRAR_EXEC = $_unrar_exec
 V4L2 = $_v4l2
 VCD = $_vcd
+VDA = $_vda
 VDPAU = $_vdpau
 VESA = $_vesa
 VIDIX = $_vidix
@@ -8350,6 +8371,7 @@ CONFIG_MUXERS   = yes
 CONFIG_NETWORK  = $networking
 CONFIG_RTPDEC   = $networking
 CONFIG_VF_LAVFI = $_vf_lavfi
+CONFIG_VDA      = $_vda
 CONFIG_VDPAU    = $_vdpau
 CONFIG_XVMC     = $_xvmc
 CONFIG_ZLIB     = $_zlib
