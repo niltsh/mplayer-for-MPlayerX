@@ -1201,6 +1201,7 @@ static const char help_text[]=
 // old vo drivers that have been replaced
 #define MSGTR_VO_PGM_HasBeenReplaced "PGM 视频输出驱动已替换为 -vo pnm:pgmyuv。\n"
 #define MSGTR_VO_MD5_HasBeenReplaced "MD5 视频输出驱动已替换为 -vo md5sum。\n"
+#define MSGTR_VO_GL2_HasBeenRenamed "g12 视频输出驱动已更名为 -vo gl_tiled，但实际上应使用 -vo gl。\n"
 
 
 // ======================= audio output drivers ========================
