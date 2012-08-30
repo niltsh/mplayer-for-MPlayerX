@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 34958
+// Synced with help_mp-en.h rev. 35110
 //
 // Translated by JRaSH <jrash06@gmail.com>
 
