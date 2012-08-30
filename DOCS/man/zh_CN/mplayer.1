@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 34993
+.\" sync with en/mplayer.1 rev. 35123
 .\" MPlayer (C) 2000-2012 MPlayer Team
 .\" This man page was/is translated by JRaSH<jrash06 at gmail.com>
 .
@@ -1021,7 +1021,7 @@ EDL 记录含有一些只对这个特定文件来说是正确的绝对数值。\
 强制使用单个固定的视频系统用于多个文件的播放\
 （一次初始化/终止操作用于所有文件）。\
 这样只打开一个窗口，将用于所有文件的播放。\
-目前以下驱动兼容 fixed-vo：gl、gl2、mga、svga、x11、xmga、\
+目前以下驱动兼容 fixed-vo：gl、gl_tiled、mga、svga、x11、xmga、\
 xv、xvidix 和 dfbmga。
 .
 .TP
@@ -1204,7 +1204,7 @@ mplayer \-heartbeat\-cmd "gnome\-screensaver\-command \-p" file
 指针移动事件。\
 选择 DVD 菜单中的按钮需要该选项。\
 支持基于 X11 的视频输出（x11、xv、xvmc等）\
-以及 gl、gl2、direct3d 和 corevideo 的视频输出
+以及 gl、gl_tiled、direct3d 和 corevideo 的视频输出
 .
 .TP
 .B \-noar
@@ -2751,8 +2751,10 @@ DVD/\:VOBsub 的抗锯齿/\:缩放模式。\
 .PD 1
 .
 .TP
-.B "\-subcc <1\-4>\ "
+.B "\-subcc <1\-8>\ "
 显示来自指定通道的 DVD 可隐藏字幕（DVD Closed Caption）。\
+值 5 至 8 用以选择从 EIA-708 数据中抽取兼容 EIA-608 数据流的\
+一种模式。\
 这些字幕
 .B 不
 是 VOB 字幕，而是为听力有障碍的人准备的特殊的 ASCII 字幕，\
@@ -3469,12 +3471,12 @@ x 和 y 指定的是从屏幕左上角到所显示图像的左上角\
 如果使用 \-wid 选项指定了外部窗口，\
 那么 x 和 y 坐标是相对于窗口而非\
 屏幕的左上角。\
-使用完全支持 \-xineramascreen 的视频输出的驱动（direct3d、gl、gl2、\
+使用完全支持 \-xineramascreen 的视频输出的驱动（direct3d、gl、gl_tiled、\
 vdpau、x11、xv、xvmc、corevideo）时，坐标是相对于 \-xineramascreen 选项\
 所给屏幕的值。
 .br
 .I 注意：
-该选项仅 x11、xmga、xv、xvmc、xvidix、gl、gl2、direct3d、\
+该选项仅 x11、xmga、xv、xvmc、xvidix、gl、gl_tiled、direct3d、\
 directx、fbdev、sdl、dfxfb 和 corevideo 视频输出驱动\
 支持。
 .sp 1
@@ -3563,14 +3565,14 @@ directx、fbdev、sdl、dfxfb 和 corevideo 视频输出驱动\
 .B "\-ontop\ "
 让播放器窗口保持位于其他窗口之上。\
 使用 X11 的视频输出驱动（除了 SDL），以及使用 directx、corevideo、quartz、\
-ggi 和 gl2 的驱动都支持。
+ggi 和 gl_tiled 的驱动都支持。
 .
 .TP
 .B \-panscan <0.0\-1.0>
 启用全景显示功能（裁剪诸如 16:9 影片的两边以适应 4:3 不带\
 黑边的显示方式）。\
 该范围内的参数值用来控制裁减多少图像。\
-只能与 xv, xmga, mga, gl, gl2, quartz, corevideo 和 xvidix 的\
+只能与 xv、xmga、mga、gl、gl_tiled、quartz、corevideo 和 xvidix 的\
 视频输出驱动一同起作用。
 .br
 .I 注意：
@@ -3665,7 +3667,7 @@ dga、x11、xv、sdl 和 directx 视频输出驱动支持该选项。\
 （因为其总是在所给屏幕上全屏显示），\
 \-geometry 是目前可用于此目的的最好\
 选项。\
-至少 direct3d、gl、gl2、x11、xv 和 corevideo 视频输出\
+至少 direct3d、gl、gl_tiled、x11、xv 和 corevideo 视频输出\
 驱动支持该选项。
 .
 .TP
@@ -4189,8 +4191,9 @@ OSD 的颜色（默认值是：0x00ffffff，对应不透明的白色）。
 需要 GLX_SGI_swap_control 支持以起作用。\
 某些（大多数/所有？）实现设备仅能在全屏模式下起作用。
 .IPs ycbcr
-使用 GL_MESA_ycbcr_texture 扩展组件将 YUV 转换为 RGB 格式。\
-在大多数情况下，该方法很可能比使用软件转换成 RGB 慢。
+使用 GL_APPLE_ycbcr_422 扩展组件将 YUV 转换为 RGB 格式。\
+如果指定了 yuv= 则默认为禁用，否则默认为自动检测。\
+注意该选项将启用一些特殊的设置以进入驱动程序中的一种特殊的快速通道。
 .IPs yuv=<n>
 选择 YUV 到 RGB 转换的类型。\
 默认方式是自动侦测，选取 0 到 2 之间的一个值。
@@ -4301,7 +4304,16 @@ GL_ARB_fragment_shader！）。\
 .IPs 3
 将画面并行排列的输入信号转换为四重缓冲的立体图像。\
 只有少数 OpenGL 显卡支持
+.IPs 4
+以按像素排列的方式将左右眼的图像混合在一起。\
+混合样式由 stipple 选项指定。
 .RE
+.IPs stipple=<以比特表示的方式>
+数值的最低 16 位用以指定所使用 4x4 排列样式（默认值：0x0f0f）。\
+可供尝试的示例：\
+0x0f0f, 0xf0f0：按水平线排列；
+0xaaaa, 0x5555：按垂直线排列；
+0xa5a5, 0x5a5a：交错网格排列
 .RE
 .sp 1
 .RS
@@ -4365,7 +4377,7 @@ GL_ARB_fragment_shader！）。\
 .PD 1
 .
 .TP
-.B "gl2\ \ \ \ "
+.B "gl_tiled \ \ \ "
 OpenGL 视频输出驱动的修改版。\
 支持大于最大纹理尺寸的视频，但是缺少\
 许多 GL 驱动的高级功能和优化选项，\
