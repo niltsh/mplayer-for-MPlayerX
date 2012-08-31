@@ -36,6 +36,7 @@
 #include "vf.h"
 
 #include "libvo/fastmemcpy.h"
+#include "libavutil/intreadwrite.h"
 #include "sub/sub.h"
 #include "m_option.h"
 #include "m_struct.h"
@@ -51,10 +52,14 @@
 #define rgba2u(c)  ( ((-152*_r(c) - 298*_g(c) + 450*_b(c)) >> 10) + 128 )
 #define rgba2v(c)  ( (( 450*_r(c) - 376*_g(c) -  73*_b(c)) >> 10) + 128 )
 
+typedef void (*copy_from_image_func)(struct vf_instance *vf,
+                                     int first_row, int last_row);
+typedef void (*copy_to_image_func)(struct vf_instance *vf);
 
 static const struct vf_priv_s {
     int outh, outw;
 
+    int is_planar;
     unsigned int outfmt;
 
     // 1 = auto-added filter: insert only if chain does not support EOSD already
@@ -63,8 +68,15 @@ static const struct vf_priv_s {
 
     unsigned char *planes[3];
     unsigned char *dirty_rows;
+
+    copy_from_image_func copy_from_image;
+    copy_to_image_func copy_to_image;
 } vf_priv_dflt;
 
+static void copy_from_image_yuv420p(struct vf_instance *, int, int);
+static void copy_to_image_yuv420p(struct vf_instance *);
+static void copy_from_image_yuv422(struct vf_instance *, int, int);
+static void copy_to_image_yuv422(struct vf_instance *);
 
 static int config(struct vf_instance *vf,
                   int width, int height, int d_width, int d_height,
@@ -72,8 +84,23 @@ static int config(struct vf_instance *vf,
 {
     struct mp_eosd_settings res = {0};
 
-    if (outfmt == IMGFMT_IF09)
+    switch (outfmt) {
+    case IMGFMT_YV12:
+    case IMGFMT_I420:
+    case IMGFMT_IYUV:
+        vf->priv->is_planar = 1;
+        vf->priv->copy_from_image = copy_from_image_yuv420p;
+        vf->priv->copy_to_image = copy_to_image_yuv420p;
+        break;
+    case IMGFMT_UYVY:
+    case IMGFMT_YUY2:
+        vf->priv->is_planar = 0;
+        vf->priv->copy_from_image = copy_from_image_yuv422;
+        vf->priv->copy_to_image = copy_to_image_yuv422;
+        break;
+    default:
         return 0;
+    }
 
     vf->priv->outfmt = outfmt;
     vf->priv->outh = height + ass_top_margin + ass_bottom_margin;
@@ -84,6 +111,8 @@ static int config(struct vf_instance *vf,
         d_height = d_height * vf->priv->outh / height;
     }
 
+    if (!vf->priv->is_planar)
+        vf->priv->planes[0] = malloc(vf->priv->outw * vf->priv->outh);
     vf->priv->planes[1]  = malloc(vf->priv->outw * vf->priv->outh);
     vf->priv->planes[2]  = malloc(vf->priv->outw * vf->priv->outh);
     vf->priv->dirty_rows = malloc(vf->priv->outh);
@@ -144,6 +173,7 @@ static void blank(mp_image_t *mpi, int y1, int y2)
     unsigned char *dst;
     int chroma_rows = (y2 - y1) >> mpi->chroma_y_shift;
 
+    if (mpi->flags & MP_IMGFLAG_PLANAR) {
     dst = mpi->planes[0] + y1 * mpi->stride[0];
     for (y = 0; y < y2 - y1; ++y) {
         memset(dst, color[0], mpi->w);
@@ -158,6 +188,27 @@ static void blank(mp_image_t *mpi, int y1, int y2)
     for (y = 0; y < chroma_rows; ++y) {
         memset(dst, color[2], mpi->chroma_width);
         dst += mpi->stride[2];
+    }
+    } else {
+        unsigned char packed_color[4];
+        int x;
+        if (mpi->imgfmt == IMGFMT_UYVY) {
+            packed_color[0] = color[1];
+            packed_color[1] = color[0];
+            packed_color[2] = color[2];
+            packed_color[3] = color[0];
+        } else {
+            packed_color[0] = color[0];
+            packed_color[1] = color[1];
+            packed_color[2] = color[0];
+            packed_color[3] = color[2];
+        }
+        dst = mpi->planes[0] + y1 * mpi->stride[0];
+        for (y = y1; y < y2; ++y) {
+            for (x = 0; x < mpi->w / 2; ++x)
+                AV_COPY32(dst + 4 * x, packed_color);
+            dst += mpi->stride[0];
+        }
     }
 }
 
@@ -224,7 +275,7 @@ static int prepare_image(struct vf_instance *vf, mp_image_t *mpi)
 /**
  * \brief Copy specified rows from render_context.dmpi to render_context.planes, upsampling to 4:4:4
  */
-static void copy_from_image(struct vf_instance *vf, int first_row,
+static void copy_from_image_yuv420p(struct vf_instance *vf, int first_row,
                             int last_row)
 {
     int pl;
@@ -270,7 +321,7 @@ static void copy_from_image(struct vf_instance *vf, int first_row,
 /**
  * \brief Copy all previously copied rows back to render_context.dmpi
  */
-static void copy_to_image(struct vf_instance *vf)
+static void copy_to_image_yuv420p(struct vf_instance *vf)
 {
     int pl;
     int i, j, k;
@@ -300,6 +351,86 @@ static void copy_to_image(struct vf_instance *vf)
     }
 }
 
+static void copy_from_image_yuv422(struct vf_instance *vf,
+                                   int first_row, int last_row)
+{
+    unsigned char *dirty_rows = vf->priv->dirty_rows;
+    int src_stride = vf->dmpi->stride[0];
+    int dst_stride = vf->priv->outw;
+    unsigned char *src = vf->dmpi->planes[0] + first_row * src_stride;
+    unsigned char **dst = vf->priv->planes;
+    int dst_off = first_row * dst_stride;
+    int is_uyvy = vf->priv->outfmt == IMGFMT_UYVY;
+    int i, j, k;
+
+    for (i = first_row; i < last_row; ++i) {
+        int next_off = dst_off + dst_stride;
+        if (!dirty_rows[i]) {
+            if (is_uyvy) {
+                for (j = dst_off, k = 0; j < next_off; j += 2, k += 4) {
+                    dst[0][j    ] = src[k + 1];
+                    dst[0][j + 1] = src[k + 3];
+                    dst[1][j    ] = src[k    ];
+                    dst[1][j + 1] = src[k    ];
+                    dst[2][j    ] = src[k + 2];
+                    dst[2][j + 1] = src[k + 2];
+                }
+            } else {
+                for (j = dst_off, k = 0; j < next_off; j += 2, k += 4) {
+                    dst[0][j    ] = src[k    ];
+                    dst[0][j + 1] = src[k + 2];
+                    dst[1][j    ] = src[k + 1];
+                    dst[1][j + 1] = src[k + 1];
+                    dst[2][j    ] = src[k + 3];
+                    dst[2][j + 1] = src[k + 3];
+                }
+            }
+        }
+        src += src_stride;
+        dst_off = next_off;
+    }
+    for (i = first_row; i < last_row; ++i)
+        dirty_rows[i] = 1;
+}
+
+static void copy_to_image_yuv422(struct vf_instance *vf)
+{
+    unsigned char *dirty_rows = vf->priv->dirty_rows;
+    int src_stride = vf->priv->outw;
+    int dst_stride = vf->dmpi->stride[0];
+    int height = vf->priv->outh;
+    unsigned char **src = vf->priv->planes;
+    unsigned char *dst = vf->dmpi->planes[0];
+    int src_off = 0;
+    int is_uyvy = vf->priv->outfmt == IMGFMT_UYVY;
+    int i, j, k;
+
+    for (i = 0; i < height; ++i) {
+        int next_off = src_off + src_stride;
+        if (*dirty_rows++) {
+#define AVERAGE(a, b) (((unsigned)(a) + (unsigned)(b)) >> 1)
+            if (is_uyvy) {
+                for (j = src_off, k = 0; j < next_off; j += 2, k += 4) {
+                    dst[k    ] = AVERAGE(src[1][j], src[1][j + 1]);
+                    dst[k + 1] = src[0][j];
+                    dst[k + 2] = AVERAGE(src[2][j], src[2][j + 1]);
+                    dst[k + 3] = src[0][j + 1];
+                }
+            } else {
+                for (j = src_off, k = 0; j < next_off; j += 2, k += 4) {
+                    dst[k    ] = src[0][j];
+                    dst[k + 1] = AVERAGE(src[1][j], src[1][j + 1]);
+                    dst[k + 2] = src[0][j + 1];
+                    dst[k + 3] = AVERAGE(src[2][j], src[2][j + 1]);
+                }
+            }
+#undef AVERAGE
+        }
+        src_off = next_off;
+        dst += dst_stride;
+    }
+}
+
 static void my_draw_bitmap(struct vf_instance *vf, unsigned char *bitmap,
                            int bitmap_w, int bitmap_h, int stride,
                            int dst_x, int dst_y, unsigned color)
@@ -311,11 +442,13 @@ static void my_draw_bitmap(struct vf_instance *vf, unsigned char *bitmap,
     unsigned char *src, *dsty, *dstu, *dstv;
     int i, j;
     mp_image_t *dmpi = vf->dmpi;
+    int stride_y = vf->priv->is_planar ? dmpi->stride[0] : vf->priv->outw;
 
     opacity = (0x10203 * opacity + 0x80) >> 8; /* 0x10203 = (1<<32)/(255*255) */
     /* 0 <= opacity <= 0x10101 */
     src = bitmap;
-    dsty = dmpi->planes[0]     + dst_x + dst_y * dmpi->stride[0];
+    dsty = vf->priv->is_planar ? dmpi->planes[0] : vf->priv->planes[0];
+    dsty += dst_x + dst_y * stride_y;
     dstu = vf->priv->planes[1] + dst_x + dst_y * vf->priv->outw;
     dstv = vf->priv->planes[2] + dst_x + dst_y * vf->priv->outw;
     for (i = 0; i < bitmap_h; ++i) {
@@ -329,7 +462,7 @@ static void my_draw_bitmap(struct vf_instance *vf, unsigned char *bitmap,
             dstv[j] = (k * v + (0xFFFFFF - k) * dstv[j] + 0x800000) >> 24;
         }
         src  += stride;
-        dsty += dmpi->stride[0];
+        dsty += stride_y;
         dstu += vf->priv->outw;
         dstv += vf->priv->outw;
     }
@@ -339,6 +472,9 @@ static void render_frame(struct vf_instance *vf, mp_image_t *mpi,
                          struct mp_eosd_image_list *images)
 {
     struct mp_eosd_image *img;
+    copy_from_image_func copy_from_image = vf->priv->copy_from_image;
+    copy_to_image_func copy_to_image = vf->priv->copy_to_image;
+
     img = eosd_image_first(images);
     if (!img)
         return;
@@ -367,6 +503,8 @@ static int query_format(struct vf_instance *vf, unsigned int fmt)
     case IMGFMT_YV12:
     case IMGFMT_I420:
     case IMGFMT_IYUV:
+    case IMGFMT_UYVY:
+    case IMGFMT_YUY2:
         return vf_next_query_format(vf, fmt) | VFCAP_EOSD;
     }
     return 0;
@@ -385,6 +523,8 @@ static int control(vf_instance_t *vf, int request, void *data)
 
 static void uninit(struct vf_instance *vf)
 {
+    if (!vf->priv->is_planar)
+        free(vf->priv->planes[0]);
     free(vf->priv->planes[1]);
     free(vf->priv->planes[2]);
     free(vf->priv->dirty_rows);
@@ -394,6 +534,8 @@ static const unsigned int fmt_list[] = {
     IMGFMT_YV12,
     IMGFMT_I420,
     IMGFMT_IYUV,
+    IMGFMT_UYVY,
+    IMGFMT_YUY2,
     0
 };
 
