@@ -8401,12 +8401,13 @@ list=$(echo $1 | tr '[a-z]' '[A-Z]')
 item=$(echo $2 | tr '[a-z]' '[A-Z]')
 _nprefix=$4;
 _defineprefix=$3;
+_postfix=$5;
 test -z "$_nprefix" && _nprefix='CONFIG'
 for part in $list; do
   if $(echo $item | grep -q -E "(^| )$part($| )"); then
-    echo "${_defineprefix}define ${_nprefix}_$part 1"
+    echo "${_defineprefix}define ${_nprefix}_${part}${_postfix} 1"
   else
-    echo "${_defineprefix}define ${_nprefix}_$part 0"
+    echo "${_defineprefix}define ${_nprefix}_${part}${_postfix} 0"
   fi
 done
 }
@@ -8552,6 +8553,7 @@ $def_words_endian
 $(ff_config_enable "$arch_all" "$arch" "#" "ARCH")
 $(ff_config_enable "$subarch_all" "$subarch" "#" "ARCH")
 $(ff_config_enable "$cpuexts_all" "$cpuexts" "#" "HAVE")
+$(ff_config_enable "$cpuexts_all" "$cpuexts" "#" "HAVE" "_INLINE")
 
 
 /* Blu-ray/DVD/VCD/CD */
@@ -8955,7 +8957,7 @@ if x86; then
 echo "%define CONFIG_GPL 1" >> "$TMPS"
 echo "$(ff_config_enable "$arch_all" "$arch" "%" "ARCH")" >> "$TMPS"
 echo "$(ff_config_enable "$subarch_all" "$subarch" "%" "ARCH")" >> "$TMPS"
-echo "$(ff_config_enable "$cpuexts_all" "$cpuexts" "%" "HAVE")" >> "$TMPS"
+echo "$(ff_config_enable "$cpuexts_all" "$cpuexts" "%" "HAVE" "_EXTERNAL")" >> "$TMPS"
 echo "$(ff_config_enable "$yasm_features_all" "$yasm_features" "%" "HAVE")" >> "$TMPS"
 
 cmp -s "$TMPS" ffmpeg/config.asm || mv -f "$TMPS" ffmpeg/config.asm
