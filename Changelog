@@ -1,8 +1,16 @@
 MPlayer
 
+    Decoders:
+    * Hardware accelerated decoding on OS X via VDA.
+
     Other:
     * "run" slave/keybinding command now supports expanding properties
     * better support for > 8 bit formats in -vo gl
+    * -vo gl now supports OSD (not EOSD though) with GLES backend.
+    * -vo gl2 renamed to -vo gl_tiled to stop people from assuming it is
+      better than -vo gl (it is in many ways worse).
+    * Fixes for DVB, teletext and closed-caption based subtitles.
+    * Support teletext and CC subtitles in WTV.
 
   1.1: "We gave up on 1.0"
 
