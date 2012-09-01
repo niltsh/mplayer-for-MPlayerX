@@ -276,6 +276,15 @@ void update_subtitles(sh_video_t *sh_video, double refpts, demux_stream_t *d_dvd
             if (type == 'd') {
                 if (d_dvdsub->demuxer->teletext) {
                     uint8_t *p = packet;
+                    if (len == 3124) { // wtv subtitle-only format
+                        while (len >= 42) {
+                            teletext_control(d_dvdsub->demuxer->teletext,
+                                TV_VBI_CONTROL_DECODE_LINE, p);
+                            p   += 42;
+                            len -= 42;
+                        }
+                        return;
+                    }
                     p++;
                     len--;
                     while (len >= 46) {

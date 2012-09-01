@@ -1867,6 +1867,9 @@ int teletext_control(void* p, int cmd, void *arg)
     case TV_VBI_CONTROL_DECODE_PAGE:
         vbi_decode(priv,*(unsigned char**)arg);
         return VBI_CONTROL_TRUE;
+    case TV_VBI_CONTROL_DECODE_LINE:
+        vbi_decode_line(priv, arg);
+        return VBI_CONTROL_TRUE;
     case TV_VBI_CONTROL_DECODE_DVB:
         vbi_decode_dvb(priv, arg);
         return VBI_CONTROL_TRUE;

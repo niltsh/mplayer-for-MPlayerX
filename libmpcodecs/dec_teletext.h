@@ -70,6 +70,7 @@ int teletext_control(void* p, int cmd, void *arg);
 #define TV_VBI_CONTROL_DECODE_PAGE     0x556   ///< decode vbi page
 #define TV_VBI_CONTROL_GET_NETWORKNAME 0x557   ///< get current network name
 #define TV_VBI_CONTROL_DECODE_DVB      0x558   ///< decode DVB teletext
+#define TV_VBI_CONTROL_DECODE_LINE     0x559   ///< decode a single teletext line (format used by WTV)
 
 #define VBI_TFORMAT_TEXT    0               ///< text mode
 #define VBI_TFORMAT_BW      1               ///< black&white mode
