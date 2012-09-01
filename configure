@@ -8553,6 +8553,7 @@ $def_words_endian
 $(ff_config_enable "$arch_all" "$arch" "#" "ARCH")
 $(ff_config_enable "$subarch_all" "$subarch" "#" "ARCH")
 $(ff_config_enable "$cpuexts_all" "$cpuexts" "#" "HAVE")
+$(ff_config_enable "$cpuexts_all" "$cpuexts" "#" "HAVE" "_EXTERNAL")
 $(ff_config_enable "$cpuexts_all" "$cpuexts" "#" "HAVE" "_INLINE")
 
 
@@ -8836,6 +8837,7 @@ $def_xform_asm
 $def_xmm_clobbers
 $def_yasm
 
+#define AV_HAVE_INCOMPATIBLE_FORK_ABI 0
 #define CONFIG_AUDIO_FLOAT 0
 #define CONFIG_AVCODEC 1
 #define CONFIG_AVSERVER 0
