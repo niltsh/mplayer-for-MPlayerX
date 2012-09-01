@@ -579,6 +579,10 @@ static void put_to_cache(priv_vbi_t* priv,tt_page* pg,int line){
     pgc->subpagenum=pg->subpagenum;
     pgc->primary_lang=pg->primary_lang;
     pgc->secondary_lang=pg->secondary_lang;
+    if (pg->flags & TT_PGFL_ERASE_PAGE) {
+        memset(pgc->raw, 0, sizeof(pgc->raw));
+        pg->flags &= ~TT_PGFL_ERASE_PAGE;
+    }
     pgc->flags=pg->flags;
     for(j=0;j<6;++j)
         pgc->links[j]=pg->links[j];
