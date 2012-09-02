@@ -100,7 +100,6 @@ static unsigned short fb_ored[256], fb_ogreen[256], fb_oblue[256];
 static struct fb_cmap fb_oldcmap = { 0, 256, fb_ored, fb_ogreen, fb_oblue };
 static int fb_cmap_changed = 0; //  to restore map
 static int fb_pixel_size;	// 32:  4  24:  3  16:  2  15:  2
-static int fb_bpp;		// 32: 32  24: 24  16: 16  15: 15
 static size_t fb_size; // size of frame_buffer
 static int fb_line_len; // length of one line in bytes
 static void (*draw_alpha_p)(int w, int h, unsigned char *src,
@@ -183,13 +182,6 @@ static int fb_preinit(int reset)
 	}
 	fb_orig_vinfo = fb_vinfo;
 
-	fb_bpp = fb_vinfo.bits_per_pixel;
-
-	/* 16 and 15 bpp is reported as 16 bpp */
-	if (fb_bpp == 16)
-		fb_bpp = fb_vinfo.red.length + fb_vinfo.green.length +
-			fb_vinfo.blue.length;
-
 	fb_err = 0;
 	return 0;
 err_out:
@@ -230,6 +222,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
 	}
 
 	draw_alpha_p = vo_get_draw_alpha(format);
+	fb_pixel_size = pixel_stride(format);
 
 	if (vo_config_count == 0) {
 		if (ioctl(fb_dev_fd, FBIOGET_FSCREENINFO, &fb_finfo)) {
@@ -296,6 +289,7 @@ static int query_format(uint32_t format)
 	// open the device, etc.
 	if (fb_preinit(0)) return 0;
 	if (IMGFMT_IS_BGR(format)) {
+		int bpp;
 		int fb_target_bpp = format & 0xff;
 		set_bpp(&fb_vinfo, fb_target_bpp);
 		fb_vinfo.xres_virtual = fb_vinfo.xres;
@@ -307,11 +301,10 @@ static int query_format(uint32_t format)
 			mp_msg(MSGT_VO, MSGL_ERR, "[fbdev2] Can't put VSCREENINFO: %s\n", strerror(errno));
 			return 0;
 		}
-		fb_pixel_size = fb_vinfo.bits_per_pixel / 8;
-		fb_bpp = fb_vinfo.bits_per_pixel;
-		if (fb_bpp == 16)
-			fb_bpp = fb_vinfo.red.length + fb_vinfo.green.length + fb_vinfo.blue.length;
-		if (fb_bpp == fb_target_bpp)
+		bpp = fb_vinfo.bits_per_pixel;
+		if (bpp == 16)
+			bpp = fb_vinfo.red.length + fb_vinfo.green.length + fb_vinfo.blue.length;
+		if (bpp == fb_target_bpp)
 			return VFCAP_CSP_SUPPORTED|VFCAP_CSP_SUPPORTED_BY_HW|VFCAP_ACCEPT_STRIDE;
 	}
 	return 0;
