@@ -279,6 +279,14 @@ void calc_src_dst_rects(int src_width, int src_height, struct vo_rect *src, stru
                         struct vo_rect *borders, const struct vo_rect *crop);
 void vo_mouse_movement(int posx, int posy);
 
+static inline int pixel_stride(unsigned fmt) {
+    if (IMGFMT_IS_RGB(fmt))
+        return (IMGFMT_RGB_DEPTH(fmt) + 7) / 8;
+    if (IMGFMT_IS_BGR(fmt))
+        return (IMGFMT_BGR_DEPTH(fmt) + 7) / 8;
+    return IMGFMT_IS_YUVP16(fmt) ? 2 : 1;
+}
+
 static inline int aspect_scaling(void)
 {
   return vo_fs;

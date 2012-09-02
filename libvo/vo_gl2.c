@@ -89,9 +89,6 @@ static int      use_yuv;
 static int      is_yuv;
 static int      use_glFinish;
 
-static void (*draw_alpha_fnc)
-                 (int x0,int y0, int w,int h, unsigned char* src, unsigned char *srca, int stride);
-
 
 /* The squares that are tiled to make up the game screen polygon */
 
@@ -456,23 +453,11 @@ static void resize(int x,int y){
   glLoadIdentity();
 }
 
-static void draw_alpha_32(int x0,int y0, int w,int h, unsigned char* src, unsigned char *srca, int stride){
-   vo_draw_alpha_rgb32(w,h,src,srca,stride,ImageData+4*(y0*image_width+x0),4*image_width);
-}
-
-static void draw_alpha_24(int x0,int y0, int w,int h, unsigned char* src, unsigned char *srca, int stride){
-   vo_draw_alpha_rgb24(w,h,src,srca,stride,ImageData+3*(y0*image_width+x0),3*image_width);
-}
-
-static void draw_alpha_16(int x0,int y0, int w,int h, unsigned char* src, unsigned char *srca, int stride){
-   vo_draw_alpha_rgb16(w,h,src,srca,stride,ImageData+2*(y0*image_width+x0),2*image_width);
-}
-
-static void draw_alpha_15(int x0,int y0, int w,int h, unsigned char* src, unsigned char *srca, int stride){
-   vo_draw_alpha_rgb15(w,h,src,srca,stride,ImageData+2*(y0*image_width+x0),2*image_width);
-}
-
-static void draw_alpha_null(int x0,int y0, int w,int h, unsigned char* src, unsigned char *srca, int stride){
+static void draw_alpha(int x0,int y0, int w,int h, unsigned char* src, unsigned char *srca, int stride){
+   int bpp = pixel_stride(image_format);
+   vo_draw_alpha_func draw = vo_get_draw_alpha(image_format);
+   if (!draw) return;
+   draw(w,h,src,srca,stride,ImageData+bpp*(y0*image_width+x0),bpp*image_width);
 }
 
 #ifdef CONFIG_GL_WIN32
@@ -665,19 +650,6 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
 
   image_bytes=(image_bpp+7)/8;
 
-  draw_alpha_fnc=draw_alpha_null;
-
-  switch(image_bpp) {
-    case 15:
-      draw_alpha_fnc=draw_alpha_15; break;
-    case 16:
-      draw_alpha_fnc=draw_alpha_16; break;
-    case 24:
-      draw_alpha_fnc=draw_alpha_24; break;
-    case 32:
-      draw_alpha_fnc=draw_alpha_32; break;
-  }
-
   if (initGl(vo_dwidth, vo_dheight) == -1)
     return -1;
 
@@ -730,7 +702,7 @@ static void check_events(void)
 static void draw_osd(void)
 {
   if (ImageData)
-    vo_draw_text(image_width,image_height,draw_alpha_fnc);
+    vo_draw_text(image_width,image_height,draw_alpha);
 }
 
 static void

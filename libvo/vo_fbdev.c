@@ -848,25 +848,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
         mp_msg(MSGT_VO, MSGL_WARN, "requested %d bpp, got %d bpp!!!\n",
                fb_bpp_we_want, fb_bpp);
 
-    switch (fb_bpp) {
-    case 32:
-        draw_alpha_p = vo_draw_alpha_rgb32;
-        break;
-    case 24:
-        draw_alpha_p = vo_draw_alpha_rgb24;
-        break;
-    case 16:
-        draw_alpha_p = vo_draw_alpha_rgb16;
-        break;
-    case 15:
-        draw_alpha_p = vo_draw_alpha_rgb15;
-        break;
-    case 12:
-        draw_alpha_p = vo_draw_alpha_rgb12;
-        break;
-    default:
-        return 1;
-    }
+    draw_alpha_p = vo_get_draw_alpha(format);
 
     fb_xres = fb_vinfo.xres;
     fb_yres = fb_vinfo.yres;

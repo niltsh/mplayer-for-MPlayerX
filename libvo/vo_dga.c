@@ -245,31 +245,15 @@ static void draw_alpha(int x0, int y0, int w, int h, unsigned char *src,
     char *d;
     unsigned int offset;
     int buffer_stride;
+    int bpp = pixel_stride(vo_dga_src_format);
+    vo_draw_alpha_func draw = vo_get_draw_alpha(vo_dga_src_format);
 
     offset = vo_dga_width * y0 + x0;
-    buffer_stride = vo_dga_width;
+    buffer_stride = vo_dga_width * bpp;
     d = CURRENT_VIDEO_BUFFER.data + vo_dga_vp_offset;
+    d += bpp * offset;
 
-    switch (HW_MODE.vdm_mplayer_depth)
-    {
-
-        case 32:
-            vo_draw_alpha_rgb32(w, h, src, srca, stride, d + 4 * offset,
-                                4 * buffer_stride);
-            break;
-        case 24:
-            vo_draw_alpha_rgb24(w, h, src, srca, stride, d + 3 * offset,
-                                3 * buffer_stride);
-            break;
-        case 15:
-            vo_draw_alpha_rgb15(w, h, src, srca, stride, d + 2 * offset,
-                                2 * buffer_stride);
-            break;
-        case 16:
-            vo_draw_alpha_rgb16(w, h, src, srca, stride, d + 2 * offset,
-                                2 * buffer_stride);
-            break;
-    }
+    if (draw) draw(w, h, src, srca, stride, d, buffer_stride);
 }
 
 

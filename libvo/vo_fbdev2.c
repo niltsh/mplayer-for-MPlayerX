@@ -229,14 +229,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
 		return 1;
 	}
 
-	switch (fb_bpp) {
-		case 32: draw_alpha_p = vo_draw_alpha_rgb32; break;
-		case 24: draw_alpha_p = vo_draw_alpha_rgb24; break;
-		case 16: draw_alpha_p = vo_draw_alpha_rgb16; break;
-		case 15: draw_alpha_p = vo_draw_alpha_rgb15; break;
-		case 12: draw_alpha_p = vo_draw_alpha_rgb12; break;
-		default: return 1;
-	}
+	draw_alpha_p = vo_get_draw_alpha(format);
 
 	if (vo_config_count == 0) {
 		if (ioctl(fb_dev_fd, FBIOGET_FSCREENINFO, &fb_finfo)) {

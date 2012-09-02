@@ -107,9 +107,7 @@ static struct vo_rect src_rect;
 static struct vo_rect dst_rect;
 static uint32_t max_width = 0, max_height = 0; // zero means: not set
 
-static void (*draw_alpha_fnc) (int x0, int y0, int w, int h,
-                               unsigned char *src, unsigned char *srca,
-                               int stride);
+vo_draw_alpha_func draw_alpha_func;
 
 static void fixup_osd_position(int *x0, int *y0, int *w, int *h)
 {
@@ -120,46 +118,18 @@ static void fixup_osd_position(int *x0, int *y0, int *w, int *h)
     *y0 = FFMIN(*y0, image_height - *h);
 }
 
-static void draw_alpha_yv12(int x0, int y0, int w, int h,
+static void draw_alpha(int x0, int y0, int w, int h,
                             unsigned char *src, unsigned char *srca,
                             int stride)
 {
+    if (!draw_alpha_func) return;
     fixup_osd_position(&x0, &y0, &w, &h);
-    vo_draw_alpha_yv12(w, h, src, srca, stride,
+    x0 *= pixel_stride(xv_format);
+    draw_alpha_func(w, h, src, srca, stride,
                        xvimage[current_buf]->data +
                        xvimage[current_buf]->offsets[0] +
                        xvimage[current_buf]->pitches[0] * y0 + x0,
                        xvimage[current_buf]->pitches[0]);
-}
-
-static void draw_alpha_yuy2(int x0, int y0, int w, int h,
-                            unsigned char *src, unsigned char *srca,
-                            int stride)
-{
-    fixup_osd_position(&x0, &y0, &w, &h);
-    vo_draw_alpha_yuy2(w, h, src, srca, stride,
-                       xvimage[current_buf]->data +
-                       xvimage[current_buf]->offsets[0] +
-                       xvimage[current_buf]->pitches[0] * y0 + 2 * x0,
-                       xvimage[current_buf]->pitches[0]);
-}
-
-static void draw_alpha_uyvy(int x0, int y0, int w, int h,
-                            unsigned char *src, unsigned char *srca,
-                            int stride)
-{
-    fixup_osd_position(&x0, &y0, &w, &h);
-    vo_draw_alpha_yuy2(w, h, src, srca, stride,
-                       xvimage[current_buf]->data +
-                       xvimage[current_buf]->offsets[0] +
-                       xvimage[current_buf]->pitches[0] * y0 + 2 * x0 + 1,
-                       xvimage[current_buf]->pitches[0]);
-}
-
-static void draw_alpha_null(int x0, int y0, int w, int h,
-                            unsigned char *src, unsigned char *srca,
-                            int stride)
-{
 }
 
 
@@ -268,23 +238,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
     mp_msg(MSGT_VO, MSGL_V, "using Xvideo port %d for hw scaling\n",
            xv_port);
 
-    switch (xv_format)
-    {
-        case IMGFMT_YV12:
-        case IMGFMT_I420:
-        case IMGFMT_IYUV:
-            draw_alpha_fnc = draw_alpha_yv12;
-            break;
-        case IMGFMT_YUY2:
-        case IMGFMT_YVYU:
-            draw_alpha_fnc = draw_alpha_yuy2;
-            break;
-        case IMGFMT_UYVY:
-            draw_alpha_fnc = draw_alpha_uyvy;
-            break;
-        default:
-            draw_alpha_fnc = draw_alpha_null;
-    }
+    draw_alpha_func = vo_get_draw_alpha(xv_format);
 
     if (vo_config_count)
         for (current_buf = 0; current_buf < num_buffers; ++current_buf)
@@ -407,7 +361,7 @@ static void draw_osd(void)
 {
     vo_draw_text(image_width -
                  image_width * vo_panscan_x / (vo_dwidth + vo_panscan_x),
-                 image_height, draw_alpha_fnc);
+                 image_height, draw_alpha);
 }
 
 static void flip_page(void)
