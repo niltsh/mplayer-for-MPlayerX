@@ -295,7 +295,7 @@ static int query_format(uint32_t format)
 {
 	// open the device, etc.
 	if (fb_preinit(0)) return 0;
-	if ((format & IMGFMT_BGR_MASK) == IMGFMT_BGR) {
+	if (IMGFMT_IS_BGR(format)) {
 		int fb_target_bpp = format & 0xff;
 		set_bpp(&fb_vinfo, fb_target_bpp);
 		fb_vinfo.xres_virtual = fb_vinfo.xres;
