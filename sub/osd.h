@@ -24,6 +24,9 @@
 
 void vo_draw_alpha_init(void); // build tables
 
+typedef void (*vo_draw_alpha_func)(int, int, unsigned char *, unsigned char *, int, unsigned char *, int);
+vo_draw_alpha_func vo_get_draw_alpha(unsigned fmt);
+
 void vo_draw_alpha_yv12(int w,  int h, unsigned char* src, unsigned char *srca, int srcstride, unsigned char* dstbase, int dststride);
 void vo_draw_alpha_yuy2(int w,  int h, unsigned char* src, unsigned char *srca, int srcstride, unsigned char* dstbase, int dststride);
 void vo_draw_alpha_uyvy(int w,  int h, unsigned char* src, unsigned char *srca, int srcstride, unsigned char* dstbase, int dststride);

@@ -27,6 +27,8 @@
 #include "osd.h"
 #include "mp_msg.h"
 #include <inttypes.h>
+#include <stdlib.h>
+#include "libmpcodecs/img_format.h"
 #include "cpudetect.h"
 
 #if ARCH_X86
@@ -425,4 +427,35 @@ void vo_draw_alpha_rgb16(int w,int h, unsigned char* src, unsigned char *srca, i
         dstbase+=dststride;
     }
     return;
+}
+
+vo_draw_alpha_func vo_get_draw_alpha(unsigned fmt) {
+    if (IMGFMT_IS_RGB(fmt) || IMGFMT_IS_BGR(fmt)) {
+        switch (IMGFMT_RGB_DEPTH(fmt))
+        {
+        case 12:
+            return vo_draw_alpha_rgb12;
+        case 15:
+            return vo_draw_alpha_rgb15;
+        case 16:
+            return vo_draw_alpha_rgb16;
+        case 24:
+            return vo_draw_alpha_rgb24;
+        case 32:
+            return vo_draw_alpha_rgb32;
+        }
+        return NULL;
+    }
+    switch (fmt) {
+    case IMGFMT_YV12:
+    case IMGFMT_I420:
+    case IMGFMT_IYUV:
+        return vo_draw_alpha_yv12;
+    case IMGFMT_YUY2:
+    case IMGFMT_YVYU:
+        return vo_draw_alpha_yuy2;
+    case IMGFMT_UYVY:
+        return vo_draw_alpha_uyvy;
+    }
+    return NULL;
 }
