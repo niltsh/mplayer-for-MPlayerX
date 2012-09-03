@@ -284,6 +284,8 @@ static inline int pixel_stride(unsigned fmt) {
         return (IMGFMT_RGB_DEPTH(fmt) + 7) / 8;
     if (IMGFMT_IS_BGR(fmt))
         return (IMGFMT_BGR_DEPTH(fmt) + 7) / 8;
+    if (fmt == IMGFMT_YUY2 || fmt == IMGFMT_UYVY)
+        return 2;
     return IMGFMT_IS_YUVP16(fmt) ? 2 : 1;
 }
 
