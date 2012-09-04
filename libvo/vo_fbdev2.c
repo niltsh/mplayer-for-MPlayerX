@@ -91,6 +91,7 @@ static void set_bpp(struct fb_var_screeninfo *p, int bpp)
 
 static char *fb_dev_name = NULL; // such as /dev/fb0
 static int fb_dev_fd; // handle for fb_dev_name
+static int fb_omap; // whether this looks like a omapfb device
 static uint8_t *frame_buffer = NULL; // mmap'd access to fbdev
 static uint8_t *center = NULL; // where to begin writing our image (centered?)
 static struct fb_fix_screeninfo fb_finfo; // fixed info
@@ -180,6 +181,9 @@ static int fb_preinit(int reset)
 		mp_msg(MSGT_VO, MSGL_ERR, "[fbdev2] Can't get VSCREENINFO: %s\n", strerror(errno));
 		goto err_out;
 	}
+	// random ioctl to check if we seem to run on OMAPFB
+#define OMAPFB_SYNC_GFX (('O' << 8) | 37)
+	fb_omap = ioctl(fb_dev_fd, OMAPFB_SYNC_GFX) == 0;
 	fb_orig_vinfo = fb_vinfo;
 
 	fb_err = 0;
@@ -258,7 +262,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
 				break;
 			default:
 				mp_msg(MSGT_VO, MSGL_ERR, "[fbdev2] visual: %d not yet supported\n", fb_finfo.visual);
-				return 1;
+				break;
 		}
 
 		fb_size = fb_finfo.smem_len;
@@ -279,7 +283,30 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
 		return 1;
 	}
 #endif
-	if (fs) memset(frame_buffer, '\0', fb_line_len * fb_vinfo.yres);
+	if (fs) {
+		int len = fb_line_len * fb_vinfo.yres;
+		int i;
+		switch (format) {
+		case IMGFMT_YUY2:
+			for (i = 0; i < len - 3;) {
+				frame_buffer[i++] = 0;
+				frame_buffer[i++] = 0x80;
+				frame_buffer[i++] = 0;
+				frame_buffer[i++] = 0x80;
+			}
+			break;
+		case IMGFMT_UYVY:
+			for (i = 0; i < len - 3;) {
+				frame_buffer[i++] = 0x80;
+				frame_buffer[i++] = 0;
+				frame_buffer[i++] = 0x80;
+				frame_buffer[i++] = 0;
+			}
+			break;
+		default:
+			memset(frame_buffer, 0, len);
+		}
+	}
 
 	return 0;
 }
@@ -288,12 +315,25 @@ static int query_format(uint32_t format)
 {
 	// open the device, etc.
 	if (fb_preinit(0)) return 0;
+	// At least IntelFB silently ignores nonstd value,
+	// so we can run the ioctl check only if already
+	// determined we are running on OMAPFB
+	if (fb_omap && (format == IMGFMT_YUY2 ||
+	                format == IMGFMT_UYVY)) {
+		fb_vinfo.xres_virtual = fb_vinfo.xres;
+		fb_vinfo.yres_virtual = fb_vinfo.yres;
+		fb_vinfo.nonstd = format == IMGFMT_YUY2 ? 8 : 1;
+		if (ioctl(fb_dev_fd, FBIOPUT_VSCREENINFO, &fb_vinfo) == 0)
+			return VFCAP_CSP_SUPPORTED|VFCAP_CSP_SUPPORTED_BY_HW|VFCAP_ACCEPT_STRIDE;
+		return 0;
+	}
 	if (IMGFMT_IS_BGR(format)) {
 		int bpp;
 		int fb_target_bpp = format & 0xff;
 		set_bpp(&fb_vinfo, fb_target_bpp);
 		fb_vinfo.xres_virtual = fb_vinfo.xres;
 		fb_vinfo.yres_virtual = fb_vinfo.yres;
+		fb_vinfo.nonstd = 0;
 		if (ioctl(fb_dev_fd, FBIOPUT_VSCREENINFO, &fb_vinfo))
 			// Needed for Intel framebuffer with 32 bpp
 			fb_vinfo.transp.length = fb_vinfo.transp.offset = 0;
