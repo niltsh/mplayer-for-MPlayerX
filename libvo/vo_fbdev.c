@@ -565,6 +565,7 @@ static fb_mode_t *fb_mode = NULL;
 /* vo_fbdev related variables */
 static int fb_dev_fd;
 static int fb_tty_fd = -1;
+static int fb_omap;
 static size_t fb_size;
 static uint8_t *frame_buffer;
 static uint8_t *center;
@@ -693,6 +694,9 @@ static int fb_preinit(int reset)
         mp_msg(MSGT_VO, MSGL_ERR, "Can't get VSCREENINFO: %s\n", strerror(errno));
         goto err_out;
     }
+    // random ioctl to check if we seem to run on OMAPFB
+#define OMAPFB_SYNC_GFX (('O' << 8) | 37)
+    fb_omap = ioctl(fb_dev_fd, OMAPFB_SYNC_GFX) == 0;
     fb_orig_vinfo = fb_vinfo;
 
     if ((fb_tty_fd = open("/dev/tty", O_RDWR)) < 0) {
@@ -901,7 +905,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
     default:
         mp_msg(MSGT_VO, MSGL_ERR, "visual: %d not yet supported\n",
                fb_finfo.visual);
-        return 1;
+        break;
     }
 
     fb_line_len = fb_finfo.line_length;
@@ -981,9 +985,29 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
 
         if (fs || vm) {
             int clear_size = fb_line_len * fb_yres;
+            int i;
             if (vo_doublebuffering)
                 clear_size <<= 1;
-            memset(frame_buffer, 0, clear_size);
+            switch (format) {
+            case IMGFMT_YUY2:
+                for (i = 0; i < clear_size - 3;) {
+                    frame_buffer[i++] = 0;
+                    frame_buffer[i++] = 0x80;
+                    frame_buffer[i++] = 0;
+                    frame_buffer[i++] = 0x80;
+                }
+                break;
+            case IMGFMT_UYVY:
+                for (i = 0; i < clear_size - 3;) {
+                    frame_buffer[i++] = 0x80;
+                    frame_buffer[i++] = 0;
+                    frame_buffer[i++] = 0x80;
+                    frame_buffer[i++] = 0;
+                }
+                break;
+            default:
+                memset(frame_buffer, 0, clear_size);
+            }
         }
     }
 
@@ -1000,6 +1024,12 @@ static int query_format(uint32_t format)
     if (vidix_name)
         return vidix_query_fourcc(format);
 #endif
+    if (fb_omap && fb_vinfo.nonstd) {
+        if ((fb_vinfo.nonstd == 1 && format == IMGFMT_UYVY) ||
+            (fb_vinfo.nonstd == 8 && format == IMGFMT_YUY2))
+            return VFCAP_ACCEPT_STRIDE | VFCAP_CSP_SUPPORTED | VFCAP_CSP_SUPPORTED_BY_HW;
+        return 0;
+    }
     if ((format & IMGFMT_BGR_MASK) == (fb_rgb ? IMGFMT_RGB : IMGFMT_BGR)) {
         int bpp = format & 0xff;
 
