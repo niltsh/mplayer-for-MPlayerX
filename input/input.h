@@ -165,6 +165,9 @@ typedef enum {
   /// GUI command
   MP_CMD_GUI,
 
+#ifdef CONFIG_ASS
+  MP_ASS_MARGIN,
+#endif
 } mp_command_type;
 
 // The arg types

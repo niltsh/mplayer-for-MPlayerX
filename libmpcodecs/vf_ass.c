@@ -614,6 +614,9 @@ static int config(struct vf_instance *vf,
     int planes, alphas;
     int i;
 
+    ass_bottom_margin = (ass_bottom_margin_ratio > 0.0)?((int)(height * ass_bottom_margin_ratio)):(0);
+    ass_top_margin = (ass_top_margin_ratio > 0.0)?((int)(height * ass_top_margin_ratio)):(0);
+
     vf->priv->outfmt = outfmt;
     vf->priv->outh = outh = height + ass_top_margin + ass_bottom_margin;
     vf->priv->outw = outw = width;
