@@ -302,6 +302,7 @@ static int draw_frame(uint8_t *src[])
 
 static uint32_t draw_image(mp_image_t *mpi)
 {
+	if (!(mpi->flags & MP_IMGFLAG_DIRECT))
 	memcpy_pic(image_data, mpi->planes[0], image_width*image_bytes, image_height, image_stride, mpi->stride[0]);
 
 	return 0;
@@ -335,6 +336,20 @@ static int query_format(uint32_t format)
 			return supportflags;
     }
     return 0;
+}
+
+static int get_image(mp_image_t *mpi)
+{
+    if (!(mpi->flags & (MP_IMGFLAG_ACCEPT_STRIDE | MP_IMGFLAG_ACCEPT_WIDTH)) ||
+            (mpi->type != MP_IMGTYPE_TEMP && mpi->type != MP_IMGTYPE_STATIC))
+        return VO_FALSE;
+
+	// mpi should not be planar format here
+	mpi->planes[0] = image_data;
+	mpi->stride[0] = image_stride;
+	mpi->flags |=  MP_IMGFLAG_DIRECT;
+	mpi->flags &= ~MP_IMGFLAG_DRAW_CALLBACK;
+	return VO_TRUE;
 }
 
 static void uninit(void)
@@ -436,6 +451,7 @@ static int control(uint32_t request, void *data)
 		case VOCTRL_RESUME:
 			return VO_TRUE;
 		case VOCTRL_QUERY_FORMAT: return query_format(*(uint32_t*)data);
+		case VOCTRL_GET_IMAGE: return get_image(data);
 		case VOCTRL_ONTOP: vo_ontop = !vo_ontop; if(!shared_buffer){ [mpGLView ontop]; } else { [mplayerosxProto ontop]; } return VO_TRUE;
 		case VOCTRL_ROOTWIN: vo_rootwin = !vo_rootwin; [mpGLView rootwin]; return VO_TRUE;
 		case VOCTRL_FULLSCREEN: vo_fs = !vo_fs; if(!shared_buffer){ [mpGLView fullscreen: NO]; } else { [mplayerosxProto toggleFullscreen]; } return VO_TRUE;
