@@ -451,6 +451,15 @@ static uint32_t Directx_InitDirectDraw(void)
     return 0;
 }
 
+static void clear_window(void)
+{
+    HDC dc = vo_w32_get_dc(vo_w32_window);
+    RECT r;
+    GetClientRect(vo_w32_window, &r);
+    FillRect(dc, &r, vo_fs || vidmode ? blackbrush : colorbrush);
+    vo_w32_release_dc(vo_w32_window, dc);
+}
+
 static uint32_t Directx_ManageDisplay(void)
 {
     HRESULT ddrval;
@@ -478,6 +487,9 @@ static uint32_t Directx_ManageDisplay(void)
 
     if(nooverlay) {
         g_lpddclipper->lpVtbl->SetHWnd(g_lpddclipper, 0, vo_w32_window);
+        // clear borders. FIXME: this causes flickering
+        if (width < vo_dwidth || height < vo_dheight)
+            clear_window();
         // For nooverlay we are done, the blitter can handle
         // a destination RECT larger than the window.
         return 0;
@@ -609,13 +621,8 @@ static void check_events(void)
     int evt = vo_w32_check_events();
     if (evt & (VO_EVENT_RESIZE | VO_EVENT_MOVE))
         Directx_ManageDisplay();
-    if (evt & (VO_EVENT_RESIZE | VO_EVENT_MOVE | VO_EVENT_EXPOSE)) {
-        HDC dc = vo_w32_get_dc(vo_w32_window);
-        RECT r;
-        GetClientRect(vo_w32_window, &r);
-        FillRect(dc, &r, vo_fs || vidmode ? blackbrush : colorbrush);
-        vo_w32_release_dc(vo_w32_window, dc);
-    }
+    if (evt & (VO_EVENT_RESIZE | VO_EVENT_MOVE | VO_EVENT_EXPOSE))
+        clear_window();
 }
 
 //find out supported overlay pixelformats
