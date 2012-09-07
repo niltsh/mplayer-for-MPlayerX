@@ -476,8 +476,14 @@ static uint32_t Directx_ManageDisplay(void)
     rd.right  = rd.left + width;
     rd.bottom = rd.top + height;
 
+    if(nooverlay) {
+        g_lpddclipper->lpVtbl->SetHWnd(g_lpddclipper, 0, vo_w32_window);
+        // For nooverlay we are done, the blitter can handle
+        // a destination RECT larger than the window.
+        return 0;
+    }
     /*ok, let's workaround some overlay limitations*/
-    if (!nooverlay) {
+    {
         uint32_t uStretchFactor1000;                 //minimum stretch
         uint32_t xstretch1000, ystretch1000;
 
@@ -564,8 +570,6 @@ static uint32_t Directx_ManageDisplay(void)
             dwUpdateFlags |= DDOVER_KEYDESTOVERRIDE;
         else if (!tmp_image)
             vo_ontop = 1;
-    } else {
-        g_lpddclipper->lpVtbl->SetHWnd(g_lpddclipper, 0, vo_w32_window);
     }
 
     /*make sure the overlay is inside the screen*/
@@ -574,10 +578,7 @@ static uint32_t Directx_ManageDisplay(void)
     rd.bottom = FFMIN(rd.bottom, vo_screenheight);
     rd.right  = FFMIN(rd.right,  vo_screenwidth);
 
-    /*for nonoverlay mode we are finished, for overlay mode we have to display the overlay first*/
-    if (nooverlay)
-        return 0;
-
+    /* Now reconfigure/show the overlay */
 //    printf("overlay: %i %i %ix%i\n",rd.left,rd.top,rd.right - rd.left,rd.bottom - rd.top);
     ddrval = g_lpddsOverlay->lpVtbl->UpdateOverlay(g_lpddsOverlay, &rs, g_lpddsPrimary, &rd, dwUpdateFlags, &ovfx);
     if (FAILED(ddrval)) {
