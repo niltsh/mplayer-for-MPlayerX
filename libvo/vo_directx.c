@@ -470,8 +470,6 @@ static uint32_t Directx_ManageDisplay(void)
         width   += vo_panscan_x;
         height  += vo_panscan_y;
     }
-    width    = FFMIN(width, vo_screenwidth);
-    height   = FFMIN(height, vo_screenheight);
     rd.left += (vo_dwidth - width) / 2;
     rd.top  += (vo_dheight - height) / 2;
 
@@ -1129,6 +1127,11 @@ static int control(uint32_t request, void *data)
         return VO_TRUE;
     case VOCTRL_FULLSCREEN:
         vo_w32_fullscreen();
+        Directx_ManageDisplay();
+        return VO_TRUE;
+    case VOCTRL_GET_PANSCAN:
+        return VO_TRUE;
+    case VOCTRL_SET_PANSCAN:
         Directx_ManageDisplay();
         return VO_TRUE;
     case VOCTRL_SET_EQUALIZER: {
