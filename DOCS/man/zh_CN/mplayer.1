@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 35123
+.\" sync with en/mplayer.1 rev. 35156
 .\" MPlayer (C) 2000-2012 MPlayer Team
 .\" This man page was/is translated by JRaSH<jrash06 at gmail.com>
 .
@@ -3572,8 +3572,8 @@ ggi 和 gl_tiled 的驱动都支持。
 启用全景显示功能（裁剪诸如 16:9 影片的两边以适应 4:3 不带\
 黑边的显示方式）。\
 该范围内的参数值用来控制裁减多少图像。\
-只能与 xv、xmga、mga、gl、gl_tiled、quartz、corevideo 和 xvidix 的\
-视频输出驱动一同起作用。
+只能与 directx、xv、xmga、mga、gl、gl_tiled、quartz、corevideo 和 xvidix 的\
+视频输出驱动一同使用。
 .br
 .I 注意：
 也允许 \-1 和 0 间的值，但这些值处于高度试验阶段，\
@@ -3586,8 +3586,7 @@ ggi 和 gl_tiled 的驱动都支持。
 值为正数表示默认范围所乘的倍数。\
 值为负数表示可以放大至 \-panscanrange+1 所表示的因数。\
 例如 \-panscanrange \-3 允许缩放因子达到 4。\
-该功能是实验性的。\
-不要报告相关缺隐，除非在使用 \-vo gl。
+该功能是实验性的。
 .
 .TP
 .B \-refreshrate <Hz>
