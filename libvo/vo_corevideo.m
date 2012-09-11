@@ -50,25 +50,24 @@
 #include "osx_common.h"
 
 //Cocoa
-NSDistantObject *mplayerosxProxy;
-id <MPlayerOSXVOProto> mplayerosxProto;
-MPlayerOpenGLView *mpGLView;
-NSAutoreleasePool *autoreleasepool;
-OSType pixelFormat;
+static NSDistantObject *mplayerosxProxy;
+static id <MPlayerOSXVOProto> mplayerosxProto;
+static MPlayerOpenGLView *mpGLView;
+static NSAutoreleasePool *autoreleasepool;
+static OSType pixelFormat;
 
 //shared memory
-BOOL shared_buffer = false;
+static BOOL shared_buffer = false;
 #define DEFAULT_BUFFER_NAME "mplayerosx"
 static char *buffer_name;
 
 //Screen
-int screen_id = -1;
-NSRect screen_frame;
-NSScreen *screen_handle;
-NSArray *screen_array;
+static int screen_id = -1;
+static NSRect screen_frame;
+static NSScreen *screen_handle;
 
 //image
-unsigned char *image_data;
+static unsigned char *image_data;
 // For double buffering
 static uint8_t image_page = 0;
 static unsigned char *image_datas[2];
@@ -121,6 +120,7 @@ static void draw_alpha(int x0, int y0, int w, int h, unsigned char *src, unsigne
 
 static void update_screen_info(void)
 {
+	NSArray *screen_array;
 	if (screen_id == -1 && xinerama_screen > -1)
 		screen_id = xinerama_screen;
 
