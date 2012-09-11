@@ -481,9 +481,9 @@ static int control(uint32_t request, void *data)
 								backing:NSBackingStoreBuffered defer:NO];
 
 	[window autorelease];
-	[window setDelegate:mpGLView];
-	[window setContentView:mpGLView];
-	[window setInitialFirstResponder:mpGLView];
+	[window setDelegate:self];
+	[window setContentView:self];
+	[window setInitialFirstResponder:self];
 	[window setAcceptsMouseMovedEvents:YES];
 	[window setTitle:@"MPlayer - The Movie Player"];
 
@@ -554,16 +554,16 @@ static int control(uint32_t request, void *data)
 		mp_msg(MSGT_VO, MSGL_ERR,"[vo_corevideo] Failed to create OpenGL texture(%d)\n", error);
 
 	//show window
-	[window makeKeyAndOrderFront:mpGLView];
+	[window makeKeyAndOrderFront:self];
 
 	if(vo_rootwin)
-		[mpGLView rootwin];
+		[self rootwin];
 
 	if(vo_fs)
-		[mpGLView fullscreen: NO];
+		[self fullscreen: NO];
 
 	if(vo_ontop)
-		[mpGLView ontop];
+		[self ontop];
 }
 
 /*
@@ -937,7 +937,7 @@ static int control(uint32_t request, void *data)
 	if (isLeopardOrLater && [event type] == NSAppKitDefined
 			&& [event subtype] == NSApplicationActivatedEventType) {
 		[window makeMainWindow];
-		[window makeKeyAndOrderFront:mpGLView];
+		[window makeKeyAndOrderFront:self];
 	}
 #endif
 }
