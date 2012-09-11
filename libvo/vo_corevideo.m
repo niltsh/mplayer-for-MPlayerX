@@ -138,7 +138,8 @@ static void update_screen_info(void)
 	screen_frame = [screen_handle frame];
 	vo_screenwidth = screen_frame.size.width;
 	vo_screenheight = screen_frame.size.height;
-	xinerama_x = xinerama_y = 0;
+	xinerama_x = screen_frame.origin.x;
+	xinerama_y = screen_frame.origin.y;
 	aspect_save_screenres(vo_screenwidth, vo_screenheight);
 }
 
@@ -525,7 +526,6 @@ static int control(uint32_t request, void *data)
 
 - (void) config
 {
-	NSRect visibleFrame;
 	CVReturn error = kCVReturnSuccess;
 
 	//config window
@@ -537,10 +537,9 @@ static int control(uint32_t request, void *data)
 	// not aware of it.
 	// Also flip vo_dy since the screen origin is in the bottom left on OSX.
 	update_screen_info();
-	visibleFrame = [screen_handle frame];
 	[window setFrameTopLeftPoint:NSMakePoint(
-		visibleFrame.origin.x + vo_dx,
-		visibleFrame.origin.y + visibleFrame.size.height - vo_dy)];
+		vo_dx,
+		2*xinerama_y + vo_screenheight - vo_dy)];
 
 	[self releaseVideoSpecific];
 	error = CVPixelBufferCreateWithBytes(NULL, image_width, image_height, pixelFormat, image_datas[0], image_stride, NULL, NULL, NULL, &frameBuffers[0]);
