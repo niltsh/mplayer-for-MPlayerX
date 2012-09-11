@@ -531,10 +531,13 @@ static int control(uint32_t request, void *data)
 	//config window
 	[window setContentSize:NSMakeSize(vo_dwidth, vo_dheight)];
 
-	// Use visibleFrame to position the window taking the menu bar and dock into account.
+	// Do not use visibleFrame - taking the menu bar and dock into account
+	// would be nicer in principle, but currently only results in the window
+	// being placed strangely off-center since vo_dx/vo_dy calculation is
+	// not aware of it.
 	// Also flip vo_dy since the screen origin is in the bottom left on OSX.
 	update_screen_info();
-	visibleFrame = [screen_handle visibleFrame];
+	visibleFrame = [screen_handle frame];
 	[window setFrameTopLeftPoint:NSMakePoint(
 		visibleFrame.origin.x + vo_dx,
 		visibleFrame.origin.y + visibleFrame.size.height - vo_dy)];
