@@ -118,13 +118,12 @@ static void draw_alpha(int x0, int y0, int w, int h, unsigned char *src, unsigne
 
 static void update_screen_info(void)
 {
-	NSArray *screen_array;
+	NSArray *screen_array = [NSScreen screens];
 	NSScreen *screen_handle;
 	NSRect screen_frame;
 	if (screen_id == -1 && xinerama_screen > -1)
 		screen_id = xinerama_screen;
 
-	screen_array = [NSScreen screens];
 	if(screen_id >= (int)[screen_array count])
 	{
 		mp_msg(MSGT_VO, MSGL_INFO, "[vo_corevideo] Device ID %d does not exist, falling back to main device\n", screen_id);
