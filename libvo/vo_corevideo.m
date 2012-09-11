@@ -456,7 +456,7 @@ static int control(uint32_t request, void *data)
 		case VOCTRL_ROOTWIN: vo_rootwin = !vo_rootwin; [mpGLView rootwin]; return VO_TRUE;
 		case VOCTRL_FULLSCREEN: vo_fs = !vo_fs; if(!shared_buffer){ [mpGLView fullscreen: NO]; } else { [mplayerosxProto toggleFullscreen]; } return VO_TRUE;
 		case VOCTRL_GET_PANSCAN: return VO_TRUE;
-		case VOCTRL_SET_PANSCAN: [mpGLView panscan]; return VO_TRUE;
+		case VOCTRL_SET_PANSCAN: panscan_calc(); return VO_TRUE;
 		case VOCTRL_UPDATE_SCREENINFO: update_screen_info(); return VO_TRUE;
 	}
 	return VO_NOTIMPL;
@@ -682,7 +682,7 @@ static int control(uint32_t request, void *data)
 		else
 			[kPanScanCmd setState:NSOffState];
 
-		[self panscan];
+		panscan_calc();
 	}
 
 	if(sender == kAspectOrgCmd)
@@ -871,14 +871,6 @@ static int control(uint32_t request, void *data)
 		[window setLevel:NSNormalWindowLevel];
 		isOntop = NO;
 	}
-}
-
-/*
-	Toggle panscan
-*/
-- (void) panscan
-{
-	panscan_calc();
 }
 
 /*

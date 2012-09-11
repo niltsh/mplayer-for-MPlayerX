@@ -94,7 +94,6 @@
 //vo control
 - (void) fullscreen: (BOOL) animate;
 - (void) ontop;
-- (void) panscan;
 - (void) rootwin;
 
 //menu
