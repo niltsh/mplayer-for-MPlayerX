@@ -118,11 +118,10 @@ static void draw_alpha(int x0, int y0, int w, int h, unsigned char *src, unsigne
 
 static void update_screen_info(void)
 {
+	int screen_id = xinerama_screen;
 	NSArray *screen_array = [NSScreen screens];
 	NSScreen *screen_handle;
 	NSRect screen_frame;
-	if (screen_id == -1 && xinerama_screen > -1)
-		screen_id = xinerama_screen;
 
 	if(screen_id >= (int)[screen_array count])
 	{
@@ -394,6 +393,7 @@ static int preinit(const char *arg)
 				"Example: mplayer -vo corevideo:device_id=1:shared_buffer:buffer_name=mybuff\n"
 				"\nOptions:\n"
 				"  device_id=<0-...>\n"
+				"    DEPRECATED, use -xineramascreen instead.\n"
 				"    Set screen device ID for fullscreen.\n"
 				"  shared_buffer\n"
 				"    Write output to a shared memory buffer instead of displaying it.\n"
@@ -406,6 +406,9 @@ static int preinit(const char *arg)
 	}
 
 	autoreleasepool = [[NSAutoreleasePool alloc] init];
+
+	if (screen_id != -1)
+		xinerama_screen = screen_id;
 
 	if (!buffer_name)
 		buffer_name = strdup(DEFAULT_BUFFER_NAME);
