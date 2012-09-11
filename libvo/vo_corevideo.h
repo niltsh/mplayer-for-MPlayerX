@@ -39,7 +39,10 @@
 - (void) ontop;
 @end
 
-@interface MPlayerOpenGLView : NSOpenGLView<NSWindowDelegate>
+@interface MPlayerOpenGLView : NSOpenGLView
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1060
+<NSWindowDelegate>
+#endif
 {
 	//Cocoa
 	NSWindow *window;
