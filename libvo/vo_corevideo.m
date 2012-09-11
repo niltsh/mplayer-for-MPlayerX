@@ -63,8 +63,6 @@ static char *buffer_name;
 
 //Screen
 static int screen_id = -1;
-static NSRect screen_frame;
-static NSScreen *screen_handle;
 
 //image
 static unsigned char *image_data;
@@ -121,6 +119,8 @@ static void draw_alpha(int x0, int y0, int w, int h, unsigned char *src, unsigne
 static void update_screen_info(void)
 {
 	NSArray *screen_array;
+	NSScreen *screen_handle;
+	NSRect screen_frame;
 	if (screen_id == -1 && xinerama_screen > -1)
 		screen_id = xinerama_screen;
 
@@ -831,13 +831,10 @@ static int control(uint32_t request, void *data)
 		old_frame = [window frame];	//save main window size & position
 		update_screen_info();
 
-		[window setFrame:screen_frame display:YES animate:animate]; //zoom-in window with nice useless sfx
+		[window setFrame:NSMakeRect(xinerama_x, xinerama_y, vo_screenwidth, vo_screenheight) display:YES animate:animate]; //zoom-in window with nice useless sfx
 		old_view_frame = [self bounds];
 
-		//fix origin for multi screen setup
-		screen_frame.origin.x = 0;
-		screen_frame.origin.y = 0;
-		[self setFrame:screen_frame];
+		[self setFrame:NSMakeRect(0, 0, vo_screenwidth, vo_screenheight)];
 		[self setNeedsDisplay:YES];
 		[window setHasShadow:NO];
 		isFullscreen = 1;
