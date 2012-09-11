@@ -39,7 +39,7 @@
 - (void) ontop;
 @end
 
-@interface MPlayerOpenGLView : NSOpenGLView
+@interface MPlayerOpenGLView : NSOpenGLView<NSWindowDelegate>
 {
 	//Cocoa
 	NSWindow *window;
