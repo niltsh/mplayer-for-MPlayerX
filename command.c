@@ -38,6 +38,7 @@
 #include "libmpcodecs/vf.h"
 #include "libmpcodecs/vd.h"
 #include "libvo/video_out.h"
+#include "libvo/aspect.h"
 #include "sub/font_load.h"
 #include "playtree.h"
 #include "libao2/audio_out.h"
@@ -75,20 +76,23 @@
 static void rescale_input_coordinates(int ix, int iy, double *dx, double *dy)
 {
     //remove the borders, if any, and rescale to the range [0,1],[0,1]
-    if (vo_fs) {                //we are in full-screen mode
-        if (vo_screenwidth > vo_dwidth) //there are borders along the x axis
-            ix -= (vo_screenwidth - vo_dwidth) / 2;
-        if (vo_screenheight > vo_dheight)       //there are borders along the y axis (usual way)
-            iy -= (vo_screenheight - vo_dheight) / 2;
-
-        if (ix < 0 || ix > vo_dwidth || iy < 0 || iy > vo_dheight) {
-            *dx = *dy = -1.0;
-            return;
-        }                       //we are on one of the borders
+    int w = vo_dwidth, h = vo_dheight;
+    if (aspect_scaling()) {
+        aspect(&w, &h, A_WINZOOM);
+        panscan_calc_windowed();
+        w += vo_panscan_x;
+        h += vo_panscan_y;
+        ix -= (vo_dwidth  - w) / 2;
+        iy -= (vo_dheight - h) / 2;
+    }
+    if (ix < 0 || ix > w || iy < 0 || iy > h) {
+        // ignore movements outside movie area
+        *dx = *dy = -1.0;
+        return;
     }
 
-    *dx = (double) ix / (double) vo_dwidth;
-    *dy = (double) iy / (double) vo_dheight;
+    *dx = (double) ix / (double) w;
+    *dy = (double) iy / (double) h;
 
     mp_msg(MSGT_CPLAYER, MSGL_V,
            "\r\nrescaled coordinates: %.3f, %.3f, screen (%d x %d), vodisplay: (%d, %d), fullscreen: %d\r\n",
