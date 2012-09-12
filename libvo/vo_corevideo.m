@@ -575,10 +575,20 @@ static int control(uint32_t request, void *data)
 */
 - (void)initMenu
 {
+	NSMenu *mainMenu = [[NSMenu alloc] init];
 	NSMenu *menu, *aspectMenu;
 	NSMenuItem *menuItem;
 
-	[NSApp setMainMenu:[[NSMenu alloc] init]];
+	menu = [[NSMenu alloc] init];
+	menuItem = [[NSMenuItem alloc] init];
+	[menuItem setSubmenu:menu];
+	[mainMenu addItem:menuItem];
+	// Note: setAppleMenu seems to be unnecessary from 10.6 on,
+	// but is needed for all earlier versions or the menu is
+	// messed up.
+	// Round-about way with performSelector used to avoid compiler
+	// warnings.
+	[NSApp performSelector:@selector(setAppleMenu:) withObject:menu];
 
 //Create Movie Menu
 	menu = [[NSMenu alloc] initWithTitle:@"Movie"];
@@ -614,7 +624,7 @@ static int control(uint32_t request, void *data)
 	//Add to menubar
 	menuItem = [[NSMenuItem alloc] initWithTitle:@"Movie" action:nil keyEquivalent:@""];
 	[menuItem setSubmenu:menu];
-	[[NSApp mainMenu] addItem:menuItem];
+	[mainMenu addItem:menuItem];
 
 //Create Window Menu
 	menu = [[NSMenu alloc] initWithTitle:@"Window"];
@@ -625,8 +635,9 @@ static int control(uint32_t request, void *data)
 	//Add to menubar
 	menuItem = [[NSMenuItem alloc] initWithTitle:@"Window" action:nil keyEquivalent:@""];
 	[menuItem setSubmenu:menu];
-	[[NSApp mainMenu] addItem:menuItem];
+	[mainMenu addItem:menuItem];
 	[NSApp setWindowsMenu:menu];
+	[NSApp setMainMenu:mainMenu];
 
 	[menu release];
 	[menuItem release];
