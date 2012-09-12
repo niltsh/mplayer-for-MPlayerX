@@ -81,11 +81,7 @@ static void rescale_input_coordinates(int ix, int iy, double *dx, double *dy)
         if (vo_screenheight > vo_dheight)       //there are borders along the y axis (usual way)
             iy -= (vo_screenheight - vo_dheight) / 2;
 
-        if (ix < 0 || ix > vo_dwidth) {
-            *dx = *dy = -1.0;
-            return;
-        }                       //we are on one of the borders
-        if (iy < 0 || iy > vo_dheight) {
+        if (ix < 0 || ix > vo_dwidth || iy < 0 || iy > vo_dheight) {
             *dx = *dy = -1.0;
             return;
         }                       //we are on one of the borders
