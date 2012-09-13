@@ -76,11 +76,6 @@ static uint32_t image_bytes;
 static uint32_t image_stride;
 static uint32_t image_format;
 
-//vo
-static int isFullscreen;
-static int isOntop;
-static int isRootwin;
-
 static float winAlpha = 1;
 
 static BOOL isLeopardOrLater;
@@ -483,7 +478,6 @@ static int control(uint32_t request, void *data)
 	[window setAcceptsMouseMovedEvents:YES];
 	[window setTitle:@"MPlayer - The Movie Player"];
 
-	isFullscreen = 0;
 	winSizeMult = 1;
 
 	//create OpenGL Context
@@ -649,7 +643,7 @@ static int control(uint32_t request, void *data)
     int d_width, d_height;
     aspect(&d_width, &d_height, A_NOZOOM);
 
-    if (isFullscreen) {
+    if (vo_fs) {
         vo_fs = !vo_fs;
         [self fullscreen:NO];
     }
@@ -773,7 +767,7 @@ static int control(uint32_t request, void *data)
 	glDisable(CVOpenGLTextureGetTarget(texture));
 
 	//render resize box
-	if(!isFullscreen)
+	if(!vo_fs)
 	{
 		NSRect frame = [self frame];
 
@@ -834,7 +828,7 @@ static int control(uint32_t request, void *data)
 	//go fullscreen
 	if(vo_fs)
 	{
-		if(!isRootwin)
+		if(!vo_rootwin)
 		{
 			SetSystemUIMode( kUIModeAllHidden, kUIOptionAutoShowMenuBar);
 			CGDisplayHideCursor(kCGDirectMainDisplay);
@@ -850,13 +844,11 @@ static int control(uint32_t request, void *data)
 		[self setFrame:NSMakeRect(0, 0, vo_screenwidth, vo_screenheight)];
 		[self setNeedsDisplay:YES];
 		[window setHasShadow:NO];
-		isFullscreen = 1;
 	}
 	else
 	{
 		SetSystemUIMode( kUIModeNormal, 0);
 
-		isFullscreen = 0;
 		CGDisplayShowCursor(kCGDirectMainDisplay);
 		mouseHide = NO;
 
@@ -876,12 +868,10 @@ static int control(uint32_t request, void *data)
 	if(vo_ontop)
 	{
 		[window setLevel:NSScreenSaverWindowLevel];
-		isOntop = YES;
 	}
 	else
 	{
 		[window setLevel:NSNormalWindowLevel];
-		isOntop = NO;
 	}
 }
 
@@ -894,12 +884,10 @@ static int control(uint32_t request, void *data)
 	{
 		[window setLevel:CGWindowLevelForKey(kCGDesktopWindowLevelKey)];
 		[window orderBack:self];
-		isRootwin = YES;
 	}
 	else
 	{
 		[window setLevel:NSNormalWindowLevel];
-		isRootwin = NO;
 	}
 }
 
@@ -912,7 +900,7 @@ static int control(uint32_t request, void *data)
 	int curTime = TickCount()/60;
 
 	//automatically hide mouse cursor (and future on-screen control?)
-	if(isFullscreen && !mouseHide && !isRootwin)
+	if(vo_fs && !mouseHide && !vo_rootwin)
 	{
 		if(curTime - lastMouseHide >= 5 || lastMouseHide == 0)
 		{
@@ -974,12 +962,12 @@ static int control(uint32_t request, void *data)
 */
 - (void) mouseMoved: (NSEvent *) theEvent
 {
-	if(isFullscreen && !isRootwin)
+	if(vo_fs && !vo_rootwin)
 	{
 		CGDisplayShowCursor(kCGDirectMainDisplay);
 		mouseHide = NO;
 	}
-	if (enable_mouse_movements && !isRootwin) {
+	if (enable_mouse_movements && !vo_rootwin) {
 		NSPoint p =[self convertPoint:[theEvent locationInWindow] fromView:nil];
 		if ([self mouse:p inRect:[self frame]]) {
 			vo_mouse_movement(p.x, [self frame].size.height - p.y);
