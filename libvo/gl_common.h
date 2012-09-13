@@ -44,10 +44,12 @@
 #include <EGL/egl.h>
 #include "x11_common.h"
 #endif
-#ifdef CONFIG_COREVIDEO
+#ifdef CONFIG_GL_OSX
 #include "osx_common.h"
-#endif
+#include <OpenGL/OpenGL.h>
+#else
 #include <GL/gl.h>
+#endif
 
 // workaround for some gl.h headers
 #ifndef GLAPIENTRY

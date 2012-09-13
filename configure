@@ -5165,7 +5165,7 @@ echores "$_sdl"
 # conflicts between -lGL and -framework OpenGL
 echocheck "OpenGL"
 #Note: this test is run even with --enable-gl since we autodetect linker flags
-if (test "$_x11" = yes || test "$_sdl" = yes || win32) && test "$_gl" != no ; then
+if (test "$_x11" = yes || test "$_sdl" = yes || win32 || test "$_corevideo" = yes) && test "$_gl" != no ; then
   cat > $TMPC << EOF
 #ifdef GL_WIN32
 #include <windows.h>
@@ -5240,6 +5240,10 @@ EOF
       libs_mplayer="$libs_mplayer -lGL"
     fi
   fi
+  if test "$_corevideo" = yes ; then
+    _gl=yes
+    _gl_osx=yes
+  fi
 else
   _gl=no
 fi
@@ -5262,6 +5266,10 @@ if test "$_gl" = yes ; then
     def_gl_sdl='#define CONFIG_GL_SDL 1'
     res_comment="$res_comment sdl"
   fi
+  if test "$_gl_osx" = yes ; then
+    def_gl_osx='#define CONFIG_GL_OSX 1'
+    res_comment="$res_comment osx"
+  fi
   vomodules="opengl $vomodules"
 else
   def_gl='#undef CONFIG_GL'
@@ -5269,6 +5277,7 @@ else
   def_gl_x11='#undef CONFIG_GL_X11'
   def_gl_egl_x11='#undef CONFIG_GL_EGL_X11'
   def_gl_sdl='#undef CONFIG_GL_SDL'
+  def_gl_osx='#undef CONFIG_GL_OSX'
   novomodules="opengl $novomodules"
 fi
 echores "$_gl"
@@ -8174,6 +8183,7 @@ GL_WIN32 = $_gl_win32
 GL_X11 = $_gl_x11
 GL_EGL_X11 = $_gl_egl_x11
 GL_SDL = $_gl_sdl
+GL_OSX = $_gl_osx
 MATRIXVIEW = $matrixview
 GUI = $_gui
 GUI_GTK = $_gui_gtk
@@ -8733,6 +8743,7 @@ $def_gl_win32
 $def_gl_x11
 $def_gl_egl_x11
 $def_gl_sdl
+$def_gl_osx
 $def_matrixview
 $def_ivtv
 $def_jpeg

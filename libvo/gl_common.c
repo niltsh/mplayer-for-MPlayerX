@@ -2357,7 +2357,7 @@ int init_mpglcontext(MPGLContext *ctx, enum MPGLType type) {
     ctx->ontop = vo_x11_ontop;
     return vo_init();
 #endif
-#ifdef CONFIG_COREVIDEO
+#ifdef CONFIG_GL_OSX
   case GLTYPE_OSX:
 //    ctx->swapGlBuffers = swapGlBuffers_osx;
     ctx->update_xinerama_info = vo_osx_update_xinerama_info;
@@ -2389,7 +2389,7 @@ void uninit_mpglcontext(MPGLContext *ctx) {
     vo_sdl_uninit();
     break;
 #endif
-#ifdef CONFIG_COREVIDEO
+#ifdef CONFIG_GL_OSX
   case GLTYPE_OSX:
     vo_osx_uninit();
     break;

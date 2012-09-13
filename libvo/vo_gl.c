@@ -631,7 +631,7 @@ static int create_window(uint32_t d_width, uint32_t d_height, uint32_t flags, co
   if (glctx.type == GLTYPE_W32 && !vo_w32_config(d_width, d_height, flags))
     return -1;
 #endif
-#ifdef CONFIG_COREVIDEO
+#ifdef CONFIG_GL_OSX
   if (glctx.type == GLTYPE_OSX && !vo_osx_config(d_width, d_height, flags))
     return -1;
 #endif
