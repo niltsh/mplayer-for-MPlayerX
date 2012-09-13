@@ -26,6 +26,7 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import <Carbon/Carbon.h>
+#import "osx_objc_common.h"
 
 // MPlayer OS X VO Protocol
 @protocol MPlayerOSXVOProto
@@ -39,14 +40,8 @@
 - (void) ontop;
 @end
 
-@interface MPlayerOpenGLView : NSOpenGLView
-#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1060
-<NSWindowDelegate>
-#endif
+@interface MPlayerOpenGLView : MPCommonOpenGLView
 {
-	//Cocoa
-	NSWindow *window;
-
 	//CoreVideo
 	CVPixelBufferRef frameBuffers[2];
 	CVOpenGLTextureCacheRef textureCache;
@@ -57,30 +52,7 @@
 	GLfloat lowerRight[2];
 	GLfloat upperRight[2];
 	GLfloat upperLeft[2];
-
-	BOOL mouseHide;
-
-	//menu command id
-	NSMenuItem *kHalfScreenCmd;
-	NSMenuItem *kNormalScreenCmd;
-	NSMenuItem *kDoubleScreenCmd;
-	NSMenuItem *kFullScreenCmd;
-	NSMenuItem *kKeepAspectCmd;
-	NSMenuItem *kAspectOrgCmd;
-	NSMenuItem *kAspectFullCmd;
-	NSMenuItem *kAspectWideCmd;
-	NSMenuItem *kPanScanCmd;
-
-	//timestamps for disabling screensaver and mouse hiding
-	int lastMouseHide;
-	int lastScreensaverUpdate;
-@public
-	float winSizeMult;
 }
-
-- (BOOL) acceptsFirstResponder;
-- (BOOL) becomeFirstResponder;
-- (BOOL) resignFirstResponder;
 
 //window & rendering
 - (void) preinit;
@@ -91,27 +63,6 @@
 - (void) setCurrentTexture;
 - (void) drawRect: (NSRect *) bounds;
 
-//vo control
-- (void) fullscreen: (BOOL) animate;
-- (void) ontop;
-- (void) rootwin;
-
-//menu
-- (void) initMenu;
-- (void) menuAction:(id)sender;
-
-//event
-- (void) keyDown: (NSEvent *) theEvent;
-- (void) mouseMoved: (NSEvent *) theEvent;
-- (void) mouseDown: (NSEvent *) theEvent;
-- (void) mouseUp: (NSEvent *) theEvent;
-- (void) rightMouseDown: (NSEvent *) theEvent;
-- (void) rightMouseUp: (NSEvent *) theEvent;
-- (void) otherMouseDown: (NSEvent *) theEvent;
-- (void) otherMouseUp: (NSEvent *) theEvent;
-- (void) scrollWheel: (NSEvent *) theEvent;
-- (void) mouseEvent: (NSEvent *) theEvent;
-- (void) check_events;
 @end
 
 #endif /* MPLAYER_VO_COREVIDEO_H */

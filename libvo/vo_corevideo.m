@@ -76,10 +76,6 @@ static uint32_t image_bytes;
 static uint32_t image_stride;
 static uint32_t image_format;
 
-static float winAlpha = 1;
-
-static BOOL isLeopardOrLater;
-
 static vo_info_t info =
 {
 	"Mac OS X Core Video",
@@ -109,31 +105,6 @@ static void draw_alpha(int x0, int y0, int w, int h, unsigned char *src, unsigne
 			vo_draw_alpha_uyvy(w,h,src,srca,stride,dst,image_stride);
 			break;
 	}
-}
-
-static void update_screen_info(void)
-{
-	int screen_id = xinerama_screen;
-	NSArray *screen_array = [NSScreen screens];
-	NSScreen *screen_handle;
-	NSRect screen_frame;
-
-	if(screen_id >= (int)[screen_array count])
-	{
-		mp_msg(MSGT_VO, MSGL_INFO, "[vo_corevideo] Device ID %d does not exist, falling back to main device\n", screen_id);
-		screen_id = -1;
-	}
-	if (screen_id < 0 && [mpGLView window])
-		screen_handle = [[mpGLView window] screen];
-	else
-		screen_handle = [screen_array objectAtIndex:(screen_id < 0 ? 0 : screen_id)];
-
-	screen_frame = [screen_handle frame];
-	vo_screenwidth = screen_frame.size.width;
-	vo_screenheight = screen_frame.size.height;
-	xinerama_x = screen_frame.origin.x;
-	xinerama_y = screen_frame.origin.y;
-	aspect_save_screenres(vo_screenwidth, vo_screenheight);
 }
 
 static void free_file_specific(void)
@@ -432,7 +403,7 @@ static int control(uint32_t request, void *data)
 		case VOCTRL_FULLSCREEN: vo_fs = !vo_fs; if(!shared_buffer){ [mpGLView fullscreen: NO]; } else { [mplayerosxProto toggleFullscreen]; } return VO_TRUE;
 		case VOCTRL_GET_PANSCAN: return VO_TRUE;
 		case VOCTRL_SET_PANSCAN: panscan_calc(); return VO_TRUE;
-		case VOCTRL_UPDATE_SCREENINFO: update_screen_info(); return VO_TRUE;
+		case VOCTRL_UPDATE_SCREENINFO: [mpGLView update_screen_info]; return VO_TRUE;
 	}
 	return VO_NOTIMPL;
 }
@@ -443,53 +414,11 @@ static int control(uint32_t request, void *data)
 @implementation MPlayerOpenGLView
 - (void) preinit
 {
-	NSOpenGLContext *glContext;
-	GLint swapInterval = 1;
 	CVReturn error;
 
-	NSApplicationLoad();
-	NSApp = [NSApplication sharedApplication];
-	isLeopardOrLater = floor(NSAppKitVersionNumber) > 824;
+	[super preinit];
 
-	osx_foreground_hack();
-
-	// Install an event handler so the Quit menu entry works
-	// The proper way using NSApp setDelegate: and
-	// applicationShouldTerminate: does not work,
-	// probably NSApplication never installs its handler.
-	[[NSAppleEventManager sharedAppleEventManager]
-		setEventHandler:self
-		andSelector:@selector(handleQuitEvent:withReplyEvent:)
-		forEventClass:kCoreEventClass
-		andEventID:kAEQuitApplication];
-
-	//init menu
-	[self initMenu];
-
-	//create window
-	window = [[NSWindow alloc]	initWithContentRect:NSMakeRect(0, 0, 100, 100)
-								styleMask:NSTitledWindowMask|NSTexturedBackgroundWindowMask|NSClosableWindowMask|NSMiniaturizableWindowMask|NSResizableWindowMask
-								backing:NSBackingStoreBuffered defer:NO];
-
-	[window autorelease];
-	[window setDelegate:self];
-	[window setContentView:self];
-	[window setInitialFirstResponder:self];
-	[window setAcceptsMouseMovedEvents:YES];
-	[window setTitle:@"MPlayer - The Movie Player"];
-
-	winSizeMult = 1;
-
-	//create OpenGL Context
-	glContext = [[NSOpenGLContext alloc] initWithFormat:[NSOpenGLView defaultPixelFormat] shareContext:nil];
-
-	[self setOpenGLContext:glContext];
-	[glContext setValues:&swapInterval forParameter:NSOpenGLCPSwapInterval];
-	[glContext setView:self];
-	[glContext makeCurrentContext];
-	[glContext release];
-
-	error = CVOpenGLTextureCacheCreate(NULL, 0, [glContext CGLContextObj], [[self pixelFormat] CGLPixelFormatObj], 0, &textureCache);
+	error = CVOpenGLTextureCacheCreate(NULL, 0, [[self openGLContext] CGLContextObj], [[self pixelFormat] CGLPixelFormatObj], 0, &textureCache);
 	if(error != kCVReturnSuccess)
 		mp_msg(MSGT_VO, MSGL_ERR,"[vo_corevideo] Failed to create OpenGL texture Cache(%d)\n", error);
 }
@@ -509,7 +438,6 @@ static int control(uint32_t request, void *data)
 	[self releaseVideoSpecific];
 	CVOpenGLTextureCacheRelease(textureCache);
 	textureCache = NULL;
-	[self setOpenGLContext:nil];
 	[super dealloc];
 }
 
@@ -517,23 +445,7 @@ static int control(uint32_t request, void *data)
 {
 	CVReturn error = kCVReturnSuccess;
 
-	config_movie_aspect((float)width/height);
-
-	vo_dwidth  = width  *= self->winSizeMult;
-	vo_dheight = height *= self->winSizeMult;
-
-	//config window
-	[window setContentSize:NSMakeSize(vo_dwidth, vo_dheight)];
-
-	// Do not use visibleFrame - taking the menu bar and dock into account
-	// would be nicer in principle, but currently only results in the window
-	// being placed strangely off-center since vo_dx/vo_dy calculation is
-	// not aware of it.
-	// Also flip vo_dy since the screen origin is in the bottom left on OSX.
-	update_screen_info();
-	[window setFrameTopLeftPoint:NSMakePoint(
-		vo_dx,
-		2*xinerama_y + vo_screenheight - vo_dy)];
+	[super config:width:height:flags];
 
 	[self releaseVideoSpecific];
 	error = CVPixelBufferCreateWithBytes(NULL, image_width, image_height, pixelFormat, image_datas[0], image_stride, NULL, NULL, NULL, &frameBuffers[0]);
@@ -548,158 +460,6 @@ static int control(uint32_t request, void *data)
 	error = CVOpenGLTextureCacheCreateTextureFromImage(NULL, textureCache, frameBuffers[image_page], 0, &texture);
 	if(error != kCVReturnSuccess)
 		mp_msg(MSGT_VO, MSGL_ERR,"[vo_corevideo] Failed to create OpenGL texture(%d)\n", error);
-
-	vo_fs = flags & VOFLAG_FULLSCREEN;
-
-	[self rootwin];
-
-	if(vo_fs)
-		[self fullscreen: NO];
-
-	[self ontop];
-
-	//show window
-	[window makeKeyAndOrderFront:self];
-}
-
-/*
-	Init Menu
-*/
-- (void)initMenu
-{
-	NSMenu *mainMenu = [[NSMenu alloc] init];
-	NSMenu *menu, *aspectMenu;
-	NSMenuItem *menuItem;
-
-	menu = [[NSMenu alloc] init];
-	menuItem = [[NSMenuItem alloc] init];
-	[menuItem setSubmenu:menu];
-	[mainMenu addItem:menuItem];
-	// Note: setAppleMenu seems to be unnecessary from 10.6 on,
-	// but is needed for all earlier versions or the menu is
-	// messed up.
-	// Round-about way with performSelector used to avoid compiler
-	// warnings.
-	[NSApp performSelector:@selector(setAppleMenu:) withObject:menu];
-
-//Create Movie Menu
-	menu = [[NSMenu alloc] initWithTitle:@"Movie"];
-	menuItem = [[NSMenuItem alloc] initWithTitle:@"Half Size" action:@selector(menuAction:) keyEquivalent:@"0"]; [menu addItem:menuItem];
-	kHalfScreenCmd = menuItem;
-	menuItem = [[NSMenuItem alloc] initWithTitle:@"Normal Size" action:@selector(menuAction:) keyEquivalent:@"1"]; [menu addItem:menuItem];
-	kNormalScreenCmd = menuItem;
-	menuItem = [[NSMenuItem alloc] initWithTitle:@"Double Size" action:@selector(menuAction:) keyEquivalent:@"2"]; [menu addItem:menuItem];
-	kDoubleScreenCmd = menuItem;
-	menuItem = [[NSMenuItem alloc] initWithTitle:@"Full Size" action:@selector(menuAction:) keyEquivalent:@"f"]; [menu addItem:menuItem];
-	kFullScreenCmd = menuItem;
-	menuItem = [NSMenuItem separatorItem]; [menu addItem:menuItem];
-
-	aspectMenu = [[NSMenu alloc] initWithTitle:@"Aspect Ratio"];
-	menuItem = [[NSMenuItem alloc] initWithTitle:@"Keep" action:@selector(menuAction:) keyEquivalent:@""]; [aspectMenu addItem:menuItem];
-	if(vo_keepaspect) [menuItem setState:NSOnState];
-	kKeepAspectCmd = menuItem;
-	menuItem = [[NSMenuItem alloc] initWithTitle:@"Pan-Scan" action:@selector(menuAction:) keyEquivalent:@""]; [aspectMenu addItem:menuItem];
-	if(vo_panscan) [menuItem setState:NSOnState];
-	kPanScanCmd = menuItem;
-	menuItem = [NSMenuItem separatorItem]; [aspectMenu addItem:menuItem];
-	menuItem = [[NSMenuItem alloc] initWithTitle:@"Original" action:@selector(menuAction:) keyEquivalent:@""]; [aspectMenu addItem:menuItem];
-	kAspectOrgCmd = menuItem;
-	menuItem = [[NSMenuItem alloc] initWithTitle:@"4:3" action:@selector(menuAction:) keyEquivalent:@""]; [aspectMenu addItem:menuItem];
-	kAspectFullCmd = menuItem;
-	menuItem = [[NSMenuItem alloc] initWithTitle:@"16:9" action:@selector(menuAction:) keyEquivalent:@""];	[aspectMenu addItem:menuItem];
-	kAspectWideCmd = menuItem;
-	menuItem = [[NSMenuItem alloc] initWithTitle:@"Aspect Ratio" action:nil keyEquivalent:@""];
-	[menuItem setSubmenu:aspectMenu];
-	[menu addItem:menuItem];
-	[aspectMenu release];
-
-	//Add to menubar
-	menuItem = [[NSMenuItem alloc] initWithTitle:@"Movie" action:nil keyEquivalent:@""];
-	[menuItem setSubmenu:menu];
-	[mainMenu addItem:menuItem];
-
-//Create Window Menu
-	menu = [[NSMenu alloc] initWithTitle:@"Window"];
-
-	menuItem = [[NSMenuItem alloc] initWithTitle:@"Minimize" action:@selector(performMiniaturize:) keyEquivalent:@"m"]; [menu addItem:menuItem];
-	menuItem = [[NSMenuItem alloc] initWithTitle:@"Zoom" action:@selector(performZoom:) keyEquivalent:@""]; [menu addItem:menuItem];
-
-	//Add to menubar
-	menuItem = [[NSMenuItem alloc] initWithTitle:@"Window" action:nil keyEquivalent:@""];
-	[menuItem setSubmenu:menu];
-	[mainMenu addItem:menuItem];
-	[NSApp setWindowsMenu:menu];
-	[NSApp setMainMenu:mainMenu];
-
-	[menu release];
-	[menuItem release];
-}
-
-- (void)set_winSizeMult:(float)mult
-{
-    NSRect frame;
-    int d_width, d_height;
-    aspect(&d_width, &d_height, A_NOZOOM);
-
-    if (vo_fs) {
-        vo_fs = !vo_fs;
-        [self fullscreen:NO];
-    }
-
-    winSizeMult = mult;
-    frame.size.width  = d_width  * mult;
-    frame.size.height = d_height * mult;
-    [window setContentSize: frame.size];
-    [self reshape];
-}
-
-/*
-	Menu Action
- */
-- (void)menuAction:(id)sender
-{
-	if(sender == kHalfScreenCmd)
-		[self set_winSizeMult: 0.5];
-	if(sender == kNormalScreenCmd)
-		[self set_winSizeMult: 1];
-	if(sender == kDoubleScreenCmd)
-		[self set_winSizeMult: 2];
-	if(sender == kFullScreenCmd)
-	{
-		vo_fs = !vo_fs;
-		[self fullscreen:NO];
-	}
-
-	if(sender == kKeepAspectCmd)
-	{
-		vo_keepaspect = !vo_keepaspect;
-		if(vo_keepaspect)
-			[kKeepAspectCmd setState:NSOnState];
-		else
-			[kKeepAspectCmd setState:NSOffState];
-
-		[self reshape];
-	}
-
-	if(sender == kPanScanCmd)
-	{
-		vo_panscan = !vo_panscan;
-		if(vo_panscan)
-			[kPanScanCmd setState:NSOnState];
-		else
-			[kPanScanCmd setState:NSOffState];
-
-		panscan_calc();
-	}
-
-	if(sender == kAspectOrgCmd)
-		change_movie_aspect(-1);
-
-	if(sender == kAspectFullCmd)
-		change_movie_aspect(4.0f/3.0f);
-
-	if(sender == kAspectWideCmd)
-		change_movie_aspect(16.0f/9.0f);
 }
 
 /*
@@ -811,261 +571,5 @@ static int control(uint32_t request, void *data)
 - (void) drawRect: (NSRect *) bounds
 {
 	[self render];
-}
-
-/*
-	Toggle Fullscreen
-*/
-- (void) fullscreen: (BOOL) animate
-{
-	static NSRect old_frame;
-	static NSRect old_view_frame;
-
-	panscan_calc();
-
-	//go fullscreen
-	if(vo_fs)
-	{
-		if(!vo_rootwin)
-		{
-			SetSystemUIMode( kUIModeAllHidden, kUIOptionAutoShowMenuBar);
-			CGDisplayHideCursor(kCGDirectMainDisplay);
-			mouseHide = YES;
-		}
-
-		old_frame = [window frame];	//save main window size & position
-		update_screen_info();
-
-		[window setFrame:NSMakeRect(xinerama_x, xinerama_y, vo_screenwidth, vo_screenheight) display:YES animate:animate]; //zoom-in window with nice useless sfx
-		old_view_frame = [self bounds];
-
-		[self setFrame:NSMakeRect(0, 0, vo_screenwidth, vo_screenheight)];
-		[self setNeedsDisplay:YES];
-		[window setHasShadow:NO];
-	}
-	else
-	{
-		SetSystemUIMode( kUIModeNormal, 0);
-
-		CGDisplayShowCursor(kCGDirectMainDisplay);
-		mouseHide = NO;
-
-		//revert window to previous setting
-		[self setFrame:old_view_frame];
-		[self setNeedsDisplay:YES];
-		[window setHasShadow:YES];
-		[window setFrame:old_frame display:YES animate:animate];//zoom-out window with nice useless sfx
-	}
-}
-
-/*
-	Toggle ontop
-*/
-- (void) ontop
-{
-	if(vo_ontop)
-	{
-		[window setLevel:NSScreenSaverWindowLevel];
-	}
-	else
-	{
-		[window setLevel:NSNormalWindowLevel];
-	}
-}
-
-/*
-	Toggle rootwin
- */
-- (void) rootwin
-{
-	if(vo_rootwin)
-	{
-		[window setLevel:CGWindowLevelForKey(kCGDesktopWindowLevelKey)];
-		[window orderBack:self];
-	}
-	else
-	{
-		[window setLevel:NSNormalWindowLevel];
-	}
-}
-
-/*
-	Check event for new event
-*/
-- (void) check_events
-{
-	NSEvent *event;
-	int curTime = TickCount()/60;
-
-	//automatically hide mouse cursor (and future on-screen control?)
-	if(vo_fs && !mouseHide && !vo_rootwin)
-	{
-		if(curTime - lastMouseHide >= 5 || lastMouseHide == 0)
-		{
-			CGDisplayHideCursor(kCGDirectMainDisplay);
-			mouseHide = TRUE;
-			lastMouseHide = curTime;
-		}
-	}
-
-	//update activity every 30 seconds to prevent
-	//screensaver from starting up.
-	if(curTime - lastScreensaverUpdate >= 30 || lastScreensaverUpdate == 0)
-	{
-		UpdateSystemActivity(UsrActivity);
-		lastScreensaverUpdate = curTime;
-	}
-
-	event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:nil inMode:NSEventTrackingRunLoopMode dequeue:YES];
-	if (event == nil)
-		return;
-	[NSApp sendEvent:event];
-	// Without SDL's bootstrap code (include SDL.h in mplayer.c),
-	// on Leopard, we have trouble to get the play window automatically focused
-	// when the app is actived. The Following code fix this problem.
-#ifndef CONFIG_SDL
-	if (isLeopardOrLater && [event type] == NSAppKitDefined
-			&& [event subtype] == NSApplicationActivatedEventType) {
-		[window makeMainWindow];
-		[window makeKeyAndOrderFront:self];
-	}
-#endif
-}
-
-/*
-	From NSView, respond to key equivalents.
-*/
-- (BOOL)performKeyEquivalent:(NSEvent *)theEvent
-{
-	switch([theEvent keyCode])
-	{
-		case 0x21: [window setAlphaValue: winAlpha-=0.05]; return YES;
-		case 0x1e: [window setAlphaValue: winAlpha+=0.05]; return YES;
-	}
-	return NO;
-}
-
-/*
-	Process key event
-*/
-- (void) keyDown: (NSEvent *) theEvent
-{
-	int key = convert_key([theEvent keyCode], *[[theEvent characters] UTF8String]);
-	if (key != -1)
-	mplayer_put_key(key);
-}
-
-/*
-	Process mouse button event
-*/
-- (void) mouseMoved: (NSEvent *) theEvent
-{
-	if(vo_fs && !vo_rootwin)
-	{
-		CGDisplayShowCursor(kCGDirectMainDisplay);
-		mouseHide = NO;
-	}
-	if (enable_mouse_movements && !vo_rootwin) {
-		NSPoint p =[self convertPoint:[theEvent locationInWindow] fromView:nil];
-		if ([self mouse:p inRect:[self frame]]) {
-			vo_mouse_movement(p.x, [self frame].size.height - p.y);
-		}
-	}
-}
-
-- (void) mouseDown: (NSEvent *) theEvent
-{
-	[self mouseEvent: theEvent];
-}
-
-- (void) mouseUp: (NSEvent *) theEvent
-{
-	[self mouseEvent: theEvent];
-}
-
-- (void) rightMouseDown: (NSEvent *) theEvent
-{
-	[self mouseEvent: theEvent];
-}
-
-- (void) rightMouseUp: (NSEvent *) theEvent
-{
-	[self mouseEvent: theEvent];
-}
-
-- (void) otherMouseDown: (NSEvent *) theEvent
-{
-	[self mouseEvent: theEvent];
-}
-
-- (void) otherMouseUp: (NSEvent *) theEvent
-{
-	[self mouseEvent: theEvent];
-}
-
-- (void) scrollWheel: (NSEvent *) theEvent
-{
-	if([theEvent deltaY] > 0)
-		mplayer_put_key(MOUSE_BTN3);
-	else
-		mplayer_put_key(MOUSE_BTN4);
-}
-
-- (void) mouseEvent: (NSEvent *) theEvent
-{
-	if ( [theEvent buttonNumber] >= 0 && [theEvent buttonNumber] <= 9 )
-	{
-		int buttonNumber = [theEvent buttonNumber];
-		// Fix to mplayer defined button order: left, middle, right
-		if (buttonNumber == 1)
-			buttonNumber = 2;
-		else if (buttonNumber == 2)
-			buttonNumber = 1;
-		switch([theEvent type])
-		{
-			case NSLeftMouseDown:
-			case NSRightMouseDown:
-			case NSOtherMouseDown:
-				mplayer_put_key((MOUSE_BTN0 + buttonNumber) | MP_KEY_DOWN);
-				break;
-			case NSLeftMouseUp:
-			case NSRightMouseUp:
-			case NSOtherMouseUp:
-				mplayer_put_key(MOUSE_BTN0 + buttonNumber);
-				break;
-		}
-	}
-}
-
-/*
-	NSResponder
-*/
-- (BOOL) acceptsFirstResponder
-{
-	return YES;
-}
-
-- (BOOL) becomeFirstResponder
-{
-	return YES;
-}
-
-- (BOOL) resignFirstResponder
-{
-	return YES;
-}
-
-- (BOOL)windowShouldClose:(id)sender
-{
-	mplayer_put_key(KEY_CLOSE_WIN);
-	// We have to wait for MPlayer to handle this,
-	// otherwise we are in trouble if the
-	// KEY_CLOSE_WIN handler is disabled
-	return NO;
-}
-
-- (void)handleQuitEvent:(NSAppleEventDescriptor*)e withReplyEvent:(NSAppleEventDescriptor*)r
-{
-	mplayer_put_key(KEY_CLOSE_WIN);
 }
 @end
