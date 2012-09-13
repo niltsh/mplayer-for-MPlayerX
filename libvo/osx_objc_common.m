@@ -48,6 +48,8 @@ static BOOL isLeopardOrLater;
 static NSAutoreleasePool *autoreleasepool;
 static MPCommonOpenGLView *oglv;
 
+void (*vo_osx_redraw_func)(void);
+
 int vo_osx_init(void)
 {
     autoreleasepool = [[NSAutoreleasePool alloc] init];
@@ -208,6 +210,11 @@ void vo_osx_update_xinerama_info(void)
 	if (!(flags & VOFLAG_HIDDEN))
 		//show window
 		[window makeKeyAndOrderFront:self];
+}
+
+- (void) drawRect: (NSRect *) bounds
+{
+	if (vo_osx_redraw_func) vo_osx_redraw_func();
 }
 
 - (void)reshape

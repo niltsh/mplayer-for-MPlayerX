@@ -689,6 +689,14 @@ static int create_window(uint32_t d_width, uint32_t d_height, uint32_t flags, co
   return 0;
 }
 
+#ifdef CONFIG_GL_OSX
+static void osx_redraw(void)
+{
+  resize(vo_dwidth, vo_dheight);
+  redraw();
+}
+#endif
+
 /* connect to server, create and map window,
  * allocate colors and (shared) memory
  */
@@ -719,6 +727,9 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
   }
   initGl(vo_dwidth, vo_dheight);
 
+#ifdef CONFIG_GL_OSX
+  vo_osx_redraw_func = osx_redraw;
+#endif
   return 0;
 }
 
