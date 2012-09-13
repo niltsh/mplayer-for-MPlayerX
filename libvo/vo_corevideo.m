@@ -481,9 +481,7 @@ static int control(uint32_t request, void *data)
 {
 	int d_width, d_height;
 
-	NSRect frame = [self frame];
-	vo_dwidth  = frame.size.width;
-	vo_dheight = frame.size.height;
+	[super reshape];
 
 	glViewport(0, 0, vo_dwidth, vo_dheight);
 	glMatrixMode(GL_PROJECTION);

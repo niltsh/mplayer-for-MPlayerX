@@ -49,6 +49,8 @@
 	//timestamps for disabling screensaver and mouse hiding
 	int lastMouseHide;
 	int lastScreensaverUpdate;
+
+	int event_flags;
 @public
 	float winSizeMult;
 }
@@ -60,6 +62,7 @@
 //window & rendering
 - (void) preinit;
 - (void) config:(uint32_t)width:(uint32_t)height:(uint32_t)flags;
+- (void) reshape;
 
 //vo control
 - (void) fullscreen: (BOOL) animate;
@@ -81,7 +84,7 @@
 - (void) otherMouseUp: (NSEvent *) theEvent;
 - (void) scrollWheel: (NSEvent *) theEvent;
 - (void) mouseEvent: (NSEvent *) theEvent;
-- (void) check_events;
+- (int) check_events;
 
 - (void) update_screen_info;
 @end

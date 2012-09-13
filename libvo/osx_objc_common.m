@@ -88,8 +88,7 @@ void vo_osx_fullscreen(void)
 
 int vo_osx_check_events(void)
 {
-    [oglv check_events];
-    return 0;
+    return [oglv check_events];
 }
 
 void vo_osx_update_xinerama_info(void)
@@ -209,6 +208,14 @@ void vo_osx_update_xinerama_info(void)
 	if (!(flags & VOFLAG_HIDDEN))
 		//show window
 		[window makeKeyAndOrderFront:self];
+}
+
+- (void)reshape
+{
+	NSRect frame = [self frame];
+	vo_dwidth  = frame.size.width;
+	vo_dheight = frame.size.height;
+	event_flags |= VO_EVENT_RESIZE;
 }
 
 /*
@@ -430,7 +437,7 @@ void vo_osx_update_xinerama_info(void)
 /*
 	Check event for new event
 */
-- (void) check_events
+- (int) check_events
 {
 	NSEvent *event;
 	int curTime = TickCount()/60;
@@ -454,9 +461,10 @@ void vo_osx_update_xinerama_info(void)
 		lastScreensaverUpdate = curTime;
 	}
 
+	event_flags = 0;
 	event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:nil inMode:NSEventTrackingRunLoopMode dequeue:YES];
 	if (event == nil)
-		return;
+		return event_flags;
 	[NSApp sendEvent:event];
 	// Without SDL's bootstrap code (include SDL.h in mplayer.c),
 	// on Leopard, we have trouble to get the play window automatically focused
@@ -468,6 +476,7 @@ void vo_osx_update_xinerama_info(void)
 		[window makeKeyAndOrderFront:self];
 	}
 #endif
+	return event_flags;
 }
 
 /*
