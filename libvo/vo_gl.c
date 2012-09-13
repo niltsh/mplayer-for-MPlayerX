@@ -692,8 +692,8 @@ static int create_window(uint32_t d_width, uint32_t d_height, uint32_t flags, co
 #ifdef CONFIG_GL_OSX
 static void osx_redraw(void)
 {
+  // resize will call redraw to refresh the screen
   resize(vo_dwidth, vo_dheight);
-  redraw();
 }
 #endif
 
