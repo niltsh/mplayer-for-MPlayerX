@@ -405,27 +405,11 @@ static int preinit(const char *arg)
 
 	if(!shared_buffer)
 	{
-		NSApplicationLoad();
-		NSApp = [NSApplication sharedApplication];
-		isLeopardOrLater = floor(NSAppKitVersionNumber) > 824;
-
-		osx_foreground_hack();
-
 		if(!mpGLView)
 		{
 			mpGLView = [[MPlayerOpenGLView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100) pixelFormat:[MPlayerOpenGLView defaultPixelFormat]];
 			[mpGLView autorelease];
 		}
-		// Install an event handler so the Quit menu entry works
-		// The proper way using NSApp setDelegate: and
-		// applicationShouldTerminate: does not work,
-		// probably NSApplication never installs its handler.
-		[[NSAppleEventManager sharedAppleEventManager]
-			setEventHandler:mpGLView
-			andSelector:@selector(handleQuitEvent:withReplyEvent:)
-			forEventClass:kCoreEventClass
-			andEventID:kAEQuitApplication];
-
 		[mpGLView display];
 		[mpGLView preinit];
 	}
@@ -462,6 +446,22 @@ static int control(uint32_t request, void *data)
 	NSOpenGLContext *glContext;
 	GLint swapInterval = 1;
 	CVReturn error;
+
+	NSApplicationLoad();
+	NSApp = [NSApplication sharedApplication];
+	isLeopardOrLater = floor(NSAppKitVersionNumber) > 824;
+
+	osx_foreground_hack();
+
+	// Install an event handler so the Quit menu entry works
+	// The proper way using NSApp setDelegate: and
+	// applicationShouldTerminate: does not work,
+	// probably NSApplication never installs its handler.
+	[[NSAppleEventManager sharedAppleEventManager]
+		setEventHandler:self
+		andSelector:@selector(handleQuitEvent:withReplyEvent:)
+		forEventClass:kCoreEventClass
+		andEventID:kAEQuitApplication];
 
 	//init menu
 	[self initMenu];
