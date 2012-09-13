@@ -44,6 +44,9 @@
 #include <EGL/egl.h>
 #include "x11_common.h"
 #endif
+#ifdef CONFIG_COREVIDEO
+#include "osx_common.h"
+#endif
 #include <GL/gl.h>
 
 // workaround for some gl.h headers
@@ -451,6 +454,7 @@ enum MPGLType {
   GLTYPE_X11,
   GLTYPE_SDL,
   GLTYPE_EGL_X11,
+  GLTYPE_OSX,
   GLTYPE_COUNT
 };
 

@@ -24,4 +24,12 @@ void change_movie_aspect(float new_aspect);
 void config_movie_aspect(float config_aspect);
 void osx_foreground_hack(void);
 
+int vo_osx_init(void);
+int vo_osx_config(uint32_t, uint32_t, uint32_t);
+void vo_osx_uninit(void);
+void vo_osx_ontop(void);
+void vo_osx_fullscreen(void);
+int vo_osx_check_events(void);
+void vo_osx_update_xinerama_info(void);
+
 #endif /* MPLAYER_OSX_COMMON_H */

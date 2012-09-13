@@ -2276,6 +2276,9 @@ static int setGlWindow_dummy(MPGLContext *ctx) {
 static void releaseGlContext_dummy(MPGLContext *ctx) {
 }
 
+static void swapGlBuffers_dummy(MPGLContext *ctx) {
+}
+
 static int dummy_check_events(void) {
   return 0;
 }
@@ -2304,6 +2307,7 @@ int init_mpglcontext(MPGLContext *ctx, enum MPGLType type) {
   memset(ctx, 0, sizeof(*ctx));
   ctx->setGlWindow = setGlWindow_dummy;
   ctx->releaseGlContext = releaseGlContext_dummy;
+  ctx->swapGlBuffers = swapGlBuffers_dummy;
   ctx->update_xinerama_info = dummy_update_xinerama_info;
   ctx->check_events = dummy_check_events;
   ctx->type = type;
@@ -2353,6 +2357,15 @@ int init_mpglcontext(MPGLContext *ctx, enum MPGLType type) {
     ctx->ontop = vo_x11_ontop;
     return vo_init();
 #endif
+#ifdef CONFIG_COREVIDEO
+  case GLTYPE_OSX:
+//    ctx->swapGlBuffers = swapGlBuffers_osx;
+    ctx->update_xinerama_info = vo_osx_update_xinerama_info;
+    ctx->check_events = vo_osx_check_events;
+    ctx->fullscreen = vo_osx_fullscreen;
+    ctx->ontop = vo_osx_ontop;
+    return vo_osx_init();
+#endif
   default:
     return 0;
   }
@@ -2374,6 +2387,11 @@ void uninit_mpglcontext(MPGLContext *ctx) {
 #ifdef CONFIG_GL_SDL
   case GLTYPE_SDL:
     vo_sdl_uninit();
+    break;
+#endif
+#ifdef CONFIG_COREVIDEO
+  case GLTYPE_OSX:
+    vo_osx_uninit();
     break;
 #endif
   }
