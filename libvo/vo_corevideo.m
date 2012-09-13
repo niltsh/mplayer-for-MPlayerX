@@ -551,14 +551,12 @@ static int control(uint32_t request, void *data)
 
 	vo_fs = flags & VOFLAG_FULLSCREEN;
 
-	if(vo_rootwin)
-		[self rootwin];
+	[self rootwin];
 
 	if(vo_fs)
 		[self fullscreen: NO];
 
-	if(vo_ontop)
-		[self ontop];
+	[self ontop];
 
 	//show window
 	[window makeKeyAndOrderFront:self];
