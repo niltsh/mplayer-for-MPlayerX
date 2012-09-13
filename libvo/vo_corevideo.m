@@ -485,24 +485,21 @@ static int control(uint32_t request, void *data)
 	vo_dwidth  = frame.size.width;
 	vo_dheight = frame.size.height;
 
-	glViewport(0, 0, frame.size.width, frame.size.height);
+	glViewport(0, 0, vo_dwidth, vo_dheight);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0, frame.size.width, frame.size.height, 0, -1.0, 1.0);
+	glOrtho(0, vo_dwidth, vo_dheight, 0, -1.0, 1.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	d_width  = vo_dwidth;
+	d_height = vo_dheight;
 	//set texture frame
 	if(vo_keepaspect)
 	{
 		aspect(&d_width, &d_height, A_WINZOOM);
-
-		textureFrame = NSMakeRect((vo_dwidth - d_width) / 2, (vo_dheight - d_height) / 2, d_width, d_height);
 	}
-	else
-	{
-		textureFrame = frame;
-	}
+	textureFrame = NSMakeRect((vo_dwidth - d_width) / 2, (vo_dheight - d_height) / 2, d_width, d_height);
 }
 
 /*
