@@ -981,9 +981,8 @@ static int control(uint32_t request, void *data)
 	}
 	if (enable_mouse_movements && !isRootwin) {
 		NSPoint p =[self convertPoint:[theEvent locationInWindow] fromView:nil];
-		if ([self mouse:p inRect:textureFrame]) {
-			vo_mouse_movement(vo_fs ? p.x : p.x - textureFrame.origin.x,
-			                  vo_fs ? [self frame].size.height - p.y : NSMaxY(textureFrame) - p.y);
+		if ([self mouse:p inRect:[self frame]]) {
+			vo_mouse_movement(p.x, [self frame].size.height - p.y);
 		}
 	}
 }
