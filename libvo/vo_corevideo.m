@@ -190,21 +190,14 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_
 
 	if(!shared_buffer)
 	{
-		config_movie_aspect((float)d_width/d_height);
-
-		vo_dwidth  = d_width  *= mpGLView->winSizeMult;
-		vo_dheight = d_height *= mpGLView->winSizeMult;
-
 		image_data = malloc(image_height*image_stride);
 		image_datas[0] = image_data;
 		if (vo_doublebuffering)
 			image_datas[1] = malloc(image_height*image_stride);
 		image_page = 0;
 
-		vo_fs = flags & VOFLAG_FULLSCREEN;
-
 		//config OpenGL View
-		[mpGLView config];
+		[mpGLView config:d_width:d_height:flags];
 		[mpGLView reshape];
 		[[mpGLView window] setTitle:[NSString stringWithCString:vo_wintitle ? vo_wintitle : title]];
 	}
@@ -526,9 +519,14 @@ static int control(uint32_t request, void *data)
 	[super dealloc];
 }
 
-- (void) config
+- (void) config:(uint32_t)width:(uint32_t)height:(uint32_t)flags
 {
 	CVReturn error = kCVReturnSuccess;
+
+	config_movie_aspect((float)width/height);
+
+	vo_dwidth  = width  *= mpGLView->winSizeMult;
+	vo_dheight = height *= mpGLView->winSizeMult;
 
 	//config window
 	[window setContentSize:NSMakeSize(vo_dwidth, vo_dheight)];
@@ -559,6 +557,8 @@ static int control(uint32_t request, void *data)
 
 	//show window
 	[window makeKeyAndOrderFront:self];
+
+	vo_fs = flags & VOFLAG_FULLSCREEN;
 
 	if(vo_rootwin)
 		[self rootwin];

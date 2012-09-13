@@ -84,7 +84,7 @@
 
 //window & rendering
 - (void) preinit;
-- (void) config;
+- (void) config:(uint32_t)width:(uint32_t)height:(uint32_t)flags;
 - (void) prepareOpenGL;
 - (void) render;
 - (void) reshape;
