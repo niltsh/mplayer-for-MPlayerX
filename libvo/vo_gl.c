@@ -1353,6 +1353,7 @@ static int preinit_internal(const char *arg, int allow_sw)
               "    1: X11/GLX\n"
               "    2: SDL\n"
               "    3: X11/EGL (experimental)\n"
+              "    4: OSX/Cocoa\n"
               "\n" );
       return -1;
     }
