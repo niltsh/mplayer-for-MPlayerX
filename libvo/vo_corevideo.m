@@ -555,9 +555,6 @@ static int control(uint32_t request, void *data)
 	if(error != kCVReturnSuccess)
 		mp_msg(MSGT_VO, MSGL_ERR,"[vo_corevideo] Failed to create OpenGL texture(%d)\n", error);
 
-	//show window
-	[window makeKeyAndOrderFront:self];
-
 	vo_fs = flags & VOFLAG_FULLSCREEN;
 
 	if(vo_rootwin)
@@ -568,6 +565,9 @@ static int control(uint32_t request, void *data)
 
 	if(vo_ontop)
 		[self ontop];
+
+	//show window
+	[window makeKeyAndOrderFront:self];
 }
 
 /*
