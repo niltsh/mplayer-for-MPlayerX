@@ -1370,6 +1370,14 @@ static int preinit_internal(const char *arg, int allow_sw)
       // rare feature, not worth creating a window to detect
       use_ycbcr = 0;
     }
+    if (glctx.type == GLTYPE_OSX && vo_doublebuffering) {
+      // doublebuffering causes issues when e.g. drawing yuy2 textures
+      // (nothing is draw) unless using glfinish which makes things slow.
+      // This is possibly because we do not actually request a double-buffered
+      // context.
+      mp_msg(MSGT_VO, MSGL_INFO, "[gl] -double not supported on OSX, switching to -nodouble\n");
+      vo_doublebuffering = 0;
+    }
     if (many_fmts)
       mp_msg(MSGT_VO, MSGL_INFO, "[gl] using extended formats. "
                "Use -vo gl:nomanyfmts if playback fails.\n");
