@@ -2359,7 +2359,7 @@ int init_mpglcontext(MPGLContext *ctx, enum MPGLType type) {
 #endif
 #ifdef CONFIG_GL_OSX
   case GLTYPE_OSX:
-//    ctx->swapGlBuffers = swapGlBuffers_osx;
+    ctx->swapGlBuffers = vo_osx_swap_buffers;
     ctx->update_xinerama_info = vo_osx_update_xinerama_info;
     ctx->check_events = vo_osx_check_events;
     ctx->fullscreen = vo_osx_fullscreen;

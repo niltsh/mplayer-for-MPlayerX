@@ -32,5 +32,6 @@ void vo_osx_ontop(void);
 void vo_osx_fullscreen(void);
 int vo_osx_check_events(void);
 void vo_osx_update_xinerama_info(void);
+void vo_osx_swap_buffers(void);
 
 #endif /* MPLAYER_OSX_COMMON_H */

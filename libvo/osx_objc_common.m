@@ -98,6 +98,11 @@ void vo_osx_update_xinerama_info(void)
     [oglv update_screen_info];
 }
 
+void vo_osx_swap_buffers(void)
+{
+    [oglv->glContext flushBuffer];
+}
+
 @implementation MPCommonOpenGLView
 - (void) update_screen_info
 {
@@ -126,7 +131,6 @@ void vo_osx_update_xinerama_info(void)
 
 - (void) preinit
 {
-	NSOpenGLContext *glContext;
 	GLint swapInterval = 1;
 
 	NSApplicationLoad();
@@ -169,11 +173,11 @@ void vo_osx_update_xinerama_info(void)
 	[glContext setValues:&swapInterval forParameter:NSOpenGLCPSwapInterval];
 	[glContext setView:self];
 	[glContext makeCurrentContext];
-	[glContext release];
 }
 
 - (void) dealloc
 {
+	[glContext release];
 	[self setOpenGLContext:nil];
 	[super dealloc];
 }

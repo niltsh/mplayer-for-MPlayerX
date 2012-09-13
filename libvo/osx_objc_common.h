@@ -53,6 +53,7 @@
 	int event_flags;
 @public
 	float winSizeMult;
+	NSOpenGLContext *glContext;
 }
 
 - (BOOL) acceptsFirstResponder;
