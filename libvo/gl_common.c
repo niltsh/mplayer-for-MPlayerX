@@ -2297,6 +2297,8 @@ int init_mpglcontext(MPGLContext *ctx, enum MPGLType type) {
   if (type == GLTYPE_AUTO) {
     int res = init_mpglcontext(ctx, GLTYPE_W32);
     if (res) return res;
+    res = init_mpglcontext(ctx, GLTYPE_OSX);
+    if (res) return res;
     res = init_mpglcontext(ctx, GLTYPE_X11);
     if (res) return res;
     res = init_mpglcontext(ctx, GLTYPE_SDL);
