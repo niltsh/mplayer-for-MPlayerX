@@ -1,6 +1,7 @@
 /*
  * CoreVideo video output driver
  * Copyright (c) 2005 Nicolas Plourde <nicolasplourde@gmail.com>
+ * Copyright (c) 2012 Reimar Döffinger <Reimar.Doeffinger@gmx.de>
  *
  * This file is part of MPlayer.
  *
