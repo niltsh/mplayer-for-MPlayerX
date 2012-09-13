@@ -519,8 +519,8 @@ static int control(uint32_t request, void *data)
 
 	config_movie_aspect((float)width/height);
 
-	vo_dwidth  = width  *= mpGLView->winSizeMult;
-	vo_dheight = height *= mpGLView->winSizeMult;
+	vo_dwidth  = width  *= self->winSizeMult;
+	vo_dheight = height *= self->winSizeMult;
 
 	//config window
 	[window setContentSize:NSMakeSize(vo_dwidth, vo_dheight)];
