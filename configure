@@ -6775,8 +6775,8 @@ EOF
              -I$_livelibdir/BasicUsageEnvironment/include \
              -I$_livelibdir/groupsock/include"
     ld_tmp="$_livelibdir/liveMedia/libliveMedia.a \
-            $_livelibdir/UsageEnvironment/libUsageEnvironment.a \
             $_livelibdir/BasicUsageEnvironment/libBasicUsageEnvironment.a \
+            $_livelibdir/UsageEnvironment/libUsageEnvironment.a \
             $_livelibdir/groupsock/libgroupsock.a \
             -lstdc++ $ld_sock"
     test -e "$_livelibdir/BasicUsageEnvironment/libBasicUsageEnvironment.a" &&
