@@ -311,7 +311,11 @@ int glFindFormat(uint32_t fmt, int *bpp, GLint *gl_texfmt,
       *gl_texfmt = GL_RGB;
       *bpp = 16;
       *gl_format = GL_YCBCR_422_APPLE;
+#if HAVE_BIGENDIAN
       *gl_type = fmt == IMGFMT_YUY2 ? GL_UNSIGNED_SHORT_8_8 : GL_UNSIGNED_SHORT_8_8_REV;
+#else
+      *gl_type = fmt == IMGFMT_UYVY ? GL_UNSIGNED_SHORT_8_8 : GL_UNSIGNED_SHORT_8_8_REV;
+#endif
       break;
 #if 0
     // we do not support palettized formats, although the format the
