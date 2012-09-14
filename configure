@@ -581,7 +581,11 @@ Advanced options:
   --enable-3dnowext         enable extended 3DNow! [autodetect]
   --enable-sse              enable SSE [autodetect]
   --enable-sse2             enable SSE2 [autodetect]
+  --enable-sse3             enable SSE3 [autodetect]
   --enable-ssse3            enable SSSE3 [autodetect]
+  --enable-sse4             enable SSE4 [autodetect]
+  --enable-sse42            enable SSE4.2 [autodetect]
+  --enable-avx              enable AVX [autodetect]
   --enable-shm              enable shm [autodetect]
   --enable-altivec          enable AltiVec (PowerPC) [autodetect]
   --enable-armv5te          enable DSP extensions (ARM) [autodetect]
@@ -634,7 +638,11 @@ _3dnowext=auto
 _mmxext=auto
 _sse=auto
 _sse2=auto
+_sse3=auto
 _ssse3=auto
+_sse4_1=auto
+_sse4_2=auto
+_avx=auto
 _cmov=auto
 _fast_cmov=auto
 _fast_clz=auto
@@ -1441,8 +1449,16 @@ for ac_option do
   --disable-sse) _sse=no ;;
   --enable-sse2) _sse2=yes ;;
   --disable-sse2) _sse2=no ;;
+  --enable-sse3) _sse3=yes ;;
+  --disable-sse3) _sse3=no ;;
   --enable-ssse3) _ssse3=yes ;;
   --disable-ssse3) _ssse3=no ;;
+  --enable-sse4) _sse4_1=yes;;
+  --disable-sse4) _sse4_1=no;;
+  --enable-sse42) _sse4_2=yes;;
+  --disable-sse42) _sse4_2=no;;
+  --enable-avx) _avx=yes;;
+  --disable-avx) _avx=no;;
   --enable-mmxext) _mmxext=yes ;;
   --disable-mmxext) _mmxext=no ;;
   --enable-3dnow) _3dnow=yes ;;
@@ -1816,7 +1832,7 @@ if x86 ; then
   exts=$($_cpuinfo | egrep 'features|flags' | cut -d ':' -f 2 | head -n 1)
 
   pparam=$(echo $exts | sed -e s/k6_mtrr/mtrr/ -e s/cyrix_arr/mtrr/ -e s/centaur_mcr/mtrr/ \
-                            -e s/xmm/sse/ -e s/kni/sse/)
+                            -e s/xmm/sse/ -e s/kni/sse/ -e s/pni/sse3/)
   # SSE implies MMX2, but not all SSE processors report the mmxext CPU flag.
   pparam=$(echo $pparam | sed -e 's/sse/sse mmxext/')
 
@@ -1869,7 +1885,11 @@ EOF
   extcheck $_3dnowext "3dnowext" "pswapd %%mm0, %%mm0"
   extcheck $_sse      "sse"      "xorps %%xmm0, %%xmm0" || _gcc3_ext="$_gcc3_ext -mno-sse"
   extcheck $_sse2     "sse2"     "xorpd %%xmm0, %%xmm0" || _gcc3_ext="$_gcc3_ext -mno-sse2"
+  extcheck $_sse3     "sse3"     "addsubps %%xmm0, %%xmm0"
   extcheck $_ssse3    "ssse3"    "pabsd %%xmm0, %%xmm0"
+  extcheck $_sse4_1   "sse4_1"   "pmaxsb %%xmm0, %%xmm0"
+  extcheck $_sse4_2   "sse4_2"   "pcmpgtq %%xmm0, %%xmm0"
+  extcheck $_avx      "avx"      "vpabsw %%xmm0, %%xmm0"
   extcheck $_cmov     "cmov"     "cmovb %%eax,  %%ebx"
 
   echocheck "mtrr support"
@@ -2521,7 +2541,11 @@ if test "$_runtime_cpudetection" = yes ; then
     test "$_mmxext"   != no && _mmxext=yes
     test "$_sse"      != no && _sse=yes
     test "$_sse2"     != no && _sse2=yes
+    test "$_sse3"     != no && _sse3=yes
     test "$_ssse3"    != no && _ssse3=yes
+    test "$_sse4_1"   != no && _sse4_1=yes
+    test "$_sse4_2"   != no && _sse4_2=yes
+    test "$_avx"      != no && _avx=yes
     test "$_mtrr"     != no && _mtrr=yes
   fi
   if ppc; then
@@ -3003,7 +3027,7 @@ if arm ; then
   echores "$_iwmmxt"
 fi
 
-cpuexts_all='ALTIVEC AVX MMX MMX2 MMXEXT AMD3DNOW AMD3DNOWEXT SSE SSE2 SSE3 SSSE3 SSE4 FAST_CMOV CMOV FAST_CLZ ARMV5TE ARMV6 ARMV6T2 ARMVFP VFPV3 NEON IWMMXT MMI VIS MVI'
+cpuexts_all='ALTIVEC AVX MMX MMX2 MMXEXT AMD3DNOW AMD3DNOWEXT SSE SSE2 SSE3 SSSE3 SSE4 SSE42 FAST_CMOV CMOV FAST_CLZ ARMV5TE ARMV6 ARMV6T2 ARMVFP VFPV3 NEON IWMMXT MMI VIS MVI'
 test "$_altivec"   = yes && cpuexts="ALTIVEC $cpuexts"
 test "$_mmx"       = yes && cpuexts="MMX $cpuexts"
 test "$_mmxext"    = yes && cpuexts="MMX2 $cpuexts"
@@ -3012,7 +3036,11 @@ test "$_3dnow"     = yes && cpuexts="AMD3DNOW $cpuexts"
 test "$_3dnowext"  = yes && cpuexts="AMD3DNOWEXT $cpuexts"
 test "$_sse"       = yes && cpuexts="SSE $cpuexts"
 test "$_sse2"      = yes && cpuexts="SSE2 $cpuexts"
+test "$_sse3"      = yes && cpuexts="SSE3 $cpuexts"
 test "$_ssse3"     = yes && cpuexts="SSSE3 $cpuexts"
+test "$_sse4_1"    = yes && cpuexts="SSE4 $cpuexts"
+test "$_sse4_2"    = yes && cpuexts="SSE42 $cpuexts"
+test "$_avx"       = yes && cpuexts="AVX $cpuexts"
 test "$_cmov"      = yes && cpuexts="CMOV $cpuexts"
 test "$_fast_cmov" = yes && cpuexts="FAST_CMOV $cpuexts"
 test "$_fast_clz"  = yes && cpuexts="FAST_CLZ $cpuexts"

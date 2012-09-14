@@ -315,6 +315,9 @@ void GetCpuCaps( CpuCaps *caps)
         caps->hasSSE2 = (regs2[3] & (1 << 26 )) >> 26; // 0x4000000
         caps->hasSSE3 = (regs2[2] & 1);        // 0x0000001
         caps->hasSSSE3 = (regs2[2] & (1 << 9 )) >>  9; // 0x0000200
+        caps->hasSSE4 = (regs2[2] & (1 << 19 )) >> 19; // 0x0080000
+        caps->hasSSE42 = (regs2[2] & (1 << 20)) >> 20; // 0x0100000
+        caps->hasAVX  = (regs2[2] & (1 << 28 )) >> 28; // 0x10000000
         caps->hasMMX2 = caps->hasSSE; // SSE cpus supports mmxext too
         cl_size = ((regs2[1] >> 8) & 0xFF)*8;
         if(cl_size) caps->cl_size = cl_size;
@@ -457,7 +460,10 @@ void GetCpuCaps( CpuCaps *caps)
     caps->hasSSE2=0;
     caps->hasSSE3=0;
     caps->hasSSSE3=0;
+    caps->hasSSE4=0;
+    caps->hasSSE42=0;
     caps->hasSSE4a=0;
+    caps->hasAVX=0;
     caps->isX86=0;
     caps->hasAltiVec = 0;
 #if HAVE_ALTIVEC
