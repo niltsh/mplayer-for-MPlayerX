@@ -769,8 +769,9 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
 
 static int encode_frame(struct vf_instance *vf, AVFrame *pic, double pts){
     const char pict_type_char[5]= {'?', 'I', 'P', 'B', 'S'};
-    int out_size;
     double dts;
+    AVPacket pkt;
+    int res, got_pkt;
 
     if(pts == MP_NOPTS_VALUE)
         pts= lavc_venc_context->frame_number * av_q2d(lavc_venc_context->time_base);
@@ -786,8 +787,10 @@ static int encode_frame(struct vf_instance *vf, AVFrame *pic, double pts){
             pic->pts= MP_NOPTS_VALUE;
 #endif
     }
-	out_size = avcodec_encode_video(lavc_venc_context, mux_v->buffer, mux_v->buffer_size,
-	    pic);
+    av_init_packet(&pkt);
+    pkt.data = mux_v->buffer;
+    pkt.size = mux_v->buffer_size;
+    res = avcodec_encode_video2(lavc_venc_context, &pkt, pic, &got_pkt);
 
     /* store stats if there are any */
     if(lavc_venc_context->stats_out && stats_file) {
@@ -796,31 +799,21 @@ static int encode_frame(struct vf_instance *vf, AVFrame *pic, double pts){
         lavc_venc_context->stats_out[0] = 0;
     }
 
-    if(pts != MP_NOPTS_VALUE)
-        dts= pts - lavc_venc_context->delay * av_q2d(lavc_venc_context->time_base);
-    else
-        dts= MP_NOPTS_VALUE;
-#if 0
-    pts= lavc_venc_context->coded_frame->opaque ?
-           *(double*)lavc_venc_context->coded_frame->opaque
-         : MP_NOPTS_VALUE;
-#else
-    if(lavc_venc_context->coded_frame->pts != MP_NOPTS_VALUE)
-        pts= lavc_venc_context->coded_frame->pts * av_q2d(lavc_venc_context->time_base);
-    else
-        pts= MP_NOPTS_VALUE;
-    assert(MP_NOPTS_VALUE == AV_NOPTS_VALUE);
-#endif
-//fprintf(stderr, "ve_lavc %f/%f\n", dts, pts);
-    if(out_size == 0 && lavc_param_skip_threshold==0 && lavc_param_skip_factor==0){
+    if (res < 0)
+        return 0;
+    if(!got_pkt && lavc_param_skip_threshold==0 && lavc_param_skip_factor==0){
         ++mux_v->encoder_delay;
         return 0;
     }
 
-    muxer_write_chunk(mux_v,out_size,lavc_venc_context->coded_frame->key_frame?0x10:0,
+    dts = pts = MP_NOPTS_VALUE;
+    if (pkt.pts != AV_NOPTS_VALUE)
+        pts = pkt.pts * av_q2d(lavc_venc_context->time_base);
+    if (pkt.dts != AV_NOPTS_VALUE)
+        dts = pkt.dts * av_q2d(lavc_venc_context->time_base);
+
+    muxer_write_chunk(mux_v,pkt.size,pkt.flags & AV_PKT_FLAG_KEY ?0x10:0,
                       dts, pts);
-    free(lavc_venc_context->coded_frame->opaque);
-    lavc_venc_context->coded_frame->opaque= NULL;
 
     /* store psnr / pict size / type / qscale */
     if(lavc_param_psnr){
@@ -865,7 +858,7 @@ static int encode_frame(struct vf_instance *vf, AVFrame *pic, double pts){
         fprintf(fvstats, "%6d, %2.2f, %6d, %2.2f, %2.2f, %2.2f, %2.2f %c\n",
             lavc_venc_context->coded_frame->coded_picture_number,
             quality,
-            out_size,
+            pkt.size,
             psnr(lavc_venc_context->coded_frame->error[0]/f),
             psnr(lavc_venc_context->coded_frame->error[1]*4/f),
             psnr(lavc_venc_context->coded_frame->error[2]*4/f),
@@ -873,7 +866,7 @@ static int encode_frame(struct vf_instance *vf, AVFrame *pic, double pts){
             pict_type_char[lavc_venc_context->coded_frame->pict_type]
             );
     }
-    return out_size;
+    return pkt.size;
 }
 
 static void uninit(struct vf_instance *vf){
