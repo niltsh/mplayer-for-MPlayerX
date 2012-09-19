@@ -8824,6 +8824,8 @@ $def_zr
 
 
 /* FFmpeg */
+#define av_restrict restrict
+
 $def_ffmpeg
 $def_ffmpeg_a
 $def_ffmpeg_so
