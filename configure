@@ -8120,6 +8120,8 @@ MANDIR  = \$(DESTDIR)$_mandir
 CONFDIR = \$(DESTDIR)$_confdir
 
 AR      = $_ar
+ARFLAGS = rc
+AR_O    = $@
 AS      = $_cc
 CC      = $_cc
 CXX     = $_cc
