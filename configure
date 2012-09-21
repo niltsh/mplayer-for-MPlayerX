@@ -8121,7 +8121,7 @@ CONFDIR = \$(DESTDIR)$_confdir
 
 AR      = $_ar
 ARFLAGS = rc
-AR_O    = $@
+AR_O    = \$@
 AS      = $_cc
 CC      = $_cc
 CXX     = $_cc
