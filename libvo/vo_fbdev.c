@@ -862,7 +862,8 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
         out_height = fb_yres;
     }
     if (out_width < in_width || out_height < in_height) {
-        mp_msg(MSGT_VO, MSGL_ERR, "screensize is smaller than video size\n");
+        mp_msg(MSGT_VO, MSGL_ERR, "screensize %ix%i is smaller than video size %ix%i\n",
+               out_width, out_height, in_width, in_height);
         return 1;
     }
 
