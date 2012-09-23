@@ -6787,6 +6787,7 @@ echores "$_nemesi"
 echocheck "LIVE555 Streaming Media libraries"
 if test "$_live" = auto  && test "$networking" = yes ; then
   cat > $TMPCPP << EOF
+#define RTSPCLIENT_SYNCHRONOUS_INTERFACE 1
 #include <liveMedia.hh>
 #if (LIVEMEDIA_LIBRARY_VERSION_INT < 1141257600)
 #error Please upgrade to version 2006.03.03 or later of the "LIVE555 Streaming Media" libraries - available from <www.live555.com/liveMedia/>
