@@ -428,7 +428,7 @@ Codecs:
   --enable-vf-lavfi         enable libavfilter wrapper [disabled]
   --disable-libavcodec_mpegaudio_hp disable high precision audio decoding
                                     in libavcodec [enabled]
-  --disable-tremor-internal disable internal Tremor [enabled]
+  --enable-tremor-internal  enable internal Tremor [disabled]
   --enable-tremor-low       enable lower accuracy internal Tremor [disabled]
   --enable-tremor           enable external Tremor [autodetect]
   --disable-libvorbis       disable libvorbis support [autodetect]
@@ -753,7 +753,7 @@ _mp3lame_lavc=auto
 _toolame=auto
 _twolame=auto
 _tremor=auto
-_tremor_internal=yes
+_tremor_internal=no
 _tremor_low=no
 _libvorbis=auto
 _speex=auto
