@@ -176,6 +176,14 @@ Clagg, Jeff (snacky) <snacky@ikaruga.co.uk>
     * x264's encoding guide
     * superficial clarity fixes for mpcf.txt
 
+Compn <compn@ffmpeg.org>
+    * #mplayer user wrangler (2003+)
+    * mailing list moderator
+    * bugzilla admin
+    * number one bug reporter and tester
+    * docs updates
+    * small non-coding tasks all over the place
+
 Comstedt, Marcus <marcus@idonex.se>
     * initial Solaris 8 x86 support
     * configure fixes
@@ -536,14 +544,6 @@ Liljeblad, Oskar <oskar@osk.mine.nu>
 
 Lin, Sam <itrs@softwell.com.tw>
     * -wid (plugger) patch
-
-Littler, Ben (compn) <patriotact@gmail.com>
-    * #mplayer user wrangler (2003+)
-    * mailing list moderator
-    * bugzilla admin
-    * number one bug reporter and tester
-    * docs updates
-    * small non-coding tasks all over the place
 
 Lombard, Pierre (pl) <p_l@gmx.fr>
     * new configure script
