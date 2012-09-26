@@ -61,9 +61,9 @@ void eosd_configure(struct mp_eosd_settings *res)
         res->srcw     != settings.srcw     ||
         res->srch     != settings.srch     ||
         res->mt       != settings.mt       ||
-        res->mt       != settings.mb       ||
-        res->mt       != settings.ml       ||
-        res->mt       != settings.mr       ||
+        res->mb       != settings.mb       ||
+        res->ml       != settings.ml       ||
+        res->mr       != settings.mr       ||
         res->unscaled != settings.unscaled) {
         settings         = *res;
         settings.changed = 1;
