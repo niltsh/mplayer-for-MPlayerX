@@ -257,7 +257,7 @@ ASS_Track* ass_read_stream(ASS_Library* library, const char *fname, char *charse
 	return track;
 }
 
-void ass_configure(ASS_Renderer* priv, int w, int h, int unscaled) {
+static void ass_configure(ASS_Renderer* priv, int w, int h, int unscaled) {
 	int hinting;
 	ass_set_frame_size(priv, w, h);
 	ass_set_margins(priv, ass_top_margin, ass_bottom_margin, 0, 0);
@@ -271,7 +271,7 @@ void ass_configure(ASS_Renderer* priv, int w, int h, int unscaled) {
 	ass_set_line_spacing(priv, ass_line_spacing);
 }
 
-void ass_configure_fonts(ASS_Renderer* priv) {
+static void ass_configure_fonts(ASS_Renderer* priv) {
 	char *dir, *path, *family;
 	dir = get_path("fonts");
 	if (font_fontconfig < 0 && sub_font_name) path = strdup(sub_font_name);
