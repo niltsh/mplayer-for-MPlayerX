@@ -299,7 +299,7 @@ Ahora ya está dentro de gdb. Escriba:
 Tan pronto como muera, gdb le devuelve a la línea de órdenes donde entró
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 </para>
@@ -311,7 +311,7 @@ info all-registers
 Cree el siguiente archivo de órdenes:
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 y después ejecute ésta orden:

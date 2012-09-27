@@ -440,7 +440,7 @@ run -v <replaceable>опции-для-mplayer</replaceable> <replaceable>имя-
 командной строки, где Вы должны набрать
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 </para>
@@ -454,7 +454,7 @@ info all-registers
 Создайте следующий командный файл:
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 Теперь просто выполните такую команду:

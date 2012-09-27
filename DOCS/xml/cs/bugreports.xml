@@ -441,7 +441,7 @@ a zopakujte pád. Jakmile to dokážete, vrátí se gdb do režimu příkazovéh
 kde musíte zadat
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 </para>
@@ -455,7 +455,7 @@ info all-registers
 Vytvořte následující příkazový řádek:
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 Pak jednoduše spusťte tento příkaz:

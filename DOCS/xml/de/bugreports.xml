@@ -407,7 +407,7 @@ make</screen>
           und reproduziere den Absturz. Sobald du das getan hast, wird gdb zur Eingabeaufforderung
           zurückkehren, wo du folgendes eingeben musst:
 <screen>bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers</screen>
         </para>
       </sect3>
@@ -417,7 +417,7 @@ info all-registers</screen>
         <para>
           Erzeuge die folgende Befehlsdatei:
 <screen>bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers</screen>
           Führe dann einfach folgenden Befehl aus:
           <screen>gdb mplayer --core=core -batch --command=<replaceable>Kommando_Datei</replaceable> &gt; mplayer.bug</screen>

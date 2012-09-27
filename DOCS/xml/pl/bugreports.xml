@@ -466,7 +466,7 @@ i odtwórz swoją awarię. Gdy tylko to zrobisz, gdb przeniesie cię z powrotem 
 wiersza poleceń, gdzie należy wpisać
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 </para>
@@ -480,7 +480,7 @@ info all-registers
 Utwórz plik z nastepującymi poleceniami:
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 A następnie uruchomić następujące polecenie:

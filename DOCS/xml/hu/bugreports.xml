@@ -442,7 +442,7 @@ run -v <replaceable>kapcsolok-az-mplayernek</replaceable> <replaceable>fajlnev</
 be kell írnod:
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 </para>
@@ -456,7 +456,7 @@ info all-registers
 Hozd létre a következő parancs fájlt:
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 Majd add ki ezt a parancsot:

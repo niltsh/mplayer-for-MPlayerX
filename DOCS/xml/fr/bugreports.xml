@@ -452,7 +452,7 @@ Aussitôt que vous l'avez fait, gdb va vous renvoyer à la ligne de commande
 où vous devrez entrer
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 </para>
@@ -466,7 +466,7 @@ info all-registers
 Créer le fichier de commande suivant&nbsp;:
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 Ensuite exécutez simplement la commande&nbsp;:

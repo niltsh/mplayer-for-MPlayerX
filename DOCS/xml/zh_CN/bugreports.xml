@@ -408,7 +408,7 @@ run -v <replaceable>options-to-mplayer</replaceable> <replaceable>filename</repl
 重复你的崩溃。你一重现此现象，gdb将使你返回命令行，在此你输入
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 </para>
@@ -422,7 +422,7 @@ info all-registers
 创建如下命令文件：
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 然后只执行这个命令

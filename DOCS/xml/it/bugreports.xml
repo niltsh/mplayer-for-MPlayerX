@@ -452,7 +452,7 @@ e riproduci il tuo crash. Appena ci sei riuscito, gdb ti ripresenterà il
 prompt dei comandi, dove devi digitare
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 </para>
@@ -466,7 +466,7 @@ info all-registers
 Genera il file di comandi seguente:
 <screen>
 bt
-disass $pc-32 $pc+32
+disass $pc-32,$pc+32
 info all-registers
 </screen>
 Poi lancia semplicemente questo comando:
