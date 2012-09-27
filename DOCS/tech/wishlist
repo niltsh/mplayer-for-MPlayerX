@@ -7,6 +7,8 @@ Documentation:
 
  * continue MEncoder tutorial
 
+ * update all MEncoder commands into ffmpeg syntax using -lavencopts o=
+
  * review manual page again
 
  * split manual page
@@ -77,8 +79,6 @@ Filters:
 
  * eq filter should support RGB in addition to YUV
 
- * move filters into ffmpeg
-
  * autocrop filter
 
  * insert af volnorm during playback
@@ -143,15 +143,9 @@ Enhancements:
 
 Difficult stuff:
 
- * RE all closed source codecs (Voxware, VIVO, MVI2, MSS1/MSS2, ...)
-
- * support for Bink codec
+ * RE all closed source codecs (Voxware, VIV2, MVI2...)
 
  * write something like mptv to replace xawtv
-
- * write/adapt a C implementation of live555 RTSP
-
- * unify live555 and Real RTSP
 
  * real mmsu:// support
 
