@@ -291,7 +291,7 @@ static inline int pixel_stride(unsigned fmt) {
 
 static inline int aspect_scaling(void)
 {
-  return vo_fs;
+  return vo_fs || vo_keepaspect;
 }
 
 #endif /* MPLAYER_VIDEO_OUT_H */
