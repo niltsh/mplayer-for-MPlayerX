@@ -493,7 +493,7 @@ static int control(uint32_t request, void *data)
 	d_width  = vo_dwidth;
 	d_height = vo_dheight;
 	//set texture frame
-	if(vo_keepaspect)
+	if(aspect_scaling())
 	{
 		aspect(&d_width, &d_height, A_WINZOOM);
 	}
