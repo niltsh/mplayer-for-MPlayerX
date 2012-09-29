@@ -582,7 +582,12 @@ static int get_buffer(AVCodecContext *avctx, AVFrame *pic){
 
     if (IMGFMT_IS_HWACCEL(ctx->best_csp)) {
         type =  MP_IMGTYPE_NUMBERED;
-    } else
+    } else if (avctx->has_b_frames) {
+        // HACK/TODO: slices currently do not work properly with B-frames,
+        // causing out-of-order frames or crashes with e.g. -vf scale,unsharp
+        // or -vf screenshot,unsharp.
+        flags &= ~MP_IMGFLAG_DRAW_CALLBACK;
+    }
     if (type == MP_IMGTYPE_IP || type == MP_IMGTYPE_IPB) {
         if(ctx->b_count>1 || ctx->ip_count>2){
             mp_msg(MSGT_DECVIDEO, MSGL_WARN, MSGTR_MPCODECS_DRIFailure);
