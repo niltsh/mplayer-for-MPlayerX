@@ -221,21 +221,6 @@ SRCS_COMMON-$(REAL_CODECS)           += libmpcodecs/ad_realaud.c \
 SRCS_COMMON-$(SPEEX)                 += libmpcodecs/ad_speex.c
 SRCS_COMMON-$(STREAM_CACHE)          += stream/cache2.c
 
-SRCS_COMMON-$(TREMOR_INTERNAL)       += tremor/bitwise.c \
-                                        tremor/block.c \
-                                        tremor/codebook.c \
-                                        tremor/floor0.c \
-                                        tremor/floor1.c \
-                                        tremor/framing.c \
-                                        tremor/info.c \
-                                        tremor/mapping0.c \
-                                        tremor/mdct.c \
-                                        tremor/registry.c \
-                                        tremor/res012.c \
-                                        tremor/sharedbook.c \
-                                        tremor/synthesis.c \
-                                        tremor/window.c \
-
 SRCS_COMMON-$(TV)                    += stream/stream_tv.c stream/tv.c \
                                         stream/frequencies.c stream/tvi_dummy.c
 SRCS_COMMON-$(TV_BSDBT848)           += stream/tvi_bsdbt848.c

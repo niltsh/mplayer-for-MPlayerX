@@ -428,9 +428,7 @@ Codecs:
   --enable-vf-lavfi         enable libavfilter wrapper [disabled]
   --disable-libavcodec_mpegaudio_hp disable high precision audio decoding
                                     in libavcodec [enabled]
-  --enable-tremor-internal  enable internal Tremor [disabled]
-  --enable-tremor-low       enable lower accuracy internal Tremor [disabled]
-  --enable-tremor           enable external Tremor [autodetect]
+  --enable-tremor           enable integer libvorbis [autodetect]
   --disable-libvorbis       disable libvorbis support [autodetect]
   --disable-speex           disable Speex support [autodetect]
   --disable-libgsm          disable libgsm support [autodetect]
@@ -753,8 +751,6 @@ _mp3lame_lavc=auto
 _toolame=auto
 _twolame=auto
 _tremor=auto
-_tremor_internal=no
-_tremor_low=no
 _libvorbis=auto
 _speex=auto
 _libgsm=auto
@@ -1155,10 +1151,6 @@ for ac_option do
   --disable-libgsm)     _libgsm=no      ;;
   --enable-tremor)      _tremor=yes     ;;
   --disable-tremor)     _tremor=no      ;;
-  --enable-tremor-internal)     _tremor_internal=yes    ;;
-  --disable-tremor-internal)    _tremor_internal=no     ;;
-  --enable-tremor-low)  _tremor_low=yes ;;
-  --disable-tremor-low) _tremor_low=no  ;;
   --enable-theora)      _theora=yes     ;;
   --disable-theora)     _theora=no      ;;
   --enable-mpg123)      _mpg123=yes     ;;
@@ -6306,9 +6298,7 @@ fi
 echores "$_toolame"
 
 echocheck "OggVorbis support"
-if test "$_tremor_internal" = yes; then
-  _libvorbis=no
-elif test "$_tremor" = auto; then
+if test "$_tremor" = auto; then
   _tremor=no
   statement_check tremor/ivorbiscodec.h 'vorbis_packet_blocksize(0, 0)' -logg -lvorbisidec && _tremor=yes && _libvorbis=no
 fi
@@ -6318,22 +6308,12 @@ if test "$_libvorbis" = auto; then
     statement_check vorbis/vorbisenc.h 'vorbis_encode_ctl(0, 0, 0)' $vorbislibs && _libvorbis=yes && break
   done
 fi
-if test "$_tremor_internal" = yes ; then
+if test "$_tremor" = yes ; then
   _vorbis=yes
   def_vorbis='#define CONFIG_OGGVORBIS 1'
   def_tremor='#define CONFIG_TREMOR 1'
-  codecmodules="tremor(internal) $codecmodules"
-  res_comment="internal Tremor"
-  if test "$_tremor_low" = yes ; then
-    cflags_tremor_low="-D_LOW_ACCURACY_"
-    res_comment="internal low accuracy Tremor"
-  fi
-elif test "$_tremor" = yes ; then
-  _vorbis=yes
-  def_vorbis='#define CONFIG_OGGVORBIS 1'
-  def_tremor='#define CONFIG_TREMOR 1'
-  codecmodules="tremor(external) $codecmodules"
-  res_comment="external Tremor"
+  codecmodules="tremor $codecmodules"
+  res_comment="integer libvorbis"
   extra_ldflags="$extra_ldflags -logg -lvorbisidec"
 elif test "$_libvorbis" = yes ; then
   _vorbis=yes
@@ -8142,7 +8122,6 @@ CFLAGS_LIBDVDNAV         = $cflags_libdvdnav
 CFLAGS_NO_OMIT_LEAF_FRAME_POINTER = $cflags_no_omit_leaf_frame_pointer
 CFLAGS_STACKREALIGN      = $cflags_stackrealign
 CFLAGS_SVGALIB_HELPER    = $cflags_svgalib_helper
-CFLAGS_TREMOR_LOW        = $cflags_tremor_low
 
 EXTRALIBS          = $extra_ldflags $ld_static $extra_libs
 EXTRALIBS_MPLAYER  = $libs_mplayer
@@ -8286,7 +8265,6 @@ TDFXFB = $_tdfxfb
 TDFXVID = $_tdfxvid
 TGA = $_tga
 TOOLAME=$_toolame
-TREMOR_INTERNAL = $_tremor_internal
 TV = $_tv
 TV_BSDBT848 = $_tv_bsdbt848
 TV_DSHOW = $_tv_dshow
