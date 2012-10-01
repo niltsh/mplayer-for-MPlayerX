@@ -2292,8 +2292,15 @@ static int sleep_until_update(float *time_frame, float *aq_sleep_time)
     //============================== SLEEP: ===================================
 
     // flag 256 means: libvo driver does its timing (dvb card)
-    if (*time_frame > 0.001 && !(vo_flags & 256))
-        *time_frame = timing_sleep(*time_frame);
+    if (!(vo_flags & 256)) {
+        if (*time_frame > 1.5) {
+            // Avoid sleeping too long without reacting to user input
+            usec_sleep(1000000);
+            *time_frame -= GetRelativeTime();
+            frame_time_remaining = 1;
+	} else if (*time_frame > 0.001)
+            *time_frame = timing_sleep(*time_frame);
+    }
 
     handle_udp_master(mpctx->sh_video->pts);
 
