@@ -41,12 +41,9 @@ if test -e ffmpeg/.svn ; then
 fi
 
 if test -e ffmpeg/mp_auto_pull ; then
-    if ! (cd ffmpeg && git checkout release/1.0) ; then
     if ! (cd ffmpeg && git pull --rebase --ff-only) ; then
         echo "git pull failed, (re)move ffmpeg/mp_auto_pull to disable pulling"
         exit 1
-    fi
-    (cd ffmpeg && git checkout release/1.0)
     fi
 fi
 
