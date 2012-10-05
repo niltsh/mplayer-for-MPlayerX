@@ -270,7 +270,10 @@ static int config(struct vf_instance *vf,
     int width, int height, int d_width, int d_height,
     unsigned int flags, unsigned int outfmt)
 {
-    if (height&3) return 0;
+    if (height&3) {
+        mp_msg(MSGT_VFILTER, MSGL_ERR, "height must be divisible by four\n");
+        return 0;
+    }
     return vf_next_config(vf, width, height, d_width, d_height, flags, outfmt);
 }
 
