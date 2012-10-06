@@ -8389,6 +8389,7 @@ CONFIG_CRYSTALHD= $crystalhd
 CONFIG_ENCODERS = yes
 CONFIG_GPL      = yes
 CONFIG_MLIB     = $_mlib
+CONFIG_MPEGAUDIO=yes
 CONFIG_MUXERS   = yes
 CONFIG_NETWORK  = $networking
 CONFIG_RTPDEC   = $networking
