@@ -69,6 +69,7 @@ static const struct AVCodecTag mp_wav_tags[] = {
     { CODEC_ID_ROQ_DPCM,          MKTAG('R', 'o', 'Q', 'A')},
     { CODEC_ID_SHORTEN,           MKTAG('s', 'h', 'r', 'n')},
     { CODEC_ID_SPEEX,             MKTAG('s', 'p', 'x', ' ')},
+    { AV_CODEC_ID_TAK,            MKTAG('T', 'A', 'K', ' ')},
     { CODEC_ID_TTA,               MKTAG('T', 'T', 'A', '1')},
     { CODEC_ID_TWINVQ,            MKTAG('T', 'W', 'I', '2')},
 #if LIBAVUTIL_VERSION_MICRO >= 100
