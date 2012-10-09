@@ -8869,6 +8869,7 @@ $def_yasm
 #define CONFIG_AVSERVER 0
 #define CONFIG_FASTDIV 0
 #define CONFIG_FFSERVER 0
+#define CONFIG_FTRAPV 0
 #define CONFIG_GNUTLS 0
 #define CONFIG_GPL 1
 #define CONFIG_GRAY 0
