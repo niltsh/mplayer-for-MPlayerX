@@ -152,7 +152,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_
 		//config OpenGL View
 		[mpGLView config:d_width:d_height:flags];
 		[mpGLView reshape];
-		[[mpGLView window] setTitle:[NSString stringWithCString:vo_wintitle ? vo_wintitle : title]];
+		[[mpGLView window] setTitle:[NSString stringWithUTF8String:vo_wintitle ? vo_wintitle : title]];
 	}
 	else
 	{
@@ -192,7 +192,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_
 		}
 
 		//connect to mplayerosx
-		mplayerosxProxy=[NSConnection rootProxyForConnectionWithRegisteredName:[NSString stringWithCString:buffer_name] host:nil];
+		mplayerosxProxy=[NSConnection rootProxyForConnectionWithRegisteredName:[NSString stringWithUTF8String:buffer_name] host:nil];
 		if ([mplayerosxProxy conformsToProtocol:@protocol(MPlayerOSXVOProto)]) {
 			[mplayerosxProxy setProtocolForProxy:@protocol(MPlayerOSXVOProto)];
 			mplayerosxProto = (id <MPlayerOSXVOProto>)mplayerosxProxy;
