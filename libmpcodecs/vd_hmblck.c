@@ -82,6 +82,14 @@ static int control(sh_video_t *sh,int cmd, void *arg,...){
  * init driver
  */
 static int init(sh_video_t *sh){
+
+    if(sh->format != IMGFMT_HM12) return 0;
+
+    if((sh->disp_w&31) != 0 || (sh->disp_h&31) != 0) {
+        mp_msg(MSGT_DECVIDEO, MSGL_ERR,
+               "hmblck: Image size must be multiple of 32.\n");
+        return 0;
+    }
     return mpcodecs_config_vo(sh,sh->disp_w,sh->disp_h,sh->format);
 }
 /*************************************************************************
