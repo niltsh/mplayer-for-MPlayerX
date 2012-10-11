@@ -35,12 +35,10 @@ static const vd_info_t info = {
 LIBVD_EXTERN(hmblck)
 
 static void de_macro_y(unsigned char* dst,unsigned char* src,int dstride,int w,int h){
-    unsigned int y;
+    int y,x,i;
     // descramble Y plane
     for (y=0; y<h; y+=16) {
-	unsigned int x;
         for (x=0; x<w; x+=16) {
-	    unsigned int i;
             for (i=0; i<16; i++) {
                 memcpy(dst + x + (y+i)*dstride, src, 16);
                 src+=16;
@@ -50,12 +48,10 @@ static void de_macro_y(unsigned char* dst,unsigned char* src,int dstride,int w,i
 }
 
 static void de_macro_uv(unsigned char* dstu,unsigned char* dstv,unsigned char* src,int dstride,int w,int h){
-    unsigned int y;
+    int y,x,i;
     // descramble U/V plane
     for (y=0; y<h; y+=16) {
-	unsigned int x;
         for (x=0; x<w; x+=8) {
-	    unsigned int i;
             for (i=0; i<16; i++) {
 		int idx=x + (y+i)*dstride;
 		dstu[idx+0]=src[0]; dstv[idx+0]=src[1];
