@@ -117,6 +117,16 @@ static void free_file_specific(void)
     }
 }
 
+static void update_screen_info_shared_buffer(void)
+{
+	NSRect rc = [[NSScreen mainScreen] frame];
+	vo_screenwidth  = rc.size.width;
+	vo_screenheight = rc.size.height;
+	xinerama_x = rc.origin.x;
+	xinerama_y = rc.origin.y;
+	aspect_save_screenres(vo_screenwidth, vo_screenheight);
+}
+
 static int config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uint32_t flags, char *title, uint32_t format)
 {
 	free_file_specific();
@@ -390,7 +400,12 @@ static int control(uint32_t request, void *data)
 		case VOCTRL_FULLSCREEN: vo_fs = !vo_fs; if(!shared_buffer){ [mpGLView fullscreen: NO]; } else { [mplayerosxProto toggleFullscreen]; } return VO_TRUE;
 		case VOCTRL_GET_PANSCAN: return VO_TRUE;
 		case VOCTRL_SET_PANSCAN: panscan_calc(); return VO_TRUE;
-		case VOCTRL_UPDATE_SCREENINFO: [mpGLView update_screen_info]; return VO_TRUE;
+		case VOCTRL_UPDATE_SCREENINFO:
+			if (shared_buffer)
+				update_screen_info_shared_buffer();
+			else
+				[mpGLView update_screen_info];
+			return VO_TRUE;
 	}
 	return VO_NOTIMPL;
 }
