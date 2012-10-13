@@ -409,6 +409,7 @@ make</screen>
 <screen>bt
 disass $pc-32,$pc+32
 info all-registers</screen>
+Benutze disass $pc-32 $pc+32 mit alten gdb Versionen.
         </para>
       </sect3>
 

@@ -455,6 +455,7 @@ bt
 disass $pc-32,$pc+32
 info all-registers
 </screen>
+Utilise disass $pc-32 $pc+32 avec les anciennes versions de gdb.
 </para>
 </sect3>
 

@@ -449,6 +449,7 @@ bt
 disass $pc-32,$pc+32
 info all-registers
 </screen>
+With older gdb versions, use disass $pc-32 $pc+32.
 </para>
 </sect3>
 
