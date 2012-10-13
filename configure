@@ -8974,6 +8974,7 @@ cat > "$TMPH" << EOF
 #define AVUTIL_AVCONFIG_H
 $def_av_bigendian
 $def_av_fast_unaligned
+#define AV_HAVE_INCOMPATIBLE_FORK_ABI 0
 #endif /* AVUTIL_AVCONFIG_H */
 EOF
 
