@@ -6305,7 +6305,7 @@ if test "$_tremor" = auto; then
 fi
 if test "$_libvorbis" = auto; then
   _libvorbis=no
-  for vorbislibs in '-lvorbis -logg' '-lvorbis -lvorbisenc -logg' ; do
+  for vorbislibs in '-lvorbis -lvorbisenc -logg' '-lvorbis -logg' ; do
     statement_check vorbis/vorbisenc.h 'vorbis_encode_ctl(0, 0, 0); ogg_stream_clear(0)' $vorbislibs && _libvorbis=yes && break
   done
 fi
