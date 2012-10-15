@@ -37,6 +37,7 @@
 #include "vf.h"
 
 extern const vd_functions_t mpcodecs_vd_null;
+extern const vd_functions_t mpcodecs_vd_black;
 extern const vd_functions_t mpcodecs_vd_ffmpeg;
 extern const vd_functions_t mpcodecs_vd_theora;
 extern const vd_functions_t mpcodecs_vd_dshow;
@@ -65,6 +66,7 @@ extern const vd_functions_t mpcodecs_vd_qtvideo;
 
 const vd_functions_t * const mpcodecs_vd_drivers[] = {
     &mpcodecs_vd_null,
+    &mpcodecs_vd_black,
 #ifdef CONFIG_FFMPEG
     &mpcodecs_vd_ffmpeg,
 #endif

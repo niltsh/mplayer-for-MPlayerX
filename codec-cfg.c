@@ -870,8 +870,8 @@ codecs_t* find_codec(unsigned int fourcc,unsigned int *fourccmap,
         for (/* NOTHING */; i--; c++) {
             if(start && c<=start) continue;
             for (j = 0; j < CODECS_MAX_FOURCC; j++) {
-                // FIXME: do NOT hardwire 'null' name here:
-                if (c->fourcc[j]==fourcc || !strcmp(c->drv,"null")) {
+                // FIXME: do NOT hardwire 'null' and 'black' here:
+                if (c->fourcc[j]==fourcc || !strcmp(c->drv,"null") || !strcmp(c->drv,"black")) {
                     if (fourccmap)
                         *fourccmap = c->fourccmap[j];
                     return c;
