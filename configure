@@ -3720,6 +3720,24 @@ if test "$_w32threads" = auto ; then
 fi
 test "$_w32threads" = yes && def_threads='#define HAVE_THREADS 1' && def_w32threads='#define HAVE_W32THREADS 1'
 echores "$_w32threads"
+echocheck "direct.h"
+_direct_h=no
+header_check direct.h && _direct_h=yes
+if [ $_direct_h = yes ]; then
+  def_direct_h='#define HAVE_DIRECT_H 1'
+else
+  def_direct_h='#define HAVE_DIRECT_H 0'
+fi
+echores "$_direct_h"
+echocheck "io.h"
+_io_h=no
+header_check io.h && _io_h=yes
+if [ $_io_h = yes ]; then
+  def_io_h='#define HAVE_IO_H 1'
+else
+  def_io_h='#define HAVE_IO_H 0'
+fi
+echores "$_io_h"
 fi #if win32; then
 
 
@@ -8948,6 +8966,8 @@ $def_libschroedinger_lavc
 $def_mp3lame_lavc
 $def_x264_lavc
 $def_xvid_lavc
+$def_direct_h
+$def_io_h
 
 $(ff_config_enable "$libavdecoders_all"  "$libavdecoders" "#")
 $(ff_config_enable "$libavencoders_all"  "$libavencoders" "#")
