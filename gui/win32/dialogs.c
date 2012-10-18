@@ -834,7 +834,7 @@ static LRESULT CALLBACK TitleChapterWndProc(HWND hwnd, UINT iMsg, WPARAM wParam,
                 sprintf(&chapters[j], "%d", guiInfo.Chapters - j);
                 SendDlgItemMessage(hwnd, ID_CHAPTERSEL, CB_INSERTSTRING, 0, (LPARAM) &chapters[j]);
             }
-            SendDlgItemMessage(hwnd, ID_CHAPTERSEL, CB_SETCURSEL, dvd_chapter, 0);
+            SendDlgItemMessage(hwnd, ID_CHAPTERSEL, CB_SETCURSEL, guiInfo.Chapter - 1, 0);
 
             break;
         case WM_COMMAND:
