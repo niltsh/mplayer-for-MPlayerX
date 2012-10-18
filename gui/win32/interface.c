@@ -580,7 +580,6 @@ int gui(int what, void *data)
             vobsub_id = -1;
             stream_cache_size = -1;
             autosync = 0;
-            dvd_title = 0;
             force_fps = 0;
             if(!mygui->playlist->tracks) return 0;
             switch(guiInfo.StreamType)
@@ -673,7 +672,6 @@ int gui(int what, void *data)
 #endif
                     guiInfo.Chapter = dvd_chapter + 1;
                     guiInfo.Angle = dvd_angle + 1;
-                    guiInfo.Track = dvd_title + 1;
                     break;
             }
             break;

@@ -44,6 +44,7 @@
 #include "libmpdemux/demuxer.h"
 
 static char* dvd_device_current;
+static int dvd_title;
 int dvd_angle=1;
 
 #define	LIBDVDREAD_VERSION(maj,min,micro)	((maj)*10000 + (min)*100 + (micro))

@@ -379,7 +379,6 @@ int stream_seek_internal(stream_t *s, off_t newpos);
 extern int bluray_angle;
 extern int bluray_chapter;
 extern int dvd_speed;
-extern int dvd_title;
 extern int dvd_chapter;
 extern int dvd_last_chapter;
 extern int dvd_angle;

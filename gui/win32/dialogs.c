@@ -827,7 +827,7 @@ static LRESULT CALLBACK TitleChapterWndProc(HWND hwnd, UINT iMsg, WPARAM wParam,
                 sprintf(&titles[i], "%d", guiInfo.Tracks - i);
                 SendDlgItemMessage(hwnd, ID_TITLESEL, CB_INSERTSTRING, 0, (LPARAM) &titles[i]);
             }
-            SendDlgItemMessage(hwnd, ID_TITLESEL, CB_SETCURSEL, dvd_title, 0);
+            SendDlgItemMessage(hwnd, ID_TITLESEL, CB_SETCURSEL, guiInfo.Track - 1, 0);
 
             for (j=0; j<guiInfo.Chapters; j++)
             {

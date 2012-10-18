@@ -397,7 +397,6 @@ int gui(int what, void *data)
         wsVisibleMouse(&guiApp.videoWindow, wsHideMouseCursor);
 
         if (guiInfo.NewPlay == GUI_FILE_NEW) {
-            dvd_title = 0;
             audio_id  = -1;
             video_id  = -1;
             dvdsub_id = -1;
@@ -630,7 +629,6 @@ int gui(int what, void *data)
             guiInfo.Subtitles = dvd->nr_of_subtitles;
             memcpy(guiInfo.Subtitle, dvd->subtitles, sizeof(dvd->subtitles));
 #endif
-            guiInfo.Track   = dvd_title + 1;
             guiInfo.Chapter = dvd_chapter + 1;
             guiInfo.Angle   = dvd_angle + 1;
             break;
