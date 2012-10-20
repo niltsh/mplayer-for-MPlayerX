@@ -120,7 +120,7 @@
 #   include <limits.h>
 #endif
 
-#ifdef HAVE_DIRECT_H
+#if HAVE_DIRECT_H
 #   include <direct.h>
 #endif
 
@@ -238,7 +238,7 @@ LIBDVDCSS_EXPORT dvdcss_t dvdcss_open ( char *psz_target )
      */
     if( psz_cache == NULL || psz_cache[0] == '\0' )
     {
-#ifdef HAVE_DIRECT_H
+#if HAVE_DIRECT_H
         typedef HRESULT( WINAPI *SHGETFOLDERPATH )
                        ( HWND, int, HANDLE, DWORD, LPTSTR );
 
