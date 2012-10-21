@@ -164,21 +164,6 @@ SRCS_COMMON-$(MACOSX_FINDER)         += osdep/macosx_finder_args.c
 SRCS_COMMON-$(MNG)                   += libmpdemux/demux_mng.c
 SRCS_COMMON-$(MPG123)                += libmpcodecs/ad_mpg123.c
 
-SRCS_MP3LIB-X86-$(HAVE_AMD3DNOW)     += mp3lib/dct36_3dnow.c \
-                                        mp3lib/dct64_3dnow.c
-SRCS_MP3LIB-X86-$(HAVE_AMD3DNOWEXT)  += mp3lib/dct36_k7.c \
-                                        mp3lib/dct64_k7.c
-SRCS_MP3LIB-X86-$(HAVE_MMX)          += mp3lib/dct64_mmx.c
-SRCS_MP3LIB-$(ARCH_X86_32)           += mp3lib/decode_i586.c \
-                                        $(SRCS_MP3LIB-X86-yes)
-SRCS_MP3LIB-$(HAVE_ALTIVEC)          += mp3lib/dct64_altivec.c
-SRCS_MP3LIB-$(HAVE_MMX)              += mp3lib/decode_mmx.c
-SRCS_MP3LIB-$(HAVE_SSE)              += mp3lib/dct64_sse.c
-SRCS_MP3LIB                          += mp3lib/sr1.c \
-                                        $(SRCS_MP3LIB-yes)
-SRCS_COMMON-$(MP3LIB)                += libmpcodecs/ad_mp3lib.c \
-                                        $(SRCS_MP3LIB)
-
 SRCS_COMMON-$(MUSEPACK)              += libmpcodecs/ad_mpc.c \
                                         libmpdemux/demux_mpc.c
 SRCS_COMMON-$(NATIVE_RTSP)           += stream/stream_rtsp.c \
@@ -1035,9 +1020,7 @@ LOADER_TEST_OBJS = $(SRCS_WIN32_EMULATION:.c=.o) $(SRCS_QTX_EMULATION:.S=.o) ffm
 loader/qtx/list$(EXESUF) loader/qtx/qtxload$(EXESUF): CFLAGS += -g
 loader/qtx/list$(EXESUF) loader/qtx/qtxload$(EXESUF): $(LOADER_TEST_OBJS)
 
-mp3lib/test$(EXESUF) mp3lib/test2$(EXESUF): $(SRCS_MP3LIB:.c=.o) libvo/aclib.o cpudetect.o $(TEST_OBJS)
-
-TESTS = codecs2html codec-cfg-test libvo/aspecttest mp3lib/test mp3lib/test2
+TESTS = codecs2html codec-cfg-test libvo/aspecttest
 
 ifdef ARCH_X86_32
 TESTS += loader/qtx/list loader/qtx/qtxload
