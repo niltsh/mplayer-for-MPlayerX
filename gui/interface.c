@@ -437,10 +437,10 @@ int gui(int what, void *data)
             sprintf(tmp, "dvd://%d", guiInfo.Track);
             uiSetFileName(NULL, tmp, SAME_STREAMTYPE);
         }
-
+#ifdef CONFIG_DVDREAD
             dvd_chapter = guiInfo.Chapter;
             dvd_angle   = guiInfo.Angle;
-
+#endif
             break;
         }
 
@@ -622,6 +622,9 @@ int gui(int what, void *data)
             stream_control(stream, STREAM_CTRL_GET_NUM_CHAPTERS, &guiInfo.Chapters);
             guiInfo.Angles = 0;
             stream_control(stream, STREAM_CTRL_GET_NUM_ANGLES, &guiInfo.Angles);
+            // guiInfo.Chapter will be set by mplayer
+            guiInfo.Angle = 1;
+            stream_control(stream, STREAM_CTRL_GET_ANGLE, &guiInfo.Angle);
 #ifdef CONFIG_DVDREAD
             dvd = stream->priv;
             guiInfo.AudioStreams = dvd->nr_of_channels;
@@ -629,8 +632,6 @@ int gui(int what, void *data)
             guiInfo.Subtitles = dvd->nr_of_subtitles;
             memcpy(guiInfo.Subtitle, dvd->subtitles, sizeof(dvd->subtitles));
 #endif
-            guiInfo.Chapter = dvd_chapter + 1;
-            guiInfo.Angle   = dvd_angle + 1;
             break;
         }
 
