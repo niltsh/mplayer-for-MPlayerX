@@ -32,8 +32,6 @@ libdvdread4/
 libvo/aspecttest
 loader/qtx/list
 loader/qtx/qtxload
-mp3lib/test
-mp3lib/test2
 TOOLS/alaw-gen
 TOOLS/alaw.dat
 TOOLS/alaw.out

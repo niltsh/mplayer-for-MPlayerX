@@ -186,8 +186,8 @@ On <emphasis role="bold">UltraSPARCs</emphasis>,
 (equivalent to MMX), currently only in
 <systemitem class="library">libmpeg2</systemitem>,
 <systemitem class="library">libvo</systemitem>
-and <systemitem class="library">libavcodec</systemitem>, but not in
-<systemitem class="library">mp3lib</systemitem>. You can watch a VOB file
+and <systemitem class="library">libavcodec</systemitem>.
+You can watch a VOB file
 on a 400MHz CPU. You'll need
 <ulink url="http://www.sun.com/sparc/vis/mediaLib.html"><systemitem class="library">mLib</systemitem></ulink>
 installed.

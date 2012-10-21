@@ -573,7 +573,6 @@ EXCLUDE                = DOCS \
                          libdvdnav \
                          libdvdread4 \
                          libmpeg2 \
-                         mp3lib \
                          stream/freesdp \
                          stream/librtsp \
                          stream/realrtsp \

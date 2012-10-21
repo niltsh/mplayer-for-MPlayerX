@@ -91,7 +91,6 @@ MPlayer code:
 Imported libs/projects:
     * FFmpeg: Michael Niedermayer
     * VIDIX core: Benjamin Zores
-    * mp3lib: None
     * loader: None
     * libmpeg2: None
     * libdvdcss: Diego Biurrun

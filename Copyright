@@ -65,24 +65,6 @@ Copyright:  1999-2000 Aaron Holtzman <aholtzma@ess.engr.uvic.ca>
 License:    GNU General Public License
 
 
-Name:       mpg123
-Version:    0.59s + significant changes
-URL:        http://www.mpg123.de/
-Directory:  mp3lib
-Copyright:  1995-1999 by Michael Hipp
-            2004 Romain Dolbeau <romain@dolbeau.org>
-            2006 Zuxy Meng <zuxy.meng@gmail.com
-License:    GNU General Public License
-
-
-Name:       Tremor
-Version:    1.0 + parts CVS from December 2004 + patches
-URL:        http://xiph.org/
-Directory:  tremor
-Copyright:  1994-2002, Xiph.org Foundation http://www.xiph.org/
-License:    BSD-like, see tremor/COPYING
-
-
 Name:       avifile DLL loader
 Version:    0.47 + patches + CVS updates
 URL:        http://avifile.sourceforge.net/

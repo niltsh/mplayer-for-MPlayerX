@@ -85,4 +85,3 @@ stream:
 
 remove externals:
 - remove libmpeg2 when ffmpeg12 is faster
-- remove mp3lib when ffmp3 is faster
