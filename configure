@@ -6319,7 +6319,7 @@ echores "$_toolame"
 echocheck "OggVorbis support"
 if test "$_tremor" = auto; then
   _tremor=no
-  statement_check tremor/ivorbiscodec.h 'vorbis_packet_blocksize(0, 0)' -logg -lvorbisidec && _tremor=yes && _libvorbis=no
+  statement_check tremor/ivorbiscodec.h 'vorbis_synthesis(0, 0)' -logg -lvorbisidec && _tremor=yes && _libvorbis=no
 fi
 if test "$_libvorbis" = auto; then
   _libvorbis=no
