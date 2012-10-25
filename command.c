@@ -1079,6 +1079,7 @@ static int mp_property_deinterlace(m_option_t *prop, int action,
                                    void *arg, MPContext *mpctx)
 {
     int deinterlace, deinterlace_old;
+    int result;
     vf_instance_t *vf;
     if (!mpctx->sh_video || !mpctx->sh_video->vfilter)
         return M_PROPERTY_UNAVAILABLE;
@@ -1093,18 +1094,19 @@ static int mp_property_deinterlace(m_option_t *prop, int action,
         if (!arg)
             return M_PROPERTY_ERROR;
         M_PROPERTY_CLAMP(prop, *(int *) arg);
-        vf->control(vf, VFCTRL_SET_DEINTERLACE, arg);
-        return M_PROPERTY_OK;
+        result = vf->control(vf, VFCTRL_SET_DEINTERLACE, arg);
+        return (result == CONTROL_OK) ? M_PROPERTY_OK : M_PROPERTY_UNAVAILABLE;
     case M_PROPERTY_STEP_UP:
     case M_PROPERTY_STEP_DOWN:
         vf->control(vf, VFCTRL_GET_DEINTERLACE, &deinterlace_old);
         deinterlace = !deinterlace_old;
-        if (vf->control(vf, VFCTRL_SET_DEINTERLACE, &deinterlace) != CONTROL_OK) {
+        result = vf->control(vf, VFCTRL_SET_DEINTERLACE, &deinterlace);
+        if (result != CONTROL_OK) {
             deinterlace = deinterlace_old;
         }
         set_osd_msg(OSD_MSG_SPEED, 1, osd_duration, MSGTR_OSDDeinterlace,
             deinterlace ? MSGTR_Enabled : MSGTR_Disabled);
-        return M_PROPERTY_OK;
+        return (result == CONTROL_OK) ? M_PROPERTY_OK : M_PROPERTY_UNAVAILABLE;
     }
     return M_PROPERTY_NOT_IMPLEMENTED;
 }
