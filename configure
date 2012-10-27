@@ -1577,9 +1577,6 @@ _getch=getch2.c
 
 if darwin; then
   extra_cflags="-mdynamic-no-pic $extra_cflags"
-  if test "$(basename $_cc)" != "clang" ; then
-    extra_cflags="-falign-loops=16 -shared-libgcc $extra_cflags"
-  fi
   _timer=timer-darwin.c
 fi
 
@@ -1724,6 +1721,10 @@ else
   done
 fi # icc
 test "$cc_fail" = yes && die "unsupported compiler version"
+
+if darwin && test "$cc_vendor" != "clang" ; then
+  extra_cflags="-falign-loops=16 -shared-libgcc $extra_cflags"
+fi
 
 echocheck "working compiler"
 cflag_check "" || die "Compiler is not functioning correctly. Check your installation and custom CFLAGS $CFLAGS ."
