@@ -3196,10 +3196,24 @@ fi
 echores "$_kstat"
 
 
-for func in cbrtf exp2 exp2f isnan isinf llrint llrintf log2 log2f lrint lrintf rint round roundf trunc truncf; do
+for func in atanf cbrtf cosf expf exp2 exp2f isnan isinf llrint llrintf log2 log2f log10f lrint lrintf rint round roundf sinf trunc truncf; do
 echocheck $func
 eval _$func=no
 statement_check math.h "${func}(2.0)" -D_ISOC99_SOURCE && eval _$func=yes
+if eval test "x\$_$func" = "xyes"; then
+  eval def_$func="\"#define HAVE_$(echo $func | tr '[a-z]' '[A-Z]') 1\""
+  echores yes
+else
+  eval def_$func="\"#define HAVE_$(echo $func | tr '[a-z]' '[A-Z]') 0\""
+  echores no
+fi
+done
+
+
+for func in atan2f ldexpf powf; do
+echocheck $func
+eval _$func=no
+statement_check math.h "${func}(1.0,1.0)" -D_ISOC99_SOURCE && eval _$func=yes
 if eval test "x\$_$func" = "xyes"; then
   eval def_$func="\"#define HAVE_$(echo $func | tr '[a-z]' '[A-Z]') 1\""
   echores yes
@@ -8832,7 +8846,11 @@ $def_arpa_inet_h
 $def_bswap
 $def_bzlib
 $def_dcbzl
+$def_atanf
+$def_atan2f
 $def_cbrtf
+$def_cosf
+$def_expf
 $def_exp2
 $def_exp2f
 $def_fast_64bit
@@ -8842,6 +8860,7 @@ $def_hardcoded_tables
 $def_ibm_asm
 $def_isinf
 $def_isnan
+$def_ldexpf
 $def_libavcodec_mpegaudio_hp
 $def_llrint
 $def_llrintf
@@ -8849,6 +8868,7 @@ $def_local_aligned_8
 $def_local_aligned_16
 $def_log2
 $def_log2f
+$def_log10f
 $def_lrint
 $def_lrintf
 $def_mlib
@@ -8859,10 +8879,12 @@ $def_os2threads
 $def_pic
 $def_poll_h
 $def_posix_memalign
+$def_powf
 $def_pthreads
 $def_rint
 $def_round
 $def_roundf
+$def_sinf
 $def_threads
 $def_trunc
 $def_truncf
