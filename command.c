@@ -1769,6 +1769,8 @@ static int mp_property_sub_by_type(m_option_t *prop, int action, void *arg,
                     while (new_pos >= 0
                             && sub_source(mpctx) != source)
                         new_pos--;
+                    // cache for next time
+                    max_sub_pos_for_source = new_pos;
                 }
                 else
                     new_pos = max_sub_pos_for_source;
