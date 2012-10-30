@@ -156,7 +156,7 @@ static int init(int rate_hz, int channels, int format, int flags) {
         sink = strchr(devarg, ':');
         if (sink) *sink++ = 0;
         if (devarg[0]) host = devarg;
-        opts = strchr(sink, ':');
+        opts = sink ? strchr(sink, ':') : NULL;
         if (opts) {
             *opts++ = 0;
             if (!sink[0]) sink = NULL;
