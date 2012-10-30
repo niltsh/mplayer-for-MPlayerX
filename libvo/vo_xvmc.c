@@ -267,7 +267,7 @@ static void print_xvimage_format_values(XvImageFormatValues *xifv){
 
     mp_msg(MSGT_VO,msgl,"  byte_order = ");
     if(xifv->byte_order == LSBFirst) mp_msg(MSGT_VO,msgl,"LSB First\n");
-    else if(xifv->type == MSBFirst) mp_msg(MSGT_VO,msgl,"MSB First\n");
+    else if(xifv->byte_order == MSBFirst) mp_msg(MSGT_VO,msgl,"MSB First\n");
     else mp_msg(MSGT_VO,msgl,"Unknown\n");//yes Linux support other types too
 
     mp_msg(MSGT_VO,msgl,"  guid = ");
