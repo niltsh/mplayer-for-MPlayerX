@@ -131,6 +131,7 @@ static int vo_old_width = 0;
 static int vo_old_height = 0;
 
 #ifdef CONFIG_XF86VM
+static int modecount;
 XF86VidModeModeInfo **vidmodes = NULL;
 XF86VidModeModeLine modeline;
 #endif
@@ -1631,8 +1632,6 @@ void vo_vm_switch(void)
     int X = vo_dwidth, Y = vo_dheight;
     int modeline_width, modeline_height;
 
-    int modecount;
-
     if (XF86VidModeQueryExtension(mDisplay, &vm_event, &vm_error))
     {
         XF86VidModeQueryVersion(mDisplay, &vm_ver, &vm_rev);
@@ -1686,7 +1685,7 @@ void vo_vm_close(void)
 {
     if (vidmodes != NULL)
     {
-        int i, modecount;
+        int i;
 
         free(vidmodes);
         vidmodes = NULL;
@@ -1706,6 +1705,7 @@ void vo_vm_close(void)
         XF86VidModeSwitchToMode(mDisplay, mScreen, vidmodes[i]);
         free(vidmodes);
         vidmodes = NULL;
+        modecount = 0;
     }
 }
 #endif
