@@ -680,7 +680,6 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
 #ifdef CONFIG_XF86VM
         if (vm)
             vo_vm_switch();
-        else
 #endif
         XGetWindowAttributes(mDisplay, DefaultRootWindow(mDisplay), &attribs);
         depth = attribs.depth;
