@@ -1115,7 +1115,7 @@ static int mp_property_capture(m_option_t *prop, int action,
                                void *arg, MPContext *mpctx)
 {
     int ret;
-    int capturing = !!mpctx->stream->capture_file;
+    int capturing = mpctx->stream && mpctx->stream->capture_file;
 
     if (!mpctx->stream)
         return M_PROPERTY_UNAVAILABLE;
