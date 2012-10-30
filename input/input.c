@@ -1170,7 +1170,7 @@ interpret_key(int code, int paused)
 	break;
     }
     if(j == num_key_down) { // key was not in the down keys : add it
-      if(num_key_down > MP_MAX_KEY_DOWN) {
+      if(num_key_down >= MP_MAX_KEY_DOWN) {
 	mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_Err2ManyKeyDowns);
 	return NULL;
       }
