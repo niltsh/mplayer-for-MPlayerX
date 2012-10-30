@@ -578,7 +578,6 @@ static void set_fullmode (int mode) {
 
 static int
 config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uint32_t flags, char *title, uint32_t format)
-//static int sdl_setup (int width, int height)
 {
 	struct sdl_priv_s *priv = &sdl_priv;
 
