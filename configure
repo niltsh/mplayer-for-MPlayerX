@@ -8949,6 +8949,7 @@ $def_yasm
 #define CONFIG_H264QPEL 1
 #define CONFIG_HUFFMAN 1
 #define CONFIG_LPC 1
+#define CONFIG_LZO 1
 #define CONFIG_MDCT 1
 #define CONFIG_RDFT 1
 
