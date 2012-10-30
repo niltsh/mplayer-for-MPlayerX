@@ -787,13 +787,13 @@ static int play(void* data, int len, int flags)
 	mp_msg(MSGT_AO,MSGL_INFO,MSGTR_AO_ALSA_TryingToResetSoundcard);
 	if ((res = snd_pcm_prepare(alsa_handler)) < 0) {
 	  mp_msg(MSGT_AO,MSGL_ERR,MSGTR_AO_ALSA_PcmPrepareError, snd_strerror(res));
-	  return 0;
 	  break;
 	}
+	res = 0;
       }
   } while (res == 0);
 
-  return res < 0 ? res : res * bytes_per_sample;
+  return res < 0 ? 0 : res * bytes_per_sample;
 }
 
 /* how many byes are free in the buffer */
