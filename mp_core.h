@@ -29,6 +29,7 @@
 #include "mixer.h"
 #include "libvo/video_out.h"
 #include "sub/subreader.h"
+#include "libavutil/attributes.h"
 
 // definitions used internally by the core player code
 
@@ -152,8 +153,8 @@ void uninit_player(unsigned int mask);
 void reinit_audio_chain(void);
 double playing_audio_pts(sh_audio_t *sh_audio, demux_stream_t *d_audio,
 			 const ao_functions_t *audio_out);
-void exit_player(enum exit_reason how);
-void exit_player_with_rc(enum exit_reason how, int rc);
+av_noreturn void exit_player(enum exit_reason how);
+av_noreturn void exit_player_with_rc(enum exit_reason how, int rc);
 void add_subtitles(char *filename, float fps, int noerr);
 int reinit_video_chain(void);
 
