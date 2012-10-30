@@ -152,10 +152,8 @@ static void uninit(sh_video_t *sh)
     vd_black_ctx *ctx = sh->context;
 
     for (i = 0; i < MP_MAX_PLANES; ++i) {
-        if (ctx->planes[i]) {
-            free(ctx->planes[i]);
-            ctx->planes[i] = NULL;
-        }
+        free(ctx->planes[i]);
+        ctx->planes[i] = NULL;
     }
 
     free(ctx);
@@ -168,8 +166,7 @@ static mp_image_t* decode(sh_video_t *sh, void *data, int len, int flags)
     vd_black_ctx *ctx = sh->context;
     int i;
 
-    if (sh->num_buffered_pts !=
-            sizeof(sh->buffered_pts) / sizeof(sh->buffered_pts[0]) - 1)
+    if (sh->num_buffered_pts != FF_ARRAY_ELEMS(sh->buffered_pts) - 1)
         return NULL;
 
     mpi = mpcodecs_get_image(sh, MP_IMGTYPE_EXPORT, MP_IMGFLAG_PRESERVE,
