@@ -630,7 +630,6 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
     priv->height = height;
     priv->dstwidth  = vo_dwidth;
     priv->dstheight = vo_dheight;
-printf("w/h: %i %i\n", vo_dwidth, vo_dheight);
 
     priv->format = format;
 
