@@ -194,7 +194,7 @@ static void log_sub(void)
     fname = get_path("subtitle_log");
     f = fopen(fname, "a");
     if (!f)
-        return;
+        goto out;
     fprintf(f, "----------------------------------------------------------\n");
     if (subdata->sub_uses_time) {
         fprintf(f,
@@ -212,6 +212,8 @@ static void log_sub(void)
         fprintf(f, "%s\n", vo_sub_last->text[i]);
     }
     fclose(f);
+out:
+    free(fname);
 }
 
 
