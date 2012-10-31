@@ -942,6 +942,8 @@ static inline void vo_update_text_sub(mp_osd_obj_t *obj, int dxs, int dys)
 		    obj->params.subtitle.utbl[utblc++] = c;
 		    k++;
 		}
+		if (utblc > MAX_UCS)
+		    break;
 		obj->params.subtitle.utbl[utblc++] = ' ';
 	    }
 	    obj->params.subtitle.utbl[utblc - 1] = 0;
