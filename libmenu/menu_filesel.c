@@ -313,12 +313,11 @@ bailout:
   free_extensions (extensions);
   closedir(dirp);
 
-  qsort(namelist, n, sizeof(char *), (kill_warn)compare);
-
   if (n < 0) {
     mp_msg(MSGT_GLOBAL,MSGL_ERR,MSGTR_LIBMENU_ReaddirError,strerror(errno));
     return 0;
   }
+  qsort(namelist, n, sizeof(char *), (kill_warn)compare);
   while(n--) {
     if((e = calloc(1,sizeof(list_entry_t))) != NULL){
     e->p.next = NULL;
