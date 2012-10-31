@@ -1224,7 +1224,7 @@ static int gen_sh_video(sh_video_t* sh, mov_track_t* trak, int timescale) {
 		      if (count_flag & 0x8000)
 		        entry = i;
 		      // only care about top 8 bits of 16-bit R, G, or B value
-		      if (entry <= palette_count && entry >= 0)
+		      if (entry < palette_count && entry >= 0)
 		      {
 		        palette_map[entry * 4 + 2] = trak->stdata[hdr_ptr + 0];
 		        palette_map[entry * 4 + 1] = trak->stdata[hdr_ptr + 2];
