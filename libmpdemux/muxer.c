@@ -132,14 +132,14 @@ void muxer_write_chunk(muxer_stream_t *s, size_t len, unsigned int flags, double
     }
     else {
       int num = s->muxer->muxbuf_num++;
-      muxbuf_t *buf, *tmp;
+      muxbuf_t *buf;
 
-      tmp = realloc_struct(s->muxer->muxbuf, (num+1), sizeof(muxbuf_t));
-      if(!tmp) {
+      s->muxer->muxbuf = realloc_struct(s->muxer->muxbuf, (num+1), sizeof(muxbuf_t));
+      if(!s->muxer->muxbuf) {
+        s->muxer->muxbuf_num = 0;
         mp_msg(MSGT_MUXER, MSGL_FATAL, MSGTR_MuxbufReallocErr);
         return;
       }
-      s->muxer->muxbuf = tmp;
       buf = s->muxer->muxbuf + num;
 
       /* buffer this frame */
