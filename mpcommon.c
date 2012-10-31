@@ -74,10 +74,12 @@ void print_version(const char* name)
     GetCpuCaps(&gCpuCaps);
 #if ARCH_X86
     mp_msg(MSGT_CPLAYER, MSGL_V,
-           "CPUflags:  MMX: %d MMX2: %d 3DNow: %d 3DNowExt: %d SSE: %d SSE2: %d SSSE3: %d\n",
+           "CPUflags:  MMX: %d MMX2: %d 3DNow: %d 3DNowExt: %d SSE: %d SSE2: %d SSE3: %d SSSE3: %d SSE4: %d SSE4.2: %d AVX: %d\n",
            gCpuCaps.hasMMX, gCpuCaps.hasMMX2,
            gCpuCaps.has3DNow, gCpuCaps.has3DNowExt,
-           gCpuCaps.hasSSE, gCpuCaps.hasSSE2, gCpuCaps.hasSSSE3);
+           gCpuCaps.hasSSE, gCpuCaps.hasSSE2, gCpuCaps.hasSSE3,
+           gCpuCaps.hasSSSE3, gCpuCaps.hasSSE4, gCpuCaps.hasSSE42,
+           gCpuCaps.hasAVX);
 #if CONFIG_RUNTIME_CPUDETECT
     mp_msg(MSGT_CPLAYER, MSGL_V, "Compiled with runtime CPU detection.\n");
 #else
@@ -94,8 +96,16 @@ if (HAVE_SSE)
     mp_msg(MSGT_CPLAYER,MSGL_V," SSE");
 if (HAVE_SSE2)
     mp_msg(MSGT_CPLAYER,MSGL_V," SSE2");
+if (HAVE_SSE3)
+    mp_msg(MSGT_CPLAYER,MSGL_V," SSE3");
 if (HAVE_SSSE3)
     mp_msg(MSGT_CPLAYER,MSGL_V," SSSE3");
+if (HAVE_SSE4)
+    mp_msg(MSGT_CPLAYER,MSGL_V," SSE4");
+if (HAVE_SSE42)
+    mp_msg(MSGT_CPLAYER,MSGL_V," SSE4.2");
+if (HAVE_AVX)
+    mp_msg(MSGT_CPLAYER,MSGL_V," AVX");
 if (HAVE_CMOV)
     mp_msg(MSGT_CPLAYER,MSGL_V," CMOV");
     mp_msg(MSGT_CPLAYER,MSGL_V,"\n");
