@@ -43,7 +43,7 @@ int iopl(int level);
 #ifdef CONFIG_DHAHELPER
 #include <fcntl.h>
 int dhahelper_initialized = 0;
-int dhahelper_fd = 0;
+int dhahelper_fd = -1;
 #endif
 
 #ifdef CONFIG_SVGAHELPER
@@ -55,7 +55,7 @@ int dhahelper_fd = 0;
 #define SVGALIB_HELPER_IOCGPCIINL SVGAHELPER_PCIINL
 #endif
 int svgahelper_initialized = 0;
-int svgahelper_fd = 0;
+int svgahelper_fd = -1;
 
 static int pci_config_type(void)
 {
@@ -92,7 +92,7 @@ static inline int enable_os_io(void)
 {
 #ifdef CONFIG_SVGAHELPER
     svgahelper_fd = open(DEV_SVGA, O_RDWR);
-    if (svgahelper_fd > 0)
+    if (svgahelper_fd != -1)
     {
 	svgahelper_initialized = 1;
 	return 0;
@@ -102,7 +102,7 @@ static inline int enable_os_io(void)
 
 #ifdef CONFIG_DHAHELPER
     dhahelper_fd = open("/dev/dhahelper", O_RDWR);
-    if (dhahelper_fd > 0)
+    if (dhahelper_fd != -1)
     {
 	dhahelper_initialized = 1;
 	return 0;
@@ -205,7 +205,7 @@ static long pci_config_read_long(
     } else {
 	    retval = 0;
     }
-    if (fd > 0) {
+    if (fd != -1) {
 	    close(fd);
     }
     return retval;
