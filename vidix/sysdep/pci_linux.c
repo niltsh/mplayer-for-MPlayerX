@@ -180,7 +180,7 @@ static int pci_get_vendor(
     } else {
 	    retval = 0xFFFF;
     }
-    if (fd > 0) {
+    if (fd != -1) {
 	    close(fd);
     }
     return retval;
