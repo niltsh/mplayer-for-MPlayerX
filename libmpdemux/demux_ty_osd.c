@@ -500,6 +500,7 @@ static void ty_AddXDSToDisplay( const char *format, ... )
    if ( ty_XDSAddLine == XDS_BUFFER_LENGTH )
    {
       mp_msg( MSGT_DEMUX, MSGL_ERR, "XDS Buffer would have been blown\n" );
+      return;
    }
 
    if ( ty_XDS_Display[ ty_XDSAddLine ] != 0 )
