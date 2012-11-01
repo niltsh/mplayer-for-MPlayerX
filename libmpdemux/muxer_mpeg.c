@@ -1496,7 +1496,6 @@ static int flush_buffers(muxer_t *muxer, int finalize)
 	muxer_stream_t *s, *vs, *as;
 	muxer_headers_t *vpriv = NULL, *apriv = NULL;
 	muxer_priv_t *priv = (muxer_priv_t *) muxer->priv;
-	double duration;
 	uint64_t iduration, iaduration;
 
 	/*
@@ -1534,11 +1533,9 @@ static int flush_buffers(muxer_t *muxer, int finalize)
 
 		vpriv = (muxer_headers_t*) vs->priv;
 
-		duration = 0;
 		iduration = 0;
 		for(i = 0; i < n; i++)
 			iduration += vpriv->framebuf[i].idur;
-		duration = (double) (iduration / 27000000.0);
 
 		if(as != NULL)
 		{
