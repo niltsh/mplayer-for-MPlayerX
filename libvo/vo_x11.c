@@ -66,7 +66,7 @@ static const vo_info_t info = {
 
 const LIBVO_EXTERN(x11)
 /* private prototypes */
-vo_draw_alpha_func draw_alpha_func;
+static vo_draw_alpha_func draw_alpha_func;
 
 /* local data */
 static unsigned char *ImageData;

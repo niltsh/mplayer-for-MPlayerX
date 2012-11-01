@@ -107,7 +107,7 @@ static struct vo_rect src_rect;
 static struct vo_rect dst_rect;
 static uint32_t max_width = 0, max_height = 0; // zero means: not set
 
-vo_draw_alpha_func draw_alpha_func;
+static vo_draw_alpha_func draw_alpha_func;
 
 static void fixup_osd_position(int *x0, int *y0, int *w, int *h)
 {
