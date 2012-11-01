@@ -111,10 +111,6 @@ static int init(sh_audio_t *sh)
 
   mp_msg(MSGT_DECAUDIO,MSGL_V,"ad_vorbis, extradata seems is %d bytes long\n", sh->wf->cbSize);
   extradata = (char*) (sh->wf+1);
-  if(!extradata) {
-    mp_msg(MSGT_DECAUDIO,MSGL_ERR,"ad_vorbis, extradata seems to be NULL!, exit\n");
-    ERROR();
-  }
 
   if(*extradata != 2) {
     mp_msg (MSGT_DEMUX, MSGL_WARN, "ad_vorbis: Vorbis track does not contain valid headers.\n");
