@@ -77,18 +77,18 @@
 #define FRAMERATE_5994 7
 #define FRAMERATE_60 8
 
-static char ftypes[] = {'?', 'I', 'P', 'B'};
+static const char ftypes[] = {'?', 'I', 'P', 'B'};
 #define FTYPE(x) (ftypes[(x)])
 
-static const char *framerates[] = {
+static const char * const framerates[] = {
 	"unchanged", "23.976", "24", "25", "29.97", "30", "50", "59.94", "60"
 };
 
-static const char *aspect_ratios[] = {
+static const char * const aspect_ratios[] = {
 	"unchanged", "1/1", "4/3", "16/9", "2.21/1"
 };
 
-static char *conf_mux = "mpeg2";
+static const char *conf_mux = "mpeg2";
 static uint32_t conf_packet_size = 0;		//dvd
 static uint32_t conf_muxrate = 0;		//kb/s
 static float conf_vaspect = 0;
