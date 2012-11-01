@@ -605,7 +605,7 @@ static int demux_audio_open(demuxer_t* demuxer) {
 	      int32_t srate;
 	      stream_skip(s, 14);
 	      srate = stream_read_int24(s) >> 4;
-	      num_samples  = stream_read_int24(s) << 16;
+	      num_samples  = (uint64_t)stream_read_int24(s) << 16;
 	      num_samples |= stream_read_word(s);
 	      if (num_samples && srate)
 	        sh_audio->i_bps = size * srate / num_samples;
