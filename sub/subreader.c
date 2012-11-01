@@ -163,7 +163,7 @@ static subtitle *sub_read_line_sami(stream_t* st, subtitle *current, int utf16) 
 	    s++;
 	    if (*s == 'P' || *s == 'p') { s++; state = 2; continue; } /* found '<P' */
 	    for (; *s != '>' && *s != '\0'; s++); /* skip remains of non-<P> TAG */
-	    if (s == '\0')
+	    if (*s == '\0')
 	      break;
 	    s++;
 	    continue;
