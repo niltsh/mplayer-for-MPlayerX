@@ -152,7 +152,7 @@ int vbrSetDefaults(vbr_control_t *state)
 {
 
 	/* Set all the structure to zero */
-	memset(state, 0, sizeof(state));
+	memset(state, 0, sizeof(*state));
 
 	/* Default mode is CBR */
 	state->mode = VBR_MODE_1PASS;
