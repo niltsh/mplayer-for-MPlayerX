@@ -396,7 +396,7 @@ http_response_parse( HTTP_header_t *http_hdr ) {
 
 	// Get the reason phrase
 	ptr = strstr( hdr_ptr, "\n" );
-	if( hdr_ptr==NULL ) {
+	if( ptr==NULL ) {
 		mp_msg(MSGT_NETWORK,MSGL_ERR,"Malformed answer. Unable to get the reason phrase.\n");
 		return -1;
 	}
