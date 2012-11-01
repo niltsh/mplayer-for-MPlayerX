@@ -300,6 +300,7 @@ static void message_callback(int level, const char *format, va_list va, void *ct
 		mp_msg(MSGT_ASS, level, "[ass] %s\n", str);
 		free(str);
 	}
+	va_end(dst);
 }
 
 /**
