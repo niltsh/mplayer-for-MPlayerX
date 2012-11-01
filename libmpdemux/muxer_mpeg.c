@@ -1780,7 +1780,7 @@ static size_t parse_mpeg12_video(muxer_stream_t *s, muxer_priv_t *priv, muxer_he
 		mp_msg(MSGT_MUXER, MSGL_FATAL, "\r\nPARSE_MPEG12: add_frames(%zu) failed, exit\r\n", len);
 		return 0;
 	}
-	mp_msg(MSGT_MUXER, MSGL_DBG2, "\r\nVIDEO FRAME, PT: %C, tr: %d, diff: %d, dts: %.3f, pts: %.3f, pdt: %u, gop_reset: %d\r\n",
+	mp_msg(MSGT_MUXER, MSGL_DBG2, "\r\nVIDEO FRAME, PT: %c, tr: %d, diff: %d, dts: %.3f, pts: %.3f, pdt: %u, gop_reset: %d\r\n",
 		ftypes[pt], temp_ref, frames_diff, ((double) spriv->last_dts/27000000.0f),
 		((double) spriv->last_pts/27000000.0f), spriv->picture.display_time, gop_reset);
 
