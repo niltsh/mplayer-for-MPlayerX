@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 Evgeniy Stepanov <eugeni.stepanov@gmail.com>
+ * Copyright (C) 2012 Xidorn Quan <quanxunzhen@gmail.com>
  *
  * This file is part of MPlayer.
  *
@@ -52,9 +53,10 @@
 #define rgba2u(c)  ( ((-152*_r(c) - 298*_g(c) + 450*_b(c)) >> 10) + 128 )
 #define rgba2v(c)  ( (( 450*_r(c) - 376*_g(c) -  73*_b(c)) >> 10) + 128 )
 
-typedef void (*copy_from_image_func)(struct vf_instance *vf,
-                                     int first_row, int last_row);
-typedef void (*copy_to_image_func)(struct vf_instance *vf);
+/* map 0 - 0xFF -> 0 - 0x101 */
+#define MAP_16BIT(v) RSHIFT(0x102 * (v), 8)
+/* map 0 - 0xFF -> 0 - 0x10101 */
+#define MAP_24BIT(v) RSHIFT(0x10203 * (v), 8)
 
 static const struct vf_priv_s {
     int outh, outw;
@@ -66,56 +68,296 @@ static const struct vf_priv_s {
     // 0 = insert always
     int auto_insert;
 
-    unsigned char *planes[3];
-    unsigned char *dirty_rows;
+    // planar data to be directly rendered on frames
+    uint8_t *planes[MP_MAX_PLANES];
+    // alpha here is actually transparency, not opacity
+    uint8_t *alphas[MP_MAX_PLANES];
+    struct dirty_rows_extent {
+        int xmin, xmax;
+    } *dirty_rows;
 
-    copy_from_image_func copy_from_image;
-    copy_to_image_func copy_to_image;
+    // called for every eosd image when subtitle is changed
+    void (*draw_image)(vf_instance_t *, struct mp_eosd_image *);
+    // called for every time subtitle is changed
+    void (*prepare_buffer)(vf_instance_t *);
+    // called for every frame
+    void (*render_frame)(vf_instance_t *);
 } vf_priv_dflt;
 
-static void copy_from_image_yuv420p(struct vf_instance *, int, int);
-static void copy_to_image_yuv420p(struct vf_instance *);
-static void copy_from_image_yuv422(struct vf_instance *, int, int);
-static void copy_to_image_yuv422(struct vf_instance *);
+static void draw_image_yuv(vf_instance_t *vf, struct mp_eosd_image *img)
+{
+    uint32_t color = img->color;
+    uint32_t opacity = 0xFF - _a(color);
+    uint8_t y = rgba2y(color),
+            u = rgba2u(color),
+            v = rgba2v(color);
+    int outw = vf->priv->outw,
+        outh = vf->priv->outh;
+    uint8_t *alpha = vf->priv->alphas[0],
+            *dst_y = vf->priv->planes[0],
+            *dst_u = vf->priv->planes[1],
+            *dst_v = vf->priv->planes[2];
+    struct dirty_rows_extent *dirty_rows = vf->priv->dirty_rows;
+    int src_x = img->dst_x, src_w = img->w,
+        src_y = img->dst_y, src_h = img->h,
+        stride = img->stride;
+    uint8_t *src = img->bitmap;
+    int i, j;
+
+    opacity = MAP_24BIT(opacity);
+    for (i = 0; i < src_h; i++) {
+        struct dirty_rows_extent *dirty_row = &dirty_rows[src_y + i];
+        dirty_row->xmin = FFMIN(dirty_row->xmin, src_x);
+        dirty_row->xmax = FFMAX(dirty_row->xmax, src_x + src_w);
+
+        for (j = 0; j < src_w; j++) {
+            uint32_t k = src[i * stride + j];
+            if (k) {
+                size_t p = (src_y + i) * outw + src_x + j;
+                k *= opacity;
+                alpha[p] = RSHIFT((0xFFFFFF - k) * alpha[p], 24);
+                dst_y[p] = RSHIFT((0xFFFFFF - k) * dst_y[p] + k * y, 24);
+                dst_u[p] = RSHIFT((0xFFFFFF - k) * dst_u[p] + k * u, 24);
+                dst_v[p] = RSHIFT((0xFFFFFF - k) * dst_v[p] + k * v, 24);
+            }
+        }
+    }
+}
+
+static void prepare_buffer_422(vf_instance_t *vf)
+{
+    uint8_t *dst_u = vf->priv->planes[1],
+            *dst_v = vf->priv->planes[2];
+    int outw = vf->priv->outw,
+        outh = vf->priv->outh;
+    struct dirty_rows_extent *dirty_rows = vf->priv->dirty_rows;
+    int i, j;
+
+    for (i = 0; i < outh; i++) {
+        int xmin = dirty_rows[i].xmin & ~1,
+            xmax = dirty_rows[i].xmax;
+        for (j = xmin; j < xmax; j += 2) {
+            size_t p = i * outw + j;
+            dst_u[p] = (dst_u[p] + dst_u[p + 1]) / 2;
+            dst_v[p] = (dst_v[p] + dst_v[p + 1]) / 2;
+        }
+    }
+}
+
+static void render_frame_yuv422(vf_instance_t *vf)
+{
+    uint8_t *alpha = vf->priv->alphas[0];
+    uint8_t *src_y = vf->priv->planes[0],
+            *src_u = vf->priv->planes[1],
+            *src_v = vf->priv->planes[2];
+    int outw = vf->priv->outw,
+        outh = vf->priv->outh;
+    struct dirty_rows_extent *dirty_rows = vf->priv->dirty_rows;
+    uint8_t *dest = vf->dmpi->planes[0];
+    int stride = vf->dmpi->stride[0];
+    int is_uyvy = vf->priv->outfmt == IMGFMT_UYVY;
+    int i, j;
+
+    for (i = 0; i < outh; i++) {
+        int xmin = dirty_rows[i].xmin & ~1,
+            xmax = dirty_rows[i].xmax;
+        for (j = xmin; j < xmax; j += 2) {
+            size_t src = i * outw + j,
+                   dst = i * stride + j * 2;
+            uint_fast16_t a0 = alpha[src],
+                          a1 = alpha[src + 1];
+            uint8_t y0, y1, u, v;
+
+            if (a0 == 0xFF && a1 == 0xFF)
+                continue;
+
+            y0 = dest[dst + is_uyvy + 0];
+            y1 = dest[dst + is_uyvy + 2];
+            u  = dest[dst - is_uyvy + 1];
+            v  = dest[dst - is_uyvy + 3];
+
+            a0 = MAP_16BIT(a0);
+            a1 = MAP_16BIT(a1);
+            y0 = ((a0 * y0) >> 8) + src_y[src];
+            y1 = ((a1 * y1) >> 8) + src_y[src + 1];
+
+            a0 = (a0 + a1) / 2;
+            u = ((a0 * u) >> 8) + src_u[src];
+            v = ((a0 * v) >> 8) + src_v[src];
+
+            dest[dst + is_uyvy + 0] = y0;
+            dest[dst + is_uyvy + 2] = y1;
+            dest[dst - is_uyvy + 1] = u;
+            dest[dst - is_uyvy + 3] = v;
+        }
+    }
+}
+
+static void prepare_buffer_420p(vf_instance_t *vf)
+{
+    int outw = vf->priv->outw,
+        outh = vf->priv->outh;
+    uint8_t *dst_u = vf->priv->planes[1],
+            *dst_v = vf->priv->planes[2];
+    uint8_t *src_a = vf->priv->alphas[0],
+            *dst_a = vf->priv->alphas[1];
+    struct dirty_rows_extent *dirty_rows = vf->priv->dirty_rows;
+    int i, j;
+
+    for (i = 0; i < outh; i += 2) {
+        int xmin = FFMIN(dirty_rows[i].xmin, dirty_rows[i + 1].xmin) & ~1,
+            xmax = FFMAX(dirty_rows[i].xmax, dirty_rows[i + 1].xmax);
+        for (j = xmin; j < xmax; j += 2) {
+            size_t p = i * outw / 4 + j / 2,
+                   q1 = i * outw + j,
+                   q2 = q1 + outw;
+            dst_a[p] = (src_a[q1] + src_a[q1 + 1] +
+                        src_a[q2] + src_a[q2 + 1] + 2) / 4;
+            dst_u[p] = (dst_u[q1] + dst_u[q1 + 1] +
+                        dst_u[q2] + dst_u[q2 + 1] + 2) / 4;
+            dst_v[p] = (dst_v[q1] + dst_v[q1 + 1] +
+                        dst_v[q2] + dst_v[q2 + 1] + 2) / 4;
+        }
+    }
+}
+
+static void render_frame_yuv420p(vf_instance_t *vf)
+{
+    uint8_t **planes = vf->priv->planes;
+    uint8_t **dest = vf->dmpi->planes;
+    struct dirty_rows_extent *dirty_rows = vf->priv->dirty_rows;
+    uint8_t *alpha;
+    uint8_t *src_y = vf->priv->planes[0],
+            *src_u = vf->priv->planes[1],
+            *src_v = vf->priv->planes[2];
+    uint8_t *dst_y = vf->dmpi->planes[0],
+            *dst_u = vf->dmpi->planes[1],
+            *dst_v = vf->dmpi->planes[2];
+    int stride;
+    int outw = vf->priv->outw,
+        outh = vf->priv->outh;
+    int i, j;
+
+    // y
+    alpha  = vf->priv->alphas[0];
+    stride = vf->dmpi->stride[0];
+    for (i = 0; i < outh; i++) {
+        int xmin = dirty_rows[i].xmin,
+            xmax = dirty_rows[i].xmax;
+        for (j = xmin; j < xmax; j++) {
+            size_t s = i * outw + j,
+                   d = i * stride + j;
+            if (alpha[s] != 0xFF)
+                dst_y[d] = ((MAP_16BIT(alpha[s]) * dst_y[d]) >> 8) + src_y[s];
+        }
+    }
+
+    // u & v
+    alpha  = vf->priv->alphas[1];
+    stride = vf->dmpi->stride[1];
+    for (i = 0; i < outh / 2; i++) {
+        int xmin = FFMIN(dirty_rows[i * 2].xmin, dirty_rows[i * 2 + 1].xmin),
+            xmax = FFMAX(dirty_rows[i * 2].xmax, dirty_rows[i * 2 + 1].xmax);
+        for (j = xmin / 2; j < (xmax + 1) / 2; j++) {
+            size_t s = i * outw / 2 + j,
+                   d = i * stride + j;
+            if (alpha[s] != 0xFF) {
+                uint_fast16_t a = MAP_16BIT(alpha[s]);
+                dst_u[d] = ((a * dst_u[d]) >> 8) + src_u[s];
+                dst_v[d] = ((a * dst_v[d]) >> 8) + src_v[s];
+            }
+        }
+    }
+}
+
+static void clean_buffer(vf_instance_t *vf)
+{
+    int outw = vf->priv->outw,
+        outh = vf->priv->outh;
+    struct dirty_rows_extent *dirty_rows = vf->priv->dirty_rows;
+    uint8_t **planes = vf->priv->planes;
+    uint8_t *alpha = vf->priv->alphas[0];
+    int i, j;
+
+    for (i = 0; i < MP_MAX_PLANES; i++) {
+        uint8_t *plane = planes[i];
+        if (!plane)
+            break;
+        for (j = 0; j < outh; j++) {
+            int xmin = dirty_rows[j].xmin;
+            int width = dirty_rows[j].xmax - xmin;
+            if (width > 0)
+                memset(plane + j * outw + xmin, 0, width);
+        }
+    }
+    for (i = 0; i < outh; i++) {
+        int xmin = dirty_rows[i].xmin;
+        int width = dirty_rows[i].xmax - xmin;
+        if (width > 0)
+            memset(alpha + i * outw + xmin, -1, width);
+    }
+    for (i = 0; i < outh; i++) {
+        dirty_rows[i].xmin = outw;
+        dirty_rows[i].xmax = 0;
+    }
+}
 
 static int config(struct vf_instance *vf,
                   int width, int height, int d_width, int d_height,
                   unsigned int flags, unsigned int outfmt)
 {
     struct mp_eosd_settings res = {0};
+    struct dirty_rows_extent *dirty_rows;
+    int outw, outh;
+    int planes, alphas;
+    int i;
 
     switch (outfmt) {
     case IMGFMT_YV12:
     case IMGFMT_I420:
     case IMGFMT_IYUV:
         vf->priv->is_planar = 1;
-        vf->priv->copy_from_image = copy_from_image_yuv420p;
-        vf->priv->copy_to_image = copy_to_image_yuv420p;
+        planes = 3;
+        alphas = 2;
+        vf->priv->draw_image = draw_image_yuv;
+        vf->priv->render_frame = render_frame_yuv420p;
+        vf->priv->prepare_buffer = prepare_buffer_420p;
         break;
     case IMGFMT_UYVY:
     case IMGFMT_YUY2:
         vf->priv->is_planar = 0;
-        vf->priv->copy_from_image = copy_from_image_yuv422;
-        vf->priv->copy_to_image = copy_to_image_yuv422;
+        planes = 3;
+        alphas = 1;
+        vf->priv->draw_image = draw_image_yuv;
+        vf->priv->render_frame = render_frame_yuv422;
+        vf->priv->prepare_buffer = prepare_buffer_422;
         break;
     default:
         return 0;
     }
 
     vf->priv->outfmt = outfmt;
-    vf->priv->outh = height + ass_top_margin + ass_bottom_margin;
-    vf->priv->outw = width;
+    vf->priv->outh = outh = height + ass_top_margin + ass_bottom_margin;
+    vf->priv->outw = outw = width;
 
     if (!opt_screen_size_x && !opt_screen_size_y) {
         d_width  = d_width  * vf->priv->outw / width;
         d_height = d_height * vf->priv->outh / height;
     }
 
-    if (!vf->priv->is_planar)
-        vf->priv->planes[0] = malloc(vf->priv->outw * vf->priv->outh);
-    vf->priv->planes[1]  = malloc(vf->priv->outw * vf->priv->outh);
-    vf->priv->planes[2]  = malloc(vf->priv->outw * vf->priv->outh);
-    vf->priv->dirty_rows = malloc(vf->priv->outh);
+    for (i = 0; i < planes; i++)
+        vf->priv->planes[i] = av_malloc(outw * outh);
+    for (i = 0; i < alphas; i++)
+        vf->priv->alphas[i] = av_malloc(outw * outh);
+    dirty_rows = av_malloc(outh * sizeof(*dirty_rows));
+    // mark all rows dirty here
+    // so that they can be properly cleaned in clear_buffer()
+    for (i = 0; i < outh; i++) {
+        dirty_rows[i].xmin = 0;
+        dirty_rows[i].xmax = outw;
+    }
+    vf->priv->dirty_rows = dirty_rows;
+    clean_buffer(vf);
 
     res.w    = vf->priv->outw;
     res.h    = vf->priv->outh;
@@ -272,220 +514,16 @@ static int prepare_image(struct vf_instance *vf, mp_image_t *mpi)
     return 0;
 }
 
-/**
- * \brief Copy specified rows from render_context.dmpi to render_context.planes, upsampling to 4:4:4
- */
-static void copy_from_image_yuv420p(struct vf_instance *vf, int first_row,
-                            int last_row)
+static void prepare_eosd(vf_instance_t *vf, struct mp_eosd_image_list *imgs)
 {
-    int pl;
-    int i, j, k;
-    unsigned char val;
-    int chroma_rows;
+    struct mp_eosd_image *img = eosd_image_first(imgs);
+    void (*draw_image)(vf_instance_t *, struct mp_eosd_image *);
 
-    first_row  -= (first_row % 2);
-    last_row   += (last_row  % 2);
-    chroma_rows = (last_row - first_row) / 2;
-
-    assert(first_row >= 0);
-    assert(first_row <= last_row);
-    assert(last_row  <= vf->priv->outh);
-
-    for (pl = 1; pl < 3; ++pl) {
-        int dst_stride = vf->priv->outw;
-        int src_stride = vf->dmpi->stride[pl];
-
-        unsigned char *src      = vf->dmpi->planes[pl] + (first_row / 2) * src_stride;
-        unsigned char *dst      = vf->priv->planes[pl] +  first_row      * dst_stride;
-        unsigned char *dst_next = dst + dst_stride;
-        for (i = 0; i < chroma_rows; ++i) {
-            if ((vf->priv->dirty_rows[first_row + i * 2    ] == 0) ||
-                (vf->priv->dirty_rows[first_row + i * 2 + 1] == 0)) {
-                for (j = 0, k = 0; j < vf->dmpi->chroma_width; ++j, k += 2) {
-                    val = *(src + j);
-                    *(dst + k    ) = val;
-                    *(dst + k + 1) = val;
-                    *(dst_next + k    ) = val;
-                    *(dst_next + k + 1) = val;
-                }
-            }
-            src += src_stride;
-            dst      = dst_next + dst_stride;
-            dst_next = dst      + dst_stride;
-        }
-    }
-    for (i = first_row; i < last_row; ++i)
-        vf->priv->dirty_rows[i] = 1;
-}
-
-/**
- * \brief Copy all previously copied rows back to render_context.dmpi
- */
-static void copy_to_image_yuv420p(struct vf_instance *vf)
-{
-    int pl;
-    int i, j, k;
-    for (pl = 1; pl < 3; ++pl) {
-        int dst_stride = vf->dmpi->stride[pl];
-        int src_stride = vf->priv->outw;
-
-        unsigned char *dst      = vf->dmpi->planes[pl];
-        unsigned char *src      = vf->priv->planes[pl];
-        unsigned char *src_next = vf->priv->planes[pl] + src_stride;
-        for (i = 0; i < vf->priv->outh / 2; ++i) {
-            if ((vf->priv->dirty_rows[i * 2] == 1)) {
-                assert(vf->priv->dirty_rows[i * 2 + 1] == 1);
-                for (j = 0, k = 0; j < vf->dmpi->chroma_width; ++j, k += 2) {
-                    unsigned val = 0;
-                    val += *(src + k);
-                    val += *(src + k + 1);
-                    val += *(src_next + k);
-                    val += *(src_next + k + 1);
-                    *(dst + j) = val >> 2;
-                }
-            }
-            dst += dst_stride;
-            src      = src_next + src_stride;
-            src_next = src      + src_stride;
-        }
-    }
-}
-
-static void copy_from_image_yuv422(struct vf_instance *vf,
-                                   int first_row, int last_row)
-{
-    unsigned char *dirty_rows = vf->priv->dirty_rows;
-    int src_stride = vf->dmpi->stride[0];
-    int dst_stride = vf->priv->outw;
-    unsigned char *src = vf->dmpi->planes[0] + first_row * src_stride;
-    unsigned char **dst = vf->priv->planes;
-    int dst_off = first_row * dst_stride;
-    int is_uyvy = vf->priv->outfmt == IMGFMT_UYVY;
-    int i, j, k;
-
-    for (i = first_row; i < last_row; ++i) {
-        int next_off = dst_off + dst_stride;
-        if (!dirty_rows[i]) {
-            if (is_uyvy) {
-                for (j = dst_off, k = 0; j < next_off; j += 2, k += 4) {
-                    dst[0][j    ] = src[k + 1];
-                    dst[0][j + 1] = src[k + 3];
-                    dst[1][j    ] = src[k    ];
-                    dst[1][j + 1] = src[k    ];
-                    dst[2][j    ] = src[k + 2];
-                    dst[2][j + 1] = src[k + 2];
-                }
-            } else {
-                for (j = dst_off, k = 0; j < next_off; j += 2, k += 4) {
-                    dst[0][j    ] = src[k    ];
-                    dst[0][j + 1] = src[k + 2];
-                    dst[1][j    ] = src[k + 1];
-                    dst[1][j + 1] = src[k + 1];
-                    dst[2][j    ] = src[k + 3];
-                    dst[2][j + 1] = src[k + 3];
-                }
-            }
-        }
-        src += src_stride;
-        dst_off = next_off;
-    }
-    for (i = first_row; i < last_row; ++i)
-        dirty_rows[i] = 1;
-}
-
-static void copy_to_image_yuv422(struct vf_instance *vf)
-{
-    unsigned char *dirty_rows = vf->priv->dirty_rows;
-    int src_stride = vf->priv->outw;
-    int dst_stride = vf->dmpi->stride[0];
-    int height = vf->priv->outh;
-    unsigned char **src = vf->priv->planes;
-    unsigned char *dst = vf->dmpi->planes[0];
-    int src_off = 0;
-    int is_uyvy = vf->priv->outfmt == IMGFMT_UYVY;
-    int i, j, k;
-
-    for (i = 0; i < height; ++i) {
-        int next_off = src_off + src_stride;
-        if (*dirty_rows++) {
-#define AVERAGE(a, b) (((unsigned)(a) + (unsigned)(b)) >> 1)
-            if (is_uyvy) {
-                for (j = src_off, k = 0; j < next_off; j += 2, k += 4) {
-                    dst[k    ] = AVERAGE(src[1][j], src[1][j + 1]);
-                    dst[k + 1] = src[0][j];
-                    dst[k + 2] = AVERAGE(src[2][j], src[2][j + 1]);
-                    dst[k + 3] = src[0][j + 1];
-                }
-            } else {
-                for (j = src_off, k = 0; j < next_off; j += 2, k += 4) {
-                    dst[k    ] = src[0][j];
-                    dst[k + 1] = AVERAGE(src[1][j], src[1][j + 1]);
-                    dst[k + 2] = src[0][j + 1];
-                    dst[k + 3] = AVERAGE(src[2][j], src[2][j + 1]);
-                }
-            }
-#undef AVERAGE
-        }
-        src_off = next_off;
-        dst += dst_stride;
-    }
-}
-
-static void my_draw_bitmap(struct vf_instance *vf, unsigned char *bitmap,
-                           int bitmap_w, int bitmap_h, int stride,
-                           int dst_x, int dst_y, unsigned color)
-{
-    unsigned char y = rgba2y(color);
-    unsigned char u = rgba2u(color);
-    unsigned char v = rgba2v(color);
-    unsigned opacity = 255 - _a(color);
-    unsigned char *src, *dsty, *dstu, *dstv;
-    int i, j;
-    mp_image_t *dmpi = vf->dmpi;
-    int stride_y = vf->priv->is_planar ? dmpi->stride[0] : vf->priv->outw;
-
-    opacity = (0x10203 * opacity + 0x80) >> 8; /* 0x10203 = (1<<32)/(255*255) */
-    /* 0 <= opacity <= 0x10101 */
-    src = bitmap;
-    dsty = vf->priv->is_planar ? dmpi->planes[0] : vf->priv->planes[0];
-    dsty += dst_x + dst_y * stride_y;
-    dstu = vf->priv->planes[1] + dst_x + dst_y * vf->priv->outw;
-    dstv = vf->priv->planes[2] + dst_x + dst_y * vf->priv->outw;
-    for (i = 0; i < bitmap_h; ++i) {
-        for (j = 0; j < bitmap_w; ++j) {
-            unsigned k = src[j];
-            if (!k)
-                continue;
-            k *= opacity; /* 0 <= k <= 0xFFFFFF */
-            dsty[j] = (k * y + (0xFFFFFF - k) * dsty[j] + 0x800000) >> 24;
-            dstu[j] = (k * u + (0xFFFFFF - k) * dstu[j] + 0x800000) >> 24;
-            dstv[j] = (k * v + (0xFFFFFF - k) * dstv[j] + 0x800000) >> 24;
-        }
-        src  += stride;
-        dsty += stride_y;
-        dstu += vf->priv->outw;
-        dstv += vf->priv->outw;
-    }
-}
-
-static void render_frame(struct vf_instance *vf, mp_image_t *mpi,
-                         struct mp_eosd_image_list *images)
-{
-    struct mp_eosd_image *img;
-    copy_from_image_func copy_from_image = vf->priv->copy_from_image;
-    copy_to_image_func copy_to_image = vf->priv->copy_to_image;
-
-    img = eosd_image_first(images);
-    if (!img)
-        return;
-        memset(vf->priv->dirty_rows, 0, vf->priv->outh);        // reset dirty rows
-        while (img) {
-            copy_from_image(vf, img->dst_y, img->dst_y + img->h);
-            my_draw_bitmap(vf, img->bitmap, img->w, img->h, img->stride,
-                           img->dst_x, img->dst_y, img->color);
-            img = eosd_image_next(images);
-        }
-        copy_to_image(vf);
+    clean_buffer(vf);
+    draw_image = vf->priv->draw_image;
+    for (; img; img = eosd_image_next(imgs))
+        draw_image(vf, img);
+    vf->priv->prepare_buffer(vf);
 }
 
 static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts)
@@ -493,7 +531,9 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts)
     struct mp_eosd_image_list images;
     eosd_render_frame(pts, &images);
     prepare_image(vf, mpi);
-    render_frame(vf, mpi, &images);
+    if (images.changed)
+        prepare_eosd(vf, &images);
+    vf->priv->render_frame(vf);
     return vf_next_put_image(vf, vf->dmpi, pts);
 }
 
@@ -523,11 +563,12 @@ static int control(vf_instance_t *vf, int request, void *data)
 
 static void uninit(struct vf_instance *vf)
 {
-    if (!vf->priv->is_planar)
-        free(vf->priv->planes[0]);
-    free(vf->priv->planes[1]);
-    free(vf->priv->planes[2]);
-    free(vf->priv->dirty_rows);
+    int i;
+    for (i = 0; i < MP_MAX_PLANES; i++)
+        av_free(vf->priv->planes[i]);
+    for (i = 0; i < MP_MAX_PLANES; i++)
+        av_free(vf->priv->alphas[i]);
+    av_free(vf->priv->dirty_rows);
 }
 
 static const unsigned int fmt_list[] = {
@@ -579,7 +620,7 @@ static const m_struct_t vf_opts = {
 const vf_info_t vf_info_ass = {
     "Render ASS/SSA subtitles",
     "ass",
-    "Evgeniy Stepanov",
+    "Evgeniy Stepanov, Xidorn Quan",
     "",
     vf_open,
     &vf_opts
