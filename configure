@@ -1973,7 +1973,9 @@ case "$host_arch" in
         fi
         ;;
     6) iproc=686
-        if test "$pmodel" -ge 15; then
+        if test "$pmodel" -eq 28 -o "$pmodel" -eq 38 -o "$pmodel" -eq 54; then
+            proc=atom
+        elif test "$pmodel" -ge 15; then
             proc=core2
         elif test "$pmodel" -eq 9 -o "$pmodel" -ge 13; then
             proc=pentium-m
@@ -2072,6 +2074,9 @@ case "$host_arch" in
           proc=i586
         fi
       fi
+    fi
+    if test "$proc" = "atom" ; then
+      cflag_check -march=$proc $cpuopt=$proc || proc=core2
     fi
     if test "$proc" = "prescott" ; then
       cflag_check -march=$proc $cpuopt=$proc || proc=pentium4
@@ -2184,7 +2189,17 @@ case "$host_arch" in
         ;;
       GenuineIntel)
         case "$pfamily" in
-        6) proc=core2;;
+        6)
+          if test "$pmodel" -eq 28 -o "$pmodel" -eq 38 -o "$pmodel" -eq 54; then
+            proc=atom
+          elif test "$pmodel" -ge 42; then
+            proc=corei7-avx
+          elif test "$pmodel" -ge 26; then
+            proc=corei7
+          else
+            proc=core2
+          fi
+          ;;
         *)
           # 64-bit prescotts exist, but as far as GCC is concerned they
           # have the same capabilities as a nocona.
@@ -2219,6 +2234,9 @@ case "$host_arch" in
         cflag_check -march=$proc $cpuopt=$proc || proc=error
       fi
       # --- Intel processors ---
+      if test "$proc" = "atom" || test "$proc" = "corei7-avx" || test "$proc" = "corei7"; then
+        cflag_check -march=$proc $cpuopt=$proc || proc=core2
+      fi
       if test "$proc" = "core2"; then
         cflag_check -march=$proc $cpuopt=$proc || proc=x86-64
       fi
