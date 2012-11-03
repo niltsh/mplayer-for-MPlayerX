@@ -752,6 +752,9 @@ int parse_codec_cfg(const char *cfgfile)
             if (!strcmp(token[0], "align16"))
                 codec->flags |= CODECS_FLAG_ALIGN16;
             else
+            if (!strcmp(token[0], "dummy"))
+                codec->flags |= CODECS_FLAG_DUMMY;
+            else
                 goto err_out_parse_error;
         } else if (!strcmp(token[0], "status")) {
             if (get_token(1, 1) < 0)
@@ -870,8 +873,7 @@ codecs_t* find_codec(unsigned int fourcc,unsigned int *fourccmap,
         for (/* NOTHING */; i--; c++) {
             if(start && c<=start) continue;
             for (j = 0; j < CODECS_MAX_FOURCC; j++) {
-                // FIXME: do NOT hardwire 'null' and 'black' here:
-                if (c->fourcc[j]==fourcc || !strcmp(c->drv,"null") || !strcmp(c->drv,"black")) {
+                if (c->fourcc[j]==fourcc || c->flags & CODECS_FLAG_DUMMY) {
                     if (fourccmap)
                         *fourccmap = c->fourccmap[j];
                     return c;

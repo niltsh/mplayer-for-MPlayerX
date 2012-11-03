@@ -26,6 +26,7 @@
 // Global flags:
 #define CODECS_FLAG_SEEKABLE    (1<<0)
 #define CODECS_FLAG_ALIGN16     (1<<1)
+#define CODECS_FLAG_DUMMY       (1<<2)
 
 // Outfmt flags:
 #define CODECS_FLAG_FLIP        (1<<0)
