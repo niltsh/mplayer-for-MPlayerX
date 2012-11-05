@@ -274,7 +274,7 @@ static const char *sub_readtext(const char *source, char **dest) {
     }
 
     *dest= malloc (len+1);
-    if (!dest) {return ERR;}
+    if (!*dest) {return ERR;}
 
     strncpy(*dest, source, len);
     (*dest)[len]=0;
