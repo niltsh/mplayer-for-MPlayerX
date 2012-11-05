@@ -1491,26 +1491,22 @@ mp_input_get_key_from_name(const char *name) {
 
 static int
 mp_input_get_input_from_name(char* name,int* keys) {
-  char *end,*ptr;
+  char *ptr;
   int n=0;
 
   ptr = name;
-  n = 0;
-  for(end = strchr(ptr,'-') ; ptr != NULL ; end = strchr(ptr,'-')) {
+  for(n = 0; ptr && *ptr && n < MP_MAX_KEY_DOWN; n++) {
+    char *end = strchr(ptr,'-');
     if(end && end[1] != '\0') {
       if(end[1] == '-')
-	end = &end[1];
+        end++;
       end[0] = '\0';
     }
     keys[n] = mp_input_get_key_from_name(ptr);
     if(keys[n] < 0) {
       return 0;
     }
-    n++;
-    if(end && end[1] != '\0' && n < MP_MAX_KEY_DOWN)
-      ptr = &end[1];
-    else
-      break;
+    ptr = end + !!end;
   }
   keys[n] = 0;
   return 1;
