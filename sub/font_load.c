@@ -67,7 +67,6 @@ err_out:
 font_desc_t* read_font_desc(const char* fname,float factor,int verbose){
 unsigned char sor[1024];
 unsigned char sor2[1024];
-font_desc_t *desc;
 FILE *f = NULL;
 char *dn;
 //struct stat fstate;
@@ -77,8 +76,8 @@ int chardb=0;
 int fontdb=-1;
 int first=1;
 
-desc=malloc(sizeof(font_desc_t));if(!desc) goto fail_out;
-memset(desc,0,sizeof(font_desc_t));
+font_desc_t *desc=calloc(1, sizeof(*desc));
+if(!desc) goto fail_out;
 
 f=fopen(fname,"rt");if(!f){ mp_msg(MSGT_OSD, MSGL_V, "font: can't open file: %s\n",fname); goto fail_out;}
 
@@ -344,9 +343,11 @@ return desc;
 fail_out:
   if (f)
     fclose(f);
-  free(desc->fpath);
-  free(desc->name);
-  free(desc);
+  if (desc) {
+    free(desc->fpath);
+    free(desc->name);
+    free(desc);
+  }
   return NULL;
 }
 
