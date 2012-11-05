@@ -956,6 +956,11 @@ void spudec_draw_scaled(void *me, unsigned int dxs, unsigned int dys, void (*dra
 	  table_y = calloc(spu->scaled_height, sizeof(scale_pixel));
 	  if (!table_x || !table_y) {
 	    mp_msg(MSGT_SPUDEC, MSGL_FATAL, "Fatal: spudec_draw_scaled: calloc failed\n");
+	    free(table_x);
+	    table_x = NULL;
+	    free(table_y);
+	    table_y = NULL;
+	    break;
 	  }
 	  scale_table(0, 0, spu->width - 1, spu->scaled_width - 1, table_x);
 	  scale_table(0, 0, spu->height - 1, spu->scaled_height - 1, table_y);
