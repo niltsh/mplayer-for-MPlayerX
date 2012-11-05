@@ -262,7 +262,7 @@ rtcp_connect (int client_port, int server_port, const char* server_hostname)
   }
 
   sin.sin_family = AF_INET;
-  memcpy (&(sin.sin_addr.s_addr), hp->h_addr, sizeof (hp->h_addr));
+  memcpy (&(sin.sin_addr.s_addr), hp->h_addr, hp->h_length);
   sin.sin_port = htons (server_port);
 
   /* datagram socket */
