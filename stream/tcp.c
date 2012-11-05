@@ -128,9 +128,9 @@ connect2Server_with_af(char *host, int port, int af,int verb) {
 #endif
 
 	switch (af) {
-		case AF_INET:  our_s_addr = (void *) &server_address.four.sin_addr; break;
+		case AF_INET:  our_s_addr = &server_address.four.sin_addr; break;
 #ifdef HAVE_AF_INET6
-		case AF_INET6: our_s_addr = (void *) &server_address.six.sin6_addr; break;
+		case AF_INET6: our_s_addr = &server_address.six.sin6_addr; break;
 #endif
 		default:
 			mp_msg(MSGT_NETWORK,MSGL_ERR, MSGTR_MPDEMUX_NW_UnknownAF, af);
@@ -151,21 +151,21 @@ connect2Server_with_af(char *host, int port, int af,int verb) {
 		if(verb) mp_msg(MSGT_NETWORK,MSGL_STATUS,MSGTR_MPDEMUX_NW_ResolvingHostForAF, host, af2String(af));
 
 #ifdef HAVE_GETHOSTBYNAME2
-		hp=(struct hostent*)gethostbyname2( host, af );
+		hp=gethostbyname2( host, af );
 #else
-		hp=(struct hostent*)gethostbyname( host );
+		hp=gethostbyname( host );
 #endif
 		if( hp==NULL ) {
 			if(verb) mp_msg(MSGT_NETWORK,MSGL_ERR,MSGTR_MPDEMUX_NW_CantResolv, af2String(af), host);
 			return TCP_ERROR_FATAL;
 		}
 
-		memcpy( our_s_addr, (void*)hp->h_addr_list[0], hp->h_length );
+		memcpy( our_s_addr, hp->h_addr_list[0], hp->h_length );
 	}
 #if HAVE_WINSOCK2_H
 	else {
 		unsigned long addr = inet_addr(host);
-		memcpy( our_s_addr, (void*)&addr, sizeof(addr) );
+		memcpy( our_s_addr, &addr, sizeof(addr) );
 	}
 #endif
 
