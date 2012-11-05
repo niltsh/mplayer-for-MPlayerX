@@ -498,13 +498,12 @@ static void uninit(struct vf_instance *vf)
 
 static int vf_open(vf_instance_t *vf, char *args)
 {
-	struct vf_priv_s *p;
 	vf->config = config;
 	vf->put_image = put_image;
 	vf->query_format = query_format;
 	vf->uninit = uninit;
 	vf->default_reqs = VFCAP_ACCEPT_STRIDE;
-	vf->priv = p = calloc(1, sizeof(struct vf_priv_s));
+	vf->priv = calloc(1, sizeof(struct vf_priv_s));
 	vf->priv->mode = 4;
 	vf->priv->parity = -1;
 	if (args) sscanf(args, "%d:%d", &vf->priv->mode, &vf->priv->parity);
