@@ -551,39 +551,37 @@ static int demux_audio_open(demuxer_t* demuxer) {
 //    printf("wav: %X .. %X\n",(int)demuxer->movi_start,(int)demuxer->movi_end);
     // Check if it contains dts audio
     if((w->wFormatTag == 0x01) && (w->nChannels == 2) && (w->nSamplesPerSec == 44100)) {
-	unsigned char buf[16384]; // vlc uses 16384*4 (4 dts frames)
+	uint32_t value = stream_read_dword(demuxer->stream);
 	unsigned int i;
-	memset(buf, 0, sizeof(buf));
-	stream_read(s, buf, sizeof(buf));
-	for (i = 0; i < sizeof(buf) - 5; i += 2) {
+	// vlc uses 16384*4 (4 dts frames)
+	for (i = 0; i < 16384; i += 2) {
+	    uint16_t next = stream_read_word(demuxer->stream);
 	    // DTS, 14 bit, LE
-	    if((buf[i] == 0xff) && (buf[i+1] == 0x1f) && (buf[i+2] == 0x00) &&
-	       (buf[i+3] == 0xe8) && ((buf[i+4] & 0xfe) == 0xf0) && (buf[i+5] == 0x07)) {
+	    if(value == 0xff1f00e8u && (next & 0xfeff) == 0xf007) {
 		sh_audio->format = 0x2001;
 		mp_msg(MSGT_DEMUX,MSGL_V,"[demux_audio] DTS audio in wav, 14 bit, LE\n");
 		break;
 	    }
 	    // DTS, 14 bit, BE
-	    if((buf[i] == 0x1f) && (buf[i+1] == 0xff) && (buf[i+2] == 0xe8) &&
-	       (buf[i+3] == 0x00) && (buf[i+4] == 0x07) && ((buf[i+5] & 0xfe) == 0xf0)) {
+	    if(value == 0x1fffe800u && (next & 0xfffe) == 0x07f0) {
 		sh_audio->format = 0x2001;
 		mp_msg(MSGT_DEMUX,MSGL_V,"[demux_audio] DTS audio in wav, 14 bit, BE\n");
 		break;
 	    }
 	    // DTS, 16 bit, BE
-	    if((buf[i] == 0x7f) && (buf[i+1] == 0xfe) && (buf[i+2] == 0x80) &&
-	       (buf[i+3] == 0x01)) {
+	    if(value == 0x7ffe8001u) {
 		sh_audio->format = 0x2001;
 		mp_msg(MSGT_DEMUX,MSGL_V,"[demux_audio] DTS audio in wav, 16 bit, BE\n");
 		break;
 	    }
 	    // DTS, 16 bit, LE
-	    if((buf[i] == 0xfe) && (buf[i+1] == 0x7f) && (buf[i+2] == 0x01) &&
-	       (buf[i+3] == 0x80)) {
+	    if(value == 0xfe7f0180u) {
 		sh_audio->format = 0x2001;
 		mp_msg(MSGT_DEMUX,MSGL_V,"[demux_audio] DTS audio in wav, 16 bit, LE\n");
 		break;
 	    }
+	    value <<= 16;
+	    value |= next;
 	}
 	if (sh_audio->format == 0x2001) {
 	    mp_msg(MSGT_DEMUX,MSGL_DBG2,"[demux_audio] DTS sync offset = %u\n", i);
