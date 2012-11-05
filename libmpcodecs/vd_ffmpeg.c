@@ -702,6 +702,7 @@ static void release_buffer(struct AVCodecContext *avctx, AVFrame *pic){
         return;
     }
 
+    if (mpi) {
 //printf("release buffer %d %d %d\n", mpi ? mpi->flags&MP_IMGFLAG_PRESERVE : -99, ctx->ip_count, ctx->b_count);
 
         if(mpi->flags&MP_IMGFLAG_PRESERVE)
@@ -709,7 +710,6 @@ static void release_buffer(struct AVCodecContext *avctx, AVFrame *pic){
         else
             ctx->b_count--;
 
-    if (mpi) {
         // release mpi (in case MPI_IMGTYPE_NUMBERED is used, e.g. for VDPAU)
         mpi->usage_count--;
         if (mpi->usage_count < 0) {
