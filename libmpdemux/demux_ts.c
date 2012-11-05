@@ -360,13 +360,13 @@ static void ts_add_stream(demuxer_t * demuxer, ES_stream_t *es)
 			priv->ts.streams[es->pid].type = TYPE_AUDIO;
 			mp_msg(MSGT_DEMUX, MSGL_V, "\r\nADDED AUDIO PID %d, type: %x stream n. %d\r\n", es->pid, sh->format, priv->last_aid);
 			priv->last_aid++;
-		}
 
-		if(es->extradata && es->extradata_len)
-		{
-			sh->wf = malloc(sizeof(*sh->wf) + es->extradata_len);
-			sh->wf->cbSize = es->extradata_len;
-			memcpy(sh->wf + 1, es->extradata, es->extradata_len);
+			if(es->extradata && es->extradata_len)
+			{
+				sh->wf = malloc(sizeof(*sh->wf) + es->extradata_len);
+				sh->wf->cbSize = es->extradata_len;
+				memcpy(sh->wf + 1, es->extradata, es->extradata_len);
+			}
 		}
 	}
 
