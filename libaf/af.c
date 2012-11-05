@@ -257,12 +257,8 @@ int af_reinit(af_stream_t* s, af_instance_t* af)
     int rv=0; // Return value
 
     // Check if there are any filters left in the list
-    if(NULL == af){
-      if(!(af=af_append(s,s->first,"dummy")))
-	return AF_UNKNOWN;
-      else
-	return AF_ERROR;
-    }
+    if(!af)
+      return af_append(s,s->first,"dummy") ? AF_ERROR : AF_UNKNOWN;
 
     // Check if this is the first filter
     if(!af->prev)
