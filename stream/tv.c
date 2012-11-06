@@ -420,7 +420,7 @@ static int open_tv(tvi_handle_t *tvh)
 {
     int i;
     const tvi_functions_t *funcs = tvh->functions;
-    int tv_fmt_list[] = {
+    static const int tv_fmt_list[] = {
       IMGFMT_YV12,
       IMGFMT_I420,
       IMGFMT_UYVY,
