@@ -264,7 +264,7 @@ static int cache_fill(cache_vars_t *s)
 static int cache_execute_control(cache_vars_t *s) {
   double double_res;
   unsigned uint_res;
-  unsigned uint64_res;
+  uint64_t uint64_res;
   int needs_flush = 0;
   static unsigned last;
   int quit = s->control == -2;
@@ -693,7 +693,7 @@ int cache_do_control(stream_t *stream, int cmd, void *arg) {
       *(unsigned *)arg = s->control_uint_arg;
       break;
     case STREAM_CTRL_GET_SIZE:
-      *(off_t *)arg = s->control_uint_arg;
+      *(uint64_t *)arg = s->control_uint_arg;
       break;
     case STREAM_CTRL_GET_LANG:
       *(struct stream_lang_req *)arg = s->control_lang_arg;
