@@ -91,8 +91,7 @@ static void draw_image_yuv(vf_instance_t *vf, struct mp_eosd_image *img)
     uint8_t y = rgba2y(color),
             u = rgba2u(color),
             v = rgba2v(color);
-    int outw = vf->priv->outw,
-        outh = vf->priv->outh;
+    int outw = vf->priv->outw;
     uint8_t *alpha = vf->priv->alphas[0],
             *dst_y = vf->priv->planes[0],
             *dst_u = vf->priv->planes[1],
@@ -227,12 +226,12 @@ static void render_frame_yuv420p(vf_instance_t *vf)
     uint8_t **dest = vf->dmpi->planes;
     struct dirty_rows_extent *dirty_rows = vf->priv->dirty_rows;
     uint8_t *alpha;
-    uint8_t *src_y = vf->priv->planes[0],
-            *src_u = vf->priv->planes[1],
-            *src_v = vf->priv->planes[2];
-    uint8_t *dst_y = vf->dmpi->planes[0],
-            *dst_u = vf->dmpi->planes[1],
-            *dst_v = vf->dmpi->planes[2];
+    uint8_t *src_y = planes[0],
+            *src_u = planes[1],
+            *src_v = planes[2];
+    uint8_t *dst_y = dest[0],
+            *dst_u = dest[1],
+            *dst_v = dest[2];
     int stride;
     int outw = vf->priv->outw,
         outh = vf->priv->outh;
