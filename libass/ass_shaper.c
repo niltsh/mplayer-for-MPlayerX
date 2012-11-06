@@ -664,6 +664,7 @@ void ass_shaper_shape(ASS_Shaper *shaper, TextInfo *text_info)
 #ifdef CONFIG_HARFBUZZ
     switch (shaper->shaping_level) {
     case ASS_SHAPING_SIMPLE:
+        shape_fribidi(shaper, glyphs, text_info->length);
         ass_shaper_skip_characters(text_info);
         break;
     case ASS_SHAPING_COMPLEX:
@@ -671,6 +672,7 @@ void ass_shaper_shape(ASS_Shaper *shaper, TextInfo *text_info)
         break;
     }
 #else
+        shape_fribidi(shaper, glyphs, text_info->length);
         ass_shaper_skip_characters(text_info);
 #endif
 #endif
