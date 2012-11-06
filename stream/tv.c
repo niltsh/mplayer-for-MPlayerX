@@ -121,6 +121,11 @@ void tv_start_scan(tvi_handle_t *tvh, int start)
     tvh->tv_param->scan=start?1:0;
 }
 
+static int tv_set_freq_float(tvi_handle_t *tvh, float freq)
+{
+    return tv_set_freq(tvh, freq/1000.0*16);
+}
+
 static void tv_scan(tvi_handle_t *tvh)
 {
     unsigned int now;
@@ -144,7 +149,7 @@ static void tv_scan(tvi_handle_t *tvh)
         scan=calloc(1,sizeof(tv_scan_t));
         tvh->scan=scan;
         cl = tvh->chanlist_s[scan->channel_num];
-        tv_set_freq(tvh, (unsigned long)(((float)cl.freq/1000)*16));
+        tv_set_freq_float(tvh, cl.freq);
         scan->scan_timer=now+1e6*tvh->tv_param->scan_period;
     }
     if(scan->scan_timer>now)
@@ -201,12 +206,12 @@ static void tv_scan(tvi_handle_t *tvh)
         }
         if (!tv_channel_current) tv_channel_current=tv_channel_list;
         if (tv_channel_current)
-            tv_set_freq(tvh, (unsigned long)(((float)tv_channel_current->freq/1000)*16));
+            tv_set_freq_float(tvh, tv_channel_current->freq);
         free(tvh->scan);
         tvh->scan=NULL;
     }else{
         cl = tvh->chanlist_s[scan->channel_num];
-        tv_set_freq(tvh, (unsigned long)(((float)cl.freq/1000)*16));
+        tv_set_freq_float(tvh, cl.freq);
         mp_msg(MSGT_TV, MSGL_INFO, "Trying: %s (%.2f). \n",cl.name,1e-3*cl.freq);
     }
 }
@@ -405,11 +410,10 @@ static int tv_set_norm_i(tvi_handle_t *tvh, int norm)
 
 static void set_norm_and_freq(tvi_handle_t *tvh, tv_channels_t *chan)
 {
-    float freq = (float)chan->freq/1000;
     mp_msg(MSGT_TV, MSGL_INFO, MSGTR_TV_SelectedChannel3, chan->number,
-           chan->name, freq);
+           chan->name, chan->freq/1000.0);
     tv_set_norm_i(tvh, chan->norm);
-    tv_set_freq(tvh, (unsigned long)(freq*16));
+    tv_set_freq_float(tvh, chan->freq);
 }
 
 static int open_tv(tvi_handle_t *tvh)
@@ -611,7 +615,7 @@ static int open_tv(tvi_handle_t *tvh)
 
 	funcs->control(tvh->priv, TVI_CONTROL_TUN_GET_FREQ, &freq);
         mp_msg(MSGT_TV, MSGL_V, "Selected frequency: %lu (%.3f)\n",
-               freq, (float)freq/16);
+               freq, freq/16.0);
     }
 
 	    if (tvh->tv_param->channel) {
@@ -628,8 +632,8 @@ static int open_tv(tvi_handle_t *tvh)
 			strcpy(tv_channel_last_real, cl.name);
 		tvh->channel = i;
 		mp_msg(MSGT_TV, MSGL_INFO, MSGTR_TV_SelectedChannel2,
-		    cl.name, (float)cl.freq/1000);
-		tv_set_freq(tvh, (unsigned long)(((float)cl.freq/1000)*16));
+		    cl.name, cl.freq/1000.0);
+		tv_set_freq_float(tvh, cl.freq);
 		break;
 	    }
 	}
@@ -937,7 +941,7 @@ int tv_get_freq(tvi_handle_t *tvh, unsigned long *freq)
     {
 	tvh->functions->control(tvh->priv, TVI_CONTROL_TUN_GET_FREQ, freq);
 	mp_msg(MSGT_TV, MSGL_V, "Current frequency: %lu (%.3f)\n",
-	    *freq, (float)*freq/16);
+	    *freq, *freq/16.0);
     }
     return 1;
 }
@@ -953,7 +957,7 @@ int tv_set_freq(tvi_handle_t *tvh, unsigned long freq)
 
 	tvh->functions->control(tvh->priv, TVI_CONTROL_TUN_GET_FREQ, &freq);
 	mp_msg(MSGT_TV, MSGL_V, "Current frequency: %lu (%.3f)\n",
-	    freq, (float)freq/16);
+	    freq, freq/16.0);
     }
     teletext_control(tvh->demuxer->teletext,TV_VBI_CONTROL_RESET,
                      &tvh->tv_param->teletext);
@@ -998,8 +1002,8 @@ int tv_step_channel_real(tvi_handle_t *tvh, int direction)
 	    strcpy(tv_channel_last_real, tvh->chanlist_s[tvh->channel].name);
 	    cl = tvh->chanlist_s[--tvh->channel];
 	    mp_msg(MSGT_TV, MSGL_INFO, MSGTR_TV_SelectedChannel2,
-		cl.name, (float)cl.freq/1000);
-	    tv_set_freq(tvh, (unsigned long)(((float)cl.freq/1000)*16));
+		cl.name, cl.freq/1000.0);
+	    tv_set_freq_float(tvh, cl.freq);
 	}
     }
 
@@ -1010,8 +1014,8 @@ int tv_step_channel_real(tvi_handle_t *tvh, int direction)
 	    strcpy(tv_channel_last_real, tvh->chanlist_s[tvh->channel].name);
 	    cl = tvh->chanlist_s[++tvh->channel];
 	    mp_msg(MSGT_TV, MSGL_INFO, MSGTR_TV_SelectedChannel2,
-		cl.name, (float)cl.freq/1000);
-	    tv_set_freq(tvh, (unsigned long)(((float)cl.freq/1000)*16));
+		cl.name, cl.freq/1000.0);
+	    tv_set_freq_float(tvh, cl.freq);
 	}
     }
     return 1;
@@ -1056,8 +1060,8 @@ int tv_set_channel_real(tvi_handle_t *tvh, char *channel) {
 	    {
 		tvh->channel = i;
 		mp_msg(MSGT_TV, MSGL_INFO, MSGTR_TV_SelectedChannel2,
-		    cl.name, (float)cl.freq/1000);
-		tv_set_freq(tvh, (unsigned long)(((float)cl.freq/1000)*16));
+		    cl.name, cl.freq/1000.0);
+		tv_set_freq_float(tvh, cl.freq);
 		break;
 	    }
 	}
@@ -1103,8 +1107,8 @@ int tv_last_channel(tvi_handle_t *tvh) {
 			strcpy(tv_channel_last_real, tvh->chanlist_s[tvh->channel].name);
 			tvh->channel = i;
 			mp_msg(MSGT_TV, MSGL_INFO, MSGTR_TV_SelectedChannel2,
-			    cl.name, (float)cl.freq/1000);
-			tv_set_freq(tvh, (unsigned long)(((float)cl.freq/1000)*16));
+			    cl.name, cl.freq/1000.0);
+			tv_set_freq_float(tvh, cl.freq);
 			break;
 		    }
 		}
