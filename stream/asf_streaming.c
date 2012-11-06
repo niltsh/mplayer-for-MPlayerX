@@ -78,6 +78,7 @@ static int asf_streaming_start( stream_t *stream, int *demuxer_type) {
     int port = stream->streaming_ctrl->url->port;
 
     // Is protocol mms or mmsu?
+    /*
     if (!strcasecmp(proto, "mmsu") || !strcasecmp(proto, "mms"))
     {
 		mp_msg(MSGT_NETWORK,MSGL_V,"Trying ASF/UDP...\n");
@@ -86,6 +87,7 @@ static int asf_streaming_start( stream_t *stream, int *demuxer_type) {
 		mp_msg(MSGT_NETWORK,MSGL_V,"  ===> ASF/UDP failed\n");
 		if( fd==-2 ) return -1;
 	}
+    */
 
     //Is protocol mms or mmst?
     if (!strcasecmp(proto, "mmst") || !strcasecmp(proto, "mms"))
