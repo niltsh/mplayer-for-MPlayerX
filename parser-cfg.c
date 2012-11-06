@@ -59,8 +59,8 @@ int m_config_parse_config_file(m_config_t* config, const char *conffile, int sil
 #define MAX_LINE_LEN	10000
 #define MAX_OPT_LEN	1000
 #define MAX_PARAM_LEN	1500
-	FILE *fp;
-	char *line;
+	FILE *fp = NULL;
+	char *line = NULL;
 	char opt[MAX_OPT_LEN + 1];
 	char param[MAX_PARAM_LEN + 1];
 	char c;		/* for the "" and '' check */
@@ -98,7 +98,6 @@ int m_config_parse_config_file(m_config_t* config, const char *conffile, int sil
 
 	if ((fp = fopen(conffile, "r")) == NULL) {
 	  mp_msg(MSGT_CFGPARSER,silent?MSGL_V:MSGL_ERR,"Failed to read %s: %s\n", conffile, strerror(errno));
-		free(line);
 		ret = silent ? 0 : -1;
 		goto out;
 	}
@@ -255,9 +254,9 @@ nextline:
 		;
 	}
 
-	free(line);
-	fclose(fp);
 out:
+	free(line);
+	if (fp) fclose(fp);
 	config->mode = prev_mode;
 	--recursion_depth;
 	return ret;
