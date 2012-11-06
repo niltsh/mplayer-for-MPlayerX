@@ -962,7 +962,7 @@ const m_option_type_t m_option_type_print_func = {
 static int parse_subconf(const m_option_t* opt,const char *name, const char *param, void* dst, int src) {
   char *subparam;
   char *subopt;
-  int nr = 0,i,r;
+  int nr = 0,i,r = 1;
   const m_option_t *subopts;
   const char *p;
   char** lst = NULL;
@@ -994,7 +994,8 @@ static int parse_subconf(const m_option_t* opt,const char *name, const char *par
           p = &p[optlen];
           if (p[0] != '"') {
             mp_msg(MSGT_CFGPARSER, MSGL_ERR, "Terminating '\"' missing for '%s'\n", subopt);
-            return M_OPT_INVALID;
+            r = M_OPT_INVALID;
+            goto out;
           }
           p = &p[1];
         } else if (p[0] == '%') {
@@ -1002,7 +1003,8 @@ static int parse_subconf(const m_option_t* opt,const char *name, const char *par
           optlen = (int)strtol(p, (char**)&p, 0);
           if (!p || p[0] != '%' || (optlen > strlen(p) - 1)) {
             mp_msg(MSGT_CFGPARSER, MSGL_ERR, "Invalid length %i for '%s'\n", optlen, subopt);
-            return M_OPT_INVALID;
+            r = M_OPT_INVALID;
+            goto out;
           }
           p = &p[1];
           av_strlcpy(subparam, p, optlen + 1);
@@ -1017,7 +1019,8 @@ static int parse_subconf(const m_option_t* opt,const char *name, const char *par
         p = &p[1];
       else if (p[0]) {
         mp_msg(MSGT_CFGPARSER, MSGL_ERR, "Incorrect termination for '%s'\n", subopt);
-        return M_OPT_INVALID;
+        r = M_OPT_INVALID;
+        goto out;
       }
 
       switch(sscanf_ret)
@@ -1030,11 +1033,12 @@ static int parse_subconf(const m_option_t* opt,const char *name, const char *par
 	  }
 	  if(!subopts[i].name) {
 	    mp_msg(MSGT_CFGPARSER, MSGL_ERR, "Option %s: Unknown suboption %s\n",name,subopt);
-	    return M_OPT_UNKNOWN;
+	    r = M_OPT_UNKNOWN;
+	    goto out;
 	  }
 	  r = m_option_parse(&subopts[i],subopt,
 			     subparam[0] == 0 ? NULL : subparam,NULL,src);
-	  if(r < 0) return r;
+	  if(r < 0) goto out;
 	  if(dst) {
 	    lst = realloc(lst,2 * (nr+2) * sizeof(char*));
 	    lst[2*nr] = strdup(subopt);
@@ -1046,12 +1050,15 @@ static int parse_subconf(const m_option_t* opt,const char *name, const char *par
 	}
     }
 
-  free(subparam);
-  free(subopt);
   if(dst)
     VAL(dst) = lst;
+  r = 1;
 
-  return 1;
+out:
+  free(subparam);
+  free(subopt);
+
+  return r;
 }
 
 const m_option_type_t m_option_type_subconfig = {
