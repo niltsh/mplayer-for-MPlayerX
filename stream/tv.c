@@ -551,10 +551,11 @@ static int open_tv(tvi_handle_t *tvh)
 	}
     }
 
-    if (tvh->chanlist == -1)
+    if (tvh->chanlist == -1) {
 	mp_msg(MSGT_TV, MSGL_WARN, MSGTR_TV_UnableFindChanlist,
 	    tvh->tv_param->chanlist);
-    else
+        return 0;
+    } else
 	mp_msg(MSGT_TV, MSGL_V, "Selected channel list: %s (including %d channels)\n",
 	    chanlists[tvh->chanlist].name, chanlists[tvh->chanlist].count);
 
