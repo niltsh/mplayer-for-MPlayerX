@@ -60,6 +60,8 @@ typedef struct dvdcss_s* dvdcss_t;
 #define LIBDVDCSS_EXPORT __declspec(dllexport) extern
 #elif defined(LIBDVDCSS_IMPORTS)
 #define LIBDVDCSS_EXPORT __declspec(dllimport) extern
+#elif defined(HAVE_VISIBILITY)
+#define LIBDVDCSS_EXPORT __attribute__((visibility("default"))) extern
 #else
 #define LIBDVDCSS_EXPORT extern
 #endif
