@@ -979,8 +979,10 @@ static inline void vo_update_text_sub(mp_osd_obj_t *obj, int dxs, int dys)
 
     if (obj->y < 0)
         obj->y = 0;
+    if (sub_pos <= 100 && obj->y > dys - h)
+        obj->y = FFMAX(dys - h, 0);
     if (obj->y > dys - h)
-        obj->y = dys - h;
+        h = FFMAX(dys - obj->y, 0);
 
     obj->bbox.y2 = obj->y + h;
 
