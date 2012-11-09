@@ -155,10 +155,6 @@ static int init(int rate,int channels,int format,int flags)
 			format=AF_FORMAT_S16_LE;
 	}
 
-	// FIXME multichannel mode is buggy
-	if(channels > 2)
-		channels = 2;
-
 	//fill global ao_data
 	ao_data.channels=channels;
 	ao_data.samplerate=rate;
