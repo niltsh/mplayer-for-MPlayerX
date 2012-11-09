@@ -80,7 +80,6 @@ static const int channel_mask[] = {
 
 
 #define SAMPLESIZE   1024
-#define BUFFER_SIZE  4096
 #define BUFFER_COUNT 16
 
 
@@ -166,13 +165,13 @@ static int init(int rate,int channels,int format,int flags)
 	ao_data.format=format;
 	ao_data.bps=channels*rate;
 	ao_data.bps*=af_fmt2bits(format)/8;
-	ao_data.outburst = BUFFER_SIZE;
 	if(ao_data.buffersize==-1)
 	{
 		ao_data.buffersize=af_fmt2bits(format)/8;
         ao_data.buffersize*= channels;
 		ao_data.buffersize*= SAMPLESIZE;
 	}
+	ao_data.outburst = ao_data.buffersize;
 	mp_msg(MSGT_AO, MSGL_V,"ao_win32: Samplerate:%iHz Channels:%i Format:%s\n",rate, channels, af_fmt2str_short(format));
     mp_msg(MSGT_AO, MSGL_V,"ao_win32: Buffersize:%d\n",ao_data.buffersize);
 
@@ -224,13 +223,13 @@ static int init(int rate,int channels,int format,int flags)
 		return 0;
     }
 	//allocate buffer memory as one big block
-	buffer = calloc(BUFFER_COUNT, BUFFER_SIZE + sizeof(WAVEHDR));
+	buffer = calloc(BUFFER_COUNT, ao_data.buffersize + sizeof(WAVEHDR));
     //and setup pointers to each buffer
     waveBlocks = (WAVEHDR*)buffer;
     buffer += sizeof(WAVEHDR) * BUFFER_COUNT;
     for(i = 0; i < BUFFER_COUNT; i++) {
         waveBlocks[i].lpData = buffer;
-        buffer += BUFFER_SIZE;
+        buffer += ao_data.buffersize;
     }
     buf_write=0;
     buf_read=0;
@@ -276,7 +275,7 @@ static int get_space(void)
 {
     int free = buf_read - buf_write - 1;
     if (free < 0) free += BUFFER_COUNT;
-    return free * BUFFER_SIZE;
+    return free * ao_data.buffersize;
 }
 
 //writes data into buffer, based on ringbuffer code in ao_sdl.c
@@ -291,7 +290,7 @@ static int write_waveOutBuffer(unsigned char* data,int len){
     //unprepare the header if it is prepared
 	if(current->dwFlags & WHDR_PREPARED)
            waveOutUnprepareHeader(hWaveOut, current, sizeof(WAVEHDR));
-	x=BUFFER_SIZE;
+	x=ao_data.buffersize;
     if(x>len) x=len;
     fast_memcpy(current->lpData,data+len2,x);
     len2+=x; len-=x;
@@ -320,5 +319,5 @@ static float get_delay(void)
 {
 	int used = buf_write - buf_read;
 	if (used < 0) used += BUFFER_COUNT;
-	return (float)(used * BUFFER_SIZE + ao_data.buffersize)/(float)ao_data.bps;
+	return (float)((used + 1) * ao_data.buffersize)/(float)ao_data.bps;
 }
