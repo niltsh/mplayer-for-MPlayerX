@@ -8104,6 +8104,8 @@ nprefix=$3;
 for part in $list; do
   if $(echo $item | grep -q -E "(^| )$part($| )"); then
     echo "${nprefix}_$part = yes"
+  else
+    echo "${nprefix}_$part = no"
   fi
 done
 }
@@ -8448,15 +8450,15 @@ HAVE_SHM        = $_shm
 HAVE_W32THREADS = $_w32threads
 HAVE_YASM       = $have_yasm
 
-$(echo $libavdecoders  | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
-$(echo $libavencoders  | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
-$(echo $libavparsers   | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
-$(echo $libavdemuxers  | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
-$(echo $libavmuxers    | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
-$(echo $libavprotocols | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
-$(echo $libavbsfs      | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
-$(echo $libavhwaccels  | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
-$(echo $libavfilters   | tr '[a-z] ' '[A-Z]\n' | sed 's/^/CONFIG_/;s/$/=yes/')
+$(mak_enable "$libavdecoders_all"  "$libavdecoders"  CONFIG)
+$(mak_enable "$libavencoders_all"  "$libavencoders"  CONFIG)
+$(mak_enable "$libavparsers_all"   "$libavparsers"   CONFIG)
+$(mak_enable "$libavdemuxers_all"  "$libavdemuxers"  CONFIG)
+$(mak_enable "$libavmuxers_all"    "$libavmuxers"    CONFIG)
+$(mak_enable "$libavprotocols_all" "$libavprotocols" CONFIG)
+$(mak_enable "$libavbsfs_all"      "$libavbsfs"      CONFIG)
+$(mak_enable "$libavhwaccels_all"  "$libavhwaccels"  CONFIG)
+$(mak_enable "$libavfilters_all"   "$libavfilters"   CONFIG)
 EOF
 
 #############################################################################
