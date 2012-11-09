@@ -165,8 +165,7 @@ static int init(int rate,int channels,int format,int flags)
 	ao_data.samplerate=rate;
 	ao_data.format=format;
 	ao_data.bps=channels*rate;
-	if(format != AF_FORMAT_U8 && format != AF_FORMAT_S8)
-	  ao_data.bps*=2;
+	ao_data.bps*=af_fmt2bits(format)/8;
 	ao_data.outburst = BUFFER_SIZE;
 	if(ao_data.buffersize==-1)
 	{
@@ -182,16 +181,15 @@ static int init(int rate,int channels,int format,int flags)
     wformat.Format.cbSize          = (channels>2)?sizeof(WAVEFORMATEXTENSIBLE)-sizeof(WAVEFORMATEX):0;
     wformat.Format.nChannels       = channels;
     wformat.Format.nSamplesPerSec  = rate;
+    wformat.Format.wBitsPerSample  = af_fmt2bits(format);
     if(AF_FORMAT_IS_AC3(format))
     {
         wformat.Format.wFormatTag      = WAVE_FORMAT_DOLBY_AC3_SPDIF;
-        wformat.Format.wBitsPerSample  = 16;
         wformat.Format.nBlockAlign     = 4;
     }
     else
     {
         wformat.Format.wFormatTag      = (channels>2)?WAVE_FORMAT_EXTENSIBLE:WAVE_FORMAT_PCM;
-        wformat.Format.wBitsPerSample  = af_fmt2bits(format);
         wformat.Format.nBlockAlign     = wformat.Format.nChannels * (wformat.Format.wBitsPerSample >> 3);
     }
 	if(channels>2)
