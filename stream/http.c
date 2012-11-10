@@ -852,7 +852,7 @@ err_out:
 	http_free( http_hdr );
 	http_hdr = NULL;
 out:
-	stream->streaming_ctrl->data = (void*)http_hdr;
+	stream->streaming_ctrl->data = http_hdr;
 	stream->fd = fd;
 	return res;
 }
