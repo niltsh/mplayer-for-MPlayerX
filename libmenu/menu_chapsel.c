@@ -76,7 +76,7 @@ static char *fmt_replace(const char *fmt, const char *chapter_name,
     int l = strlen(fmt);
     int cl = strlen(chapter_name);
     int sl = strlen(start);
-    char *str = malloc(l + cl + sl);
+    char *str = malloc(l + cl + sl + 1);
     char *p;
     strcpy(str, fmt);
     p = strstr(str, ctag);
