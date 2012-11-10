@@ -422,7 +422,7 @@ static demuxer_t* demux_open_film(demuxer_t* demuxer)
         // precalculate PTS
         if (!sh_video || film_chunk.syncinfo1 == 0xFFFFFFFF)
         {
-	  if(demuxer->audio->id>=-1)
+	  if(sh_audio)
           film_chunk.pts =
             (float)total_audio_bytes / (float)sh_audio->wf->nAvgBytesPerSec;
           total_audio_bytes += film_chunk.chunk_size;
