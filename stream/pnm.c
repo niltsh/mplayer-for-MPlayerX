@@ -821,7 +821,6 @@ static int pnm_streaming_read( int fd, char *buffer, int size, streaming_ctrl_t 
 static int open_s(stream_t *stream,int mode, void* opts, int* file_format) {
   int fd;
   pnm_t *pnm;
-  URL_t *url;
 
   mp_msg(MSGT_OPEN, MSGL_INFO, "STREAM_PNM, URL: %s\n", stream->url);
   stream->streaming_ctrl = streaming_ctrl_new();
@@ -829,9 +828,7 @@ static int open_s(stream_t *stream,int mode, void* opts, int* file_format) {
     return STREAM_ERROR;
 
   stream->streaming_ctrl->bandwidth = network_bandwidth;
-  url = url_new(stream->url);
-  stream->streaming_ctrl->url = check4proxies(url);
-  url_free(url);
+  stream->streaming_ctrl->url = url_new_with_proxy(stream->url);
 
   fd = connect2Server( stream->streaming_ctrl->url->hostname,
     stream->streaming_ctrl->url->port ? stream->streaming_ctrl->url->port : 7070,1 );

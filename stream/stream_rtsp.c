@@ -141,16 +141,13 @@ rtsp_streaming_close (struct stream *s)
 static int
 rtsp_streaming_open (stream_t *stream, int mode, void *opts, int *file_format)
 {
-  URL_t *url;
-
   mp_msg (MSGT_OPEN, MSGL_V, "STREAM_RTSP, URL: %s\n", stream->url);
   stream->streaming_ctrl = streaming_ctrl_new ();
   if (!stream->streaming_ctrl)
     return STREAM_ERROR;
 
   stream->streaming_ctrl->bandwidth = network_bandwidth;
-  url = url_new (stream->url);
-  stream->streaming_ctrl->url = check4proxies (url);
+  stream->streaming_ctrl->url = url_new_with_proxy(stream->url);
 
   stream->fd = -1;
   index_mode = -1; /* prevent most RTSP streams from locking due to -idx */

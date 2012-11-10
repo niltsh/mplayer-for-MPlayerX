@@ -47,7 +47,6 @@ static int rtsp_streaming_seek(int fd, off_t pos,
 static int rtsp_streaming_open (stream_t *stream, int mode, void *opts,
                                 int *file_format)
 {
-    URL_t *url;
     stream->fd = -1;
 
     mp_msg (MSGT_OPEN, MSGL_V, "STREAM_RTSP, URL: %s\n", stream->url);
@@ -56,8 +55,7 @@ static int rtsp_streaming_open (stream_t *stream, int mode, void *opts,
     return STREAM_ERROR;
 
     stream->streaming_ctrl->bandwidth = network_bandwidth;
-    url = url_new(stream->url);
-    stream->streaming_ctrl->url = check4proxies(url);
+    stream->streaming_ctrl->url = url_new_with_proxy(stream->url);
     stream->streaming_ctrl->streaming_seek = rtsp_streaming_seek;
 
     *file_format = DEMUXER_TYPE_RTP_NEMESI;

@@ -217,7 +217,6 @@ static int scast_streaming_start(stream_t *stream) {
 static int nop_streaming_start( stream_t *stream ) {
 	HTTP_header_t *http_hdr = NULL;
 	char *next_url=NULL;
-	URL_t *rd_url=NULL;
 	int fd,ret;
 	if( stream==NULL ) return -1;
 
@@ -247,12 +246,9 @@ static int nop_streaming_start( stream_t *stream ) {
 				ret=-1;
 				next_url = http_get_field( http_hdr, "Location" );
 
-				if (next_url != NULL)
-					rd_url=url_new(next_url);
-
-				if (next_url != NULL && rd_url != NULL) {
+				if (next_url != NULL) {
 					mp_msg(MSGT_NETWORK,MSGL_STATUS,"Redirected: Using this url instead %s\n",next_url);
-							stream->streaming_ctrl->url=check4proxies(rd_url);
+							stream->streaming_ctrl->url=url_new_with_proxy(next_url);
 					ret=nop_streaming_start(stream); //recursively get streaming started
 				} else {
 					mp_msg(MSGT_NETWORK,MSGL_ERR,"Redirection failed\n");
@@ -890,16 +886,13 @@ static int fixup_open(stream_t *stream,int seekable) {
 
 static int open_s1(stream_t *stream,int mode, void* opts, int* file_format) {
 	int seekable=0;
-	URL_t *url;
 
 	stream->streaming_ctrl = streaming_ctrl_new();
 	if( stream->streaming_ctrl==NULL ) {
 		return STREAM_ERROR;
 	}
 	stream->streaming_ctrl->bandwidth = network_bandwidth;
-	url = url_new(stream->url);
-	stream->streaming_ctrl->url = check4proxies(url);
-	url_free(url);
+	stream->streaming_ctrl->url = url_new_with_proxy(stream->url);
 
 	mp_msg(MSGT_OPEN, MSGL_V, "STREAM_HTTP(1), URL: %s\n", stream->url);
 	seekable = http_streaming_start(stream, file_format);
@@ -919,16 +912,13 @@ static int open_s1(stream_t *stream,int mode, void* opts, int* file_format) {
 
 static int open_s2(stream_t *stream,int mode, void* opts, int* file_format) {
 	int seekable=0;
-	URL_t *url;
 
 	stream->streaming_ctrl = streaming_ctrl_new();
 	if( stream->streaming_ctrl==NULL ) {
 		return STREAM_ERROR;
 	}
 	stream->streaming_ctrl->bandwidth = network_bandwidth;
-	url = url_new(stream->url);
-	stream->streaming_ctrl->url = check4proxies(url);
-	url_free(url);
+	stream->streaming_ctrl->url = url_new_with_proxy(stream->url);
 
 	mp_msg(MSGT_OPEN, MSGL_V, "STREAM_HTTP(2), URL: %s\n", stream->url);
 	seekable = http_streaming_start(stream, file_format);
