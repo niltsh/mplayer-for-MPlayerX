@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 35191
+.\" sync with en/mplayer.1 rev. 35369
 .\" MPlayer (C) 2000-2012 MPlayer Team
 .\" This man page was/is translated by JRaSH<jrash06 at gmail.com>
 .
@@ -2884,9 +2884,10 @@ sub,subtitles,/tmp/subs，那么 MPlayer 将在这些目录下搜索\
 而使基于时间的字幕文件减慢播放字幕。
 .
 .TP
-.B \-subpos <0\-100>（有助于与 \-vf expand 一同使用）
+.B \-subpos <0\-150>（有助于与 \-vf expand 一同使用）
 指定字幕在屏幕上显示的位置。\
-参数值是以屏幕高度的百分比为单位的字幕垂直位置。
+参数值是以屏幕高度的百分比为单位的字幕垂直位置。\
+值大于 100 时将截断部分字幕的显示。
 .
 .TP
 .B \-subwidth <10\-100>
