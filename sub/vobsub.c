@@ -67,7 +67,7 @@ static rar_stream_t *rar_open(const char *const filename,
         errno = EINVAL;
         return NULL;
     }
-    stream = malloc(sizeof(rar_stream_t));
+    stream = calloc(1, sizeof(rar_stream_t));
     if (stream == NULL)
         return NULL;
     /* first try normal access */
@@ -137,12 +137,12 @@ static rar_stream_t *rar_open(const char *const filename,
     return stream;
 }
 
-static int rar_close(rar_stream_t *stream)
+static void rar_close(rar_stream_t *stream)
 {
     if (stream->file)
-        return fclose(stream->file);
+        fclose(stream->file);
     free(stream->data);
-    return 0;
+    free(stream);
 }
 
 static int rar_eof(rar_stream_t *stream)
