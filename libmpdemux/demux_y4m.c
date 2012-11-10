@@ -83,7 +83,7 @@ static void read_streaminfo(demuxer_t *demuxer);
 //     1 = successfully read a packet
 static int demux_y4m_fill_buffer(demuxer_t *demux, demux_stream_t *dsds) {
   demux_stream_t *ds=demux->video;
-  demux_packet_t *dp;
+  demux_packet_t *dp = NULL;
   y4m_priv_t *priv=demux->priv;
   y4m_frame_info_t fi;
   unsigned char *buf[3];
@@ -114,11 +114,11 @@ static int demux_y4m_fill_buffer(demuxer_t *demux, demux_stream_t *dsds) {
   {
     int c = stream_read_char(demux->stream); /* F */
     if (c == -256)
-	return 0; /* EOF */
+	goto err_out; /* EOF */
     if (c != 'F')
     {
 	mp_msg(MSGT_DEMUX, MSGL_V, "Bad frame at %d\n", (int)stream_tell(demux->stream)-1);
-	return 0;
+	goto err_out;
     }
     stream_skip(demux->stream, 5); /* RAME\n */
     stream_read(demux->stream, buf[0], size);
@@ -130,7 +130,7 @@ static int demux_y4m_fill_buffer(demuxer_t *demux, demux_stream_t *dsds) {
     int err = y4m_read_frame(demux->stream, priv->si, &fi, buf);
     if (err != Y4M_OK) {
       mp_msg(MSGT_DEMUX, MSGL_ERR, "error reading frame %s\n", y4m_strerr(err));
-      return 0;
+      goto err_out;
     }
   }
 
@@ -142,6 +142,11 @@ static int demux_y4m_fill_buffer(demuxer_t *demux, demux_stream_t *dsds) {
   ds_add_packet(ds, dp);
 
   return 1;
+
+err_out:
+  if (dp)
+    free_demux_packet(dp);
+  return 0;
 }
 
 static void read_streaminfo(demuxer_t *demuxer)
