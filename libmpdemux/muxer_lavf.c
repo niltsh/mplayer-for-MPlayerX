@@ -177,19 +177,17 @@ static muxer_stream_t* lavf_new_stream(muxer_t *muxer, int type)
 
 static void fix_parameters(muxer_stream_t *stream)
 {
-	muxer_stream_priv_t *spriv = (muxer_stream_priv_t *) stream->priv;
-	AVCodecContext *ctx;
-
-	ctx = spriv->avstream->codec;
+	muxer_stream_priv_t *spriv = stream->priv;
+	AVCodecContext *ctx = spriv->avstream->codec;
 
         ctx->bit_rate= stream->avg_rate;
-        if(stream->wf && stream->wf->nAvgBytesPerSec && !ctx->bit_rate)
-            ctx->bit_rate = stream->wf->nAvgBytesPerSec * 8;
         ctx->rc_buffer_size= stream->vbv_size;
         ctx->rc_max_rate= stream->max_rate;
 
 	if(stream->type == MUXER_TYPE_AUDIO)
 	{
+		if (!ctx->bit_rate)
+		    ctx->bit_rate = stream->wf->nAvgBytesPerSec * 8;
 		ctx->codec_id = mp_tag2codec_id(stream->wf->wFormatTag, 1);
 #if 0 //breaks aac in mov at least
 		ctx->codec_tag = codec_get_wav_tag(ctx->codec_id);
