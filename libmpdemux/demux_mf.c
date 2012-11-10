@@ -61,7 +61,11 @@ static int demux_mf_fill_buffer(demuxer_t *demuxer, demux_stream_t *ds){
   {
    sh_video_t     * sh_video = demuxer->video->sh;
    demux_packet_t * dp = new_demux_packet( fs.st_size );
-   if ( !fread( dp->buffer,fs.st_size,1,f ) ) return 0;
+   if ( !fread( dp->buffer,fs.st_size,1,f ) ) {
+        fclose(f);
+        free_demux_packet(dp);
+        return 0;
+   }
    dp->pts=mf->curr_frame / sh_video->fps;
    dp->pos=mf->curr_frame;
    dp->flags=1;
