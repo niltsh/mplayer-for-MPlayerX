@@ -296,6 +296,5 @@ cookies_set(HTTP_header_t * http_hdr, const char *domain, const char *url)
 
     if (found_cookies)
 	http_set_field(http_hdr, buf);
-    else
-	free(buf);
+    free(buf);
 }
