@@ -78,7 +78,7 @@ typedef struct menu_cmd_bindings_s {
 
 struct menu_def_st {
   char* name;
-  menu_info_t* type;
+  const menu_info_t* type;
   void* cfg;
   char* args;
 };

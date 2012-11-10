@@ -47,7 +47,7 @@ struct  menu_s {
   void (*read_cmd)(menu_t* menu,int cmd);
   int (*read_key)(menu_t* menu,int cmd);
   void (*close)(menu_t* menu);
-  struct m_struct_st* priv_st;
+  const struct m_struct_st* priv_st;
   struct menu_priv_s* priv;
   int show; // Draw it ?
   int cl; // Close request (user sent a close cmd or
