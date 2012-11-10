@@ -1651,11 +1651,6 @@ echo configuration: $configuration > "$TMPLOG"
 echo >> "$TMPLOG"
 
 
-if test "$_runtime_cpudetection" = yes && ! x86 && ! ppc; then
-  die "Runtime CPU detection only works for x86, x86-64 and PPC!"
-fi
-
-
 # Checking CC version...
 # Intel C++ Compilers (no autoselect, use CC=/some/binary ./configure)
 if test "$(basename $_cc)" = "icc" || test "$(basename $_cc)" = "ecc"; then
@@ -1750,6 +1745,10 @@ fi
 
 echo "Detected operating system: $system_name"
 echo "Detected host architecture: $host_arch"
+
+if test "$_runtime_cpudetection" = yes && ! x86 && ! ppc; then
+  die "Runtime CPU detection only works for x86, x86-64 and PPC!"
+fi
 
 echocheck "cross compilation"
 if test $_cross_compile = auto ; then
