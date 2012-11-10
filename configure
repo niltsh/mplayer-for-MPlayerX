@@ -7047,7 +7047,7 @@ if test "$_mencoder" = yes && test "$_xvid" = yes && test "$_xvid_lavc" = auto ;
 fi
 if test "$_xvid_lavc" = yes ; then
   def_xvid_lavc='#define CONFIG_LIBXVID 1'
-  libavencoders="$libavencoders LIBXVID LIBXVID_ENCODER"
+  libavencoders="$libavencoders LIBXVID_ENCODER"
 else
   _xvid_lavc=no
   def_xvid_lavc='#define CONFIG_LIBXVID 0'
@@ -8450,6 +8450,7 @@ HAVE_SHM        = $_shm
 HAVE_W32THREADS = $_w32threads
 HAVE_YASM       = $have_yasm
 
+CONFIG_LIBXVID = $_xvid_lavc
 $(mak_enable "$libavdecoders_all"  "$libavdecoders"  CONFIG)
 $(mak_enable "$libavencoders_all"  "$libavencoders"  CONFIG)
 $(mak_enable "$libavparsers_all"   "$libavparsers"   CONFIG)
