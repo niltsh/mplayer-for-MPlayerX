@@ -453,25 +453,19 @@ http_response_parse( HTTP_header_t *http_hdr ) {
 
 char *
 http_build_request( HTTP_header_t *http_hdr ) {
-	char *ptr, *uri=NULL;
+	char *ptr;
 	int len;
 	HTTP_field_t *field;
 	if( http_hdr==NULL ) return NULL;
 
 	if( http_hdr->method==NULL ) http_set_method( http_hdr, "GET");
 	if( http_hdr->uri==NULL ) http_set_uri( http_hdr, "/");
-	else {
-		uri = malloc(strlen(http_hdr->uri) + 1);
-		if( uri==NULL ) {
-			mp_msg(MSGT_NETWORK,MSGL_ERR,MSGTR_MemAllocFailed);
-			return NULL;
-		}
-		strcpy(uri,http_hdr->uri);
-	}
+	if( !http_hdr->uri || !http_hdr->method)
+		return NULL;
 
 	//**** Compute the request length
 	// Add the Method line
-	len = strlen(http_hdr->method)+strlen(uri)+12;
+	len = strlen(http_hdr->method)+strlen(http_hdr->uri)+12;
 	// Add the fields
 	field = http_hdr->first_field;
 	while( field!=NULL ) {
@@ -499,7 +493,7 @@ http_build_request( HTTP_header_t *http_hdr ) {
 	//*** Building the request
 	ptr = http_hdr->buffer;
 	// Add the method line
-	ptr += sprintf( ptr, "%s %s HTTP/1.%d\r\n", http_hdr->method, uri, http_hdr->http_minor_version );
+	ptr += sprintf( ptr, "%s %s HTTP/1.%d\r\n", http_hdr->method, http_hdr->uri, http_hdr->http_minor_version );
 	field = http_hdr->first_field;
 	// Add the field
 	while( field!=NULL ) {
@@ -512,7 +506,6 @@ http_build_request( HTTP_header_t *http_hdr ) {
 		memcpy( ptr, http_hdr->body, http_hdr->body_size );
 	}
 
-	free(uri);
 	return http_hdr->buffer;
 }
 
