@@ -181,6 +181,7 @@ static struct cookie_list_type *load_cookies_from(const char *filename,
 	    list = new;
 	}
     }
+    free(ptr);
     return list;
 }
 
