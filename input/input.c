@@ -1906,8 +1906,8 @@ static int mp_input_print_cmd_list(m_option_t* cfg) {
  */
 int
 mp_input_check_interrupt(int time) {
-  mp_cmd_t* cmd;
-  if((cmd = mp_input_get_cmd(time,0,1)) == NULL)
+  mp_cmd_t *cmd = mp_input_get_cmd(time,0,1);
+  if (!cmd)
     return 0;
   switch(cmd->id) {
   case MP_CMD_QUIT:
