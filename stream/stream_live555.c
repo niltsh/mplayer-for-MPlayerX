@@ -49,7 +49,7 @@ static int open_live_rtsp_sip(stream_t *stream,int mode, void* opts, int* file_f
   stream->streaming_ctrl->bandwidth = network_bandwidth;
   url = url_new(stream->url);
   stream->streaming_ctrl->url = check4proxies(url);
-  //url_free(url);
+  url_free(url);
 
   mp_msg(MSGT_OPEN, MSGL_INFO, "STREAM_LIVE555, URL: %s\n", stream->url);
 

@@ -831,7 +831,7 @@ static int open_s(stream_t *stream,int mode, void* opts, int* file_format) {
   stream->streaming_ctrl->bandwidth = network_bandwidth;
   url = url_new(stream->url);
   stream->streaming_ctrl->url = check4proxies(url);
-  //url_free(url);
+  url_free(url);
 
   fd = connect2Server( stream->streaming_ctrl->url->hostname,
     stream->streaming_ctrl->url->port ? stream->streaming_ctrl->url->port : 7070,1 );
