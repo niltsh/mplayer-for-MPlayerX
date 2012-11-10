@@ -211,13 +211,12 @@ static struct cookie_list_type *load_cookies(void)
     if (dir) {
 	while ((ent = readdir(dir)) != NULL) {
 	    if ((ent->d_name)[0] != '.') {
-		const char *home = getenv("HOME");
-		unsigned len = strlen(home) +
+		unsigned len = strlen(homedir) +
 		               sizeof("/.mozilla/default/") +
 		               strlen(ent->d_name) + sizeof("cookies.txt") + 1;
 		buf = malloc(len);
 		snprintf(buf, len, "%s/.mozilla/default/%s/cookies.txt",
-			 home, ent->d_name);
+			 homedir, ent->d_name);
 		list = load_cookies_from(buf, list);
 		free(buf);
 	    }
