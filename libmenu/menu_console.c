@@ -421,7 +421,9 @@ static void read_cmd(menu_t* menu,int cmd) {
 	break;
       default: // Send the other commands to mplayer
 	mp_input_queue_cmd(c);
+	c = NULL;
       }
+      if (c) mp_cmd_free(c);
     }
     return;
   }
