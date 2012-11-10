@@ -115,7 +115,7 @@ static muxer_stream_t* lavf_new_stream(muxer_t *muxer, int type)
 	muxer_stream_priv_t *spriv;
 	AVCodecContext *ctx;
 
-	if(!muxer || (type != MUXER_TYPE_VIDEO && type != MUXER_TYPE_AUDIO))
+	if(type != MUXER_TYPE_VIDEO && type != MUXER_TYPE_AUDIO)
 	{
 		mp_msg(MSGT_MUXER, MSGL_ERR, "UNKNOWN TYPE %d\n", type);
 		return NULL;
@@ -248,7 +248,7 @@ static void write_chunk(muxer_stream_t *stream, size_t len, unsigned int flags, 
 {
 	muxer_t *muxer = stream->muxer;
 	muxer_priv_t *priv = muxer->priv;
-	muxer_stream_priv_t *spriv = (muxer_stream_priv_t *) stream->priv;
+	muxer_stream_priv_t *spriv = stream->priv;
 	AVPacket pkt;
 
 	if(len)
