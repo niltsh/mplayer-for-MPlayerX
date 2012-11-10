@@ -510,7 +510,7 @@ static void load_pgm_skip(FILE *f) {
   ungetc(c, f);
 }
 
-#define REMOVE_LOGO_LOAD_PGM_ERROR_MESSAGE(message) {mp_msg(MSGT_VFILTER, MSGL_ERR, message); return NULL;}
+#define REMOVE_LOGO_LOAD_PGM_ERROR_MESSAGE(message) {mp_msg(MSGT_VFILTER, MSGL_ERR, message); goto err_out;}
 
 /**
  * \brief Loads a raw pgm or ppm file into a newly created pgm_structure object.
@@ -568,8 +568,15 @@ static pgm_structure * load_pgm(const char * file_name)
       *write_position |= fgetc(input);
     }
   }
+  fclose(input);
 
   return new_pgm;
+
+err_out:
+  if (input)
+    fclose(input);
+  free(new_pgm);
+  return NULL;
 }
 
 /**
