@@ -443,8 +443,9 @@ static demuxer_t* demux_open_film(demuxer_t* demuxer)
     default:
       mp_msg(MSGT_DEMUX, MSGL_ERR, "Unrecognized FILM header chunk: %08X\n",
         chunk_type);
+      free(film_data->chunks);
+      free(film_data);
       return NULL;
-      break;
     }
   }
 
