@@ -167,7 +167,7 @@ static struct cookie_list_type *load_cookies_from(const char *filename,
     if (!ptr)
 	return list;
 
-    while (*ptr > 0) {
+    while (*ptr) {
 	char *cols[7];
 	if (parse_line(&ptr, cols)) {
 	    struct cookie_list_type *new;
