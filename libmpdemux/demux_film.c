@@ -410,7 +410,7 @@ static demuxer_t* demux_open_film(demuxer_t* demuxer)
         if (counting_chunks)
         {
           // if we're counting chunks, always count an audio chunk
-          if (film_chunk.syncinfo1 == 0xFFFFFFFF)
+          if (!sh_video || film_chunk.syncinfo1 == 0xFFFFFFFF)
             film_data->chunks_per_second++;
           // if it's a video chunk, check if it's time to stop counting
           else if ((film_chunk.syncinfo1 & 0x7FFFFFFF) >= sh_video->fps)
@@ -420,7 +420,7 @@ static demuxer_t* demux_open_film(demuxer_t* demuxer)
         }
 
         // precalculate PTS
-        if (film_chunk.syncinfo1 == 0xFFFFFFFF)
+        if (!sh_video || film_chunk.syncinfo1 == 0xFFFFFFFF)
         {
 	  if(demuxer->audio->id>=-1)
           film_chunk.pts =
