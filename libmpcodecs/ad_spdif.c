@@ -252,7 +252,7 @@ static int decode_audio(sh_audio_t *sh, unsigned char *buf,
             if (x == 0) {
                 mp_msg(MSGT_DECAUDIO,MSGL_V,
                        "start[%p] pkt.size[%d] in_size[%d] consumed[%d] x[%d].\n",
-                       start, pkt.size, in_size, consumed, x);
+                       start, 0, in_size, consumed, x);
                 continue; // END_NOT_FOUND
             }
             sh->ds->buffer_pos -= in_size - consumed;
