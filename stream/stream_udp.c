@@ -63,18 +63,15 @@ udp_streaming_start (stream_t *stream)
 static int
 udp_stream_open (stream_t *stream, int mode, void *opts, int *file_format)
 {
-  URL_t *url;
-
   mp_msg (MSGT_OPEN, MSGL_INFO, "STREAM_UDP, URL: %s\n", stream->url);
   stream->streaming_ctrl = streaming_ctrl_new ();
   if (!stream->streaming_ctrl)
     return STREAM_ERROR;
 
   stream->streaming_ctrl->bandwidth = network_bandwidth;
-  url = url_new (stream->url);
-  stream->streaming_ctrl->url = check4proxies (url);
+  stream->streaming_ctrl->url = url_new(stream->url);
 
-  if (url->port == 0)
+  if (stream->streaming_ctrl->url->port == 0)
   {
     mp_msg (MSGT_NETWORK, MSGL_ERR,
             "You must enter a port number for UDP streams!\n");
