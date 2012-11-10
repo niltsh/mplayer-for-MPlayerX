@@ -110,44 +110,49 @@ static int parse_line(char **ptr, char *cols[6])
 /* Loads a file into RAM */
 static char *load_file(const char *filename, off_t * length)
 {
-    int fd;
-    char *buffer;
+    int fd = -1;
+    char *buffer = NULL;
 
     mp_msg(MSGT_NETWORK, MSGL_V, "Loading cookie file: %s\n", filename);
 
     fd = open(filename, O_RDONLY);
     if (fd < 0) {
 	mp_msg(MSGT_NETWORK, MSGL_V, "Could not open");
-	return NULL;
+	goto err_out;
     }
 
     *length = lseek(fd, 0, SEEK_END);
 
     if (*length < 0) {
 	mp_msg(MSGT_NETWORK, MSGL_V, "Could not find EOF");
-	return NULL;
+	goto err_out;
     }
 
     if (*length > SIZE_MAX - 1) {
 	mp_msg(MSGT_NETWORK, MSGL_V, "File too big, could not malloc.");
-	return NULL;
+	goto err_out;
     }
 
     lseek(fd, 0, SEEK_SET);
 
     if (!(buffer = malloc(*length + 1))) {
 	mp_msg(MSGT_NETWORK, MSGL_V, "Could not malloc.");
-	return NULL;
+	goto err_out;
     }
 
     if (read(fd, buffer, *length) != *length) {
 	mp_msg(MSGT_NETWORK, MSGL_V, "Read is behaving funny.");
-	return NULL;
+	goto err_out;
     }
     close(fd);
     buffer[*length] = 0;
 
     return buffer;
+
+err_out:
+    if (fd != -1) close(fd);
+    free(buffer);
+    return NULL;
 }
 
 /* Loads a cookies.txt file into a linked list. */
