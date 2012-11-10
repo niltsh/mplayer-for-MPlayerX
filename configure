@@ -1507,7 +1507,6 @@ mkdir $mplayer_tmpdir || die "Unable to create tmpdir."
 TMPLOG="config.log"
 TMPC="$mplayer_tmpdir/tmp.c"
 TMPCPP="$mplayer_tmpdir/tmp.cpp"
-TMPEXE="$mplayer_tmpdir/tmp$_exesuf"
 TMPH="$mplayer_tmpdir/tmp.h"
 TMPS="$mplayer_tmpdir/tmp.S"
 
@@ -1721,6 +1720,8 @@ fi
 if darwin && test "$cc_vendor" != "clang" ; then
   extra_cflags="-falign-loops=16 -shared-libgcc $extra_cflags"
 fi
+
+TMPEXE="$mplayer_tmpdir/tmp$_exesuf"
 
 echocheck "working compiler"
 cflag_check "" || die "Compiler is not functioning correctly. Check your installation and custom CFLAGS $CFLAGS ."
