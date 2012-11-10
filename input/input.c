@@ -1914,9 +1914,11 @@ mp_input_check_interrupt(int time) {
   case MP_CMD_PLAY_TREE_STEP:
   case MP_CMD_PLAY_TREE_UP_STEP:
   case MP_CMD_PLAY_ALT_SRC_STEP:
+    mp_cmd_free(cmd);
     // The cmd will be executed when we are back in the main loop
     return 1;
   }
+  mp_cmd_free(cmd);
   // remove the cmd from the queue
   cmd = mp_input_get_cmd(time,0,0);
   mp_cmd_free(cmd);
