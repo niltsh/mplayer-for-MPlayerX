@@ -83,7 +83,7 @@ int http_send_request(URL_t *url, off_t pos);
 HTTP_header_t *http_read_response(int fd);
 
 int http_authenticate(HTTP_header_t *http_hdr, URL_t *url, int *auth_retry);
-URL_t* check4proxies(URL_t *url);
+URL_t* check4proxies(const URL_t *url);
 
 void fixup_network_stream_cache(stream_t *stream);
 int http_seek(stream_t *stream, off_t pos);
