@@ -283,6 +283,11 @@ static int init_video(sh_video_t *sh_video, char *codecname, char *vfm,
                    sh_video->codec->name, sh_video->codec->drv);
             continue;
         }
+        /* only allow dummy codecs if specified via -vc */
+        if (sh_video->codec->flags & CODECS_FLAG_DUMMY && !codecname) {
+            continue;
+        }
+
         orig_w = sh_video->bih ? sh_video->bih->biWidth  : sh_video->disp_w;
         orig_h = sh_video->bih ? sh_video->bih->biHeight : sh_video->disp_h;
         sh_video->disp_w = orig_w;
