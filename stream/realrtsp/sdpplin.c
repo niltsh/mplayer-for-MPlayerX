@@ -139,6 +139,7 @@ static sdpplin_stream_t *sdpplin_parse_stream(char **data) {
     printf("sdpplin: no m= found.\n");
     free(desc);
     xbuffer_free(buf);
+    xbuffer_free(decoded);
     return NULL;
   }
   *data=nl(*data);
