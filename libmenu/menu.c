@@ -232,15 +232,15 @@ static int menu_parse_config(char* buffer) {
 int menu_init(struct MPContext *mpctx, char* cfg_file) {
   char* buffer = NULL;
   int bl = BUF_STEP, br = 0;
-  int f, fd;
+  int f = 0, fd = -1;
 #ifndef CONFIG_FREETYPE
   if(vo_font == NULL)
-    return 0;
+    goto out;
 #endif
   fd = open(cfg_file, O_RDONLY);
   if(fd < 0) {
     mp_msg(MSGT_GLOBAL,MSGL_WARN,MSGTR_LIBMENU_CantOpenConfigFile,cfg_file);
-    return 0;
+    goto out;
   }
   buffer = malloc(bl);
   while(1) {
@@ -248,9 +248,7 @@ int menu_init(struct MPContext *mpctx, char* cfg_file) {
     if(bl - br < BUF_MIN) {
       if(bl >= BUF_MAX) {
 	mp_msg(MSGT_GLOBAL,MSGL_WARN,MSGTR_LIBMENU_ConfigFileIsTooBig,BUF_MAX/1024);
-	close(fd);
-	free(buffer);
-	return 0;
+	goto out;
       }
       bl += BUF_STEP;
       buffer = realloc(buffer,bl);
@@ -261,14 +259,15 @@ int menu_init(struct MPContext *mpctx, char* cfg_file) {
   }
   if(!br) {
     mp_msg(MSGT_GLOBAL,MSGL_WARN,MSGTR_LIBMENU_ConfigFileIsEmpty);
-    return 0;
+    goto out;
   }
   buffer[br-1] = '\0';
 
-  close(fd);
-
   menu_ctx = mpctx;
   f = menu_parse_config(buffer);
+
+out:
+  if (fd != -1) close(fd);
   free(buffer);
   return f;
 }
