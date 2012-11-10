@@ -1484,9 +1484,6 @@ static void *read_matrix(unsigned char *filename)
 		matrix[i] = value;
 	}
 
-	/* Fills the rest with 1 */
-	while(i<64) matrix[i++] = 1;
-
 	/* We're done */
 	fclose(input);
 
