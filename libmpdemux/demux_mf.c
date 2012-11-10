@@ -33,7 +33,7 @@
 #include "mf.h"
 
 static void demux_seek_mf(demuxer_t *demuxer,float rel_seek_secs,float audio_delay,int flags){
-  mf_t * mf = (mf_t *)demuxer->priv;
+  mf_t * mf = demuxer->priv;
   sh_video_t   * sh_video = demuxer->video->sh;
   int newpos = (flags & SEEK_ABSOLUTE)?0:mf->curr_frame - 1;
 
@@ -48,11 +48,10 @@ static void demux_seek_mf(demuxer_t *demuxer,float rel_seek_secs,float audio_del
 //     0 = EOF or no stream found
 //     1 = successfully read a packet
 static int demux_mf_fill_buffer(demuxer_t *demuxer, demux_stream_t *ds){
-  mf_t         * mf;
+  mf_t         * mf = demuxer->priv;
   struct stat    fs;
   FILE         * f;
 
-  mf=(mf_t*)demuxer->priv;
   if ( mf->curr_frame >= mf->nr_of_files ) return 0;
 
   stat( mf->names[mf->curr_frame],&fs );
@@ -189,7 +188,7 @@ static void demux_close_mf(demuxer_t* demuxer) {
 }
 
 static int demux_control_mf(demuxer_t *demuxer, int cmd, void *arg) {
-  mf_t *mf = (mf_t *)demuxer->priv;
+  mf_t *mf = demuxer->priv;
   sh_video_t *sh_video = demuxer->video->sh;
 
   switch(cmd) {
