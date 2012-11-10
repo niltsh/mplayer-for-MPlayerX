@@ -1497,6 +1497,91 @@ test -z "$_mandir"  && _mandir="$_prefix/share/man"
 test -z "$_confdir" && _confdir="$_prefix/etc/mplayer"
 test -z "$_libdir"  && _libdir="$_prefix/lib"
 
+for tmpdir in "$TMPDIR" "$TEMPDIR" "/tmp" ; do
+  test "$tmpdir" && break
+done
+
+mplayer_tmpdir="$tmpdir/mplayer-configure-$RANDOM-$$"
+mkdir $mplayer_tmpdir || die "Unable to create tmpdir."
+
+TMPLOG="config.log"
+TMPC="$mplayer_tmpdir/tmp.c"
+TMPCPP="$mplayer_tmpdir/tmp.cpp"
+TMPEXE="$mplayer_tmpdir/tmp$_exesuf"
+TMPH="$mplayer_tmpdir/tmp.h"
+TMPS="$mplayer_tmpdir/tmp.S"
+
+rm -f "$TMPLOG"
+echo configuration: $configuration > "$TMPLOG"
+echo >> "$TMPLOG"
+
+
+# Checking CC version...
+# Intel C++ Compilers (no autoselect, use CC=/some/binary ./configure)
+if test "$(basename $_cc)" = "icc" || test "$(basename $_cc)" = "ecc"; then
+  echocheck "$_cc version"
+  cc_vendor=intel
+  cc_name=$($_cc -V 2>&1 | head -n 1 | cut -d ',' -f 1)
+  cc_version=$($_cc -V 2>&1 | head -n 1 | cut -d ',' -f 2 | cut -d ' ' -f 3)
+  _cc_major=$(echo $cc_version | cut -d '.' -f 1)
+  _cc_minor=$(echo $cc_version | cut -d '.' -f 2)
+  # TODO verify older icc/ecc compatibility
+  case $cc_version in
+    '')
+      cc_version="v. ?.??, bad"
+      cc_fail=yes
+      ;;
+    10.1|11.1|12.0)
+      cc_version="$cc_version, ok"
+      ;;
+    *)
+      cc_version="$cc_version, bad"
+      cc_fail=yes
+      ;;
+  esac
+  echores "$cc_version"
+else
+  for _cc in "$_cc" gcc cc ; do
+    cc_name_tmp=$($_cc -v 2>&1 | tail -n 1 | cut -d ' ' -f 1)
+    if test "$cc_name_tmp" = "gcc"; then
+      cc_name=$cc_name_tmp
+      echocheck "$_cc version"
+      cc_vendor=gnu
+      cc_version=$($_cc -dumpversion 2>&1)
+      case $cc_version in
+        2.96*)
+          cc_fail=yes
+          ;;
+        *)
+          _cc_major=$(echo $cc_version | cut -d '.' -f 1)
+          _cc_minor=$(echo $cc_version | cut -d '.' -f 2)
+          _cc_mini=$(echo $cc_version | cut -d '.' -f 3)
+          ;;
+      esac
+      echores "$cc_version"
+      break
+    fi
+    if $_cc -v 2>&1 | grep -q "clang"; then
+      echocheck "$_cc version"
+      cc_vendor=clang
+      cc_version=$($_cc -dumpversion 2>&1)
+      res_comment="experimental support only"
+      echores "clang $cc_version"
+      break
+    fi
+    cc_name_tmp=$($_cc -V 2>&1 | head -n 1 | cut -d ' ' -f 2,3)
+    if test "$cc_name_tmp" = "Sun C"; then
+      echocheck "$_cc version"
+      cc_vendor=sun
+      cc_version=$($_cc -V 2>&1 | head -n 1 | cut -d ' ' -f 4)
+      res_comment="experimental support only"
+      echores "Sun C $cc_version"
+      break
+    fi
+  done
+fi # icc
+test "$cc_fail" = yes && die "unsupported compiler version"
+
 # Determine our OS name and CPU architecture
 if test -z "$_target" ; then
   # OS name
@@ -1526,6 +1611,7 @@ if test -z "$_target" ; then
     system_name="$system_name-UNKNOWN"
     ;;
   esac
+  cpp_condition_check '' 'defined(__MINGW32__)' && system_name=MINGW32
 
 
   # host's CPU/instruction set
@@ -1631,91 +1717,6 @@ fi
 if wine ; then
   extra_cflags="-fno-pic -UWIN32 -U_WIN32 -U__WIN32 -U__WIN32__ -DWINE_NOWINSOCK -Dstricmp=strcasecmp $extra_cflags"
 fi
-
-for tmpdir in "$TMPDIR" "$TEMPDIR" "/tmp" ; do
-  test "$tmpdir" && break
-done
-
-mplayer_tmpdir="$tmpdir/mplayer-configure-$RANDOM-$$"
-mkdir $mplayer_tmpdir || die "Unable to create tmpdir."
-
-TMPLOG="config.log"
-TMPC="$mplayer_tmpdir/tmp.c"
-TMPCPP="$mplayer_tmpdir/tmp.cpp"
-TMPEXE="$mplayer_tmpdir/tmp$_exesuf"
-TMPH="$mplayer_tmpdir/tmp.h"
-TMPS="$mplayer_tmpdir/tmp.S"
-
-rm -f "$TMPLOG"
-echo configuration: $configuration > "$TMPLOG"
-echo >> "$TMPLOG"
-
-
-# Checking CC version...
-# Intel C++ Compilers (no autoselect, use CC=/some/binary ./configure)
-if test "$(basename $_cc)" = "icc" || test "$(basename $_cc)" = "ecc"; then
-  echocheck "$_cc version"
-  cc_vendor=intel
-  cc_name=$($_cc -V 2>&1 | head -n 1 | cut -d ',' -f 1)
-  cc_version=$($_cc -V 2>&1 | head -n 1 | cut -d ',' -f 2 | cut -d ' ' -f 3)
-  _cc_major=$(echo $cc_version | cut -d '.' -f 1)
-  _cc_minor=$(echo $cc_version | cut -d '.' -f 2)
-  # TODO verify older icc/ecc compatibility
-  case $cc_version in
-    '')
-      cc_version="v. ?.??, bad"
-      cc_fail=yes
-      ;;
-    10.1|11.1|12.0)
-      cc_version="$cc_version, ok"
-      ;;
-    *)
-      cc_version="$cc_version, bad"
-      cc_fail=yes
-      ;;
-  esac
-  echores "$cc_version"
-else
-  for _cc in "$_cc" gcc cc ; do
-    cc_name_tmp=$($_cc -v 2>&1 | tail -n 1 | cut -d ' ' -f 1)
-    if test "$cc_name_tmp" = "gcc"; then
-      cc_name=$cc_name_tmp
-      echocheck "$_cc version"
-      cc_vendor=gnu
-      cc_version=$($_cc -dumpversion 2>&1)
-      case $cc_version in
-        2.96*)
-          cc_fail=yes
-          ;;
-        *)
-          _cc_major=$(echo $cc_version | cut -d '.' -f 1)
-          _cc_minor=$(echo $cc_version | cut -d '.' -f 2)
-          _cc_mini=$(echo $cc_version | cut -d '.' -f 3)
-          ;;
-      esac
-      echores "$cc_version"
-      break
-    fi
-    if $_cc -v 2>&1 | grep -q "clang"; then
-      echocheck "$_cc version"
-      cc_vendor=clang
-      cc_version=$($_cc -dumpversion 2>&1)
-      res_comment="experimental support only"
-      echores "clang $cc_version"
-      break
-    fi
-    cc_name_tmp=$($_cc -V 2>&1 | head -n 1 | cut -d ' ' -f 2,3)
-    if test "$cc_name_tmp" = "Sun C"; then
-      echocheck "$_cc version"
-      cc_vendor=sun
-      cc_version=$($_cc -V 2>&1 | head -n 1 | cut -d ' ' -f 4)
-      res_comment="experimental support only"
-      echores "Sun C $cc_version"
-      break
-    fi
-  done
-fi # icc
-test "$cc_fail" = yes && die "unsupported compiler version"
 
 if darwin && test "$cc_vendor" != "clang" ; then
   extra_cflags="-falign-loops=16 -shared-libgcc $extra_cflags"
