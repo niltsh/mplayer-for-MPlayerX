@@ -1325,7 +1325,7 @@ static void decode_pkt28(priv_vbi_t* priv,unsigned char*data){
  * Used XawTV's algorithm. Signal phase is calculated with help of starting clock
  * run-in sequence (min/max values and bit distance values are calculated)
  */
-static int decode_raw_line_runin(priv_vbi_t* priv,unsigned char* buf,unsigned char* data){
+static int decode_raw_line_runin(const priv_vbi_t* priv,const unsigned char* buf,unsigned char* data){
     const int magic= 0x27; // reversed 1110010
     int dt[256],hi[6],lo[6];
     int i,x,r;
