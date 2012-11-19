@@ -764,6 +764,8 @@ int gui(int what, void *data)
         }
         case GUI_END_FILE:
         {
+          guiInfo.sh_video = NULL;
+
           if(!uiGotoTheNext && guiInfo.Playing)
           {
               uiGotoTheNext = 1;

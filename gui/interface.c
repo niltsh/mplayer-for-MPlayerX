@@ -761,9 +761,9 @@ int gui(int what, void *data)
 
     case GUI_END_FILE:
 
-        uiEventHandling(ivRedraw, 1);
-
         guiInfo.sh_video = NULL;
+
+        uiEventHandling(ivRedraw, 1);
 
         if (!uiGotoTheNext && guiInfo.Playing) {
             uiGotoTheNext = 1;
