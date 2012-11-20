@@ -105,6 +105,11 @@ static int fd_can_read(int fd,int timeout) {
 /*
  * read a line of text
  *
+ * If the line is too long to fit in the buffer, provided via parameters
+ * buf and max, the remaining characters are skipped. So the next call to
+ * this function is synchronized to the start of the following response
+ * line.
+ *
  * The parameter buf will always be initialized as long as max is bigger
  * then 1. If nothing is read it will contain an empty string.
  *
@@ -144,8 +149,18 @@ static int readline(char *buf,int max,struct stream_priv_s *ctl)
 	}
       }
       if (max == 1) {
-	*buf = '\0';
-	break;
+        char *q = memchr(ctl->cget, '\n', ctl->cavail);
+
+        if (q) { // found EOL: update state and return
+          ++q;
+          ctl->cavail -= q - ctl->cget;
+          ctl->cget = q;
+
+          break;
+        }
+
+        // receive more data to find end of current line
+        ctl->cget = ctl->cput;
       }
       if (ctl->cput == ctl->cget) {
 	ctl->cput = ctl->cget = ctl->buf;
