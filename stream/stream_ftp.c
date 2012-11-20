@@ -67,7 +67,7 @@ static struct stream_priv_s {
   NULL,
 };
 
-#define CMD_BUFSIZE 256
+#define CMD_BUFSIZE 8192
 
 #define BUFSIZE 2048
 
