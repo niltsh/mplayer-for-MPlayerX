@@ -52,6 +52,7 @@ static struct stream_priv_s {
   int handle;
   int cavail,cleft;
   char *buf;
+  char *cmd_buf;
 } stream_priv_dflts = {
   "anonymous","no@spam",
   NULL,
@@ -62,8 +63,11 @@ static struct stream_priv_s {
 
   -1,
   0,0,
-  NULL
+  NULL,
+  NULL,
 };
+
+#define CMD_BUFSIZE 256
 
 #define BUFSIZE 2048
 
@@ -289,7 +293,7 @@ static int FtpOpenPort(struct stream_priv_s* p) {
 static int FtpOpenData(stream_t* s,off_t newpos) {
   struct stream_priv_s* p = s->priv;
   int resp;
-  char str[256],rsp_txt[256];
+  char rsp_txt[256];
 
   // Open a new connection
   s->fd = FtpOpenPort(p);
@@ -297,21 +301,21 @@ static int FtpOpenData(stream_t* s,off_t newpos) {
   if(s->fd < 0) return 0;
 
   if(newpos > 0) {
-    snprintf(str,255,"REST %"PRId64, (int64_t)newpos);
+    snprintf(p->cmd_buf,CMD_BUFSIZE - 1,"REST %"PRId64, (int64_t)newpos);
 
-    resp = FtpSendCmd(str,p,rsp_txt);
+    resp = FtpSendCmd(p->cmd_buf,p,rsp_txt);
     if(resp != 3) {
-      mp_msg(MSGT_OPEN,MSGL_WARN, "[ftp] command '%s' failed: %s\n",str,rsp_txt);
+      mp_msg(MSGT_OPEN,MSGL_WARN, "[ftp] command '%s' failed: %s\n",p->cmd_buf,rsp_txt);
       newpos = 0;
     }
   }
 
   // Get the file
-  snprintf(str,255,"RETR %s",p->filename);
-  resp = FtpSendCmd(str,p,rsp_txt);
+  snprintf(p->cmd_buf,CMD_BUFSIZE - 1,"RETR %s",p->filename);
+  resp = FtpSendCmd(p->cmd_buf,p,rsp_txt);
 
   if(resp != 1) {
-    mp_msg(MSGT_OPEN,MSGL_ERR, "[ftp] command '%s' failed: %s\n",str,rsp_txt);
+    mp_msg(MSGT_OPEN,MSGL_ERR, "[ftp] command '%s' failed: %s\n",p->cmd_buf,rsp_txt);
     return 0;
   }
 
@@ -406,6 +410,7 @@ static void close_f(stream_t *s) {
   }
 
   free(p->buf);
+  free(p->cmd_buf);
 
   m_struct_free(&stream_opts,p);
 }
@@ -416,7 +421,7 @@ static int open_f(stream_t *stream,int mode, void* opts, int* file_format) {
   int resp;
   int64_t len = 0;
   struct stream_priv_s* p = (struct stream_priv_s*)opts;
-  char str[256],rsp_txt[256];
+  char rsp_txt[256];
 
   if(mode != STREAM_READ) {
     mp_msg(MSGT_OPEN,MSGL_ERR, "[ftp] Unknown open mode %d\n",mode);
@@ -432,8 +437,9 @@ static int open_f(stream_t *stream,int mode, void* opts, int* file_format) {
 
   // Allocate buffers
   p->buf = malloc(BUFSIZE);
+  p->cmd_buf = malloc(CMD_BUFSIZE);
 
-  if (!p->buf) {
+  if (!p->buf || !p->cmd_buf) {
     close_f(stream);
     m_struct_free(&stream_opts,opts);
     return STREAM_ERROR;
@@ -458,20 +464,20 @@ static int open_f(stream_t *stream,int mode, void* opts, int* file_format) {
   }
 
   // Login
-  snprintf(str,255,"USER %s",p->user);
-  resp = FtpSendCmd(str,p,rsp_txt);
+  snprintf(p->cmd_buf,CMD_BUFSIZE - 1,"USER %s",p->user);
+  resp = FtpSendCmd(p->cmd_buf,p,rsp_txt);
 
   // password needed
   if(resp == 3) {
-    snprintf(str,255,"PASS %s",p->pass);
-    resp = FtpSendCmd(str,p,rsp_txt);
+    snprintf(p->cmd_buf,CMD_BUFSIZE - 1,"PASS %s",p->pass);
+    resp = FtpSendCmd(p->cmd_buf,p,rsp_txt);
     if(resp != 2) {
-      mp_msg(MSGT_OPEN,MSGL_ERR, "[ftp] command '%s' failed: %s\n",str,rsp_txt);
+      mp_msg(MSGT_OPEN,MSGL_ERR, "[ftp] command '%s' failed: %s\n",p->cmd_buf,rsp_txt);
       close_f(stream);
       return STREAM_ERROR;
     }
   } else if(resp != 2) {
-    mp_msg(MSGT_OPEN,MSGL_ERR, "[ftp] command '%s' failed: %s\n",str,rsp_txt);
+    mp_msg(MSGT_OPEN,MSGL_ERR, "[ftp] command '%s' failed: %s\n",p->cmd_buf,rsp_txt);
     close_f(stream);
     return STREAM_ERROR;
   }
@@ -485,10 +491,10 @@ static int open_f(stream_t *stream,int mode, void* opts, int* file_format) {
   }
 
   // Get the filesize
-  snprintf(str,255,"SIZE %s",p->filename);
-  resp = FtpSendCmd(str,p,rsp_txt);
+  snprintf(p->cmd_buf,CMD_BUFSIZE - 1,"SIZE %s",p->filename);
+  resp = FtpSendCmd(p->cmd_buf,p,rsp_txt);
   if(resp != 2) {
-    mp_msg(MSGT_OPEN,MSGL_WARN, "[ftp] command '%s' failed: %s\n",str,rsp_txt);
+    mp_msg(MSGT_OPEN,MSGL_WARN, "[ftp] command '%s' failed: %s\n",p->cmd_buf,rsp_txt);
   } else {
     int dummy;
     sscanf(rsp_txt,"%d %"SCNd64,&dummy,&len);
