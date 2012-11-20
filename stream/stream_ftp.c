@@ -430,6 +430,15 @@ static int open_f(stream_t *stream,int mode, void* opts, int* file_format) {
     return STREAM_ERROR;
   }
 
+  // Allocate buffers
+  p->buf = malloc(BUFSIZE);
+
+  if (!p->buf) {
+    close_f(stream);
+    m_struct_free(&stream_opts,opts);
+    return STREAM_ERROR;
+  }
+
   // Open the control connection
   p->handle = connect2Server(p->host,p->port,1);
 
@@ -441,7 +450,6 @@ static int open_f(stream_t *stream,int mode, void* opts, int* file_format) {
   // We got a connection, let's start serious things
   stream->fd = -1;
   stream->priv = p;
-  p->buf = malloc(BUFSIZE);
 
   if (readresp(p, NULL) == 0) {
     close_f(stream);
