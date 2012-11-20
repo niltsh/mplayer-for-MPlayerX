@@ -105,6 +105,9 @@ static int fd_can_read(int fd,int timeout) {
 /*
  * read a line of text
  *
+ * The parameter buf will always be initialized as long as max is bigger
+ * then 1. If nothing is read it will contain an empty string.
+ *
  * return -1 on error or bytecount
  */
 static int readline(char *buf,int max,struct stream_priv_s *ctl)
@@ -112,6 +115,11 @@ static int readline(char *buf,int max,struct stream_priv_s *ctl)
     int x,retval = 0;
     char *end,*bp=buf;
     int eof = 0;
+
+    if (max <= 0) {
+      return -1;
+    }
+    *bp = '\0';
 
     do {
       if (ctl->cavail > 0) {
@@ -181,13 +189,14 @@ static int readresp(struct stream_priv_s* ctl,char* rsp)
 {
     static char response[256];
     char match[5];
-    int r;
+    int r, len;
 
-    if (readline(response,256,ctl) == -1)
+    len = readline(response,256,ctl);
+    if (rsp) strcpy(rsp,response);
+    if (len == -1)
       return 0;
 
     r = atoi(response)/100;
-    if(rsp) strcpy(rsp,response);
 
     mp_msg(MSGT_STREAM,MSGL_V, "[ftp] < %s",response);
 
