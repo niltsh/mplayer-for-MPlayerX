@@ -400,9 +400,11 @@ static void close_f(stream_t *s) {
     s->fd = -1;
   }
 
-  FtpSendCmd("QUIT",p,NULL);
+  if (p->handle >= 0) {
+    FtpSendCmd("QUIT", p, NULL);
+    closesocket(p->handle);
+  }
 
-  if(p->handle >= 0) closesocket(p->handle);
   free(p->buf);
 
   m_struct_free(&stream_opts,p);
