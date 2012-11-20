@@ -60,7 +60,7 @@ static struct stream_priv_s {
   NULL,
   NULL,
 
-  0,
+  -1,
   0,0,
   NULL
 };
@@ -359,7 +359,7 @@ static int seek(stream_t *s,off_t newpos) {
 
     // First close the fd
     closesocket(s->fd);
-    s->fd = 0;
+    s->fd = -1;
 
     // Send send the telnet sequence needed to make the server react
 
@@ -395,14 +395,14 @@ static void close_f(stream_t *s) {
 
   if(!p) return;
 
-  if(s->fd > 0) {
+  if(s->fd >= 0) {
     closesocket(s->fd);
-    s->fd = 0;
+    s->fd = -1;
   }
 
   FtpSendCmd("QUIT",p,NULL);
 
-  if(p->handle) closesocket(p->handle);
+  if(p->handle >= 0) closesocket(p->handle);
   free(p->buf);
 
   m_struct_free(&stream_opts,p);
