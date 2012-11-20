@@ -32,6 +32,7 @@
 #include <winsock2.h>
 #endif
 
+#include "libavutil/avutil.h"
 #include "mp_msg.h"
 #include "network.h"
 #include "stream.h"
@@ -114,7 +115,7 @@ static int readline(char *buf,int max,struct stream_priv_s *ctl)
 
     do {
       if (ctl->cavail > 0) {
-	x = (max >= ctl->cavail) ? ctl->cavail : max-1;
+	x = FFMIN(ctl->cavail, max-1);
 	end = memccpy(bp,ctl->cget,'\n',x);
 	if (end != NULL)
 	  x = end - bp;
