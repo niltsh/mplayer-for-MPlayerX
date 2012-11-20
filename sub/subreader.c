@@ -677,7 +677,7 @@ static subtitle *sub_read_line_ssa(stream_t *st,subtitle *current, int utf16) {
             tmp = line2;
             if(!(tmp=strchr(++tmp, ','))) break;
             if(brace && brace < tmp) break; // comma inside command
-            if(*(++tmp) == ' ') break;
+            if(tmp[1] == ' ') break;
                   /* a space after a comma means we're already in a sentence */
             line2 = tmp;
           }
