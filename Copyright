@@ -13,7 +13,7 @@ MPlayer includes code from several external sources. General information and
 license details are listed below:
 
 Name:       FFmpeg
-Version:    Subversion HEAD
+Version:    Git HEAD
 URL:        http://www.ffmpeg.org
 Directory:  ffmpeg
 Copyright:  Many, see individual files for copyright notices.
@@ -53,7 +53,7 @@ License:    GNU General Public License
 
 
 Name:       libmpeg2
-Version:    0.5.1 + patches
+Version:    Subversion r1197 + patches
 URL:        http://libmpeg2.sourceforge.net/
 Directory:  libmpeg2
 Copyright:  1999-2000 Aaron Holtzman <aholtzma@ess.engr.uvic.ca>
@@ -154,11 +154,11 @@ Copyright:  Alex Ionescu (alex.ionescu@reactos.org)
 License:    GNU General Public License
 
 Name:       libass
-Version:    0.9.10
+Version:    0.10.1
 URL:        http://code.google.com/p/libass/
 Directory:  libass/
 Copyright:  2006 Evgeniy Stepanov <eugeni.stepanov@gmail.com>
-            2009 Grigori Goronzy <greg@geekmind.org>
+            2009-2012 Grigori Goronzy <greg@geekmind.org>
 License:    GNU General Public License
 
 Name:       Icons
