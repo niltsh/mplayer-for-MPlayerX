@@ -245,6 +245,7 @@ static int copy_samples(AVCodecContext *avc, AVFrame *frame,
         case 4:
             copy_samples_planar(4, frame->nb_samples, channels,
                                 buf, frame->extended_data);
+            break;
         default:
             copy_samples_planar(sample_size, frame->nb_samples, channels,
                                 buf, frame->extended_data);
