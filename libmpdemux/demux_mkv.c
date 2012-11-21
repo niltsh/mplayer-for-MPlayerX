@@ -1546,6 +1546,7 @@ static int demux_mkv_open_video(demuxer_t *demuxer, mkv_track_t *track,
             cnt = track->private_size - RVPROPERTIES_SIZE;
             if (cnt > INT_MAX - sizeof(*bih) - 8) {
                 mp_msg(MSGT_DEMUX, MSGL_ERR, "[mkv] Integer overflow!\n");
+                free(bih);
                 return 1;
             }
             bih = realloc(bih, sizeof(*bih) + 8 + cnt);
