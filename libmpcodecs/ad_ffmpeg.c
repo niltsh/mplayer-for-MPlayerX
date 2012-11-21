@@ -202,13 +202,13 @@ static int control(sh_audio_t *sh,int cmd,void* arg, ...)
     return CONTROL_UNKNOWN;
 }
 
-static av_always_inline void copy_samples_planar(unsigned bps,
-                                                 unsigned nb_samples,
-                                                 unsigned nb_channels,
+static av_always_inline void copy_samples_planar(size_t bps,
+                                                 size_t nb_samples,
+                                                 size_t nb_channels,
                                                  unsigned char *dst,
                                                  unsigned char **src)
 {
-    unsigned s, c, o = 0;
+    size_t s, c, o = 0;
 
     for (s = 0; s < nb_samples; s++) {
         for (c = 0; c < nb_channels; c++) {
