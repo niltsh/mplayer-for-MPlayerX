@@ -325,7 +325,7 @@ void ShowFileSelect( int type,int modal )
 
  if ( !tmp && fsMedium ) tmp=guiInfo.Filename;
 
- if ( tmp && tmp[0] )
+ if ( tmp && tmp[0] && !strstr( tmp,"://" ) )
   {
    dir = strdup( tmp );
 
