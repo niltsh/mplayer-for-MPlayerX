@@ -170,7 +170,7 @@ struct vf_priv_s
  * of how MPlayer works, it cannot safely halt execution, but at least the user
  * will get an error message before the segfault happens.
  */
-static void * safe_malloc(int size)
+static void * safe_malloc(size_t size)
 {
   void * answer = malloc(size);
   if (answer == NULL)
