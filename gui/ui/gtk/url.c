@@ -103,6 +103,7 @@ static void on_Button_pressed( GtkButton * button,gpointer user_data )
      listMgr( URLLIST_ITEM_ADD,item );
 
      uiSetFileName( NULL,str,STREAMTYPE_STREAM ); guiInfo.NewPlay=GUI_FILE_NEW;
+     import_file_into_gui(str, 0);
      uiEventHandling( evPlay,0 );
     }
   }

@@ -141,6 +141,7 @@ void uiEventHandling( int msg,float param )
         break;
 
    case evLoadURL:
+        listMgr( PLAYLIST_DELETE,0 );
         gtkShow( evLoadURL,NULL );
 	break;
 
@@ -208,7 +209,7 @@ play:
 
         if ( ( msg == evPlaySwitchToPause )&&( guiInfo.Playing == GUI_PAUSE ) ) goto NoPause;
 
-	if ( listMgr( PLAYLIST_ITEM_GET_CURR,0 ) &&( guiInfo.StreamType == STREAMTYPE_FILE ) )
+	if ( listMgr( PLAYLIST_ITEM_GET_CURR,0 ) &&( guiInfo.StreamType == STREAMTYPE_FILE || guiInfo.StreamType == STREAMTYPE_STREAM ) )
 	 {
 	  plItem * next = listMgr( PLAYLIST_ITEM_GET_CURR,0 );
 	  uiSetFileName( next->path,next->name,SAME_STREAMTYPE );
