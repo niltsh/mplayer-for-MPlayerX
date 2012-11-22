@@ -484,8 +484,8 @@ void uiMainMouseHandle( int Button,int X,int Y,int RX,int RY )
             item=&guiApp.mainItems[SelectedItem];
             item->pressed=btnReleased;
            }
+          if ( currentselected == - 1 || SelectedItem == -1 ) { itemtype=0; break; }
           SelectedItem=-1;
-          if ( currentselected == - 1 ) { itemtype=0; break; }
           value=0;
           switch( itemtype )
            {
