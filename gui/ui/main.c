@@ -141,7 +141,6 @@ void uiEventHandling( int msg,float param )
         break;
 
    case evLoadURL:
-        listMgr( PLAYLIST_DELETE,0 );
         gtkShow( evLoadURL,NULL );
 	break;
 
@@ -272,7 +271,6 @@ NoPause:
         uiMainAutoPlay=1;
 //	guiInfo.StreamType=STREAMTYPE_FILE;
    case evLoad:
-	listMgr( PLAYLIST_DELETE,0 );
         gtkShow( evLoad,NULL );
         break;
    case evLoadSubtitle:  gtkShow( evLoadSubtitle,NULL );  break;

@@ -511,6 +511,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
           selected = g_strconcat(fsSelectedDirectory, "/", fsSelectedFile, NULL);
           if (selected)
           {
+            listMgr(PLAYLIST_DELETE, 0);
             add_to_gui_playlist(selected, PLAYLIST_ITEM_APPEND);
             g_free(selected);
           }
