@@ -835,33 +835,33 @@ int gui(int what, void *data)
 }
 
 // This function adds/inserts one file into the gui playlist.
-int import_file_into_gui(char *temp, int insert)
+int add_to_gui_playlist(const char *what, int how)
 {
     char *filename, *pathname;
     plItem *item;
 
-    filename = strdup(mp_basename(temp));
-    pathname = strdup(temp);
+    if (!what || (how != PLAYLIST_ITEM_APPEND && how != PLAYLIST_ITEM_INSERT))
+        return 0;
+
+    filename = strdup(mp_basename(what));
+    pathname = strdup(what);
 
     if (strlen(pathname) - strlen(filename) > 0)
         pathname[strlen(pathname) - strlen(filename) - 1] = 0;                                            // we have some path, so remove / at end
     else
         pathname[strlen(pathname) - strlen(filename)] = 0;
 
-    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] playtree, add: %s/%s\n", pathname, filename);
-
     item = calloc(1, sizeof(plItem));
 
     if (!item)
         return 0;
 
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] playtree, add: %s/%s\n", pathname, filename);
+
     item->name = filename;
     item->path = pathname;
 
-    if (insert)
-        listMgr(PLAYLIST_ITEM_INSERT, item);           // inserts the item after current, and makes current=item
-    else
-        listMgr(PLAYLIST_ITEM_APPEND, item);
+    listMgr(how, item);
 
     return 1;
 }
@@ -881,7 +881,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
     if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
             /* add it to end of list */
-            if (import_file_into_gui(filename, 0))
+            if (add_to_gui_playlist(filename, PLAYLIST_ITEM_APPEND))
                 result = 1;
     }
 
@@ -910,7 +910,7 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
     if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
             /* insert it into the list and set plCurrent=new item */
-            if (import_file_into_gui(filename, 1))
+            if (add_to_gui_playlist(filename, PLAYLIST_ITEM_INSERT))
                 result = 1;
 
         pt_iter_destroy(&my_pt_iter);

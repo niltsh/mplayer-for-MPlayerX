@@ -32,6 +32,7 @@
 
 #include "gui/app.h"
 #include "gui/interface.h"
+#include "gui/util/list.h"
 #include "gui/util/mem.h"
 #include "gui/util/string.h"
 #include "help_mp.h"
@@ -510,7 +511,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
           selected = g_strconcat(fsSelectedDirectory, "/", fsSelectedFile, NULL);
           if (selected)
           {
-            import_file_into_gui(selected, 0);
+            add_to_gui_playlist(selected, PLAYLIST_ITEM_APPEND);
             g_free(selected);
           }
           guiInfo.NewPlay=GUI_FILE_NEW; sub_fps=0;

@@ -150,6 +150,6 @@ void mplayerLoadSubtitle(const char *name);
 void gmp_msg(int mod, int lev, const char *format, ...);
 //@}
 
-int import_file_into_gui(char *temp, int insert);
+int add_to_gui_playlist(const char *what, int how);
 
 #endif /* MPLAYER_GUI_INTERFACE_H */
