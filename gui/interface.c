@@ -835,7 +835,7 @@ int gui(int what, void *data)
 }
 
 // This function adds/inserts one file into the gui playlist.
-static int import_file_into_gui(char *temp, int insert)
+int import_file_into_gui(char *temp, int insert)
 {
     char *filename, *pathname;
     plItem *item;
