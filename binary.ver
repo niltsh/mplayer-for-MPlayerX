@@ -1,0 +1,3 @@
+MPLAYER_1 {
+  local: *;
+};
