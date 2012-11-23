@@ -336,8 +336,8 @@ set_volume:
    case evIconify:
         switch ( iparam )
          {
-          case 0: wsIconify( guiApp.mainWindow ); break;
-          case 1: wsIconify( guiApp.videoWindow ); break;
+          case 0: wsIconify( &guiApp.mainWindow ); break;
+          case 1: wsIconify( &guiApp.videoWindow ); break;
          }
         break;
    case evHalfSize:

@@ -1196,12 +1196,14 @@ void wsResizeWindow(wsTWindow *win, int sx, int sy)
         XMapWindow(wsDisplay, win->WindowID);
 }
 
-// ----------------------------------------------------------------------------------------------
-//    Iconify window.
-// ----------------------------------------------------------------------------------------------
-void wsIconify(wsTWindow win)
+/**
+ * @brief Iconify a window.
+ *
+ * @param win pointer to a ws window structure
+ */
+void wsIconify(wsTWindow *win)
 {
-    XIconifyWindow(wsDisplay, win.WindowID, 0);
+    XIconifyWindow(wsDisplay, win->WindowID, 0);
 }
 
 /**
