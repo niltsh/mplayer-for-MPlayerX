@@ -511,12 +511,15 @@ void uiMainMouseHandle( int Button,int X,int Y,int RX,int RY )
    case wsP5MouseButton: value=-2.5f; goto rollerhandled;
    case wsP4MouseButton: value= 2.5f;
 rollerhandled:
+          if (currentselected != - 1)
+           {
           item=&guiApp.mainItems[currentselected];
           if ( ( item->type == itHPotmeter )||( item->type == itVPotmeter )||( item->type == itPotmeter ) )
            {
             item->value+=value;
             btnModify( item->message,item->value );
             uiEventHandling( item->message,item->value );
+           }
            }
           break;
 
