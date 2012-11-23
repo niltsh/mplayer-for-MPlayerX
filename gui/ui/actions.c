@@ -241,7 +241,6 @@ void uiSetFileName(char *dir, char *name, int type)
 void uiCurr(void)
 {
     plItem *curr;
-    int stop = 0;
 
     if (guiInfo.Playing == GUI_PAUSE)
         return;
@@ -264,9 +263,6 @@ void uiCurr(void)
 
         return;
     }
-
-    if (stop)
-        uiEventHandling(evStop, 0);
 
     if (guiInfo.Playing == GUI_PLAY)
         uiEventHandling(evPlay, 0);
