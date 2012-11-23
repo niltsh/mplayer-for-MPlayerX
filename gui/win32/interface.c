@@ -817,7 +817,7 @@ int gui(int what, void *data)
 }
 
 /* This function adds/inserts one file into the gui playlist */
-static int add_to_gui_playlist(const char *what, int how)
+int add_to_gui_playlist(const char *what, int how)
 {
     char filename[MAX_PATH];
     char *filepart = filename;
