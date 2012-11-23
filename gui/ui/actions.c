@@ -257,7 +257,7 @@ void uiCurr(void)
 
         if (curr) {
             uiSetFileName(curr->path, curr->name, STREAMTYPE_FILE);
-            uiGotoTheNext = (guiInfo.Playing ? 0 : 1);
+            uiGotoTheNext = 0;
             break;
         }
 
