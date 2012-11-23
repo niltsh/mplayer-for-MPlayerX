@@ -1297,27 +1297,6 @@ void wsSetForegroundRGB(wsTWindow *win, int r, int g, int b)
 }
 
 // ----------------------------------------------------------------------------------------------
-//    Draw string at x,y with fc ( foreground color ) and bc ( background color ).
-// ----------------------------------------------------------------------------------------------
-void wsDrawString(wsTWindow win, int x, int y, char *str, int fc, int bc)
-{
-    XSetForeground(wsDisplay, win.wGC, bc);
-    XFillRectangle(wsDisplay, win.WindowID, win.wGC, x, y,
-                   XTextWidth(win.Font, str, strlen(str)) + 20,
-                   win.FontHeight + 2);
-    XSetForeground(wsDisplay, win.wGC, fc);
-    XDrawString(wsDisplay, win.WindowID, win.wGC, x + 10, y + 13, str, strlen(str));
-}
-
-// ----------------------------------------------------------------------------------------------
-//    Calculation string width.
-// ----------------------------------------------------------------------------------------------
-int wsTextWidth(wsTWindow win, char *str)
-{
-    return XTextWidth(win.Font, str, strlen(str)) + 20;
-}
-
-// ----------------------------------------------------------------------------------------------
 //    Show / hide mouse cursor.
 // ----------------------------------------------------------------------------------------------
 void wsVisibleMouse(wsTWindow *win, int m)

@@ -250,12 +250,6 @@ void wsSetShape(wsTWindow *win, char *data);
 void wsSetIcon(Display *dpy, Window win, guiIcon_t *icon);
 
 // ----------------------------------------------------------------------------------------------
-//    Draw string at x,y with fc ( foreground color ) and bc ( background color ).
-// ----------------------------------------------------------------------------------------------
-void wsDrawString(wsTWindow win, int x, int y, char *str, int fc, int bc);
-int wsTextWidth(wsTWindow win, char *str);
-
-// ----------------------------------------------------------------------------------------------
 //    Show / hide mouse cursor.
 // ----------------------------------------------------------------------------------------------
 void wsVisibleMouse(wsTWindow *win, int m);
