@@ -388,7 +388,7 @@ void RenderAll(wsTWindow *window, wItem *Items, int nrItems, char *db)
                 char c[2];
 
                 l    = (item->textwidth ? item->textwidth : item->width);
-                x    = l - ((d - DLABEL_DELAY) / 20) % l - 1;
+                x    = (l ? l - ((d - DLABEL_DELAY) / 20) % l - 1 : 0);
                 c[0] = *item->text;
                 c[1] = '\0';
 
