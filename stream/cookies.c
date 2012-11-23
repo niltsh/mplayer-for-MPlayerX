@@ -160,9 +160,10 @@ static struct cookie_list_type *load_cookies_from(const char *filename,
 						  struct cookie_list_type
 						  *list)
 {
-    char *ptr;
+    char *ptr, *buffer;
     off_t length;
 
+    buffer =
     ptr = load_file(filename, &length);
     if (!ptr)
 	return list;
@@ -181,7 +182,7 @@ static struct cookie_list_type *load_cookies_from(const char *filename,
 	    list = new;
 	}
     }
-    free(ptr);
+    free(buffer);
     return list;
 }
 
