@@ -310,6 +310,7 @@ void
 url_free(URL_t* url) {
 	if(!url) return;
 	free(url->url);
+	free(url->noauth_url);
 	free(url->protocol);
 	free(url->hostname);
 	free(url->file);
