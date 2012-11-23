@@ -1074,18 +1074,22 @@ int skinRead(char *sname)
 
         for (i = 0; i < FF_ARRAY_ELEMS(skinItem); i++) {
             if (!strcmp(item, skinItem[i].name)) {
-                if (skinItem[i].func(param) != 0)
+                if (skinItem[i].func(param) != 0) {
+                    fclose(skinfile);
                     return -2;
-                else
+                } else
                     break;
             }
         }
 
         if (i == FF_ARRAY_ELEMS(skinItem)) {
             skin_error(MSGTR_SKIN_UNKNOWN_ITEM, item);
+            fclose(skinfile);
             return -2;
         }
     }
+
+    fclose(skinfile);
 
     if (linenumber == 0) {
         mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_SkinFileNotReadable, skinfname);
