@@ -7774,6 +7774,14 @@ else
   echores "no"
 fi
 
+echocheck "linker support for --large-address-aware"
+if cflag_check "-Wl,--large-address-aware" ; then
+  extra_ldflags="-Wl,--large-address-aware $extra_ldflags"
+  echores "yes"
+else
+  echores "no"
+fi
+
 
 # Dynamic linking flags
 # (FIXME: 'echocheck "dynamic linking"' above and modify here accordingly)
