@@ -195,13 +195,13 @@ static void uiPlaybarMouseHandle( int Button, int X, int Y, int RX, int RY )
 rollerhandled:
         if (currentselected != - 1)
          {
-        item=&guiApp.playbarItems[currentselected];
-        if ( ( item->type == itHPotmeter )||( item->type == itVPotmeter )||( item->type == itPotmeter ) )
-	 {
-	  item->value+=value;
-	  btnModify( item->message,item->value );
-	  uiEventHandling( item->message,item->value );
-	 }
+          item=&guiApp.playbarItems[currentselected];
+          if ( ( item->type == itHPotmeter )||( item->type == itVPotmeter )||( item->type == itPotmeter ) )
+           {
+            item->value+=value;
+            btnModify( item->message,item->value );
+            uiEventHandling( item->message,item->value );
+           }
 	 }
 	break;
 /* --- */
