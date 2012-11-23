@@ -18,6 +18,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -100,7 +101,7 @@ static int gtkLoadIcon(GtkIconTheme *theme, gint size, GdkPixmap **gdkIcon, GdkB
             data = gdk_pixbuf_get_pixels(pixbuf);
 
             for (i = csize; i < guiIcon.collection_size; data += 4, i++)
-                guiIcon.collection[i] = (data[3] << 24) | AV_RB24(data);  // RGBA -> ARGB
+                guiIcon.collection[i] = (uint32_t)(data[3] << 24) | AV_RB24(data);  // RGBA -> ARGB
         }
 
         g_object_unref(pixbuf);
