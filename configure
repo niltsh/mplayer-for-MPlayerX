@@ -1509,6 +1509,8 @@ TMPC="$mplayer_tmpdir/tmp.c"
 TMPCPP="$mplayer_tmpdir/tmp.cpp"
 TMPH="$mplayer_tmpdir/tmp.h"
 TMPS="$mplayer_tmpdir/tmp.S"
+# We will update this later once we know the executable suffix
+TMPEXE="$mplayer_tmpdir/tmp"
 
 rm -f "$TMPLOG"
 echo configuration: $configuration > "$TMPLOG"
