@@ -42,12 +42,12 @@
  * @param img pointer suitable to store the image data
  *
  * @return 0 (ok), 1 (decoding error), 2 (open error), 3 (file too big),
- *                 4 (out of memory), 5 (avcodec alloc error)
+ *                 4 (out of memory), 5 (read error), 6 (avcodec alloc error)
  */
 static int pngRead(const char *fname, guiImage *img)
 {
     FILE *file;
-    size_t len;
+    size_t len, l;
     void *data;
     int decode_ok, bpl;
     AVCodecContext *avctx;
@@ -75,8 +75,13 @@ static int pngRead(const char *fname, guiImage *img)
     }
 
     fseek(file, 0, SEEK_SET);
-    fread(data, len, 1, file);
+    l = fread(data, len, 1, file);
     fclose(file);
+
+    if (l != 1) {
+        av_free(data);
+        return 5;
+    }
 
     avctx = avcodec_alloc_context3(NULL);
     frame = avcodec_alloc_frame();
@@ -85,7 +90,7 @@ static int pngRead(const char *fname, guiImage *img)
         av_free(frame);
         av_free(avctx);
         av_free(data);
-        return 5;
+        return 6;
     }
 
     avcodec_register_all();
