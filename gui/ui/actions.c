@@ -79,7 +79,7 @@ void uiPlay(void)
     gui(GUI_SET_STATE, (void *)GUI_PLAY);
     uiVideoRender = 0;
     wsSetBackgroundRGB(&guiApp.videoWindow, 0, 0, 0);
-    wsClearWindow(guiApp.videoWindow);
+    wsClearWindow(&guiApp.videoWindow);
 }
 
 void uiPause(void)
@@ -169,7 +169,7 @@ void uiChangeSkin(char *name)
     if (!guiInfo.Playing) {
         uiVideoRender = 1;
         wsSetBackgroundRGB(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
-        wsClearWindow(guiApp.videoWindow);
+        wsClearWindow(&guiApp.videoWindow);
         wsPostRedisplay(&guiApp.videoWindow);
     }
 
