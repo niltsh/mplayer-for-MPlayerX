@@ -47,7 +47,7 @@
 static int pngRead(const char *fname, guiImage *img)
 {
     FILE *file;
-    long len;
+    size_t len;
     void *data;
     int decode_ok, bpl;
     AVCodecContext *avctx;
