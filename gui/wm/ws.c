@@ -615,7 +615,9 @@ void wsDestroyWindow(wsTWindow *win)
     int l;
 
     l = wsSearch(win->WindowID);
-    wsWindowList[l] = NULL;
+
+    if (l != -1)
+        wsWindowList[l] = NULL;
 
     if (win->wsCursor != None) {
         XFreeCursor(wsDisplay, win->wsCursor);
