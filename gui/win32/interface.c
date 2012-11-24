@@ -77,7 +77,7 @@ int guiWinID = 0;
 
 char *skinName = NULL;
 char *codecname = NULL;
-int uiGotoTheNext = 1;
+int uiProcessNextInPlaylist = 1;
 static gui_t *mygui = NULL;
 static int update_videowindow(void);
 static RECT old_rect;
@@ -364,7 +364,7 @@ static void guiSetEvent(int event)
                 {
                     guiInfo.NewPlay = GUI_FILE_NEW;
                     update_playlistwindow();
-                    uiGotoTheNext = guiInfo.Playing? 0 : 1;
+                    uiProcessNextInPlaylist = guiInfo.Playing? 0 : 1;
                     gui(GUI_SET_STATE, (void *) GUI_STOP);
                     gui(GUI_SET_STATE, (void *) GUI_PLAY);
                     break;
@@ -766,13 +766,13 @@ int gui(int what, void *data)
         {
           guiInfo.sh_video = NULL;
 
-          if(!uiGotoTheNext && guiInfo.Playing)
+          if(!uiProcessNextInPlaylist && guiInfo.Playing)
           {
-              uiGotoTheNext = 1;
+              uiProcessNextInPlaylist = 1;
               break;
           }
 
-          if(uiGotoTheNext && guiInfo.Playing &&
+          if(uiProcessNextInPlaylist && guiInfo.Playing &&
             (mygui->playlist->current < (mygui->playlist->trackcount - 1)) &&
             guiInfo.StreamType != STREAMTYPE_DVD &&
             guiInfo.StreamType != STREAMTYPE_DVDNAV)
@@ -781,7 +781,7 @@ int gui(int what, void *data)
               if(movie_aspect >= 0)
                   movie_aspect = -1;
 
-              uiGotoTheNext = 1;
+              uiProcessNextInPlaylist = 1;
               guiInfo.NewPlay = GUI_FILE_NEW;
               uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename, STREAMTYPE_FILE);
               //sprintf(guiInfo.Filename, mygui->playlist->tracks[(mygui->playlist->current)++]->filename);
@@ -864,7 +864,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
                 result = 1;
         }
     }
-    uiGotoTheNext = 1;
+    uiProcessNextInPlaylist = 1;
 
     if (result)
     {

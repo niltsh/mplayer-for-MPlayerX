@@ -23,7 +23,7 @@
 
 #define SAME_STREAMTYPE (STREAMTYPE_DUMMY - 1)
 
-extern int uiGotoTheNext;
+extern int uiProcessNextInPlaylist;
 
 void uiAbsSeek(float sec);
 void uiChangeSkin(char *name);

@@ -765,8 +765,8 @@ int gui(int what, void *data)
 
         uiEventHandling(ivRedraw, 1);
 
-        if (!uiGotoTheNext && guiInfo.Playing) {
-            uiGotoTheNext = 1;
+        if (!uiProcessNextInPlaylist && guiInfo.Playing) {
+            uiProcessNextInPlaylist = 1;
             break;
         }
 
@@ -886,7 +886,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
     }
 
     uiCurr();   // update filename
-    uiGotoTheNext = 1;
+    uiProcessNextInPlaylist = 1;
 
     if (enqueue)
         filename = NULL;            // don't start playing
