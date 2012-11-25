@@ -210,8 +210,8 @@ play:
 
 	if ( listMgr( PLAYLIST_ITEM_GET_CURR,0 ) &&( guiInfo.StreamType == STREAMTYPE_FILE || guiInfo.StreamType == STREAMTYPE_STREAM ) )
 	 {
-	  plItem * next = listMgr( PLAYLIST_ITEM_GET_CURR,0 );
-	  uiSetFileName( next->path,next->name,SAME_STREAMTYPE );
+	  plItem * curr = listMgr( PLAYLIST_ITEM_GET_CURR,0 );
+	  uiSetFileName( curr->path,curr->name,SAME_STREAMTYPE );
 	 }
 
         switch ( guiInfo.StreamType )
