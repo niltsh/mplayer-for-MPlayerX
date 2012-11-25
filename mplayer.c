@@ -1799,6 +1799,7 @@ static int generate_video_frame(sh_video_t *sh_video, demux_stream_t *d_video)
             start   = NULL;
             pts     = MP_NOPTS_VALUE;
             hit_eof = 1;
+            drop_frame = 0;
         }
         if (in_size > max_framesize)
             max_framesize = in_size;
