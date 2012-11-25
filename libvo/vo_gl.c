@@ -151,7 +151,6 @@ static int stereo_mode;
 static int stipple;
 static enum MPGLType backend;
 
-static int int_pause;
 static int eq_bri = 0;
 static int eq_cont = 0;
 static int eq_sat = 0;
@@ -711,7 +710,6 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
   is_yuv |= (xs << 8) | (ys << 16);
   glFindFormat(format, NULL, &gl_texfmt, &gl_format, &gl_type);
 
-  int_pause = 0;
   vo_flipped = !!(flags & VOFLAG_FLIPPING);
 
   if (create_window(d_width, d_height, flags, title) < 0)
@@ -741,7 +739,7 @@ static void check_events(void)
         initGl(vo_dwidth, vo_dheight);
     }
     if(e&VO_EVENT_RESIZE) resize(vo_dwidth,vo_dheight);
-    if(e&VO_EVENT_EXPOSE && int_pause) redraw();
+    else if(e&VO_EVENT_EXPOSE) redraw();
 }
 
 /**
@@ -1422,10 +1420,6 @@ static const struct {
 static int control(uint32_t request, void *data)
 {
   switch (request) {
-  case VOCTRL_PAUSE:
-  case VOCTRL_RESUME:
-    int_pause = (request == VOCTRL_PAUSE);
-    return VO_TRUE;
   case VOCTRL_QUERY_FORMAT:
     return query_format(*(uint32_t*)data);
   case VOCTRL_GET_IMAGE:
