@@ -358,15 +358,16 @@ mp_image_t* vf_get_image(vf_instance_t* vf, unsigned int outfmt, int mp_imgtype,
     mpi->flags|=mp_imgflag&(MP_IMGFLAGMASK_RESTRICTIONS|MP_IMGFLAG_DRAW_CALLBACK|MP_IMGFLAG_RGB_PALETTE);
     if(!vf->draw_slice) mpi->flags&=~MP_IMGFLAG_DRAW_CALLBACK;
     missing_palette = !(mpi->flags & MP_IMGFLAG_RGB_PALETTE) && (mp_imgflag & MP_IMGFLAG_RGB_PALETTE);
-    if(mpi->width!=w2 || mpi->height!=h || missing_palette){
+    if(mpi->width!=w2 || mpi->height!=h || mpi->imgfmt != outfmt || missing_palette){
 //      printf("vf.c: MPI parameters changed!  %dx%d -> %dx%d   \n", mpi->width,mpi->height,w2,h);
         if(mpi->flags&MP_IMGFLAG_ALLOCATED){
-            if(mpi->width<w2 || mpi->height<h || missing_palette){
+            if(mpi->width<w2 || mpi->height<h || mpi->imgfmt != outfmt || missing_palette){
                 // need to re-allocate buffer memory:
                 av_freep(&mpi->planes[0]);
                 if (mpi->flags & MP_IMGFLAG_RGB_PALETTE)
                     av_freep(&mpi->planes[1]);
                 mpi->flags&=~MP_IMGFLAG_ALLOCATED;
+                mpi->bpp = 0;
                 mp_msg(MSGT_VFILTER,MSGL_V,"vf.c: have to REALLOCATE buffer memory in vf_%s :(\n",
                        vf->info->name);
             }
