@@ -609,6 +609,7 @@ void uiDandDHandler(int num,char** files)
 
   char* subtitles = NULL;
   char* filename = NULL;
+  char* s;
 
   if (num <= 0)
     return;
@@ -650,10 +651,12 @@ void uiDandDHandler(int num,char** files)
 
       item = calloc(1,sizeof(plItem));
 
+      s = strrchr( str,'/' );
+
       /* FIXME: decompose file name ? */
       /* yes -- Pontscho */
-      if ( strrchr( str,'/' ) ) {
-	char * s = strrchr( str,'/' ); *s=0; s++;
+      if ( s ) {
+	*s=0; s++;
 	item->name = gstrdup( s );
 	item->path = gstrdup( str );
       } else {
