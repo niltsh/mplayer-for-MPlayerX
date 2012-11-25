@@ -289,29 +289,30 @@ void listRepl(char ***list, const char *search, const char *replace)
  */
 int add_to_gui_playlist(const char *what, int how)
 {
-    char *filename, *pathname;
+    const char *file;
+    char *path;
     plItem *item;
 
     if (!what || (how != PLAYLIST_ITEM_APPEND && how != PLAYLIST_ITEM_INSERT))
         return 0;
 
-    filename = strdup(mp_basename(what));
-    pathname = strdup(what);
+    file = mp_basename(what);
+    path = strdup(what);
 
-    if (strlen(pathname) - strlen(filename) > 0)
-        pathname[strlen(pathname) - strlen(filename) - 1] = 0;                                            // we have some path, so remove / at end
+    if (file > what)
+        path[file - what - 1] = 0;
     else
-        pathname[strlen(pathname) - strlen(filename)] = 0;
+        strcpy(path, ".");
 
     item = calloc(1, sizeof(plItem));
 
     if (!item)
         return 0;
 
-    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[list] adding %s/%s\n", pathname, filename);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[list] adding %s/%s\n", path, file);
 
-    item->name = filename;
-    item->path = pathname;
+    item->name = strdup(file);
+    item->path = path;
 
     listMgr(how, item);
 
