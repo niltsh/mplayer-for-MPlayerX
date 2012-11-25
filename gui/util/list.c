@@ -27,6 +27,9 @@
 #include "list.h"
 #include "string.h"
 
+#include "mp_msg.h"
+#include "path.h"
+
 static plItem *plList;
 static plItem *plCurrent;
 
@@ -274,4 +277,43 @@ void listRepl(char ***list, const char *search, const char *replace)
 
     (*list)[i]     = strdup(replace);
     (*list)[i + 1] = NULL;
+}
+
+/**
+ * @brief Append or insert a file to the playlist.
+ *
+ * @param what file to be added
+ * @param how command (#PLAYLIST_ITEM_APPEND or #PLAYLIST_ITEM_INSERT) to be performed
+ *
+ * @return 1 (ok) or 0 (error)
+ */
+int add_to_gui_playlist(const char *what, int how)
+{
+    char *filename, *pathname;
+    plItem *item;
+
+    if (!what || (how != PLAYLIST_ITEM_APPEND && how != PLAYLIST_ITEM_INSERT))
+        return 0;
+
+    filename = strdup(mp_basename(what));
+    pathname = strdup(what);
+
+    if (strlen(pathname) - strlen(filename) > 0)
+        pathname[strlen(pathname) - strlen(filename) - 1] = 0;                                            // we have some path, so remove / at end
+    else
+        pathname[strlen(pathname) - strlen(filename)] = 0;
+
+    item = calloc(1, sizeof(plItem));
+
+    if (!item)
+        return 0;
+
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[list] adding %s/%s\n", pathname, filename);
+
+    item->name = filename;
+    item->path = pathname;
+
+    listMgr(how, item);
+
+    return 1;
 }

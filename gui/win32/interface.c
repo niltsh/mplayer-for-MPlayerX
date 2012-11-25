@@ -459,7 +459,7 @@ void uiSetFileName(char *dir, char *name, int type)
     filename = guiInfo.Filename;
 #ifdef __WINE__
     // When the GUI receives the files to be played in guiPlaylistInitialize()
-    // and guiPlaylistAdd(), it calls add_to_gui_playlist() where the call of
+    // and guiPlaylistAdd(), it calls import_file_into_gui() where the call of
     // Wine's GetFullPathName() converts each file name into the Windows style
     // (C:\path\to\file), which needs to be reconverted for MPlayer, so that
     // it will find the filename in the Linux filesystem.
@@ -817,18 +817,18 @@ int gui(int what, void *data)
 }
 
 /* This function adds/inserts one file into the gui playlist */
-int add_to_gui_playlist(const char *what, int how)
+static int import_file_into_gui(char *pathname, int insert)
 {
     char filename[MAX_PATH];
     char *filepart = filename;
 
-    if (strstr(what, "://"))
+    if (strstr(pathname, "://"))
     {
-        mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] Adding special %s\n", what);
-        mygui->playlist->add_track(mygui->playlist, what, NULL, NULL, 0);
+        mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] Adding special %s\n", pathname);
+        mygui->playlist->add_track(mygui->playlist, pathname, NULL, NULL, 0);
         return 1;
     }
-    if (GetFullPathName(what, MAX_PATH, filename, &filepart))
+    if (GetFullPathName(pathname, MAX_PATH, filename, &filepart))
     {
         if (!(GetFileAttributes(filename) & FILE_ATTRIBUTE_DIRECTORY))
         {
@@ -860,7 +860,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
         {
             if (parse_filename(filename, my_playtree, config, 0))
                 result = 1;
-            else if (add_to_gui_playlist(filename, PLAYLIST_ITEM_APPEND)) /* Add it to end of list */
+            else if (import_file_into_gui(filename, 0)) /* Add it to end of list */
                 result = 1;
         }
     }
@@ -889,7 +889,7 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
     if((my_pt_iter = pt_iter_create(&my_playtree, config)))
     {
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
-            if (add_to_gui_playlist(filename, PLAYLIST_ITEM_INSERT)) /* insert it into the list and set plCurrent = new item */
+            if (import_file_into_gui(filename, 1)) /* insert it into the list and set plCurrent = new item */
                 result = 1;
         pt_iter_destroy(&my_pt_iter);
     }

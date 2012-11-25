@@ -834,38 +834,6 @@ int gui(int what, void *data)
     return True;
 }
 
-// This function adds/inserts one file into the gui playlist.
-int add_to_gui_playlist(const char *what, int how)
-{
-    char *filename, *pathname;
-    plItem *item;
-
-    if (!what || (how != PLAYLIST_ITEM_APPEND && how != PLAYLIST_ITEM_INSERT))
-        return 0;
-
-    filename = strdup(mp_basename(what));
-    pathname = strdup(what);
-
-    if (strlen(pathname) - strlen(filename) > 0)
-        pathname[strlen(pathname) - strlen(filename) - 1] = 0;                                            // we have some path, so remove / at end
-    else
-        pathname[strlen(pathname) - strlen(filename)] = 0;
-
-    item = calloc(1, sizeof(plItem));
-
-    if (!item)
-        return 0;
-
-    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] playtree, add: %s/%s\n", pathname, filename);
-
-    item->name = filename;
-    item->path = pathname;
-
-    listMgr(how, item);
-
-    return 1;
-}
-
 // This function imports the initial playtree (based on cmd-line files)
 // into the gui playlist by either:
 // - overwriting gui pl (enqueue=0)

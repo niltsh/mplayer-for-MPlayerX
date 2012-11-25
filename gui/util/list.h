@@ -55,4 +55,9 @@ void listRepl(char ***list, const char *search, const char *replace);
 void listSet(char ***list, const char *entry);
 //@}
 
+/// @name high-level list operations
+//@{
+int add_to_gui_playlist(const char *what, int how);
+//@}
+
 #endif /* MPLAYER_GUI_LIST_H */
