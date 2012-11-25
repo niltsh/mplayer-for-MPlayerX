@@ -407,12 +407,19 @@ static int put_image(struct vf_instance *vf, mp_image_t *mpi, double pts){
     }
 
     if(mpi->flags&MP_IMGFLAG_DIRECT || mpi->flags&MP_IMGFLAG_DRAW_CALLBACK){
+	int full_w = FFMIN(mpi->width,  vf->priv->exp_w);
+	int full_h = FFMIN(mpi->height, vf->priv->exp_h);
 	vf->dmpi=mpi->priv;
 	if(!vf->dmpi) { mp_msg(MSGT_VFILTER, MSGL_WARN, MSGTR_MPCODECS_FunWhydowegetNULL); return 0; }
 	mpi->priv=NULL;
 #ifdef OSD_SUPPORT
 	if(vf->priv->osd) draw_osd(vf,mpi->w,mpi->h);
 #endif
+	// padding for use by decoder needs to be cleared
+	if (mpi->w < full_w)
+	    vf_mpi_clear(mpi, mpi->w, 0, full_w - mpi->w, full_h);
+	if (mpi->h < full_h)
+	    vf_mpi_clear(mpi, 0, mpi->h, full_w, full_h - mpi->h);
 	// we've used DR, so we're ready...
 	if(!(mpi->flags&MP_IMGFLAG_PLANAR))
 	    vf->dmpi->planes[1] = mpi->planes[1]; // passthrough rgb8 palette
