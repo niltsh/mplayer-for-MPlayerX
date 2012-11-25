@@ -221,9 +221,6 @@ void uiChangeSkin(char *name)
 
 void uiSetFileName(char *dir, char *name, int type)
 {
-    if (!name)
-        return;
-
     if (!dir)
         setdup(&guiInfo.Filename, name);
     else
