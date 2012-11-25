@@ -32,6 +32,7 @@
 #include "stream/stream.h"
 
 #include "gui/cfg.h"
+#include "gui/interface.h"
 #include "gui/ui/widgets.h"
 #include "gui/util/list.h"
 #include "gui/util/mem.h"
@@ -215,6 +216,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 //	  guiInfo.NewPlay=GUI_FILE_NEW;
 //	  guiInfo.StreamType=STREAMTYPE_FILE;
 	 }
+	else if (!guiInfo.Playing) uiSetFileName(NULL, NULL, STREAMTYPE_DUMMY);
        }
   case 0: // cancel
        HidePlayList();
