@@ -293,7 +293,7 @@ int add_to_gui_playlist(const char *what, int how)
     char *path;
     plItem *item;
 
-    if (!what || (how != PLAYLIST_ITEM_APPEND && how != PLAYLIST_ITEM_INSERT))
+    if (!what || !*what || (how != PLAYLIST_ITEM_APPEND && how != PLAYLIST_ITEM_INSERT))
         return 0;
 
     file = mp_basename(what);
