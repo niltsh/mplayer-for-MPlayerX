@@ -660,8 +660,9 @@ void uiDandDHandler(int num,char** files)
 	item->name = gstrdup( s );
 	item->path = gstrdup( str );
       } else {
+	// NOTE TO MYSELF: this shouldn't happen, make sure we have a full path
 	item->name = strdup(str);
-	item->path = strdup("");
+	item->path = strdup(".");
       }
       listMgr(PLAYLIST_ITEM_APPEND,item);
     } else {
