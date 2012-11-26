@@ -413,7 +413,7 @@ static void close_f(stream_t *s) {
 static int open_f(stream_t *stream,int mode, void* opts, av_unused int* file_format) {
   int resp;
   int64_t len = 0;
-  struct stream_priv_s* p = (struct stream_priv_s*)opts;
+  struct stream_priv_s* p = opts;
   char rsp_txt[256];
 
   if(mode != STREAM_READ) {
