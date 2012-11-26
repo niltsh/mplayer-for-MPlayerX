@@ -170,6 +170,8 @@ static unsigned int slice_height = 1;
 // performance statistics
 static int imgcnt, dr_imgcnt, dr_rejectcnt;
 
+static int did_render;
+
 static void redraw(void);
 
 static void resize(int x,int y){
@@ -899,24 +901,33 @@ static void do_render(void) {
   }
   if (is_yuv || custom_prog)
     glDisableYUVConversion(gl_target, yuvconvtype);
+  did_render = 1;
 }
 
 static void flip_page(void) {
+  // We might get an expose event between draw_image and its
+  // corresponding flip_page.
+  // For double-buffering we would then flip in a clear backbuffer.
+  // Easiest way to handle it is by keeping track if the
+  // current GL buffer contains a properly rendered video.
+  // did_render will always be false for single buffer.
+  if (!did_render) {
+    do_render();
+    do_render_osd(RENDER_OSD | RENDER_EOSD);
+  }
   if (vo_doublebuffering) {
     if (use_glFinish) mpglFinish();
     glctx.swapGlBuffers(&glctx);
     if (aspect_scaling() && use_aspect)
       mpglClear(GL_COLOR_BUFFER_BIT);
   } else {
-    do_render();
-    do_render_osd(RENDER_OSD | RENDER_EOSD);
     if (use_glFinish) mpglFinish();
     else mpglFlush();
   }
+  did_render = 0;
 }
 
 static void redraw(void) {
-  if (vo_doublebuffering) { do_render(); do_render_osd(RENDER_OSD | RENDER_EOSD); }
   flip_page();
 }
 
