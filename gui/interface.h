@@ -69,6 +69,9 @@ enum {
 #define GUI_FILE_NEW  2
 //@}
 
+/// StreamTypes that are permitted in a playlist
+#define isPlaylistStreamtype (guiInfo.StreamType == STREAMTYPE_FILE || guiInfo.StreamType == STREAMTYPE_STREAM)
+
 /// mplayer() instructions
 enum {
     MPLAYER_EXIT_GUI,

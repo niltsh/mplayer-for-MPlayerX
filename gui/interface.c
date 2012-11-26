@@ -789,9 +789,7 @@ int gui(int what, void *data)
 
             filename = NULL;
 
-            if (!listMgr(PLAYLIST_ITEM_GET_CURR, 0) &&
-                (guiInfo.StreamType == STREAMTYPE_FILE ||
-                 guiInfo.StreamType == STREAMTYPE_STREAM))
+            if (isPlaylistStreamtype && !listMgr(PLAYLIST_ITEM_GET_CURR, 0))
                 uiSetFileName(NULL, NULL, STREAMTYPE_DUMMY);
 
             guiInfo.ElapsedTime   = 0;
