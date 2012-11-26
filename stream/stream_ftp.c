@@ -54,17 +54,10 @@ static struct stream_priv_s {
   char *buf;
   char *cmd_buf;
 } stream_priv_dflts = {
-  "anonymous","no@spam",
-  NULL,
-  21,
-  NULL,
-  NULL,
-  NULL,
-
-  -1,
-  0,0,
-  NULL,
-  NULL,
+  .user = "anonymous",
+  .pass = "no@spam",
+  .port = 21,
+  .handle = -1,
 };
 
 #define CMD_BUFSIZE 8192
