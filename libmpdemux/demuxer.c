@@ -663,6 +663,7 @@ int ds_fill_buffer(demux_stream_t *ds)
             demux_packet_t *p = ds->first;
             // obviously not yet EOF after all
             ds->eof = 0;
+            ds->fill_count = 0;
 #if 0
             if (demux->reference_clock != MP_NOPTS_VALUE) {
                 if (   p->pts != MP_NOPTS_VALUE
@@ -697,6 +698,11 @@ int ds_fill_buffer(demux_stream_t *ds)
             --ds->packs;
             return 1;
         }
+        // avoid buffering too far ahead in e.g. badly interleaved files
+        // or when one stream is shorter, without breaking large audio
+        // delay with well interleaved files.
+        if (ds->fill_count++ > 20)
+            break;
         // avoid printing the "too many ..." message over and over
         if (ds->eof)
             break;

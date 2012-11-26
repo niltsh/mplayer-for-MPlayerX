@@ -144,6 +144,7 @@ typedef struct {
   int non_interleaved;     // 1 if this stream is not properly interleaved,
                            // so e.g. subtitle handling must do explicit reads.
 //---------------
+  int fill_count;         // number of unsuccessful tries to get a packet
   int packs;              // number of packets in buffer
   int bytes;              // total bytes of packets in buffer
   demux_packet_t *first;  // read to first buffer after the current buffer from here
