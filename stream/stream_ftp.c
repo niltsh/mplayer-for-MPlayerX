@@ -513,6 +513,7 @@ static int open_f(stream_t *stream,int mode, void* opts, av_unused int* file_for
   stream->priv = p;
   stream->fill_buffer = fill_buffer;
   stream->close = close_f;
+  stream->type = STREAMTYPE_STREAM;
 
   return STREAM_OK;
 }
