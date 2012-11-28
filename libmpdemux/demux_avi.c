@@ -210,6 +210,23 @@ static uint32_t avi_find_id(stream_t *stream) {
   return id;
 }
 
+static void switch_to_ni(demuxer_t *demux) {
+  avi_priv_t *priv=demux->priv;
+  mp_msg(MSGT_DEMUX,MSGL_WARN,MSGTR_SwitchToNi);
+  if(priv->idx_size>0){
+    // has index
+    demux->type=DEMUXER_TYPE_AVI_NI;
+    demux->desc=&demuxer_desc_avi_ni;
+    --priv->idx_pos; // hack
+  } else {
+    // no index
+    demux->type=DEMUXER_TYPE_AVI_NINI;
+    demux->desc=&demuxer_desc_avi_nini;
+    priv->idx_pos=demux->filepos; // hack
+  }
+  priv->idx_pos_v=priv->idx_pos_a=priv->idx_pos;
+}
+
 // return value:
 //     0 = EOF or no stream found
 //     1 = successfully read a packet
@@ -285,19 +302,7 @@ do{
   if(ds)
     if(ds->packs+1>=MAX_PACKS || ds->bytes+len>=MAX_PACK_BYTES){
 	// this packet will cause a buffer overflow, switch to -ni mode!!!
-	mp_msg(MSGT_DEMUX,MSGL_WARN,MSGTR_SwitchToNi);
-	if(priv->idx_size>0){
-	    // has index
-	    demux->type=DEMUXER_TYPE_AVI_NI;
-	    demux->desc=&demuxer_desc_avi_ni;
-	    --priv->idx_pos; // hack
-	} else {
-	    // no index
-	    demux->type=DEMUXER_TYPE_AVI_NINI;
-	    demux->desc=&demuxer_desc_avi_nini;
-	    priv->idx_pos=demux->filepos; // hack
-	}
-	priv->idx_pos_v=priv->idx_pos_a=priv->idx_pos;
+	switch_to_ni(demux);
 	// quit now, we can't even (no enough buffer memory) read this packet :(
 	return -1;
     }
@@ -437,6 +442,18 @@ int index_mode=-1;  // -1=untouched  0=don't use index  1=use (generate) index
 char *index_file_save = NULL, *index_file_load = NULL;
 int force_ni=0;     // force non-interleaved AVI parsing
 
+static int try_ds_fill(demuxer_t *demux, demux_stream_t *ds) {
+  int is_ni = demux->type != DEMUXER_TYPE_AVI;
+  if (ds_fill_buffer(ds))
+    return 1;
+  if (is_ni)
+    return 0;
+  switch_to_ni(demux);
+  ds->eof = 0;
+  ds->fill_count = 0;
+  return ds_fill_buffer(ds);
+}
+
 static demuxer_t* demux_open_avi(demuxer_t* demuxer){
     demux_stream_t *d_audio=demuxer->audio;
     demux_stream_t *d_video=demuxer->video;
@@ -521,14 +538,14 @@ static demuxer_t* demux_open_avi(demuxer_t* demuxer){
       }
       demuxer->seekable=0;
   }
-  if(!ds_fill_buffer(d_video)){
+  if(!try_ds_fill(demuxer, d_video)){
     mp_msg(MSGT_DEMUX,MSGL_ERR,"AVI: " MSGTR_MissingVideoStreamBug);
     return NULL;
   }
   sh_video=d_video->sh;sh_video->ds=d_video;
   if(d_audio->id!=-2){
     mp_msg(MSGT_DEMUX,MSGL_V,"AVI: Searching for audio stream (id:%d)\n",d_audio->id);
-    if(!priv->audio_streams || !ds_fill_buffer(d_audio)){
+    if(!priv->audio_streams || !try_ds_fill(demuxer, d_audio)){
       mp_msg(MSGT_DEMUX,MSGL_INFO,"AVI: " MSGTR_MissingAudioStream);
       d_audio->sh=sh_audio=NULL;
     } else {
