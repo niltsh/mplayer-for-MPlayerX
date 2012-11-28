@@ -198,8 +198,7 @@ static void CheckDir( GtkWidget * list )
  glob( "*",0,NULL,&gg );
  for(  i=0;i<gg.gl_pathc;i++ )
   {
-   stat( gg.gl_pathv[i],&fs );
-   if( !S_ISDIR( fs.st_mode ) ) continue;
+   if( ( stat( gg.gl_pathv[i],&fs ) != 0 ) || !S_ISDIR( fs.st_mode ) ) continue;
    clist_append_fname(list, gg.gl_pathv[i], dpixmap, dmask);
   }
 
@@ -226,8 +225,7 @@ static void CheckDir( GtkWidget * list )
    {
      char *ext;
 
-     stat( gg.gl_pathv[i],&fs );
-     if(  S_ISDIR( fs.st_mode ) ) continue;
+     if( ( stat( gg.gl_pathv[i],&fs ) != 0 ) || S_ISDIR( fs.st_mode ) ) continue;
 
      ext = strrchr(gg.gl_pathv[i], '.');
 
@@ -332,8 +330,7 @@ void ShowFileSelect( int type,int modal )
    do
     {
      char * c = strrchr( dir,'/' );
-     stat( dir,&f );
-     if ( S_ISDIR( f.st_mode ) ) break;
+     if ( ( stat( dir,&f ) != 0 ) || S_ISDIR( f.st_mode ) ) break;
      if ( c ) *c=0;
     } while ( strrchr( dir,'/' ) );
 
@@ -490,8 +487,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
  struct stat     fs;
  gchar         * selected;
 
- stat( fsSelectedFile,&fs );
- if(  S_ISDIR(fs.st_mode ) )
+ if( ( stat( fsSelectedFile,&fs ) == 0 ) && S_ISDIR( fs.st_mode ) )
   {
    chdir( fsSelectedFile );
    fsSelectedFile=fsThatDir;

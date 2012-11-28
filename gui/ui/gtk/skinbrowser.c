@@ -77,8 +77,7 @@ int gtkFillSkinList( gchar * mdir )
  for( i=0;i<(int)gg.gl_pathc;i++ )
   {
    if ( !strcmp( gg.gl_pathv[i],"." ) || !strcmp( gg.gl_pathv[i],".." ) ) continue;
-   stat( gg.gl_pathv[i],&fs );
-   if ( S_ISDIR( fs.st_mode ) )
+   if ( ( stat( gg.gl_pathv[i],&fs ) == 0 ) && S_ISDIR( fs.st_mode ) )
     {
      tmp=strrchr( gg.gl_pathv[i],'/' ); tmp++;
      if ( !strcmp( tmp,"default" ) ) continue;
