@@ -217,7 +217,8 @@ static void switch_to_ni(demuxer_t *demux) {
     // has index
     demux->type=DEMUXER_TYPE_AVI_NI;
     demux->desc=&demuxer_desc_avi_ni;
-    --priv->idx_pos; // hack
+    if (priv->idx_pos > 0)
+      --priv->idx_pos; // hack
   } else {
     // no index
     demux->type=DEMUXER_TYPE_AVI_NINI;
