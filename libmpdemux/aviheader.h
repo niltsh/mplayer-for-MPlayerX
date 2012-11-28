@@ -345,7 +345,7 @@ typedef enum {
 
 typedef struct {
   // index stuff:
-  void* idx;
+  AVIINDEXENTRY *idx;
   int idx_size;
   off_t idx_pos;
   off_t idx_pos_a;

@@ -394,7 +394,7 @@ while(1){
       read = stream_read(demuxer->stream,(char*)priv->idx,priv->idx_size<<4);
       priv->idx_size = FFMAX(read, 0) >> 4;
       for (i = 0; i < priv->idx_size; i++) {	// swap index to machine endian
-	AVIINDEXENTRY *entry=(AVIINDEXENTRY*)priv->idx + i;
+	AVIINDEXENTRY *entry=priv->idx + i;
 	le2me_AVIINDEXENTRY(entry);
 	/*
 	 * We (ab)use the upper word for bits 32-47 of the offset, so
@@ -551,7 +551,7 @@ if (priv->isodml && (index_mode==-1 || index_mode==0 || index_mode==1)) {
 	stream_reset (demuxer->stream);
 
 	// find out the video stream id. I have seen files with 01db.
-	for (idx = &((AVIINDEXENTRY *)priv->idx)[0], i=0; i<priv->idx_size; i++, idx++){
+	for (idx = priv->idx, i=0; i<priv->idx_size; i++, idx++){
 	    unsigned char res[2];
 	    if (odml_get_vstream_id(idx->ckid, res)) {
 		db = mmioFOURCC(res[0], res[1], 'd', 'b');
@@ -560,14 +560,14 @@ if (priv->isodml && (index_mode==-1 || index_mode==0 || index_mode==1)) {
 	}
 
 	// find first non keyframe
-	for (idx = &((AVIINDEXENTRY *)priv->idx)[0], i=0; i<priv->idx_size; i++, idx++){
+	for (idx = priv->idx, i=0; i<priv->idx_size; i++, idx++){
 	    if (!(idx->dwFlags & AVIIF_KEYFRAME) && idx->ckid == db) break;
 	}
 	if (i<priv->idx_size && db) {
 	    stream_seek(demuxer->stream, AVI_IDX_OFFSET(idx));
 	    id = stream_read_dword_le(demuxer->stream);
 	    if (id && id != db) // index fcc and real fcc differ? fix it.
-		for (idx = &((AVIINDEXENTRY *)priv->idx)[0], i=0; i<priv->idx_size; i++, idx++){
+		for (idx = priv->idx, i=0; i<priv->idx_size; i++, idx++){
 		    if (!(idx->dwFlags & AVIIF_KEYFRAME) && idx->ckid == db)
 			idx->ckid = id;
 	    }
@@ -616,7 +616,7 @@ if (index_file_load) {
   }
 
   for (i=0; i<priv->idx_size;i++) {
-    AVIINDEXENTRY *idx=&((AVIINDEXENTRY *)priv->idx)[i];
+    AVIINDEXENTRY *idx=priv->idx + i;
     fread(idx, sizeof(AVIINDEXENTRY), 1, fp);
     if (feof(fp)) {
       mp_msg(MSGT_HEADER,MSGL_ERR, MSGTR_MPDEMUX_AVIHDR_PrematureEOF, index_file_load);
@@ -661,7 +661,7 @@ if(index_mode>=2 || (priv->idx_size==0 && index_mode==1)){
       priv->idx=realloc(priv->idx,priv->idx_size*sizeof(AVIINDEXENTRY));
       if(!priv->idx){idx_pos=0; break;} // error!
     }
-    idx=&((AVIINDEXENTRY *)priv->idx)[idx_pos++];
+    idx=priv->idx + idx_pos++;
     idx->ckid=id;
     idx->dwFlags=AVIIF_KEYFRAME; // FIXME
     idx->dwFlags|=(demuxer->filepos>>16)&0xffff0000U;
@@ -727,7 +727,7 @@ skip_chunk:
     fwrite("MPIDX1", 6, 1, fp);
     fwrite(&priv->idx_size, sizeof(priv->idx_size), 1, fp);
     for (i=0; i<priv->idx_size; i++) {
-      AVIINDEXENTRY *idx = &((AVIINDEXENTRY *)priv->idx)[i];
+      AVIINDEXENTRY *idx = priv->idx + i;
       fwrite(idx, sizeof(AVIINDEXENTRY), 1, fp);
     }
     fclose(fp);
