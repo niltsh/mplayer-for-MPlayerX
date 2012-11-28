@@ -371,8 +371,6 @@ typedef struct {
   int warned_unaligned;
 } avi_priv_t;
 
-#define AVI_PRIV ((avi_priv_t*)(demuxer->priv))
-
 #define AVI_IDX_OFFSET(x) ((((uint64_t)(x)->dwFlags&0xffff0000)<<16)+(x)->dwChunkOffset)
 
 void read_avi_header(demuxer_t *demuxer, int index_mode);
