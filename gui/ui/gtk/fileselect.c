@@ -489,7 +489,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
 
  if( ( stat( fsSelectedFile,&fs ) == 0 ) && S_ISDIR( fs.st_mode ) )
   {
-   chdir( fsSelectedFile );
+   if ( chdir( fsSelectedFile ) != 0 ) return;
    fsSelectedFile=fsThatDir;
    CheckDir( fsFNameList );
    gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),(unsigned char *)get_current_dir_name_utf8() );
