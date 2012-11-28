@@ -896,7 +896,7 @@ GtkWidget * create_Preferences( void )
   AddHSeparator( vbox3 );
   CBExtraStereo=AddCheckButton( MSGTR_PREFERENCES_ExtraStereo,vbox3 );
   hbox8=AddHBox( vbox3,1 );
-  label=AddLabel( MSGTR_PREFERENCES_Coefficient,hbox8 );
+  /*label=*/AddLabel( MSGTR_PREFERENCES_Coefficient,hbox8 );
 //    gtk_misc_set_padding( GTK_MISC( label ),20,0 );
   HSExtraStereoMuladj=GTK_ADJUSTMENT( gtk_adjustment_new( 0,-10,10,0.1,0,0 ) );
   HSExtraStereoMul=AddHScaler( HSExtraStereoMuladj,hbox8,1 );
