@@ -616,8 +616,7 @@ if (index_file_load) {
   }
 
   for (i=0; i<priv->idx_size;i++) {
-    AVIINDEXENTRY *idx;
-    idx=&((AVIINDEXENTRY *)priv->idx)[i];
+    AVIINDEXENTRY *idx=&((AVIINDEXENTRY *)priv->idx)[i];
     fread(idx, sizeof(AVIINDEXENTRY), 1, fp);
     if (feof(fp)) {
       mp_msg(MSGT_HEADER,MSGL_ERR, MSGTR_MPDEMUX_AVIHDR_PrematureEOF, index_file_load);

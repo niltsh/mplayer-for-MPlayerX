@@ -240,11 +240,10 @@ demux_stream_t *ds;
 
 do{
   int flags=1;
-  AVIINDEXENTRY *idx=NULL;
   if(priv->idx_size>0 && priv->idx_pos<priv->idx_size){
     off_t pos;
 
-    idx=&((AVIINDEXENTRY *)priv->idx)[priv->idx_pos++];
+    AVIINDEXENTRY *idx=&((AVIINDEXENTRY *)priv->idx)[priv->idx_pos++];
 
     if(idx->dwFlags&AVIIF_LIST){
       if (!valid_stream_id(idx->ckid))
@@ -326,7 +325,6 @@ int ret=0;
 
 do{
   int flags=1;
-  AVIINDEXENTRY *idx=NULL;
   int idx_pos=0;
   demux->filepos=stream_tell(demux->stream);
 
@@ -336,7 +334,7 @@ do{
 
   if(priv->idx_size>0 && idx_pos<priv->idx_size){
     off_t pos;
-    idx=&((AVIINDEXENTRY *)priv->idx)[idx_pos];
+    AVIINDEXENTRY *idx=&((AVIINDEXENTRY *)priv->idx)[idx_pos];
 
     if(idx->dwFlags&AVIIF_LIST){
       if (!valid_stream_id(idx->ckid))
