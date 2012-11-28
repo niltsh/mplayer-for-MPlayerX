@@ -462,7 +462,7 @@ static demuxer_t* demux_open_avi(demuxer_t* demuxer){
     sh_video_t *sh_video=NULL;
     avi_priv_t* priv=calloc(1, sizeof(avi_priv_t));
 
-  demuxer->priv=(void*)priv;
+  demuxer->priv=priv;
 
   //---- AVI header:
   read_avi_header(demuxer,(demuxer->stream->flags & MP_STREAM_SEEK_BW)?index_mode:-2);
