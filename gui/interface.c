@@ -789,12 +789,13 @@ int gui(int what, void *data)
 
             filename = NULL;
 
-            if (isPlaylistStreamtype && !listMgr(PLAYLIST_ITEM_GET_CURR, 0))
+            if (isPlaylistStreamtype && !listMgr(PLAYLIST_ITEM_GET_CURR, 0)) {
+                guiInfo.AudioChannels = 0;
                 uiSetFileName(NULL, NULL, STREAMTYPE_DUMMY);
+            }
 
             guiInfo.ElapsedTime   = 0;
             guiInfo.Position      = 0;
-            guiInfo.AudioChannels = 0;
 
             guiInfo.Track   = 1;
             guiInfo.Chapter = 1;
