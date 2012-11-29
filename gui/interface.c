@@ -789,6 +789,10 @@ int gui(int what, void *data)
 
             filename = NULL;
 
+            guiInfo.Track   = 1;
+            guiInfo.Chapter = 1;
+            guiInfo.Angle   = 1;
+
             if (isPlaylistStreamtype && !listMgr(PLAYLIST_ITEM_GET_CURR, 0)) {
                 guiInfo.Track         = 0;
                 guiInfo.Chapter       = 0;
@@ -800,10 +804,6 @@ int gui(int what, void *data)
 
             guiInfo.ElapsedTime = 0;
             guiInfo.Position    = 0;
-
-            guiInfo.Track   = 1;
-            guiInfo.Chapter = 1;
-            guiInfo.Angle   = 1;
 
             if (gtkShowVideoWindow) {
                 guiInfo.VideoWindow = True;
