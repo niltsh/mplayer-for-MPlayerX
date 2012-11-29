@@ -6,33 +6,29 @@ This HOWTO explains how to set up cross-compilation.
 MinGW under Debian
 ==================
 
-First, you need to install the "mingw32" package and get a MPlayer SVN
+First, you need to install the "gcc-mingw-w64" package and get a MPlayer SVN
 checkout.
 
-Next, you need quite a lot of dependencies. Since this is for testing and
-not actually use, the easiest way is to use this package:
-http://natsuki.mplayerhq.hu/~reimar/mpl_mingw32.tar.bz2
-NOTE that this is likely to be quite out-dated and might include packages
-with security issues, so do not use it to build binaries for real use.
+To get a fully functional build, you need to get a lot of dependencies
+compiled first. This is outside the scope of this document.
 
-After extracting this package into the MPlayer source-tree,
-you only need to run the included linux-mingw.sh to configure (it just runs
-./configure --host-cc=cc --target=i686-mingw32msvc --cc=i586-mingw32msvc-cc
---windres=i586-mingw32msvc-windres --ranlib=i586-mingw32msvc-ranlib
---extra-cflags="-I$PWD/osdep/mingw32"
---extra-ldflags="-L$PWD/osdep/mingw32"
---with-freetype-config="$PWD/osdep/mingw32/ftconf") and then run make.
+Then you need to run
+./configure --enable-cross-compile --windres=i686-w64-mingw32-windres --cc=i686-w64-mingw32-gcc
+and make.
+To compile a 64-bit Windows binary, use
+./configure --enable-cross-compile --windres=x86_64-w64-mingw32-windres --cc=x86_64-w64-mingw32-gcc
+instead.
+For files meant to run on a different computer you should usually
+use --enable-runtime-cpudetection.
 
 You should be able to run the generated binary with Wine, if you want to.
 
 The steps as command-lines:
 
-sudo apt-get install mingw32
+sudo apt-get install gcc-mingw-w64
 svn co svn://svn.mplayerhq.hu/mplayer/trunk MPlayer-mingw
 cd MPlayer-mingw
-wget http://natsuki.mplayerhq.hu/~reimar/mpl_mingw32.tar.bz2
-tar -xjf mpl_mingw32.tar.bz2
-sh linux-mingw.sh
+./configure --enable-cross-compile --windres=i686-w64-mingw32-windres --cc=i686-w64-mingw32-gcc
 make
 
 
