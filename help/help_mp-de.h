@@ -760,7 +760,7 @@ static const char help_text[]=
 #define MSGTR_AudioPreferences "Audio-Treiberkonfiguration"
 #define MSGTR_NoMediaOpened "Keine Medien geöffnet."
 #define MSGTR_Title "Titel %d"
-#define MSGTR_NoChapter "kein Kapitel"
+#define MSGTR_NoChapter "Kein Kapitel"
 #define MSGTR_Chapter "Kapitel %d"
 #define MSGTR_NoFileLoaded "Keine Datei geladen."
 #define MSGTR_Filter_UTF8Subtitles "UTF-8 kodierte Untertitel (*.utf, *.utf-8, *.utf8)"
