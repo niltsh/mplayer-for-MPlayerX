@@ -194,7 +194,6 @@ void uiEventHandling( int msg,float param )
         uiEventHandling( ivPlayDVD, 0 );
         break;
    case evPlayDVD:
-        guiInfo.Track=1;
         guiInfo.Chapter=1;
         guiInfo.Angle=1;
    case ivPlayDVD:
@@ -249,6 +248,8 @@ play:
 	       guiInfoMediumClear( CLEAR_ALL - CLEAR_DVD - CLEAR_FILE );
 	       if ( guiInfo.Playing != GUI_PAUSE )
 	        {
+		 if ( !guiInfo.Track )
+                   guiInfo.Track=1;
                  guiInfo.NewPlay=GUI_FILE_SAME;
 		}
                break;
