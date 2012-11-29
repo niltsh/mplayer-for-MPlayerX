@@ -375,6 +375,7 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
             bih->biSize= sizeof(*bih) + codec->extradata_size;
             bih->biWidth= codec->width;
             bih->biHeight= codec->height;
+            bih->biPlanes= 1;
             bih->biBitCount= codec->bits_per_coded_sample;
             bih->biSizeImage = bih->biWidth * bih->biHeight * bih->biBitCount/8;
             bih->biCompression= codec->codec_tag;
