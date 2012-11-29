@@ -137,7 +137,6 @@ static int init(sh_audio_t *sh)
     }
 
     // get sample_rate & bitrate from parser
-    bps = srate = 0;
     x = ds_get_packet_pts(sh->ds, &start, &pts);
     in_size = x;
     if (x <= 0) {
@@ -145,10 +144,9 @@ static int init(sh_audio_t *sh)
         x = 0;
     }
     ds_parse(sh->ds, &start, &x, pts, 0);
-    if (x == 0) { // not enough buffer
-        srate = 48000;    //fake value
-        bps   = 768000/8; //fake value
-    } else  if (sh->avctx) {
+    srate = 48000;    //fake value
+    bps   = 768000/8; //fake value
+    if (x && sh->avctx) { // we have parser and large enough buffer
         if (sh->avctx->sample_rate < 44100) {
             mp_msg(MSGT_DECAUDIO,MSGL_INFO,
                    "This stream sample_rate[%d Hz] may be broken. "
