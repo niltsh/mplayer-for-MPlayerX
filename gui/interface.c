@@ -790,6 +790,7 @@ int gui(int what, void *data)
             filename = NULL;
 
             if (isPlaylistStreamtype && !listMgr(PLAYLIST_ITEM_GET_CURR, 0)) {
+                guiInfo.RunningTime   = 0;
                 guiInfo.AudioChannels = 0;
                 uiSetFileName(NULL, NULL, STREAMTYPE_DUMMY);
             }
