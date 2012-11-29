@@ -794,8 +794,8 @@ int gui(int what, void *data)
                 uiSetFileName(NULL, NULL, STREAMTYPE_DUMMY);
             }
 
-            guiInfo.ElapsedTime   = 0;
-            guiInfo.Position      = 0;
+            guiInfo.ElapsedTime = 0;
+            guiInfo.Position    = 0;
 
             guiInfo.Track   = 1;
             guiInfo.Chapter = 1;
