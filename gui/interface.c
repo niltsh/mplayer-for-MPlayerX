@@ -789,7 +789,8 @@ int gui(int what, void *data)
 
             filename = NULL;
 
-            guiInfo.Track   = 1;
+            if (!isPlaylistStreamtype)
+                guiInfo.Track = (guiInfo.StreamType == STREAMTYPE_VCD ? 2 : 1);
             if (guiInfo.Chapter)
                 guiInfo.Chapter = 1;
             if (guiInfo.Angle)
