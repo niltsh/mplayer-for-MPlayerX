@@ -864,6 +864,9 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
     if (enqueue)
         filename = NULL;            // don't start playing
 
+    if (result)
+        guiInfo.Track = 1;
+
     return result;
 }
 
