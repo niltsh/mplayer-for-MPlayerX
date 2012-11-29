@@ -38,6 +38,7 @@ LIBVD_EXTERN(black)
 typedef struct {
     unsigned char *planes[MP_MAX_PLANES];
     int stride[MP_MAX_PLANES];
+    int buffer_filled;
     int w, h;
 } vd_black_ctx;
 
@@ -166,7 +167,9 @@ static mp_image_t* decode(sh_video_t *sh, void *data, int len, int flags)
     vd_black_ctx *ctx = sh->context;
     int i;
 
-    if (sh->num_buffered_pts != FF_ARRAY_ELEMS(sh->buffered_pts) - 1)
+    if (sh->num_buffered_pts == FF_ARRAY_ELEMS(sh->buffered_pts) - 1)
+        ctx->buffer_filled = 1;
+    if (!ctx->buffer_filled || !sh->num_buffered_pts)
         return NULL;
 
     mpi = mpcodecs_get_image(sh, MP_IMGTYPE_EXPORT, MP_IMGFLAG_PRESERVE,
