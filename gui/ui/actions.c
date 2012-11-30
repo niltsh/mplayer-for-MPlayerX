@@ -105,8 +105,8 @@ void uiState(void)
         btnSet(evPlaySwitchToPause, btnReleased);
         btnSet(evPauseSwitchToPlay, btnDisabled);
     } else {
-        btnSet(evPlaySwitchToPause, btnDisabled);
         btnSet(evPauseSwitchToPlay, btnReleased);
+        btnSet(evPlaySwitchToPause, btnDisabled);
     }
 }
 
