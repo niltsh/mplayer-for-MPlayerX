@@ -89,9 +89,11 @@ void uiPause(void)
 
     if (guiInfo.Playing == GUI_PLAY) {
         mp_cmd_t *cmd = calloc(1, sizeof(*cmd));
+        if (cmd) {
         cmd->id   = MP_CMD_PAUSE;
         cmd->name = strdup("pause");
         mp_input_queue_cmd(cmd);
+        }
     } else
         guiInfo.Playing = GUI_PLAY;
 }
