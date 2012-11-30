@@ -94,14 +94,23 @@ static int control(struct af_instance_s* af, int cmd, void* arg)
     char buf1[256];
     char buf2[256];
     af_data_t *data = arg;
+    int supported_ac3 = 0;
 
     // Make sure this filter isn't redundant
     if(af->data->format == data->format &&
        af->data->bps == data->bps)
       return AF_DETACH;
 
+    // A bit complex because we can convert AC3
+    // to generic iec61937 but not the other way
+    // round.
+    if (AF_FORMAT_IS_AC3(af->data->format))
+      supported_ac3 = AF_FORMAT_IS_AC3(data->format);
+    else if (AF_FORMAT_IS_IEC61937(af->data->format))
+      supported_ac3 = AF_FORMAT_IS_IEC61937(data->format);
+
     // Allow trivial AC3-endianness conversion
-    if (!AF_FORMAT_IS_AC3(af->data->format) || !AF_FORMAT_IS_AC3(data->format))
+    if (!supported_ac3)
     // Check for errors in configuration
     if((AF_OK != check_bps(data->bps)) ||
        (AF_OK != check_format(data->format)) ||
