@@ -16,6 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+/**
+ * @file
+ * @brief User interface actions
+ */
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -39,6 +44,11 @@
 #include "mp_msg.h"
 #include "mplayer.h"
 
+/**
+ * @brief Switch video window fullscreen mode.
+ *
+ *        Switch normal video to fullscreen and fullscreen video to normal.
+ */
 void uiFullScreen(void)
 {
     if (!guiInfo.VideoWindow)
@@ -59,6 +69,9 @@ void uiFullScreen(void)
         wsSetBackgroundRGB(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
 }
 
+/**
+ * @brief Switch to play mode.
+ */
 void uiPlay(void)
 {
     if (guiInfo.Playing == GUI_PLAY)
@@ -81,6 +94,9 @@ void uiPlay(void)
     wsClearWindow(&guiApp.videoWindow);
 }
 
+/**
+ * @brief Switch to pause mode.
+ */
 void uiPause(void)
 {
     if (!guiInfo.Playing)
@@ -98,6 +114,9 @@ void uiPause(void)
         guiInfo.Playing = GUI_PLAY;
 }
 
+/**
+ * @brief Adjust GUI items to reflect current state (i.e. current playing mode).
+ */
 void uiState(void)
 {
     if (guiInfo.Playing == GUI_STOP || guiInfo.Playing == GUI_PAUSE) {
@@ -109,18 +128,37 @@ void uiState(void)
     }
 }
 
+/**
+ * @brief Seek new playback position.
+ *
+ *       The new position is a relative one.
+ *
+ * @param sec seconds to seek (either forward (> 0) or backward (< 0))
+ */
 void uiRelSeek(float sec)
 {
     rel_seek_secs = sec;
     abs_seek_pos  = 0;
 }
 
+/**
+ * @brief Seek new playback position.
+ *
+ *       The new position is an absolute one.
+ *
+ * @param percent percentage of playback time to position to
+ */
 void uiAbsSeek(float percent)
 {
     rel_seek_secs = percent / 100.0;
     abs_seek_pos  = SEEK_ABSOLUTE | SEEK_FACTOR;
 }
 
+/**
+ * @brief Change to a different skin.
+ *
+ * @param name name of the skin to change to
+ */
 void uiChangeSkin(char *name)
 {
     int prev, bprev;
@@ -221,6 +259,13 @@ void uiChangeSkin(char *name)
     wsSetLayer(wsDisplay, guiApp.menuWindow.WindowID, guiApp.videoWindow.isFullScreen);
 }
 
+/**
+ * @brief Set the current file name to be played.
+ *
+ * @param dir directory (optional, else NULL)
+ * @param name filename
+ * @param type stream type of the file
+ */
 void uiSetFileName(char *dir, char *name, int type)
 {
     if (!dir)
@@ -237,6 +282,9 @@ void uiSetFileName(char *dir, char *name, int type)
     nfree(guiInfo.SubtitleFilename);
 }
 
+/**
+ * @brief Set file to be played to current playlist entry.
+ */
 void uiCurr(void)
 {
     plItem *curr;
@@ -268,6 +316,9 @@ void uiCurr(void)
         uiEventHandling(evPlay, 0);
 }
 
+/**
+ * @brief Switch to previous playback track.
+ */
 void uiPrev(void)
 {
     int stop = 0;
@@ -329,6 +380,9 @@ void uiPrev(void)
         uiEventHandling(evPlay, 0);
 }
 
+/**
+ * @brief Switch to next playback track.
+ */
 void uiNext(void)
 {
     int stop = 0;
