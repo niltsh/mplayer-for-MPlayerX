@@ -1492,7 +1492,12 @@ static int mp_property_sub(m_option_t *prop, int action, void *arg,
         }
         if (dvdsub_id >= 0) {
             char lang[40] = MSGTR_Unknown;
-            demuxer_sub_lang(mpctx->demuxer, dvdsub_id, lang, sizeof(lang));
+            int id = dvdsub_id;
+            // HACK: for DVDs sub->sh/id will be invalid until
+            // we actually get the first packet
+            if (d_sub && d_sub->sh)
+                id = d_sub->id;
+            demuxer_sub_lang(mpctx->demuxer, id, lang, sizeof(lang));
             snprintf(*(char **) arg, 63, "(%d) %s", dvdsub_id, lang);
             return M_PROPERTY_OK;
         }
