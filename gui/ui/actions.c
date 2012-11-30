@@ -35,6 +35,7 @@
 #include "config.h"
 #include "help_mp.h"
 #include "input/input.h"
+#include "libmpdemux/demuxer.h"
 #include "libmpcodecs/vd.h"
 #include "libvo/video_out.h"
 #include "mp_core.h"
@@ -115,7 +116,7 @@ void uiRelSeek(float sec)
 void uiAbsSeek(float percent)
 {
     rel_seek_secs = percent / 100.0;
-    abs_seek_pos  = 3;
+    abs_seek_pos  = SEEK_ABSOLUTE | SEEK_FACTOR;
 }
 
 void uiChangeSkin(char *name)

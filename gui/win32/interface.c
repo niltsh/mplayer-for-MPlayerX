@@ -296,7 +296,7 @@ static void guiSetEvent(int event)
         case evSetMoviePosition:
         {
             rel_seek_secs = guiInfo.Position / 100.0f;
-            abs_seek_pos = 3;
+            abs_seek_pos = SEEK_ABSOLUTE | SEEK_FACTOR;
             break;
         }
         case evForward10sec:
