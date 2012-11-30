@@ -131,7 +131,7 @@ void uiState(void)
 /**
  * @brief Seek new playback position.
  *
- *       The new position is a relative one.
+ *        The new position is a relative one.
  *
  * @param sec seconds to seek (either forward (> 0) or backward (< 0))
  */
@@ -144,7 +144,7 @@ void uiRelSeek(float sec)
 /**
  * @brief Seek new playback position.
  *
- *       The new position is an absolute one.
+ *        The new position is an absolute one.
  *
  * @param percent percentage of playback time to position to
  */
