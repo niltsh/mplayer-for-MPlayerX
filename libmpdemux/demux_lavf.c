@@ -595,6 +595,7 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
     if(!priv->video_streams){
         if(!priv->audio_streams){
 	    mp_msg(MSGT_HEADER,MSGL_ERR,"LAVF: no audio or video headers found - broken file?\n");
+            if (!priv->sub_streams)
             return NULL;
         }
         demuxer->video->id=-2; // audio-only
