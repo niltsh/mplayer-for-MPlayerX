@@ -332,19 +332,11 @@ void uiNext(void)
 
     switch (guiInfo.StreamType) {
     case STREAMTYPE_CDDA:
+    case STREAMTYPE_VCD:
 
         if (++guiInfo.Track > guiInfo.Tracks) {
             guiInfo.Track = guiInfo.Tracks;
             stop = 1;
-        }
-
-        break;
-
-    case STREAMTYPE_VCD:
-
-        if (++guiInfo.Track >= guiInfo.Tracks) {
-            stop = (guiInfo.Track > guiInfo.Tracks);
-            guiInfo.Track = FFMAX(2, guiInfo.Tracks);
         }
 
         break;
