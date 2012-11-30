@@ -297,7 +297,7 @@ void uiPrev(void)
         if (--guiInfo.Chapter == 0) {
             guiInfo.Chapter = 1;
 
-            if (--guiInfo.Track = 0) {
+            if (--guiInfo.Track == 0) {
                 guiInfo.Track = 1;
                 stop = 1;
             }
