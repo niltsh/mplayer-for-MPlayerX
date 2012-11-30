@@ -109,9 +109,10 @@ static int control(struct af_instance_s* af, int cmd, void* arg)
        (AF_OK != check_format(af->data->format)))
       return AF_ERROR;
 
+    af_fmt2str(data->format,buf1,256);
+    af_fmt2str(af->data->format,buf2,256);
     mp_msg(MSGT_AFILTER, MSGL_V, "[format] Changing sample format from %s to %s\n",
-	   af_fmt2str(data->format,buf1,256),
-	   af_fmt2str(af->data->format,buf2,256));
+	   buf1, buf2);
 
     af->data->rate = data->rate;
     af->data->nch  = data->nch;
@@ -130,16 +131,14 @@ static int control(struct af_instance_s* af, int cmd, void* arg)
 	(af->data->format == AF_FORMAT_S16_NE))
     {
 	mp_msg(MSGT_AFILTER, MSGL_V, "[format] Accelerated %s to %s conversion\n",
-	   af_fmt2str(data->format,buf1,256),
-	   af_fmt2str(af->data->format,buf2,256));
+	   buf1, buf2);
 	af->play = play_float_s16;
     }
     if ((data->format == AF_FORMAT_S16_NE) &&
 	(af->data->format == AF_FORMAT_FLOAT_NE))
     {
 	mp_msg(MSGT_AFILTER, MSGL_V, "[format] Accelerated %s to %s conversion\n",
-	   af_fmt2str(data->format,buf1,256),
-	   af_fmt2str(af->data->format,buf2,256));
+	   buf1, buf2);
 	af->play = play_s16_float;
     }
     return AF_OK;
