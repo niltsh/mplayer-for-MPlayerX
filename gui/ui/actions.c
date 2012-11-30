@@ -24,21 +24,20 @@
 #include "gui/app.h"
 #include "gui/gui.h"
 #include "gui/interface.h"
-#include "gui/skin/font.h"
 #include "gui/skin/skin.h"
 #include "gui/util/list.h"
 #include "gui/util/mem.h"
 #include "gui/util/string.h"
+#include "gui/wm/ws.h"
 #include "gui/wm/wsxdnd.h"
-#include "widgets.h"
 
-#include "config.h"
 #include "help_mp.h"
 #include "input/input.h"
 #include "libmpdemux/demuxer.h"
-#include "libmpcodecs/vd.h"
 #include "libvo/video_out.h"
 #include "mp_core.h"
+#include "mp_msg.h"
+#include "mplayer.h"
 
 void uiFullScreen(void)
 {
