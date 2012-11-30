@@ -77,14 +77,13 @@ static int check_format(int format)
 {
   char buf[256];
   switch(format & AF_FORMAT_SPECIAL_MASK){
-  case(AF_FORMAT_IMA_ADPCM):
-  case(AF_FORMAT_MPEG2):
-  case(AF_FORMAT_AC3):
-    mp_msg(MSGT_AFILTER, MSGL_ERR, "[format] Sample format %s not yet supported \n",
-	 af_fmt2str(format,buf,256));
-    return AF_ERROR;
+  case AF_FORMAT_MU_LAW:
+  case AF_FORMAT_A_LAW:
+    return AF_OK;
   }
-  return AF_OK;
+  mp_msg(MSGT_AFILTER, MSGL_ERR, "[format] Sample format %s not yet supported \n",
+         af_fmt2str(format,buf,256));
+  return AF_ERROR;
 }
 
 // Initialization and runtime control
