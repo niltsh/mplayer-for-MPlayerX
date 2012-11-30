@@ -169,7 +169,7 @@ static int init(sh_audio_t *sh)
         break;
     case CODEC_ID_AC3:
         spdif_ctx->iec61937_packet_size = 6144;
-        sh->sample_format               = AF_FORMAT_IEC61937_LE;
+        sh->sample_format               = AF_FORMAT_AC3_LE;
         sh->samplerate                  = srate;
         sh->channels                    = 2;
         sh->i_bps                       = bps;
