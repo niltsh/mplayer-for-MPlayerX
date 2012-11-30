@@ -23,6 +23,7 @@
 
 #include "interface.h"
 #include "app.h"
+#include "gui.h"
 #include "skin/skin.h"
 #include "ui/gmplayer.h"
 #include "ui/widgets.h"
