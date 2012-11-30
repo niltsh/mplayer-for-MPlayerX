@@ -267,25 +267,29 @@ void uiCurr(void)
 
 void uiPrev(void)
 {
-    plItem *prev;
     int stop = 0;
+    plItem *prev;
 
     if (guiInfo.Playing == GUI_PAUSE)
         return;
 
     switch (guiInfo.StreamType) {
     case STREAMTYPE_CDDA:
+
         if (--guiInfo.Track == 0) {
             guiInfo.Track = 1;
             stop = 1;
         }
+
         break;
 
     case STREAMTYPE_VCD:
+
         if (--guiInfo.Track == 1) {
             guiInfo.Track = 2;
             stop = 1;
         }
+
         break;
 
     case STREAMTYPE_DVD:
