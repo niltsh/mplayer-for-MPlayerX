@@ -58,8 +58,9 @@
 #endif
 
 guiInterface_t guiInfo = {
-    .StreamType = STREAMTYPE_DUMMY,
-    .Balance    = 50.0f
+    .StreamType   = STREAMTYPE_DUMMY,
+    .Balance      = 50.0f,
+    .PlaylistNext = 1
 };
 
 static int initialized;
@@ -766,8 +767,8 @@ int gui(int what, void *data)
 
         uiEventHandling(ivRedraw, 1);
 
-        if (!uiProcessNextInPlaylist && guiInfo.Playing) {
-            uiProcessNextInPlaylist = 1;
+        if (!guiInfo.PlaylistNext && guiInfo.Playing) {
+            guiInfo.PlaylistNext = 1;
             break;
         }
 
@@ -866,7 +867,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
     }
 
     uiCurr();   // update filename
-    uiProcessNextInPlaylist = 1;
+    guiInfo.PlaylistNext = 1;
 
     if (enqueue)
         filename = NULL;            // don't start playing

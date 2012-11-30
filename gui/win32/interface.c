@@ -77,7 +77,6 @@ int guiWinID = 0;
 
 char *skinName = NULL;
 char *codecname = NULL;
-int uiProcessNextInPlaylist = 1;
 static gui_t *mygui = NULL;
 static int update_videowindow(void);
 static RECT old_rect;
@@ -364,7 +363,7 @@ static void guiSetEvent(int event)
                 {
                     guiInfo.NewPlay = GUI_FILE_NEW;
                     update_playlistwindow();
-                    uiProcessNextInPlaylist = guiInfo.Playing? 0 : 1;
+                    guiInfo.PlaylistNext = guiInfo.Playing? 0 : 1;
                     gui(GUI_SET_STATE, (void *) GUI_STOP);
                     gui(GUI_SET_STATE, (void *) GUI_PLAY);
                     break;
@@ -766,13 +765,13 @@ int gui(int what, void *data)
         {
           guiInfo.sh_video = NULL;
 
-          if(!uiProcessNextInPlaylist && guiInfo.Playing)
+          if(!guiInfo.PlaylistNext && guiInfo.Playing)
           {
-              uiProcessNextInPlaylist = 1;
+              guiInfo.PlaylistNext = 1;
               break;
           }
 
-          if(uiProcessNextInPlaylist && guiInfo.Playing &&
+          if(guiInfo.PlaylistNext && guiInfo.Playing &&
             (mygui->playlist->current < (mygui->playlist->trackcount - 1)) &&
             guiInfo.StreamType != STREAMTYPE_DVD &&
             guiInfo.StreamType != STREAMTYPE_DVDNAV)
@@ -781,7 +780,7 @@ int gui(int what, void *data)
               if(movie_aspect >= 0)
                   movie_aspect = -1;
 
-              uiProcessNextInPlaylist = 1;
+              guiInfo.PlaylistNext = 1;
               guiInfo.NewPlay = GUI_FILE_NEW;
               uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename, STREAMTYPE_FILE);
               //sprintf(guiInfo.Filename, mygui->playlist->tracks[(mygui->playlist->current)++]->filename);
@@ -864,7 +863,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
                 result = 1;
         }
     }
-    uiProcessNextInPlaylist = 1;
+    guiInfo.PlaylistNext = 1;
 
     if (result)
     {

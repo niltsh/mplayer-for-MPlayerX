@@ -39,8 +39,6 @@
 #include "libvo/video_out.h"
 #include "mp_core.h"
 
-int uiProcessNextInPlaylist = 1;
-
 void uiFullScreen(void)
 {
     if (!guiInfo.VideoWindow)
@@ -255,7 +253,7 @@ void uiCurr(void)
 
         if (curr) {
             uiSetFileName(curr->path, curr->name, STREAMTYPE_FILE);
-            uiProcessNextInPlaylist = 0;
+            guiInfo.PlaylistNext = 0;
             break;
         }
 
@@ -312,7 +310,7 @@ void uiPrev(void)
 
         if (prev) {
             uiSetFileName(prev->path, prev->name, STREAMTYPE_FILE);
-            uiProcessNextInPlaylist = (guiInfo.Playing ? 0 : 1);
+            guiInfo.PlaylistNext = (guiInfo.Playing ? 0 : 1);
             guiInfo.Track--;
             break;
         }
@@ -365,7 +363,7 @@ void uiNext(void)
 
         if (next) {
             uiSetFileName(next->path, next->name, STREAMTYPE_FILE);
-            uiProcessNextInPlaylist = (guiInfo.Playing ? 0 : 1);
+            guiInfo.PlaylistNext = (guiInfo.Playing ? 0 : 1);
             guiInfo.Track++;
             break;
         }

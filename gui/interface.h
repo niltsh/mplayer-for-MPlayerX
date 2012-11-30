@@ -129,6 +129,7 @@ typedef struct {
     float Balance;
 
     int NewPlay;              // public, read access by MPlayer
+    int PlaylistNext;
 } guiInterface_t;
 
 extern guiInterface_t guiInfo;
