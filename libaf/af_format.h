@@ -30,7 +30,7 @@
 #define AF_FORMAT_LE		(1<<0) // Little Endian
 #define AF_FORMAT_END_MASK	(1<<0)
 
-#if HAVE_BIGENDIAN	       	// Native endian of cpu
+#if HAVE_BIGENDIAN              // Native endianness of cpu
 #define	AF_FORMAT_NE		AF_FORMAT_BE
 #else
 #define	AF_FORMAT_NE		AF_FORMAT_LE
@@ -43,7 +43,7 @@
 
 // Fixed or floating point
 #define AF_FORMAT_I		(0<<2) // Int
-#define AF_FORMAT_F		(1<<2) // Foating point
+#define AF_FORMAT_F		(1<<2) // Floating point
 #define AF_FORMAT_POINT_MASK	(1<<2)
 
 // Bits used
@@ -55,7 +55,7 @@
 #define AF_FORMAT_48BIT		(5<<3)
 #define AF_FORMAT_BITS_MASK	(7<<3)
 
-// Special flags refering to non pcm data
+// Special flags referring to non pcm data
 #define AF_FORMAT_MU_LAW	(1<<6)
 #define AF_FORMAT_A_LAW		(2<<6)
 #define AF_FORMAT_MPEG2		(3<<6) // MPEG(2) audio
