@@ -415,21 +415,21 @@ static void blank(mp_image_t *mpi, int y1, int y2)
     int chroma_rows = (y2 - y1) >> mpi->chroma_y_shift;
 
     if (mpi->flags & MP_IMGFLAG_PLANAR) {
-    dst = mpi->planes[0] + y1 * mpi->stride[0];
-    for (y = 0; y < y2 - y1; ++y) {
-        memset(dst, color[0], mpi->w);
-        dst += mpi->stride[0];
-    }
-    dst = mpi->planes[1] + (y1 >> mpi->chroma_y_shift) * mpi->stride[1];
-    for (y = 0; y < chroma_rows; ++y) {
-        memset(dst, color[1], mpi->chroma_width);
-        dst += mpi->stride[1];
-    }
-    dst = mpi->planes[2] + (y1 >> mpi->chroma_y_shift) * mpi->stride[2];
-    for (y = 0; y < chroma_rows; ++y) {
-        memset(dst, color[2], mpi->chroma_width);
-        dst += mpi->stride[2];
-    }
+        dst = mpi->planes[0] + y1 * mpi->stride[0];
+        for (y = 0; y < y2 - y1; ++y) {
+            memset(dst, color[0], mpi->w);
+            dst += mpi->stride[0];
+        }
+        dst = mpi->planes[1] + (y1 >> mpi->chroma_y_shift) * mpi->stride[1];
+        for (y = 0; y < chroma_rows; ++y) {
+            memset(dst, color[1], mpi->chroma_width);
+            dst += mpi->stride[1];
+        }
+        dst = mpi->planes[2] + (y1 >> mpi->chroma_y_shift) * mpi->stride[2];
+        for (y = 0; y < chroma_rows; ++y) {
+            memset(dst, color[2], mpi->chroma_width);
+            dst += mpi->stride[2];
+        }
     } else {
         unsigned char packed_color[4];
         int x;
@@ -480,30 +480,30 @@ static int prepare_image(struct vf_instance *vf, mp_image_t *mpi)
     // copy mpi->dmpi...
     if (mpi->flags & MP_IMGFLAG_PLANAR) {
         memcpy_pic(vf->dmpi->planes[0] +  ass_top_margin * vf->dmpi->stride[0],
-		   mpi->planes[0],
-		   mpi->w,
-		   mpi->h,
-		   vf->dmpi->stride[0],
-		   mpi->stride[0]);
+                   mpi->planes[0],
+                   mpi->w,
+                   mpi->h,
+                   vf->dmpi->stride[0],
+                   mpi->stride[0]);
         memcpy_pic(vf->dmpi->planes[1] + (ass_top_margin >> mpi->chroma_y_shift) * vf->dmpi->stride[1],
-		   mpi->planes[1],
-		   mpi->w >> mpi->chroma_x_shift,
-                   mpi->h >> mpi->chroma_y_shift,
-		   vf->dmpi->stride[1],
-                   mpi->stride[1]);
-        memcpy_pic(vf->dmpi->planes[2] + (ass_top_margin >> mpi->chroma_y_shift) * vf->dmpi->stride[2],
-		   mpi->planes[2],
+                   mpi->planes[1],
                    mpi->w >> mpi->chroma_x_shift,
                    mpi->h >> mpi->chroma_y_shift,
-		   vf->dmpi->stride[2],
+                   vf->dmpi->stride[1],
+                   mpi->stride[1]);
+        memcpy_pic(vf->dmpi->planes[2] + (ass_top_margin >> mpi->chroma_y_shift) * vf->dmpi->stride[2],
+                   mpi->planes[2],
+                   mpi->w >> mpi->chroma_x_shift,
+                   mpi->h >> mpi->chroma_y_shift,
+                   vf->dmpi->stride[2],
                    mpi->stride[2]);
     } else {
         memcpy_pic(vf->dmpi->planes[0] + ass_top_margin * vf->dmpi->stride[0],
-		   mpi->planes[0],
+                   mpi->planes[0],
                    mpi->w * (vf->dmpi->bpp / 8),
-		   mpi->h,
+                   mpi->h,
                    vf->dmpi->stride[0],
-		   mpi->stride[0]);
+                   mpi->stride[0]);
         vf->dmpi->planes[1] = mpi->planes[1];   // passthrough rgb8 palette
     }
     if (ass_top_margin)
