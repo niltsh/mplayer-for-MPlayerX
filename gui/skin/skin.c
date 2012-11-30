@@ -32,7 +32,6 @@
 #include "gui/util/cut.h"
 #include "gui/util/string.h"
 
-#include "config.h"
 #include "help_mp.h"
 #include "libavutil/avstring.h"
 #include "libavutil/common.h"

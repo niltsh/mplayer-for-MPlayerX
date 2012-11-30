@@ -23,6 +23,7 @@
 #define MPLAYER_GUI_WS_H
 
 #include "gui/ui/widgets.h"
+#include "config.h"
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>

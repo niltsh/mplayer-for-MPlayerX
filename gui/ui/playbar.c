@@ -24,7 +24,6 @@
 #include <unistd.h>
 #include <string.h>
 
-#include "config.h"
 #include "gui/app.h"
 #include "gui/interface.h"
 #include "gui/skin/font.h"

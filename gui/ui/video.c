@@ -20,7 +20,6 @@
 
 #include <string.h>
 
-#include "config.h"
 #include "libvo/x11_common.h"
 #include "help_mp.h"
 #include "mp_core.h"

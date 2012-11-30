@@ -23,7 +23,6 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "config.h"
 #include "help_mp.h"
 #include "mp_msg.h"
 #include "gui/app.h"

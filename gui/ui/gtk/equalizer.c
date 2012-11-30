@@ -26,7 +26,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
-#include "config.h"
 #include "gui/app.h"
 #include "gui/cfg.h"
 #include "gui/interface.h"

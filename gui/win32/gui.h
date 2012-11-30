@@ -24,7 +24,6 @@
 #ifndef MPLAYER_GUI_GUI_H
 #define MPLAYER_GUI_GUI_H
 
-#include "config.h"
 #include "mplayer.h"
 #include "playtree.h"
 #include "m_config.h"

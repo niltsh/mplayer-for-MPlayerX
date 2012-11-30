@@ -29,6 +29,7 @@
 #include <windowsx.h>
 #include <shlobj.h>
 
+#include "config.h"
 #include "mpcommon.h"
 #include "mplayer.h"
 #include "mp_fifo.h"

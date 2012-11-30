@@ -19,7 +19,6 @@
 #ifndef MPLAYER_GUI_INTERFACE_H
 #define MPLAYER_GUI_INTERFACE_H
 
-#include "config.h"
 #include "libaf/af.h"
 #include "libmpdemux/stheader.h"
 #include "m_config.h"

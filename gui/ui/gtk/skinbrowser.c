@@ -23,7 +23,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "config.h"
 #include "skinbrowser.h"
 #include "tools.h"
 

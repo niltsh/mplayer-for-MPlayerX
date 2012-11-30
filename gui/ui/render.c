@@ -28,7 +28,6 @@
 
 #include "access_mpcontext.h"
 #include "codec-cfg.h"
-#include "config.h"
 #include "libavutil/avstring.h"
 #include "libmpdemux/stheader.h"
 #include "mixer.h"

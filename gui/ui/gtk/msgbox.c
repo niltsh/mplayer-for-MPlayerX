@@ -18,7 +18,6 @@
 
 #include <string.h>
 
-#include "config.h"
 #include "gui/app.h"
 #include "help_mp.h"
 

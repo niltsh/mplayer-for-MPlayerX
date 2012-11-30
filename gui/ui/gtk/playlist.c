@@ -27,7 +27,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
-#include "config.h"
 #include "help_mp.h"
 #include "stream/stream.h"
 
