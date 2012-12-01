@@ -77,6 +77,7 @@ static int check_format(int format)
 {
   char buf[256];
   switch(format & AF_FORMAT_SPECIAL_MASK){
+  case 0:
   case AF_FORMAT_MU_LAW:
   case AF_FORMAT_A_LAW:
     return AF_OK;
