@@ -283,6 +283,22 @@ void uiSetFile(char *dir, char *name, int type)
 }
 
 /**
+ * @brief Unset the file being played.
+ *
+ * @note Additionally, clear all #guiInfo members associated with the file.
+ */
+void uiUnsetFile(void)
+{
+    uiSetFile(NULL, NULL, STREAMTYPE_DUMMY);
+
+    guiInfo.Track         = 0;
+    guiInfo.Chapter       = 0;
+    guiInfo.Angle         = 0;
+    guiInfo.RunningTime   = 0;
+    guiInfo.AudioChannels = 0;
+}
+
+/**
  * @brief Set file to be played to current playlist entry.
  */
 void uiCurr(void)

@@ -30,5 +30,6 @@ void uiPrev(void);
 void uiRelSeek(float percent);
 void uiSetFile(char *dir, char *name, int type);
 void uiState(void);
+void uiUnsetFile(void);
 
 #endif /* MPLAYER_GUI_ACTIONS_H */

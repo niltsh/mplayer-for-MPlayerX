@@ -798,14 +798,8 @@ int gui(int what, void *data)
             if (guiInfo.Angle)
                 guiInfo.Angle = 1;
 
-            if (isPlaylistStreamtype && !listMgr(PLAYLIST_ITEM_GET_CURR, 0)) {
-                guiInfo.Track         = 0;
-                guiInfo.Chapter       = 0;
-                guiInfo.Angle         = 0;
-                guiInfo.RunningTime   = 0;
-                guiInfo.AudioChannels = 0;
-                uiSetFile(NULL, NULL, STREAMTYPE_DUMMY);
-            }
+            if (isPlaylistStreamtype && !listMgr(PLAYLIST_ITEM_GET_CURR, 0))
+                uiUnsetFile();
 
             guiInfo.ElapsedTime = 0;
             guiInfo.Position    = 0;
