@@ -296,6 +296,8 @@ void uiUnsetFile(void)
     guiInfo.Angle         = 0;
     guiInfo.RunningTime   = 0;
     guiInfo.AudioChannels = 0;
+    guiInfo.VideoWidth    = 0;
+    guiInfo.VideoHeight   = 0;
 }
 
 /**

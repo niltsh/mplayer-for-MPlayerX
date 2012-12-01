@@ -672,8 +672,11 @@ int gui(int what, void *data)
 
         guiInfo.AudioChannels = data ? ((sh_audio_t *)data)->channels : 0;
 
-        if (data && !guiInfo.sh_video)
+        if (data && !guiInfo.sh_video) {
             guiInfo.VideoWindow = False;
+            guiInfo.VideoWidth  = 0;
+            guiInfo.VideoHeight = 0;
+        }
 
         gui(GUI_SET_MIXER, 0);
 
