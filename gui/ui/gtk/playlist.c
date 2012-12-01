@@ -216,7 +216,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 //	  guiInfo.NewPlay=GUI_FILE_NEW;
 //	  guiInfo.StreamType=STREAMTYPE_FILE;
 	 }
-	else if (isPlaylistStreamtype && !guiInfo.Playing) uiSetFile(NULL, NULL, STREAMTYPE_DUMMY);
+	else if (isPlaylistStreamtype && !guiInfo.Playing) uiUnsetFile();
        }
   case 0: // cancel
        HidePlayList();
