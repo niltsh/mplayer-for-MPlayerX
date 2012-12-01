@@ -211,12 +211,12 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	item = listMgr( PLAYLIST_ITEM_GET_CURR,0 );
 	if ( item )
 	 {
-	  uiSetFileName( item->path,item->name,STREAMTYPE_FILE );
+	  uiSetFile( item->path,item->name,STREAMTYPE_FILE );
 //	  setddup( &guiInfo.Filename,item->path,item->name );
 //	  guiInfo.NewPlay=GUI_FILE_NEW;
 //	  guiInfo.StreamType=STREAMTYPE_FILE;
 	 }
-	else if (isPlaylistStreamtype && !guiInfo.Playing) uiSetFileName(NULL, NULL, STREAMTYPE_DUMMY);
+	else if (isPlaylistStreamtype && !guiInfo.Playing) uiSetFile(NULL, NULL, STREAMTYPE_DUMMY);
        }
   case 0: // cancel
        HidePlayList();

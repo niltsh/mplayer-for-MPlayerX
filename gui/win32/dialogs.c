@@ -141,7 +141,7 @@ int display_openfilewindow(gui_t *gui, int add)
             {
                 if (GetFullPathName(filename, MAX_PATH, filename, &filepart))
                 {
-                    uiSetFileName(NULL, filename, STREAMTYPE_FILE);
+                    uiSetFile(NULL, filename, STREAMTYPE_FILE);
                     if(!parse_filename(filename, playtree, mconfig, 0))
                         gui->playlist->add_track(gui->playlist, filename, NULL, filepart, 0);
                     mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] Adding file: %s - path %s\n", filespec, filename);
@@ -326,7 +326,7 @@ static LRESULT CALLBACK OpenUrlWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPAR
                 {
                     char file[MAX_PATH];
                     SendMessage(url, WM_GETTEXT, MAX_PATH, (LPARAM) file);
-                    uiSetFileName(NULL, file, STREAMTYPE_STREAM);
+                    uiSetFile(NULL, file, STREAMTYPE_STREAM);
                     if((f = fopen(history, "wt+")))
                     {
                         fprintf(f, file);
@@ -526,7 +526,7 @@ static LRESULT CALLBACK PlayListWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPA
                     {
                 case ID_PLAY:
                         if(selected) pl->current = selected - 1;
-                        uiSetFileName(NULL, pl->tracks[pl->current]->filename, STREAMTYPE_FILE);
+                        uiSetFile(NULL, pl->tracks[pl->current]->filename, STREAMTYPE_FILE);
                         gui->startplay(gui);
                     }
                     return 0;

@@ -260,13 +260,13 @@ void uiChangeSkin(char *name)
 }
 
 /**
- * @brief Set the current file name to be played.
+ * @brief Set the file to be played.
  *
  * @param dir directory (optional, else NULL)
  * @param name filename
  * @param type stream type of the file
  */
-void uiSetFileName(char *dir, char *name, int type)
+void uiSetFile(char *dir, char *name, int type)
 {
     if (!dir)
         setdup(&guiInfo.Filename, name);
@@ -304,7 +304,7 @@ void uiCurr(void)
         curr = listMgr(PLAYLIST_ITEM_GET_CURR, 0);
 
         if (curr) {
-            uiSetFileName(curr->path, curr->name, STREAMTYPE_FILE);
+            uiSetFile(curr->path, curr->name, STREAMTYPE_FILE);
             guiInfo.PlaylistNext = 0;
             break;
         }
@@ -364,7 +364,7 @@ void uiPrev(void)
         prev = listMgr(PLAYLIST_ITEM_GET_PREV, 0);
 
         if (prev) {
-            uiSetFileName(prev->path, prev->name, STREAMTYPE_FILE);
+            uiSetFile(prev->path, prev->name, STREAMTYPE_FILE);
             guiInfo.PlaylistNext = (guiInfo.Playing ? 0 : 1);
             guiInfo.Track--;
             break;
@@ -420,7 +420,7 @@ void uiNext(void)
         next = listMgr(PLAYLIST_ITEM_GET_NEXT, 0);
 
         if (next) {
-            uiSetFileName(next->path, next->name, STREAMTYPE_FILE);
+            uiSetFile(next->path, next->name, STREAMTYPE_FILE);
             guiInfo.PlaylistNext = (guiInfo.Playing ? 0 : 1);
             guiInfo.Track++;
             break;

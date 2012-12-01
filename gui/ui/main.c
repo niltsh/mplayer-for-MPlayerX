@@ -211,7 +211,7 @@ play:
 	if ( isPlaylistStreamtype && listMgr( PLAYLIST_ITEM_GET_CURR,0 ) )
 	 {
 	  plItem * curr = listMgr( PLAYLIST_ITEM_GET_CURR,0 );
-	  uiSetFileName( curr->path,curr->name,SAME_STREAMTYPE );
+	  uiSetFile( curr->path,curr->name,SAME_STREAMTYPE );
 	 }
 
         switch ( guiInfo.StreamType )
@@ -674,7 +674,7 @@ void uiDandDHandler(int num,char** files)
   }
 
   if (filename) {
-    uiSetFileName( NULL,filename,STREAMTYPE_FILE );
+    uiSetFile( NULL,filename,STREAMTYPE_FILE );
     if ( guiInfo.Playing == GUI_PLAY ) uiEventHandling( evStop,0 );
     uiEventHandling( evPlay,0 );
   }

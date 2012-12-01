@@ -28,7 +28,7 @@ void uiPause(void);
 void uiPlay(void);
 void uiPrev(void);
 void uiRelSeek(float percent);
-void uiSetFileName(char *dir, char *name, int type);
+void uiSetFile(char *dir, char *name, int type);
 void uiState(void);
 
 #endif /* MPLAYER_GUI_ACTIONS_H */

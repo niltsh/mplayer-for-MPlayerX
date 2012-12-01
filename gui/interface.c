@@ -239,7 +239,7 @@ void guiInit(void)
     playlist = listMgr(PLAYLIST_ITEM_GET_CURR, 0);
 
     if (playlist && !filename) {
-        uiSetFileName(playlist->path, playlist->name, STREAMTYPE_FILE);
+        uiSetFile(playlist->path, playlist->name, STREAMTYPE_FILE);
         filename = NULL; // don't start playing
     }
 
@@ -419,7 +419,7 @@ int gui(int what, void *data)
             char tmp[512];
 
             sprintf(tmp, "cdda://%d", guiInfo.Track);
-            uiSetFileName(NULL, tmp, SAME_STREAMTYPE);
+            uiSetFile(NULL, tmp, SAME_STREAMTYPE);
         }
         break;
 
@@ -428,7 +428,7 @@ int gui(int what, void *data)
             char tmp[512];
 
             sprintf(tmp, "vcd://%d", guiInfo.Track);
-            uiSetFileName(NULL, tmp, SAME_STREAMTYPE);
+            uiSetFile(NULL, tmp, SAME_STREAMTYPE);
         }
         break;
 
@@ -437,7 +437,7 @@ int gui(int what, void *data)
             char tmp[512];
 
             sprintf(tmp, "dvd://%d", guiInfo.Track);
-            uiSetFileName(NULL, tmp, SAME_STREAMTYPE);
+            uiSetFile(NULL, tmp, SAME_STREAMTYPE);
         }
 #ifdef CONFIG_DVDREAD
             dvd_chapter = guiInfo.Chapter;
@@ -782,7 +782,7 @@ int gui(int what, void *data)
         next = listMgr(PLAYLIST_ITEM_GET_NEXT, 0);
 
         if (guiInfo.Playing && next) {
-            uiSetFileName(next->path, next->name, STREAMTYPE_FILE);
+            uiSetFile(next->path, next->name, STREAMTYPE_FILE);
             guiInfo.NewPlay = GUI_FILE_NEW;
             guiInfo.Track++;
         } else {
@@ -804,7 +804,7 @@ int gui(int what, void *data)
                 guiInfo.Angle         = 0;
                 guiInfo.RunningTime   = 0;
                 guiInfo.AudioChannels = 0;
-                uiSetFileName(NULL, NULL, STREAMTYPE_DUMMY);
+                uiSetFile(NULL, NULL, STREAMTYPE_DUMMY);
             }
 
             guiInfo.ElapsedTime = 0;

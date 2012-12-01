@@ -102,7 +102,7 @@ static void on_Button_pressed( GtkButton * button,gpointer user_data )
      item->url=gstrdup( str );
      listMgr( URLLIST_ITEM_ADD,item );
 
-     uiSetFileName( NULL,str,STREAMTYPE_STREAM ); guiInfo.NewPlay=GUI_FILE_NEW;
+     uiSetFile( NULL,str,STREAMTYPE_STREAM ); guiInfo.NewPlay=GUI_FILE_NEW;
      listMgr(PLAYLIST_DELETE, 0);
      add_to_gui_playlist(str, PLAYLIST_ITEM_APPEND);
      uiEventHandling( evPlay,0 );

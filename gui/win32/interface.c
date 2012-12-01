@@ -219,7 +219,7 @@ static void guiSetEvent(int event)
             // Linux filesystem.
             dvd_device = unix_device(dvd_device);
 #endif
-            uiSetFileName(NULL, dvd_device, STREAMTYPE_DVD);
+            uiSetFile(NULL, dvd_device, STREAMTYPE_DVD);
             dvdname[0] = 0;
             strcat(dvdname, "DVD Movie");
             GetVolumeInformation(dvd_device, dvdname, MAX_PATH, NULL, NULL, NULL, NULL, 0);
@@ -420,7 +420,7 @@ void uiNext(void)
         default:
             if(mygui->playlist->current == (mygui->playlist->trackcount - 1))
                 return;
-            uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename,
+            uiSetFile(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename,
                            STREAMTYPE_FILE);
             break;
     }
@@ -440,14 +440,14 @@ void uiPrev(void)
         default:
             if(mygui->playlist->current == 0)
                 return;
-            uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)--]->filename,
+            uiSetFile(NULL, mygui->playlist->tracks[(mygui->playlist->current)--]->filename,
                            STREAMTYPE_FILE);
             break;
     }
     mygui->startplay(mygui);
 }
 
-void uiSetFileName(char *dir, char *name, int type)
+void uiSetFile(char *dir, char *name, int type)
 {
     if(!name) return;
     if(!dir)
@@ -585,7 +585,7 @@ int gui(int what, void *data)
             {
                 case STREAMTYPE_FILE:
                 case STREAMTYPE_STREAM:
-                    uiSetFileName(NULL, mygui->playlist->tracks[mygui->playlist->current]->filename, SAME_STREAMTYPE);
+                    uiSetFile(NULL, mygui->playlist->tracks[mygui->playlist->current]->filename, SAME_STREAMTYPE);
                     guiInfo.Track = mygui->playlist->current + 1;
                     break;
                 case STREAMTYPE_DVD:
@@ -596,7 +596,7 @@ int gui(int what, void *data)
                     dvd_angle = guiInfo.Angle;
 #endif
                     sprintf(tmp,"dvd://%d", guiInfo.Track);
-                    uiSetFileName(NULL, tmp, SAME_STREAMTYPE);
+                    uiSetFile(NULL, tmp, SAME_STREAMTYPE);
                     break;
                 }
             }
@@ -782,7 +782,7 @@ int gui(int what, void *data)
 
               guiInfo.PlaylistNext = 1;
               guiInfo.NewPlay = GUI_FILE_NEW;
-              uiSetFileName(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename, STREAMTYPE_FILE);
+              uiSetFile(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename, STREAMTYPE_FILE);
               //sprintf(guiInfo.Filename, mygui->playlist->tracks[(mygui->playlist->current)++]->filename);
           }
 
@@ -868,7 +868,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
     if (result)
     {
         mygui->playlist->current = 0;
-        uiSetFileName(NULL, mygui->playlist->tracks[0]->filename, STREAMTYPE_FILE);
+        uiSetFile(NULL, mygui->playlist->tracks[0]->filename, STREAMTYPE_FILE);
     }
 
     if (enqueue) filename = NULL;

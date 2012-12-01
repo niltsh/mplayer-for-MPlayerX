@@ -503,7 +503,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
    case fsVideoSelector:
           for (l = 0; fsVideoFilterNames[l][0]; l++)
             if (strcmp(fsVideoFilterNames[l][0], MSGTR_Filter_Playlists) == 0) break;
-          uiSetFileName( fsSelectedDirectory,fsSelectedFile, fsLastVideoFilterSelected == l ? STREAMTYPE_PLAYLIST : STREAMTYPE_FILE );
+          uiSetFile( fsSelectedDirectory,fsSelectedFile, fsLastVideoFilterSelected == l ? STREAMTYPE_PLAYLIST : STREAMTYPE_FILE );
           selected = g_strconcat(fsSelectedDirectory, "/", fsSelectedFile, NULL);
           if (selected)
           {

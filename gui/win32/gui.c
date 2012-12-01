@@ -501,7 +501,7 @@ static LRESULT CALLBACK VideoProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                 for(i=0; i<filecount; i++)
                 {
                     DragQueryFile((HDROP) wParam, i, file, MAX_PATH);
-                    uiSetFileName(NULL, file, STREAMTYPE_FILE);
+                    uiSetFile(NULL, file, STREAMTYPE_FILE);
                     if(!parse_filename(file, playtree, mconfig, 1))
                         gui->playlist->add_track(gui->playlist, file, NULL, NULL, 0);
                 }
@@ -773,7 +773,7 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
             {
                 PCOPYDATASTRUCT cdData;
                 cdData = (PCOPYDATASTRUCT) lParam;
-                uiSetFileName(NULL, cdData->lpData, STREAMTYPE_FILE);
+                uiSetFile(NULL, cdData->lpData, STREAMTYPE_FILE);
                 if(!parse_filename(cdData->lpData, playtree, mconfig, 1))
                     gui->playlist->add_track(gui->playlist, cdData->lpData, NULL, NULL, 0);
                 gui->startplay(gui);
@@ -790,7 +790,7 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                 for(i=0; i<filecount; i++)
                 {
                     DragQueryFile((HDROP) wParam, i, file, MAX_PATH);
-                    uiSetFileName(NULL, file, STREAMTYPE_FILE);
+                    uiSetFile(NULL, file, STREAMTYPE_FILE);
                     if(!parse_filename(file, playtree, mconfig, 1))
                         gui->playlist->add_track(gui->playlist, file, NULL, NULL, 0);
                 }
