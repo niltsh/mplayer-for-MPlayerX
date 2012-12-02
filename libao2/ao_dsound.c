@@ -574,7 +574,7 @@ static void uninit(int immed)
 		// the right amount of time first.
 		usec_sleep(get_delay() * 1000 * 1000);
 		while(!IDirectSoundBuffer_GetStatus(hdsbuf,&status) && (status&DSBSTATUS_PLAYING))
-			usec_sleep(20000);
+			usec_sleep(5000);
 	}
 	DestroyBuffer();
 	UninitDirectSound();
