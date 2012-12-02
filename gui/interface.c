@@ -787,7 +787,7 @@ int gui(int what, void *data)
         if (guiInfo.Playing && next) {
             uiSetFile(next->path, next->name, STREAMTYPE_FILE);
             guiInfo.NewPlay = GUI_FILE_NEW;
-            guiInfo.Track++;
+            guiInfo.Track   = (int)listMgr(PLAYLIST_ITEM_GET_POS, next);
         } else {
             if (guiInfo.NewPlay == GUI_FILE_NEW)
                 break;

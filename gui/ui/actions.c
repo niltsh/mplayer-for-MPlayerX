@@ -384,7 +384,7 @@ void uiPrev(void)
         if (prev) {
             uiSetFile(prev->path, prev->name, STREAMTYPE_FILE);
             guiInfo.PlaylistNext = (guiInfo.Playing ? 0 : 1);
-            guiInfo.Track--;
+            guiInfo.Track = (int)listMgr(PLAYLIST_ITEM_GET_POS, prev);
             break;
         }
 
@@ -440,7 +440,7 @@ void uiNext(void)
         if (next) {
             uiSetFile(next->path, next->name, STREAMTYPE_FILE);
             guiInfo.PlaylistNext = (guiInfo.Playing ? 0 : 1);
-            guiInfo.Track++;
+            guiInfo.Track = (int)listMgr(PLAYLIST_ITEM_GET_POS, next);
             break;
         }
 
