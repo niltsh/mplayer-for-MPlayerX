@@ -234,7 +234,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	    uiUnsetFile();
 	    uiSetFile( item->path,item->name,STREAMTYPE_FILE );
 	    guiInfo.NewPlay = GUI_FILE_NEW;
-	    guiInfo.PlaylistNext = 0;
+	    guiInfo.PlaylistNext = (curr.name ? 0 : 1);
 	    guiInfo.Track = 1;
 	   }
 	 }
