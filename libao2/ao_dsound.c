@@ -81,13 +81,6 @@ static const GUID KSDATAFORMAT_SUBTYPE_PCM = {0x1,0x0000,0x0010, {0x80,0x00,0x00
 #define SPEAKER_TOP_BACK_RIGHT         0x20000
 #define SPEAKER_RESERVED               0x80000000
 
-#define DSSPEAKER_HEADPHONE         0x00000001
-#define DSSPEAKER_MONO              0x00000002
-#define DSSPEAKER_QUAD              0x00000003
-#define DSSPEAKER_STEREO            0x00000004
-#define DSSPEAKER_SURROUND          0x00000005
-#define DSSPEAKER_5POINT1           0x00000006
-
 #ifndef _WAVEFORMATEXTENSIBLE_
 typedef struct {
     WAVEFORMATEX    Format;
