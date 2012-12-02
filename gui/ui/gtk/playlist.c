@@ -36,6 +36,7 @@
 #include "gui/ui/widgets.h"
 #include "gui/util/list.h"
 #include "gui/util/mem.h"
+#include "gui/util/string.h"
 #include "playlist.h"
 #include "tools.h"
 
@@ -193,8 +194,16 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
  {
   case 1: // ok
        {
-        int i;
-        plItem * item;
+	int pos, i;
+	plItem curr, * item, * old;
+	item = listMgr( PLAYLIST_ITEM_GET_CURR,0 );
+	if (item)
+	 {
+	  curr.path = gstrdup(item->path);
+	  curr.name = gstrdup(item->name);
+	 }
+	else curr.path = curr.name = NULL;
+	pos = (int) listMgr( PLAYLIST_ITEM_GET_POS,item );
 	listMgr( PLAYLIST_DELETE,0 );
 	for ( i=0;i<NrOfSelected;i++ )
 	 {
@@ -208,15 +217,30 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	  if ( !item->path ) item->path = strdup( text[1] );
 	  listMgr( PLAYLIST_ITEM_APPEND,item );
 	 }
-	item = listMgr( PLAYLIST_ITEM_GET_CURR,0 );
+	item = listMgr( PLAYLIST_GET,0 );
 	if ( item )
 	 {
-	  uiSetFile( item->path,item->name,STREAMTYPE_FILE );
-//	  setddup( &guiInfo.Filename,item->path,item->name );
-//	  guiInfo.NewPlay=GUI_FILE_NEW;
-//	  guiInfo.StreamType=STREAMTYPE_FILE;
+	  if ( guiInfo.Playing && curr.name && pos )
+	   {
+	    old = listMgr( PLAYLIST_ITEM_FIND,&curr );
+	    if ( old &&  ( pos == (int) listMgr( PLAYLIST_ITEM_GET_POS,old ) ) )
+	     {
+	      listMgr( PLAYLIST_ITEM_SET_CURR,old );
+	      item = NULL;
+	     }
+	   }
+	  if ( item )
+	   {
+	    uiUnsetFile();
+	    uiSetFile( item->path,item->name,STREAMTYPE_FILE );
+	    guiInfo.NewPlay = GUI_FILE_NEW;
+	    guiInfo.PlaylistNext = 0;
+	    guiInfo.Track = 1;
+	   }
 	 }
 	else if (isPlaylistStreamtype && !guiInfo.Playing) uiUnsetFile();
+	free(curr.path);
+	free(curr.name);
        }
   case 0: // cancel
        HidePlayList();
