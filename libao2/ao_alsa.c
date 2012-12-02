@@ -235,9 +235,9 @@ static void parse_device (char *dest, const char *src, int len)
   char *tmp;
   memmove(dest, src, len);
   dest[len] = 0;
-  while ((tmp = strrchr(dest, '.')))
+  while ((tmp = strchr(dest, '.')))
     tmp[0] = ',';
-  while ((tmp = strrchr(dest, '=')))
+  while ((tmp = strchr(dest, '=')))
     tmp[0] = ':';
 }
 
