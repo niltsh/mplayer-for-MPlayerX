@@ -213,10 +213,10 @@ char *gstrdup(const char *str)
  *
  *        The string is duplicated by calling #gstrdup().
  *
- * @note @a *old is freed prior to the assignment.
- *
  * @param old pointer to a variable suitable to store the new pointer
  * @param str string to be duplicated
+ *
+ * @note @a *old is freed prior to the assignment.
  */
 void setdup(char **old, const char *str)
 {
@@ -228,11 +228,11 @@ void setdup(char **old, const char *str)
  * @brief Assign a newly allocated string
  *        containing the path created from a directory and a filename.
  *
- * @note @a *old is freed prior to the assignment.
- *
  * @param old pointer to a variable suitable to store the new pointer
  * @param dir directory
  * @param name filename
+ *
+ * @note @a *old is freed prior to the assignment.
  */
 void setddup(char **old, const char *dir, const char *name)
 {
@@ -331,13 +331,13 @@ char *TranslateFilename(int how, char *fname, size_t maxlen)
 /**
  * @brief Read characters from @a file.
  *
- * @note Reading stops with an end-of-line character or at end of file.
- *
  * @param str pointer to a buffer to receive the read characters
  * @param size number of characters read at the most (including a terminating null-character)
  * @param file file to read from
  *
  * @return str (success) or NULL (error)
+ *
+ * @note Reading stops with an end-of-line character or at end of file.
  */
 char *fgetstr(char *str, int size, FILE *file)
 {
