@@ -329,7 +329,7 @@ static int write_buffer(unsigned char *data, int len)
   	    // it's this easy because buffer size and len are always
   	    // aligned to multiples of channels*bytespersample
   	    // there's probably some room for speed improvements here
-  	    const int chantable[6] = {0, 1, 4, 5, 2, 3}; // reorder "matrix"
+  	    static const int chantable[6] = {0, 1, 4, 5, 2, 3}; // reorder "matrix"
   	    int i, j;
   	    int numsamp,sampsize;
 
