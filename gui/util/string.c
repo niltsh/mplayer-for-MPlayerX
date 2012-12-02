@@ -153,6 +153,14 @@ char *gstrchr(const char *str, int c)
     return strchr(str, c);
 }
 
+/**
+ * @brief A strcmp() that can handle NULL pointers.
+ *
+ * @param a string to be compared
+ * @param b string which is compared
+ *
+ * @return return value of strcmp() or -1, if a or b are NULL
+ */
 int gstrcmp(const char *a, const char *b)
 {
     if (!a && !b)
