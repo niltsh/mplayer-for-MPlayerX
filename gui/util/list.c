@@ -96,6 +96,21 @@ void *listMgr(int cmd, void *data)
         } else
             return listMgr(PLAYLIST_ITEM_APPEND, pdat);
 
+    case PLAYLIST_ITEM_FIND:
+
+        if (plList) {
+            plItem *item = plList;
+
+            do {
+                if (gstrcmp(item->path, pdat->path) == 0 && gstrcmp(item->name, pdat->name) == 0)
+                    return item;
+
+                item = item->next;
+            } while (item);
+        }
+
+        return NULL;
+
     case PLAYLIST_ITEM_SET_CURR:
 
         plCurrent = pdat;
