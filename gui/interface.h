@@ -94,11 +94,11 @@ typedef struct {
     sh_video_t *sh_video;
     af_stream_t *afilter;
 
-    char *CodecName;
-
     int VideoWindow;
     int VideoWidth;
     int VideoHeight;
+
+    char *CodecName;
 
     int StreamType;
     int AudioChannels;

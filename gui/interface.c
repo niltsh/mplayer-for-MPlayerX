@@ -789,7 +789,7 @@ int gui(int what, void *data)
         }
 
         if (guiInfo.Playing)
-        next = listMgr(PLAYLIST_ITEM_GET_NEXT, 0);
+            next = listMgr(PLAYLIST_ITEM_GET_NEXT, 0);
 
         if (guiInfo.Playing && next) {
             uiSetFile(next->path, next->name, STREAMTYPE_FILE);
