@@ -568,6 +568,11 @@ static void uninit(int immed)
 	else{
 		DWORD status;
 		IDirectSoundBuffer_Play(hdsbuf, 0, 0, 0);
+		// This should not be necessary, but a lot of drivers
+		// do not correctly report the status here, causing
+		// audio to be discarded. So we sleep approximately
+		// the right amount of time first.
+		usec_sleep(get_delay() * 1000 * 1000);
 		while(!IDirectSoundBuffer_GetStatus(hdsbuf,&status) && (status&DSBSTATUS_PLAYING))
 			usec_sleep(20000);
 	}
