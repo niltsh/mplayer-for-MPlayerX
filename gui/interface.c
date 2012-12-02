@@ -34,6 +34,7 @@
 #include "wm/wsxdnd.h"
 
 #include "access_mpcontext.h"
+#include "codec-cfg.h"
 #include "config.h"
 #include "help_mp.h"
 #include "input/input.h"
@@ -651,6 +652,11 @@ int gui(int what, void *data)
         /* video */
 
         guiInfo.sh_video = data;
+
+        nfree(guiInfo.CodecName);
+
+        if (guiInfo.sh_video)
+            guiInfo.CodecName = strdup(guiInfo.sh_video->codec->name);
 
         state = (guiInfo.StreamType == STREAMTYPE_STREAM ? btnDisabled : btnReleased);
         btnSet(evForward10sec, state);

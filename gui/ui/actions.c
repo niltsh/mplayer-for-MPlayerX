@@ -291,6 +291,8 @@ void uiUnsetFile(void)
 {
     uiSetFile(NULL, NULL, STREAMTYPE_DUMMY);
 
+    nfree(guiInfo.CodecName);
+
     guiInfo.Track         = 0;
     guiInfo.Chapter       = 0;
     guiInfo.Angle         = 0;

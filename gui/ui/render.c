@@ -27,9 +27,7 @@
 #include "gui/util/string.h"
 
 #include "access_mpcontext.h"
-#include "codec-cfg.h"
 #include "libavutil/avstring.h"
-#include "libmpdemux/stheader.h"
 #include "mixer.h"
 #include "osdep/timer.h"
 #include "stream/stream.h"
@@ -150,7 +148,7 @@ calclengthmmmmss:
                 break;
 
             case 'C':
-                snprintf(tmp, sizeof(tmp), "%s", guiInfo.sh_video ? guiInfo.sh_video->codec->name : "");
+                snprintf(tmp, sizeof(tmp), "%s", guiInfo.CodecName ? guiInfo.CodecName : "");
                 av_strlcat(trbuf, tmp, sizeof(trbuf));
                 break;
 
