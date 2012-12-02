@@ -416,12 +416,12 @@ static int control(int cmd, void *arg)
 static int init(int rate, int channels, int format, int flags)
 {
     int res;
-	if (!InitDirectSound()) return 0;
 
-	// ok, now create the buffers
 	WAVEFORMATEXTENSIBLE wformat;
 	DSBUFFERDESC dsbpridesc;
 	DSBUFFERDESC dsbdesc;
+
+	if (!InitDirectSound()) return 0;
 
 	//check if the channel count and format is supported in general
 	if (channels > 6) {
