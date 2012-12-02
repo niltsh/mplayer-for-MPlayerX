@@ -328,7 +328,7 @@ int gui(int what, void *data)
 #ifdef CONFIG_DVDREAD
     dvd_priv_t *dvd;
 #endif
-    plItem *next;
+    plItem *next = NULL;
     int msg, state;
 
     if (guiInfo.mpcontext)
@@ -788,6 +788,7 @@ int gui(int what, void *data)
                 break;
         }
 
+        if (guiInfo.Playing)
         next = listMgr(PLAYLIST_ITEM_GET_NEXT, 0);
 
         if (guiInfo.Playing && next) {
