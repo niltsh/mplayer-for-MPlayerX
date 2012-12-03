@@ -414,6 +414,7 @@ int gui(int what, void *data)
         switch (guiInfo.StreamType) {
         case STREAMTYPE_FILE:
         case STREAMTYPE_STREAM:
+            filename = guiInfo.Filename;
             break;
 
         case STREAMTYPE_CDDA:

@@ -208,12 +208,6 @@ play:
 
         if ( ( msg == evPlaySwitchToPause )&&( guiInfo.Playing == GUI_PAUSE ) ) goto NoPause;
 
-	if ( isPlaylistStreamtype && listMgr( PLAYLIST_ITEM_GET_CURR,0 ) )
-	 {
-	  plItem * curr = listMgr( PLAYLIST_ITEM_GET_CURR,0 );
-	  uiSetFile( curr->path,curr->name,SAME_STREAMTYPE );
-	 }
-
         switch ( guiInfo.StreamType )
          {
 	  case STREAMTYPE_FILE:
