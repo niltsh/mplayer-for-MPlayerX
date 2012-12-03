@@ -57,11 +57,6 @@
 #include "mp_core.h"
 #include "mpcommon.h"
 
-#define CLEAR_FILE 1
-#define CLEAR_VCD  2
-#define CLEAR_DVD  4
-#define CLEAR_ALL  (CLEAR_FILE + CLEAR_VCD + CLEAR_DVD)
-
 #define GUI_REDRAW_WAIT 375
 
 #include "actions.h"
@@ -105,25 +100,25 @@ void uiMainDraw( void )
 // XFlush( wsDisplay );
 }
 
-static void guiInfoMediumClear (int what)
+static void MediumPrepare (int type)
 {
-  if (what & CLEAR_FILE)
+  switch (type)
   {
-    nfree(guiInfo.Filename);
-    nfree(guiInfo.SubtitleFilename);
-    nfree(guiInfo.AudioFilename);
-    listMgr(PLAYLIST_DELETE, 0);
-  }
+    case STREAMTYPE_DVD:
+      listMgr(PLAYLIST_DELETE, 0);
+      break;
 
-  if (what & CLEAR_VCD) guiInfo.Tracks = 0;
-
-  if (what & CLEAR_DVD)
-  {
-    guiInfo.AudioStreams = 0;
-    guiInfo.Subtitles = 0;
-    guiInfo.Tracks = 0;
-    guiInfo.Chapters = 0;
-    guiInfo.Angles = 0;
+    case STREAMTYPE_CDDA:
+    case STREAMTYPE_VCD:
+      listMgr(PLAYLIST_DELETE, 0);
+    case STREAMTYPE_FILE:
+    case STREAMTYPE_STREAM:
+    case STREAMTYPE_PLAYLIST:
+      guiInfo.AudioStreams = 0;
+      guiInfo.Subtitles = 0;
+      guiInfo.Chapters = 0;
+      guiInfo.Angles = 0;
+      break;
   }
 }
 
@@ -163,7 +158,6 @@ void uiEventHandling( int msg,float param )
    case ivSetCDTrack:
         guiInfo.Track=iparam;
    case evPlayCD:
- 	guiInfoMediumClear ( CLEAR_ALL );
 	guiInfo.StreamType=STREAMTYPE_CDDA;
 	goto play;
 #endif
@@ -171,7 +165,6 @@ void uiEventHandling( int msg,float param )
    case ivSetVCDTrack:
         guiInfo.Track=iparam;
    case evPlayVCD:
- 	guiInfoMediumClear ( CLEAR_ALL );
 	guiInfo.StreamType=STREAMTYPE_VCD;
 	goto play;
 #endif
@@ -198,7 +191,6 @@ void uiEventHandling( int msg,float param )
         guiInfo.Chapter=1;
         guiInfo.Angle=1;
    case ivPlayDVD:
- 	guiInfoMediumClear( CLEAR_ALL - CLEAR_DVD );
         guiInfo.StreamType=STREAMTYPE_DVD;
 	goto play;
 #endif
@@ -208,19 +200,19 @@ play:
 
         if ( ( msg == evPlaySwitchToPause )&&( guiInfo.Playing == GUI_PAUSE ) ) goto NoPause;
 
+        MediumPrepare( guiInfo.StreamType );
+
         switch ( guiInfo.StreamType )
          {
 	  case STREAMTYPE_FILE:
 	  case STREAMTYPE_STREAM:
 	  case STREAMTYPE_PLAYLIST:
-	       guiInfoMediumClear( CLEAR_ALL - CLEAR_FILE );
 	       if ( !guiInfo.Track )
 	         guiInfo.Track=1;
 	       guiInfo.NewPlay=GUI_FILE_NEW;
 	       break;
 
           case STREAMTYPE_CDDA:
-	       guiInfoMediumClear( CLEAR_ALL - CLEAR_VCD - CLEAR_FILE );
 	       if ( guiInfo.Playing != GUI_PAUSE )
 	        {
 		 if ( !guiInfo.Track )
@@ -230,7 +222,6 @@ play:
 	       break;
 
           case STREAMTYPE_VCD:
-	       guiInfoMediumClear( CLEAR_ALL - CLEAR_VCD - CLEAR_FILE );
 	       if ( guiInfo.Playing != GUI_PAUSE )
 	        {
 		 if ( !guiInfo.Track )
@@ -240,7 +231,6 @@ play:
 	       break;
 
           case STREAMTYPE_DVD:
-	       guiInfoMediumClear( CLEAR_ALL - CLEAR_DVD - CLEAR_FILE );
 	       if ( guiInfo.Playing != GUI_PAUSE )
 	        {
 		 if ( !guiInfo.Track )
