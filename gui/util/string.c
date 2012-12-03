@@ -16,6 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+/**
+ * @file
+ * @brief String utilities
+ */
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -145,6 +150,14 @@ char *decomment(char *in)
     return in;
 }
 
+/**
+ * @brief A strchr() that can handle NULL pointers.
+ *
+ * @param str string to examine
+ * @param c character to find
+ *
+ * @return return value of strchr() or NULL, if @a str is NULL
+ */
 char *gstrchr(const char *str, int c)
 {
     if (!str)
@@ -159,7 +172,7 @@ char *gstrchr(const char *str, int c)
  * @param a string to be compared
  * @param b string which is compared
  *
- * @return return value of strcmp() or -1, if a or b are NULL
+ * @return return value of strcmp() or -1, if @a a or @a b are NULL
  */
 int gstrcmp(const char *a, const char *b)
 {
@@ -178,7 +191,7 @@ int gstrcmp(const char *a, const char *b)
  * @param b string which is compared
  * @param n number of characters compared at the most
  *
- * @return return value of strncmp() or -1, if a or b are NULL
+ * @return return value of strncmp() or -1, if @a a or @a b are NULL
  */
 int gstrncmp(const char *a, const char *b, size_t n)
 {
