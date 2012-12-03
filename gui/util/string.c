@@ -314,7 +314,7 @@ char *TranslateFilename(int how, char *fname, size_t maxlen)
         if (guiInfo.Chapter)
             snprintf(fname, maxlen, MSGTR_Chapter, guiInfo.Chapter);
         else
-            av_strlcat(fname, MSGTR_NoChapter, maxlen);
+            av_strlcpy(fname, MSGTR_NoChapter, maxlen);
         break;
 
     default:
