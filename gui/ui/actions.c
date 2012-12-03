@@ -326,6 +326,7 @@ void uiCurr(void)
         if (curr) {
             uiSetFile(curr->path, curr->name, STREAMTYPE_FILE);
             guiInfo.PlaylistNext = 0;
+            guiInfo.Track = (int)listMgr(PLAYLIST_ITEM_GET_POS, curr);
             break;
         }
 
