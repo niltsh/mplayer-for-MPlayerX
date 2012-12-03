@@ -242,8 +242,8 @@ void guiInit(void)
     if (playlist && !filename) {
         uiSetFile(playlist->path, playlist->name, STREAMTYPE_FILE);
         guiInfo.Tracks = (int)listMgr(PLAYLIST_ITEM_GET_POS, 0);
-        guiInfo.Track = 1;
-        filename      = NULL; // don't start playing
+        guiInfo.Track  = 1;
+        filename       = NULL; // don't start playing
     }
 
     if (subdata)
