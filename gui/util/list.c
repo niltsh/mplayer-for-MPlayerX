@@ -45,7 +45,8 @@ static urlItem *urlList;
  *         pointer to current list item (ITEM command) or
  *         NULL (DELETE or unknown command)
  *
- * @note PLAYLIST_ITEM_GET_POS returns the position number as pointer,
+ * @note PLAYLIST_ITEM_GET_POS returns the position number as pointer
+ *       (if @a data is NULL the last position number, i.e. number of items),
  *       and position 0 means "not found"
  */
 void *listMgr(int cmd, void *data)
@@ -138,6 +139,9 @@ void *listMgr(int cmd, void *data)
 
                 item = item->next;
             } while (item);
+
+            if (!pdat)
+                pos = i;
         }
 
         return (void *)pos;
