@@ -241,6 +241,7 @@ void guiInit(void)
 
     if (playlist && !filename) {
         uiSetFile(playlist->path, playlist->name, STREAMTYPE_FILE);
+        guiInfo.Tracks = (int)listMgr(PLAYLIST_ITEM_GET_POS, 0);
         guiInfo.Track = 1;
         filename      = NULL; // don't start playing
     }
@@ -608,6 +609,7 @@ int gui(int what, void *data)
         switch (guiInfo.StreamType) {
         case STREAMTYPE_FILE:
         case STREAMTYPE_STREAM:
+            guiInfo.Tracks = (int)listMgr(PLAYLIST_ITEM_GET_POS, 0);
             break;
 
         case STREAMTYPE_CDDA:

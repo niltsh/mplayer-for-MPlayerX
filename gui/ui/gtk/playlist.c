@@ -236,6 +236,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	    guiInfo.PlaylistNext = (curr.name ? 0 : 1);
 	    guiInfo.Track = 1;
 	   }
+	  guiInfo.Tracks = (int) listMgr( PLAYLIST_ITEM_GET_POS,NULL );
 	 }
 	else if (isPlaylistStreamtype && !guiInfo.Playing) uiUnsetFile();
 	free(curr.path);
