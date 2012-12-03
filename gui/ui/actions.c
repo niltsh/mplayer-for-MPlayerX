@@ -265,6 +265,8 @@ void uiChangeSkin(char *name)
  * @param dir directory (optional, else NULL)
  * @param name filename
  * @param type stream type of the file
+ *
+ * @note All #guiInfo members associated with the file will be cleared.
  */
 void uiSetFile(char *dir, char *name, int type)
 {
@@ -275,31 +277,29 @@ void uiSetFile(char *dir, char *name, int type)
 
     filename = guiInfo.Filename;
 
-    if (type != SAME_STREAMTYPE)
+    if (type != SAME_STREAMTYPE) {
         guiInfo.StreamType = type;
 
-    nfree(guiInfo.AudioFilename);
-    nfree(guiInfo.SubtitleFilename);
+        guiInfo.VideoWidth    = 0;
+        guiInfo.VideoHeight   = 0;
+        guiInfo.AudioChannels = 0;
+        guiInfo.RunningTime   = 0;
+        guiInfo.Track   = 0;
+        guiInfo.Chapter = 0;
+        guiInfo.Angle   = 0;
+
+        nfree(guiInfo.CodecName);
+        nfree(guiInfo.AudioFilename);
+        nfree(guiInfo.SubtitleFilename);
+    }
 }
 
 /**
  * @brief Unset the file being played.
- *
- * @note Additionally, clear all #guiInfo members associated with the file.
  */
 void uiUnsetFile(void)
 {
     uiSetFile(NULL, NULL, STREAMTYPE_DUMMY);
-
-    nfree(guiInfo.CodecName);
-
-    guiInfo.Track         = 0;
-    guiInfo.Chapter       = 0;
-    guiInfo.Angle         = 0;
-    guiInfo.RunningTime   = 0;
-    guiInfo.AudioChannels = 0;
-    guiInfo.VideoWidth    = 0;
-    guiInfo.VideoHeight   = 0;
 }
 
 /**
