@@ -816,8 +816,6 @@ int gui(int what, void *data)
 
             if (gtkShowVideoWindow) {
                 guiInfo.VideoWindow = True;
-                guiInfo.VideoWidth  = guiApp.video.width;
-                guiInfo.VideoHeight = guiApp.video.height;
 
                 if (!guiApp.videoWindow.isFullScreen) {
                     wsResizeWindow(&guiApp.videoWindow, guiApp.video.width, guiApp.video.height);
