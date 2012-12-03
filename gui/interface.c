@@ -241,6 +241,7 @@ void guiInit(void)
 
     if (playlist && !filename) {
         uiSetFile(playlist->path, playlist->name, STREAMTYPE_FILE);
+        guiInfo.Track = 1;
         filename = NULL; // don't start playing
     }
 
