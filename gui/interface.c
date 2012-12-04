@@ -1097,7 +1097,7 @@ void mplayerLoadFont(void)
 
 void mplayerLoadSubtitle(const char *name)
 {
-    if (guiInfo.Playing == 0)
+    if (guiInfo.Playing == GUI_STOP)
         return;
 
     if (subdata) {
