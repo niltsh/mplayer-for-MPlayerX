@@ -168,7 +168,7 @@ enum PixelFormat out_pix_fmt = PIX_FMT_NONE;
 
 #define MWM_TEAROFF_WINDOW      (1L << 0)
 
-void wsWindowDecoration(wsTWindow *win, long d)
+void wsWindowDecoration(wsTWindow *win, Bool decor)
 {
     wsMotifHints = XInternAtom(wsDisplay, "_MOTIF_WM_HINTS", 0);
 
@@ -178,7 +178,7 @@ void wsWindowDecoration(wsTWindow *win, long d)
     memset(&wsMotifWmHints, 0, sizeof(MotifWmHints));
     wsMotifWmHints.flags = MWM_HINTS_FUNCTIONS | MWM_HINTS_DECORATIONS;
 
-    if (d) {
+    if (decor) {
         wsMotifWmHints.functions   = MWM_FUNC_MOVE | MWM_FUNC_CLOSE | MWM_FUNC_MINIMIZE | MWM_FUNC_MAXIMIZE | MWM_FUNC_RESIZE;
         wsMotifWmHints.decorations = MWM_DECOR_ALL;
     }

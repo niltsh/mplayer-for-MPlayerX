@@ -207,7 +207,7 @@ void guiInit(void)
     wsSetIcon(wsDisplay, guiApp.videoWindow.WindowID, &guiIcon);
 
     if (!guiApp.mainDecoration)
-        wsWindowDecoration(&guiApp.mainWindow, 0);
+        wsWindowDecoration(&guiApp.mainWindow, False);
 
     wsVisibleWindow(&guiApp.mainWindow, wsShowWindow);
 

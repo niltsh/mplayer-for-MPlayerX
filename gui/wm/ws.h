@@ -243,7 +243,7 @@ void wsSetBackgroundRGB(wsTWindow *win, int r, int g, int b);
 #define wsClearWindow(win) XClearWindow(wsDisplay, (win)->WindowID)
 void wsSetTitle(wsTWindow *win, char *name);
 void wsVisibleWindow(wsTWindow *win, int show);
-void wsWindowDecoration(wsTWindow *win, long d);
+void wsWindowDecoration(wsTWindow *win, Bool decor);
 void wsSetLayer(Display *wsDisplay, Window win, int layer);
 void wsFullScreen(wsTWindow *win);
 void wsPostRedisplay(wsTWindow *win);

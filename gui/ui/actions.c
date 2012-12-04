@@ -245,7 +245,7 @@ void uiChangeSkin(char *name)
     wsXDNDMakeAwareness(&guiApp.mainWindow);
 
     if (!guiApp.mainDecoration)
-        wsWindowDecoration(&guiApp.mainWindow, 0);
+        wsWindowDecoration(&guiApp.mainWindow, False);
 
     wsVisibleWindow(&guiApp.mainWindow, wsShowWindow);
     mainVisible = True;
