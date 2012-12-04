@@ -65,14 +65,14 @@
 unsigned int GetTimerMS( void );
 
 unsigned char * mainDrawBuffer = NULL;
-int             uiMainRender = 1;
+int             uiMainRender = True;
 
-int             uiMainAutoPlay = 0;
+int             uiMainAutoPlay = False;
 int             uiMiddleMenu = 0;
 
-int             mainVisible = 1;
+int             mainVisible = True;
 
-int             boxMoved = 0;
+int             boxMoved = False;
 int             sx = 0,sy = 0;
 int             i,pot = 0;
 
@@ -94,7 +94,7 @@ void uiMainDraw( void )
 
    fast_memcpy( mainDrawBuffer,guiApp.main.Bitmap.Image,guiApp.main.Bitmap.ImageSize );
    RenderAll( &guiApp.mainWindow,guiApp.mainItems,guiApp.IndexOfMainItems,mainDrawBuffer );
-   uiMainRender=0;
+   uiMainRender=False;
   }
  wsPutImage( &guiApp.mainWindow );
 // XFlush( wsDisplay );
@@ -254,7 +254,7 @@ NoPause:
 	break;
 
    case evLoadPlay:
-        uiMainAutoPlay=1;
+        uiMainAutoPlay=True;
 //	guiInfo.StreamType=STREAMTYPE_FILE;
    case evLoad:
         gtkShow( evLoad,NULL );
@@ -402,7 +402,7 @@ set_volume:
             break;
           last_redraw_time = now;
         }
-        uiMainRender=1;
+        uiMainRender=True;
         wsPostRedisplay( &guiApp.mainWindow );
 	wsPostRedisplay( &guiApp.playbarWindow );
         break;
@@ -444,10 +444,10 @@ void uiMainMouseHandle( int Button,int X,int Y,int RX,int RY )
 
    case wsPLMouseButton:
 	  gtkShow( ivHidePopUpMenu,NULL );
-          sx=X; sy=Y; boxMoved=1; itemtype=itPLMButton;
+          sx=X; sy=Y; boxMoved=True; itemtype=itPLMButton;
           SelectedItem=currentselected;
           if ( SelectedItem == -1 ) break;
-          boxMoved=0;
+          boxMoved=False;
           item=&guiApp.mainItems[SelectedItem];
           itemtype=item->type;
           item->pressed=btnPressed;
@@ -462,7 +462,7 @@ void uiMainMouseHandle( int Button,int X,int Y,int RX,int RY )
            }
           break;
    case wsRLMouseButton:
-          boxMoved=0;
+          boxMoved=False;
           if ( SelectedItem != -1 )   // NOTE TO MYSELF: only if itButton, itHPotmeter or itVPotmeter
            {
             item=&guiApp.mainItems[SelectedItem];
@@ -516,7 +516,7 @@ rollerhandled:
            {
             case itPLMButton:
                  wsMoveWindow( &guiApp.mainWindow,True,RX - abs( sx ),RY - abs( sy ) );
-                 uiMainRender=0;
+                 uiMainRender=False;
                  break;
             case itPRMButton:
                  uiMenuMouseHandle( RX,RY );

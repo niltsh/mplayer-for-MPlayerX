@@ -27,6 +27,7 @@
 #include "skin.h"
 #include "font.h"
 #include "gui/app.h"
+#include "gui/gui.h"
 #include "gui/interface.h"
 #include "gui/ui/widgets.h"
 #include "gui/util/cut.h"
@@ -78,16 +79,16 @@ static void skin_error(const char *format, ...)
  *
  * @param item name of the item to be put in a message in case of an error
  *
- * @return 1 (ok) or 0 (error)
+ * @return #True (ok) or #False (error)
  */
 static int section_item(char *item)
 {
     if (!skin) {
         skin_error(MSGTR_SKIN_ERROR_SECTION, item);
-        return 0;
+        return False;
     }
 
-    return 1;
+    return True;
 }
 
 /**
@@ -95,16 +96,16 @@ static int section_item(char *item)
  *
  * @param item name of the item to be put in a message in case of an error
  *
- * @return 1 (ok) or 0 (error)
+ * @return #True (ok) or #False (error)
  */
 static int window_item(char *item)
 {
     if (!currWinName[0]) {
         skin_error(MSGTR_SKIN_ERROR_WINDOW, item);
-        return 0;
+        return False;
     }
 
-    return 1;
+    return True;
 }
 
 /**
@@ -364,9 +365,9 @@ static int item_base(char *in)
     }
 
     if (is_bar)
-        skin->playbarIsPresent = 1;
+        skin->playbarIsPresent = True;
     if (is_menu)
-        skin->menuIsPresent = 1;
+        skin->menuIsPresent = True;
 
     return 0;
 }

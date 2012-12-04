@@ -27,6 +27,7 @@
 #include <unistd.h>
 
 #include "bitmap.h"
+#include "gui/gui.h"
 
 #include "help_mp.h"
 #include "libavcodec/avcodec.h"
@@ -143,7 +144,7 @@ static int pngRead(const char *fname, guiImage *img)
         if (img->Image)
             memcpy_pic(img->Image, frame->data[0], bpl, img->Height, bpl, frame->linesize[0]);
         else
-            decode_ok = 0;
+            decode_ok = False;
     }
 
     avcodec_close(avctx);
@@ -159,7 +160,7 @@ static int pngRead(const char *fname, guiImage *img)
  *
  * @param img image to be converted
  *
- * @return 1 (ok) or 0 (error)
+ * @return #True (ok) or #False (error)
  *
  * @note This is an in-place conversion,
  *       new memory will be allocated for @a img if necessary.
@@ -179,7 +180,7 @@ static int convert_ARGB(guiImage *img)
         if (!img->Image) {
             free(orgImage);
             mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", img->ImageSize);
-            return 0;
+            return False;
         }
 
         mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 32 bpp conversion size: %lu\n", img->ImageSize);
@@ -194,9 +195,9 @@ static int convert_ARGB(guiImage *img)
         for (i = 0; i < img->ImageSize; i += 4)
             *(uint32_t *)&img->Image[i] = (img->Image[i + 3] << 24) | AV_RB24(&img->Image[i]);
     } else
-        return 0;
+        return False;
 
-    return 1;
+    return True;
 }
 
 /**
@@ -278,7 +279,7 @@ void bpFree(guiImage *img)
  * @param in image to render a bitmap mask from
  * @param out bitmap mask
  *
- * @return 1 (ok) or 0 (error)
+ * @return #True (ok) or #False (error)
  *
  * @note As a side effect, transparent pixels of @a in will be rendered black.
  */
@@ -298,7 +299,7 @@ int bpRenderMask(const guiImage *in, guiImage *out)
 
     if (!out->Image) {
         mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] not enough memory: %lu\n", out->ImageSize);
-        return 0;
+        return False;
     }
 
     buf = (uint32_t *)in->Image;
@@ -334,5 +335,5 @@ int bpRenderMask(const guiImage *in, guiImage *out)
 
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[bitmap] 1 bpp conversion size: %lu\n", out->ImageSize);
 
-    return 1;
+    return True;
 }

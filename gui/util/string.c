@@ -25,6 +25,7 @@
 #include <string.h>
 
 #include "string.h"
+#include "gui/gui.h"
 #include "gui/interface.h"
 
 #include "config.h"
@@ -93,7 +94,7 @@ char *strswap(char *in, char from, char to)
 char *trim(char *in)
 {
     char *src, *dest;
-    int freeze = 0;
+    int freeze = False;
 
     src = dest = in;
 
@@ -128,7 +129,7 @@ char *trim(char *in)
 char *decomment(char *in)
 {
     char *p;
-    int nap = 0;
+    int nap = False;
 
     p = in;
 

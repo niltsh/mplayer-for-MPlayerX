@@ -41,6 +41,7 @@
 
 #include "widgets.h"
 #include "gui/app.h"
+#include "gui/gui.h"
 #include "gui/interface.h"
 #include "gui/wm/ws.h"
 
@@ -54,7 +55,7 @@ GtkWidget *ErrorPixmap;
 
 int gtkPopupMenu      = 0;
 int gtkPopupMenuParam = 0;
-int gtkInitialized    = 0;
+int gtkInitialized    = False;
 
 #include "gtk/skinbrowser.h"
 #include "gtk/playlist.h"
@@ -151,7 +152,7 @@ void gtkInit(void)
 
     gtkLoadIcon(theme, 48, &gdkIcon, &gdkIconMask);
 
-    gtkInitialized = 1;
+    gtkInitialized = True;
 }
 
 void gtkAddIcon(GtkWidget *window)

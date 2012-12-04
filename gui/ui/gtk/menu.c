@@ -30,6 +30,7 @@
 #include "gui/ui/widgets.h"
 #include "gui/ui/gmplayer.h"
 #include "gui/app.h"
+#include "gui/gui.h"
 #include "gui/interface.h"
 
 #include "stream/stream.h"
@@ -645,15 +646,15 @@ GtkWidget * create_PopUpMenu( void )
 
   if ( guiInfo.VideoWindow )
    {
-    int b1 = 0, b2 = 0, b_half = 0;
+    int b1 = False, b2 = False, b_half = False;
     AddSeparator( Menu );
     if ( !guiApp.videoWindow.isFullScreen && guiInfo.Playing )
      {
       if ( ( guiApp.videoWindow.Width == guiInfo.VideoWidth * 2 )&&
-           ( guiApp.videoWindow.Height == guiInfo.VideoHeight * 2 ) ) b2=1;
+           ( guiApp.videoWindow.Height == guiInfo.VideoHeight * 2 ) ) b2=True;
       else if ( ( guiApp.videoWindow.Width == guiInfo.VideoWidth / 2 ) &&
-                ( guiApp.videoWindow.Height == guiInfo.VideoHeight / 2 ) ) b_half=1;
-      else b1=1;
+                ( guiApp.videoWindow.Height == guiInfo.VideoHeight / 2 ) ) b_half=True;
+      else b1=True;
      } else b1=!guiApp.videoWindow.isFullScreen;
     H=AddMenuCheckItem( window1, (const char*)half_xpm, Menu,MSGTR_MENU_HalfSize,b_half,evHalfSize );
     N=AddMenuCheckItem( window1, (const char*)normal_xpm, Menu,MSGTR_MENU_NormalSize"      ",b1,evNormalSize );

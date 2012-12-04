@@ -26,16 +26,17 @@
 #include "help_mp.h"
 #include "mp_msg.h"
 #include "gui/app.h"
+#include "gui/gui.h"
 #include "gmplayer.h"
 
 #include "widgets.h"
 
 unsigned char * menuDrawBuffer = NULL;
-int             menuRender = 1;
+int             menuRender = True;
 int             menuItem = -1;
 int             oldMenuItem = -1;
 int             menuX,menuY;
-static int      menuIsInitialized = 0;
+static int      menuIsInitialized = False;
 
 static void uiMenuDraw( void )
 {
@@ -64,7 +65,7 @@ static void uiMenuDraw( void )
    oldMenuItem=menuItem;
 /* --- */
    wsConvert( &guiApp.menuWindow,menuDrawBuffer );
-   menuRender=0;
+   menuRender=False;
   }
  wsPutImage( &guiApp.menuWindow );
 }
@@ -111,7 +112,7 @@ void uiShowMenu( int mx,int my )
  wsMoveWindow( &guiApp.menuWindow,True,x,y );
  wsRaiseWindowTop( wsDisplay,guiApp.menuWindow.WindowID );
  wsSetLayer( wsDisplay,guiApp.menuWindow.WindowID,1 );
- menuRender=1;
+ menuRender=True;
  wsVisibleWindow( &guiApp.menuWindow,wsShowWindow );
  wsPostRedisplay( &guiApp.menuWindow );
 }
@@ -165,9 +166,9 @@ void uiMenuInit( void )
 
  mp_msg( MSGT_GPLAYER,MSGL_DBG2,"[menu] menuWindow ID: 0x%x\n",(int)guiApp.menuWindow.WindowID );
 
- menuIsInitialized=1;
+ menuIsInitialized=True;
  guiApp.menuWindow.ReDraw=uiMenuDraw;
 // guiApp.menuWindow.MouseHandler=uiMenuMouseHandle;
 // guiApp.menuWindow.KeyHandler=uiMainKeyHandle;
- menuRender=1; wsPostRedisplay( &guiApp.menuWindow );
+ menuRender=True; wsPostRedisplay( &guiApp.menuWindow );
 }

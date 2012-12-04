@@ -61,7 +61,7 @@
 guiInterface_t guiInfo = {
     .StreamType   = STREAMTYPE_DUMMY,
     .Balance      = 50.0f,
-    .PlaylistNext = 1
+    .PlaylistNext = True
 };
 
 static int initialized;
@@ -83,13 +83,13 @@ void guiInit(void)
         gtkDXR3Device = strdup("/dev/em8300-0");
 
     if (stream_cache_size > 0) {
-        gtkCacheOn   = 1;
+        gtkCacheOn   = True;
         gtkCacheSize = stream_cache_size;
     } else if (stream_cache_size == 0)
-        gtkCacheOn = 0;
+        gtkCacheOn = False;
 
     if (autosync && (autosync != gtkAutoSync)) {
-        gtkAutoSyncOn = 1;
+        gtkAutoSyncOn = True;
         gtkAutoSync   = autosync;
     }
 
@@ -235,7 +235,7 @@ void guiInit(void)
 
     guiInfo.Playing = GUI_STOP;
 
-    uiVideoRender = 1;
+    uiVideoRender = True;
 
     playlist = listMgr(PLAYLIST_ITEM_GET_CURR, 0);
 
@@ -251,13 +251,13 @@ void guiInit(void)
 
     mplayerLoadFont();
 
-    initialized = 1;
+    initialized = True;
 }
 
 void guiDone(void)
 {
     if (initialized) {
-        uiMainRender = 0;
+        uiMainRender = False;
 
         if (gui_save_pos) {
             gui_main_pos_x  = guiApp.mainWindow.X;
@@ -571,7 +571,7 @@ int gui(int what, void *data)
         if (gtkSubDumpSrt)
             stream_dump_type = 6;
 
-        gtkSubDumpMPSub = gtkSubDumpSrt = 0;
+        gtkSubDumpMPSub = gtkSubDumpSrt = False;
         mplayerLoadFont();
 
         /* misc */
@@ -781,7 +781,7 @@ int gui(int what, void *data)
         uiEventHandling(ivRedraw, 1);
 
         if (!guiInfo.PlaylistNext && guiInfo.Playing) {
-            guiInfo.PlaylistNext = 1;
+            guiInfo.PlaylistNext = True;
             break;
         }
 
@@ -840,7 +840,7 @@ int gui(int what, void *data)
             gui(GUI_SET_STATE, (void *)GUI_STOP);
 
             wsHandleEvents();
-            uiVideoRender = 1;
+            uiVideoRender = True;
             wsSetBackgroundRGB(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
             wsClearWindow(&guiApp.videoWindow);
             wsPostRedisplay(&guiApp.videoWindow);
@@ -860,7 +860,7 @@ int gui(int what, void *data)
 int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqueue)
 {
     play_tree_iter_t *my_pt_iter = NULL;
-    int result = 0;
+    int result = False;
 
     if (!enqueue)
         listMgr(PLAYLIST_DELETE, 0);             // delete playlist before "appending"
@@ -869,11 +869,11 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
             /* add it to end of list */
             if (add_to_gui_playlist(filename, PLAYLIST_ITEM_APPEND))
-                result = 1;
+                result = True;
     }
 
     uiCurr();   // update filename
-    guiInfo.PlaylistNext = 1;
+    guiInfo.PlaylistNext = True;
 
     if (enqueue)
         filename = NULL;            // don't start playing
@@ -892,7 +892,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
 int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
 {
     play_tree_iter_t *my_pt_iter = NULL;
-    int result = 0;
+    int result = False;
     plItem *save;
 
     save = (plItem *)listMgr(PLAYLIST_ITEM_GET_CURR, 0);    // save current item
@@ -901,7 +901,7 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
             /* insert it into the list and set plCurrent=new item */
             if (add_to_gui_playlist(filename, PLAYLIST_ITEM_INSERT))
-                result = 1;
+                result = True;
 
         pt_iter_destroy(&my_pt_iter);
     }

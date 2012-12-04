@@ -22,6 +22,7 @@
  */
 
 #include "app.h"
+#include "gui.h"
 #include "skin/font.h"
 
 #include "libavutil/common.h"
@@ -106,16 +107,16 @@ void appFreeStruct(void)
     int i;
 
     appClearItem(&guiApp.main);
-    guiApp.mainDecoration = 0;
+    guiApp.mainDecoration = False;
 
     appClearItem(&guiApp.video);
 
     appClearItem(&guiApp.playbar);
-    guiApp.playbarIsPresent = 0;
+    guiApp.playbarIsPresent = False;
 
     appClearItem(&guiApp.menu);
     appClearItem(&guiApp.menuSelected);
-    guiApp.menuIsPresent = 0;
+    guiApp.menuIsPresent = False;
 
     for (i = 0; i <= guiApp.IndexOfMainItems; i++)
         appClearItem(&guiApp.mainItems[i]);

@@ -24,6 +24,14 @@
 #ifndef MPLAYER_GUI_GUI_H
 #define MPLAYER_GUI_GUI_H
 
+//@{
+/// boolean symbolic constant
+#if !defined(True) && !defined(False)
+#define True  1
+#define False 0
+#endif
+//@}
+
 /// a pseudo stream type indicating not to change the current one
 #define SAME_STREAMTYPE (STREAMTYPE_DUMMY - 1)
 

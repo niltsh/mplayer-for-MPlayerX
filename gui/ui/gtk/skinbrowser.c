@@ -28,6 +28,7 @@
 
 #include "gui/app.h"
 #include "gui/cfg.h"
+#include "gui/gui.h"
 #include "gui/skin/skin.h"
 #include "help_mp.h"
 
@@ -87,7 +88,7 @@ int gtkFillSkinList( gchar * mdir )
     }
   }
  globfree( &gg );
- return 1;
+ return True;
 }
 
 static void prButton( GtkButton * button,gpointer user_data )

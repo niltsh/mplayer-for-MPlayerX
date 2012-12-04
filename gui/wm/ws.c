@@ -107,8 +107,8 @@ wsTWindow *wsWindowList[wsWLCount] = { NULL, NULL, NULL, NULL, NULL };
 
 unsigned long wsKeyTable[512];
 
-int wsUseXShm   = 1;
-int wsUseXShape = 1;
+int wsUseXShm   = True;
+int wsUseXShape = True;
 
 static int wsSearch(Window win)
 {
@@ -259,7 +259,7 @@ void wsXInit(Display *mDisplay)
 
         if (dispname && *dispname != ':') {
             localdisp = 0;
-            wsUseXShm = 0;
+            wsUseXShm = False;
         }
 
         mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] display name: %s => %s display.\n", dispname, localdisp ? "local" : "REMOTE");
@@ -271,7 +271,7 @@ void wsXInit(Display *mDisplay)
 #ifdef HAVE_SHM
     if (!XShmQueryExtension(wsDisplay))
 #endif
-    wsUseXShm = 0;
+    wsUseXShm = False;
 
     if (!wsUseXShm)
         mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_WS_NoXshm);
@@ -279,7 +279,7 @@ void wsXInit(Display *mDisplay)
 #ifdef CONFIG_XSHAPE
     if (!XShapeQueryExtension(wsDisplay, &eventbase, &errorbase))
 #endif
-    wsUseXShape = 0;
+    wsUseXShape = False;
 
     if (!wsUseXShape)
         mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_WS_NoXshape);
@@ -439,7 +439,7 @@ void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV
     win->Property = D;
 
     if (D & wsShowFrame)
-        win->Decorations = 1;
+        win->Decorations = True;
 
     wsHGC = DefaultGC(wsDisplay, wsScreen);
 
@@ -788,26 +788,26 @@ expose:
     case KeyRelease:
         i = wsKeyReleased;
 keypressed:
-        wsWindowList[l]->Alt      = 0;
-        wsWindowList[l]->Shift    = 0;
-        wsWindowList[l]->NumLock  = 0;
-        wsWindowList[l]->Control  = 0;
-        wsWindowList[l]->CapsLock = 0;
+        wsWindowList[l]->Alt      = False;
+        wsWindowList[l]->Shift    = False;
+        wsWindowList[l]->NumLock  = False;
+        wsWindowList[l]->Control  = False;
+        wsWindowList[l]->CapsLock = False;
 
         if (Event->xkey.state & Mod1Mask)
-            wsWindowList[l]->Alt = 1;
+            wsWindowList[l]->Alt = True;
 
         if (Event->xkey.state & Mod2Mask)
-            wsWindowList[l]->NumLock = 1;
+            wsWindowList[l]->NumLock = True;
 
         if (Event->xkey.state & ControlMask)
-            wsWindowList[l]->Control = 1;
+            wsWindowList[l]->Control = True;
 
         if (Event->xkey.state & ShiftMask)
-            wsWindowList[l]->Shift = 1;
+            wsWindowList[l]->Shift = True;
 
         if (Event->xkey.state & LockMask)
-            wsWindowList[l]->CapsLock = 1;
+            wsWindowList[l]->CapsLock = True;
 
 #if 0
         {
@@ -1436,7 +1436,7 @@ void wsCreateImage(wsTWindow *win, int Width, int Height)
         }
 
         win->xImage->data     = win->Shminfo.shmaddr;
-        win->Shminfo.readOnly = 0;
+        win->Shminfo.readOnly = False;
         XShmAttach(wsDisplay, &win->Shminfo);
         XSync(wsDisplay, False);
         shmctl(win->Shminfo.shmid, IPC_RMID, 0);

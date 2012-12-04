@@ -89,7 +89,7 @@ void uiPlay(void)
     }
 
     gui(GUI_SET_STATE, (void *)GUI_PLAY);
-    uiVideoRender = 0;
+    uiVideoRender = False;
     wsSetBackgroundRGB(&guiApp.videoWindow, 0, 0, 0);
     wsClearWindow(&guiApp.videoWindow);
 }
@@ -166,11 +166,11 @@ void uiChangeSkin(char *name)
     prev  = guiApp.menuIsPresent;
     bprev = guiApp.playbarIsPresent;
 
-    mainVisible = 0;
+    mainVisible = False;
 
     if (skinRead(name) != 0) {
         if (skinRead(skinName) != 0) {
-            mainVisible = 1;
+            mainVisible = True;
             return;
         }
     }
@@ -207,7 +207,7 @@ void uiChangeSkin(char *name)
         wsConvert(&guiApp.videoWindow, guiApp.video.Bitmap.Image);
 
     if (!guiInfo.Playing) {
-        uiVideoRender = 1;
+        uiVideoRender = True;
         wsSetBackgroundRGB(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
         wsClearWindow(&guiApp.videoWindow);
         wsPostRedisplay(&guiApp.videoWindow);
@@ -248,7 +248,7 @@ void uiChangeSkin(char *name)
         wsWindowDecoration(&guiApp.mainWindow, 0);
 
     wsVisibleWindow(&guiApp.mainWindow, wsShowWindow);
-    mainVisible = 1;
+    mainVisible = True;
 
     btnModify(evSetVolume, guiInfo.Volume);
     btnModify(evSetBalance, guiInfo.Balance);
@@ -325,7 +325,7 @@ void uiCurr(void)
 
         if (curr) {
             uiSetFile(curr->path, curr->name, STREAMTYPE_FILE);
-            guiInfo.PlaylistNext = 0;
+            guiInfo.PlaylistNext = False;
             guiInfo.Track = (int)listMgr(PLAYLIST_ITEM_GET_POS, curr);
             break;
         }
@@ -342,7 +342,7 @@ void uiCurr(void)
  */
 void uiPrev(void)
 {
-    int stop = 0;
+    int stop = False;
     plItem *prev;
 
     if (guiInfo.Playing == GUI_PAUSE)
@@ -353,7 +353,7 @@ void uiPrev(void)
 
         if (--guiInfo.Track == 0) {
             guiInfo.Track = 1;
-            stop = 1;
+            stop = True;
         }
 
         break;
@@ -362,7 +362,7 @@ void uiPrev(void)
 
         if (--guiInfo.Track == 1) {
             guiInfo.Track = 2;
-            stop = 1;
+            stop = True;
         }
 
         break;
@@ -374,7 +374,7 @@ void uiPrev(void)
 
             if (--guiInfo.Track == 0) {
                 guiInfo.Track = 1;
-                stop = 1;
+                stop = True;
             }
         }
 
@@ -386,7 +386,7 @@ void uiPrev(void)
 
         if (prev) {
             uiSetFile(prev->path, prev->name, STREAMTYPE_FILE);
-            guiInfo.PlaylistNext = (guiInfo.Playing ? 0 : 1);
+            guiInfo.PlaylistNext = (guiInfo.Playing ? False : True);
             guiInfo.Track = (int)listMgr(PLAYLIST_ITEM_GET_POS, prev);
             break;
         }
@@ -406,7 +406,7 @@ void uiPrev(void)
  */
 void uiNext(void)
 {
-    int stop = 0;
+    int stop = False;
     plItem *next;
 
     if (guiInfo.Playing == GUI_PAUSE)
@@ -418,7 +418,7 @@ void uiNext(void)
 
         if (++guiInfo.Track > guiInfo.Tracks) {
             guiInfo.Track = guiInfo.Tracks;
-            stop = 1;
+            stop = True;
         }
 
         break;
@@ -430,7 +430,7 @@ void uiNext(void)
 
             if (++guiInfo.Track > guiInfo.Tracks) {
                 guiInfo.Track = guiInfo.Tracks;
-                stop = 1;
+                stop = True;
             }
         }
 
@@ -442,7 +442,7 @@ void uiNext(void)
 
         if (next) {
             uiSetFile(next->path, next->name, STREAMTYPE_FILE);
-            guiInfo.PlaylistNext = (guiInfo.Playing ? 0 : 1);
+            guiInfo.PlaylistNext = (guiInfo.Playing ? False : True);
             guiInfo.Track = (int)listMgr(PLAYLIST_ITEM_GET_POS, next);
             break;
         }

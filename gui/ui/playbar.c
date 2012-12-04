@@ -25,6 +25,7 @@
 #include <string.h>
 
 #include "gui/app.h"
+#include "gui/gui.h"
 #include "gui/interface.h"
 #include "gui/skin/font.h"
 #include "gui/skin/skin.h"
@@ -53,7 +54,7 @@ unsigned int GetTimerMS( void );
 unsigned int GetTimer( void );
 
 unsigned char * playbarDrawBuffer = NULL;
-int		playbarVisible = 0;
+int		playbarVisible = False;
 int  		playbarLength = 0;
 int		uiPlaybarFade = 0;
 
@@ -80,7 +81,7 @@ static void uiPlaybarDraw( void )
 	 {
 	  playbarLength=guiApp.videoWindow.Height - guiApp.playbar.height;
 	  uiPlaybarFade=0;
-	  vo_mouse_autohide=0;
+	  vo_mouse_autohide=False;
 	 }
         wsMoveWindow( &guiApp.playbarWindow,True,x,playbarLength );
 	break;
@@ -89,8 +90,9 @@ static void uiPlaybarDraw( void )
 	if ( playbarLength > guiApp.videoWindow.Height )
 	 {
 	  playbarLength=guiApp.videoWindow.Height;
-	  uiPlaybarFade=playbarVisible=0;
-          vo_mouse_autohide=1;
+	  uiPlaybarFade=0;
+	  playbarVisible=False;
+          vo_mouse_autohide=True;
           wsVisibleWindow( &guiApp.playbarWindow,wsHideWindow );
 	  return;
 	 }
@@ -104,7 +106,7 @@ static void uiPlaybarDraw( void )
    btnModify( evSetMoviePosition,guiInfo.Position );
    btnModify( evSetVolume,guiInfo.Volume );
 
-   vo_mouse_autohide=0;
+   vo_mouse_autohide=False;
 
    fast_memcpy( playbarDrawBuffer,guiApp.playbar.Bitmap.Image,guiApp.playbar.Bitmap.ImageSize );
    RenderAll( &guiApp.playbarWindow,guiApp.playbarItems,guiApp.IndexOfPlaybarItems,playbarDrawBuffer );
@@ -237,7 +239,7 @@ void uiPlaybarShow( int y )
  if ( y > guiApp.videoWindow.Height - guiApp.playbar.height )
   {
    if ( !uiPlaybarFade ) wsVisibleWindow( &guiApp.playbarWindow,wsShowWindow );
-   uiPlaybarFade=1; playbarVisible=1; wsPostRedisplay( &guiApp.playbarWindow );
+   uiPlaybarFade=1; playbarVisible=True; wsPostRedisplay( &guiApp.playbarWindow );
   }
   else if ( !uiPlaybarFade ) uiPlaybarFade=2;
 }

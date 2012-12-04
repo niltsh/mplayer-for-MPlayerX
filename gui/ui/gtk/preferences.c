@@ -41,6 +41,7 @@
 
 #include "gui/app.h"
 #include "gui/cfg.h"
+#include "gui/gui.h"
 #include "gui/interface.h"
 #include "gui/ui/gmplayer.h"
 #include "gui/ui/widgets.h"
@@ -467,11 +468,11 @@ void ShowPreferences( void )
  gtk_widget_show( Preferences );
  gtkSetLayer( Preferences );
  {
-  static int visible = 1;
+  static int visible = True;
   if ( visible )
    {
     gtkMessageBox( GTK_MB_WARNING,MSGTR_PREFERENCES_Message );
-    visible=0;
+    visible=False;
    }
  }
 }
@@ -620,11 +621,11 @@ static void prButton( GtkButton * button, gpointer user_data )
 	player_idle_mode=!gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBNoIdle ) );
 	mplayer( MPLAYER_SET_AUTO_QUALITY,HSPPQualityadj->value,0 );
 
-	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBCache ) ) ) { gtkCacheSize=(int)SBCacheadj->value; gtkCacheOn=1; }
-	 else gtkCacheOn=0;
+	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBCache ) ) ) { gtkCacheSize=(int)SBCacheadj->value; gtkCacheOn=True; }
+	 else gtkCacheOn=False;
 
-	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBAutoSync ) ) ) { gtkAutoSync=(int)SBAutoSyncadj->value; gtkAutoSyncOn=1; }
-	 else gtkAutoSyncOn=0;
+	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBAutoSync ) ) ) { gtkAutoSync=(int)SBAutoSyncadj->value; gtkAutoSyncOn=True; }
+	 else gtkAutoSyncOn=False;
 
 	setdup( &dvd_device,gtk_entry_get_text( GTK_ENTRY( prEDVDDevice ) ) );
 	setdup( &cdrom_device,gtk_entry_get_text( GTK_ENTRY( prECDRomDevice ) ) );

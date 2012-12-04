@@ -21,6 +21,7 @@
 #include <string.h>
 
 #include "cfg.h"
+#include "gui.h"
 #include "interface.h"
 #include "util/list.h"
 #include "util/string.h"
@@ -82,11 +83,11 @@ int gtkSubDumpSrt;
 
 gtkASS_t gtkASS;
 
-int gtkEnablePlayBar = 1;
+int gtkEnablePlayBar = True;
 int gtkLoadFullscreen;
-int gtkShowVideoWindow = 1;
+int gtkShowVideoWindow = True;
 
-int gui_save_pos    = 1;
+int gui_save_pos    = True;
 int gui_main_pos_x  = -3;
 int gui_main_pos_y  = -3;
 int gui_video_pos_x = -3;
@@ -244,7 +245,7 @@ void cfg_read(void)
     char *fname, line[512];
     FILE *file;
 
-    player_idle_mode = 1;   // GUI is in idle mode by default
+    player_idle_mode = True;   // GUI is in idle mode by default
 
     /* configuration */
 

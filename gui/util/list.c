@@ -25,6 +25,7 @@
 #include <string.h>
 
 #include "list.h"
+#include "gui/gui.h"
 #include "string.h"
 
 #include "mp_msg.h"
@@ -329,7 +330,7 @@ void listRepl(char ***list, const char *search, const char *replace)
  * @param what file to be added
  * @param how command (#PLAYLIST_ITEM_APPEND or #PLAYLIST_ITEM_INSERT) to be performed
  *
- * @return 1 (ok) or 0 (error)
+ * @return #True (ok) or #False (error)
  */
 int add_to_gui_playlist(const char *what, int how)
 {
@@ -338,7 +339,7 @@ int add_to_gui_playlist(const char *what, int how)
     plItem *item;
 
     if (!what || !*what || (how != PLAYLIST_ITEM_APPEND && how != PLAYLIST_ITEM_INSERT))
-        return 0;
+        return False;
 
     file = mp_basename(what);
     path = strdup(what);
@@ -351,7 +352,7 @@ int add_to_gui_playlist(const char *what, int how)
     item = calloc(1, sizeof(plItem));
 
     if (!item)
-        return 0;
+        return False;
 
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[list] adding %s/%s\n", path, file);
 
@@ -360,5 +361,5 @@ int add_to_gui_playlist(const char *what, int how)
 
     listMgr(how, item);
 
-    return 1;
+    return True;
 }
