@@ -40,7 +40,7 @@ int adddirtoplaylist(playlist_t *playlist, const char *path, int recursive)
 
     findHandle = FindFirstFile(findpath, &finddata);
 
-    if (findHandle == INVALID_HANDLE_VALUE) return 0;
+    if (findHandle == INVALID_HANDLE_VALUE) return FALSE;
     do
     {
         if (finddata.cFileName[0] == '.' || strstr(finddata.cFileName, "Thumbs.db")) continue;
@@ -58,7 +58,7 @@ int adddirtoplaylist(playlist_t *playlist, const char *path, int recursive)
         }
     } while (FindNextFile(findHandle, &finddata));
     FindClose(findHandle);
-    return 1;
+    return TRUE;
 }
 
 static void add_track(playlist_t *playlist, const char *filename, const char *artist, const char *title, int duration)

@@ -43,20 +43,20 @@
 static void set_defaults(void)
 {
     proc_priority = "normal";
-    vo_doublebuffering = 1;
-    vo_directrendering = 0;
+    vo_doublebuffering = TRUE;
+    vo_directrendering = FALSE;
     frame_dropping = 0;
-    soft_vol = 0;
-    gtkAONorm = 0;
-    gtkAOExtraStereo = 0;
+    soft_vol = FALSE;
+    gtkAONorm = FALSE;
+    gtkAOExtraStereo = FALSE;
     gtkAOExtraStereoMul = 1.0;
     audio_delay = 0.0;
-    video_window = 1;
-    gtkCacheOn = 0;
+    video_window = TRUE;
+    gtkCacheOn = FALSE;
     gtkCacheSize = 2048;
-    gtkAutoSyncOn = 0;
+    gtkAutoSyncOn = FALSE;
     gtkAutoSync = 0;
-    player_idle_mode = 1;
+    player_idle_mode = TRUE;
 }
 
 static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
@@ -565,18 +565,18 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
 
                     /* double buffering */
                     if(SendDlgItemMessage(hwnd, ID_DOUBLE, BM_GETCHECK, 0, 0) == BST_CHECKED)
-                        vo_doublebuffering = 1;
-                    else vo_doublebuffering = 0;
+                        vo_doublebuffering = TRUE;
+                    else vo_doublebuffering = FALSE;
 
                     /* direct rendering */
                     if(SendDlgItemMessage(hwnd, ID_DIRECT, BM_GETCHECK, 0, 0) == BST_CHECKED)
-                        vo_directrendering = 1;
-                    else vo_directrendering = 0;
+                        vo_directrendering = TRUE;
+                    else vo_directrendering = FALSE;
 
                     /* quit after playing */
                     if(SendDlgItemMessage(hwnd, ID_IDLE, BM_GETCHECK, 0, 0) == BST_CHECKED)
-                        player_idle_mode = 0;
-                    else player_idle_mode = 1;
+                        player_idle_mode = FALSE;
+                    else player_idle_mode = TRUE;
 
                     /* frame dropping */
                     if(SendDlgItemMessage(hwnd, ID_FRAMEDROP, BM_GETCHECK, 0, 0) == BST_CHECKED)
@@ -585,19 +585,19 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
 
                     /* normalize */
                     if(SendDlgItemMessage(hwnd, ID_NORMALIZE, BM_GETCHECK, 0, 0) == BST_CHECKED)
-                        gtkAONorm = 1;
-                    else gtkAONorm = 0;
+                        gtkAONorm = TRUE;
+                    else gtkAONorm = FALSE;
 
                     /* software mixer */
                     if(SendDlgItemMessage(hwnd, ID_SOFTMIX, BM_GETCHECK, 0, 0) == BST_CHECKED)
-                        soft_vol = 1;
-                    else soft_vol = 0;
+                        soft_vol = TRUE;
+                    else soft_vol = FALSE;
 
                     /* extra stereo */
                     if(SendDlgItemMessage(hwnd, ID_EXTRASTEREO, BM_GETCHECK, 0, 0) == BST_CHECKED)
-                        gtkAOExtraStereo = 1;
+                        gtkAOExtraStereo = TRUE;
                     else {
-                        gtkAOExtraStereo = 0;
+                        gtkAOExtraStereo = FALSE;
                         gtkAOExtraStereoMul = 10.0;
                     }
                     gtkAOExtraStereoMul = SendDlgItemMessage(hwnd, ID_TRACKBAR1, TBM_GETPOS, 0, 0) / 10.0;
@@ -607,20 +607,20 @@ static LRESULT CALLBACK PrefsWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM
 
                     /* cache */
                     if(SendDlgItemMessage(hwnd, ID_CACHE, BM_GETCHECK, 0, 0) == BST_CHECKED)
-                        gtkCacheOn = 1;
-                    else gtkCacheOn = 0;
+                        gtkCacheOn = TRUE;
+                    else gtkCacheOn = FALSE;
                     gtkCacheSize = SendDlgItemMessage(hwnd, ID_UPDOWN1, UDM_GETPOS32, 0, 0);
 
                     /* autosync */
                     if(SendDlgItemMessage(hwnd, ID_AUTOSYNC, BM_GETCHECK, 0, 0) == BST_CHECKED)
-                        gtkAutoSyncOn = 1;
-                    else gtkAutoSyncOn = 0;
+                        gtkAutoSyncOn = TRUE;
+                    else gtkAutoSyncOn = FALSE;
                     gtkAutoSync = SendDlgItemMessage(hwnd, ID_UPDOWN2, UDM_GETPOS32, 0, 0);
 
                     /* video window */
                     if(SendDlgItemMessage(hwnd, ID_VIDEOWINDOW, BM_GETCHECK, 0, 0) == BST_CHECKED)
-                        video_window = 1;
-                    else video_window = 0;
+                        video_window = TRUE;
+                    else video_window = FALSE;
 
                     /* osd level */
                     if(SendDlgItemMessage(hwnd, ID_NONE, BM_GETCHECK, 0, 0) == BST_CHECKED)

@@ -43,7 +43,7 @@ int set_video_colors(sh_video_t *sh_video, const char *item, int value);
 int get_video_colors(sh_video_t *sh_video, const char *item, int *value);
 
 guiInterface_t guiInfo;
-int addurl = 0;
+int addurl = FALSE;
 
 void mplayerLoadSubtitle(const char *name)
 {
@@ -332,7 +332,7 @@ static LRESULT CALLBACK OpenUrlWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPAR
                         fprintf(f, file);
                         fclose(f);
                     }
-                    if(!parse_filename(file, playtree, mconfig, addurl? 0 : 1))
+                    if(!parse_filename(file, playtree, mconfig, addurl? FALSE : TRUE))
                         gui->playlist->add_track(gui->playlist, file, NULL, NULL, 0);
                     if(!addurl)
                         gui->startplay(gui);
@@ -345,7 +345,7 @@ static LRESULT CALLBACK OpenUrlWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPAR
         return 0;
         case WM_DESTROY:
         {
-            addurl = 0;
+            addurl = FALSE;
             return 0;
         }
     }
@@ -374,7 +374,7 @@ void display_openurlwindow(gui_t *gui, int add)
     WNDCLASS wc;
     int x, y;
 
-    if(add) addurl = 1;
+    if(add) addurl = TRUE;
     if(FindWindow(NULL, acp(MSGTR_Network))) return;
     wc.style         = CS_HREDRAW | CS_VREDRAW;
     wc.lpfnWndProc   = OpenUrlWndProc;

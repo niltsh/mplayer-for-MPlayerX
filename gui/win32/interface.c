@@ -483,10 +483,10 @@ void uiFullScreen( void )
 
         if(fullscreen)
         {
-            fullscreen = 0;
+            fullscreen = FALSE;
             style = WS_OVERLAPPEDWINDOW | WS_SIZEBOX;
         } else {
-            fullscreen = 1;
+            fullscreen = TRUE;
             style = WS_VISIBLE | WS_POPUP;
         }
         SetWindowLong(mygui->videowindow, GWL_STYLE, style);
@@ -506,7 +506,7 @@ static unsigned __stdcall GuiThread(void* param)
 
     if(autosync && autosync != gtkAutoSync)
     {
-       gtkAutoSyncOn = 1;
+       gtkAutoSyncOn = TRUE;
        gtkAutoSync = autosync;
     }
 
@@ -559,7 +559,7 @@ int gui(int what, void *data)
 #ifdef CONFIG_DVDREAD
     dvd_priv_t *dvdp;
 #endif
-    if(!mygui || !mygui->skin) return 0;
+    if(!mygui || !mygui->skin) return FALSE;
 
     if(guiInfo.mpcontext)
     {
@@ -580,7 +580,7 @@ int gui(int what, void *data)
             stream_cache_size = -1;
             autosync = 0;
             force_fps = 0;
-            if(!mygui->playlist->tracks) return 0;
+            if(!mygui->playlist->tracks) return FALSE;
             switch(guiInfo.StreamType)
             {
                 case STREAMTYPE_FILE:
@@ -600,7 +600,7 @@ int gui(int what, void *data)
                     break;
                 }
             }
-            guiInfo.VideoWindow = 1;
+            guiInfo.VideoWindow = TRUE;
             if(gtkAONorm) listRepl(&af_cfg.list, "volnorm", "volnorm");
             if(gtkAOExtraStereo)
             {
@@ -617,7 +617,7 @@ int gui(int what, void *data)
         }
         case GUI_SET_AUDIO:
         {
-            if (data && !guiInfo.sh_video) guiInfo.VideoWindow = 0;
+            if (data && !guiInfo.sh_video) guiInfo.VideoWindow = FALSE;
             if(IsWindowVisible(mygui->videowindow) && !guiInfo.VideoWindow)
                 ShowWindow(mygui->videowindow, SW_HIDE);
             break;
@@ -725,7 +725,7 @@ int gui(int what, void *data)
                     mygui->uninit(mygui);
                     nfree(mygui);
                     exit_player(EXIT_QUIT);
-                    return 1;
+                    return TRUE;
                 }
                 case MP_CMD_PLAY_TREE_STEP:
                   guiSetEvent(evNext);
@@ -767,7 +767,7 @@ int gui(int what, void *data)
 
           if(!guiInfo.PlaylistNext && guiInfo.Playing)
           {
-              guiInfo.PlaylistNext = 1;
+              guiInfo.PlaylistNext = TRUE;
               break;
           }
 
@@ -780,7 +780,7 @@ int gui(int what, void *data)
               if(movie_aspect >= 0)
                   movie_aspect = -1;
 
-              guiInfo.PlaylistNext = 1;
+              guiInfo.PlaylistNext = TRUE;
               guiInfo.NewPlay = GUI_FILE_NEW;
               uiSetFile(NULL, mygui->playlist->tracks[(mygui->playlist->current)++]->filename, STREAMTYPE_FILE);
               //sprintf(guiInfo.Filename, mygui->playlist->tracks[(mygui->playlist->current)++]->filename);
@@ -800,7 +800,7 @@ int gui(int what, void *data)
           if (mygui->playlist->current == (mygui->playlist->trackcount - 1))
               mygui->playlist->current = 0;
 
-          fullscreen = 0;
+          fullscreen = FALSE;
           if(style == (WS_VISIBLE | WS_POPUP))
           {
               style = WS_OVERLAPPEDWINDOW | WS_SIZEBOX;
@@ -812,7 +812,7 @@ int gui(int what, void *data)
         default:
             mp_msg(MSGT_GPLAYER, MSGL_ERR, "[GUI] GOT UNHANDLED EVENT %i\n", what);
     }
-    return 1;
+    return TRUE;
 }
 
 /* This function adds/inserts one file into the gui playlist */
@@ -849,7 +849,7 @@ static int import_file_into_gui(char *pathname, int insert)
 int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqueue)
 {
     play_tree_iter_t *my_pt_iter = NULL;
-    int result = 0;
+    int result = FALSE;
 
     if(!mygui) guiInit();
 
@@ -858,12 +858,12 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
         {
             if (parse_filename(filename, my_playtree, config, 0))
-                result = 1;
+                result = TRUE;
             else if (import_file_into_gui(filename, 0)) /* Add it to end of list */
-                result = 1;
+                result = TRUE;
         }
     }
-    guiInfo.PlaylistNext = 1;
+    guiInfo.PlaylistNext = TRUE;
 
     if (result)
     {
@@ -883,13 +883,13 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
 int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
 {
     play_tree_iter_t *my_pt_iter = NULL;
-    int result = 0;
+    int result = FALSE;
 
     if((my_pt_iter = pt_iter_create(&my_playtree, config)))
     {
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
             if (import_file_into_gui(filename, 1)) /* insert it into the list and set plCurrent = new item */
-                result = 1;
+                result = TRUE;
         pt_iter_destroy(&my_pt_iter);
     }
     return result;

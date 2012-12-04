@@ -64,7 +64,7 @@ float video_aspect;
 
 DWORD oldtime;
 NOTIFYICONDATA nid;
-int console_state = 0;
+int console_state = FALSE;
 play_tree_t *playtree = NULL;
 
 static HBRUSH    colorbrush = NULL;           //Handle to colorkey brush
@@ -122,8 +122,8 @@ static void console_toggle(gui_t *gui)
     if (console_state)
     {
         FreeConsole();
-        console = 0;
-        console_state = 0;
+        console = FALSE;
+        console_state = FALSE;
     }
     else
     {
@@ -131,7 +131,7 @@ static void console_toggle(gui_t *gui)
         CONSOLE_SCREEN_BUFFER_INFO coninfo;
         FILE *fp;
         HWND hwnd = NULL;
-        console = 1;
+        console = TRUE;
         AllocConsole();
         SetConsoleTitle(mplayer_version);
 
@@ -156,7 +156,7 @@ static void console_toggle(gui_t *gui)
         *stderr = *fp;
         setvbuf(stderr, NULL, _IONBF, 0);
         print_version("MPlayer");
-        console_state = 1;
+        console_state = TRUE;
     }
 
     if (gui)
@@ -867,20 +867,20 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                 {
                     char volname[MAX_PATH];
                     char menuitem[MAX_PATH];
-                    int flags = MF_STRING, enable = 0;
+                    int flags = MF_STRING, enable = FALSE;
                     mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] checking %s for CD/VCD/SVCD/DVDs\n", device + pos);
 #ifdef CONFIG_DVDREAD
                     sprintf(searchpath, "%sVIDEO_TS", device + pos);
                     if(GetFileAttributes(searchpath) != INVALID_FILE_ATTRIBUTES)
-                        enable = 1;
+                        enable = TRUE;
 #endif
                     sprintf(searchpath, "%sMpegav", device + pos);
                     if(GetFileAttributes(searchpath) != INVALID_FILE_ATTRIBUTES)
-                        enable = 1;
+                        enable = TRUE;
 #ifdef CONFIG_CDDA
                     sprintf(searchpath, "%sTrack01.cda", device + pos);
                     if(GetFileAttributes(searchpath) != INVALID_FILE_ATTRIBUTES)
-                        enable = 1;
+                        enable = TRUE;
 #endif
                     flags |= (enable ? MF_ENABLED : MF_GRAYED);
                     volname[0] = 0;

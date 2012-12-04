@@ -41,18 +41,18 @@
 static const char gui_configuration[] =  "gui.conf";
 
 /* params */
-int   gtkAONorm = 0;
-int   gtkAOExtraStereo = 0;
+int   gtkAONorm = FALSE;
+int   gtkAOExtraStereo = FALSE;
 float gtkAOExtraStereoMul = 1.0;
-int   gtkCacheOn = 0;
+int   gtkCacheOn = FALSE;
 int   gtkCacheSize = 2048;
-int   gtkAutoSyncOn = 0;
+int   gtkAutoSyncOn = FALSE;
 int   gtkAutoSync = 0;
 
-int video_window = 1;
-int console = 0;
+int video_window = TRUE;
+int console = FALSE;
 
-int gui_save_pos = 1;
+int gui_save_pos = TRUE;
 int gui_main_pos_x = -2;
 int gui_main_pos_y = -2;
 int gui_video_pos_x = -1;
@@ -99,7 +99,7 @@ void cfg_read(void)
 {
     char *cfg = get_path(gui_configuration);
 
-    player_idle_mode = 1;   // GUI is in idle mode by default
+    player_idle_mode = TRUE;   // GUI is in idle mode by default
 
     /* read configuration */
     mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] [cfg] reading config file: %s\n", cfg);
