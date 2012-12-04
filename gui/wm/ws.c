@@ -573,10 +573,10 @@ void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV
                          GCForeground | GCBackground,
                          &win->wGCV);
 
-    win->Visible = 0;
-    win->Focused = 0;
-    win->Mapped  = 0;
-    win->Rolled  = 0;
+    win->Visible = wsNo;
+    win->Focused = wsNo;
+    win->Mapped  = wsNo;
+    win->Rolled  = wsNo;
 
     if (D & wsShowWindow)
         XMapWindow(wsDisplay, win->WindowID);
@@ -634,10 +634,10 @@ void wsDestroyWindow(wsTWindow *win)
     win->Idle         = NULL;
     win->MouseHandler = NULL;
     win->KeyHandler   = NULL;
-    win->Visible      = 0;
-    win->Focused      = 0;
-    win->Mapped       = 0;
-    win->Rolled       = 0;
+    win->Visible      = wsNo;
+    win->Focused      = wsNo;
+    win->Mapped       = wsNo;
+    win->Rolled       = wsNo;
 #endif
 }
 
@@ -702,7 +702,7 @@ Bool wsEvents(Display *display, XEvent *Event)
 
     case UnmapNotify:
         i = wsWindowUnmapped;
-        wsWindowList[l]->Mapped = wsNone;
+        wsWindowList[l]->Mapped = wsNo;
         goto expose;
 
     case FocusIn:
@@ -716,11 +716,11 @@ Bool wsEvents(Display *display, XEvent *Event)
 
     case FocusOut:
 
-        if (wsWindowList[l]->Focused == wsNone)
+        if (wsWindowList[l]->Focused == wsNo)
             break;
 
         i = wsWindowFocusOut;
-        wsWindowList[l]->Focused = wsNone;
+        wsWindowList[l]->Focused = wsNo;
         goto expose;
 
     case VisibilityNotify:
@@ -771,7 +771,7 @@ expose:
                 wsWindowList[l]->ReSize(wsWindowList[l]->X, wsWindowList[l]->Y, wsWindowList[l]->Width, wsWindowList[l]->Height);
         }
 
-        wsWindowList[l]->Rolled = wsNone;
+        wsWindowList[l]->Rolled = wsNo;
 
         if (Event->xconfigure.y < 0) {
             i = wsWindowRolled;

@@ -96,7 +96,7 @@
 #define wsWindowRolled         256
 #define wsWindowClosed         512
 
-#define wsNone       0
+#define wsNo         0
 #define wsMapped     1
 #define wsFocused    2
 #define wsVisible    3
