@@ -860,7 +860,7 @@ int gui(int what, void *data)
 int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqueue)
 {
     play_tree_iter_t *my_pt_iter = NULL;
-    int result = False;
+    int added = False;
 
     if (!enqueue)
         listMgr(PLAYLIST_DELETE, 0);             // delete playlist before "appending"
@@ -869,7 +869,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
             /* add it to end of list */
             if (add_to_gui_playlist(filename, PLAYLIST_ITEM_APPEND))
-                result = True;
+                added = True;
     }
 
     uiCurr();   // update filename
@@ -878,10 +878,10 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
     if (enqueue)
         filename = NULL;            // don't start playing
 
-    if (result)
+    if (added)
         guiInfo.Track = 1;
 
-    return result;
+    return added;
 }
 
 // This function imports and inserts an playtree, that is created "on the fly",
@@ -892,7 +892,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
 int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
 {
     play_tree_iter_t *my_pt_iter = NULL;
-    int result = False;
+    int added = False;
     plItem *save;
 
     save = (plItem *)listMgr(PLAYLIST_ITEM_GET_CURR, 0);    // save current item
@@ -901,7 +901,7 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
             /* insert it into the list and set plCurrent=new item */
             if (add_to_gui_playlist(filename, PLAYLIST_ITEM_INSERT))
-                result = True;
+                added = True;
 
         pt_iter_destroy(&my_pt_iter);
     }
@@ -911,12 +911,12 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
     else
         listMgr(PLAYLIST_ITEM_SET_CURR, listMgr(PLAYLIST_GET, 0));    // go to head, if plList was empty before
 
-    if (save && result)
+    if (save && added)
         listMgr(PLAYLIST_ITEM_DEL_CURR, 0);
 
     uiCurr();   // update filename
 
-    return result;
+    return added;
 }
 
 /* GUI -> MPlayer */
