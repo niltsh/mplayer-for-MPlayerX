@@ -100,7 +100,7 @@ int wsBlueMask       = 0;
 int wsOutMask        = 0;
 int wsNonNativeOrder = 0;
 
-int wsTrue = True;
+Bool wsTrue = True;
 
 #define wsWLCount 5
 wsTWindow *wsWindowList[wsWLCount] = { NULL, NULL, NULL, NULL, NULL };
