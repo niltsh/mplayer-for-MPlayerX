@@ -668,7 +668,7 @@ Bool wsEvents(Display *display, XEvent *Event)
     if (l == -1)
         return !wsTrue;
 
-    wsWindowList[l]->State = 0;
+    wsWindowList[l]->State = wsNone;
 
     switch (Event->type) {
     case ClientMessage:

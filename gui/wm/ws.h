@@ -85,6 +85,7 @@
 #define wsRGB15 7
 #define wsBGR15 8
 
+#define wsNone                   0
 #define wsWindowVisible          1
 #define wsWindowPartialVisible   2
 #define wsWindowNotVisible       4
