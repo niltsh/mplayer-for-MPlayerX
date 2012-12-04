@@ -849,7 +849,7 @@ static int import_file_into_gui(char *pathname, int insert)
 int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqueue)
 {
     play_tree_iter_t *my_pt_iter = NULL;
-    int result = FALSE;
+    int added = FALSE;
 
     if(!mygui) guiInit();
 
@@ -858,14 +858,14 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
         {
             if (parse_filename(filename, my_playtree, config, 0))
-                result = TRUE;
+                added = TRUE;
             else if (import_file_into_gui(filename, 0)) /* Add it to end of list */
-                result = TRUE;
+                added = TRUE;
         }
     }
     guiInfo.PlaylistNext = TRUE;
 
-    if (result)
+    if (added)
     {
         mygui->playlist->current = 0;
         uiSetFile(NULL, mygui->playlist->tracks[0]->filename, STREAMTYPE_FILE);
@@ -873,7 +873,7 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
 
     if (enqueue) filename = NULL;
 
-    return result;
+    return added;
 }
 
 /* This function imports and inserts an playtree, that is created "on the fly", for example by
@@ -883,16 +883,16 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
 int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
 {
     play_tree_iter_t *my_pt_iter = NULL;
-    int result = FALSE;
+    int added = FALSE;
 
     if((my_pt_iter = pt_iter_create(&my_playtree, config)))
     {
         while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
             if (import_file_into_gui(filename, 1)) /* insert it into the list and set plCurrent = new item */
-                result = TRUE;
+                added = TRUE;
         pt_iter_destroy(&my_pt_iter);
     }
-    return result;
+    return added;
 }
 
 static int update_videowindow(void)
