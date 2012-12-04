@@ -68,7 +68,6 @@ unsigned char * mainDrawBuffer = NULL;
 int             uiMainRender = True;
 
 int             uiMainAutoPlay = False;
-int             uiMiddleMenu = 0;
 
 int             mainVisible = True;
 
@@ -538,8 +537,6 @@ potihandled:
           break;
   }
 }
-
-int keyPressed = 0;
 
 void uiMainKeyHandle( int KeyCode,int Type,int Key )
 {
