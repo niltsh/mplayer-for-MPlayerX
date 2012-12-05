@@ -105,6 +105,7 @@ const mime_struct_t mime_type_table[] = {
 	{ "application/ogg", DEMUXER_TYPE_OGG },
 	{ "application/x-ogg", DEMUXER_TYPE_OGG },
 	{ "audio/ogg", DEMUXER_TYPE_OGG },
+	{ "video/ogg", DEMUXER_TYPE_OGG },
 	// NullSoft Streaming Video
 	{ "video/nsv", DEMUXER_TYPE_NSV},
 	{ "misc/ultravox", DEMUXER_TYPE_NSV},
