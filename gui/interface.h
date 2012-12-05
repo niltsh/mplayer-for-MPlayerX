@@ -55,6 +55,12 @@ enum {
     GUI_SET_VIDEO
 };
 
+/// guiPlaylist() instructions
+enum {
+    GUI_PLAYLIST_INIT,
+    GUI_PLAYLIST_ADD
+};
+
 //@{
 /// Playing state
 #define GUI_STOP  0
@@ -140,8 +146,7 @@ extern guiInterface_t guiInfo;
 int gui(int what, void *data);
 void guiDone(void);
 void guiInit(void);
-int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config);
-int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqueue);
+int guiPlaylist(int what, play_tree_t *my_playtree, m_config_t *config, int enqueue);
 //@}
 
 /// @name GUI -> MPlayer

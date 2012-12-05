@@ -853,14 +853,18 @@ int gui(int what, void *data)
     return True;
 }
 
+int guiPlaylist(int what, play_tree_t *my_playtree, m_config_t *config, int enqueue)
+{
+    play_tree_iter_t *my_pt_iter = NULL;
+    int added = False;
+    plItem *save;
+
+    switch (what) {
 // This function imports the initial playtree (based on cmd-line files)
 // into the gui playlist by either:
 // - overwriting gui pl (enqueue=0)
 // - appending it to gui pl (enqueue=1)
-int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqueue)
-{
-    play_tree_iter_t *my_pt_iter = NULL;
-    int added = False;
+    case GUI_PLAYLIST_INIT:
 
     if (!enqueue)
         listMgr(PLAYLIST_DELETE, 0);             // delete playlist before "appending"
@@ -881,19 +885,14 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
     if (added)
         guiInfo.Track = 1;
 
-    return added;
-}
+        break;
 
 // This function imports and inserts an playtree, that is created "on the fly",
 // for example by parsing some MOV-Reference-File; or by loading an playlist
 // with "File Open". (The latter, actually, isn't allowed in MPlayer and thus
 // not working which is why this function won't get called for that reason.)
 // The file which contained the playlist is thereby replaced with it's contents.
-int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
-{
-    play_tree_iter_t *my_pt_iter = NULL;
-    int added = False;
-    plItem *save;
+    case GUI_PLAYLIST_ADD:
 
     save = (plItem *)listMgr(PLAYLIST_ITEM_GET_CURR, 0);    // save current item
 
@@ -915,6 +914,9 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
         listMgr(PLAYLIST_ITEM_DEL_CURR, 0);
 
     uiCurr();   // update filename
+
+        break;
+    }
 
     return added;
 }

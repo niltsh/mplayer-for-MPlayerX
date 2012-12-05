@@ -182,7 +182,7 @@ int parse_filename(char *file, play_tree_t *playtree, m_config_t *mconfig, int c
     if(strstr(file, ".m3u") || strstr(file, ".pls"))
     {
         playtree = parse_playlist_file(file);
-        guiPlaylistAdd(playtree, mconfig);
+        guiPlaylist(GUI_PLAYLIST_ADD, playtree, mconfig, 0);
         return 1;
     }
     return 0;
@@ -457,8 +457,8 @@ void uiSetFile(char *dir, char *name, int type)
 
     filename = guiInfo.Filename;
 #ifdef __WINE__
-    // When the GUI receives the files to be played in guiPlaylistInitialize()
-    // and guiPlaylistAdd(), it calls import_file_into_gui() where the call of
+    // When the GUI receives the files to be played in guiPlaylist(),
+    // it calls import_file_into_gui() where the call of
     // Wine's GetFullPathName() converts each file name into the Windows style
     // (C:\path\to\file), which needs to be reconverted for MPlayer, so that
     // it will find the filename in the Linux filesystem.
@@ -842,14 +842,17 @@ static int import_file_into_gui(char *pathname, int insert)
     return 0;
 }
 
-/*  This function imports the initial playtree (based on cmd-line files) into the gui playlist
-    by either:
-    - overwriting gui pl (enqueue=0) */
-
-int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqueue)
+int guiPlaylist (int what, play_tree_t *my_playtree, m_config_t *config, int enqueue)
 {
     play_tree_iter_t *my_pt_iter = NULL;
     int added = FALSE;
+
+    switch (what)
+    {
+/*  This function imports the initial playtree (based on cmd-line files) into the gui playlist
+    by either:
+    - overwriting gui pl (enqueue=0) */
+      case GUI_PLAYLIST_INIT:
 
     if(!mygui) guiInit();
 
@@ -873,17 +876,12 @@ int guiPlaylistInitialize(play_tree_t *my_playtree, m_config_t *config, int enqu
 
     if (enqueue) filename = NULL;
 
-    return added;
-}
+          break;
 
 /* This function imports and inserts an playtree, that is created "on the fly", for example by
    parsing some MOV-Reference-File; or by loading an playlist with "File Open"
    The file which contained the playlist is thereby replaced with it's contents. */
-
-int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
-{
-    play_tree_iter_t *my_pt_iter = NULL;
-    int added = FALSE;
+        case GUI_PLAYLIST_ADD:
 
     if((my_pt_iter = pt_iter_create(&my_playtree, config)))
     {
@@ -892,6 +890,10 @@ int guiPlaylistAdd(play_tree_t *my_playtree, m_config_t *config)
                 added = TRUE;
         pt_iter_destroy(&my_pt_iter);
     }
+
+          break;
+    }
+
     return added;
 }
 

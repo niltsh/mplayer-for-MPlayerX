@@ -1033,7 +1033,7 @@ static int playtree_add_playlist(play_tree_t *entry)
 #ifdef CONFIG_GUI
     if (use_gui) {
         if (entry) {
-            guiPlaylistAdd(entry, mconfig);
+            guiPlaylist(GUI_PLAYLIST_ADD, entry, mconfig, 0);
             play_tree_free_list(entry, 1);
         }
     } else
@@ -2859,7 +2859,7 @@ int main(int argc, char *argv[])
             play_tree_add_bpf(mpctx->playtree, cwd);
         }
         // Import initital playtree into GUI.
-        guiPlaylistInitialize(mpctx->playtree, mconfig, enqueue);
+        guiPlaylist(GUI_PLAYLIST_INIT, mpctx->playtree, mconfig, enqueue);
     }
 #endif /* CONFIG_GUI */
 
