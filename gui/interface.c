@@ -853,6 +853,18 @@ int gui(int what, void *data)
     return True;
 }
 
+/**
+ * @brief Initialize the GUI playlist (i.e. import files that had been given
+ *        on the command line) or add files "on the fly" (i.e. replace the
+ *        current one (a playlist file) by other ones (its content)).
+ *
+ * @param what command (#GUI_PLAYLIST_INIT or #GUI_PLAYLIST_ADD) to be performed
+ * @param playtree MPlayer playtree to read from
+ * @param config MPlayer config context
+ * @param enqueue whether to overwrite GUI playlist (#False) or to append to it (#True)
+ *
+ * @return #True (ok) or #False (error)
+ */
 int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue)
 {
     play_tree_iter_t *pt_iter;
@@ -865,17 +877,12 @@ int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue
         return False;
 
     switch (what) {
-// This function imports the initial playtree (based on cmd-line files)
-// into the gui playlist by either:
-// - overwriting gui pl (enqueue=0)
-// - appending it to gui pl (enqueue=1)
     case GUI_PLAYLIST_INIT:
 
         if (!enqueue)
-            listMgr(PLAYLIST_DELETE, 0);             // delete playlist before "appending"
+            listMgr(PLAYLIST_DELETE, 0);
 
         while ((filename = pt_iter_get_next_file(pt_iter)))
-            /* add it to end of list */
             if (add_to_gui_playlist(filename, PLAYLIST_ITEM_APPEND))
                 added = True;
 
@@ -890,24 +897,18 @@ int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue
 
         break;
 
-// This function imports and inserts an playtree, that is created "on the fly",
-// for example by parsing some MOV-Reference-File; or by loading an playlist
-// with "File Open". (The latter, actually, isn't allowed in MPlayer and thus
-// not working which is why this function won't get called for that reason.)
-// The file which contained the playlist is thereby replaced with it's contents.
     case GUI_PLAYLIST_ADD:
 
         curr = listMgr(PLAYLIST_ITEM_GET_CURR, 0);
 
         while ((filename = pt_iter_get_next_file(pt_iter)))
-            /* insert it into the list and set plCurrent=new item */
             if (add_to_gui_playlist(filename, PLAYLIST_ITEM_INSERT))
                 added = True;
 
         if (curr)
             listMgr(PLAYLIST_ITEM_SET_CURR, curr);
         else
-            listMgr(PLAYLIST_ITEM_SET_CURR, listMgr(PLAYLIST_GET, 0));    // go to head, if plList was empty before
+            listMgr(PLAYLIST_ITEM_SET_CURR, listMgr(PLAYLIST_GET, 0));
 
         if (curr && added)
             listMgr(PLAYLIST_ITEM_DEL_CURR, 0);
