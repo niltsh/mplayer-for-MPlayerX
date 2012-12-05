@@ -868,6 +868,7 @@ int gui(int what, void *data)
 int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue)
 {
     play_tree_iter_t *pt_iter;
+    const char *file;
     int added = False;
     plItem *curr;
 
@@ -882,8 +883,8 @@ int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue
         if (!enqueue)
             listMgr(PLAYLIST_DELETE, 0);
 
-        while ((filename = pt_iter_get_next_file(pt_iter)))
-            if (add_to_gui_playlist(filename, PLAYLIST_ITEM_APPEND))
+        while ((file = pt_iter_get_next_file(pt_iter)))
+            if (add_to_gui_playlist(file, PLAYLIST_ITEM_APPEND))
                 added = True;
 
         uiCurr();   // update filename
@@ -901,8 +902,8 @@ int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue
 
         curr = listMgr(PLAYLIST_ITEM_GET_CURR, 0);
 
-        while ((filename = pt_iter_get_next_file(pt_iter)))
-            if (add_to_gui_playlist(filename, PLAYLIST_ITEM_INSERT))
+        while ((file = pt_iter_get_next_file(pt_iter)))
+            if (add_to_gui_playlist(file, PLAYLIST_ITEM_INSERT))
                 added = True;
 
         if (curr)
