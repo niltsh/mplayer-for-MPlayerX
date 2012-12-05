@@ -897,7 +897,7 @@ int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue
 // The file which contained the playlist is thereby replaced with it's contents.
     case GUI_PLAYLIST_ADD:
 
-        curr = (plItem *)listMgr(PLAYLIST_ITEM_GET_CURR, 0);
+        curr = listMgr(PLAYLIST_ITEM_GET_CURR, 0);
 
         while ((filename = pt_iter_get_next_file(pt_iter)))
             /* insert it into the list and set plCurrent=new item */
