@@ -845,6 +845,7 @@ static int import_file_into_gui(char *pathname, int insert)
 int guiPlaylist (int what, play_tree_t *playtree, m_config_t *config, int enqueue)
 {
     play_tree_iter_t *pt_iter = NULL;
+    char *file;
     int added = FALSE;
 
     switch (what)
@@ -858,11 +859,11 @@ int guiPlaylist (int what, play_tree_t *playtree, m_config_t *config, int enqueu
 
             if((pt_iter = pt_iter_create(&playtree, config)))
             {
-                while ((filename = pt_iter_get_next_file(pt_iter)) != NULL)
+                while ((file = pt_iter_get_next_file(pt_iter)) != NULL)
                 {
-                    if (parse_filename(filename, playtree, config, 0))
+                    if (parse_filename(file, playtree, config, 0))
                         added = TRUE;
-                    else if (import_file_into_gui(filename, 0)) /* Add it to end of list */
+                    else if (import_file_into_gui(file, 0)) /* Add it to end of list */
                         added = TRUE;
                 }
             }
@@ -885,8 +886,8 @@ int guiPlaylist (int what, play_tree_t *playtree, m_config_t *config, int enqueu
 
             if((pt_iter = pt_iter_create(&playtree, config)))
             {
-                while ((filename = pt_iter_get_next_file(pt_iter)) != NULL)
-                    if (import_file_into_gui(filename, 1)) /* insert it into the list and set plCurrent = new item */
+                while ((file = pt_iter_get_next_file(pt_iter)) != NULL)
+                    if (import_file_into_gui(file, 1)) /* insert it into the list and set plCurrent = new item */
                         added = TRUE;
                 pt_iter_destroy(&pt_iter);
             }
