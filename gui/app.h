@@ -90,7 +90,6 @@ typedef struct {
     const char *name;
 } evName;
 
-/* Button states */
 /// Skin items
 enum {
     itNone,
@@ -106,9 +105,12 @@ enum {
     itPRMButton
 };
 
+//@{
+/// Button state
 #define btnDisabled 0
 #define btnReleased 1
 #define btnPressed  2
+//@}
 
 /* Item definition */
 
