@@ -889,11 +889,11 @@ int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue
         uiCurr();   // update filename
         guiInfo.PlaylistNext = True;
 
-        if (enqueue)
-            filename = NULL;            // don't start playing
-
         if (added)
             guiInfo.Track = 1;
+
+        if (enqueue)
+            filename = NULL;            // don't start playing
 
         break;
 
