@@ -855,9 +855,14 @@ int gui(int what, void *data)
 
 int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue)
 {
-    play_tree_iter_t *pt_iter = NULL;
+    play_tree_iter_t *pt_iter;
     int added = False;
     plItem *curr;
+
+    pt_iter = pt_iter_create(&playtree, config);
+
+    if (!pt_iter)
+        return False;
 
     switch (what) {
 // This function imports the initial playtree (based on cmd-line files)
@@ -869,12 +874,10 @@ int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue
         if (!enqueue)
             listMgr(PLAYLIST_DELETE, 0);             // delete playlist before "appending"
 
-        if ((pt_iter = pt_iter_create(&playtree, config))) {
             while ((filename = pt_iter_get_next_file(pt_iter)) != NULL)
                 /* add it to end of list */
                 if (add_to_gui_playlist(filename, PLAYLIST_ITEM_APPEND))
                     added = True;
-        }
 
         uiCurr();   // update filename
         guiInfo.PlaylistNext = True;
@@ -896,14 +899,10 @@ int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue
 
         curr = (plItem *)listMgr(PLAYLIST_ITEM_GET_CURR, 0);
 
-        if ((pt_iter = pt_iter_create(&playtree, config))) {
             while ((filename = pt_iter_get_next_file(pt_iter)) != NULL)
                 /* insert it into the list and set plCurrent=new item */
                 if (add_to_gui_playlist(filename, PLAYLIST_ITEM_INSERT))
                     added = True;
-
-            pt_iter_destroy(&pt_iter);
-        }
 
         if (curr)
             listMgr(PLAYLIST_ITEM_SET_CURR, curr);
@@ -917,6 +916,8 @@ int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue
 
         break;
     }
+
+    pt_iter_destroy(&pt_iter);
 
     return added;
 }
