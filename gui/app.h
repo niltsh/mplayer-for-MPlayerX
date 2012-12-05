@@ -112,10 +112,9 @@ enum {
 #define btnPressed  2
 //@}
 
-/* Item definition */
-
 #define MAX_ITEMS 64
 
+/// Item definition
 typedef struct {
     int type;
 
