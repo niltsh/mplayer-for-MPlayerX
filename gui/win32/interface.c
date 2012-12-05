@@ -842,9 +842,9 @@ static int import_file_into_gui(char *pathname, int insert)
     return 0;
 }
 
-int guiPlaylist (int what, play_tree_t *my_playtree, m_config_t *config, int enqueue)
+int guiPlaylist (int what, play_tree_t *playtree, m_config_t *config, int enqueue)
 {
-    play_tree_iter_t *my_pt_iter = NULL;
+    play_tree_iter_t *pt_iter = NULL;
     int added = FALSE;
 
     switch (what)
@@ -856,11 +856,11 @@ int guiPlaylist (int what, play_tree_t *my_playtree, m_config_t *config, int enq
 
             if(!mygui) guiInit();
 
-            if((my_pt_iter = pt_iter_create(&my_playtree, config)))
+            if((pt_iter = pt_iter_create(&playtree, config)))
             {
-                while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
+                while ((filename = pt_iter_get_next_file(pt_iter)) != NULL)
                 {
-                    if (parse_filename(filename, my_playtree, config, 0))
+                    if (parse_filename(filename, playtree, config, 0))
                         added = TRUE;
                     else if (import_file_into_gui(filename, 0)) /* Add it to end of list */
                         added = TRUE;
@@ -883,12 +883,12 @@ int guiPlaylist (int what, play_tree_t *my_playtree, m_config_t *config, int enq
            The file which contained the playlist is thereby replaced with it's contents. */
         case GUI_PLAYLIST_ADD:
 
-            if((my_pt_iter = pt_iter_create(&my_playtree, config)))
+            if((pt_iter = pt_iter_create(&playtree, config)))
             {
-                while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
+                while ((filename = pt_iter_get_next_file(pt_iter)) != NULL)
                     if (import_file_into_gui(filename, 1)) /* insert it into the list and set plCurrent = new item */
                         added = TRUE;
-                pt_iter_destroy(&my_pt_iter);
+                pt_iter_destroy(&pt_iter);
             }
 
             break;

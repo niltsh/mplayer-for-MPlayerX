@@ -146,7 +146,7 @@ extern guiInterface_t guiInfo;
 int gui(int what, void *data);
 void guiDone(void);
 void guiInit(void);
-int guiPlaylist(int what, play_tree_t *my_playtree, m_config_t *config, int enqueue);
+int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue);
 //@}
 
 /// @name GUI -> MPlayer

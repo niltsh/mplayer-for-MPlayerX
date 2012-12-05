@@ -853,11 +853,11 @@ int gui(int what, void *data)
     return True;
 }
 
-int guiPlaylist(int what, play_tree_t *my_playtree, m_config_t *config, int enqueue)
+int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue)
 {
-    play_tree_iter_t *my_pt_iter = NULL;
+    play_tree_iter_t *pt_iter = NULL;
     int added = False;
-    plItem *save;
+    plItem *curr;
 
     switch (what) {
 // This function imports the initial playtree (based on cmd-line files)
@@ -869,8 +869,8 @@ int guiPlaylist(int what, play_tree_t *my_playtree, m_config_t *config, int enqu
         if (!enqueue)
             listMgr(PLAYLIST_DELETE, 0);             // delete playlist before "appending"
 
-        if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
-            while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
+        if ((pt_iter = pt_iter_create(&playtree, config))) {
+            while ((filename = pt_iter_get_next_file(pt_iter)) != NULL)
                 /* add it to end of list */
                 if (add_to_gui_playlist(filename, PLAYLIST_ITEM_APPEND))
                     added = True;
@@ -894,23 +894,23 @@ int guiPlaylist(int what, play_tree_t *my_playtree, m_config_t *config, int enqu
 // The file which contained the playlist is thereby replaced with it's contents.
     case GUI_PLAYLIST_ADD:
 
-        save = (plItem *)listMgr(PLAYLIST_ITEM_GET_CURR, 0);    // save current item
+        curr = (plItem *)listMgr(PLAYLIST_ITEM_GET_CURR, 0);
 
-        if ((my_pt_iter = pt_iter_create(&my_playtree, config))) {
-            while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
+        if ((pt_iter = pt_iter_create(&playtree, config))) {
+            while ((filename = pt_iter_get_next_file(pt_iter)) != NULL)
                 /* insert it into the list and set plCurrent=new item */
                 if (add_to_gui_playlist(filename, PLAYLIST_ITEM_INSERT))
                     added = True;
 
-            pt_iter_destroy(&my_pt_iter);
+            pt_iter_destroy(&pt_iter);
         }
 
-        if (save)
-            listMgr(PLAYLIST_ITEM_SET_CURR, save);
+        if (curr)
+            listMgr(PLAYLIST_ITEM_SET_CURR, curr);
         else
             listMgr(PLAYLIST_ITEM_SET_CURR, listMgr(PLAYLIST_GET, 0));    // go to head, if plList was empty before
 
-        if (save && added)
+        if (curr && added)
             listMgr(PLAYLIST_ITEM_DEL_CURR, 0);
 
         uiCurr();   // update filename
