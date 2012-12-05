@@ -849,49 +849,49 @@ int guiPlaylist (int what, play_tree_t *my_playtree, m_config_t *config, int enq
 
     switch (what)
     {
-/*  This function imports the initial playtree (based on cmd-line files) into the gui playlist
-    by either:
-    - overwriting gui pl (enqueue=0) */
-      case GUI_PLAYLIST_INIT:
+        /*  This function imports the initial playtree (based on cmd-line files) into the gui playlist
+            by either:
+            - overwriting gui pl (enqueue=0) */
+        case GUI_PLAYLIST_INIT:
 
-    if(!mygui) guiInit();
+            if(!mygui) guiInit();
 
-    if((my_pt_iter = pt_iter_create(&my_playtree, config)))
-    {
-        while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
-        {
-            if (parse_filename(filename, my_playtree, config, 0))
-                added = TRUE;
-            else if (import_file_into_gui(filename, 0)) /* Add it to end of list */
-                added = TRUE;
-        }
-    }
-    guiInfo.PlaylistNext = TRUE;
+            if((my_pt_iter = pt_iter_create(&my_playtree, config)))
+            {
+                while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
+                {
+                    if (parse_filename(filename, my_playtree, config, 0))
+                        added = TRUE;
+                    else if (import_file_into_gui(filename, 0)) /* Add it to end of list */
+                        added = TRUE;
+                }
+            }
+            guiInfo.PlaylistNext = TRUE;
 
-    if (added)
-    {
-        mygui->playlist->current = 0;
-        uiSetFile(NULL, mygui->playlist->tracks[0]->filename, STREAMTYPE_FILE);
-    }
+            if (added)
+            {
+                mygui->playlist->current = 0;
+                uiSetFile(NULL, mygui->playlist->tracks[0]->filename, STREAMTYPE_FILE);
+            }
 
-    if (enqueue) filename = NULL;
+            if (enqueue) filename = NULL;
 
-          break;
+            break;
 
-/* This function imports and inserts an playtree, that is created "on the fly", for example by
-   parsing some MOV-Reference-File; or by loading an playlist with "File Open"
-   The file which contained the playlist is thereby replaced with it's contents. */
+        /* This function imports and inserts an playtree, that is created "on the fly", for example by
+           parsing some MOV-Reference-File; or by loading an playlist with "File Open"
+           The file which contained the playlist is thereby replaced with it's contents. */
         case GUI_PLAYLIST_ADD:
 
-    if((my_pt_iter = pt_iter_create(&my_playtree, config)))
-    {
-        while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
-            if (import_file_into_gui(filename, 1)) /* insert it into the list and set plCurrent = new item */
-                added = TRUE;
-        pt_iter_destroy(&my_pt_iter);
-    }
+            if((my_pt_iter = pt_iter_create(&my_playtree, config)))
+            {
+                while ((filename = pt_iter_get_next_file(my_pt_iter)) != NULL)
+                    if (import_file_into_gui(filename, 1)) /* insert it into the list and set plCurrent = new item */
+                        added = TRUE;
+                pt_iter_destroy(&my_pt_iter);
+            }
 
-          break;
+            break;
     }
 
     return added;
