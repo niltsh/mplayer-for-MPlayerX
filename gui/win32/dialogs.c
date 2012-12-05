@@ -90,7 +90,7 @@ int display_openfilewindow(gui_t *gui, int add)
     OPENFILENAME fileopen;
     int result = 0;
     char filelist[MAXFILE];
-    char filename[MAX_PATH];
+    char file[MAX_PATH];
     char directory[MAX_PATH];
     char *filespec = NULL;
     char *filepart = NULL;
@@ -127,24 +127,24 @@ int display_openfilewindow(gui_t *gui, int add)
         do
         {
             filespec = &fileopen.lpstrFile[fileopen.nFileOffset];
-            strcpy(filename, directory);
+            strcpy(file, directory);
 
             if (*filespec)
             {
-                strcat(filename, "/");
-                strcat(filename, filespec);
+                strcat(file, "/");
+                strcat(file, filespec);
             }
 
-            if (GetFileAttributes(filename) & FILE_ATTRIBUTE_DIRECTORY)
-                mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] %s is a directory, skipping...\n", filename);
+            if (GetFileAttributes(file) & FILE_ATTRIBUTE_DIRECTORY)
+                mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] %s is a directory, skipping...\n", file);
             else
             {
-                if (GetFullPathName(filename, MAX_PATH, filename, &filepart))
+                if (GetFullPathName(file, MAX_PATH, file, &filepart))
                 {
-                    uiSetFile(NULL, filename, STREAMTYPE_FILE);
-                    if(!parse_filename(filename, playtree, mconfig, 0))
-                        gui->playlist->add_track(gui->playlist, filename, NULL, filepart, 0);
-                    mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] Adding file: %s - path %s\n", filespec, filename);
+                    uiSetFile(NULL, file, STREAMTYPE_FILE);
+                    if(!parse_filename(file, playtree, mconfig, 0))
+                        gui->playlist->add_track(gui->playlist, file, NULL, filepart, 0);
+                    mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] Adding file: %s - path %s\n", filespec, file);
                     result++;
                 }
             }

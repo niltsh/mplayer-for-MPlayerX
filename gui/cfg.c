@@ -233,11 +233,11 @@ static const m_option_t gui_opts[] = {
     { NULL,                          NULL,                     0,                     0,           0,     0,          NULL }
 };
 
-int cfg_gui_include(m_option_t *conf, const char *filename)
+int cfg_gui_include(m_option_t *conf, const char *file)
 {
     (void)conf;
 
-    return m_config_parse_config_file(gui_conf, filename, 0);
+    return m_config_parse_config_file(gui_conf, file, 0);
 }
 
 void cfg_read(void)

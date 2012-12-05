@@ -172,13 +172,13 @@ static char * get_current_dir_name_utf8( void )
 static void clist_append_fname(GtkWidget * list, char *fname,
                                GdkPixmap *pixmap, GdkPixmap *mask) {
   gint pos;
-  gchar *filename, *str[2];
-  filename = g_filename_to_utf8(fname, -1, NULL, NULL, NULL);
+  gchar *filename_utf8, *str[2];
+  filename_utf8 = g_filename_to_utf8(fname, -1, NULL, NULL, NULL);
   str[0] = NULL;
-  str[1] = filename ? filename : fname;
+  str[1] = filename_utf8 ? filename_utf8 : fname;
   pos = gtk_clist_append(GTK_CLIST(list), str);
   gtk_clist_set_pixmap(GTK_CLIST(list), pos, 0, pixmap, mask);
-  g_free(filename);
+  g_free(filename_utf8);
 }
 
 static void CheckDir( GtkWidget * list )

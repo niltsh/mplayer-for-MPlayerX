@@ -166,21 +166,21 @@ static void console_toggle(gui_t *gui)
     }
 }
 
-void capitalize(char *filename)
+void capitalize(char *fname)
 {
     unsigned int i;
     BOOL cap = TRUE;
-    for (i=0; i < strlen(filename); i++)
+    for (i=0; i < strlen(fname); i++)
     {
         if (cap)
         {
             cap = FALSE;
-            filename[i] = toupper(filename[i]);
+            fname[i] = toupper(fname[i]);
         }
-        else if (filename[i] == ' ')
+        else if (fname[i] == ' ')
             cap = TRUE;
         else
-            filename[i] = tolower(filename[i]);
+            fname[i] = tolower(fname[i]);
     }
 }
 static void display_about_box(HWND hWnd)
@@ -1040,7 +1040,7 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
             {
                 char device[MAX_PATH];
                 char searchpath[MAX_PATH];
-                char filename[MAX_PATH];
+                char file[MAX_PATH];
                 int len, pos = 0, cdromdrive = 0;
                 len = GetLogicalDriveStrings(MAX_PATH, device);
                 while(pos < len)
@@ -1074,8 +1074,8 @@ static LRESULT CALLBACK EventProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                                     gui->playlist->clear_playlist(gui->playlist);
                                     do
                                     {
-                                        sprintf(filename, "%smpegav/%s", device + pos, finddata.cFileName);
-                                        gui->playlist->add_track(gui->playlist, filename, NULL, NULL, 0);
+                                        sprintf(file, "%smpegav/%s", device + pos, finddata.cFileName);
+                                        gui->playlist->add_track(gui->playlist, file, NULL, NULL, 0);
                                     }
                                     while(FindNextFile(searchhndl, &finddata));
                                     FindClose(searchhndl);

@@ -95,16 +95,16 @@ mixer_t *mixer = NULL;
  *
  * @return pointer to the converted file path
  */
-static char *unix_name (char *filename)
+static char *unix_name (char *win_filename)
 {
     static char *unix_filename;
     LPSTR (*CDECL wine_get_unix_file_name_ptr)(LPCWSTR);
     int wchar_conv;
 
-    if (*filename && (filename[1] == ':'))
+    if (*win_filename && (win_filename[1] == ':'))
     {
         wine_get_unix_file_name_ptr = (void *) GetProcAddress(GetModuleHandleA("KERNEL32"), "wine_get_unix_file_name");
-        wchar_conv = MultiByteToWideChar(CP_UNIXCP, 0, filename, -1, NULL, 0);
+        wchar_conv = MultiByteToWideChar(CP_UNIXCP, 0, win_filename, -1, NULL, 0);
 
         if (wine_get_unix_file_name_ptr && wchar_conv)
         {
@@ -112,16 +112,16 @@ static char *unix_name (char *filename)
             char *unix_name;
 
             ntpath = HeapAlloc(GetProcessHeap(), 0, sizeof(*ntpath) * (wchar_conv + 1));
-            MultiByteToWideChar(CP_UNIXCP, 0, filename, -1, ntpath, wchar_conv);
+            MultiByteToWideChar(CP_UNIXCP, 0, win_filename, -1, ntpath, wchar_conv);
             unix_name = wine_get_unix_file_name_ptr(ntpath);
             setdup(&unix_filename, unix_name);
-            filename = unix_filename;
+            win_filename = unix_filename;
             HeapFree(GetProcessHeap(), 0, unix_name);
             HeapFree(GetProcessHeap(), 0, ntpath);
         }
     }
 
-    return filename;
+    return win_filename;
 }
 
 /**
@@ -818,8 +818,8 @@ int gui(int what, void *data)
 /* This function adds/inserts one file into the gui playlist */
 static int import_file_into_gui(char *pathname, int insert)
 {
-    char filename[MAX_PATH];
-    char *filepart = filename;
+    char file[MAX_PATH];
+    char *filepart = file;
 
     if (strstr(pathname, "://"))
     {
@@ -827,16 +827,16 @@ static int import_file_into_gui(char *pathname, int insert)
         mygui->playlist->add_track(mygui->playlist, pathname, NULL, NULL, 0);
         return 1;
     }
-    if (GetFullPathName(pathname, MAX_PATH, filename, &filepart))
+    if (GetFullPathName(pathname, MAX_PATH, file, &filepart))
     {
-        if (!(GetFileAttributes(filename) & FILE_ATTRIBUTE_DIRECTORY))
+        if (!(GetFileAttributes(file) & FILE_ATTRIBUTE_DIRECTORY))
         {
-            mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] Adding filename: %s - fullpath: %s\n", filepart, filename);
-            mygui->playlist->add_track(mygui->playlist, filename, NULL, filepart, 0);
+            mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] Adding filename: %s - fullpath: %s\n", filepart, file);
+            mygui->playlist->add_track(mygui->playlist, file, NULL, filepart, 0);
             return 1;
         }
         else
-            mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] Cannot add %s\n", filename);
+            mp_msg(MSGT_GPLAYER, MSGL_V, "[GUI] Cannot add %s\n", file);
     }
 
     return 0;

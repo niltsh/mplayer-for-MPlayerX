@@ -591,7 +591,7 @@ void uiDandDHandler(int num,char** files)
   int f = 0;
 
   char* subtitles = NULL;
-  char* filename = NULL;
+  char* file = NULL;
   char* s;
 
   if (num <= 0)
@@ -627,8 +627,8 @@ void uiDandDHandler(int num,char** files)
       }
 
       /* clear playlist */
-      if (filename == NULL) {
-	filename = files[f];
+      if (file == NULL) {
+	file = files[f];
 	listMgr(PLAYLIST_DELETE,0);
       }
 
@@ -654,8 +654,8 @@ void uiDandDHandler(int num,char** files)
     free( str );
   }
 
-  if (filename) {
-    uiSetFile( NULL,filename,STREAMTYPE_FILE );
+  if (file) {
+    uiSetFile( NULL,file,STREAMTYPE_FILE );
     if ( guiInfo.Playing == GUI_PLAY ) uiEventHandling( evStop,0 );
     uiEventHandling( evPlay,0 );
   }
