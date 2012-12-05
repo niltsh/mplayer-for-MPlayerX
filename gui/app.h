@@ -112,8 +112,6 @@ enum {
 #define btnPressed  2
 //@}
 
-#define MAX_ITEMS 64
-
 /// Item definition
 typedef struct {
     int type;
@@ -143,6 +141,9 @@ typedef struct {
 
     int pressed;
 } wItem;
+
+/// Maximum GUI items
+#define MAX_ITEMS 64
 
 typedef struct {
     wItem main;
