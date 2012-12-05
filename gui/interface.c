@@ -874,7 +874,7 @@ int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue
         if (!enqueue)
             listMgr(PLAYLIST_DELETE, 0);             // delete playlist before "appending"
 
-        while ((filename = pt_iter_get_next_file(pt_iter)) != NULL)
+        while ((filename = pt_iter_get_next_file(pt_iter)))
             /* add it to end of list */
             if (add_to_gui_playlist(filename, PLAYLIST_ITEM_APPEND))
                 added = True;
@@ -899,7 +899,7 @@ int guiPlaylist(int what, play_tree_t *playtree, m_config_t *config, int enqueue
 
         curr = (plItem *)listMgr(PLAYLIST_ITEM_GET_CURR, 0);
 
-        while ((filename = pt_iter_get_next_file(pt_iter)) != NULL)
+        while ((filename = pt_iter_get_next_file(pt_iter)))
             /* insert it into the list and set plCurrent=new item */
             if (add_to_gui_playlist(filename, PLAYLIST_ITEM_INSERT))
                 added = True;
