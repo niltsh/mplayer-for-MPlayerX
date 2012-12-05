@@ -90,22 +90,21 @@ typedef struct {
     const char *name;
 } evName;
 
-/* Skin items */
-
-#define itNone      0
-#define itButton    101
-#define itHPotmeter 102
-#define itVPotmeter 103
-#define itSLabel    104
-#define itDLabel    105
-#define itBase      106
-#define itPotmeter  107
-#define itMenu      108
-
-#define itPLMButton (itNone - 1)
-#define itPRMButton (itNone - 2)
-
 /* Button states */
+/// Skin items
+enum {
+    itNone,
+    itBase,
+    itButton,
+    itSLabel,
+    itDLabel,
+    itHPotmeter,
+    itVPotmeter,
+    itPotmeter,
+    itMenu,
+    itPLMButton = 100,
+    itPRMButton
+};
 
 #define btnDisabled 0
 #define btnReleased 1
