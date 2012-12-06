@@ -51,12 +51,12 @@
 #include "mpcommon.h"
 #include "mplayer.h"
 #include "path.h"
-#include "sub/font_load.h"
-#include "sub/sub.h"
-
 #ifdef CONFIG_DVDREAD
 #include "stream/stream_dvd.h"
 #endif
+#include "sub/font_load.h"
+#include "sub/sub.h"
+#include "sub/subreader.h"
 
 guiInterface_t guiInfo = {
     .StreamType   = STREAMTYPE_DUMMY,
