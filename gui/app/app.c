@@ -23,7 +23,7 @@
 
 #include "app.h"
 #include "gui.h"
-#include "skin/font.h"
+#include "gui/skin/font.h"
 
 #include "libavutil/common.h"
 

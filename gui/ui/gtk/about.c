@@ -17,7 +17,7 @@
  */
 
 #include "config.h"
-#include "gui/app.h"
+#include "gui/app/app.h"
 #include "help_mp.h"
 #include "version.h"
 

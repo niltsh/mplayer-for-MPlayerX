@@ -19,8 +19,8 @@
 #ifndef MPLAYER_GUI_APP_H
 #define MPLAYER_GUI_APP_H
 
-#include "util/bitmap.h"
-#include "wm/ws.h"
+#include "gui/util/bitmap.h"
+#include "gui/wm/ws.h"
 
 /// GUI messages (user events)
 enum {

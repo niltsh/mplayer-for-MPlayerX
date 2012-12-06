@@ -30,8 +30,8 @@
 #include "help_mp.h"
 #include "stream/stream.h"
 
-#include "gui/cfg.h"
-#include "gui/gui.h"
+#include "gui/app/cfg.h"
+#include "gui/app/gui.h"
 #include "gui/interface.h"
 #include "gui/ui/widgets.h"
 #include "gui/util/list.h"

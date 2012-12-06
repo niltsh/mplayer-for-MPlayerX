@@ -22,9 +22,9 @@
 
 #include "cfg.h"
 #include "gui.h"
-#include "interface.h"
-#include "util/list.h"
-#include "util/string.h"
+#include "gui/interface.h"
+#include "gui/util/list.h"
+#include "gui/util/string.h"
 
 #include "config.h"
 #include "help_mp.h"

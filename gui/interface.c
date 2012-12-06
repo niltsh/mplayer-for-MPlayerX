@@ -22,8 +22,8 @@
 #include <string.h>
 
 #include "interface.h"
-#include "app.h"
-#include "gui.h"
+#include "app/app.h"
+#include "app/gui.h"
 #include "skin/skin.h"
 #include "ui/gmplayer.h"
 #include "ui/widgets.h"

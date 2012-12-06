@@ -30,8 +30,8 @@
 #include "gui/ui/pixmaps/dir.xpm"
 #include "gui/ui/pixmaps/file.xpm"
 
-#include "gui/app.h"
-#include "gui/gui.h"
+#include "gui/app/app.h"
+#include "gui/app/gui.h"
 #include "gui/interface.h"
 #include "gui/util/list.h"
 #include "gui/util/mem.h"

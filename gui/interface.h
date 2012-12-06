@@ -29,7 +29,7 @@
 // These are in support of the non-GUI files that interact with
 // the GUI and that only need to include interface.h for this.
 // ------------------------------------------------------------
-#include "cfg.h"
+#include "app/cfg.h"
 
 extern int use_gui;             // this is defined in mplayer.c
 // ------------------------------------------------------------

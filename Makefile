@@ -497,8 +497,8 @@ SRCS_MPLAYER-$(MATRIXVIEW)   += libvo/vo_matrixview.c libvo/matrixview.c
 SRCS_MPLAYER-$(GUI)          += gui/util/bitmap.c \
                                 gui/util/list.c \
                                 gui/util/string.c
-SRCS_MPLAYER-$(GUI_GTK)      += gui/app.c \
-                                gui/cfg.c \
+SRCS_MPLAYER-$(GUI_GTK)      += gui/app/app.c \
+                                gui/app/cfg.c \
                                 gui/interface.c \
                                 gui/skin/font.c \
                                 gui/skin/skin.c \
@@ -689,6 +689,7 @@ INSTALL_TARGETS-$(MPLAYER)  += install-mplayer  install-mplayer-man
 
 DIRS =  . \
         gui \
+        gui/app \
         gui/skin \
         gui/ui \
         gui/ui/gtk \

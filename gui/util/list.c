@@ -25,7 +25,7 @@
 #include <string.h>
 
 #include "list.h"
-#include "gui/gui.h"
+#include "gui/app/gui.h"
 #include "string.h"
 
 #include "mp_msg.h"

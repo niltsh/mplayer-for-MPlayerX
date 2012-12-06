@@ -39,9 +39,9 @@
 #include "libmpcodecs/dec_video.h"
 #include "sub/font_load.h"
 
-#include "gui/app.h"
-#include "gui/cfg.h"
-#include "gui/gui.h"
+#include "gui/app/app.h"
+#include "gui/app/cfg.h"
+#include "gui/app/gui.h"
 #include "gui/interface.h"
 #include "gui/ui/gmplayer.h"
 #include "gui/ui/widgets.h"

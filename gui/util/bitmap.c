@@ -27,7 +27,7 @@
 #include <unistd.h>
 
 #include "bitmap.h"
-#include "gui/gui.h"
+#include "gui/app/gui.h"
 
 #include "help_mp.h"
 #include "libavcodec/avcodec.h"

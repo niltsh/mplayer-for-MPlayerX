@@ -26,8 +26,8 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
-#include "gui/app.h"
-#include "gui/cfg.h"
+#include "gui/app/app.h"
+#include "gui/app/cfg.h"
 #include "gui/interface.h"
 #include "help_mp.h"
 #include "libaf/equalizer.h"

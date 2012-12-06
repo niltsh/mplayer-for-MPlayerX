@@ -26,9 +26,9 @@
 #include "skinbrowser.h"
 #include "tools.h"
 
-#include "gui/app.h"
-#include "gui/cfg.h"
-#include "gui/gui.h"
+#include "gui/app/app.h"
+#include "gui/app/cfg.h"
+#include "gui/app/gui.h"
 #include "gui/skin/skin.h"
 #include "help_mp.h"
 
