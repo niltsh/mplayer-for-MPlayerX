@@ -21,8 +21,8 @@
 #include "gui/app/app.h"
 #include "help_mp.h"
 
-#include "gui/ui/pixmaps/error.xpm"
-#include "gui/ui/pixmaps/warning.xpm"
+#include "pixmaps/error.xpm"
+#include "pixmaps/warning.xpm"
 
 #include "gui/ui/widgets.h"
 #include "msgbox.h"

@@ -499,20 +499,20 @@ SRCS_MPLAYER-$(GUI)          += gui/util/bitmap.c \
                                 gui/util/string.c
 SRCS_MPLAYER-$(GUI_GTK)      += gui/app/app.c \
                                 gui/app/cfg.c \
+                                gui/dialog/about.c \
+                                gui/dialog/equalizer.c \
+                                gui/dialog/fileselect.c \
+                                gui/dialog/menu.c \
+                                gui/dialog/msgbox.c \
+                                gui/dialog/playlist.c \
+                                gui/dialog/preferences.c \
+                                gui/dialog/skinbrowser.c \
+                                gui/dialog/tools.c \
+                                gui/dialog/url.c \
                                 gui/interface.c \
                                 gui/skin/font.c \
                                 gui/skin/skin.c \
                                 gui/ui/actions.c \
-                                gui/ui/gtk/about.c \
-                                gui/ui/gtk/equalizer.c \
-                                gui/ui/gtk/fileselect.c \
-                                gui/ui/gtk/menu.c \
-                                gui/ui/gtk/msgbox.c \
-                                gui/ui/gtk/playlist.c \
-                                gui/ui/gtk/preferences.c \
-                                gui/ui/gtk/skinbrowser.c \
-                                gui/ui/gtk/tools.c \
-                                gui/ui/gtk/url.c \
                                 gui/ui/main.c \
                                 gui/ui/menu.c \
                                 gui/ui/playbar.c \
@@ -690,9 +690,9 @@ INSTALL_TARGETS-$(MPLAYER)  += install-mplayer  install-mplayer-man
 DIRS =  . \
         gui \
         gui/app \
+        gui/dialog \
         gui/skin \
         gui/ui \
-        gui/ui/gtk \
         gui/util \
         gui/win32 \
         gui/wm \
@@ -841,7 +841,7 @@ $(foreach lang, $(DOC_LANG_ALL),$(eval $(lang-def)))
 # Make sure all generated header files are created.
 codec-cfg.o: codecs.conf.h
 $(DEP_FILES) $(MENCODER_DEPS) $(MPLAYER_DEPS): help_mp.h
-mpcommon.o osdep/mplayer-rc.o gui/ui/gtk/about.o gui/win32/gui.o: version.h
+mpcommon.o osdep/mplayer-rc.o gui/dialog/about.o gui/win32/gui.o: version.h
 
 osdep/mplayer-rc.o: osdep/mplayer.exe.manifest
 

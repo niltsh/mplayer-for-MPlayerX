@@ -40,8 +40,8 @@
 #include "playlist.h"
 #include "tools.h"
 
-#include "gui/ui/pixmaps/open2.xpm"
-#include "gui/ui/pixmaps/dir2.xpm"
+#include "pixmaps/open2.xpm"
+#include "pixmaps/dir2.xpm"
 
        GtkWidget * PlayList = NULL;
 static GtkWidget * CTDirTree;

@@ -46,7 +46,7 @@
 #include "gui/wm/ws.h"
 
 #include "actions.h"
-#include "gtk/fileselect.h"
+#include "gui/dialog/fileselect.h"
 
 GtkWidget *PopUpMenu = NULL;
 
@@ -57,14 +57,14 @@ int gtkPopupMenu      = 0;
 int gtkPopupMenuParam = 0;
 int gtkInitialized    = False;
 
-#include "gtk/skinbrowser.h"
-#include "gtk/playlist.h"
-#include "gtk/msgbox.h"
-#include "gtk/about.h"
-#include "gtk/preferences.h"
-#include "gtk/menu.h"
-#include "gtk/url.h"
-#include "gtk/equalizer.h"
+#include "gui/dialog/skinbrowser.h"
+#include "gui/dialog/playlist.h"
+#include "gui/dialog/msgbox.h"
+#include "gui/dialog/about.h"
+#include "gui/dialog/preferences.h"
+#include "gui/dialog/menu.h"
+#include "gui/dialog/url.h"
+#include "gui/dialog/equalizer.h"
 
 static const char gui_icon_name[] = "mplayer";
 

@@ -26,9 +26,9 @@
 #include "config.h"
 #include "gui/ui/gmplayer.h"
 
-#include "gui/ui/pixmaps/up.xpm"
-#include "gui/ui/pixmaps/dir.xpm"
-#include "gui/ui/pixmaps/file.xpm"
+#include "pixmaps/up.xpm"
+#include "pixmaps/dir.xpm"
+#include "pixmaps/file.xpm"
 
 #include "gui/app/app.h"
 #include "gui/app/gui.h"

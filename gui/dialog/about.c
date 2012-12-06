@@ -21,7 +21,7 @@
 #include "help_mp.h"
 #include "version.h"
 
-#include "gui/ui/pixmaps/emblem.xpm"
+#include "pixmaps/emblem.xpm"
 #include "gui/ui/widgets.h"
 #include "about.h"
 #include "tools.h"
