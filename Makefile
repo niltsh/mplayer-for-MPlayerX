@@ -500,6 +500,7 @@ SRCS_MPLAYER-$(GUI)          += gui/util/bitmap.c \
 SRCS_MPLAYER-$(GUI_GTK)      += gui/app/app.c \
                                 gui/app/cfg.c \
                                 gui/dialog/about.c \
+                                gui/dialog/dialog.c \
                                 gui/dialog/equalizer.c \
                                 gui/dialog/fileselect.c \
                                 gui/dialog/menu.c \
@@ -518,7 +519,6 @@ SRCS_MPLAYER-$(GUI_GTK)      += gui/app/app.c \
                                 gui/ui/playbar.c \
                                 gui/ui/render.c \
                                 gui/ui/video.c \
-                                gui/ui/widgets.c \
                                 gui/util/cut.c \
                                 gui/wm/ws.c \
                                 gui/wm/wsxdnd.c \

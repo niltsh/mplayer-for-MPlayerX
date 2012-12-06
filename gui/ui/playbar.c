@@ -47,7 +47,7 @@
 
 #include "ui.h"
 #include "actions.h"
-#include "widgets.h"
+#include "gui/dialog/dialog.h"
 #include "render.h"
 
 unsigned int GetTimerMS( void );

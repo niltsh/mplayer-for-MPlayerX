@@ -32,7 +32,7 @@
 #include "gui/skin/skin.h"
 #include "help_mp.h"
 
-#include "gui/ui/widgets.h"
+#include "dialog.h"
 
 GtkWidget * SkinList = NULL;
 char      * sbSelectedSkin=NULL;

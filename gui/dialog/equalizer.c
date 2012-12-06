@@ -37,7 +37,7 @@
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"
 #include "libmpcodecs/dec_video.h"
-#include "gui/ui/widgets.h"
+#include "dialog.h"
 #include "gui/util/mem.h"
 #include "gui/util/string.h"
 

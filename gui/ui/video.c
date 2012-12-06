@@ -28,7 +28,7 @@
 #include "gui/app/app.h"
 #include "gui/app/gui.h"
 #include "gui/interface.h"
-#include "widgets.h"
+#include "gui/dialog/dialog.h"
 
 int             uiVideoRender = False;
 int             videoVisible = 0;

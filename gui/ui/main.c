@@ -60,7 +60,7 @@
 #define GUI_REDRAW_WAIT 375
 
 #include "actions.h"
-#include "widgets.h"
+#include "gui/dialog/dialog.h"
 
 unsigned int GetTimerMS( void );
 

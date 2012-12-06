@@ -22,7 +22,7 @@
 #include "version.h"
 
 #include "pixmaps/emblem.xpm"
-#include "gui/ui/widgets.h"
+#include "dialog.h"
 #include "about.h"
 #include "tools.h"
 

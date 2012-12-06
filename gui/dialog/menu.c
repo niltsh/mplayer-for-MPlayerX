@@ -27,7 +27,7 @@
 #include "mpcommon.h"
 
 #include "menu.h"
-#include "gui/ui/widgets.h"
+#include "dialog.h"
 #include "gui/ui/ui.h"
 #include "gui/app/app.h"
 #include "gui/app/gui.h"

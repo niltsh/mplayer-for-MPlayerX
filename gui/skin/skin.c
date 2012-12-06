@@ -28,8 +28,8 @@
 #include "font.h"
 #include "gui/app/app.h"
 #include "gui/app/gui.h"
+#include "gui/dialog/dialog.h"
 #include "gui/interface.h"
-#include "gui/ui/widgets.h"
 #include "gui/util/cut.h"
 #include "gui/util/string.h"
 

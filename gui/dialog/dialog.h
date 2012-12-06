@@ -16,8 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef MPLAYER_GUI_WIDGETS_H
-#define MPLAYER_GUI_WIDGETS_H
+#ifndef MPLAYER_GUI_DIALOG_H
+#define MPLAYER_GUI_DIALOG_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,7 +27,7 @@
 #include <X11/Xproto.h>
 
 #include "osdep/shmem.h"
-#include "actions.h"
+#include "gui/ui/actions.h"
 #include "mplayer.h"
 
 #define GTK_MB_SIMPLE 0
@@ -80,4 +80,4 @@ void gtkMessageBox(int type, const gchar *str);
 void gtkSetLayer(GtkWidget *wdg);
 void gtkActive(GtkWidget *wdg);
 
-#endif /* MPLAYER_GUI_WIDGETS_H */
+#endif /* MPLAYER_GUI_DIALOG_H */

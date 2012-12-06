@@ -24,7 +24,7 @@
 #include "pixmaps/error.xpm"
 #include "pixmaps/warning.xpm"
 
-#include "gui/ui/widgets.h"
+#include "dialog.h"
 #include "msgbox.h"
 #include "tools.h"
 

@@ -41,7 +41,7 @@
 #include "stream/stream.h"
 #include "libavutil/common.h"
 
-#include "gui/ui/widgets.h"
+#include "dialog.h"
 #include "fileselect.h"
 #include "preferences.h"
 #include "tools.h"

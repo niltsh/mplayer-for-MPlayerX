@@ -22,7 +22,7 @@
 #ifndef MPLAYER_GUI_WS_H
 #define MPLAYER_GUI_WS_H
 
-#include "gui/ui/widgets.h"
+#include "gui/dialog/dialog.h"
 #include "config.h"
 
 #include <X11/Xlib.h>

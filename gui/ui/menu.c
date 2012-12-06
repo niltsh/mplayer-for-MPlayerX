@@ -29,7 +29,7 @@
 #include "gui/app/gui.h"
 #include "ui.h"
 
-#include "widgets.h"
+#include "gui/dialog/dialog.h"
 
 unsigned char * menuDrawBuffer = NULL;
 int             menuRender = True;
