@@ -58,6 +58,9 @@
 #include "sub/sub.h"
 #include "sub/subreader.h"
 
+/**
+ * @brief Initialize interface data.
+ */
 guiInterface_t guiInfo = {
     .StreamType   = STREAMTYPE_DUMMY,
     .Balance      = 50.0f,
@@ -68,6 +71,9 @@ static int initialized;
 
 /* MPlayer -> GUI */
 
+/**
+ * @brief Initialize and start the GUI.
+ */
 void guiInit(void)
 {
     int i;
@@ -254,6 +260,9 @@ void guiInit(void)
     initialized = True;
 }
 
+/**
+ * @brief Stop and finalize the GUI.
+ */
 void guiDone(void)
 {
     if (initialized) {
@@ -323,6 +332,16 @@ static void add_vf(char *str)
     mp_msg(MSGT_GPLAYER, MSGL_INFO, MSGTR_AddingVideoFilter, str);
 }
 
+/**
+ * @brief Issue a command to the GUI.
+ *
+ * @note The GUI is controlled by giving it commands.
+ *
+ * @param what command to be performed
+ * @param data pointer to data needed for the command
+ *
+ * @return #True (ok) or #False (error)
+ */
 int gui(int what, void *data)
 {
     mixer_t *mixer = NULL;
