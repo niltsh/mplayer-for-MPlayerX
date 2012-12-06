@@ -27,10 +27,10 @@
 #include <string.h>
 
 #include "font.h"
+#include "skin.h"
 #include "gui/util/cut.h"
 #include "gui/util/mem.h"
 #include "gui/util/string.h"
-#include "skin.h"
 
 #include "libavutil/avstring.h"
 #include "mp_msg.h"

@@ -25,8 +25,8 @@
 #include <string.h>
 
 #include "list.h"
-#include "gui/app/gui.h"
 #include "string.h"
+#include "gui/app/gui.h"
 
 #include "mp_msg.h"
 #include "path.h"
