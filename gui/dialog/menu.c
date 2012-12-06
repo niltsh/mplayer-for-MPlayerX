@@ -28,7 +28,7 @@
 
 #include "menu.h"
 #include "gui/ui/widgets.h"
-#include "gui/ui/gmplayer.h"
+#include "gui/ui/ui.h"
 #include "gui/app/app.h"
 #include "gui/app/gui.h"
 #include "gui/interface.h"

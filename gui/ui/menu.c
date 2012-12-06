@@ -27,7 +27,7 @@
 #include "mp_msg.h"
 #include "gui/app/app.h"
 #include "gui/app/gui.h"
-#include "gmplayer.h"
+#include "ui.h"
 
 #include "widgets.h"
 

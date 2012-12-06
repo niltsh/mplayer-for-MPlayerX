@@ -30,7 +30,7 @@
 #include "tools.h"
 #include "gui/interface.h"
 #include "gui/app/app.h"
-#include "gui/ui/gmplayer.h"
+#include "gui/ui/ui.h"
 #include "gui/ui/widgets.h"
 #include "gui/util/list.h"
 #include "gui/util/string.h"

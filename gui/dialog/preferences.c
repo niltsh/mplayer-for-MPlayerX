@@ -43,7 +43,7 @@
 #include "gui/app/cfg.h"
 #include "gui/app/gui.h"
 #include "gui/interface.h"
-#include "gui/ui/gmplayer.h"
+#include "gui/ui/ui.h"
 #include "gui/ui/widgets.h"
 #include "gui/util/list.h"
 #include "gui/util/mem.h"

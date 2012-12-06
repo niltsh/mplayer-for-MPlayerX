@@ -45,7 +45,7 @@
 #include "libmpdemux/stheader.h"
 #include "codec-cfg.h"
 
-#include "gmplayer.h"
+#include "ui.h"
 #include "actions.h"
 #include "widgets.h"
 #include "render.h"

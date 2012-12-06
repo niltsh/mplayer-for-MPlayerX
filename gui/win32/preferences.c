@@ -32,7 +32,7 @@
 #include "osdep/priority.h"
 #include "mixer.h"
 #include "gui/util/list.h"
-#include "gui/ui/gmplayer.h"
+#include "gui/ui/ui.h"
 #include "gui/interface.h"
 #include "gui.h"
 #include "mp_msg.h"

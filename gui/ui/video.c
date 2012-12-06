@@ -24,7 +24,7 @@
 #include "help_mp.h"
 #include "mp_core.h"
 
-#include "gmplayer.h"
+#include "ui.h"
 #include "gui/app/app.h"
 #include "gui/app/gui.h"
 #include "gui/interface.h"

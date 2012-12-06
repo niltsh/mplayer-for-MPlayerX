@@ -43,7 +43,7 @@
 #include "libmpcodecs/vd.h"
 #include "gui/interface.h"
 #include "gui/ui/actions.h"
-#include "gui/ui/gmplayer.h"
+#include "gui/ui/ui.h"
 #include "gui/util/mem.h"
 #include "gui.h"
 #include "dialogs.h"

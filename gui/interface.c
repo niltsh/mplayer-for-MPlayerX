@@ -25,7 +25,7 @@
 #include "app/app.h"
 #include "app/gui.h"
 #include "skin/skin.h"
-#include "ui/gmplayer.h"
+#include "ui/ui.h"
 #include "ui/widgets.h"
 #include "util/list.h"
 #include "util/mem.h"

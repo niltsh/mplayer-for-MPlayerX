@@ -62,7 +62,7 @@
 #include "libmpcodecs/vd.h"
 #include "libmpcodecs/dec_audio.h"
 #include "gui/ui/actions.h"
-#include "gui/ui/gmplayer.h"
+#include "gui/ui/ui.h"
 #include "gui/util/mem.h"
 #include "gui/util/list.h"
 #include "gui/util/string.h"
