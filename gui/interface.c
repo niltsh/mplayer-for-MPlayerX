@@ -751,6 +751,7 @@ int gui(int what, void *data)
 
         if (mixer) {
             float l, r, b;
+            static float last_balance = 50.0f;
 
             mixer_getvolume(mixer, &l, &r);
             guiInfo.Volume = FFMAX(l, r);
@@ -758,7 +759,14 @@ int gui(int what, void *data)
 
             mixer_getbalance(mixer, &b);
             guiInfo.Balance = (b + 1.0) * 50.0;
-            btnModify(evSetBalance, guiInfo.Balance);
+
+            if (guiInfo.Balance != last_balance) {
+                l = guiInfo.Volume * (100.0 - guiInfo.Balance) / 50.0;
+                r = guiInfo.Volume * guiInfo.Balance / 50.0;
+                mixer_setvolume(mixer, FFMIN(l, guiInfo.Volume), FFMIN(r, guiInfo.Volume));
+                btnModify(evSetBalance, guiInfo.Balance);
+                last_balance = guiInfo.Balance;
+            }
         }
 
         break;
