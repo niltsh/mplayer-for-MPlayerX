@@ -306,7 +306,7 @@ NoPause:
 
    case evSetBalance:
         guiInfo.Balance=param;
-        mixer_setbalance( mixer,(guiInfo.Balance - 50.0 ) / 50.0 );
+        mixer_setbalance( mixer,(guiInfo.Balance - 50.0 ) / 50.0 );   // transform 0..100 to -1..1
         osd = osd_level;
         osd_level = 0;
         uiEventHandling(evSetVolume, guiInfo.Volume);

@@ -758,7 +758,7 @@ int gui(int what, void *data)
             btnModify(evSetVolume, guiInfo.Volume);
 
             mixer_getbalance(mixer, &b);
-            guiInfo.Balance = (b + 1.0) * 50.0;
+            guiInfo.Balance = (b + 1.0) * 50.0; // transform -1..1 to 0..100
 
             if (guiInfo.Balance != last_balance) {
                 l = guiInfo.Volume * (100.0 - guiInfo.Balance) / 50.0;
