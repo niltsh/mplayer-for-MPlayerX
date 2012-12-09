@@ -43,7 +43,7 @@ static char *Translate(char *str)
     char tmp[512];
     unsigned int i, c;
     int t;
-    mixer_t *mixer;
+    mixer_t *mixer = NULL;
 
     *trbuf = 0;
 
@@ -170,9 +170,10 @@ calclengthmmmmss:
 
             case 'a':
 
+                if (guiInfo.mpcontext)
                 mixer = mpctx_get_mixer(guiInfo.mpcontext);
 
-                if (mixer->muted) {
+                if (mixer && mixer->muted) {
                     av_strlcat(trbuf, "n", sizeof(trbuf));
                     break;
                 }
