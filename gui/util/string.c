@@ -274,6 +274,7 @@ char *TranslateFilename(int how, char *fname, size_t maxlen)
 
     switch (guiInfo.StreamType) {
     case STREAMTYPE_FILE:
+
         if (guiInfo.Filename && *guiInfo.Filename) {
             p = strrchr(guiInfo.Filename,
 #if HAVE_DOS_PATHS
@@ -297,28 +298,35 @@ char *TranslateFilename(int how, char *fname, size_t maxlen)
                 fname[len - 5] = 0;
         } else
             av_strlcpy(fname, MSGTR_NoFileLoaded, maxlen);
+
         break;
 
     case STREAMTYPE_STREAM:
+
         av_strlcpy(fname, guiInfo.Filename, maxlen);
         break;
 
     case STREAMTYPE_CDDA:
+
         snprintf(fname, maxlen, MSGTR_Title, guiInfo.Track);
         break;
 
     case STREAMTYPE_VCD:
+
         snprintf(fname, maxlen, MSGTR_Title, guiInfo.Track - 1);
         break;
 
     case STREAMTYPE_DVD:
+
         if (guiInfo.Chapter)
             snprintf(fname, maxlen, MSGTR_Chapter, guiInfo.Chapter);
         else
             av_strlcpy(fname, MSGTR_NoChapter, maxlen);
+
         break;
 
     default:
+
         av_strlcpy(fname, MSGTR_NoMediaOpened, maxlen);
         break;
     }

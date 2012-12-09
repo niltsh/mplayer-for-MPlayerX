@@ -332,35 +332,45 @@ void RenderAll(wsTWindow *window, wItem *Items, int nrItems, char *db)
 
         switch (item->type) {
         case itButton:
+
             PutImage(&item->Bitmap, item->x, item->y, 3, ofs);
             break;
 
         case itPotmeter:
+
             if (item->numphases == 1)
                 SimplePotmeterPutImage(&item->Bitmap, item->x, item->y, item->value / 100.0);
             else
                 PutImage(&item->Bitmap, item->x, item->y, item->numphases, (item->numphases - 1) * (item->value / 100.0));
+
             break;
 
         case itHPotmeter:
+
             if (item->numphases == 1)
                 SimplePotmeterPutImage(&item->Bitmap, item->x, item->y, item->value / 100.0);
             else
                 PutImage(&item->Bitmap, item->x, item->y, item->numphases, (item->numphases - 1) * (item->value / 100.0));
+
             PutImage(&item->Mask, item->x + (item->width - item->pwidth) * (item->value / 100.0), item->y, 3, ofs);
             break;
 
         case itVPotmeter:
+
             PutImage(&item->Bitmap, item->x, item->y, item->numphases, item->numphases * (1.0 - item->value / 100.0));
             PutImage(&item->Mask, item->x, item->y + (item->height - item->pheight) * (1.0 - item->value / 100.0), 3, ofs);
             break;
 
         case itSLabel:
+
             if (item->width == -1)
                 item->width = fntTextWidth(item->fontid, item->label);
+
             image = fntTextRender(item, 0, item->label);
+
             if (image)
                 PutImage(image, item->x, item->y, 1, 0);
+
             break;
 
         case itDLabel:

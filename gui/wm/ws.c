@@ -696,11 +696,13 @@ Bool wsEvents(Display *display, XEvent *Event)
         break;
 
     case MapNotify:
+
         i = wsWindowMapped;
         wsWindowList[l]->Mapped = wsMapped;
         goto expose;
 
     case UnmapNotify:
+
         i = wsWindowUnmapped;
         wsWindowList[l]->Mapped = wsNo;
         goto expose;
@@ -751,6 +753,7 @@ expose:
         break;
 
     case Expose:
+
         wsWindowList[l]->State = wsWindowExpose;
 
         if ((wsWindowList[l]->ReDraw) && (!Event->xexpose.count))
@@ -759,6 +762,7 @@ expose:
         break;
 
     case ConfigureNotify:
+
         XTranslateCoordinates(wsDisplay, wsWindowList[l]->WindowID, wsRootWin, 0, 0, &x, &y, &child_window);
 
         if ((wsWindowList[l]->X != x) || (wsWindowList[l]->Y != y) || (wsWindowList[l]->Width != Event->xconfigure.width) || (wsWindowList[l]->Height != Event->xconfigure.height)) {
@@ -782,10 +786,12 @@ expose:
         break;
 
     case KeyPress:
+
         i = wsKeyPressed;
         goto keypressed;
 
     case KeyRelease:
+
         i = wsKeyReleased;
 keypressed:
         wsWindowList[l]->Alt      = False;
@@ -840,6 +846,7 @@ keypressed:
         break;
 
     case MotionNotify:
+
         i = wsMoveMouse;
         {
             /* pump all motion events from the display queue:
@@ -855,36 +862,46 @@ keypressed:
                 }
             }
         }
+
         if (wsWindowList[l]->wsCursor != None) {
             wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
             mouse_win  = wsWindowList[l];
             mouse_time = GetTimerMS();
         }
+
         goto buttonreleased;
 
     case ButtonRelease:
+
         i = Event->xbutton.button + 128;
+
         if (wsWindowList[l]->wsCursor != None) {
             wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
             mouse_win  = wsWindowList[l];
             mouse_time = GetTimerMS();
         }
+
         goto buttonreleased;
 
     case ButtonPress:
+
         i = Event->xbutton.button;
+
         if (wsWindowList[l]->wsCursor != None) {
             wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
             mouse_win  = wsWindowList[l];
             mouse_time = GetTimerMS();
         }
+
         goto buttonreleased;
 
     case EnterNotify:
+
         i = wsEnterWindow;
         goto buttonreleased;
 
     case LeaveNotify:
+
         i = wsLeaveWindow;
 buttonreleased:
 
@@ -894,6 +911,7 @@ buttonreleased:
         break;
 
     case SelectionNotify:
+
         /* Handle DandD */
         wsXDNDProcessSelection(wsWindowList[l], Event);
         break;
@@ -901,6 +919,7 @@ buttonreleased:
 
     XFlush(wsDisplay);
     XSync(wsDisplay, False);
+
     return !wsTrue;
 }
 
@@ -1313,6 +1332,7 @@ void wsVisibleMouse(wsTWindow *win, int m)
         break;
 
     case wsHideMouseCursor:
+
         win->wsCursor = XCreatePixmapCursor(wsDisplay, win->wsCursorPixmap, win->wsCursorPixmap, &win->wsColor, &win->wsColor, 0, 0);
         XDefineCursor(wsDisplay, win->WindowID, win->wsCursor);
         break;
@@ -1374,12 +1394,16 @@ void wsVisibleWindow(wsTWindow *win, int show)
 {
     switch (show) {
     case wsShowWindow:
+
         XMapRaised(wsDisplay, win->WindowID);
+
         if (vo_fs_type & vo_wm_FULLSCREEN)
             win->isFullScreen = False;
+
         break;
 
     case wsHideWindow:
+
         XUnmapWindow(wsDisplay, win->WindowID);
         break;
     }

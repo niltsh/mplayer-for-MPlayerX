@@ -354,6 +354,7 @@ int gui(int what, void *data)
 
     switch (what) {
     case GUI_SET_CONTEXT:
+
         guiInfo.mpcontext = data;
         break;
 
@@ -372,10 +373,13 @@ int gui(int what, void *data)
         break;
 
     case GUI_HANDLE_EVENTS:
+
         if (!guiInfo.Playing || !guiInfo.VideoWindow)
             wsHandleEvents();
+
         wsAutohideCursor();
         gtkEventHandling();
+
         break;
 
     case GUI_RUN_COMMAND:
@@ -407,10 +411,13 @@ int gui(int what, void *data)
         break;
 
     case GUI_RUN_MESSAGE:
+
         mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] GUI_RUN_MESSAGE: %s\n", (const char *)data);
         msg = appFindMessage((const char *)data);
+
         if ((msg == evMenu) || appFindItem(msg))
             uiEventHandling(msg, 0);
+
         break;
 
     case GUI_PREPARE:
@@ -664,6 +671,7 @@ int gui(int what, void *data)
         break;
 
     case GUI_SET_AFILTER:
+
         guiInfo.afilter = data;
         break;
 
@@ -752,9 +760,11 @@ int gui(int what, void *data)
             guiInfo.Balance = (b + 1.0) * 50.0;
             btnModify(evSetBalance, guiInfo.Balance);
         }
+
         break;
 
     case GUI_REDRAW:
+
         uiEventHandling(ivRedraw, 0);
         break;
 
@@ -782,6 +792,7 @@ int gui(int what, void *data)
         break;
 
     case GUI_HANDLE_X_EVENT:
+
         wsEvents(wsDisplay, data);
         gtkEventHandling();
         break;
