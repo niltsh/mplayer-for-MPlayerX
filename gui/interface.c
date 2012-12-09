@@ -750,7 +750,7 @@ int gui(int what, void *data)
 
             mixer_getbalance(mixer, &b);
             guiInfo.Balance = (b + 1.0) * 50.0;
-                btnModify(evSetBalance, guiInfo.Balance);
+            btnModify(evSetBalance, guiInfo.Balance);
         }
         break;
 

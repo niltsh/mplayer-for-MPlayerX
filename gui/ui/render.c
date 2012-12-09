@@ -171,7 +171,7 @@ calclengthmmmmss:
             case 'a':
 
                 if (guiInfo.mpcontext)
-                mixer = mpctx_get_mixer(guiInfo.mpcontext);
+                    mixer = mpctx_get_mixer(guiInfo.mpcontext);
 
                 if (mixer && mixer->muted) {
                     av_strlcat(trbuf, "n", sizeof(trbuf));
