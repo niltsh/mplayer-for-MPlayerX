@@ -742,23 +742,15 @@ int gui(int what, void *data)
             mixer = mpctx_get_mixer(guiInfo.mpcontext);
 
         if (mixer) {
-            float l, r;
-            static float last_balance = -1;
+            float l, r, b;
 
             mixer_getvolume(mixer, &l, &r);
-
             guiInfo.Volume = FFMAX(l, r);
             btnModify(evSetVolume, guiInfo.Volume);
 
-            if (guiInfo.Balance != last_balance) {
-                if (guiInfo.Volume)
-                    guiInfo.Balance = ((r - l) / guiInfo.Volume + 1.0) * 50.0;
-                else
-                    guiInfo.Balance = 50.0f;
-
-                last_balance = guiInfo.Balance;
+            mixer_getbalance(mixer, &b);
+            guiInfo.Balance = (b + 1.0) * 50.0;
                 btnModify(evSetBalance, guiInfo.Balance);
-            }
         }
         break;
 
