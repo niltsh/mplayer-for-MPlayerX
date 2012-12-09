@@ -56,6 +56,7 @@
 #include "m_property.h"
 #include "mp_core.h"
 #include "mpcommon.h"
+#include "libavutil/common.h"
 
 #define GUI_REDRAW_WAIT 375
 
@@ -290,10 +291,7 @@ NoPause:
         {
 	 float l = guiInfo.Volume * ( ( 100.0 - guiInfo.Balance ) / 50.0 );
 	 float r = guiInfo.Volume * ( ( guiInfo.Balance ) / 50.0 );
-	 if ( l > guiInfo.Volume ) l=guiInfo.Volume;
-	 if ( r > guiInfo.Volume ) r=guiInfo.Volume;
-//	 printf( "!!! v: %.2f b: %.2f -> %.2f x %.2f\n",guiInfo.Volume,guiInfo.Balance,l,r );
-         mixer_setvolume( mixer,l,r );
+         mixer_setvolume( mixer,FFMIN(l,guiInfo.Volume),FFMIN(r,guiInfo.Volume) );
 	}
 	if ( osd_level )
 	 {
