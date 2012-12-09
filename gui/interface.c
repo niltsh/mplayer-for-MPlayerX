@@ -836,15 +836,22 @@ int gui(int what, void *data)
 
             filename = NULL;
 
-            if (!isPlaylistStreamtype)
                 guiInfo.Track = (guiInfo.StreamType == STREAMTYPE_VCD ? 2 : 1);
             if (guiInfo.Chapter)
                 guiInfo.Chapter = 1;
             if (guiInfo.Angle)
                 guiInfo.Angle = 1;
 
-            if (isPlaylistStreamtype && !listMgr(PLAYLIST_ITEM_GET_CURR, 0))
+            if (isPlaylistStreamtype) {
+                if (!listMgr(PLAYLIST_ITEM_GET_CURR, 0))
                 uiUnsetFile();
+                else {
+                    plItem *curr;
+
+                    curr = listMgr(PLAYLIST_ITEM_SET_CURR, listMgr(PLAYLIST_GET, 0));
+                    uiSetFile(curr->path, curr->name, STREAMTYPE_FILE);
+                }
+            }
 
             guiInfo.ElapsedTime = 0;
             guiInfo.Position    = 0;
