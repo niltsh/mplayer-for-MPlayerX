@@ -367,8 +367,10 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
                 switch (codec->pix_fmt) {
                     case PIX_FMT_RGB24:
                         codec->codec_tag= MKTAG(24, 'B', 'G', 'R');
+                        break;
                     case PIX_FMT_BGR24:
                         codec->codec_tag= MKTAG(24, 'R', 'G', 'B');
+                        break;
                 }
             }
             codec->codec_tag = mp_codec_id2tag(codec->codec_id, codec->codec_tag, 0);
