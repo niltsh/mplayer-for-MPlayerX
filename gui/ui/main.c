@@ -287,10 +287,6 @@ NoPause:
 
    case evSetVolume:
         guiInfo.Volume=param;
-	goto set_volume;
-   case evSetBalance:
-        guiInfo.Balance=param;
-set_volume:
         {
 	 float l = guiInfo.Volume * ( ( 100.0 - guiInfo.Balance ) / 50.0 );
 	 float r = guiInfo.Volume * ( ( guiInfo.Balance ) / 50.0 );
@@ -308,6 +304,17 @@ set_volume:
 	 }
         break;
 
+   case evSetBalance:
+        guiInfo.Balance=param;
+        mixer_setbalance( mixer,(guiInfo.Balance - 50.0 ) / 50.0 );
+        if ( osd_level )
+         {
+          osd_visible=(GetTimerMS() + 1000) | 1;
+          vo_osd_progbar_type=OSD_BALANCE;
+          vo_osd_progbar_value=( ( guiInfo.Balance ) * 256.0 ) / 100.0;
+          vo_osd_changed( OSDTYPE_PROGBAR );
+         }
+        break;
 
    case evMenu:
         /*if (guiApp.menuIsPresent)   NOTE TO MYSELF: Uncomment only after mouse
