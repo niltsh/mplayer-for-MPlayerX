@@ -836,7 +836,8 @@ int gui(int what, void *data)
 
             filename = NULL;
 
-                guiInfo.Track = (guiInfo.StreamType == STREAMTYPE_VCD ? 2 : 1);
+            guiInfo.Track = (guiInfo.StreamType == STREAMTYPE_VCD ? 2 : 1);
+
             if (guiInfo.Chapter)
                 guiInfo.Chapter = 1;
             if (guiInfo.Angle)
@@ -844,7 +845,7 @@ int gui(int what, void *data)
 
             if (isPlaylistStreamtype) {
                 if (!listMgr(PLAYLIST_ITEM_GET_CURR, 0))
-                uiUnsetFile();
+                    uiUnsetFile();
                 else {
                     plItem *curr;
 
