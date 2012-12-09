@@ -352,9 +352,6 @@ int gui(int what, void *data)
     plItem *next = NULL;
     int msg, state;
 
-    if (guiInfo.mpcontext)
-        mixer = mpctx_get_mixer(guiInfo.mpcontext);
-
     switch (what) {
     case GUI_SET_CONTEXT:
         guiInfo.mpcontext = data;
@@ -740,6 +737,10 @@ int gui(int what, void *data)
         break;
 
     case GUI_SET_MIXER:
+
+        if (guiInfo.mpcontext)
+            mixer = mpctx_get_mixer(guiInfo.mpcontext);
+
         if (mixer) {
             float l, r;
             static float last_balance = -1;
