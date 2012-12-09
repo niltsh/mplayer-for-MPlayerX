@@ -125,7 +125,7 @@ static unsigned last_redraw_time = 0;
 
 void uiEventHandling( int msg,float param )
 {
- int iparam = (int)param;
+ int iparam = (int)param, osd;
  mixer_t *mixer = mpctx_get_mixer(guiInfo.mpcontext);
 
  switch( msg )
@@ -307,6 +307,10 @@ NoPause:
    case evSetBalance:
         guiInfo.Balance=param;
         mixer_setbalance( mixer,(guiInfo.Balance - 50.0 ) / 50.0 );
+        osd = osd_level;
+        osd_level = 0;
+        uiEventHandling(evSetVolume, guiInfo.Volume);
+        osd_level = osd;
         if ( osd_level )
          {
           osd_visible=(GetTimerMS() + 1000) | 1;
