@@ -344,13 +344,13 @@ static void add_vf(char *str)
  */
 int gui(int what, void *data)
 {
-    mixer_t *mixer = NULL;
     stream_t *stream;
 #ifdef CONFIG_DVDREAD
     dvd_priv_t *dvd;
 #endif
-    plItem *next = NULL;
     int msg, state;
+    mixer_t *mixer = NULL;
+    plItem *next   = NULL;
 
     switch (what) {
     case GUI_SET_CONTEXT:
