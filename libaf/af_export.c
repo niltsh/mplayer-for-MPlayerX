@@ -74,7 +74,7 @@ static int control(struct af_instance_s* af, int cmd, void* arg)
     int mapsize;
 
     // Free previous buffers
-    if (s->buf)
+    if (s->buf[0])
       free(s->buf[0]);
 
     // unmap previous area
@@ -183,7 +183,7 @@ static void uninit( struct af_instance_s* af )
 
   if(af->setup){
     af_export_t* s = af->setup;
-    if (s->buf)
+    if (s->buf[0])
       free(s->buf[0]);
 
     // Free mmaped area
