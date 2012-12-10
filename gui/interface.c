@@ -845,10 +845,12 @@ int gui(int what, void *data)
                 guiInfo.Angle = 1;
 
             if (isPlaylistStreamtype) {
-                if (!listMgr(PLAYLIST_ITEM_GET_CURR, 0))
+                plItem *curr = listMgr(PLAYLIST_ITEM_GET_CURR, 0);
+
+                if (!curr)
                     uiUnsetFile();
-                else if (listMgr(PLAYLIST_ITEM_GET_CURR, 0) != listMgr(PLAYLIST_GET, 0)) {
-                    plItem *curr = listMgr(PLAYLIST_ITEM_SET_CURR, listMgr(PLAYLIST_GET, 0));
+                else if (curr != listMgr(PLAYLIST_GET, 0)) {
+                    curr = listMgr(PLAYLIST_ITEM_SET_CURR, listMgr(PLAYLIST_GET, 0));
                     uiSetFile(curr->path, curr->name, STREAMTYPE_FILE);
                     guiInfo.Track = 1;
                 }
