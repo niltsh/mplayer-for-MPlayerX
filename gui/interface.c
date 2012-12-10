@@ -848,9 +848,7 @@ int gui(int what, void *data)
                 if (!listMgr(PLAYLIST_ITEM_GET_CURR, 0))
                     uiUnsetFile();
                 else {
-                    plItem *curr;
-
-                    curr = listMgr(PLAYLIST_ITEM_SET_CURR, listMgr(PLAYLIST_GET, 0));
+                    plItem *curr = listMgr(PLAYLIST_ITEM_SET_CURR, listMgr(PLAYLIST_GET, 0));
                     uiSetFile(curr->path, curr->name, STREAMTYPE_FILE);
                     guiInfo.Track = 1;
                 }
