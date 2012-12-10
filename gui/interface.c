@@ -847,7 +847,7 @@ int gui(int what, void *data)
 
                 if (!curr)
                     uiUnsetFile();
-                else if (curr != listMgr(PLAYLIST_GET, 0)) {
+                else if ((curr != listMgr(PLAYLIST_GET, 0)) && guiInfo.Playing) {
                     curr = listMgr(PLAYLIST_ITEM_SET_CURR, listMgr(PLAYLIST_GET, 0));
                     uiSetFile(curr->path, curr->name, STREAMTYPE_FILE);
                     guiInfo.Track = 1;
