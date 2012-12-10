@@ -848,13 +848,14 @@ int gui(int what, void *data)
             } else if (guiInfo.Playing) {
                 int first = (guiInfo.StreamType == STREAMTYPE_VCD ? 2 : 1);
 
-                if (guiInfo.Chapter)
-                    guiInfo.Chapter = 1;
-                if (guiInfo.Angle)
-                    guiInfo.Angle = 1;
                 if (guiInfo.Track != first) {
                     uiUnsetMedia();
                     guiInfo.Track = first;
+                }
+
+                if (guiInfo.StreamType == STREAMTYPE_DVD) {
+                    guiInfo.Chapter = 1;
+                    guiInfo.Angle   = 1;
                 }
             }
 
