@@ -279,18 +279,7 @@ void uiSetFile(char *dir, char *name, int type)
 
     if (type != SAME_STREAMTYPE) {
         guiInfo.StreamType = type;
-
-        guiInfo.VideoWidth    = 0;
-        guiInfo.VideoHeight   = 0;
-        guiInfo.AudioChannels = 0;
-        guiInfo.RunningTime   = 0;
-        guiInfo.Track   = 0;
-        guiInfo.Chapter = 0;
-        guiInfo.Angle   = 0;
-
-        nfree(guiInfo.CodecName);
-        nfree(guiInfo.AudioFilename);
-        nfree(guiInfo.SubtitleFilename);
+        uiUnsetMedia();
     }
 }
 
@@ -300,6 +289,24 @@ void uiSetFile(char *dir, char *name, int type)
 void uiUnsetFile(void)
 {
     uiSetFile(NULL, NULL, STREAMTYPE_DUMMY);
+}
+
+/**
+ * @brief Unset media information.
+ */
+void uiUnsetMedia(void)
+{
+    guiInfo.VideoWidth    = 0;
+    guiInfo.VideoHeight   = 0;
+    guiInfo.AudioChannels = 0;
+    guiInfo.RunningTime   = 0;
+    guiInfo.Track   = 0;
+    guiInfo.Chapter = 0;
+    guiInfo.Angle   = 0;
+
+    nfree(guiInfo.CodecName);
+    nfree(guiInfo.AudioFilename);
+    nfree(guiInfo.SubtitleFilename);
 }
 
 /**
