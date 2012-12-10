@@ -813,15 +813,15 @@ int gui(int what, void *data)
         uiEventHandling(ivRedraw, 1);
 
         if (guiInfo.Playing) {
-        if (!guiInfo.PlaylistNext) {
-            guiInfo.PlaylistNext = True;
-            break;
-        }
+            if (!guiInfo.PlaylistNext) {
+                guiInfo.PlaylistNext = True;
+                break;
+            }
 
-        if (guiInfo.StreamType == STREAMTYPE_CDDA && guiInfo.Track < guiInfo.Tracks) {
-            uiNext();
-            break;
-        }
+            if (guiInfo.StreamType == STREAMTYPE_CDDA && guiInfo.Track < guiInfo.Tracks) {
+                uiNext();
+                break;
+            }
 
             next = listMgr(PLAYLIST_ITEM_GET_NEXT, 0);
         }
