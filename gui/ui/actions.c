@@ -430,6 +430,7 @@ void uiNext(void)
 
             if (++guiInfo.Track > guiInfo.Tracks) {
                 guiInfo.Track = guiInfo.Tracks;
+                guiInfo.Chapter = guiInfo.Chapters;
                 stop = True;
             }
         }
