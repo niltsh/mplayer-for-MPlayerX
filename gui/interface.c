@@ -846,12 +846,16 @@ int gui(int what, void *data)
                     guiInfo.Track = 1;
                 }
             } else if (guiInfo.Playing) {
-                guiInfo.Track = (guiInfo.StreamType == STREAMTYPE_VCD ? 2 : 1);
+                int first = (guiInfo.StreamType == STREAMTYPE_VCD ? 2 : 1);
 
                 if (guiInfo.Chapter)
                     guiInfo.Chapter = 1;
                 if (guiInfo.Angle)
                     guiInfo.Angle = 1;
+                if (guiInfo.Track != first) {
+                    uiUnsetMedia();
+                    guiInfo.Track = first;
+                }
             }
 
             guiInfo.ElapsedTime = 0;
