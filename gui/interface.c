@@ -852,6 +852,7 @@ int gui(int what, void *data)
 
                     curr = listMgr(PLAYLIST_ITEM_SET_CURR, listMgr(PLAYLIST_GET, 0));
                     uiSetFile(curr->path, curr->name, STREAMTYPE_FILE);
+                    guiInfo.Track = 1;
                 }
             }
 
