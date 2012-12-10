@@ -812,20 +812,21 @@ int gui(int what, void *data)
 
         uiEventHandling(ivRedraw, 1);
 
-        if (!guiInfo.PlaylistNext && guiInfo.Playing) {
+        if (guiInfo.Playing) {
+        if (!guiInfo.PlaylistNext) {
             guiInfo.PlaylistNext = True;
             break;
         }
 
-        if ((guiInfo.StreamType == STREAMTYPE_CDDA) && (guiInfo.Track < guiInfo.Tracks) && guiInfo.Playing) {
+        if (guiInfo.StreamType == STREAMTYPE_CDDA && guiInfo.Track < guiInfo.Tracks) {
             uiNext();
             break;
         }
 
-        if (guiInfo.Playing)
             next = listMgr(PLAYLIST_ITEM_GET_NEXT, 0);
+        }
 
-        if (guiInfo.Playing && next) {
+        if (next) {
             uiSetFile(next->path, next->name, STREAMTYPE_FILE);
             guiInfo.NewPlay = GUI_FILE_NEW;
             guiInfo.Track   = (int)listMgr(PLAYLIST_ITEM_GET_POS, next);
