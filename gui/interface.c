@@ -817,11 +817,9 @@ int gui(int what, void *data)
             break;
         }
 
-        if (guiInfo.StreamType == STREAMTYPE_CDDA) {
+        if ((guiInfo.StreamType == STREAMTYPE_CDDA) && guiInfo.Playing) {
             uiNext();
-
-            if (guiInfo.Playing)
-                break;
+            break;
         }
 
         if (guiInfo.Playing)
