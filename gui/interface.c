@@ -285,6 +285,7 @@ void guiDone(void)
     }
 
     appFreeStruct();
+    uiUnsetFile();
     listMgr(PLAYLIST_DELETE, 0);
     listMgr(URLLIST_DELETE, 0);
     free(guiIcon.collection);
