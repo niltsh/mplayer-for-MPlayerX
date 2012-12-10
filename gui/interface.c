@@ -284,10 +284,10 @@ void guiDone(void)
         wsXDone();
     }
 
-    appFreeStruct();
     uiUnsetFile();
     listMgr(PLAYLIST_DELETE, 0);
     listMgr(URLLIST_DELETE, 0);
+    appFreeStruct();
     free(guiIcon.collection);
 
     if (gui_conf) {
