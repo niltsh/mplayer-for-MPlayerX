@@ -308,9 +308,9 @@ void uiUnsetMedia(int totals)
         guiInfo.Chapters = 0;
         guiInfo.Angles   = 0;
     } else {
-    guiInfo.Track   = 0;
-    guiInfo.Chapter = 0;
-    guiInfo.Angle   = 0;
+        guiInfo.Track   = 0;
+        guiInfo.Chapter = 0;
+        guiInfo.Angle   = 0;
     }
 
     nfree(guiInfo.CodecName);
