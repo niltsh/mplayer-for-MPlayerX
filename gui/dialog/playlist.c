@@ -202,7 +202,11 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	  curr.path = gstrdup(item->path);
 	  curr.name = gstrdup(item->name);
 	 }
-	else curr.path = curr.name = NULL;
+	else
+	 {
+	  curr.path = NULL;
+	  curr.name = NULL;
+	 }
 	listMgr( PLAYLIST_DELETE,0 );
 	for ( i=0;i<NrOfSelected;i++ )
 	 {
