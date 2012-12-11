@@ -194,14 +194,13 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
  {
   case 1: // ok
        {
-	int pos = 0, i;
+	int i;
 	plItem curr, * item, * old;
 	item = listMgr( PLAYLIST_ITEM_GET_CURR,0 );
 	if (item)
 	 {
 	  curr.path = gstrdup(item->path);
 	  curr.name = gstrdup(item->name);
-	  pos = (int) listMgr( PLAYLIST_ITEM_GET_POS,item );
 	 }
 	else curr.path = curr.name = NULL;
 	listMgr( PLAYLIST_DELETE,0 );
@@ -220,12 +219,13 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	item = listMgr( PLAYLIST_GET,0 );
 	if ( item )
 	 {
-	  if ( guiInfo.Playing && curr.name && pos )
+	  if ( guiInfo.Playing && curr.name )
 	   {
 	    old = listMgr( PLAYLIST_ITEM_FIND,&curr );
-	    if ( old &&  ( pos == (int) listMgr( PLAYLIST_ITEM_GET_POS,old ) ) )
+	    if ( old )
 	     {
 	      listMgr( PLAYLIST_ITEM_SET_CURR,old );
+	      guiInfo.Track = (int) listMgr( PLAYLIST_ITEM_GET_POS,old );
 	      item = NULL;
 	     }
 	   }
