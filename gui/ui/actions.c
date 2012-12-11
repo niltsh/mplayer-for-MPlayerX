@@ -358,8 +358,8 @@ void uiCurr(void)
  */
 void uiPrev(void)
 {
-    int stop = False;
-    plItem *prev;
+    int stop = False, unset = True;
+    plItem *prev = NULL;
 
     if (guiInfo.Playing == GUI_PAUSE)
         return;
@@ -392,7 +392,8 @@ void uiPrev(void)
                 guiInfo.Track = 1;
                 stop = True;
             }
-        }
+        } else
+            unset = False;
 
         break;
 
@@ -415,6 +416,8 @@ void uiPrev(void)
 
     if (guiInfo.Playing == GUI_PLAY)
         uiEventHandling(evPlay, 0);
+    else if (!stop && !prev && unset)
+        uiUnsetMedia(True);
 }
 
 /**
@@ -422,8 +425,8 @@ void uiPrev(void)
  */
 void uiNext(void)
 {
-    int stop = False;
-    plItem *next;
+    int stop = False, unset = True;
+    plItem *next = NULL;
 
     if (guiInfo.Playing == GUI_PAUSE)
         return;
@@ -449,7 +452,8 @@ void uiNext(void)
                 guiInfo.Chapter = guiInfo.Chapters;
                 stop = True;
             }
-        }
+        } else
+            unset = False;
 
         break;
 
@@ -472,4 +476,6 @@ void uiNext(void)
 
     if (guiInfo.Playing == GUI_PLAY)
         uiEventHandling(evPlay, 0);
+    else if (!stop && !next && unset)
+        uiUnsetMedia(True);
 }
