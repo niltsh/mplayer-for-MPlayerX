@@ -31,6 +31,6 @@ void uiRelSeek(float percent);
 void uiSetFile(char *dir, char *name, int type);
 void uiState(void);
 void uiUnsetFile(void);
-void uiUnsetMedia(void);
+void uiUnsetMedia(int totals);
 
 #endif /* MPLAYER_GUI_ACTIONS_H */

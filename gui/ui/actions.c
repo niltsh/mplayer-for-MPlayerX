@@ -279,7 +279,7 @@ void uiSetFile(char *dir, char *name, int type)
 
     if (type != SAME_STREAMTYPE) {
         guiInfo.StreamType = type;
-        uiUnsetMedia();
+        uiUnsetMedia(False);
     }
 }
 
@@ -293,16 +293,25 @@ void uiUnsetFile(void)
 
 /**
  * @brief Unset media information.
+ *
+ * @param totals whether to unset number of chapters and angles (#True) or
+ *               just track, chapter and angle (#False) as well
  */
-void uiUnsetMedia(void)
+void uiUnsetMedia(int totals)
 {
     guiInfo.VideoWidth    = 0;
     guiInfo.VideoHeight   = 0;
     guiInfo.AudioChannels = 0;
     guiInfo.RunningTime   = 0;
+
+    if (totals) {
+        guiInfo.Chapters = 0;
+        guiInfo.Angles   = 0;
+    } else {
     guiInfo.Track   = 0;
     guiInfo.Chapter = 0;
     guiInfo.Angle   = 0;
+    }
 
     nfree(guiInfo.CodecName);
     nfree(guiInfo.AudioFilename);

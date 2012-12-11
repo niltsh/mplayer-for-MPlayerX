@@ -850,7 +850,7 @@ int gui(int what, void *data)
                 int first = (guiInfo.StreamType == STREAMTYPE_VCD ? 2 : 1);
 
                 if (guiInfo.Track != first) {
-                    uiUnsetMedia();
+                    uiUnsetMedia(True);
                     guiInfo.Track = first;
                 }
 
