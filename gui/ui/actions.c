@@ -441,7 +441,7 @@ void uiNext(void)
 
     case STREAMTYPE_DVD:
 
-        if (guiInfo.Chapter++ == guiInfo.Chapters) {
+        if (guiInfo.Chapter++ >= guiInfo.Chapters) {
             guiInfo.Chapter = 1;
 
             if (++guiInfo.Track > guiInfo.Tracks) {
