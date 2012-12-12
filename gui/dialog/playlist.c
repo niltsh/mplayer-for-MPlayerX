@@ -223,7 +223,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	item = listMgr( PLAYLIST_GET,0 );
 	if ( item )
 	 {
-	  if ( guiInfo.Playing && curr.name )
+	  if ( guiInfo.Playing )
 	   {
 	    old = listMgr( PLAYLIST_ITEM_FIND,&curr );
 	    if ( old )
