@@ -311,6 +311,10 @@ static int config(struct vf_instance *vf,
     int planes, alphas;
     int i;
 
+    vf->priv->outfmt = outfmt;
+    vf->priv->outh = outh = height + ass_top_margin + ass_bottom_margin;
+    vf->priv->outw = outw = width;
+
     switch (outfmt) {
     case IMGFMT_YV12:
     case IMGFMT_I420:
@@ -334,10 +338,6 @@ static int config(struct vf_instance *vf,
     default:
         return 0;
     }
-
-    vf->priv->outfmt = outfmt;
-    vf->priv->outh = outh = height + ass_top_margin + ass_bottom_margin;
-    vf->priv->outw = outw = width;
 
     if (!opt_screen_size_x && !opt_screen_size_y) {
         d_width  = d_width  * vf->priv->outw / width;
