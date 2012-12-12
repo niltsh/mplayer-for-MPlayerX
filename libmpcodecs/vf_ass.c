@@ -45,6 +45,9 @@
 #include "sub/ass_mp.h"
 #include "sub/eosd.h"
 
+#include "cpudetect.h"
+#include "libavutil/x86_cpu.h"
+
 #define _r(c)  ((c)>>24)
 #define _g(c)  (((c)>>16)&0xFF)
 #define _b(c)  (((c)>>8)&0xFF)
@@ -57,6 +60,15 @@
 #define MAP_16BIT(v) RSHIFT(0x102 * (v), 8)
 /* map 0 - 0xFF -> 0 - 0x10101 */
 #define MAP_24BIT(v) RSHIFT(0x10203 * (v), 8)
+
+#if HAVE_SSE4
+
+#define CLEAN_XMM(n) \
+    __asm__ volatile ( "pxor %%xmm" #n ", %%xmm" #n " \n\t" : )
+DECLARE_ASM_CONST(16, uint32_t, SSE_32BIT_80H[4]) = { [0 ... 3] = 0x80 };
+DECLARE_ASM_CONST(16, uint32_t, SSE_32BIT_MAP[4]) = { [0 ... 3] = 0x102 };
+
+#endif // HAVE_SSE4
 
 static const struct vf_priv_s {
     int outh, outw;
@@ -139,6 +151,7 @@ static void prepare_buffer_422(vf_instance_t *vf)
             size_t p = i * outw + j;
             dst_u[p] = (dst_u[p] + dst_u[p + 1]) / 2;
             dst_v[p] = (dst_v[p] + dst_v[p + 1]) / 2;
+            dst_u[p + 1] = dst_v[p + 1] = 0;
         }
     }
 }
@@ -191,6 +204,116 @@ static void render_frame_yuv422(vf_instance_t *vf)
         }
     }
 }
+
+#if HAVE_SSE4
+
+static void render_frame_yuv422_sse4(vf_instance_t *vf)
+{
+    uint8_t *alpha = vf->priv->alphas[0];
+    uint8_t *src_y = vf->priv->planes[0],
+            *src_u = vf->priv->planes[1],
+            *src_v = vf->priv->planes[2];
+    int outw = vf->priv->outw,
+        outh = vf->priv->outh;
+    struct dirty_rows_extent *dr = vf->priv->dirty_rows;
+    uint8_t *dst = vf->dmpi->planes[0];
+    int stride = vf->dmpi->stride[0];
+    int is_uyvy = vf->priv->outfmt == IMGFMT_UYVY;
+    int i;
+
+    CLEAN_XMM(7);
+
+    for (i = 0; i < outh; i++) {
+        size_t xmin = dr[i].xmin & ~7,
+               xmax = dr[i].xmax;
+        __asm__ volatile (
+                "jmp 4f \n\t"
+                "1: \n\t"
+
+                "cmpl   $-1,    0(%[alpha], %[j], 1) \n\t"
+                "jne    2f \n\t"
+                "cmpl   $-1,    4(%[alpha], %[j], 1) \n\t"
+                "jne    2f \n\t"
+                "jmp    3f \n\t"
+
+                "2: \n\t"
+                "movq       (%[alpha], %[j], 1),    %%xmm0 \n\t"
+                "punpcklbw  %%xmm7, %%xmm0 \n\t"
+                "movdqa     %%xmm0, %%xmm1 \n\t"
+                "punpcklwd  %%xmm7, %%xmm0 \n\t"
+                "punpckhwd  %%xmm7, %%xmm1 \n\t"
+                "pmulld     "MANGLE(SSE_32BIT_MAP)",    %%xmm0 \n\t"
+                "pmulld     "MANGLE(SSE_32BIT_MAP)",    %%xmm1 \n\t"
+                "paddd      "MANGLE(SSE_32BIT_80H)",    %%xmm0 \n\t"
+                "paddd      "MANGLE(SSE_32BIT_80H)",    %%xmm1 \n\t"
+                "psrld      $8, %%xmm0 \n\t"
+                "psrld      $8, %%xmm1 \n\t"
+                "movdqa     %%xmm0, %%xmm2 \n\t"
+                "movdqa     %%xmm1, %%xmm3 \n\t"
+                "packssdw   %%xmm1, %%xmm0 \n\t"
+                "phaddd     %%xmm3, %%xmm2 \n\t"
+                "psrld      $1, %%xmm2 \n\t"
+                "packusdw   %%xmm7, %%xmm2 \n\t"
+                "punpcklwd  %%xmm2, %%xmm2 \n\t"
+
+                "movdqu     (%[dst], %[j], 2),  %%xmm1 \n\t"
+                "movdqa     %%xmm1, %%xmm3 \n\t"
+                "test       %[f],   %[f] \n\t"
+                "jz         11f \n\t"
+                "psrlw      $8, %%xmm1 \n\t"
+                "psllw      $8, %%xmm3 \n\t"
+                "psrlw      $8, %%xmm3 \n\t"
+                "jmp        12f \n\t"
+                "11: \n\t"
+                "psllw      $8, %%xmm1 \n\t"
+                "psrlw      $8, %%xmm1 \n\t"
+                "psrlw      $8, %%xmm3 \n\t"
+                "12: \n\t"
+                "pmullw     %%xmm0, %%xmm1 \n\t"
+                "pmullw     %%xmm2, %%xmm3 \n\t"
+                "psrlw      $8, %%xmm1 \n\t"
+                "psrlw      $8, %%xmm3 \n\t"
+                "packuswb   %%xmm7, %%xmm1 \n\t"
+                "packuswb   %%xmm7, %%xmm3 \n\t"
+                "movq       (%[src_y], %[j], 1),    %%xmm4 \n\t"
+                "movq       (%[src_u], %[j], 1),    %%xmm5 \n\t"
+                "movq       (%[src_v], %[j], 1),    %%xmm6 \n\t"
+                "packuswb   %%xmm7, %%xmm5 \n\t"
+                "packuswb   %%xmm7, %%xmm6 \n\t"
+                "punpcklbw  %%xmm6, %%xmm5 \n\t"
+                "test       %[f],   %[f] \n\t"
+                "jz         21f \n\t"
+                "punpcklbw  %%xmm1, %%xmm3 \n\t"
+                "punpcklbw  %%xmm4, %%xmm5 \n\t"
+                "paddb      %%xmm5, %%xmm3 \n\t"
+                "movdqu     %%xmm3, (%[dst], %[j], 2) \n\t"
+                "jmp        22f \n\t"
+                "21: \n\t"
+                "punpcklbw  %%xmm3, %%xmm1 \n\t"
+                "punpcklbw  %%xmm5, %%xmm4 \n\t"
+                "paddb      %%xmm4, %%xmm1 \n\t"
+                "movdqu     %%xmm1, (%[dst], %[j], 2) \n\t"
+                "22: \n\t"
+
+                "3: \n\t"
+                "add    $8, %[j] \n\t"
+                "4: \n\t"
+                "cmp    %[xmax],    %[j] \n\t"
+                "jl     1b \n\t"
+
+                : : [dst]   "r" (dst + i * stride),
+                    [alpha] "r" (alpha + i * outw),
+                    [src_y] "r" (src_y + i * outw),
+                    [src_u] "r" (src_u + i * outw),
+                    [src_v] "r" (src_v + i * outw),
+                    [j]     "r" (xmin),
+                    [xmax]  "g" (xmax),
+                    [f]     "r" (is_uyvy)
+        );
+    }
+}
+
+#endif // HAVE_SSE4
 
 static void prepare_buffer_420p(vf_instance_t *vf)
 {
@@ -334,6 +457,10 @@ static int config(struct vf_instance *vf,
         vf->priv->draw_image = draw_image_yuv;
         vf->priv->render_frame = render_frame_yuv422;
         vf->priv->prepare_buffer = prepare_buffer_422;
+#if HAVE_SSE4
+        if (gCpuCaps.hasSSE4 && outw % 8 == 0)
+            vf->priv->render_frame = render_frame_yuv422_sse4;
+#endif
         break;
     default:
         return 0;
