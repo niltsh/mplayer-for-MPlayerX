@@ -253,7 +253,7 @@ static void render_frame_yuv422_sse4(vf_instance_t *vf)
                 "packssdw   %%xmm1, %%xmm0 \n\t"
                 "phaddd     %%xmm3, %%xmm2 \n\t"
                 "psrld      $1, %%xmm2 \n\t"
-                "packusdw   %%xmm7, %%xmm2 \n\t"
+                "packssdw   %%xmm7, %%xmm2 \n\t"
                 "punpcklwd  %%xmm2, %%xmm2 \n\t"
 
                 "movdqu     (%[dst], %[j], 2),  %%xmm1 \n\t"
