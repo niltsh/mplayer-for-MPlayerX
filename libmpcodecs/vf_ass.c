@@ -63,8 +63,10 @@
 
 #if HAVE_SSE4
 
-DECLARE_ASM_CONST(16, uint32_t, SSE_32BIT_80H[4]) = { [0 ... 3] = 0x80 };
-DECLARE_ASM_CONST(16, uint32_t, SSE_32BIT_MAP[4]) = { [0 ... 3] = 0x102 };
+DECLARE_ASM_CONST(16, uint32_t, sse_int32_80h[4])
+    = { 0x80, 0x80, 0x80, 0x80 };
+DECLARE_ASM_CONST(16, uint32_t, sse_int32_map_factor[4])
+    = { 0x102, 0x102, 0x102, 0x102 };
 
 #endif // HAVE_SSE4
 
@@ -239,10 +241,10 @@ static void render_frame_yuv422_sse4(vf_instance_t *vf)
                 "movdqa     %%xmm0, %%xmm1 \n\t"
                 "punpcklwd  %%xmm7, %%xmm0 \n\t"
                 "punpckhwd  %%xmm7, %%xmm1 \n\t"
-                "pmulld     "MANGLE(SSE_32BIT_MAP)",    %%xmm0 \n\t"
-                "pmulld     "MANGLE(SSE_32BIT_MAP)",    %%xmm1 \n\t"
-                "paddd      "MANGLE(SSE_32BIT_80H)",    %%xmm0 \n\t"
-                "paddd      "MANGLE(SSE_32BIT_80H)",    %%xmm1 \n\t"
+                "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm0 \n\t"
+                "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm1 \n\t"
+                "paddd      "MANGLE(sse_int32_80h)",    %%xmm0 \n\t"
+                "paddd      "MANGLE(sse_int32_80h)",    %%xmm1 \n\t"
                 "psrld      $8, %%xmm0 \n\t"
                 "psrld      $8, %%xmm1 \n\t"
                 "movdqa     %%xmm0, %%xmm2 \n\t"
@@ -450,14 +452,14 @@ static void render_frame_yuv420p_sse4(vf_instance_t *vf)
             "punpckhwd  %%xmm7, %%xmm1 \n\t"                        \
             "punpcklwd  %%xmm7, %%xmm2 \n\t"                        \
             "punpckhwd  %%xmm7, %%xmm3 \n\t"                        \
-            "pmulld     "MANGLE(SSE_32BIT_MAP)",    %%xmm0 \n\t"    \
-            "pmulld     "MANGLE(SSE_32BIT_MAP)",    %%xmm1 \n\t"    \
-            "pmulld     "MANGLE(SSE_32BIT_MAP)",    %%xmm2 \n\t"    \
-            "pmulld     "MANGLE(SSE_32BIT_MAP)",    %%xmm3 \n\t"    \
-            "paddd      "MANGLE(SSE_32BIT_80H)",    %%xmm0 \n\t"    \
-            "paddd      "MANGLE(SSE_32BIT_80H)",    %%xmm1 \n\t"    \
-            "paddd      "MANGLE(SSE_32BIT_80H)",    %%xmm2 \n\t"    \
-            "paddd      "MANGLE(SSE_32BIT_80H)",    %%xmm3 \n\t"    \
+            "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm0 \n\t"\
+            "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm1 \n\t"\
+            "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm2 \n\t"\
+            "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm3 \n\t"\
+            "paddd      "MANGLE(sse_int32_80h)",    %%xmm0 \n\t"    \
+            "paddd      "MANGLE(sse_int32_80h)",    %%xmm1 \n\t"    \
+            "paddd      "MANGLE(sse_int32_80h)",    %%xmm2 \n\t"    \
+            "paddd      "MANGLE(sse_int32_80h)",    %%xmm3 \n\t"    \
             "psrld      $8, %%xmm0 \n\t"                            \
             "psrld      $8, %%xmm1 \n\t"                            \
             "psrld      $8, %%xmm2 \n\t"                            \
