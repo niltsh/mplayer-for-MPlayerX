@@ -218,7 +218,7 @@ static void render_frame_yuv422_sse4(vf_instance_t *vf)
     struct dirty_rows_extent *dr = vf->priv->dirty_rows;
     uint8_t *dst = vf->dmpi->planes[0];
     int stride = vf->dmpi->stride[0];
-    int is_uyvy = vf->priv->outfmt == IMGFMT_UYVY;
+    int32_t is_uyvy = vf->priv->outfmt == IMGFMT_UYVY;
     int i;
 
     CLEAN_XMM(7);
@@ -258,8 +258,8 @@ static void render_frame_yuv422_sse4(vf_instance_t *vf)
 
                 "movdqu     (%[dst], %[j], 2),  %%xmm1 \n\t"
                 "movdqa     %%xmm1, %%xmm3 \n\t"
-                "test       %[f],   %[f] \n\t"
-                "jz         11f \n\t"
+                "cmpl       $0, %[f] \n\t"
+                "je         11f \n\t"
                 "psrlw      $8, %%xmm1 \n\t"
                 "psllw      $8, %%xmm3 \n\t"
                 "psrlw      $8, %%xmm3 \n\t"
@@ -281,8 +281,8 @@ static void render_frame_yuv422_sse4(vf_instance_t *vf)
                 "packuswb   %%xmm7, %%xmm5 \n\t"
                 "packuswb   %%xmm7, %%xmm6 \n\t"
                 "punpcklbw  %%xmm6, %%xmm5 \n\t"
-                "test       %[f],   %[f] \n\t"
-                "jz         21f \n\t"
+                "cmpl       $0, %[f] \n\t"
+                "je         21f \n\t"
                 "punpcklbw  %%xmm1, %%xmm3 \n\t"
                 "punpcklbw  %%xmm4, %%xmm5 \n\t"
                 "paddb      %%xmm5, %%xmm3 \n\t"
@@ -308,7 +308,7 @@ static void render_frame_yuv422_sse4(vf_instance_t *vf)
                     [src_v] "r" (src_v + i * outw),
                     [j]     "r" (xmin),
                     [xmax]  "g" (xmax),
-                    [f]     "r" (is_uyvy)
+                    [f]     "g" (is_uyvy)
         );
     }
 }
