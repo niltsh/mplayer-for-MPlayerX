@@ -63,8 +63,6 @@
 
 #if HAVE_SSE4
 
-#define CLEAN_XMM(n) \
-    __asm__ volatile ( "pxor %%xmm" #n ", %%xmm" #n " \n\t" : )
 DECLARE_ASM_CONST(16, uint32_t, SSE_32BIT_80H[4]) = { [0 ... 3] = 0x80 };
 DECLARE_ASM_CONST(16, uint32_t, SSE_32BIT_MAP[4]) = { [0 ... 3] = 0x102 };
 
@@ -221,13 +219,12 @@ static void render_frame_yuv422_sse4(vf_instance_t *vf)
     int32_t is_uyvy = vf->priv->outfmt == IMGFMT_UYVY;
     int i;
 
-    CLEAN_XMM(7);
-
     for (i = 0; i < outh; i++) {
         size_t xmin = dr[i].xmin & ~7,
                xmax = dr[i].xmax;
         __asm__ volatile (
-                "jmp 4f \n\t"
+                "pxor   %%xmm7, %%xmm7 \n\t"
+                "jmp    4f \n\t"
                 "1: \n\t"
 
                 "cmpl   $-1,    0(%[alpha], %[j], 1) \n\t"
@@ -431,8 +428,6 @@ static void render_frame_yuv420p_sse4(vf_instance_t *vf)
         outh = vf->priv->outh;
     int i;
 
-    CLEAN_XMM(7);
-
 #define CHECK_16_ALPHA \
             "cmpl   $-1,     0(%[alpha], %[j], 1) \n\t" \
             "jne    2f \n\t"                            \
@@ -488,6 +483,7 @@ static void render_frame_yuv420p_sse4(vf_instance_t *vf)
         size_t xmin = dr[i].xmin & ~15,
                xmax = dr[i].xmax;
         __asm__ volatile (
+                "pxor   %%xmm7, %%xmm7 \n\t"
                 "jmp    4f \n\t"
 
                 "1: \n\t"
