@@ -9063,6 +9063,7 @@ if x86; then
 # Create a skeleton config.asm with just the ARCH_ definitions for FFmpeg.
 > "$TMPS"
 echo "%define CONFIG_GPL 1" >> "$TMPS"
+echo "%define HAVE_ALIGNED_STACK 1" >> "$TMPS"
 echo "$(ff_config_enable "$arch_all" "$arch" "%" "ARCH")" >> "$TMPS"
 echo "$(ff_config_enable "$subarch_all" "$subarch" "%" "ARCH")" >> "$TMPS"
 echo "$(ff_config_enable "$cpuexts_all" "$cpuexts" "%" "HAVE" "_EXTERNAL")" >> "$TMPS"
