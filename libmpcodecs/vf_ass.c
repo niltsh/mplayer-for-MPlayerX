@@ -274,9 +274,12 @@ static void render_frame_yuv422_sse4(vf_instance_t *vf)
                 "psrlw      $8, %%xmm3 \n\t"
                 "packuswb   %%xmm7, %%xmm1 \n\t"
                 "packuswb   %%xmm7, %%xmm3 \n\t"
-                "movq       (%[src_y], %[j], 1),    %%xmm4 \n\t"
-                "movq       (%[src_u], %[j], 1),    %%xmm5 \n\t"
-                "movq       (%[src_v], %[j], 1),    %%xmm6 \n\t"
+                "mov        %[src_y],   %%"REG_S" \n\t"
+                "movq       (%%"REG_S", %[j], 1),   %%xmm4 \n\t"
+                "mov        %[src_u],   %%"REG_S" \n\t"
+                "movq       (%%"REG_S", %[j], 1),   %%xmm5 \n\t"
+                "mov        %[src_v],   %%"REG_S" \n\t"
+                "movq       (%%"REG_S", %[j], 1),   %%xmm6 \n\t"
                 "packuswb   %%xmm7, %%xmm5 \n\t"
                 "packuswb   %%xmm7, %%xmm6 \n\t"
                 "punpcklbw  %%xmm6, %%xmm5 \n\t"
@@ -302,12 +305,13 @@ static void render_frame_yuv422_sse4(vf_instance_t *vf)
 
                 : : [dst]   "r" (dst + i * stride),
                     [alpha] "r" (alpha + i * outw),
-                    [src_y] "r" (src_y + i * outw),
-                    [src_u] "r" (src_u + i * outw),
-                    [src_v] "r" (src_v + i * outw),
+                    [src_y] "g" (src_y + i * outw),
+                    [src_u] "g" (src_u + i * outw),
+                    [src_v] "g" (src_v + i * outw),
                     [j]     "r" (xmin),
                     [xmax]  "g" (xmax),
                     [f]     "g" (is_uyvy)
+                : REG_S
         );
     }
 }
