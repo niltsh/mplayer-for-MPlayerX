@@ -40,6 +40,8 @@ cat <<EOF > "$TARGET"
 #ifndef MPLAYER_HELP_MP_H
 #define MPLAYER_HELP_MP_H
 
+#include "config.h"
+
 EOF
 
 cat "$TRANSLATION" >> "$TARGET"
