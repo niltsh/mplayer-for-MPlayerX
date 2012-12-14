@@ -467,16 +467,19 @@ static void render_frame_yuv420p_sse4(vf_instance_t *vf)
             "packssdw   %%xmm1, %%xmm0 \n\t"                        \
             "packssdw   %%xmm3, %%xmm2 \n\t"
 
-#define MUL_ALPHA(dst, xmm1, xmm2) \
-            "movq       0(%["#dst"], %[j], 1),  %%"#xmm1" \n\t" \
-            "movq       8(%["#dst"], %[j], 1),  %%"#xmm2" \n\t" \
-            "punpcklbw  %%xmm7, %%"#xmm1" \n\t"                 \
-            "punpcklbw  %%xmm7, %%"#xmm2" \n\t"                 \
-            "pmullw     %%xmm0, %%"#xmm1" \n\t"                 \
-            "pmullw     %%xmm2, %%"#xmm2" \n\t"                 \
-            "psrlw      $8, %%"#xmm1" \n\t"                     \
-            "psrlw      $8, %%"#xmm2" \n\t"                     \
-            "packuswb   %%"#xmm2", %%"#xmm1" \n\t"
+#define DO_RENDER \
+            "movq       0(%%"REG_D", %[j], 1),  %%xmm1 \n\t"    \
+            "movq       8(%%"REG_D", %[j], 1),  %%xmm3 \n\t"    \
+            "punpcklbw  %%xmm7, %%xmm1 \n\t"                    \
+            "punpcklbw  %%xmm7, %%xmm3 \n\t"                    \
+            "pmullw     %%xmm0, %%xmm1 \n\t"                    \
+            "pmullw     %%xmm2, %%xmm3 \n\t"                    \
+            "psrlw      $8, %%xmm1 \n\t"                        \
+            "psrlw      $8, %%xmm3 \n\t"                        \
+            "packuswb   %%xmm3, %%xmm1 \n\t"                    \
+            "movdqa     (%%"REG_S", %[j], 1),   %%xmm4 \n\t"    \
+            "paddb      %%xmm4, %%xmm1 \n\t"                    \
+            "movdqu     %%xmm1, (%%"REG_D", %[j], 1) \n\t"
 
     // y
     alpha = vf->priv->alphas[0];
@@ -493,10 +496,7 @@ static void render_frame_yuv420p_sse4(vf_instance_t *vf)
 
                 "2: \n\t"
                 MAP_16_ALPHA
-                MUL_ALPHA(dst_y, xmm1, xmm3)
-                "movdqa (%[src_y], %[j], 1),    %%xmm0 \n\t"
-                "paddb  %%xmm0, %%xmm1 \n\t"
-                "movdqu %%xmm1, (%[dst_y], %[j], 1) \n\t"
+                DO_RENDER
 
                 "3: \n\t"
                 "add    $16,    %[j] \n\t"
@@ -507,8 +507,8 @@ static void render_frame_yuv420p_sse4(vf_instance_t *vf)
                 : : [j] "r" (xmin),
                     [xmax] "g" (xmax),
                     [alpha] "r" (alpha + i * outw),
-                    [src_y] "r" (src_y + i * outw),
-                    [dst_y] "r" (dst_y + i * stride)
+                    [src]   "S" (src_y + i * outw),
+                    [dst]   "D" (dst_y + i * stride)
         );
     }
 
@@ -519,6 +519,7 @@ static void render_frame_yuv420p_sse4(vf_instance_t *vf)
         size_t xmin = FFMIN(dr[i * 2].xmin, dr[i * 2 + 1].xmin) & ~31,
                xmax = FFMAX(dr[i * 2].xmax, dr[i * 2 + 1].xmax);
         __asm__ volatile (
+                "pxor   %%xmm7, %%xmm7 \n\t"
                 "jmp    4f \n\t"
 
                 "1: \n\t"
@@ -526,14 +527,12 @@ static void render_frame_yuv420p_sse4(vf_instance_t *vf)
 
                 "2: \n\t"
                 MAP_16_ALPHA
-                MUL_ALPHA(dst_u, xmm1, xmm4)
-                MUL_ALPHA(dst_v, xmm3, xmm5)
-                "movdqa (%[src_u], %[j], 1),    %%xmm0 \n\t"
-                "movdqa (%[src_v], %[j], 1),    %%xmm2 \n\t"
-                "paddb  %%xmm0, %%xmm1 \n\t"
-                "paddb  %%xmm2, %%xmm3 \n\t"
-                "movdqu %%xmm1, (%[dst_u], %[j], 1) \n\t"
-                "movdqu %%xmm3, (%[dst_v], %[j], 1) \n\t"
+                "mov    %[src_u],   %%"REG_S"  \n\t"
+                "mov    %[dst_u],   %%"REG_D"  \n\t"
+                DO_RENDER
+                "mov    %[src_v],   %%"REG_S"  \n\t"
+                "mov    %[dst_v],   %%"REG_D"  \n\t"
+                DO_RENDER
 
                 "3: \n\t"
                 "add    $16,    %[j] \n\t"
@@ -544,10 +543,11 @@ static void render_frame_yuv420p_sse4(vf_instance_t *vf)
                 : : [j] "r" (xmin / 2),
                     [xmax] "g" ((xmax + 1) / 2),
                     [alpha] "r" (alpha + i * outw / 2),
-                    [src_u] "r" (src_u + i * outw / 2),
-                    [src_v] "r" (src_v + i * outw / 2),
-                    [dst_u] "r" (dst_u + i * stride),
-                    [dst_v] "r" (dst_v + i * stride)
+                    [src_u] "g" (src_u + i * outw / 2),
+                    [src_v] "g" (src_v + i * outw / 2),
+                    [dst_u] "g" (dst_u + i * stride),
+                    [dst_v] "g" (dst_v + i * stride)
+                :   REG_S, REG_D
         );
     }
 
