@@ -32,6 +32,7 @@
 #include "m_option.h"
 //#include "m_config.h"
 #include "mp_msg.h"
+#include "mp_global.h"
 #include "stream/url.h"
 #include "libavutil/avstring.h"
 
@@ -1324,7 +1325,10 @@ int parse_timestring(const char *str, double *time, char endchar)
     *time = 60*a + d;
   else if (sscanf(str, "%lf%n", &d, &len) >= 1)
     *time = d;
-  else
+  else if (strncasecmp(str, "nopts", 5) == 0) {
+    *time = MP_NOPTS_VALUE;
+    len = 5;
+  } else
     return 0; /* unsupported time format */
   if (str[len] && str[len] != endchar)
     return 0; /* invalid extra characters at the end */
