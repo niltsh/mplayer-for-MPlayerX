@@ -228,6 +228,10 @@ static void fix_parameters(muxer_stream_t *stream)
 		ctx->bit_rate = 800000;
 		ctx->time_base.den = stream->h.dwRate;
 		ctx->time_base.num = stream->h.dwScale;
+		if (stream->aspect)
+			ctx->sample_aspect_ratio =
+			spriv->avstream->sample_aspect_ratio = av_d2q(stream->aspect * ctx->height / ctx->width, 255);
+
 		if(stream->bih->biSize > sizeof(*stream->bih))
 		{
 			ctx->extradata_size = stream->bih->biSize - sizeof(*stream->bih);
