@@ -954,6 +954,7 @@ clean:
 distclean: clean testsclean toolsclean driversclean dhahelperclean
 	-$(MAKE) -C ffmpeg $@
 	-rm -f DOCS/xml/html-chunk.xsl DOCS/xml/html-single.xsl
+	-rm -f $(foreach lang,$(DOC_LANG_ALL),DOCS/xml/$(lang)/main.xml)
 	-rm -f config.* TAGS tags
 
 doxygen:
