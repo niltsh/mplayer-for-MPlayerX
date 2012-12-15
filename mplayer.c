@@ -3958,6 +3958,11 @@ goto_enable_cache:
                 mpctx->eof    = 0;
                 abs_seek_pos  = SEEK_ABSOLUTE;
                 rel_seek_secs = seek_to_sec;
+                if (seek_to_sec == MP_NOPTS_VALUE) {
+                    // the first pts is not necessarily 0
+                    abs_seek_pos  = SEEK_ABSOLUTE | SEEK_FACTOR;
+                    rel_seek_secs = 0;
+                }
                 loop_seek     = 1;
             }
 
