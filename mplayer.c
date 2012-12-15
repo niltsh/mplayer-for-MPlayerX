@@ -203,7 +203,7 @@ int term_osd = 1;
 static char *term_osd_esc = "\x1b[A\r\x1b[K";
 static char *playing_msg;
 // seek:
-static double seek_to_sec;
+static double seek_to_sec = MP_NOPTS_VALUE;
 static off_t seek_to_byte;
 static off_t step_sec;
 static int loop_seek;
@@ -3702,7 +3702,7 @@ goto_enable_cache:
             goto goto_next_file;
         }
 
-        if (seek_to_sec) {
+        if (seek_to_sec != MP_NOPTS_VALUE) {
             seek(mpctx, seek_to_sec, SEEK_ABSOLUTE);
             end_at.pos += seek_to_sec;
         }
