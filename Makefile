@@ -944,17 +944,17 @@ uninstall:
 clean:
 	-$(MAKE) -C ffmpeg $@
 	-rm -rf tests/res
-	-rm -f $(call ADD_ALL_DIRS,/*.o /*.a /*.ho /*~)
+	-rm -f $(call ADD_ALL_DIRS,/*.o /*.d /*.a /*.ho /*~)
 	-rm -f $(call ADD_ALL_EXESUFS,mplayer mencoder)
+	-rm -f $(VIDIX_PCI_FILES)
+	-rm -f $(call ADD_ALL_EXESUFS,codec-cfg cpuinfo)
+	-rm -f codecs.conf.h help_mp.h version.h
 	-rm -rf DOCS/tech/doxygen DOCS/HTML
 
 distclean: clean testsclean toolsclean driversclean dhahelperclean
 	-$(MAKE) -C ffmpeg $@
 	-rm -f DOCS/xml/html-chunk.xsl DOCS/xml/html-single.xsl
-	-rm -f $(call ADD_ALL_DIRS,/*.d)
-	-rm -f config.* codecs.conf.h help_mp.h version.h TAGS tags
-	-rm -f $(VIDIX_PCI_FILES)
-	-rm -f $(call ADD_ALL_EXESUFS,codec-cfg cpuinfo)
+	-rm -f config.* TAGS tags
 
 doxygen:
 	doxygen DOCS/tech/Doxyfile
