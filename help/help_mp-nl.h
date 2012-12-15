@@ -522,8 +522,6 @@ static const char help_text[]=
 
 // ====================== GUI messages/buttons ========================
 
-#ifdef CONFIG_GUI
-
 // --- labels ---
 #define MSGTR_About "Info over"
 #define MSGTR_FileSelect "Selecteer bestand..."
@@ -742,8 +740,6 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_FatalError "Fatale fout!"
 #define MSGTR_MSGBOX_LABEL_Error "Fout!"
 #define MSGTR_MSGBOX_LABEL_Warning "Waarschuwing!"
-
-#endif
 
 // ======================= VO Video Output drivers ========================
 

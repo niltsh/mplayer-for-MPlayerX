@@ -686,8 +686,6 @@ static const char help_text[]=
 
 // ====================== GUI messages/buttons ========================
 
-#ifdef CONFIG_GUI
-
 // --- labels ---
 #define MSGTR_About "Hakkında"
 #define MSGTR_FileSelect "Dosya Seç..."
@@ -963,8 +961,6 @@ static const char help_text[]=
 
 #define MSGTR_WS_NotAFile " Bu bir dosya olarak görünmüyor...\n"
 #define MSGTR_WS_DDNothing "D&D: Hiçbirşey geri dönmedi!\n"
-
-#endif
 
 // ======================= VO Video Output drivers ========================
 

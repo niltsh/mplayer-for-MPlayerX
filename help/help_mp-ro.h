@@ -279,8 +279,6 @@ static const char help_text[]=
 
 // ====================== GUI messages/buttons ========================
 
-#ifdef CONFIG_GUI
-
 // --- labels ---
 #define MSGTR_About "Despre MPlayer"
 #define MSGTR_FileSelect "Alege fiºierul..."
@@ -475,5 +473,3 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_FatalError "Eroare fatalã!"
 #define MSGTR_MSGBOX_LABEL_Error "Eroare!"
 #define MSGTR_MSGBOX_LABEL_Warning "Atenþie!"
-
-#endif

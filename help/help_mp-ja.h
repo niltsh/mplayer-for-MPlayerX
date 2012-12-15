@@ -256,8 +256,6 @@ static const char help_text[]=
 
 // ====================== GUI messages/buttons ========================
 
-#ifdef CONFIG_GUI
-
 // --- labels ---
 #define MSGTR_About "アバウト"
 #define MSGTR_FileSelect "ファイル選択 ..."
@@ -409,5 +407,3 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_FatalError "致命的エラー!"
 #define MSGTR_MSGBOX_LABEL_Error "エラー"
 #define MSGTR_MSGBOX_LABEL_Warning "警告"
-
-#endif

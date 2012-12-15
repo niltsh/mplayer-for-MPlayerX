@@ -541,8 +541,6 @@ static const char help_text[]=
 
 // ====================== GUI messages/buttons ========================
 
-#ifdef CONFIG_GUI
-
 // --- labels ---
 #define MSGTR_About "Acerca de"
 #define MSGTR_FileSelect "Seleccionar archivo..."
@@ -808,8 +806,6 @@ static const char help_text[]=
 // wsxdnd.c
 #define MSGTR_WS_NotAFile "Esto no parece ser un archivo...\n"
 #define MSGTR_WS_DDNothing "D&D: ¡No retorno nada!\n"
-
-#endif
 
 // ======================= video output drivers ========================
 

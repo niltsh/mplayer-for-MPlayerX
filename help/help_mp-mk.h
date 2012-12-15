@@ -315,8 +315,6 @@ static const char help_text[]=
 
 // ====================== GUI пораки/копчиња ========================
 
-#ifdef CONFIG_GUI
-
 // --- лабели ---
 #define MSGTR_About "За"
 #define MSGTR_FileSelect "Изберете датотека ..."
@@ -528,5 +526,3 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_FatalError "Фатална Грешка!"
 #define MSGTR_MSGBOX_LABEL_Error "Грешка!"
 #define MSGTR_MSGBOX_LABEL_Warning "Предупредување!"
-
-#endif

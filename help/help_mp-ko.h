@@ -318,8 +318,6 @@ static const char help_text[]=
 
 // ====================== GUI messages/buttons ========================
 
-#ifdef CONFIG_GUI
-
 // --- labels ---
 #define MSGTR_About "정보"
 #define MSGTR_FileSelect "파일 선택..."
@@ -530,5 +528,3 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_FatalError "치명적 오류!"
 #define MSGTR_MSGBOX_LABEL_Error "오류!"
 #define MSGTR_MSGBOX_LABEL_Warning "경고!"
-
-#endif

@@ -659,8 +659,6 @@ static const char help_text[]=
 
 // ====================== GUI messages/buttons ========================
 
-#ifdef CONFIG_GUI
-
 // --- labels ---
 #define MSGTR_About "關于"
 #define MSGTR_FileSelect "選擇文件..."
@@ -935,8 +933,6 @@ static const char help_text[]=
 
 #define MSGTR_WS_NotAFile "這好像不是一個文件...\n"
 #define MSGTR_WS_DDNothing "D&D: 没有任何東西返回!\n"
-
-#endif
 
 // ======================= VO Video Output drivers ========================
 

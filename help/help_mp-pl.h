@@ -641,8 +641,6 @@ static const char help_text[]=
 
 // ====================== GUI messages/buttons ========================
 
-#ifdef CONFIG_GUI
-
 // --- labels ---
 #define MSGTR_About "O programie"
 #define MSGTR_FileSelect "Wybierz plik..."
@@ -917,8 +915,6 @@ static const char help_text[]=
 
 #define MSGTR_WS_NotAFile "To nie wygląda jak plik...\n"
 #define MSGTR_WS_DDNothing "D&D: Nic nie zwrócono!\n"
-
-#endif
 
 // ======================= VO Video Output drivers ========================
 

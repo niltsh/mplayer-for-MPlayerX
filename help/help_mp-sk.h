@@ -625,8 +625,6 @@ static const char help_text[]=
 
 // ====================== GUI messages/buttons ========================
 
-#ifdef CONFIG_GUI
-
 // --- labels ---
 #define MSGTR_About "O aplikácii"
 #define MSGTR_FileSelect "Vybrať súbor..."
@@ -866,5 +864,3 @@ static const char help_text[]=
 #define MSGTR_MSGBOX_LABEL_FatalError "Fatálna chyba!"
 #define MSGTR_MSGBOX_LABEL_Error "Chyba!"
 #define MSGTR_MSGBOX_LABEL_Warning "Upozornenie!"
-
-#endif

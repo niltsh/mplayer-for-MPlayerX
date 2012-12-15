@@ -537,8 +537,6 @@ static const char help_text[]=
 
 // ====================== GUI messages/buttons ========================
 
-#ifdef CONFIG_GUI
-
 // --- labels ---
 #define MSGTR_About "Информация"
 #define MSGTR_FileSelect "Избор на файл..."
@@ -794,8 +792,6 @@ static const char help_text[]=
 
 #define MSGTR_WS_NotAFile "Това не прилича на файл...\n"
 #define MSGTR_WS_DDNothing "D&D: Не е върнат резултат!\n"
-
-#endif
 
 // ======================= VO Video Output drivers ========================
 

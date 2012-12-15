@@ -677,8 +677,6 @@ static const char help_text[]=
 
 // ====================== messages/boutons GUI ========================
 
-#ifdef CONFIG_GUI
-
 // --- labels ---
 #define MSGTR_About "À propos..."
 #define MSGTR_FileSelect "Choisir un fichier..."
@@ -949,8 +947,6 @@ static const char help_text[]=
 
 #define MSGTR_WS_NotAFile "Ceci ne semble pas être un fichier...\n"
 #define MSGTR_WS_DDNothing "D&D : Rien de retourné !\n"
-
-#endif
 
 // ======================= VO Pilotes Sortie Video ========================
 
