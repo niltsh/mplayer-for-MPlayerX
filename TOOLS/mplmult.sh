@@ -35,10 +35,12 @@ done
 mkfifo $fifo_list
 (cat $dir/stream.yuv | tee $fifo_list > /dev/null ) &
 for fifo in $fifo_list; do
-  # -benchmark is neccessary so that it will not do any timing.
+  # -benchmark is necessary so that it will not do any timing.
   # the master instance already takes care of it and not specifying
   # it will break A-V sync.
-  mplayer -nocache -quiet -benchmark "$fifo" > /dev/null 2>&1 &
+  # -demuxer y4m is necessary because otherwise excessive probing
+  # (probably by # the lavf demuxer) causes a long delay.
+  mplayer -nocache -quiet -benchmark -demuxer y4m "$fifo" > /dev/null 2>&1 &
 done
 mplayer -nocache -fixed-vo -vo yuv4mpeg:file=$dir/stream.yuv "$@"
 
