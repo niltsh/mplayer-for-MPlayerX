@@ -225,93 +225,93 @@ static void render_frame_yuv422_sse4(vf_instance_t *vf)
         size_t xmin = dr[i].xmin & ~7,
                xmax = dr[i].xmax;
         __asm__ volatile (
-                "pxor   %%xmm7, %%xmm7 \n\t"
-                "jmp    4f \n\t"
-                "1: \n\t"
+            "pxor   %%xmm7, %%xmm7 \n\t"
+            "jmp    4f \n\t"
+            "1: \n\t"
 
-                "cmpl   $-1,    0(%[alpha], %[j], 1) \n\t"
-                "jne    2f \n\t"
-                "cmpl   $-1,    4(%[alpha], %[j], 1) \n\t"
-                "jne    2f \n\t"
-                "jmp    3f \n\t"
+            "cmpl   $-1,    0(%[alpha], %[j], 1) \n\t"
+            "jne    2f \n\t"
+            "cmpl   $-1,    4(%[alpha], %[j], 1) \n\t"
+            "jne    2f \n\t"
+            "jmp    3f \n\t"
 
-                "2: \n\t"
-                "movq       (%[alpha], %[j], 1),    %%xmm0 \n\t"
-                "punpcklbw  %%xmm7, %%xmm0 \n\t"
-                "movdqa     %%xmm0, %%xmm1 \n\t"
-                "punpcklwd  %%xmm7, %%xmm0 \n\t"
-                "punpckhwd  %%xmm7, %%xmm1 \n\t"
-                "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm0 \n\t"
-                "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm1 \n\t"
-                "paddd      "MANGLE(sse_int32_80h)",    %%xmm0 \n\t"
-                "paddd      "MANGLE(sse_int32_80h)",    %%xmm1 \n\t"
-                "psrld      $8, %%xmm0 \n\t"
-                "psrld      $8, %%xmm1 \n\t"
-                "movdqa     %%xmm0, %%xmm2 \n\t"
-                "movdqa     %%xmm1, %%xmm3 \n\t"
-                "packssdw   %%xmm1, %%xmm0 \n\t"
-                "phaddd     %%xmm3, %%xmm2 \n\t"
-                "psrld      $1, %%xmm2 \n\t"
-                "packssdw   %%xmm7, %%xmm2 \n\t"
-                "punpcklwd  %%xmm2, %%xmm2 \n\t"
+            "2: \n\t"
+            "movq       (%[alpha], %[j], 1),    %%xmm0 \n\t"
+            "punpcklbw  %%xmm7, %%xmm0 \n\t"
+            "movdqa     %%xmm0, %%xmm1 \n\t"
+            "punpcklwd  %%xmm7, %%xmm0 \n\t"
+            "punpckhwd  %%xmm7, %%xmm1 \n\t"
+            "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm0 \n\t"
+            "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm1 \n\t"
+            "paddd      "MANGLE(sse_int32_80h)",    %%xmm0 \n\t"
+            "paddd      "MANGLE(sse_int32_80h)",    %%xmm1 \n\t"
+            "psrld      $8, %%xmm0 \n\t"
+            "psrld      $8, %%xmm1 \n\t"
+            "movdqa     %%xmm0, %%xmm2 \n\t"
+            "movdqa     %%xmm1, %%xmm3 \n\t"
+            "packssdw   %%xmm1, %%xmm0 \n\t"
+            "phaddd     %%xmm3, %%xmm2 \n\t"
+            "psrld      $1, %%xmm2 \n\t"
+            "packssdw   %%xmm7, %%xmm2 \n\t"
+            "punpcklwd  %%xmm2, %%xmm2 \n\t"
 
-                "movdqu     (%[dst], %[j], 2),  %%xmm1 \n\t"
-                "movdqa     %%xmm1, %%xmm3 \n\t"
-                "cmpl       $0, %[f] \n\t"
-                "je         11f \n\t"
-                "psrlw      $8, %%xmm1 \n\t"
-                "psllw      $8, %%xmm3 \n\t"
-                "psrlw      $8, %%xmm3 \n\t"
-                "jmp        12f \n\t"
-                "11: \n\t"
-                "psllw      $8, %%xmm1 \n\t"
-                "psrlw      $8, %%xmm1 \n\t"
-                "psrlw      $8, %%xmm3 \n\t"
-                "12: \n\t"
-                "pmullw     %%xmm0, %%xmm1 \n\t"
-                "pmullw     %%xmm2, %%xmm3 \n\t"
-                "psrlw      $8, %%xmm1 \n\t"
-                "psrlw      $8, %%xmm3 \n\t"
-                "packuswb   %%xmm7, %%xmm1 \n\t"
-                "packuswb   %%xmm7, %%xmm3 \n\t"
-                "mov        %[src_y],   %%"REG_S" \n\t"
-                "movq       (%%"REG_S", %[j], 1),   %%xmm4 \n\t"
-                "mov        %[src_u],   %%"REG_S" \n\t"
-                "movq       (%%"REG_S", %[j], 1),   %%xmm5 \n\t"
-                "mov        %[src_v],   %%"REG_S" \n\t"
-                "movq       (%%"REG_S", %[j], 1),   %%xmm6 \n\t"
-                "packuswb   %%xmm7, %%xmm5 \n\t"
-                "packuswb   %%xmm7, %%xmm6 \n\t"
-                "punpcklbw  %%xmm6, %%xmm5 \n\t"
-                "cmpl       $0, %[f] \n\t"
-                "je         21f \n\t"
-                "punpcklbw  %%xmm1, %%xmm3 \n\t"
-                "punpcklbw  %%xmm4, %%xmm5 \n\t"
-                "paddb      %%xmm5, %%xmm3 \n\t"
-                "movdqu     %%xmm3, (%[dst], %[j], 2) \n\t"
-                "jmp        22f \n\t"
-                "21: \n\t"
-                "punpcklbw  %%xmm3, %%xmm1 \n\t"
-                "punpcklbw  %%xmm5, %%xmm4 \n\t"
-                "paddb      %%xmm4, %%xmm1 \n\t"
-                "movdqu     %%xmm1, (%[dst], %[j], 2) \n\t"
-                "22: \n\t"
+            "movdqu     (%[dst], %[j], 2),  %%xmm1 \n\t"
+            "movdqa     %%xmm1, %%xmm3 \n\t"
+            "cmpl       $0, %[f] \n\t"
+            "je         11f \n\t"
+            "psrlw      $8, %%xmm1 \n\t"
+            "psllw      $8, %%xmm3 \n\t"
+            "psrlw      $8, %%xmm3 \n\t"
+            "jmp        12f \n\t"
+            "11: \n\t"
+            "psllw      $8, %%xmm1 \n\t"
+            "psrlw      $8, %%xmm1 \n\t"
+            "psrlw      $8, %%xmm3 \n\t"
+            "12: \n\t"
+            "pmullw     %%xmm0, %%xmm1 \n\t"
+            "pmullw     %%xmm2, %%xmm3 \n\t"
+            "psrlw      $8, %%xmm1 \n\t"
+            "psrlw      $8, %%xmm3 \n\t"
+            "packuswb   %%xmm7, %%xmm1 \n\t"
+            "packuswb   %%xmm7, %%xmm3 \n\t"
+            "mov        %[src_y],   %%"REG_S" \n\t"
+            "movq       (%%"REG_S", %[j], 1),   %%xmm4 \n\t"
+            "mov        %[src_u],   %%"REG_S" \n\t"
+            "movq       (%%"REG_S", %[j], 1),   %%xmm5 \n\t"
+            "mov        %[src_v],   %%"REG_S" \n\t"
+            "movq       (%%"REG_S", %[j], 1),   %%xmm6 \n\t"
+            "packuswb   %%xmm7, %%xmm5 \n\t"
+            "packuswb   %%xmm7, %%xmm6 \n\t"
+            "punpcklbw  %%xmm6, %%xmm5 \n\t"
+            "cmpl       $0, %[f] \n\t"
+            "je         21f \n\t"
+            "punpcklbw  %%xmm1, %%xmm3 \n\t"
+            "punpcklbw  %%xmm4, %%xmm5 \n\t"
+            "paddb      %%xmm5, %%xmm3 \n\t"
+            "movdqu     %%xmm3, (%[dst], %[j], 2) \n\t"
+            "jmp        22f \n\t"
+            "21: \n\t"
+            "punpcklbw  %%xmm3, %%xmm1 \n\t"
+            "punpcklbw  %%xmm5, %%xmm4 \n\t"
+            "paddb      %%xmm4, %%xmm1 \n\t"
+            "movdqu     %%xmm1, (%[dst], %[j], 2) \n\t"
+            "22: \n\t"
 
-                "3: \n\t"
-                "add    $8, %[j] \n\t"
-                "4: \n\t"
-                "cmp    %[xmax],    %[j] \n\t"
-                "jl     1b \n\t"
+            "3: \n\t"
+            "add    $8, %[j] \n\t"
+            "4: \n\t"
+            "cmp    %[xmax],    %[j] \n\t"
+            "jl     1b \n\t"
 
-                : : [dst]   "r" (dst + i * stride),
-                    [alpha] "r" (alpha + i * outw),
-                    [src_y] "g" (src_y + i * outw),
-                    [src_u] "g" (src_u + i * outw),
-                    [src_v] "g" (src_v + i * outw),
-                    [j]     "r" (xmin),
-                    [xmax]  "g" (xmax),
-                    [f]     "g" (is_uyvy)
-                : REG_S
+            : : [dst]   "r" (dst + i * stride),
+                [alpha] "r" (alpha + i * outw),
+                [src_y] "g" (src_y + i * outw),
+                [src_u] "g" (src_u + i * outw),
+                [src_v] "g" (src_v + i * outw),
+                [j]     "r" (xmin),
+                [xmax]  "g" (xmax),
+                [f]     "g" (is_uyvy)
+            : REG_S
         );
     }
 }
@@ -419,21 +419,6 @@ static void render_frame_yuv420p(vf_instance_t *vf)
 
 #if HAVE_SSE4
 
-static void render_frame_yuv420p_sse4(vf_instance_t *vf)
-{
-    struct dirty_rows_extent *dr = vf->priv->dirty_rows;
-    uint8_t *alpha;
-    uint8_t *src_y = vf->priv->planes[0],
-            *src_u = vf->priv->planes[1],
-            *src_v = vf->priv->planes[2];
-    uint8_t *dst_y = vf->dmpi->planes[0],
-            *dst_u = vf->dmpi->planes[1],
-            *dst_v = vf->dmpi->planes[2];
-    int stride;
-    int outw = vf->priv->outw,
-        outh = vf->priv->outh;
-    int i;
-
 #define CHECK_16_ALPHA \
             "cmpl   $-1,     0(%[alpha], %[j], 1) \n\t" \
             "jne    2f \n\t"                            \
@@ -485,6 +470,21 @@ static void render_frame_yuv420p_sse4(vf_instance_t *vf)
             "paddb      %%xmm4, %%xmm1 \n\t"                    \
             "movdqu     %%xmm1, (%%"REG_D", %[j], 1) \n\t"
 
+static void render_frame_yuv420p_sse4(vf_instance_t *vf)
+{
+    struct dirty_rows_extent *dr = vf->priv->dirty_rows;
+    uint8_t *alpha;
+    uint8_t *src_y = vf->priv->planes[0],
+            *src_u = vf->priv->planes[1],
+            *src_v = vf->priv->planes[2];
+    uint8_t *dst_y = vf->dmpi->planes[0],
+            *dst_u = vf->dmpi->planes[1],
+            *dst_v = vf->dmpi->planes[2];
+    int stride;
+    int outw = vf->priv->outw,
+        outh = vf->priv->outh;
+    int i;
+
     // y
     alpha = vf->priv->alphas[0];
     stride = vf->dmpi->stride[0];
@@ -492,27 +492,27 @@ static void render_frame_yuv420p_sse4(vf_instance_t *vf)
         size_t xmin = dr[i].xmin & ~15,
                xmax = dr[i].xmax;
         __asm__ volatile (
-                "pxor   %%xmm7, %%xmm7 \n\t"
-                "jmp    4f \n\t"
+            "pxor   %%xmm7, %%xmm7 \n\t"
+            "jmp    4f \n\t"
 
-                "1: \n\t"
-                CHECK_16_ALPHA
+            "1: \n\t"
+            CHECK_16_ALPHA
 
-                "2: \n\t"
-                MAP_16_ALPHA
-                DO_RENDER
+            "2: \n\t"
+            MAP_16_ALPHA
+            DO_RENDER
 
-                "3: \n\t"
-                "add    $16,    %[j] \n\t"
-                "4: \n\t"
-                "cmp    %[xmax],    %[j] \n\t"
-                "jl     1b \n\t"
+            "3: \n\t"
+            "add    $16,    %[j] \n\t"
+            "4: \n\t"
+            "cmp    %[xmax],    %[j] \n\t"
+            "jl     1b \n\t"
 
-                : : [j] "r" (xmin),
-                    [xmax] "g" (xmax),
-                    [alpha] "r" (alpha + i * outw),
-                    [src]   "S" (src_y + i * outw),
-                    [dst]   "D" (dst_y + i * stride)
+            : : [j] "r" (xmin),
+                [xmax] "g" (xmax),
+                [alpha] "r" (alpha + i * outw),
+                [src]   "S" (src_y + i * outw),
+                [dst]   "D" (dst_y + i * stride)
         );
     }
 
@@ -523,42 +523,42 @@ static void render_frame_yuv420p_sse4(vf_instance_t *vf)
         size_t xmin = FFMIN(dr[i * 2].xmin, dr[i * 2 + 1].xmin) & ~31,
                xmax = FFMAX(dr[i * 2].xmax, dr[i * 2 + 1].xmax);
         __asm__ volatile (
-                "pxor   %%xmm7, %%xmm7 \n\t"
-                "jmp    4f \n\t"
+            "pxor   %%xmm7, %%xmm7 \n\t"
+            "jmp    4f \n\t"
 
-                "1: \n\t"
-                CHECK_16_ALPHA
+            "1: \n\t"
+            CHECK_16_ALPHA
 
-                "2: \n\t"
-                MAP_16_ALPHA
-                "mov    %[src_u],   %%"REG_S"  \n\t"
-                "mov    %[dst_u],   %%"REG_D"  \n\t"
-                DO_RENDER
-                "mov    %[src_v],   %%"REG_S"  \n\t"
-                "mov    %[dst_v],   %%"REG_D"  \n\t"
-                DO_RENDER
+            "2: \n\t"
+            MAP_16_ALPHA
+            "mov    %[src_u],   %%"REG_S"  \n\t"
+            "mov    %[dst_u],   %%"REG_D"  \n\t"
+            DO_RENDER
+            "mov    %[src_v],   %%"REG_S"  \n\t"
+            "mov    %[dst_v],   %%"REG_D"  \n\t"
+            DO_RENDER
 
-                "3: \n\t"
-                "add    $16,    %[j] \n\t"
-                "4: \n\t"
-                "cmp    %[xmax],    %[j] \n\t"
-                "jl     1b \n\t"
+            "3: \n\t"
+            "add    $16,    %[j] \n\t"
+            "4: \n\t"
+            "cmp    %[xmax],    %[j] \n\t"
+            "jl     1b \n\t"
 
-                : : [j] "r" (xmin / 2),
-                    [xmax] "g" ((xmax + 1) / 2),
-                    [alpha] "r" (alpha + i * outw / 2),
-                    [src_u] "g" (src_u + i * outw / 2),
-                    [src_v] "g" (src_v + i * outw / 2),
-                    [dst_u] "g" (dst_u + i * stride),
-                    [dst_v] "g" (dst_v + i * stride)
-                :   REG_S, REG_D
+            : : [j] "r" (xmin / 2),
+                [xmax] "g" ((xmax + 1) / 2),
+                [alpha] "r" (alpha + i * outw / 2),
+                [src_u] "g" (src_u + i * outw / 2),
+                [src_v] "g" (src_v + i * outw / 2),
+                [dst_u] "g" (dst_u + i * stride),
+                [dst_v] "g" (dst_v + i * stride)
+            :   REG_S, REG_D
         );
     }
+}
 
 #undef CHECK_16_ALPHA
 #undef MAP_16_ALPHA
 #undef MUL_ALPHA
-}
 
 #endif // HAVE_SSE4
 
