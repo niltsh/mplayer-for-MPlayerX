@@ -685,6 +685,9 @@ static void demux_seek_lavf(demuxer_t *demuxer, float rel_seek_secs, float audio
       priv->last_pts = priv->avfc->start_time != AV_NOPTS_VALUE ?
                        priv->avfc->start_time : 0;
     }
+    // This is important also for SEEK_ABSOLUTE because seeking
+    // is done by dts, while start_time is relative to pts and thus
+    // usually too large.
     if (rel_seek_secs <= 0) avsflags = AVSEEK_FLAG_BACKWARD;
     if (flags & SEEK_FACTOR) {
       if (priv->avfc->duration == 0 || priv->avfc->duration == AV_NOPTS_VALUE)
