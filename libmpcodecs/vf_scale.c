@@ -220,7 +220,7 @@ static int config(struct vf_instance *vf,
         return 0;
     }
     sfmt = imgfmt2pixfmt(outfmt);
-    if (outfmt == IMGFMT_RGB8 || outfmt == IMGFMT_BGR8) sfmt = PIX_FMT_PAL8;
+    if (outfmt == IMGFMT_BGR8) sfmt = PIX_FMT_PAL8;
     dfmt = imgfmt2pixfmt(best);
 
     vo_flags=vf->next->query_format(vf->next,best);
