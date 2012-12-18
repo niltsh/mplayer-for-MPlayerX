@@ -420,55 +420,55 @@ static void render_frame_yuv420p(vf_instance_t *vf)
 #if HAVE_SSE4
 
 #define CHECK_16_ALPHA \
-            "cmpl   $-1,     0(%[alpha], %[j], 1) \n\t" \
-            "jne    2f \n\t"                            \
-            "cmpl   $-1,     4(%[alpha], %[j], 1) \n\t" \
-            "jne    2f \n\t"                            \
-            "cmpl   $-1,     8(%[alpha], %[j], 1) \n\t" \
-            "jne    2f \n\t"                            \
-            "cmpl   $-1,    12(%[alpha], %[j], 1) \n\t" \
-            "jne    2f \n\t"                            \
-            "jmp    3f \n\t"
+    "cmpl   $-1,     0(%[alpha], %[j], 1) \n\t" \
+    "jne    2f \n\t"                            \
+    "cmpl   $-1,     4(%[alpha], %[j], 1) \n\t" \
+    "jne    2f \n\t"                            \
+    "cmpl   $-1,     8(%[alpha], %[j], 1) \n\t" \
+    "jne    2f \n\t"                            \
+    "cmpl   $-1,    12(%[alpha], %[j], 1) \n\t" \
+    "jne    2f \n\t"                            \
+    "jmp    3f \n\t"
 
 #define MAP_16_ALPHA \
-            "movq       0(%[alpha], %[j], 1),   %%xmm0 \n\t"        \
-            "movq       8(%[alpha], %[j], 1),   %%xmm2 \n\t"        \
-            "punpcklbw  %%xmm7, %%xmm0 \n\t"                        \
-            "punpcklbw  %%xmm7, %%xmm2 \n\t"                        \
-            "movdqa     %%xmm0, %%xmm1 \n\t"                        \
-            "movdqa     %%xmm2, %%xmm3 \n\t"                        \
-            "punpcklwd  %%xmm7, %%xmm0 \n\t"                        \
-            "punpckhwd  %%xmm7, %%xmm1 \n\t"                        \
-            "punpcklwd  %%xmm7, %%xmm2 \n\t"                        \
-            "punpckhwd  %%xmm7, %%xmm3 \n\t"                        \
-            "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm0 \n\t"\
-            "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm1 \n\t"\
-            "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm2 \n\t"\
-            "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm3 \n\t"\
-            "paddd      "MANGLE(sse_int32_80h)",    %%xmm0 \n\t"    \
-            "paddd      "MANGLE(sse_int32_80h)",    %%xmm1 \n\t"    \
-            "paddd      "MANGLE(sse_int32_80h)",    %%xmm2 \n\t"    \
-            "paddd      "MANGLE(sse_int32_80h)",    %%xmm3 \n\t"    \
-            "psrld      $8, %%xmm0 \n\t"                            \
-            "psrld      $8, %%xmm1 \n\t"                            \
-            "psrld      $8, %%xmm2 \n\t"                            \
-            "psrld      $8, %%xmm3 \n\t"                            \
-            "packssdw   %%xmm1, %%xmm0 \n\t"                        \
-            "packssdw   %%xmm3, %%xmm2 \n\t"
+    "movq       0(%[alpha], %[j], 1),   %%xmm0 \n\t"        \
+    "movq       8(%[alpha], %[j], 1),   %%xmm2 \n\t"        \
+    "punpcklbw  %%xmm7, %%xmm0 \n\t"                        \
+    "punpcklbw  %%xmm7, %%xmm2 \n\t"                        \
+    "movdqa     %%xmm0, %%xmm1 \n\t"                        \
+    "movdqa     %%xmm2, %%xmm3 \n\t"                        \
+    "punpcklwd  %%xmm7, %%xmm0 \n\t"                        \
+    "punpckhwd  %%xmm7, %%xmm1 \n\t"                        \
+    "punpcklwd  %%xmm7, %%xmm2 \n\t"                        \
+    "punpckhwd  %%xmm7, %%xmm3 \n\t"                        \
+    "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm0 \n\t"\
+    "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm1 \n\t"\
+    "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm2 \n\t"\
+    "pmulld     "MANGLE(sse_int32_map_factor)", %%xmm3 \n\t"\
+    "paddd      "MANGLE(sse_int32_80h)",    %%xmm0 \n\t"    \
+    "paddd      "MANGLE(sse_int32_80h)",    %%xmm1 \n\t"    \
+    "paddd      "MANGLE(sse_int32_80h)",    %%xmm2 \n\t"    \
+    "paddd      "MANGLE(sse_int32_80h)",    %%xmm3 \n\t"    \
+    "psrld      $8, %%xmm0 \n\t"                            \
+    "psrld      $8, %%xmm1 \n\t"                            \
+    "psrld      $8, %%xmm2 \n\t"                            \
+    "psrld      $8, %%xmm3 \n\t"                            \
+    "packssdw   %%xmm1, %%xmm0 \n\t"                        \
+    "packssdw   %%xmm3, %%xmm2 \n\t"
 
 #define DO_RENDER \
-            "movq       0(%%"REG_D", %[j], 1),  %%xmm1 \n\t"    \
-            "movq       8(%%"REG_D", %[j], 1),  %%xmm3 \n\t"    \
-            "punpcklbw  %%xmm7, %%xmm1 \n\t"                    \
-            "punpcklbw  %%xmm7, %%xmm3 \n\t"                    \
-            "pmullw     %%xmm0, %%xmm1 \n\t"                    \
-            "pmullw     %%xmm2, %%xmm3 \n\t"                    \
-            "psrlw      $8, %%xmm1 \n\t"                        \
-            "psrlw      $8, %%xmm3 \n\t"                        \
-            "packuswb   %%xmm3, %%xmm1 \n\t"                    \
-            "movdqa     (%%"REG_S", %[j], 1),   %%xmm4 \n\t"    \
-            "paddb      %%xmm4, %%xmm1 \n\t"                    \
-            "movdqu     %%xmm1, (%%"REG_D", %[j], 1) \n\t"
+    "movq       0(%%"REG_D", %[j], 1),  %%xmm1 \n\t"    \
+    "movq       8(%%"REG_D", %[j], 1),  %%xmm3 \n\t"    \
+    "punpcklbw  %%xmm7, %%xmm1 \n\t"                    \
+    "punpcklbw  %%xmm7, %%xmm3 \n\t"                    \
+    "pmullw     %%xmm0, %%xmm1 \n\t"                    \
+    "pmullw     %%xmm2, %%xmm3 \n\t"                    \
+    "psrlw      $8, %%xmm1 \n\t"                        \
+    "psrlw      $8, %%xmm3 \n\t"                        \
+    "packuswb   %%xmm3, %%xmm1 \n\t"                    \
+    "movdqa     (%%"REG_S", %[j], 1),   %%xmm4 \n\t"    \
+    "paddb      %%xmm4, %%xmm1 \n\t"                    \
+    "movdqu     %%xmm1, (%%"REG_D", %[j], 1) \n\t"
 
 static void render_frame_yuv420p_sse4(vf_instance_t *vf)
 {
