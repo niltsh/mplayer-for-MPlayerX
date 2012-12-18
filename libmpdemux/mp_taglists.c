@@ -163,6 +163,7 @@ static const struct AVCodecTag mp_bmp_tags[] = {
     { CODEC_ID_RV40,              MKTAG('R', 'V', '4', '0')},
 #if LIBAVUTIL_VERSION_MICRO >= 100
     { CODEC_ID_SANM,              MKTAG('S', 'A', 'N', 'M')},
+    { AV_CODEC_ID_SGIRLE,         MKTAG('r', 'l', 'e', '1')},
 #endif
     { CODEC_ID_SVQ3,              MKTAG('S', 'V', 'Q', '3')},
     { CODEC_ID_TMV,               MKTAG('t', 'm', 'v', '8')},
