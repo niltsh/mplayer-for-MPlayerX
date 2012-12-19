@@ -389,7 +389,7 @@ int gui(int what, void *data)
 
         switch ((int)data) {
         case MP_CMD_VO_FULLSCREEN:
-            uiEventHandling(evFullScreen, 0);
+            uiEventHandling(evFullScreen, True);
             break;
 
         case MP_CMD_PLAY_TREE_STEP:
@@ -793,7 +793,7 @@ int gui(int what, void *data)
         }
 
         if (gtkLoadFullscreen ^ guiApp.videoWindow.isFullScreen)
-            uiEventHandling(evFullScreen, 0);
+            uiEventHandling(evFullScreen, True);
 
         if (guiWinID >= 0)
             wsMoveWindow(&guiApp.mainWindow, True, 0, guiInfo.VideoHeight);
@@ -875,7 +875,7 @@ int gui(int what, void *data)
                     wsVisibleWindow(&guiApp.videoWindow, wsShowWindow);
 
                 if (gtkLoadFullscreen ^ guiApp.videoWindow.isFullScreen)
-                    uiEventHandling(evFullScreen, 0);
+                    uiEventHandling(evFullScreen, False);
             } else {
                 wsVisibleWindow(&guiApp.videoWindow, wsHideWindow);
                 guiInfo.VideoWindow = False;
