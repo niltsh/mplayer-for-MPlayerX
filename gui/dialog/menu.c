@@ -578,10 +578,10 @@ GtkWidget * create_PopUpMenu( void )
 //  if ( guiInfo.Playing )
    {
     AspectMenu=AddSubMenu( window1, (const char*)aspect_xpm, Menu,MSGTR_MENU_AspectRatio );
-    AddMenuItem( window1, (const char*)aspect11_xpm, AspectMenu,MSGTR_MENU_Original,( 1 << 16 ) + evSetAspect );
-    AddMenuItem( window1, (const char*)aspect169_xpm, AspectMenu,"16:9",( 2 << 16 ) + evSetAspect );
-    AddMenuItem( window1, (const char*)aspect43_xpm, AspectMenu,"4:3",( 3 << 16 ) + evSetAspect );
-    AddMenuItem( window1, (const char*)aspect235_xpm, AspectMenu,"2.35",( 4 << 16 ) + evSetAspect );
+    AddMenuItem( window1, (const char*)aspect11_xpm, AspectMenu,MSGTR_MENU_Original,evSetAspect + ( 1 << 16 ) );
+    AddMenuItem( window1, (const char*)aspect169_xpm, AspectMenu,"16:9",evSetAspect + ( 2 << 16 ) );
+    AddMenuItem( window1, (const char*)aspect43_xpm, AspectMenu,"4:3",evSetAspect + ( 3 << 16 ) );
+    AddMenuItem( window1, (const char*)aspect235_xpm, AspectMenu,"2.35",evSetAspect + ( 4 << 16 ) );
    }
 
   if ( guiInfo.Playing && demuxer && guiInfo.StreamType != STREAMTYPE_DVD )
