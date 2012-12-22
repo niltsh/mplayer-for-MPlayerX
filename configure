@@ -8443,6 +8443,7 @@ CONFIG_MPEGVIDEOENC = yes
 CONFIG_RANGECODER   = yes
 CONFIG_RDFT    = yes
 CONFIG_SINEWIN = yes
+CONFIG_VIDEODSP = yes
 CONFIG_VP3DSP  = yes
 
 $mak_hardcoded_tables
