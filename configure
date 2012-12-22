@@ -5004,12 +5004,14 @@ fi
 echocheck "MNG support"
 if test "$_mng" = auto ; then
   _mng=no
-  return_statement_check libmng.h 'const char * p_ver = mng_version_text()' '!p_ver || p_ver[0] == 0' -lmng -lz && _mng=yes
+  for mnglibs in '-lmng -lz' '-lmng -ljpeg -lz' ; do
+    return_statement_check libmng.h 'const char * p_ver = mng_version_text()' '!p_ver || p_ver[0] == 0' $mnglibs && _mng=yes
+  done
 fi
 echores "$_mng"
 if test "$_mng" = yes ; then
   def_mng='#define CONFIG_MNG 1'
-  extra_ldflags="$extra_ldflags -lmng -lz"
+  extra_ldflags="$extra_ldflags $mnglibs"
   vomodules="mng $vomodules"
 else
   def_mng='#undef CONFIG_MNG'
