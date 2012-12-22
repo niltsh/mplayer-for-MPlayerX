@@ -444,6 +444,7 @@ Codecs:
   --disable-ladspa          disable LADSPA plugin support [autodetect]
   --disable-libbs2b         disable libbs2b audio filter support [autodetect]
   --disable-libdv           disable libdv 0.9.5 en/decoding support [autodetect]
+  --disable-libilbc         disable libilbc decoding support [autodetect]
   --disable-libopus         disable libopus decoding support [autodetect]
   --disable-mpg123          disable libmpg123 MP3 decoding support [autodetect]
   --disable-mad             disable libmad (MPEG audio) support [autodetect]
@@ -769,6 +770,7 @@ _faac=auto
 _faac_lavc=auto
 _ladspa=auto
 _libbs2b=auto
+_libilbc=auto
 _libopus=auto
 _xmms=no
 _vcd=auto
@@ -1178,6 +1180,8 @@ for ac_option do
   --disable-ladspa)     _ladspa=no      ;;
   --enable-libbs2b)     _libbs2b=yes    ;;
   --disable-libbs2b)    _libbs2b=no     ;;
+  --enable-libilbc)     _libilbc=yes    ;;
+  --disable-libilbc)    _libilbc=no     ;;
   --enable-libopus)     _libopus=yes    ;;
   --disable-libopus)    _libopus=no     ;;
   --enable-xmms)        _xmms=yes       ;;
@@ -6619,6 +6623,23 @@ fi
 echores "$_faad"
 
 
+echocheck "libilbc support"
+if test "$_libilbc" = auto; then
+  _libilbc=no
+  statement_check ilbc.h 'WebRtcIlbcfix_InitDecode(0, 0, 0);' -lilbc && _libilbc=yes
+fi
+echores "$_libilbc"
+if test "$_libilbc" = yes ; then
+  def_libilbc='#define CONFIG_LIBILBC 1'
+  extra_ldflags="$extra_ldflags -lilbc"
+  libavdecoders="$libavdecoders LIBILBC_DECODER"
+  codecmodules="ilbc $codecmodules"
+else
+  def_libopenjpeg='#define CONFIG_ILBC 0'
+  nocodecmodules="ilbc $nocodecmodules"
+fi
+
+
 echocheck "libopus decoding support"
 if test "$_libopus" = auto ; then
   _libopus=no
@@ -8681,6 +8702,7 @@ $def_libdv
 $def_liblzo
 $def_libmpeg2
 $def_libmpeg2_internal
+$def_libilbc
 $def_libopus
 $def_mad
 $def_mp3lame
