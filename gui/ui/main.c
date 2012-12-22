@@ -371,7 +371,7 @@ NoPause:
 	  break;
          } else if ( !guiApp.videoWindow.isFullScreen ) break;
    case evFullScreen:
-        if ( guiInfo.VideoWindow && guiInfo.Playing )
+        if ( guiInfo.VideoWindow && ( guiInfo.Playing || !iparam ) )
          {
           uiFullScreen();
           if ( !guiApp.videoWindow.isFullScreen )
