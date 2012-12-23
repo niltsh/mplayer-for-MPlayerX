@@ -6637,7 +6637,7 @@ if test "$_libilbc" = yes ; then
   libavdecoders="$libavdecoders LIBILBC_DECODER"
   codecmodules="ilbc $codecmodules"
 else
-  def_libopenjpeg='#define CONFIG_ILBC 0'
+  def_libilbc='#define CONFIG_ILBC 0'
   nocodecmodules="ilbc $nocodecmodules"
 fi
 
