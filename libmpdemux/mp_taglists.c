@@ -56,6 +56,7 @@ static const struct AVCodecTag mp_wav_tags[] = {
 #endif
     { CODEC_ID_G723_1,            MKTAG('7', '2', '3', '1')},
     { CODEC_ID_INTERPLAY_DPCM,    MKTAG('I', 'N', 'P', 'A')},
+    { AV_CODEC_ID_ILBC,           MKTAG('i', 'l', 'b', 'c')},
     { CODEC_ID_MLP,               MKTAG('M', 'L', 'P', ' ')},
     { CODEC_ID_MP1,               0x50},
     { CODEC_ID_MP4ALS,            MKTAG('A', 'L', 'S', ' ')},
