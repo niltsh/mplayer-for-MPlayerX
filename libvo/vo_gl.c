@@ -907,6 +907,7 @@ static void do_render(void) {
 }
 
 static void flip_page(void) {
+  int need_clear = aspect_scaling() && use_aspect;
   // We might get an expose event between draw_image and its
   // corresponding flip_page.
   // For double-buffering we would then flip in a clear backbuffer.
@@ -914,18 +915,20 @@ static void flip_page(void) {
   // current GL buffer contains a properly rendered video.
   // did_render will always be false for single buffer.
   if (!did_render) {
+    if (!vo_doublebuffering && need_clear)
+      mpglClear(GL_COLOR_BUFFER_BIT);
     do_render();
     do_render_osd(RENDER_OSD | RENDER_EOSD);
   }
+  if (use_glFinish) mpglFinish();
+
   if (vo_doublebuffering) {
-    if (use_glFinish) mpglFinish();
     glctx.swapGlBuffers(&glctx);
-    if (aspect_scaling() && use_aspect)
+    if (need_clear)
       mpglClear(GL_COLOR_BUFFER_BIT);
-  } else {
-    if (use_glFinish) mpglFinish();
-    else mpglFlush();
-  }
+  } else if (!use_glFinish)
+    mpglFlush();
+
   did_render = 0;
 }
 
