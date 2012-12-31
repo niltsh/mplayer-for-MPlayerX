@@ -333,7 +333,7 @@ static void prepare_buffer_420p(vf_instance_t *vf)
         int xmin = FFMIN(dirty_rows[i].xmin, dirty_rows[i + 1].xmin) & ~1,
             xmax = FFMAX(dirty_rows[i].xmax, dirty_rows[i + 1].xmax);
         for (j = xmin; j < xmax; j += 2) {
-            size_t p = i * outw / 4 + j / 2,
+            size_t p = i * outw / 2 + j / 2,
                    q1 = i * outw + j,
                    q2 = q1 + outw;
             dst_a[p] = (src_a[q1] + src_a[q1 + 1] +
@@ -354,12 +354,12 @@ static void prepare_buffer_420p(vf_instance_t *vf)
             if (xmin >= xmax)
                 continue;
             for (j = xmin & ~31; j < xmin; j += 2) {
-                size_t p = i * outw / 4 + j / 2;
+                size_t p = i * outw / 2 + j / 2;
                 dst_a[p] = 0xFF;
                 dst_u[p] = dst_v[p] = 0;
             }
             for (j = xmax; j < FFALIGN(xmax, 32); j += 2) {
-                size_t p = i * outw / 4 + j / 2;
+                size_t p = i * outw / 2 + j / 2;
                 dst_a[p] = 0xFF;
                 dst_u[p] = dst_v[p] = 0;
             }
@@ -406,7 +406,7 @@ static void render_frame_yuv420p(vf_instance_t *vf)
         int xmin = FFMIN(dirty_rows[i * 2].xmin, dirty_rows[i * 2 + 1].xmin),
             xmax = FFMAX(dirty_rows[i * 2].xmax, dirty_rows[i * 2 + 1].xmax);
         for (j = xmin / 2; j < (xmax + 1) / 2; j++) {
-            size_t s = i * outw / 2 + j,
+            size_t s = i * outw + j,
                    d = i * stride + j;
             if (alpha[s] != 0xFF) {
                 uint_fast16_t a = MAP_16BIT(alpha[s]);
@@ -546,9 +546,9 @@ static void render_frame_yuv420p_sse4(vf_instance_t *vf)
 
             : : [j] "r" (xmin / 2),
                 [xmax] "g" ((xmax + 1) / 2),
-                [alpha] "r" (alpha + i * outw / 2),
-                [src_u] "g" (src_u + i * outw / 2),
-                [src_v] "g" (src_v + i * outw / 2),
+                [alpha] "r" (alpha + i * outw),
+                [src_u] "g" (src_u + i * outw),
+                [src_v] "g" (src_v + i * outw),
                 [dst_u] "g" (dst_u + i * stride),
                 [dst_v] "g" (dst_v + i * stride)
             :   REG_S, REG_D
@@ -571,6 +571,16 @@ static void clean_buffer(vf_instance_t *vf)
     uint8_t *alpha = vf->priv->alphas[0];
     int i, j;
 
+    if (vf->priv->prepare_buffer == prepare_buffer_420p) {
+        // HACK: prepare_buffer_420p touched u & v planes
+        //       so we want to clean them here.
+        for (i = 0; i < outh; i += 2) {
+            int xmin = FFMIN(dirty_rows[i].xmin, dirty_rows[i + 1].xmin) & ~1,
+                xmax = FFMAX(dirty_rows[i].xmax, dirty_rows[i + 1].xmax);
+            dirty_rows[i / 2].xmin = FFMIN(dirty_rows[i / 2].xmin, xmin / 2);
+            dirty_rows[i / 2].xmax = FFMAX(dirty_rows[i / 2].xmax, xmax / 2);
+        }
+    }
     for (i = 0; i < MP_MAX_PLANES; i++) {
         uint8_t *plane = planes[i];
         if (!plane)
