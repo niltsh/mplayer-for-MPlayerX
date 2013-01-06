@@ -457,18 +457,6 @@ const m_option_t noconfig_opts[] = {
 };
 
 /**
- * Initialization code to be run at the very start, must not depend
- * on option values.
- */
-void common_preinit(void)
-{
-    InitTimer();
-    srand(GetTimerMS());
-
-    mp_msg_init();
-}
-
-/**
  * Code to fix any kind of insane defaults some OS might have.
  * Currently mostly fixes for insecure-by-default Windows.
  */
@@ -492,6 +480,19 @@ static void sanitize_os(void)
 }
 
 /**
+ * Initialization code to be run at the very start, must not depend
+ * on option values.
+ */
+void common_preinit(void)
+{
+    sanitize_os();
+    InitTimer();
+    srand(GetTimerMS());
+
+    mp_msg_init();
+}
+
+/**
  * Initialization code to be run after command-line parsing.
  */
 int common_init(void)
@@ -499,7 +500,6 @@ int common_init(void)
 #if (defined(__MINGW32__) || defined(__CYGWIN__)) && defined(CONFIG_WIN32DLL)
     set_path_env();
 #endif
-    sanitize_os();
 
 #ifdef CONFIG_PRIORITY
     set_priority();
