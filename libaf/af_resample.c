@@ -244,6 +244,7 @@ static int control(struct af_instance_s* af, int cmd, void* arg)
       if(NULL == w || NULL == s->w ||
 	 -1 == af_filter_design_fir(s->up*L, w, &fc, LP|KAISER , 10.0)){
 	mp_msg(MSGT_AFILTER, MSGL_ERR, "[resample] Unable to design prototype filter.\n");
+	free(w);
 	return AF_ERROR;
       }
       // Copy data from prototype to polyphase filter
