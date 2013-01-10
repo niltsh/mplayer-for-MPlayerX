@@ -242,15 +242,15 @@ void gtkMessageBox(int type, const gchar *str)
             gtk_main_iteration_do(0);
 }
 
-void gtkSetLayer(GtkWidget *wdg)
+void gtkSetLayer(GtkWidget *window)
 {
-    wsSetLayer(gdk_display, GDK_WINDOW_XWINDOW(wdg->window), guiApp.videoWindow.isFullScreen);
-    gtkActive(wdg);
+    wsSetLayer(gdk_display, GDK_WINDOW_XWINDOW(window->window), guiApp.videoWindow.isFullScreen);
+    gtkActive(window);
 }
 
-void gtkActive(GtkWidget *wdg)
+void gtkActive(GtkWidget *window)
 {
-    wsRaiseWindowTop(gdk_display, GDK_WINDOW_XWINDOW(wdg->window));
+    wsRaiseWindowTop(gdk_display, GDK_WINDOW_XWINDOW(window->window));
 }
 
 void gtkShow(int type, char *param)

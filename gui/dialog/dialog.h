@@ -76,7 +76,7 @@ void gtkEventHandling(void);
 
 void gtkShow(int type, char *param);
 void gtkMessageBox(int type, const gchar *str);
-void gtkSetLayer(GtkWidget *wdg);
-void gtkActive(GtkWidget *wdg);
+void gtkSetLayer(GtkWidget *window);
+void gtkActive(GtkWidget *window);
 
 #endif /* MPLAYER_GUI_DIALOG_H */
