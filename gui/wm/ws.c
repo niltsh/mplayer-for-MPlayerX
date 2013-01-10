@@ -240,15 +240,14 @@ static void wsUpdateXineramaInfo(wsTWindow *win)
     }
 }
 
-void wsXInit(Display *mDisplay)
+void wsXInit(Display *display)
 {
     int eventbase;
     int errorbase;
 
     mp_msg(MSGT_GPLAYER, MSGL_V, "X init.\n");
 
-    // NOTE TO MYSELF: Use global mDisplay, get rid of wsDisplay.
-    wsDisplay = mDisplay;
+    wsDisplay = display;
 
     XSetErrorHandler(wsErrorHandler);
 
@@ -969,9 +968,9 @@ void wsMainLoop(void)
 #define WIN_LAYER_NORMAL                 4
 #define WIN_LAYER_ONTOP                 10
 
-void wsSetLayer(Display *wsDisplay, Window win, int layer)
+void wsSetLayer(Display *display, Window Win, int layer)
 {
-    vo_x11_setlayer(wsDisplay, win, layer);
+    vo_x11_setlayer(display, Win, layer);
 }
 
 /**
@@ -1230,13 +1229,13 @@ void wsIconify(wsTWindow *win)
 /**
  * @brief Map a window and raise it to the top.
  *
- * @param dpy display
- * @param win window
+ * @param display display
+ * @param Win window
  */
-void wsRaiseWindowTop(Display *dpy, Window win)
+void wsRaiseWindowTop(Display *display, Window Win)
 {
-    XMapRaised(dpy, win);
-    XRaiseWindow(dpy, win);
+    XMapRaised(display, Win);
+    XRaiseWindow(display, Win);
 }
 
 // ----------------------------------------------------------------------------------------------
@@ -1551,18 +1550,18 @@ void wsSetShape(wsTWindow *win, char *data)
  *        This function sets the X icon hint as well as
  *        the properties KWM_WIN_ICON and _NET_WM_ICON.
  *
- * @param dpy display
- * @param win window
+ * @param display display
+ * @param Win window
  * @param icon pointer to the icons
  */
-void wsSetIcon(Display *dpy, Window win, guiIcon_t *icon)
+void wsSetIcon(Display *display, Window Win, guiIcon_t *icon)
 {
     XWMHints *wm;
     Atom iconatom;
     long data[2];
 
     if (icon->normal) {
-        wm = XGetWMHints(dpy, win);
+        wm = XGetWMHints(display, Win);
 
         if (!wm)
             wm = XAllocWMHints();
@@ -1571,20 +1570,20 @@ void wsSetIcon(Display *dpy, Window win, guiIcon_t *icon)
         wm->icon_mask   = icon->normal_mask;
         wm->flags      |= IconPixmapHint | IconMaskHint;
 
-        XSetWMHints(dpy, win, wm);
+        XSetWMHints(display, Win, wm);
         XFree(wm);
     }
 
     if (icon->small || icon->normal) {
-        iconatom = XInternAtom(dpy, "KWM_WIN_ICON", False);
+        iconatom = XInternAtom(display, "KWM_WIN_ICON", False);
         data[0]  = (icon->small ? icon->small : icon->normal);
         data[1]  = (icon->small ? icon->small_mask : icon->normal_mask);
 
-        XChangeProperty(dpy, win, iconatom, iconatom, 32, PropModeReplace, (unsigned char *)data, 2);
+        XChangeProperty(display, Win, iconatom, iconatom, 32, PropModeReplace, (unsigned char *)data, 2);
     }
 
     if (icon->collection) {
-        iconatom = XInternAtom(dpy, "_NET_WM_ICON", False);
-        XChangeProperty(dpy, win, iconatom, XA_CARDINAL, 32, PropModeReplace, (unsigned char *)icon->collection, icon->collection_size);
+        iconatom = XInternAtom(display, "_NET_WM_ICON", False);
+        XChangeProperty(display, Win, iconatom, XA_CARDINAL, 32, PropModeReplace, (unsigned char *)icon->collection, icon->collection_size);
     }
 }

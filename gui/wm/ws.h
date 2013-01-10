@@ -213,7 +213,7 @@ extern int wsUseXShm;
 extern unsigned long wsKeyTable[512];
 
 void wsXDone(void);
-void wsXInit(Display *disp);
+void wsXInit(Display *display);
 
 int wsGetDepthOnScreen(void);
 
@@ -237,7 +237,7 @@ void wsMoveWindow(wsTWindow *win, Bool abs, int x, int y);
 void wsMoveWindowWithin(wsTWindow *win, Bool abs, int x, int y);
 void wsResizeWindow(wsTWindow *win, int sx, int sy);
 void wsIconify(wsTWindow *win);
-void wsRaiseWindowTop(Display *dpy, Window win);
+void wsRaiseWindowTop(Display *display, Window Win);
 void wsSetBackground(wsTWindow *win, int color);
 void wsSetForegroundRGB(wsTWindow *win, int r, int g, int b);
 void wsSetBackgroundRGB(wsTWindow *win, int r, int g, int b);
@@ -245,11 +245,11 @@ void wsSetBackgroundRGB(wsTWindow *win, int r, int g, int b);
 void wsSetTitle(wsTWindow *win, char *name);
 void wsVisibleWindow(wsTWindow *win, int show);
 void wsWindowDecoration(wsTWindow *win, Bool decor);
-void wsSetLayer(Display *wsDisplay, Window win, int layer);
+void wsSetLayer(Display *display, Window Win, int layer);
 void wsFullScreen(wsTWindow *win);
 void wsPostRedisplay(wsTWindow *win);
 void wsSetShape(wsTWindow *win, char *data);
-void wsSetIcon(Display *dpy, Window win, guiIcon_t *icon);
+void wsSetIcon(Display *display, Window Win, guiIcon_t *icon);
 
 // ----------------------------------------------------------------------------------------------
 //    Show / hide mouse cursor.
