@@ -115,7 +115,7 @@ static int gtkLoadIcon(GtkIconTheme *theme, gint size, GdkPixmap **gdkIcon, GdkB
     return (pixbuf != NULL);
 }
 
-void gtkInit(void)
+void gtkInit(char *display_name)
 {
     int argc = 0;
     char *arg[3], **argv = arg;
@@ -127,9 +127,9 @@ void gtkInit(void)
 
     arg[argc++] = GMPlayer;
 
-    if (mDisplayName) {            // MPlayer option '-display' was given
+    if (display_name) {            // MPlayer option '-display' was given
         arg[argc++] = "--display"; // Pass corresponding command line arguments to GTK,
-        arg[argc++] = mDisplayName; // to open the requested display for the GUI, too.
+        arg[argc++] = display_name; // to open the requested display for the GUI, too.
     }
 
 #ifdef CONFIG_GTK2

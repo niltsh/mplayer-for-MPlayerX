@@ -64,7 +64,7 @@ extern guiIcon_t guiIcon;
 
 void widgetsCreate(void);
 
-void gtkInit(void);
+void gtkInit(char *display_name);
 void gtkAddIcon(GtkWidget *window);
 
 int gtkFillSkinList(gchar *dir);

@@ -111,7 +111,7 @@ void guiInit(void)
     /* initialize graphical user interfaces */
 
     wsXInit(mDisplay);
-    gtkInit();
+    gtkInit(mDisplayName);
 
     /* load skin */
 
