@@ -191,16 +191,18 @@ void wsWindowDecoration(wsTWindow *win, Bool decor)
 //   Init X Window System.
 // ----------------------------------------------------------------------------------------------
 
-static int wsErrorHandler(Display *dpy, XErrorEvent *Event)
+static int wsErrorHandler(Display *display, XErrorEvent *event)
 {
     char type[128];
 
-    XGetErrorText(dpy, Event->error_code, type, 128);
+    XGetErrorText(display, event->error_code, type, 128);
+
     fprintf(stderr, "[ws] Error in display.\n");
-    fprintf(stderr, "[ws]  Error code: %d ( %s )\n", Event->error_code, type);
-    fprintf(stderr, "[ws]  Request code: %d\n", Event->request_code);
-    fprintf(stderr, "[ws]  Minor code: %d\n", Event->minor_code);
+    fprintf(stderr, "[ws]  Error code: %d ( %s )\n", event->error_code, type);
+    fprintf(stderr, "[ws]  Request code: %d\n", event->request_code);
+    fprintf(stderr, "[ws]  Minor code: %d\n", event->minor_code);
     fprintf(stderr, "[ws]  Modules: %s\n", current_module ? current_module : "(NULL)");
+
     return 0;
 }
 
