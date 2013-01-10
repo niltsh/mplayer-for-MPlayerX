@@ -267,9 +267,6 @@ void wsResizeImage(wsTWindow *win, int Width, int Height);
 void wsDestroyImage(wsTWindow *win);
 int wsGetOutMask(void);
 
-void wsScreenSaverOn(Display *mDisplay);
-void wsScreenSaverOff(Display *mDisplay);
-
 #define wgIsRect(X, Y, tX, tY, bX, bY) (((X) > (tX)) && ((Y) > (tY)) && ((X) < (bX)) && ((Y) < (bY)))
 
 #endif /* MPLAYER_GUI_WS_H */
