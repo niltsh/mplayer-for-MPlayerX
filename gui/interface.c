@@ -106,10 +106,9 @@ void guiInit(void)
     gtkASS.top_margin    = ass_top_margin;
     gtkASS.bottom_margin = ass_bottom_margin;
 
-    gtkInit();
-
     /* initialize X */
     wsXInit(mDisplay);
+    gtkInit();
 
     /* load skin */
 
