@@ -137,6 +137,7 @@ void gtkInit(char *display_name)
 #endif
 
     gtk_init(&argc, &argv);
+    wsSetErrorHandler();           // GDK has just set its own handler
 
     theme = gtk_icon_theme_get_default();
 

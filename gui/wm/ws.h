@@ -214,6 +214,7 @@ extern unsigned long wsKeyTable[512];
 
 void wsXDone(void);
 void wsXInit(Display *display);
+void wsSetErrorHandler(void);
 
 int wsGetDepthOnScreen(void);
 

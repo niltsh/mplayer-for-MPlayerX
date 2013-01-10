@@ -249,6 +249,14 @@ static void wsUpdateXineramaInfo(wsTWindow *win)
     }
 }
 
+/**
+ * @brief Set the X error handler.
+ */
+void wsSetErrorHandler(void)
+{
+    XSetErrorHandler(wsErrorHandler);
+}
+
 void wsXInit(Display *display)
 {
     int eventbase;
@@ -258,7 +266,7 @@ void wsXInit(Display *display)
 
     wsDisplay = display;
 
-    XSetErrorHandler(wsErrorHandler);
+    wsSetErrorHandler();
 
 /* enable DND atoms */
     wsXDNDInitialize();
