@@ -806,7 +806,7 @@ int gui(int what, void *data)
 
     case GUI_HANDLE_X_EVENT:
 
-        wsEvents(wsDisplay, data);
+        wsEvents(data);
         gtkEventHandling();
         break;
 

@@ -674,7 +674,7 @@ void wsAutohideCursor(void)
 //   Handle events.
 // ----------------------------------------------------------------------------------------------
 
-Bool wsEvents(Display *display, XEvent *event)
+Bool wsEvents(XEvent *event)
 {
     unsigned long i = 0;
     int l;
@@ -872,7 +872,7 @@ keypressed:
             static XEvent e;
 
             if (event->xmotion.state) {
-                while (XCheckTypedWindowEvent(display, event->xany.window, MotionNotify, &e)) {
+                while (XCheckTypedWindowEvent(wsDisplay, event->xany.window, MotionNotify, &e)) {
                     /* FIXME: need to make sure we didn't release/press the button in between...*/
                     /* FIXME: do we need some timeout here to make sure we don't spend too much time
                      * removing events from the queue? */
@@ -947,7 +947,7 @@ void wsHandleEvents(void)
     while (XPending(wsDisplay)) {
         XNextEvent(wsDisplay, &wsEvent);
 //   printf("### X event: %d  [%d]\n",wsEvent.type,delay);
-        wsEvents(wsDisplay, &wsEvent);
+        wsEvents(&wsEvent);
     }
 }
 
@@ -964,7 +964,7 @@ void wsMainLoop(void)
         /* handle pending events */
         while (XPending(wsDisplay)) {
             XNextEvent(wsDisplay, &wsEvent);
-            wsEvents(wsDisplay, &wsEvent);
+            wsEvents(&wsEvent);
             delay = 0;
         }
 
