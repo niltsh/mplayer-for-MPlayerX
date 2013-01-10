@@ -195,7 +195,7 @@ static int wsErrorHandler(Display *display, XErrorEvent *event)
 {
     char type[128];
 
-    XGetErrorText(display, event->error_code, type, 128);
+    XGetErrorText(display, event->error_code, type, sizeof(type));
 
     fprintf(stderr, "[ws] Error in display.\n");
     fprintf(stderr, "[ws]  Error code: %d ( %s )\n", event->error_code, type);
