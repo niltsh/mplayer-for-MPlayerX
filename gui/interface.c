@@ -81,6 +81,8 @@ void guiInit(void)
 
     mp_msg(MSGT_GPLAYER, MSGL_V, "GUI init.\n");
 
+    /* check options */
+
     if (!cdrom_device)
         cdrom_device = strdup(DEFAULT_CDROM_DEVICE);
     if (!dvd_device)
@@ -106,7 +108,8 @@ void guiInit(void)
     gtkASS.top_margin    = ass_top_margin;
     gtkASS.bottom_margin = ass_bottom_margin;
 
-    /* initialize X */
+    /* initialize graphical user interfaces */
+
     wsXInit(mDisplay);
     gtkInit();
 
