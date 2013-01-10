@@ -245,6 +245,8 @@ void wsXInit(Display *mDisplay)
     int eventbase;
     int errorbase;
 
+    mp_msg(MSGT_GPLAYER, MSGL_V, "X init.\n");
+
     // NOTE TO MYSELF: Use global mDisplay, get rid of wsDisplay.
     wsDisplay = mDisplay;
 
