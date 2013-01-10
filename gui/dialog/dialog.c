@@ -48,14 +48,14 @@
 #include "gui/ui/actions.h"
 #include "fileselect.h"
 
-GtkWidget *PopUpMenu = NULL;
+static GtkWidget *PopUpMenu;
 
 GtkWidget *WarningPixmap;
 GtkWidget *ErrorPixmap;
 
 int gtkPopupMenu      = 0;
 int gtkPopupMenuParam = 0;
-int gtkInitialized    = False;
+static int gtkInitialized;
 
 #include "skinbrowser.h"
 #include "playlist.h"

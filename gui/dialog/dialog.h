@@ -38,7 +38,6 @@
 
 extern GtkWidget *PlayList;
 extern GtkWidget *Options;
-extern GtkWidget *PopUpMenu;
 
 extern GtkWidget *WarningPixmap;
 extern GtkWidget *ErrorPixmap;
