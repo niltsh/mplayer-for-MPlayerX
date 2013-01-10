@@ -1055,6 +1055,7 @@ static const char help_text[]=
 #define MSGTR_WS_NotEnoughMemoryDrawBuffer "[ws] Sorry, nicht genügend Speicher zum Schreiben des Buffers.\n"
 #define MSGTR_WS_DpmsUnavailable "DPMS nicht verfügbar?\n"
 #define MSGTR_WS_DpmsNotEnabled "Konnte DPMS nicht aktivieren.\n"
+#define MSGTR_WS_XError "[ws] Ein X11-Fehler ist aufgetreten!\n"
 
 // wsxdnd.c
 #define MSGTR_WS_NotAFile "Dies scheint keine Datei zu sein...\n"
