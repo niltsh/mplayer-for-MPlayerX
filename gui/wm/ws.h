@@ -220,7 +220,7 @@ int wsGetDepthOnScreen(void);
 void wsDoExit(void);
 void wsMainLoop(void);
 void wsAutohideCursor(void);
-Bool wsEvents(Display *display, XEvent *Event);
+Bool wsEvents(Display *display, XEvent *event);
 void wsHandleEvents(void);
 
 // ----------------------------------------------------------------------------------------------

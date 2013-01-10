@@ -657,41 +657,41 @@ void wsAutohideCursor(void)
 //   Handle events.
 // ----------------------------------------------------------------------------------------------
 
-Bool wsEvents(Display *display, XEvent *Event)
+Bool wsEvents(Display *display, XEvent *event)
 {
     unsigned long i = 0;
     int l;
     int x, y;
     Window child_window = 0;
 
-    l = wsSearch(Event->xany.window);
+    l = wsSearch(event->xany.window);
 
     if (l == -1)
         return !wsTrue;
 
     wsWindowList[l]->State = wsNone;
 
-    switch (Event->type) {
+    switch (event->type) {
     case ClientMessage:
 
-        if (Event->xclient.message_type == wsWindowList[l]->AtomProtocols) {
-            if ((Atom)Event->xclient.data.l[0] == wsWindowList[l]->AtomDeleteWindow) {
+        if (event->xclient.message_type == wsWindowList[l]->AtomProtocols) {
+            if ((Atom)event->xclient.data.l[0] == wsWindowList[l]->AtomDeleteWindow) {
                 i = wsWindowClosed;
                 goto expose;
             }
 
-            if ((Atom)Event->xclient.data.l[0] == wsWindowList[l]->AtomTakeFocus) {
+            if ((Atom)event->xclient.data.l[0] == wsWindowList[l]->AtomTakeFocus) {
                 i = wsWindowFocusIn;
                 wsWindowList[l]->Focused = wsFocused;
                 goto expose;
             }
 
-            if ((Atom)Event->xclient.data.l[0] == wsWindowList[l]->AtomRolle) {
+            if ((Atom)event->xclient.data.l[0] == wsWindowList[l]->AtomRolle) {
                 mp_msg(MSGT_GPLAYER, MSGL_V, "[ws] role set.\n");
             }
         } else {
             /* try to process DND events */
-            wsXDNDProcessClientMessage(&Event->xclient);
+            wsXDNDProcessClientMessage(&event->xclient);
         }
 
         break;
@@ -728,7 +728,7 @@ Bool wsEvents(Display *display, XEvent *Event)
 
     case VisibilityNotify:
 
-        switch (Event->xvisibility.state) {
+        switch (event->xvisibility.state) {
         case VisibilityUnobscured:
             i = wsWindowVisible;
             wsWindowList[l]->Visible = wsVisible;
@@ -757,7 +757,7 @@ expose:
 
         wsWindowList[l]->State = wsWindowExpose;
 
-        if ((wsWindowList[l]->ReDraw) && (!Event->xexpose.count))
+        if ((wsWindowList[l]->ReDraw) && (!event->xexpose.count))
             wsWindowList[l]->ReDraw();
 
         break;
@@ -766,11 +766,11 @@ expose:
 
         XTranslateCoordinates(wsDisplay, wsWindowList[l]->WindowID, wsRootWin, 0, 0, &x, &y, &child_window);
 
-        if ((wsWindowList[l]->X != x) || (wsWindowList[l]->Y != y) || (wsWindowList[l]->Width != Event->xconfigure.width) || (wsWindowList[l]->Height != Event->xconfigure.height)) {
+        if ((wsWindowList[l]->X != x) || (wsWindowList[l]->Y != y) || (wsWindowList[l]->Width != event->xconfigure.width) || (wsWindowList[l]->Height != event->xconfigure.height)) {
             wsWindowList[l]->X      = x;
             wsWindowList[l]->Y      = y;
-            wsWindowList[l]->Width  = Event->xconfigure.width;
-            wsWindowList[l]->Height = Event->xconfigure.height;
+            wsWindowList[l]->Width  = event->xconfigure.width;
+            wsWindowList[l]->Height = event->xconfigure.height;
 
             if (wsWindowList[l]->ReSize)
                 wsWindowList[l]->ReSize(wsWindowList[l]->X, wsWindowList[l]->Y, wsWindowList[l]->Width, wsWindowList[l]->Height);
@@ -778,7 +778,7 @@ expose:
 
         wsWindowList[l]->Rolled = wsNo;
 
-        if (Event->xconfigure.y < 0) {
+        if (event->xconfigure.y < 0) {
             i = wsWindowRolled;
             wsWindowList[l]->Rolled = wsRolled;
             goto expose;
@@ -801,32 +801,32 @@ keypressed:
         wsWindowList[l]->Control  = False;
         wsWindowList[l]->CapsLock = False;
 
-        if (Event->xkey.state & Mod1Mask)
+        if (event->xkey.state & Mod1Mask)
             wsWindowList[l]->Alt = True;
 
-        if (Event->xkey.state & Mod2Mask)
+        if (event->xkey.state & Mod2Mask)
             wsWindowList[l]->NumLock = True;
 
-        if (Event->xkey.state & ControlMask)
+        if (event->xkey.state & ControlMask)
             wsWindowList[l]->Control = True;
 
-        if (Event->xkey.state & ShiftMask)
+        if (event->xkey.state & ShiftMask)
             wsWindowList[l]->Shift = True;
 
-        if (Event->xkey.state & LockMask)
+        if (event->xkey.state & LockMask)
             wsWindowList[l]->CapsLock = True;
 
 #if 0
         {
             KeySym keySym;
-            keySym = XKeycodeToKeysym(wsDisplay, Event->xkey.keycode, 0);
+            keySym = XKeycodeToKeysym(wsDisplay, event->xkey.keycode, 0);
 
             if (keySym != NoSymbol) {
                 keySym = ((keySym & 0xff00) != 0 ? ((keySym & 0x00ff) + 256) : (keySym));
                 wsKeyTable[keySym] = i;
 
                 if (wsWindowList[l]->KeyHandler)
-                    wsWindowList[l]->KeyHandler(Event->xkey.state, i, keySym);
+                    wsWindowList[l]->KeyHandler(event->xkey.state, i, keySym);
             }
         }
 #else
@@ -836,12 +836,12 @@ keypressed:
             KeySym keySym;
             static XComposeStatus stat;
 
-            XLookupString(&Event->xkey, buf, sizeof(buf), &keySym, &stat);
+            XLookupString(&event->xkey, buf, sizeof(buf), &keySym, &stat);
             key = ((keySym & 0xff00) != 0 ? ((keySym & 0x00ff) + 256) : (keySym));
             wsKeyTable[key] = i;
 
             if (wsWindowList[l]->KeyHandler)
-                wsWindowList[l]->KeyHandler(Event->xkey.keycode, i, key);
+                wsWindowList[l]->KeyHandler(event->xkey.keycode, i, key);
         }
 #endif
         break;
@@ -854,12 +854,12 @@ keypressed:
              * this way it works faster when moving the window */
             static XEvent e;
 
-            if (Event->xmotion.state) {
-                while (XCheckTypedWindowEvent(display, Event->xany.window, MotionNotify, &e)) {
+            if (event->xmotion.state) {
+                while (XCheckTypedWindowEvent(display, event->xany.window, MotionNotify, &e)) {
                     /* FIXME: need to make sure we didn't release/press the button in between...*/
                     /* FIXME: do we need some timeout here to make sure we don't spend too much time
                      * removing events from the queue? */
-                    Event = &e;
+                    event = &e;
                 }
             }
         }
@@ -874,7 +874,7 @@ keypressed:
 
     case ButtonRelease:
 
-        i = Event->xbutton.button + 128;
+        i = event->xbutton.button + 128;
 
         if (wsWindowList[l]->wsCursor != None) {
             wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
@@ -886,7 +886,7 @@ keypressed:
 
     case ButtonPress:
 
-        i = Event->xbutton.button;
+        i = event->xbutton.button;
 
         if (wsWindowList[l]->wsCursor != None) {
             wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
@@ -907,14 +907,14 @@ keypressed:
 buttonreleased:
 
         if (wsWindowList[l]->MouseHandler)
-            wsWindowList[l]->MouseHandler(i, Event->xbutton.x, Event->xbutton.y, Event->xmotion.x_root, Event->xmotion.y_root);
+            wsWindowList[l]->MouseHandler(i, event->xbutton.x, event->xbutton.y, event->xmotion.x_root, event->xmotion.y_root);
 
         break;
 
     case SelectionNotify:
 
         /* Handle DandD */
-        wsXDNDProcessSelection(wsWindowList[l], Event);
+        wsXDNDProcessSelection(wsWindowList[l], event);
         break;
     }
 
