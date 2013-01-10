@@ -1536,6 +1536,16 @@ int wsGetOutMask(void)
     return 0;
 }
 
+/**
+ * @brief Clear the entire area in a window.
+ *
+ * @param win pointer to a ws window structure
+ */
+void wsClearWindow(wsTWindow *win)
+{
+    XClearWindow(wsDisplay, win->WindowID);
+}
+
 void wsSetTitle(wsTWindow *win, char *name)
 {
     XStoreName(wsDisplay, win->WindowID, name);
