@@ -85,8 +85,10 @@ void guiInit(void)
         cdrom_device = strdup(DEFAULT_CDROM_DEVICE);
     if (!dvd_device)
         dvd_device = strdup(DEFAULT_DVD_DEVICE);
+#ifdef CONFIG_DXR3
     if (!gtkDXR3Device)
         gtkDXR3Device = strdup("/dev/em8300-0");
+#endif
 
     if (stream_cache_size > 0) {
         gtkCacheOn   = True;
