@@ -9022,6 +9022,7 @@ $def_yasm
 #define CONFIG_LZO 1
 #define CONFIG_MDCT 1
 #define CONFIG_RDFT 1
+#define CONFIG_VIDEODSP 1
 
 /* Use these registers in FFmpeg x86 inline asm. No proper detection yet. */
 #ifndef MP_DEBUG
