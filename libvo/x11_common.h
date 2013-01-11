@@ -40,7 +40,6 @@
 
 extern int metacity_hack;
 
-extern int vo_fs_layer;
 extern int vo_wm_type;
 extern int vo_fs_type;
 extern char** vo_fstype_list;
