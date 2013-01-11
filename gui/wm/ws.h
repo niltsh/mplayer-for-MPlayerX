@@ -246,7 +246,7 @@ void wsClearWindow(wsTWindow *win);
 void wsSetTitle(wsTWindow *win, char *name);
 void wsVisibleWindow(wsTWindow *win, int show);
 void wsWindowDecoration(wsTWindow *win, Bool decor);
-void wsSetLayer(Display *display, Window Win, int layer);
+void wsSetLayer(Display *display, Window Win, Bool fullscreen);
 void wsFullScreen(wsTWindow *win);
 void wsPostRedisplay(wsTWindow *win);
 void wsSetShape(wsTWindow *win, char *data);

@@ -985,9 +985,9 @@ void wsMainLoop(void)
 #define WIN_LAYER_NORMAL                 4
 #define WIN_LAYER_ONTOP                 10
 
-void wsSetLayer(Display *display, Window Win, int layer)
+void wsSetLayer(Display *display, Window Win, Bool fullscreen)
 {
-    vo_x11_setlayer(display, Win, layer);
+    vo_x11_setlayer(display, Win, fullscreen);
 }
 
 /**
