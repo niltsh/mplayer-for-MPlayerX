@@ -901,13 +901,13 @@ static const char help_text[]=
 
 // ws.c
 
-#define MSGTR_WS_RemoteDisplay "[ws] Ekran zdalny, wyłączam XMITSHM.\n"
-#define MSGTR_WS_NoXshm "[ws] Niestety Twój system nie obsługuje rozszerzeń dzielonej pamięci X.\n"
-#define MSGTR_WS_NoXshape "[ws] Niestety Twój system nie obsługuje rozszerzenia XShape.\n"
-#define MSGTR_WS_ColorDepthTooLow "[ws] Niestety paleta kolorów jest za mała.\n"
-#define MSGTR_WS_TooManyOpenWindows "[ws] Za dużo otwartych okien.\n"
-#define MSGTR_WS_ShmError "[ws] błąd rozszerzenia pamięci dzielonej\n"
-#define MSGTR_WS_NotEnoughMemoryDrawBuffer "[ws] Za mało pamięci do wyrysowania bufora.\n"
+#define MSGTR_WS_RemoteDisplay "Ekran zdalny, wyłączam XMITSHM.\n"
+#define MSGTR_WS_NoXshm "Niestety Twój system nie obsługuje rozszerzeń dzielonej pamięci X.\n"
+#define MSGTR_WS_NoXshape "Niestety Twój system nie obsługuje rozszerzenia XShape.\n"
+#define MSGTR_WS_ColorDepthTooLow "Niestety paleta kolorów jest za mała.\n"
+#define MSGTR_WS_TooManyOpenWindows "Za dużo otwartych okien.\n"
+#define MSGTR_WS_ShmError "błąd rozszerzenia pamięci dzielonej\n"
+#define MSGTR_WS_NotEnoughMemoryDrawBuffer "Za mało pamięci do wyrysowania bufora.\n"
 #define MSGTR_WS_DpmsUnavailable "DPMS niedostępny?\n"
 #define MSGTR_WS_DpmsNotEnabled "Nie mogłem włączyć DPMS.\n"
 

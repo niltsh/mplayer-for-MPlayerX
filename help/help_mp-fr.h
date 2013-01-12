@@ -933,13 +933,13 @@ static const char help_text[]=
 
 // ws.c
 
-#define MSGTR_WS_RemoteDisplay "[ws] Affichage à distance, désactive XMITSHM.\n"
-#define MSGTR_WS_NoXshm "[ws] Désolé, votre système ne supporte pas l'extension de mémoire partagée X.\n"
-#define MSGTR_WS_NoXshape "[ws] Désolé, votre système ne supporte pas l'extension XShape.\n"
-#define MSGTR_WS_ColorDepthTooLow "[ws] Désolé, la profondeur d'échantillonnage est trop basse.\n"
-#define MSGTR_WS_TooManyOpenWindows "[ws] Trop de fenêtres ouvertes.\n"
-#define MSGTR_WS_ShmError "[ws] Erreur d'extension de mémoire partagée\n"
-#define MSGTR_WS_NotEnoughMemoryDrawBuffer "[ws] Désolé, mémoire insuffisante pour tampon de dessin.\n"
+#define MSGTR_WS_RemoteDisplay "Affichage à distance, désactive XMITSHM.\n"
+#define MSGTR_WS_NoXshm "Désolé, votre système ne supporte pas l'extension de mémoire partagée X.\n"
+#define MSGTR_WS_NoXshape "Désolé, votre système ne supporte pas l'extension XShape.\n"
+#define MSGTR_WS_ColorDepthTooLow "Désolé, la profondeur d'échantillonnage est trop basse.\n"
+#define MSGTR_WS_TooManyOpenWindows "Trop de fenêtres ouvertes.\n"
+#define MSGTR_WS_ShmError "Erreur d'extension de mémoire partagée\n"
+#define MSGTR_WS_NotEnoughMemoryDrawBuffer "Désolé, mémoire insuffisante pour tampon de dessin.\n"
 #define MSGTR_WS_DpmsUnavailable "DPMS non disponible ?\n"
 #define MSGTR_WS_DpmsNotEnabled "Imposssible d'activer DPMS.\n"
 

@@ -205,7 +205,7 @@ static int wsErrorHandler(Display *display, XErrorEvent *event)
 
     XGetErrorText(display, event->error_code, type, sizeof(type));
 
-    mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_WS_XError);
+    mp_msg(MSGT_GPLAYER, MSGL_ERR, "[ws] " MSGTR_WS_XError);
     mp_msg(MSGT_GPLAYER, MSGL_ERR, "[ws]  Error code: %d - %s\n", event->error_code, type);
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  Request code: %d (minor code: %d)\n", event->request_code, event->minor_code);
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  MPlayer module: %s\n", current_module ? current_module : "(none)");

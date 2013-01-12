@@ -839,13 +839,13 @@ static const char help_text[]=
 #define MSGTR_NotAFile "这好像不是文件：%s！\n"
 
 // ws.c
-#define MSGTR_WS_RemoteDisplay "[ws] 远程显示界面，禁用 XMITSHM。\n"
-#define MSGTR_WS_NoXshm "[ws] 抱歉，你的系统不支持 X 共享内存扩展组件。\n"
-#define MSGTR_WS_NoXshape "[ws] 抱歉，你的系统不支持 XShape 扩展组件。\n"
-#define MSGTR_WS_ColorDepthTooLow "[ws] 抱歉，色彩深度太低。\n"
-#define MSGTR_WS_TooManyOpenWindows "[ws] 打开窗口太多。\n"
-#define MSGTR_WS_ShmError "[ws] 共享内存扩展组件错误\n"
-#define MSGTR_WS_NotEnoughMemoryDrawBuffer "[ws] 抱歉，内存不足以用于绘制缓冲。\n"
+#define MSGTR_WS_RemoteDisplay "远程显示界面，禁用 XMITSHM。\n"
+#define MSGTR_WS_NoXshm "抱歉，你的系统不支持 X 共享内存扩展组件。\n"
+#define MSGTR_WS_NoXshape "抱歉，你的系统不支持 XShape 扩展组件。\n"
+#define MSGTR_WS_ColorDepthTooLow "抱歉，色彩深度太低。\n"
+#define MSGTR_WS_TooManyOpenWindows "打开窗口太多。\n"
+#define MSGTR_WS_ShmError "共享内存扩展组件错误\n"
+#define MSGTR_WS_NotEnoughMemoryDrawBuffer "抱歉，内存不足以用于绘制缓冲。\n"
 #define MSGTR_WS_DpmsUnavailable "DPMS 不可用？\n"
 #define MSGTR_WS_DpmsNotEnabled "无法启用 DPMS。\n"
 

@@ -839,16 +839,16 @@ static const char help_text[]=
 #define MSGTR_NotAFile "This does not seem to be a file: %s !\n"
 
 // ws.c
-#define MSGTR_WS_RemoteDisplay "[ws] Remote display, disabling XMITSHM.\n"
-#define MSGTR_WS_NoXshm "[ws] Sorry, your system does not support the X shared memory extension.\n"
-#define MSGTR_WS_NoXshape "[ws] Sorry, your system does not support the XShape extension.\n"
-#define MSGTR_WS_ColorDepthTooLow "[ws] Sorry, the color depth is too low.\n"
-#define MSGTR_WS_TooManyOpenWindows "[ws] There are too many open windows.\n"
-#define MSGTR_WS_ShmError "[ws] shared memory extension error\n"
-#define MSGTR_WS_NotEnoughMemoryDrawBuffer "[ws] Sorry, not enough memory to draw buffer.\n"
+#define MSGTR_WS_RemoteDisplay "Remote display, disabling XMITSHM.\n"
+#define MSGTR_WS_NoXshm "Sorry, your system does not support the X shared memory extension.\n"
+#define MSGTR_WS_NoXshape "Sorry, your system does not support the XShape extension.\n"
+#define MSGTR_WS_ColorDepthTooLow "Sorry, the color depth is too low.\n"
+#define MSGTR_WS_TooManyOpenWindows "There are too many open windows.\n"
+#define MSGTR_WS_ShmError "shared memory extension error\n"
+#define MSGTR_WS_NotEnoughMemoryDrawBuffer "Sorry, not enough memory to draw buffer.\n"
 #define MSGTR_WS_DpmsUnavailable "DPMS not available?\n"
 #define MSGTR_WS_DpmsNotEnabled "Could not enable DPMS.\n"
-#define MSGTR_WS_XError "[ws] An X11 Error has occurred!\n"
+#define MSGTR_WS_XError "An X11 Error has occurred!\n"
 
 // wsxdnd.c
 #define MSGTR_WS_NotAFile "This does not seem to be a file...\n"

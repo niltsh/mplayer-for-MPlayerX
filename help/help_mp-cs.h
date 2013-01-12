@@ -766,13 +766,13 @@ static const char help_text[]=
 #define MSGTR_NotAFile "Toto nevypadá jako soubor: %s !\n"
 
 // ws.c
-#define MSGTR_WS_RemoteDisplay "[ws] Vzdálený display, vypínám XMITSHM.\n"
-#define MSGTR_WS_NoXshm "[ws] Promiňte, ale váš systém nepodporuje rozšíření X shared memory.\n"
-#define MSGTR_WS_NoXshape "[ws] Promiňte, ale váš systém nepodporuje rozšíření XShape.\n"
-#define MSGTR_WS_ColorDepthTooLow "[ws] Promiňte, ale barevná hloubka je příliš malá.\n"
-#define MSGTR_WS_TooManyOpenWindows "[ws] Příliš mnoho otevřených oken.\n"
-#define MSGTR_WS_ShmError "[ws] chyba rozšíření shared memory\n"
-#define MSGTR_WS_NotEnoughMemoryDrawBuffer "[ws] Promiňte, nedostatek paměti pro vykreslení bufferu.\n"
+#define MSGTR_WS_RemoteDisplay "Vzdálený display, vypínám XMITSHM.\n"
+#define MSGTR_WS_NoXshm "Promiňte, ale váš systém nepodporuje rozšíření X shared memory.\n"
+#define MSGTR_WS_NoXshape "Promiňte, ale váš systém nepodporuje rozšíření XShape.\n"
+#define MSGTR_WS_ColorDepthTooLow "Promiňte, ale barevná hloubka je příliš malá.\n"
+#define MSGTR_WS_TooManyOpenWindows "Příliš mnoho otevřených oken.\n"
+#define MSGTR_WS_ShmError "chyba rozšíření shared memory\n"
+#define MSGTR_WS_NotEnoughMemoryDrawBuffer "Promiňte, nedostatek paměti pro vykreslení bufferu.\n"
 #define MSGTR_WS_DpmsUnavailable "DPMS není k dispozici?\n"
 #define MSGTR_WS_DpmsNotEnabled "Nelze zapnout DPMS.\n"
 

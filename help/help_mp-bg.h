@@ -778,13 +778,13 @@ static const char help_text[]=
 
 // ws.c
 
-#define MSGTR_WS_RemoteDisplay "[ws] Отдалечен дисплей, изключване на  XMITSHM.\n"
-#define MSGTR_WS_NoXshm "[ws] За съжаление вашата система не поддържа разширението на X за споделена памет.\n"
-#define MSGTR_WS_NoXshape "[ws] За съжаление вашата система не поддържа разширението XShape.\n"
-#define MSGTR_WS_ColorDepthTooLow "[ws] Твърде ниска дълбочина на цветовете.\n"
-#define MSGTR_WS_TooManyOpenWindows "[ws] Твърде много отворени прозорци.\n"
-#define MSGTR_WS_ShmError "[ws] грешка в разширението за споделена памет\n"
-#define MSGTR_WS_NotEnoughMemoryDrawBuffer "[ws] Няма достатъчно памет за draw buffer.\n"
+#define MSGTR_WS_RemoteDisplay "Отдалечен дисплей, изключване на  XMITSHM.\n"
+#define MSGTR_WS_NoXshm "За съжаление вашата система не поддържа разширението на X за споделена памет.\n"
+#define MSGTR_WS_NoXshape "За съжаление вашата система не поддържа разширението XShape.\n"
+#define MSGTR_WS_ColorDepthTooLow "Твърде ниска дълбочина на цветовете.\n"
+#define MSGTR_WS_TooManyOpenWindows "Твърде много отворени прозорци.\n"
+#define MSGTR_WS_ShmError "грешка в разширението за споделена памет\n"
+#define MSGTR_WS_NotEnoughMemoryDrawBuffer "Няма достатъчно памет за draw buffer.\n"
 #define MSGTR_WS_DpmsUnavailable "DPMS не е достъпен?\n"
 #define MSGTR_WS_DpmsNotEnabled "DPMS не може да бъде включен.\n"
 

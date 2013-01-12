@@ -776,13 +776,13 @@ static const char help_text[]=
 #define MSGTR_NotAFile "Questo non pare essere un file: %s !\n"
 
 // ws.c
-#define MSGTR_WS_RemoteDisplay "[ws] Display remoto, disabilito XMITSHM.\n"
-#define MSGTR_WS_NoXshm "[ws] Spiacente, il tuo sistema non supporta l'estensione 'X shared memory'.\n"
-#define MSGTR_WS_NoXshape "[ws] Spiacente, il tuo sistema non supporta l'estensione XShape.\n"
-#define MSGTR_WS_ColorDepthTooLow "[ws] Spiacente, la profondità colore è troppo bassa.\n"
-#define MSGTR_WS_TooManyOpenWindows "[ws] Ci sono troppe finestre aperte.\n"
-#define MSGTR_WS_ShmError "[ws] errore estensione 'shared memory'\n"
-#define MSGTR_WS_NotEnoughMemoryDrawBuffer "[ws] Spiacente, non abbastanza memoria per il tracciare il buffer.\n"
+#define MSGTR_WS_RemoteDisplay "Display remoto, disabilito XMITSHM.\n"
+#define MSGTR_WS_NoXshm "Spiacente, il tuo sistema non supporta l'estensione 'X shared memory'.\n"
+#define MSGTR_WS_NoXshape "Spiacente, il tuo sistema non supporta l'estensione XShape.\n"
+#define MSGTR_WS_ColorDepthTooLow "Spiacente, la profondità colore è troppo bassa.\n"
+#define MSGTR_WS_TooManyOpenWindows "Ci sono troppe finestre aperte.\n"
+#define MSGTR_WS_ShmError "errore estensione 'shared memory'\n"
+#define MSGTR_WS_NotEnoughMemoryDrawBuffer "Spiacente, non abbastanza memoria per il tracciare il buffer.\n"
 #define MSGTR_WS_DpmsUnavailable "DPMS non disponibile?\n"
 #define MSGTR_WS_DpmsNotEnabled "Non posso abilitare DPMS.\n"
 

@@ -1046,16 +1046,16 @@ static const char help_text[]=
 #define MSGTR_NotAFile "Dies scheint keine Datei zu sein: %s !\n"
 
 // ws.c
-#define MSGTR_WS_RemoteDisplay "[ws] Ferngesteuertes Display, deaktiviere XMITSHM.\n"
-#define MSGTR_WS_NoXshm "[ws] Sorry, dein System unterstützt die Shared-Memory-Erweiterung von X nicht.\n"
-#define MSGTR_WS_NoXshape "[ws] Sorry, dein System unterstützt die XShape-Erweiterung nicht.\n"
-#define MSGTR_WS_ColorDepthTooLow "[ws] Sorry, die Farbtiefe ist zu niedrig.\n"
-#define MSGTR_WS_TooManyOpenWindows "[ws] Es sind zu viele Fenster geöffnet.\n"
-#define MSGTR_WS_ShmError "[ws] Fehler der Shared-Memory-Erweiterung\n"
-#define MSGTR_WS_NotEnoughMemoryDrawBuffer "[ws] Sorry, nicht genügend Speicher zum Schreiben des Buffers.\n"
+#define MSGTR_WS_RemoteDisplay "Ferngesteuertes Display, deaktiviere XMITSHM.\n"
+#define MSGTR_WS_NoXshm "Sorry, dein System unterstützt die Shared-Memory-Erweiterung von X nicht.\n"
+#define MSGTR_WS_NoXshape "Sorry, dein System unterstützt die XShape-Erweiterung nicht.\n"
+#define MSGTR_WS_ColorDepthTooLow "Sorry, die Farbtiefe ist zu niedrig.\n"
+#define MSGTR_WS_TooManyOpenWindows "Es sind zu viele Fenster geöffnet.\n"
+#define MSGTR_WS_ShmError "Fehler der Shared-Memory-Erweiterung\n"
+#define MSGTR_WS_NotEnoughMemoryDrawBuffer "Sorry, nicht genügend Speicher zum Schreiben des Buffers.\n"
 #define MSGTR_WS_DpmsUnavailable "DPMS nicht verfügbar?\n"
 #define MSGTR_WS_DpmsNotEnabled "Konnte DPMS nicht aktivieren.\n"
-#define MSGTR_WS_XError "[ws] Ein X11-Fehler ist aufgetreten!\n"
+#define MSGTR_WS_XError "Ein X11-Fehler ist aufgetreten!\n"
 
 // wsxdnd.c
 #define MSGTR_WS_NotAFile "Dies scheint keine Datei zu sein...\n"

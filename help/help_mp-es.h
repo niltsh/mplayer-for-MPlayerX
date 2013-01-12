@@ -793,13 +793,13 @@ static const char help_text[]=
 #define MSGTR_NotAFile "Esto no parece ser un archivo: %s !\n"
 
 // ws.c
-#define MSGTR_WS_RemoteDisplay "[ws] Display remoto, desactivando XMITSHM.\n"
-#define MSGTR_WS_NoXshm "[ws] Lo lamento, su sistema no soporta la extensión de memoria compartida X.\n"
-#define MSGTR_WS_NoXshape "[ws] Lo lamento, su sistema no soporta la extensión XShape.\n"
-#define MSGTR_WS_ColorDepthTooLow "[ws] Lo lamento, la profundidad de color es demasiado baja.\n"
-#define MSGTR_WS_TooManyOpenWindows "[ws] Hay demasiadas ventanas abiertas.\n"
-#define MSGTR_WS_ShmError "[ws] Error en la extensión de memoria compartida\n"
-#define MSGTR_WS_NotEnoughMemoryDrawBuffer "[ws] Lo lamento, no hay suficiente memoria para el buffer de dibujo.\n"
+#define MSGTR_WS_RemoteDisplay "Display remoto, desactivando XMITSHM.\n"
+#define MSGTR_WS_NoXshm "Lo lamento, su sistema no soporta la extensión de memoria compartida X.\n"
+#define MSGTR_WS_NoXshape "Lo lamento, su sistema no soporta la extensión XShape.\n"
+#define MSGTR_WS_ColorDepthTooLow "Lo lamento, la profundidad de color es demasiado baja.\n"
+#define MSGTR_WS_TooManyOpenWindows "Hay demasiadas ventanas abiertas.\n"
+#define MSGTR_WS_ShmError "Error en la extensión de memoria compartida\n"
+#define MSGTR_WS_NotEnoughMemoryDrawBuffer "Lo lamento, no hay suficiente memoria para el buffer de dibujo.\n"
 #define MSGTR_WS_DpmsUnavailable "¿DPMS no disponible?\n"
 #define MSGTR_WS_DpmsNotEnabled "No se pudo activar DPMS.\n"
 

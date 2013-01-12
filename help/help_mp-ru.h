@@ -768,13 +768,13 @@ static const char help_text[]=
 #define MSGTR_NotAFile "Это не похоже на файл: '%s' !\n"
 
 // ws.c
-#define MSGTR_WS_RemoteDisplay "[ws] Удалённый дисплей, отключаю XMITSHM.\n"
-#define MSGTR_WS_NoXshm "[ws] Извините, ваша система не поддерживает расширение разделяемой памяти X'ов.\n"
-#define MSGTR_WS_NoXshape "[ws] Извините, ваша система не поддерживает расширение XShape.\n"
-#define MSGTR_WS_ColorDepthTooLow "[ws] Извините, глубина цвета слишком мала.\n"
-#define MSGTR_WS_TooManyOpenWindows "[ws] Слишком много открытых окон.\n"
-#define MSGTR_WS_ShmError "[ws] ошибка расширения разделяемой памяти\n"
-#define MSGTR_WS_NotEnoughMemoryDrawBuffer "[ws] Извините, недостаточно памяти для буфера прорисовки.\n"
+#define MSGTR_WS_RemoteDisplay "Удалённый дисплей, отключаю XMITSHM.\n"
+#define MSGTR_WS_NoXshm "Извините, ваша система не поддерживает расширение разделяемой памяти X'ов.\n"
+#define MSGTR_WS_NoXshape "Извините, ваша система не поддерживает расширение XShape.\n"
+#define MSGTR_WS_ColorDepthTooLow "Извините, глубина цвета слишком мала.\n"
+#define MSGTR_WS_TooManyOpenWindows "Слишком много открытых окон.\n"
+#define MSGTR_WS_ShmError "ошибка расширения разделяемой памяти\n"
+#define MSGTR_WS_NotEnoughMemoryDrawBuffer "Извините, недостаточно памяти для буфера прорисовки.\n"
 #define MSGTR_WS_DpmsUnavailable "DPMS не доступен?\n"
 #define MSGTR_WS_DpmsNotEnabled "Не могу включить DPMS.\n"
 

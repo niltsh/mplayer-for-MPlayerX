@@ -779,13 +779,13 @@ static const char help_text[]=
 #define MSGTR_NotAFile "Úgy tűnik, hogy ez nem fájl: %s !\n"
 
 // ws.c
-#define MSGTR_WS_RemoteDisplay "[ws] Távoli képernyő, XMITSHM kikapcsolva.\n"
-#define MSGTR_WS_NoXshm "[ws] Bocs, a rendszered nem támogatja az X osztott memória kiterjesztést.\n"
-#define MSGTR_WS_NoXshape "[ws] Bocs, a rendszered nem támogatja az XShape kiterjesztést.\n"
-#define MSGTR_WS_ColorDepthTooLow "[ws] Bocs, a szín mélység túl kicsi.\n"
-#define MSGTR_WS_TooManyOpenWindows "[ws] Túl sok nyitott ablak van.\n"
-#define MSGTR_WS_ShmError "[ws] osztott memória kiterjesztés hibája\n"
-#define MSGTR_WS_NotEnoughMemoryDrawBuffer "[ws] Bocs, nincs elég memória a rajz buffernek.\n"
+#define MSGTR_WS_RemoteDisplay "Távoli képernyő, XMITSHM kikapcsolva.\n"
+#define MSGTR_WS_NoXshm "Bocs, a rendszered nem támogatja az X osztott memória kiterjesztést.\n"
+#define MSGTR_WS_NoXshape "Bocs, a rendszered nem támogatja az XShape kiterjesztést.\n"
+#define MSGTR_WS_ColorDepthTooLow "Bocs, a szín mélység túl kicsi.\n"
+#define MSGTR_WS_TooManyOpenWindows "Túl sok nyitott ablak van.\n"
+#define MSGTR_WS_ShmError "osztott memória kiterjesztés hibája\n"
+#define MSGTR_WS_NotEnoughMemoryDrawBuffer "Bocs, nincs elég memória a rajz buffernek.\n"
 #define MSGTR_WS_DpmsUnavailable "A DPMS nem elérhető?\n"
 #define MSGTR_WS_DpmsNotEnabled "A DPMS nem engedélyezhető.\n"
 
