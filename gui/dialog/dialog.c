@@ -75,6 +75,16 @@ static const char gui_icon_name[] = "mplayer";
 
 guiIcon_t guiIcon;
 
+/**
+ * @brief Add an icon to the #guiIcon icon structure.
+ *
+ * @param theme theme to load the icon from
+ * @param size size of the icon to load
+ * @param gdkIcon location to store a pointer to the created pixmap
+ * @param gdkIconMask location to store a pointer to the created mask
+ *
+ * @return #True (ok) or #False (error)
+ */
 static int gtkLoadIcon(GtkIconTheme *theme, gint size, GdkPixmap **gdkIcon, GdkBitmap **gdkIconMask)
 {
     GdkPixbuf *pixbuf;
@@ -115,6 +125,11 @@ static int gtkLoadIcon(GtkIconTheme *theme, gint size, GdkPixmap **gdkIcon, GdkB
     return (pixbuf != NULL);
 }
 
+/**
+ * @brief Initialize the GTK user interface.
+ *
+ * @param display_name name of the X display to use or NULL (using the DISPLAY environment variable)
+ */
 void gtkInit(char *display_name)
 {
     int argc = 0;
@@ -156,6 +171,11 @@ void gtkInit(char *display_name)
     gtkInitialized = True;
 }
 
+/**
+ * @brief Add the #guiIcon icons to a GTK window.
+ *
+ * @param window pointer to a GtkWindow widget
+ */
 void gtkAddIcon(GtkWidget *window)
 {
     wsSetIcon(gdk_display, GDK_WINDOW_XWINDOW(window->window), &guiIcon);
@@ -242,12 +262,22 @@ void gtkMessageBox(int type, const gchar *str)
             gtk_main_iteration_do(0);
 }
 
+/**
+ * @brief Set the layer for a GTK window.
+ *
+ * @param window pointer to a GtkWindow widget
+ */
 void gtkSetLayer(GtkWidget *window)
 {
     wsSetLayer(gdk_display, GDK_WINDOW_XWINDOW(window->window), guiApp.videoWindow.isFullScreen);
     gtkActive(window);
 }
 
+/**
+ * @brief Activate a GTK window, i.e. raise it to the top.
+ *
+ * @param window pointer to a GtkWindow widget
+ */
 void gtkActive(GtkWidget *window)
 {
     wsRaiseWindowTop(gdk_display, GDK_WINDOW_XWINDOW(window->window));

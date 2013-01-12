@@ -985,6 +985,13 @@ void wsMainLoop(void)
 #define WIN_LAYER_NORMAL                 4
 #define WIN_LAYER_ONTOP                 10
 
+/**
+ * @brief Set the layer for a window.
+ *
+ * @param display display
+ * @param Win window
+ * @param fullscreen whether to set fullscreen or normal layer
+ */
 void wsSetLayer(Display *display, Window Win, Bool fullscreen)
 {
     vo_x11_setlayer(display, Win, fullscreen);
