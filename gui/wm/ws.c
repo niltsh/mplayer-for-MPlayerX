@@ -436,6 +436,62 @@ static void wsWindowPosition(wsTWindow *win, int x, int y, int width, int height
     }
 }
 
+/**
+ * @brief Replace the size hints for the WM_NORMAL_HINTS property of a window.
+ *
+ * @param win pointer to a ws window structure
+ * @param hints size hints bits
+ */
+static void wsSizeHint(wsTWindow *win, long hints)
+{
+    win->SizeHint.flags = hints;
+
+    if (hints & PPosition) {
+        win->SizeHint.x = win->X;
+        win->SizeHint.y = win->Y;
+    }
+
+    if (hints & PSize) {
+        win->SizeHint.width  = win->Width;
+        win->SizeHint.height = win->Height;
+    }
+
+    if (hints & PMinSize || win->Property & wsMinSize) {
+        win->SizeHint.flags     |= PMinSize;
+        win->SizeHint.min_width  = win->Width;
+        win->SizeHint.min_height = win->Height;
+    }
+
+    if (hints & PMaxSize || win->Property & wsMaxSize) {
+        win->SizeHint.flags     |= PMaxSize;
+        win->SizeHint.max_width  = win->Width;
+        win->SizeHint.max_height = win->Height;
+    }
+
+    if (hints & PResizeInc) {
+        win->SizeHint.width_inc  = 1;
+        win->SizeHint.height_inc = 1;
+    }
+
+    if (hints & PAspect) {
+        win->SizeHint.min_aspect.x = win->Width;
+        win->SizeHint.min_aspect.y = win->Height;
+        win->SizeHint.max_aspect.x = win->Width;
+        win->SizeHint.max_aspect.y = win->Height;
+    }
+
+//  if (hints & PBaseSize)
+    {
+        win->SizeHint.base_width  = win->Width;
+        win->SizeHint.base_height = win->Height;
+    }
+
+    if (hints & PWinGravity)
+        win->SizeHint.win_gravity = StaticGravity;
+
+    XSetWMNormalHints(wsDisplay, win->WindowID, &win->SizeHint);
+}
+
 // ----------------------------------------------------------------------------------------------
 //   Create window.
 //     X,Y   : window position
@@ -541,30 +597,7 @@ void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV
     wsClassHint.res_class = "MPlayer";
     XSetClassHint(wsDisplay, win->WindowID, &wsClassHint);
 
-    win->SizeHint.flags  = PPosition | PSize | PResizeInc | PWinGravity; // | PBaseSize;
-    win->SizeHint.x      = win->X;
-    win->SizeHint.y      = win->Y;
-    win->SizeHint.width  = win->Width;
-    win->SizeHint.height = win->Height;
-
-    if (D & wsMinSize) {
-        win->SizeHint.flags     |= PMinSize;
-        win->SizeHint.min_width  = win->Width;
-        win->SizeHint.min_height = win->Height;
-    }
-
-    if (D & wsMaxSize) {
-        win->SizeHint.flags     |= PMaxSize;
-        win->SizeHint.max_width  = win->Width;
-        win->SizeHint.max_height = win->Height;
-    }
-
-    win->SizeHint.height_inc  = 1;
-    win->SizeHint.width_inc   = 1;
-    win->SizeHint.base_width  = win->Width;
-    win->SizeHint.base_height = win->Height;
-    win->SizeHint.win_gravity = StaticGravity;
-    XSetWMNormalHints(wsDisplay, win->WindowID, &win->SizeHint);
+    wsSizeHint(win, PPosition | PSize | PResizeInc /* | PBaseSize */ | PWinGravity);
 
     win->WMHints.flags = InputHint | StateHint;
     win->WMHints.input = True;
@@ -1205,32 +1238,10 @@ void wsResizeWindow(wsTWindow *win, int sx, int sy)
     win->Width  = sx;
     win->Height = sy;
 
-    win->SizeHint.flags  = PPosition | PSize | PWinGravity; // | PBaseSize;
-    win->SizeHint.x      = win->X;
-    win->SizeHint.y      = win->Y;
-    win->SizeHint.width  = win->Width;
-    win->SizeHint.height = win->Height;
-
-    if (win->Property & wsMinSize) {
-        win->SizeHint.flags     |= PMinSize;
-        win->SizeHint.min_width  = win->Width;
-        win->SizeHint.min_height = win->Height;
-    }
-
-    if (win->Property & wsMaxSize) {
-        win->SizeHint.flags     |= PMaxSize;
-        win->SizeHint.max_width  = win->Width;
-        win->SizeHint.max_height = win->Height;
-    }
-
-    win->SizeHint.win_gravity = StaticGravity;
-    win->SizeHint.base_width  = sx;
-    win->SizeHint.base_height = sy;
-
     if (vo_wm_type == 0)
         XUnmapWindow(wsDisplay, win->WindowID);
 
-    XSetWMNormalHints(wsDisplay, win->WindowID, &win->SizeHint);
+    wsSizeHint(win, PPosition | PSize /* | PBaseSize */ | PWinGravity);
     XResizeWindow(wsDisplay, win->WindowID, sx, sy);
 
     if (win->ReSize)
