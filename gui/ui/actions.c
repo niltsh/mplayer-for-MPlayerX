@@ -232,7 +232,7 @@ void uiChangeSkin(char *name)
 
     wsDestroyWindow(&guiApp.mainWindow);
 
-    wsCreateWindow(&guiApp.mainWindow, guiApp.main.x, guiApp.main.y, guiApp.main.width, guiApp.main.height, wsNoBorder, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, wsShowFrame | wsMaxSize | wsHideWindow, "MPlayer");
+    wsCreateWindow(&guiApp.mainWindow, guiApp.main.x, guiApp.main.y, guiApp.main.width, guiApp.main.height, wsNoBorder, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, wsShowFrame | wsMinSize | wsMaxSize | wsHideWindow, "MPlayer");
     wsCreateImage(&guiApp.mainWindow, guiApp.main.Bitmap.Width, guiApp.main.Bitmap.Height);
     wsSetShape(&guiApp.mainWindow, guiApp.main.Mask.Image);
     wsSetIcon(wsDisplay, guiApp.mainWindow.WindowID, &guiIcon);
