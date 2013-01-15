@@ -224,7 +224,7 @@ void guiInit(void)
     if (gtkShowVideoWindow) {
         wsVisibleWindow(&guiApp.videoWindow, wsShowWindow);
 
-            guiInfo.VideoWindow       = True;
+        guiInfo.VideoWindow = True;
 
         if (gtkLoadFullscreen)
             uiFullScreen();
