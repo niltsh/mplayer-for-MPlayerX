@@ -172,7 +172,7 @@ void guiInit(void)
     if (guiWinID >= 0)
         guiApp.mainWindow.Parent = guiWinID;
 
-    wsCreateWindow(&guiApp.videoWindow, guiApp.video.x, guiApp.video.y, guiApp.video.width, guiApp.video.height, wsNoBorder, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, wsShowFrame | wsHideWindow | wsWaitMap, "MPlayer - Video");
+    wsCreateWindow(&guiApp.videoWindow, guiApp.video.x, guiApp.video.y, guiApp.video.width, guiApp.video.height, wsNoBorder, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, wsShowFrame | wsHideWindow | wsWaitMap | wsAspect, "MPlayer - Video");
     wsDestroyImage(&guiApp.videoWindow);
     wsCreateImage(&guiApp.videoWindow, guiApp.video.Bitmap.Width, guiApp.video.Bitmap.Height);
     wsXDNDMakeAwareness(&guiApp.videoWindow);

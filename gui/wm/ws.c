@@ -471,7 +471,7 @@ static void wsSizeHint(wsWindow *win)
         win->SizeHint.max_height = win->Height;
     }
 
-    if (vo_keepaspect /*&& (win->Property & wsAspect)*/) {
+    if (vo_keepaspect && (win->Property & wsAspect)) {
         win->SizeHint.flags |= PAspect;
         win->SizeHint.min_aspect.x = win->Width;
         win->SizeHint.min_aspect.y = win->Height;
