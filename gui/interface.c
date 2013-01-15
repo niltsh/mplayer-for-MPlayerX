@@ -172,7 +172,7 @@ void guiInit(void)
     if (guiWinID >= 0)
         guiApp.mainWindow.Parent = guiWinID;
 
-    wsCreateWindow(&guiApp.videoWindow, guiApp.video.x, guiApp.video.y, guiApp.video.width, guiApp.video.height, wsNoBorder, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, wsShowFrame | wsHideWindow | wsWaitMap | wsAspect, "MPlayer - Video");
+    wsCreateWindow(&guiApp.videoWindow, guiApp.video.x, guiApp.video.y, guiApp.video.width, guiApp.video.height, 0, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, wsShowFrame | wsHideWindow | wsWaitMap | wsAspect, "MPlayer - Video");
     wsDestroyImage(&guiApp.videoWindow);
     wsCreateImage(&guiApp.videoWindow, guiApp.video.Bitmap.Width, guiApp.video.Bitmap.Height);
     wsXDNDMakeAwareness(&guiApp.videoWindow);
@@ -185,7 +185,7 @@ void guiInit(void)
 // i=wsHideFrame|wsMaxSize|wsHideWindow;
 // if ( guiApp.mainDecoration ) i=wsShowFrame|wsMaxSize|wsHideWindow;
     i = wsShowFrame | wsMinSize | wsMaxSize | wsHideWindow;
-    wsCreateWindow(&guiApp.mainWindow, guiApp.main.x, guiApp.main.y, guiApp.main.width, guiApp.main.height, wsNoBorder, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, i, "MPlayer");
+    wsCreateWindow(&guiApp.mainWindow, guiApp.main.x, guiApp.main.y, guiApp.main.width, guiApp.main.height, 0, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, i, "MPlayer");
     wsSetShape(&guiApp.mainWindow, guiApp.main.Mask.Image);
     wsXDNDMakeAwareness(&guiApp.mainWindow);
 

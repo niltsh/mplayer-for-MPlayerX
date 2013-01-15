@@ -160,7 +160,7 @@ void uiMenuInit( void )
 
  wsCreateWindow( &guiApp.menuWindow,
  guiApp.menu.x,guiApp.menu.y,guiApp.menu.width,guiApp.menu.height,
- wsNoBorder,wsShowMouseCursor|wsHandleMouseButton|wsHandleMouseMove,wsOverredirect|wsHideFrame|wsMaxSize|wsMinSize|wsHideWindow,"MPlayer menu" );
+ 0,wsShowMouseCursor|wsHandleMouseButton|wsHandleMouseMove,wsOverredirect|wsHideFrame|wsMaxSize|wsMinSize|wsHideWindow,"MPlayer menu" );
 
  wsSetShape( &guiApp.menuWindow,guiApp.menu.Mask.Image );
 

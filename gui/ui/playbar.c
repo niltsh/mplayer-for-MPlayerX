@@ -259,7 +259,7 @@ void uiPlaybarInit( void )
  guiApp.playbarWindow.Parent=guiApp.videoWindow.WindowID;
  wsCreateWindow( &guiApp.playbarWindow,
    guiApp.playbar.x,guiApp.playbar.y,guiApp.playbar.width,guiApp.playbar.height,
-   wsNoBorder,wsShowMouseCursor|wsHandleMouseButton|wsHandleMouseMove,wsHideFrame|wsHideWindow,"PlayBar" );
+   0,wsShowMouseCursor|wsHandleMouseButton|wsHandleMouseMove,wsHideFrame|wsHideWindow,"PlayBar" );
 
  wsSetShape( &guiApp.playbarWindow,guiApp.playbar.Mask.Image );
 

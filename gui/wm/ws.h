@@ -74,8 +74,6 @@
 #define  wsWaitMap      64
 #define  wsAspect       128
 
-#define  wsNoBorder 0
-
 #define  wsSysName "AutoSpace Window System LiTe"
 
 #define wsRGB32 1
