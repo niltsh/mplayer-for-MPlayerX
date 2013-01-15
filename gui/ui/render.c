@@ -304,7 +304,7 @@ static void SimplePotmeterPutImage(guiImage *bf, int x, int y, float frac)
     }
 }
 
-void RenderAll(wsTWindow *window, wItem *Items, int nrItems, char *db)
+void RenderAll(wsWindow *window, wItem *Items, int nrItems, char *db)
 {
     wItem *item;
     guiImage *image = NULL;

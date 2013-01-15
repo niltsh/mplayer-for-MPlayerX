@@ -65,7 +65,7 @@
 
 #define MOUSEHIDE_DELAY 1000   // in milliseconds
 
-static wsTWindow *mouse_win;
+static wsWindow *mouse_win;
 static unsigned int mouse_time;
 
 typedef struct {
@@ -103,7 +103,7 @@ int wsNonNativeOrder = 0;
 Bool wsTrue = True;
 
 #define wsWLCount 5
-wsTWindow *wsWindowList[wsWLCount] = { NULL, NULL, NULL, NULL, NULL };
+wsWindow *wsWindowList[wsWLCount] = { NULL, NULL, NULL, NULL, NULL };
 
 unsigned long wsKeyTable[512];
 
@@ -168,7 +168,7 @@ enum PixelFormat out_pix_fmt = PIX_FMT_NONE;
 
 #define MWM_TEAROFF_WINDOW      (1L << 0)
 
-void wsWindowDecoration(wsTWindow *win, Bool decor)
+void wsWindowDecoration(wsWindow *win, Bool decor)
 {
     wsMotifHints = XInternAtom(wsDisplay, "_MOTIF_WM_HINTS", 0);
 
@@ -222,7 +222,7 @@ static int wsErrorHandler(Display *display, XErrorEvent *event)
  *
  * @param win pointer to a ws window structure or NULL
  */
-static void wsUpdateXineramaInfo(wsTWindow *win)
+static void wsUpdateXineramaInfo(wsWindow *win)
 {
     if (win) {
         vo_dx      = win->X;
@@ -405,7 +405,7 @@ void wsXInit(Display *display)
  * @param width width of the area to place the window in
  * @param height height of the area to place the window in
  */
-static void wsWindowPosition(wsTWindow *win, int x, int y, int width, int height)
+static void wsWindowPosition(wsWindow *win, int x, int y, int width, int height)
 {
     switch (x) {
     case -1:
@@ -441,7 +441,7 @@ static void wsWindowPosition(wsTWindow *win, int x, int y, int width, int height
  *
  * @param win pointer to a ws window structure
  */
-static void wsSizeHint(wsTWindow *win)
+static void wsSizeHint(wsWindow *win)
 {
     win->SizeHint.flags = 0;
 
@@ -495,7 +495,7 @@ static void wsSizeHint(wsTWindow *win)
  *
  * @param win pointer to a ws window structure
  */
-static void wsMapWait(wsTWindow *win)
+static void wsMapWait(wsWindow *win)
 {
     XEvent xev;
 
@@ -530,7 +530,7 @@ Window LeaderWindow;
 //   c     : mouse cursor visible
 //   p     : properties - "decoration", visible titlebar, etc ...
 // ----------------------------------------------------------------------------------------------
-void wsCreateWindow(wsTWindow *win, int x, int y, int w, int h, int b, int c, unsigned char p, char *label)
+void wsCreateWindow(wsWindow *win, int x, int y, int w, int h, int b, int c, unsigned char p, char *label)
 {
     int depth;
 
@@ -687,7 +687,7 @@ void wsCreateWindow(wsTWindow *win, int x, int y, int w, int h, int b, int c, un
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] window is created. ( %s ).\n", label);
 }
 
-void wsDestroyWindow(wsTWindow *win)
+void wsDestroyWindow(wsWindow *win)
 {
     int l;
 
@@ -1063,7 +1063,7 @@ void wsSetLayer(Display *display, Window Win, Bool fullscreen)
  *
  * @param win pointer to a ws window structure
  */
-void wsFullScreen(wsTWindow *win)
+void wsFullScreen(wsWindow *win)
 {
     if (win->isFullScreen) {
         if (vo_fs_type & vo_wm_FULLSCREEN)
@@ -1118,7 +1118,7 @@ void wsFullScreen(wsTWindow *win)
 // ----------------------------------------------------------------------------------------------
 //    Redraw screen.
 // ----------------------------------------------------------------------------------------------
-void wsPostRedisplay(wsTWindow *win)
+void wsPostRedisplay(wsWindow *win)
 {
     if (win->ReDraw) {
         win->State = wsWindowExpose;
@@ -1139,7 +1139,7 @@ void wsDoExit(void)
 // ----------------------------------------------------------------------------------------------
 //    Put 'Image' to window.
 // ----------------------------------------------------------------------------------------------
-void wsConvert(wsTWindow *win, unsigned char *Image)
+void wsConvert(wsWindow *win, unsigned char *Image)
 {
     const uint8_t *src[4] = { Image, NULL, NULL, NULL };
     int src_stride[4]     = { 4 * win->xImage->width, 0, 0, 0 };
@@ -1180,7 +1180,7 @@ void wsConvert(wsTWindow *win, unsigned char *Image)
     }
 }
 
-void wsPutImage(wsTWindow *win)
+void wsPutImage(wsWindow *win)
 {
 #ifdef HAVE_SHM
     if (wsUseXShm) {
@@ -1201,7 +1201,7 @@ void wsPutImage(wsTWindow *win)
 // ----------------------------------------------------------------------------------------------
 //    Move window to x, y.
 // ----------------------------------------------------------------------------------------------
-void wsMoveWindow(wsTWindow *win, Bool abs, int x, int y)
+void wsMoveWindow(wsWindow *win, Bool abs, int x, int y)
 {
     if (abs) {
         win->X = x;
@@ -1225,7 +1225,7 @@ void wsMoveWindow(wsTWindow *win, Bool abs, int x, int y)
  * @param x x position of the window (real/absolute or mock)
  * @param y y position of the window (real/absolute or mock)
  */
-void wsMoveWindowWithin(wsTWindow *win, Bool abs, int x, int y)
+void wsMoveWindowWithin(wsWindow *win, Bool abs, int x, int y)
 {
     Bool fitting = True;
 
@@ -1254,7 +1254,7 @@ void wsMoveWindowWithin(wsTWindow *win, Bool abs, int x, int y)
 // ----------------------------------------------------------------------------------------------
 //    Resize window to sx, sy.
 // ----------------------------------------------------------------------------------------------
-void wsResizeWindow(wsTWindow *win, int sx, int sy)
+void wsResizeWindow(wsWindow *win, int sx, int sy)
 {
     win->Width  = sx;
     win->Height = sy;
@@ -1277,7 +1277,7 @@ void wsResizeWindow(wsTWindow *win, int sx, int sy)
  *
  * @param win pointer to a ws window structure
  */
-void wsIconify(wsTWindow *win)
+void wsIconify(wsWindow *win)
 {
     XIconifyWindow(wsDisplay, win->WindowID, 0);
 }
@@ -1297,12 +1297,12 @@ void wsRaiseWindowTop(Display *display, Window Win)
 // ----------------------------------------------------------------------------------------------
 //    Set window background to 'color'.
 // ----------------------------------------------------------------------------------------------
-void wsSetBackground(wsTWindow *win, int color)
+void wsSetBackground(wsWindow *win, int color)
 {
     XSetWindowBackground(wsDisplay, win->WindowID, color);
 }
 
-void wsSetBackgroundRGB(wsTWindow *win, int r, int g, int b)
+void wsSetBackgroundRGB(wsWindow *win, int r, int g, int b)
 {
     int color = 0;
 
@@ -1337,7 +1337,7 @@ void wsSetBackgroundRGB(wsTWindow *win, int r, int g, int b)
     XSetWindowBackground(wsDisplay, win->WindowID, color);
 }
 
-void wsSetForegroundRGB(wsTWindow *win, int r, int g, int b)
+void wsSetForegroundRGB(wsWindow *win, int r, int g, int b)
 {
     int color = 0;
 
@@ -1375,7 +1375,7 @@ void wsSetForegroundRGB(wsTWindow *win, int r, int g, int b)
 // ----------------------------------------------------------------------------------------------
 //    Show / hide mouse cursor.
 // ----------------------------------------------------------------------------------------------
-void wsVisibleMouse(wsTWindow *win, int m)
+void wsVisibleMouse(wsWindow *win, int m)
 {
     switch (m) {
     case wsShowMouseCursor:
@@ -1447,7 +1447,7 @@ void wsXDone(void)
     XCloseDisplay(wsDisplay);
 }
 
-void wsVisibleWindow(wsTWindow *win, int show)
+void wsVisibleWindow(wsWindow *win, int show)
 {
     switch (show) {
     case wsShowWindow:
@@ -1469,7 +1469,7 @@ void wsVisibleWindow(wsTWindow *win, int show)
     XFlush(wsDisplay);
 }
 
-void wsDestroyImage(wsTWindow *win)
+void wsDestroyImage(wsWindow *win)
 {
     if (win->xImage) {
         XDestroyImage(win->xImage);
@@ -1485,7 +1485,7 @@ void wsDestroyImage(wsTWindow *win)
     win->xImage = NULL;
 }
 
-void wsCreateImage(wsTWindow *win, int Width, int Height)
+void wsCreateImage(wsWindow *win, int Width, int Height)
 {
 #ifdef HAVE_SHM
     if (wsUseXShm) {
@@ -1541,7 +1541,7 @@ void wsCreateImage(wsTWindow *win, int Width, int Height)
     win->ImageDatadw = (unsigned int *)win->xImage->data;
 }
 
-void wsResizeImage(wsTWindow *win, int Width, int Height)
+void wsResizeImage(wsWindow *win, int Width, int Height)
 {
     wsDestroyImage(win);
     wsCreateImage(win, Width, Height);
@@ -1581,22 +1581,22 @@ int wsGetOutMask(void)
  *
  * @param win pointer to a ws window structure
  */
-void wsClearWindow(wsTWindow *win)
+void wsClearWindow(wsWindow *win)
 {
     XClearWindow(wsDisplay, win->WindowID);
 }
 
-void wsSetTitle(wsTWindow *win, char *name)
+void wsSetTitle(wsWindow *win, char *name)
 {
     XStoreName(wsDisplay, win->WindowID, name);
 }
 
-void wsSetMousePosition(wsTWindow *win, int x, int y)
+void wsSetMousePosition(wsWindow *win, int x, int y)
 {
     XWarpPointer(wsDisplay, wsRootWin, win->WindowID, 0, 0, 0, 0, x, y);
 }
 
-void wsSetShape(wsTWindow *win, char *data)
+void wsSetShape(wsWindow *win, char *data)
 {
 #ifdef CONFIG_XSHAPE
     if (!wsUseXShape)

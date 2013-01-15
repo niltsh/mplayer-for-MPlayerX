@@ -61,19 +61,19 @@ void wsXDNDInitialize(void)
     XA_XdndTypeList = XInternAtom(wsDisplay, "XdndTypeList", False);
 }
 
-void wsXDNDMakeAwareness(wsTWindow* win) {
+void wsXDNDMakeAwareness(wsWindow* win) {
     long int xdnd_version = XDND_VERSION;
     XChangeProperty (wsDisplay, win->WindowID, XA_XdndAware, XA_ATOM,
             32, PropModeAppend, (char *)&xdnd_version, 1);
 }
 
-void wsXDNDClearAwareness(wsTWindow* win) {
+void wsXDNDClearAwareness(wsWindow* win) {
     XDeleteProperty (wsDisplay, win->WindowID, XA_XdndAware);
 }
 
 #define MAX_DND_FILES 64
 Bool
-wsXDNDProcessSelection(wsTWindow* win, XEvent *event)
+wsXDNDProcessSelection(wsWindow* win, XEvent *event)
 {
     Atom ret_type;
     int ret_format;

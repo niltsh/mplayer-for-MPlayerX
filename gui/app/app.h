@@ -147,19 +147,19 @@ typedef struct {
 
 typedef struct {
     wItem main;
-    wsTWindow mainWindow;
+    wsWindow mainWindow;
     int mainDecoration;
 
     wItem video;
-    wsTWindow videoWindow;
+    wsWindow videoWindow;
 
     wItem playbar;
-    wsTWindow playbarWindow;
+    wsWindow playbarWindow;
     int playbarIsPresent;
 
     wItem menu;
     wItem menuSelected;
-    wsTWindow menuWindow;
+    wsWindow menuWindow;
     int menuIsPresent;
 
     int IndexOfMainItems;
