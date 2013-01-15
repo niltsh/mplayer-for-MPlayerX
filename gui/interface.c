@@ -172,7 +172,7 @@ void guiInit(void)
     if (guiWinID >= 0)
         guiApp.mainWindow.Parent = guiWinID;
 
-    wsCreateWindow(&guiApp.videoWindow, guiApp.video.x, guiApp.video.y, guiApp.video.width, guiApp.video.height, wsNoBorder, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, wsShowFrame | wsHideWindow, "MPlayer - Video");
+    wsCreateWindow(&guiApp.videoWindow, guiApp.video.x, guiApp.video.y, guiApp.video.width, guiApp.video.height, wsNoBorder, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, wsShowFrame | wsHideWindow | wsWaitMap, "MPlayer - Video");
     wsDestroyImage(&guiApp.videoWindow);
     wsCreateImage(&guiApp.videoWindow, guiApp.video.Bitmap.Width, guiApp.video.Bitmap.Height);
     wsXDNDMakeAwareness(&guiApp.videoWindow);
@@ -224,16 +224,8 @@ void guiInit(void)
     if (gtkShowVideoWindow) {
         wsVisibleWindow(&guiApp.videoWindow, wsShowWindow);
 
-        {
-            XEvent xev;
-
-            do
-                XNextEvent(wsDisplay, &xev);
-            while (xev.type != MapNotify || xev.xmap.event != guiApp.videoWindow.WindowID);
-
             guiApp.videoWindow.Mapped = wsMapped;
             guiInfo.VideoWindow       = True;
-        }
 
         if (gtkLoadFullscreen)
             uiFullScreen();

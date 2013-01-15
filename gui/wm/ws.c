@@ -490,6 +490,21 @@ static void wsSizeHint(wsTWindow *win)
     XSetWMNormalHints(wsDisplay, win->WindowID, &win->SizeHint);
 }
 
+/**
+ * @brief Wait until a window is mapped if its property requires it.
+ *
+ * @param win pointer to a ws window structure
+ */
+static void wsMapWait(wsTWindow *win)
+{
+    XEvent xev;
+
+    if (win->Property & wsWaitMap)
+        do
+            XNextEvent(wsDisplay, &xev);
+        while (xev.type != MapNotify || xev.xmap.event != win->WindowID);
+}
+
 // ----------------------------------------------------------------------------------------------
 //   Create window.
 //     X,Y   : window position
@@ -627,8 +642,10 @@ void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV
     win->Mapped  = wsNo;
     win->Rolled  = wsNo;
 
-    if (D & wsShowWindow)
+    if (D & wsShowWindow) {
         XMapWindow(wsDisplay, win->WindowID);
+        wsMapWait(win);
+    }
 
     wsCreateImage(win, win->Width, win->Height);
 /* End of creating -------------------------------------------------------------------------- */
@@ -1425,6 +1442,7 @@ void wsVisibleWindow(wsTWindow *win, int show)
     case wsShowWindow:
 
         XMapRaised(wsDisplay, win->WindowID);
+        wsMapWait(win);
 
         if (vo_fs_type & vo_wm_FULLSCREEN)
             win->isFullScreen = False;
