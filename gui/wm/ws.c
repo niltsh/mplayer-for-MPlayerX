@@ -479,7 +479,6 @@ static void wsSizeHint(wsWindow *win)
         win->SizeHint.max_aspect.y = win->Height;
     }
 
-    /* fluxbox e.g. is said to be unable to handle the (more natural) values width/height */
     win->SizeHint.flags      |= PBaseSize;
     win->SizeHint.base_width  = 0;
     win->SizeHint.base_height = 0;
