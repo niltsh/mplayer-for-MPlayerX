@@ -110,17 +110,6 @@ unsigned long wsKeyTable[512];
 int wsUseXShm   = True;
 int wsUseXShape = True;
 
-static int wsSearch(Window win)
-{
-    int i;
-
-    for (i = 0; i < wsWLCount; i++)
-        if (wsWindowList[i] && wsWindowList[i]->WindowID == win)
-            return i;
-
-    return -1;
-}
-
 /* --- */
 
 #define PACK_RGB16(r, g, b, pixel) pixel = (b >> 3); \
@@ -167,25 +156,6 @@ enum PixelFormat out_pix_fmt = PIX_FMT_NONE;
 #define MWM_INPUT_APPLICATION_MODAL MWM_INPUT_PRIMARY_APPLICATION_MODAL
 
 #define MWM_TEAROFF_WINDOW      (1L << 0)
-
-void wsWindowDecoration(wsWindow *win, Bool decor)
-{
-    wsMotifHints = XInternAtom(wsDisplay, "_MOTIF_WM_HINTS", 0);
-
-    if (wsMotifHints == None)
-        return;
-
-    memset(&wsMotifWmHints, 0, sizeof(MotifWmHints));
-    wsMotifWmHints.flags = MWM_HINTS_FUNCTIONS | MWM_HINTS_DECORATIONS;
-
-    if (decor) {
-        wsMotifWmHints.functions   = MWM_FUNC_MOVE | MWM_FUNC_CLOSE | MWM_FUNC_MINIMIZE | MWM_FUNC_MAXIMIZE | MWM_FUNC_RESIZE;
-        wsMotifWmHints.decorations = MWM_DECOR_ALL;
-    }
-
-    XChangeProperty(wsDisplay, win->WindowID, wsMotifHints, wsMotifHints, 32,
-                    PropModeReplace, (unsigned char *)&wsMotifWmHints, 5);
-}
 
 // ----------------------------------------------------------------------------------------------
 //   Init X Window System.
@@ -686,6 +656,36 @@ void wsCreateWindow(wsWindow *win, int x, int y, int w, int h, int b, int c, uns
     win->MouseHandler = NULL;
     win->KeyHandler   = NULL;
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] window is created. ( %s ).\n", label);
+}
+
+void wsWindowDecoration(wsWindow *win, Bool decor)
+{
+    wsMotifHints = XInternAtom(wsDisplay, "_MOTIF_WM_HINTS", 0);
+
+    if (wsMotifHints == None)
+        return;
+
+    memset(&wsMotifWmHints, 0, sizeof(MotifWmHints));
+    wsMotifWmHints.flags = MWM_HINTS_FUNCTIONS | MWM_HINTS_DECORATIONS;
+
+    if (decor) {
+        wsMotifWmHints.functions   = MWM_FUNC_MOVE | MWM_FUNC_CLOSE | MWM_FUNC_MINIMIZE | MWM_FUNC_MAXIMIZE | MWM_FUNC_RESIZE;
+        wsMotifWmHints.decorations = MWM_DECOR_ALL;
+    }
+
+    XChangeProperty(wsDisplay, win->WindowID, wsMotifHints, wsMotifHints, 32,
+                    PropModeReplace, (unsigned char *)&wsMotifWmHints, 5);
+}
+
+static int wsSearch(Window win)
+{
+    int i;
+
+    for (i = 0; i < wsWLCount; i++)
+        if (wsWindowList[i] && wsWindowList[i]->WindowID == win)
+            return i;
+
+    return -1;
 }
 
 void wsDestroyWindow(wsWindow *win)

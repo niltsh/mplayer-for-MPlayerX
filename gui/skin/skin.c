@@ -126,39 +126,6 @@ static int in_window(char *name)
 }
 
 /**
- * @brief Read a skin @a image file.
- *
- * @param fname filename (with path)
- * @param img pointer suitable to store the image data
- *
- * @return return code of #bpRead()
- */
-int skinImageRead(char *fname, guiImage *img)
-{
-    int i = bpRead(fname, img);
-
-    switch (i) {
-    case -1:
-        skin_error(MSGTR_SKIN_BITMAP_16bit, fname);
-        break;
-
-    case -2:
-        skin_error(MSGTR_SKIN_BITMAP_FileNotFound, fname);
-        break;
-
-    case -5:
-        skin_error(MSGTR_SKIN_BITMAP_PNGReadError, fname);
-        break;
-
-    case -8:
-        skin_error(MSGTR_SKIN_BITMAP_ConversionError, fname);
-        break;
-    }
-
-    return i;
-}
-
-/**
  * @brief Get next free item in current @a window.
  *
  * @return pointer to next free item (ok) or NULL (error)
@@ -998,6 +965,39 @@ static _item skinItem[] = {
     { "vpotmeter",  item_vpotmeter  },
     { "window",     item_window     }
 };
+
+/**
+ * @brief Read a skin @a image file.
+ *
+ * @param fname filename (with path)
+ * @param img pointer suitable to store the image data
+ *
+ * @return return code of #bpRead()
+ */
+int skinImageRead(char *fname, guiImage *img)
+{
+    int i = bpRead(fname, img);
+
+    switch (i) {
+    case -1:
+        skin_error(MSGTR_SKIN_BITMAP_16bit, fname);
+        break;
+
+    case -2:
+        skin_error(MSGTR_SKIN_BITMAP_FileNotFound, fname);
+        break;
+
+    case -5:
+        skin_error(MSGTR_SKIN_BITMAP_PNGReadError, fname);
+        break;
+
+    case -8:
+        skin_error(MSGTR_SKIN_BITMAP_ConversionError, fname);
+        break;
+    }
+
+    return i;
+}
 
 /**
  * @brief Build the skin file path for a skin name.

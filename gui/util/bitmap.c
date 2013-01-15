@@ -37,6 +37,32 @@
 #include "mp_msg.h"
 
 /**
+ * @brief Check whether a (PNG) file exists.
+ *
+ * @param fname filename (with path, but may lack extension)
+ *
+ * @return path including extension (ok) or NULL (not accessible)
+ */
+static const char *fExist(const char *fname)
+{
+    static const char ext[][4] = { "png", "PNG" };
+    static char buf[512];
+    unsigned int i;
+
+    if (access(fname, R_OK) == 0)
+        return fname;
+
+    for (i = 0; i < FF_ARRAY_ELEMS(ext); i++) {
+        snprintf(buf, sizeof(buf), "%s.%s", fname, ext[i]);
+
+        if (access(buf, R_OK) == 0)
+            return buf;
+    }
+
+    return NULL;
+}
+
+/**
  * @brief Read and decode a PNG file into bitmap data.
  *
  * @param fname filename (with path)
@@ -198,32 +224,6 @@ static int convert_ARGB(guiImage *img)
         return False;
 
     return True;
-}
-
-/**
- * @brief Check whether a (PNG) file exists.
- *
- * @param fname filename (with path, but may lack extension)
- *
- * @return path including extension (ok) or NULL (not accessible)
- */
-static const char *fExist(const char *fname)
-{
-    static const char ext[][4] = { "png", "PNG" };
-    static char buf[512];
-    unsigned int i;
-
-    if (access(fname, R_OK) == 0)
-        return fname;
-
-    for (i = 0; i < FF_ARRAY_ELEMS(ext); i++) {
-        snprintf(buf, sizeof(buf), "%s.%s", fname, ext[i]);
-
-        if (access(buf, R_OK) == 0)
-            return buf;
-    }
-
-    return NULL;
 }
 
 /**
