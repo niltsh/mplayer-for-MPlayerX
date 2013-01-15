@@ -447,16 +447,16 @@ static void wsSizeHint(wsTWindow *win)
 
     /* obsolete, solely for compatibility reasons */
     win->SizeHint.flags |= PPosition;
-        win->SizeHint.x = win->X;
-        win->SizeHint.y = win->Y;
+    win->SizeHint.x      = win->X;
+    win->SizeHint.y      = win->Y;
 
     /* obsolete, solely for compatibility reasons */
     win->SizeHint.flags |= PSize;
-        win->SizeHint.width  = win->Width;
-        win->SizeHint.height = win->Height;
+    win->SizeHint.width  = win->Width;
+    win->SizeHint.height = win->Height;
 
     /* a minimum of 4 is said to avoid off-by-one errors and be required by mga_vid */
-        win->SizeHint.flags     |= PMinSize;
+    win->SizeHint.flags     |= PMinSize;
     win->SizeHint.min_width  = 4;
     win->SizeHint.min_height = 4;
 
