@@ -1102,8 +1102,8 @@ void wsFullScreen(wsWindow *win)
 
     /* restore window if window manager doesn't support EWMH */
     if (!(vo_fs_type & vo_wm_FULLSCREEN)) {
-        wsWindowDecoration(win, win->Decorations && !win->isFullScreen);
         wsSizeHint(win);
+        wsWindowDecoration(win, win->Decorations && !win->isFullScreen);
         wsSetLayer(wsDisplay, win->WindowID, win->isFullScreen);
         XMoveResizeWindow(wsDisplay, win->WindowID, win->X, win->Y, win->Width, win->Height);
     }
