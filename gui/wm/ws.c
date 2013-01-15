@@ -1267,8 +1267,8 @@ void wsIconify(wsTWindow *win)
  */
 void wsRaiseWindowTop(Display *display, Window Win)
 {
-    XMapRaised(display, Win);
-    XRaiseWindow(display, Win);
+    XMapRaised(display, Win);     // NOTE TO MYSELF: is that really enough?
+    XRaiseWindow(display, Win);   // NOTE TO MYSELF: is that really enough?
 }
 
 // ----------------------------------------------------------------------------------------------

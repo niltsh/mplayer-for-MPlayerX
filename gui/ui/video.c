@@ -102,6 +102,7 @@ void uiVideoMouseHandle( int Button,int X,int Y,int RX,int RY )
    case wsRLMouseButton:
           if ( ( !mplVideoMoved )&&( guiApp.videoWindow.isFullScreen ) )
            {
+            // NOTE TO MYSELF: this doesn't work, fix later with wsSetLayer()?
             if( videoVisible++%2 ) wsRaiseWindowTop( wsDisplay,guiApp.mainWindow.WindowID );
              else wsRaiseWindowTop( wsDisplay,guiApp.videoWindow.WindowID );
 	   }
