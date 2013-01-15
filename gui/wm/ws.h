@@ -173,7 +173,6 @@ typedef struct {
     unsigned long WindowMask;
     XVisualInfo VisualInfo;
     XSetWindowAttributes WindowAttrib;
-    XSizeHints SizeHint;
     XWMHints WMHints;
 
     XFontStruct *Font;

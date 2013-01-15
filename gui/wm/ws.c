@@ -443,50 +443,52 @@ static void wsWindowPosition(wsWindow *win, int x, int y, int width, int height)
  */
 static void wsSizeHint(wsWindow *win)
 {
-    win->SizeHint.flags = 0;
+    XSizeHints size;
+
+    size.flags = 0;
 
     /* obsolete, solely for compatibility reasons */
-    win->SizeHint.flags |= PPosition;
-    win->SizeHint.x      = win->X;
-    win->SizeHint.y      = win->Y;
+    size.flags |= PPosition;
+    size.x      = win->X;
+    size.y      = win->Y;
 
     /* obsolete, solely for compatibility reasons */
-    win->SizeHint.flags |= PSize;
-    win->SizeHint.width  = win->Width;
-    win->SizeHint.height = win->Height;
+    size.flags |= PSize;
+    size.width  = win->Width;
+    size.height = win->Height;
 
     /* a minimum of 4 is said to avoid off-by-one errors and be required by mga_vid */
-    win->SizeHint.flags     |= PMinSize;
-    win->SizeHint.min_width  = 4;
-    win->SizeHint.min_height = 4;
+    size.flags     |= PMinSize;
+    size.min_width  = 4;
+    size.min_height = 4;
 
     if (win->Property & wsMinSize) {
-        win->SizeHint.min_width  = win->Width;
-        win->SizeHint.min_height = win->Height;
+        size.min_width  = win->Width;
+        size.min_height = win->Height;
     }
 
     if (win->Property & wsMaxSize) {
-        win->SizeHint.flags     |= PMaxSize;
-        win->SizeHint.max_width  = win->Width;
-        win->SizeHint.max_height = win->Height;
+        size.flags     |= PMaxSize;
+        size.max_width  = win->Width;
+        size.max_height = win->Height;
     }
 
     if (vo_keepaspect && (win->Property & wsAspect)) {
-        win->SizeHint.flags |= PAspect;
-        win->SizeHint.min_aspect.x = win->Width;
-        win->SizeHint.min_aspect.y = win->Height;
-        win->SizeHint.max_aspect.x = win->Width;
-        win->SizeHint.max_aspect.y = win->Height;
+        size.flags |= PAspect;
+        size.min_aspect.x = win->Width;
+        size.min_aspect.y = win->Height;
+        size.max_aspect.x = win->Width;
+        size.max_aspect.y = win->Height;
     }
 
-    win->SizeHint.flags      |= PBaseSize;
-    win->SizeHint.base_width  = 0;
-    win->SizeHint.base_height = 0;
+    size.flags      |= PBaseSize;
+    size.base_width  = 0;
+    size.base_height = 0;
 
-    win->SizeHint.flags      |= PWinGravity;
-    win->SizeHint.win_gravity = StaticGravity;
+    size.flags      |= PWinGravity;
+    size.win_gravity = StaticGravity;
 
-    XSetWMNormalHints(wsDisplay, win->WindowID, &win->SizeHint);
+    XSetWMNormalHints(wsDisplay, win->WindowID, &size);
 }
 
 /**
