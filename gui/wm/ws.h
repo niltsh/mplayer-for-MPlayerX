@@ -225,15 +225,7 @@ void wsAutohideCursor(void);
 Bool wsEvents(XEvent *event);
 void wsHandleEvents(void);
 
-// ----------------------------------------------------------------------------------------------
-//  wsCrateWindow: create a new window on the screen.
-//   X,Y   : window position
-//   wX,hY : window size
-//   bW    : window frame size
-//   cV    : mouse cursor visible
-//   D     : "decoration", visible titlebar, etc ...
-// ----------------------------------------------------------------------------------------------
-void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV, unsigned char D, char *label);
+void wsCreateWindow(wsTWindow *win, int x, int y, int w, int h, int b, int c, unsigned char p, char *label);
 void wsDestroyWindow(wsTWindow *win);
 void wsMoveWindow(wsTWindow *win, Bool abs, int x, int y);
 void wsMoveWindowWithin(wsTWindow *win, Bool abs, int x, int y);

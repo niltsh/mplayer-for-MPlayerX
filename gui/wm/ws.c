@@ -522,35 +522,43 @@ XClassHint wsClassHint;
 XTextProperty wsTextProperty;
 Window LeaderWindow;
 
-void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV, unsigned char D, char *label)
+// ----------------------------------------------------------------------------------------------
+//  wsCreateWindow: create a new window on the screen.
+//   x,y   : window position
+//   w,h   : window size
+//   b     : window border size
+//   c     : mouse cursor visible
+//   p     : properties - "decoration", visible titlebar, etc ...
+// ----------------------------------------------------------------------------------------------
+void wsCreateWindow(wsTWindow *win, int x, int y, int w, int h, int b, int c, unsigned char p, char *label)
 {
     int depth;
 
-    win->Property = D;
+    win->Property = p;
 
-    if (D & wsShowFrame)
+    if (p & wsShowFrame)
         win->Decorations = True;
 
     wsHGC = DefaultGC(wsDisplay, wsScreen);
 
-    wsWindowPosition(win, X, Y, wX, hY);
+    wsWindowPosition(win, x, y, w, h);
 
-    win->Width     = wX;
-    win->Height    = hY;
+    win->Width     = w;
+    win->Height    = h;
     win->OldX      = win->X;
     win->OldY      = win->Y;
     win->OldWidth  = win->Width;
     win->OldHeight = win->Height;
 
 /* Border size for window. */
-    win->BorderWidth = bW;
+    win->BorderWidth = b;
 /* Hide Mouse Cursor */
     win->wsCursor = None;
-    win->wsMouseEventType = cV;
+    win->wsMouseEventType = c;
     win->wsCursorData[0]  = 0;
     win->wsCursorPixmap   = XCreateBitmapFromData(wsDisplay, wsRootWin, win->wsCursorData, 1, 1);
 
-    if (!(cV & wsShowMouseCursor))
+    if (!(c & wsShowMouseCursor))
         win->wsCursor = XCreatePixmapCursor(wsDisplay, win->wsCursorPixmap, win->wsCursorPixmap, &win->wsColor, &win->wsColor, 0, 0);
 
     depth = vo_find_depth_from_visuals(wsDisplay, wsScreen, NULL);
@@ -584,16 +592,16 @@ void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV
                                    VisibilityChangeMask |
                                    KeyPressMask | KeyReleaseMask;
 
-    if ((cV & wsHandleMouseButton))
+    if ((c & wsHandleMouseButton))
         win->WindowAttrib.event_mask |= ButtonPressMask | ButtonReleaseMask;
 
-    if ((cV & wsHandleMouseMove))
+    if ((c & wsHandleMouseMove))
         win->WindowAttrib.event_mask |= PointerMotionMask;
 
     win->WindowAttrib.cursor = win->wsCursor;
     win->WindowAttrib.override_redirect = False;
 
-    if (D & wsOverredirect)
+    if (p & wsOverredirect)
         win->WindowAttrib.override_redirect = True;
 
     win->WindowMask = CWBackPixel | CWBorderPixel |
@@ -645,7 +653,7 @@ void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV
     win->Mapped  = wsNo;
     win->Rolled  = wsNo;
 
-    if (D & wsShowWindow) {
+    if (p & wsShowWindow) {
         XMapWindow(wsDisplay, win->WindowID);
         wsMapWait(win);
     }
