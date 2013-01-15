@@ -1181,12 +1181,7 @@ void wsMoveWindow(wsTWindow *win, Bool abs, int x, int y)
     } else
         wsWindowPosition(win, x, y, win->Width, win->Height);
 
-    win->SizeHint.flags       = PPosition | PWinGravity;
-    win->SizeHint.x           = win->X;
-    win->SizeHint.y           = win->Y;
-    win->SizeHint.win_gravity = StaticGravity;
-    XSetWMNormalHints(wsDisplay, win->WindowID, &win->SizeHint);
-
+    wsSizeHint(win);
     XMoveWindow(wsDisplay, win->WindowID, win->X, win->Y);
 
     if (win->ReSize)
