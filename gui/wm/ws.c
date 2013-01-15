@@ -440,54 +440,52 @@ static void wsWindowPosition(wsTWindow *win, int x, int y, int width, int height
  * @brief Replace the size hints for the WM_NORMAL_HINTS property of a window.
  *
  * @param win pointer to a ws window structure
- * @param hints size hints bits
  */
-static void wsSizeHint(wsTWindow *win, long hints)
+static void wsSizeHint(wsTWindow *win)
 {
-    win->SizeHint.flags = hints;
+    win->SizeHint.flags = 0;
 
-    if (hints & PPosition) {
+    /* obsolete, solely for compatibility reasons */
+    win->SizeHint.flags |= PPosition;
         win->SizeHint.x = win->X;
         win->SizeHint.y = win->Y;
-    }
 
-    if (hints & PSize) {
+    /* obsolete, solely for compatibility reasons */
+    win->SizeHint.flags |= PSize;
         win->SizeHint.width  = win->Width;
         win->SizeHint.height = win->Height;
-    }
 
-    if (hints & PMinSize || win->Property & wsMinSize) {
+    /* a minimum of 4 is said to avoid off-by-one errors and be required by mga_vid */
         win->SizeHint.flags     |= PMinSize;
+    win->SizeHint.min_width  = 4;
+    win->SizeHint.min_height = 4;
+
+    if (win->Property & wsMinSize) {
         win->SizeHint.min_width  = win->Width;
         win->SizeHint.min_height = win->Height;
     }
 
-    if (hints & PMaxSize || win->Property & wsMaxSize) {
+    if (win->Property & wsMaxSize) {
         win->SizeHint.flags     |= PMaxSize;
         win->SizeHint.max_width  = win->Width;
         win->SizeHint.max_height = win->Height;
     }
 
-    if (hints & PResizeInc) {
-        win->SizeHint.width_inc  = 1;
-        win->SizeHint.height_inc = 1;
-    }
-
-    if (hints & PAspect) {
+    if (vo_keepaspect /*&& (win->Property & wsAspect)*/) {
+        win->SizeHint.flags |= PAspect;
         win->SizeHint.min_aspect.x = win->Width;
         win->SizeHint.min_aspect.y = win->Height;
         win->SizeHint.max_aspect.x = win->Width;
         win->SizeHint.max_aspect.y = win->Height;
     }
 
-//  if (hints & PBaseSize)
-    {
-        win->SizeHint.base_width  = win->Width;
-        win->SizeHint.base_height = win->Height;
-    }
+    /* fluxbox e.g. is said to be unable to handle the (more natural) values width/height */
+    win->SizeHint.flags      |= PBaseSize;
+    win->SizeHint.base_width  = 0;
+    win->SizeHint.base_height = 0;
 
-    if (hints & PWinGravity)
-        win->SizeHint.win_gravity = StaticGravity;
+    win->SizeHint.flags      |= PWinGravity;
+    win->SizeHint.win_gravity = StaticGravity;
 
     XSetWMNormalHints(wsDisplay, win->WindowID, &win->SizeHint);
 }
@@ -597,7 +595,7 @@ void wsCreateWindow(wsTWindow *win, int X, int Y, int wX, int hY, int bW, int cV
     wsClassHint.res_class = "MPlayer";
     XSetClassHint(wsDisplay, win->WindowID, &wsClassHint);
 
-    wsSizeHint(win, PPosition | PSize | PResizeInc /* | PBaseSize */ | PWinGravity);
+    wsSizeHint(win);
 
     win->WMHints.flags = InputHint | StateHint;
     win->WMHints.input = True;
@@ -1076,7 +1074,7 @@ void wsFullScreen(wsTWindow *win)
     /* restore window if window manager doesn't support EWMH */
     if (!(vo_fs_type & vo_wm_FULLSCREEN)) {
         wsWindowDecoration(win, win->Decorations && !win->isFullScreen);
-        wsSizeHint(win, PPosition | PSize /* | PBaseSize */ | PWinGravity | (vo_keepaspect ? PAspect : 0));
+        wsSizeHint(win);
         wsSetLayer(wsDisplay, win->WindowID, win->isFullScreen);
         XMoveResizeWindow(wsDisplay, win->WindowID, win->X, win->Y, win->Width, win->Height);
     }
@@ -1241,7 +1239,7 @@ void wsResizeWindow(wsTWindow *win, int sx, int sy)
     if (vo_wm_type == 0)
         XUnmapWindow(wsDisplay, win->WindowID);
 
-    wsSizeHint(win, PPosition | PSize /* | PBaseSize */ | PWinGravity);
+    wsSizeHint(win);
     XResizeWindow(wsDisplay, win->WindowID, sx, sy);
 
     if (win->ReSize)
