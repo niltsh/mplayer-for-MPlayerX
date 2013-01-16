@@ -88,9 +88,6 @@ void uiVideoMouseHandle( int Button,int X,int Y,int RX,int RY )
                    if ( !guiApp.videoWindow.isFullScreen )
                     {
                      wsMoveWindow( &guiApp.videoWindow,True,RX - sx,RY - sy );
-                     guiApp.video.x = guiApp.videoWindow.X;
-                     guiApp.video.y = guiApp.videoWindow.Y;
-                     // NOTE TO MYSELF: dragging the title bar goes unnoticed?
                     }
                    break;
             case wsPMMouseButton:

@@ -266,8 +266,8 @@ void guiDone(void)
         if (gui_save_pos) {
             gui_main_pos_x  = guiApp.mainWindow.X;
             gui_main_pos_y  = guiApp.mainWindow.Y;
-            gui_video_pos_x = guiApp.video.x;
-            gui_video_pos_y = guiApp.video.y;
+            gui_video_pos_x = guiApp.videoWindow.X;
+            gui_video_pos_y = guiApp.videoWindow.Y;
         }
 
         ass_enabled       = gtkASS.enabled;
