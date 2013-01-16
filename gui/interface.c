@@ -780,9 +780,6 @@ int gui(int what, void *data)
         if (!guiApp.videoWindow.isFullScreen || !guiApp.videoWindow.Mapped) {
             if (!guiApp.videoWindow.isFullScreen)
                 wsResizeWindow(&guiApp.videoWindow, guiInfo.VideoWidth, guiInfo.VideoHeight);
-
-            wsMoveWindow(&guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y);
-
             if (!guiApp.videoWindow.Mapped)
                 wsVisibleWindow(&guiApp.videoWindow, wsShowWindow);
         }
@@ -861,10 +858,8 @@ int gui(int what, void *data)
             if (gtkShowVideoWindow) {
                 guiInfo.VideoWindow = True;
 
-                if (!guiApp.videoWindow.isFullScreen) {
+                if (!guiApp.videoWindow.isFullScreen)
                     wsResizeWindow(&guiApp.videoWindow, guiApp.video.width, guiApp.video.height);
-                    wsMoveWindow(&guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y);
-                }
 
                 if (!guiApp.videoWindow.Mapped)
                     wsVisibleWindow(&guiApp.videoWindow, wsShowWindow);

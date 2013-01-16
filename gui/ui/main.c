@@ -342,7 +342,6 @@ NoPause:
             uiFullScreen();
            }
           wsResizeWindow( &guiApp.videoWindow, guiInfo.VideoWidth / 2, guiInfo.VideoHeight / 2 );
-          wsMoveWindow( &guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y );
           btnSet( evFullScreen,btnReleased );
          }
         break;
@@ -354,7 +353,6 @@ NoPause:
             uiFullScreen();
            }
           wsResizeWindow( &guiApp.videoWindow, guiInfo.VideoWidth * 2, guiInfo.VideoHeight * 2 );
-          wsMoveWindowWithin( &guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y );
           btnSet( evFullScreen,btnReleased );
          }
         break;
@@ -366,7 +364,6 @@ NoPause:
             uiFullScreen();
            }
           wsResizeWindow( &guiApp.videoWindow, guiInfo.VideoWidth, guiInfo.VideoHeight );
-          wsMoveWindow( &guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y );
           btnSet( evFullScreen,btnReleased );
 	  break;
          } else if ( !guiApp.videoWindow.isFullScreen ) break;
@@ -375,10 +372,7 @@ NoPause:
          {
           uiFullScreen();
           if ( !guiApp.videoWindow.isFullScreen )
-           {
             wsResizeWindow( &guiApp.videoWindow, iparam ? guiInfo.VideoWidth : guiApp.video.width, iparam ? guiInfo.VideoHeight : guiApp.video.height );
-            wsMoveWindow( &guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y );
-           }
          }
 	if ( guiApp.videoWindow.isFullScreen ) btnSet( evFullScreen,btnPressed );
 	 else btnSet( evFullScreen,btnReleased );
