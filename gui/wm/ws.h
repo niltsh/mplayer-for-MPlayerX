@@ -148,7 +148,6 @@ typedef struct {
     unsigned short int *ImageDataw;
     unsigned int *ImageDatadw;
     GC wGC;
-    XGCValues wGCV;
     unsigned long WindowMask;
     XVisualInfo VisualInfo;
     XSetWindowAttributes WindowAttrib;

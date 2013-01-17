@@ -946,8 +946,8 @@ void wsCreateWindow(wsWindow *win, int x, int y, int w, int h, int b, int c, uns
     XSetWMIconName(wsDisplay, win->WindowID, &wsTextProperty);
 
     win->wGC = XCreateGC(wsDisplay, win->WindowID,
-                         GCForeground | GCBackground,
-                         &win->wGCV);
+                         0,
+                         NULL);
 
     win->Visible = wsNo;
     win->Focused = wsNo;
