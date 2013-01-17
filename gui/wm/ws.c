@@ -87,7 +87,7 @@ Display *wsDisplay;
 static int wsScreen;
 static Window wsRootWin;
 
-int wsDepthOnScreen;
+int wsScreenDepth;
 static int wsRedMask;
 static int wsGreenMask;
 static int wsBlueMask;
@@ -165,7 +165,7 @@ static void wsUpdateXineramaInfo(wsWindow *win)
     }
 }
 
-static int wsGetDepthOnScreen(void)
+static int wsGetScreenDepth(void)
 {
     int depth;
     XImage *mXImage;
@@ -174,7 +174,7 @@ static int wsGetDepthOnScreen(void)
     if ((depth = vo_find_depth_from_visuals(wsDisplay, wsScreen, &visual)) > 0) {
         mXImage = XCreateImage(wsDisplay, visual, depth, ZPixmap, 0, NULL,
                                1, 1, 32, 0);
-        wsDepthOnScreen = mXImage->bits_per_pixel;
+        wsScreenDepth = mXImage->bits_per_pixel;
         wsRedMask       = mXImage->red_mask;
         wsGreenMask     = mXImage->green_mask;
         wsBlueMask      = mXImage->blue_mask;
@@ -199,40 +199,40 @@ static int wsGetDepthOnScreen(void)
         if ((ibpp + 7) / 8 != (bpp + 7) / 8)
             ibpp = bpp;
 
-        wsDepthOnScreen = ibpp;
+        wsScreenDepth = ibpp;
         wsRedMask       = mXImage->red_mask;
         wsGreenMask     = mXImage->green_mask;
         wsBlueMask      = mXImage->blue_mask;
         XDestroyImage(mXImage);
     }
 
-    return wsDepthOnScreen;
+    return wsScreenDepth;
 }
 
 static int wsGetOutMask(void)
 {
-    if ((wsDepthOnScreen == 32) && (wsRedMask == 0xff0000) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0x0000ff))
+    if ((wsScreenDepth == 32) && (wsRedMask == 0xff0000) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0x0000ff))
         return wsRGB32;
 
-    if ((wsDepthOnScreen == 32) && (wsRedMask == 0x0000ff) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0xff0000))
+    if ((wsScreenDepth == 32) && (wsRedMask == 0x0000ff) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0xff0000))
         return wsBGR32;
 
-    if ((wsDepthOnScreen == 24) && (wsRedMask == 0xff0000) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0x0000ff))
+    if ((wsScreenDepth == 24) && (wsRedMask == 0xff0000) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0x0000ff))
         return wsRGB24;
 
-    if ((wsDepthOnScreen == 24) && (wsRedMask == 0x0000ff) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0xff0000))
+    if ((wsScreenDepth == 24) && (wsRedMask == 0x0000ff) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0xff0000))
         return wsBGR24;
 
-    if ((wsDepthOnScreen == 16) && (wsRedMask == 0xf800) && (wsGreenMask == 0x7e0) && (wsBlueMask == 0x1f))
+    if ((wsScreenDepth == 16) && (wsRedMask == 0xf800) && (wsGreenMask == 0x7e0) && (wsBlueMask == 0x1f))
         return wsRGB16;
 
-    if ((wsDepthOnScreen == 16) && (wsRedMask == 0x1f) && (wsGreenMask == 0x7e0) && (wsBlueMask == 0xf800))
+    if ((wsScreenDepth == 16) && (wsRedMask == 0x1f) && (wsGreenMask == 0x7e0) && (wsBlueMask == 0xf800))
         return wsBGR16;
 
-    if ((wsDepthOnScreen == 15) && (wsRedMask == 0x7c00) && (wsGreenMask == 0x3e0) && (wsBlueMask == 0x1f))
+    if ((wsScreenDepth == 15) && (wsRedMask == 0x7c00) && (wsGreenMask == 0x3e0) && (wsBlueMask == 0x1f))
         return wsRGB15;
 
-    if ((wsDepthOnScreen == 15) && (wsRedMask == 0x1f) && (wsGreenMask == 0x3e0) && (wsBlueMask == 0x7c00))
+    if ((wsScreenDepth == 15) && (wsRedMask == 0x1f) && (wsGreenMask == 0x3e0) && (wsBlueMask == 0x7c00))
         return wsBGR15;
 
     return 0;
@@ -309,9 +309,9 @@ void wsXInit(Display *display)
 
     wsUpdateXineramaInfo(NULL);
 
-    wsGetDepthOnScreen();
+    wsGetScreenDepth();
 
-    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] Screen depth: %d\n", wsDepthOnScreen);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] Screen depth: %d\n", wsScreenDepth);
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  size: %dx%d\n", wsMaxX, wsMaxY);
 
 #ifdef CONFIG_XINERAMA
@@ -1387,7 +1387,7 @@ void wsCreateImage(wsWindow *win, int Width, int Height)
     {
         win->xImage = XCreateImage(wsDisplay, win->VisualInfo.visual, win->VisualInfo.depth,
                                    ZPixmap, 0, 0, Width, Height,
-                                   (wsDepthOnScreen == 3) ? 32 : wsDepthOnScreen,
+                                   (wsScreenDepth == 3) ? 32 : wsScreenDepth,
                                    0);
 
         if ((win->xImage->data = malloc(win->xImage->bytes_per_line * win->xImage->height)) == NULL) {
