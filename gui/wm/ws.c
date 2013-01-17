@@ -99,8 +99,6 @@ static Bool wsTrue = True;
 #define wsWLCount 5
 static wsWindow *wsWindowList[wsWLCount];
 
-static unsigned long wsKeyTable[512];
-
 static int wsUseXShm   = True;
 static int wsUseXShape = True;
 
@@ -876,7 +874,6 @@ keypressed:
 
             if (keySym != NoSymbol) {
                 keySym = ((keySym & 0xff00) != 0 ? ((keySym & 0x00ff) + 256) : (keySym));
-                wsKeyTable[keySym] = i;
 
                 if (wsWindowList[l]->KeyHandler)
                     wsWindowList[l]->KeyHandler(event->xkey.state, i, keySym);
@@ -891,7 +888,6 @@ keypressed:
 
             XLookupString(&event->xkey, buf, sizeof(buf), &keySym, &stat);
             key = ((keySym & 0xff00) != 0 ? ((keySym & 0x00ff) + 256) : (keySym));
-            wsKeyTable[key] = i;
 
             if (wsWindowList[l]->KeyHandler)
                 wsWindowList[l]->KeyHandler(event->xkey.keycode, i, key);

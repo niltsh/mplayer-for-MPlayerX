@@ -178,8 +178,6 @@ extern Display *wsDisplay;
 extern int wsDepthOnScreen;
 
 // ----------------------------------------------------------------------------------------------
-//  wsKeyTable
-// ----------------------------------------------------------------------------------------------
 void wsXDone(void);
 void wsXInit(Display *display);
 void wsSetErrorHandler(void);
