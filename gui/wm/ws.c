@@ -621,8 +621,6 @@ void wsCreateWindow(wsWindow *win, int x, int y, int w, int h, int b, int c, uns
     XSync(wsDisplay, False);
 
     win->ReDraw       = NULL;
-    win->ReSize       = NULL;
-    win->Idle         = NULL;
     win->MouseHandler = NULL;
     win->KeyHandler   = NULL;
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] window is created. ( %s ).\n", label);
@@ -680,8 +678,6 @@ void wsDestroyWindow(wsWindow *win)
     XDestroyWindow(wsDisplay, win->WindowID);
 #if 0
     win->ReDraw       = NULL;
-    win->ReSize       = NULL;
-    win->Idle         = NULL;
     win->MouseHandler = NULL;
     win->KeyHandler   = NULL;
     win->Visible      = wsNo;
@@ -820,9 +816,6 @@ expose:
             wsWindowList[l]->Y      = y;
             wsWindowList[l]->Width  = event->xconfigure.width;
             wsWindowList[l]->Height = event->xconfigure.height;
-
-            if (wsWindowList[l]->ReSize)
-                wsWindowList[l]->ReSize(wsWindowList[l]->X, wsWindowList[l]->Y, wsWindowList[l]->Width, wsWindowList[l]->Height);
         }
 
         wsWindowList[l]->Rolled = wsNo;
@@ -1143,9 +1136,6 @@ void wsMoveWindow(wsWindow *win, Bool abs, int x, int y)
 
     wsSizeHint(win);
     XMoveWindow(wsDisplay, win->WindowID, win->X, win->Y);
-
-    if (win->ReSize)
-        win->ReSize(win->X, win->Y, win->Width, win->Height);
 }
 
 /**
@@ -1196,9 +1186,6 @@ void wsResizeWindow(wsWindow *win, int sx, int sy)
 
     wsSizeHint(win);
     XResizeWindow(wsDisplay, win->WindowID, sx, sy);
-
-    if (win->ReSize)
-        win->ReSize(win->X, win->Y, win->Width, win->Height);
 
     if (vo_wm_type == 0)
         XMapWindow(wsDisplay, win->WindowID);
