@@ -87,7 +87,7 @@ Display *wsDisplay;
 static int wsScreen;
 static Window wsRootWin;
 
-int wsScreenDepth;
+static int wsScreenDepth;
 static int wsRedMask;
 static int wsGreenMask;
 static int wsBlueMask;

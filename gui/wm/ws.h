@@ -171,8 +171,6 @@ extern int wsOrgY;
 
 extern Display *wsDisplay;
 
-extern int wsScreenDepth;
-
 // ----------------------------------------------------------------------------------------------
 void wsXDone(void);
 void wsXInit(Display *display);
