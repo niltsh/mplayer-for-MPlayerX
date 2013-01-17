@@ -36,11 +36,6 @@
 #define  wsKeyReleased   0
 #define  wsKeyPressed    1
 
-#define  wsShift        (1L << 0)
-#define  wsLock         (1L << 1)
-#define  wsCtrl         (1L << 2)
-#define  wsAlt          (1L << 3)
-
 #define  wsPLMouseButton 1
 #define  wsPMMouseButton 2
 #define  wsPRMouseButton 3
@@ -56,16 +51,12 @@
 #define  wsMoveMouse     255
 
 #define  wsShowMouseCursor   1
-#define  wsMouse             1
 #define  wsHideMouseCursor   0
-#define  wsNoMouse           0
 #define  wsHandleMouseButton 2
 #define  wsHandleMouseMove   4
 
 #define  wsHideFrame    0
-#define  wsNoFrame      0
 #define  wsShowFrame    1
-#define  wsFrame        1
 #define  wsMaxSize      2
 #define  wsMinSize      4
 #define  wsShowWindow   8
@@ -73,8 +64,6 @@
 #define  wsOverredirect 32
 #define  wsWaitMap      64
 #define  wsAspect       128
-
-#define  wsSysName "AutoSpace Window System LiTe"
 
 #define wsRGB32 1
 #define wsBGR32 2
@@ -104,12 +93,6 @@
 #define wsNotVisible 4
 #define wsPVisible   5
 #define wsRolled     6
-
-#define wsWMUnknown  0
-#define wsWMNetWM    1
-#define wsWMKDE      2
-#define wsWMIceWM    3
-#define wsWMWMaker   4
 
 typedef   void (*wsTReDraw)(void);
 typedef   void (*wsTReSize)(unsigned int X, unsigned int Y, unsigned int width, unsigned int height);
@@ -191,34 +174,18 @@ extern int wsOrgX;
 extern int wsOrgY;
 
 extern Display *wsDisplay;
-extern int wsScreen;
-extern Window wsRootWin;
-extern int wsLayer;
-
-extern unsigned char *wsImageData;
-
-extern XEvent wsEvent;
 
 extern int wsDepthOnScreen;
-extern int wsRedMask;
-extern int wsGreenMask;
-extern int wsBlueMask;
-
-extern int wsUseXShm;
 
 // ----------------------------------------------------------------------------------------------
 //  wsKeyTable
 // ----------------------------------------------------------------------------------------------
-extern unsigned long wsKeyTable[512];
-
 void wsXDone(void);
 void wsXInit(Display *display);
 void wsSetErrorHandler(void);
 
 int wsGetDepthOnScreen(void);
 
-void wsDoExit(void);
-void wsMainLoop(void);
 void wsAutohideCursor(void);
 Bool wsEvents(XEvent *event);
 void wsHandleEvents(void);
@@ -230,8 +197,6 @@ void wsMoveWindowWithin(wsWindow *win, Bool abs, int x, int y);
 void wsResizeWindow(wsWindow *win, int sx, int sy);
 void wsIconify(wsWindow *win);
 void wsRaiseWindowTop(Display *display, Window Win);
-void wsSetBackground(wsWindow *win, int color);
-void wsSetForegroundRGB(wsWindow *win, int r, int g, int b);
 void wsSetBackgroundRGB(wsWindow *win, int r, int g, int b);
 void wsClearWindow(wsWindow *win);
 void wsSetTitle(wsWindow *win, char *name);
@@ -247,7 +212,6 @@ void wsSetIcon(Display *display, Window Win, guiIcon_t *icon);
 //    Show / hide mouse cursor.
 // ----------------------------------------------------------------------------------------------
 void wsVisibleMouse(wsWindow *win, int m);
-void wsSetMousePosition(wsWindow *win, int x, int y);
 
 // ----------------------------------------------------------------------------------------------
 // Image handling

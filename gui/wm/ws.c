@@ -87,11 +87,7 @@ Display *wsDisplay;
 int wsScreen;
 Window wsRootWin;
 XEvent wsEvent;
-int wsWindowDepth;
-GC wsHGC;
 MotifWmHints wsMotifWmHints;
-Atom wsTextProperlyAtom = None;
-int wsLayer = 0;
 
 int wsDepthOnScreen  = 0;
 int wsRedMask        = 0;
@@ -131,10 +127,7 @@ enum PixelFormat out_pix_fmt = PIX_FMT_NONE;
 
 #define MWM_HINTS_FUNCTIONS     (1L << 0)
 #define MWM_HINTS_DECORATIONS   (1L << 1)
-#define MWM_HINTS_INPUT_MODE    (1L << 2)
-#define MWM_HINTS_STATUS        (1L << 3)
 
-#define MWM_FUNC_ALL            (1L << 0)
 #define MWM_FUNC_RESIZE         (1L << 1)
 #define MWM_FUNC_MOVE           (1L << 2)
 #define MWM_FUNC_MINIMIZE       (1L << 3)
@@ -142,20 +135,6 @@ enum PixelFormat out_pix_fmt = PIX_FMT_NONE;
 #define MWM_FUNC_CLOSE          (1L << 5)
 
 #define MWM_DECOR_ALL           (1L << 0)
-#define MWM_DECOR_BORDER        (1L << 1)
-#define MWM_DECOR_RESIZEH       (1L << 2)
-#define MWM_DECOR_TITLE         (1L << 3)
-#define MWM_DECOR_MENU          (1L << 4)
-#define MWM_DECOR_MINIMIZE      (1L << 5)
-#define MWM_DECOR_MAXIMIZE      (1L << 6)
-
-#define MWM_INPUT_MODELESS 0
-#define MWM_INPUT_PRIMARY_APPLICATION_MODAL 1
-#define MWM_INPUT_SYSTEM_MODAL 2
-#define MWM_INPUT_FULL_APPLICATION_MODAL 3
-#define MWM_INPUT_APPLICATION_MODAL MWM_INPUT_PRIMARY_APPLICATION_MODAL
-
-#define MWM_TEAROFF_WINDOW      (1L << 0)
 
 // ----------------------------------------------------------------------------------------------
 //   Init X Window System.
@@ -509,8 +488,6 @@ void wsCreateWindow(wsWindow *win, int x, int y, int w, int h, int b, int c, uns
 
     if (p & wsShowFrame)
         win->Decorations = True;
-
-    wsHGC = DefaultGC(wsDisplay, wsScreen);
 
     wsWindowPosition(win, x, y, w, h);
 
@@ -1011,39 +988,9 @@ void wsHandleEvents(void)
     }
 }
 
-void wsMainLoop(void)
-{
-    int delay = 20;
-
-    mp_msg(MSGT_GPLAYER, MSGL_V, "[ws] init threads: %d\n", XInitThreads());
-    XSynchronize(wsDisplay, False);
-    XLockDisplay(wsDisplay);
-// XIfEvent( wsDisplay,&wsEvent,wsEvents );
-
-    while (wsTrue) {
-        /* handle pending events */
-        while (XPending(wsDisplay)) {
-            XNextEvent(wsDisplay, &wsEvent);
-            wsEvents(&wsEvent);
-            delay = 0;
-        }
-
-        usleep(delay * 1000); // FIXME!
-
-        if (delay < 10 * 20)
-            delay += 20;               // pump up delay up to 0.2 sec (low activity)
-    }
-
-    XUnlockDisplay(wsDisplay);
-}
-
 // ----------------------------------------------------------------------------------------------
 //    Move window to selected layer
 // ----------------------------------------------------------------------------------------------
-
-#define WIN_LAYER_ONBOTTOM               2
-#define WIN_LAYER_NORMAL                 4
-#define WIN_LAYER_ONTOP                 10
 
 /**
  * @brief Set the layer for a window.
@@ -1126,15 +1073,6 @@ void wsPostRedisplay(wsWindow *win)
         win->ReDraw();
         XFlush(wsDisplay);
     }
-}
-
-// ----------------------------------------------------------------------------------------------
-//    Do Exit.
-// ----------------------------------------------------------------------------------------------
-void wsDoExit(void)
-{
-    wsTrue = False;
-    wsResizeWindow(wsWindowList[0], 32, 32);
 }
 
 // ----------------------------------------------------------------------------------------------
@@ -1298,11 +1236,6 @@ void wsRaiseWindowTop(Display *display, Window Win)
 // ----------------------------------------------------------------------------------------------
 //    Set window background to 'color'.
 // ----------------------------------------------------------------------------------------------
-void wsSetBackground(wsWindow *win, int color)
-{
-    XSetWindowBackground(wsDisplay, win->WindowID, color);
-}
-
 void wsSetBackgroundRGB(wsWindow *win, int r, int g, int b)
 {
     int color = 0;
@@ -1336,41 +1269,6 @@ void wsSetBackgroundRGB(wsWindow *win, int r, int g, int b)
     }
 
     XSetWindowBackground(wsDisplay, win->WindowID, color);
-}
-
-void wsSetForegroundRGB(wsWindow *win, int r, int g, int b)
-{
-    int color = 0;
-
-    switch (wsOutMask) {
-    case wsRGB32:
-    case wsRGB24:
-        color = (r << 16) + (g << 8) + b;
-        break;
-
-    case wsBGR32:
-    case wsBGR24:
-        color = (b << 16) + (g << 8) + r;
-        break;
-
-    case wsRGB16:
-        PACK_RGB16(b, g, r, color);
-        break;
-
-    case wsBGR16:
-        PACK_RGB16(r, g, b, color);
-        break;
-
-    case wsRGB15:
-        PACK_RGB15(b, g, r, color);
-        break;
-
-    case wsBGR15:
-        PACK_RGB15(r, g, b, color);
-        break;
-    }
-
-    XSetForeground(wsDisplay, win->wGC, color);
 }
 
 // ----------------------------------------------------------------------------------------------
@@ -1590,11 +1488,6 @@ void wsClearWindow(wsWindow *win)
 void wsSetTitle(wsWindow *win, char *name)
 {
     XStoreName(wsDisplay, win->WindowID, name);
-}
-
-void wsSetMousePosition(wsWindow *win, int x, int y)
-{
-    XWarpPointer(wsDisplay, wsRootWin, win->WindowID, 0, 0, 0, 0, x, y);
 }
 
 void wsSetShape(wsWindow *win, char *data)
