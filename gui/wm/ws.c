@@ -379,7 +379,7 @@ void wsXInit(Display *display)
 
 void wsXDone(void)
 {
-    XCloseDisplay(wsDisplay);
+    //XCloseDisplay(wsDisplay);
 }
 
 /**
