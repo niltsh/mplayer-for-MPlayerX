@@ -129,32 +129,6 @@ static enum PixelFormat out_pix_fmt = PIX_FMT_NONE;
 
 #define MWM_DECOR_ALL           (1L << 0)
 
-// ----------------------------------------------------------------------------------------------
-//   Init X Window System.
-// ----------------------------------------------------------------------------------------------
-
-/**
- * @brief Inform about an X error that has occurred.
- *
- * @param display display
- * @param event pointer to an X error event structure
- *
- * @return 0
- */
-static int wsErrorHandler(Display *display, XErrorEvent *event)
-{
-    char type[128];
-
-    XGetErrorText(display, event->error_code, type, sizeof(type));
-
-    mp_msg(MSGT_GPLAYER, MSGL_ERR, "[ws] " MSGTR_WS_XError);
-    mp_msg(MSGT_GPLAYER, MSGL_ERR, "[ws]  Error code: %d - %s\n", event->error_code, type);
-    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  Request code: %d (minor code: %d)\n", event->request_code, event->minor_code);
-    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  MPlayer module: %s\n", current_module ? current_module : "(none)");
-
-    return 0;
-}
-
 /**
  * @brief Update screen width, screen height and screen origin x and y
  *        from xinerama information.
@@ -191,12 +165,77 @@ static void wsUpdateXineramaInfo(wsWindow *win)
     }
 }
 
-/**
- * @brief Set the X error handler.
- */
-void wsSetErrorHandler(void)
+int wsGetDepthOnScreen(void)
 {
-    XSetErrorHandler(wsErrorHandler);
+    int depth;
+    XImage *mXImage;
+    Visual *visual;
+
+    if ((depth = vo_find_depth_from_visuals(wsDisplay, wsScreen, &visual)) > 0) {
+        mXImage = XCreateImage(wsDisplay, visual, depth, ZPixmap, 0, NULL,
+                               1, 1, 32, 0);
+        wsDepthOnScreen = mXImage->bits_per_pixel;
+        wsRedMask       = mXImage->red_mask;
+        wsGreenMask     = mXImage->green_mask;
+        wsBlueMask      = mXImage->blue_mask;
+#if HAVE_BIGENDIAN
+        wsNonNativeOrder = mXImage->byte_order == LSBFirst;
+#else
+        wsNonNativeOrder = mXImage->byte_order == MSBFirst;
+#endif
+        XDestroyImage(mXImage);
+    } else {
+        int bpp, ibpp;
+        XWindowAttributes attribs;
+
+        mXImage = XGetImage(wsDisplay, wsRootWin, 0, 0, 1, 1, AllPlanes, ZPixmap);
+        bpp     = mXImage->bits_per_pixel;
+
+        XGetWindowAttributes(wsDisplay, wsRootWin, &attribs);
+        ibpp    = attribs.depth;
+        mXImage = XGetImage(wsDisplay, wsRootWin, 0, 0, 1, 1, AllPlanes, ZPixmap);
+        bpp     = mXImage->bits_per_pixel;
+
+        if ((ibpp + 7) / 8 != (bpp + 7) / 8)
+            ibpp = bpp;
+
+        wsDepthOnScreen = ibpp;
+        wsRedMask       = mXImage->red_mask;
+        wsGreenMask     = mXImage->green_mask;
+        wsBlueMask      = mXImage->blue_mask;
+        XDestroyImage(mXImage);
+    }
+
+    return wsDepthOnScreen;
+}
+
+int wsGetOutMask(void)
+{
+    if ((wsDepthOnScreen == 32) && (wsRedMask == 0xff0000) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0x0000ff))
+        return wsRGB32;
+
+    if ((wsDepthOnScreen == 32) && (wsRedMask == 0x0000ff) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0xff0000))
+        return wsBGR32;
+
+    if ((wsDepthOnScreen == 24) && (wsRedMask == 0xff0000) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0x0000ff))
+        return wsRGB24;
+
+    if ((wsDepthOnScreen == 24) && (wsRedMask == 0x0000ff) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0xff0000))
+        return wsBGR24;
+
+    if ((wsDepthOnScreen == 16) && (wsRedMask == 0xf800) && (wsGreenMask == 0x7e0) && (wsBlueMask == 0x1f))
+        return wsRGB16;
+
+    if ((wsDepthOnScreen == 16) && (wsRedMask == 0x1f) && (wsGreenMask == 0x7e0) && (wsBlueMask == 0xf800))
+        return wsBGR16;
+
+    if ((wsDepthOnScreen == 15) && (wsRedMask == 0x7c00) && (wsGreenMask == 0x3e0) && (wsBlueMask == 0x1f))
+        return wsRGB15;
+
+    if ((wsDepthOnScreen == 15) && (wsRedMask == 0x1f) && (wsGreenMask == 0x3e0) && (wsBlueMask == 0x7c00))
+        return wsBGR15;
+
+    return 0;
 }
 
 void wsXInit(Display *display)
@@ -335,6 +374,327 @@ void wsXInit(Display *display)
     case wsBGR15:
         out_pix_fmt = PIX_FMT_BGR555;
         break;
+    }
+}
+
+void wsXDone(void)
+{
+    XCloseDisplay(wsDisplay);
+}
+
+/**
+ * @brief Inform about an X error that has occurred.
+ *
+ * @param display display
+ * @param event pointer to an X error event structure
+ *
+ * @return 0
+ */
+static int wsErrorHandler(Display *display, XErrorEvent *event)
+{
+    char type[128];
+
+    XGetErrorText(display, event->error_code, type, sizeof(type));
+
+    mp_msg(MSGT_GPLAYER, MSGL_ERR, "[ws] " MSGTR_WS_XError);
+    mp_msg(MSGT_GPLAYER, MSGL_ERR, "[ws]  Error code: %d - %s\n", event->error_code, type);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  Request code: %d (minor code: %d)\n", event->request_code, event->minor_code);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws]  MPlayer module: %s\n", current_module ? current_module : "(none)");
+
+    return 0;
+}
+
+/**
+ * @brief Set the X error handler.
+ */
+void wsSetErrorHandler(void)
+{
+    XSetErrorHandler(wsErrorHandler);
+}
+
+// ----------------------------------------------------------------------------------------------
+//   Handle events.
+// ----------------------------------------------------------------------------------------------
+
+static int wsSearch(Window win)
+{
+    int i;
+
+    for (i = 0; i < wsWLCount; i++)
+        if (wsWindowList[i] && wsWindowList[i]->WindowID == win)
+            return i;
+
+    return -1;
+}
+
+void wsEvents(XEvent *event)
+{
+    unsigned long i = 0;
+    int l;
+    int x, y;
+    Window child_window = 0;
+
+    l = wsSearch(event->xany.window);
+
+    if (l == -1)
+        return;
+
+    wsWindowList[l]->State = wsNone;
+
+    switch (event->type) {
+    case ClientMessage:
+
+        if (event->xclient.message_type == wsWindowList[l]->AtomProtocols) {
+            if ((Atom)event->xclient.data.l[0] == wsWindowList[l]->AtomDeleteWindow) {
+                i = wsWindowClosed;
+                goto expose;
+            }
+
+            if ((Atom)event->xclient.data.l[0] == wsWindowList[l]->AtomTakeFocus) {
+                i = wsWindowFocusIn;
+                wsWindowList[l]->Focused = wsFocused;
+                goto expose;
+            }
+
+            if ((Atom)event->xclient.data.l[0] == wsWindowList[l]->AtomRolle) {
+                mp_msg(MSGT_GPLAYER, MSGL_V, "[ws] role set.\n");
+            }
+        } else {
+            /* try to process DND events */
+            wsXDNDProcessClientMessage(&event->xclient);
+        }
+
+        break;
+
+    case MapNotify:
+
+        i = wsWindowMapped;
+        wsWindowList[l]->Mapped = wsMapped;
+        goto expose;
+
+    case UnmapNotify:
+
+        i = wsWindowUnmapped;
+        wsWindowList[l]->Mapped = wsNo;
+        goto expose;
+
+    case FocusIn:
+
+        if (wsWindowList[l]->Focused == wsFocused)
+            break;
+
+        i = wsWindowFocusIn;
+        wsWindowList[l]->Focused = wsFocused;
+        goto expose;
+
+    case FocusOut:
+
+        if (wsWindowList[l]->Focused == wsNo)
+            break;
+
+        i = wsWindowFocusOut;
+        wsWindowList[l]->Focused = wsNo;
+        goto expose;
+
+    case VisibilityNotify:
+
+        switch (event->xvisibility.state) {
+        case VisibilityUnobscured:
+            i = wsWindowVisible;
+            wsWindowList[l]->Visible = wsVisible;
+            goto expose;
+
+        case VisibilityFullyObscured:
+            i = wsWindowNotVisible;
+            wsWindowList[l]->Visible = wsNotVisible;
+            goto expose;
+
+        case VisibilityPartiallyObscured:
+            i = wsWindowPartialVisible;
+            wsWindowList[l]->Visible = wsPVisible;
+            goto expose;
+        }
+
+expose:
+        wsWindowList[l]->State = i;
+
+        if (wsWindowList[l]->ReDraw)
+            wsWindowList[l]->ReDraw();
+
+        break;
+
+    case Expose:
+
+        wsWindowList[l]->State = wsWindowExpose;
+
+        if ((wsWindowList[l]->ReDraw) && (!event->xexpose.count))
+            wsWindowList[l]->ReDraw();
+
+        break;
+
+    case ConfigureNotify:
+
+        XTranslateCoordinates(wsDisplay, wsWindowList[l]->WindowID, wsRootWin, 0, 0, &x, &y, &child_window);
+
+        if ((wsWindowList[l]->X != x) || (wsWindowList[l]->Y != y) || (wsWindowList[l]->Width != event->xconfigure.width) || (wsWindowList[l]->Height != event->xconfigure.height)) {
+            wsWindowList[l]->X      = x;
+            wsWindowList[l]->Y      = y;
+            wsWindowList[l]->Width  = event->xconfigure.width;
+            wsWindowList[l]->Height = event->xconfigure.height;
+        }
+
+        wsWindowList[l]->Rolled = wsNo;
+
+        if (event->xconfigure.y < 0) {
+            i = wsWindowRolled;
+            wsWindowList[l]->Rolled = wsRolled;
+            goto expose;
+        }
+
+        break;
+
+    case KeyPress:
+
+        i = wsKeyPressed;
+        goto keypressed;
+
+    case KeyRelease:
+
+        i = wsKeyReleased;
+keypressed:
+        wsWindowList[l]->Alt      = False;
+        wsWindowList[l]->Shift    = False;
+        wsWindowList[l]->NumLock  = False;
+        wsWindowList[l]->Control  = False;
+        wsWindowList[l]->CapsLock = False;
+
+        if (event->xkey.state & Mod1Mask)
+            wsWindowList[l]->Alt = True;
+
+        if (event->xkey.state & Mod2Mask)
+            wsWindowList[l]->NumLock = True;
+
+        if (event->xkey.state & ControlMask)
+            wsWindowList[l]->Control = True;
+
+        if (event->xkey.state & ShiftMask)
+            wsWindowList[l]->Shift = True;
+
+        if (event->xkey.state & LockMask)
+            wsWindowList[l]->CapsLock = True;
+
+#if 0
+        {
+            KeySym keySym;
+            keySym = XKeycodeToKeysym(wsDisplay, event->xkey.keycode, 0);
+
+            if (keySym != NoSymbol) {
+                keySym = ((keySym & 0xff00) != 0 ? ((keySym & 0x00ff) + 256) : (keySym));
+
+                if (wsWindowList[l]->KeyHandler)
+                    wsWindowList[l]->KeyHandler(event->xkey.state, i, keySym);
+            }
+        }
+#else
+        {
+            int key;
+            char buf[100];
+            KeySym keySym;
+            static XComposeStatus stat;
+
+            XLookupString(&event->xkey, buf, sizeof(buf), &keySym, &stat);
+            key = ((keySym & 0xff00) != 0 ? ((keySym & 0x00ff) + 256) : (keySym));
+
+            if (wsWindowList[l]->KeyHandler)
+                wsWindowList[l]->KeyHandler(event->xkey.keycode, i, key);
+        }
+#endif
+        break;
+
+    case MotionNotify:
+
+        i = wsMoveMouse;
+        {
+            /* pump all motion events from the display queue:
+             * this way it works faster when moving the window */
+            static XEvent e;
+
+            if (event->xmotion.state) {
+                while (XCheckTypedWindowEvent(wsDisplay, event->xany.window, MotionNotify, &e)) {
+                    /* FIXME: need to make sure we didn't release/press the button in between...*/
+                    /* FIXME: do we need some timeout here to make sure we don't spend too much time
+                     * removing events from the queue? */
+                    event = &e;
+                }
+            }
+        }
+
+        if (wsWindowList[l]->wsCursor != None) {
+            wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
+            mouse_win  = wsWindowList[l];
+            mouse_time = GetTimerMS();
+        }
+
+        goto buttonreleased;
+
+    case ButtonRelease:
+
+        i = event->xbutton.button + 128;
+
+        if (wsWindowList[l]->wsCursor != None) {
+            wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
+            mouse_win  = wsWindowList[l];
+            mouse_time = GetTimerMS();
+        }
+
+        goto buttonreleased;
+
+    case ButtonPress:
+
+        i = event->xbutton.button;
+
+        if (wsWindowList[l]->wsCursor != None) {
+            wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
+            mouse_win  = wsWindowList[l];
+            mouse_time = GetTimerMS();
+        }
+
+        goto buttonreleased;
+
+    case EnterNotify:
+
+        i = wsEnterWindow;
+        goto buttonreleased;
+
+    case LeaveNotify:
+
+        i = wsLeaveWindow;
+buttonreleased:
+
+        if (wsWindowList[l]->MouseHandler)
+            wsWindowList[l]->MouseHandler(i, event->xbutton.x, event->xbutton.y, event->xmotion.x_root, event->xmotion.y_root);
+
+        break;
+
+    case SelectionNotify:
+
+        /* Handle DandD */
+        wsXDNDProcessSelection(wsWindowList[l], event);
+        break;
+    }
+
+    XFlush(wsDisplay);
+    XSync(wsDisplay, False);
+}
+
+void wsHandleEvents(void)
+{
+    XEvent wsEvent;
+    /* handle pending events */
+    while (XPending(wsDisplay)) {
+        XNextEvent(wsDisplay, &wsEvent);
+//   printf("### X event: %d  [%d]\n",wsEvent.type,delay);
+        wsEvents(&wsEvent);
     }
 }
 
@@ -626,38 +986,6 @@ void wsCreateWindow(wsWindow *win, int x, int y, int w, int h, int b, int c, uns
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] window is created. ( %s ).\n", label);
 }
 
-void wsWindowDecoration(wsWindow *win, Bool decor)
-{
-    MotifWmHints wsMotifWmHints;
-
-    wsMotifHints = XInternAtom(wsDisplay, "_MOTIF_WM_HINTS", 0);
-
-    if (wsMotifHints == None)
-        return;
-
-    memset(&wsMotifWmHints, 0, sizeof(MotifWmHints));
-    wsMotifWmHints.flags = MWM_HINTS_FUNCTIONS | MWM_HINTS_DECORATIONS;
-
-    if (decor) {
-        wsMotifWmHints.functions   = MWM_FUNC_MOVE | MWM_FUNC_CLOSE | MWM_FUNC_MINIMIZE | MWM_FUNC_MAXIMIZE | MWM_FUNC_RESIZE;
-        wsMotifWmHints.decorations = MWM_DECOR_ALL;
-    }
-
-    XChangeProperty(wsDisplay, win->WindowID, wsMotifHints, wsMotifHints, 32,
-                    PropModeReplace, (unsigned char *)&wsMotifWmHints, 5);
-}
-
-static int wsSearch(Window win)
-{
-    int i;
-
-    for (i = 0; i < wsWLCount; i++)
-        if (wsWindowList[i] && wsWindowList[i]->WindowID == win)
-            return i;
-
-    return -1;
-}
-
 void wsDestroyWindow(wsWindow *win)
 {
     int l;
@@ -687,440 +1015,137 @@ void wsDestroyWindow(wsWindow *win)
 #endif
 }
 
-/**
- * @brief Handle automatic hiding of the cursor.
- */
-void wsAutohideCursor(void)
+void wsSetTitle(wsWindow *win, char *name)
 {
-    if (mouse_win && (GetTimerMS() - mouse_time >= MOUSEHIDE_DELAY)) {
-        wsVisibleMouse(mouse_win, wsHideMouseCursor);
-        mouse_win = NULL;
-    }
+    XStoreName(wsDisplay, win->WindowID, name);
 }
 
-// ----------------------------------------------------------------------------------------------
-//   Handle events.
-// ----------------------------------------------------------------------------------------------
-
-void wsEvents(XEvent *event)
+void wsWindowDecoration(wsWindow *win, Bool decor)
 {
-    unsigned long i = 0;
-    int l;
-    int x, y;
-    Window child_window = 0;
+    MotifWmHints wsMotifWmHints;
 
-    l = wsSearch(event->xany.window);
+    wsMotifHints = XInternAtom(wsDisplay, "_MOTIF_WM_HINTS", 0);
 
-    if (l == -1)
+    if (wsMotifHints == None)
         return;
 
-    wsWindowList[l]->State = wsNone;
-
-    switch (event->type) {
-    case ClientMessage:
-
-        if (event->xclient.message_type == wsWindowList[l]->AtomProtocols) {
-            if ((Atom)event->xclient.data.l[0] == wsWindowList[l]->AtomDeleteWindow) {
-                i = wsWindowClosed;
-                goto expose;
-            }
-
-            if ((Atom)event->xclient.data.l[0] == wsWindowList[l]->AtomTakeFocus) {
-                i = wsWindowFocusIn;
-                wsWindowList[l]->Focused = wsFocused;
-                goto expose;
-            }
-
-            if ((Atom)event->xclient.data.l[0] == wsWindowList[l]->AtomRolle) {
-                mp_msg(MSGT_GPLAYER, MSGL_V, "[ws] role set.\n");
-            }
-        } else {
-            /* try to process DND events */
-            wsXDNDProcessClientMessage(&event->xclient);
-        }
-
-        break;
-
-    case MapNotify:
-
-        i = wsWindowMapped;
-        wsWindowList[l]->Mapped = wsMapped;
-        goto expose;
-
-    case UnmapNotify:
-
-        i = wsWindowUnmapped;
-        wsWindowList[l]->Mapped = wsNo;
-        goto expose;
-
-    case FocusIn:
-
-        if (wsWindowList[l]->Focused == wsFocused)
-            break;
-
-        i = wsWindowFocusIn;
-        wsWindowList[l]->Focused = wsFocused;
-        goto expose;
-
-    case FocusOut:
-
-        if (wsWindowList[l]->Focused == wsNo)
-            break;
-
-        i = wsWindowFocusOut;
-        wsWindowList[l]->Focused = wsNo;
-        goto expose;
-
-    case VisibilityNotify:
-
-        switch (event->xvisibility.state) {
-        case VisibilityUnobscured:
-            i = wsWindowVisible;
-            wsWindowList[l]->Visible = wsVisible;
-            goto expose;
-
-        case VisibilityFullyObscured:
-            i = wsWindowNotVisible;
-            wsWindowList[l]->Visible = wsNotVisible;
-            goto expose;
-
-        case VisibilityPartiallyObscured:
-            i = wsWindowPartialVisible;
-            wsWindowList[l]->Visible = wsPVisible;
-            goto expose;
-        }
-
-expose:
-        wsWindowList[l]->State = i;
-
-        if (wsWindowList[l]->ReDraw)
-            wsWindowList[l]->ReDraw();
-
-        break;
-
-    case Expose:
-
-        wsWindowList[l]->State = wsWindowExpose;
-
-        if ((wsWindowList[l]->ReDraw) && (!event->xexpose.count))
-            wsWindowList[l]->ReDraw();
-
-        break;
-
-    case ConfigureNotify:
-
-        XTranslateCoordinates(wsDisplay, wsWindowList[l]->WindowID, wsRootWin, 0, 0, &x, &y, &child_window);
-
-        if ((wsWindowList[l]->X != x) || (wsWindowList[l]->Y != y) || (wsWindowList[l]->Width != event->xconfigure.width) || (wsWindowList[l]->Height != event->xconfigure.height)) {
-            wsWindowList[l]->X      = x;
-            wsWindowList[l]->Y      = y;
-            wsWindowList[l]->Width  = event->xconfigure.width;
-            wsWindowList[l]->Height = event->xconfigure.height;
-        }
-
-        wsWindowList[l]->Rolled = wsNo;
-
-        if (event->xconfigure.y < 0) {
-            i = wsWindowRolled;
-            wsWindowList[l]->Rolled = wsRolled;
-            goto expose;
-        }
-
-        break;
-
-    case KeyPress:
-
-        i = wsKeyPressed;
-        goto keypressed;
-
-    case KeyRelease:
-
-        i = wsKeyReleased;
-keypressed:
-        wsWindowList[l]->Alt      = False;
-        wsWindowList[l]->Shift    = False;
-        wsWindowList[l]->NumLock  = False;
-        wsWindowList[l]->Control  = False;
-        wsWindowList[l]->CapsLock = False;
-
-        if (event->xkey.state & Mod1Mask)
-            wsWindowList[l]->Alt = True;
-
-        if (event->xkey.state & Mod2Mask)
-            wsWindowList[l]->NumLock = True;
-
-        if (event->xkey.state & ControlMask)
-            wsWindowList[l]->Control = True;
-
-        if (event->xkey.state & ShiftMask)
-            wsWindowList[l]->Shift = True;
-
-        if (event->xkey.state & LockMask)
-            wsWindowList[l]->CapsLock = True;
-
-#if 0
-        {
-            KeySym keySym;
-            keySym = XKeycodeToKeysym(wsDisplay, event->xkey.keycode, 0);
-
-            if (keySym != NoSymbol) {
-                keySym = ((keySym & 0xff00) != 0 ? ((keySym & 0x00ff) + 256) : (keySym));
-
-                if (wsWindowList[l]->KeyHandler)
-                    wsWindowList[l]->KeyHandler(event->xkey.state, i, keySym);
-            }
-        }
-#else
-        {
-            int key;
-            char buf[100];
-            KeySym keySym;
-            static XComposeStatus stat;
-
-            XLookupString(&event->xkey, buf, sizeof(buf), &keySym, &stat);
-            key = ((keySym & 0xff00) != 0 ? ((keySym & 0x00ff) + 256) : (keySym));
-
-            if (wsWindowList[l]->KeyHandler)
-                wsWindowList[l]->KeyHandler(event->xkey.keycode, i, key);
-        }
-#endif
-        break;
-
-    case MotionNotify:
-
-        i = wsMoveMouse;
-        {
-            /* pump all motion events from the display queue:
-             * this way it works faster when moving the window */
-            static XEvent e;
-
-            if (event->xmotion.state) {
-                while (XCheckTypedWindowEvent(wsDisplay, event->xany.window, MotionNotify, &e)) {
-                    /* FIXME: need to make sure we didn't release/press the button in between...*/
-                    /* FIXME: do we need some timeout here to make sure we don't spend too much time
-                     * removing events from the queue? */
-                    event = &e;
-                }
-            }
-        }
-
-        if (wsWindowList[l]->wsCursor != None) {
-            wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
-            mouse_win  = wsWindowList[l];
-            mouse_time = GetTimerMS();
-        }
-
-        goto buttonreleased;
-
-    case ButtonRelease:
-
-        i = event->xbutton.button + 128;
-
-        if (wsWindowList[l]->wsCursor != None) {
-            wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
-            mouse_win  = wsWindowList[l];
-            mouse_time = GetTimerMS();
-        }
-
-        goto buttonreleased;
-
-    case ButtonPress:
-
-        i = event->xbutton.button;
-
-        if (wsWindowList[l]->wsCursor != None) {
-            wsVisibleMouse(wsWindowList[l], wsShowMouseCursor);
-            mouse_win  = wsWindowList[l];
-            mouse_time = GetTimerMS();
-        }
-
-        goto buttonreleased;
-
-    case EnterNotify:
-
-        i = wsEnterWindow;
-        goto buttonreleased;
-
-    case LeaveNotify:
-
-        i = wsLeaveWindow;
-buttonreleased:
-
-        if (wsWindowList[l]->MouseHandler)
-            wsWindowList[l]->MouseHandler(i, event->xbutton.x, event->xbutton.y, event->xmotion.x_root, event->xmotion.y_root);
-
-        break;
-
-    case SelectionNotify:
-
-        /* Handle DandD */
-        wsXDNDProcessSelection(wsWindowList[l], event);
-        break;
+    memset(&wsMotifWmHints, 0, sizeof(MotifWmHints));
+    wsMotifWmHints.flags = MWM_HINTS_FUNCTIONS | MWM_HINTS_DECORATIONS;
+
+    if (decor) {
+        wsMotifWmHints.functions   = MWM_FUNC_MOVE | MWM_FUNC_CLOSE | MWM_FUNC_MINIMIZE | MWM_FUNC_MAXIMIZE | MWM_FUNC_RESIZE;
+        wsMotifWmHints.decorations = MWM_DECOR_ALL;
     }
 
-    XFlush(wsDisplay);
-    XSync(wsDisplay, False);
+    XChangeProperty(wsDisplay, win->WindowID, wsMotifHints, wsMotifHints, 32,
+                    PropModeReplace, (unsigned char *)&wsMotifWmHints, 5);
 }
 
-void wsHandleEvents(void)
+void wsSetShape(wsWindow *win, char *data)
 {
-    XEvent wsEvent;
-    /* handle pending events */
-    while (XPending(wsDisplay)) {
-        XNextEvent(wsDisplay, &wsEvent);
-//   printf("### X event: %d  [%d]\n",wsEvent.type,delay);
-        wsEvents(&wsEvent);
-    }
-}
+#ifdef CONFIG_XSHAPE
+    if (!wsUseXShape)
+        return;
 
-// ----------------------------------------------------------------------------------------------
-//    Move window to selected layer
-// ----------------------------------------------------------------------------------------------
+    if (data) {
+        win->Mask = XCreateBitmapFromData(wsDisplay, win->WindowID, data, win->Width, win->Height);
+        XShapeCombineMask(wsDisplay, win->WindowID, ShapeBounding, 0, 0, win->Mask, ShapeSet);
+        XFreePixmap(wsDisplay, win->Mask);
+    } else
+        XShapeCombineMask(wsDisplay, win->WindowID, ShapeBounding, 0, 0, None, ShapeSet);
+#endif
+}
 
 /**
- * @brief Set the layer for a window.
+ * @brief Set differently sized icons to a window.
+ *
+ *        This function sets the X icon hint as well as
+ *        the properties KWM_WIN_ICON and _NET_WM_ICON.
  *
  * @param display display
  * @param Win window
- * @param fullscreen whether to set fullscreen or normal layer
+ * @param icon pointer to the icons
  */
-void wsSetLayer(Display *display, Window Win, Bool fullscreen)
+void wsSetIcon(Display *display, Window Win, guiIcon_t *icon)
 {
-    vo_x11_setlayer(display, Win, fullscreen);
+    XWMHints *wm;
+    Atom iconatom;
+    long data[2];
+
+    if (icon->normal) {
+        wm = XGetWMHints(display, Win);
+
+        if (!wm)
+            wm = XAllocWMHints();
+
+        wm->icon_pixmap = icon->normal;
+        wm->icon_mask   = icon->normal_mask;
+        wm->flags      |= IconPixmapHint | IconMaskHint;
+
+        XSetWMHints(display, Win, wm);
+        XFree(wm);
+    }
+
+    if (icon->small || icon->normal) {
+        iconatom = XInternAtom(display, "KWM_WIN_ICON", False);
+        data[0]  = (icon->small ? icon->small : icon->normal);
+        data[1]  = (icon->small ? icon->small_mask : icon->normal_mask);
+
+        XChangeProperty(display, Win, iconatom, iconatom, 32, PropModeReplace, (unsigned char *)data, 2);
+    }
+
+    if (icon->collection) {
+        iconatom = XInternAtom(display, "_NET_WM_ICON", False);
+        XChangeProperty(display, Win, iconatom, XA_CARDINAL, 32, PropModeReplace, (unsigned char *)icon->collection, icon->collection_size);
+    }
+}
+
+// ----------------------------------------------------------------------------------------------
+//    Set window background to 'color'.
+// ----------------------------------------------------------------------------------------------
+void wsSetBackgroundRGB(wsWindow *win, int r, int g, int b)
+{
+    int color = 0;
+
+    switch (wsOutMask) {
+    case wsRGB32:
+    case wsRGB24:
+        color = (r << 16) + (g << 8) + b;
+        break;
+
+    case wsBGR32:
+    case wsBGR24:
+        color = (b << 16) + (g << 8) + r;
+        break;
+
+    case wsRGB16:
+        PACK_RGB16(b, g, r, color);
+        break;
+
+    case wsBGR16:
+        PACK_RGB16(r, g, b, color);
+        break;
+
+    case wsRGB15:
+        PACK_RGB15(b, g, r, color);
+        break;
+
+    case wsBGR15:
+        PACK_RGB15(r, g, b, color);
+        break;
+    }
+
+    XSetWindowBackground(wsDisplay, win->WindowID, color);
 }
 
 /**
- * @brief Switch window fullscreen state.
- *
- *        Switch normal window to fullscreen and fullscreen window to normal.
+ * @brief Clear the entire area in a window.
  *
  * @param win pointer to a ws window structure
  */
-void wsFullScreen(wsWindow *win)
+void wsClearWindow(wsWindow *win)
 {
-    if (win->isFullScreen) {
-        if (vo_fs_type & vo_wm_FULLSCREEN)
-            /* window manager supports EWMH */
-            vo_x11_ewmh_fullscreen(win->WindowID, _NET_WM_STATE_REMOVE);
-        else {
-            win->X      = win->OldX;
-            win->Y      = win->OldY;
-            win->Width  = win->OldWidth;
-            win->Height = win->OldHeight;
-        }
-
-        win->isFullScreen = False;
-    } else {
-        if (vo_fs_type & vo_wm_FULLSCREEN)
-            /* window manager supports EWMH */
-            vo_x11_ewmh_fullscreen(win->WindowID, _NET_WM_STATE_ADD);
-        else {
-            win->OldX      = win->X;
-            win->OldY      = win->Y;
-            win->OldWidth  = win->Width;
-            win->OldHeight = win->Height;
-        }
-
-        win->isFullScreen = True;
-
-        wsUpdateXineramaInfo(win);
-    }
-
-    /* unknown window manager and obsolete option -fsmode used */
-    if (vo_wm_type == 0 && !(vo_fsmode & 16)) {
-        XUnmapWindow(wsDisplay, win->WindowID); // required for MWM
-        XWithdrawWindow(wsDisplay, win->WindowID, wsScreen);
-    }
-
-    /* restore window if window manager doesn't support EWMH */
-    if (!(vo_fs_type & vo_wm_FULLSCREEN)) {
-        wsSizeHint(win);
-        wsWindowDecoration(win, win->Decorations && !win->isFullScreen);
-        wsSetLayer(wsDisplay, win->WindowID, win->isFullScreen);
-        XMoveResizeWindow(wsDisplay, win->WindowID, win->X, win->Y, win->Width, win->Height);
-    }
-
-    /* some window managers lose ontop after fullscreen */
-    if (!win->isFullScreen & vo_ontop)
-        wsSetLayer(wsDisplay, win->WindowID, vo_ontop);
-
-    wsRaiseWindowTop(wsDisplay, win->WindowID);
-    XFlush(wsDisplay);
-}
-
-// ----------------------------------------------------------------------------------------------
-//    Redraw screen.
-// ----------------------------------------------------------------------------------------------
-void wsPostRedisplay(wsWindow *win)
-{
-    if (win->ReDraw) {
-        win->State = wsWindowExpose;
-        win->ReDraw();
-        XFlush(wsDisplay);
-    }
-}
-
-// ----------------------------------------------------------------------------------------------
-//    Put 'Image' to window.
-// ----------------------------------------------------------------------------------------------
-void wsConvert(wsWindow *win, unsigned char *Image)
-{
-    static struct SwsContext *sws_ctx;
-    const uint8_t *src[4] = { Image, NULL, NULL, NULL };
-    int src_stride[4]     = { 4 * win->xImage->width, 0, 0, 0 };
-    uint8_t *dst[4]       = { win->ImageData, NULL, NULL, NULL };
-    int dst_stride[4];
-    int i;
-
-    sws_ctx = sws_getCachedContext(sws_ctx, win->xImage->width, win->xImage->height, PIX_FMT_RGB32,
-                                   win->xImage->width, win->xImage->height, out_pix_fmt,
-                                   SWS_POINT, NULL, NULL, NULL);
-    av_image_fill_linesizes(dst_stride, out_pix_fmt, win->xImage->width);
-    sws_scale(sws_ctx, src, src_stride, 0, win->xImage->height, dst, dst_stride);
-
-    if (!wsNonNativeOrder)
-        return;
-
-    switch (win->xImage->bits_per_pixel) {
-    case 32:
-    {
-        uint32_t *d = (uint32_t *)win->ImageData;
-
-        for (i = 0; i < win->xImage->width * win->xImage->height; i++)
-            d[i] = bswap_32(d[i]);
-
-        break;
-    }
-
-    case 16:
-    case 15:
-    {
-        uint16_t *d = (uint16_t *)win->ImageData;
-
-        for (i = 0; i < win->xImage->width * win->xImage->height; i++)
-            d[i] = bswap_16(d[i]);
-
-        break;
-    }
-    }
-}
-
-void wsPutImage(wsWindow *win)
-{
-#ifdef HAVE_SHM
-    if (wsUseXShm) {
-        XShmPutImage(wsDisplay, win->WindowID, win->wGC, win->xImage,
-                     0, 0,
-                     (win->Width - win->xImage->width) / 2, (win->Height - win->xImage->height) / 2,
-                     win->xImage->width, win->xImage->height, 0);
-    } else
-#endif
-    {
-        XPutImage(wsDisplay, win->WindowID, win->wGC, win->xImage,
-                  0, 0,
-                  (win->Width - win->xImage->width) / 2, (win->Height - win->xImage->height) / 2,
-                  win->xImage->width, win->xImage->height);
-    }
+    XClearWindow(wsDisplay, win->WindowID);
 }
 
 // ----------------------------------------------------------------------------------------------
@@ -1192,6 +1217,65 @@ void wsResizeWindow(wsWindow *win, int sx, int sy)
 }
 
 /**
+ * @brief Switch window fullscreen state.
+ *
+ *        Switch normal window to fullscreen and fullscreen window to normal.
+ *
+ * @param win pointer to a ws window structure
+ */
+void wsFullScreen(wsWindow *win)
+{
+    if (win->isFullScreen) {
+        if (vo_fs_type & vo_wm_FULLSCREEN)
+            /* window manager supports EWMH */
+            vo_x11_ewmh_fullscreen(win->WindowID, _NET_WM_STATE_REMOVE);
+        else {
+            win->X      = win->OldX;
+            win->Y      = win->OldY;
+            win->Width  = win->OldWidth;
+            win->Height = win->OldHeight;
+        }
+
+        win->isFullScreen = False;
+    } else {
+        if (vo_fs_type & vo_wm_FULLSCREEN)
+            /* window manager supports EWMH */
+            vo_x11_ewmh_fullscreen(win->WindowID, _NET_WM_STATE_ADD);
+        else {
+            win->OldX      = win->X;
+            win->OldY      = win->Y;
+            win->OldWidth  = win->Width;
+            win->OldHeight = win->Height;
+        }
+
+        win->isFullScreen = True;
+
+        wsUpdateXineramaInfo(win);
+    }
+
+    /* unknown window manager and obsolete option -fsmode used */
+    if (vo_wm_type == 0 && !(vo_fsmode & 16)) {
+        XUnmapWindow(wsDisplay, win->WindowID); // required for MWM
+        XWithdrawWindow(wsDisplay, win->WindowID, wsScreen);
+    }
+
+    /* restore window if window manager doesn't support EWMH */
+    if (!(vo_fs_type & vo_wm_FULLSCREEN)) {
+        wsSizeHint(win);
+        wsWindowDecoration(win, win->Decorations && !win->isFullScreen);
+        wsSetLayer(wsDisplay, win->WindowID, win->isFullScreen);
+        XMoveResizeWindow(wsDisplay, win->WindowID, win->X, win->Y, win->Width, win->Height);
+    }
+
+    /* some window managers lose ontop after fullscreen */
+    if (!win->isFullScreen & vo_ontop)
+        wsSetLayer(wsDisplay, win->WindowID, vo_ontop);
+
+    wsRaiseWindowTop(wsDisplay, win->WindowID);
+    XFlush(wsDisplay);
+}
+
+/**
  * @brief Iconify a window.
  *
  * @param win pointer to a ws window structure
@@ -1199,131 +1283,6 @@ void wsResizeWindow(wsWindow *win, int sx, int sy)
 void wsIconify(wsWindow *win)
 {
     XIconifyWindow(wsDisplay, win->WindowID, 0);
-}
-
-/**
- * @brief Map a window and raise it to the top.
- *
- * @param display display
- * @param Win window
- */
-void wsRaiseWindowTop(Display *display, Window Win)
-{
-    XMapRaised(display, Win);     // NOTE TO MYSELF: is that really enough?
-    XRaiseWindow(display, Win);   // NOTE TO MYSELF: is that really enough?
-}
-
-// ----------------------------------------------------------------------------------------------
-//    Set window background to 'color'.
-// ----------------------------------------------------------------------------------------------
-void wsSetBackgroundRGB(wsWindow *win, int r, int g, int b)
-{
-    int color = 0;
-
-    switch (wsOutMask) {
-    case wsRGB32:
-    case wsRGB24:
-        color = (r << 16) + (g << 8) + b;
-        break;
-
-    case wsBGR32:
-    case wsBGR24:
-        color = (b << 16) + (g << 8) + r;
-        break;
-
-    case wsRGB16:
-        PACK_RGB16(b, g, r, color);
-        break;
-
-    case wsBGR16:
-        PACK_RGB16(r, g, b, color);
-        break;
-
-    case wsRGB15:
-        PACK_RGB15(b, g, r, color);
-        break;
-
-    case wsBGR15:
-        PACK_RGB15(r, g, b, color);
-        break;
-    }
-
-    XSetWindowBackground(wsDisplay, win->WindowID, color);
-}
-
-// ----------------------------------------------------------------------------------------------
-//    Show / hide mouse cursor.
-// ----------------------------------------------------------------------------------------------
-void wsVisibleMouse(wsWindow *win, int m)
-{
-    switch (m) {
-    case wsShowMouseCursor:
-
-        if (win->wsCursor != None) {
-            XFreeCursor(wsDisplay, win->wsCursor);
-            win->wsCursor = None;
-        }
-
-        XDefineCursor(wsDisplay, win->WindowID, 0);
-        break;
-
-    case wsHideMouseCursor:
-
-        win->wsCursor = XCreatePixmapCursor(wsDisplay, win->wsCursorPixmap, win->wsCursorPixmap, &win->wsColor, &win->wsColor, 0, 0);
-        XDefineCursor(wsDisplay, win->WindowID, win->wsCursor);
-        break;
-    }
-
-    XFlush(wsDisplay);
-}
-
-int wsGetDepthOnScreen(void)
-{
-    int depth;
-    XImage *mXImage;
-    Visual *visual;
-
-    if ((depth = vo_find_depth_from_visuals(wsDisplay, wsScreen, &visual)) > 0) {
-        mXImage = XCreateImage(wsDisplay, visual, depth, ZPixmap, 0, NULL,
-                               1, 1, 32, 0);
-        wsDepthOnScreen = mXImage->bits_per_pixel;
-        wsRedMask       = mXImage->red_mask;
-        wsGreenMask     = mXImage->green_mask;
-        wsBlueMask      = mXImage->blue_mask;
-#if HAVE_BIGENDIAN
-        wsNonNativeOrder = mXImage->byte_order == LSBFirst;
-#else
-        wsNonNativeOrder = mXImage->byte_order == MSBFirst;
-#endif
-        XDestroyImage(mXImage);
-    } else {
-        int bpp, ibpp;
-        XWindowAttributes attribs;
-
-        mXImage = XGetImage(wsDisplay, wsRootWin, 0, 0, 1, 1, AllPlanes, ZPixmap);
-        bpp     = mXImage->bits_per_pixel;
-
-        XGetWindowAttributes(wsDisplay, wsRootWin, &attribs);
-        ibpp    = attribs.depth;
-        mXImage = XGetImage(wsDisplay, wsRootWin, 0, 0, 1, 1, AllPlanes, ZPixmap);
-        bpp     = mXImage->bits_per_pixel;
-
-        if ((ibpp + 7) / 8 != (bpp + 7) / 8)
-            ibpp = bpp;
-
-        wsDepthOnScreen = ibpp;
-        wsRedMask       = mXImage->red_mask;
-        wsGreenMask     = mXImage->green_mask;
-        wsBlueMask      = mXImage->blue_mask;
-        XDestroyImage(mXImage);
-    }
-
-    return wsDepthOnScreen;
-}
-
-void wsXDone(void)
-{
-    XCloseDisplay(wsDisplay);
 }
 
 void wsVisibleWindow(wsWindow *win, int show)
@@ -1348,22 +1307,49 @@ void wsVisibleWindow(wsWindow *win, int show)
     XFlush(wsDisplay);
 }
 
-void wsDestroyImage(wsWindow *win)
+/**
+ * @brief Map a window and raise it to the top.
+ *
+ * @param display display
+ * @param Win window
+ */
+void wsRaiseWindowTop(Display *display, Window Win)
 {
-    if (win->xImage) {
-        XDestroyImage(win->xImage);
-
-#ifdef HAVE_SHM
-        if (wsUseXShm) {
-            XShmDetach(wsDisplay, &win->Shminfo);
-            shmdt(win->Shminfo.shmaddr);
-        }
-#endif
-    }
-
-    win->xImage = NULL;
+    XMapRaised(display, Win);     // NOTE TO MYSELF: is that really enough?
+    XRaiseWindow(display, Win);   // NOTE TO MYSELF: is that really enough?
 }
 
+// ----------------------------------------------------------------------------------------------
+//    Move window to selected layer
+// ----------------------------------------------------------------------------------------------
+
+/**
+ * @brief Set the layer for a window.
+ *
+ * @param display display
+ * @param Win window
+ * @param fullscreen whether to set fullscreen or normal layer
+ */
+void wsSetLayer(Display *display, Window Win, Bool fullscreen)
+{
+    vo_x11_setlayer(display, Win, fullscreen);
+}
+
+// ----------------------------------------------------------------------------------------------
+//    Redraw screen.
+// ----------------------------------------------------------------------------------------------
+void wsPostRedisplay(wsWindow *win)
+{
+    if (win->ReDraw) {
+        win->State = wsWindowExpose;
+        win->ReDraw();
+        XFlush(wsDisplay);
+    }
+}
+
+// ----------------------------------------------------------------------------------------------
+//    Put 'Image' to window.
+// ----------------------------------------------------------------------------------------------
 void wsCreateImage(wsWindow *win, int Width, int Height)
 {
 #ifdef HAVE_SHM
@@ -1420,111 +1406,121 @@ void wsCreateImage(wsWindow *win, int Width, int Height)
     win->ImageDatadw = (unsigned int *)win->xImage->data;
 }
 
+void wsDestroyImage(wsWindow *win)
+{
+    if (win->xImage) {
+        XDestroyImage(win->xImage);
+
+#ifdef HAVE_SHM
+        if (wsUseXShm) {
+            XShmDetach(wsDisplay, &win->Shminfo);
+            shmdt(win->Shminfo.shmaddr);
+        }
+#endif
+    }
+
+    win->xImage = NULL;
+}
+
+void wsConvert(wsWindow *win, unsigned char *Image)
+{
+    static struct SwsContext *sws_ctx;
+    const uint8_t *src[4] = { Image, NULL, NULL, NULL };
+    int src_stride[4]     = { 4 * win->xImage->width, 0, 0, 0 };
+    uint8_t *dst[4]       = { win->ImageData, NULL, NULL, NULL };
+    int dst_stride[4];
+    int i;
+
+    sws_ctx = sws_getCachedContext(sws_ctx, win->xImage->width, win->xImage->height, PIX_FMT_RGB32,
+                                   win->xImage->width, win->xImage->height, out_pix_fmt,
+                                   SWS_POINT, NULL, NULL, NULL);
+    av_image_fill_linesizes(dst_stride, out_pix_fmt, win->xImage->width);
+    sws_scale(sws_ctx, src, src_stride, 0, win->xImage->height, dst, dst_stride);
+
+    if (!wsNonNativeOrder)
+        return;
+
+    switch (win->xImage->bits_per_pixel) {
+    case 32:
+    {
+        uint32_t *d = (uint32_t *)win->ImageData;
+
+        for (i = 0; i < win->xImage->width * win->xImage->height; i++)
+            d[i] = bswap_32(d[i]);
+
+        break;
+    }
+
+    case 16:
+    case 15:
+    {
+        uint16_t *d = (uint16_t *)win->ImageData;
+
+        for (i = 0; i < win->xImage->width * win->xImage->height; i++)
+            d[i] = bswap_16(d[i]);
+
+        break;
+    }
+    }
+}
+
+void wsPutImage(wsWindow *win)
+{
+#ifdef HAVE_SHM
+    if (wsUseXShm) {
+        XShmPutImage(wsDisplay, win->WindowID, win->wGC, win->xImage,
+                     0, 0,
+                     (win->Width - win->xImage->width) / 2, (win->Height - win->xImage->height) / 2,
+                     win->xImage->width, win->xImage->height, 0);
+    } else
+#endif
+    {
+        XPutImage(wsDisplay, win->WindowID, win->wGC, win->xImage,
+                  0, 0,
+                  (win->Width - win->xImage->width) / 2, (win->Height - win->xImage->height) / 2,
+                  win->xImage->width, win->xImage->height);
+    }
+}
+
 void wsResizeImage(wsWindow *win, int Width, int Height)
 {
     wsDestroyImage(win);
     wsCreateImage(win, Width, Height);
 }
 
-int wsGetOutMask(void)
+// ----------------------------------------------------------------------------------------------
+//    Show / hide mouse cursor.
+// ----------------------------------------------------------------------------------------------
+void wsVisibleMouse(wsWindow *win, int m)
 {
-    if ((wsDepthOnScreen == 32) && (wsRedMask == 0xff0000) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0x0000ff))
-        return wsRGB32;
+    switch (m) {
+    case wsShowMouseCursor:
 
-    if ((wsDepthOnScreen == 32) && (wsRedMask == 0x0000ff) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0xff0000))
-        return wsBGR32;
+        if (win->wsCursor != None) {
+            XFreeCursor(wsDisplay, win->wsCursor);
+            win->wsCursor = None;
+        }
 
-    if ((wsDepthOnScreen == 24) && (wsRedMask == 0xff0000) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0x0000ff))
-        return wsRGB24;
+        XDefineCursor(wsDisplay, win->WindowID, 0);
+        break;
 
-    if ((wsDepthOnScreen == 24) && (wsRedMask == 0x0000ff) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0xff0000))
-        return wsBGR24;
+    case wsHideMouseCursor:
 
-    if ((wsDepthOnScreen == 16) && (wsRedMask == 0xf800) && (wsGreenMask == 0x7e0) && (wsBlueMask == 0x1f))
-        return wsRGB16;
+        win->wsCursor = XCreatePixmapCursor(wsDisplay, win->wsCursorPixmap, win->wsCursorPixmap, &win->wsColor, &win->wsColor, 0, 0);
+        XDefineCursor(wsDisplay, win->WindowID, win->wsCursor);
+        break;
+    }
 
-    if ((wsDepthOnScreen == 16) && (wsRedMask == 0x1f) && (wsGreenMask == 0x7e0) && (wsBlueMask == 0xf800))
-        return wsBGR16;
-
-    if ((wsDepthOnScreen == 15) && (wsRedMask == 0x7c00) && (wsGreenMask == 0x3e0) && (wsBlueMask == 0x1f))
-        return wsRGB15;
-
-    if ((wsDepthOnScreen == 15) && (wsRedMask == 0x1f) && (wsGreenMask == 0x3e0) && (wsBlueMask == 0x7c00))
-        return wsBGR15;
-
-    return 0;
+    XFlush(wsDisplay);
 }
 
 /**
- * @brief Clear the entire area in a window.
- *
- * @param win pointer to a ws window structure
+ * @brief Handle automatic hiding of the cursor.
  */
-void wsClearWindow(wsWindow *win)
+void wsAutohideCursor(void)
 {
-    XClearWindow(wsDisplay, win->WindowID);
-}
-
-void wsSetTitle(wsWindow *win, char *name)
-{
-    XStoreName(wsDisplay, win->WindowID, name);
-}
-
-void wsSetShape(wsWindow *win, char *data)
-{
-#ifdef CONFIG_XSHAPE
-    if (!wsUseXShape)
-        return;
-
-    if (data) {
-        win->Mask = XCreateBitmapFromData(wsDisplay, win->WindowID, data, win->Width, win->Height);
-        XShapeCombineMask(wsDisplay, win->WindowID, ShapeBounding, 0, 0, win->Mask, ShapeSet);
-        XFreePixmap(wsDisplay, win->Mask);
-    } else
-        XShapeCombineMask(wsDisplay, win->WindowID, ShapeBounding, 0, 0, None, ShapeSet);
-#endif
-}
-
-/**
- * @brief Set differently sized icons to a window.
- *
- *        This function sets the X icon hint as well as
- *        the properties KWM_WIN_ICON and _NET_WM_ICON.
- *
- * @param display display
- * @param Win window
- * @param icon pointer to the icons
- */
-void wsSetIcon(Display *display, Window Win, guiIcon_t *icon)
-{
-    XWMHints *wm;
-    Atom iconatom;
-    long data[2];
-
-    if (icon->normal) {
-        wm = XGetWMHints(display, Win);
-
-        if (!wm)
-            wm = XAllocWMHints();
-
-        wm->icon_pixmap = icon->normal;
-        wm->icon_mask   = icon->normal_mask;
-        wm->flags      |= IconPixmapHint | IconMaskHint;
-
-        XSetWMHints(display, Win, wm);
-        XFree(wm);
-    }
-
-    if (icon->small || icon->normal) {
-        iconatom = XInternAtom(display, "KWM_WIN_ICON", False);
-        data[0]  = (icon->small ? icon->small : icon->normal);
-        data[1]  = (icon->small ? icon->small_mask : icon->normal_mask);
-
-        XChangeProperty(display, Win, iconatom, iconatom, 32, PropModeReplace, (unsigned char *)data, 2);
-    }
-
-    if (icon->collection) {
-        iconatom = XInternAtom(display, "_NET_WM_ICON", False);
-        XChangeProperty(display, Win, iconatom, XA_CARDINAL, 32, PropModeReplace, (unsigned char *)icon->collection, icon->collection_size);
+    if (mouse_win && (GetTimerMS() - mouse_time >= MOUSEHIDE_DELAY)) {
+        wsVisibleMouse(mouse_win, wsHideMouseCursor);
+        mouse_win = NULL;
     }
 }
