@@ -76,35 +76,33 @@ typedef struct {
     unsigned long status;
 } MotifWmHints;
 
-Atom wsMotifHints;
+static Atom wsMotifHints;
 
-int wsMaxX = 0;                          // Screen width.
-int wsMaxY = 0;                          // Screen height.
-int wsOrgX = 0;                          // Screen origin x.
-int wsOrgY = 0;                          // Screen origin y.
+int wsMaxX;                          // Screen width.
+int wsMaxY;                          // Screen height.
+int wsOrgX;                          // Screen origin x.
+int wsOrgY;                          // Screen origin y.
 
 Display *wsDisplay;
-int wsScreen;
-Window wsRootWin;
-XEvent wsEvent;
-MotifWmHints wsMotifWmHints;
+static int wsScreen;
+static Window wsRootWin;
 
-int wsDepthOnScreen  = 0;
-int wsRedMask        = 0;
-int wsGreenMask      = 0;
-int wsBlueMask       = 0;
-int wsOutMask        = 0;
-int wsNonNativeOrder = 0;
+int wsDepthOnScreen;
+static int wsRedMask;
+static int wsGreenMask;
+static int wsBlueMask;
+static int wsOutMask;
+static int wsNonNativeOrder;
 
-Bool wsTrue = True;
+static Bool wsTrue = True;
 
 #define wsWLCount 5
-wsWindow *wsWindowList[wsWLCount] = { NULL, NULL, NULL, NULL, NULL };
+static wsWindow *wsWindowList[wsWLCount];
 
-unsigned long wsKeyTable[512];
+static unsigned long wsKeyTable[512];
 
-int wsUseXShm   = True;
-int wsUseXShape = True;
+static int wsUseXShm   = True;
+static int wsUseXShape = True;
 
 /* --- */
 
@@ -120,8 +118,7 @@ int wsUseXShape = True;
     pixel <<= 5; \
     pixel  |= (r >> 3)
 
-struct SwsContext *sws_ctx   = NULL;
-enum PixelFormat out_pix_fmt = PIX_FMT_NONE;
+static enum PixelFormat out_pix_fmt = PIX_FMT_NONE;
 
 /* --- */
 
@@ -637,6 +634,8 @@ void wsCreateWindow(wsWindow *win, int x, int y, int w, int h, int b, int c, uns
 
 void wsWindowDecoration(wsWindow *win, Bool decor)
 {
+    MotifWmHints wsMotifWmHints;
+
     wsMotifHints = XInternAtom(wsDisplay, "_MOTIF_WM_HINTS", 0);
 
     if (wsMotifHints == None)
@@ -980,6 +979,7 @@ buttonreleased:
 
 void wsHandleEvents(void)
 {
+    XEvent wsEvent;
     /* handle pending events */
     while (XPending(wsDisplay)) {
         XNextEvent(wsDisplay, &wsEvent);
@@ -1080,6 +1080,7 @@ void wsPostRedisplay(wsWindow *win)
 // ----------------------------------------------------------------------------------------------
 void wsConvert(wsWindow *win, unsigned char *Image)
 {
+    static struct SwsContext *sws_ctx;
     const uint8_t *src[4] = { Image, NULL, NULL, NULL };
     int src_stride[4]     = { 4 * win->xImage->width, 0, 0, 0 };
     uint8_t *dst[4]       = { win->ImageData, NULL, NULL, NULL };
