@@ -94,8 +94,6 @@ static int wsBlueMask;
 static int wsOutMask;
 static int wsNonNativeOrder;
 
-static Bool wsTrue = True;
-
 #define wsWLCount 5
 static wsWindow *wsWindowList[wsWLCount];
 
@@ -708,7 +706,7 @@ void wsAutohideCursor(void)
 //   Handle events.
 // ----------------------------------------------------------------------------------------------
 
-Bool wsEvents(XEvent *event)
+void wsEvents(XEvent *event)
 {
     unsigned long i = 0;
     int l;
@@ -718,7 +716,7 @@ Bool wsEvents(XEvent *event)
     l = wsSearch(event->xany.window);
 
     if (l == -1)
-        return !wsTrue;
+        return;
 
     wsWindowList[l]->State = wsNone;
 
@@ -969,8 +967,6 @@ buttonreleased:
 
     XFlush(wsDisplay);
     XSync(wsDisplay, False);
-
-    return !wsTrue;
 }
 
 void wsHandleEvents(void)

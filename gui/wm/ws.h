@@ -185,7 +185,7 @@ void wsSetErrorHandler(void);
 int wsGetDepthOnScreen(void);
 
 void wsAutohideCursor(void);
-Bool wsEvents(XEvent *event);
+void wsEvents(XEvent *event);
 void wsHandleEvents(void);
 
 void wsCreateWindow(wsWindow *win, int x, int y, int w, int h, int b, int c, unsigned char p, char *label);
