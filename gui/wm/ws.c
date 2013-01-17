@@ -165,7 +165,7 @@ static void wsUpdateXineramaInfo(wsWindow *win)
     }
 }
 
-int wsGetDepthOnScreen(void)
+static int wsGetDepthOnScreen(void)
 {
     int depth;
     XImage *mXImage;
@@ -209,7 +209,7 @@ int wsGetDepthOnScreen(void)
     return wsDepthOnScreen;
 }
 
-int wsGetOutMask(void)
+static int wsGetOutMask(void)
 {
     if ((wsDepthOnScreen == 32) && (wsRedMask == 0xff0000) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0x0000ff))
         return wsRGB32;

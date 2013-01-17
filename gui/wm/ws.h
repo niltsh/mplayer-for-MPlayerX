@@ -178,8 +178,6 @@ void wsXDone(void);
 void wsXInit(Display *display);
 void wsSetErrorHandler(void);
 
-int wsGetDepthOnScreen(void);
-
 void wsAutohideCursor(void);
 void wsEvents(XEvent *event);
 void wsHandleEvents(void);
@@ -215,7 +213,6 @@ void wsConvert(wsWindow *win, unsigned char *Image);
 void wsPutImage(wsWindow *win);
 void wsResizeImage(wsWindow *win, int Width, int Height);
 void wsDestroyImage(wsWindow *win);
-int wsGetOutMask(void);
 
 #define wgIsRect(X, Y, tX, tY, bX, bY) (((X) > (tX)) && ((Y) > (tY)) && ((X) < (bX)) && ((Y) < (bY)))
 
