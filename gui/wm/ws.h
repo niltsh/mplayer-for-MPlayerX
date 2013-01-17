@@ -1,7 +1,4 @@
 /*
- * AutoSpace Window System for Linux/Win32 v0.61
- * written by pontscho/fresh!mindworkz
- *
  * This file is part of MPlayer.
  *
  * MPlayer is free software; you can redistribute it and/or modify
@@ -17,6 +14,9 @@
  * You should have received a copy of the GNU General Public License along
  * with MPlayer; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * based on: AutoSpace Window System for Linux/Win32,
+ *           written by pontscho/fresh!mindworkz
  */
 
 #ifndef MPLAYER_GUI_WS_H
