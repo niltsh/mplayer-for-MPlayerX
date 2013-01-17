@@ -1015,11 +1015,6 @@ void wsDestroyWindow(wsWindow *win)
 #endif
 }
 
-void wsSetTitle(wsWindow *win, char *name)
-{
-    XStoreName(wsDisplay, win->WindowID, name);
-}
-
 void wsWindowDecoration(wsWindow *win, Bool decor)
 {
     MotifWmHints wsMotifWmHints;

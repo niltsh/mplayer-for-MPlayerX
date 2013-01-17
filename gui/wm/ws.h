@@ -191,7 +191,6 @@ void wsIconify(wsWindow *win);
 void wsRaiseWindowTop(Display *display, Window Win);
 void wsSetBackgroundRGB(wsWindow *win, int r, int g, int b);
 void wsClearWindow(wsWindow *win);
-void wsSetTitle(wsWindow *win, char *name);
 void wsVisibleWindow(wsWindow *win, int show);
 void wsWindowDecoration(wsWindow *win, Bool decor);
 void wsSetLayer(Display *display, Window Win, Bool fullscreen);
