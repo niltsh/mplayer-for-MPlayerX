@@ -175,9 +175,9 @@ static int wsGetScreenDepth(void)
         mXImage = XCreateImage(wsDisplay, visual, depth, ZPixmap, 0, NULL,
                                1, 1, 32, 0);
         wsScreenDepth = mXImage->bits_per_pixel;
-        wsRedMask       = mXImage->red_mask;
-        wsGreenMask     = mXImage->green_mask;
-        wsBlueMask      = mXImage->blue_mask;
+        wsRedMask     = mXImage->red_mask;
+        wsGreenMask   = mXImage->green_mask;
+        wsBlueMask    = mXImage->blue_mask;
 #if HAVE_BIGENDIAN
         wsNonNativeOrder = mXImage->byte_order == LSBFirst;
 #else
@@ -200,9 +200,9 @@ static int wsGetScreenDepth(void)
             ibpp = bpp;
 
         wsScreenDepth = ibpp;
-        wsRedMask       = mXImage->red_mask;
-        wsGreenMask     = mXImage->green_mask;
-        wsBlueMask      = mXImage->blue_mask;
+        wsRedMask     = mXImage->red_mask;
+        wsGreenMask   = mXImage->green_mask;
+        wsBlueMask    = mXImage->blue_mask;
         XDestroyImage(mXImage);
     }
 
