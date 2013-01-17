@@ -431,7 +431,7 @@ void uiMainMouseHandle( int Button,int X,int Y,int RX,int RY )
 
  for ( i=0;i <= guiApp.IndexOfMainItems;i++ )
   if ( ( guiApp.mainItems[i].pressed != btnDisabled )&&
-       ( wgIsRect( X,Y,guiApp.mainItems[i].x,guiApp.mainItems[i].y,guiApp.mainItems[i].x+guiApp.mainItems[i].width,guiApp.mainItems[i].y+guiApp.mainItems[i].height ) ) )
+       ( isInside( X,Y,guiApp.mainItems[i].x,guiApp.mainItems[i].y,guiApp.mainItems[i].x+guiApp.mainItems[i].width,guiApp.mainItems[i].y+guiApp.mainItems[i].height ) ) )
    { currentselected=i; break; }
 
  switch ( Button )

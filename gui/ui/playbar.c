@@ -127,7 +127,7 @@ static void uiPlaybarMouseHandle( int Button, int X, int Y, int RX, int RY )
 
  for ( i=0;i <= guiApp.IndexOfPlaybarItems;i++ )
    if ( ( guiApp.playbarItems[i].pressed != btnDisabled )&&
-      ( wgIsRect( X,Y,guiApp.playbarItems[i].x,guiApp.playbarItems[i].y,guiApp.playbarItems[i].x+guiApp.playbarItems[i].width,guiApp.playbarItems[i].y+guiApp.playbarItems[i].height ) ) )
+      ( isInside( X,Y,guiApp.playbarItems[i].x,guiApp.playbarItems[i].y,guiApp.playbarItems[i].x+guiApp.playbarItems[i].width,guiApp.playbarItems[i].y+guiApp.playbarItems[i].height ) ) )
     { currentselected=i; break; }
 
  switch ( Button )

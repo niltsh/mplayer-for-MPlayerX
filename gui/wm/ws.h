@@ -213,6 +213,4 @@ void wsPutImage(wsWindow *win);
 void wsResizeImage(wsWindow *win, int Width, int Height);
 void wsDestroyImage(wsWindow *win);
 
-#define wgIsRect(X, Y, tX, tY, bX, bY) (((X) > (tX)) && ((Y) > (tY)) && ((X) < (bX)) && ((Y) < (bY)))
-
 #endif /* MPLAYER_GUI_WS_H */

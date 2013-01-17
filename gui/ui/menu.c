@@ -87,7 +87,7 @@ void uiMenuMouseHandle( int RX,int RY )
 
  for( i=0;i<=guiApp.IndexOfMenuItems;i++ )
   {
-   if ( wgIsRect( x,y,
+   if ( isInside( x,y,
          guiApp.menuItems[i].x,guiApp.menuItems[i].y,
          guiApp.menuItems[i].x+guiApp.menuItems[i].width,guiApp.menuItems[i].y+guiApp.menuItems[i].height ) ) { menuItem=i; break; }
   }
@@ -134,7 +134,7 @@ void uiHideMenu( int mx,int my,int w )
 
 // printf( "---------> %d %d,%d\n",i,x,y );
 // printf( "--------> mi: %d,%d %dx%d\n",guiApp.menuItems[i].x,guiApp.menuItems[i].y,guiApp.menuItems[i].width,guiApp.menuItems[i].height );
- if ( wgIsRect( x,y,
+ if ( isInside( x,y,
         guiApp.menuItems[i].x,guiApp.menuItems[i].y,
         guiApp.menuItems[i].x+guiApp.menuItems[i].width,
         guiApp.menuItems[i].y+guiApp.menuItems[i].height ) )
