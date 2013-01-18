@@ -68,16 +68,6 @@
 static wsWindow *mouse_win;
 static unsigned int mouse_time;
 
-typedef struct {
-    unsigned long flags;
-    unsigned long functions;
-    unsigned long decorations;
-    long input_mode;
-    unsigned long status;
-} MotifWmHints;
-
-static Atom wsMotifHints;
-
 int wsMaxX;                          // Screen width.
 int wsMaxY;                          // Screen height.
 int wsOrgX;                          // Screen origin x.
@@ -1014,14 +1004,21 @@ void wsWindowDestroy(wsWindow *win)
 
 void wsWindowDecoration(wsWindow *win, Bool decor)
 {
-    MotifWmHints wsMotifWmHints;
+    Atom wsMotifHints;
+    struct {
+        unsigned long flags;
+        unsigned long functions;
+        unsigned long decorations;
+        long input_mode;
+        unsigned long status;
+    } wsMotifWmHints;
 
     wsMotifHints = XInternAtom(wsDisplay, "_MOTIF_WM_HINTS", 0);
 
     if (wsMotifHints == None)
         return;
 
-    memset(&wsMotifWmHints, 0, sizeof(MotifWmHints));
+    memset(&wsMotifWmHints, 0, sizeof(wsMotifWmHints));
     wsMotifWmHints.flags = MWM_HINTS_FUNCTIONS | MWM_HINTS_DECORATIONS;
 
     if (decor) {
