@@ -336,7 +336,7 @@ static int fntTextHeight(int id, char *str)
  *
  * @return image containing the rendered text
  */
-guiImage *fntTextRender(wItem *item, int px, char *txt)
+guiImage *fntTextRender(guiItem *item, int px, char *txt)
 {
     unsigned char *u;
     unsigned int i;

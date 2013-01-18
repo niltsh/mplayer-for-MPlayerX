@@ -90,7 +90,7 @@ static const evName evNames[] = {
  *
  * @param item item to be freed
  */
-static void appClearItem(wItem *item)
+static void appClearItem(guiItem *item)
 {
     bpFree(&item->Bitmap);
     bpFree(&item->Mask);
@@ -157,9 +157,9 @@ int appFindMessage(const char *name)
  *
  * @return pointer to the item (ok) or NULL (not found)
  */
-wItem *appFindItem(int event)
+guiItem *appFindItem(int event)
 {
-    wItem *item;
+    guiItem *item;
     int i, n;
 
     if (guiApp.videoWindow.isFullScreen && guiApp.playbarIsPresent) {

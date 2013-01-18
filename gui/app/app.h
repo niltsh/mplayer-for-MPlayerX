@@ -140,41 +140,41 @@ typedef struct {
     int last_x;
 
     int pressed;
-} wItem;
+} guiItem;
 
 /// Maximum GUI items
 #define MAX_ITEMS 64
 
 typedef struct {
-    wItem main;
+    guiItem main;
     wsWindow mainWindow;
     int mainDecoration;
 
-    wItem video;
+    guiItem video;
     wsWindow videoWindow;
 
-    wItem playbar;
+    guiItem playbar;
     wsWindow playbarWindow;
     int playbarIsPresent;
 
-    wItem menu;
-    wItem menuSelected;
+    guiItem menu;
+    guiItem menuSelected;
     wsWindow menuWindow;
     int menuIsPresent;
 
     int IndexOfMainItems;
-    wItem mainItems[MAX_ITEMS];
+    guiItem mainItems[MAX_ITEMS];
 
     int IndexOfPlaybarItems;
-    wItem playbarItems[MAX_ITEMS];
+    guiItem playbarItems[MAX_ITEMS];
 
     int IndexOfMenuItems;
-    wItem menuItems[MAX_ITEMS];
+    guiItem menuItems[MAX_ITEMS];
 } guiItems;
 
 extern guiItems guiApp;
 
-wItem *appFindItem(int event);
+guiItem *appFindItem(int event);
 int appFindMessage(const char *name);
 void appFreeStruct(void);
 void btnModify(int event, float state);

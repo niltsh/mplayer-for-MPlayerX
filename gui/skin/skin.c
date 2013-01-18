@@ -52,9 +52,9 @@ static int linenumber;
 static unsigned char path[512];
 
 static unsigned char currWinName[32];
-static wItem *currWin;
+static guiItem *currWin;
 static int *currWinItemIdx;
-static wItem *currWinItems;
+static guiItem *currWinItems;
 
 /**
  * @brief Display a skin error message.
@@ -130,9 +130,9 @@ static int in_window(char *name)
  *
  * @return pointer to next free item (ok) or NULL (error)
  */
-static wItem *next_item(void)
+static guiItem *next_item(void)
 {
-    wItem *item = NULL;
+    guiItem *item = NULL;
 
     if (*currWinItemIdx < MAX_ITEMS - 1) {
         (*currWinItemIdx)++;
@@ -384,7 +384,7 @@ static int item_button(char *in)
     unsigned char file[512];
     int x, y, w, h, message;
     char msg[32];
-    wItem *item;
+    guiItem *item;
 
     if (!window_item("button"))
         return 1;
@@ -455,7 +455,7 @@ static int item_button(char *in)
 static int item_selected(char *in)
 {
     unsigned char file[512];
-    wItem *currItem;
+    guiItem *currItem;
 
     if (!window_item("selected"))
         return 1;
@@ -499,7 +499,7 @@ static int item_menu(char *in)
 {
     int x, y, w, h, message;
     char msg[32];
-    wItem *item;
+    guiItem *item;
 
     if (!window_item("menu"))
         return 1;
@@ -559,7 +559,7 @@ static int item_hpotmeter(char *in)
     unsigned char phfname[256];
     unsigned char buf[512];
     int pwidth, pheight, ph, d, x, y, w, h, message;
-    wItem *item;
+    guiItem *item;
 
     if (!window_item("h/v potmeter"))
         return 1;
@@ -649,7 +649,7 @@ static int item_hpotmeter(char *in)
 static int item_vpotmeter(char *in)
 {
     int r;
-    wItem *item;
+    guiItem *item;
 
     r = item_hpotmeter(in);
 
@@ -675,7 +675,7 @@ static int item_potmeter(char *in)
     unsigned char phfname[256];
     unsigned char buf[512];
     int ph, d, x, y, w, h, message;
-    wItem *item;
+    guiItem *item;
 
     if (!window_item("potmeter"))
         return 1;
@@ -794,7 +794,7 @@ static int item_slabel(char *in)
     int x, y, id;
     char fnt[256];
     char txt[256];
-    wItem *item;
+    guiItem *item;
 
     if (!window_item("slabel"))
         return 1;
@@ -857,7 +857,7 @@ static int item_dlabel(char *in)
     int x, y, w, a, id;
     char fnt[256];
     char txt[256];
-    wItem *item;
+    guiItem *item;
 
     if (!window_item("dlabel"))
         return 1;

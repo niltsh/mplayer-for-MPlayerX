@@ -423,7 +423,7 @@ void uiMainMouseHandle( int Button,int X,int Y,int RX,int RY )
 {
  static int     itemtype = 0;
         int     i;
-        wItem * item = NULL;
+        guiItem * item = NULL;
         float   value = 0.0f;
 
  static int     SelectedItem = -1;
