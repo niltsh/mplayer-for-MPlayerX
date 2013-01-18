@@ -1022,7 +1022,11 @@ void wsWindowDecoration(wsWindow *win, Bool decor)
     wsMotifWmHints.flags = MWM_HINTS_FUNCTIONS | MWM_HINTS_DECORATIONS;
 
     if (decor) {
-        wsMotifWmHints.functions   = MWM_FUNC_MOVE | MWM_FUNC_CLOSE | MWM_FUNC_MINIMIZE | MWM_FUNC_MAXIMIZE | MWM_FUNC_RESIZE;
+        wsMotifWmHints.functions = MWM_FUNC_MOVE | MWM_FUNC_CLOSE | MWM_FUNC_MINIMIZE | MWM_FUNC_MAXIMIZE;
+
+        if (!(win->Property & wsMinSize) || !(win->Property & wsMaxSize))
+            wsMotifWmHints.functions |= MWM_FUNC_RESIZE;
+
         wsMotifWmHints.decorations = MWM_DECOR_ALL;
     }
 
