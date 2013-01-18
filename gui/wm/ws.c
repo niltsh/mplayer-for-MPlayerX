@@ -1196,16 +1196,16 @@ void wsWindowMoveWithin(wsWindow *win, Bool abs, int x, int y)
 // ----------------------------------------------------------------------------------------------
 //    Resize window to sx, sy.
 // ----------------------------------------------------------------------------------------------
-void wsWindowResize(wsWindow *win, int sx, int sy)
+void wsWindowResize(wsWindow *win, int w, int h)
 {
-    win->Width  = sx;
-    win->Height = sy;
+    win->Width  = w;
+    win->Height = h;
 
     if (vo_wm_type == 0)
         XUnmapWindow(wsDisplay, win->WindowID);
 
     wsSizeHint(win);
-    XResizeWindow(wsDisplay, win->WindowID, sx, sy);
+    XResizeWindow(wsDisplay, win->WindowID, w, h);
 
     if (vo_wm_type == 0)
         XMapWindow(wsDisplay, win->WindowID);
@@ -1280,9 +1280,9 @@ void wsWindowIconify(wsWindow *win)
     XIconifyWindow(wsDisplay, win->WindowID, 0);
 }
 
-void wsWindowVisibility(wsWindow *win, int show)
+void wsWindowVisibility(wsWindow *win, int vis)
 {
-    switch (show) {
+    switch (vis) {
     case wsShowWindow:
 
         XMapRaised(wsDisplay, win->WindowID);
@@ -1345,12 +1345,12 @@ void wsWindowRedraw(wsWindow *win)
 // ----------------------------------------------------------------------------------------------
 //    Put 'Image' to window.
 // ----------------------------------------------------------------------------------------------
-void wsImageCreate(wsWindow *win, int Width, int Height)
+void wsImageCreate(wsWindow *win, int w, int h)
 {
 #ifdef HAVE_SHM
     if (wsUseXShm) {
         win->xImage = XShmCreateImage(wsDisplay, win->VisualInfo.visual,
-                                      win->VisualInfo.depth, ZPixmap, NULL, &win->Shminfo, Width, Height);
+                                      win->VisualInfo.depth, ZPixmap, NULL, &win->Shminfo, w, h);
 
         if (win->xImage == NULL) {
             mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_WS_ShmError);
@@ -1386,7 +1386,7 @@ void wsImageCreate(wsWindow *win, int Width, int Height)
 #endif
     {
         win->xImage = XCreateImage(wsDisplay, win->VisualInfo.visual, win->VisualInfo.depth,
-                                   ZPixmap, 0, 0, Width, Height,
+                                   ZPixmap, 0, 0, w, h,
                                    (wsScreenDepth == 3) ? 32 : wsScreenDepth,
                                    0);
 
@@ -1417,10 +1417,10 @@ void wsImageDestroy(wsWindow *win)
     win->xImage = NULL;
 }
 
-void wsImageConvert(wsWindow *win, unsigned char *Image)
+void wsImageConvert(wsWindow *win, unsigned char *img)
 {
     static struct SwsContext *sws_ctx;
-    const uint8_t *src[4] = { Image, NULL, NULL, NULL };
+    const uint8_t *src[4] = { img, NULL, NULL, NULL };
     int src_stride[4]     = { 4 * win->xImage->width, 0, 0, 0 };
     uint8_t *dst[4]       = { win->ImageData, NULL, NULL, NULL };
     int dst_stride[4];
@@ -1477,18 +1477,18 @@ void wsImageDraw(wsWindow *win)
     }
 }
 
-void wsImageResize(wsWindow *win, int Width, int Height)
+void wsImageResize(wsWindow *win, int w, int h)
 {
     wsImageDestroy(win);
-    wsImageCreate(win, Width, Height);
+    wsImageCreate(win, w, h);
 }
 
 // ----------------------------------------------------------------------------------------------
 //    Show / hide mouse cursor.
 // ----------------------------------------------------------------------------------------------
-void wsMouseVisibility(wsWindow *win, int m)
+void wsMouseVisibility(wsWindow *win, int vis)
 {
-    switch (m) {
+    switch (vis) {
     case wsShowMouseCursor:
 
         if (win->wsCursor != None) {
