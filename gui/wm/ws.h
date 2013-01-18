@@ -171,43 +171,43 @@ extern int wsOrgY;
 extern Display *wsDisplay;
 
 // ----------------------------------------------------------------------------------------------
-void wsXDone(void);
-void wsXInit(Display *display);
+void wsDone(void);
+void wsInit(Display *display);
 void wsSetErrorHandler(void);
 
-void wsAutohideCursor(void);
-void wsEvents(XEvent *event);
-void wsHandleEvents(void);
+void wsMouseAutohide(void);
+void wsEvent(XEvent *event);
+void wsEvents(void);
 
-void wsCreateWindow(wsWindow *win, int x, int y, int w, int h, int b, int c, unsigned char p, char *label);
-void wsDestroyWindow(wsWindow *win);
-void wsMoveWindow(wsWindow *win, Bool abs, int x, int y);
-void wsMoveWindowWithin(wsWindow *win, Bool abs, int x, int y);
-void wsResizeWindow(wsWindow *win, int sx, int sy);
-void wsIconify(wsWindow *win);
-void wsRaiseWindowTop(Display *display, Window Win);
-void wsSetBackgroundRGB(wsWindow *win, int r, int g, int b);
-void wsClearWindow(wsWindow *win);
-void wsVisibleWindow(wsWindow *win, int show);
+void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int b, int c, unsigned char p, char *label);
+void wsWindowDestroy(wsWindow *win);
+void wsWindowMove(wsWindow *win, Bool abs, int x, int y);
+void wsWindowMoveWithin(wsWindow *win, Bool abs, int x, int y);
+void wsWindowResize(wsWindow *win, int sx, int sy);
+void wsWindowIconify(wsWindow *win);
+void wsWindowRaiseTop(Display *display, Window Win);
+void wsWindowBackground(wsWindow *win, int r, int g, int b);
+void wsWindowClear(wsWindow *win);
+void wsWindowVisibility(wsWindow *win, int show);
 void wsWindowDecoration(wsWindow *win, Bool decor);
-void wsSetLayer(Display *display, Window Win, Bool fullscreen);
-void wsFullScreen(wsWindow *win);
-void wsPostRedisplay(wsWindow *win);
-void wsSetShape(wsWindow *win, char *data);
-void wsSetIcon(Display *display, Window Win, guiIcon_t *icon);
+void wsWindowLayer(Display *display, Window Win, Bool fullscreen);
+void wsWindowFullscreen(wsWindow *win);
+void wsWindowRedraw(wsWindow *win);
+void wsWindowShape(wsWindow *win, char *data);
+void wsWindowIcon(Display *display, Window Win, guiIcon_t *icon);
 
 // ----------------------------------------------------------------------------------------------
 //    Show / hide mouse cursor.
 // ----------------------------------------------------------------------------------------------
-void wsVisibleMouse(wsWindow *win, int m);
+void wsMouseVisibility(wsWindow *win, int m);
 
 // ----------------------------------------------------------------------------------------------
 // Image handling
 // ----------------------------------------------------------------------------------------------
-void wsCreateImage(wsWindow *win, int Width, int Height);
-void wsConvert(wsWindow *win, unsigned char *Image);
-void wsPutImage(wsWindow *win);
-void wsResizeImage(wsWindow *win, int Width, int Height);
-void wsDestroyImage(wsWindow *win);
+void wsImageCreate(wsWindow *win, int Width, int Height);
+void wsImageConvert(wsWindow *win, unsigned char *Image);
+void wsImageDraw(wsWindow *win);
+void wsImageResize(wsWindow *win, int Width, int Height);
+void wsImageDestroy(wsWindow *win);
 
 #endif /* MPLAYER_GUI_WS_H */

@@ -47,7 +47,7 @@ void uiVideoDraw( void )
 
  if ( uiVideoRender && guiApp.videoWindow.State == wsWindowExpose )
   {
-   if ( guiApp.video.Bitmap.Image ) wsPutImage( &guiApp.videoWindow );
+   if ( guiApp.video.Bitmap.Image ) wsImageDraw( &guiApp.videoWindow );
   }
  guiApp.videoWindow.State=0;
 }
@@ -87,7 +87,7 @@ void uiVideoMouseHandle( int Button,int X,int Y,int RX,int RY )
                    mplVideoMoved=1;
                    if ( !guiApp.videoWindow.isFullScreen )
                     {
-                     wsMoveWindow( &guiApp.videoWindow,True,RX - sx,RY - sy );
+                     wsWindowMove( &guiApp.videoWindow,True,RX - sx,RY - sy );
                     }
                    break;
             case wsPMMouseButton:
@@ -99,9 +99,9 @@ void uiVideoMouseHandle( int Button,int X,int Y,int RX,int RY )
    case wsRLMouseButton:
           if ( ( !mplVideoMoved )&&( guiApp.videoWindow.isFullScreen ) )
            {
-            // NOTE TO MYSELF: this doesn't work, fix later with wsSetLayer()?
-            if( videoVisible++%2 ) wsRaiseWindowTop( wsDisplay,guiApp.mainWindow.WindowID );
-             else wsRaiseWindowTop( wsDisplay,guiApp.videoWindow.WindowID );
+            // NOTE TO MYSELF: this doesn't work, fix later with wsWindowLayer()?
+            if( videoVisible++%2 ) wsWindowRaiseTop( wsDisplay,guiApp.mainWindow.WindowID );
+             else wsWindowRaiseTop( wsDisplay,guiApp.videoWindow.WindowID );
 	   }
           msButton=0;
           mplVideoMoved=0;

@@ -54,19 +54,19 @@ void uiFullScreen(void)
     if (!guiInfo.VideoWindow)
         return;
 
-    wsFullScreen(&guiApp.videoWindow);
+    wsWindowFullscreen(&guiApp.videoWindow);
 
     vo_fs = guiApp.videoWindow.isFullScreen;
 
-    wsSetLayer(wsDisplay, guiApp.mainWindow.WindowID, guiApp.videoWindow.isFullScreen);
+    wsWindowLayer(wsDisplay, guiApp.mainWindow.WindowID, guiApp.videoWindow.isFullScreen);
 
     if (guiApp.menuIsPresent)
-        wsSetLayer(wsDisplay, guiApp.menuWindow.WindowID, guiApp.videoWindow.isFullScreen);
+        wsWindowLayer(wsDisplay, guiApp.menuWindow.WindowID, guiApp.videoWindow.isFullScreen);
 
     if (guiInfo.Playing)
-        wsSetBackgroundRGB(&guiApp.videoWindow, 0, 0, 0);
+        wsWindowBackground(&guiApp.videoWindow, 0, 0, 0);
     else
-        wsSetBackgroundRGB(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
+        wsWindowBackground(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
 }
 
 /**
@@ -90,8 +90,8 @@ void uiPlay(void)
 
     gui(GUI_SET_STATE, (void *)GUI_PLAY);
     uiVideoRender = False;
-    wsSetBackgroundRGB(&guiApp.videoWindow, 0, 0, 0);
-    wsClearWindow(&guiApp.videoWindow);
+    wsWindowBackground(&guiApp.videoWindow, 0, 0, 0);
+    wsWindowClear(&guiApp.videoWindow);
 }
 
 /**
@@ -186,37 +186,37 @@ void uiChangeSkin(char *name)
             mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
         }
 
-        wsResizeWindow(&guiApp.menuWindow, guiApp.menu.width, guiApp.menu.height);
-        wsResizeImage(&guiApp.menuWindow, guiApp.menu.width, guiApp.menu.height);
-        wsSetShape(&guiApp.menuWindow, guiApp.menu.Mask.Image);
-        wsVisibleWindow(&guiApp.menuWindow, wsHideWindow);
+        wsWindowResize(&guiApp.menuWindow, guiApp.menu.width, guiApp.menu.height);
+        wsImageResize(&guiApp.menuWindow, guiApp.menu.width, guiApp.menu.height);
+        wsWindowShape(&guiApp.menuWindow, guiApp.menu.Mask.Image);
+        wsWindowVisibility(&guiApp.menuWindow, wsHideWindow);
     } else
         uiMenuInit();
 
     /* reload video window */
 
     if (guiApp.video.Bitmap.Image)
-        wsResizeImage(&guiApp.videoWindow, guiApp.video.Bitmap.Width, guiApp.video.Bitmap.Height);
+        wsImageResize(&guiApp.videoWindow, guiApp.video.Bitmap.Width, guiApp.video.Bitmap.Height);
 
     if (!guiApp.videoWindow.isFullScreen && !guiInfo.Playing) {
-        wsResizeWindow(&guiApp.videoWindow, guiApp.video.width, guiApp.video.height);
-        wsMoveWindow(&guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y);
+        wsWindowResize(&guiApp.videoWindow, guiApp.video.width, guiApp.video.height);
+        wsWindowMove(&guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y);
     }
 
     if (guiApp.video.Bitmap.Image)
-        wsConvert(&guiApp.videoWindow, guiApp.video.Bitmap.Image);
+        wsImageConvert(&guiApp.videoWindow, guiApp.video.Bitmap.Image);
 
     if (!guiInfo.Playing) {
         uiVideoRender = True;
-        wsSetBackgroundRGB(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
-        wsClearWindow(&guiApp.videoWindow);
-        wsPostRedisplay(&guiApp.videoWindow);
+        wsWindowBackground(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
+        wsWindowClear(&guiApp.videoWindow);
+        wsWindowRedraw(&guiApp.videoWindow);
     }
 
     /* reload playbar */
 
     if (bprev)
-        wsDestroyWindow(&guiApp.playbarWindow);
+        wsWindowDestroy(&guiApp.playbarWindow);
 
     uiPlaybarInit();
 
@@ -230,12 +230,12 @@ void uiChangeSkin(char *name)
         mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
     }
 
-    wsDestroyWindow(&guiApp.mainWindow);
+    wsWindowDestroy(&guiApp.mainWindow);
 
-    wsCreateWindow(&guiApp.mainWindow, guiApp.main.x, guiApp.main.y, guiApp.main.width, guiApp.main.height, 0, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, wsShowFrame | wsMinSize | wsMaxSize | wsHideWindow, "MPlayer");
-    wsCreateImage(&guiApp.mainWindow, guiApp.main.Bitmap.Width, guiApp.main.Bitmap.Height);
-    wsSetShape(&guiApp.mainWindow, guiApp.main.Mask.Image);
-    wsSetIcon(wsDisplay, guiApp.mainWindow.WindowID, &guiIcon);
+    wsWindowCreate(&guiApp.mainWindow, guiApp.main.x, guiApp.main.y, guiApp.main.width, guiApp.main.height, 0, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, wsShowFrame | wsMinSize | wsMaxSize | wsHideWindow, "MPlayer");
+    wsImageCreate(&guiApp.mainWindow, guiApp.main.Bitmap.Width, guiApp.main.Bitmap.Height);
+    wsWindowShape(&guiApp.mainWindow, guiApp.main.Mask.Image);
+    wsWindowIcon(wsDisplay, guiApp.mainWindow.WindowID, &guiIcon);
 
     guiApp.mainWindow.ReDraw       = (void *)uiMainDraw;
     guiApp.mainWindow.MouseHandler = uiMainMouseHandle;
@@ -247,7 +247,7 @@ void uiChangeSkin(char *name)
     if (!guiApp.mainDecoration)
         wsWindowDecoration(&guiApp.mainWindow, False);
 
-    wsVisibleWindow(&guiApp.mainWindow, wsShowWindow);
+    wsWindowVisibility(&guiApp.mainWindow, wsShowWindow);
     mainVisible = True;
 
     btnModify(evSetVolume, guiInfo.Volume);
@@ -255,8 +255,8 @@ void uiChangeSkin(char *name)
     btnModify(evSetMoviePosition, guiInfo.Position);
     btnSet(evFullScreen, (guiApp.videoWindow.isFullScreen ? btnPressed : btnReleased));
 
-    wsSetLayer(wsDisplay, guiApp.mainWindow.WindowID, guiApp.videoWindow.isFullScreen);
-    wsSetLayer(wsDisplay, guiApp.menuWindow.WindowID, guiApp.videoWindow.isFullScreen);
+    wsWindowLayer(wsDisplay, guiApp.mainWindow.WindowID, guiApp.videoWindow.isFullScreen);
+    wsWindowLayer(wsDisplay, guiApp.menuWindow.WindowID, guiApp.videoWindow.isFullScreen);
 }
 
 /**

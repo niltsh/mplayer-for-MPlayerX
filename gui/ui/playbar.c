@@ -83,7 +83,7 @@ static void uiPlaybarDraw( void )
 	  uiPlaybarFade=0;
 	  vo_mouse_autohide=False;
 	 }
-        wsMoveWindow( &guiApp.playbarWindow,True,x,playbarLength );
+        wsWindowMove( &guiApp.playbarWindow,True,x,playbarLength );
 	break;
    case 2: // fade out
 	playbarLength+=10;
@@ -93,10 +93,10 @@ static void uiPlaybarDraw( void )
 	  uiPlaybarFade=0;
 	  playbarVisible=False;
           vo_mouse_autohide=True;
-          wsVisibleWindow( &guiApp.playbarWindow,wsHideWindow );
+          wsWindowVisibility( &guiApp.playbarWindow,wsHideWindow );
 	  return;
 	 }
-        wsMoveWindow( &guiApp.playbarWindow,True,x,playbarLength );
+        wsWindowMove( &guiApp.playbarWindow,True,x,playbarLength );
 	break;
   }
 
@@ -110,9 +110,9 @@ static void uiPlaybarDraw( void )
 
    fast_memcpy( playbarDrawBuffer,guiApp.playbar.Bitmap.Image,guiApp.playbar.Bitmap.ImageSize );
    RenderAll( &guiApp.playbarWindow,guiApp.playbarItems,guiApp.IndexOfPlaybarItems,playbarDrawBuffer );
-   wsConvert( &guiApp.playbarWindow,playbarDrawBuffer );
+   wsImageConvert( &guiApp.playbarWindow,playbarDrawBuffer );
   }
- wsPutImage( &guiApp.playbarWindow );
+ wsImageDraw( &guiApp.playbarWindow );
 }
 
 static void uiPlaybarMouseHandle( int Button, int X, int Y, int RX, int RY )
@@ -238,8 +238,8 @@ void uiPlaybarShow( int y )
 
  if ( y > guiApp.videoWindow.Height - guiApp.playbar.height )
   {
-   if ( !uiPlaybarFade ) wsVisibleWindow( &guiApp.playbarWindow,wsShowWindow );
-   uiPlaybarFade=1; playbarVisible=True; wsPostRedisplay( &guiApp.playbarWindow );
+   if ( !uiPlaybarFade ) wsWindowVisibility( &guiApp.playbarWindow,wsShowWindow );
+   uiPlaybarFade=1; playbarVisible=True; wsWindowRedraw( &guiApp.playbarWindow );
   }
   else if ( !uiPlaybarFade ) uiPlaybarFade=2;
 }
@@ -257,11 +257,11 @@ void uiPlaybarInit( void )
   }
 
  guiApp.playbarWindow.Parent=guiApp.videoWindow.WindowID;
- wsCreateWindow( &guiApp.playbarWindow,
+ wsWindowCreate( &guiApp.playbarWindow,
    guiApp.playbar.x,guiApp.playbar.y,guiApp.playbar.width,guiApp.playbar.height,
    0,wsShowMouseCursor|wsHandleMouseButton|wsHandleMouseMove,wsHideFrame|wsHideWindow,"PlayBar" );
 
- wsSetShape( &guiApp.playbarWindow,guiApp.playbar.Mask.Image );
+ wsWindowShape( &guiApp.playbarWindow,guiApp.playbar.Mask.Image );
 
  guiApp.playbarWindow.ReDraw=(void *)uiPlaybarDraw;
  guiApp.playbarWindow.MouseHandler=uiPlaybarMouseHandle;

@@ -96,7 +96,7 @@ void uiMainDraw( void )
    RenderAll( &guiApp.mainWindow,guiApp.mainItems,guiApp.IndexOfMainItems,mainDrawBuffer );
    uiMainRender=False;
   }
- wsPutImage( &guiApp.mainWindow );
+ wsImageDraw( &guiApp.mainWindow );
 // XFlush( wsDisplay );
 }
 
@@ -330,8 +330,8 @@ NoPause:
    case evIconify:
         switch ( iparam )
          {
-          case 0: wsIconify( &guiApp.mainWindow ); break;
-          case 1: wsIconify( &guiApp.videoWindow ); break;
+          case 0: wsWindowIconify( &guiApp.mainWindow ); break;
+          case 1: wsWindowIconify( &guiApp.videoWindow ); break;
          }
         break;
    case evHalfSize:
@@ -341,7 +341,7 @@ NoPause:
            {
             uiFullScreen();
            }
-          wsResizeWindow( &guiApp.videoWindow, guiInfo.VideoWidth / 2, guiInfo.VideoHeight / 2 );
+          wsWindowResize( &guiApp.videoWindow, guiInfo.VideoWidth / 2, guiInfo.VideoHeight / 2 );
           btnSet( evFullScreen,btnReleased );
          }
         break;
@@ -352,8 +352,8 @@ NoPause:
            {
             uiFullScreen();
            }
-          wsResizeWindow( &guiApp.videoWindow, guiInfo.VideoWidth * 2, guiInfo.VideoHeight * 2 );
-          wsMoveWindowWithin( &guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y );
+          wsWindowResize( &guiApp.videoWindow, guiInfo.VideoWidth * 2, guiInfo.VideoHeight * 2 );
+          wsWindowMoveWithin( &guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y );
           btnSet( evFullScreen,btnReleased );
          }
         break;
@@ -364,7 +364,7 @@ NoPause:
            {
             uiFullScreen();
            }
-          wsResizeWindow( &guiApp.videoWindow, guiInfo.VideoWidth, guiInfo.VideoHeight );
+          wsWindowResize( &guiApp.videoWindow, guiInfo.VideoWidth, guiInfo.VideoHeight );
           btnSet( evFullScreen,btnReleased );
 	  break;
          } else if ( !guiApp.videoWindow.isFullScreen ) break;
@@ -373,7 +373,7 @@ NoPause:
          {
           uiFullScreen();
           if ( !guiApp.videoWindow.isFullScreen )
-            wsResizeWindow( &guiApp.videoWindow, iparam ? guiInfo.VideoWidth : guiApp.video.width, iparam ? guiInfo.VideoHeight : guiApp.video.height );
+            wsWindowResize( &guiApp.videoWindow, iparam ? guiInfo.VideoWidth : guiApp.video.width, iparam ? guiInfo.VideoHeight : guiApp.video.height );
          }
 	if ( guiApp.videoWindow.isFullScreen ) btnSet( evFullScreen,btnPressed );
 	 else btnSet( evFullScreen,btnReleased );
@@ -388,7 +388,7 @@ NoPause:
 	  case 1:
 	  default: movie_aspect=-1;
 	 }
-	wsClearWindow( &guiApp.videoWindow );
+	wsWindowClear( &guiApp.videoWindow );
 	if ( guiInfo.StreamType == STREAMTYPE_VCD ) uiEventHandling( evPlayVCD, 0 );
 	 else if ( guiInfo.StreamType == STREAMTYPE_DVD ) uiEventHandling( ivPlayDVD, 0 );
 	 else
@@ -406,8 +406,8 @@ NoPause:
           last_redraw_time = now;
         }
         uiMainRender=True;
-        wsPostRedisplay( &guiApp.mainWindow );
-	wsPostRedisplay( &guiApp.playbarWindow );
+        wsWindowRedraw( &guiApp.mainWindow );
+	wsWindowRedraw( &guiApp.playbarWindow );
         break;
 /* system events */
    case evNone:
@@ -518,7 +518,7 @@ rollerhandled:
           switch ( itemtype )
            {
             case itPLMButton:
-                 wsMoveWindow( &guiApp.mainWindow,True,RX - abs( sx ),RY - abs( sy ) );
+                 wsWindowMove( &guiApp.mainWindow,True,RX - abs( sx ),RY - abs( sy ) );
                  uiMainRender=False;
                  break;
             case itPRMButton:

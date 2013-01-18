@@ -110,7 +110,7 @@ void guiInit(void)
 
     /* initialize graphical user interfaces */
 
-    wsXInit(mDisplay);
+    wsInit(mDisplay);
     gtkInit(mDisplayName);
 
     /* load skin */
@@ -172,9 +172,9 @@ void guiInit(void)
     if (guiWinID >= 0)
         guiApp.mainWindow.Parent = guiWinID;
 
-    wsCreateWindow(&guiApp.videoWindow, guiApp.video.x, guiApp.video.y, guiApp.video.width, guiApp.video.height, 0, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, wsShowFrame | wsHideWindow | wsWaitMap | wsAspect, "MPlayer - Video");
-    wsDestroyImage(&guiApp.videoWindow);
-    wsCreateImage(&guiApp.videoWindow, guiApp.video.Bitmap.Width, guiApp.video.Bitmap.Height);
+    wsWindowCreate(&guiApp.videoWindow, guiApp.video.x, guiApp.video.y, guiApp.video.width, guiApp.video.height, 0, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, wsShowFrame | wsHideWindow | wsWaitMap | wsAspect, "MPlayer - Video");
+    wsImageDestroy(&guiApp.videoWindow);
+    wsImageCreate(&guiApp.videoWindow, guiApp.video.Bitmap.Width, guiApp.video.Bitmap.Height);
     wsXDNDMakeAwareness(&guiApp.videoWindow);
 
     WinID = guiApp.videoWindow.WindowID;
@@ -185,8 +185,8 @@ void guiInit(void)
 // i=wsHideFrame|wsMaxSize|wsHideWindow;
 // if ( guiApp.mainDecoration ) i=wsShowFrame|wsMaxSize|wsHideWindow;
     i = wsShowFrame | wsMinSize | wsMaxSize | wsHideWindow;
-    wsCreateWindow(&guiApp.mainWindow, guiApp.main.x, guiApp.main.y, guiApp.main.width, guiApp.main.height, 0, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, i, "MPlayer");
-    wsSetShape(&guiApp.mainWindow, guiApp.main.Mask.Image);
+    wsWindowCreate(&guiApp.mainWindow, guiApp.main.x, guiApp.main.y, guiApp.main.width, guiApp.main.height, 0, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, i, "MPlayer");
+    wsWindowShape(&guiApp.mainWindow, guiApp.main.Mask.Image);
     wsXDNDMakeAwareness(&guiApp.mainWindow);
 
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] mainWindow ID: 0x%x\n", (int)guiApp.mainWindow.WindowID);
@@ -202,33 +202,33 @@ void guiInit(void)
     guiApp.videoWindow.KeyHandler   = uiMainKeyHandle;
     guiApp.videoWindow.DandDHandler = uiDandDHandler;
 
-    wsSetBackgroundRGB(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
-    wsClearWindow(&guiApp.videoWindow);
+    wsWindowBackground(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
+    wsWindowClear(&guiApp.videoWindow);
 
     if (guiApp.video.Bitmap.Image)
-        wsConvert(&guiApp.videoWindow, guiApp.video.Bitmap.Image);
+        wsImageConvert(&guiApp.videoWindow, guiApp.video.Bitmap.Image);
 
     btnModify(evSetVolume, guiInfo.Volume);
     btnModify(evSetBalance, guiInfo.Balance);
     btnModify(evSetMoviePosition, guiInfo.Position);
 
-    wsSetIcon(wsDisplay, guiApp.mainWindow.WindowID, &guiIcon);
-    wsSetIcon(wsDisplay, guiApp.videoWindow.WindowID, &guiIcon);
+    wsWindowIcon(wsDisplay, guiApp.mainWindow.WindowID, &guiIcon);
+    wsWindowIcon(wsDisplay, guiApp.videoWindow.WindowID, &guiIcon);
 
     if (!guiApp.mainDecoration)
         wsWindowDecoration(&guiApp.mainWindow, False);
 
-    wsVisibleWindow(&guiApp.mainWindow, wsShowWindow);
+    wsWindowVisibility(&guiApp.mainWindow, wsShowWindow);
 
     if (gtkShowVideoWindow) {
-        wsVisibleWindow(&guiApp.videoWindow, wsShowWindow);
+        wsWindowVisibility(&guiApp.videoWindow, wsShowWindow);
 
         guiInfo.VideoWindow = True;
 
         if (gtkLoadFullscreen)
             uiFullScreen();
     } else
-        wsSetBackgroundRGB(&guiApp.videoWindow, 0, 0, 0);
+        wsWindowBackground(&guiApp.videoWindow, 0, 0, 0);
 
     if (gtkLoadFullscreen)
         btnSet(evFullScreen, btnPressed);
@@ -275,7 +275,7 @@ void guiDone(void)
         ass_bottom_margin = gtkASS.bottom_margin;
 
         cfg_write();
-        wsXDone();
+        wsDone();
     }
 
     uiUnsetFile();
@@ -358,7 +358,7 @@ int gui(int what, void *data)
         switch ((int)data) {
         case GUI_STOP:
         case GUI_PLAY:
-// if ( !gtkShowVideoWindow ) wsVisibleWindow( &guiApp.videoWindow,wsHideWindow );
+// if ( !gtkShowVideoWindow ) wsWindowVisibility( &guiApp.videoWindow,wsHideWindow );
         case GUI_PAUSE:
             guiInfo.Playing = (int)data;
             break;
@@ -370,9 +370,9 @@ int gui(int what, void *data)
     case GUI_HANDLE_EVENTS:
 
         if (!guiInfo.Playing || !guiInfo.VideoWindow)
-            wsHandleEvents();
+            wsEvents();
 
-        wsAutohideCursor();
+        wsMouseAutohide();
         gtkEventHandling();
 
         break;
@@ -417,7 +417,7 @@ int gui(int what, void *data)
 
     case GUI_PREPARE:
 
-        wsVisibleMouse(&guiApp.videoWindow, wsHideMouseCursor);
+        wsMouseVisibility(&guiApp.videoWindow, wsHideMouseCursor);
 
         if (guiInfo.NewPlay == GUI_FILE_NEW) {
             audio_id  = -1;
@@ -728,7 +728,7 @@ int gui(int what, void *data)
 
         // ...without video there will be no call to GUI_SETUP_VIDEO_WINDOW
         if (!guiInfo.VideoWindow) {
-            wsVisibleWindow(&guiApp.videoWindow, wsHideWindow);
+            wsWindowVisibility(&guiApp.videoWindow, wsHideWindow);
             btnSet(evFullScreen, (gtkLoadFullscreen ? btnPressed : btnReleased));
         }
 
@@ -778,22 +778,22 @@ int gui(int what, void *data)
 
         if (!guiApp.videoWindow.isFullScreen || !guiApp.videoWindow.Mapped) {
             if (!guiApp.videoWindow.isFullScreen)
-                wsResizeWindow(&guiApp.videoWindow, guiInfo.VideoWidth, guiInfo.VideoHeight);
+                wsWindowResize(&guiApp.videoWindow, guiInfo.VideoWidth, guiInfo.VideoHeight);
             if (!guiApp.videoWindow.Mapped)
-                wsVisibleWindow(&guiApp.videoWindow, wsShowWindow);
+                wsWindowVisibility(&guiApp.videoWindow, wsShowWindow);
         }
 
         if (gtkLoadFullscreen ^ guiApp.videoWindow.isFullScreen)
             uiEventHandling(evFullScreen, True);
 
         if (guiWinID >= 0)
-            wsMoveWindow(&guiApp.mainWindow, True, 0, guiInfo.VideoHeight);
+            wsWindowMove(&guiApp.mainWindow, True, 0, guiInfo.VideoHeight);
 
         break;
 
     case GUI_HANDLE_X_EVENT:
 
-        wsEvents(data);
+        wsEvent(data);
         gtkEventHandling();
         break;
 
@@ -858,27 +858,27 @@ int gui(int what, void *data)
                 guiInfo.VideoWindow = True;
 
                 if (!guiApp.videoWindow.isFullScreen)
-                    wsResizeWindow(&guiApp.videoWindow, guiApp.video.width, guiApp.video.height);
+                    wsWindowResize(&guiApp.videoWindow, guiApp.video.width, guiApp.video.height);
 
                 if (!guiApp.videoWindow.Mapped)
-                    wsVisibleWindow(&guiApp.videoWindow, wsShowWindow);
+                    wsWindowVisibility(&guiApp.videoWindow, wsShowWindow);
 
                 if (gtkLoadFullscreen ^ guiApp.videoWindow.isFullScreen)
                     uiEventHandling(evFullScreen, False);
             } else {
-                wsVisibleWindow(&guiApp.videoWindow, wsHideWindow);
+                wsWindowVisibility(&guiApp.videoWindow, wsHideWindow);
                 guiInfo.VideoWindow = False;
                 btnSet(evFullScreen, (gtkLoadFullscreen ? btnPressed : btnReleased));
             }
 
             gui(GUI_SET_STATE, (void *)GUI_STOP);
 
-            wsHandleEvents();
+            wsEvents();
             uiVideoRender = True;
-            wsSetBackgroundRGB(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
-            wsClearWindow(&guiApp.videoWindow);
-            wsPostRedisplay(&guiApp.videoWindow);
-            wsVisibleMouse(&guiApp.videoWindow, wsShowMouseCursor);
+            wsWindowBackground(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
+            wsWindowClear(&guiApp.videoWindow);
+            wsWindowRedraw(&guiApp.videoWindow);
+            wsMouseVisibility(&guiApp.videoWindow, wsShowMouseCursor);
         }
 
         break;

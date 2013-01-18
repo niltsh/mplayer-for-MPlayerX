@@ -64,10 +64,10 @@ static void uiMenuDraw( void )
     }
    oldMenuItem=menuItem;
 /* --- */
-   wsConvert( &guiApp.menuWindow,menuDrawBuffer );
+   wsImageConvert( &guiApp.menuWindow,menuDrawBuffer );
    menuRender=False;
   }
- wsPutImage( &guiApp.menuWindow );
+ wsImageDraw( &guiApp.menuWindow );
 }
 
 void uiMenuMouseHandle( int RX,int RY )
@@ -81,7 +81,7 @@ void uiMenuMouseHandle( int RX,int RY )
  y=RY - guiApp.menuWindow.Y;
  if ( ( x < 0 ) || ( y < 0  ) || ( x > guiApp.menu.width ) || ( y > guiApp.menu.height ) )
   {
-   wsPostRedisplay( &guiApp.menuWindow );
+   wsWindowRedraw( &guiApp.menuWindow );
    return;
   }
 
@@ -91,7 +91,7 @@ void uiMenuMouseHandle( int RX,int RY )
          guiApp.menuItems[i].x,guiApp.menuItems[i].y,
          guiApp.menuItems[i].x+guiApp.menuItems[i].width,guiApp.menuItems[i].y+guiApp.menuItems[i].height ) ) { menuItem=i; break; }
   }
- wsPostRedisplay( &guiApp.menuWindow );
+ wsWindowRedraw( &guiApp.menuWindow );
 }
 
 void uiShowMenu( int mx,int my )
@@ -109,12 +109,12 @@ void uiShowMenu( int mx,int my )
 
  menuItem = 0;
 
- wsMoveWindow( &guiApp.menuWindow,True,x,y );
- wsRaiseWindowTop( wsDisplay,guiApp.menuWindow.WindowID );
- wsSetLayer( wsDisplay,guiApp.menuWindow.WindowID,1 );
+ wsWindowMove( &guiApp.menuWindow,True,x,y );
+ wsWindowRaiseTop( wsDisplay,guiApp.menuWindow.WindowID );
+ wsWindowLayer( wsDisplay,guiApp.menuWindow.WindowID,1 );
  menuRender=True;
- wsVisibleWindow( &guiApp.menuWindow,wsShowWindow );
- wsPostRedisplay( &guiApp.menuWindow );
+ wsWindowVisibility( &guiApp.menuWindow,wsShowWindow );
+ wsWindowRedraw( &guiApp.menuWindow );
 }
 
 void uiHideMenu( int mx,int my,int w )
@@ -128,7 +128,7 @@ void uiHideMenu( int mx,int my,int w )
 // x=RX - guiApp.menuWindow.X;
 // y=RY - guiApp.menuWindow.Y;
 
- wsVisibleWindow( &guiApp.menuWindow,wsHideWindow );
+ wsWindowVisibility( &guiApp.menuWindow,wsHideWindow );
 
  if ( ( x < 0 ) || ( y < 0 ) ) return;
 
@@ -158,11 +158,11 @@ void uiMenuInit( void )
    return;
   }
 
- wsCreateWindow( &guiApp.menuWindow,
+ wsWindowCreate( &guiApp.menuWindow,
  guiApp.menu.x,guiApp.menu.y,guiApp.menu.width,guiApp.menu.height,
  0,wsShowMouseCursor|wsHandleMouseButton|wsHandleMouseMove,wsOverredirect|wsHideFrame|wsMaxSize|wsMinSize|wsHideWindow,"MPlayer menu" );
 
- wsSetShape( &guiApp.menuWindow,guiApp.menu.Mask.Image );
+ wsWindowShape( &guiApp.menuWindow,guiApp.menu.Mask.Image );
 
  mp_msg( MSGT_GPLAYER,MSGL_DBG2,"[menu] menuWindow ID: 0x%x\n",(int)guiApp.menuWindow.WindowID );
 
@@ -170,5 +170,5 @@ void uiMenuInit( void )
  guiApp.menuWindow.ReDraw=uiMenuDraw;
 // guiApp.menuWindow.MouseHandler=uiMenuMouseHandle;
 // guiApp.menuWindow.KeyHandler=uiMainKeyHandle;
- menuRender=True; wsPostRedisplay( &guiApp.menuWindow );
+ menuRender=True; wsWindowRedraw( &guiApp.menuWindow );
 }

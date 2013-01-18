@@ -178,7 +178,7 @@ void gtkInit(char *display_name)
  */
 void gtkAddIcon(GtkWidget *window)
 {
-    wsSetIcon(gdk_display, GDK_WINDOW_XWINDOW(window->window), &guiIcon);
+    wsWindowIcon(gdk_display, GDK_WINDOW_XWINDOW(window->window), &guiIcon);
 }
 
 void gtkClearList(GtkWidget *list)
@@ -269,7 +269,7 @@ void gtkMessageBox(int type, const gchar *str)
  */
 void gtkSetLayer(GtkWidget *window)
 {
-    wsSetLayer(gdk_display, GDK_WINDOW_XWINDOW(window->window), guiApp.videoWindow.isFullScreen);
+    wsWindowLayer(gdk_display, GDK_WINDOW_XWINDOW(window->window), guiApp.videoWindow.isFullScreen);
     gtkActive(window);
 }
 
@@ -280,7 +280,7 @@ void gtkSetLayer(GtkWidget *window)
  */
 void gtkActive(GtkWidget *window)
 {
-    wsRaiseWindowTop(gdk_display, GDK_WINDOW_XWINDOW(window->window));
+    wsWindowRaiseTop(gdk_display, GDK_WINDOW_XWINDOW(window->window));
 }
 
 void gtkShow(int type, char *param)
