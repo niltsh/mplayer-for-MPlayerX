@@ -832,7 +832,7 @@ Window LeaderWindow;
 //   c     : mouse cursor visible
 //   p     : properties - "decoration", visible titlebar, etc ...
 // ----------------------------------------------------------------------------------------------
-void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, unsigned char p, int c, char *label)
+void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, char *label)
 {
     int depth;
 
