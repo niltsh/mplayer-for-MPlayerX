@@ -829,11 +829,10 @@ Window LeaderWindow;
 //  wsWindowCreate: create a new window on the screen.
 //   x,y   : window position
 //   w,h   : window size
-//   b     : window border size
 //   c     : mouse cursor visible
 //   p     : properties - "decoration", visible titlebar, etc ...
 // ----------------------------------------------------------------------------------------------
-void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int b, int c, unsigned char p, char *label)
+void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, unsigned char p, int c, char *label)
 {
     int depth;
 
@@ -851,8 +850,6 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int b, int c, uns
     win->OldWidth  = win->Width;
     win->OldHeight = win->Height;
 
-/* Border size for window. */
-    win->BorderWidth = b;
 /* Hide Mouse Cursor */
     win->wsCursor = None;
     win->wsMouseEventType = c;
@@ -911,7 +908,7 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int b, int c, uns
 
     win->WindowID = XCreateWindow(wsDisplay,
                                   (win->Parent != 0 ? win->Parent : wsRootWin),
-                                  win->X, win->Y, win->Width, win->Height, win->BorderWidth,
+                                  win->X, win->Y, win->Width, win->Height, 0,
                                   win->VisualInfo.depth,
                                   InputOutput,
                                   win->VisualInfo.visual,

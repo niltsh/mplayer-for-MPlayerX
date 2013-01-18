@@ -106,7 +106,6 @@ typedef struct {
     int OldX, OldY, OldWidth, OldHeight;
     int MaxX, MaxY;
     int isFullScreen;
-    int BorderWidth;
     int Property;
     unsigned char *bImage;
     XImage *xImage;
@@ -179,7 +178,7 @@ void wsMouseAutohide(void);
 void wsEvent(XEvent *event);
 void wsEvents(void);
 
-void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int b, int c, unsigned char p, char *label);
+void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, unsigned char p, int c, char *label);
 void wsWindowDestroy(wsWindow *win);
 void wsWindowMove(wsWindow *win, Bool abs, int x, int y);
 void wsWindowMoveWithin(wsWindow *win, Bool abs, int x, int y);
