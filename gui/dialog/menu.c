@@ -654,7 +654,7 @@ GtkWidget * create_PopUpMenu( void )
            ( guiApp.videoWindow.Height == guiInfo.VideoHeight * 2 ) ) b2=True;
       else if ( ( guiApp.videoWindow.Width == guiInfo.VideoWidth / 2 ) &&
                 ( guiApp.videoWindow.Height == guiInfo.VideoHeight / 2 ) ) b_half=True;
-      else b1=True;
+      else b1=( guiApp.videoWindow.Width == guiInfo.VideoWidth && guiApp.videoWindow.Height == guiInfo.VideoHeight );
      } else b1=!guiApp.videoWindow.isFullScreen;
     H=AddMenuCheckItem( window1, (const char*)half_xpm, Menu,MSGTR_MENU_HalfSize,b_half,evHalfSize );
     N=AddMenuCheckItem( window1, (const char*)normal_xpm, Menu,MSGTR_MENU_NormalSize"      ",b1,evNormalSize );
