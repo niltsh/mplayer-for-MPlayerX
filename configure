@@ -7216,8 +7216,8 @@ EOF
 fi
 if test "$_libvpx_lavc" = yes ; then
   def_libvpx_lavc='#define CONFIG_LIBVPX 1'
-  libavdecoders="$libavdecoders LIBVPX_DECODER"
-  libavencoders="$libavencoders LIBVPX_ENCODER"
+  libavdecoders="$libavdecoders LIBVPX_VP8_DECODER"
+  libavencoders="$libavencoders LIBVPX_VP8_ENCODER"
   codecmodules="libvpx $codecmodules"
 else
   def_libvpx_lavc='#define CONFIG_LIBVPX 0'
