@@ -783,7 +783,7 @@ static void wsSizeHint(wsWindow *win)
     XSetWMNormalHints(wsDisplay, win->WindowID, &size);
 }
 
-void wsWindowDecoration(wsWindow *win)
+static void wsWindowDecoration(wsWindow *win)
 {
     Atom wsMotifHints;
     struct {
