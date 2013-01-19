@@ -733,7 +733,7 @@ static void wsWindowUpdatePosition(wsWindow *win, int x, int y, int width, int h
  *
  * @param win pointer to a ws window structure
  */
-static void wsSizeHint(wsWindow *win)
+static void wsWindowSizeHint(wsWindow *win)
 {
     XSizeHints size;
 
@@ -820,7 +820,7 @@ static void wsWindowDecoration(wsWindow *win)
  *
  * @param win pointer to a ws window structure
  */
-static void wsMapWait(wsWindow *win)
+static void wsWindowMapWait(wsWindow *win)
 {
     XEvent xev;
 
@@ -940,7 +940,7 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
     wsClassHint.res_class = "MPlayer";
     XSetClassHint(wsDisplay, win->WindowID, &wsClassHint);
 
-    wsSizeHint(win);
+    wsWindowSizeHint(win);
 
     win->WMHints.flags = InputHint | StateHint;
     win->WMHints.input = True;
@@ -974,7 +974,7 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
 
     if (p & wsShowWindow) {
         XMapWindow(wsDisplay, win->WindowID);
-        wsMapWait(win);
+        wsWindowMapWait(win);
     }
 
     wsImageCreate(win, win->Width, win->Height);
@@ -1151,7 +1151,7 @@ void wsWindowMove(wsWindow *win, Bool abs, int x, int y)
     } else
         wsWindowUpdatePosition(win, x, y, win->Width, win->Height);
 
-    wsSizeHint(win);
+    wsWindowSizeHint(win);
     XMoveWindow(wsDisplay, win->WindowID, win->X, win->Y);
 }
 
@@ -1201,7 +1201,7 @@ void wsWindowResize(wsWindow *win, int w, int h)
     if (vo_wm_type == 0)
         XUnmapWindow(wsDisplay, win->WindowID);
 
-    wsSizeHint(win);
+    wsWindowSizeHint(win);
     XResizeWindow(wsDisplay, win->WindowID, w, h);
 
     if (vo_wm_type == 0)
@@ -1256,7 +1256,7 @@ void wsWindowFullscreen(wsWindow *win)
         if (!win->isFullScreen)
             wsWindowDecoration(win);
 
-        wsSizeHint(win);
+        wsWindowSizeHint(win);
         wsWindowLayer(wsDisplay, win->WindowID, win->isFullScreen);
         XMoveResizeWindow(wsDisplay, win->WindowID, win->X, win->Y, win->Width, win->Height);
     }
@@ -1285,7 +1285,7 @@ void wsWindowVisibility(wsWindow *win, int vis)
     case wsShowWindow:
 
         XMapRaised(wsDisplay, win->WindowID);
-        wsMapWait(win);
+        wsWindowMapWait(win);
 
         if (vo_fs_type & vo_wm_FULLSCREEN)
             win->isFullScreen = False;
