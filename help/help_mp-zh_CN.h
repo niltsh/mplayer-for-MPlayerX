@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 35110
+// Synced with help_mp-en.h rev. 35738
 //
 // Translated by JRaSH <jrash06@gmail.com>
 
@@ -848,6 +848,7 @@ static const char help_text[]=
 #define MSGTR_WS_NotEnoughMemoryDrawBuffer "抱歉，内存不足以用于绘制缓冲。\n"
 #define MSGTR_WS_DpmsUnavailable "DPMS 不可用？\n"
 #define MSGTR_WS_DpmsNotEnabled "无法启用 DPMS。\n"
+#define MSGTR_WS_XError "出现了一个 X11 的错误！\n"
 
 // wsxdnd.c
 #define MSGTR_WS_NotAFile "这好像不是一个文件...\n"
