@@ -184,7 +184,7 @@ void guiInit(void)
 
 // i=wsHideFrame|wsMaxSize|wsHideWindow;
 // if ( guiApp.mainDecoration ) i=wsShowFrame|wsMaxSize|wsHideWindow;
-    i = wsShowFrame | wsMinSize | wsMaxSize | wsHideWindow;
+    i = (guiApp.mainDecoration ? wsShowFrame : 0) | wsMinSize | wsMaxSize | wsHideWindow;
     wsWindowCreate(&guiApp.mainWindow, guiApp.main.x, guiApp.main.y, guiApp.main.width, guiApp.main.height, i, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, "MPlayer");
     wsWindowShape(&guiApp.mainWindow, guiApp.main.Mask.Image);
     wsXDNDMakeAwareness(&guiApp.mainWindow);
@@ -214,9 +214,6 @@ void guiInit(void)
 
     wsWindowIcon(wsDisplay, guiApp.mainWindow.WindowID, &guiIcon);
     wsWindowIcon(wsDisplay, guiApp.videoWindow.WindowID, &guiIcon);
-
-    if (!guiApp.mainDecoration)
-        wsWindowDecoration(&guiApp.mainWindow, False);
 
     wsWindowVisibility(&guiApp.mainWindow, wsShowWindow);
 

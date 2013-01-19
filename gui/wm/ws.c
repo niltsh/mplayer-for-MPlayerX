@@ -828,8 +828,7 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
 
     win->Property = p;
 
-    if (p & wsShowFrame)
-        win->Decoration = True;
+    win->Decoration = ((p & wsShowFrame) != 0);
 
     wsWindowUpdatePosition(win, x, y, w, h);
 
@@ -916,7 +915,7 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
     win->WMHints.initial_state = NormalState;
     XSetWMHints(wsDisplay, win->WindowID, &win->WMHints);
 
-    wsWindowDecoration(win, win->Decoration);
+    wsWindowDecoration(win);
     XStoreName(wsDisplay, win->WindowID, label);
     XmbSetWMProperties(wsDisplay, win->WindowID, label, label, NULL, 0, NULL, NULL, NULL);
 
@@ -1002,7 +1001,7 @@ void wsWindowDestroy(wsWindow *win)
 #endif
 }
 
-void wsWindowDecoration(wsWindow *win, Bool decor)
+void wsWindowDecoration(wsWindow *win)
 {
     Atom wsMotifHints;
     struct {
@@ -1021,7 +1020,7 @@ void wsWindowDecoration(wsWindow *win, Bool decor)
     memset(&wsMotifWmHints, 0, sizeof(wsMotifWmHints));
     wsMotifWmHints.flags = MWM_HINTS_FUNCTIONS | MWM_HINTS_DECORATIONS;
 
-    if (decor) {
+    if (win->Decoration) {
         wsMotifWmHints.functions = MWM_FUNC_MOVE | MWM_FUNC_CLOSE | MWM_FUNC_MINIMIZE | MWM_FUNC_MAXIMIZE;
 
         if (!(win->Property & wsMinSize) || !(win->Property & wsMaxSize))
@@ -1254,8 +1253,10 @@ void wsWindowFullscreen(wsWindow *win)
 
     /* restore window if window manager doesn't support EWMH */
     if (!(vo_fs_type & vo_wm_FULLSCREEN)) {
+        if (!win->isFullScreen)
+            wsWindowDecoration(win);
+
         wsSizeHint(win);
-        wsWindowDecoration(win, win->Decoration && !win->isFullScreen);
         wsWindowLayer(wsDisplay, win->WindowID, win->isFullScreen);
         XMoveResizeWindow(wsDisplay, win->WindowID, win->X, win->Y, win->Width, win->Height);
     }
