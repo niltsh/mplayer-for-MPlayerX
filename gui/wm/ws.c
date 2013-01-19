@@ -783,6 +783,38 @@ static void wsSizeHint(wsWindow *win)
     XSetWMNormalHints(wsDisplay, win->WindowID, &size);
 }
 
+void wsWindowDecoration(wsWindow *win)
+{
+    Atom wsMotifHints;
+    struct {
+        unsigned long flags;
+        unsigned long functions;
+        unsigned long decorations;
+        long input_mode;
+        unsigned long status;
+    } wsMotifWmHints;
+
+    wsMotifHints = XInternAtom(wsDisplay, "_MOTIF_WM_HINTS", 0);
+
+    if (wsMotifHints == None)
+        return;
+
+    memset(&wsMotifWmHints, 0, sizeof(wsMotifWmHints));
+    wsMotifWmHints.flags = MWM_HINTS_FUNCTIONS | MWM_HINTS_DECORATIONS;
+
+    if (win->Decoration) {
+        wsMotifWmHints.functions = MWM_FUNC_MOVE | MWM_FUNC_CLOSE | MWM_FUNC_MINIMIZE | MWM_FUNC_MAXIMIZE;
+
+        if (!(win->Property & wsMinSize) || !(win->Property & wsMaxSize))
+            wsMotifWmHints.functions |= MWM_FUNC_RESIZE;
+
+        wsMotifWmHints.decorations = MWM_DECOR_ALL;
+    }
+
+    XChangeProperty(wsDisplay, win->WindowID, wsMotifHints, wsMotifHints, 32,
+                    PropModeReplace, (unsigned char *)&wsMotifWmHints, 5);
+}
+
 /**
  * @brief Wait until a window is mapped if its property requires it.
  *
@@ -999,38 +1031,6 @@ void wsWindowDestroy(wsWindow *win)
     win->Mapped       = wsNo;
     win->Rolled       = wsNo;
 #endif
-}
-
-void wsWindowDecoration(wsWindow *win)
-{
-    Atom wsMotifHints;
-    struct {
-        unsigned long flags;
-        unsigned long functions;
-        unsigned long decorations;
-        long input_mode;
-        unsigned long status;
-    } wsMotifWmHints;
-
-    wsMotifHints = XInternAtom(wsDisplay, "_MOTIF_WM_HINTS", 0);
-
-    if (wsMotifHints == None)
-        return;
-
-    memset(&wsMotifWmHints, 0, sizeof(wsMotifWmHints));
-    wsMotifWmHints.flags = MWM_HINTS_FUNCTIONS | MWM_HINTS_DECORATIONS;
-
-    if (win->Decoration) {
-        wsMotifWmHints.functions = MWM_FUNC_MOVE | MWM_FUNC_CLOSE | MWM_FUNC_MINIMIZE | MWM_FUNC_MAXIMIZE;
-
-        if (!(win->Property & wsMinSize) || !(win->Property & wsMaxSize))
-            wsMotifWmHints.functions |= MWM_FUNC_RESIZE;
-
-        wsMotifWmHints.decorations = MWM_DECOR_ALL;
-    }
-
-    XChangeProperty(wsDisplay, win->WindowID, wsMotifHints, wsMotifHints, 32,
-                    PropModeReplace, (unsigned char *)&wsMotifWmHints, 5);
 }
 
 void wsWindowShape(wsWindow *win, char *data)
