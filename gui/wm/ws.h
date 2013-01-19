@@ -103,7 +103,6 @@ typedef struct {
     Window Parent;
     int X, Y, Width, Height;
     int OldX, OldY, OldWidth, OldHeight;
-    int MaxX, MaxY;
     int isFullScreen;
     int Property;
     unsigned char *bImage;
@@ -135,7 +134,6 @@ typedef struct {
     Atom AtomProtocols;
     Atom AtomsProtocols[3];
     Atom AtomLeaderClient;
-    Atom AtomRemote;
     Atom AtomWMSizeHint;
     Atom AtomWMNormalHint;
 
@@ -150,9 +148,6 @@ typedef struct {
     XVisualInfo VisualInfo;
     XSetWindowAttributes WindowAttrib;
     XWMHints WMHints;
-
-    XFontStruct *Font;
-    int FontHeight;
 
     Cursor wsCursor;
     char wsCursorData[1];
