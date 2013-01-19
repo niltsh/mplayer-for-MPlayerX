@@ -103,7 +103,7 @@ typedef struct {
     Window Parent;
     int X, Y, Width, Height;
     int OldX, OldY, OldWidth, OldHeight;
-    int isFullScreen;
+    Bool isFullScreen;
     int Property;
     unsigned char *bImage;
     XImage *xImage;
