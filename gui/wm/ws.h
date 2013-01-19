@@ -108,7 +108,7 @@ typedef struct {
     unsigned char *bImage;
     XImage *xImage;
     Pixmap Mask;
-    Bool Decorations;
+    Bool Decoration;
 
     int State;
     int Visible;

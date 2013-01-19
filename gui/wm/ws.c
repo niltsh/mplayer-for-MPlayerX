@@ -829,7 +829,7 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
     win->Property = p;
 
     if (p & wsShowFrame)
-        win->Decorations = True;
+        win->Decoration = True;
 
     wsWindowUpdatePosition(win, x, y, w, h);
 
@@ -916,7 +916,7 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
     win->WMHints.initial_state = NormalState;
     XSetWMHints(wsDisplay, win->WindowID, &win->WMHints);
 
-    wsWindowDecoration(win, win->Decorations);
+    wsWindowDecoration(win, win->Decoration);
     XStoreName(wsDisplay, win->WindowID, label);
     XmbSetWMProperties(wsDisplay, win->WindowID, label, label, NULL, 0, NULL, NULL, NULL);
 
@@ -1255,7 +1255,7 @@ void wsWindowFullscreen(wsWindow *win)
     /* restore window if window manager doesn't support EWMH */
     if (!(vo_fs_type & vo_wm_FULLSCREEN)) {
         wsSizeHint(win);
-        wsWindowDecoration(win, win->Decorations && !win->isFullScreen);
+        wsWindowDecoration(win, win->Decoration && !win->isFullScreen);
         wsWindowLayer(wsDisplay, win->WindowID, win->isFullScreen);
         XMoveResizeWindow(wsDisplay, win->WindowID, win->X, win->Y, win->Width, win->Height);
     }
