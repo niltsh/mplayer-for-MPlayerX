@@ -213,7 +213,7 @@ static int config(struct vf_instance *vf,
     int round_w=0, round_h=0;
     int i;
     SwsFilter *srcFilter, *dstFilter;
-    enum PixelFormat dfmt, sfmt;
+    enum AVPixelFormat dfmt, sfmt;
 
     if(!best){
         mp_msg(MSGT_VFILTER,MSGL_WARN,"SwScale: no supported outfmt found :(\n");
@@ -642,7 +642,7 @@ struct SwsContext *sws_getContextFromCmdLine(int srcW, int srcH, int srcFormat, 
 {
         int flags;
         SwsFilter *dstFilterParam, *srcFilterParam;
-        enum PixelFormat dfmt, sfmt;
+        enum AVPixelFormat dfmt, sfmt;
 
         dfmt = imgfmt2pixfmt(dstFormat);
         sfmt = imgfmt2pixfmt(srcFormat);

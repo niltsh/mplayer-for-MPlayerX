@@ -33,12 +33,12 @@ struct vf_priv_s {
     AVFilterContext *out;
     int in_w;
     int in_h;
-    enum PixelFormat in_pixfmt;
+    enum AVPixelFormat in_pixfmt;
     int in_imgfmt;
     AVRational in_sar;
     int out_w;
     int out_h;
-    enum PixelFormat out_pixfmt;
+    enum AVPixelFormat out_pixfmt;
     int out_imgfmt;
     AVRational out_sar;
     struct AVFilterBufferRef *in_buf;
@@ -51,7 +51,7 @@ static void buf_mpi_free(AVFilterBuffer *buf)
     av_free(buf);
 }
 
-static AVFilterBufferRef *mpi_to_bufref(mp_image_t *mpi, enum PixelFormat fmt,
+static AVFilterBufferRef *mpi_to_bufref(mp_image_t *mpi, enum AVPixelFormat fmt,
                                         AVRational sar)
 {
     AVFilterBufferRef *buf;
@@ -94,7 +94,7 @@ static int mpsink_query_formats(AVFilterContext *ctx)
     struct mpsink_priv *c = ctx->priv;
     struct vf_instance *vf = c->vf;
     AVFilterFormats *all;
-    enum PixelFormat *sup;
+    enum AVPixelFormat *sup;
     unsigned i, nsup = 0;
     int ifmt;
 
@@ -186,7 +186,7 @@ static int mpsrc_init(AVFilterContext *ctx,
 static int mpsrc_query_formats(AVFilterContext *ctx)
 {
     struct mpsrc_priv *c = ctx->priv;
-    enum PixelFormat pix_fmts[] = { c->vf->priv->in_pixfmt, PIX_FMT_NONE };
+    enum AVPixelFormat pix_fmts[] = { c->vf->priv->in_pixfmt, PIX_FMT_NONE };
     avfilter_set_common_pixel_formats(ctx, avfilter_make_format_list(pix_fmts));
     return 0;
 }

@@ -149,7 +149,7 @@ static image *pngRead(skin_t *skin, const char *fname)
       int src_stride[4] = { 4 * bmp.Width, 0, 0, 0 };
       uint8_t *dst[4] = { NULL, NULL, NULL, NULL };
       int dst_stride[4];
-      enum PixelFormat out_pix_fmt = PIX_FMT_NONE;
+      enum AVPixelFormat out_pix_fmt = PIX_FMT_NONE;
       struct SwsContext *sws;
       if      (skin->desktopbpp == 16) out_pix_fmt = PIX_FMT_RGB555;
       else if (skin->desktopbpp == 24) out_pix_fmt = PIX_FMT_RGB24;

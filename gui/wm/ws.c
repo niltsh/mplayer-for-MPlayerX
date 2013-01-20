@@ -92,7 +92,7 @@ static int wsUseXShape = True;
     pixel <<= 5; \
     pixel  |= (r >> 3)
 
-static enum PixelFormat out_pix_fmt = PIX_FMT_NONE;
+static enum AVPixelFormat out_pix_fmt = PIX_FMT_NONE;
 
 /* --- */
 

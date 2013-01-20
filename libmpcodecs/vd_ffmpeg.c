@@ -58,7 +58,7 @@ LIBVD_EXTERN(ffmpeg)
 typedef struct {
     AVCodecContext *avctx;
     AVFrame *pic;
-    enum PixelFormat pix_fmt;
+    enum AVPixelFormat pix_fmt;
     int do_slices;
     int do_dr1;
     int nonref_dr; ///< allow dr only for non-reference frames
@@ -80,8 +80,8 @@ static void release_buffer(AVCodecContext *avctx, AVFrame *pic);
 static void draw_slice(struct AVCodecContext *s, const AVFrame *src, int offset[4],
                        int y, int type, int height);
 
-static enum PixelFormat get_format(struct AVCodecContext *avctx,
-                                   const enum PixelFormat *pix_fmt);
+static enum AVPixelFormat get_format(struct AVCodecContext *avctx,
+                                     const enum AVPixelFormat *pix_fmt);
 
 static int lavc_param_workaround_bugs= FF_BUG_AUTODETECT;
 static int lavc_param_error_resilience=2;
@@ -188,7 +188,9 @@ static int control(sh_video_t *sh, int cmd, void *arg, ...){
     return CONTROL_UNKNOWN;
 }
 
-static void set_format_params(struct AVCodecContext *avctx, enum PixelFormat fmt){
+static void set_format_params(struct AVCodecContext *avctx,
+                              enum AVPixelFormat fmt)
+{
     int imgfmt;
     if (fmt == PIX_FMT_NONE)
         return;
@@ -471,7 +473,8 @@ static void draw_slice(struct AVCodecContext *s,
 }
 
 
-static int init_vo(sh_video_t *sh, enum PixelFormat pix_fmt){
+static int init_vo(sh_video_t *sh, enum AVPixelFormat pix_fmt)
+{
     vd_ffmpeg_ctx *ctx = sh->context;
     AVCodecContext *avctx = ctx->avctx;
     float aspect= av_q2d(avctx->sample_aspect_ratio) * avctx->width / avctx->height;
@@ -959,9 +962,10 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
     return mpi;
 }
 
-static enum PixelFormat get_format(struct AVCodecContext *avctx,
-                                    const enum PixelFormat *fmt){
-    enum PixelFormat selected_format;
+static enum AVPixelFormat get_format(struct AVCodecContext *avctx,
+                                     const enum AVPixelFormat *fmt)
+{
+    enum AVPixelFormat selected_format;
     int imgfmt;
     sh_video_t *sh = avctx->opaque;
     int i;
