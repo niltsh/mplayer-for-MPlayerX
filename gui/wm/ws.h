@@ -22,12 +22,13 @@
 #ifndef MPLAYER_GUI_WS_H
 #define MPLAYER_GUI_WS_H
 
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+
 #include "gui/dialog/dialog.h"
 
 #include "config.h"
 
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
 #ifdef HAVE_SHM
 #include <X11/extensions/XShm.h>
 #endif
