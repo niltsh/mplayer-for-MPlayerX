@@ -80,7 +80,7 @@ If you have questions please contact with me: Nick Kurshev: nickols_k@mail.ru.
 // 3dnow memcpy support from kernel 2.4.2
 //  by Pontscho/fresh!mindworkz
 
-#include "libavutil/x86_cpu.h"
+#include "libavutil/x86/asm.h"
 
 #undef HAVE_ONLY_MMX1
 #if HAVE_MMX && !HAVE_MMX2 && !HAVE_AMD3DNOW && !HAVE_SSE

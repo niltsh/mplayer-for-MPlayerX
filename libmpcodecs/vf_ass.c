@@ -46,7 +46,7 @@
 #include "sub/eosd.h"
 
 #include "cpudetect.h"
-#include "libavutil/x86_cpu.h"
+#include "libavutil/x86/asm.h"
 
 #define _r(c)  ((c)>>24)
 #define _g(c)  (((c)>>16)&0xFF)

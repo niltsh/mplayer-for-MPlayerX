@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "libavutil/x86_cpu.h"
+#include "libavutil/x86/asm.h"
 #include "config.h"
 #include "pullup.h"
 
