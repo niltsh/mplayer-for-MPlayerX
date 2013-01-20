@@ -7,6 +7,7 @@ codecs2html
 codecs.conf.h
 config.*
 cpuinfo
+ffmpeg
 gmplayer
 help_mp.h
 mencoder
@@ -15,7 +16,13 @@ tags
 TAGS
 version.h
 debian/changelog
+debian/files
+debian/mplayer-dbg/
+debian/mplayer-doc/
+debian/mplayer-gui/
+debian/*.debhelper
 debian/*.debhelper.log
+debian/*.substvars
 DOCS/codecs-status.html
 DOCS/HTML/
 DOCS/HTML-single/
