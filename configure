@@ -5150,17 +5150,7 @@ echores "$_gif"
 case "$_gif" in yes*)
   echocheck "broken giflib workaround"
   def_gif_tvt_hack='#define CONFIG_GIF_TVT_HACK 1'
-
-  cat > $TMPC << EOF
-#include <stdio.h>
-#include <gif_lib.h>
-int main(void) {
-  GifFileType gif = {.UserData = NULL};
-  printf("UserData is at address %p\n", gif.UserData);
-  return 0;
-}
-EOF
-  if cc_check "$ld_gif" ; then
+  if statement_check_broken stdio.h gif_lib.h 'GifFileType gif = {.UserData = NULL}; printf("UserData is at address %p\n", gif.UserData)' "$ld_gif" ; then
     def_gif_tvt_hack='#undef CONFIG_GIF_TVT_HACK'
     echores "disabled"
   else
