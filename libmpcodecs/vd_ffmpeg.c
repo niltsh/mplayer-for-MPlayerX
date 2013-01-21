@@ -47,6 +47,18 @@ LIBVD_EXTERN(ffmpeg)
 
 #include "libavcodec/avcodec.h"
 
+#ifndef AV_EF_COMPLIANT
+#define AV_EF_COMPLIANT 0
+#endif
+
+#ifndef AV_EF_CAREFUL
+#define AV_EF_CAREFUL 0
+#endif
+
+#ifndef AV_EF_AGGRESSIVE
+#define AV_EF_AGGRESSIVE 0
+#endif
+
 #if AVPALETTE_SIZE > 1024
 #error palette too large, adapt libmpcodecs/vf.c:vf_get_image
 #endif
