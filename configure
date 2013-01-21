@@ -3601,6 +3601,14 @@ fi
 echores "$_malloc"
 
 
+echocheck "aligned malloc"
+aligned_malloc=no
+def_aligned_malloc='#define HAVE_ALIGNED_MALLOC 0'
+statement_check malloc.h '_aligned_malloc(0)' && aligned_malloc=yes &&
+  def_aligned_malloc='#define HAVE_ALIGNED_MALLOC 1'
+echores "$aligned_malloc"
+
+
 echocheck "memalign()"
 # XXX restrict to x86 ? extend to other CPUs/cacheline sizes ?
 def_memalign_hack='#define CONFIG_MEMALIGN_HACK 0'
@@ -8922,6 +8930,7 @@ $def_ffmpeg_so
 #define CONFIG_MUXERS 1
 $def_rtpdec
 
+$def_aligned_malloc
 $def_arpa_inet_h
 $def_bswap
 $def_bzlib
