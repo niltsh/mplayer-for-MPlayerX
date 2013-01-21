@@ -3788,6 +3788,15 @@ else
   def_direct_h='#define HAVE_DIRECT_H 0'
 fi
 echores "$_direct_h"
+
+
+echocheck "windows.h"
+windows_h=no
+def_windows_h='#define HAVE_WINDOWS_H 0'
+header_check windows.h && windows_h=yes && def_windows_h='#define HAVE_WINDOWS_H 1'
+echores "$windows_h"
+
+
 echocheck "io.h"
 _io_h=no
 header_check io.h && _io_h=yes
@@ -8927,6 +8936,7 @@ $def_arpa_inet_h
 $def_direct_h
 $def_io_h
 $def_poll_h
+$def_windows_h
 
 /* external libraries */
 $def_bzlib
