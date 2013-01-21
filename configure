@@ -3675,6 +3675,14 @@ else
   def_mman_has_map_failed='#define MAP_FAILED ((void *) -1)'
 fi
 
+
+echocheck "mprotect"
+mprotect=no
+def_mprotect='#define HAVE_MPROTECT 0'
+statement_check_broken stddef.h sys/mman.h 'mprotect(NULL, 0, 0)' && mprotect=yes
+echores "$mprotect"
+
+
 echocheck "dynamic loader"
 _dl=no
 for ld_tmp in "" -ldl; do
@@ -8946,6 +8954,7 @@ $def_lrintf
 $def_mlib
 $def_mkstemp
 $def_mmap
+$def_mprotect
 $def_network
 $def_os2threads
 $def_pic
