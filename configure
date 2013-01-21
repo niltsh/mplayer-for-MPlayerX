@@ -8857,6 +8857,7 @@ $def_jpeg
 $def_kva
 $def_md5sum
 $def_mga
+$def_mlib
 $def_mng
 $def_postproc
 $def_png
@@ -8915,10 +8916,52 @@ $def_ffmpeg_so
 #define CONFIG_MUXERS 1
 $def_rtpdec
 
-$def_aligned_malloc
+/* selectable features */
+$def_hardcoded_tables
+$def_libavcodec_mpegaudio_hp
+$def_network
+$def_vf_lavfi
+
+/* headers */
 $def_arpa_inet_h
-$def_bswap
+$def_direct_h
+$def_io_h
+$def_poll_h
+
+/* external libraries */
 $def_bzlib
+$def_crystalhd
+$def_faac_lavc
+$def_libdirac_lavc
+$def_libgsm
+$def_libopencore_amrnb
+$def_libopencore_amrwb
+$def_libopenjpeg
+$def_librtmp
+$def_libschroedinger_lavc
+$def_mp3lame_lavc
+$def_x264_lavc
+$def_xvid_lavc
+
+/* system features */
+$def_fast_64bit
+$def_fast_unaligned
+$def_gnu_as
+$def_ibm_asm
+$def_local_aligned_8
+$def_local_aligned_16
+$def_os2threads
+$def_pic
+$def_pthreads
+$def_threads
+$def_w32threads
+$def_xform_asm
+$def_xmm_clobbers
+$def_yasm
+
+/* system functions */
+$def_aligned_malloc
+$def_bswap
 $def_dcbzl
 $def_atanf
 $def_atan2f
@@ -8927,47 +8970,27 @@ $def_cosf
 $def_expf
 $def_exp2
 $def_exp2f
-$def_fast_64bit
-$def_fast_unaligned
-$def_gnu_as
-$def_hardcoded_tables
-$def_ibm_asm
 $def_isinf
 $def_isnan
 $def_ldexpf
-$def_libavcodec_mpegaudio_hp
 $def_llrint
 $def_llrintf
-$def_local_aligned_8
-$def_local_aligned_16
 $def_log2
 $def_log2f
 $def_log10f
 $def_lrint
 $def_lrintf
-$def_mlib
 $def_mkstemp
 $def_mmap
-$def_mprotect
-$def_network
-$def_os2threads
-$def_pic
-$def_poll_h
 $def_posix_memalign
 $def_powf
-$def_pthreads
+$def_mprotect
 $def_rint
 $def_round
 $def_roundf
 $def_sinf
-$def_threads
 $def_trunc
 $def_truncf
-$def_vf_lavfi
-$def_w32threads
-$def_xform_asm
-$def_xmm_clobbers
-$def_yasm
 
 #define AV_HAVE_INCOMPATIBLE_FORK_ABI 0
 #define CONFIG_AUDIO_FLOAT 0
@@ -9041,22 +9064,6 @@ $def_yasm
 
 #define LIBAV_CONFIGURATION FFMPEG_CONFIGURATION
 #define LIBAV_LICENSE FFMPEG_LICENSE
-
-/* External libraries used through FFmpeg. */
-$def_crystalhd
-$def_faac_lavc
-$def_libdirac_lavc
-$def_libgsm
-$def_libopencore_amrnb
-$def_libopencore_amrwb
-$def_libopenjpeg
-$def_librtmp
-$def_libschroedinger_lavc
-$def_mp3lame_lavc
-$def_x264_lavc
-$def_xvid_lavc
-$def_direct_h
-$def_io_h
 
 $(ff_config_enable "$libavdecoders_all"  "$libavdecoders" "#")
 $(ff_config_enable "$libavencoders_all"  "$libavencoders" "#")
