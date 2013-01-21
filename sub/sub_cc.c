@@ -42,6 +42,7 @@
 #include "sub.h"
 
 #include "libavutil/avutil.h"
+#include "libavutil/common.h"
 
 
 #define CC_MAX_LINE_LENGTH 64

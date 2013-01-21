@@ -37,6 +37,7 @@
 #include "vf.h"
 #include "vf_scale.h"
 
+#include "libavutil/mem.h"
 #include "libswscale/swscale.h"
 #include "libavcodec/avcodec.h"
 

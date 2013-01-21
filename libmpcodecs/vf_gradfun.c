@@ -39,6 +39,8 @@
 #include "vf.h"
 #include "libvo/fastmemcpy.h"
 #include "libavutil/avutil.h"
+#include "libavutil/common.h"
+#include "libavutil/mem.h"
 #include "libavutil/x86/asm.h"
 
 struct vf_priv_s {

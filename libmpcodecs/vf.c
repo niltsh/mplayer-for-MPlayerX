@@ -40,6 +40,7 @@
 #include "vf.h"
 
 #include "libvo/fastmemcpy.h"
+#include "libavutil/common.h"
 #include "libavutil/mem.h"
 
 extern const vf_info_t vf_info_1bpp;

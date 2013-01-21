@@ -34,6 +34,7 @@
 #include "libvo/fastmemcpy.h"
 
 #include "libavutil/avutil.h"
+#include "libavutil/common.h"
 
 /* Functions used by play to convert the input audio to the correct
    format */

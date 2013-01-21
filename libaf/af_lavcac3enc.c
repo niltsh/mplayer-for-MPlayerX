@@ -33,6 +33,7 @@
 #include "av_helpers.h"
 
 #include "libavcodec/avcodec.h"
+#include "libavutil/common.h"
 #include "libavutil/intreadwrite.h"
 
 #define AC3_MAX_CHANNELS            6

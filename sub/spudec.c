@@ -42,6 +42,7 @@
 #include "spudec.h"
 #include "vobsub.h"
 #include "libavutil/avutil.h"
+#include "libavutil/common.h"
 #include "libavutil/intreadwrite.h"
 #include "libswscale/swscale.h"
 

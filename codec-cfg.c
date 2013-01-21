@@ -54,6 +54,7 @@
 #include "help_mp.h"
 
 #include "libavutil/avutil.h"
+#include "libavutil/common.h"
 #include "libmpcodecs/img_format.h"
 #include "codec-cfg.h"
 

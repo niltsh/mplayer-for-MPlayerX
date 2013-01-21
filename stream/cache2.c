@@ -40,6 +40,7 @@
 #include <errno.h>
 
 #include "libavutil/avutil.h"
+#include "libavutil/common.h"
 #include "osdep/shmem.h"
 #include "osdep/timer.h"
 #if defined(__MINGW32__)

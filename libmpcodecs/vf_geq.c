@@ -33,6 +33,7 @@
 #include "vf.h"
 
 #include "libavcodec/avcodec.h"
+#include "libavutil/common.h"
 #include "libavutil/eval.h"
 
 struct vf_priv_s {
