@@ -476,33 +476,33 @@ static void ds_add_packet_internal(demux_stream_t *ds, demux_packet_t *dp)
 #ifdef CONFIG_FFMPEG
 static void allocate_parser(AVCodecContext **avctx, AVCodecParserContext **parser, unsigned format)
 {
-    enum CodecID codec_id = CODEC_ID_NONE;
+    enum CodecID codec_id = AV_CODEC_ID_NONE;
 
     init_avcodec();
 
     switch (format) {
     case 0x1600:
     case MKTAG('M', 'P', '4', 'A'):
-        codec_id = CODEC_ID_AAC;
+        codec_id = AV_CODEC_ID_AAC;
         break;
     case 0x1602:
     case MKTAG('M', 'P', '4', 'L'):
-        codec_id = CODEC_ID_AAC_LATM;
+        codec_id = AV_CODEC_ID_AAC_LATM;
         break;
     case 0x2000:
     case 0x332D6361:
     case 0x332D4341:
     case 0x20736D:
     case MKTAG('s', 'a', 'c', '3'):
-        codec_id = CODEC_ID_AC3;
+        codec_id = AV_CODEC_ID_AC3;
         break;
     case MKTAG('d', 'n', 'e', 't'):
         // DNET/byte-swapped AC-3 - there is no parser for that yet
-        //codec_id = CODEC_ID_DNET;
+        //codec_id = AV_CODEC_ID_DNET;
         break;
     case MKTAG('E', 'A', 'C', '3'):
     case MKTAG('e', 'c', '-', '3'):
-        codec_id = CODEC_ID_EAC3;
+        codec_id = AV_CODEC_ID_EAC3;
         break;
     case 0x2001:
     case 0x86:
@@ -510,13 +510,13 @@ static void allocate_parser(AVCodecContext **avctx, AVCodecParserContext **parse
     case MKTAG('d', 't', 's', ' '):
     case MKTAG('d', 't', 's', 'b'):
     case MKTAG('d', 't', 's', 'c'):
-        codec_id = CODEC_ID_DTS;
+        codec_id = AV_CODEC_ID_DTS;
         break;
     case MKTAG('f', 'L', 'a', 'C'):
-        codec_id = CODEC_ID_FLAC;
+        codec_id = AV_CODEC_ID_FLAC;
         break;
     case MKTAG('M', 'L', 'P', ' '):
-        codec_id = CODEC_ID_MLP;
+        codec_id = AV_CODEC_ID_MLP;
         break;
     case 0x55:
     case 0x5500736d:
@@ -524,19 +524,19 @@ static void allocate_parser(AVCodecContext **avctx, AVCodecParserContext **parse
     case MKTAG('.', 'm', 'p', '3'):
     case MKTAG('M', 'P', '3', ' '):
     case MKTAG('L', 'A', 'M', 'E'):
-        codec_id = CODEC_ID_MP3;
+        codec_id = AV_CODEC_ID_MP3;
         break;
     case 0x50:
     case 0x5000736d:
     case MKTAG('.', 'm', 'p', '2'):
     case MKTAG('.', 'm', 'p', '1'):
-        codec_id = CODEC_ID_MP2;
+        codec_id = AV_CODEC_ID_MP2;
         break;
     case MKTAG('T', 'R', 'H', 'D'):
-        codec_id = CODEC_ID_TRUEHD;
+        codec_id = AV_CODEC_ID_TRUEHD;
         break;
     }
-    if (codec_id != CODEC_ID_NONE) {
+    if (codec_id != AV_CODEC_ID_NONE) {
         *avctx = avcodec_alloc_context3(NULL);
         if (!*avctx)
             return;

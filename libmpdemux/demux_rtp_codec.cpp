@@ -140,7 +140,7 @@ void rtpCodecInitialize_video(demuxer_t* demuxer,
     int fooLen;
     const uint8_t* fooData;
     avcodec_register_all();
-    h264parserctx = av_parser_init(CODEC_ID_H264);
+    h264parserctx = av_parser_init(AV_CODEC_ID_H264);
     avcctx = avcodec_alloc_context3(NULL);
     // Pass the config to the parser
     h264parserctx->parser->parser_parse(h264parserctx, avcctx,

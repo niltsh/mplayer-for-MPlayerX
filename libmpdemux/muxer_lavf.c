@@ -155,7 +155,7 @@ static muxer_stream_t* lavf_new_stream(muxer_t *muxer, int type)
 	spriv->avstream->id = 1;
 
 	ctx = spriv->avstream->codec;
-	ctx->codec_id = CODEC_ID_NONE;
+	ctx->codec_id = AV_CODEC_ID_NONE;
 	switch(type)
 	{
 		case MUXER_TYPE_VIDEO:

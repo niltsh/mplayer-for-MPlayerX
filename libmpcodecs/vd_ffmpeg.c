@@ -247,12 +247,14 @@ static int init(sh_video_t *sh){
     if(use_slices && (lavc_codec->capabilities&CODEC_CAP_DRAW_HORIZ_BAND) && !do_vis_debug)
         ctx->do_slices=1;
 
-    if(lavc_codec->capabilities&CODEC_CAP_DR1 && !do_vis_debug && lavc_codec->id != CODEC_ID_INTERPLAY_VIDEO && lavc_codec->id != CODEC_ID_VP8)
+    if (lavc_codec->capabilities & CODEC_CAP_DR1 && !do_vis_debug &&
+        lavc_codec->id != AV_CODEC_ID_INTERPLAY_VIDEO &&
+        lavc_codec->id != AV_CODEC_ID_VP8)
         ctx->do_dr1=1;
     // TODO: fix and enable again. This currently causes issues when using filters
     // and seeking, usually failing with the "Ran out of numbered images" message,
     // but bugzilla #2118 might be related as well.
-    //ctx->nonref_dr = lavc_codec->id == CODEC_ID_H264;
+    //ctx->nonref_dr = lavc_codec->id == AV_CODEC_ID_H264;
     ctx->ip_count= ctx->b_count= 0;
 
     ctx->pic = avcodec_alloc_frame();
@@ -897,7 +899,7 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
 //--
 
     if(!got_picture) {
-	if (avctx->codec->id == CODEC_ID_H264 &&
+        if (avctx->codec->id == AV_CODEC_ID_H264 &&
 	    skip_frame <= AVDISCARD_DEFAULT)
 	    return &mpi_no_picture; // H.264 first field only
 	else

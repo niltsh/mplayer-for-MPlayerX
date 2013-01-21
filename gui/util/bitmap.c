@@ -121,7 +121,7 @@ static int pngRead(const char *fname, guiImage *img)
     }
 
     avcodec_register_all();
-    avcodec_open2(avctx, avcodec_find_decoder(CODEC_ID_PNG), NULL);
+    avcodec_open2(avctx, avcodec_find_decoder(AV_CODEC_ID_PNG), NULL);
 
     av_init_packet(&pkt);
     pkt.data = data;

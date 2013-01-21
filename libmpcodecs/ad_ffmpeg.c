@@ -64,7 +64,7 @@ static int setup_format(sh_audio_t *sh_audio, const AVCodecContext *lavc_context
         // If the decoder uses the wrong number of channels all is lost anyway.
         // sh_audio->channels=sh_audio->wf->nChannels;
 
-        if (lavc_context->codec_id == CODEC_ID_AAC &&
+        if (lavc_context->codec_id == AV_CODEC_ID_AAC &&
             samplerate == 2*sh_audio->wf->nSamplesPerSec) {
             broken_srate = 1;
         } else if (sh_audio->wf->nSamplesPerSec)

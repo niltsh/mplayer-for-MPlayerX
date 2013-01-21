@@ -84,7 +84,7 @@ int decode_avsub(struct sh_sub *sh, uint8_t **data, int *size,
                  double *pts, double *endpts)
 {
     AVCodecContext *ctx = sh->context;
-    enum CodecID cid = CODEC_ID_NONE;
+    enum CodecID cid = AV_CODEC_ID_NONE;
     int new_type = 0;
     int res;
     int got_sub;
@@ -93,11 +93,11 @@ int decode_avsub(struct sh_sub *sh, uint8_t **data, int *size,
 
     switch (sh->type) {
     case 'b':
-        cid = CODEC_ID_DVB_SUBTITLE; break;
+        cid = AV_CODEC_ID_DVB_SUBTITLE; break;
     case 'p':
-        cid = CODEC_ID_HDMV_PGS_SUBTITLE; break;
+        cid = AV_CODEC_ID_HDMV_PGS_SUBTITLE; break;
     case 'x':
-        cid = CODEC_ID_XSUB; break;
+        cid = AV_CODEC_ID_XSUB; break;
     }
 
     av_init_packet(&pkt);
