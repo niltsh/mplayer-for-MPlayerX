@@ -989,8 +989,8 @@ static char *sub_recode(ASS_Library *library, char *data, size_t size,
                 } else {
                     ass_msg(library, MSGL_WARN, "Error recoding file");
                     free(outbuf);
-		    outbuf = NULL;
-		    goto out;
+                    outbuf = NULL;
+                    goto out;
                 }
             } else if (clear)
                 break;
