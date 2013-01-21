@@ -3760,6 +3760,9 @@ if test "$_w32threads" = auto ; then
 fi
 test "$_w32threads" = yes && def_threads='#define HAVE_THREADS 1' && def_w32threads='#define HAVE_W32THREADS 1'
 echores "$_w32threads"
+fi #if win32; then
+
+
 echocheck "direct.h"
 _direct_h=no
 header_check direct.h && _direct_h=yes
@@ -3778,7 +3781,6 @@ else
   def_io_h='#define HAVE_IO_H 0'
 fi
 echores "$_io_h"
-fi #if win32; then
 
 
 if os2 ; then
