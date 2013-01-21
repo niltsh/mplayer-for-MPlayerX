@@ -3790,6 +3790,21 @@ fi
 echores "$_direct_h"
 
 
+if os2 ; then
+echocheck "os2threads"
+if test "$_pthreads" = yes ; then
+  res_comment="using pthread instead"
+  _os2threads=no
+fi
+if test "$_os2threads" = auto ; then
+  _os2threads=no
+  os2 && _os2threads=yes
+fi
+test "$_os2threads" = yes && def_threads='#define HAVE_THREADS 1' && def_os2threads='#define HAVE_OS2THREADS 1'
+echores "$_os2threads"
+fi #if os2
+
+
 echocheck "windows.h"
 windows_h=no
 def_windows_h='#define HAVE_WINDOWS_H 0'
@@ -3807,20 +3822,6 @@ else
 fi
 echores "$_io_h"
 
-
-if os2 ; then
-echocheck "os2threads"
-if test "$_pthreads" = yes ; then
-  res_comment="using pthread instead"
-  _os2threads=no
-fi
-if test "$_os2threads" = auto ; then
-  _os2threads=no
-  os2 && _os2threads=yes
-fi
-test "$_os2threads" = yes && def_threads='#define HAVE_THREADS 1' && def_os2threads='#define HAVE_OS2THREADS 1'
-echores "$_os2threads"
-fi #if os2
 
 echocheck "rpath"
 if test "$_rpath" = yes ; then
