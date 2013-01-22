@@ -388,7 +388,6 @@ NoPause:
 	  case 1:
 	  default: movie_aspect=-1;
 	 }
-	wsWindowClear( &guiApp.videoWindow );
 	if ( guiInfo.StreamType == STREAMTYPE_VCD ) uiEventHandling( evPlayVCD, 0 );
 	 else if ( guiInfo.StreamType == STREAMTYPE_DVD ) uiEventHandling( ivPlayDVD, 0 );
 	 else
