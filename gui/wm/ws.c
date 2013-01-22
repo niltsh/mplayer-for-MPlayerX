@@ -51,18 +51,6 @@
 #include <X11/extensions/xf86vmode.h>
 #endif
 
-/// Color byte orders and depths
-enum {
-    wsRGB32 = 1,
-    wsBGR32,
-    wsRGB24,
-    wsBGR24,
-    wsRGB16,
-    wsBGR16,
-    wsRGB15,
-    wsBGR15
-};
-
 #define MOUSEHIDE_DELAY 1000   // in milliseconds
 
 static wsWindow *mouse_win;
@@ -81,7 +69,6 @@ static int wsScreenDepth;
 static int wsRedMask;
 static int wsGreenMask;
 static int wsBlueMask;
-static int wsOutMask;
 static int wsNonNativeOrder;
 
 #define wsWLCount 5
@@ -183,35 +170,6 @@ static int wsGetScreenDepth(void)
     }
 
     return wsScreenDepth;
-}
-
-static int wsGetOutMask(void)
-{
-    if ((wsScreenDepth == 32) && (wsRedMask == 0xff0000) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0x0000ff))
-        return wsRGB32;
-
-    if ((wsScreenDepth == 32) && (wsRedMask == 0x0000ff) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0xff0000))
-        return wsBGR32;
-
-    if ((wsScreenDepth == 24) && (wsRedMask == 0xff0000) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0x0000ff))
-        return wsRGB24;
-
-    if ((wsScreenDepth == 24) && (wsRedMask == 0x0000ff) && (wsGreenMask == 0x00ff00) && (wsBlueMask == 0xff0000))
-        return wsBGR24;
-
-    if ((wsScreenDepth == 16) && (wsRedMask == 0xf800) && (wsGreenMask == 0x7e0) && (wsBlueMask == 0x1f))
-        return wsRGB16;
-
-    if ((wsScreenDepth == 16) && (wsRedMask == 0x1f) && (wsGreenMask == 0x7e0) && (wsBlueMask == 0xf800))
-        return wsBGR16;
-
-    if ((wsScreenDepth == 15) && (wsRedMask == 0x7c00) && (wsGreenMask == 0x3e0) && (wsBlueMask == 0x1f))
-        return wsRGB15;
-
-    if ((wsScreenDepth == 15) && (wsRedMask == 0x1f) && (wsGreenMask == 0x3e0) && (wsBlueMask == 0x7c00))
-        return wsBGR15;
-
-    return 0;
 }
 
 void wsInit(Display *display)
@@ -316,41 +274,22 @@ void wsInit(Display *display)
     }
 #endif
 
-    wsOutMask = wsGetOutMask();
-
-    switch (wsOutMask) {
-    case wsRGB32:
+    if (wsScreenDepth == 32 && wsRedMask == 0xff0000 && wsGreenMask == 0x00ff00 && wsBlueMask == 0x0000ff)
         out_pix_fmt = PIX_FMT_RGB32;
-        break;
-
-    case wsBGR32:
+    else if (wsScreenDepth == 32 && wsRedMask == 0x0000ff && wsGreenMask == 0x00ff00 && wsBlueMask == 0xff0000)
         out_pix_fmt = PIX_FMT_BGR32;
-        break;
-
-    case wsRGB24:
+    else if (wsScreenDepth == 24 && wsRedMask == 0xff0000 && wsGreenMask == 0x00ff00 && wsBlueMask == 0x0000ff)
         out_pix_fmt = PIX_FMT_RGB24;
-        break;
-
-    case wsBGR24:
+    else if (wsScreenDepth == 24 && wsRedMask == 0x0000ff && wsGreenMask == 0x00ff00 && wsBlueMask == 0xff0000)
         out_pix_fmt = PIX_FMT_BGR24;
-        break;
-
-    case wsRGB16:
+    else if (wsScreenDepth == 16 && wsRedMask == 0xf800 && wsGreenMask == 0x7e0 && wsBlueMask == 0x1f)
         out_pix_fmt = PIX_FMT_RGB565;
-        break;
-
-    case wsBGR16:
+    else if (wsScreenDepth == 16 && wsRedMask == 0x1f && wsGreenMask == 0x7e0 && wsBlueMask == 0xf800)
         out_pix_fmt = PIX_FMT_BGR565;
-        break;
-
-    case wsRGB15:
+    else if (wsScreenDepth == 15 && wsRedMask == 0x7c00 && wsGreenMask == 0x3e0 && wsBlueMask == 0x1f)
         out_pix_fmt = PIX_FMT_RGB555;
-        break;
-
-    case wsBGR15:
+    else if (wsScreenDepth == 15 && wsRedMask == 0x1f && wsGreenMask == 0x3e0 && wsBlueMask == 0x7c00)
         out_pix_fmt = PIX_FMT_BGR555;
-        break;
-    }
 }
 
 void wsDone(void)
@@ -1129,32 +1068,35 @@ void wsWindowBackground(wsWindow *win, int r, int g, int b)
 {
     int color = 0;
 
-    switch (wsOutMask) {
-    case wsRGB32:
-    case wsRGB24:
+    switch (out_pix_fmt) {
+    case PIX_FMT_RGB32:
+    case PIX_FMT_RGB24:
         color = (r << 16) + (g << 8) + b;
         break;
 
-    case wsBGR32:
-    case wsBGR24:
+    case PIX_FMT_BGR32:
+    case PIX_FMT_BGR24:
         color = (b << 16) + (g << 8) + r;
         break;
 
-    case wsRGB16:
+    case PIX_FMT_RGB565:
         color = pack_rgb16(r, g, b);
         break;
 
-    case wsBGR16:
+    case PIX_FMT_BGR565:
         color = pack_rgb16(b, g, r);
         break;
 
-    case wsRGB15:
+    case PIX_FMT_RGB555:
         color = pack_rgb15(r, g, b);
         break;
 
-    case wsBGR15:
+    case PIX_FMT_BGR555:
         color = pack_rgb15(b, g, r);
         break;
+
+    default:
+        ;
     }
 
     XSetWindowBackground(wsDisplay, win->WindowID, color);
