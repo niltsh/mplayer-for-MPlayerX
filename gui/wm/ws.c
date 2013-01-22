@@ -78,22 +78,6 @@ static wsWindow *wsWindowList[wsWLCount];
 static int wsUseXShm   = True;
 static int wsUseXShape = True;
 
-/* --- */
-
-#define PACK_RGB16(r, g, b, pixel) \
-    pixel   = (r >> 3); \
-    pixel <<= 6; \
-    pixel  |= (g >> 2); \
-    pixel <<= 5; \
-    pixel  |= (b >> 3)
-
-#define PACK_RGB15(r, g, b, pixel) \
-    pixel   = (r >> 3); \
-    pixel <<= 5; \
-    pixel  |= (g >> 3); \
-    pixel <<= 5; \
-    pixel  |= (b >> 3)
-
 static enum AVPixelFormat out_pix_fmt = PIX_FMT_NONE;
 
 /* --- */
@@ -1085,6 +1069,50 @@ void wsWindowIcon(Display *display, Window Win, guiIcon_t *icon)
 // ----------------------------------------------------------------------------------------------
 //    Set window background to 'color'.
 // ----------------------------------------------------------------------------------------------
+/**
+ * @brief Pack color components @a r, @a g and @a b into 15 bits.
+ *
+ * @param r red (0 - 255)
+ * @param g green (0 - 255)
+ * @param b blue (0 - 255)
+ *
+ * @return pixel suitable for a RGB 15 bits color format
+ */
+static int pack_rgb15(int r, int g, int b)
+{
+    int pixel;
+
+    pixel   = (r >> 3);
+    pixel <<= 5;
+    pixel  |= (g >> 3);
+    pixel <<= 5;
+    pixel  |= (b >> 3);
+
+    return pixel;
+}
+
+/**
+ * @brief Pack color components @a r, @a g and @a b into 16 bits.
+ *
+ * @param r red (0 - 255)
+ * @param g green (0 - 255)
+ * @param b blue (0 - 255)
+ *
+ * @return pixel suitable for a RGB 16 bits color format
+ */
+static int pack_rgb16(int r, int g, int b)
+{
+    int pixel;
+
+    pixel   = (r >> 3);
+    pixel <<= 6;
+    pixel  |= (g >> 2);
+    pixel <<= 5;
+    pixel  |= (b >> 3);
+
+    return pixel;
+}
+
 void wsWindowBackground(wsWindow *win, int r, int g, int b)
 {
     int color = 0;
@@ -1101,19 +1129,19 @@ void wsWindowBackground(wsWindow *win, int r, int g, int b)
         break;
 
     case wsRGB16:
-        PACK_RGB16(r, g, b, color);
+        color = pack_rgb16(r, g, b);
         break;
 
     case wsBGR16:
-        PACK_RGB16(b, g, r, color);
+        color = pack_rgb16(b, g, r);
         break;
 
     case wsRGB15:
-        PACK_RGB15(r, g, b, color);
+        color = pack_rgb15(r, g, b);
         break;
 
     case wsBGR15:
-        PACK_RGB15(b, g, r, color);
+        color = pack_rgb15(b, g, r);
         break;
     }
 
