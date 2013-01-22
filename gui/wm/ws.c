@@ -51,6 +51,18 @@
 #include <X11/extensions/xf86vmode.h>
 #endif
 
+/// Color byte orders and depths
+enum {
+    wsRGB32 = 1,
+    wsBGR32,
+    wsRGB24,
+    wsBGR24,
+    wsRGB16,
+    wsBGR16,
+    wsRGB15,
+    wsBGR15
+};
+
 #define MOUSEHIDE_DELAY 1000   // in milliseconds
 
 static wsWindow *mouse_win;

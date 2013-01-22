@@ -65,15 +65,6 @@
 #define  wsWaitMap      64
 #define  wsAspect       128
 
-#define wsRGB32 1
-#define wsBGR32 2
-#define wsRGB24 3
-#define wsBGR24 4
-#define wsRGB16 5
-#define wsBGR16 6
-#define wsRGB15 7
-#define wsBGR15 8
-
 #define wsNone                   0
 #define wsWindowVisible          1
 #define wsWindowPartialVisible   2
