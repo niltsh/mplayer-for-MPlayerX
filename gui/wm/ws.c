@@ -80,17 +80,19 @@ static int wsUseXShape = True;
 
 /* --- */
 
-#define PACK_RGB16(r, g, b, pixel) pixel = (b >> 3); \
+#define PACK_RGB16(r, g, b, pixel) \
+    pixel   = (r >> 3); \
     pixel <<= 6; \
     pixel  |= (g >> 2); \
     pixel <<= 5; \
-    pixel  |= (r >> 3)
+    pixel  |= (b >> 3)
 
-#define PACK_RGB15(r, g, b, pixel) pixel = (b >> 3); \
+#define PACK_RGB15(r, g, b, pixel) \
+    pixel   = (r >> 3); \
     pixel <<= 5; \
     pixel  |= (g >> 3); \
     pixel <<= 5; \
-    pixel  |= (r >> 3)
+    pixel  |= (b >> 3)
 
 static enum AVPixelFormat out_pix_fmt = PIX_FMT_NONE;
 
@@ -1099,19 +1101,19 @@ void wsWindowBackground(wsWindow *win, int r, int g, int b)
         break;
 
     case wsRGB16:
-        PACK_RGB16(b, g, r, color);
-        break;
-
-    case wsBGR16:
         PACK_RGB16(r, g, b, color);
         break;
 
+    case wsBGR16:
+        PACK_RGB16(b, g, r, color);
+        break;
+
     case wsRGB15:
-        PACK_RGB15(b, g, r, color);
+        PACK_RGB15(r, g, b, color);
         break;
 
     case wsBGR15:
-        PACK_RGB15(r, g, b, color);
+        PACK_RGB15(b, g, r, color);
         break;
     }
 
