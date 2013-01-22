@@ -48,16 +48,16 @@ typedef struct urlItem {
     struct urlItem *next;
 } urlItem;
 
-/// @name list manager (playlist, URL list)
+/// @name List manager (playlist, URL list)
 void *listMgr(int cmd, void *data);
 
-/// @name char pointer list operations
+/// @name Char pointer list operations
 //@{
 void listRepl(char ***list, const char *search, const char *replace);
 void listSet(char ***list, const char *entry);
 //@}
 
-/// @name high-level list operations
+/// @name High-level list operations
 //@{
 int add_to_gui_playlist(const char *what, int how);
 //@}

@@ -25,20 +25,20 @@
 #define MPLAYER_GUI_GUI_H
 
 //@{
-/// boolean symbolic constant
+/// Boolean symbolic constant
 #if !defined(True) && !defined(False)
 #define True  1
 #define False 0
 #endif
 //@}
 
-/// a pseudo stream type indicating not to change the current one
+/// A pseudo stream type indicating not to change the current one
 #define SAME_STREAMTYPE (STREAMTYPE_DUMMY - 1)
 
 /// StreamTypes that are permitted in a playlist
 #define isPlaylistStreamtype (guiInfo.StreamType == STREAMTYPE_FILE || guiInfo.StreamType == STREAMTYPE_STREAM)
 
-/// check whether x/y is inside the rectangle given by top x/y and bottom x/y
+/// Check whether @a x/y is inside the rectangle given by @a top @a x/y and @a bottom @a x/y.
 #define isInside(x, y, tx, ty, bx, by) ((x) > (tx) && (y) > (ty) && (x) < (bx) && (y) < (by))
 
 #endif /* MPLAYER_GUI_GUI_H */

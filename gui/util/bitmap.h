@@ -19,10 +19,7 @@
 #ifndef MPLAYER_GUI_BITMAP_H
 #define MPLAYER_GUI_BITMAP_H
 
-/**
- * @def GUI_TRANSPARENT
- * transparent color (opaque fuchsia/magenta)
- */
+/// Transparent color (opaque fuchsia/magenta)
 #define GUI_TRANSPARENT 0xffff00ff
 #define ALPHA_OPAQUE    0xff000000
 

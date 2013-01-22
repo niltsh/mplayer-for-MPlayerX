@@ -26,10 +26,7 @@
 
 #include <stdlib.h>
 
-/**
- * @def nfree(p)
- * Free @a p and set it to NULL.
- */
+/// Free @a p and set it to NULL.
 #define nfree(p) do { free(p); p = NULL; } while (0)
 
 #endif /* MPLAYER_GUI_MEM_H */
