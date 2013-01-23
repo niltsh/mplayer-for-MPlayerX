@@ -3785,7 +3785,8 @@ header_check direct.h && _direct_h=yes
 if [ $_direct_h = yes ]; then
   def_direct_h='#define HAVE_DIRECT_H 1'
 else
-  def_direct_h='#define HAVE_DIRECT_H 0'
+  # libdvdcss checks this via #ifdef, so we need #undef here.
+  def_direct_h='#undef HAVE_DIRECT_H'
 fi
 echores "$_direct_h"
 
