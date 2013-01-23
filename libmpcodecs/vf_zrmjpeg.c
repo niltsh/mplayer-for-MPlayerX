@@ -65,7 +65,7 @@
 		"vf_zrmjpeg: " __VA_ARGS__)
 
 /// The get_pixels() routine to use. The real routine comes from dsputil
-static void (*get_pixels)(DCTELEM *restrict block, const uint8_t *pixels, int line_size);
+static void (*get_pixels)(int16_t *restrict block, const uint8_t *pixels, int line_size);
 
 /* Begin excessive code duplication ************************************/
 /* Code coming from mpegvideo.c and mjpeg.c in ../libavcodec ***********/
@@ -196,7 +196,7 @@ static inline void encode_dc(MpegEncContext *s, int val,
  *
  * This routine is a duplicate of encode_block in mjpeg.c
  */
-static void encode_block(MpegEncContext *s, DCTELEM *block, int n) {
+static void encode_block(MpegEncContext *s, int16_t *block, int n) {
 	int mant, nbits, code, i, j;
 	int component, dc, run, last_index, val;
 	MJpegContext *m = s->mjpeg_ctx;
@@ -267,7 +267,7 @@ static void encode_block(MpegEncContext *s, DCTELEM *block, int n) {
  * The max and min level, which are clipped to, are stored in
  * s->min_qcoeff and s->max_qcoeff respectively.
  */
-static inline void clip_coeffs(MpegEncContext *s, DCTELEM *block,
+static inline void clip_coeffs(MpegEncContext *s, int16_t *block,
 		int last_index) {
 	int i;
 	const int maxlevel= s->max_qcoeff;
