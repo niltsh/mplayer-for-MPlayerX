@@ -91,7 +91,6 @@ void uiPlay(void)
     gui(GUI_SET_STATE, (void *)GUI_PLAY);
     uiVideoRender = False;
     wsWindowBackground(&guiApp.videoWindow, 0, 0, 0);
-    wsWindowClear(&guiApp.videoWindow);
 }
 
 /**
@@ -209,7 +208,6 @@ void uiChangeSkin(char *name)
     if (!guiInfo.Playing) {
         uiVideoRender = True;
         wsWindowBackground(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
-        wsWindowClear(&guiApp.videoWindow);
         wsWindowRedraw(&guiApp.videoWindow);
     }
 

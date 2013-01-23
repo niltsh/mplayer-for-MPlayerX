@@ -172,7 +172,6 @@ void wsWindowResize(wsWindow *win, int w, int h);
 void wsWindowIconify(wsWindow *win);
 void wsWindowRaiseTop(Display *display, Window Win);
 void wsWindowBackground(wsWindow *win, int r, int g, int b);
-void wsWindowClear(wsWindow *win);
 void wsWindowVisibility(wsWindow *win, int vis);
 void wsWindowLayer(Display *display, Window Win, Bool fullscreen);
 void wsWindowFullscreen(wsWindow *win);

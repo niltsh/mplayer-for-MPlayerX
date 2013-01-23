@@ -1099,15 +1099,6 @@ void wsWindowBackground(wsWindow *win, int r, int g, int b)
     }
 
     XSetWindowBackground(wsDisplay, win->WindowID, color);
-}
-
-/**
- * @brief Clear the entire area in a window.
- *
- * @param win pointer to a ws window structure
- */
-void wsWindowClear(wsWindow *win)
-{
     XClearWindow(wsDisplay, win->WindowID);
 }
 

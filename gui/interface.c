@@ -203,7 +203,6 @@ void guiInit(void)
     guiApp.videoWindow.DandDHandler = uiDandDHandler;
 
     wsWindowBackground(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
-    wsWindowClear(&guiApp.videoWindow);
 
     if (guiApp.video.Bitmap.Image)
         wsImageConvert(&guiApp.videoWindow, guiApp.video.Bitmap.Image);
@@ -873,7 +872,6 @@ int gui(int what, void *data)
             wsEvents();
             uiVideoRender = True;
             wsWindowBackground(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
-            wsWindowClear(&guiApp.videoWindow);
             wsWindowRedraw(&guiApp.videoWindow);
             wsMouseVisibility(&guiApp.videoWindow, wsShowMouseCursor);
         }
