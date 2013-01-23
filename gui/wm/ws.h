@@ -188,7 +188,7 @@ void wsMouseVisibility(wsWindow *win, int vis);
 // Image handling
 // ----------------------------------------------------------------------------------------------
 void wsImageCreate(wsWindow *win, int w, int h);
-void wsImageConvert(wsWindow *win, unsigned char *img);
+void wsImageRender(wsWindow *win, unsigned char *img);
 void wsImageDraw(wsWindow *win);
 void wsImageResize(wsWindow *win, int w, int h);
 void wsImageDestroy(wsWindow *win);

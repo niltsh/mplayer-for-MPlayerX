@@ -64,7 +64,7 @@ static void uiMenuDraw( void )
     }
    oldMenuItem=menuItem;
 /* --- */
-   wsImageConvert( &guiApp.menuWindow,menuDrawBuffer );
+   wsImageRender( &guiApp.menuWindow,menuDrawBuffer );
    menuRender=False;
   }
  wsImageDraw( &guiApp.menuWindow );

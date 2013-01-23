@@ -197,7 +197,7 @@ void uiChangeSkin(char *name)
     }
 
     if (guiApp.video.Bitmap.Image)
-        wsImageConvert(&guiApp.videoWindow, guiApp.video.Bitmap.Image);
+        wsImageRender(&guiApp.videoWindow, guiApp.video.Bitmap.Image);
 
     if (!guiInfo.Playing) {
         uiVideoRender = True;

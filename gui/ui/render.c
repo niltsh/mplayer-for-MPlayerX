@@ -416,5 +416,5 @@ void RenderAll(wsWindow *window, guiItem *Items, int nrItems, char *db)
         }
     }
 
-    wsImageConvert(window, db);
+    wsImageRender(window, db);
 }

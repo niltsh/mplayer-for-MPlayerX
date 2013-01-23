@@ -203,7 +203,7 @@ void guiInit(void)
     guiApp.videoWindow.DandDHandler = uiDandDHandler;
 
     if (guiApp.video.Bitmap.Image)
-        wsImageConvert(&guiApp.videoWindow, guiApp.video.Bitmap.Image);
+        wsImageRender(&guiApp.videoWindow, guiApp.video.Bitmap.Image);
 
     btnModify(evSetVolume, guiInfo.Volume);
     btnModify(evSetBalance, guiInfo.Balance);

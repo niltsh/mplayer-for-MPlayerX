@@ -1378,7 +1378,7 @@ void wsImageDestroy(wsWindow *win)
     win->xImage = NULL;
 }
 
-void wsImageConvert(wsWindow *win, unsigned char *img)
+void wsImageRender(wsWindow *win, unsigned char *img)
 {
     static struct SwsContext *sws_ctx;
     const uint8_t *src[4] = { img, NULL, NULL, NULL };

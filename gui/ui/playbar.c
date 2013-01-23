@@ -110,7 +110,7 @@ static void uiPlaybarDraw( void )
 
    fast_memcpy( playbarDrawBuffer,guiApp.playbar.Bitmap.Image,guiApp.playbar.Bitmap.ImageSize );
    RenderAll( &guiApp.playbarWindow,guiApp.playbarItems,guiApp.IndexOfPlaybarItems,playbarDrawBuffer );
-   wsImageConvert( &guiApp.playbarWindow,playbarDrawBuffer );
+   wsImageRender( &guiApp.playbarWindow,playbarDrawBuffer );
   }
  wsImageDraw( &guiApp.playbarWindow );
 }
