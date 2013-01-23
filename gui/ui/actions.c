@@ -62,11 +62,6 @@ void uiFullScreen(void)
 
     if (guiApp.menuIsPresent)
         wsWindowLayer(wsDisplay, guiApp.menuWindow.WindowID, guiApp.videoWindow.isFullScreen);
-
-    if (guiInfo.Playing)
-        wsWindowBackground(&guiApp.videoWindow, 0, 0, 0);
-    else
-        wsWindowBackground(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
 }
 
 /**
@@ -90,7 +85,6 @@ void uiPlay(void)
 
     gui(GUI_SET_STATE, (void *)GUI_PLAY);
     uiVideoRender = False;
-    wsWindowBackground(&guiApp.videoWindow, 0, 0, 0);
 }
 
 /**
@@ -207,7 +201,6 @@ void uiChangeSkin(char *name)
 
     if (!guiInfo.Playing) {
         uiVideoRender = True;
-        wsWindowBackground(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
         wsWindowRedraw(&guiApp.videoWindow);
     }
 

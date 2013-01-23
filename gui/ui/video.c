@@ -47,6 +47,7 @@ void uiVideoDraw( void )
 
  if ( uiVideoRender && guiApp.videoWindow.State == wsWindowExpose )
   {
+   wsWindowBackground(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
    if ( guiApp.video.Bitmap.Image ) wsImageDraw( &guiApp.videoWindow );
   }
  guiApp.videoWindow.State=0;
