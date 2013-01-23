@@ -827,13 +827,13 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
     win->AtomsProtocols[2] = win->AtomRolle;
 /* --- */
 
-    win->WindowAttrib.border_pixel     = WhitePixel(wsDisplay, wsScreen);
-    win->WindowAttrib.colormap   = XCreateColormap(wsDisplay, wsRootWin, win->VisualInfo.visual, AllocNone);
-    win->WindowAttrib.event_mask = StructureNotifyMask | FocusChangeMask |
-                                   ExposureMask | PropertyChangeMask |
-                                   EnterWindowMask | LeaveWindowMask |
-                                   VisibilityChangeMask |
-                                   KeyPressMask | KeyReleaseMask;
+    win->WindowAttrib.border_pixel = WhitePixel(wsDisplay, wsScreen);
+    win->WindowAttrib.colormap     = XCreateColormap(wsDisplay, wsRootWin, win->VisualInfo.visual, AllocNone);
+    win->WindowAttrib.event_mask   = StructureNotifyMask | FocusChangeMask |
+                                     ExposureMask | PropertyChangeMask |
+                                     EnterWindowMask | LeaveWindowMask |
+                                     VisibilityChangeMask |
+                                     KeyPressMask | KeyReleaseMask;
 
     if ((c & wsHandleMouseButton))
         win->WindowAttrib.event_mask |= ButtonPressMask | ButtonReleaseMask;
