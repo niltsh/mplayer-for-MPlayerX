@@ -84,7 +84,6 @@ void uiPlay(void)
     }
 
     gui(GUI_SET_STATE, (void *)GUI_PLAY);
-    uiVideoRender = False;
 }
 
 /**
@@ -199,10 +198,8 @@ void uiChangeSkin(char *name)
     if (guiApp.video.Bitmap.Image)
         wsImageRender(&guiApp.videoWindow, guiApp.video.Bitmap.Image);
 
-    if (!guiInfo.Playing) {
-        uiVideoRender = True;
+    if (!guiInfo.Playing)
         wsWindowRedraw(&guiApp.videoWindow);
-    }
 
     /* reload playbar */
 
