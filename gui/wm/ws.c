@@ -827,7 +827,6 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
     win->AtomsProtocols[2] = win->AtomRolle;
 /* --- */
 
-    win->WindowAttrib.background_pixel = BlackPixel(wsDisplay, wsScreen);
     win->WindowAttrib.border_pixel     = WhitePixel(wsDisplay, wsScreen);
     win->WindowAttrib.colormap   = XCreateColormap(wsDisplay, wsRootWin, win->VisualInfo.visual, AllocNone);
     win->WindowAttrib.event_mask = StructureNotifyMask | FocusChangeMask |
@@ -848,7 +847,7 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
     if (p & wsOverredirect)
         win->WindowAttrib.override_redirect = True;
 
-    win->WindowMask = CWBackPixel | CWBorderPixel |
+    win->WindowMask = CWBorderPixel |
                       CWColormap | CWEventMask | CWCursor |
                       CWOverrideRedirect;
 
