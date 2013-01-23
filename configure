@@ -2596,12 +2596,10 @@ EOF
 fi
 if test "$_big_endian" = yes ; then
   _byte_order='big-endian'
-  def_words_endian='#define WORDS_BIGENDIAN 1'
   def_bigendian='#define HAVE_BIGENDIAN 1'
   def_av_bigendian='#define AV_HAVE_BIGENDIAN 1'
 else
   _byte_order='little-endian'
-  def_words_endian='#undef WORDS_BIGENDIAN'
   def_bigendian='#define HAVE_BIGENDIAN 0'
   def_av_bigendian='#define AV_HAVE_BIGENDIAN 0'
 fi
@@ -8679,7 +8677,6 @@ $def_armthumb
 $def_bigendian
 $def_ebx_available
 $def_vfp_args
-$def_words_endian
 $(ff_config_enable "$arch_all" "$arch" "#" "ARCH")
 $(ff_config_enable "$subarch_all" "$subarch" "#" "ARCH")
 $(ff_config_enable "$cpuexts_all" "$cpuexts" "#" "HAVE")
