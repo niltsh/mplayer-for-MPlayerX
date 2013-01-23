@@ -52,6 +52,7 @@ static const struct AVCodecTag mp_wav_tags[] = {
     { AV_CODEC_ID_DSICINAUDIO,       MKTAG('D', 'C', 'I', 'A') },
     { AV_CODEC_ID_EAC3,              MKTAG('E', 'A', 'C', '3') },
 #if LIBAVUTIL_VERSION_MICRO >= 100
+    { AV_CODEC_ID_EVRC,              MKTAG('s', 'e', 'v', 'c') },
     { AV_CODEC_ID_FFWAVESYNTH,       MKTAG('F', 'F', 'W', 'S') },
 #endif
     { AV_CODEC_ID_G723_1,            MKTAG('7', '2', '3', '1') },
