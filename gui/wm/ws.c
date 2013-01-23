@@ -1033,11 +1033,11 @@ static int pack_rgb15(int r, int g, int b)
 {
     int pixel;
 
-    pixel   = (r >> 3);
+    pixel   = r >> 3;
     pixel <<= 5;
-    pixel  |= (g >> 3);
+    pixel  |= g >> 3;
     pixel <<= 5;
-    pixel  |= (b >> 3);
+    pixel  |= b >> 3;
 
     return pixel;
 }
@@ -1055,11 +1055,11 @@ static int pack_rgb16(int r, int g, int b)
 {
     int pixel;
 
-    pixel   = (r >> 3);
+    pixel   = r >> 3;
     pixel <<= 6;
-    pixel  |= (g >> 2);
+    pixel  |= g >> 2;
     pixel <<= 5;
-    pixel  |= (b >> 3);
+    pixel  |= b >> 3;
 
     return pixel;
 }
