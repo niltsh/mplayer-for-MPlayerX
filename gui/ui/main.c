@@ -519,7 +519,6 @@ rollerhandled:
            {
             case itPLMButton:
                  wsWindowMove( &guiApp.mainWindow,True,RX - abs( sx ),RY - abs( sy ) );
-                 uiMainRender=False;
                  break;
             case itPRMButton:
                  uiMenuMouseHandle( RX,RY );
