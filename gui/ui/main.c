@@ -125,7 +125,7 @@ static void MediumPrepare (int type)
 
 static unsigned last_redraw_time = 0;
 
-void uiEventHandling( int msg,float param )
+void uiMainEvent( int msg,float param )
 {
  int iparam = (int)param, osd;
  mixer_t *mixer = mpctx_get_mixer(guiInfo.mpcontext);
@@ -172,21 +172,21 @@ void uiEventHandling( int msg,float param )
 #ifdef CONFIG_DVDREAD
    case ivSetDVDSubtitle:
         dvdsub_id=iparam;
-        uiEventHandling( ivPlayDVD, 0 );
+        uiMainEvent( ivPlayDVD, 0 );
         break;
    case ivSetDVDAudio:
         audio_id=iparam;
-        uiEventHandling( ivPlayDVD, 0 );
+        uiMainEvent( ivPlayDVD, 0 );
         break;
    case ivSetDVDChapter:
         guiInfo.Chapter=iparam;
-        uiEventHandling( ivPlayDVD, 0 );
+        uiMainEvent( ivPlayDVD, 0 );
         break;
    case ivSetDVDTitle:
         guiInfo.Track=iparam;
         guiInfo.Chapter=1;
         guiInfo.Angle=1;
-        uiEventHandling( ivPlayDVD, 0 );
+        uiMainEvent( ivPlayDVD, 0 );
         break;
    case evPlayDVD:
         guiInfo.Chapter=1;
@@ -308,7 +308,7 @@ NoPause:
         mixer_setbalance( mixer,(guiInfo.Balance - 50.0 ) / 50.0 );   // transform 0..100 to -1..1
         osd = osd_level;
         osd_level = 0;
-        uiEventHandling(evSetVolume, guiInfo.Volume);
+        uiMainEvent(evSetVolume, guiInfo.Volume);
         osd_level = osd;
         if ( osd_level )
          {
@@ -389,8 +389,8 @@ NoPause:
 	  case 1:
 	  default: movie_aspect=-1;
 	 }
-	if ( guiInfo.StreamType == STREAMTYPE_VCD ) uiEventHandling( evPlayVCD, 0 );
-	 else if ( guiInfo.StreamType == STREAMTYPE_DVD ) uiEventHandling( ivPlayDVD, 0 );
+	if ( guiInfo.StreamType == STREAMTYPE_VCD ) uiMainEvent( evPlayVCD, 0 );
+	 else if ( guiInfo.StreamType == STREAMTYPE_DVD ) uiMainEvent( ivPlayDVD, 0 );
 	 else
 	 guiInfo.NewPlay=GUI_FILE_NEW;
 	break;
@@ -411,10 +411,10 @@ NoPause:
         break;
 /* system events */
    case evNone:
-        mp_msg( MSGT_GPLAYER,MSGL_DBG2,"[main] uiEventHandling: evNone\n" );
+        mp_msg( MSGT_GPLAYER,MSGL_DBG2,"[main] uiMainEvent: evNone\n" );
         break;
    default:
-        mp_msg( MSGT_GPLAYER,MSGL_DBG2,"[main] uiEventHandling: unknown event %d, param %.2f\n", msg, param );
+        mp_msg( MSGT_GPLAYER,MSGL_DBG2,"[main] uiMainEvent: unknown event %d, param %.2f\n", msg, param );
         break;
   }
 }
@@ -479,16 +479,16 @@ void uiMainMouse( int Button,int X,int Y,int RX,int RY )
             case itPotmeter:
             case itHPotmeter:
                  btnModify( item->message,(float)( X - item->x ) / item->width * 100.0f );
-		 uiEventHandling( item->message,item->value );
+		 uiMainEvent( item->message,item->value );
                  value=item->value;
                  break;
 	    case itVPotmeter:
                  btnModify( item->message, ( 1. - (float)( Y - item->y ) / item->height) * 100.0f );
-		 uiEventHandling( item->message,item->value );
+		 uiMainEvent( item->message,item->value );
                  value=item->value;
                  break;
            }
-          uiEventHandling( item->message,value );
+          uiMainEvent( item->message,value );
           itemtype=0;
           break;
 
@@ -507,7 +507,7 @@ rollerhandled:
              {
               item->value+=value;
               btnModify( item->message,item->value );
-              uiEventHandling( item->message,item->value );
+              uiMainEvent( item->message,item->value );
              }
            }
           break;
@@ -534,7 +534,7 @@ rollerhandled:
 potihandled:
                  if ( item->value > 100.0f ) item->value=100.0f;
                  if ( item->value < 0.0f ) item->value=0.0f;
-                 uiEventHandling( item->message,item->value );
+                 uiMainEvent( item->message,item->value );
                  break;
            }
           break;
@@ -578,13 +578,13 @@ void uiMainKey( int KeyCode,int Type,int Key )
       case wsEscape:
     	    if ( guiInfo.VideoWindow && guiInfo.Playing && guiApp.videoWindow.isFullScreen )
 	     {
-	      uiEventHandling( evNormalSize,0 );
+	      uiMainEvent( evNormalSize,0 );
 	      return;
 	     }
       default:          vo_x11_putkey( Key ); return;
      }
    }
- if ( msg != evNone ) uiEventHandling( msg,0 );
+ if ( msg != evNone ) uiMainEvent( msg,0 );
 }
 
 /* this will be used to handle drag & drop files */
@@ -659,8 +659,8 @@ void uiMainDND(int num,char** files)
 
   if (file) {
     uiSetFile( NULL,file,STREAMTYPE_FILE );
-    if ( guiInfo.Playing == GUI_PLAY ) uiEventHandling( evStop,0 );
-    uiEventHandling( evPlay,0 );
+    if ( guiInfo.Playing == GUI_PLAY ) uiMainEvent( evStop,0 );
+    uiMainEvent( evPlay,0 );
   }
   if (subtitles) {
     nfree(guiInfo.SubtitleFilename);

@@ -31,7 +31,7 @@ extern int             sx, sy;
 void uiInit( void * disp );
 
 void uiMainDraw( void );
-void uiEventHandling( int msg, float param );
+void uiMainEvent( int msg, float param );
 void uiMainMouse( int Button, int X, int Y, int RX, int RY );
 void uiMainKey( int KeyCode, int Type, int Key );
 void uiMainDND(int num, char** files);

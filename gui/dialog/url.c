@@ -105,7 +105,7 @@ static void on_Button_pressed( GtkButton * button,gpointer user_data )
      uiSetFile( NULL,str,STREAMTYPE_STREAM ); guiInfo.NewPlay=GUI_FILE_NEW;
      listMgr(PLAYLIST_DELETE, 0);
      add_to_gui_playlist(str, PLAYLIST_ITEM_APPEND);
-     uiEventHandling( evPlay,0 );
+     uiMainEvent( evPlay,0 );
     }
   }
  HideURLDialogBox();

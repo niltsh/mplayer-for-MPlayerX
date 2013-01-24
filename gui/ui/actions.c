@@ -335,7 +335,7 @@ void uiCurr(void)
     }
 
     if (guiInfo.Playing == GUI_PLAY)
-        uiEventHandling(evPlay, 0);
+        uiMainEvent(evPlay, 0);
 }
 
 /**
@@ -397,10 +397,10 @@ void uiPrev(void)
     }
 
     if (stop)
-        uiEventHandling(evStop, 0);
+        uiMainEvent(evStop, 0);
 
     if (guiInfo.Playing == GUI_PLAY)
-        uiEventHandling(evPlay, 0);
+        uiMainEvent(evPlay, 0);
     else if (!stop && !prev && unset)
         uiUnsetMedia(True);
 }
@@ -457,10 +457,10 @@ void uiNext(void)
     }
 
     if (stop)
-        uiEventHandling(evStop, 0);
+        uiMainEvent(evStop, 0);
 
     if (guiInfo.Playing == GUI_PLAY)
-        uiEventHandling(evPlay, 0);
+        uiMainEvent(evPlay, 0);
     else if (!stop && !next && unset)
         uiUnsetMedia(True);
 }
