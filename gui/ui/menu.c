@@ -94,6 +94,36 @@ void uiMenuMouse( int RX,int RY )
  wsWindowRedraw( &guiApp.menuWindow );
 }
 
+void uiMenuInit( void )
+{
+
+ if ( menuIsInitialized || !guiApp.menuIsPresent || !guiApp.menu.Bitmap.Image ) return;
+
+ guiApp.menu.x=0;
+ guiApp.menu.y=0;
+
+ if ( ( menuDrawBuffer = calloc( 1,guiApp.menu.Bitmap.ImageSize ) ) == NULL )
+  {
+    mp_msg( MSGT_GPLAYER,MSGL_DBG2,MSGTR_NEMFMR );
+   gtkMessageBox( GTK_MB_FATAL,MSGTR_NEMFMR );
+   return;
+  }
+
+ wsWindowCreate( &guiApp.menuWindow,
+ guiApp.menu.x,guiApp.menu.y,guiApp.menu.width,guiApp.menu.height,
+ wsOverredirect|wsHideFrame|wsMaxSize|wsMinSize|wsHideWindow,wsShowMouseCursor|wsHandleMouseButton|wsHandleMouseMove,"MPlayer menu" );
+
+ wsWindowShape( &guiApp.menuWindow,guiApp.menu.Mask.Image );
+
+ mp_msg( MSGT_GPLAYER,MSGL_DBG2,"[menu] menuWindow ID: 0x%x\n",(int)guiApp.menuWindow.WindowID );
+
+ menuIsInitialized=True;
+ guiApp.menuWindow.DrawHandler=uiMenuDraw;
+// guiApp.menuWindow.MouseHandler=uiMenuMouse;
+// guiApp.menuWindow.KeyHandler=uiMainKey;
+ uiMenuRender=True; wsWindowRedraw( &guiApp.menuWindow );
+}
+
 void uiMenuShow( int mx,int my )
 {
  int x,y;
@@ -141,34 +171,4 @@ void uiMenuHide( int mx,int my,int w )
    {
     uiEventHandling( guiApp.menuItems[i].message,(float)w );
    }
-}
-
-void uiMenuInit( void )
-{
-
- if ( menuIsInitialized || !guiApp.menuIsPresent || !guiApp.menu.Bitmap.Image ) return;
-
- guiApp.menu.x=0;
- guiApp.menu.y=0;
-
- if ( ( menuDrawBuffer = calloc( 1,guiApp.menu.Bitmap.ImageSize ) ) == NULL )
-  {
-    mp_msg( MSGT_GPLAYER,MSGL_DBG2,MSGTR_NEMFMR );
-   gtkMessageBox( GTK_MB_FATAL,MSGTR_NEMFMR );
-   return;
-  }
-
- wsWindowCreate( &guiApp.menuWindow,
- guiApp.menu.x,guiApp.menu.y,guiApp.menu.width,guiApp.menu.height,
- wsOverredirect|wsHideFrame|wsMaxSize|wsMinSize|wsHideWindow,wsShowMouseCursor|wsHandleMouseButton|wsHandleMouseMove,"MPlayer menu" );
-
- wsWindowShape( &guiApp.menuWindow,guiApp.menu.Mask.Image );
-
- mp_msg( MSGT_GPLAYER,MSGL_DBG2,"[menu] menuWindow ID: 0x%x\n",(int)guiApp.menuWindow.WindowID );
-
- menuIsInitialized=True;
- guiApp.menuWindow.DrawHandler=uiMenuDraw;
-// guiApp.menuWindow.MouseHandler=uiMenuMouse;
-// guiApp.menuWindow.KeyHandler=uiMainKey;
- uiMenuRender=True; wsWindowRedraw( &guiApp.menuWindow );
 }
