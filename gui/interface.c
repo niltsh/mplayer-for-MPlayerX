@@ -254,8 +254,6 @@ void guiInit(void)
 void guiDone(void)
 {
     if (initialized) {
-        uiMainRender = False;
-
         if (gui_save_pos) {
             gui_main_pos_x  = guiApp.mainWindow.X;
             gui_main_pos_y  = guiApp.mainWindow.Y;
@@ -269,6 +267,9 @@ void guiDone(void)
         ass_bottom_margin = gtkASS.bottom_margin;
 
         cfg_write();
+
+        uiVideoRender = False;
+        uiMainRender  = False;
 
         // NOTE TO MYSELF: destroy the windows
 
