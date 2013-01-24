@@ -167,7 +167,7 @@ void uiMenuInit( void )
  mp_msg( MSGT_GPLAYER,MSGL_DBG2,"[menu] menuWindow ID: 0x%x\n",(int)guiApp.menuWindow.WindowID );
 
  menuIsInitialized=True;
- guiApp.menuWindow.ReDraw=uiMenuDraw;
+ guiApp.menuWindow.DrawHandler=uiMenuDraw;
 // guiApp.menuWindow.MouseHandler=uiMenuMouseHandle;
 // guiApp.menuWindow.KeyHandler=uiMainKeyHandle;
  uiMenuRender=True; wsWindowRedraw( &guiApp.menuWindow );

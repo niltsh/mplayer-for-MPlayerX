@@ -85,7 +85,7 @@
 #define wsPVisible   5
 #define wsRolled     6
 
-typedef   void (*wsTReDraw)(void);
+typedef   void (*wsTDrawHandler)(void);
 typedef   void (*wsTKeyHandler)(int KeyCode, int Type, int Key);
 typedef   void (*wsTMouseHandler)(int Button, int X, int Y, int RX, int RY);
 typedef   void (*wsTDNDHandler)(int num, char **str);
@@ -108,7 +108,7 @@ typedef struct {
     int Focused;
     int Rolled;
 
-    wsTReDraw ReDraw;
+    wsTDrawHandler DrawHandler;
     wsTKeyHandler KeyHandler;
     wsTMouseHandler MouseHandler;
     wsTDNDHandler DNDHandler;

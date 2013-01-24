@@ -434,8 +434,8 @@ void wsEvent(XEvent *event)
 expose:
         wsWindowList[l]->State = i;
 
-        if (wsWindowList[l]->ReDraw)
-            wsWindowList[l]->ReDraw();
+        if (wsWindowList[l]->DrawHandler)
+            wsWindowList[l]->DrawHandler();
 
         break;
 
@@ -443,8 +443,8 @@ expose:
 
         wsWindowList[l]->State = wsWindowExpose;
 
-        if ((wsWindowList[l]->ReDraw) && (!event->xexpose.count))
-            wsWindowList[l]->ReDraw();
+        if ((wsWindowList[l]->DrawHandler) && (!event->xexpose.count))
+            wsWindowList[l]->DrawHandler();
 
         break;
 
@@ -923,7 +923,7 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
     XFlush(wsDisplay);
     XSync(wsDisplay, False);
 
-    win->ReDraw       = NULL;
+    win->DrawHandler  = NULL;
     win->MouseHandler = NULL;
     win->KeyHandler   = NULL;
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] window is created. ( %s ).\n", label);
@@ -938,7 +938,7 @@ void wsWindowDestroy(wsWindow *win)
     if (l != -1)
         wsWindowList[l] = NULL;
 
-    win->ReDraw       = NULL;
+    win->DrawHandler  = NULL;
     win->MouseHandler = NULL;
     win->KeyHandler   = NULL;
     win->DNDHandler   = NULL;
@@ -1310,9 +1310,9 @@ void wsWindowLayer(Display *display, Window Win, Bool fullscreen)
 // ----------------------------------------------------------------------------------------------
 void wsWindowRedraw(wsWindow *win)
 {
-    if (win->ReDraw) {
+    if (win->DrawHandler) {
         win->State = wsWindowExpose;
-        win->ReDraw();
+        win->DrawHandler();
         XFlush(wsDisplay);
     }
 }
