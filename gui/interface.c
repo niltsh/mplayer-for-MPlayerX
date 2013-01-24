@@ -195,12 +195,12 @@ void guiInit(void)
     guiApp.mainWindow.DrawHandler  = uiMainDraw;
     guiApp.mainWindow.MouseHandler = uiMainMouse;
     guiApp.mainWindow.KeyHandler   = uiMainKey;
-    guiApp.mainWindow.DNDHandler   = uiDND;
+    guiApp.mainWindow.DNDHandler   = uiMainDND;
 
     guiApp.videoWindow.DrawHandler  = uiVideoDraw;
     guiApp.videoWindow.MouseHandler = uiVideoMouse;
     guiApp.videoWindow.KeyHandler   = uiMainKey;
-    guiApp.videoWindow.DNDHandler   = uiDND;
+    guiApp.videoWindow.DNDHandler   = uiMainDND;
 
     if (guiApp.video.Bitmap.Image)
         wsImageRender(&guiApp.videoWindow, guiApp.video.Bitmap.Image);

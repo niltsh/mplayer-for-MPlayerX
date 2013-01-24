@@ -588,7 +588,7 @@ void uiMainKey( int KeyCode,int Type,int Key )
 }
 
 /* this will be used to handle drag & drop files */
-void uiDND(int num,char** files)
+void uiMainDND(int num,char** files)
 {
   struct stat buf;
   int f = 0;

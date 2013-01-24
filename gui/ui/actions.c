@@ -228,7 +228,7 @@ void uiChangeSkin(char *name)
     guiApp.mainWindow.DrawHandler  = uiMainDraw;
     guiApp.mainWindow.MouseHandler = uiMainMouse;
     guiApp.mainWindow.KeyHandler   = uiMainKey;
-    guiApp.mainWindow.DNDHandler   = uiDND;
+    guiApp.mainWindow.DNDHandler   = uiMainDND;
 
     wsXDNDMakeAwareness(&guiApp.mainWindow);
 
