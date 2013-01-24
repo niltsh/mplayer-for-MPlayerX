@@ -266,8 +266,6 @@ void guiDone(void)
 
         cfg_write();
 
-        uiMainRender  = False;
-
         // NOTE TO MYSELF: destroy the windows
 
         wsDone();

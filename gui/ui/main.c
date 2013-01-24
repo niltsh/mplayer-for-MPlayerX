@@ -66,7 +66,7 @@
 unsigned int GetTimerMS( void );
 
 unsigned char * mainDrawBuffer = NULL;
-int             uiMainRender = True;
+static int      uiMainRender = True;
 
 int             uiMainAutoPlay = False;
 
