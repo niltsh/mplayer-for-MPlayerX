@@ -40,8 +40,8 @@ void uiVideoDraw( void );
 void uiVideoMouse( int Button, int X, int Y, int RX, int RY );
 
 void uiMenuInit( void );
-void uiHideMenu( int mx, int my, int w );
-void uiShowMenu( int mx, int my );
+void uiMenuHide( int mx, int my, int w );
+void uiMenuShow( int mx, int my );
 void uiMenuMouse( int RX, int RY );
 
 void uiPlaybarInit( void );

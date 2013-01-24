@@ -94,7 +94,7 @@ void uiMenuMouse( int RX,int RY )
  wsWindowRedraw( &guiApp.menuWindow );
 }
 
-void uiShowMenu( int mx,int my )
+void uiMenuShow( int mx,int my )
 {
  int x,y;
 
@@ -117,7 +117,7 @@ void uiShowMenu( int mx,int my )
  wsWindowRedraw( &guiApp.menuWindow );
 }
 
-void uiHideMenu( int mx,int my,int w )
+void uiMenuHide( int mx,int my,int w )
 {
  int x,y,i=menuItem;
 

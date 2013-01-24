@@ -64,11 +64,11 @@ void uiVideoMouse( int Button,int X,int Y,int RX,int RY )
           break;
    case wsPMMouseButton:
           gtkShow( ivHidePopUpMenu,NULL );
-          uiShowMenu( RX,RY );
+          uiMenuShow( RX,RY );
           msButton=wsPMMouseButton;
           break;
    case wsRMMouseButton:
-          uiHideMenu( RX,RY,1 );
+          uiMenuHide( RX,RY,1 );
           msButton=0;
           break;
 /* --- */

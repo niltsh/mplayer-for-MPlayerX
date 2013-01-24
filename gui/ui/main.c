@@ -323,7 +323,7 @@ NoPause:
         /*if (guiApp.menuIsPresent)   NOTE TO MYSELF: Uncomment only after mouse
          {                                            pointer and cursor keys work
           gtkShow( ivHidePopUpMenu,NULL );            with this menu from skin as
-          uiShowMenu( 0,0 );                          they do with normal menus.
+          uiMenuShow( 0,0 );                          they do with normal menus.
          }
         else*/ gtkShow( ivShowPopUpMenu,NULL );
         break;
@@ -438,11 +438,11 @@ void uiMainMouse( int Button,int X,int Y,int RX,int RY )
   {
    case wsPMMouseButton:
 	  gtkShow( ivHidePopUpMenu,NULL );
-          uiShowMenu( RX,RY );
+          uiMenuShow( RX,RY );
           itemtype=itPRMButton;
           break;
    case wsRMMouseButton:
-          uiHideMenu( RX,RY,0 );
+          uiMenuHide( RX,RY,0 );
           break;
 
    case wsPLMouseButton:
