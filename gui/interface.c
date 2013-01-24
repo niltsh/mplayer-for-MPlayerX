@@ -799,7 +799,7 @@ int gui(int what, void *data)
 
         guiInfo.sh_video = NULL;
 
-        uiEventHandling(ivRedraw, 1);
+        uiEventHandling(ivRedraw, True);
 
         if (guiInfo.Playing) {
             if (!guiInfo.PlaylistNext) {
