@@ -938,6 +938,11 @@ void wsWindowDestroy(wsWindow *win)
     if (l != -1)
         wsWindowList[l] = NULL;
 
+    win->ReDraw       = NULL;
+    win->MouseHandler = NULL;
+    win->KeyHandler   = NULL;
+    win->DandDHandler = NULL;
+
     if (win->wsCursor != None) {
         XFreeCursor(wsDisplay, win->wsCursor);
         win->wsCursor = None;
@@ -948,9 +953,6 @@ void wsWindowDestroy(wsWindow *win)
     wsImageDestroy(win);
     XDestroyWindow(wsDisplay, win->WindowID);
 #if 0
-    win->ReDraw       = NULL;
-    win->MouseHandler = NULL;
-    win->KeyHandler   = NULL;
     win->Visible      = wsNo;
     win->Focused      = wsNo;
     win->Mapped       = wsNo;
