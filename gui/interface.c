@@ -192,12 +192,12 @@ void guiInit(void)
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] mainWindow ID: 0x%x\n", (int)guiApp.mainWindow.WindowID);
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] videoWindow ID: 0x%x\n", (int)guiApp.videoWindow.WindowID);
 
-    guiApp.mainWindow.DrawHandler  = (void *)uiMainDraw;
+    guiApp.mainWindow.DrawHandler  = uiMainDraw;
     guiApp.mainWindow.MouseHandler = uiMainMouseHandle;
     guiApp.mainWindow.KeyHandler   = uiMainKeyHandle;
     guiApp.mainWindow.DNDHandler   = uiDNDHandler;
 
-    guiApp.videoWindow.DrawHandler  = (void *)uiVideoDraw;
+    guiApp.videoWindow.DrawHandler  = uiVideoDraw;
     guiApp.videoWindow.MouseHandler = uiVideoMouseHandle;
     guiApp.videoWindow.KeyHandler   = uiMainKeyHandle;
     guiApp.videoWindow.DNDHandler   = uiDNDHandler;

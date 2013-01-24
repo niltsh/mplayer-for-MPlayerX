@@ -225,7 +225,7 @@ void uiChangeSkin(char *name)
     wsWindowShape(&guiApp.mainWindow, guiApp.main.Mask.Image);
     wsWindowIcon(wsDisplay, guiApp.mainWindow.WindowID, &guiIcon);
 
-    guiApp.mainWindow.DrawHandler  = (void *)uiMainDraw;
+    guiApp.mainWindow.DrawHandler  = uiMainDraw;
     guiApp.mainWindow.MouseHandler = uiMainMouseHandle;
     guiApp.mainWindow.KeyHandler   = uiMainKeyHandle;
     guiApp.mainWindow.DNDHandler   = uiDNDHandler;

@@ -263,7 +263,7 @@ void uiPlaybarInit( void )
 
  wsWindowShape( &guiApp.playbarWindow,guiApp.playbar.Mask.Image );
 
- guiApp.playbarWindow.DrawHandler=(void *)uiPlaybarDraw;
+ guiApp.playbarWindow.DrawHandler=uiPlaybarDraw;
  guiApp.playbarWindow.MouseHandler=uiPlaybarMouseHandle;
  guiApp.playbarWindow.KeyHandler=uiMainKeyHandle;
 
