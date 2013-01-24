@@ -28,8 +28,6 @@ extern int             uiPlaybarFade;
 
 extern int             sx, sy;
 
-void uiInit( void * disp );
-
 void uiMainDraw( void );
 void uiMainEvent( int msg, float param );
 void uiMainMouse( int Button, int X, int Y, int RX, int RY );
