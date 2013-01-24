@@ -1111,8 +1111,8 @@ void wsWindowBackground(wsWindow *win, int r, int g, int b)
     if (r == -1 && g == -1 && b == -1)
         XSetWindowBackgroundPixmap(wsDisplay, win->WindowID, None);
     else {
-    XSetWindowBackground(wsDisplay, win->WindowID, color);
-    XClearWindow(wsDisplay, win->WindowID);
+        XSetWindowBackground(wsDisplay, win->WindowID, color);
+        XClearWindow(wsDisplay, win->WindowID);
     }
 }
 
