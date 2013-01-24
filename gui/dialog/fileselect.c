@@ -541,7 +541,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
    item=item->next;
   }
  if ( i ) fsTopList_items=g_list_prepend( fsTopList_items,(gchar *)get_current_dir_name_utf8() );
- if ( uiMainAutoPlay ) { uiMainAutoPlay=False; uiMainEvent( evPlay,0 ); }
+ if ( uiLoadPlay ) { uiLoadPlay=False; uiMainEvent( evPlay,0 ); }
   else gui( GUI_SET_STATE,(void *) GUI_STOP );
 }
 

@@ -68,7 +68,7 @@ unsigned int GetTimerMS( void );
 unsigned char * mainDrawBuffer = NULL;
 static int      uiMainRender = True;
 
-int             uiMainAutoPlay = False;
+int             uiLoadPlay = False;
 
 int             mainVisible = True;
 
@@ -255,7 +255,7 @@ NoPause:
 	break;
 
    case evLoadPlay:
-        uiMainAutoPlay=True;
+        uiLoadPlay=True;
 //	guiInfo.StreamType=STREAMTYPE_FILE;
    case evLoad:
         gtkShow( evLoad,NULL );

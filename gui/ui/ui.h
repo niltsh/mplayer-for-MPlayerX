@@ -23,7 +23,7 @@ extern unsigned char * mainDrawBuffer;
 extern unsigned char * menuDrawBuffer;
 extern int             mainVisible;
 
-extern int             uiMainAutoPlay;
+extern int             uiLoadPlay;
 extern int             uiPlaybarFade;
 
 extern int             sx, sy;
