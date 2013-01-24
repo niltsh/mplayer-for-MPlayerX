@@ -32,7 +32,7 @@
 #include "gui/dialog/dialog.h"
 
 unsigned char * menuDrawBuffer = NULL;
-int             menuRender = True;
+static int      uiMenuRender = True;
 int             menuItem = -1;
 int             oldMenuItem = -1;
 int             menuX,menuY;
@@ -45,9 +45,9 @@ static void uiMenuDraw( void )
  int             x,y,tmp;
 
  if ( !guiApp.menuIsPresent || !guiApp.menu.Bitmap.Image ) return;
- if ( !menuRender && !guiApp.menuWindow.Visible ) return;
+ if ( !uiMenuRender && !guiApp.menuWindow.Visible ) return;
 
- if ( menuRender || menuItem != oldMenuItem )
+ if ( uiMenuRender || menuItem != oldMenuItem )
   {
    memcpy( menuDrawBuffer,guiApp.menu.Bitmap.Image,guiApp.menu.Bitmap.ImageSize );
 /* --- */
@@ -65,7 +65,7 @@ static void uiMenuDraw( void )
    oldMenuItem=menuItem;
 /* --- */
    wsImageRender( &guiApp.menuWindow,menuDrawBuffer );
-   menuRender=False;
+   uiMenuRender=False;
   }
  wsImageDraw( &guiApp.menuWindow );
 }
@@ -112,7 +112,7 @@ void uiShowMenu( int mx,int my )
  wsWindowMove( &guiApp.menuWindow,True,x,y );
  wsWindowRaiseTop( wsDisplay,guiApp.menuWindow.WindowID );
  wsWindowLayer( wsDisplay,guiApp.menuWindow.WindowID,1 );
- menuRender=True;
+ uiMenuRender=True;
  wsWindowVisibility( &guiApp.menuWindow,wsShowWindow );
  wsWindowRedraw( &guiApp.menuWindow );
 }
@@ -170,5 +170,5 @@ void uiMenuInit( void )
  guiApp.menuWindow.ReDraw=uiMenuDraw;
 // guiApp.menuWindow.MouseHandler=uiMenuMouseHandle;
 // guiApp.menuWindow.KeyHandler=uiMainKeyHandle;
- menuRender=True; wsWindowRedraw( &guiApp.menuWindow );
+ uiMenuRender=True; wsWindowRedraw( &guiApp.menuWindow );
 }
