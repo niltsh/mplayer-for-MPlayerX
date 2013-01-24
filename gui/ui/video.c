@@ -30,7 +30,6 @@
 #include "gui/interface.h"
 #include "gui/dialog/dialog.h"
 
-int             uiVideoRender = False;
 int             videoVisible = 0;
 
 void uiVideoDraw( void )
@@ -41,11 +40,10 @@ void uiVideoDraw( void )
  if ( guiApp.videoWindow.State == wsWindowFocusOut && metacity_hack != 3 ) videoVisible--;
 
  if ( !guiApp.videoWindow.Mapped ||
-      guiApp.videoWindow.Visible == wsWindowNotVisible ) return;
+      guiApp.videoWindow.Visible == wsWindowNotVisible ||
+      guiInfo.Playing) return;
 
- if ( guiInfo.Playing ) uiVideoRender=False;
-
- if ( uiVideoRender && guiApp.videoWindow.State == wsWindowExpose )
+ if ( guiApp.videoWindow.State == wsWindowExpose )
   {
    wsWindowBackground(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
    if ( guiApp.video.Bitmap.Image ) wsImageDraw( &guiApp.videoWindow );

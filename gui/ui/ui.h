@@ -19,7 +19,6 @@
 #ifndef MPLAYER_GUI_UI_H
 #define MPLAYER_GUI_UI_H
 
-extern int             uiVideoRender;
 extern int             uiMainRender;
 
 extern unsigned char * mainDrawBuffer;

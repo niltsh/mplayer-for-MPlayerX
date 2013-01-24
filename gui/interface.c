@@ -229,8 +229,6 @@ void guiInit(void)
 
     guiInfo.Playing = GUI_STOP;
 
-    uiVideoRender = True;
-
     playlist = listMgr(PLAYLIST_ITEM_GET_CURR, 0);
 
     if (playlist && !filename) {
@@ -268,7 +266,6 @@ void guiDone(void)
 
         cfg_write();
 
-        uiVideoRender = False;
         uiMainRender  = False;
 
         // NOTE TO MYSELF: destroy the windows
@@ -874,7 +871,6 @@ int gui(int what, void *data)
             gui(GUI_SET_STATE, (void *)GUI_STOP);
 
             wsEvents();
-            uiVideoRender = True;
             wsWindowRedraw(&guiApp.videoWindow);
             wsMouseVisibility(&guiApp.videoWindow, wsShowMouseCursor);
         }
