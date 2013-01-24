@@ -1019,9 +1019,6 @@ void wsWindowIcon(Display *display, Window Win, guiIcon_t *icon)
     }
 }
 
-// ----------------------------------------------------------------------------------------------
-//    Set window background to 'color'.
-// ----------------------------------------------------------------------------------------------
 /**
  * @brief Pack color components @a r, @a g and @a b into 15 bits.
  *
@@ -1066,6 +1063,16 @@ static int pack_rgb16(int r, int g, int b)
     return pixel;
 }
 
+/**
+ * @brief Set and fill, or unset a window background.
+ *
+ * @param win pointer to a ws window structure
+ * @param r red (0 - 255, or -1)
+ * @param g green (0 - 255, or -1)
+ * @param b blue (0 - 255, or -1)
+ *
+ * @note Passing -1 for @a r, @a g and @a b unsets the background.
+ */
 void wsWindowBackground(wsWindow *win, int r, int g, int b)
 {
     int color = 0;
@@ -1101,8 +1108,12 @@ void wsWindowBackground(wsWindow *win, int r, int g, int b)
         ;
     }
 
+    if (r == -1 && g == -1 && b == -1)
+        XSetWindowBackgroundPixmap(wsDisplay, win->WindowID, None);
+    else {
     XSetWindowBackground(wsDisplay, win->WindowID, color);
     XClearWindow(wsDisplay, win->WindowID);
+    }
 }
 
 // ----------------------------------------------------------------------------------------------

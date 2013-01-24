@@ -787,6 +787,8 @@ int gui(int what, void *data)
         if (guiWinID >= 0)
             wsWindowMove(&guiApp.mainWindow, True, 0, guiInfo.VideoHeight);
 
+        wsWindowBackground(&guiApp.videoWindow, -1, -1, -1);
+
         break;
 
     case GUI_HANDLE_X_EVENT:
