@@ -594,7 +594,7 @@ buttonreleased:
 
     case SelectionNotify:
 
-        /* Handle DandD */
+        /* Handle drag & drop */
         wsXDNDProcessSelection(wsWindowList[l], event);
         break;
     }
@@ -941,7 +941,7 @@ void wsWindowDestroy(wsWindow *win)
     win->ReDraw       = NULL;
     win->MouseHandler = NULL;
     win->KeyHandler   = NULL;
-    win->DandDHandler = NULL;
+    win->DNDHandler   = NULL;
 
     if (win->wsCursor != None) {
         XFreeCursor(wsDisplay, win->wsCursor);

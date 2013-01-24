@@ -34,7 +34,7 @@ void uiMainDraw( void );
 void uiEventHandling( int msg, float param );
 void uiMainMouseHandle( int Button, int X, int Y, int RX, int RY );
 void uiMainKeyHandle( int KeyCode, int Type, int Key );
-void uiDandDHandler(int num, char** files);
+void uiDNDHandler(int num, char** files);
 
 void uiVideoDraw( void );
 void uiVideoMouseHandle( int Button, int X, int Y, int RX, int RY );

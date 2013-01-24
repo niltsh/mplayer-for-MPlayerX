@@ -587,8 +587,8 @@ void uiMainKeyHandle( int KeyCode,int Type,int Key )
  if ( msg != evNone ) uiEventHandling( msg,0 );
 }
 
-/* this will be used to handle Drag&Drop files */
-void uiDandDHandler(int num,char** files)
+/* this will be used to handle drag & drop files */
+void uiDNDHandler(int num,char** files)
 {
   struct stat buf;
   int f = 0;

@@ -141,8 +141,8 @@ wsXDNDProcessSelection(wsWindow* win, XEvent *event)
       }
 
       /* Handle the files */
-      if(win->DandDHandler){
-	win->DandDHandler(num,files);
+      if(win->DNDHandler){
+	win->DNDHandler(num,files);
       }
     }
 

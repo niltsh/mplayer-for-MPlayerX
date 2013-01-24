@@ -111,7 +111,7 @@ typedef struct {
     wsTReDraw ReDraw;
     wsTKeyHandler KeyHandler;
     wsTMouseHandler MouseHandler;
-    wsTDNDHandler DandDHandler;
+    wsTDNDHandler DNDHandler;
 
     int Alt;
     int Shift;
