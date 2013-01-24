@@ -50,7 +50,6 @@ void uiVideoDraw( void )
    wsWindowBackground(&guiApp.videoWindow, guiApp.video.R, guiApp.video.G, guiApp.video.B);
    if ( guiApp.video.Bitmap.Image ) wsImageDraw( &guiApp.videoWindow );
   }
- guiApp.videoWindow.State=0;
 }
 
 void uiVideoMouseHandle( int Button,int X,int Y,int RX,int RY )
