@@ -86,8 +86,8 @@
 #define wsRolled     6
 
 typedef   void (*wsTDrawHandler)(void);
-typedef   void (*wsTKeyHandler)(int KeyCode, int Type, int Key);
 typedef   void (*wsTMouseHandler)(int Button, int X, int Y, int RX, int RY);
+typedef   void (*wsTKeyHandler)(int KeyCode, int Type, int Key);
 typedef   void (*wsTDNDHandler)(int num, char **str);
 
 typedef struct {
@@ -109,8 +109,8 @@ typedef struct {
     int Rolled;
 
     wsTDrawHandler DrawHandler;
-    wsTKeyHandler KeyHandler;
     wsTMouseHandler MouseHandler;
+    wsTKeyHandler KeyHandler;
     wsTDNDHandler DNDHandler;
 
     int Alt;
