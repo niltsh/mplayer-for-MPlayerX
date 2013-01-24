@@ -50,7 +50,7 @@ void uiVideoDraw( void )
   }
 }
 
-void uiVideoMouseHandle( int Button,int X,int Y,int RX,int RY )
+void uiVideoMouse( int Button,int X,int Y,int RX,int RY )
 {
  static int mplVideoMoved = 0;
  static int msButton = 0;
@@ -89,7 +89,7 @@ void uiVideoMouseHandle( int Button,int X,int Y,int RX,int RY )
                     }
                    break;
             case wsPMMouseButton:
-                   uiMenuMouseHandle( RX,RY );
+                   uiMenuMouse( RX,RY );
                    break;
 	    default: uiPlaybarShow( Y ); break;
            }

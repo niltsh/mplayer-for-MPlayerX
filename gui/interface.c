@@ -193,14 +193,14 @@ void guiInit(void)
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] videoWindow ID: 0x%x\n", (int)guiApp.videoWindow.WindowID);
 
     guiApp.mainWindow.DrawHandler  = uiMainDraw;
-    guiApp.mainWindow.MouseHandler = uiMainMouseHandle;
-    guiApp.mainWindow.KeyHandler   = uiMainKeyHandle;
-    guiApp.mainWindow.DNDHandler   = uiDNDHandler;
+    guiApp.mainWindow.MouseHandler = uiMainMouse;
+    guiApp.mainWindow.KeyHandler   = uiMainKey;
+    guiApp.mainWindow.DNDHandler   = uiDND;
 
     guiApp.videoWindow.DrawHandler  = uiVideoDraw;
-    guiApp.videoWindow.MouseHandler = uiVideoMouseHandle;
-    guiApp.videoWindow.KeyHandler   = uiMainKeyHandle;
-    guiApp.videoWindow.DNDHandler   = uiDNDHandler;
+    guiApp.videoWindow.MouseHandler = uiVideoMouse;
+    guiApp.videoWindow.KeyHandler   = uiMainKey;
+    guiApp.videoWindow.DNDHandler   = uiDND;
 
     if (guiApp.video.Bitmap.Image)
         wsImageRender(&guiApp.videoWindow, guiApp.video.Bitmap.Image);

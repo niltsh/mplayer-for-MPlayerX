@@ -32,17 +32,17 @@ void uiInit( void * disp );
 
 void uiMainDraw( void );
 void uiEventHandling( int msg, float param );
-void uiMainMouseHandle( int Button, int X, int Y, int RX, int RY );
-void uiMainKeyHandle( int KeyCode, int Type, int Key );
-void uiDNDHandler(int num, char** files);
+void uiMainMouse( int Button, int X, int Y, int RX, int RY );
+void uiMainKey( int KeyCode, int Type, int Key );
+void uiDND(int num, char** files);
 
 void uiVideoDraw( void );
-void uiVideoMouseHandle( int Button, int X, int Y, int RX, int RY );
+void uiVideoMouse( int Button, int X, int Y, int RX, int RY );
 
 void uiMenuInit( void );
 void uiHideMenu( int mx, int my, int w );
 void uiShowMenu( int mx, int my );
-void uiMenuMouseHandle( int RX, int RY );
+void uiMenuMouse( int RX, int RY );
 
 void uiPlaybarInit( void );
 void uiPlaybarShow( int y );

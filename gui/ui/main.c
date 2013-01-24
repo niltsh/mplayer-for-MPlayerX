@@ -419,7 +419,7 @@ NoPause:
   }
 }
 
-void uiMainMouseHandle( int Button,int X,int Y,int RX,int RY )
+void uiMainMouse( int Button,int X,int Y,int RX,int RY )
 {
  static int     itemtype = 0;
         int     i;
@@ -521,7 +521,7 @@ rollerhandled:
                  wsWindowMove( &guiApp.mainWindow,True,RX - abs( sx ),RY - abs( sy ) );
                  break;
             case itPRMButton:
-                 uiMenuMouseHandle( RX,RY );
+                 uiMenuMouse( RX,RY );
                  break;
             case itPotmeter:
                  item->value=(float)( X - item->x ) / item->width * 100.0f;
@@ -541,7 +541,7 @@ potihandled:
   }
 }
 
-void uiMainKeyHandle( int KeyCode,int Type,int Key )
+void uiMainKey( int KeyCode,int Type,int Key )
 {
  int msg = evNone;
 
@@ -588,7 +588,7 @@ void uiMainKeyHandle( int KeyCode,int Type,int Key )
 }
 
 /* this will be used to handle drag & drop files */
-void uiDNDHandler(int num,char** files)
+void uiDND(int num,char** files)
 {
   struct stat buf;
   int f = 0;

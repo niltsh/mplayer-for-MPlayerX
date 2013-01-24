@@ -115,7 +115,7 @@ static void uiPlaybarDraw( void )
  wsImageDraw( &guiApp.playbarWindow );
 }
 
-static void uiPlaybarMouseHandle( int Button, int X, int Y, int RX, int RY )
+static void uiPlaybarMouse( int Button, int X, int Y, int RX, int RY )
 {
  static int     itemtype = 0;
         int     i;
@@ -211,7 +211,7 @@ rollerhandled:
 	switch ( itemtype )
 	 {
 	  case itPRMButton:
-	       uiMenuMouseHandle( RX,RY );
+	       uiMenuMouse( RX,RY );
 	       break;
 	  case itPotmeter:
 	       item->value=(float)( X - item->x ) / item->width * 100.0f;
@@ -264,8 +264,8 @@ void uiPlaybarInit( void )
  wsWindowShape( &guiApp.playbarWindow,guiApp.playbar.Mask.Image );
 
  guiApp.playbarWindow.DrawHandler=uiPlaybarDraw;
- guiApp.playbarWindow.MouseHandler=uiPlaybarMouseHandle;
- guiApp.playbarWindow.KeyHandler=uiMainKeyHandle;
+ guiApp.playbarWindow.MouseHandler=uiPlaybarMouse;
+ guiApp.playbarWindow.KeyHandler=uiMainKey;
 
  playbarLength=guiApp.videoWindow.Height;
 }

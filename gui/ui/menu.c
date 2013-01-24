@@ -70,7 +70,7 @@ static void uiMenuDraw( void )
  wsImageDraw( &guiApp.menuWindow );
 }
 
-void uiMenuMouseHandle( int RX,int RY )
+void uiMenuMouse( int RX,int RY )
 {
  int x,y,i;
 
@@ -168,7 +168,7 @@ void uiMenuInit( void )
 
  menuIsInitialized=True;
  guiApp.menuWindow.DrawHandler=uiMenuDraw;
-// guiApp.menuWindow.MouseHandler=uiMenuMouseHandle;
-// guiApp.menuWindow.KeyHandler=uiMainKeyHandle;
+// guiApp.menuWindow.MouseHandler=uiMenuMouse;
+// guiApp.menuWindow.KeyHandler=uiMainKey;
  uiMenuRender=True; wsWindowRedraw( &guiApp.menuWindow );
 }
