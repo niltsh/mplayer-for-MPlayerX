@@ -294,6 +294,7 @@ void wsInit(Display *display)
 
 void wsDone(void)
 {
+    // NOTE TO MYSELF: uninit wsInit stuff?
     //XCloseDisplay(wsDisplay);
 }
 

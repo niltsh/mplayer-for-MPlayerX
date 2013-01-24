@@ -269,6 +269,9 @@ void guiDone(void)
         ass_bottom_margin = gtkASS.bottom_margin;
 
         cfg_write();
+
+        // NOTE TO MYSELF: destroy the windows
+
         wsDone();
     }
 

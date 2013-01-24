@@ -96,6 +96,7 @@ void uiMainDraw( void )
    RenderAll( &guiApp.mainWindow,guiApp.mainItems,guiApp.IndexOfMainItems,mainDrawBuffer );
    uiMainRender=False;
   }
+ // NOTE TO MYSELF: probably not, if uiMainRender is False
  wsImageDraw( &guiApp.mainWindow );
 // XFlush( wsDisplay );
 }
