@@ -231,19 +231,6 @@ potihandled:
   }
 }
 
-void uiPlaybarShow( int y )
-{
- if ( !guiApp.playbarIsPresent || !gtkEnablePlayBar ) return;
- if ( !guiApp.videoWindow.isFullScreen ) return;
-
- if ( y > guiApp.videoWindow.Height - guiApp.playbar.height )
-  {
-   if ( !uiPlaybarFade ) wsWindowVisibility( &guiApp.playbarWindow,wsShowWindow );
-   uiPlaybarFade=1; playbarVisible=True; wsWindowRedraw( &guiApp.playbarWindow );
-  }
-  else if ( !uiPlaybarFade ) uiPlaybarFade=2;
-}
-
 void uiPlaybarInit( void )
 {
  if ( !guiApp.playbarIsPresent ) return;
@@ -268,4 +255,17 @@ void uiPlaybarInit( void )
  guiApp.playbarWindow.KeyHandler=uiMainKey;
 
  playbarLength=guiApp.videoWindow.Height;
+}
+
+void uiPlaybarShow( int y )
+{
+ if ( !guiApp.playbarIsPresent || !gtkEnablePlayBar ) return;
+ if ( !guiApp.videoWindow.isFullScreen ) return;
+
+ if ( y > guiApp.videoWindow.Height - guiApp.playbar.height )
+  {
+   if ( !uiPlaybarFade ) wsWindowVisibility( &guiApp.playbarWindow,wsShowWindow );
+   uiPlaybarFade=1; playbarVisible=True; wsWindowRedraw( &guiApp.playbarWindow );
+  }
+  else if ( !uiPlaybarFade ) uiPlaybarFade=2;
 }
