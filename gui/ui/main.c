@@ -56,8 +56,6 @@
 unsigned char * mainDrawBuffer = NULL;
 int             uiMainRender = True;
 
-int             uiLoadPlay = False;
-
 int             mainVisible = True;
 
 int             boxMoved = False;

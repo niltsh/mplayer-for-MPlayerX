@@ -59,6 +59,8 @@
 
 #define GUI_REDRAW_WAIT 375   // in milliseconds
 
+int uiLoadPlay;
+
 static unsigned int last_redraw_time;
 
 /**

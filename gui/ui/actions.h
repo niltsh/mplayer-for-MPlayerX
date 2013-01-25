@@ -19,6 +19,8 @@
 #ifndef MPLAYER_GUI_ACTIONS_H
 #define MPLAYER_GUI_ACTIONS_H
 
+extern int uiLoadPlay;
+
 void uiAbsSeek(float sec);
 void uiChangeSkin(char *name);
 void uiCurr(void);

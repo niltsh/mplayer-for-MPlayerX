@@ -25,7 +25,6 @@
 
 #include "config.h"
 #include "gui/ui/actions.h"
-#include "gui/ui/ui.h"
 
 #include "pixmaps/up.xpm"
 #include "pixmaps/dir.xpm"
