@@ -114,9 +114,9 @@ void uiMenuInit( void )
  guiApp.menu.x,guiApp.menu.y,guiApp.menu.width,guiApp.menu.height,
  wsOverredirect|wsHideFrame|wsMaxSize|wsMinSize|wsHideWindow,wsShowMouseCursor|wsHandleMouseButton|wsHandleMouseMove,"MPlayer menu" );
 
- wsWindowShape( &guiApp.menuWindow,guiApp.menu.Mask.Image );
-
  mp_msg( MSGT_GPLAYER,MSGL_DBG2,"[menu] menuWindow ID: 0x%x\n",(int)guiApp.menuWindow.WindowID );
+
+ wsWindowShape( &guiApp.menuWindow,guiApp.menu.Mask.Image );
 
  menuIsInitialized=True;
  guiApp.menuWindow.DrawHandler=uiMenuDraw;
