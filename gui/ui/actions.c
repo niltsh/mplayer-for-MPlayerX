@@ -59,7 +59,7 @@
 
 #define GUI_REDRAW_WAIT 375
 
-static unsigned last_redraw_time;
+static unsigned int last_redraw_time;
 
 static void MediumPrepare(int type)
 {
@@ -469,7 +469,7 @@ NoPause:
 /* timer events */
     case ivRedraw:
     {
-        unsigned now = GetTimerMS();
+        unsigned int now = GetTimerMS();
 
         if ((now > last_redraw_time) &&
             (now < last_redraw_time + GUI_REDRAW_WAIT) &&
