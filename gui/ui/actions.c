@@ -57,10 +57,15 @@
 #include "stream/stream.h"
 #include "sub/sub.h"
 
-#define GUI_REDRAW_WAIT 375
+#define GUI_REDRAW_WAIT 375   // in milliseconds
 
 static unsigned int last_redraw_time;
 
+/**
+ * @brief Clear information not used for this @a type of stream.
+ *
+ * @param type stream type
+ */
 static void MediumPrepare(int type)
 {
     switch (type) {
