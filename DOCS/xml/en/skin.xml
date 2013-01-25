@@ -344,6 +344,9 @@ blocks.
 +------------+<!--
   --></screen>
   </informalfigure>
+  <para>
+  A special value of <literal>NULL</literal> can be used if you want no <literal>image</literal>.
+  </para>
   </listitem>
 </varlistentry>
 
@@ -386,7 +389,8 @@ blocks.
   <listitem><para>
     <literal>button</literal> - the image to be used for the
     button (must have three parts below each other, like in case of
-    <link linkend="skin-button">button</link>)
+    <link linkend="skin-button">button</link>). A special value of
+    <literal>NULL</literal> can be used if you want no image.
   </para></listitem>
   <listitem><para>
     <literal>bwidth</literal>, <literal>bheight</literal> - size
@@ -642,6 +646,9 @@ The following entries can be used in the
   <literal>width</literal> and <literal>height</literal>
   denote the size of the window; they are optional (if they are missing, the
   window is the same size as the image).
+  A special value of <literal>NULL</literal> can be used if you want no image
+  (in which case <literal>width</literal> and <literal>height</literal> are
+  mandatory).
   </para></listitem>
 </varlistentry>
 

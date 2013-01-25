@@ -401,6 +401,10 @@ end
 +---------------+<!--
               --></screen>
             </informalfigure>
+            <para>
+             Ein spezieller Wert von <literal>NULL</literal> kann für <literal>image</literal>
+             benutzt werden, wenn keine Grafik angezeigt werden soll.
+            </para>
           </listitem>
         </varlistentry>
 
@@ -456,7 +460,8 @@ end
                 <para>
                   <literal>button</literal> - die für den Button zu verwendende
                   Grafik (muss drei untereinander liegende Teile aufweisen, wie im Fall des
-                  <link linkend="skin-button">Buttons</link>)
+                  <link linkend="skin-button">Buttons</link>). Ein spezieller Wert von
+                  <literal>NULL</literal> kann benutzt werden, wenn keine Grafik angezeigt werden soll.
                 </para>
               </listitem>
               <listitem>
@@ -765,6 +770,9 @@ end
               <literal>width</literal> und <literal>height</literal>
               kennzeichnen Breite und Höhe des Fensters; sie sind optional (wenn sie fehlen, hat
               das Fenster dieselbe Größe wie die Grafik).
+              Ein spezieller Wert von <literal>NULL</literal> kann benutzt werden, wenn keine Grafik
+              angezeigt werden soll (dann dürfen <literal>width</literal> und <literal>height</literal>
+              allerdings nicht fehlen).
             </para>
           </listitem>
         </varlistentry>
