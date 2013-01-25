@@ -39,7 +39,6 @@ void uiVideoMouse( int Button, int X, int Y, int RX, int RY );
 void uiMenuInit( void );
 void uiMenuHide( int mx, int my, int w );
 void uiMenuShow( int mx, int my );
-void uiMenuMouse( int RX, int RY );
 
 void uiPlaybarInit( void );
 void uiPlaybarShow( int y );

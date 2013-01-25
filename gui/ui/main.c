@@ -189,7 +189,7 @@ rollerhandled:
                  wsWindowMove( &guiApp.mainWindow,True,RX - abs( sx ),RY - abs( sy ) );
                  break;
             case itPRMButton:
-                 uiMenuMouse( RX,RY );
+                 guiApp.menuWindow.MouseHandler( 0,RX,RY,0,0 );
                  break;
             case itPotmeter:
                  item->value=(float)( X - item->x ) / item->width * 100.0f;
