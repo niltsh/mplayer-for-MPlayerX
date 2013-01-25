@@ -89,7 +89,7 @@ void uiVideoMouse( int Button,int X,int Y,int RX,int RY )
                     }
                    break;
             case wsPMMouseButton:
-                   guiApp.menuWindow.MouseHandler( 0,RX,RY,0,0 );
+                   if (guiApp.menuIsPresent) guiApp.menuWindow.MouseHandler( 0,RX,RY,0,0 );
                    break;
 	    default: uiPlaybarShow( Y ); break;
            }

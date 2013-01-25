@@ -211,7 +211,7 @@ rollerhandled:
 	switch ( itemtype )
 	 {
 	  case itPRMButton:
-	       guiApp.menuWindow.MouseHandler( 0,RX,RY,0,0 );
+	       if (guiApp.menuIsPresent) guiApp.menuWindow.MouseHandler( 0,RX,RY,0,0 );
 	       break;
 	  case itPotmeter:
 	       item->value=(float)( X - item->x ) / item->width * 100.0f;
