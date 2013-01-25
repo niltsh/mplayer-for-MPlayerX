@@ -146,13 +146,6 @@ void guiInit(void)
 
     /* initialize windows */
 
-    mainDrawBuffer = malloc(guiApp.main.Bitmap.ImageSize);
-
-    if (!mainDrawBuffer) {
-        gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_NEMDB);
-        mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
-    }
-
     if (gui_save_pos) {
         if (gui_main_pos_x != -3)
             guiApp.main.x = gui_main_pos_x;
@@ -173,15 +166,6 @@ void guiInit(void)
     if (guiWinID >= 0)
         guiApp.mainWindow.Parent = guiWinID;
 
-// i=wsHideFrame|wsMaxSize|wsHideWindow;
-// if ( guiApp.mainDecoration ) i=wsShowFrame|wsMaxSize|wsHideWindow;
-    i = (guiApp.mainDecoration ? wsShowFrame : 0) | wsMinSize | wsMaxSize | wsHideWindow;
-    wsWindowCreate(&guiApp.mainWindow, guiApp.main.x, guiApp.main.y, guiApp.main.width, guiApp.main.height, i, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, "MPlayer");
-    wsWindowShape(&guiApp.mainWindow, guiApp.main.Mask.Image);
-    wsXDNDMakeAwareness(&guiApp.mainWindow);
-
-    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] mainWindow ID: 0x%x\n", (int)guiApp.mainWindow.WindowID);
-
     uiMainInit();      // main window must be first!
     uiVideoInit();     // video window must be second!
     uiPlaybarInit();
@@ -192,8 +176,6 @@ void guiInit(void)
     btnModify(evSetVolume, guiInfo.Volume);
     btnModify(evSetBalance, guiInfo.Balance);
     btnModify(evSetMoviePosition, guiInfo.Position);
-
-    wsWindowIcon(wsDisplay, guiApp.mainWindow.WindowID, &guiIcon);
 
     wsWindowVisibility(&guiApp.mainWindow, wsShowWindow);
 

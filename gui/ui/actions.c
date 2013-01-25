@@ -668,23 +668,9 @@ void uiChangeSkin(char *name)
     /* reload main window */
 
     free(mainDrawBuffer);
-    mainDrawBuffer = calloc(1, guiApp.main.Bitmap.ImageSize);
-
-    if (!mainDrawBuffer) {
-        gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_NEMDB);
-        mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
-    }
-
     wsWindowDestroy(&guiApp.mainWindow);
 
-    wsWindowCreate(&guiApp.mainWindow, guiApp.main.x, guiApp.main.y, guiApp.main.width, guiApp.main.height, (guiApp.mainDecoration ? wsShowFrame : 0) | wsMinSize | wsMaxSize | wsHideWindow, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, "MPlayer");
-    wsImageCreate(&guiApp.mainWindow, guiApp.main.Bitmap.Width, guiApp.main.Bitmap.Height);
-    wsWindowShape(&guiApp.mainWindow, guiApp.main.Mask.Image);
-    wsWindowIcon(wsDisplay, guiApp.mainWindow.WindowID, &guiIcon);
-
     uiMainInit();
-
-    wsXDNDMakeAwareness(&guiApp.mainWindow);
 
     wsWindowVisibility(&guiApp.mainWindow, wsShowWindow);
     mainVisible = True;

@@ -34,6 +34,7 @@
 #include "gui/util/mem.h"
 #include "gui/util/string.h"
 #include "gui/wm/ws.h"
+#include "gui/wm/wsxdnd.h"
 
 #include "help_mp.h"
 #include "mp_msg.h"
@@ -339,6 +340,20 @@ static void uiMainDND(int num,char** files)
 
 void uiMainInit (void)
 {
+  mainDrawBuffer = malloc(guiApp.main.Bitmap.ImageSize);
+
+  if (!mainDrawBuffer)
+  {
+    gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_NEMDB);
+    mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
+  }
+
+  wsWindowCreate(&guiApp.mainWindow, guiApp.main.x, guiApp.main.y, guiApp.main.width, guiApp.main.height, (guiApp.mainDecoration ? wsShowFrame : 0 ) | wsMinSize | wsMaxSize | wsHideWindow, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, "MPlayer");
+  mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[main] mainWindow ID: 0x%x\n", (int) guiApp.mainWindow.WindowID);
+  wsWindowShape(&guiApp.mainWindow, guiApp.main.Mask.Image);
+  wsWindowIcon(wsDisplay, guiApp.mainWindow.WindowID, &guiIcon);
+  wsXDNDMakeAwareness(&guiApp.mainWindow);
+
   guiApp.mainWindow.DrawHandler = uiMainDraw;
   guiApp.mainWindow.MouseHandler = uiMainMouse;
   guiApp.mainWindow.KeyHandler = uiMainKey;
