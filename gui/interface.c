@@ -173,13 +173,6 @@ void guiInit(void)
     if (guiWinID >= 0)
         guiApp.mainWindow.Parent = guiWinID;
 
-    wsWindowCreate(&guiApp.videoWindow, guiApp.video.x, guiApp.video.y, guiApp.video.width, guiApp.video.height, wsShowFrame | wsHideWindow | wsWaitMap | wsAspect, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, "MPlayer - Video");
-    wsImageDestroy(&guiApp.videoWindow);
-    wsImageCreate(&guiApp.videoWindow, guiApp.video.Bitmap.Width, guiApp.video.Bitmap.Height);
-    wsXDNDMakeAwareness(&guiApp.videoWindow);
-
-    WinID = guiApp.videoWindow.WindowID;
-
 // i=wsHideFrame|wsMaxSize|wsHideWindow;
 // if ( guiApp.mainDecoration ) i=wsShowFrame|wsMaxSize|wsHideWindow;
     i = (guiApp.mainDecoration ? wsShowFrame : 0) | wsMinSize | wsMaxSize | wsHideWindow;
@@ -188,22 +181,19 @@ void guiInit(void)
     wsXDNDMakeAwareness(&guiApp.mainWindow);
 
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] mainWindow ID: 0x%x\n", (int)guiApp.mainWindow.WindowID);
-    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] videoWindow ID: 0x%x\n", (int)guiApp.videoWindow.WindowID);
 
     uiMainInit();      // main window must be first!
     uiVideoInit();     // video window must be second!
     uiPlaybarInit();
     uiMenuInit();
 
-    if (guiApp.video.Bitmap.Image)
-        wsImageRender(&guiApp.videoWindow, guiApp.video.Bitmap.Image);
+    WinID = guiApp.videoWindow.WindowID;
 
     btnModify(evSetVolume, guiInfo.Volume);
     btnModify(evSetBalance, guiInfo.Balance);
     btnModify(evSetMoviePosition, guiInfo.Position);
 
     wsWindowIcon(wsDisplay, guiApp.mainWindow.WindowID, &guiIcon);
-    wsWindowIcon(wsDisplay, guiApp.videoWindow.WindowID, &guiIcon);
 
     wsWindowVisibility(&guiApp.mainWindow, wsShowWindow);
 
