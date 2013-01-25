@@ -195,27 +195,11 @@ play:
                 break;
 
             case STREAMTYPE_CDDA:
-
-                if (!guiInfo.Track)
-                    guiInfo.Track = 1;
-
-                guiInfo.NewPlay = GUI_FILE_SAME;
-
-                break;
-
             case STREAMTYPE_VCD:
-
-                if (!guiInfo.Track)
-                    guiInfo.Track = 2;
-
-                guiInfo.NewPlay = GUI_FILE_SAME;
-
-                break;
-
             case STREAMTYPE_DVD:
 
                 if (!guiInfo.Track)
-                    guiInfo.Track = 1;
+                    guiInfo.Track = (guiInfo.StreamType == STREAMTYPE_VCD ? 2 : 1);
 
                 guiInfo.NewPlay = GUI_FILE_SAME;
 
