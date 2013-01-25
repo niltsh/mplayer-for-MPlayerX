@@ -33,6 +33,7 @@
 #include "gui/wm/ws.h"
 
 #include "help_mp.h"
+#include "mp_msg.h"
 #include "mp_core.h"
 #include "libvo/x11_common.h"
 #include "libvo/fastmemcpy.h"
@@ -247,6 +248,8 @@ void uiPlaybarInit( void )
  wsWindowCreate( &guiApp.playbarWindow,
    guiApp.playbar.x,guiApp.playbar.y,guiApp.playbar.width,guiApp.playbar.height,
    wsHideFrame|wsHideWindow,wsShowMouseCursor|wsHandleMouseButton|wsHandleMouseMove,"PlayBar" );
+
+ mp_msg( MSGT_GPLAYER,MSGL_DBG2,"[playbar] playbarWindow ID: 0x%x\n",(int)guiApp.playbarWindow.WindowID );
 
  wsWindowShape( &guiApp.playbarWindow,guiApp.playbar.Mask.Image );
 
