@@ -178,9 +178,7 @@ void uiEvent(int ev, float param)
     case evPlaySwitchToPause:
 play:
 
-        if ((ev == evPlaySwitchToPause) && (guiInfo.Playing == GUI_PAUSE))
-            goto NoPause;
-
+        if (guiInfo.Playing != GUI_PAUSE) {
         MediumPrepare(guiInfo.StreamType);
 
         switch (guiInfo.StreamType) {
@@ -192,40 +190,37 @@ play:
                 guiInfo.Track = 1;
 
             guiInfo.NewPlay = GUI_FILE_NEW;
+            guiInfo.PlaylistNext = !guiInfo.Playing;
+
             break;
 
         case STREAMTYPE_CDDA:
 
-            if (guiInfo.Playing != GUI_PAUSE) {
                 if (!guiInfo.Track)
                     guiInfo.Track = 1;
 
                 guiInfo.NewPlay = GUI_FILE_SAME;
-            }
 
             break;
 
         case STREAMTYPE_VCD:
 
-            if (guiInfo.Playing != GUI_PAUSE) {
                 if (!guiInfo.Track)
                     guiInfo.Track = 2;
 
                 guiInfo.NewPlay = GUI_FILE_SAME;
-            }
 
             break;
 
         case STREAMTYPE_DVD:
 
-            if (guiInfo.Playing != GUI_PAUSE) {
                 if (!guiInfo.Track)
                     guiInfo.Track = 1;
 
                 guiInfo.NewPlay = GUI_FILE_SAME;
-            }
 
             break;
+        }
         }
 
         uiPlay();
@@ -233,7 +228,6 @@ play:
 
     case evPause:
     case evPauseSwitchToPlay:
-NoPause:
         uiPause();
         break;
 
