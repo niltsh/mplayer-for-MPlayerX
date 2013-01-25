@@ -27,6 +27,7 @@
 #include "mp_msg.h"
 #include "gui/app/app.h"
 #include "gui/app/gui.h"
+#include "actions.h"
 #include "ui.h"
 
 #include "gui/dialog/dialog.h"

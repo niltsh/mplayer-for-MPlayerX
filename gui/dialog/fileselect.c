@@ -24,6 +24,7 @@
 #include <unistd.h>
 
 #include "config.h"
+#include "gui/ui/actions.h"
 #include "gui/ui/ui.h"
 
 #include "pixmaps/up.xpm"

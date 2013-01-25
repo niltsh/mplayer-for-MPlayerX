@@ -30,7 +30,6 @@ extern int             uiPlaybarFade;
 extern int             sx, sy;
 
 void uiMainDraw( void );
-void uiMainEvent( int msg, float param );
 void uiMainMouse( int Button, int X, int Y, int RX, int RY );
 void uiMainKey( int KeyCode, int Type, int Key );
 void uiMainDND(int num, char** files);

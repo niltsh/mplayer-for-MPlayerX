@@ -26,6 +26,7 @@
 #include "app/gui.h"
 #include "dialog/dialog.h"
 #include "skin/skin.h"
+#include "ui/actions.h"
 #include "ui/ui.h"
 #include "util/list.h"
 #include "util/mem.h"

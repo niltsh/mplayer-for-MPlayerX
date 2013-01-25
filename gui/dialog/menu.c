@@ -28,7 +28,7 @@
 
 #include "menu.h"
 #include "dialog.h"
-#include "gui/ui/ui.h"
+#include "gui/ui/actions.h"
 #include "gui/app/app.h"
 #include "gui/app/gui.h"
 #include "gui/interface.h"

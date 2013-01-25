@@ -22,6 +22,7 @@
 void uiAbsSeek(float sec);
 void uiChangeSkin(char *name);
 void uiCurr(void);
+void uiMainEvent(int msg, float param);
 void uiFullScreen(void);
 void uiNext(void);
 void uiPause(void);
