@@ -377,23 +377,23 @@ int gui(int what, void *data)
 
         switch ((int)data) {
         case MP_CMD_VO_FULLSCREEN:
-            uiMainEvent(evFullScreen, True);
+            uiEvent(evFullScreen, True);
             break;
 
         case MP_CMD_PLAY_TREE_STEP:
-            uiMainEvent(evNext, 0);
+            uiEvent(evNext, 0);
             break;
 
         case -MP_CMD_PLAY_TREE_STEP:
-            uiMainEvent(evPrev, 0);
+            uiEvent(evPrev, 0);
             break;
 
         case MP_CMD_STOP:
-            uiMainEvent(evStop, 0);
+            uiEvent(evStop, 0);
             break;
 
         case MP_CMD_QUIT:
-            uiMainEvent(evExit, 0);
+            uiEvent(evExit, 0);
             break;
         }
 
@@ -405,7 +405,7 @@ int gui(int what, void *data)
         msg = appFindMessage((const char *)data);
 
         if ((msg == evMenu) || appFindItem(msg))
-            uiMainEvent(msg, 0);
+            uiEvent(msg, 0);
 
         break;
 
@@ -762,7 +762,7 @@ int gui(int what, void *data)
 
     case GUI_REDRAW:
 
-        uiMainEvent(ivRedraw, 0);
+        uiEvent(ivRedraw, 0);
         break;
 
     case GUI_SETUP_VIDEO_WINDOW:
@@ -778,7 +778,7 @@ int gui(int what, void *data)
         }
 
         if (gtkLoadFullscreen ^ guiApp.videoWindow.isFullScreen)
-            uiMainEvent(evFullScreen, True);
+            uiEvent(evFullScreen, True);
 
         if (guiWinID >= 0)
             wsWindowMove(&guiApp.mainWindow, True, 0, guiInfo.VideoHeight);
@@ -797,7 +797,7 @@ int gui(int what, void *data)
 
         guiInfo.sh_video = NULL;
 
-        uiMainEvent(ivRedraw, True);
+        uiEvent(ivRedraw, True);
 
         if (guiInfo.Playing) {
             if (!guiInfo.PlaylistNext) {
@@ -860,7 +860,7 @@ int gui(int what, void *data)
                     wsWindowVisibility(&guiApp.videoWindow, wsShowWindow);
 
                 if (gtkLoadFullscreen ^ guiApp.videoWindow.isFullScreen)
-                    uiMainEvent(evFullScreen, False);
+                    uiEvent(evFullScreen, False);
             } else {
                 wsWindowVisibility(&guiApp.videoWindow, wsHideWindow);
                 guiInfo.VideoWindow = False;

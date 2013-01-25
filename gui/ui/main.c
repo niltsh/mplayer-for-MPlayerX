@@ -149,16 +149,16 @@ void uiMainMouse( int Button,int X,int Y,int RX,int RY )
             case itPotmeter:
             case itHPotmeter:
                  btnModify( item->message,(float)( X - item->x ) / item->width * 100.0f );
-		 uiMainEvent( item->message,item->value );
+		 uiEvent( item->message,item->value );
                  value=item->value;
                  break;
 	    case itVPotmeter:
                  btnModify( item->message, ( 1. - (float)( Y - item->y ) / item->height) * 100.0f );
-		 uiMainEvent( item->message,item->value );
+		 uiEvent( item->message,item->value );
                  value=item->value;
                  break;
            }
-          uiMainEvent( item->message,value );
+          uiEvent( item->message,value );
           itemtype=0;
           break;
 
@@ -177,7 +177,7 @@ rollerhandled:
              {
               item->value+=value;
               btnModify( item->message,item->value );
-              uiMainEvent( item->message,item->value );
+              uiEvent( item->message,item->value );
              }
            }
           break;
@@ -204,7 +204,7 @@ rollerhandled:
 potihandled:
                  if ( item->value > 100.0f ) item->value=100.0f;
                  if ( item->value < 0.0f ) item->value=0.0f;
-                 uiMainEvent( item->message,item->value );
+                 uiEvent( item->message,item->value );
                  break;
            }
           break;
@@ -248,13 +248,13 @@ void uiMainKey( int KeyCode,int Type,int Key )
       case wsEscape:
     	    if ( guiInfo.VideoWindow && guiInfo.Playing && guiApp.videoWindow.isFullScreen )
 	     {
-	      uiMainEvent( evNormalSize,0 );
+	      uiEvent( evNormalSize,0 );
 	      return;
 	     }
       default:          vo_x11_putkey( Key ); return;
      }
    }
- if ( msg != evNone ) uiMainEvent( msg,0 );
+ if ( msg != evNone ) uiEvent( msg,0 );
 }
 
 /* this will be used to handle drag & drop files */
@@ -329,8 +329,8 @@ void uiMainDND(int num,char** files)
 
   if (file) {
     uiSetFile( NULL,file,STREAMTYPE_FILE );
-    if ( guiInfo.Playing == GUI_PLAY ) uiMainEvent( evStop,0 );
-    uiMainEvent( evPlay,0 );
+    if ( guiInfo.Playing == GUI_PLAY ) uiEvent( evStop,0 );
+    uiEvent( evPlay,0 );
   }
   if (subtitles) {
     nfree(guiInfo.SubtitleFilename);

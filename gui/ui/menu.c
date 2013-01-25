@@ -170,6 +170,6 @@ void uiMenuHide( int mx,int my,int w )
         guiApp.menuItems[i].x+guiApp.menuItems[i].width,
         guiApp.menuItems[i].y+guiApp.menuItems[i].height ) )
    {
-    uiMainEvent( guiApp.menuItems[i].message,(float)w );
+    uiEvent( guiApp.menuItems[i].message,(float)w );
    }
 }

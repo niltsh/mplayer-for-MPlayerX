@@ -82,12 +82,12 @@ static void MediumPrepare(int type)
     }
 }
 
-void uiMainEvent(int msg, float param)
+void uiEvent(int ev, float param)
 {
     int iparam     = (int)param, osd;
     mixer_t *mixer = mpctx_get_mixer(guiInfo.mpcontext);
 
-    switch (msg) {
+    switch (ev) {
 /* user events */
     case evExit:
         mplayer(MPLAYER_EXIT_GUI, EXIT_QUIT, 0);
@@ -138,24 +138,24 @@ void uiMainEvent(int msg, float param)
 #ifdef CONFIG_DVDREAD
     case ivSetDVDSubtitle:
         dvdsub_id = iparam;
-        uiMainEvent(ivPlayDVD, 0);
+        uiEvent(ivPlayDVD, 0);
         break;
 
     case ivSetDVDAudio:
         audio_id = iparam;
-        uiMainEvent(ivPlayDVD, 0);
+        uiEvent(ivPlayDVD, 0);
         break;
 
     case ivSetDVDChapter:
         guiInfo.Chapter = iparam;
-        uiMainEvent(ivPlayDVD, 0);
+        uiEvent(ivPlayDVD, 0);
         break;
 
     case ivSetDVDTitle:
         guiInfo.Track   = iparam;
         guiInfo.Chapter = 1;
         guiInfo.Angle   = 1;
-        uiMainEvent(ivPlayDVD, 0);
+        uiEvent(ivPlayDVD, 0);
         break;
 
     case evPlayDVD:
@@ -171,7 +171,7 @@ void uiMainEvent(int msg, float param)
     case evPlaySwitchToPause:
 play:
 
-        if ((msg == evPlaySwitchToPause) && (guiInfo.Playing == GUI_PAUSE))
+        if ((ev == evPlaySwitchToPause) && (guiInfo.Playing == GUI_PAUSE))
             goto NoPause;
 
         MediumPrepare(guiInfo.StreamType);
@@ -346,7 +346,7 @@ NoPause:
         mixer_setbalance(mixer, (guiInfo.Balance - 50.0) / 50.0);     // transform 0..100 to -1..1
         osd       = osd_level;
         osd_level = 0;
-        uiMainEvent(evSetVolume, guiInfo.Volume);
+        uiEvent(evSetVolume, guiInfo.Volume);
         osd_level = osd;
 
         if (osd_level) {
@@ -458,9 +458,9 @@ NoPause:
         }
 
         if (guiInfo.StreamType == STREAMTYPE_VCD)
-            uiMainEvent(evPlayVCD, 0);
+            uiEvent(evPlayVCD, 0);
         else if (guiInfo.StreamType == STREAMTYPE_DVD)
-            uiMainEvent(ivPlayDVD, 0);
+            uiEvent(ivPlayDVD, 0);
         else
             guiInfo.NewPlay = GUI_FILE_NEW;
 
@@ -485,11 +485,11 @@ NoPause:
 
 /* system events */
     case evNone:
-        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[actions] uiMainEvent: evNone\n");
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[actions] uiEvent: evNone\n");
         break;
 
     default:
-        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[actions] uiMainEvent: unknown event %d, param %.2f\n", msg, param);
+        mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[actions] uiEvent: unknown event %d, param %.2f\n", ev, param);
         break;
     }
 }
@@ -785,7 +785,7 @@ void uiCurr(void)
     }
 
     if (guiInfo.Playing == GUI_PLAY)
-        uiMainEvent(evPlay, 0);
+        uiEvent(evPlay, 0);
 }
 
 /**
@@ -847,10 +847,10 @@ void uiPrev(void)
     }
 
     if (stop)
-        uiMainEvent(evStop, 0);
+        uiEvent(evStop, 0);
 
     if (guiInfo.Playing == GUI_PLAY)
-        uiMainEvent(evPlay, 0);
+        uiEvent(evPlay, 0);
     else if (!stop && !prev && unset)
         uiUnsetMedia(True);
 }
@@ -907,10 +907,10 @@ void uiNext(void)
     }
 
     if (stop)
-        uiMainEvent(evStop, 0);
+        uiEvent(evStop, 0);
 
     if (guiInfo.Playing == GUI_PLAY)
-        uiMainEvent(evPlay, 0);
+        uiEvent(evPlay, 0);
     else if (!stop && !next && unset)
         uiUnsetMedia(True);
 }
