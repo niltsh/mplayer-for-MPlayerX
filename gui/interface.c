@@ -77,7 +77,7 @@ static int initialized;
  */
 void guiInit(void)
 {
-    int i;
+    int r;
     plItem *playlist;
 
     mp_msg(MSGT_GPLAYER, MSGL_V, "GUI init.\n");
@@ -125,16 +125,16 @@ void guiInit(void)
     if (!skinName)
         skinName = strdup("default");
 
-    i = skinRead(skinName);
+    r = skinRead(skinName);
 
-    if (i == -1 && strcmp(skinName, "default") != 0) {
+    if (r == -1 && strcmp(skinName, "default") != 0) {
         mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_SKIN_SKINCFG_SelectedSkinNotFound, skinName);
 
         skinName = strdup("default");
-        i = skinRead(skinName);
+        r = skinRead(skinName);
     }
 
-    switch (i) {
+    switch (r) {
     case -1:
         gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_SKIN_SKINCFG_SkinNotFound, skinName);
         mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
