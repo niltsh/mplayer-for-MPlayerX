@@ -305,6 +305,10 @@ static int item_base(char *in)
 
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "\n");
 
+    if (is_video && (strcmp(fname, "NULL") == 0)) {
+        currWin->width  = 0;
+        currWin->height = 0;
+    } else {
     av_strlcpy(file, path, sizeof(file));
     av_strlcat(file, fname, sizeof(file));
 
@@ -313,6 +317,7 @@ static int item_base(char *in)
 
     currWin->width  = currWin->Bitmap.Width;
     currWin->height = currWin->Bitmap.Height;
+    }
 
     if (is_video) {
         if (w && h) {
@@ -320,6 +325,9 @@ static int item_base(char *in)
             currWin->height = h;
         }
     }
+
+    if (currWin->width == 0 || currWin->height == 0)
+        return 1;
 
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[skin]    %s: %dx%d\n", (is_video && w && h ? "size" : " bitmap"), currWin->width, currWin->height);
 
