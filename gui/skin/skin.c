@@ -309,14 +309,14 @@ static int item_base(char *in)
         currWin->width  = 0;
         currWin->height = 0;
     } else {
-    av_strlcpy(file, path, sizeof(file));
-    av_strlcat(file, fname, sizeof(file));
+        av_strlcpy(file, path, sizeof(file));
+        av_strlcat(file, fname, sizeof(file));
 
-    if (skinImageRead(file, &currWin->Bitmap) != 0)
-        return 1;
+        if (skinImageRead(file, &currWin->Bitmap) != 0)
+            return 1;
 
-    currWin->width  = currWin->Bitmap.Width;
-    currWin->height = currWin->Bitmap.Height;
+        currWin->width  = currWin->Bitmap.Width;
+        currWin->height = currWin->Bitmap.Height;
     }
 
     if (is_video) {
