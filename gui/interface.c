@@ -191,7 +191,7 @@ void guiInit(void)
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] videoWindow ID: 0x%x\n", (int)guiApp.videoWindow.WindowID);
 
     uiMainInit();      // main window must be first!
-    uiVideoInit();
+    uiVideoInit();     // video window must be second!
     uiPlaybarInit();
     uiMenuInit();
 
