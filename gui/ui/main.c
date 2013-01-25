@@ -54,7 +54,7 @@
 
 #include "actions.h"
 
-unsigned char * mainDrawBuffer = NULL;
+static unsigned char * mainDrawBuffer;
 int             uiMainRender = True;
 
 int             mainVisible = True;
@@ -340,6 +340,8 @@ static void uiMainDND(int num,char** files)
 
 void uiMainInit (void)
 {
+  if (mainDrawBuffer) free(mainDrawBuffer);
+
   mainDrawBuffer = malloc(guiApp.main.Bitmap.ImageSize);
 
   if (!mainDrawBuffer)

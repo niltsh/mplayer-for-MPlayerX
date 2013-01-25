@@ -645,7 +645,6 @@ void uiChangeSkin(char *name)
 
     /* reload main window */
 
-    free(mainDrawBuffer);
     wsWindowDestroy(&guiApp.mainWindow);
 
     uiMainInit();
