@@ -29,6 +29,7 @@
 #include "gui/app/gui.h"
 #include "actions.h"
 #include "ui.h"
+#include "gui/util/mem.h"
 
 #include "gui/dialog/dialog.h"
 
@@ -123,6 +124,12 @@ void uiMenuInit( void )
  guiApp.menuWindow.MouseHandler=uiMenuMouse;
 // guiApp.menuWindow.KeyHandler=guiApp.mainWindow.KeyHandler;
  uiMenuRender=True; wsWindowRedraw( &guiApp.menuWindow );
+}
+
+void uiMenuDone( void )
+{
+  nfree(menuDrawBuffer);
+  wsWindowDestroy(&guiApp.menuWindow);
 }
 
 void uiMenuShow( int mx,int my )

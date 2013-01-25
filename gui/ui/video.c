@@ -126,3 +126,8 @@ void uiVideoInit (void)
   guiApp.videoWindow.KeyHandler = guiApp.mainWindow.KeyHandler;
   guiApp.videoWindow.DNDHandler = guiApp.mainWindow.DNDHandler;
 }
+
+void uiVideoDone (void)
+{
+  wsWindowDestroy(&guiApp.videoWindow);
+}

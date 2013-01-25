@@ -361,3 +361,9 @@ void uiMainInit (void)
   guiApp.mainWindow.KeyHandler = uiMainKey;
   guiApp.mainWindow.DNDHandler = uiMainDND;
 }
+
+void uiMainDone (void)
+{
+  nfree(mainDrawBuffer);
+  wsWindowDestroy(&guiApp.mainWindow);
+}

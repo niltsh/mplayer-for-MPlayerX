@@ -231,7 +231,13 @@ void guiDone(void)
 
         cfg_write();
 
-        // NOTE TO MYSELF: destroy the windows
+        if (guiApp.menuIsPresent)
+            uiMenuDone();
+        if (guiApp.playbarIsPresent)
+            uiPlaybarDone();
+
+        uiVideoDone();
+        uiMainDone();
 
         wsDone();
     }

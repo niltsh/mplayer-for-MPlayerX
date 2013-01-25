@@ -639,14 +639,13 @@ void uiChangeSkin(char *name)
     /* reload playbar */
 
     if (bprev)
-        wsWindowDestroy(&guiApp.playbarWindow);
+        uiPlaybarDone();
 
     uiPlaybarInit();
 
     /* reload main window */
 
-    wsWindowDestroy(&guiApp.mainWindow);
-
+    uiMainDone();
     uiMainInit();
 
     wsWindowVisibility(&guiApp.mainWindow, wsShowWindow);

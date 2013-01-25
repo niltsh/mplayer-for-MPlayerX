@@ -260,6 +260,12 @@ void uiPlaybarInit( void )
  playbarLength=guiApp.videoWindow.Height;
 }
 
+void uiPlaybarDone( void )
+{
+  nfree(playbarDrawBuffer);
+  wsWindowDestroy(&guiApp.playbarWindow);
+}
+
 void uiPlaybarShow( int y )
 {
  if ( !guiApp.playbarIsPresent || !gtkEnablePlayBar ) return;

@@ -28,14 +28,18 @@ extern int             uiPlaybarFade;
 extern int             sx, sy;
 
 void uiMainInit( void );
+void uiMainDone( void );
 
 void uiVideoInit( void );
+void uiVideoDone( void );
 
 void uiMenuInit( void );
+void uiMenuDone( void );
 void uiMenuHide( int mx, int my, int w );
 void uiMenuShow( int mx, int my );
 
 void uiPlaybarInit( void );
+void uiPlaybarDone( void );
 void uiPlaybarShow( int y );
 
 #endif /* MPLAYER_GUI_UI_H */
