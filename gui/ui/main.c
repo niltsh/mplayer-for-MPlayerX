@@ -340,8 +340,6 @@ static void uiMainDND(int num,char** files)
 
 void uiMainInit (void)
 {
-  if (mainDrawBuffer) free(mainDrawBuffer);
-
   mainDrawBuffer = malloc(guiApp.main.Bitmap.ImageSize);
 
   if (!mainDrawBuffer)
