@@ -179,48 +179,48 @@ void uiEvent(int ev, float param)
 play:
 
         if (guiInfo.Playing != GUI_PAUSE) {
-        MediumPrepare(guiInfo.StreamType);
+            MediumPrepare(guiInfo.StreamType);
 
-        switch (guiInfo.StreamType) {
-        case STREAMTYPE_FILE:
-        case STREAMTYPE_STREAM:
-        case STREAMTYPE_PLAYLIST:
+            switch (guiInfo.StreamType) {
+            case STREAMTYPE_FILE:
+            case STREAMTYPE_STREAM:
+            case STREAMTYPE_PLAYLIST:
 
-            if (!guiInfo.Track)
-                guiInfo.Track = 1;
+                if (!guiInfo.Track)
+                    guiInfo.Track = 1;
 
-            guiInfo.NewPlay = GUI_FILE_NEW;
-            guiInfo.PlaylistNext = !guiInfo.Playing;
+                guiInfo.NewPlay      = GUI_FILE_NEW;
+                guiInfo.PlaylistNext = !guiInfo.Playing;
 
-            break;
+                break;
 
-        case STREAMTYPE_CDDA:
+            case STREAMTYPE_CDDA:
 
                 if (!guiInfo.Track)
                     guiInfo.Track = 1;
 
                 guiInfo.NewPlay = GUI_FILE_SAME;
 
-            break;
+                break;
 
-        case STREAMTYPE_VCD:
+            case STREAMTYPE_VCD:
 
                 if (!guiInfo.Track)
                     guiInfo.Track = 2;
 
                 guiInfo.NewPlay = GUI_FILE_SAME;
 
-            break;
+                break;
 
-        case STREAMTYPE_DVD:
+            case STREAMTYPE_DVD:
 
                 if (!guiInfo.Track)
                     guiInfo.Track = 1;
 
                 guiInfo.NewPlay = GUI_FILE_SAME;
 
-            break;
-        }
+                break;
+            }
         }
 
         uiPlay();
