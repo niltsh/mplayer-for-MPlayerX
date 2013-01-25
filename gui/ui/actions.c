@@ -59,7 +59,7 @@
 
 #define GUI_REDRAW_WAIT 375
 
-static unsigned last_redraw_time = 0;
+static unsigned last_redraw_time;
 
 static void MediumPrepare(int type)
 {
