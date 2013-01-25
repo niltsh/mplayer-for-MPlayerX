@@ -64,7 +64,7 @@ int             i,pot = 0;
 
 #include "render.h"
 
-void uiMainDraw( void )
+static void uiMainDraw( void )
 {
 
  if ( guiApp.mainWindow.State == wsWindowClosed ) mplayer( MPLAYER_EXIT_GUI, EXIT_QUIT, 0 );
@@ -87,7 +87,7 @@ void uiMainDraw( void )
 // XFlush( wsDisplay );
 }
 
-void uiMainMouse( int Button,int X,int Y,int RX,int RY )
+static void uiMainMouse( int Button,int X,int Y,int RX,int RY )
 {
  static int     itemtype = 0;
         int     i;
@@ -209,7 +209,7 @@ potihandled:
   }
 }
 
-void uiMainKey( int KeyCode,int Type,int Key )
+static void uiMainKey( int KeyCode,int Type,int Key )
 {
  int msg = evNone;
 
@@ -256,7 +256,7 @@ void uiMainKey( int KeyCode,int Type,int Key )
 }
 
 /* this will be used to handle drag & drop files */
-void uiMainDND(int num,char** files)
+static void uiMainDND(int num,char** files)
 {
   struct stat buf;
   int f = 0;
@@ -335,4 +335,12 @@ void uiMainDND(int num,char** files)
     guiInfo.SubtitleFilename = subtitles;
     mplayerLoadSubtitle(guiInfo.SubtitleFilename);
   }
+}
+
+void uiMainInit (void)
+{
+  guiApp.mainWindow.DrawHandler = uiMainDraw;
+  guiApp.mainWindow.MouseHandler = uiMainMouse;
+  guiApp.mainWindow.KeyHandler = uiMainKey;
+  guiApp.mainWindow.DNDHandler = uiMainDND;
 }

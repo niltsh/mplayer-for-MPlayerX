@@ -32,7 +32,7 @@
 
 int             videoVisible = 0;
 
-void uiVideoDraw( void )
+static void uiVideoDraw( void )
 {
  if ( guiApp.videoWindow.State == wsWindowClosed ) mplayer( MPLAYER_EXIT_GUI, EXIT_QUIT, 0 );
 
@@ -50,7 +50,7 @@ void uiVideoDraw( void )
   }
 }
 
-void uiVideoMouse( int Button,int X,int Y,int RX,int RY )
+static void uiVideoMouse( int Button,int X,int Y,int RX,int RY )
 {
  static int mplVideoMoved = 0;
  static int msButton = 0;
@@ -105,4 +105,12 @@ void uiVideoMouse( int Button,int X,int Y,int RX,int RY )
           mplVideoMoved=0;
           break;
   }
+}
+
+void uiVideoInit (void)
+{
+  guiApp.videoWindow.DrawHandler = uiVideoDraw;
+  guiApp.videoWindow.MouseHandler = uiVideoMouse;
+  guiApp.videoWindow.KeyHandler = guiApp.mainWindow.KeyHandler;
+  guiApp.videoWindow.DNDHandler = guiApp.mainWindow.DNDHandler;
 }

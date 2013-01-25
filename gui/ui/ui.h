@@ -28,13 +28,9 @@ extern int             uiPlaybarFade;
 
 extern int             sx, sy;
 
-void uiMainDraw( void );
-void uiMainMouse( int Button, int X, int Y, int RX, int RY );
-void uiMainKey( int KeyCode, int Type, int Key );
-void uiMainDND(int num, char** files);
+void uiMainInit( void );
 
-void uiVideoDraw( void );
-void uiVideoMouse( int Button, int X, int Y, int RX, int RY );
+void uiVideoInit( void );
 
 void uiMenuInit( void );
 void uiMenuHide( int mx, int my, int w );

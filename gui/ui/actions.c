@@ -682,10 +682,7 @@ void uiChangeSkin(char *name)
     wsWindowShape(&guiApp.mainWindow, guiApp.main.Mask.Image);
     wsWindowIcon(wsDisplay, guiApp.mainWindow.WindowID, &guiIcon);
 
-    guiApp.mainWindow.DrawHandler  = uiMainDraw;
-    guiApp.mainWindow.MouseHandler = uiMainMouse;
-    guiApp.mainWindow.KeyHandler   = uiMainKey;
-    guiApp.mainWindow.DNDHandler   = uiMainDND;
+    uiMainInit();
 
     wsXDNDMakeAwareness(&guiApp.mainWindow);
 

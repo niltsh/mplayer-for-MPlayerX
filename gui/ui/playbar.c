@@ -252,7 +252,7 @@ void uiPlaybarInit( void )
 
  guiApp.playbarWindow.DrawHandler=uiPlaybarDraw;
  guiApp.playbarWindow.MouseHandler=uiPlaybarMouse;
- guiApp.playbarWindow.KeyHandler=uiMainKey;
+ guiApp.playbarWindow.KeyHandler=guiApp.mainWindow.KeyHandler;
 
  playbarLength=guiApp.videoWindow.Height;
 }

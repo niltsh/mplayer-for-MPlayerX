@@ -121,7 +121,7 @@ void uiMenuInit( void )
  menuIsInitialized=True;
  guiApp.menuWindow.DrawHandler=uiMenuDraw;
  guiApp.menuWindow.MouseHandler=uiMenuMouse;
-// guiApp.menuWindow.KeyHandler=uiMainKey;
+// guiApp.menuWindow.KeyHandler=guiApp.mainWindow.KeyHandler;
  uiMenuRender=True; wsWindowRedraw( &guiApp.menuWindow );
 }
 
