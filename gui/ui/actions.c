@@ -619,9 +619,9 @@ void uiChangeSkin(char *name)
 
     if (!guiInfo.Playing) {
         if (!guiApp.videoWindow.isFullScreen) {
-        wsWindowResize(&guiApp.videoWindow, guiApp.video.width, guiApp.video.height);
-        wsWindowMove(&guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y);
-    }
+            wsWindowResize(&guiApp.videoWindow, guiApp.video.width, guiApp.video.height);
+            wsWindowMove(&guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y);
+        }
 
         wsWindowRedraw(&guiApp.videoWindow);
     }
