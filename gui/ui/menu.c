@@ -45,7 +45,7 @@ static void uiMenuDraw( void )
  uint32_t * drw = NULL;
  int             x,y,tmp;
 
- if ( !guiApp.menuIsPresent || !guiApp.menu.Bitmap.Image ) return;
+ if ( !guiApp.menuIsPresent ) return;
  if ( !uiMenuRender && !guiApp.menuWindow.Visible ) return;
 
  if ( uiMenuRender || menuItem != oldMenuItem )
@@ -75,8 +75,6 @@ static void uiMenuMouse( int Button,int X,int Y,int RX,int RY )
 {
  int x,y,i;
 
- if ( !guiApp.menu.Bitmap.Image ) return;
-
  menuItem=-1;
  x=X - guiApp.menuWindow.X;
  y=Y - guiApp.menuWindow.Y;
@@ -98,7 +96,7 @@ static void uiMenuMouse( int Button,int X,int Y,int RX,int RY )
 void uiMenuInit( void )
 {
 
- if ( !guiApp.menuIsPresent || !guiApp.menu.Bitmap.Image ) return;
+ if ( !guiApp.menuIsPresent ) return;
 
  guiApp.menu.x=0;
  guiApp.menu.y=0;
@@ -134,7 +132,7 @@ void uiMenuShow( int mx,int my )
 {
  int x,y;
 
- if ( !guiApp.menuIsPresent || !guiApp.menu.Bitmap.Image ) return;
+ if ( !guiApp.menuIsPresent ) return;
 
  x=mx;
  if ( x + guiApp.menuWindow.Width > wsMaxX ) x=wsMaxX - guiApp.menuWindow.Width - 1 + wsOrgX;
@@ -157,7 +155,7 @@ void uiMenuHide( int mx,int my,int w )
 {
  int x,y,i=menuItem;
 
- if ( !guiApp.menuIsPresent || !guiApp.menu.Bitmap.Image ) return;
+ if ( !guiApp.menuIsPresent ) return;
 
  x=mx-menuX;
  y=my-menuY;
