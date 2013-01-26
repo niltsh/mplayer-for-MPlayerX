@@ -38,7 +38,6 @@ static int      uiMenuRender = True;
 int             menuItem = -1;
 int             oldMenuItem = -1;
 int             menuX,menuY;
-static int      menuIsInitialized = False;
 
 static void uiMenuDraw( void )
 {
@@ -99,7 +98,7 @@ static void uiMenuMouse( int Button,int X,int Y,int RX,int RY )
 void uiMenuInit( void )
 {
 
- if ( menuIsInitialized || !guiApp.menuIsPresent || !guiApp.menu.Bitmap.Image ) return;
+ if ( !guiApp.menuIsPresent || !guiApp.menu.Bitmap.Image ) return;
 
  guiApp.menu.x=0;
  guiApp.menu.y=0;
@@ -119,7 +118,6 @@ void uiMenuInit( void )
 
  wsWindowShape( &guiApp.menuWindow,guiApp.menu.Mask.Image );
 
- menuIsInitialized=True;
  guiApp.menuWindow.DrawHandler=uiMenuDraw;
  guiApp.menuWindow.MouseHandler=uiMenuMouse;
 // guiApp.menuWindow.KeyHandler=guiApp.mainWindow.KeyHandler;
