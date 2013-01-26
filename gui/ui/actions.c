@@ -588,10 +588,10 @@ void uiAbsSeek(float percent)
  */
 void uiChangeSkin(char *name)
 {
-    int prev, bprev;
+    int was_menu, was_playbar;
 
-    prev  = guiApp.menuIsPresent;
-    bprev = guiApp.playbarIsPresent;
+    was_menu    = guiApp.menuIsPresent;
+    was_playbar = guiApp.playbarIsPresent;
 
     mainVisible = False;
 
@@ -604,7 +604,7 @@ void uiChangeSkin(char *name)
 
     /* reload menu window */
 
-    if (prev && guiApp.menuIsPresent) {
+    if (was_menu && guiApp.menuIsPresent) {
         free(menuDrawBuffer);
         menuDrawBuffer = calloc(1, guiApp.menu.Bitmap.ImageSize);
 
@@ -638,7 +638,7 @@ void uiChangeSkin(char *name)
 
     /* reload playbar */
 
-    if (bprev)
+    if (was_playbar)
         uiPlaybarDone();
 
     uiPlaybarInit();
