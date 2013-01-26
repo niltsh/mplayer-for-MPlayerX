@@ -635,21 +635,10 @@ void uiChangeSkin(char *name)
 
     /* reload menu window */
 
-    if (was_menu && guiApp.menuIsPresent) {
-        free(menuDrawBuffer);
-        menuDrawBuffer = calloc(1, guiApp.menu.Bitmap.ImageSize);
+    if (was_menu)
+        uiMenuDone();
 
-        if (!menuDrawBuffer) {
-            gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_NEMDB);
-            mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
-        }
-
-        wsWindowResize(&guiApp.menuWindow, guiApp.menu.width, guiApp.menu.height);
-        wsImageResize(&guiApp.menuWindow, guiApp.menu.width, guiApp.menu.height);
-        wsWindowShape(&guiApp.menuWindow, guiApp.menu.Mask.Image);
-        wsWindowVisibility(&guiApp.menuWindow, wsHideWindow);
-    } else
-        uiMenuInit();
+    uiMenuInit();
 
     /* */
 
