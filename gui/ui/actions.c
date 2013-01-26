@@ -602,25 +602,15 @@ void uiChangeSkin(char *name)
         }
     }
 
-    /* reload menu window */
+    /* reload main window (must be first!) */
 
-    if (was_menu && guiApp.menuIsPresent) {
-        free(menuDrawBuffer);
-        menuDrawBuffer = calloc(1, guiApp.menu.Bitmap.ImageSize);
+    uiMainDone();
+    uiMainInit();
 
-        if (!menuDrawBuffer) {
-            gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_NEMDB);
-            mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
-        }
+    wsWindowVisibility(&guiApp.mainWindow, wsShowWindow);
+    mainVisible = True;
 
-        wsWindowResize(&guiApp.menuWindow, guiApp.menu.width, guiApp.menu.height);
-        wsImageResize(&guiApp.menuWindow, guiApp.menu.width, guiApp.menu.height);
-        wsWindowShape(&guiApp.menuWindow, guiApp.menu.Mask.Image);
-        wsWindowVisibility(&guiApp.menuWindow, wsHideWindow);
-    } else
-        uiMenuInit();
-
-    /* reload video window */
+    /* reload video window (must be second!) */
 
     if (guiApp.video.Bitmap.Image)
         wsImageResize(&guiApp.videoWindow, guiApp.video.Bitmap.Width, guiApp.video.Bitmap.Height);
@@ -643,13 +633,25 @@ void uiChangeSkin(char *name)
 
     uiPlaybarInit();
 
-    /* reload main window */
+    /* reload menu window */
 
-    uiMainDone();
-    uiMainInit();
+    if (was_menu && guiApp.menuIsPresent) {
+        free(menuDrawBuffer);
+        menuDrawBuffer = calloc(1, guiApp.menu.Bitmap.ImageSize);
 
-    wsWindowVisibility(&guiApp.mainWindow, wsShowWindow);
-    mainVisible = True;
+        if (!menuDrawBuffer) {
+            gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_NEMDB);
+            mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
+        }
+
+        wsWindowResize(&guiApp.menuWindow, guiApp.menu.width, guiApp.menu.height);
+        wsImageResize(&guiApp.menuWindow, guiApp.menu.width, guiApp.menu.height);
+        wsWindowShape(&guiApp.menuWindow, guiApp.menu.Mask.Image);
+        wsWindowVisibility(&guiApp.menuWindow, wsHideWindow);
+    } else
+        uiMenuInit();
+
+    /* */
 
     btnModify(evSetVolume, guiInfo.Volume);
     btnModify(evSetBalance, guiInfo.Balance);
