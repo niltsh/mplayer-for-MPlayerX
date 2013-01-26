@@ -123,7 +123,8 @@ static void uiMainMouse( int Button,int X,int Y,int RX,int RY )
           item=&guiApp.mainItems[SelectedItem];
           itemtype=item->type;
           item->pressed=btnPressed;
-          switch( item->type )
+          // NOTE TO MYSELF: commented, because the expression can never be true
+          /*switch( item->type )
            {
             case itButton:
                  if ( ( SelectedItem > -1 ) &&
@@ -131,7 +132,7 @@ static void uiMainMouse( int Button,int X,int Y,int RX,int RY )
                       ( ( item->message == evPauseSwitchToPlay && item->message == evPlaySwitchToPause ) ) ) )
                   { item->pressed=btnDisabled; }
                  break;
-           }
+           }*/
           break;
    case wsRLMouseButton:
           boxMoved=False;
