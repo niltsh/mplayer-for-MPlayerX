@@ -236,8 +236,6 @@ void uiPlaybarInit( void )
 {
  if ( !guiApp.playbarIsPresent ) return;
 
- nfree( playbarDrawBuffer );
-
  if ( ( playbarDrawBuffer = malloc( guiApp.playbar.Bitmap.ImageSize ) ) == NULL )
   {
    gmp_msg( MSGT_GPLAYER,MSGL_FATAL,MSGTR_NEMDB );
