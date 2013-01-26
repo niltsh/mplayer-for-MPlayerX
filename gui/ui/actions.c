@@ -610,21 +610,21 @@ void uiChangeSkin(char *name)
     wsWindowVisibility(&guiApp.mainWindow, wsShowWindow);
     mainVisible = True;
 
-    /* reload video window (must be second!) */
+    /* adjust video window */
 
-    if (guiApp.video.Bitmap.Image)
+    if (guiApp.video.Bitmap.Image) {
         wsImageResize(&guiApp.videoWindow, guiApp.video.Bitmap.Width, guiApp.video.Bitmap.Height);
+        wsImageRender(&guiApp.videoWindow, guiApp.video.Bitmap.Image);
+    }
 
-    if (!guiApp.videoWindow.isFullScreen && !guiInfo.Playing) {
+    if (!guiInfo.Playing) {
+        if (!guiApp.videoWindow.isFullScreen) {
         wsWindowResize(&guiApp.videoWindow, guiApp.video.width, guiApp.video.height);
         wsWindowMove(&guiApp.videoWindow, False, guiApp.video.x, guiApp.video.y);
     }
 
-    if (guiApp.video.Bitmap.Image)
-        wsImageRender(&guiApp.videoWindow, guiApp.video.Bitmap.Image);
-
-    if (!guiInfo.Playing)
         wsWindowRedraw(&guiApp.videoWindow);
+    }
 
     /* reload playbar */
 
