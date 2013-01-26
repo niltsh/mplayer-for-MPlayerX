@@ -597,8 +597,8 @@ void uiChangeSkin(char *name)
 
     if (skinRead(name) != 0) {
         if (skinRead(skinName) != 0) {
-            mainVisible = True;
-            return;
+            gmp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_SKIN_SKINCFG_SkinCfgError, skinName);
+            mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
         }
     }
 
