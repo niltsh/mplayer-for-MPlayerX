@@ -46,7 +46,7 @@
 #endif
 #ifdef CONFIG_GL_OSX
 #include "osx_common.h"
-#include <OpenGL/OpenGL.h>
+#include <OpenGL/gl.h>
 #else
 #include <GL/gl.h>
 #endif
