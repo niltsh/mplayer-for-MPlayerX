@@ -941,9 +941,9 @@ int vo_x11_check_events(Display * mydisplay)
                 break;
             case MapNotify:
                 if (WinID < 0) {
-                vo_hint.win_gravity = old_gravity;
-                XSetWMNormalHints(mDisplay, vo_window, &vo_hint);
-                vo_fs_flip = 0;
+                    vo_hint.win_gravity = old_gravity;
+                    XSetWMNormalHints(mDisplay, vo_window, &vo_hint);
+                    vo_fs_flip = 0;
                 }
                 break;
             case DestroyNotify:
