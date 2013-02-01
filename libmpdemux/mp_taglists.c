@@ -94,6 +94,7 @@ static const struct AVCodecTag mp_codecid_override_tags[] = {
     { AV_CODEC_ID_AAC,               MKTAG('M', 'P', '4', 'A') },
     { AV_CODEC_ID_AAC_LATM,          MKTAG('M', 'P', '4', 'L') },
     { AV_CODEC_ID_AC3,               0x2000 },
+    { AV_CODEC_ID_ADPCM_G722,        0x28f },
     { AV_CODEC_ID_ADPCM_IMA_EA_SEAD, MKTAG('S', 'E', 'A', 'D') },
     { AV_CODEC_ID_ADPCM_IMA_AMV,     MKTAG('A', 'M', 'V', 'A') },
     { AV_CODEC_ID_DTS,               0x2001 },
