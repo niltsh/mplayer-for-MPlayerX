@@ -261,12 +261,16 @@ static int init(sh_video_t *sh){
 
     if (lavc_codec->capabilities & CODEC_CAP_DR1 && !do_vis_debug &&
         lavc_codec->id != AV_CODEC_ID_INTERPLAY_VIDEO &&
+        lavc_codec->id != AV_CODEC_ID_H264 &&
         lavc_codec->id != AV_CODEC_ID_VP8)
         ctx->do_dr1=1;
     // TODO: fix and enable again. This currently causes issues when using filters
     // and seeking, usually failing with the "Ran out of numbered images" message,
     // but bugzilla #2118 might be related as well.
-    //ctx->nonref_dr = lavc_codec->id == AV_CODEC_ID_H264;
+    if (0 && lavc_codec->id == AV_CODEC_ID_H264) {
+        ctx->do_dr1 = 1;
+        ctx->nonref_dr = 1;
+    }
     ctx->ip_count= ctx->b_count= 0;
 
     ctx->pic = avcodec_alloc_frame();
