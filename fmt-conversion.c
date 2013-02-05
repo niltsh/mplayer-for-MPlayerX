@@ -166,7 +166,7 @@ int pixfmt2imgfmt(enum AVPixelFormat pix_fmt)
             break;
     fmt = conversion_map[i].fmt;
     if (!fmt)
-        mp_msg(MSGT_GLOBAL, MSGL_ERR, "Unsupported AVPixelFormat %i\n", pix_fmt);
+        mp_msg(MSGT_GLOBAL, MSGL_DBG2, "Unsupported AVPixelFormat %i\n", pix_fmt);
     return fmt;
 }
 
