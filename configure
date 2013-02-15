@@ -69,6 +69,15 @@ export LC_ALL=C
 # Store the configure line that was used
 configuration="$*"
 
+# utility functions
+tolower() {
+  tr '[A-Z]' '[a-z]'
+}
+
+toupper() {
+  tr '[a-z]' '[A-Z]'
+}
+
 # Prefer these macros to full length text !
 # These macros only return an error code - NO display is done
 compile_check() {
@@ -225,7 +234,7 @@ die () {
 
 # OS test booleans functions
 issystem() {
-  test "$(echo $system_name | tr A-Z a-z)" = "$(echo $1 | tr A-Z a-z)"
+  test "$(echo $system_name | tolower)" = "$(echo $1 | tolower)"
 }
 aix()       { issystem "AIX"; }
 amigaos()   { issystem "AmigaOS"; }
@@ -679,24 +688,24 @@ _libavcodec_mpegaudio_hp=yes
 _libopencore_amrnb=auto
 _libopencore_amrwb=auto
 libopenjpeg=auto
-libavdecoders_all=$(sed -n 's/^[^#]*DEC.*(.*, *\(.*\)).*/\1_decoder/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
+libavdecoders_all=$(sed -n 's/^[^#]*DEC.*(.*, *\(.*\)).*/\1_decoder/p' ffmpeg/libavcodec/allcodecs.c | toupper)
 libavdecoders=$(echo $libavdecoders_all | sed -e 's/ LIB[A-Z0-9_]*_DECODER//g')
-libavencoders_all=$(sed -n 's/^[^#]*ENC.*(.*, *\(.*\)).*/\1_encoder/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
+libavencoders_all=$(sed -n 's/^[^#]*ENC.*(.*, *\(.*\)).*/\1_encoder/p' ffmpeg/libavcodec/allcodecs.c | toupper)
 libavencoders=$(echo $libavencoders_all | sed -e 's/ LIB[A-Z0-9_]*_ENCODER//g')
-libavparsers_all=$(sed -n 's/^[^#]*PARSER.*(.*, *\(.*\)).*/\1_parser/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
+libavparsers_all=$(sed -n 's/^[^#]*PARSER.*(.*, *\(.*\)).*/\1_parser/p' ffmpeg/libavcodec/allcodecs.c | toupper)
 libavparsers=$libavparsers_all
-libavbsfs_all=$(sed -n 's/^[^#]*BSF.*(.*, *\(.*\)).*/\1_bsf/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
+libavbsfs_all=$(sed -n 's/^[^#]*BSF.*(.*, *\(.*\)).*/\1_bsf/p' ffmpeg/libavcodec/allcodecs.c | toupper)
 libavbsfs=$libavbsfs_all
-libavhwaccels_all=$(sed -n 's/^[^#]*HWACCEL.*(.*, *\(.*\)).*/\1_hwaccel/p' ffmpeg/libavcodec/allcodecs.c | tr '[a-z]' '[A-Z]')
+libavhwaccels_all=$(sed -n 's/^[^#]*HWACCEL.*(.*, *\(.*\)).*/\1_hwaccel/p' ffmpeg/libavcodec/allcodecs.c | toupper)
 # Disable all hardware accelerators for now.
 libavhwaccels=
-libavdemuxers_all=$(sed -n 's/^[^#]*DEMUX.*(.*, *\(.*\)).*/\1_demuxer/p' ffmpeg/libavformat/allformats.c | tr '[a-z]' '[A-Z]')
+libavdemuxers_all=$(sed -n 's/^[^#]*DEMUX.*(.*, *\(.*\)).*/\1_demuxer/p' ffmpeg/libavformat/allformats.c | toupper)
 libavdemuxers=$(echo $libavdemuxers_all | sed -e 's/ LIB[A-Z0-9_]*_DEMUXER//g' -e s/REDIR_DEMUXER// -e s/AVISYNTH_DEMUXER//)
-libavmuxers_all=$(sed -n 's/^[^#]*_MUX.*(.*, *\(.*\)).*/\1_muxer/p' ffmpeg/libavformat/allformats.c | tr '[a-z]' '[A-Z]')
+libavmuxers_all=$(sed -n 's/^[^#]*_MUX.*(.*, *\(.*\)).*/\1_muxer/p' ffmpeg/libavformat/allformats.c | toupper)
 libavmuxers=$(echo $libavmuxers_all | sed -e 's/ LIB[A-Z0-9_]*_MUXER//g' -e s/RTP_MUXER// -e s/RTSP_MUXER// -e s/SAP_MUXER//)
-libavprotocols_all=$(sed -n 's/^[^#]*PROTOCOL.*(.*, *\(.*\)).*/\1_protocol/p' ffmpeg/libavformat/allformats.c | tr '[a-z]' '[A-Z]')
+libavprotocols_all=$(sed -n 's/^[^#]*PROTOCOL.*(.*, *\(.*\)).*/\1_protocol/p' ffmpeg/libavformat/allformats.c | toupper)
 libavprotocols=$(echo $libavprotocols | sed -e s/HTTPS_PROTOCOL// -e s/TLS_PROTOCOL// -e s/BLURAY_PROTOCOL// -e s/FFRTMPCRYPT_PROTOCOL//)
-libavfilters_all=$(sed -n 's/^[^#]*FILTER.*(.*, *\(.*\),.*).*/\1_filter/p' ffmpeg/libavfilter/allfilters.c | tr '[a-z]' '[A-Z]')
+libavfilters_all=$(sed -n 's/^[^#]*FILTER.*(.*, *\(.*\),.*).*/\1_filter/p' ffmpeg/libavfilter/allfilters.c | toupper)
 libavfilters=$(echo $libavfilters_all | sed -e 's/ LIB[A-Z0-9_]*_FILTER//g' -e 's/ FREI0R[A-Z0-9_]*_FILTER//g' -e 's/ OCV_FILTER//g' -e 's/ MP_FILTER//g')
 _mencoder=yes
 _mplayer=yes
@@ -1291,20 +1300,20 @@ for ac_option do
   --disable-libopencore_amrnb)  _libopencore_amrnb=no   ;;
   --enable-libopencore_amrwb)   _libopencore_amrwb=yes  ;;
   --disable-libopencore_amrwb)  _libopencore_amrwb=no   ;;
-  --enable-decoder=*)  libavdecoders="$libavdecoders $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
-  --disable-decoder=*) libavdecoders=$(echo $libavdecoders | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
-  --enable-encoder=*)  libavencoders="$libavencoders $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
-  --disable-encoder=*) libavencoders=$(echo $libavencoders | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
-  --enable-parser=*)   libavparsers="$libavparsers $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
-  --disable-parser=*)  libavparsers=$(echo $libavparsers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
-  --enable-protocol=*)   libavprotocols="$libavprotocols $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
-  --disable-protocol=*)  libavprotocols=$(echo $libavprotocols | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
-  --enable-demuxer=*)  libavdemuxers="$libavdemuxers $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
-  --disable-demuxer=*) libavdemuxers=$(echo $libavdemuxers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
-  --enable-muxer=*)    libavmuxers="$libavmuxers $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
-  --disable-muxer=*)    libavmuxers=$(echo $libavmuxers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
-  --enable-filter=*)    libavfilters="$libavfilters $(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')" ;;
-  --disable-filter=*)    libavfilters=$(echo $libavfilters | sed "s/$(echo $ac_option | cut -d '=' -f 2 | tr '[a-z]' '[A-Z]')//g") ;;
+  --enable-decoder=*)  libavdecoders="$libavdecoders $(echo $ac_option | cut -d '=' -f 2 | toupper)" ;;
+  --disable-decoder=*) libavdecoders=$(echo $libavdecoders | sed "s/$(echo $ac_option | cut -d '=' -f 2 | toupper)//g") ;;
+  --enable-encoder=*)  libavencoders="$libavencoders $(echo $ac_option | cut -d '=' -f 2 | toupper)" ;;
+  --disable-encoder=*) libavencoders=$(echo $libavencoders | sed "s/$(echo $ac_option | cut -d '=' -f 2 | toupper)//g") ;;
+  --enable-parser=*)   libavparsers="$libavparsers $(echo $ac_option | cut -d '=' -f 2 | toupper)" ;;
+  --disable-parser=*)  libavparsers=$(echo $libavparsers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | toupper)//g") ;;
+  --enable-protocol=*)   libavprotocols="$libavprotocols $(echo $ac_option | cut -d '=' -f 2 | toupper)" ;;
+  --disable-protocol=*)  libavprotocols=$(echo $libavprotocols | sed "s/$(echo $ac_option | cut -d '=' -f 2 | toupper)//g") ;;
+  --enable-demuxer=*)  libavdemuxers="$libavdemuxers $(echo $ac_option | cut -d '=' -f 2 | toupper)" ;;
+  --disable-demuxer=*) libavdemuxers=$(echo $libavdemuxers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | toupper)//g") ;;
+  --enable-muxer=*)    libavmuxers="$libavmuxers $(echo $ac_option | cut -d '=' -f 2 | toupper)" ;;
+  --disable-muxer=*)    libavmuxers=$(echo $libavmuxers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | toupper)//g") ;;
+  --enable-filter=*)    libavfilters="$libavfilters $(echo $ac_option | cut -d '=' -f 2 | toupper)" ;;
+  --disable-filter=*)    libavfilters=$(echo $libavfilters | sed "s/$(echo $ac_option | cut -d '=' -f 2 | toupper)//g") ;;
   --enable-ffmpeg_a)    ffmpeg_a=yes    ;;
   --disable-ffmpeg_a)   ffmpeg_a=no     ;;
   --enable-ffmpeg_so)   ffmpeg_so=yes   ;;
@@ -1642,7 +1651,7 @@ if test -z "$_target" ; then
 else # if test -z "$_target"
   for component in 3 2; do
     system_name=$(echo $_target | cut -d '-' -f $component)
-    case "$(echo $system_name | tr A-Z a-z)" in
+    case "$(echo $system_name | tolower)" in
       linux) system_name=Linux ;;
       freebsd) system_name=FreeBSD ;;
       gnu/kfreebsd) system_name=FreeBSD ;;
@@ -3227,10 +3236,10 @@ echocheck $func
 eval _$func=no
 statement_check math.h "${func}(2.0)" -D_ISOC99_SOURCE && eval _$func=yes
 if eval test "x\$_$func" = "xyes"; then
-  eval def_$func="\"#define HAVE_$(echo $func | tr '[a-z]' '[A-Z]') 1\""
+  eval def_$func="\"#define HAVE_$(echo $func | toupper) 1\""
   echores yes
 else
-  eval def_$func="\"#define HAVE_$(echo $func | tr '[a-z]' '[A-Z]') 0\""
+  eval def_$func="\"#define HAVE_$(echo $func | toupper) 0\""
   echores no
 fi
 done
@@ -3241,10 +3250,10 @@ echocheck $func
 eval _$func=no
 statement_check math.h "${func}(1.0,1.0)" -D_ISOC99_SOURCE && eval _$func=yes
 if eval test "x\$_$func" = "xyes"; then
-  eval def_$func="\"#define HAVE_$(echo $func | tr '[a-z]' '[A-Z]') 1\""
+  eval def_$func="\"#define HAVE_$(echo $func | toupper) 1\""
   echores yes
 else
-  eval def_$func="\"#define HAVE_$(echo $func | tr '[a-z]' '[A-Z]') 0\""
+  eval def_$func="\"#define HAVE_$(echo $func | toupper) 0\""
   echores no
 fi
 done
@@ -4743,7 +4752,7 @@ if test "$_vidix" = yes ; then
   (test $host_arch = "sh" && linux) || _vidix_drivers=$(echo $_vidix_drivers | sed s/sh_veu//)
 
   for driver in $_vidix_drivers ; do
-    uc_driver=$(echo $driver | tr '[a-z]' '[A-Z]')
+    uc_driver=$(echo $driver | toupper)
     eval _vidix_drv_${driver}=yes
     eval def_vidix_drv_${driver}=\"\#define CONFIG_VIDIX_DRV_${uc_driver} 1\"
   done
@@ -8155,8 +8164,8 @@ fi
 #############################################################################
 
 mak_enable () {
-list=$(echo $1 | tr '[a-z]' '[A-Z]')
-item=$(echo $2 | tr '[a-z]' '[A-Z]')
+list=$(echo $1 | toupper)
+item=$(echo $2 | toupper)
 nprefix=$3;
 for part in $list; do
   if $(echo $item | grep -q -E "(^| )$part($| )"); then
@@ -8524,8 +8533,8 @@ EOF
 #############################################################################
 
 ff_config_enable () {
-list=$(echo $1 | tr '[a-z]' '[A-Z]')
-item=$(echo $2 | tr '[a-z]' '[A-Z]')
+list=$(echo $1 | toupper)
+item=$(echo $2 | toupper)
 _nprefix=$4;
 _defineprefix=$3;
 _postfix=$5;
