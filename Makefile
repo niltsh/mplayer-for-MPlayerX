@@ -847,9 +847,9 @@ osdep/mplayer-rc.o: osdep/mplayer.exe.manifest
 
 gui/%: CFLAGS += -Wno-strict-prototypes
 
-libdvdcss/%:   CFLAGS := -Ilibdvdcss -D_GNU_SOURCE -DVERSION=\"1.2.12\" $(CFLAGS_LIBDVDCSS) $(CFLAGS)
-libdvdnav/%:   CFLAGS := -Ilibdvdnav -D_GNU_SOURCE -DHAVE_CONFIG_H -DVERSION=\"MPlayer-custom\" $(CFLAGS)
-libdvdread4/%: CFLAGS := -Ilibdvdread4 -D_GNU_SOURCE $(CFLAGS_LIBDVDCSS_DVDREAD) $(CFLAGS)
+libdvdcss/%:   CFLAGS := -Ilibdvdcss -DVERSION=\"1.2.12\" $(CFLAGS_LIBDVDCSS) $(CFLAGS)
+libdvdnav/%:   CFLAGS := -Ilibdvdnav -DHAVE_CONFIG_H -DVERSION=\"MPlayer-custom\" $(CFLAGS)
+libdvdread4/%: CFLAGS := -Ilibdvdread4 $(CFLAGS_LIBDVDCSS_DVDREAD) $(CFLAGS)
 
 loader/%: CFLAGS += -fno-omit-frame-pointer $(CFLAGS_NO_OMIT_LEAF_FRAME_POINTER)
 #loader/%: CFLAGS += -Ddbg_printf=__vprintf -DTRACE=__vprintf -DDETAILED_OUT
