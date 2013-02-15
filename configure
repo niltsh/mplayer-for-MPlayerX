@@ -695,7 +695,6 @@ libavdemuxers=$(echo $libavdemuxers_all | sed -e 's/ LIB[A-Z0-9_]*_DEMUXER//g' -
 libavmuxers_all=$(sed -n 's/^[^#]*_MUX.*(.*, *\(.*\)).*/\1_muxer/p' ffmpeg/libavformat/allformats.c | tr '[a-z]' '[A-Z]')
 libavmuxers=$(echo $libavmuxers_all | sed -e 's/ LIB[A-Z0-9_]*_MUXER//g' -e s/RTP_MUXER// -e s/RTSP_MUXER// -e s/SAP_MUXER//)
 libavprotocols_all=$(sed -n 's/^[^#]*PROTOCOL.*(.*, *\(.*\)).*/\1_protocol/p' ffmpeg/libavformat/allformats.c | tr '[a-z]' '[A-Z]')
-libavprotocols=$libavprotocols_all
 libavprotocols=$(echo $libavprotocols | sed -e s/HTTPS_PROTOCOL// -e s/TLS_PROTOCOL// -e s/BLURAY_PROTOCOL// -e s/FFRTMPCRYPT_PROTOCOL//)
 libavfilters_all=$(sed -n 's/^[^#]*FILTER.*(.*, *\(.*\),.*).*/\1_filter/p' ffmpeg/libavfilter/allfilters.c | tr '[a-z]' '[A-Z]')
 libavfilters=$(echo $libavfilters_all | sed -e 's/ LIB[A-Z0-9_]*_FILTER//g' -e 's/ FREI0R[A-Z0-9_]*_FILTER//g' -e 's/ OCV_FILTER//g' -e 's/ MP_FILTER//g')
