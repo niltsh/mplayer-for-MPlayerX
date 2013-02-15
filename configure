@@ -905,116 +905,125 @@ def_stream_cache="#define CONFIG_STREAM_CACHE 1"
 def_priority="#undef CONFIG_PRIORITY"
 def_pthread_cache="#undef PTHREAD_CACHE"
 shmem=no
+
+option_value(){
+  echo $(echo $* | cut -d '=' -f 2-)
+}
+
+option_value_uc(){
+  echo $(option_value $1 | toupper)
+}
+
 for ac_option do
   case "$ac_option" in
   --help|-help|-h)
     show_help
     ;;
   --prefix=*)
-    _prefix=$(echo $ac_option | cut -d '=' -f 2)
+    _prefix=$(option_value $ac_option)
     ;;
   --bindir=*)
-    _bindir=$(echo $ac_option | cut -d '=' -f 2)
+    _bindir=$(option_value $ac_option)
     ;;
   --datadir=*)
-    _datadir=$(echo $ac_option | cut -d '=' -f 2)
+    _datadir=$(option_value $ac_option)
     ;;
   --mandir=*)
-    _mandir=$(echo $ac_option | cut -d '=' -f 2)
+    _mandir=$(option_value $ac_option)
     ;;
   --confdir=*)
-    _confdir=$(echo $ac_option | cut -d '=' -f 2)
+    _confdir=$(option_value $ac_option)
     ;;
   --libdir=*)
-    _libdir=$(echo $ac_option | cut -d '=' -f 2)
+    _libdir=$(option_value $ac_option)
     ;;
   --codecsdir=*)
-    _codecsdir=$(echo $ac_option | cut -d '=' -f 2)
+    _codecsdir=$(option_value $ac_option)
     ;;
 
   --with-install=*)
-    _install=$(echo $ac_option | cut -d '=' -f 2 )
+    _install=$(option_value $ac_option)
     ;;
   --with-xvmclib=*)
-    _xvmclib=$(echo $ac_option | cut -d '=' -f 2)
+    _xvmclib=$(option_value $ac_option)
     ;;
 
   --with-sdl-config=*)
-    _sdlconfig=$(echo $ac_option | cut -d '=' -f 2)
+    _sdlconfig=$(option_value $ac_option)
     ;;
   --with-freetype-config=*)
-    _freetypeconfig=$(echo $ac_option | cut -d '=' -f 2)
+    _freetypeconfig=$(option_value $ac_option)
     ;;
   --with-gtk-config=*)
-    _gtkconfig=$(echo $ac_option | cut -d '=' -f 2)
+    _gtkconfig=$(option_value $ac_option)
     ;;
   --with-glib-config=*)
-    _glibconfig=$(echo $ac_option | cut -d '=' -f 2)
+    _glibconfig=$(option_value $ac_option)
     ;;
   --with-dvdnav-config=*)
-    _dvdnavconfig=$(echo $ac_option | cut -d '=' -f 2)
+    _dvdnavconfig=$(option_value $ac_option)
     ;;
   --with-dvdread-config=*)
-    _dvdreadconfig=$(echo $ac_option | cut -d '=' -f 2)
+    _dvdreadconfig=$(option_value $ac_option)
     ;;
 
   --extra-cflags=*)
-    extra_cflags=$(echo $ac_option | cut -d '=' -f 2-)
+    extra_cflags=$(option_value $ac_option)
     ;;
   --extra-ldflags=*)
-    extra_ldflags=$(echo $ac_option | cut -d '=' -f 2-)
+    extra_ldflags=$(option_value $ac_option)
     ;;
   --extra-libs=*)
-    extra_libs=$(echo $ac_option | cut -d '=' -f 2)
+    extra_libs=$(option_value $ac_option)
     ;;
   --extra-libs-mplayer=*)
-    libs_mplayer=$(echo $ac_option | cut -d '=' -f 2)
+    libs_mplayer=$(option_value $ac_option)
     ;;
   --extra-libs-mencoder=*)
-    libs_mencoder=$(echo $ac_option | cut -d '=' -f 2)
+    libs_mencoder=$(option_value $ac_option)
     ;;
 
   --target=*)
-    _target=$(echo $ac_option | cut -d '=' -f 2)
+    _target=$(option_value $ac_option)
     ;;
   --cc=*)
-    _cc=$(echo $ac_option | cut -d '=' -f 2)
+    _cc=$(option_value $ac_option)
     ;;
   --host-cc=*)
-    _host_cc=$(echo $ac_option | cut -d '=' -f 2)
+    _host_cc=$(option_value $ac_option)
     ;;
   --as=*)
-    _as=$(echo $ac_option | cut -d '=' -f 2)
+    _as=$(option_value $ac_option)
     ;;
   --nm=*)
-    _nm=$(echo $ac_option | cut -d '=' -f 2)
+    _nm=$(option_value $ac_option)
     ;;
   --yasm=*)
-    _yasm=$(echo $ac_option | cut -d '=' -f 2)
+    _yasm=$(option_value $ac_option)
     ;;
   --ar=*)
-    _ar=$(echo $ac_option | cut -d '=' -f 2)
+    _ar=$(option_value $ac_option)
     ;;
   --ranlib=*)
-    _ranlib=$(echo $ac_option | cut -d '=' -f 2)
+    _ranlib=$(option_value $ac_option)
     ;;
   --windres=*)
-    _windres=$(echo $ac_option | cut -d '=' -f 2)
+    _windres=$(option_value $ac_option)
     ;;
   --charset=*)
-    _charset=$(echo $ac_option | cut -d '=' -f 2)
+    _charset=$(option_value $ac_option)
     ;;
   --language-doc=*)
-    language_doc=$(echo $ac_option | cut -d '=' -f 2)
+    language_doc=$(option_value $ac_option)
     ;;
   --language-man=*)
-    language_man=$(echo $ac_option | cut -d '=' -f 2)
+    language_man=$(option_value $ac_option)
     ;;
   --language-msg=*)
-    language_msg=$(echo $ac_option | cut -d '=' -f 2)
+    language_msg=$(option_value $ac_option)
     ;;
   --language=*)
-    language=$(echo $ac_option | cut -d '=' -f 2)
+    language=$(option_value $ac_option)
     ;;
 
   --enable-static)
@@ -1033,7 +1042,7 @@ for ac_option do
     _debug='-g'
     ;;
   --enable-debug=*)
-    _debug=$(echo $_echo_n '-g'$_echo_c; echo $ac_option | cut -d '=' -f 2)
+    _debug=$(echo $_echo_n '-g'$_echo_c; option_value $ac_option)
     ;;
   --disable-debug)
     _debug=
@@ -1269,7 +1278,7 @@ for ac_option do
   --enable-vidix)       _vidix=yes      ;;
   --disable-vidix)      _vidix=no       ;;
   --with-vidix-drivers=*)
-    _vidix_drivers=$(echo $ac_option | cut -d '=' -f 2)
+    _vidix_drivers=$(option_value $ac_option)
     ;;
   --disable-vidix-pcidb)  _vidix_pcidb=no         ;;
   --enable-dhahelper)   _dhahelper=yes  ;;
@@ -1300,20 +1309,20 @@ for ac_option do
   --disable-libopencore_amrnb)  _libopencore_amrnb=no   ;;
   --enable-libopencore_amrwb)   _libopencore_amrwb=yes  ;;
   --disable-libopencore_amrwb)  _libopencore_amrwb=no   ;;
-  --enable-decoder=*)  libavdecoders="$libavdecoders $(echo $ac_option | cut -d '=' -f 2 | toupper)" ;;
-  --disable-decoder=*) libavdecoders=$(echo $libavdecoders | sed "s/$(echo $ac_option | cut -d '=' -f 2 | toupper)//g") ;;
-  --enable-encoder=*)  libavencoders="$libavencoders $(echo $ac_option | cut -d '=' -f 2 | toupper)" ;;
-  --disable-encoder=*) libavencoders=$(echo $libavencoders | sed "s/$(echo $ac_option | cut -d '=' -f 2 | toupper)//g") ;;
-  --enable-parser=*)   libavparsers="$libavparsers $(echo $ac_option | cut -d '=' -f 2 | toupper)" ;;
-  --disable-parser=*)  libavparsers=$(echo $libavparsers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | toupper)//g") ;;
-  --enable-protocol=*)   libavprotocols="$libavprotocols $(echo $ac_option | cut -d '=' -f 2 | toupper)" ;;
-  --disable-protocol=*)  libavprotocols=$(echo $libavprotocols | sed "s/$(echo $ac_option | cut -d '=' -f 2 | toupper)//g") ;;
-  --enable-demuxer=*)  libavdemuxers="$libavdemuxers $(echo $ac_option | cut -d '=' -f 2 | toupper)" ;;
-  --disable-demuxer=*) libavdemuxers=$(echo $libavdemuxers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | toupper)//g") ;;
-  --enable-muxer=*)    libavmuxers="$libavmuxers $(echo $ac_option | cut -d '=' -f 2 | toupper)" ;;
-  --disable-muxer=*)    libavmuxers=$(echo $libavmuxers | sed "s/$(echo $ac_option | cut -d '=' -f 2 | toupper)//g") ;;
-  --enable-filter=*)    libavfilters="$libavfilters $(echo $ac_option | cut -d '=' -f 2 | toupper)" ;;
-  --disable-filter=*)    libavfilters=$(echo $libavfilters | sed "s/$(echo $ac_option | cut -d '=' -f 2 | toupper)//g") ;;
+  --enable-decoder=*)  libavdecoders="$libavdecoders $(option_value_uc $ac_option)" ;;
+  --disable-decoder=*) libavdecoders=$(echo $libavdecoders | sed "s/$(option_value_uc $ac_option)//g") ;;
+  --enable-encoder=*)  libavencoders="$libavencoders $(option_value_uc $ac_option)" ;;
+  --disable-encoder=*) libavencoders=$(echo $libavencoders | sed "s/$(option_value_uc $ac_option)//g") ;;
+  --enable-parser=*)   libavparsers="$libavparsers $(option_value_uc $ac_option)" ;;
+  --disable-parser=*)  libavparsers=$(echo $libavparsers | sed "s/$(option_value_uc $ac_option)//g") ;;
+  --enable-protocol=*)   libavprotocols="$libavprotocols $(option_value_uc $ac_option)" ;;
+  --disable-protocol=*)  libavprotocols=$(echo $libavprotocols | sed "s/$(option_value_uc $ac_option)//g") ;;
+  --enable-demuxer=*)  libavdemuxers="$libavdemuxers $(option_value_uc $ac_option)" ;;
+  --disable-demuxer=*) libavdemuxers=$(echo $libavdemuxers | sed "s/$(option_value_uc $ac_option)//g") ;;
+  --enable-muxer=*)    libavmuxers="$libavmuxers $(option_value_uc $ac_option)" ;;
+  --disable-muxer=*)    libavmuxers=$(echo $libavmuxers | sed "s/$(option_value_uc $ac_option)//g") ;;
+  --enable-filter=*)    libavfilters="$libavfilters $(option_value_uc $ac_option)" ;;
+  --disable-filter=*)    libavfilters=$(echo $libavfilters | sed "s/$(option_value_uc $ac_option)//g") ;;
   --enable-ffmpeg_a)    ffmpeg_a=yes    ;;
   --disable-ffmpeg_a)   ffmpeg_a=no     ;;
   --enable-ffmpeg_so)   ffmpeg_so=yes   ;;
