@@ -3891,8 +3891,10 @@ EOF
 fi
 if test "$_iconv" = yes ; then
   def_iconv='#define CONFIG_ICONV 1'
+  def_have_iconv='#define HAVE_ICONV 1'
 else
   def_iconv='#undef CONFIG_ICONV'
+  def_have_iconv='#define HAVE_ICONV 0'
 fi
 echores "$_iconv"
 
@@ -8663,6 +8665,7 @@ $def_dos_paths
 $def_extern_asm
 $def_extern_prefix
 $def_iconv
+$def_have_iconv
 $def_kstat
 $def_macosx_bundle
 $def_macosx_finder
