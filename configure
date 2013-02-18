@@ -9076,6 +9076,7 @@ $def_truncf
 
 /* Some FFmpeg codecs depend on these. Enable them unconditionally for now. */
 #define CONFIG_AANDCTTABLES 1
+#define CONFIG_AUDIO_FRAME_QUEUE 1
 #define CONFIG_DCT 1
 #define CONFIG_DWT 1
 #define CONFIG_FFT 1
