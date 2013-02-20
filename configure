@@ -704,17 +704,34 @@ libavmuxers_all=$(list_subparts    _MUX     muxer    format/allformats.c)
 libavprotocols_all=$(list_subparts PROTOCOL protocol format/allformats.c)
 libavfilters_all=$(list_subparts   FILTER   filter   filter/allfilters.c)
 
-libavdecoders=$(echo $libavdecoders_all | sed -e 's/ LIB[A-Z0-9_]*_DECODER//g')
-libavencoders=$(echo $libavencoders_all | sed -e 's/ LIB[A-Z0-9_]*_ENCODER//g')
-libavparsers=$libavparsers_all
-libavbsfs=$libavbsfs_all
+filter_out_component() {
+  eval list=\$libav${1}s
+  type=$(echo $1 | toupper)
+  shift
+  for item in $@; do
+    filter_patterns="$filter_patterns -e s/[^A-Z0-9_]${item}_${type}//g"
+  done
+  echo " $list" | sed $filter_patterns
+}
+
+libavdecoders=$(echo $libavdecoders_all)
+libavencoders=$(echo $libavencoders_all)
+libavparsers=$(echo $libavparsers_all)
+libavbsfs=$(echo $libavbsfs_all)
 # Disable all hardware accelerators for now.
 libavhwaccels=
-libavdemuxers=$(echo $libavdemuxers_all | sed -e 's/ LIB[A-Z0-9_]*_DEMUXER//g' -e s/REDIR_DEMUXER// -e s/AVISYNTH_DEMUXER//)
-libavmuxers=$(echo $libavmuxers_all | sed -e 's/ LIB[A-Z0-9_]*_MUXER//g' -e s/RTP_MUXER// -e s/RTSP_MUXER// -e s/SAP_MUXER//)
-libavprotocols=$libavprotocols_all
-libavprotocols=$(echo $libavprotocols | sed -e s/HTTPS_PROTOCOL// -e s/TLS_PROTOCOL// -e s/BLURAY_PROTOCOL// -e s/FFRTMPCRYPT_PROTOCOL//)
-libavfilters=$(echo $libavfilters_all | sed -e 's/ LIB[A-Z0-9_]*_FILTER//g' -e 's/ FREI0R[A-Z0-9_]*_FILTER//g' -e 's/ OCV_FILTER//g' -e 's/ MP_FILTER//g')
+libavdemuxers=$(echo $libavdemuxers_all)
+libavmuxers=$(echo $libavmuxers_all)
+libavprotocols=$(echo $libavprotocols_all)
+libavfilters=$(echo $libavfilters_all)
+
+libavdecoders=$(filter_out_component decoder 'LIB[A-Z0-9_]*')
+libavencoders=$(filter_out_component encoder 'LIB[A-Z0-9_]*')
+libavdemuxers=$(filter_out_component demuxer 'AVISYNTH LIB[A-Z0-9_]* REDIR')
+libavmuxers=$(filter_out_component muxer 'LIB[A-Z0-9_]* RTP RTSP SAP')
+libavprotocols=$(filter_out_component protocol 'BLURAY FFRTMPCRYPT HTTPS TLS')
+libavfilters=$(filter_out_component filter 'FREI0R[A-Z0-9_]* LIB[A-Z0-9_]* MP OCV')
+
 _mencoder=yes
 _mplayer=yes
 _x11=auto
@@ -1318,19 +1335,19 @@ for ac_option do
   --enable-libopencore_amrwb)   _libopencore_amrwb=yes  ;;
   --disable-libopencore_amrwb)  _libopencore_amrwb=no   ;;
   --enable-decoder=*)  libavdecoders="$libavdecoders $(option_value_uc $ac_option)" ;;
-  --disable-decoder=*) libavdecoders=$(echo $libavdecoders | sed "s/$(option_value_uc $ac_option)//g") ;;
+  --disable-decoder=*) libavdecoders=$(filter_out_component decoder "$(option_value_uc $ac_option)") ;;
   --enable-encoder=*)  libavencoders="$libavencoders $(option_value_uc $ac_option)" ;;
-  --disable-encoder=*) libavencoders=$(echo $libavencoders | sed "s/$(option_value_uc $ac_option)//g") ;;
+  --disable-encoder=*) libavencoders=$(filter_out_component encoder "$(option_value_uc $ac_option)") ;;
   --enable-parser=*)   libavparsers="$libavparsers $(option_value_uc $ac_option)" ;;
-  --disable-parser=*)  libavparsers=$(echo $libavparsers | sed "s/$(option_value_uc $ac_option)//g") ;;
+  --disable-parser=*)  libavparsers=$(filter_out_component parser "$(option_value_uc $ac_option)") ;;
   --enable-protocol=*)   libavprotocols="$libavprotocols $(option_value_uc $ac_option)" ;;
-  --disable-protocol=*)  libavprotocols=$(echo $libavprotocols | sed "s/$(option_value_uc $ac_option)//g") ;;
+  --disable-protocol=*)  libavprotocols=$(filter_out_component protocol "$(option_value_uc $ac_option)") ;;
   --enable-demuxer=*)  libavdemuxers="$libavdemuxers $(option_value_uc $ac_option)" ;;
-  --disable-demuxer=*) libavdemuxers=$(echo $libavdemuxers | sed "s/$(option_value_uc $ac_option)//g") ;;
+  --disable-demuxer=*) libavdemuxers=$(filter_out_component demuxer "$(option_value_uc $ac_option)") ;;
   --enable-muxer=*)    libavmuxers="$libavmuxers $(option_value_uc $ac_option)" ;;
-  --disable-muxer=*)    libavmuxers=$(echo $libavmuxers | sed "s/$(option_value_uc $ac_option)//g") ;;
+  --disable-muxer=*)    libavmuxers=$(filter_out_component muxer "$(option_value_uc $ac_option)") ;;
   --enable-filter=*)    libavfilters="$libavfilters $(option_value_uc $ac_option)" ;;
-  --disable-filter=*)    libavfilters=$(echo $libavfilters | sed "s/$(option_value_uc $ac_option)//g") ;;
+  --disable-filter=*)   libavfilters=$(filter_out_component filter "$(option_value_uc $ac_option)") ;;
   --enable-ffmpeg_a)    ffmpeg_a=yes    ;;
   --disable-ffmpeg_a)   ffmpeg_a=no     ;;
   --enable-ffmpeg_so)   ffmpeg_so=yes   ;;
@@ -3509,8 +3526,8 @@ else
   def_network='#define CONFIG_NETWORK 0'
   def_networking='#undef CONFIG_NETWORKING'
   def_rtpdec='#define CONFIG_RTPDEC 0'
-  libavprotocols=$(echo $libavprotocols | sed -e s/GOPHER_PROTOCOL// -e s/HTTP_PROTOCOL// -e s/RTMP_PROTOCOL// -e s/RTP_PROTOCOL// -e s/TCP_PROTOCOL// -e s/UDP_PROTOCOL// -e s/MMSH_PROTOCOL// -e s/MMST_PROTOCOL// -e s/SCTP_PROTOCOL//)
-  libavdemuxers=$(echo $libavdemuxers | sed -e s/RTSP_DEMUXER// -e s/SDP_DEMUXER// -e s/SAP_DEMUXER// -e s/RTP_DEMUXER//)
+  libavprotocols=$(filter_out_component protocol 'GOPHER HTTP MMSH MMST RTMP RTP SCTP TCP UDP')
+  libavdemuxers=$(filter_out_component demuxer 'RTP RTSP SAP SDP')
 fi
 echores "$networking"
 
@@ -3568,7 +3585,7 @@ if test "$_sctp" = auto ; then
   fi
 fi
 if test "$_sctp" = no ; then
-  libavprotocols=$(echo $libavprotocols | sed -e s/SCTP_PROTOCOL//)
+  libavprotocols=$(filter_out_component protocol 'SCTP')
 fi
 echores "$_sctp"
 
@@ -4571,7 +4588,7 @@ if test "$_xvmc" = yes ; then
 else
   def_xvmc='#define CONFIG_XVMC 0'
   novomodules="xvmc $novomodules"
-  libavdecoders=$(echo $libavdecoders | sed -e s/MPEG_XVMC_DECODER//)
+  libavdecoders=$(filter_out_component decoder 'MPEG_XVMC')
 fi
 echores "$_xvmc"
 
@@ -4587,7 +4604,7 @@ if test "$_vda" = yes ; then
   libavhwaccels="H264_VDA_HWACCEL"
 else
   def_vda='#define CONFIG_VDA 0'
-  libavdecoders=$(echo $libavdecoders | sed -e 's/[A-Z0-9]*_VDA_DECODER//g')
+  libavdecoders=$(filter_out_component decoder '[A-Z0-9]*_VDA')
 fi
 echores "$_vda"
 
@@ -4607,7 +4624,7 @@ if test "$_vdpau" = yes ; then
 else
   def_vdpau='#define CONFIG_VDPAU 0'
   novomodules="vdpau $novomodules"
-  libavdecoders=$(echo $libavdecoders | sed -e 's/[A-Z0-9]*_VDPAU_DECODER//g')
+  libavdecoders=$(filter_out_component decoder '[A-Z0-9]*_VDPAU')
 fi
 echores "$_vdpau"
 
@@ -6292,8 +6309,8 @@ if test "$_zlib" = yes ; then
   mplayer_encoders="$mplayer_encoders PNG_ENCODER"
 else
   def_zlib='#define CONFIG_ZLIB 0'
-  libavdecoders=$(echo $libavdecoders | sed -e s/FLASHSV_DECODER// -e s/FLASHSV2_DECODER// -e s/PNG_DECODER// -e s/ZMBV_DECODER// -e s/ZLIB_DECODER// -e s/DXA_DECODER// -e s/EXR_DECODER// -e s/TSCC_DECODER// -e s/ZEROCODEC_DECODER//)
-  libavencoders=$(echo $libavencoders | sed -e s/FLASHSV_ENCODER// -e s/FLASHSV2_DECODER// -e s/FLASHSV2_ENCODER// -e s/PNG_ENCODER// -e s/ZMBV_ENCODER// -e s/ZLIB_ENCODER//)
+  libavdecoders=$(filter_out_component decoder 'FLASHSV FLASHSV2 PNG ZMBV ZLIB DXA EXR TSCC ZEROCODEC')
+  libavencoders=$(filter_out_component encoder 'FLASHSV FLASHSV2 PNG ZMBV ZLIB')
 fi
 echores "$_zlib"
 
@@ -6944,7 +6961,7 @@ else
   _librtmp=no
   def_librtmp='#define CONFIG_LIBRTMP 0'
   noinputmodules="librtmp $noinputmodules"
-  libavprotocols=$(echo $libavprotocols | sed -e s/LIBRTMP_PROTOCOL// -e s/LIBRTMPE_PROTOCOL// -e s/LIBRTMPS_PROTOCOL// -e s/LIBRTMPT_PROTOCOL// -e s/LIBRTMPTE_PROTOCOL// )
+  libavprotocols=$(filter_out_component protocol 'LIBRTMP LIBRTMPE LIBRTMPS LIBRTMPT LIBRTMPTE')
 fi
 echores "$_librtmp"
 
@@ -7088,7 +7105,7 @@ if test "$crystalhd" = yes ; then
 else
    def_crystalhd="#define CONFIG_CRYSTALHD 0"
    nocodecmodules="crystalhd $nocodecmodules"
-   libavdecoders=$(echo $libavdecoders | sed -e 's/[A-Z0-9]*_CRYSTALHD_DECODER//g')
+   libavdecoders=$(filter_out_component decoder '[A-Z0-9]*_CRYSTALHD')
 fi
 echores "$crystalhd"
 
