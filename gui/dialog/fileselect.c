@@ -331,7 +331,7 @@ void ShowFileSelect( int type,int modal )
    do
     {
      char * c = strrchr( dir,'/' );
-     if ( ( stat( dir,&f ) != 0 ) || S_ISDIR( f.st_mode ) ) break;
+     if ( ( stat( dir,&f ) == 0 ) && S_ISDIR( f.st_mode ) ) break;
      if ( c ) *c=0;
     } while ( strrchr( dir,'/' ) );
 
