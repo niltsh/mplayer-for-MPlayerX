@@ -548,7 +548,6 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
 static void fs_Cancel_released( GtkButton * button,gpointer user_data )
 {
  HideFileSelect();
- fs_PersistantHistory( get_current_dir_name_utf8() );      //totem, write into history file
 }
 
 static void fs_fsFNameList_select_row( GtkCList * clist, gint row, gint column,
