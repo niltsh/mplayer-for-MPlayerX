@@ -719,8 +719,6 @@ static int config(uint32_t s_width, uint32_t s_height, uint32_t width, uint32_t 
     break;
   }
 
-  if (vo_ontop) vo_x11_setlayer(mDisplay, vo_window, vo_ontop);
-
   // start playing
   if(ioctl(dxr2_fd, DXR2_IOC_PLAY, NULL) == 0) {
     playing = 1;
