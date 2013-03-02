@@ -679,7 +679,7 @@ void vo_x11_decoration(Display * vo_Display, Window w, int d)
     int mformat;
     unsigned long mn, mb;
 
-    if (!WinID)
+    if (WinID >= 0)
         return;
 
     if (vo_fsmode & 8)
