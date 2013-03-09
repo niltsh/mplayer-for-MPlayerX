@@ -261,11 +261,7 @@ LIBDVDCSS_EXPORT dvdcss_t dvdcss_open ( char *psz_target )
             {
                 /* Get the "Application Data" folder for the current user */
                 if( p_getpath( NULL, CSIDL_APPDATA | CSIDL_FLAG_CREATE,
-                               NULL, SHGFP_TYPE_CURRENT, psz_home ) == S_OK )
-                {
-                    FreeLibrary( p_dll );
-                }
-                else
+                               NULL, SHGFP_TYPE_CURRENT, psz_home ) != S_OK )
                 {
                     *psz_home = '\0';
                 }
