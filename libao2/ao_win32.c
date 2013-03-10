@@ -117,8 +117,8 @@ static int control(int cmd,void *arg)
 		{
 			ao_control_vol_t* vol = (ao_control_vol_t*)arg;
 			waveOutGetVolume(hWaveOut,&volume);
-			vol->left = (float)(LOWORD(volume)/655.35);
-			vol->right = (float)(HIWORD(volume)/655.35);
+			vol->left = LOWORD(volume)/655.35;
+			vol->right = HIWORD(volume)/655.35;
 			mp_msg(MSGT_AO, MSGL_DBG2,"ao_win32: volume left:%f volume right:%f\n",vol->left,vol->right);
 			return CONTROL_OK;
 		}
