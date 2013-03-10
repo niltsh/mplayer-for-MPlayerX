@@ -64,7 +64,7 @@
 static struct termios tio_orig;
 #endif
 static int getch2_len=0;
-static char getch2_buf[BUF_LEN];
+static uint8_t getch2_buf[BUF_LEN];
 
 int screen_width=80;
 int screen_height=24;
@@ -224,7 +224,7 @@ void getch2(void)
             }
             if ((c == '[' || c == 'O') && getch2_len >= 3) {
                 int c = getch2_buf[2];
-                const short ctable[] = {
+                const unsigned ctable[] = {
                     KEY_UP, KEY_DOWN, KEY_RIGHT, KEY_LEFT, 0,
                     KEY_END, KEY_PGDWN, KEY_HOME, KEY_PGUP, 0, 0, KEY_INS, 0, 0, 0,
                     KEY_F+1, KEY_F+2, KEY_F+3, KEY_F+4};
@@ -248,7 +248,7 @@ void getch2(void)
                 int i = getch2_buf[2] - '0';
                 int j = getch2_buf[3] - '0';
                 if (i >= 0 && i <= 9 && j >= 0 && j <= 9) {
-                    const short ftable[20] = {
+                    const uint8_t ftable[20] = {
                         11,12,13,14,15, 17,18,19,20,21,
                         23,24,25,26,28, 29,31,32,33,34 };
                     int a = i*10 + j;
