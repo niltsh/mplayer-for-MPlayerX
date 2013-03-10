@@ -35,34 +35,6 @@
 #
 #############################################################################
 
-if test -e ffmpeg/.svn ; then
-    echo "You have an outdated FFmpeg SVN checkout in ffmpeg/, please (re)move or replace it"
-    exit 1
-fi
-
-if test -e ffmpeg/mp_auto_pull ; then
-    (cd ffmpeg && git checkout master)
-    if ! (cd ffmpeg && git pull --rebase --ff-only) ; then
-        echo "git pull failed, (re)move ffmpeg/mp_auto_pull to disable pulling"
-        exit 1
-    fi
-fi
-
-if ! test -e ffmpeg ; then
-    echo "No FFmpeg checkout, press enter to download one with git or CTRL+C to abort"
-    read tmp
-    if ! git clone --depth 1 git://source.ffmpeg.org/ffmpeg.git ffmpeg ; then
-        rm -rf ffmpeg
-        echo "Failed to get a FFmpeg checkout"
-        echo "Please try again or put FFmpeg source code copy into ffmpeg/ manually."
-        echo "Nightly snapshot: http://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2"
-        echo "To use a github mirror via http (e.g. because a firewall blocks git):"
-        echo "git clone --depth 1 https://github.com/FFmpeg/FFmpeg ffmpeg; touch ffmpeg/mp_auto_pull"
-        exit 1
-    fi
-    touch ffmpeg/mp_auto_pull
-fi
-
 # Prevent locale nonsense from breaking basic text processing utilities
 export LC_ALL=C
 
@@ -688,50 +660,6 @@ _libavcodec_mpegaudio_hp=yes
 _libopencore_amrnb=auto
 _libopencore_amrwb=auto
 libopenjpeg=auto
-
-list_subparts() {
-  pattern="s/^[^#]*${1}.*([^ ,]*, *\([^ ,)]*\).*/\1_${2}/p"
-  sed -n "$pattern" ffmpeg/libav${3} | toupper
-}
-
-libavdecoders_all=$(list_subparts  DEC      decoder  codec/allcodecs.c)
-libavencoders_all=$(list_subparts  ENC      encoder  codec/allcodecs.c)
-libavparsers_all=$(list_subparts   PARSER   parser   codec/allcodecs.c)
-libavbsfs_all=$(list_subparts      BSF      bsf      codec/allcodecs.c)
-libavhwaccels_all=$(list_subparts  HWACCEL  hwaccel  codec/allcodecs.c)
-libavdemuxers_all=$(list_subparts  DEMUX    demuxer  format/allformats.c)
-libavmuxers_all=$(list_subparts    _MUX     muxer    format/allformats.c)
-libavprotocols_all=$(list_subparts PROTOCOL protocol format/allformats.c)
-libavfilters_all=$(list_subparts   FILTER   filter   filter/allfilters.c)
-
-filter_out_component() {
-  eval list=\$libav${1}s
-  type=$(echo $1 | toupper)
-  shift
-  for item in $@; do
-    filter_patterns="$filter_patterns -e s/[^A-Z0-9_]${item}_${type}//g"
-  done
-  echo " $list" | sed $filter_patterns
-}
-
-libavdecoders=$(echo $libavdecoders_all)
-libavencoders=$(echo $libavencoders_all)
-libavparsers=$(echo $libavparsers_all)
-libavbsfs=$(echo $libavbsfs_all)
-# Disable all hardware accelerators for now.
-libavhwaccels=
-libavdemuxers=$(echo $libavdemuxers_all)
-libavmuxers=$(echo $libavmuxers_all)
-libavprotocols=$(echo $libavprotocols_all)
-libavfilters=$(echo $libavfilters_all)
-
-libavdecoders=$(filter_out_component decoder 'LIB[A-Z0-9_]*')
-libavencoders=$(filter_out_component encoder 'LIB[A-Z0-9_]*')
-libavdemuxers=$(filter_out_component demuxer 'AVISYNTH LIB[A-Z0-9_]* REDIR')
-libavmuxers=$(filter_out_component muxer 'LIB[A-Z0-9_]* RTP RTSP SAP')
-libavprotocols=$(filter_out_component protocol 'BLURAY FFRTMPCRYPT HTTPS TLS')
-libavfilters=$(filter_out_component filter 'FREI0R[A-Z0-9_]* LIB[A-Z0-9_]* MP OCV')
-
 _mencoder=yes
 _mplayer=yes
 _x11=auto
@@ -1334,20 +1262,6 @@ for ac_option do
   --disable-libopencore_amrnb)  _libopencore_amrnb=no   ;;
   --enable-libopencore_amrwb)   _libopencore_amrwb=yes  ;;
   --disable-libopencore_amrwb)  _libopencore_amrwb=no   ;;
-  --enable-decoder=*)  libavdecoders="$libavdecoders $(option_value_uc $ac_option)" ;;
-  --disable-decoder=*) libavdecoders=$(filter_out_component decoder "$(option_value_uc $ac_option)") ;;
-  --enable-encoder=*)  libavencoders="$libavencoders $(option_value_uc $ac_option)" ;;
-  --disable-encoder=*) libavencoders=$(filter_out_component encoder "$(option_value_uc $ac_option)") ;;
-  --enable-parser=*)   libavparsers="$libavparsers $(option_value_uc $ac_option)" ;;
-  --disable-parser=*)  libavparsers=$(filter_out_component parser "$(option_value_uc $ac_option)") ;;
-  --enable-protocol=*)   libavprotocols="$libavprotocols $(option_value_uc $ac_option)" ;;
-  --disable-protocol=*)  libavprotocols=$(filter_out_component protocol "$(option_value_uc $ac_option)") ;;
-  --enable-demuxer=*)  libavdemuxers="$libavdemuxers $(option_value_uc $ac_option)" ;;
-  --disable-demuxer=*) libavdemuxers=$(filter_out_component demuxer "$(option_value_uc $ac_option)") ;;
-  --enable-muxer=*)    libavmuxers="$libavmuxers $(option_value_uc $ac_option)" ;;
-  --disable-muxer=*)    libavmuxers=$(filter_out_component muxer "$(option_value_uc $ac_option)") ;;
-  --enable-filter=*)    libavfilters="$libavfilters $(option_value_uc $ac_option)" ;;
-  --disable-filter=*)   libavfilters=$(filter_out_component filter "$(option_value_uc $ac_option)") ;;
   --enable-ffmpeg_a)    ffmpeg_a=yes    ;;
   --disable-ffmpeg_a)   ffmpeg_a=no     ;;
   --enable-ffmpeg_so)   ffmpeg_so=yes   ;;
@@ -1532,6 +1446,9 @@ for ac_option do
   --disable-mmx) # 3DNow! and MMX2 require MMX
         _3dnow=no _3dnowext=no _mmx=no _mmxext=no ;;
 
+  # Handle these options in a second pass.
+  --*-decoder=*|--*-encoder=*|--*-parser=*|--*-protocol=*|--*-demuxer=*|--*-muxer=*|--*-filter=*)  ;;
+
   *)
     echo "Unknown parameter: $ac_option"
     exit 1
@@ -1565,6 +1482,100 @@ TMPEXE="$mplayer_tmpdir/tmp"
 rm -f "$TMPLOG"
 echo configuration: $configuration > "$TMPLOG"
 echo >> "$TMPLOG"
+
+
+# local FFmpeg checkout handling
+if test -e ffmpeg/.svn ; then
+    echo "You have an outdated FFmpeg SVN checkout in ffmpeg/, please (re)move or replace it"
+    exit 1
+fi
+
+if test -e ffmpeg/mp_auto_pull ; then
+    (cd ffmpeg && git checkout master)
+    if ! (cd ffmpeg && git pull --rebase --ff-only) ; then
+        echo "git pull failed, (re)move ffmpeg/mp_auto_pull to disable pulling"
+        exit 1
+    fi
+fi
+
+if ! test -e ffmpeg ; then
+    echo "No FFmpeg checkout, press enter to download one with git or CTRL+C to abort"
+    read tmp
+    if ! git clone --depth 1 git://source.ffmpeg.org/ffmpeg.git ffmpeg ; then
+        rm -rf ffmpeg
+        echo "Failed to get a FFmpeg checkout"
+        echo "Please try again or put FFmpeg source code copy into ffmpeg/ manually."
+        echo "Nightly snapshot: http://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2"
+        echo "To use a github mirror via http (e.g. because a firewall blocks git):"
+        echo "git clone --depth 1 https://github.com/FFmpeg/FFmpeg ffmpeg; touch ffmpeg/mp_auto_pull"
+        exit 1
+    fi
+    touch ffmpeg/mp_auto_pull
+fi
+
+list_subparts() {
+  pattern="s/^[^#]*${1}.*([^ ,]*, *\([^ ,)]*\).*/\1_${2}/p"
+  sed -n "$pattern" ffmpeg/libav${3} | toupper
+}
+
+libavdecoders_all=$(list_subparts  DEC      decoder  codec/allcodecs.c)
+libavencoders_all=$(list_subparts  ENC      encoder  codec/allcodecs.c)
+libavparsers_all=$(list_subparts   PARSER   parser   codec/allcodecs.c)
+libavbsfs_all=$(list_subparts      BSF      bsf      codec/allcodecs.c)
+libavhwaccels_all=$(list_subparts  HWACCEL  hwaccel  codec/allcodecs.c)
+libavdemuxers_all=$(list_subparts  DEMUX    demuxer  format/allformats.c)
+libavmuxers_all=$(list_subparts    _MUX     muxer    format/allformats.c)
+libavprotocols_all=$(list_subparts PROTOCOL protocol format/allformats.c)
+libavfilters_all=$(list_subparts   FILTER   filter   filter/allfilters.c)
+
+filter_out_component() {
+  eval list=\$libav${1}s
+  type=$(echo $1 | toupper)
+  shift
+  for item in $@; do
+    filter_patterns="$filter_patterns -e s/[^A-Z0-9_]${item}_${type}//g"
+  done
+  echo " $list" | sed $filter_patterns
+}
+
+libavdecoders=$(echo $libavdecoders_all)
+libavencoders=$(echo $libavencoders_all)
+libavparsers=$(echo $libavparsers_all)
+libavbsfs=$(echo $libavbsfs_all)
+# Disable all hardware accelerators for now.
+libavhwaccels=
+libavdemuxers=$(echo $libavdemuxers_all)
+libavmuxers=$(echo $libavmuxers_all)
+libavprotocols=$(echo $libavprotocols_all)
+libavfilters=$(echo $libavfilters_all)
+
+libavdecoders=$(filter_out_component decoder 'LIB[A-Z0-9_]*')
+libavencoders=$(filter_out_component encoder 'LIB[A-Z0-9_]*')
+libavdemuxers=$(filter_out_component demuxer 'AVISYNTH LIB[A-Z0-9_]* REDIR')
+libavmuxers=$(filter_out_component muxer 'LIB[A-Z0-9_]* RTP RTSP SAP')
+libavprotocols=$(filter_out_component protocol 'BLURAY FFRTMPCRYPT HTTPS TLS')
+libavfilters=$(filter_out_component filter 'FREI0R[A-Z0-9_]* LIB[A-Z0-9_]* MP OCV')
+
+# second pass command line parsing for options needing local FFmpeg checkout
+for ac_option do
+  case "$ac_option" in
+  --enable-decoder=*)   libavdecoders="$libavdecoders   $(option_value_uc $ac_option)" ;;
+  --enable-encoder=*)   libavencoders="$libavencoders   $(option_value_uc $ac_option)" ;;
+  --enable-parser=*)    libavparsers="$libavparsers     $(option_value_uc $ac_option)" ;;
+  --enable-protocol=*)  libavprotocols="$libavprotocols $(option_value_uc $ac_option)" ;;
+  --enable-demuxer=*)   libavdemuxers="$libavdemuxers   $(option_value_uc $ac_option)" ;;
+  --enable-muxer=*)     libavmuxers="$libavmuxers       $(option_value_uc $ac_option)" ;;
+  --enable-filter=*)    libavfilters="$libavfilters     $(option_value_uc $ac_option)" ;;
+
+  --disable-decoder=*)  libavdecoders=$(filter_out_component  decoder  "$(option_value_uc $ac_option)") ;;
+  --disable-encoder=*)  libavencoders=$(filter_out_component  encoder  "$(option_value_uc $ac_option)") ;;
+  --disable-parser=*)   libavparsers=$(filter_out_component   parser   "$(option_value_uc $ac_option)") ;;
+  --disable-protocol=*) libavprotocols=$(filter_out_component protocol "$(option_value_uc $ac_option)") ;;
+  --disable-demuxer=*)  libavdemuxers=$(filter_out_component  demuxer  "$(option_value_uc $ac_option)") ;;
+  --disable-muxer=*)    libavmuxers=$(filter_out_component    muxer    "$(option_value_uc $ac_option)") ;;
+  --disable-filter=*)   libavfilters=$(filter_out_component   filter   "$(option_value_uc $ac_option)") ;;
+  esac
+done
 
 
 # Checking CC version...
