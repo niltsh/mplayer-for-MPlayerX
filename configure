@@ -4591,7 +4591,8 @@ EOF
 fi
 if test "$_xvmc" = yes ; then
   def_xvmc='#define CONFIG_XVMC 1'
-  libs_mplayer="$libs_mplayer -lXvMC -l$_xvmclib"
+  libs_mplayer="$libs_mplayer -lXvMC"
+  test -n "$_xvmclib" && libs_mplayer="$libs_mplayer -l$_xvmclib"
   vomodules="xvmc $vomodules"
   res_comment="using $_xvmclib"
 else
