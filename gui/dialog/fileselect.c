@@ -391,7 +391,7 @@ static void fs_PersistantHistory( char * subject )
  if ( !subject ) return;
 
  for ( i=0;i < FF_ARRAY_ELEMS(fsHistory);i++ )
-  if ( fsHistory[i] && !strcmp( fsHistory[i],subject ) )
+  if ( gstrcmp( fsHistory[i],subject ) == 0 )
    {
     entry=fsHistory[i];
     break;
