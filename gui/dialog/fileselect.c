@@ -396,7 +396,7 @@ static void fs_PersistantHistory( char * subject )
     entry=fsHistory[i];
     break;
    }
- if ( i >= FF_ARRAY_ELEMS(fsHistory) )
+ if ( i == FF_ARRAY_ELEMS(fsHistory) )
   {
    i=FF_ARRAY_ELEMS(fsHistory)-1;
    nfree( fsHistory[i] );
