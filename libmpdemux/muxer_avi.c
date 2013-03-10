@@ -170,7 +170,7 @@ if(len>0){
 
 static void write_avi_list(stream_t *stream, unsigned int id, int len)
 {
-  unsigned int list_id = FOURCC_LIST;
+  unsigned int list_id = mmioFOURCC('L', 'I', 'S', 'T');
   int le_len;
   int le_id;
   len += 4; // list fix
