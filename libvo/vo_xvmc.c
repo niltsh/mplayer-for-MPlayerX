@@ -509,6 +509,9 @@ static int config(uint32_t width, uint32_t height,
         return -1;
     }
 
+    mp_msg(MSGT_VO,MSGL_DBG4, "vo_xvmc: XvMCCreateContext(mDisplay %p, xv_port=%d, mode_id=0x%08x, width=%d, height=%d, XVMC_DIRECT=%d,ctx=%p)\n",
+                            mDisplay, xv_port,mode_id,width,height,XVMC_DIRECT,&ctx);
+
     rez = XvMCCreateContext(mDisplay, xv_port,mode_id,width,height,XVMC_DIRECT,&ctx);
     if( rez != Success ){
         mp_msg(MSGT_VO,MSGL_ERR,"vo_xvmc: XvMCCreateContext failed with error %d\n",rez);
