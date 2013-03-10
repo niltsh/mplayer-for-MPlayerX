@@ -8455,6 +8455,7 @@ FFMPEG     = $ffmpeg
 FFMPEG_A   = $ffmpeg_a
 
 CONFIG_AVCODEC  = $ffmpeg_a
+CONFIG_AVDEVICE = $ffmpeg_a
 CONFIG_AVFILTER = $ffmpeg_a
 CONFIG_AVFORMAT = $ffmpeg_a
 CONFIG_AVUTIL   = $ffmpeg_a
