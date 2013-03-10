@@ -398,8 +398,7 @@ static void fs_PersistantHistory( char * subject )
    }
  if ( i == FF_ARRAY_ELEMS(fsHistory) )
   {
-   i=FF_ARRAY_ELEMS(fsHistory)-1;
-   nfree( fsHistory[i] );
+   nfree( fsHistory[--i] );
    entry=strdup( subject );
   }
  for ( ;i;i-- ) fsHistory[i]=fsHistory[i - 1];
