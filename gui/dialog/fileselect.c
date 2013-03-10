@@ -388,7 +388,7 @@ static void fs_PersistantHistory( char * subject )
  unsigned int i;
  char * entry;
 
- if ( fsType != fsVideoSelector ) return;
+ if ( !subject ) return;
 
  for ( i=0;i < FF_ARRAY_ELEMS(fsHistory);i++ )
   if ( fsHistory[i] && !strcmp( fsHistory[i],subject ) )
@@ -400,7 +400,7 @@ static void fs_PersistantHistory( char * subject )
   {
    i=FF_ARRAY_ELEMS(fsHistory)-1;
    nfree( fsHistory[i] );
-   entry=gstrdup( subject );
+   entry=strdup( subject );
   }
  for ( ;i;i-- ) fsHistory[i]=fsHistory[i - 1];
  fsHistory[0]=entry;
