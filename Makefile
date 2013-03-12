@@ -71,7 +71,6 @@ SRCS_COMMON-$(FASTMEMCPY)            += libvo/aclib.c
 SRCS_COMMON-$(FFMPEG)                += av_helpers.c                \
                                         av_opts.c                   \
                                         libaf/af_lavcac3enc.c       \
-                                        libaf/af_lavcresample.c     \
                                         libmpcodecs/ad_ffmpeg.c     \
                                         libmpcodecs/ad_spdif.c      \
                                         libmpcodecs/vd_ffmpeg.c     \
