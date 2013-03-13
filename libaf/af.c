@@ -74,7 +74,7 @@ static const af_info_t * const filter_list[] = {
    &af_info_extrastereo,
 #ifdef CONFIG_FFMPEG
    &af_info_lavcac3enc,
-//   &af_info_lavcresample,
+   &af_info_lavcresample,
 #endif
    &af_info_sweep,
    &af_info_hrtf,
