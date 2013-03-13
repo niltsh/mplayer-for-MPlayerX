@@ -193,14 +193,14 @@ static void get_taglists(const struct AVCodecTag *dst[3], int audio)
     dst[2] = NULL;
 }
 
-enum CodecID mp_tag2codec_id(uint32_t tag, int audio)
+enum AVCodecID mp_tag2codec_id(uint32_t tag, int audio)
 {
     const struct AVCodecTag *taglists[3];
     get_taglists(taglists, audio);
     return av_codec_get_id(taglists, tag);
 }
 
-uint32_t mp_codec_id2tag(enum CodecID codec_id, uint32_t old_tag, int audio)
+uint32_t mp_codec_id2tag(enum AVCodecID codec_id, uint32_t old_tag, int audio)
 {
     const struct AVCodecTag *taglists[3];
     // For some formats (like PCM) always trust AV_CODEC_ID_* more than codec_tag

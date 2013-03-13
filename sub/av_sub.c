@@ -84,7 +84,7 @@ int decode_avsub(struct sh_sub *sh, uint8_t **data, int *size,
                  double *pts, double *endpts)
 {
     AVCodecContext *ctx = sh->context;
-    enum CodecID cid = AV_CODEC_ID_NONE;
+    enum AVCodecID cid = AV_CODEC_ID_NONE;
     int new_type = 0;
     int res;
     int got_sub;

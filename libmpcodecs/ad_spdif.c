@@ -82,7 +82,7 @@ static int init(sh_audio_t *sh)
     unsigned char *start;
     double pts;
     static const struct {
-        const char *name; enum CodecID id;
+        const char *name; enum AVCodecID id;
     } fmt_id_type[] = {
         { "aac" , AV_CODEC_ID_AAC    },
         { "ac3" , AV_CODEC_ID_AC3    },
