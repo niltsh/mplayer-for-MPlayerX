@@ -80,8 +80,6 @@ static int lavc_param_keyint = -1;
 static int lavc_param_vpass = 0;
 static int lavc_param_vrc_strategy = 0;
 static int lavc_param_vb_strategy = 0;
-static int lavc_param_luma_elim_threshold = 0;
-static int lavc_param_chroma_elim_threshold = 0;
 static int lavc_param_packet_size= 0;
 static int lavc_param_strict= -1;
 static int lavc_param_data_partitioning= 0;
@@ -143,12 +141,8 @@ static int lavc_param_coder= 0;
 static int lavc_param_context= 0;
 static char *lavc_param_intra_matrix = NULL;
 static char *lavc_param_inter_matrix = NULL;
-static int lavc_param_cbp= 0;
 static int lavc_param_mv0= 0;
 static int lavc_param_noise_reduction= 0;
-static int lavc_param_qns= 0;
-static int lavc_param_qp_rd= 0;
-static int lavc_param_inter_threshold= 0;
 static int lavc_param_sc_threshold= 0;
 static int lavc_param_ss= 0;
 static int lavc_param_top= -1;
@@ -210,8 +204,8 @@ const m_option_t lavcopts_conf[]={
 	{"vrc_strategy", &lavc_param_vrc_strategy, CONF_TYPE_INT, CONF_RANGE, 0, 2, NULL},
 	{"vb_strategy", &lavc_param_vb_strategy, CONF_TYPE_INT, CONF_RANGE, 0, 10, NULL},
 	{"vb_qoffset", &lavc_param_vb_qoffset, CONF_TYPE_FLOAT, CONF_RANGE, 0.0, 31.0, NULL},
-	{"vlelim", &lavc_param_luma_elim_threshold, CONF_TYPE_INT, CONF_RANGE, -99, 99, NULL},
-	{"vcelim", &lavc_param_chroma_elim_threshold, CONF_TYPE_INT, CONF_RANGE, -99, 99, NULL},
+	{"vlelim", "Please use o=luma_elim_threshold=<value> instead of vlelim.\n", CONF_TYPE_PRINT, 0, 0, 0, NULL},
+	{"vcelim", "Please use o=chroma_elim_threshold=<value> instead of vcelim.\n", CONF_TYPE_PRINT, 0, 0, 0, NULL},
 	{"vpsize", &lavc_param_packet_size, CONF_TYPE_INT, CONF_RANGE, 0, 100000000, NULL},
 	{"vstrict", &lavc_param_strict, CONF_TYPE_INT, CONF_RANGE, -99, 99, NULL},
 	{"vdpart", &lavc_param_data_partitioning, CONF_TYPE_FLAG, 0, 0, 1, NULL},
@@ -275,10 +269,10 @@ const m_option_t lavcopts_conf[]={
 	{"context", &lavc_param_context, CONF_TYPE_INT, CONF_RANGE, 0, 10, NULL},
 	{"intra_matrix", &lavc_param_intra_matrix, CONF_TYPE_STRING, 0, 0, 0, NULL},
 	{"inter_matrix", &lavc_param_inter_matrix, CONF_TYPE_STRING, 0, 0, 0, NULL},
-	{"cbp", &lavc_param_cbp, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_CBP_RD, NULL},
+	{"cbp", "Please use o=mpv_flags=+cbp_rd instead of cbp.\n", CONF_TYPE_PRINT, 0, 0, 0, NULL},
 	{"mv0", &lavc_param_mv0, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_MV0, NULL},
 	{"nr", &lavc_param_noise_reduction, CONF_TYPE_INT, CONF_RANGE, 0, 1000000, NULL},
-	{"qprd", &lavc_param_qp_rd, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_QP_RD, NULL},
+	{"qprd", "Please use o=mpv_flags=+qp_rd instead of qprd.\n", CONF_TYPE_PRINT, 0, 0, 0, NULL},
 	{"ss", &lavc_param_ss, CONF_TYPE_FLAG, 0, 0, 1, NULL},
 	{"alt", &lavc_param_alt, CONF_TYPE_FLAG, 0, 0, 1, NULL},
 	{"ilme", &lavc_param_ilme, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_INTERLACED_ME, NULL},
@@ -286,10 +280,10 @@ const m_option_t lavcopts_conf[]={
 	{"gmc", &lavc_param_gmc, CONF_TYPE_FLAG, 0, 0, CODEC_FLAG_GMC, NULL},
 	{"dc", &lavc_param_dc_precision, CONF_TYPE_INT, CONF_RANGE, 8, 11, NULL},
 	{"border_mask", &lavc_param_border_masking, CONF_TYPE_FLOAT, CONF_RANGE, 0.0, 1.0, NULL},
-	{"inter_threshold", &lavc_param_inter_threshold, CONF_TYPE_INT, CONF_RANGE, -1000000, 1000000, NULL},
+	{"inter_threshold", "inter_threshold has no effect, please remove it.\n", CONF_TYPE_PRINT, 0, 0, 0, NULL},
 	{"sc_threshold", &lavc_param_sc_threshold, CONF_TYPE_INT, CONF_RANGE, -1000000000, 1000000000, NULL},
 	{"top", &lavc_param_top, CONF_TYPE_INT, CONF_RANGE, -1, 1, NULL},
-        {"qns", &lavc_param_qns, CONF_TYPE_INT, CONF_RANGE, 0, 1000000, NULL},
+        {"qns", "Please use o=quantizer_noise_shaping=<value> instead of qns.\n", CONF_TYPE_PRINT, 0, 0, 0, NULL},
         {"nssew", &lavc_param_nssew, CONF_TYPE_INT, CONF_RANGE, 0, 1000000, NULL},
 	{"threads", &lavc_param_threads, CONF_TYPE_INT, CONF_RANGE, 1, 16, NULL},
 	{"turbo", &lavc_param_turbo, CONF_TYPE_FLAG, 0, 0, 1, NULL},
@@ -366,8 +360,6 @@ static int config(struct vf_instance *vf,
     lavc_venc_context->rc_strategy= lavc_param_vrc_strategy;
     lavc_venc_context->b_frame_strategy= lavc_param_vb_strategy;
     lavc_venc_context->b_quant_offset= (int)(FF_QP2LAMBDA * lavc_param_vb_qoffset + 0.5);
-    lavc_venc_context->luma_elim_threshold= lavc_param_luma_elim_threshold;
-    lavc_venc_context->chroma_elim_threshold= lavc_param_chroma_elim_threshold;
     lavc_venc_context->rtp_payload_size= lavc_param_packet_size;
     lavc_venc_context->strict_std_compliance= lavc_param_strict;
     lavc_venc_context->i_quant_factor= lavc_param_vi_qfactor;
@@ -402,8 +394,6 @@ static int config(struct vf_instance *vf,
     lavc_venc_context->context_model= lavc_param_context;
     lavc_venc_context->scenechange_threshold= lavc_param_sc_threshold;
     lavc_venc_context->noise_reduction= lavc_param_noise_reduction;
-    lavc_venc_context->quantizer_noise_shaping= lavc_param_qns;
-    lavc_venc_context->inter_threshold= lavc_param_inter_threshold;
     lavc_venc_context->nsse_weight= lavc_param_nssew;
     lavc_venc_context->frame_skip_threshold= lavc_param_skip_threshold;
     lavc_venc_context->frame_skip_factor= lavc_param_skip_factor;
@@ -553,9 +543,7 @@ static int config(struct vf_instance *vf,
     lavc_venc_context->flags|= lavc_param_v4mv ? CODEC_FLAG_4MV : 0;
     if (lavc_param_data_partitioning)
         av_dict_set(&opts, "data_partitioning", "1", 0);
-    lavc_venc_context->flags|= lavc_param_cbp;
     lavc_venc_context->flags|= lavc_param_mv0;
-    lavc_venc_context->flags|= lavc_param_qp_rd;
     if (lavc_param_ss)
         av_dict_set(&opts, "structured_slices", "1", 0);
     if (lavc_param_alt)
@@ -588,7 +576,7 @@ static int config(struct vf_instance *vf,
     lavc_venc_context->level = lavc_param_level;
 
     if(lavc_param_avopt){
-        if(parse_avopts(lavc_venc_context, lavc_param_avopt) < 0){
+        if(av_dict_parse_string(&opts, lavc_param_avopt, "=", ",", 0) < 0){
             mp_msg(MSGT_MENCODER,MSGL_ERR, "Your options /%s/ look like gibberish to me pal\n", lavc_param_avopt);
             return 0;
         }
@@ -644,16 +632,14 @@ static int config(struct vf_instance *vf,
 	  lavc_venc_context->pre_dia_size = 0;
 	  lavc_venc_context->dia_size = 1;
 
-	  lavc_venc_context->quantizer_noise_shaping = 0; // qns=0
 	  lavc_venc_context->noise_reduction = 0; // nr=0
 	  lavc_venc_context->mb_decision = 0; // mbd=0 ("realtime" encoding)
 
 	  lavc_venc_context->flags &= ~CODEC_FLAG_QPEL;
 	  lavc_venc_context->flags &= ~CODEC_FLAG_4MV;
 	  lavc_venc_context->trellis = 0;
-	  lavc_venc_context->flags &= ~CODEC_FLAG_CBP_RD;
-	  lavc_venc_context->flags &= ~CODEC_FLAG_QP_RD;
 	  lavc_venc_context->flags &= ~CODEC_FLAG_MV0;
+	  av_dict_set(&opts, "mpv_flags", "-qp_rd-cbp_rd", 0);
 	}
 	break;
     }
@@ -676,6 +662,11 @@ static int config(struct vf_instance *vf,
     if (avcodec_open2(lavc_venc_context, vf->priv->codec, &opts) != 0) {
 	mp_msg(MSGT_MENCODER,MSGL_ERR,MSGTR_CantOpenCodec);
 	return 0;
+    }
+    if (av_dict_count(opts)) {
+        AVDictionaryEntry *e = av_dict_get(opts, "", NULL, 0);
+        mp_msg(MSGT_MENCODER,MSGL_ERR,"Unknown option %s\n");
+        return 0;
     }
     av_dict_free(&opts);
 
