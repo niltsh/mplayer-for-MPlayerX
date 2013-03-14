@@ -23,7 +23,7 @@
 #ifndef MPLAYER_KEYCODES_H
 #define MPLAYER_KEYCODES_H
 
-#define KEY_BASE 0x100
+#define KEY_BASE 0x1000000
 
 enum {
     KEY_TAB = 9,
@@ -76,7 +76,7 @@ enum {
     KEY_VOLUME_DOWN,
     KEY_MUTE,
     /* Special internal/virtual keys */
-    KEY_CLOSE_WIN = 0x1000,
+    KEY_CLOSE_WIN = KEY_BASE + 0x1000,
 };
 
 /* Control keys short name */

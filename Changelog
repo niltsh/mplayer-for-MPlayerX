@@ -13,6 +13,7 @@ MPlayer
       better than -vo gl (it is in many ways worse).
     * Fixes for DVB, teletext and closed-caption based subtitles.
     * Support teletext and CC subtitles in WTV.
+    * Support binding keys corresponding to non-ASCII characters.
 
   1.1: "We gave up on 1.0"
 

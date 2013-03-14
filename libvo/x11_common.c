@@ -21,6 +21,7 @@
 #include <math.h>
 #include <inttypes.h>
 #include <limits.h>
+#include <locale.h>
 
 #include "config.h"
 #include "mp_msg.h"
@@ -427,6 +428,9 @@ int vo_init(void)
         return 1;               // already called
     }
 
+    // Required so that XLookupString returns UTF-8
+    if (!setlocale(LC_CTYPE, "C.UTF-8") && !setlocale(LC_CTYPE, "en_US.utf8"))
+        mp_msg(MSGT_VO, MSGL_WARN, "Could not find a UTF-8 locale, some keys will no be handled.\n");
     XSetErrorHandler(x11_errorhandler);
 
     dispName = XDisplayName(mDisplayName);
@@ -810,11 +814,22 @@ static int check_resize(void)
     return rc;
 }
 
+static int to_utf8(const uint8_t *in)
+{
+    uint32_t v = 0;
+    GET_UTF8(v, *in++, goto err;)
+    if (*in || v >= KEY_BASE)
+        goto err;
+    return v;
+err:
+    return 0;
+}
+
 int vo_x11_check_events(Display * mydisplay)
 {
     int ret = 0;
     XEvent Event;
-    char buf[100];
+    uint8_t buf[16] = {0};
     KeySym keySym;
     static XComposeStatus stat;
     static int ctrl_state;
@@ -852,7 +867,7 @@ int vo_x11_check_events(Display * mydisplay)
             case KeyPress:
             case KeyRelease:
                 {
-                    int key;
+                    int key, utf8;
 
 #ifdef CONFIG_GUI
                     if ( use_gui ) { break; }
@@ -863,6 +878,8 @@ int vo_x11_check_events(Display * mydisplay)
                     key =
                         ((keySym & 0xff00) !=
                          0 ? ((keySym & 0x00ff) + 256) : (keySym));
+                    utf8 = to_utf8(buf);
+                    if (utf8) key = 0;
                     if (key == wsLeftCtrl || key == wsRightCtrl) {
                         ctrl_state = Event.type == KeyPress;
                         mplayer_put_key(KEY_CTRL |
@@ -880,7 +897,8 @@ int vo_x11_check_events(Display * mydisplay)
                             (ctrl_state ? MP_KEY_DOWN : 0));
                     }
                     if (!vo_x11_putkey_ext(keySym)) {
-                        vo_x11_putkey(key);
+                        if (utf8) mplayer_put_key(utf8);
+                        else vo_x11_putkey(key);
                     }
                     ret |= VO_EVENT_KEYPRESS;
                 }

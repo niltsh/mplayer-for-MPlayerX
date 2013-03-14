@@ -60,6 +60,7 @@
 #include "mp_fifo.h"
 #include "keycodes.h"
 #include "getch2.h"
+#include "libavutil/common.h"
 
 #ifdef HAVE_TERMIOS
 static struct termios tio_orig;
@@ -201,6 +202,14 @@ void getch2(void)
                         len = 2;
                 }
                 code = KEY_ENTER;
+            } else if (code >= 0xc0) {
+                uint32_t utf8 = 0;
+                i = 0;
+                GET_UTF8(utf8, (i < getch2_len ? getch2_buf[i++] : 0), goto not_utf8;)
+                if (utf8 < KEY_BASE) {
+                    code = utf8;
+                    len = i;
+                }
             }
         }
         else if (getch2_len > 1) {
@@ -262,6 +271,7 @@ void getch2(void)
                 }
             }
         }
+    not_utf8:
     found:
         getch2_len -= len;
         for (i = 0; i < getch2_len; i++)
