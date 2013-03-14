@@ -15,6 +15,10 @@ MPlayer
     * Support teletext and CC subtitles in WTV.
     * Support binding keys corresponding to non-ASCII characters.
 
+    Ports:
+    * Windows: support file names as UTF-8 in slave mode and passing
+      file names as wchar command line arguments.
+
   1.1: "We gave up on 1.0"
 
     Decoders:

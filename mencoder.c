@@ -578,7 +578,7 @@ audio_encoder_t *aencoder = NULL;
 
 user_correct_pts = 0;
 
-  common_preinit();
+  common_preinit(&argc, &argv);
 
   // Create the config context and register the options
   mconfig = m_config_new();

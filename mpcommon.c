@@ -456,6 +456,73 @@ const m_option_t noconfig_opts[] = {
     {NULL, NULL, 0, 0, 0, 0, NULL}
 };
 
+#ifdef __MINGW32__
+static int get_win32_cmdline(int *argc_ptr, char **argv_ptr[])
+{
+    int i;
+    int argv_size, size;
+    int argc_n;
+    char **argv_n;
+    LPWSTR *argv_w = NULL;
+    void *buffer = NULL;
+    char *strs, *strs_end;
+
+    HMODULE kernel32 = GetModuleHandle("Kernel32.dll");
+    HMODULE shell32  = GetModuleHandle("shell32.dll");
+    int WINAPI (*wc2mb)(UINT, DWORD, LPCWSTR, int, LPSTR, int, LPCSTR, LPBOOL) = NULL;
+    LPCWSTR WINAPI (*getCmdlW)(void) = NULL;
+    LPWSTR * WINAPI (*cmdl2argv)(LPCWSTR, int *) = NULL;
+
+    if (!kernel32 || !shell32)
+        goto err_out;
+    wc2mb = GetProcAddress(kernel32, "WideCharToMultiByte");
+    getCmdlW = GetProcAddress(kernel32, "GetCommandLineW");
+    cmdl2argv = GetProcAddress(shell32, "CommandLineToArgvW");
+    if (!wc2mb || !getCmdlW || !cmdl2argv)
+        goto err_out;
+
+    argv_w = cmdl2argv(getCmdlW(), &argc_n);
+    if (!argv_w || argc_n < 0 || argc_n >= INT_MAX / sizeof(char *))
+        goto err_out;
+
+    size = argv_size = (argc_n + 1) * sizeof(char *);
+    for (i = 0; i < argc_n; i++) {
+        int conv_size = wc2mb(CP_UTF8, 0, argv_w[i], -1, NULL, 0, NULL, NULL);
+        if (conv_size < 0 || conv_size > INT_MAX - size)
+            goto err_out;
+        size += conv_size;
+    }
+
+    buffer = calloc(1, size);
+    if (!buffer)
+        goto err_out;
+    argv_n = buffer;
+    strs_end = strs = buffer;
+    strs += argv_size;
+    strs_end += size;
+
+    for (i = 0; i < argc_n; i++) {
+        int conv_size = wc2mb(CP_UTF8, 0, argv_w[i], -1,
+                              strs, strs_end - strs, NULL, NULL);
+        if (conv_size < 0 || conv_size > strs_end - strs)
+            goto err_out;
+        argv_n[i] = strs;
+        strs += conv_size;
+    }
+    argv_n[i] = NULL;
+
+    *argc_ptr = argc_n;
+    *argv_ptr = argv_n;
+    LocalFree(argv_w);
+    return 0;
+
+err_out:
+    free(buffer);
+    LocalFree(argv_w);
+    return -1;
+}
+#endif
+
 /**
  * Code to fix any kind of insane defaults some OS might have.
  * Currently mostly fixes for insecure-by-default Windows.
@@ -483,8 +550,14 @@ static void sanitize_os(void)
  * Initialization code to be run at the very start, must not depend
  * on option values.
  */
-void common_preinit(void)
+void common_preinit(int *argc_ptr, char **argv_ptr[])
 {
+#ifdef __MINGW32__
+    get_win32_cmdline(argc_ptr, argv_ptr);
+#else
+    (void)argc_ptr;
+    (void)argv_ptr;
+#endif
     sanitize_os();
     InitTimer();
     srand(GetTimerMS());
