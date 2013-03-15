@@ -439,9 +439,12 @@ void cfg_write(void)
     if (file) {
         unsigned int i;
 
-        for (i = 0; i < FF_ARRAY_ELEMS(fsHistory); i++)
-            if (fsHistory[i])
+        for (i = 0; i < FF_ARRAY_ELEMS(fsHistory); i++) {
+            if (fsHistory[i]) {
                 fprintf(file, "%s\n", fsHistory[i]);
+                free(fsHistory[i]);
+            }
+        }
 
         fclose(file);
     }
