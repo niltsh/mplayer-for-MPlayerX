@@ -43,6 +43,7 @@
 #include "gui/app/app.h"
 #include "gui/app/gui.h"
 #include "gui/interface.h"
+#include "gui/util/string.h"
 #include "gui/wm/ws.h"
 
 #include "gui/ui/actions.h"
@@ -132,6 +133,9 @@ void gtkInit(char *display_name)
 {
     int argc = 0;
     char *arg[3], **argv = arg;
+#ifdef CONFIG_GTK2
+    char *env;
+#endif
     GtkIconTheme *theme;
     GdkPixmap *gdkIcon;
     GdkBitmap *gdkIconMask;
@@ -147,6 +151,11 @@ void gtkInit(char *display_name)
 
 #ifdef CONFIG_GTK2
     gtk_disable_setlocale();
+
+    env = getenv("G_FILENAME_ENCODING");
+
+    if ((!env && getenv("G_BROKEN_FILENAMES")) || (gstrncmp(env, "@locale", 7) == 0))
+        mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_LOCALE_ENCODING);
 #endif
 
     gtk_init(&argc, &argv);

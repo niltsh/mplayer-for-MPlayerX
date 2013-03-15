@@ -810,6 +810,7 @@ static const char help_text[]=
 #define MSGTR_IDFGCVD "Sorry, es wurde kein GUI-kompatibler Ausgabetreiber gefunden.\n"
 #define MSGTR_NEEDLAVC "Sorry, du versuchst, Nicht-MPEG Dateien ohne erneute Encodierung abzuspielen.\nBitte aktiviere lavc in der DXR3/H+-Konfigurationsbox."
 #define MSGTR_ICONERROR "Icon '%s' (Größe %d) wurde nicht gefunden oder das Format wird nicht unterstützt.\n"
+#define MSGTR_LOCALE_ENCODING "@locale in G_FILENAME_ENCODING oder G_BROKEN_FILENAMES wird nicht unterstützt,\ndie Kodierung muss in G_FILENAME_ENCODING explizit angegeben werden.\n"
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "Fehler in Skin-Konfigurationsdatei in Zeile %d: %s"
