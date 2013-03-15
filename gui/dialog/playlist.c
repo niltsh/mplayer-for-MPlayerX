@@ -43,6 +43,9 @@
 #include "pixmaps/open2.xpm"
 #include "pixmaps/dir2.xpm"
 
+#define CFG_OLD_PLAYLIST 1
+#include "gui/app/cfg-old.c"
+
        GtkWidget * PlayList = NULL;
 static GtkWidget * CTDirTree;
 static GtkWidget * CLFiles;
@@ -546,7 +549,7 @@ GtkWidget * create_PlayList( void )
   gtk_ctree_expand( GTK_CTREE( CTDirTree ),parent );
   gtk_widget_show( CTDirTree );
 
-  if ( fsHistory[0] ) old_path = g_filename_from_utf8( fsHistory[0], -1, NULL, NULL, NULL );
+  if ( fsHistory[0] ) old_path = strdup( cfg_old_filename_from_utf8( fsHistory[0] ) );
 
   gtk_clist_set_column_widget( GTK_CLIST( CTDirTree ),0,
     AddLabel( MSGTR_PLAYLIST_DirectoryTree,NULL ) );

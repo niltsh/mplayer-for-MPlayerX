@@ -31,6 +31,7 @@
  */
 static const gchar *cfg_old_filename_from_utf8(const gchar *fname)
 {
+#ifdef CFG_OLD_PLAYLIST
     static gchar *name;
 
     if (g_utf8_validate(fname, -1, NULL)) {
@@ -39,6 +40,8 @@ static const gchar *cfg_old_filename_from_utf8(const gchar *fname)
 
         return name;
     }
-
+#endif
     return fname;
 }
+
+#undef CFG_OLD_PLAYLIST
