@@ -32,9 +32,6 @@
 #define RINGSIZE 8
 #define FRAGSIZE 4096 /* (2^12 see SETFRAGSIZE below) */
 
-#define TRUE  (1==1)
-#define FALSE (1==0)
-
 #define PAL_WIDTH  768
 #define PAL_HEIGHT 576
 #define PAL_FPS    25
@@ -167,16 +164,16 @@ static void processframe(int signal)
 {
 struct timeval curtime;
 
-if(G_private->immediatemode == TRUE) return;
+if(G_private->immediatemode) return;
 
 gettimeofday(&curtime, NULL);
 
-if(G_private->framebuf[G_private->curpaintframe].dirty == TRUE)
+if(G_private->framebuf[G_private->curpaintframe].dirty)
     {
     memcpy(G_private->framebuf[G_private->curpaintframe].buf,
             G_private->livebuf, G_private->framebufsize);
 
-    G_private->framebuf[G_private->curpaintframe].dirty = FALSE;
+    G_private->framebuf[G_private->curpaintframe].dirty = 0;
 
     G_private->framebuf[G_private->curpaintframe].timestamp =
             curtime.tv_sec + curtime.tv_usec*.000001;
@@ -243,7 +240,7 @@ static int control(priv_t *priv, int cmd, void *arg)
 /* Tuner Controls */
 
     case TVI_CONTROL_IS_TUNER:
-        if(priv->tunerready == FALSE) return TVI_CONTROL_FALSE;
+        if(!priv->tunerready) return TVI_CONTROL_FALSE;
         return TVI_CONTROL_TRUE;
 
     case TVI_CONTROL_TUN_GET_FREQ:
@@ -315,7 +312,7 @@ static int control(priv_t *priv, int cmd, void *arg)
 /* Audio Controls */
 
     case TVI_CONTROL_IS_AUDIO:
-        if(priv->dspready == FALSE) return TVI_CONTROL_FALSE;
+        if(!priv->dspready) return TVI_CONTROL_FALSE;
         return TVI_CONTROL_TRUE;
 
     case TVI_CONTROL_AUD_GET_FORMAT:
@@ -361,7 +358,7 @@ static int control(priv_t *priv, int cmd, void *arg)
 /* Video Controls */
 
     case TVI_CONTROL_IS_VIDEO:
-        if(priv->videoready == FALSE) return TVI_CONTROL_FALSE;
+        if(!priv->videoready) return TVI_CONTROL_FALSE;
         return TVI_CONTROL_TRUE;
 
     case TVI_CONTROL_TUN_SET_NORM:
@@ -440,7 +437,7 @@ static int control(priv_t *priv, int cmd, void *arg)
             }
 
 #ifdef BT848_SAUDIO
-	if(priv->tunerready == TRUE &&
+	if(priv->tunerready &&
 	    ioctl(priv->tunerfd, BT848_SAUDIO, &priv->tv_param->audio_id) < 0)
 	    {
            mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TV_Bt848IoctlFailed, "BT848_SAUDIO", strerror(errno));
@@ -531,7 +528,7 @@ static int control(priv_t *priv, int cmd, void *arg)
         return TVI_CONTROL_TRUE;
 
     case TVI_CONTROL_IMMEDIATE:
-        priv->immediatemode = TRUE;
+        priv->immediatemode = 1;
         return TVI_CONTROL_TRUE;
     }
 
@@ -548,8 +545,8 @@ G_private = priv; /* Oooh, sick */
 
 /* Video Configuration */
 
-priv->videoready = TRUE;
-priv->immediatemode = FALSE;
+priv->videoready = 1;
+priv->immediatemode = 0;
 priv->iformat = METEOR_FMT_PAL;
 priv->maxheight = PAL_HEIGHT;
 priv->maxwidth = PAL_WIDTH;
@@ -571,35 +568,35 @@ priv->btfd = open(priv->btdev, O_RDONLY);
 if(priv->btfd < 0)
     {
     mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TV_Bt848ErrorOpeningBktrDev, strerror(errno));
-    priv->videoready = FALSE;
+    priv->videoready = 0;
     }
 
-if(priv->videoready == TRUE &&
+if(priv->videoready &&
    ioctl(priv->btfd, METEORSFMT, &priv->iformat) < 0)
     {
     mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TV_Bt848IoctlFailed, "SETEORSFMT", strerror(errno));
     }
 
-if(priv->videoready == TRUE &&
+if(priv->videoready &&
    ioctl(priv->btfd, METEORSINPUT, &priv->source) < 0)
     {
     mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TV_Bt848IoctlFailed, "METEORSINPUT", strerror(errno));
     }
 
 tmp_fps = priv->fps;
-if(priv->videoready == TRUE &&
+if(priv->videoready &&
    ioctl(priv->btfd, METEORSFPS, &tmp_fps) < 0)
     {
     mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TV_Bt848IoctlFailed, "METEORSFPS", strerror(errno));
     }
 
-if(priv->videoready == TRUE &&
+if(priv->videoready &&
    ioctl(priv->btfd, METEORSETGEO, &priv->geom) < 0)
     {
     mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TV_Bt848IoctlFailed, "METEORSGEQ", strerror(errno));
     }
 
-if(priv->videoready == TRUE)
+if(priv->videoready)
     {
     priv->framebufsize = (priv->geom.columns * priv->geom.rows * 2);
 
@@ -609,7 +606,7 @@ if(priv->videoready == TRUE)
     if(priv->livebuf == (u_char *) MAP_FAILED)
         {
         mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TV_Bt848MmapFailed, strerror(errno));
-        priv->videoready = FALSE;
+        priv->videoready = 0;
         }
 
     for(count=0;count<RINGSIZE;count++)
@@ -619,30 +616,30 @@ if(priv->videoready == TRUE)
         if(priv->framebuf[count].buf == NULL)
             {
             mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TV_Bt848FrameBufAllocFailed, strerror(errno));
-            priv->videoready = FALSE;
+            priv->videoready = 0;
             break;
             }
 
-        priv->framebuf[count].dirty = TRUE;
+        priv->framebuf[count].dirty = 1;
         priv->framebuf[count].timestamp = 0;
         }
     }
 
 /* Tuner Configuration */
 
-priv->tunerready = TRUE;
+priv->tunerready = 1;
 
 priv->tunerfd = open(priv->tunerdev, O_RDONLY);
 
 if(priv->tunerfd < 0)
     {
     mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TV_Bt848ErrorOpeningTunerDev, strerror(errno));
-    priv->tunerready = FALSE;
+    priv->tunerready = 0;
     }
 
 /* Audio Configuration */
 
-priv->dspready = TRUE;
+priv->dspready = 1;
 priv->dspsamplesize = 16;
 priv->dspstereo = 1;
 priv->dspspeed = 44100;
@@ -655,7 +652,7 @@ priv->dspframesize = priv->dspspeed*priv->dspsamplesize/8/priv->fps *
 if((priv->dspfd = open (priv->dspdev, O_RDONLY, 0)) < 0)
     {
     mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TV_Bt848ErrorOpeningDspDev, strerror(errno));
-    priv->dspready = FALSE;
+    priv->dspready = 0;
     }
 
 marg = (256 << 16) | 12;
@@ -663,10 +660,10 @@ marg = (256 << 16) | 12;
 if (ioctl(priv->dspfd, SNDCTL_DSP_SETFRAGMENT, &marg ) < 0 )
     {
     mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TV_Bt848IoctlFailed, "SNDCTL_DSP_SETFRAGMENT", strerror(errno));
-    priv->dspready = FALSE;
+    priv->dspready = 0;
     }
 
-if((priv->dspready == TRUE) &&
+if(priv->dspready &&
    ((ioctl(priv->dspfd, SNDCTL_DSP_SAMPLESIZE, &priv->dspsamplesize) == -1) ||
    (ioctl(priv->dspfd, SNDCTL_DSP_STEREO, &priv->dspstereo) == -1) ||
    (ioctl(priv->dspfd, SNDCTL_DSP_SPEED, &priv->dspspeed) == -1) ||
@@ -674,7 +671,7 @@ if((priv->dspready == TRUE) &&
     {
     mp_msg(MSGT_TV, MSGL_ERR, MSGTR_TV_Bt848ErrorConfiguringDsp, strerror(errno));
     close(priv->dspfd);
-    priv->dspready = FALSE;
+    priv->dspready = 0;
     }
 
 return 1;
@@ -688,7 +685,7 @@ struct timeval curtime;
 int marg;
 
 fprintf(stderr,"START\n");
-if(priv->videoready == FALSE) return 0;
+if(!priv->videoready) return 0;
 
 signal(SIGUSR1, processframe);
 signal(SIGALRM, processframe);
@@ -722,7 +719,7 @@ static int uninit(priv_t *priv)
 {
 int marg;
 
-if(priv->videoready == FALSE) return 0;
+if(!priv->videoready) return 0;
 
 marg = METEOR_SIG_MODE_MASK;
 
@@ -746,7 +743,7 @@ close(priv->dspfd);
 priv->dspfd = -1;
 priv->btfd = -1;
 
-priv->dspready = priv->videoready = FALSE;
+priv->dspready = priv->videoready = 0;
 
 return 1;
 }
@@ -756,7 +753,7 @@ static double grabimmediate_video_frame(priv_t *priv, char *buffer, int len)
 {
 sigset_t sa_mask;
 
-if(priv->videoready == FALSE) return 0;
+if(!priv->videoready) return 0;
 
 alarm(1);
 sigfillset(&sa_mask);
@@ -779,14 +776,14 @@ static double grab_video_frame(priv_t *priv, char *buffer, int len)
 double timestamp=0;
 sigset_t sa_mask;
 
-if(priv->videoready == FALSE) return 0;
+if(!priv->videoready) return 0;
 
-if(priv->immediatemode == TRUE)
+if(priv->immediatemode)
     {
     return grabimmediate_video_frame(priv, buffer, len);
     }
 
-while(priv->framebuf[priv->curbufframe].dirty == TRUE)
+while(priv->framebuf[priv->curbufframe].dirty)
     {
     alarm(1);
     sigemptyset(&sa_mask);
@@ -796,7 +793,7 @@ while(priv->framebuf[priv->curbufframe].dirty == TRUE)
 
 memcpy(buffer, priv->framebuf[priv->curbufframe].buf, len);
 timestamp = priv->framebuf[priv->curbufframe].timestamp;
-priv->framebuf[priv->curbufframe].dirty = TRUE;
+priv->framebuf[priv->curbufframe].dirty = 1;
 
 priv->curbufframe++;
 if(priv->curbufframe >= RINGSIZE) priv->curbufframe = 0;
@@ -817,7 +814,7 @@ double timeskew;
 int bytesread;
 int ret;
 
-if(priv->dspready == FALSE) return 0;
+if(!priv->dspready) return 0;
 
 gettimeofday(&curtime, NULL);
 
@@ -866,7 +863,7 @@ int bytesavail;
 struct audio_info auinf;
 #endif
 
-if(priv->dspready == FALSE) return 0;
+if(!priv->dspready) return 0;
 
 #ifdef CONFIG_SUN_AUDIO
 if(ioctl(priv->dspfd, AUDIO_GETINFO, &auinf) < 0)
