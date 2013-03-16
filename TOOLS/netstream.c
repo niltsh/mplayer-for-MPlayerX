@@ -139,7 +139,7 @@ static int net_stream_seek(client_t* cl, uint64_t pos) {
     return 1;
   }
 
-  if(!stream_seek(cl->stream,(off_t)pos)) {
+  if(!stream_seek(cl->stream,pos)) {
     if(!write_error(cl->fd,"Seek failed\n"))
       return 0;
     return 1;
