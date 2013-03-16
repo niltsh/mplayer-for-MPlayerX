@@ -195,13 +195,13 @@ static void resize(int x,int y){
   ass_border_x = ass_border_y = 0;
   if (aspect_scaling() && use_aspect) {
     int new_w, new_h;
-    GLdouble scale_x, scale_y;
+    double scale_x, scale_y;
     aspect(&new_w, &new_h, A_WINZOOM);
     panscan_calc_windowed();
     new_w += vo_panscan_x;
     new_h += vo_panscan_y;
-    scale_x = (GLdouble)new_w / (GLdouble)x;
-    scale_y = (GLdouble)new_h / (GLdouble)y;
+    scale_x = (double)new_w / (double)x;
+    scale_y = (double)new_h / (double)y;
     matrix[0]  *= scale_x;
     matrix[12] *= scale_x;
     matrix[5]  *= scale_y;

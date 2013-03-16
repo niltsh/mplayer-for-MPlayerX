@@ -67,7 +67,7 @@ void (GLAPIENTRY *mpglTexEnvi)(GLenum, GLenum, GLint);
 void (GLAPIENTRY *mpglColor4ub)(GLubyte, GLubyte, GLubyte, GLubyte);
 void (GLAPIENTRY *mpglColor4f)(GLfloat, GLfloat, GLfloat, GLfloat);
 void (GLAPIENTRY *mpglClearColor)(GLclampf, GLclampf, GLclampf, GLclampf);
-void (GLAPIENTRY *mpglClearDepth)(GLclampd);
+void (GLAPIENTRY *mpglClearDepthf)(GLclampf);
 void (GLAPIENTRY *mpglDepthFunc)(GLenum);
 void (GLAPIENTRY *mpglEnable)(GLenum);
 void (GLAPIENTRY *mpglDisable)(GLenum);
@@ -92,6 +92,7 @@ void (GLAPIENTRY *mpglLightfv)(GLenum, GLenum, const GLfloat *);
 void (GLAPIENTRY *mpglColorMaterial)(GLenum, GLenum);
 void (GLAPIENTRY *mpglShadeModel)(GLenum);
 void (GLAPIENTRY *mpglGetIntegerv)(GLenum, GLint *);
+static void (GLAPIENTRY *mpglGetTexLevelParameteriv)(GLenum, GLint, GLenum, GLint *);
 void (GLAPIENTRY *mpglColorMask)(GLboolean, GLboolean, GLboolean, GLboolean);
 
 /**
@@ -430,7 +431,7 @@ static const extfunc_desc_t extfuncs[] = {
   DEF_FUNC_DESC(Color4ub),
   DEF_FUNC_DESC(Color4f),
   DEF_FUNC_DESC(ClearColor),
-  DEF_FUNC_DESC(ClearDepth),
+  DEF_FUNC_DESC(ClearDepthf),
   DEF_FUNC_DESC(DepthFunc),
   DEF_FUNC_DESC(Enable),
   DEF_FUNC_DESC(Disable),
@@ -454,6 +455,7 @@ static const extfunc_desc_t extfuncs[] = {
   DEF_FUNC_DESC(ColorMaterial),
   DEF_FUNC_DESC(ShadeModel),
   DEF_FUNC_DESC(GetIntegerv),
+  DEF_FUNC_DESC(GetTexLevelParameteriv),
   DEF_FUNC_DESC(ColorMask),
 
   // here start the real extensions
@@ -584,7 +586,7 @@ void glCreateClearTex(GLenum target, GLenum fmt, GLenum format, GLenum type, GLi
   if (format == GL_LUMINANCE && type == GL_UNSIGNED_SHORT) {
     // ensure we get enough bits
     GLint bits = 0;
-    glGetTexLevelParameteriv(target, 0, GL_TEXTURE_LUMINANCE_SIZE, &bits);
+    mpglGetTexLevelParameteriv(target, 0, GL_TEXTURE_LUMINANCE_SIZE, &bits);
     if (bits > 0 && bits < 14 && (use_depth_l16 || HAVE_BIGENDIAN)) {
       fmt = GL_DEPTH_COMPONENT16;
       format = GL_DEPTH_COMPONENT;

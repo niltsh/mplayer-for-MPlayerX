@@ -35,6 +35,127 @@
 #endif
 #endif
 
+// base OpenGL defines
+#ifndef GL_NONE
+#define GL_NONE 0
+#endif
+
+#ifndef GL_QUADS
+#define GL_QUADS 0x0007
+#endif
+
+#ifndef GL_FRONT_LEFT
+#define GL_FRONT_LEFT 0x0400
+#endif
+#ifndef GL_FRONT_RIGHT
+#define GL_FRONT_RIGHT 0x0401
+#endif
+#ifndef GL_BACK_LEFT
+#define GL_BACK_LEFT 0x0402
+#endif
+#ifndef GL_BACK_RIGHT
+#define GL_BACK_RIGHT 0x0403
+#endif
+
+#ifndef GL_DRAW_BUFFER
+#define GL_DRAW_BUFFER 0x0C01
+#endif
+#ifndef GL_UNPACK_ROW_LENGTH
+#define GL_UNPACK_ROW_LENGTH 0x0CF2
+#endif
+
+#ifndef GL_TEXTURE_1D
+#define GL_TEXTURE_1D 0x0DE0
+#endif
+#ifndef GL_TEXTURE_BORDER_COLOR
+#define GL_TEXTURE_BORDER_COLOR 0x1004
+#endif
+#ifndef GL_COMPILE
+#define GL_COMPILE 0x1300
+#endif
+#ifndef GL_CLAMP
+#define GL_CLAMP 0x2900
+#endif
+
+#ifndef GL_INT
+#define GL_INT 0x1404
+#endif
+#ifndef GL_2_BYTES
+#define GL_2_BYTES 0x1407
+#endif
+#ifndef GL_3_BYTES
+#define GL_3_BYTES 0x1408
+#endif
+#ifndef GL_4_BYTES
+#define GL_4_BYTES 0x1409
+#endif
+#ifndef GL_DOUBLE
+#define GL_DOUBLE 0x140A
+#endif
+
+#ifndef GL_COLOR_INDEX
+#define GL_COLOR_INDEX 0x1900
+#endif
+#ifndef GL_RED
+#define GL_RED 0x1903
+#endif
+#ifndef GL_GREEN
+#define GL_GREEN 0x1904
+#endif
+#ifndef GL_BLUE
+#define GL_BLUE 0x1905
+#endif
+#ifndef GL_R3_G3_B2
+#define GL_R3_G3_B2 0x2A10
+#endif
+#ifndef GL_LUMINANCE8
+#define GL_LUMINANCE8 0x8040
+#endif
+#ifndef GL_RGB4
+#define GL_RGB4 0x804F
+#endif
+#ifndef GL_RGB5
+#define GL_RGB5 0x8050
+#endif
+#ifndef GL_RGB8
+#define GL_RGB8 0x8051
+#endif
+#ifndef GL_RGB10
+#define GL_RGB10 0x8052
+#endif
+#ifndef GL_RGB12
+#define GL_RGB12 0x8053
+#endif
+#ifndef GL_RGB16
+#define GL_RGB16 0x8054
+#endif
+#ifndef GL_RGBA2
+#define GL_RGBA2 0x8055
+#endif
+#ifndef GL_RGBA4
+#define GL_RGBA4 0x8056
+#endif
+#ifndef GL_RGB5_A1
+#define GL_RGB5_A1 0x8057
+#endif
+#ifndef GL_RGBA8
+#define GL_RGBA8  0x8058
+#endif
+#ifndef GL_RGB10_A2
+#define GL_RGB10_A2 0x8059
+#endif
+#ifndef GL_RGBA12
+#define GL_RGBA12 0x805A
+#endif
+#ifndef GL_RGBA16
+#define GL_RGBA16 0x805B
+#endif
+
+#ifndef GL_TEXTURE_PRIORITY
+#define GL_TEXTURE_PRIORITY 0x8066
+#endif
+
+
 /**
  * \defgroup glextdefines OpenGL extension defines
  *
