@@ -116,6 +116,8 @@ int unrar_exec_get(unsigned char **output, unsigned long *size,
         *size += bytesread;
         if (*size == bufsize) {
             char *p;
+            if (bufsize >= 0x7fffffff - ALLOC_INCR)
+                break;
             bufsize += ALLOC_INCR;
             p = realloc(*output, bufsize);
             if (!p)
