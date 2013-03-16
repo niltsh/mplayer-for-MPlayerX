@@ -67,7 +67,7 @@ void (GLAPIENTRY *mpglTexEnvi)(GLenum, GLenum, GLint);
 void (GLAPIENTRY *mpglColor4ub)(GLubyte, GLubyte, GLubyte, GLubyte);
 void (GLAPIENTRY *mpglColor4f)(GLfloat, GLfloat, GLfloat, GLfloat);
 void (GLAPIENTRY *mpglClearColor)(GLclampf, GLclampf, GLclampf, GLclampf);
-void (GLAPIENTRY *mpglClearDepthf)(GLclampf);
+void (GLAPIENTRY *mpglClearDepth)(double);
 void (GLAPIENTRY *mpglDepthFunc)(GLenum);
 void (GLAPIENTRY *mpglEnable)(GLenum);
 void (GLAPIENTRY *mpglDisable)(GLenum);
@@ -431,7 +431,7 @@ static const extfunc_desc_t extfuncs[] = {
   DEF_FUNC_DESC(Color4ub),
   DEF_FUNC_DESC(Color4f),
   DEF_FUNC_DESC(ClearColor),
-  DEF_FUNC_DESC(ClearDepthf),
+  DEF_FUNC_DESC(ClearDepth),
   DEF_FUNC_DESC(DepthFunc),
   DEF_FUNC_DESC(Enable),
   DEF_FUNC_DESC(Disable),

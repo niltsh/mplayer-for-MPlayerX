@@ -278,7 +278,7 @@ void matrixview_init(int w, int h)
     mpglClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
     // Depth to clear depth buffer to; type of test.
-    mpglClearDepthf(1.0);
+    mpglClearDepth(1.0);
     mpglDepthFunc(GL_LESS);
 
     // Enables Smooth Color Shading; try GL_FLAT for (lack of) fun.

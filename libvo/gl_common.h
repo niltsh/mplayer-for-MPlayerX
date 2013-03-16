@@ -254,7 +254,7 @@ extern void (GLAPIENTRY *mpglTexEnvi)(GLenum, GLenum, GLint);
 extern void (GLAPIENTRY *mpglColor4ub)(GLubyte, GLubyte, GLubyte, GLubyte);
 extern void (GLAPIENTRY *mpglColor4f)(GLfloat, GLfloat, GLfloat, GLfloat);
 extern void (GLAPIENTRY *mpglClearColor)(GLclampf, GLclampf, GLclampf, GLclampf);
-extern void (GLAPIENTRY *mpglClearDepthf)(GLclampf);
+extern void (GLAPIENTRY *mpglClearDepth)(double);
 extern void (GLAPIENTRY *mpglDepthFunc)(GLenum);
 extern void (GLAPIENTRY *mpglEnable)(GLenum);
 extern void (GLAPIENTRY *mpglDisable)(GLenum);
