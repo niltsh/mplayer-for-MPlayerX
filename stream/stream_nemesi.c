@@ -39,7 +39,7 @@
 
 char *rtsp_destination = NULL;
 
-static int rtsp_streaming_seek(int fd, off_t pos,
+static int rtsp_streaming_seek(int fd, uint64_t pos,
                                streaming_ctrl_t* streaming_ctrl) {
     return -1;
 }

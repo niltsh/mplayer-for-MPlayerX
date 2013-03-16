@@ -87,10 +87,10 @@ static void bluray_stream_close(stream_t *s)
     free(b);
 }
 
-static int bluray_stream_seek(stream_t *s, off_t pos)
+static int bluray_stream_seek(stream_t *s, uint64_t pos)
 {
     struct bluray_priv_s *b = s->priv;
-    off_t p;
+    uint64_t p;
 
     p = bd_seek(b->bd, pos);
     if (p == -1)

@@ -87,7 +87,7 @@ static const struct m_struct_st stream_opts = {
   stream_opts_fields
 };
 
-static int seek(stream_t *s, off_t newpos);
+static int seek(stream_t *s, uint64_t newpos);
 static void show_audio_subs_languages(dvdnav_t *nav);
 
 static dvdnav_priv_t * new_dvdnav_stream(char * filename) {
@@ -276,7 +276,7 @@ static void update_title_len(stream_t *stream) {
 
   status = dvdnav_get_position(priv->dvdnav, &pos, &len);
   if(status == DVDNAV_STATUS_OK && len) {
-    stream->end_pos = (off_t) len * 2048;
+    stream->end_pos = len * 2048ull;
     stream->seek = seek;
   } else {
     stream->seek = NULL;
@@ -285,7 +285,7 @@ static void update_title_len(stream_t *stream) {
 }
 
 
-static int seek(stream_t *s, off_t newpos) {
+static int seek(stream_t *s, uint64_t newpos) {
   uint32_t sector = 0;
   dvdnav_priv_t *priv = s->priv;
 

@@ -453,7 +453,7 @@ static int asf_http_streaming_read( int fd, char *buffer, int size, streaming_ct
   return read;
 }
 
-static int asf_http_streaming_seek( int fd, off_t pos, streaming_ctrl_t *streaming_ctrl ) {
+static int asf_http_streaming_seek( int fd, uint64_t pos, streaming_ctrl_t *streaming_ctrl ) {
 	return -1;
 	// to shut up gcc warning
 	fd++;
