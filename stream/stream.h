@@ -128,7 +128,7 @@ typedef struct streaming_control {
 	unsigned int buffer_pos;
 	unsigned int bandwidth;	// The downstream available
 	int (*streaming_read)( int fd, char *buffer, int buffer_size, struct streaming_control *stream_ctrl );
-	int (*streaming_seek)( int fd, uint64_t pos, struct streaming_control *stream_ctrl );
+	int (*streaming_seek)( int fd, int64_t pos, struct streaming_control *stream_ctrl );
 	void *data;
 } streaming_ctrl_t;
 
@@ -155,7 +155,7 @@ typedef struct stream {
   // Write
   int (*write_buffer)(struct stream *s, char* buffer, int len);
   // Seek
-  int (*seek)(struct stream *s, uint64_t pos);
+  int (*seek)(struct stream *s, int64_t pos);
   // Control
   // Will be later used to let streams like dvd and cdda report
   // their structure (ie tracks, chapters, etc)
@@ -169,7 +169,7 @@ typedef struct stream {
   int sector_size; // sector size (seek will be aligned on this size if non 0)
   int read_chunk; // maximum amount of data to read at once to limit latency (0 for default)
   unsigned int buf_pos,buf_len;
-  uint64_t pos,start_pos,end_pos;
+  int64_t pos,start_pos,end_pos;
   int eof;
   int mode; //STREAM_READ or STREAM_WRITE
   unsigned int cache_pid;
@@ -188,7 +188,7 @@ typedef struct stream {
 #endif
 
 int stream_fill_buffer(stream_t *s);
-int stream_seek_long(stream_t *s, uint64_t pos);
+int stream_seek_long(stream_t *s, int64_t pos);
 void stream_capture_do(stream_t *s);
 
 #ifdef CONFIG_STREAM_CACHE
@@ -312,12 +312,12 @@ static inline int stream_eof(stream_t *s)
   return s->eof;
 }
 
-static inline uint64_t stream_tell(stream_t *s)
+static inline int64_t stream_tell(stream_t *s)
 {
   return s->pos+s->buf_pos-s->buf_len;
 }
 
-static inline int stream_seek(stream_t *s, uint64_t pos)
+static inline int stream_seek(stream_t *s, int64_t pos)
 {
 
   mp_dbg(MSGT_DEMUX, MSGL_DBG3, "seek to 0x%"PRIX64"\n", pos);
@@ -328,7 +328,7 @@ static inline int stream_seek(stream_t *s, uint64_t pos)
     pos = 0;
   }
   if(pos<s->pos){
-    uint64_t x=pos-(s->pos-s->buf_len);
+    int64_t x=pos-(s->pos-s->buf_len);
     if(x>=0){
       s->buf_pos=x;
 //      putchar('*');fflush(stdout);
@@ -339,7 +339,7 @@ static inline int stream_seek(stream_t *s, uint64_t pos)
   return cache_stream_seek_long(s,pos);
 }
 
-static inline int stream_skip(stream_t *s, uint64_t len)
+static inline int stream_skip(stream_t *s, int64_t len)
 {
   if( len<0 || (len>2*STREAM_BUFFER_SIZE && (s->flags & MP_STREAM_SEEK_FW)) ) {
     // negative or big skip!
@@ -375,7 +375,7 @@ int stream_check_interrupt(int time);
 /// Internal read function bypassing the stream buffer
 int stream_read_internal(stream_t *s, void *buf, int len);
 /// Internal seek function bypassing the stream buffer
-int stream_seek_internal(stream_t *s, uint64_t newpos);
+int stream_seek_internal(stream_t *s, int64_t newpos);
 
 extern int bluray_angle;
 extern int bluray_chapter;

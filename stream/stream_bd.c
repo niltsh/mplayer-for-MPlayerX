@@ -101,7 +101,7 @@ struct bd_priv {
     stream_t     *title_file;
     struct AVAES *aescbc;
     struct AVAES *aeseed;
-    uint64_t      pos;
+    int64_t       pos;
     struct uks    uks;
     int           nr_lang_maps;
     struct lang_map *lang_maps;
@@ -117,7 +117,7 @@ static void bd_stream_close(stream_t *s)
     free(bd);
 }
 
-static int bd_stream_seek(stream_t *s, uint64_t pos)
+static int bd_stream_seek(stream_t *s, int64_t pos)
 {
     struct bd_priv *bd = s->priv;
 
@@ -275,7 +275,7 @@ static int bd_get_uks(struct bd_priv *bd)
 }
 
 // NOTE: we assume buf is sufficiently aligned to 64 bit read/writes
-static uint64_t bd_read(struct bd_priv *bd, uint8_t *buf, int len)
+static int64_t bd_read(struct bd_priv *bd, uint8_t *buf, int len)
 {
     int read_len;
     int unit_offset = bd->pos % BD_UNIT_SIZE;

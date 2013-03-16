@@ -416,7 +416,7 @@ static void dvd_close(dvd_priv_t *d)
 
 static int fill_buffer(stream_t *s, char *buf, int len)
 {
-  uint64_t pos;
+  int64_t pos;
   if (len < 2048)
     return -1;
   pos = dvd_read_sector(s->priv, buf);
@@ -426,7 +426,7 @@ static int fill_buffer(stream_t *s, char *buf, int len)
   return 2048; // full sector
 }
 
-static int seek(stream_t *s, uint64_t newpos) {
+static int seek(stream_t *s, int64_t newpos) {
   s->pos=newpos; // real seek
   dvd_seek(s->priv,s->pos/2048);
   return 1;
@@ -504,7 +504,7 @@ static int seek_to_chapter(stream_t *stream, ifo_handle_t *vts_file, tt_srpt_t *
     dvd_priv_t *d = stream->priv;
     ptt_info_t ptt;
     pgc_t *pgc;
-    uint64_t pos;
+    int64_t pos;
 
     if(!vts_file || !tt_srpt)
        return 0;
@@ -597,7 +597,7 @@ static int dvd_seek_to_time(stream_t *stream, ifo_handle_t *vts_file, double sec
     unsigned int i, j, k, timeunit, ac_time, tmap_sector=0, cell_sector=0, vobu_sector=0;
     int t=0;
     double tm, duration;
-    uint64_t pos = -1;
+    int64_t pos = -1;
     dvd_priv_t *d = stream->priv;
     vts_tmapt_t *vts_tmapt = vts_file->vts_tmapt;
 

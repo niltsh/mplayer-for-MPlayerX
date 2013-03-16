@@ -286,7 +286,7 @@ static int stream_reconnect(stream_t *s)
 #define MAX_RECONNECT_RETRIES 5
 #define RECONNECT_SLEEP_MS 1000
     int retry = 0;
-    uint64_t pos = s->pos;
+    int64_t pos = s->pos;
     // Seeking is used as a hack to make network streams
     // reopen the connection, ideally they would implement
     // e.g. a STREAM_CTRL_RECONNECT to do this
@@ -380,7 +380,7 @@ int stream_write_buffer(stream_t *s, unsigned char *buf, int len) {
   return rd;
 }
 
-int stream_seek_internal(stream_t *s, uint64_t newpos)
+int stream_seek_internal(stream_t *s, int64_t newpos)
 {
 if(newpos==0 || newpos!=s->pos){
   switch(s->type){
@@ -428,9 +428,9 @@ if(newpos==0 || newpos!=s->pos){
   return -1;
 }
 
-int stream_seek_long(stream_t *s, uint64_t pos){
+int stream_seek_long(stream_t *s, int64_t pos){
   int res;
-  uint64_t newpos=0;
+  int64_t newpos=0;
 
 //  if( mp_msg_test(MSGT_STREAM,MSGL_DBG3) ) printf("seek_long to 0x%X\n",(unsigned int)pos);
 
@@ -445,7 +445,7 @@ int stream_seek_long(stream_t *s, uint64_t pos){
   if(s->sector_size)
       newpos = (pos/s->sector_size)*s->sector_size;
   else
-      newpos = pos&(~((uint64_t)STREAM_BUFFER_SIZE-1));
+      newpos = pos&(~((int64_t)STREAM_BUFFER_SIZE-1));
 
 if( mp_msg_test(MSGT_STREAM,MSGL_DBG3) ){
   mp_msg(MSGT_STREAM,MSGL_DBG3, "s->pos=%"PRIX64"  newpos=%"PRIX64"  new_bufpos=%"PRIX64"  buflen=%X  \n",

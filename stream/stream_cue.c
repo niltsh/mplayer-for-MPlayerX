@@ -480,7 +480,7 @@ static int cue_vcd_get_track_end (int track){
   return VCD_SECTOR_DATA * sector;
 }
 
-static int seek(stream_t *s, uint64_t newpos) {
+static int seek(stream_t *s, int64_t newpos) {
   s->pos=newpos;
   cue_set_msf(s->pos/VCD_SECTOR_DATA);
   return 1;

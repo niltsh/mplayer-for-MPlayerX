@@ -42,7 +42,7 @@ static int write_buffer(stream_t *s, char *buffer, int len)
     return len;
 }
 
-static int seek(stream_t *s, uint64_t newpos)
+static int seek(stream_t *s, int64_t newpos)
 {
     s->pos = newpos;
     if (avio_seek(s->priv, s->pos, SEEK_SET) < 0) {

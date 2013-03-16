@@ -86,7 +86,7 @@ static int control(stream_t *s, int cmd, void *arg) {
   return STREAM_UNSUPPORTED;
 }
 
-static int seek(stream_t *s, uint64_t newpos) {
+static int seek(stream_t *s, int64_t newpos) {
   s->pos = newpos;
   if(smbc_lseek(s->fd,s->pos,SEEK_SET)<0) {
     s->eof=1;

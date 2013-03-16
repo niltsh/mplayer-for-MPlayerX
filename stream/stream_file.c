@@ -78,7 +78,7 @@ static int write_buffer(stream_t *s, char* buffer, int len) {
   return len;
 }
 
-static int seek(stream_t *s, uint64_t newpos) {
+static int seek(stream_t *s, int64_t newpos) {
   s->pos = newpos;
   if(lseek(s->fd,s->pos,SEEK_SET)<0) {
     s->eof=1;
@@ -87,7 +87,7 @@ static int seek(stream_t *s, uint64_t newpos) {
   return 1;
 }
 
-static int seek_forward(stream_t *s, uint64_t newpos) {
+static int seek_forward(stream_t *s, int64_t newpos) {
   if(newpos<s->pos){
     mp_msg(MSGT_STREAM,MSGL_INFO,"Cannot seek backward in linear streams!\n");
     return 0;
@@ -143,7 +143,7 @@ fallback:
 static int open_f(stream_t *stream,int mode, void* opts, int* file_format) {
   int f;
   mode_t m = 0;
-  uint64_t len;
+  int64_t len;
   unsigned char *filename;
   struct stream_priv_s* p = (struct stream_priv_s*)opts;
 

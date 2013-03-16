@@ -87,7 +87,7 @@ static const struct m_struct_st stream_opts = {
   stream_opts_fields
 };
 
-static int seek(stream_t *s, uint64_t newpos);
+static int seek(stream_t *s, int64_t newpos);
 static void show_audio_subs_languages(dvdnav_t *nav);
 
 static dvdnav_priv_t * new_dvdnav_stream(char * filename) {
@@ -285,7 +285,7 @@ static void update_title_len(stream_t *stream) {
 }
 
 
-static int seek(stream_t *s, uint64_t newpos) {
+static int seek(stream_t *s, int64_t newpos) {
   uint32_t sector = 0;
   dvdnav_priv_t *priv = s->priv;
 
