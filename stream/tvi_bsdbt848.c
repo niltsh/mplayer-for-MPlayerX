@@ -684,7 +684,6 @@ int tmp;
 struct timeval curtime;
 int marg;
 
-fprintf(stderr,"START\n");
 if(!priv->videoready) return 0;
 
 signal(SIGUSR1, processframe);
