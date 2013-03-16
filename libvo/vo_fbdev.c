@@ -32,7 +32,11 @@
 
 #include <sys/mman.h>
 #include <sys/ioctl.h>
+#ifdef __ANDROID__
+#include <linux/kd.h>
+#else
 #include <sys/kd.h>
+#endif
 #include <linux/fb.h>
 
 #include "config.h"

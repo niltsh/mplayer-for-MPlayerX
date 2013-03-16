@@ -29,7 +29,9 @@
 
 #ifdef __linux__
 #include <linux/cdrom.h>
+#ifndef __ANDROID__
 #include <scsi/sg.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
