@@ -47,6 +47,9 @@
 #ifdef CONFIG_GL_OSX
 #include "osx_common.h"
 #include <OpenGL/gl.h>
+#elif defined(CONFIG_GL_EGL_ANDROID)
+#include <EGL/egl.h>
+#include <GLES/gl.h>
 #else
 #include <GL/gl.h>
 #endif
@@ -192,6 +195,7 @@ enum MPGLType {
   GLTYPE_SDL,
   GLTYPE_EGL_X11,
   GLTYPE_OSX,
+  GLTYPE_EGL_ANDROID,
   GLTYPE_COUNT
 };
 
@@ -210,7 +214,7 @@ typedef struct MPGLContext {
 #ifdef CONFIG_GL_X11
     GLXContext x11;
 #endif
-#ifdef CONFIG_GL_EGL_X11
+#if defined(CONFIG_GL_EGL_X11) || defined(CONFIG_GL_EGL_ANDROID)
     EGLContext egl;
 #endif
   } context;

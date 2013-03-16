@@ -18,6 +18,10 @@ MPlayer
     Ports:
     * Windows: support file names as UTF-8 in slave mode and passing
       file names as wchar command line arguments.
+    * Android: MPlayer can be run from adb shell and display videos
+      via OpenGL ES.
+      Note that just a bit of seeking etc. would cause reproducible
+      system reboots after just a few seconds on my Galaxy S2.
 
   1.1: "We gave up on 1.0"
 

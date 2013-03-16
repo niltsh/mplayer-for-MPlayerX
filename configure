@@ -5317,7 +5317,7 @@ echores "$_sdl"
 # conflicts between -lGL and -framework OpenGL
 echocheck "OpenGL"
 #Note: this test is run even with --enable-gl since we autodetect linker flags
-if (test "$_x11" = yes || test "$_sdl" = yes || win32 || test "$_corevideo" = yes) && test "$_gl" != no ; then
+if test "$_gl" != no ; then
   cat > $TMPC << EOF
 #ifdef GL_WIN32
 #include <windows.h>
@@ -5337,6 +5337,9 @@ if (test "$_x11" = yes || test "$_sdl" = yes || win32 || test "$_corevideo" = ye
 #include <GL/gl.h>
 #include <X11/Xlib.h>
 #include <EGL/egl.h>
+#elif defined(GL_EGL_ANDROID)
+#include <GLES/gl.h>
+#include <EGL/egl.h>
 #else
 #include <GL/gl.h>
 #include <X11/Xlib.h>
@@ -5348,13 +5351,16 @@ int main(int argc, char *argv[]) {
   wglCreateContext(dc);
 #elif defined(GL_SDL)
   SDL_GL_SwapBuffers();
-#elif defined(GL_EGL_X11)
+#elif defined(GL_EGL_X11) || defined(GL_EGL_ANDROID)
   EGLDisplay eglDisplay = EGL_NO_DISPLAY;
   eglInitialize(eglDisplay, NULL, NULL);
 #else
   glXCreateContext(NULL, NULL, NULL, True);
 #endif
-#ifndef GL_EGL_X11
+#ifdef GL_EGL_ANDROID
+  EGLNativeWindowType android_createDisplaySurface(void);
+  android_createDisplaySurface();
+#elif !defined(GL_EGL_X11)
   glFinish();
 #endif
   return 0;
@@ -5369,6 +5375,11 @@ EOF
       break
     fi
   done
+  if cc_check -DGL_EGL_ANDROID -lEGL -lui ; then
+    _gl=yes
+    _gl_egl_android=yes
+    libs_mplayer="$libs_mplayer -lEGL -lui $ld_dl"
+  fi
   if test "$_x11" = yes && cc_check -DGL_EGL_X11 -lEGL ; then
     _gl=yes
     _gl_egl_x11=yes
@@ -5410,6 +5421,10 @@ if test "$_gl" = yes ; then
     def_gl_x11='#define CONFIG_GL_X11 1'
     res_comment="$res_comment x11"
   fi
+  if test "$_gl_egl_android" = yes ; then
+    def_gl_egl_android='#define CONFIG_GL_EGL_ANDROID 1'
+    res_comment="$res_comment egl_android"
+  fi
   if test "$_gl_egl_x11" = yes ; then
     def_gl_egl_x11='#define CONFIG_GL_EGL_X11 1'
     res_comment="$res_comment egl_x11"
@@ -5427,6 +5442,7 @@ else
   def_gl='#undef CONFIG_GL'
   def_gl_win32='#undef CONFIG_GL_WIN32'
   def_gl_x11='#undef CONFIG_GL_X11'
+  def_gl_egl_android='#undef CONFIG_GL_EGL_ANDROID'
   def_gl_egl_x11='#undef CONFIG_GL_EGL_X11'
   def_gl_sdl='#undef CONFIG_GL_SDL'
   def_gl_osx='#undef CONFIG_GL_OSX'
@@ -8916,6 +8932,7 @@ $def_gif_tvt_hack
 $def_gl
 $def_gl_win32
 $def_gl_x11
+$def_gl_egl_android
 $def_gl_egl_x11
 $def_gl_sdl
 $def_gl_osx

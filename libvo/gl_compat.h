@@ -80,6 +80,9 @@
 #ifndef GL_INT
 #define GL_INT 0x1404
 #endif
+#ifndef GL_UNSIGNED_INT
+#define GL_UNSIGNED_INT 0x1405
+#endif
 #ifndef GL_2_BYTES
 #define GL_2_BYTES 0x1407
 #endif
