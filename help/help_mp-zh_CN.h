@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 35738
+// Synced with help_mp-en.h rev. 35968
 //
 // Translated by JRaSH <jrash06@gmail.com>
 
@@ -604,6 +604,7 @@ static const char help_text[]=
 #define MSGTR_IDFGCVD "抱歉，未找到与 GUI 兼容的视频输出驱动。\n"
 #define MSGTR_NEEDLAVC "抱歉，未重新编码前无法用你的 DXR3/H+ 设备播放非 MPEG 文件。\n请启用 DXR3/H+ 配置盒中的 lavc 编解码器。"
 #define MSGTR_ICONERROR "未找到图标‘%s’（大小为 %d）或格式不支持。\n"
+#define MSGTR_LOCALE_ENCODING "不支持 G_FILENAME_ENCODING=@locale 或 G_BROKEN_FILENAMES，\n必须在 G_FILENAME_ENCODING 中明确指定编码方式。\n"
 
 // --- skin loader error messages
 #define MSGTR_SKIN_ERRORMESSAGE "界面外观配置文件错误，行 %d：%s"
