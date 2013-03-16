@@ -321,7 +321,7 @@ static int mpeg_eof(mpeg_t *mpeg)
     return rar_eof(mpeg->stream);
 }
 
-static off_t mpeg_tell(mpeg_t *mpeg)
+static uint64_t mpeg_tell(mpeg_t *mpeg)
 {
     return rar_tell(mpeg->stream);
 }
@@ -481,7 +481,7 @@ static int mpeg_run(mpeg_t *mpeg)
 
 typedef struct {
     unsigned int pts100;
-    off_t filepos;
+    uint64_t filepos;
     unsigned int size;
     unsigned char *data;
 } packet_t;
@@ -648,7 +648,7 @@ static int vobsub_add_id(vobsub_t *vob, const char *id, size_t idlen,
     return 0;
 }
 
-static int vobsub_add_timestamp(vobsub_t *vob, off_t filepos, int ms)
+static int vobsub_add_timestamp(vobsub_t *vob, uint64_t filepos, int ms)
 {
     packet_queue_t *queue;
     packet_t *pkt;
@@ -696,7 +696,7 @@ static int vobsub_parse_id(vobsub_t *vob, const char *line)
 static int vobsub_parse_timestamp(vobsub_t *vob, const char *line)
 {
     int h, m, s, ms;
-    off_t filepos;
+    uint64_t filepos;
     if (sscanf(line, " %02d:%02d:%02d:%03d, filepos: %09"PRIx64"",
                &h, &m, &s, &ms, &filepos) != 5)
         return -1;
@@ -946,7 +946,7 @@ void *vobsub_open(const char *const name, const char *const ifo,
             } else {
                 long last_pts_diff = 0;
                 while (!mpeg_eof(mpg)) {
-                    off_t pos = mpeg_tell(mpg);
+                    uint64_t pos = mpeg_tell(mpg);
                     if (mpeg_run(mpg) < 0) {
                         if (!mpeg_eof(mpg))
                             mp_msg(MSGT_VOBSUB, MSGL_ERR, "VobSub: mpeg_run error\n");
