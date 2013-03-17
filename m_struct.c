@@ -23,6 +23,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 
 #include "m_option.h"
 #include "m_struct.h"

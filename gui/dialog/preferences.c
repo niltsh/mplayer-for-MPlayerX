@@ -21,6 +21,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string.h>
+#include <strings.h>
 
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>

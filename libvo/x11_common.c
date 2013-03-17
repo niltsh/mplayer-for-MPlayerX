@@ -30,6 +30,7 @@
 #include "x11_common.h"
 
 #include <string.h>
+#include <strings.h>
 #include <unistd.h>
 #include <assert.h>
 

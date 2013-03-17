@@ -33,6 +33,7 @@
  */
 
 #include <stdio.h>
+#include <strings.h>
 
 #include "config.h"
 #include "sub/ass_mp.h"

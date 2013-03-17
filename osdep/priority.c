@@ -25,8 +25,8 @@
 #ifndef __OS2__
 #include <windows.h>
 #endif
-
 #include <string.h>
+#include <strings.h>
 
 #include "mp_msg.h"
 #include "help_mp.h"

@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h> /* strtok */
+#include <strings.h>
 
 #include "config.h"
 #include "mp_msg.h"

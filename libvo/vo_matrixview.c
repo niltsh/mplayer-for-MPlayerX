@@ -25,6 +25,7 @@
 #include "config.h"
 
 #include <stdint.h>
+#include <strings.h>
 
 #include "mp_msg.h"
 #include "subopt-helper.h"

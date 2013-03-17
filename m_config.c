@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#include <strings.h>
 #ifdef MP_DEBUG
 #include <assert.h>
 #endif

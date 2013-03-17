@@ -53,6 +53,7 @@ for DLL to know too much about its environment.
 #include "path.h"
 
 #include <stdlib.h>
+#include <strings.h>
 #include <assert.h>
 #include <stdarg.h>
 #include <ctype.h>

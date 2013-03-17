@@ -48,6 +48,7 @@
 #include <sys/mman.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 #include <pthread.h>
 #ifdef HAVE_SYS_SYSINFO_H
 #include <sys/sysinfo.h>

@@ -50,6 +50,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 #include <sys/time.h>
 #if defined(__MINGW32__) || defined(__CYGWIN__)
 #include <windows.h>

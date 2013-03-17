@@ -34,6 +34,7 @@
 #include <assert.h>
 #include "config.h"
 #include <string.h>
+#include <strings.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <errno.h>

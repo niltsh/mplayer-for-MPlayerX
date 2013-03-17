@@ -21,6 +21,7 @@
 #include <inttypes.h>
 #include <unistd.h>
 #include <string.h>
+#include <strings.h>
 #include <sys/types.h>
 #include <toolame.h>
 

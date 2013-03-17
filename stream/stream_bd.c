@@ -22,6 +22,8 @@
 #include <stdio.h>
 #include <limits.h>
 #include <ctype.h>
+#include <strings.h>
+
 #include "libavutil/common.h"
 #include "libavutil/aes.h"
 #include "libavutil/sha.h"

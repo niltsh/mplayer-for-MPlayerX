@@ -75,6 +75,8 @@
 #include "config.h"
 
 #include <stdio.h>
+#include <strings.h>
+
 #include "libmpcodecs/img_format.h"
 #include "libmpcodecs/dec_teletext.h"
 #include "libaf/af_format.h"
