@@ -3279,7 +3279,7 @@ echores "$_kstat"
 for func in atanf cbrt cbrtf cosf expf exp2 exp2f isnan isinf llrint llrintf log2 log2f log10f lrint lrintf rint round roundf sinf trunc truncf; do
 echocheck $func
 eval _$func=no
-statement_check math.h "${func}(2.0)" -D_ISOC99_SOURCE && eval _$func=yes
+statement_check math.h "${func}(2.0)" && eval _$func=yes
 if eval test "x\$_$func" = "xyes"; then
   eval def_$func="\"#define HAVE_$(echo $func | toupper) 1\""
   echores yes
@@ -3293,7 +3293,7 @@ done
 for func in atan2f ldexpf powf; do
 echocheck $func
 eval _$func=no
-statement_check math.h "${func}(1.0,1.0)" -D_ISOC99_SOURCE && eval _$func=yes
+statement_check math.h "${func}(1.0,1.0)" && eval _$func=yes
 if eval test "x\$_$func" = "xyes"; then
   eval def_$func="\"#define HAVE_$(echo $func | toupper) 1\""
   echores yes
@@ -3306,7 +3306,7 @@ done
 
 echocheck "mkstemp"
 _mkstemp=no
-define_statement_check "_XOPEN_SOURCE 600" "stdlib.h" 'mkstemp("")' && _mkstemp=yes
+statement_check stdlib.h 'mkstemp("")' && _mkstemp=yes
 if test "$_mkstemp" = yes ; then
   def_mkstemp='#define HAVE_MKSTEMP 1'
 else
@@ -3678,7 +3678,7 @@ echores "$_memalign"
 echocheck "posix_memalign()"
 posix_memalign=no
 def_posix_memalign='#define HAVE_POSIX_MEMALIGN 0'
-define_statement_check "_XOPEN_SOURCE 600" "stdlib.h" 'posix_memalign(NULL, 0, 0)' &&
+statement_check stdlib.h 'posix_memalign(NULL, 0, 0)' &&
     posix_memalign=yes && def_posix_memalign='#define HAVE_POSIX_MEMALIGN 1'
 echores "$posix_memalign"
 
@@ -4103,13 +4103,8 @@ echores "$strsep"
 echocheck "vsscanf()"
 vsscanf=yes
 def_vsscanf='#define HAVE_VSSCANF 1'
-cat > $TMPC << EOF
-#define _ISOC99_SOURCE
-#include <stdarg.h>
-#include <stdio.h>
-int main(void) { va_list ap; vsscanf("foo", "bar", ap); return 0; }
-EOF
-cc_check || { vsscanf=no ; def_vsscanf='#undef HAVE_VSSCANF' ; }
+statement_check_broken stdarg.h stdio.h 'va_list ap; vsscanf("foo", "bar", ap)' ||
+    { vsscanf=no ; def_vsscanf='#undef HAVE_VSSCANF' ; }
 echores "$vsscanf"
 
 
