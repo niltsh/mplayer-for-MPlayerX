@@ -943,7 +943,7 @@ uninstall:
 	rm -f $(MANDIR)/man1/mplayer.1 $(MANDIR)/man1/mencoder.1
 	rm -f $(foreach lang,$(MAN_LANGS),$(foreach man,mplayer.1 mencoder.1,$(MANDIR)/$(lang)/man1/$(man)))
 
-clean:
+clean: testsclean toolsclean driversclean dhahelperclean
 	-$(MAKE) -C ffmpeg $@
 	-rm -rf tests/res
 	-rm -f $(call ADD_ALL_DIRS,/*.o /*.d /*.a /*.ho /*~)
@@ -953,7 +953,7 @@ clean:
 	-rm -f codecs.conf.h help_mp.h version.h
 	-rm -rf DOCS/tech/doxygen DOCS/HTML
 
-distclean: clean testsclean toolsclean driversclean dhahelperclean
+distclean: clean
 	-$(MAKE) -C ffmpeg $@
 	-rm -f DOCS/xml/html-chunk.xsl DOCS/xml/html-single.xsl
 	-rm -f $(foreach lang,$(DOC_LANG_ALL),DOCS/xml/$(lang)/main.xml)
