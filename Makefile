@@ -1022,11 +1022,9 @@ LOADER_TEST_OBJS = $(SRCS_WIN32_EMULATION:.c=.o) $(SRCS_QTX_EMULATION:.S=.o) ffm
 loader/qtx/list$(EXESUF) loader/qtx/qtxload$(EXESUF): CFLAGS += -g
 loader/qtx/list$(EXESUF) loader/qtx/qtxload$(EXESUF): $(LOADER_TEST_OBJS)
 
-TESTS = codecs2html codec-cfg-test libvo/aspecttest
+TESTS-$(ARCH_X86_32) += loader/qtx/list loader/qtx/qtxload
 
-ifdef ARCH_X86_32
-TESTS += loader/qtx/list loader/qtx/qtxload
-endif
+TESTS := codecs2html codec-cfg-test libvo/aspecttest $(TESTS-yes)
 
 TESTS_DEP_FILES = $(addsuffix .d,$(TESTS))
 
@@ -1035,11 +1033,9 @@ tests: $(addsuffix $(EXESUF),$(TESTS))
 testsclean:
 	-rm -f $(call ADD_ALL_EXESUFS,$(TESTS))
 
-TOOLS = $(addprefix TOOLS/,alaw-gen asfinfo avi-fix avisubdump compare dump_mp4 movinfo netstream subrip vivodump)
+TOOLS-$(ARCH_X86) += fastmemcpybench modify_reg
 
-ifdef ARCH_X86
-TOOLS += TOOLS/fastmemcpybench TOOLS/modify_reg
-endif
+TOOLS := $(addprefix TOOLS/,alaw-gen asfinfo avi-fix avisubdump compare dump_mp4 movinfo netstream subrip vivodump $(TOOLS-yes))
 
 ALLTOOLS = $(TOOLS) TOOLS/bmovl-test TOOLS/vfw2menc
 
