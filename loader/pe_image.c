@@ -37,6 +37,9 @@
  *   newer pe binaries produced by MSVC 5 and later, since they are also aligned
  *   to 4096 byte boundaries on disk.
  */
+
+#define _BSD_SOURCE
+
 #include "config.h"
 #include "debug.h"
 

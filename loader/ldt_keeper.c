@@ -17,6 +17,8 @@
  * http://svn.mplayerhq.hu/mplayer/trunk/
  */
 
+#define _BSD_SOURCE
+
 #include "config.h"
 #include "ldt_keeper.h"
 

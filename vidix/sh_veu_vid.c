@@ -24,6 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+#define _BSD_SOURCE
+
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
