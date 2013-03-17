@@ -108,16 +108,15 @@ void _init(void) {
 	loadSyms();
 }
 
-struct timezone tz;
 struct timeval tv1, tv2;
 
 void tic(void) {
-	gettimeofday(&tv1, &tz);
+	gettimeofday(&tv1, NULL);
 }
 
 void toc(void) {
 	long secs, usecs;
-	gettimeofday(&tv2, &tz);
+	gettimeofday(&tv2, NULL);
 	secs=tv2.tv_sec-tv1.tv_sec;
 	usecs=tv2.tv_usec-tv1.tv_usec;
 	if (usecs<0) {

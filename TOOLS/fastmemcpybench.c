@@ -175,9 +175,8 @@ static int mga_init(void)
 static unsigned int GetTimer(void)
 {
     struct timeval tv;
-    struct timezone tz;
     //float s;
-    gettimeofday(&tv, &tz);
+    gettimeofday(&tv, NULL);
     //s = tv.tv_usec; s *= 0.000001; s += tv.tv_sec;
     return tv.tv_sec * 1000000 + tv.tv_usec;
 }

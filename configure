@@ -4143,7 +4143,7 @@ echores "$_select"
 echocheck "gettimeofday()"
 gettimeofday=yes
 def_gettimeofday='#define HAVE_GETTIMEOFDAY 1'
-statement_check sys/time.h 'struct timeval tv; struct timezone tz; gettimeofday(&tv, &tz)' ||
+statement_check_broken stddef.h sys/time.h 'struct timeval tv; gettimeofday(&tv, NULL)' ||
     { gettimeofday=no ; def_gettimeofday='#undef HAVE_GETTIMEOFDAY' ; }
 echores "$gettimeofday"
 
