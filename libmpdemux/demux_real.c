@@ -591,10 +591,8 @@ static int demux_real_fill_buffer(demuxer_t *demuxer, demux_stream_t *dsds)
 
     /* Handle audio/video demxing switch for multirate files (non-interleaved) */
     if (priv->is_multirate && priv->stream_switch) {
-        if (priv->current_apacket >= priv->index_table_size[demuxer->audio->id])
-            demuxer->audio->eof = 1;
-        if (priv->current_vpacket >= priv->index_table_size[demuxer->video->id])
-            demuxer->video->eof = 1;
+        demuxer->audio->eof = priv->current_apacket >= priv->index_table_size[demuxer->audio->id];
+        demuxer->video->eof = priv->current_vpacket >= priv->index_table_size[demuxer->video->id];
         if (demuxer->audio->eof && demuxer->video->eof)
             return 0;
         else if (!demuxer->audio->eof && demuxer->video->eof)
@@ -1804,7 +1802,7 @@ static void demux_seek_real(demuxer_t *demuxer, float rel_seek_secs, float audio
     sh_video_t *sh_video = d_video->sh;
     int vid = d_video->id, aid = d_audio->id;
     int next_offset = 0;
-    int64_t cur_timestamp = 0;
+    int64_t target_timestamp = 0;
     int streams = 0;
     int retried = 0;
 
@@ -1831,15 +1829,16 @@ static void demux_seek_real(demuxer_t *demuxer, float rel_seek_secs, float audio
 
 //    if (index_mode == 1 || index_mode == 2) {
     	if (streams & 1) {// use the video index if we have one
-            cur_timestamp = priv->index_table[vid][priv->current_vpacket].timestamp;
+            target_timestamp = priv->index_table[vid][priv->current_vpacket].timestamp;
+            target_timestamp += rel_seek_secs * 1000;
 	    if (rel_seek_secs > 0)
-	    	while ((priv->index_table[vid][priv->current_vpacket].timestamp - cur_timestamp) < rel_seek_secs * 1000){
+	    	while (priv->index_table[vid][priv->current_vpacket].timestamp < target_timestamp){
 	    		priv->current_vpacket += 1;
 	    		if (priv->current_vpacket >= priv->index_table_size[vid]) {
 	    			priv->current_vpacket = priv->index_table_size[vid] - 1;
 				if (!retried) {
 					stream_seek(demuxer->stream, priv->index_table[vid][priv->current_vpacket].offset);
-					add_index_segment(demuxer, vid, cur_timestamp + rel_seek_secs * 1000);
+					add_index_segment(demuxer, vid, target_timestamp);
 					retried = 1;
 				}
 				else
@@ -1847,7 +1846,7 @@ static void demux_seek_real(demuxer_t *demuxer, float rel_seek_secs, float audio
 	    		}
 	    	}
 	    else if (rel_seek_secs < 0) {
-	    	while ((cur_timestamp - priv->index_table[vid][priv->current_vpacket].timestamp) < - rel_seek_secs * 1000){
+	    	while (priv->index_table[vid][priv->current_vpacket].timestamp > target_timestamp){
 	    		priv->current_vpacket -= 1;
 	    		if (priv->current_vpacket < 0) {
 	    			priv->current_vpacket = 0;
@@ -1858,14 +1857,13 @@ static void demux_seek_real(demuxer_t *demuxer, float rel_seek_secs, float audio
 	    priv->video_curpos = priv->index_table[vid][priv->current_vpacket].offset;
 	    priv->audio_need_keyframe = !priv->is_multirate;
 	    priv->video_after_seek = 1;
+        } else {
+            target_timestamp = priv->index_table[aid][priv->current_apacket].timestamp;
+            target_timestamp += rel_seek_secs * 1000;
         }
     	if (streams & 2) {
-	    if (!(streams & 1)) {
-		cur_timestamp =
-		    priv->index_table[aid][priv->current_apacket].timestamp;
-	    }
 	    if (rel_seek_secs > 0)
-	    	while ((priv->index_table[aid][priv->current_apacket].timestamp - cur_timestamp) < rel_seek_secs * 1000){
+	    	while (priv->index_table[aid][priv->current_apacket].timestamp < target_timestamp){
 	    		priv->current_apacket += 1;
 	    		if (priv->current_apacket >= priv->index_table_size[aid]) {
 	    			priv->current_apacket = priv->index_table_size[aid] - 1;
@@ -1873,7 +1871,7 @@ static void demux_seek_real(demuxer_t *demuxer, float rel_seek_secs, float audio
 	    		}
 	    	}
 	    else if (rel_seek_secs < 0)
-	    	while ((cur_timestamp - priv->index_table[aid][priv->current_apacket].timestamp) < - rel_seek_secs * 1000){
+	    	while (priv->index_table[aid][priv->current_apacket].timestamp > target_timestamp){
 	    		priv->current_apacket -= 1;
 	    		if (priv->current_apacket < 0) {
 	    			priv->current_apacket = 0;
