@@ -766,8 +766,10 @@ mplayer$(EXESUF): EXTRALIBS += $(EXTRALIBS_MPLAYER)
 mencoder$(EXESUF) mplayer$(EXESUF):
 	$(CC) -o $@ $^ $(EXTRALIBS)
 
-codec-cfg$(EXESUF): codec-cfg.c codec-cfg.h help_mp.h
-	$(HOST_CC) -O -DCODECS2HTML -I. -o $@ $<
+codec-cfg-test$(EXESUF): HOSTCFLAGS := $(HOSTCFLAGS) -DTESTING
+codec-cfg$(EXESUF) codecs2html$(EXESUF):  HOSTCFLAGS := $(HOSTCFLAGS) -DCODECS2HTML
+codec-cfg$(EXESUF) codec-cfg-test$(EXESUF) codecs2html$(EXESUF): codec-cfg.c codec-cfg.h help_mp.h
+	$(HOST_CC) $(HOSTCFLAGS) -o $@ $<
 
 codecs.conf.h: codec-cfg$(EXESUF) etc/codecs.conf
 	./$^ > $@
@@ -839,7 +841,7 @@ $(foreach lang, $(DOC_LANG_ALL),$(eval $(lang-def)))
 ###### dependency declarations / specific CFLAGS ######
 
 # Make sure all generated header files are created.
-codec-cfg.o: codecs.conf.h
+codec-cfg.o codec-cfg-test$(EXESUF): codecs.conf.h
 $(DEP_FILES) $(MENCODER_DEPS) $(MPLAYER_DEPS): help_mp.h
 mpcommon.o osdep/mplayer-rc.o gui/dialog/about.o gui/win32/gui.o: version.h
 
@@ -1008,12 +1010,6 @@ endif
 ###### tests / tools #######
 
 TEST_OBJS = mp_msg.o mp_fifo.o osdep/$(GETCH) osdep/$(TIMER) -ltermcap -lm
-
-codec-cfg-test$(EXESUF): codec-cfg.c codecs.conf.h help_mp.h
-	$(CC) -I. -DTESTING -o $@ $^
-
-codecs2html$(EXESUF): codec-cfg.c help_mp.h
-	$(CC) -I. -DCODECS2HTML -o $@ $^
 
 libvo/aspecttest$(EXESUF): libvo/aspect.o libvo/geometry.o $(TEST_OBJS)
 
