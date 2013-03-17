@@ -712,6 +712,16 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
   is_yuv |= (xs << 8) | (ys << 16);
   glFindFormat(format, NULL, &gl_texfmt, &gl_format, &gl_type);
 
+  if (glctx.type == GLTYPE_OSX && vo_doublebuffering && !is_yuv) {
+    // doublebuffering causes issues when e.g. drawing yuy2 or rgb textures
+    // (nothing is draw) unless using glfinish which makes things slow.
+    // This is possibly because we do not actually request a double-buffered
+    // context.
+    // However single-buffering causes slowdown and artefacts when
+    // drawing planar formats. Mostly tested on PPC MacMini
+    mp_msg(MSGT_VO, MSGL_INFO, "[gl] -double not supported on OSX for interleaved formats, switching to -nodouble\n");
+    vo_doublebuffering = 0;
+  }
   vo_flipped = !!(flags & VOFLAG_FLIPPING);
 
   if (create_window(d_width, d_height, flags, title) < 0)
@@ -1389,14 +1399,6 @@ static int preinit_internal(const char *arg, int allow_sw)
     } else if (use_ycbcr == -1) {
       // rare feature, not worth creating a window to detect
       use_ycbcr = 0;
-    }
-    if (glctx.type == GLTYPE_OSX && vo_doublebuffering) {
-      // doublebuffering causes issues when e.g. drawing yuy2 textures
-      // (nothing is draw) unless using glfinish which makes things slow.
-      // This is possibly because we do not actually request a double-buffered
-      // context.
-      mp_msg(MSGT_VO, MSGL_INFO, "[gl] -double not supported on OSX, switching to -nodouble\n");
-      vo_doublebuffering = 0;
     }
     if (many_fmts)
       mp_msg(MSGT_VO, MSGL_INFO, "[gl] using extended formats. "
