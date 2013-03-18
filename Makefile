@@ -766,10 +766,8 @@ mplayer$(EXESUF): EXTRALIBS += $(EXTRALIBS_MPLAYER)
 mencoder$(EXESUF) mplayer$(EXESUF):
 	$(CC) -o $@ $^ $(EXTRALIBS)
 
-codec-cfg-test$(EXESUF): HOSTCFLAGS := $(HOSTCFLAGS) -DTESTING
-codec-cfg$(EXESUF) codecs2html$(EXESUF):  HOSTCFLAGS := $(HOSTCFLAGS) -DCODECS2HTML
-codec-cfg$(EXESUF) codec-cfg-test$(EXESUF) codecs2html$(EXESUF): codec-cfg.c codec-cfg.h help_mp.h
-	$(HOST_CC) $(HOSTCFLAGS) -o $@ $<
+codec-cfg$(EXESUF): codec-cfg.c codec-cfg.h help_mp.h
+	$(HOST_CC) -O -DCODECS2HTML -I. -Iffmpeg -o $@ $<
 
 codecs.conf.h: codec-cfg$(EXESUF) etc/codecs.conf
 	./$^ > $@
@@ -797,7 +795,7 @@ version.h: version.sh $(wildcard .svn/entries .git/logs/HEAD)
 	./$< `$(CC) -dumpversion`
 
 %$(EXESUF): %.c
-	$(CC) $(CC_DEPFLAGS) $(CFLAGS) -o $@ $^ $(LIBS)
+	$(CC) $(CC_DEPFLAGS) $(CFLAGS) -o $@ $^
 
 %.ho: %.h
 	$(CC) $(CFLAGS) -Wno-unused -c -o $@ -x c $<
@@ -841,7 +839,7 @@ $(foreach lang, $(DOC_LANG_ALL),$(eval $(lang-def)))
 ###### dependency declarations / specific CFLAGS ######
 
 # Make sure all generated header files are created.
-codec-cfg.o codec-cfg-test$(EXESUF): codecs.conf.h
+codec-cfg.o: codecs.conf.h
 $(DEP_FILES) $(MENCODER_DEPS) $(MPLAYER_DEPS): help_mp.h
 mpcommon.o osdep/mplayer-rc.o gui/dialog/about.o gui/win32/gui.o: version.h
 
@@ -1009,13 +1007,17 @@ endif
 
 ###### tests / tools #######
 
-MP_MSG_LIBS = -ltermcap -lm
-MP_MSG_OBJS = mp_msg.o mp_fifo.o osdep/$(GETCH) osdep/$(TIMER)
+TEST_OBJS = mp_msg.o mp_fifo.o osdep/$(GETCH) osdep/$(TIMER) -ltermcap -lm
 
-libvo/aspecttest$(EXESUF): libvo/aspect.o libvo/geometry.o $(MP_MSG_OBJS)
-libvo/aspecttest$(EXESUF): LIBS = $(MP_MSG_LIBS)
+codec-cfg-test$(EXESUF): codec-cfg.c codecs.conf.h help_mp.h
+	$(CC) -I. -Iffmpeg -DTESTING -o $@ $^
 
-LOADER_TEST_OBJS = $(SRCS_WIN32_EMULATION:.c=.o) $(SRCS_QTX_EMULATION:.S=.o) ffmpeg/libavutil/libavutil.a osdep/mmap_anon.o cpudetect.o path.o $(MP_MSG_OBJS)
+codecs2html$(EXESUF): codec-cfg.c help_mp.h
+	$(CC) -I. -Iffmpeg -DCODECS2HTML -o $@ $^
+
+libvo/aspecttest$(EXESUF): libvo/aspect.o libvo/geometry.o $(TEST_OBJS)
+
+LOADER_TEST_OBJS = $(SRCS_WIN32_EMULATION:.c=.o) $(SRCS_QTX_EMULATION:.S=.o) ffmpeg/libavutil/libavutil.a osdep/mmap_anon.o cpudetect.o path.o $(TEST_OBJS)
 
 loader/qtx/list$(EXESUF) loader/qtx/qtxload$(EXESUF): CFLAGS += -g
 loader/qtx/list$(EXESUF) loader/qtx/qtxload$(EXESUF): $(LOADER_TEST_OBJS)
@@ -1049,8 +1051,7 @@ toolsclean:
 TOOLS/bmovl-test$(EXESUF): -lSDL_image
 
 TOOLS/subrip$(EXESUF): path.o sub/vobsub.o sub/spudec.o sub/unrar_exec.o \
-    ffmpeg/libswscale/libswscale.a ffmpeg/libavutil/libavutil.a $(MP_MSG_OBJS)
-TOOLS/subrip$(EXESUF): LIBS = $(MP_MSG_LIBS)
+    ffmpeg/libswscale/libswscale.a ffmpeg/libavutil/libavutil.a $(TEST_OBJS)
 
 TOOLS/vfw2menc$(EXESUF): -lwinmm -lole32
 
