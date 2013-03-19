@@ -53,8 +53,7 @@
 char * get_current_dir_name( void );
 #endif
 
-gchar         * fsSelectedFile = NULL;
-gchar         * fsSelectedFileUtf8 = NULL;
+char          * fsSelectedFile = NULL;
 gchar         * fsSelectedDirectory = NULL;
 gchar         * fsSelectedDirectoryUtf8 = NULL;
 unsigned char * fsThatDir = ".";
@@ -173,13 +172,13 @@ static char * get_current_dir_name_utf8( void )
 static void clist_append_fname(GtkWidget * list, char *fname,
                                GdkPixmap *pixmap, GdkPixmap *mask) {
   gint pos;
-  gchar *filename_utf8, *str[2];
-  filename_utf8 = g_filename_to_utf8(fname, -1, NULL, NULL, NULL);
+  gchar *str[2];
   str[0] = NULL;
-  str[1] = filename_utf8 ? filename_utf8 : fname;
+  str[1] = g_filename_display_name(fname);
   pos = gtk_clist_append(GTK_CLIST(list), str);
+  gtk_clist_set_row_data_full(GTK_CLIST(list), pos, strdup(fname), free);
   gtk_clist_set_pixmap(GTK_CLIST(list), pos, 0, pixmap, mask);
-  g_free(filename_utf8);
+  g_free(str[1]);
 }
 
 static void CheckDir( GtkWidget * list )
@@ -560,10 +559,7 @@ static void fs_fsFNameList_select_row( GtkCList * clist, gint row, gint column,
                                        GdkEvent * event, gpointer user_data)
 {
  fsCurrFNameListSelected = row;
- gtk_clist_get_text( clist,row,1,&fsSelectedFile );
- g_free( fsSelectedFileUtf8 );
- fsSelectedFileUtf8 = g_filename_from_utf8( fsSelectedFile, -1, NULL, NULL, NULL );
- if ( fsSelectedFileUtf8 ) fsSelectedFile = fsSelectedFileUtf8;
+ fsSelectedFile = gtk_clist_get_row_data(clist, row);
  if( event && event->type == GDK_BUTTON_PRESS )  gtk_button_released( GTK_BUTTON( fsOk ) );
 }
 
@@ -607,10 +603,7 @@ static gboolean fs_fsFNameList_event( GtkWidget * widget,
   {
     if ( gtk_clist_get_selection_info( GTK_CLIST( widget ), bevent->x, bevent->y, &row, &col ) )
     {
-      gtk_clist_get_text( GTK_CLIST( widget ), row, 1, &fsSelectedFile );
-      g_free( fsSelectedFileUtf8 );
-      fsSelectedFileUtf8 = g_filename_from_utf8( fsSelectedFile, -1, NULL, NULL, NULL );
-      if ( fsSelectedFileUtf8 ) fsSelectedFile = fsSelectedFileUtf8;
+      fsSelectedFile = gtk_clist_get_row_data(GTK_CLIST(widget), row);
       gtk_button_released( GTK_BUTTON( fsOk ) );
       return TRUE;
     }
@@ -621,8 +614,6 @@ static gboolean fs_fsFNameList_event( GtkWidget * widget,
 
 static void fs_Destroy( void )
 {
- g_free( fsSelectedFileUtf8 );
- fsSelectedFileUtf8 = NULL;
  g_free( fsSelectedDirectoryUtf8 );
  fsSelectedDirectoryUtf8 = NULL;
  WidgetDestroy( fsFileSelect, &fsFileSelect );
