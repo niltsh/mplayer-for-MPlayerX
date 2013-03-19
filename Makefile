@@ -1020,7 +1020,7 @@ LOADER_TEST_OBJS = $(SRCS_WIN32_EMULATION:.c=.o) $(SRCS_QTX_EMULATION:.S=.o) ffm
 loader/qtx/list$(EXESUF) loader/qtx/qtxload$(EXESUF): CFLAGS += -g
 loader/qtx/list$(EXESUF) loader/qtx/qtxload$(EXESUF): $(LOADER_TEST_OBJS)
 
-TESTS-$(ARCH_X86_32) += loader/qtx/list loader/qtx/qtxload
+TESTS-$(QTX_EMULATION) += loader/qtx/list loader/qtx/qtxload
 
 TESTS := codecs2html codec-cfg-test libvo/aspecttest $(TESTS-yes)
 
