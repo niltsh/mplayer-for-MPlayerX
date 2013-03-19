@@ -24,10 +24,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/ioctl.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <sys/mman.h>
 #include <sys/time.h>
 #include <inttypes.h>
 
@@ -121,6 +119,9 @@
 #define ARR_SIZE (1024*768*2)
 
 #ifdef CONFIG_MGA
+
+#include <sys/ioctl.h>
+#include <sys/mman.h>
 
 #include "drivers/mga_vid.h"
 
