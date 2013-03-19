@@ -1,6 +1,8 @@
 #ifndef MPLAYER_WINESTRING_H
 #define MPLAYER_WINESTRING_H
 
+#include <strings.h>
+
 #include "windef.h"
 
 LPWSTR      WINAPI lstrcpyAtoW(LPWSTR,LPCSTR);

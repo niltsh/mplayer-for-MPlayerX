@@ -33,6 +33,7 @@
 #include "libavutil/intreadwrite.h"
 
 #include <string.h>
+#include <strings.h>
 
 #define MP3 1
 #define WAV 2
