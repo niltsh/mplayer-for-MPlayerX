@@ -22,8 +22,9 @@
  */
 
 /**
- * @brief Convert a filename which is either in UTF-8
- *        or in an encoding specified in G_FILENAME_ENCODING.
+ * @brief Convert a filename into the original byte sequence
+ *        according to the encoding specified in G_FILENAME_ENCODING,
+ *        if it's currently in UTF-8.
  *
  * @param fname filename
  *
