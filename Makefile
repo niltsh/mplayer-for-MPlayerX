@@ -1029,7 +1029,7 @@ TESTS_DEP_FILES = $(addsuffix .d,$(TESTS))
 tests: $(addsuffix $(EXESUF),$(TESTS))
 
 testsclean:
-	-rm -f $(call ADD_ALL_EXESUFS,$(TESTS))
+	-rm -f $(call ADD_ALL_EXESUFS,$(TESTS) $(TESTS-no))
 
 TOOLS-$(ARCH_X86)       += fastmemcpybench modify_reg
 TOOLS-$(HAVE_WINDOWS_H) += vfw2menc
