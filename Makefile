@@ -1031,19 +1031,18 @@ tests: $(addsuffix $(EXESUF),$(TESTS))
 testsclean:
 	-rm -f $(call ADD_ALL_EXESUFS,$(TESTS))
 
-TOOLS-$(ARCH_X86) += fastmemcpybench modify_reg
+TOOLS-$(ARCH_X86)       += fastmemcpybench modify_reg
+TOOLS-$(HAVE_WINDOWS_H) += vfw2menc
+TOOLS-$(SDL_IMAGE)      += bmovl-test
 
 TOOLS := $(addprefix TOOLS/,alaw-gen asfinfo avi-fix avisubdump compare dump_mp4 movinfo netstream subrip vivodump $(TOOLS-yes))
 
-ALLTOOLS = $(TOOLS) TOOLS/bmovl-test TOOLS/vfw2menc
-
-TOOLS_DEP_FILES = $(addsuffix .d,$(ALLTOOLS))
+TOOLS_DEP_FILES = $(addsuffix .d,$(TOOLS))
 
 tools: $(addsuffix $(EXESUF),$(TOOLS))
-alltools: $(addsuffix $(EXESUF),$(ALLTOOLS))
 
 toolsclean:
-	-rm -f $(call ADD_ALL_EXESUFS,$(ALLTOOLS))
+	-rm -f $(call ADD_ALL_EXESUFS,$(TOOLS) $(TOOLS-no))
 	-rm -f TOOLS/realcodecs/*.so.6.0
 
 TOOLS/bmovl-test$(EXESUF): LIBS = -lSDL_image

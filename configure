@@ -5308,6 +5308,14 @@ fi
 echores "$_sdl"
 
 
+echocheck "SDL image"
+sdl_image=no
+if test "$_sdl" = yes ; then
+  header_check SDL/SDL_image.h -lSDL_image && sdl_image=yes
+fi
+echores "$sdl_image"
+
+
 # make sure this stays below CoreVideo to avoid issues due to namespace
 # conflicts between -lGL and -framework OpenGL
 echocheck "OpenGL"
@@ -8360,6 +8368,7 @@ GUI_GTK = $_gui_gtk
 GUI_WIN32 = $_gui_win32
 HAVE_POSIX_SELECT = $_posix_select
 HAVE_SYS_MMAN_H = $_mman
+HAVE_WINDOWS_H = $windows_h
 IVTV = $_ivtv
 JACK = $_jack
 JOYSTICK = $_joystick
@@ -8415,6 +8424,7 @@ RADIO_CAPTURE=$_radio_capture
 REAL_CODECS = $_real
 S3FB = $_s3fb
 SDL = $_sdl
+SDL_IMAGE = $sdl_image
 SPEEX = $_speex
 STREAM_CACHE = $_stream_cache
 SGIAUDIO = $_sgiaudio
