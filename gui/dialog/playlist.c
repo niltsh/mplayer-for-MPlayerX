@@ -140,17 +140,16 @@ void ShowPlayList( void )
  next = listMgr( PLAYLIST_GET,0 );
  if ( next )
   {
-   gchar * name, * path;
    while ( next || next->next )
     {
-     char * text[1][3]; text[0][2]="";
-     name = g_filename_to_utf8( next->name, -1, NULL, NULL, NULL );
-     path = g_filename_to_utf8( next->path, -1, NULL, NULL, NULL );
-     text[0][0]=name ? name : next->name;
-     text[0][1]=path ? path : next->path;
+     char * text[1][5]; text[0][4]="";
+     text[0][0]=g_filename_display_name( next->name );
+     text[0][1]=g_filename_display_name( next->path );
+     text[0][2]=next->name;
+     text[0][3]=next->path;
      gtk_clist_append( GTK_CLIST( CLSelected ),text[0] );
-     g_free( path );
-     g_free( name );
+     g_free( text[0][0] );
+     g_free( text[0][1] );
      NrOfSelected++;
      if ( next->next ) next=next->next; else break;
     }
@@ -213,14 +212,12 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	listMgr( PLAYLIST_DELETE,0 );
 	for ( i=0;i<NrOfSelected;i++ )
 	 {
-	  char * text[3];
+	  char * text[2];
 	  item=calloc( 1,sizeof( plItem ) );
-	  gtk_clist_get_text( GTK_CLIST( CLSelected ),i,0,&text[0] );
-	  gtk_clist_get_text( GTK_CLIST( CLSelected ),i,1,&text[1] );
-	  item->name=g_filename_from_utf8( text[0], -1, NULL, NULL, NULL );
-	  if ( !item->name ) item->name = strdup( text[0] );
-	  item->path=g_filename_from_utf8( text[1], -1, NULL, NULL, NULL );
-	  if ( !item->path ) item->path = strdup( text[1] );
+	  gtk_clist_get_text( GTK_CLIST( CLSelected ),i,2,&text[0] );
+	  gtk_clist_get_text( GTK_CLIST( CLSelected ),i,3,&text[1] );
+	  item->name = strdup( text[0] );
+	  item->path = strdup( text[1] );
 	  listMgr( PLAYLIST_ITEM_APPEND,item );
 	 }
 	item = listMgr( PLAYLIST_GET,0 );
@@ -285,9 +282,8 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
        {
         int i;
         void *p;
-        char * itext[1][2];
-        gchar * cpath;
-        char * text[1][3]; text[0][2]="";
+        char * itext[2];
+        char * text[1][5]; text[0][4]="";
         gtk_clist_freeze( GTK_CLIST( CLSelected ) );
         for ( i=0;i<NrOfEntrys;i++ )
          {
@@ -300,11 +296,12 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	     {
 	      CLListSelected=p;
 	      CLListSelected[NrOfSelected - 1]=False;
-	      gtk_clist_get_text( GTK_CLIST( CLFiles ),i,0,(char **)&itext );
-	      cpath=g_filename_to_utf8( current_path, -1, NULL, NULL, NULL );
-	      text[0][0]=itext[0][0]; text[0][1]=cpath ? cpath : current_path;
+	      gtk_clist_get_text( GTK_CLIST( CLFiles ),i,0,&itext[0] );
+	      gtk_clist_get_text( GTK_CLIST( CLFiles ),i,1,&itext[1] );
+	      text[0][0]=itext[0]; text[0][1]=g_filename_display_name( current_path );
+	      text[0][2]=itext[1]; text[0][3]=current_path;
 	      gtk_clist_append( GTK_CLIST( CLSelected ),text[0] );
-	      g_free( cpath );
+	      g_free( text[0][1] );
 	     }
 	   }
 	 }
@@ -423,13 +420,13 @@ static void plCTree( GtkCTree * ctree,GtkCTreeNode * parent_node,gpointer user_d
 	else sprintf( path,"%s/%s",current_path,dirent->d_name );
        text=dirent->d_name;
        g_free( name );
-       name=g_filename_to_utf8( text, -1, NULL, NULL, NULL );
+       name=g_filename_display_name( text );
 
        if ( stat( path,&statbuf ) != -1 && S_ISDIR( statbuf.st_mode ) && dirent->d_name[0] != '.' )
 	{
 	 DirNode=malloc( sizeof( DirNodeType ) ); DirNode->scaned=False; DirNode->path=strdup( path );
 	 subdir=check_for_subdir( path );
-	 node=gtk_ctree_insert_node( ctree,parent_node,NULL,(name ? &name : &text ),4,pxOpenedBook,msOpenedBook,pxClosedBook,msClosedBook,!subdir,FALSE );
+	 node=gtk_ctree_insert_node( ctree,parent_node,NULL,&name,4,pxOpenedBook,msOpenedBook,pxClosedBook,msClosedBook,!subdir,FALSE );
 	 gtk_ctree_node_set_row_data_full( ctree,node,DirNode,NULL );
 	 if ( subdir ) gtk_ctree_insert_node( ctree,node,NULL,&dummy,4,NULL,NULL,NULL,NULL,FALSE,FALSE );
 	}
@@ -451,8 +448,7 @@ static void scan_dir( char * path )
  char		   * curr;
  struct dirent * dirent;
  struct 		 stat statbuf;
- gchar		   * name;
- char 		   * text[1][2]; text[0][1]="";
+ char 		   * text[1][3]; text[0][2]="";
 
  gtk_clist_clear( GTK_CLIST( CLFiles ) );
  if ( (dir=opendir( path )) )
@@ -463,10 +459,10 @@ static void scan_dir( char * path )
 	 curr=calloc( 1,strlen( path ) + strlen( dirent->d_name ) + 3 ); sprintf( curr,"%s/%s",path,dirent->d_name );
 	 if ( stat( curr,&statbuf ) != -1 && ( S_ISREG( statbuf.st_mode ) || S_ISLNK( statbuf.st_mode ) ) )
 	  {
-	   name=g_filename_to_utf8( dirent->d_name, -1, NULL, NULL, NULL );
-	   text[0][0]=name ? name : dirent->d_name;
+	   text[0][0]=g_filename_display_name( dirent->d_name );
+	   text[0][1]=dirent->d_name;
 	   gtk_clist_append( GTK_CLIST( CLFiles ), text[0] );
-	   g_free( name );
+	   g_free( text[0][0] );
 	   NrOfEntrys++;
 	  }
 	 free( curr );
@@ -564,10 +560,11 @@ GtkWidget * create_PlayList( void )
   gtk_box_pack_start( GTK_BOX( vbox2 ),scrolledwindow2,TRUE,TRUE,0 );
   gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW( scrolledwindow2 ),GTK_POLICY_AUTOMATIC,GTK_POLICY_AUTOMATIC );
 
-  CLFiles=gtk_clist_new( 1 );
+  CLFiles=gtk_clist_new( 2 );
   gtk_widget_show( CLFiles );
   gtk_container_add( GTK_CONTAINER( scrolledwindow2 ),CLFiles );
   gtk_clist_set_column_width( GTK_CLIST( CLFiles ),0,80 );
+  gtk_clist_set_column_visibility( GTK_CLIST( CLFiles ),1,FALSE );
   gtk_clist_set_selection_mode( GTK_CLIST( CLFiles ),GTK_SELECTION_EXTENDED );
   gtk_clist_column_titles_show( GTK_CLIST( CLFiles ) );
   gtk_clist_set_shadow_type( GTK_CLIST( CLFiles ),GTK_SHADOW_NONE );
@@ -584,11 +581,13 @@ GtkWidget * create_PlayList( void )
   gtk_box_pack_start( GTK_BOX( vbox2 ),scrolledwindow3,TRUE,TRUE,0 );
   gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW( scrolledwindow3 ),GTK_POLICY_AUTOMATIC,GTK_POLICY_AUTOMATIC );
 
-  CLSelected=gtk_clist_new( 2 );
+  CLSelected=gtk_clist_new( 4 );
   gtk_widget_show( CLSelected );
   gtk_container_add( GTK_CONTAINER( scrolledwindow3 ),CLSelected );
   gtk_clist_set_column_width( GTK_CLIST( CLSelected ),0,295 );
   gtk_clist_set_column_width( GTK_CLIST( CLSelected ),1,295 );
+  gtk_clist_set_column_visibility( GTK_CLIST( CLSelected ),2,FALSE );
+  gtk_clist_set_column_visibility( GTK_CLIST( CLSelected ),3,FALSE );
   gtk_clist_set_selection_mode( GTK_CLIST( CLSelected ),GTK_SELECTION_MULTIPLE );
   gtk_clist_column_titles_show( GTK_CLIST( CLSelected ) );
   gtk_clist_set_shadow_type( GTK_CLIST( CLSelected ),GTK_SHADOW_NONE );
