@@ -1031,9 +1031,10 @@ tests: $(addsuffix $(EXESUF),$(TESTS))
 testsclean:
 	-rm -f $(call ADD_ALL_EXESUFS,$(TESTS) $(TESTS-no))
 
-TOOLS-$(ARCH_X86)       += fastmemcpybench modify_reg
+TOOLS-$(ARCH_X86)               += fastmemcpybench
 TOOLS-$(HAVE_WINDOWS_H) += vfw2menc
 TOOLS-$(SDL_IMAGE)      += bmovl-test
+TOOLS-$(WIN32_EMULATION)        += modify_reg
 
 TOOLS := $(addprefix TOOLS/,alaw-gen asfinfo avi-fix avisubdump compare dump_mp4 movinfo netstream subrip vivodump $(TOOLS-yes))
 

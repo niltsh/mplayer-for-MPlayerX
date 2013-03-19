@@ -6821,6 +6821,7 @@ if test "$_win32dll" = auto ; then
     _win32dll=yes
   fi
 fi
+_win32_emulation=no
 if test "$_win32dll" = yes ; then
   def_win32dll='#define CONFIG_WIN32DLL 1'
   if ! win32 ; then
