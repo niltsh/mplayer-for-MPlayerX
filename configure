@@ -2721,6 +2721,8 @@ else
   warn_cflags=yes
 fi
 
+CFLAGS="-D_ISOC99_SOURCE -D_POSIX_C_SOURCE=200112 -D_XOPEN_SOURCE=600 $CFLAGS"
+
 if test "$cc_vendor" = "gnu" ; then
   cflag_check -fno-tree-vectorize && CFLAGS="$CFLAGS -fno-tree-vectorize"
   cflag_check -Wundef && WARNFLAGS="-Wundef $WARNFLAGS"
@@ -2730,8 +2732,6 @@ if test "$cc_vendor" = "gnu" ; then
   cflag_check -Wdisabled-optimization && WARN_CFLAGS="-Wdisabled-optimization $WARN_CFLAGS"
   cflag_check -Wmissing-prototypes && WARN_CFLAGS="-Wmissing-prototypes $WARN_CFLAGS"
   cflag_check -Wstrict-prototypes && WARN_CFLAGS="-Wstrict-prototypes $WARN_CFLAGS"
-else
-  CFLAGS="-D_ISOC99_SOURCE $CFLAGS"
 fi
 
 cflag_check -mno-omit-leaf-frame-pointer && cflags_no_omit_leaf_frame_pointer="-mno-omit-leaf-frame-pointer"
