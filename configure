@@ -1719,7 +1719,6 @@ else # if test -z "$_target"
   fi
 fi
 
-extra_cflags="-I. -Iffmpeg $extra_cflags"
 _timer=timer-linux.c
 _getch=getch2.c
 
@@ -2721,7 +2720,7 @@ else
   warn_cflags=yes
 fi
 
-CFLAGS="-D_ISOC99_SOURCE $CFLAGS"
+CFLAGS="-D_ISOC99_SOURCE -I. -Iffmpeg $CFLAGS"
 
 cpp_condition_check features.h "defined __GLIBC__" &&
   CFLAGS="-D_POSIX_C_SOURCE=200112 -D_XOPEN_SOURCE=600 $CFLAGS"
