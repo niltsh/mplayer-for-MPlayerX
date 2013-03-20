@@ -2721,7 +2721,10 @@ else
   warn_cflags=yes
 fi
 
-CFLAGS="-D_ISOC99_SOURCE -D_POSIX_C_SOURCE=200112 -D_XOPEN_SOURCE=600 $CFLAGS"
+CFLAGS="-D_ISOC99_SOURCE $CFLAGS"
+
+cpp_condition_check features.h "defined __GLIBC__" &&
+  CFLAGS="-D_POSIX_C_SOURCE=200112 -D_XOPEN_SOURCE=600 $CFLAGS"
 
 if test "$cc_vendor" = "gnu" ; then
   cflag_check -fno-tree-vectorize && CFLAGS="$CFLAGS -fno-tree-vectorize"
