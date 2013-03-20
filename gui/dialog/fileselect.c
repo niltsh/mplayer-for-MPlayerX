@@ -57,7 +57,6 @@ char * get_current_dir_name( void );
 #endif
 
 char          * fsSelectedFile = NULL;
-char          * fsSelectedDirectory = NULL;
 gchar         * fsSelectedDirectoryUtf8 = NULL;
 unsigned char * fsThatDir = ".";
 const gchar   * fsFilter = "*";
@@ -498,6 +497,7 @@ static void fs_Up_released( GtkButton * button, gpointer user_data )
 
 static void fs_Ok_released( GtkButton * button, gpointer user_data )
 {
+ char          * fsSelectedDirectory;
  GList         * item;
  int             i = 1, l;
  struct stat     fs;
@@ -530,7 +530,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
             g_free(selected);
           }
           guiInfo.NewPlay=GUI_FILE_NEW; sub_fps=0;
-          fs_PersistantHistory( get_current_dir_name() );      //totem, write into history
+          fs_PersistantHistory( fsSelectedDirectory );
           break;
    case fsSubtitleSelector:
           setddup( &guiInfo.SubtitleFilename,fsSelectedDirectory,fsSelectedFile );
@@ -562,6 +562,9 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
    fsTopList_items=g_list_prepend( fsTopList_items,fsSelectedDirectoryUtf8 );
    g_hash_table_insert(fsPathTable, strdup(fsSelectedDirectoryUtf8), strdup(fsSelectedDirectory));
  }
+
+ free(fsSelectedDirectory);
+
  if ( uiLoadPlay ) { uiLoadPlay=False; uiEvent( evPlay,0 ); }
   else gui( GUI_SET_STATE,(void *) GUI_STOP );
 }
