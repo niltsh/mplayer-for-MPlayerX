@@ -256,7 +256,7 @@ void fstype_help(void)
     mp_msg(MSGT_VO, MSGL_INFO, "    %-15s %s\n", "stays_on_top",
            "use _NETWM_STATE_STAYS_ON_TOP hint if available");
     mp_msg(MSGT_VO, MSGL_INFO,
-           "You can also negate the settings with simply putting '-' in the beginning");
+           "You can also negate individual flags by preceding them with a '-' character");
     mp_msg(MSGT_VO, MSGL_INFO, "\n");
 }
 
@@ -431,7 +431,7 @@ int vo_init(void)
 
     // Required so that XLookupString returns UTF-8
     if (!setlocale(LC_CTYPE, "C.UTF-8") && !setlocale(LC_CTYPE, "en_US.utf8"))
-        mp_msg(MSGT_VO, MSGL_WARN, "Could not find a UTF-8 locale, some keys will no be handled.\n");
+        mp_msg(MSGT_VO, MSGL_WARN, "Could not find a UTF-8 locale, some keys will not be handled.\n");
     XSetErrorHandler(x11_errorhandler);
 
     dispName = XDisplayName(mDisplayName);
@@ -1603,7 +1603,7 @@ static int x11_selectinput_errorhandler(Display * display,
         mp_msg(MSGT_VO, MSGL_ERR,
                "X11 error: BadAccess during XSelectInput Call\n");
         mp_msg(MSGT_VO, MSGL_ERR,
-               "X11 error: The 'ButtonPressMask' mask of specified window has probably already used by another appication (see man XSelectInput)\n");
+               "X11 error: The 'ButtonPressMask' mask of specified window was probably already used by another application (see man XSelectInput)\n");
         /* If you think MPlayer should shutdown with this error,
          * comment out the following line */
         return 0;
@@ -1763,7 +1763,7 @@ int vo_find_depth_from_visuals(Display * dpy, int screen,
                    visuals[i].blue_mask);
             /*
              * Save the visual index and its depth, if this is the first
-             * truecolor visul, or a visual that is 'preferred' over the
+             * truecolor visual, or a visual that is 'preferred' over the
              * previous 'best' visual.
              */
             if (bestvisual_depth == -1
