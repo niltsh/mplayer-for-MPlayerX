@@ -257,6 +257,8 @@ void ShowFileSelect( int type,int modal )
 {
  int i, k, fsMedium;
  char * tmp = NULL, * dir = NULL;
+ const gchar *fname;
+ gchar *utf8name;
  struct stat f;
 
  if ( fsFileSelect ) gtkActive( fsFileSelect );
@@ -343,14 +345,12 @@ void ShowFileSelect( int type,int modal )
  if ( fsPathTable ) g_hash_table_destroy( fsPathTable ); fsPathTable=g_hash_table_new_full(g_str_hash, g_str_equal, free, free);
  {
   unsigned int  i, c = 1;
-  gchar *utf8name;
 
   if ( fsMedium )
    {
     for ( i=0;i < FF_ARRAY_ELEMS(fsHistory);i++ )
      if ( fsHistory[i] )
       {
-       const gchar *fname;
        fname = cfg_old_filename_from_utf8(fsHistory[i]);
        utf8name = g_filename_display_name(fname);
        fsTopList_items=g_list_append( fsTopList_items,utf8name );
@@ -366,7 +366,13 @@ void ShowFileSelect( int type,int modal )
    }
  }
  free( dir );
- if ( getenv( "HOME" ) ) fsTopList_items=g_list_append( fsTopList_items,getenv( "HOME" ) );
+ fname = getenv( "HOME" );
+ if ( fname )
+  {
+   utf8name = g_filename_display_name( fname );
+   fsTopList_items=g_list_append( fsTopList_items,utf8name );
+   g_hash_table_insert(fsPathTable, strdup(utf8name), strdup(fname));
+  }
  else fsTopList_items=g_list_append( fsTopList_items,"/home" );
  if (stat( "/media",&f ) == 0) fsTopList_items=g_list_append( fsTopList_items,"/media" );
  if (stat( "/mnt",&f ) == 0) fsTopList_items=g_list_append( fsTopList_items,"/mnt" );
