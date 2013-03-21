@@ -367,17 +367,11 @@ void ShowFileSelect( int type,int modal )
        if ( c ) c=gstrcmp( dir,fname );
       }
    }
-  if ( c && dir )
-   {
-     fs_AddPathUtf8(dir, GTK_POS_TOP);
-   }
+  if ( c && dir ) fs_AddPathUtf8(dir, GTK_POS_TOP);
  }
  free( dir );
  fname = getenv( "HOME" );
- if ( fname )
-  {
-   fs_AddPathUtf8(fname, GTK_POS_BOTTOM);
-  }
+ if ( fname ) fs_AddPathUtf8(fname, GTK_POS_BOTTOM);
  else fsTopList_items=g_list_append( fsTopList_items,"/home" );
  if (stat( "/media",&f ) == 0) fsTopList_items=g_list_append( fsTopList_items,"/media" );
  if (stat( "/mnt",&f ) == 0) fsTopList_items=g_list_append( fsTopList_items,"/mnt" );
