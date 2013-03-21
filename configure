@@ -2740,7 +2740,7 @@ if test "$cc_vendor" = "gnu" ; then
 fi
 
 cflag_check -mno-omit-leaf-frame-pointer && cflags_no_omit_leaf_frame_pointer="-mno-omit-leaf-frame-pointer"
-cflag_check -MD -MP && DEPFLAGS="-MD -MP"
+cflag_check -MMD -MP && DEPFLAGS="-MMD -MP"
 
 
 if test -n "$LDFLAGS" ; then
