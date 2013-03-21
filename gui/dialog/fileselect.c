@@ -253,12 +253,23 @@ static void CheckDir( GtkWidget * list )
  gtk_widget_show( list );
 }
 
+static void fs_AddPathUtf8 (const char *name, GtkPositionType pos)
+{
+  gchar *utf8name;
+
+  utf8name = g_filename_display_name(name);
+
+  if (pos == GTK_POS_TOP) fsTopList_items = g_list_prepend(fsTopList_items, utf8name);
+  else fsTopList_items = g_list_append(fsTopList_items, utf8name);
+
+  g_hash_table_insert(fsPathTable, strdup(utf8name), strdup(name));
+}
+
 void ShowFileSelect( int type,int modal )
 {
  int i, k, fsMedium;
  char * tmp = NULL, * dir = NULL;
  const gchar *fname;
- gchar *utf8name;
  struct stat f;
 
  if ( fsFileSelect ) gtkActive( fsFileSelect );
@@ -352,26 +363,20 @@ void ShowFileSelect( int type,int modal )
      if ( fsHistory[i] )
       {
        fname = cfg_old_filename_from_utf8(fsHistory[i]);
-       utf8name = g_filename_display_name(fname);
-       fsTopList_items=g_list_append( fsTopList_items,utf8name );
-       g_hash_table_insert(fsPathTable, strdup(utf8name), strdup(fname));
+       fs_AddPathUtf8(fname, GTK_POS_BOTTOM);
        if ( c ) c=gstrcmp( dir,fname );
       }
    }
   if ( c && dir )
    {
-     utf8name = g_filename_display_name( dir );
-     fsTopList_items=g_list_prepend( fsTopList_items,utf8name );
-     g_hash_table_insert(fsPathTable, strdup(utf8name), strdup(dir));
+     fs_AddPathUtf8(dir, GTK_POS_TOP);
    }
  }
  free( dir );
  fname = getenv( "HOME" );
  if ( fname )
   {
-   utf8name = g_filename_display_name( fname );
-   fsTopList_items=g_list_append( fsTopList_items,utf8name );
-   g_hash_table_insert(fsPathTable, strdup(utf8name), strdup(fname));
+   fs_AddPathUtf8(fname, GTK_POS_BOTTOM);
   }
  else fsTopList_items=g_list_append( fsTopList_items,"/home" );
  if (stat( "/media",&f ) == 0) fsTopList_items=g_list_append( fsTopList_items,"/media" );
