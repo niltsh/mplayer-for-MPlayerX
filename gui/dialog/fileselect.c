@@ -502,8 +502,7 @@ static void fs_Up_released( GtkButton * button, gpointer user_data )
 static void fs_Ok_released( GtkButton * button, gpointer user_data )
 {
  char          * fsSelectedDirectory;
- GList         * item;
- int             i = 1, l;
+ int             l;
  struct stat     fs;
  gchar         * selected;
 
@@ -557,18 +556,6 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
   }
 
  HideFileSelect();
-
- item=fsTopList_items;
- while( item )
-  {
-   if ( !strcmp( item->data,fsSelectedDirectoryUtf8 ) ) i=0;
-   item=item->next;
-  }
- if ( i )
- {
-   fsTopList_items=g_list_prepend( fsTopList_items,fsSelectedDirectoryUtf8 );
-   g_hash_table_insert(fsPathTable, strdup(fsSelectedDirectoryUtf8), strdup(fsSelectedDirectory));
- }
 
  free(fsSelectedDirectory);
 
