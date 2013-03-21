@@ -395,7 +395,7 @@ static void plCTree( GtkCTree * ctree,GtkCTreeNode * parent_node,gpointer user_d
 {
  GtkCTreeNode  * node;
  DirNodeType   * DirNode;
- gchar 		   * text, * name = NULL;
+ gchar 		   * text, * utf8name = NULL;
  gchar 		   * dummy = "dummy";
  int     	 	 subdir = True;
  DIR   		   * dir = NULL;
@@ -419,14 +419,14 @@ static void plCTree( GtkCTree * ctree,GtkCTreeNode * parent_node,gpointer user_d
        if ( !strcmp( current_path,"/" ) ) sprintf( path,"/%s",dirent->d_name );
 	else sprintf( path,"%s/%s",current_path,dirent->d_name );
        text=dirent->d_name;
-       g_free( name );
-       name=g_filename_display_name( text );
+       g_free( utf8name );
+       utf8name=g_filename_display_name( text );
 
        if ( stat( path,&statbuf ) != -1 && S_ISDIR( statbuf.st_mode ) && dirent->d_name[0] != '.' )
 	{
 	 DirNode=malloc( sizeof( DirNodeType ) ); DirNode->scaned=False; DirNode->path=strdup( path );
 	 subdir=check_for_subdir( path );
-	 node=gtk_ctree_insert_node( ctree,parent_node,NULL,&name,4,pxOpenedBook,msOpenedBook,pxClosedBook,msClosedBook,!subdir,FALSE );
+	 node=gtk_ctree_insert_node( ctree,parent_node,NULL,&utf8name,4,pxOpenedBook,msOpenedBook,pxClosedBook,msClosedBook,!subdir,FALSE );
 	 gtk_ctree_node_set_row_data_full( ctree,node,DirNode,NULL );
 	 if ( subdir ) gtk_ctree_insert_node( ctree,node,NULL,&dummy,4,NULL,NULL,NULL,NULL,FALSE,FALSE );
 	}
@@ -439,7 +439,7 @@ static void plCTree( GtkCTree * ctree,GtkCTreeNode * parent_node,gpointer user_d
    gtk_clist_thaw( GTK_CLIST( ctree ) );
   }
 
-  g_free( name );
+  g_free( utf8name );
 }
 
 static void scan_dir( char * path )

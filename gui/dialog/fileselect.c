@@ -343,7 +343,7 @@ void ShowFileSelect( int type,int modal )
  if ( fsPathTable ) g_hash_table_destroy( fsPathTable ); fsPathTable=g_hash_table_new_full(g_str_hash, g_str_equal, free, free);
  {
   unsigned int  i, c = 1;
-  gchar *uname;
+  gchar *utf8name;
 
   if ( fsMedium )
    {
@@ -352,17 +352,17 @@ void ShowFileSelect( int type,int modal )
       {
        const gchar *fname;
        fname = cfg_old_filename_from_utf8(fsHistory[i]);
-       uname = g_filename_display_name(fname);
-       fsTopList_items=g_list_append( fsTopList_items,uname );
-       g_hash_table_insert(fsPathTable, strdup(uname), strdup(fname));
+       utf8name = g_filename_display_name(fname);
+       fsTopList_items=g_list_append( fsTopList_items,utf8name );
+       g_hash_table_insert(fsPathTable, strdup(utf8name), strdup(fname));
        if ( c ) c=gstrcmp( dir,fname );
       }
    }
   if ( c && dir )
    {
-     uname = g_filename_display_name( dir );
-     fsTopList_items=g_list_prepend( fsTopList_items,uname );
-     g_hash_table_insert(fsPathTable, strdup(uname), strdup(dir));
+     utf8name = g_filename_display_name( dir );
+     fsTopList_items=g_list_prepend( fsTopList_items,utf8name );
+     g_hash_table_insert(fsPathTable, strdup(utf8name), strdup(dir));
    }
  }
  free( dir );
