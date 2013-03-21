@@ -1019,7 +1019,6 @@ endif
 
 ###### tests / tools #######
 
-MP_MSG_LIBS = -ltermcap -lm
 MP_MSG_OBJS = mp_msg.o mp_fifo.o osdep/$(GETCH) osdep/$(TIMER)
 
 libvo/aspecttest$(EXESUF): libvo/aspect.o libvo/geometry.o $(MP_MSG_OBJS)
@@ -1059,7 +1058,7 @@ toolsclean:
 
 TOOLS/bmovl-test$(EXESUF): LIBS = -lSDL_image
 TOOLS/vfw2menc$(EXESUF):   LIBS = -lwinmm -lole32
-TOOLS/subrip$(EXESUF):     LIBS = $(MP_MSG_LIBS)
+TOOLS/subrip$(EXESUF):     LIBS = $(MP_MSG_LIBS) -lm
 TOOLS/subrip$(EXESUF): path.o sub/vobsub.o sub/spudec.o sub/unrar_exec.o \
     ffmpeg/libswscale/libswscale.a ffmpeg/libavutil/libavutil.a $(MP_MSG_OBJS)
 
