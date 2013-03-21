@@ -57,7 +57,6 @@ char * get_current_dir_name( void );
 #endif
 
 char          * fsSelectedFile = NULL;
-gchar         * fsSelectedDirectoryUtf8 = NULL;
 unsigned char * fsThatDir = ".";
 const gchar   * fsFilter = "*";
 
@@ -520,8 +519,6 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
   }
 
         fsSelectedDirectory=(unsigned char *)get_current_dir_name();
-        g_free( fsSelectedDirectoryUtf8 );
-        fsSelectedDirectoryUtf8=get_current_dir_name_utf8();
  switch ( fsType )
   {
    case fsVideoSelector:
