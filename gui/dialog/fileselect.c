@@ -488,10 +488,14 @@ static void fs_fsPathCombo_changed( GtkEditable * editable,
 
 static void fs_Up_released( GtkButton * button, gpointer user_data )
 {
+ char *utf8dir;
+
  chdir( ".." );
  fsSelectedFile=fsThatDir;
  CheckDir( fsFNameList );
- gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),(unsigned char *)get_current_dir_name_utf8() );
+ utf8dir = get_current_dir_name_utf8();
+ gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),(unsigned char *)utf8dir );
+ g_free(utf8dir);
  return;
 }
 
@@ -505,10 +509,13 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
 
  if( ( stat( fsSelectedFile,&fs ) == 0 ) && S_ISDIR( fs.st_mode ) )
   {
+   char *utf8dir;
    if ( chdir( fsSelectedFile ) != 0 ) return;
    fsSelectedFile=fsThatDir;
    CheckDir( fsFNameList );
-   gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),(unsigned char *)get_current_dir_name_utf8() );
+   utf8dir = get_current_dir_name_utf8();
+   gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),(unsigned char *)utf8dir );
+   g_free(utf8dir);
    gtk_widget_grab_focus( fsFNameList );
    return;
   }
