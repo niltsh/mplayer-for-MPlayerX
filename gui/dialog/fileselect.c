@@ -552,9 +552,9 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
 	  break;
   }
 
- HideFileSelect();
-
  free(fsSelectedDirectory);
+
+ HideFileSelect();
 
  if ( uiLoadPlay ) { uiLoadPlay=False; uiEvent( evPlay,0 ); }
   else gui( GUI_SET_STATE,(void *) GUI_STOP );
