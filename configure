@@ -1471,6 +1471,12 @@ done
 mplayer_tmpdir="$tmpdir/mplayer-configure-$RANDOM-$$"
 mkdir $mplayer_tmpdir || die "Unable to create tmpdir."
 
+cleanup() {
+  rm -rf "$mplayer_tmpdir"
+}
+
+trap cleanup EXIT
+
 TMPLOG="config.log"
 TMPC="$mplayer_tmpdir/tmp.c"
 TMPCPP="$mplayer_tmpdir/tmp.cpp"
@@ -9320,4 +9326,4 @@ EOF
 fi
 
 # Last move:
-rm -rf "$mplayer_tmpdir"
+cleanup
