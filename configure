@@ -6008,9 +6008,7 @@ echores "$_bluray"
 echocheck "dvdread"
 if test "$_dvdread_internal" = auto ; then
   _dvdread_internal=no
-  if (linux || freebsd || netbsd || openbsd || dragonfly || sunos || hpux) &&
-     (test "$_dvd" = yes || test "$_cdrom" = yes || test "$_cdio" = yes ||
-      test "$_dvdio" = yes || test "$_bsdi_dvd" = yes) ||
+  if linux || freebsd || netbsd || openbsd || dragonfly || sunos || hpux ||
      darwin || win32 || os2; then
     _dvdread_internal=yes
     _dvdread=yes
