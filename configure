@@ -3962,94 +3962,6 @@ fi
 echores "$_soundcard_h"
 
 
-echocheck "sys/dvdio.h"
-_dvdio=no
-# FreeBSD 8.1 has broken dvdio.h
-header_check_broken sys/types.h sys/dvdio.h && _dvdio=yes
-if test "$_dvdio" = yes ; then
-  def_dvdio='#define DVD_STRUCT_IN_SYS_DVDIO_H 1'
-else
-  def_dvdio='#undef DVD_STRUCT_IN_SYS_DVDIO_H'
-fi
-echores "$_dvdio"
-
-
-echocheck "sys/cdio.h"
-_cdio=no
-# at least OpenSolaris has a broken cdio.h
-header_check_broken sys/types.h sys/cdio.h && _cdio=yes
-if test "$_cdio" = yes ; then
-  def_cdio='#define DVD_STRUCT_IN_SYS_CDIO_H 1'
-else
-  def_cdio='#undef DVD_STRUCT_IN_SYS_CDIO_H'
-fi
-echores "$_cdio"
-
-
-echocheck "linux/cdrom.h"
-_cdrom=no
-header_check linux/cdrom.h && _cdrom=yes
-if test "$_cdrom" = yes ; then
-  def_cdrom='#define DVD_STRUCT_IN_LINUX_CDROM_H 1'
-else
-  def_cdrom='#undef DVD_STRUCT_IN_LINUX_CDROM_H'
-fi
-echores "$_cdrom"
-
-
-echocheck "dvd.h"
-_dvd=no
-header_check dvd.h && _dvd=yes
-if test "$_dvd" = yes ; then
-  def_dvd='#define DVD_STRUCT_IN_DVD_H 1'
-else
-  def_dvd='#undef DVD_STRUCT_IN_DVD_H'
-fi
-echores "$_dvd"
-
-
-if bsdos; then
-echocheck "BSDI dvd.h"
-_bsdi_dvd=no
-header_check dvd.h && _bsdi_dvd=yes
-if test "$_bsdi_dvd" = yes ; then
-  def_bsdi_dvd='#define DVD_STRUCT_IN_BSDI_DVDIOCTL_DVD_H 1'
-else
-  def_bsdi_dvd='#undef DVD_STRUCT_IN_BSDI_DVDIOCTL_DVD_H'
-fi
-echores "$_bsdi_dvd"
-fi #if bsdos
-
-
-if hpux; then
-# also used by AIX, but AIX does not support VCD and/or libdvdread
-echocheck "HP-UX SCSI header"
-_hpux_scsi_h=no
-header_check sys/scsi.h && _hpux_scsi_h=yes
-if test "$_hpux_scsi_h" = yes ; then
-  def_hpux_scsi_h='#define HPUX_SCTL_IO 1'
-else
-  def_hpux_scsi_h='#undef HPUX_SCTL_IO'
-fi
-echores "$_hpux_scsi_h"
-fi #if hpux
-
-
-if sunos; then
-echocheck "userspace SCSI headers (Solaris)"
-_sol_scsi_h=no
-header_check sys/scsi/scsi_types.h &&
-  header_check_broken sys/types.h sys/scsi/impl/uscsi.h &&
-   _sol_scsi_h=yes
-if test "$_sol_scsi_h" = yes ; then
-  def_sol_scsi_h='#define SOLARIS_USCSI 1'
-else
-  def_sol_scsi_h='#undef SOLARIS_USCSI'
-fi
-echores "$_sol_scsi_h"
-fi #if sunos
-
-
 echocheck "termcap"
 if test "$_termcap" = auto ; then
   _termcap=no
@@ -6046,10 +5958,53 @@ echores "$_dvdread"
 
 
 echocheck "internal libdvdcss"
+def_dvdio='#undef DVD_STRUCT_IN_SYS_DVDIO_H'
+def_dvd='#undef DVD_STRUCT_IN_DVD_H'
+def_cdio='#undef DVD_STRUCT_IN_SYS_CDIO_H'
+def_cdrom='#undef DVD_STRUCT_IN_LINUX_CDROM_H'
+def_bsdi_dvd='#undef DVD_STRUCT_IN_BSDI_DVDIOCTL_DVD_H'
+def_hpux_scsi_h='#undef HPUX_SCTL_IO'
+def_sol_scsi_h='#undef SOLARIS_USCSI'
+_dvdio=no
+_dvd=no
+_cdio=no
+_cdrom=no
+_sol_scsi_h=no
+_hpux_scsi_h=no
+_bsdi_dvd=no
 if test "$_libdvdcss_internal" = auto && test "$_dvdread_internal" = yes ; then
   _libdvdcss_internal=no
   test -d libdvdcss && _libdvdcss_internal=yes
-  hpux && test "$_hpux_scsi_h" = no && _libdvdcss_internal=no
+
+  if header_check linux/cdrom.h ; then
+     _cdrom=yes
+     def_cdrom='#define DVD_STRUCT_IN_LINUX_CDROM_H 1'
+  # FreeBSD 8.1 has broken dvdio.h
+  elif header_check_broken sys/types.h sys/dvdio.h ; then
+    _dvdio=yes
+    def_dvdio='#define DVD_STRUCT_IN_SYS_DVDIO_H 1'
+  elif header_check dvd.h ; then
+    _dvd=yes
+    def_dvd='#define DVD_STRUCT_IN_DVD_H 1'
+  # at least OpenSolaris has a broken cdio.h
+  elif header_check_broken sys/types.h sys/cdio.h ; then
+    _cdio=yes
+    def_cdio='#define DVD_STRUCT_IN_SYS_CDIO_H 1'
+  fi
+
+  if sunos; then
+    header_check sys/scsi/scsi_types.h &&
+      header_check_broken sys/types.h sys/scsi/impl/uscsi.h &&
+        _sol_scsi_h=yes && def_sol_scsi_h='#define SOLARIS_USCSI 1'
+  elif hpux; then
+    # also used by AIX, but AIX does not support VCD and/or libdvdread
+    header_check sys/scsi.h && _hpux_scsi_h=yes &&
+      def_hpux_scsi_h='#define HPUX_SCTL_IO 1' ||
+      _libdvdcss_internal=no
+  elif bsdos; then
+    header_check dvd.h && _bsdi_dvd=yes &&
+      def_bsdi_dvd='#define DVD_STRUCT_IN_BSDI_DVDIOCTL_DVD_H 1'
+  fi
 fi
 if test "$_libdvdcss_internal" = yes ; then
   if linux || netbsd || openbsd || bsdos || wine ; then
