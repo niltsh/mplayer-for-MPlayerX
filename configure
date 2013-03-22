@@ -6002,7 +6002,6 @@ echores "$_bluray"
 echocheck "dvdread"
 if test "$_dvdread_internal" = auto ; then
   _dvdread_internal=no
-  _dvdread=no
   if (linux || freebsd || netbsd || openbsd || dragonfly || sunos || hpux) &&
      (test "$_dvd" = yes || test "$_cdrom" = yes || test "$_cdio" = yes ||
       test "$_dvdio" = yes || test "$_bsdi_dvd" = yes) ||
@@ -6011,7 +6010,8 @@ if test "$_dvdread_internal" = auto ; then
     _dvdread=yes
     extra_cflags="-Ilibdvdread4 $extra_cflags"
   fi
-elif test "$_dvdread" = auto ; then
+fi
+if test "$_dvdread" = auto ; then
   _dvdread=no
   if test "$_dl" = yes; then
     _dvdreadcflags=$($_dvdreadconfig --cflags 2> /dev/null)
