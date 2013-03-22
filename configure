@@ -8684,7 +8684,19 @@ $def_fast_inttypes
 #define HAVE_ERRNO_H 1
 #define HAVE_INTTYPES_H 1
 #define HAVE_UNISTD_H 1
+$def_bsdi_dvd
+$def_cdio
+$def_cdrom
+$def_dvd
+$def_dvd_bsd
+$def_dvd_darwin
+$def_dvd_linux
+$def_dvd_openbsd
 $def_dvdcss
+$def_dvdio
+$def_hpux_scsi_h
+$def_sol_scsi_h
+
 /* libdvdcss + libdvdread */
 #define HAVE_LIMITS_H 1
 /* libdvdread */
@@ -8782,22 +8794,11 @@ $(ff_config_enable "$cpuexts_all" "$cpuexts" "#" "HAVE" "_INLINE")
 #define DEFAULT_CDROM_DEVICE "$default_cdrom_device"
 #define DEFAULT_DVD_DEVICE   "$default_dvd_device"
 $def_bluray
-$def_bsdi_dvd
 $def_cddb
-$def_cdio
 $def_cdparanoia
-$def_cdrom
-$def_dvd
-$def_dvd_bsd
-$def_dvd_darwin
-$def_dvd_linux
-$def_dvd_openbsd
-$def_dvdio
 $def_dvdnav
 $def_dvdread
-$def_hpux_scsi_h
 $def_libcdio
-$def_sol_scsi_h
 $def_vcd
 
 
