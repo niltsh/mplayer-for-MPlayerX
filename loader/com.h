@@ -6,13 +6,9 @@
 #ifndef MPLAYER_COM_H
 #define MPLAYER_COM_H
 
-#include "config.h"
-
-#ifdef HAVE_STDINT_H
 #include <stdint.h>
-#else
-#include <inttypes.h>
-#endif
+
+#include "config.h"
 
 /**
  * Internal functions and structures for COM emulation code.
