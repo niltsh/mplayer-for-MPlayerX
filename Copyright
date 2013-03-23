@@ -22,7 +22,7 @@ License:    GNU Lesser General Public License, some parts GNU General Public
 
 
 Name:       libdvdcss
-Version:    Subversion r256 + local changes
+Version:    Git 39e0e2b
 URL:        http://developers.videolan.org/libdvdcss/
 Directory:  libdvdcss
 Copyright:  1998-2008 VideoLAN

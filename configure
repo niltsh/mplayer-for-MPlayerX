@@ -3843,13 +3843,8 @@ fi #if win32; then
 
 echocheck "direct.h"
 _direct_h=no
-header_check direct.h && _direct_h=yes
-if [ $_direct_h = yes ]; then
-  def_direct_h='#define HAVE_DIRECT_H 1'
-else
-  # libdvdcss checks this via #ifdef, so we need #undef here.
-  def_direct_h='#undef HAVE_DIRECT_H'
-fi
+def_direct_h='#define HAVE_DIRECT_H 0'
+header_check direct.h && _direct_h=yes && def_direct_h='#define HAVE_DIRECT_H 1'
 echores "$_direct_h"
 
 
@@ -5958,20 +5953,20 @@ echores "$_dvdread"
 
 
 echocheck "internal libdvdcss"
+def_broken_mkdir='#undef HAVE_BROKEN_MKDIR'
 def_dvdio='#undef DVD_STRUCT_IN_SYS_DVDIO_H'
 def_dvd='#undef DVD_STRUCT_IN_DVD_H'
 def_cdio='#undef DVD_STRUCT_IN_SYS_CDIO_H'
 def_cdrom='#undef DVD_STRUCT_IN_LINUX_CDROM_H'
-def_bsdi_dvd='#undef DVD_STRUCT_IN_BSDI_DVDIOCTL_DVD_H'
 def_hpux_scsi_h='#undef HPUX_SCTL_IO'
 def_sol_scsi_h='#undef SOLARIS_USCSI'
+def_sys_uio_h='#undef HAVE_SYS_UIO_H'
 _dvdio=no
 _dvd=no
 _cdio=no
 _cdrom=no
 _sol_scsi_h=no
 _hpux_scsi_h=no
-_bsdi_dvd=no
 if test "$_libdvdcss_internal" = auto && test "$_dvdread_internal" = yes ; then
   _libdvdcss_internal=no
   test -d libdvdcss && _libdvdcss_internal=yes
@@ -6001,13 +5996,17 @@ if test "$_libdvdcss_internal" = auto && test "$_dvdread_internal" = yes ; then
     header_check sys/scsi.h && _hpux_scsi_h=yes &&
       def_hpux_scsi_h='#define HPUX_SCTL_IO 1' ||
       _libdvdcss_internal=no
-  elif bsdos; then
-    header_check dvd.h && _bsdi_dvd=yes &&
-      def_bsdi_dvd='#define DVD_STRUCT_IN_BSDI_DVDIOCTL_DVD_H 1'
   fi
+
+  statement_check_broken stddef.h sys/stat.h 'mkdir(NULL, 0)' ||
+    def_broken_mkdir='#define HAVE_BROKEN_MKDIR 1'
+
+  header_check "sys/uio.h" &&
+    def_sys_uio_h='#define HAVE_SYS_UIO_H 1'
+
 fi
 if test "$_libdvdcss_internal" = yes ; then
-  if linux || netbsd || openbsd || bsdos || wine ; then
+  if linux || netbsd || openbsd || wine ; then
     def_dvd_linux='#define HAVE_LINUX_DVD_STRUCT 1'
     openbsd && def_dvd_openbsd='#define HAVE_OPENBSD_DVD_STRUCT 1'
   elif freebsd || dragonfly ; then
@@ -6016,9 +6015,9 @@ if test "$_libdvdcss_internal" = yes ; then
     def_dvd_darwin='#define DARWIN_DVD_IOCTL'
     extra_ldflags="$extra_ldflags -framework IOKit -framework Carbon"
   elif cygwin ; then
-    cflags_libdvdcss="-DSYS_CYGWIN -DWIN32"
-  elif os2 ; then
-    cflags_libdvdcss="-DSYS_OS2"
+    cflags_libdvdcss="-D_WIN32_IE=0x0500 -mwin32"
+  elif mingw ; then
+    cflags_libdvdcss="-D_WIN32_IE=0x0500"
   fi
   cflags_libdvdcss_dvdread="-Ilibdvdcss"
   def_dvdcss="#define HAVE_DVDCSS_DVDCSS_H 1"
@@ -8618,6 +8617,11 @@ cat > $TMPH << EOF
 #undef FAST_OSD
 #undef FAST_OSD_TABLE
 
+/* Required for libdvdcss and some files below stream/. */
+#ifndef O_BINARY
+#define O_BINARY 0
+#endif
+
 /* Define this to enable MPEG-1/2 image postprocessing in libmpeg2 */
 #define MPEG12_POSTPROC 1
 #define ATTRIBUTE_ALIGNED_MAX 16
@@ -8637,7 +8641,7 @@ $def_fast_inttypes
 #define HAVE_ERRNO_H 1
 #define HAVE_INTTYPES_H 1
 #define HAVE_UNISTD_H 1
-$def_bsdi_dvd
+$def_broken_mkdir
 $def_cdio
 $def_cdrom
 $def_dvd
@@ -8649,6 +8653,7 @@ $def_dvdcss
 $def_dvdio
 $def_hpux_scsi_h
 $def_sol_scsi_h
+$def_sys_uio_h
 
 /* libdvdcss + libdvdread */
 #define HAVE_LIMITS_H 1
