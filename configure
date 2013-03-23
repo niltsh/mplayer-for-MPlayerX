@@ -4091,13 +4091,9 @@ echores "$_setmode"
 if sunos; then
 echocheck "sysi86()"
 _sysi86=no
-statement_check sys/sysi86.h 'sysi86(0)' && _sysi86=yes
-if test "$_sysi86" = yes ; then
-  def_sysi86='#define HAVE_SYSI86 1'
-  statement_check sys/sysi86.h 'int sysi86(int, void*); sysi86(0)' && def_sysi86_iv='#define HAVE_SYSI86_iv 1'
-else
-  def_sysi86='#undef HAVE_SYSI86'
-fi
+def_sysi86='#define HAVE_SYSI86 0'
+statement_check sys/sysi86.h 'int sysi86(int, void*); sysi86(0)' &&
+  _sysi86=yes && def_sysi86='#define HAVE_SYSI86 1'
 echores "$_sysi86"
 fi #if sunos
 
