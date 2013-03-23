@@ -4019,7 +4019,7 @@ echores "$_shm"
 echocheck "strsep()"
 strsep=yes
 def_strsep='#define HAVE_STRSEP 1'
-statement_check string.h 'char *s = "Hello, world!"; strsep(&s, ",")' ||
+define_statement_check _BSD_SOURCE string.h 'char *s = "Hello, world!"; strsep(&s, ",")' ||
     { strsep=no ; def_strsep='#undef HAVE_STRSEP' ; }
 echores "$strsep"
 

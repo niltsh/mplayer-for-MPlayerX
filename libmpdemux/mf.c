@@ -16,6 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#define _BSD_SOURCE
+
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
