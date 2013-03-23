@@ -6012,7 +6012,7 @@ if test "$_libdvdcss_internal" = yes ; then
     extra_ldflags="$extra_ldflags -framework IOKit -framework Carbon"
   elif cygwin ; then
     cflags_libdvdcss="-D_WIN32_IE=0x0500 -mwin32"
-  elif mingw ; then
+  elif mingw32 ; then
     cflags_libdvdcss="-D_WIN32_IE=0x0500"
   fi
   cflags_libdvdcss_dvdread="-Ilibdvdcss"
