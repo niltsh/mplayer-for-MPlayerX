@@ -29,9 +29,6 @@
 
 extern GtkWidget   * fsFileSelect;
 
-void HideFileSelect( void );
 void ShowFileSelect( int type, int modal );
-
-GtkWidget * create_FileSelect( void );
 
 #endif /* MPLAYER_GUI_FILESELECT_H */
