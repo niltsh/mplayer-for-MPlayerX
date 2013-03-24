@@ -27,8 +27,6 @@
 #define fsAudioSelector    3
 #define fsFontSelector     4
 
-#include <errno.h>
-
 extern GtkWidget   * fsFileSelect;
 
 void HideFileSelect( void );
