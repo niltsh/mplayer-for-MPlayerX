@@ -506,6 +506,12 @@ static gboolean fs_fsFNameList_event( GtkWidget * widget,
 static void fs_Destroy( void )
 {
  WidgetDestroy( fsFileSelect, &fsFileSelect );
+
+ g_hash_table_destroy( fsPathTable );
+
+ g_list_foreach(fsTopList_items, (GFunc) g_free, NULL);
+ g_list_free(fsTopList_items);
+ fsTopList_items = NULL;
 }
 
 static GtkWidget * create_FileSelect( void )
@@ -724,13 +730,8 @@ void ShowFileSelect( int type,int modal )
    if ( !dir[0] ) nfree( dir );
   }
 
- if ( fsTopList_items )
- {
-   g_list_foreach(fsTopList_items, (GFunc) g_free, NULL);
-   g_list_free(fsTopList_items);
-   fsTopList_items = NULL;
- }
- if ( fsPathTable ) g_hash_table_destroy( fsPathTable ); fsPathTable=g_hash_table_new_full(g_str_hash, g_str_equal, free, free);
+ fsPathTable = g_hash_table_new_full(g_str_hash, g_str_equal, free, free);
+
  {
   unsigned int  i, c = 1;
 
