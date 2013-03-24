@@ -9064,6 +9064,7 @@ $def_truncf
 #define CONFIG_GRAY 0
 #define CONFIG_LIBMODPLUG 0
 #define CONFIG_LIBVORBIS 0
+#define CONFIG_MEMORY_POISONING 0
 #define CONFIG_OPENSSL 0
 #define CONFIG_POWERPC_PERF 0
 /* For now prefer speed over avoiding potential invalid reads */
