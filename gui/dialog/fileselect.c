@@ -375,7 +375,7 @@ static void fs_Up_released( GtkButton * button, gpointer user_data )
  fsSelectedFile=fsThatDir;
  CheckDir( fsFNameList );
  utf8dir = get_current_dir_name_utf8();
- gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),(unsigned char *)utf8dir );
+ gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),utf8dir );
  g_free(utf8dir);
  return;
 }
@@ -394,13 +394,13 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
    fsSelectedFile=fsThatDir;
    CheckDir( fsFNameList );
    utf8dir = get_current_dir_name_utf8();
-   gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),(unsigned char *)utf8dir );
+   gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),utf8dir );
    g_free(utf8dir);
    gtk_widget_grab_focus( fsFNameList );
    return;
   }
 
-        fsSelectedDirectory=(unsigned char *)get_current_dir_name();
+        fsSelectedDirectory=get_current_dir_name();
  switch ( fsType )
   {
    case fsVideoSelector:
