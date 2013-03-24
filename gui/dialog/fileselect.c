@@ -161,9 +161,10 @@ GdkPixmap   * fpixmap;
 GdkBitmap   * dmask;
 GdkBitmap   * fmask;
 
-static char * get_current_dir_name_utf8( void )
+static gchar * get_current_dir_name_utf8( void )
 {
- char * dir, * utf8dir;
+ char * dir;
+ gchar * utf8dir;
  dir = get_current_dir_name();
  utf8dir = g_filename_display_name( dir );
  free( dir );
@@ -368,7 +369,7 @@ static void fs_fsPathCombo_changed( GtkEditable * editable,
 
 static void fs_Up_released( GtkButton * button, gpointer user_data )
 {
- char *utf8dir;
+ gchar *utf8dir;
 
  chdir( ".." );
  fsSelectedFile=fsThatDir;
@@ -388,7 +389,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
 
  if( ( stat( fsSelectedFile,&fs ) == 0 ) && S_ISDIR( fs.st_mode ) )
   {
-   char *utf8dir;
+   gchar *utf8dir;
    if ( chdir( fsSelectedFile ) != 0 ) return;
    fsSelectedFile=fsThatDir;
    CheckDir( fsFNameList );
