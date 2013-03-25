@@ -499,6 +499,7 @@ GtkWidget * create_PlayList( void )
   gchar 	* root = "/";
   gchar 	* dummy = "dummy";
   DirNodeType 	* DirNode;
+  plItem        * last;
 
   accel_group=gtk_accel_group_new();
 
@@ -545,7 +546,10 @@ GtkWidget * create_PlayList( void )
   gtk_ctree_expand( GTK_CTREE( CTDirTree ),parent );
   gtk_widget_show( CTDirTree );
 
-  if ( fsHistory[0] ) old_path = strdup( cfg_old_filename_from_utf8( fsHistory[0] ) );
+  last=listMgr( PLAYLIST_ITEM_GET_LAST,0 );
+
+  if ( last && last->path ) old_path = strdup( last->path );
+  else if ( fsHistory[0] ) old_path = strdup( cfg_old_filename_from_utf8( fsHistory[0] ) );
 
   gtk_clist_set_column_widget( GTK_CLIST( CTDirTree ),0,
     AddLabel( MSGTR_PLAYLIST_DirectoryTree,NULL ) );
