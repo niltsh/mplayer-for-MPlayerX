@@ -26,17 +26,17 @@
 #define KEY_BASE 0x1000000
 
 enum {
+    KEY_BACKSPACE = 8,
     KEY_TAB = 9,
     KEY_ENTER = 13,
+    KEY_ESC = 27,
+    KEY_DELETE = 127,
     /* Control keys */
-    KEY_BACKSPACE = KEY_BASE,
-    KEY_DELETE,
-    KEY_INSERT,
+    KEY_INSERT = KEY_BASE,
     KEY_HOME,
     KEY_END,
     KEY_PAGE_UP,
     KEY_PAGE_DOWN,
-    KEY_ESC,
     /* Cursor movement */
     KEY_RIGHT = KEY_BASE + 16,
     KEY_LEFT,
