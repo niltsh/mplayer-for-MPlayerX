@@ -666,7 +666,7 @@ void ShowFileSelect( int type,int modal )
         gtk_combo_set_popdown_strings( GTK_COMBO( List ),fsList_items );
         g_list_free( fsList_items );
         gtk_entry_set_text( GTK_ENTRY( fsFilterCombo ),fsVideoFilterNames[k >= 0 ? k : i-2][0] );
-	tmp=guiInfo.Filename;
+	//tmp=guiInfo.Filename;
         break;
    case fsSubtitleSelector:
         gtk_window_set_title( GTK_WINDOW( fsFileSelect ),MSGTR_SubtitleSelect );
@@ -714,8 +714,6 @@ void ShowFileSelect( int type,int modal )
   }
 
  fsMedium=(fsType == fsVideoSelector || fsType == fsSubtitleSelector || fsType == fsAudioSelector);
-
- if ( !tmp && fsMedium ) tmp=guiInfo.Filename;
 
  if ( tmp && tmp[0] && !strstr( tmp,"://" ) )
   {
