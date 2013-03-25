@@ -165,6 +165,19 @@ void *listMgr(int cmd, void *data)
 
         return NULL;
 
+    case PLAYLIST_ITEM_GET_LAST:
+
+        if (plList) {
+            plItem *item = plList;
+
+            while (item->next)
+                item = item->next;
+
+            return item;
+        }
+
+        return NULL;
+
     case PLAYLIST_ITEM_DEL_CURR:
 
         if (plCurrent) {
