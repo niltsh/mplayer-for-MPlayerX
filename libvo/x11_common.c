@@ -879,7 +879,7 @@ int vo_x11_check_events(Display * mydisplay)
                     key =
                         ((keySym & 0xff00) !=
                          0 ? ((keySym & 0x00ff) + 256) : (keySym));
-                    utf8 = to_utf8(buf);
+                    utf8 = buf[0] > 0xc0 ? to_utf8(buf) : 0;
                     if (utf8) key = 0;
                     if (key == wsLeftCtrl || key == wsRightCtrl) {
                         ctrl_state = Event.type == KeyPress;
