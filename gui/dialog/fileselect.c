@@ -56,8 +56,8 @@
 char * get_current_dir_name( void );
 #endif
 
-char          * fsSelectedFile = NULL;
-unsigned char * fsThatDir = ".";
+const char    * fsSelectedFile = NULL;
+const char    * fsThisDir = ".";
 const gchar   * fsFilter = "*";
 
 int             fsType    = 0;
@@ -376,7 +376,7 @@ static void fs_Up_released( GtkButton * button, gpointer user_data )
  utf8dir = get_current_dir_name_utf8();
  gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),utf8dir );
  g_free(utf8dir);
- fsSelectedFile=fsThatDir;
+ fsSelectedFile=fsThisDir;
  return;
 }
 
@@ -396,7 +396,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
    gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),utf8dir );
    g_free(utf8dir);
    gtk_widget_grab_focus( fsFNameList );
-   fsSelectedFile=fsThatDir;
+   fsSelectedFile=fsThisDir;
    return;
   }
 
