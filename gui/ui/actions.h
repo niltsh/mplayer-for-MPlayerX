@@ -31,7 +31,7 @@ void uiPause(void);
 void uiPlay(void);
 void uiPrev(void);
 void uiRelSeek(float percent);
-void uiSetFile(char *dir, char *name, int type);
+void uiSetFile(const char *dir, const char *name, int type);
 void uiState(void);
 void uiUnsetFile(void);
 void uiUnsetMedia(int totals);

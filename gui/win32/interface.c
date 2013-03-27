@@ -447,7 +447,7 @@ void uiPrev(void)
     mygui->startplay(mygui);
 }
 
-void uiSetFile(char *dir, char *name, int type)
+void uiSetFile(const char *dir, const char *name, int type)
 {
     if(!name) return;
     if(!dir)

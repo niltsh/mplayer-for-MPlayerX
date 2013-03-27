@@ -660,7 +660,7 @@ void uiChangeSkin(char *name)
  *
  * @note All #guiInfo members associated with the file will be cleared.
  */
-void uiSetFile(char *dir, char *name, int type)
+void uiSetFile(const char *dir, const char *name, int type)
 {
     if (!dir)
         setdup(&guiInfo.Filename, name);
