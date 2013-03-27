@@ -372,11 +372,11 @@ static void fs_Up_released( GtkButton * button, gpointer user_data )
  gchar *utf8dir;
 
  chdir( ".." );
- fsSelectedFile=fsThatDir;
  CheckDir( fsFNameList );
  utf8dir = get_current_dir_name_utf8();
  gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),utf8dir );
  g_free(utf8dir);
+ fsSelectedFile=fsThatDir;
  return;
 }
 
@@ -391,12 +391,12 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
   {
    gchar *utf8dir;
    if ( chdir( fsSelectedFile ) != 0 ) return;
-   fsSelectedFile=fsThatDir;
    CheckDir( fsFNameList );
    utf8dir = get_current_dir_name_utf8();
    gtk_entry_set_text( GTK_ENTRY( fsPathCombo ),utf8dir );
    g_free(utf8dir);
    gtk_widget_grab_focus( fsFNameList );
+   fsSelectedFile=fsThatDir;
    return;
   }
 
