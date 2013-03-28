@@ -27,8 +27,8 @@
 #define fsAudioSelector    3
 #define fsFontSelector     4
 
-extern GtkWidget   * fsFileSelect;
+extern GtkWidget *fsFileSelect;
 
-void ShowFileSelect( int type, int modal );
+void ShowFileSelect(int type, int modal);
 
 #endif /* MPLAYER_GUI_FILESELECT_H */
