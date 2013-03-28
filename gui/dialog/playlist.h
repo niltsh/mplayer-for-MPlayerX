@@ -23,6 +23,4 @@
 
 void ShowPlaylist( void );
 
-GtkWidget * create_PlayList (void);
-
 #endif /* MPLAYER_GUI_PLAYLIST_H */
