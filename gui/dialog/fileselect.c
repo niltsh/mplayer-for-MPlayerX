@@ -254,15 +254,23 @@ static void CheckDir( GtkWidget * list )
  gtk_widget_show( list );
 }
 
+static GList *fs_glist_add (GList *list, gpointer data, GtkPositionType pos)
+{
+  if (!g_list_find_custom(list, data, (GCompareFunc) strcmp))
+  {
+    if (pos == GTK_POS_TOP) list = g_list_prepend(list, data);
+    else list = g_list_append(list, data);
+  }
+
+  return list;
+}
+
 static void fs_AddPathUtf8 (const char *name, GtkPositionType pos)
 {
   gchar *utf8name;
 
   utf8name = g_filename_display_name(name);
-
-  if (pos == GTK_POS_TOP) fsTopList_items = g_list_prepend(fsTopList_items, utf8name);
-  else fsTopList_items = g_list_append(fsTopList_items, utf8name);
-
+  fsTopList_items = fs_glist_add(fsTopList_items, utf8name, pos);
   g_hash_table_insert(fsPathTable, strdup(utf8name), strdup(name));
 }
 
@@ -749,10 +757,10 @@ void ShowFileSelect( int type,int modal )
  free( dir );
  fname = getenv( "HOME" );
  if ( fname ) fs_AddPathUtf8(fname, GTK_POS_BOTTOM);
- else fsTopList_items=g_list_append( fsTopList_items,g_strdup( "/home" ) );
- if (stat( "/media",&f ) == 0) fsTopList_items=g_list_append( fsTopList_items,g_strdup( "/media" ) );
- if (stat( "/mnt",&f ) == 0) fsTopList_items=g_list_append( fsTopList_items,g_strdup( "/mnt" ) );
- fsTopList_items=g_list_append( fsTopList_items,g_strdup( "/" ) );
+ else fsTopList_items=fs_glist_add( fsTopList_items,g_strdup( "/home" ),GTK_POS_BOTTOM );
+ if (stat( "/media",&f ) == 0) fsTopList_items=fs_glist_add( fsTopList_items,g_strdup( "/media" ),GTK_POS_BOTTOM );
+ if (stat( "/mnt",&f ) == 0) fsTopList_items=fs_glist_add( fsTopList_items,g_strdup( "/mnt" ),GTK_POS_BOTTOM );
+ fsTopList_items=fs_glist_add( fsTopList_items,g_strdup( "/" ),GTK_POS_BOTTOM );
  gtk_combo_set_popdown_strings( GTK_COMBO( fsCombo4 ),fsTopList_items );
 
  gtk_widget_grab_focus( fsFNameList );
