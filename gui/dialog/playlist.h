@@ -22,7 +22,6 @@
 #include <gtk/gtk.h>
 
 void ShowPlayList( void );
-void HidePlayList( void );
 
 GtkWidget * create_PlayList (void);
 

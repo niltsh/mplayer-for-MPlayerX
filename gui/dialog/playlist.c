@@ -160,7 +160,7 @@ void ShowPlayList( void )
  gtk_widget_show( PlayList );
 }
 
-void HidePlayList( void )
+static void HidePlayList( void )
 {
  if ( !PlayList ) return;
  NrOfSelected=NrOfEntrys=0;
