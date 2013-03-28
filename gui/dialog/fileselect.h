@@ -29,7 +29,7 @@ enum {
     FILESELECT_FONT
 };
 
-extern GtkWidget *fsFileSelect;
+extern GtkWidget *FileSelector;
 
 void ShowFileSelect(int type, int modal);
 
