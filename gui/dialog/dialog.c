@@ -325,17 +325,17 @@ void gtkShow(int type, char *param)
         break;
 
     case evLoad:
-        ShowFileSelect(fsVideoSelector, 0);
+        ShowFileSelect(FILESELECT_VIDEO_AUDIO, 0);
         gtkSetLayer(fsFileSelect);
         break;
 
     case evLoadSubtitle:
-        ShowFileSelect(fsSubtitleSelector, 0);
+        ShowFileSelect(FILESELECT_SUBTITLE, 0);
         gtkSetLayer(fsFileSelect);
         break;
 
     case evLoadAudioFile:
-        ShowFileSelect(fsAudioSelector, 0);
+        ShowFileSelect(FILESELECT_AUDIO, 0);
         gtkSetLayer(fsFileSelect);
         break;
 

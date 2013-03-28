@@ -23,10 +23,10 @@
 
 /// File Selector types
 enum {
-    fsVideoSelector,
-    fsSubtitleSelector,
-    fsAudioSelector,
-    fsFontSelector
+    FILESELECT_VIDEO_AUDIO,
+    FILESELECT_SUBTITLE,
+    FILESELECT_AUDIO,
+    FILESELECT_FONT
 };
 
 extern GtkWidget *fsFileSelect;

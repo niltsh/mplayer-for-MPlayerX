@@ -323,12 +323,12 @@ static void fs_fsFilterCombo_changed( GtkEditable * editable,
 
  switch ( fsType )
   {
-   case fsVideoSelector:
+   case FILESELECT_VIDEO_AUDIO:
           for( i=0;fsVideoFilterNames[i][0];i++ )
            if( !strcmp( str,fsVideoFilterNames[i][0] ) )
             { fsFilter=fsVideoFilterNames[i][1]; fsLastVideoFilterSelected = i;	break; }
           break;
-   case fsSubtitleSelector:
+   case FILESELECT_SUBTITLE:
           for( i=0;fsSubtitleFilterNames[i][0];i++ )
            if( !strcmp( str,fsSubtitleFilterNames[i][0] ) )
             { fsFilter=fsSubtitleFilterNames[i][1]; fsLastSubtitleFilterSelected = i; break; }
@@ -338,12 +338,12 @@ static void fs_fsFilterCombo_changed( GtkEditable * editable,
            if( !strcmp( str,fsOtherFilterNames[i][0] ) )
             { fsFilter=fsOtherFilterNames[i][1]; break; }
           break;*/
-   case fsAudioSelector:
+   case FILESELECT_AUDIO:
           for( i=0;fsAudioFileNames[i][0];i++ )
            if( !strcmp( str,fsAudioFileNames[i][0] ) )
             { fsFilter=fsAudioFileNames[i][1]; fsLastAudioFilterSelected = i; break; }
 	  break;
-   case fsFontSelector:
+   case FILESELECT_FONT:
           for( i=0;fsFontFileNames[i][0];i++ )
 	    if( !strcmp( str,fsFontFileNames[i][0] ) )
 	     { fsFilter=fsFontFileNames[i][1]; fsLastFontFilterSelected = i; break; }
@@ -411,7 +411,7 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
         fsSelectedDirectory=get_current_dir_name();
  switch ( fsType )
   {
-   case fsVideoSelector:
+   case FILESELECT_VIDEO_AUDIO:
           for (l = 0; fsVideoFilterNames[l][0]; l++)
             if (strcmp(fsVideoFilterNames[l][0], MSGTR_Filter_Playlists) == 0) break;
           uiSetFile( fsSelectedDirectory,fsSelectedFile, fsLastVideoFilterSelected == l ? STREAMTYPE_PLAYLIST : STREAMTYPE_FILE );
@@ -425,17 +425,17 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
           guiInfo.NewPlay=GUI_FILE_NEW; sub_fps=0;
           fs_PersistantHistory( fsSelectedDirectory );
           break;
-   case fsSubtitleSelector:
+   case FILESELECT_SUBTITLE:
           setddup( &guiInfo.SubtitleFilename,fsSelectedDirectory,fsSelectedFile );
 	  mplayerLoadSubtitle( guiInfo.SubtitleFilename );
           break;
 /*   case fsOtherSelector:
           setddup( &guiInfo.Othername,fsSelectedDirectory,fsSelectedFile );
           break;*/
-   case fsAudioSelector:
+   case FILESELECT_AUDIO:
           setddup( &guiInfo.AudioFilename,fsSelectedDirectory,fsSelectedFile );
           break;
-   case fsFontSelector:
+   case FILESELECT_FONT:
           setddup( &font_name,fsSelectedDirectory,fsSelectedFile );
 	  mplayerLoadFont();
 	  if ( Preferences ) gtk_entry_set_text( GTK_ENTRY( prEFontName ),font_name );
@@ -665,7 +665,7 @@ void ShowFileSelect( int type,int modal )
  fsType=type;
  switch ( type )
   {
-   case fsVideoSelector:
+   case FILESELECT_VIDEO_AUDIO:
         gtk_window_set_title( GTK_WINDOW( fsFileSelect ),MSGTR_FileSelect );
         fsList_items=NULL;
         for( i=0;fsVideoFilterNames[i][0];i++ )
@@ -676,7 +676,7 @@ void ShowFileSelect( int type,int modal )
         gtk_entry_set_text( GTK_ENTRY( fsFilterCombo ),fsVideoFilterNames[k >= 0 ? k : i-2][0] );
 	//tmp=guiInfo.Filename;
         break;
-   case fsSubtitleSelector:
+   case FILESELECT_SUBTITLE:
         gtk_window_set_title( GTK_WINDOW( fsFileSelect ),MSGTR_SubtitleSelect );
         fsList_items=NULL;
         for( i=0;fsSubtitleFilterNames[i][0];i++ )
@@ -697,7 +697,7 @@ void ShowFileSelect( int type,int modal )
         gtk_entry_set_text( GTK_ENTRY( fsFilterCombo ),fsOtherFilterNames[0][0] );
 	tmp=guiInfo.Othername;
         break;*/
-   case fsAudioSelector:
+   case FILESELECT_AUDIO:
 	gtk_window_set_title( GTK_WINDOW( fsFileSelect ),MSGTR_AudioFileSelect );
 	fsList_items=NULL;
 	for( i=0;fsAudioFileNames[i][0];i++ )
@@ -708,7 +708,7 @@ void ShowFileSelect( int type,int modal )
 	gtk_entry_set_text( GTK_ENTRY( fsFilterCombo ),fsAudioFileNames[k >= 0 ? k : i-2][0] );
 	tmp=guiInfo.AudioFilename;
 	break;
-   case fsFontSelector:
+   case FILESELECT_FONT:
         gtk_window_set_title( GTK_WINDOW( fsFileSelect ),MSGTR_FontSelect );
 	fsList_items=NULL;
 	for( i=0;fsFontFileNames[i][0];i++ )
@@ -721,7 +721,7 @@ void ShowFileSelect( int type,int modal )
 	break;
   }
 
- fsMedium=(fsType == fsVideoSelector || fsType == fsSubtitleSelector || fsType == fsAudioSelector);
+ fsMedium=(fsType == FILESELECT_VIDEO_AUDIO || fsType == FILESELECT_SUBTITLE || fsType == FILESELECT_AUDIO);
 
  if ( tmp && tmp[0] && !strstr( tmp,"://" ) )
   {
