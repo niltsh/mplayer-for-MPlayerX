@@ -657,7 +657,7 @@ static void prButton( GtkButton * button, gpointer user_data )
 	break;
 #endif
    case bLFont:
-        ShowFileSelect( FILESELECT_FONT,FALSE );
+        ShowFileSelector( FILESELECT_FONT );
 	gtkSetLayer( FileSelector );
 	break;
   }

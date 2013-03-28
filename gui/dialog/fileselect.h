@@ -31,6 +31,6 @@ enum {
 
 extern GtkWidget *FileSelector;
 
-void ShowFileSelect(int type, int modal);
+void ShowFileSelector(int type);
 
 #endif /* MPLAYER_GUI_FILESELECT_H */

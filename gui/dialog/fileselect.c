@@ -652,7 +652,7 @@ static GtkWidget * create_FileSelect( void )
  return FileSelector;
 }
 
-void ShowFileSelect( int type,int modal )
+void ShowFileSelector( int type )
 {
  int i, k, fsMedium;
  char * tmp = NULL, * dir = NULL;
@@ -768,8 +768,6 @@ void ShowFileSelect( int type,int modal )
  ((GtkCList *)fsFNameList)->focus_row = fsLastFNameListSelected;
  gtk_clist_select_row( GTK_CLIST( fsFNameList ),fsLastFNameListSelected,1 );
  fsLastFNameListSelected = 0;
-
- gtk_window_set_modal( GTK_WINDOW( FileSelector ),modal );
 
  gtk_widget_show( FileSelector );
 }
