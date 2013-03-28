@@ -21,6 +21,8 @@
 
 #include <gtk/gtk.h>
 
+extern GtkWidget *Playlist;
+
 void ShowPlaylist( void );
 
 #endif /* MPLAYER_GUI_PLAYLIST_H */
