@@ -28,7 +28,7 @@
 
 GtkWidget * About = NULL;
 
-void ShowAboutBox( void )
+void ShowAbout( void )
 {
  if ( About ) gtkActive( About );
    else About=create_About();

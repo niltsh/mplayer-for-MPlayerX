@@ -340,7 +340,7 @@ void gtkShow(int type, char *param)
         break;
 
     case evAbout:
-        ShowAboutBox();
+        ShowAbout();
         gtkSetLayer(About);
         break;
 
