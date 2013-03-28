@@ -160,7 +160,7 @@ void ShowPlayList( void )
  gtk_widget_show( PlayList );
 }
 
-static void HidePlayList( void )
+static void HidePlaylist( void )
 {
  if ( !PlayList ) return;
  NrOfSelected=NrOfEntrys=0;
@@ -247,7 +247,7 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	free(curr.name);
        }
   case 0: // cancel
-       HidePlayList();
+       HidePlaylist();
        break;
   case 2: // remove
        {
