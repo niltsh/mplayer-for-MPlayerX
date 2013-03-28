@@ -21,11 +21,13 @@
 
 #include <gtk/gtk.h>
 
-#define fsVideoSelector    0
-#define fsSubtitleSelector 1
-//#define fsOtherSelector    2
-#define fsAudioSelector    3
-#define fsFontSelector     4
+/// File Selector types
+enum {
+    fsVideoSelector,
+    fsSubtitleSelector,
+    fsAudioSelector,
+    fsFontSelector
+};
 
 extern GtkWidget *fsFileSelect;
 
