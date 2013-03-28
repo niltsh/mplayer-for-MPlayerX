@@ -90,8 +90,6 @@ static int compare_func(const void *a, const void *b)
  return i;
 }
 
-static void scan_dir( char * path );
-
 static void HidePlaylist( void )
 {
  if ( !Playlist ) return;
