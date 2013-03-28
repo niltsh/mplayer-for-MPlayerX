@@ -368,8 +368,8 @@ void gtkShow(int type, char *param)
         break;
 
     case evLoadURL:
-        ShowURLDialogBox();
-        gtkSetLayer(URL);
+        ShowURLDialog();
+        gtkSetLayer(URLDialog);
         break;
     }
 }
