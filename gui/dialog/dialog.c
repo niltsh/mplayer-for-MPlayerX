@@ -320,8 +320,8 @@ void gtkShow(int type, char *param)
         break;
 
     case evPlaylist:
-        ShowPlayList();
-        gtkSetLayer(PlayList);
+        ShowPlaylist();
+        gtkSetLayer(Playlist);
         break;
 
     case evLoad:

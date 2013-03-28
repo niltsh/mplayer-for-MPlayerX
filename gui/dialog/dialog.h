@@ -36,7 +36,7 @@
 #define GTK_MB_ERROR 4
 #define GTK_MB_WARNING 8
 
-extern GtkWidget *PlayList;
+extern GtkWidget *Playlist;
 extern GtkWidget *Options;
 
 extern GtkWidget *WarningPixmap;

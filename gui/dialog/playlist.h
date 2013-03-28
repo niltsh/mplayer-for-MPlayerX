@@ -21,7 +21,7 @@
 
 #include <gtk/gtk.h>
 
-void ShowPlayList( void );
+void ShowPlaylist( void );
 
 GtkWidget * create_PlayList (void);
 
