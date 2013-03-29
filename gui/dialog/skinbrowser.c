@@ -89,7 +89,7 @@ static void on_SkinList_select_row( GtkCList * clist,gint row,gint column,GdkEve
   }
 }
 
-static GtkWidget * create_SkinBrowser( void )
+static GtkWidget * CreateSkinBrowser( void )
 {
  GtkWidget     * vbox5;
  GtkWidget     * scrolledwindow1;
@@ -170,7 +170,7 @@ static GtkWidget * create_SkinBrowser( void )
 void ShowSkinBrowser( void )
 {
  if ( SkinBrowser ) gtkActive( SkinBrowser );
-   else SkinBrowser=create_SkinBrowser();
+   else SkinBrowser=CreateSkinBrowser();
 }
 
 int gtkFillSkinList( gchar * mdir )

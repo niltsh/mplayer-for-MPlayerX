@@ -353,7 +353,7 @@ void gtkShow(int type, char *param)
             gtk_widget_destroy(PopUpMenu);
         }
 
-        PopUpMenu = create_PopUpMenu();
+        PopUpMenu = CreatePopUpMenu();
         gtk_menu_popup(GTK_MENU(PopUpMenu), NULL, NULL, NULL, NULL, 0, 0);
         break;
 

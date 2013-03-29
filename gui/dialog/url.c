@@ -82,7 +82,7 @@ static void on_Button_pressed( GtkButton * button,gpointer user_data )
  HideURLDialog();
 }
 
-static GtkWidget * create_URLDialog( void )
+static GtkWidget * CreateURLDialog( void )
 {
  GtkWidget * vbox1;
  GtkWidget * hbox1;
@@ -148,7 +148,7 @@ void ShowURLDialog( void )
  urlItem * item;
 
  if ( URLDialog ) gtkActive( URLDialog );
-   else URLDialog=create_URLDialog();
+   else URLDialog=CreateURLDialog();
 
  item = listMgr( URLLIST_GET,0 );
 

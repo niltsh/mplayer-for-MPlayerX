@@ -31,7 +31,7 @@ GtkWidget * About = NULL;
 static void abWidgetDestroy( GtkButton * button, gpointer user_data )
 { WidgetDestroy( NULL,&About ); }
 
-static GtkWidget * create_About( void )
+static GtkWidget * CreateAbout( void )
 {
   GtkWidget     * vbox;
   GtkWidget     * pixmap1;
@@ -348,6 +348,6 @@ static GtkWidget * create_About( void )
 void ShowAbout( void )
 {
  if ( About ) gtkActive( About );
-   else About=create_About();
+   else About=CreateAbout();
  gtk_widget_show( About );
 }

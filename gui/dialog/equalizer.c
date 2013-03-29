@@ -232,7 +232,7 @@ static void eqNotebook( GtkNotebook * notebook, gpointer page,
    else gtk_widget_show( Config );
 }
 
-static GtkWidget * create_Equalizer( void )
+static GtkWidget * CreateEqualizer( void )
 {
   GtkWidget * vbox1;
   GtkWidget * hbox1;
@@ -461,7 +461,7 @@ static GtkWidget * create_Equalizer( void )
 void ShowEqualizer( void )
 {
  if ( Equalizer ) gtkActive( Equalizer );
-    else Equalizer=create_Equalizer();
+    else Equalizer=CreateEqualizer();
 
  if ( !gtkEquChannel1 ) gtkEquChannel1=strdup( MSGTR_EQU_Front_Right );
  if ( !gtkEquChannel2 ) gtkEquChannel2=strdup( MSGTR_EQU_Front_Left );
@@ -517,14 +517,14 @@ static GtkWidget * CEChannel6;
 static GtkWidget * ecOk;
 static GtkWidget * ecCancel;
 
-GtkWidget * create_EquConfig( void );
+GtkWidget * CreateEquConfig( void );
 
 void ShowEquConfig( void )
 {
  GList * Items = NULL;
 
  if ( EquConfig ) gtkActive( EquConfig );
-    else EquConfig=create_EquConfig();
+    else EquConfig=CreateEquConfig();
 
  Items=g_list_append( Items,(gpointer)MSGTR_EQU_Front_Right  );
  Items=g_list_append( Items,(gpointer)MSGTR_EQU_Front_Left );
@@ -576,7 +576,7 @@ static void ecButtonReleased( GtkButton * button,gpointer user_data )
  HideEquConfig();
 }
 
-GtkWidget * create_EquConfig( void )
+GtkWidget * CreateEquConfig( void )
 {
   GtkWidget * vbox1;
   GtkWidget * table1;

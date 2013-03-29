@@ -510,7 +510,7 @@ static void prCListRow( GtkCList * clist,gint row,gint column,GdkEvent * event,g
   }
 }
 
-static GtkWidget * create_Preferences( void )
+static GtkWidget * CreatePreferences( void )
 {
   GtkWidget * label;
   GtkWidget * frame;
@@ -1092,7 +1092,7 @@ static GtkWidget * create_Preferences( void )
 void ShowPreferences( void )
 {
  if ( Preferences ) gtkActive( Preferences );
-   else Preferences=create_Preferences();
+   else Preferences=CreatePreferences();
 
 /* 1st page */
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBAudioEqualizer ),gtkEnableAudioEqualizer );
@@ -1555,7 +1555,7 @@ static void audioButton(GtkButton *button, gpointer user_data) {
   }
 }
 
-static GtkWidget *create_AudioConfig( void ) {
+static GtkWidget *CreateAudioConfig( void ) {
   GList *items = NULL;
   GtkWidget *vbox;
   GtkWidget *table;
@@ -1677,7 +1677,7 @@ static GtkWidget *create_AudioConfig( void ) {
 
 void ShowAudioConfig( void ) {
   if (AudioConfig) gtkActive(AudioConfig);
-  else AudioConfig = create_AudioConfig();
+  else AudioConfig = CreateAudioConfig();
 
 #ifdef CONFIG_OSS_AUDIO
   if (strncmp(ao_driver[0], "oss", 3) == 0) {
@@ -1718,12 +1718,12 @@ static GtkWidget * RBVLavc;
 static GtkWidget * dxr3BOk;
 static GtkWidget * dxr3BCancel;
 
-GtkWidget * create_DXR3Config( void );
+GtkWidget * CreateDXR3Config( void );
 
 void ShowDXR3Config( void )
 {
  if ( DXR3Config ) gtkActive( DXR3Config );
-  else DXR3Config=create_DXR3Config();
+  else DXR3Config=CreateDXR3Config();
 
  gtk_entry_set_text( GTK_ENTRY( CEDXR3Device ),gtkDXR3Device );
 
@@ -1755,7 +1755,7 @@ static void dxr3Button( GtkButton * button,gpointer user_data )
  }
 }
 
-GtkWidget * create_DXR3Config( void )
+GtkWidget * CreateDXR3Config( void )
 {
  GtkWidget * vbox1;
  GtkWidget * vbox2;

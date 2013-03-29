@@ -523,7 +523,7 @@ static void fs_Destroy( void )
  fsTopList_items = NULL;
 }
 
-static GtkWidget * create_FileSelect( void )
+static GtkWidget * CreateFileSelect( void )
 {
  GtkWidget     * vbox4;
  GtkWidget     * hbox4;
@@ -660,7 +660,7 @@ void ShowFileSelector( int type )
  struct stat f;
 
  if ( FileSelector ) gtkActive( FileSelector );
-  else FileSelector=create_FileSelect();
+  else FileSelector=CreateFileSelect();
 
  fsType=type;
  switch ( type )

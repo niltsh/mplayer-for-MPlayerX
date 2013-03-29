@@ -415,7 +415,7 @@ static void plCTRow(GtkCList * clist, gint row, gint column, GdkEvent * event, g
  CLFileSelected=calloc( 1,NrOfEntrys * sizeof( int ) );
 }
 
-static GtkWidget * create_Playlist( void )
+static GtkWidget * CreatePlaylist( void )
 {
   GtkWidget 	* vbox1;
   GtkWidget 	* hbox1;
@@ -577,7 +577,7 @@ void ShowPlaylist( void )
  plItem * next;
 
  if ( Playlist ) gtkActive( Playlist );
-  else Playlist=create_Playlist();
+  else Playlist=CreatePlaylist();
 
  if ( old_path && *old_path )
   {
