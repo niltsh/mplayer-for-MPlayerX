@@ -25,7 +25,6 @@ extern GtkWidget * Preferences;
 extern GtkWidget * prEFontName;
 
 GtkWidget * create_Preferences( void );
-GtkWidget * create_AudioConfig( void );
 
 void ShowPreferences( void );
 

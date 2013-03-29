@@ -1507,39 +1507,6 @@ static GtkWidget *CBAudioMixerChannel;
 static GtkWidget *BAudioOk;
 static GtkWidget *BAudioCancel;
 
-void ShowAudioConfig( void ) {
-  if (AudioConfig) gtkActive(AudioConfig);
-  else AudioConfig = create_AudioConfig();
-
-#ifdef CONFIG_OSS_AUDIO
-  if (strncmp(ao_driver[0], "oss", 3) == 0) {
-    setGtkEntryText(CEAudioDevice, gtkAOOSSDevice);
-    setGtkEntryText(CEAudioMixer, gtkAOOSSMixer);
-    setGtkEntryText(CEAudioMixerChannel, gtkAOOSSMixerChannel);
-  }
-#endif
-#ifdef CONFIG_ALSA
-  if (strncmp(ao_driver[0], "alsa", 4) == 0) {
-    setGtkEntryText(CEAudioDevice, gtkAOALSADevice);
-    setGtkEntryText(CEAudioMixer, gtkAOALSAMixer);
-    setGtkEntryText(CEAudioMixerChannel, gtkAOALSAMixerChannel);
-  }
-#endif
-#ifdef CONFIG_SDL
-  if (strncmp(ao_driver[0], "sdl", 3) == 0) {
-    setGtkEntryText(CEAudioDevice, gtkAOSDLDriver);
-  }
-#endif
-#ifdef CONFIG_ESD
-  if (strncmp(ao_driver[0], "esd", 3) == 0) {
-    setGtkEntryText(CEAudioDevice, gtkAOESDDevice);
-  }
-#endif
-
-  gtk_widget_show(AudioConfig);
-  gtkSetLayer(AudioConfig);
-}
-
 void HideAudioConfig( void ) {
   if (!AudioConfig) return;
   gtk_widget_hide(AudioConfig);
@@ -1588,7 +1555,7 @@ static void audioButton(GtkButton *button, gpointer user_data) {
   }
 }
 
-GtkWidget *create_AudioConfig( void ) {
+static GtkWidget *create_AudioConfig( void ) {
   GList *items = NULL;
   GtkWidget *vbox;
   GtkWidget *table;
@@ -1706,6 +1673,39 @@ GtkWidget *create_AudioConfig( void ) {
   gtk_window_add_accel_group(GTK_WINDOW(AudioConfig), accel_group);
 
   return AudioConfig;
+}
+
+void ShowAudioConfig( void ) {
+  if (AudioConfig) gtkActive(AudioConfig);
+  else AudioConfig = create_AudioConfig();
+
+#ifdef CONFIG_OSS_AUDIO
+  if (strncmp(ao_driver[0], "oss", 3) == 0) {
+    setGtkEntryText(CEAudioDevice, gtkAOOSSDevice);
+    setGtkEntryText(CEAudioMixer, gtkAOOSSMixer);
+    setGtkEntryText(CEAudioMixerChannel, gtkAOOSSMixerChannel);
+  }
+#endif
+#ifdef CONFIG_ALSA
+  if (strncmp(ao_driver[0], "alsa", 4) == 0) {
+    setGtkEntryText(CEAudioDevice, gtkAOALSADevice);
+    setGtkEntryText(CEAudioMixer, gtkAOALSAMixer);
+    setGtkEntryText(CEAudioMixerChannel, gtkAOALSAMixerChannel);
+  }
+#endif
+#ifdef CONFIG_SDL
+  if (strncmp(ao_driver[0], "sdl", 3) == 0) {
+    setGtkEntryText(CEAudioDevice, gtkAOSDLDriver);
+  }
+#endif
+#ifdef CONFIG_ESD
+  if (strncmp(ao_driver[0], "esd", 3) == 0) {
+    setGtkEntryText(CEAudioDevice, gtkAOESDDevice);
+  }
+#endif
+
+  gtk_widget_show(AudioConfig);
+  gtkSetLayer(AudioConfig);
 }
 
 /* dxr3 config box */
