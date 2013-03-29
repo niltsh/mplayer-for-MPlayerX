@@ -186,10 +186,10 @@ static char * ao_driver[3];
 static char * vo_driver[3];
 static int    old_video_driver = 0;
 
+static GtkWidget *AudioConfig;
+
  void ShowDXR3Config( void );
- void HideDXR3Config( void );
  void ShowAudioConfig( void );
- void HideAudioConfig( void );
 
 static gboolean prHScaler( GtkWidget * widget,GdkEvent * event,gpointer user_data );
 static void prToggled( GtkToggleButton * togglebutton,gpointer user_data );
@@ -197,18 +197,6 @@ static void prCListRow( GtkCList * clist,gint row,gint column,GdkEvent * event,g
 #if defined(CONFIG_FREETYPE) || defined(CONFIG_ICONV)
 static void prEntry( GtkEditable * editable,gpointer user_data );
 #endif
-
-static void HidePreferences( void )
-{
- if ( !Preferences ) return;
- gtk_widget_hide( Preferences );
- gtk_widget_destroy( Preferences );
- Preferences=NULL;
- HideAudioConfig();
-#ifdef CONFIG_DXR3
- HideDXR3Config();
-#endif
-}
 
 #if defined(CONFIG_FREETYPE) || defined(CONFIG_ICONV)
 static void prEntry( GtkEditable * editable,gpointer user_data )
@@ -352,7 +340,20 @@ static void prButton( GtkButton * button, gpointer user_data )
 	setdup( &cdrom_device,gtk_entry_get_text( GTK_ENTRY( prECDRomDevice ) ) );
 
    case bCancel:
-	HidePreferences();
+	gtk_widget_destroy( Preferences );
+	Preferences=NULL;
+	if ( AudioConfig )
+	{
+	 gtk_widget_destroy( AudioConfig );
+	 AudioConfig=NULL;
+	}
+#ifdef CONFIG_DXR3
+	if ( DXR3Config )
+	{
+	 gtk_widget_destroy( DXR3Config );
+	 DXR3Config=NULL;
+	}
+#endif
 	break;
    case bAConfig:
 	if ( !ao_driver[0] ) break;
@@ -1497,7 +1498,6 @@ static void setGtkEntryText(GtkWidget *dest, char *to)
 }
 #endif
 
-static GtkWidget *AudioConfig;
 static GtkWidget *CEAudioDevice;
 static GtkWidget *CBAudioDevice;
 static GtkWidget *CEAudioMixer;
@@ -1506,13 +1506,6 @@ static GtkWidget *CEAudioMixerChannel;
 static GtkWidget *CBAudioMixerChannel;
 static GtkWidget *BAudioOk;
 static GtkWidget *BAudioCancel;
-
-void HideAudioConfig( void ) {
-  if (!AudioConfig) return;
-  gtk_widget_hide(AudioConfig);
-  gtk_widget_destroy(AudioConfig);
-  AudioConfig=NULL;
-}
 
 static void audioButton(GtkButton *button, gpointer user_data) {
   switch( (int)user_data ) {
@@ -1550,7 +1543,8 @@ static void audioButton(GtkButton *button, gpointer user_data) {
       }
 #endif
    case 0:
-      HideAudioConfig();
+      gtk_widget_destroy(AudioConfig);
+      AudioConfig=NULL;
       break;
   }
 }
@@ -1734,14 +1728,6 @@ void ShowDXR3Config( void )
  gtkSetLayer( DXR3Config );
 }
 
-void HideDXR3Config( void )
-{
- if ( !DXR3Config ) return;
- gtk_widget_hide( DXR3Config );
- gtk_widget_destroy( DXR3Config );
- DXR3Config=NULL;
-}
-
 static void dxr3Button( GtkButton * button,gpointer user_data )
 {
  switch ( (int)user_data )
@@ -1750,7 +1736,8 @@ static void dxr3Button( GtkButton * button,gpointer user_data )
        nfree( gtkDXR3Device ); gtkDXR3Device=strdup( gtk_entry_get_text( GTK_ENTRY( CEDXR3Device ) ) );
        gtkVfLAVC=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( RBVLavc ) );
   case 1: // Cancel
-       HideDXR3Config();
+       gtk_widget_destroy( DXR3Config );
+       DXR3Config=NULL;
        break;
  }
 }
