@@ -125,23 +125,6 @@ static void eqSetChannelNames( void )
  gtk_clist_select_row( GTK_CLIST( ChannelsList ),0,0 );
 }
 
-static void HideEquConfig( void )
-{
- if ( !EquConfig ) return;
- gtk_widget_hide( EquConfig );
- gtk_widget_destroy( EquConfig );
- EquConfig=NULL;
-}
-
-static void HideEqualizer( void )
-{
- if ( !Equalizer ) return;
- gtk_widget_hide( Equalizer );
- gtk_widget_destroy( Equalizer );
- Equalizer=NULL;
- if ( EquConfig ) HideEquConfig();
-}
-
 static gboolean eqHScaleMotion( GtkWidget * widget,GdkEventMotion  * event,gpointer user_data )
 {
  equalizer_t eq;
@@ -189,7 +172,15 @@ static void eqButtonReleased( GtkButton * button,gpointer user_data )
 {
  switch( (int)user_data )
   {
-   case 0: HideEqualizer(); break;
+   case 0:
+        gtk_widget_destroy( Equalizer );
+        Equalizer=NULL;
+        if ( EquConfig )
+         {
+          gtk_widget_destroy( EquConfig );
+          EquConfig=NULL;
+         }
+        break;
    case 1:
 	if ( gtk_notebook_get_current_page( GTK_NOTEBOOK( Notebook ) ) == 0 )
 	 {
@@ -572,7 +563,8 @@ static void ecButtonReleased( GtkButton * button,gpointer user_data )
   nfree( gtkEquChannel6 ); gtkEquChannel6=gstrdup( gtk_entry_get_text( GTK_ENTRY( CEChannel6 ) ) );
   eqSetChannelNames();
  }
- HideEquConfig();
+ gtk_widget_destroy( EquConfig );
+ EquConfig=NULL;
 }
 
 GtkWidget * CreateEquConfig( void )
