@@ -21,7 +21,6 @@
 
 #include <gtk/gtk.h>
 
-extern GtkWidget * AudioConfig;
 extern GtkWidget * Preferences;
 extern GtkWidget * prEFontName;
 

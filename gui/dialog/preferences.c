@@ -1497,7 +1497,7 @@ static void setGtkEntryText(GtkWidget *dest, char *to)
 }
 #endif
 
-       GtkWidget *AudioConfig;
+static GtkWidget *AudioConfig;
 static GtkWidget *CEAudioDevice;
 static GtkWidget *CBAudioDevice;
 static GtkWidget *CEAudioMixer;
