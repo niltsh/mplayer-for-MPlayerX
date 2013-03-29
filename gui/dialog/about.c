@@ -28,17 +28,10 @@
 
 GtkWidget * About = NULL;
 
-void ShowAbout( void )
-{
- if ( About ) gtkActive( About );
-   else About=create_About();
- gtk_widget_show( About );
-}
-
 static void abWidgetDestroy( GtkButton * button, gpointer user_data )
 { WidgetDestroy( NULL,&About ); }
 
-GtkWidget * create_About( void )
+static GtkWidget * create_About( void )
 {
   GtkWidget     * vbox;
   GtkWidget     * pixmap1;
@@ -350,4 +343,11 @@ GtkWidget * create_About( void )
   gtk_window_add_accel_group( GTK_WINDOW( About ),accel_group );
 
   return About;
+}
+
+void ShowAbout( void )
+{
+ if ( About ) gtkActive( About );
+   else About=create_About();
+ gtk_widget_show( About );
 }
