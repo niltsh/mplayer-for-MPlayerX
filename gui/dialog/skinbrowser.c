@@ -44,51 +44,12 @@ static char * prev=NULL;
 
 GtkWidget * SkinBrowser = NULL;
 
-void ShowSkinBrowser( void )
-{
- if ( SkinBrowser ) gtkActive( SkinBrowser );
-   else SkinBrowser=create_SkinBrowser();
-}
-
 static void HideSkinBrowser( void )
 {
  if ( !SkinBrowser ) return;
  gtk_widget_hide( SkinBrowser );
  gtk_widget_destroy( SkinBrowser );
  SkinBrowser=NULL;
-}
-
-int gtkFillSkinList( gchar * mdir )
-{
- gchar         * str[2];
- gchar         * tmp;
- int             i;
- glob_t          gg;
- struct stat     fs;
-
- gtkOldSkin=strdup( skinName );
- prev=gtkOldSkin;
-
- str[0]="default";
- str[1]="";
- if ( gtkFindCList( SkinList,str[0] ) == -1 ) gtk_clist_append( GTK_CLIST( SkinList ),str );
-
- glob( mdir,GLOB_NOSORT,NULL,&gg );
- for( i=0;i<(int)gg.gl_pathc;i++ )
-  {
-   if ( !strcmp( gg.gl_pathv[i],"." ) || !strcmp( gg.gl_pathv[i],".." ) ) continue;
-   if ( ( stat( gg.gl_pathv[i],&fs ) == 0 ) && S_ISDIR( fs.st_mode ) )
-    {
-     tmp=strrchr( gg.gl_pathv[i],'/' );
-     if (tmp) tmp++;
-     else tmp = gg.gl_pathv[i];
-     if ( !strcmp( tmp,"default" ) ) continue;
-     str[0]=tmp;
-     if ( gtkFindCList( SkinList,str[0] ) == -1 ) gtk_clist_append( GTK_CLIST( SkinList ),str );
-    }
-  }
- globfree( &gg );
- return True;
 }
 
 static void prButton( GtkButton * button,gpointer user_data )
@@ -128,7 +89,7 @@ static void on_SkinList_select_row( GtkCList * clist,gint row,gint column,GdkEve
   }
 }
 
-GtkWidget * create_SkinBrowser( void )
+static GtkWidget * create_SkinBrowser( void )
 {
  GtkWidget     * vbox5;
  GtkWidget     * scrolledwindow1;
@@ -204,4 +165,43 @@ GtkWidget * create_SkinBrowser( void )
  gtk_widget_grab_focus( SkinList );
 
  return SkinBrowser;
+}
+
+void ShowSkinBrowser( void )
+{
+ if ( SkinBrowser ) gtkActive( SkinBrowser );
+   else SkinBrowser=create_SkinBrowser();
+}
+
+int gtkFillSkinList( gchar * mdir )
+{
+ gchar         * str[2];
+ gchar         * tmp;
+ int             i;
+ glob_t          gg;
+ struct stat     fs;
+
+ gtkOldSkin=strdup( skinName );
+ prev=gtkOldSkin;
+
+ str[0]="default";
+ str[1]="";
+ if ( gtkFindCList( SkinList,str[0] ) == -1 ) gtk_clist_append( GTK_CLIST( SkinList ),str );
+
+ glob( mdir,GLOB_NOSORT,NULL,&gg );
+ for( i=0;i<(int)gg.gl_pathc;i++ )
+  {
+   if ( !strcmp( gg.gl_pathv[i],"." ) || !strcmp( gg.gl_pathv[i],".." ) ) continue;
+   if ( ( stat( gg.gl_pathv[i],&fs ) == 0 ) && S_ISDIR( fs.st_mode ) )
+    {
+     tmp=strrchr( gg.gl_pathv[i],'/' );
+     if (tmp) tmp++;
+     else tmp = gg.gl_pathv[i];
+     if ( !strcmp( tmp,"default" ) ) continue;
+     str[0]=tmp;
+     if ( gtkFindCList( SkinList,str[0] ) == -1 ) gtk_clist_append( GTK_CLIST( SkinList ),str );
+    }
+  }
+ globfree( &gg );
+ return True;
 }
