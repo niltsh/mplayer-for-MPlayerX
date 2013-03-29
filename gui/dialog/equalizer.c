@@ -126,48 +126,6 @@ static void eqSetChannelNames( void )
  gtk_clist_select_row( GTK_CLIST( ChannelsList ),0,0 );
 }
 
-void ShowEqualizer( void )
-{
- if ( Equalizer ) gtkActive( Equalizer );
-    else Equalizer=create_Equalizer();
-
- if ( !gtkEquChannel1 ) gtkEquChannel1=strdup( MSGTR_EQU_Front_Right );
- if ( !gtkEquChannel2 ) gtkEquChannel2=strdup( MSGTR_EQU_Front_Left );
- if ( !gtkEquChannel3 ) gtkEquChannel3=strdup( MSGTR_EQU_Back_Right );
- if ( !gtkEquChannel4 ) gtkEquChannel4=strdup( MSGTR_EQU_Back_Left );
- if ( !gtkEquChannel5 ) gtkEquChannel5=strdup( MSGTR_EQU_Center );
- if ( !gtkEquChannel6 ) gtkEquChannel6=strdup( MSGTR_EQU_Bass );
-
- eqSetChannelNames();
-
- if ( !guiInfo.Playing || !guiInfo.sh_video )
-  {
-   gtk_widget_set_sensitive( VContrast,FALSE );
-   gtk_widget_set_sensitive( VBrightness,FALSE );
-   gtk_widget_set_sensitive( VHue,FALSE );
-   gtk_widget_set_sensitive( VSaturation,FALSE );
-  }
- Channel=-1;
- eqSetBands( 0 );
- if ( !guiInfo.Playing || !gtkEnableAudioEqualizer )
-  {
-   gtk_widget_set_sensitive( ChannelsList,FALSE );
-   gtk_widget_set_sensitive( A3125,FALSE );
-   gtk_widget_set_sensitive( A125,FALSE );
-   gtk_widget_set_sensitive( A6250,FALSE );
-   gtk_widget_set_sensitive( A250,FALSE );
-   gtk_widget_set_sensitive( A500,FALSE );
-   gtk_widget_set_sensitive( A1000,FALSE );
-   gtk_widget_set_sensitive( A2000,FALSE );
-   gtk_widget_set_sensitive( A4000,FALSE );
-   gtk_widget_set_sensitive( A8000,FALSE );
-   gtk_widget_set_sensitive( A16000,FALSE );
-  }
-
- if ( gtk_notebook_get_current_page( GTK_NOTEBOOK( Notebook ) ) == 0 ) gtk_widget_show( Config );
- gtk_widget_show( Equalizer );
-}
-
 static void HideEqualizer( void )
 {
  if ( !Equalizer ) return;
@@ -274,7 +232,7 @@ static void eqNotebook( GtkNotebook * notebook, gpointer page,
    else gtk_widget_show( Config );
 }
 
-GtkWidget * create_Equalizer( void )
+static GtkWidget * create_Equalizer( void )
 {
   GtkWidget * vbox1;
   GtkWidget * hbox1;
@@ -498,6 +456,48 @@ GtkWidget * create_Equalizer( void )
   gtk_window_add_accel_group( GTK_WINDOW( Equalizer ),accel_group );
 
   return Equalizer;
+}
+
+void ShowEqualizer( void )
+{
+ if ( Equalizer ) gtkActive( Equalizer );
+    else Equalizer=create_Equalizer();
+
+ if ( !gtkEquChannel1 ) gtkEquChannel1=strdup( MSGTR_EQU_Front_Right );
+ if ( !gtkEquChannel2 ) gtkEquChannel2=strdup( MSGTR_EQU_Front_Left );
+ if ( !gtkEquChannel3 ) gtkEquChannel3=strdup( MSGTR_EQU_Back_Right );
+ if ( !gtkEquChannel4 ) gtkEquChannel4=strdup( MSGTR_EQU_Back_Left );
+ if ( !gtkEquChannel5 ) gtkEquChannel5=strdup( MSGTR_EQU_Center );
+ if ( !gtkEquChannel6 ) gtkEquChannel6=strdup( MSGTR_EQU_Bass );
+
+ eqSetChannelNames();
+
+ if ( !guiInfo.Playing || !guiInfo.sh_video )
+  {
+   gtk_widget_set_sensitive( VContrast,FALSE );
+   gtk_widget_set_sensitive( VBrightness,FALSE );
+   gtk_widget_set_sensitive( VHue,FALSE );
+   gtk_widget_set_sensitive( VSaturation,FALSE );
+  }
+ Channel=-1;
+ eqSetBands( 0 );
+ if ( !guiInfo.Playing || !gtkEnableAudioEqualizer )
+  {
+   gtk_widget_set_sensitive( ChannelsList,FALSE );
+   gtk_widget_set_sensitive( A3125,FALSE );
+   gtk_widget_set_sensitive( A125,FALSE );
+   gtk_widget_set_sensitive( A6250,FALSE );
+   gtk_widget_set_sensitive( A250,FALSE );
+   gtk_widget_set_sensitive( A500,FALSE );
+   gtk_widget_set_sensitive( A1000,FALSE );
+   gtk_widget_set_sensitive( A2000,FALSE );
+   gtk_widget_set_sensitive( A4000,FALSE );
+   gtk_widget_set_sensitive( A8000,FALSE );
+   gtk_widget_set_sensitive( A16000,FALSE );
+  }
+
+ if ( gtk_notebook_get_current_page( GTK_NOTEBOOK( Notebook ) ) == 0 ) gtk_widget_show( Config );
+ gtk_widget_show( Equalizer );
 }
 
 /* equalizer config dialog box */
