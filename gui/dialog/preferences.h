@@ -24,8 +24,6 @@
 extern GtkWidget * Preferences;
 extern GtkWidget * prEFontName;
 
-GtkWidget * create_Preferences( void );
-
 void ShowPreferences( void );
 
 #endif /* MPLAYER_GUI_PREFERENCES_H */
