@@ -42,35 +42,6 @@ static GtkWidget * URLCombo;
 static GtkWidget * URLEntry;
 static GList     * URLComboEntrys = NULL;
 
-void ShowURLDialog( void )
-{
- urlItem * item;
-
- if ( URLDialog ) gtkActive( URLDialog );
-   else URLDialog=create_URL();
-
- item = listMgr( URLLIST_GET,0 );
-
- if ( item )
-  {
-   g_list_free( URLComboEntrys );
-   URLComboEntrys=NULL;
-   while( item )
-    {
-     URLComboEntrys=g_list_append( URLComboEntrys,(gchar *)item->url );
-     item=item->next;
-    }
-  }
-
- if ( URLComboEntrys )
-  {
-   gtk_entry_set_text( GTK_ENTRY( URLEntry ),URLComboEntrys->data );
-   gtk_combo_set_popdown_strings( GTK_COMBO( URLCombo ),URLComboEntrys );
-  }
-
- gtk_widget_show( URLDialog );
-}
-
 static void HideURLDialog( void )
 {
  if ( !URLDialog ) return;
@@ -111,7 +82,7 @@ static void on_Button_pressed( GtkButton * button,gpointer user_data )
  HideURLDialog();
 }
 
-GtkWidget * create_URL( void )
+static GtkWidget * create_URLDialog( void )
 {
  GtkWidget * vbox1;
  GtkWidget * hbox1;
@@ -170,4 +141,33 @@ GtkWidget * create_URL( void )
  gtk_window_add_accel_group( GTK_WINDOW( URLDialog ),accel_group );
 
  return URLDialog;
+}
+
+void ShowURLDialog( void )
+{
+ urlItem * item;
+
+ if ( URLDialog ) gtkActive( URLDialog );
+   else URLDialog=create_URLDialog();
+
+ item = listMgr( URLLIST_GET,0 );
+
+ if ( item )
+  {
+   g_list_free( URLComboEntrys );
+   URLComboEntrys=NULL;
+   while( item )
+    {
+     URLComboEntrys=g_list_append( URLComboEntrys,(gchar *)item->url );
+     item=item->next;
+    }
+  }
+
+ if ( URLComboEntrys )
+  {
+   gtk_entry_set_text( GTK_ENTRY( URLEntry ),URLComboEntrys->data );
+   gtk_combo_set_popdown_strings( GTK_COMBO( URLCombo ),URLComboEntrys );
+  }
+
+ gtk_widget_show( URLDialog );
 }

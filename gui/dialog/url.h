@@ -24,6 +24,5 @@
 extern GtkWidget * URLDialog;
 
 void ShowURLDialog( void );
-GtkWidget * create_URL( void );
 
 #endif /* MPLAYER_GUI_URL_H */
