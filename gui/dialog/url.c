@@ -42,14 +42,6 @@ static GtkWidget * URLCombo;
 static GtkWidget * URLEntry;
 static GList     * URLComboEntrys = NULL;
 
-static void HideURLDialog( void )
-{
- if ( !URLDialog ) return;
- gtk_widget_hide( URLDialog );
- gtk_widget_destroy( URLDialog );
- URLDialog=0;
-}
-
 static void on_Button_pressed( GtkButton * button,gpointer user_data )
 {
  urlItem * item;
@@ -79,7 +71,8 @@ static void on_Button_pressed( GtkButton * button,gpointer user_data )
      uiEvent( evPlay,0 );
     }
   }
- HideURLDialog();
+ gtk_widget_destroy( URLDialog );
+ URLDialog = NULL;
 }
 
 static GtkWidget * CreateURLDialog( void )
