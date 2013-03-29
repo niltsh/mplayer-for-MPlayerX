@@ -22,7 +22,6 @@
 #include <gtk/gtk.h>
 
 extern GtkWidget * URLDialog;
-extern int         gtkVURLDialogBox;
 
 void ShowURLDialog( void );
 GtkWidget * create_URL( void );
