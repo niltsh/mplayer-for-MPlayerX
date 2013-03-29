@@ -90,18 +90,6 @@ static int compare_func(const void *a, const void *b)
  return i;
 }
 
-static void HidePlaylist( void )
-{
- if ( !Playlist ) return;
- NrOfSelected=NrOfEntrys=0;
- nfree( CLListSelected ); nfree( CLFileSelected );
- free( old_path );
- old_path=strdup( current_path );
- gtk_widget_hide( Playlist );
- gtk_widget_destroy( Playlist );
- Playlist=NULL;
-}
-
 static void plRowSelect( GtkCList * clist,gint row,gint column,GdkEvent * event,gpointer user_data )
 {
  switch ( (int) user_data )
@@ -177,7 +165,13 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
 	free(curr.name);
        }
   case 0: // cancel
-       HidePlaylist();
+       NrOfSelected=NrOfEntrys=0;
+       nfree( CLListSelected );
+       nfree( CLFileSelected );
+       free( old_path );
+       old_path=strdup( current_path );
+       gtk_widget_destroy( Playlist );
+       Playlist=NULL;
        break;
   case 2: // remove
        {
