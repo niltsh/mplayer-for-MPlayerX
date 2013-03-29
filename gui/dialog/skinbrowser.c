@@ -44,14 +44,6 @@ static char * prev=NULL;
 
 GtkWidget * SkinBrowser = NULL;
 
-static void HideSkinBrowser( void )
-{
- if ( !SkinBrowser ) return;
- gtk_widget_hide( SkinBrowser );
- gtk_widget_destroy( SkinBrowser );
- SkinBrowser=NULL;
-}
-
 static void prButton( GtkButton * button,gpointer user_data )
 {
  if ( sbSelectedSkin )
@@ -68,7 +60,8 @@ static void prButton( GtkButton * button,gpointer user_data )
 	break;
   }
  }
- HideSkinBrowser();
+ gtk_widget_destroy( SkinBrowser );
+ SkinBrowser=NULL;
 }
 
 static void on_SkinList_select_row( GtkCList * clist,gint row,gint column,GdkEvent * event,gpointer user_data )
@@ -85,7 +78,8 @@ static void on_SkinList_select_row( GtkCList * clist,gint row,gint column,GdkEve
   {
    free( skinName );
    skinName=strdup( sbSelectedSkin );
-   HideSkinBrowser();
+   gtk_widget_destroy( SkinBrowser );
+   SkinBrowser=NULL;
   }
 }
 
