@@ -274,15 +274,6 @@ static void fs_AddPathUtf8 (const char *name, GtkPositionType pos)
   g_hash_table_insert(fsPathTable, strdup(utf8name), strdup(name));
 }
 
-static void HideFileSelect( void )
-{
- if ( !FileSelector ) return;
- gtk_widget_hide( FileSelector );
- gtk_widget_destroy( FileSelector );
- FileSelector=NULL;
- fsLastFNameListSelected = fsCurrFNameListSelected;
-}
-
 static void fs_PersistantHistory( char * subject )
 {
  unsigned int i;
@@ -388,6 +379,13 @@ static void fs_Up_released( GtkButton * button, gpointer user_data )
  return;
 }
 
+static void fs_Cancel_released( GtkButton * button,gpointer user_data )
+{
+ gtk_widget_destroy( FileSelector );
+ FileSelector=NULL;
+ fsLastFNameListSelected = fsCurrFNameListSelected;
+}
+
 static void fs_Ok_released( GtkButton * button, gpointer user_data )
 {
  char          * fsSelectedDirectory;
@@ -444,15 +442,10 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
 
  free(fsSelectedDirectory);
 
- HideFileSelect();
+ fs_Cancel_released(NULL, NULL);
 
  if ( uiLoadPlay ) { uiLoadPlay=False; uiEvent( evPlay,0 ); }
   else gui( GUI_SET_STATE,(void *) GUI_STOP );
-}
-
-static void fs_Cancel_released( GtkButton * button,gpointer user_data )
-{
- HideFileSelect();
 }
 
 static void fs_fsFNameList_select_row( GtkCList * clist, gint row, gint column,
