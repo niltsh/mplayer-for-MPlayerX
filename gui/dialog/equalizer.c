@@ -71,7 +71,6 @@ char * gtkEquChannel6 = NULL;
 // ---
 
 void ShowEquConfig( void );
-void HideEquConfig( void );
 
 static void eqSetBands( int channel )
 {
@@ -124,6 +123,14 @@ static void eqSetChannelNames( void )
    str[0]=gtkEquChannel6; gtk_clist_append( GTK_CLIST( ChannelsList ) ,str);
   }
  gtk_clist_select_row( GTK_CLIST( ChannelsList ),0,0 );
+}
+
+static void HideEquConfig( void )
+{
+ if ( !EquConfig ) return;
+ gtk_widget_hide( EquConfig );
+ gtk_widget_destroy( EquConfig );
+ EquConfig=NULL;
 }
 
 static void HideEqualizer( void )
@@ -551,14 +558,6 @@ void ShowEquConfig( void )
 
  gtk_widget_show( EquConfig );
  gtkSetLayer( EquConfig );
-}
-
-void HideEquConfig( void )
-{
- if ( !EquConfig ) return;
- gtk_widget_hide( EquConfig );
- gtk_widget_destroy( EquConfig );
- EquConfig=NULL;
 }
 
 static void ecButtonReleased( GtkButton * button,gpointer user_data )
