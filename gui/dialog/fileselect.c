@@ -64,7 +64,7 @@ int             fsType    = 0;
 
 static gint     fsCurrFNameListSelected, fsLastFNameListSelected;
 
-char * fsVideoFilterNames[][2] =
+char * fsVideoAudioFilterNames[][2] =
          {
 	   { MSGTR_Filter_AVIFiles,      "*.avi" },
 	   { MSGTR_Filter_DivXFiles,     "*.divx" },
@@ -86,7 +86,7 @@ char * fsVideoFilterNames[][2] =
 	   { MSGTR_Filter_AllFiles,      "*" },
 	   { NULL,NULL }
 	 };
-int fsLastVideoFilterSelected = -1;
+int fsLastVideoAudioFilterSelected = -1;
 
 char * fsSubtitleFilterNames[][2] =
          {
@@ -324,9 +324,9 @@ static void fs_fsFilterCombo_changed( GtkEditable * editable,
  switch ( fsType )
   {
    case FILESELECT_VIDEO_AUDIO:
-          for( i=0;fsVideoFilterNames[i][0];i++ )
-           if( !strcmp( str,fsVideoFilterNames[i][0] ) )
-            { fsFilter=fsVideoFilterNames[i][1]; fsLastVideoFilterSelected = i;	break; }
+          for( i=0;fsVideoAudioFilterNames[i][0];i++ )
+           if( !strcmp( str,fsVideoAudioFilterNames[i][0] ) )
+            { fsFilter=fsVideoAudioFilterNames[i][1]; fsLastVideoAudioFilterSelected = i;	break; }
           break;
    case FILESELECT_SUBTITLE:
           for( i=0;fsSubtitleFilterNames[i][0];i++ )
@@ -412,9 +412,9 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
  switch ( fsType )
   {
    case FILESELECT_VIDEO_AUDIO:
-          for (l = 0; fsVideoFilterNames[l][0]; l++)
-            if (strcmp(fsVideoFilterNames[l][0], MSGTR_Filter_Playlists) == 0) break;
-          uiSetFile( fsSelectedDirectory,fsSelectedFile, fsLastVideoFilterSelected == l ? STREAMTYPE_PLAYLIST : STREAMTYPE_FILE );
+          for (l = 0; fsVideoAudioFilterNames[l][0]; l++)
+            if (strcmp(fsVideoAudioFilterNames[l][0], MSGTR_Filter_Playlists) == 0) break;
+          uiSetFile( fsSelectedDirectory,fsSelectedFile, fsLastVideoAudioFilterSelected == l ? STREAMTYPE_PLAYLIST : STREAMTYPE_FILE );
           selected = g_strconcat(fsSelectedDirectory, "/", fsSelectedFile, NULL);
           if (selected)
           {
@@ -668,12 +668,12 @@ void ShowFileSelector( int type )
    case FILESELECT_VIDEO_AUDIO:
         gtk_window_set_title( GTK_WINDOW( FileSelector ),MSGTR_FileSelect );
         fsList_items=NULL;
-        for( i=0;fsVideoFilterNames[i][0];i++ )
-          fsList_items=g_list_append( fsList_items,fsVideoFilterNames[i][0] );
-	k = fsLastVideoFilterSelected;
+        for( i=0;fsVideoAudioFilterNames[i][0];i++ )
+          fsList_items=g_list_append( fsList_items,fsVideoAudioFilterNames[i][0] );
+	k = fsLastVideoAudioFilterSelected;
         gtk_combo_set_popdown_strings( GTK_COMBO( List ),fsList_items );
         g_list_free( fsList_items );
-        gtk_entry_set_text( GTK_ENTRY( fsFilterCombo ),fsVideoFilterNames[k >= 0 ? k : i-2][0] );
+        gtk_entry_set_text( GTK_ENTRY( fsFilterCombo ),fsVideoAudioFilterNames[k >= 0 ? k : i-2][0] );
 	//tmp=guiInfo.Filename;
         break;
    case FILESELECT_SUBTITLE:
