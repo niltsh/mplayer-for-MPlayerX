@@ -71,7 +71,7 @@ void ShowURLDialog( void )
  gtk_widget_show( URLDialog );
 }
 
-static void HideURLDialogBox( void )
+static void HideURLDialog( void )
 {
  if ( !URLDialog ) return;
  gtk_widget_hide( URLDialog );
@@ -108,7 +108,7 @@ static void on_Button_pressed( GtkButton * button,gpointer user_data )
      uiEvent( evPlay,0 );
     }
   }
- HideURLDialogBox();
+ HideURLDialog();
 }
 
 GtkWidget * create_URL( void )
