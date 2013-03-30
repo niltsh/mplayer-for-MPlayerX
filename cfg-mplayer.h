@@ -189,6 +189,7 @@ const m_option_t mplayer_opts[]={
     {"fstype", &vo_fstype_list, CONF_TYPE_STRING_LIST, 0, 0, 0, NULL},
 #endif
     {"heartbeat-cmd", &heartbeat_cmd, CONF_TYPE_STRING, 0, 0, 0, NULL},
+    {"heartbeat-interval", &heartbeat_interval, CONF_TYPE_FLOAT, CONF_MIN, 0.0, 0, NULL},
     {"mouseinput", &vo_nomouse_input, CONF_TYPE_FLAG, 0, 1, 0, NULL},
     {"nomouseinput", &vo_nomouse_input, CONF_TYPE_FLAG,0, 0, 1, NULL},
 

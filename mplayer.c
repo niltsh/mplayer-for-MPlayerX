@@ -146,6 +146,7 @@ int enable_mouse_movements;
 float start_volume = -1;
 double start_pts   = MP_NOPTS_VALUE;
 char *heartbeat_cmd;
+float heartbeat_interval = 30.0;
 static int max_framesize;
 
 int noconsolecontrols;
@@ -3818,7 +3819,9 @@ goto_enable_cache:
                 if (heartbeat_cmd) {
                     static unsigned last_heartbeat;
                     unsigned now = GetTimerMS();
-                    if (now - last_heartbeat > 30000) {
+                    // compare as unsigned so that any mistakes (overflow etc)
+                    // trigger a heartbeat, thus resetting the logic.
+                    if (now - last_heartbeat > (unsigned)(heartbeat_interval * 1000)) {
                         last_heartbeat = now;
                         system(heartbeat_cmd);
                     }
