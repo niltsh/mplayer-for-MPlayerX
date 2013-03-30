@@ -72,7 +72,6 @@ static void on_Button_pressed( GtkButton * button,gpointer user_data )
     }
   }
  gtk_widget_destroy( URLDialog );
- URLDialog = NULL;
 }
 
 static GtkWidget * CreateURLDialog( void )
@@ -126,7 +125,7 @@ static GtkWidget * CreateURLDialog( void )
  gtk_widget_add_accelerator( Ok,"clicked",accel_group,GDK_Return,0,GTK_ACCEL_VISIBLE );
  gtk_widget_add_accelerator( Cancel,"clicked",accel_group,GDK_Escape,0,GTK_ACCEL_VISIBLE );
 
- gtk_signal_connect( GTK_OBJECT( URLDialog ),"destroy",GTK_SIGNAL_FUNC( WidgetDestroy ),&URLDialog );
+ gtk_signal_connect( GTK_OBJECT( URLDialog ),"destroy",GTK_SIGNAL_FUNC( gtk_widget_destroyed ),&URLDialog );
  gtk_signal_connect( GTK_OBJECT( Ok ),"clicked",GTK_SIGNAL_FUNC( on_Button_pressed ),(void *)1 );
  gtk_signal_connect( GTK_OBJECT( Cancel ),"clicked",GTK_SIGNAL_FUNC( on_Button_pressed ),NULL );
 

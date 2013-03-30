@@ -382,7 +382,6 @@ static void fs_Up_released( GtkButton * button, gpointer user_data )
 static void fs_Cancel_released( GtkButton * button,gpointer user_data )
 {
  gtk_widget_destroy( FileSelector );
- FileSelector=NULL;
  fsLastFNameListSelected = fsCurrFNameListSelected;
 }
 
@@ -507,7 +506,7 @@ static gboolean fs_fsFNameList_event( GtkWidget * widget,
 
 static void fs_Destroy( void )
 {
- WidgetDestroy( FileSelector, &FileSelector );
+ gtk_widget_destroyed( FileSelector, &FileSelector );
 
  g_hash_table_destroy( fsPathTable );
 

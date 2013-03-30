@@ -34,7 +34,6 @@ GtkWidget * MessageBox = NULL;
 static void on_Ok_released( GtkButton * button,gpointer user_data  )
 {
  gtk_widget_destroy( MessageBox );
- MessageBox=NULL;
 }
 
 static GtkWidget * CreateMessageBox( void )
@@ -98,7 +97,7 @@ static GtkWidget * CreateMessageBox( void )
  gtk_widget_add_accelerator( Ok,"clicked",accel_group,GDK_Return,0,GTK_ACCEL_VISIBLE );
  gtk_widget_add_accelerator( Ok,"clicked",accel_group,GDK_Escape,0,GTK_ACCEL_VISIBLE );
 
- gtk_signal_connect( GTK_OBJECT( MessageBox ),"destroy",GTK_SIGNAL_FUNC( WidgetDestroy ),&MessageBox );
+ gtk_signal_connect( GTK_OBJECT( MessageBox ),"destroy",GTK_SIGNAL_FUNC( gtk_widget_destroyed ),&MessageBox );
  gtk_signal_connect( GTK_OBJECT( Ok ),"clicked",GTK_SIGNAL_FUNC( on_Ok_released ),NULL );
 
  gtk_window_add_accel_group( GTK_WINDOW( MessageBox ),accel_group );

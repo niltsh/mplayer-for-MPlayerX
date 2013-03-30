@@ -341,18 +341,9 @@ static void prButton( GtkButton * button, gpointer user_data )
 
    case bCancel:
 	gtk_widget_destroy( Preferences );
-	Preferences=NULL;
-	if ( AudioConfig )
-	{
-	 gtk_widget_destroy( AudioConfig );
-	 AudioConfig=NULL;
-	}
+	if ( AudioConfig ) gtk_widget_destroy( AudioConfig );
 #ifdef CONFIG_DXR3
-	if ( DXR3Config )
-	{
-	 gtk_widget_destroy( DXR3Config );
-	 DXR3Config=NULL;
-	}
+	if ( DXR3Config ) gtk_widget_destroy( DXR3Config );
 #endif
 	break;
    case bAConfig:
@@ -1036,7 +1027,7 @@ static GtkWidget * CreatePreferences( void )
   gtk_widget_add_accelerator( BOk,"clicked",accel_group,GDK_Return,0,GTK_ACCEL_VISIBLE );
   gtk_widget_add_accelerator( BCancel,"clicked",accel_group,GDK_Escape,0,GTK_ACCEL_VISIBLE );
 
-  gtk_signal_connect( GTK_OBJECT( Preferences ),"destroy",GTK_SIGNAL_FUNC( WidgetDestroy ),&Preferences );
+  gtk_signal_connect( GTK_OBJECT( Preferences ),"destroy",GTK_SIGNAL_FUNC( gtk_widget_destroyed ),&Preferences );
 
   gtk_signal_connect( GTK_OBJECT( AConfig ),"clicked",GTK_SIGNAL_FUNC( prButton ),(void*)bAConfig );
   gtk_signal_connect( GTK_OBJECT( BOk ),"clicked",GTK_SIGNAL_FUNC( prButton ),(void*)bOk );
@@ -1544,7 +1535,6 @@ static void audioButton(GtkButton *button, gpointer user_data) {
 #endif
    case 0:
       gtk_widget_destroy(AudioConfig);
-      AudioConfig=NULL;
       break;
   }
 }
@@ -1657,7 +1647,7 @@ static GtkWidget *CreateAudioConfig( void ) {
   BAudioOk = AddButton(MSGTR_Ok, hbuttonbox);
   BAudioCancel = AddButton(MSGTR_Cancel, hbuttonbox);
 
-  gtk_signal_connect(GTK_OBJECT(AudioConfig), "destroy", GTK_SIGNAL_FUNC(WidgetDestroy), &AudioConfig);
+  gtk_signal_connect(GTK_OBJECT(AudioConfig), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &AudioConfig);
   gtk_signal_connect(GTK_OBJECT(BAudioOk), "clicked", GTK_SIGNAL_FUNC(audioButton), (void*)1);
   gtk_signal_connect(GTK_OBJECT(BAudioCancel), "clicked", GTK_SIGNAL_FUNC(audioButton), (void*)0);
 
@@ -1737,7 +1727,6 @@ static void dxr3Button( GtkButton * button,gpointer user_data )
        gtkVfLAVC=gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( RBVLavc ) );
   case 1: // Cancel
        gtk_widget_destroy( DXR3Config );
-       DXR3Config=NULL;
        break;
  }
 }
@@ -1805,7 +1794,7 @@ GtkWidget * CreateDXR3Config( void )
  gtk_widget_add_accelerator( dxr3BOk,"clicked",accel_group,GDK_Return,0,GTK_ACCEL_VISIBLE );
  gtk_widget_add_accelerator( dxr3BCancel,"clicked",accel_group,GDK_Escape,0,GTK_ACCEL_VISIBLE );
 
- gtk_signal_connect( GTK_OBJECT( DXR3Config ),"destroy",GTK_SIGNAL_FUNC( WidgetDestroy ),&DXR3Config );
+ gtk_signal_connect( GTK_OBJECT( DXR3Config ),"destroy",GTK_SIGNAL_FUNC( gtk_widget_destroyed ),&DXR3Config );
 
  gtk_signal_connect( GTK_OBJECT( dxr3BOk ),"clicked",GTK_SIGNAL_FUNC( dxr3Button ),(void *)0 );
  gtk_signal_connect( GTK_OBJECT( dxr3BCancel ),"clicked",GTK_SIGNAL_FUNC( dxr3Button ),(void *)1 );

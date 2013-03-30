@@ -174,12 +174,7 @@ static void eqButtonReleased( GtkButton * button,gpointer user_data )
   {
    case 0:
         gtk_widget_destroy( Equalizer );
-        Equalizer=NULL;
-        if ( EquConfig )
-         {
-          gtk_widget_destroy( EquConfig );
-          EquConfig=NULL;
-         }
+        if ( EquConfig ) gtk_widget_destroy( EquConfig );
         break;
    case 1:
 	if ( gtk_notebook_get_current_page( GTK_NOTEBOOK( Notebook ) ) == 0 )
@@ -424,7 +419,7 @@ static GtkWidget * CreateEqualizer( void )
   gtk_widget_add_accelerator( Ok,"clicked",accel_group,GDK_Escape,0,GTK_ACCEL_VISIBLE );
   gtk_widget_add_accelerator( Ok,"clicked",accel_group,GDK_Return,0,GTK_ACCEL_VISIBLE );
 
-  gtk_signal_connect( GTK_OBJECT( Equalizer ),"destroy",GTK_SIGNAL_FUNC( WidgetDestroy ),&Equalizer );
+  gtk_signal_connect( GTK_OBJECT( Equalizer ),"destroy",GTK_SIGNAL_FUNC( gtk_widget_destroyed ),&Equalizer );
   gtk_signal_connect( GTK_OBJECT( Equalizer ),"focus_in_event",GTK_SIGNAL_FUNC( eqFocus ),(void *)2 );
 
   gtk_signal_connect( GTK_OBJECT( ChannelsList ),"select_row",GTK_SIGNAL_FUNC( eqSelectChannelsListRow ),NULL );
@@ -564,7 +559,6 @@ static void ecButtonReleased( GtkButton * button,gpointer user_data )
   eqSetChannelNames();
  }
  gtk_widget_destroy( EquConfig );
- EquConfig=NULL;
 }
 
 GtkWidget * CreateEquConfig( void )
@@ -677,7 +671,7 @@ GtkWidget * CreateEquConfig( void )
   gtk_widget_add_accelerator( ecOk,"clicked",accel_group,GDK_Return,0,GTK_ACCEL_VISIBLE );
   gtk_widget_add_accelerator( ecCancel,"clicked",accel_group,GDK_Escape,0,GTK_ACCEL_VISIBLE );
 
-  gtk_signal_connect( GTK_OBJECT( EquConfig ),"destroy",GTK_SIGNAL_FUNC( WidgetDestroy ),&EquConfig );
+  gtk_signal_connect( GTK_OBJECT( EquConfig ),"destroy",GTK_SIGNAL_FUNC( gtk_widget_destroyed ),&EquConfig );
 
   gtk_signal_connect( GTK_OBJECT( ecOk ),"clicked",GTK_SIGNAL_FUNC( ecButtonReleased ),(void *)1 );
   gtk_signal_connect( GTK_OBJECT( ecCancel ),"clicked",GTK_SIGNAL_FUNC( ecButtonReleased ),(void *)0 );

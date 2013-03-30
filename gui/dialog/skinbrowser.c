@@ -61,7 +61,6 @@ static void prButton( GtkButton * button,gpointer user_data )
   }
  }
  gtk_widget_destroy( SkinBrowser );
- SkinBrowser=NULL;
 }
 
 static void on_SkinList_select_row( GtkCList * clist,gint row,gint column,GdkEvent * event,gpointer user_data )
@@ -79,7 +78,6 @@ static void on_SkinList_select_row( GtkCList * clist,gint row,gint column,GdkEve
    free( skinName );
    skinName=strdup( sbSelectedSkin );
    gtk_widget_destroy( SkinBrowser );
-   SkinBrowser=NULL;
   }
 }
 
@@ -145,7 +143,7 @@ static GtkWidget * CreateSkinBrowser( void )
  gtk_widget_add_accelerator( Ok,"clicked",accel_group,GDK_Return,0,GTK_ACCEL_VISIBLE );
  gtk_widget_add_accelerator( Cancel,"clicked",accel_group,GDK_Escape,0,GTK_ACCEL_VISIBLE );
 
- gtk_signal_connect( GTK_OBJECT( SkinBrowser ),"destroy",GTK_SIGNAL_FUNC( WidgetDestroy ),&SkinBrowser );
+ gtk_signal_connect( GTK_OBJECT( SkinBrowser ),"destroy",GTK_SIGNAL_FUNC( gtk_widget_destroyed ),&SkinBrowser );
  gtk_signal_connect( GTK_OBJECT( SkinList ),"select_row",GTK_SIGNAL_FUNC( on_SkinList_select_row ),NULL );
  gtk_signal_connect( GTK_OBJECT( Ok ),"clicked",GTK_SIGNAL_FUNC( prButton ),(void *)1 );
  gtk_signal_connect( GTK_OBJECT( Cancel ),"clicked",GTK_SIGNAL_FUNC( prButton ),(void *)0 );

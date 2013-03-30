@@ -171,7 +171,6 @@ static void plButtonReleased( GtkButton * button,gpointer user_data )
        free( old_path );
        old_path=strdup( current_path );
        gtk_widget_destroy( Playlist );
-       Playlist=NULL;
        break;
   case 2: // remove
        {
@@ -541,7 +540,7 @@ static GtkWidget * CreatePlaylist( void )
 
   gtk_widget_add_accelerator( Cancel,"clicked",accel_group,GDK_Escape,0,GTK_ACCEL_VISIBLE );
 
-  gtk_signal_connect( GTK_OBJECT( Playlist ),"destroy",GTK_SIGNAL_FUNC( WidgetDestroy ),&Playlist );
+  gtk_signal_connect( GTK_OBJECT( Playlist ),"destroy",GTK_SIGNAL_FUNC( gtk_widget_destroyed ),&Playlist );
 
   gtk_signal_connect( GTK_OBJECT( CLFiles ),"select_row",GTK_SIGNAL_FUNC( plRowSelect ),(void *)0 );
   gtk_signal_connect( GTK_OBJECT( CLFiles ),"unselect_row",GTK_SIGNAL_FUNC( plUnRowSelect ),(void *)0 );

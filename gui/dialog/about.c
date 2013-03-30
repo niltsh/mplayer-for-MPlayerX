@@ -29,7 +29,7 @@
 GtkWidget * About = NULL;
 
 static void abWidgetDestroy( GtkButton * button, gpointer user_data )
-{ WidgetDestroy( NULL,&About ); }
+{ gtk_widget_destroy( About ); }
 
 static GtkWidget * CreateAbout( void )
 {
@@ -335,7 +335,7 @@ static GtkWidget * CreateAbout( void )
   AddHSeparator( vbox );
   Ok=AddButton( MSGTR_Ok,AddHButtonBox( vbox ) );
 
-  gtk_signal_connect( GTK_OBJECT( About ),"destroy",GTK_SIGNAL_FUNC( WidgetDestroy ),&About );
+  gtk_signal_connect( GTK_OBJECT( About ),"destroy",GTK_SIGNAL_FUNC( gtk_widget_destroyed ),&About );
   gtk_signal_connect_object( GTK_OBJECT( Ok ),"clicked",GTK_SIGNAL_FUNC( abWidgetDestroy ),NULL );
 
   gtk_widget_add_accelerator( Ok,"clicked",accel_group,GDK_Escape,0,GTK_ACCEL_VISIBLE );
