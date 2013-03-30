@@ -369,6 +369,7 @@ static void print_help(void)
     OSStatus err;
     UInt32 i_param_size;
     int num_devices;
+    int i;
     AudioDeviceID *devids;
     char *device_name;
 
@@ -393,7 +394,7 @@ static void print_help(void)
 
     num_devices = i_param_size / sizeof(AudioDeviceID);
 
-    for (int i = 0; i < num_devices; ++i) {
+    for (i = 0; i < num_devices; ++i) {
         err = GetAudioPropertyString(devids[i], kAudioObjectPropertyName, &device_name);
 
         if (err == noErr) {
@@ -1247,7 +1248,8 @@ static OSStatus StreamListener( AudioObjectID inObjectID,
                                 const AudioObjectPropertyAddress inAddresses[],
                                 void *inClientData )
 {
-    for (int i=0; i < inNumberAddresses; ++i)
+    int i;
+    for (i=0; i < inNumberAddresses; ++i)
     {
         if (inAddresses[i].mSelector == kAudioStreamPropertyPhysicalFormat) {
             ao_msg(MSGT_AO, MSGL_WARN, "got notify kAudioStreamPropertyPhysicalFormat changed.\n");
@@ -1264,7 +1266,8 @@ static OSStatus DeviceListener( AudioObjectID inObjectID,
                                 const AudioObjectPropertyAddress inAddresses[],
                                 void *inClientData )
 {
-    for (int i=0; i < inNumberAddresses; ++i)
+    int i;
+    for (i=0; i < inNumberAddresses; ++i)
     {
         if (inAddresses[i].mSelector == kAudioDevicePropertyDeviceHasChanged) {
             ao_msg(MSGT_AO, MSGL_WARN, "got notify kAudioDevicePropertyDeviceHasChanged.\n");
