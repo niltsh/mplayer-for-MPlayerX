@@ -29,7 +29,12 @@
 GtkWidget * About = NULL;
 
 static void abWidgetDestroy( GtkButton * button, gpointer user_data )
-{ gtk_widget_destroy( About ); }
+{
+  (void) button;
+  (void) user_data;
+
+  gtk_widget_destroy( About );
+}
 
 static GtkWidget * CreateAbout( void )
 {

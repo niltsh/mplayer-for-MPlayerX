@@ -92,6 +92,10 @@ static int compare_func(const void *a, const void *b)
 
 static void plRowSelect( GtkCList * clist,gint row,gint column,GdkEvent * event,gpointer user_data )
 {
+ (void) clist;
+ (void) column;
+ (void) event;
+
  switch ( (int) user_data )
   {
    case 0: CLFileSelected[row]=True; break;
@@ -101,6 +105,10 @@ static void plRowSelect( GtkCList * clist,gint row,gint column,GdkEvent * event,
 
 static void plUnRowSelect( GtkCList * clist,gint row,gint column,GdkEvent * event,gpointer user_data )
 {
+ (void) clist;
+ (void) column;
+ (void) event;
+
  switch ( (int) user_data )
   {
    case 0: CLFileSelected[row]=False; break;
@@ -110,6 +118,8 @@ static void plUnRowSelect( GtkCList * clist,gint row,gint column,GdkEvent * even
 
 static void plButtonReleased( GtkButton * button,gpointer user_data )
 {
+ (void) button;
+
  switch ( (int) user_data )
  {
   case 1: // ok
@@ -326,6 +336,8 @@ static void plCTree( GtkCTree * ctree,GtkCTreeNode * parent_node,gpointer user_d
  gchar  	   * path;
  struct 		 stat statbuf;
 
+ (void) user_data;
+
  DirNode=gtk_ctree_node_get_row_data( ctree,parent_node );
  if ( !DirNode->scaned )
   {
@@ -399,6 +411,11 @@ static void plCTRow(GtkCList * clist, gint row, gint column, GdkEvent * event, g
 {
  DirNodeType  * DirNode;
  GtkCTreeNode * node;
+
+ (void) column;
+ (void) event;
+ (void) user_data;
+
  node=gtk_ctree_node_nth( GTK_CTREE( clist ),row );
  DirNode=gtk_ctree_node_get_row_data( GTK_CTREE( clist ),node );
  current_path=DirNode->path;

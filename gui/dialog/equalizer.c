@@ -128,6 +128,10 @@ static void eqSetChannelNames( void )
 static gboolean eqHScaleMotion( GtkWidget * widget,GdkEventMotion  * event,gpointer user_data )
 {
  equalizer_t eq;
+
+ (void) widget;
+ (void) event;
+
  switch ( (int)user_data )
   {
    case 0: eq.gain=A3125adj->value; break;
@@ -156,6 +160,8 @@ static gboolean eqHScaleMotion( GtkWidget * widget,GdkEventMotion  * event,gpoin
 
 static gboolean eqVScaleMotion( GtkWidget * widget,GdkEventMotion  * event,gpointer user_data )
 {
+ (void) widget;
+ (void) event;
 
  switch( (int)user_data )
   {
@@ -170,6 +176,8 @@ static gboolean eqVScaleMotion( GtkWidget * widget,GdkEventMotion  * event,gpoin
 
 static void eqButtonReleased( GtkButton * button,gpointer user_data )
 {
+ (void) button;
+
  switch( (int)user_data )
   {
    case 0:
@@ -201,12 +209,21 @@ static void eqButtonReleased( GtkButton * button,gpointer user_data )
 
 static gboolean eqFocus( GtkWidget * widget,GdkEvent * event,gpointer user_data )
 {
+ (void) widget;
+ (void) event;
+ (void) user_data;
+
  eqSetBands( Channel );
  return FALSE;
 }
 
 static void eqSelectChannelsListRow( GtkCList * clist,gint row,gint column,GdkEvent * event,gpointer user_data )
 {
+ (void) clist;
+ (void) column;
+ (void) event;
+ (void) user_data;
+
  Channel=row - 1;
  eqSetBands( Channel );
  if ( Channel == -1 )
@@ -221,6 +238,10 @@ static void eqSelectChannelsListRow( GtkCList * clist,gint row,gint column,GdkEv
 static void eqNotebook( GtkNotebook * notebook, gpointer page,
                         guint page_num, gpointer user_data )
 {
+ (void) notebook;
+ (void) page;
+ (void) user_data;
+
  if ( page_num ) gtk_widget_hide( Config );
    else gtk_widget_show( Config );
 }
@@ -548,6 +569,8 @@ void ShowEquConfig( void )
 
 static void ecButtonReleased( GtkButton * button,gpointer user_data )
 {
+ (void) button;
+
  if ( (int)user_data )
  { // if you pressed Ok
   nfree( gtkEquChannel1 ); gtkEquChannel1=gstrdup( gtk_entry_get_text( GTK_ENTRY( CEChannel1 ) ) );

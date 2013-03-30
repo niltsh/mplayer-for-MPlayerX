@@ -33,6 +33,9 @@ GtkWidget * MessageBox = NULL;
 
 static void on_Ok_released( GtkButton * button,gpointer user_data  )
 {
+ (void) button;
+ (void) user_data;
+
  gtk_widget_destroy( MessageBox );
 }
 

@@ -204,6 +204,8 @@ static void prEntry( GtkEditable * editable,gpointer user_data )
  const char * comment;
  int    i;
 
+ (void) editable;
+
  switch( (int)user_data )
   {
 #ifdef CONFIG_FREETYPE
@@ -236,6 +238,8 @@ static void prEntry( GtkEditable * editable,gpointer user_data )
 
 static void prButton( GtkButton * button, gpointer user_data )
 {
+ (void) button;
+
  switch ( (int)user_data )
   {
    case bOk:
@@ -377,6 +381,9 @@ static void prButton( GtkButton * button, gpointer user_data )
 
 static gboolean prHScaler( GtkWidget * widget,GdkEvent * event,gpointer user_data )
 {
+ (void) widget;
+ (void) event;
+
  switch ( (int)user_data )
   {
    case 0: // extra stereo coefficient
@@ -423,6 +430,9 @@ static gboolean prHScaler( GtkWidget * widget,GdkEvent * event,gpointer user_dat
 static void prToggled( GtkToggleButton * togglebutton,gpointer user_data )
 {
  int window;
+
+ (void) togglebutton;
+
  switch ( (int)user_data )
   {
    case 0: // extra stereo coefficient
@@ -477,6 +487,10 @@ static void prToggled( GtkToggleButton * togglebutton,gpointer user_data )
 
 static void prCListRow( GtkCList * clist,gint row,gint column,GdkEvent * event,gpointer user_data )
 {
+ (void) clist;
+ (void) column;
+ (void) event;
+
  switch ( (int)user_data )
   {
    case 0: // audio driver
@@ -1499,6 +1513,9 @@ static GtkWidget *BAudioOk;
 static GtkWidget *BAudioCancel;
 
 static void audioButton(GtkButton *button, gpointer user_data) {
+
+  (void) button;
+
   switch( (int)user_data ) {
     case 1:
 #ifdef CONFIG_OSS_AUDIO
@@ -1720,6 +1737,8 @@ void ShowDXR3Config( void )
 
 static void dxr3Button( GtkButton * button,gpointer user_data )
 {
+ (void) button;
+
  switch ( (int)user_data )
  {
   case 0: // Ok

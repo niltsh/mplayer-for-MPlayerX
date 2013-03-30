@@ -46,6 +46,8 @@ static void on_Button_pressed( GtkButton * button,gpointer user_data )
 {
  urlItem * item;
 
+ (void) button;
+
  if ( (int)user_data )
   {
    gchar * str= strdup( gtk_entry_get_text( GTK_ENTRY( URLEntry ) ) );

@@ -300,6 +300,8 @@ static void fs_PersistantHistory( char * subject )
 static void fs_fsFilterCombo_activate( GtkEntry * entry,
                                        gpointer user_data )
 {
+ (void) entry;
+
  fsFilter=gtk_entry_get_text( GTK_ENTRY( user_data ) );
  CheckDir( fsFNameList );
 }
@@ -309,6 +311,8 @@ static void fs_fsFilterCombo_changed( GtkEditable * editable,
 {
  const char * str;
  int    i;
+
+ (void) editable;
 
  str=gtk_entry_get_text( GTK_ENTRY(user_data ) );
 
@@ -350,6 +354,8 @@ static void fs_fsPathCombo_activate( GtkEntry * entry,
  const unsigned char * str;
  gchar * dirname;
 
+ (void) entry;
+
  str=gtk_entry_get_text( GTK_ENTRY( user_data ) );
  dirname=g_hash_table_lookup(fsPathTable, str);
  if ( chdir( dirname ? (const unsigned char *)dirname : str ) != -1 ) CheckDir( fsFNameList );
@@ -361,6 +367,8 @@ static void fs_fsPathCombo_changed( GtkEditable * editable,
  const unsigned char * str;
  gchar * dirname;
 
+ (void) editable;
+
  str=gtk_entry_get_text( GTK_ENTRY( user_data ) );
  dirname=g_hash_table_lookup(fsPathTable, str);
  if ( chdir( dirname ? (const unsigned char *)dirname : str ) != -1 ) CheckDir( fsFNameList );
@@ -369,6 +377,9 @@ static void fs_fsPathCombo_changed( GtkEditable * editable,
 static void fs_Up_released( GtkButton * button, gpointer user_data )
 {
  gchar *utf8dir;
+
+ (void) button;
+ (void) user_data;
 
  chdir( ".." );
  CheckDir( fsFNameList );
@@ -381,6 +392,9 @@ static void fs_Up_released( GtkButton * button, gpointer user_data )
 
 static void fs_Cancel_released( GtkButton * button,gpointer user_data )
 {
+ (void) button;
+ (void) user_data;
+
  gtk_widget_destroy( FileSelector );
  fsLastFNameListSelected = fsCurrFNameListSelected;
 }
@@ -391,6 +405,9 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
  int             l;
  struct stat     fs;
  gchar         * selected;
+
+ (void) button;
+ (void) user_data;
 
  if( ( stat( fsSelectedFile,&fs ) == 0 ) && S_ISDIR( fs.st_mode ) )
   {
@@ -450,6 +467,9 @@ static void fs_Ok_released( GtkButton * button, gpointer user_data )
 static void fs_fsFNameList_select_row( GtkCList * clist, gint row, gint column,
                                        GdkEvent * event, gpointer user_data)
 {
+ (void) column;
+ (void) user_data;
+
  fsCurrFNameListSelected = row;
  fsSelectedFile = gtk_clist_get_row_data(clist, row);
  if( event && event->type == GDK_BUTTON_PRESS )  gtk_button_released( GTK_BUTTON( fsOk ) );
@@ -459,6 +479,8 @@ static gboolean on_FileSelect_key_release_event( GtkWidget * widget,
                                                  GdkEvent * event,
                                                  gpointer user_data )
 {
+ (void) user_data;
+
  if ( GTK_WIDGET_TYPE( widget ) == GTK_TYPE_BUTTON )
  {
   if (event->key.keyval == GDK_Return) gtk_button_released( GTK_BUTTON( widget ) );
@@ -488,6 +510,8 @@ static gboolean fs_fsFNameList_event( GtkWidget * widget,
 {
   GdkEventButton *bevent;
   gint row, col;
+
+ (void) user_data;
 
   bevent = (GdkEventButton *) event;
 

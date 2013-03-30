@@ -75,6 +75,10 @@ static void uiMenuMouse( int Button,int X,int Y,int RX,int RY )
 {
  int x,y,i;
 
+ (void) Button;
+ (void) RX;
+ (void) RY;
+
  menuItem=-1;
  x=X - guiApp.menuWindow.X;
  y=Y - guiApp.menuWindow.Y;

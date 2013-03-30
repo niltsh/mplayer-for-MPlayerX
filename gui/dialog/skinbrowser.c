@@ -46,6 +46,8 @@ GtkWidget * SkinBrowser = NULL;
 
 static void prButton( GtkButton * button,gpointer user_data )
 {
+ (void) button;
+
  if ( sbSelectedSkin )
  {
   switch ( (int)user_data )
@@ -65,6 +67,9 @@ static void prButton( GtkButton * button,gpointer user_data )
 
 static void on_SkinList_select_row( GtkCList * clist,gint row,gint column,GdkEvent * event,gpointer user_data )
 {
+ (void) column;
+ (void) user_data;
+
  gtk_clist_get_text( clist,row,0,&sbSelectedSkin );
  if ( strcmp( prev,sbSelectedSkin ) )
   {
