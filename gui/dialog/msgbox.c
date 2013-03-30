@@ -33,7 +33,6 @@ GtkWidget * MessageBox = NULL;
 
 static void on_Ok_released( GtkButton * button,gpointer user_data  )
 {
- gtk_widget_hide( MessageBox );
  gtk_widget_destroy( MessageBox );
  MessageBox=NULL;
 }
@@ -109,7 +108,7 @@ static GtkWidget * CreateMessageBox( void )
 
 void ShowMessageBox( const char * msg )
 {
- if ( MessageBox ) { gtk_widget_hide( MessageBox ); gtk_widget_destroy( MessageBox ); }
+ if ( MessageBox ) gtk_widget_destroy( MessageBox );
  MessageBox=CreateMessageBox();
  if ( strlen( msg ) < 20 ) gtk_widget_set_usize( MessageBox,196,-1 );
 }
