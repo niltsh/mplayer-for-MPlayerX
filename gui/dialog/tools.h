@@ -36,6 +36,5 @@ GtkWidget * AddHButtonBox( GtkWidget * parent );
 GtkWidget * AddHScaler( GtkAdjustment * adj, GtkWidget * parent, int digit );
 GtkWidget * AddVScaler( GtkAdjustment * adj, GtkWidget * parent, int digit );
 GtkWidget * AddComboBox( GtkWidget * parent );
-void WidgetDestroy( GtkWidget * widget, GtkWidget ** widget_pointer );
 
 #endif /* MPLAYER_GUI_TOOLS_H */

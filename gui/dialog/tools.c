@@ -21,14 +21,6 @@
 
 #include "tools.h"
 
-void WidgetDestroy( GtkWidget * widget,GtkWidget ** widget_pointer )
-{
- if ( !widget_pointer ) return;
- gtk_widget_hide( *widget_pointer );
- gtk_widget_destroy( *widget_pointer );
- *widget_pointer=NULL;
-}
-
 GtkWidget * AddDialogFrame( GtkWidget * parent )
 {
  GtkWidget * frame;
