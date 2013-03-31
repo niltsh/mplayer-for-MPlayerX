@@ -183,7 +183,7 @@ int gtkFillSkinList( gchar * mdir )
 
  str[0]="default";
  str[1]="";
- if ( gtkFindCList( SkinList,str[0] ) == -1 ) gtk_clist_append( GTK_CLIST( SkinList ),str );
+ if ( gtkFindInCList( SkinList,str[0] ) == -1 ) gtk_clist_append( GTK_CLIST( SkinList ),str );
 
  glob( mdir,GLOB_NOSORT,NULL,&gg );
  for( i=0;i<(int)gg.gl_pathc;i++ )
@@ -196,7 +196,7 @@ int gtkFillSkinList( gchar * mdir )
      else tmp = gg.gl_pathv[i];
      if ( !strcmp( tmp,"default" ) ) continue;
      str[0]=tmp;
-     if ( gtkFindCList( SkinList,str[0] ) == -1 ) gtk_clist_append( GTK_CLIST( SkinList ),str );
+     if ( gtkFindInCList( SkinList,str[0] ) == -1 ) gtk_clist_append( GTK_CLIST( SkinList ),str );
     }
   }
  globfree( &gg );

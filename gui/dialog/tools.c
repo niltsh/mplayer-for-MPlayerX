@@ -18,6 +18,7 @@
 
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
+#include <string.h>
 
 #include "tools.h"
 
@@ -186,4 +187,19 @@ GtkWidget * gtkAddCombo( GtkWidget * parent )
  gtk_widget_show( CB );
  if ( parent ) gtk_box_pack_start( GTK_BOX( parent ),CB,TRUE,TRUE,0 );
  return CB;
+}
+
+int gtkFindInCList (GtkWidget *list, char *item)
+{
+  gint j;
+  gchar *tmpstr;
+
+  for (j = 0; j < GTK_CLIST(list)->rows; j++)
+  {
+    gtk_clist_get_text(GTK_CLIST(list), j, 0, &tmpstr);
+
+    if (!strcmp(tmpstr, item)) return j;
+  }
+
+  return -1;
 }

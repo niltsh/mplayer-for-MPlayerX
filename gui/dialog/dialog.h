@@ -67,7 +67,6 @@ void gtkInit(char *display_name);
 void gtkAddIcon(GtkWidget *window);
 
 int gtkFillSkinList(gchar *dir);
-int gtkFindCList(GtkWidget *list, char *item);
 
 void gtkEventHandling(void);
 

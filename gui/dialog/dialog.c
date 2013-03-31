@@ -66,6 +66,7 @@ static int gtkInitialized;
 #include "menu.h"
 #include "url.h"
 #include "equalizer.h"
+#include "tools.h"
 
 static const char gui_icon_name[] = "mplayer";
 
@@ -188,21 +189,6 @@ void gtkAddIcon(GtkWidget *window)
     wsWindowIcon(gdk_display, GDK_WINDOW_XWINDOW(window->window), &guiIcon);
 }
 
-int gtkFindCList(GtkWidget *list, char *item)
-{
-    gint j;
-    gchar *tmpstr;
-
-    for (j = 0; j < GTK_CLIST(list)->rows; j++) {
-        gtk_clist_get_text(GTK_CLIST(list), j, 0, &tmpstr);
-
-        if (!strcmp(tmpstr, item))
-            return j;
-    }
-
-    return -1;
-}
-
 void gtkEventHandling(void)
 {
     int i;
@@ -281,7 +267,7 @@ static void gtkSelectInCList(GtkWidget *list, char *item)
 {
     gint i;
 
-    if ((i = gtkFindCList(list, item)) > -1)
+    if ((i = gtkFindInCList(list, item)) > -1)
         gtk_clist_select_row(GTK_CLIST(list), i, 0);
 }
 
