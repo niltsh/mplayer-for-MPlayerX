@@ -16,25 +16,21 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-#include <gdk/gdkkeysyms.h>
-#include <gtk/gtk.h>
-
 #include "url.h"
-#include "tools.h"
-#include "gui/interface.h"
-#include "gui/app/app.h"
-#include "gui/ui/actions.h"
 #include "dialog.h"
+#include "tools.h"
+#include "gui/app/app.h"
+#include "gui/interface.h"
+#include "gui/ui/actions.h"
 #include "gui/util/list.h"
 #include "gui/util/string.h"
+
 #include "help_mp.h"
+#include "stream/stream.h"
 
 GtkWidget *URLDialog = NULL;
 
