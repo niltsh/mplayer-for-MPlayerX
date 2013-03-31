@@ -97,11 +97,11 @@ static GtkWidget *CreateURLDialog(void)
     gtk_widget_realize(URLDialog);
     gtkAddIcon(URLDialog);
 
-    vbox1 = AddVBox(AddDialogFrame(URLDialog), 0);
-    hbox1 = AddHBox(vbox1, 1);
-    AddLabel("URL: ", hbox1);
+    vbox1 = gtkAddVBox(gtkAddDialogFrame(URLDialog), 0);
+    hbox1 = gtkAddHBox(vbox1, 1);
+    gtkAddLabel("URL: ", hbox1);
 
-    URLCombo = AddComboBox(hbox1);
+    URLCombo = gtkAddCombo(hbox1);
 /*
  * gtk_combo_new();
  * gtk_widget_set_name( URLCombo,"URLCombo" );
@@ -112,14 +112,14 @@ static GtkWidget *CreateURLDialog(void)
     gtk_widget_set_name(URLEntry, "URLEntry");
     gtk_widget_show(URLEntry);
 
-    AddHSeparator(vbox1);
+    gtkAddHSeparator(vbox1);
 
-    hbuttonbox1 = AddHButtonBox(vbox1);
+    hbuttonbox1 = gtkAddHButtonBox(vbox1);
     gtk_button_box_set_layout(GTK_BUTTON_BOX(hbuttonbox1), GTK_BUTTONBOX_END);
     gtk_button_box_set_spacing(GTK_BUTTON_BOX(hbuttonbox1), 10);
 
-    Ok     = AddButton(MSGTR_Ok, hbuttonbox1);
-    Cancel = AddButton(MSGTR_Cancel, hbuttonbox1);
+    Ok     = gtkAddButton(MSGTR_Ok, hbuttonbox1);
+    Cancel = gtkAddButton(MSGTR_Cancel, hbuttonbox1);
 
     gtk_widget_add_accelerator(Ok, "clicked", accel_group, GDK_Return, 0, GTK_ACCEL_VISIBLE);
     gtk_widget_add_accelerator(Cancel, "clicked", accel_group, GDK_Escape, 0, GTK_ACCEL_VISIBLE);

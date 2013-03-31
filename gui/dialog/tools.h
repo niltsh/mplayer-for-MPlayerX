@@ -22,19 +22,19 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
-GtkWidget * AddDialogFrame( GtkWidget * parent );
-GtkWidget * AddFrame( const char * title, int type, GtkWidget * parent, int add );
-GtkWidget * AddLabel( const char * title, GtkWidget * parent );
-GtkWidget * AddVBox( GtkWidget * parent, int type );
-GtkWidget * AddHBox( GtkWidget * parent, int type );
-GtkWidget * AddCheckButton( const char * title, GtkWidget * parent );
-GtkWidget * AddRadioButton( const char * title, GSList ** group, GtkWidget * parent );
-GtkWidget * AddSpinButton( const char * title, GtkAdjustment * adj, GtkWidget * parent );
-GtkWidget * AddButton( const char * title, GtkWidget * parent );
-GtkWidget * AddHSeparator( GtkWidget * parent );
-GtkWidget * AddHButtonBox( GtkWidget * parent );
-GtkWidget * AddHScaler( GtkAdjustment * adj, GtkWidget * parent, int digit );
-GtkWidget * AddVScaler( GtkAdjustment * adj, GtkWidget * parent, int digit );
-GtkWidget * AddComboBox( GtkWidget * parent );
+GtkWidget * gtkAddDialogFrame( GtkWidget * parent );
+GtkWidget * gtkAddFrame( const char * title, int type, GtkWidget * parent, int add );
+GtkWidget * gtkAddLabel( const char * title, GtkWidget * parent );
+GtkWidget * gtkAddVBox( GtkWidget * parent, int type );
+GtkWidget * gtkAddHBox( GtkWidget * parent, int type );
+GtkWidget * gtkAddCheckButton( const char * title, GtkWidget * parent );
+GtkWidget * gtkAddRadioButton( const char * title, GSList ** group, GtkWidget * parent );
+GtkWidget * gtkAddSpinButton( const char * title, GtkAdjustment * adj, GtkWidget * parent );
+GtkWidget * gtkAddButton( const char * title, GtkWidget * parent );
+GtkWidget * gtkAddHSeparator( GtkWidget * parent );
+GtkWidget * gtkAddHButtonBox( GtkWidget * parent );
+GtkWidget * gtkAddHScale( GtkAdjustment * adj, GtkWidget * parent, int digit );
+GtkWidget * gtkAddVScale( GtkAdjustment * adj, GtkWidget * parent, int digit );
+GtkWidget * gtkAddCombo( GtkWidget * parent );
 
 #endif /* MPLAYER_GUI_TOOLS_H */

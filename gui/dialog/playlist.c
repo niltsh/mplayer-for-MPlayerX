@@ -454,14 +454,14 @@ static GtkWidget * CreatePlaylist( void )
   gtk_widget_realize( Playlist );
   gtkAddIcon( Playlist );
 
-  vbox1=AddVBox( AddDialogFrame( Playlist ),0 );
-  hbox1=AddHBox( NULL,1 );
+  vbox1=gtkAddVBox( gtkAddDialogFrame( Playlist ),0 );
+  hbox1=gtkAddHBox( NULL,1 );
    gtk_box_pack_start( GTK_BOX( vbox1 ),hbox1,TRUE,TRUE,0 );
 
   scrolledwindow1=gtk_scrolled_window_new( NULL,NULL );
   gtk_widget_show( scrolledwindow1 );
   gtk_container_add( GTK_CONTAINER(
-    AddFrame( NULL,0,hbox1,1 ) ),scrolledwindow1 );
+    gtkAddFrame( NULL,0,hbox1,1 ) ),scrolledwindow1 );
   gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW( scrolledwindow1 ),GTK_POLICY_AUTOMATIC,GTK_POLICY_AUTOMATIC );
 
   CTDirTree=gtk_ctree_new( 1,0 );
@@ -492,12 +492,12 @@ static GtkWidget * CreatePlaylist( void )
   else if ( fsHistory[0] ) old_path = strdup( cfg_old_filename_from_utf8( fsHistory[0] ) );
 
   gtk_clist_set_column_widget( GTK_CLIST( CTDirTree ),0,
-    AddLabel( MSGTR_PLAYLIST_DirectoryTree,NULL ) );
+    gtkAddLabel( MSGTR_PLAYLIST_DirectoryTree,NULL ) );
 
   gtk_clist_column_title_passive( GTK_CLIST( CTDirTree ),0 );
 
-  vbox2=AddVBox(
-    AddFrame( NULL,1,hbox1,1 ),0 );
+  vbox2=gtkAddVBox(
+    gtkAddFrame( NULL,1,hbox1,1 ),0 );
 
   scrolledwindow2=gtk_scrolled_window_new( NULL,NULL );
   gtk_widget_show( scrolledwindow2 );
@@ -514,11 +514,11 @@ static GtkWidget * CreatePlaylist( void )
   gtk_clist_set_shadow_type( GTK_CLIST( CLFiles ),GTK_SHADOW_NONE );
 
   gtk_clist_set_column_widget( GTK_CLIST( CLFiles ),0,
-    AddLabel( MSGTR_PLAYLIST_Files,NULL ) );
+    gtkAddLabel( MSGTR_PLAYLIST_Files,NULL ) );
 
   gtk_clist_column_title_passive( GTK_CLIST( CLFiles ),0 );
 
-  AddHSeparator( vbox2 );
+  gtkAddHSeparator( vbox2 );
 
   scrolledwindow3=gtk_scrolled_window_new( NULL,NULL );
   gtk_widget_show( scrolledwindow3 );
@@ -537,23 +537,23 @@ static GtkWidget * CreatePlaylist( void )
   gtk_clist_set_shadow_type( GTK_CLIST( CLSelected ),GTK_SHADOW_NONE );
 
   gtk_clist_set_column_widget( GTK_CLIST( CLSelected ),0,
-    AddLabel( MSGTR_PLAYLIST_Selected,NULL ) );
+    gtkAddLabel( MSGTR_PLAYLIST_Selected,NULL ) );
 
   gtk_clist_set_column_widget( GTK_CLIST( CLSelected ),1,
-    AddLabel( MSGTR_PLAYLIST_Path,NULL ) );
+    gtkAddLabel( MSGTR_PLAYLIST_Path,NULL ) );
 
   gtk_clist_column_title_passive( GTK_CLIST( CLSelected ),0 );
 
-  AddHSeparator( vbox1 );
+  gtkAddHSeparator( vbox1 );
 
-  hbuttonbox1=AddHButtonBox( vbox1 );
+  hbuttonbox1=gtkAddHButtonBox( vbox1 );
     gtk_button_box_set_layout( GTK_BUTTON_BOX( hbuttonbox1 ),GTK_BUTTONBOX_END );
     gtk_button_box_set_spacing( GTK_BUTTON_BOX( hbuttonbox1 ),10 );
 
-  Add=AddButton( MSGTR_Add,hbuttonbox1 );
-  Remove=AddButton( MSGTR_Remove,hbuttonbox1 );
-  Ok=AddButton( MSGTR_Ok,hbuttonbox1 );
-  Cancel=AddButton( MSGTR_Cancel,hbuttonbox1 );
+  Add=gtkAddButton( MSGTR_Add,hbuttonbox1 );
+  Remove=gtkAddButton( MSGTR_Remove,hbuttonbox1 );
+  Ok=gtkAddButton( MSGTR_Ok,hbuttonbox1 );
+  Cancel=gtkAddButton( MSGTR_Cancel,hbuttonbox1 );
 
   gtk_widget_add_accelerator( Cancel,"clicked",accel_group,GDK_Escape,0,GTK_ACCEL_VISIBLE );
 

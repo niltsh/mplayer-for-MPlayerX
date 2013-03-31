@@ -65,8 +65,8 @@ static GtkWidget * CreateMessageBox( void )
  gtk_widget_realize( MessageBox );
  gtkAddIcon( MessageBox );
 
- vbox1=AddVBox( AddDialogFrame( MessageBox ),0 );
- hbox1=AddHBox( vbox1,1 );
+ vbox1=gtkAddVBox( gtkAddDialogFrame( MessageBox ),0 );
+ hbox1=gtkAddHBox( vbox1,1 );
 
  pixmapstyle=gtk_widget_get_style( MessageBox );
 
@@ -93,9 +93,9 @@ static GtkWidget * CreateMessageBox( void )
  gtk_label_set_justify( GTK_LABEL( gtkMessageBoxText ),GTK_JUSTIFY_CENTER );
  gtk_label_set_line_wrap( GTK_LABEL( gtkMessageBoxText ),FALSE );
 
- AddHSeparator( vbox1 );
- hbuttonbox1=AddHButtonBox( vbox1 );
- Ok=AddButton( MSGTR_Ok,hbuttonbox1 );
+ gtkAddHSeparator( vbox1 );
+ hbuttonbox1=gtkAddHButtonBox( vbox1 );
+ Ok=gtkAddButton( MSGTR_Ok,hbuttonbox1 );
 
  gtk_widget_add_accelerator( Ok,"clicked",accel_group,GDK_Return,0,GTK_ACCEL_VISIBLE );
  gtk_widget_add_accelerator( Ok,"clicked",accel_group,GDK_Escape,0,GTK_ACCEL_VISIBLE );

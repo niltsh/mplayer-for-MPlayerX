@@ -112,9 +112,9 @@ static GtkWidget * CreateSkinBrowser( void )
  gtk_widget_realize( SkinBrowser );
  gtkAddIcon( SkinBrowser );
 
- vbox5=AddVBox( AddDialogFrame( SkinBrowser ),0 );
- AddLabel( MSGTR_SKIN_LABEL,vbox5 );
- AddHSeparator( vbox5 );
+ vbox5=gtkAddVBox( gtkAddDialogFrame( SkinBrowser ),0 );
+ gtkAddLabel( MSGTR_SKIN_LABEL,vbox5 );
+ gtkAddHSeparator( vbox5 );
 
  scrolledwindow1=gtk_scrolled_window_new( NULL,NULL );
  gtk_widget_set_name( scrolledwindow1,"scrolledwindow1" );
@@ -136,14 +136,14 @@ static GtkWidget * CreateSkinBrowser( void )
  gtk_clist_column_titles_hide( GTK_CLIST( SkinList ) );
  gtk_clist_set_shadow_type( GTK_CLIST( SkinList ),GTK_SHADOW_ETCHED_OUT );
 
- AddHSeparator( vbox5 );
+ gtkAddHSeparator( vbox5 );
 
- hbuttonbox4=AddHButtonBox( vbox5 );
+ hbuttonbox4=gtkAddHButtonBox( vbox5 );
   gtk_button_box_set_layout( GTK_BUTTON_BOX( hbuttonbox4 ),GTK_BUTTONBOX_SPREAD );
   gtk_button_box_set_spacing( GTK_BUTTON_BOX( hbuttonbox4 ),10 );
 
- Ok=AddButton( MSGTR_Ok,hbuttonbox4 );
- Cancel=AddButton( MSGTR_Cancel,hbuttonbox4 );
+ Ok=gtkAddButton( MSGTR_Ok,hbuttonbox4 );
+ Cancel=gtkAddButton( MSGTR_Cancel,hbuttonbox4 );
 
  gtk_widget_add_accelerator( Ok,"clicked",accel_group,GDK_Return,0,GTK_ACCEL_VISIBLE );
  gtk_widget_add_accelerator( Cancel,"clicked",accel_group,GDK_Escape,0,GTK_ACCEL_VISIBLE );

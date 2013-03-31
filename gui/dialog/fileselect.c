@@ -623,8 +623,8 @@ static GtkWidget *CreateFileSelect(void)
     dpixmap = gdk_pixmap_colormap_create_from_xpm_d(FileSelector->window, fsColorMap, &dmask, &style->bg[GTK_STATE_NORMAL], (gchar **)dir_xpm);
     fpixmap = gdk_pixmap_colormap_create_from_xpm_d(FileSelector->window, fsColorMap, &fmask, &style->bg[GTK_STATE_NORMAL], (gchar **)file_xpm);
 
-    vbox4 = AddVBox(AddDialogFrame(FileSelector), 0);
-    hbox4 = AddHBox(vbox4, 1);
+    vbox4 = gtkAddVBox(gtkAddDialogFrame(FileSelector), 0);
+    hbox4 = gtkAddHBox(vbox4, 1);
 
     fsCombo4 = gtk_combo_new();
     gtk_widget_set_name(fsCombo4, "fsCombo4");
@@ -654,9 +654,9 @@ static GtkWidget *CreateFileSelect(void)
     gtk_box_pack_start(GTK_BOX(hbox4), fsUp, FALSE, FALSE, 0);
     gtk_widget_set_usize(fsUp, 65, 15);
 
-    AddHSeparator(vbox4);
+    gtkAddHSeparator(vbox4);
 
-    hbox6 = AddHBox(NULL, 0);
+    hbox6 = gtkAddHBox(NULL, 0);
     gtk_box_pack_start(GTK_BOX(vbox4), hbox6, TRUE, TRUE, 0);
 
     fsFNameListWindow = gtk_scrolled_window_new(NULL, NULL);
@@ -674,7 +674,7 @@ static GtkWidget *CreateFileSelect(void)
     gtk_clist_column_titles_hide(GTK_CLIST(fsFNameList));
     gtk_clist_set_shadow_type(GTK_CLIST(fsFNameList), GTK_SHADOW_ETCHED_OUT);
 
-    AddHSeparator(vbox4);
+    gtkAddHSeparator(vbox4);
 
     List = gtk_combo_new();
     gtk_widget_set_name(List, "List");
@@ -690,14 +690,14 @@ static GtkWidget *CreateFileSelect(void)
     gtk_entry_set_editable(GTK_ENTRY(fsFilterCombo), FALSE);
     gtk_widget_set_usize(fsFilterCombo, -2, 20);
 
-    AddHSeparator(vbox4);
+    gtkAddHSeparator(vbox4);
 
-    hbuttonbox3 = AddHButtonBox(vbox4);
+    hbuttonbox3 = gtkAddHButtonBox(vbox4);
     gtk_button_box_set_layout(GTK_BUTTON_BOX(hbuttonbox3), GTK_BUTTONBOX_END);
     gtk_button_box_set_spacing(GTK_BUTTON_BOX(hbuttonbox3), 10);
 
-    fsOk     = AddButton(MSGTR_Ok, hbuttonbox3);
-    fsCancel = AddButton(MSGTR_Cancel, hbuttonbox3);
+    fsOk     = gtkAddButton(MSGTR_Ok, hbuttonbox3);
+    fsCancel = gtkAddButton(MSGTR_Cancel, hbuttonbox3);
 
     gtk_signal_connect(GTK_OBJECT(FileSelector), "destroy", GTK_SIGNAL_FUNC(fs_Destroy), NULL);
     gtk_signal_connect(GTK_OBJECT(FileSelector), "key_release_event", GTK_SIGNAL_FUNC(on_FileSelect_key_release_event), NULL);
