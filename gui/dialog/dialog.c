@@ -188,11 +188,6 @@ void gtkAddIcon(GtkWidget *window)
     wsWindowIcon(gdk_display, GDK_WINDOW_XWINDOW(window->window), &guiIcon);
 }
 
-void gtkClearList(GtkWidget *list)
-{
-    gtk_clist_clear(GTK_CLIST(list));
-}
-
 int gtkFindCList(GtkWidget *list, char *item)
 {
     gint j;
@@ -301,7 +296,7 @@ void gtkShow(int type, char *param)
     case evSkinBrowser:
         ShowSkinBrowser();
 
-//        gtkClearList( SkinList );
+//        gtk_clist_clear(GTK_CLIST(SkinList));
         if (gtkFillSkinList(sbMPlayerPrefixDir) &&
             gtkFillSkinList(sbMPlayerDirInHome)) {
             gtkSetDefaultToCList(SkinList, param);
