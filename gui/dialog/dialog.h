@@ -28,11 +28,6 @@
 #define GTK_MB_ERROR 4
 #define GTK_MB_WARNING 8
 
-extern GtkWidget *WarningPixmap;
-extern GtkWidget *ErrorPixmap;
-
-extern GtkWidget *gtkMessageBoxText;
-
 typedef struct {
     Pixmap small;
     Pixmap small_mask;

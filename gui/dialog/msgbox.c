@@ -30,6 +30,8 @@
 
 GtkWidget * gtkMessageBoxText;
 GtkWidget * MessageBox = NULL;
+GtkWidget * WarningPixmap;
+GtkWidget * ErrorPixmap;
 
 static void on_Ok_released( GtkButton * button,gpointer user_data  )
 {

@@ -51,9 +51,6 @@
 
 static GtkWidget *PopUpMenu;
 
-GtkWidget *WarningPixmap;
-GtkWidget *ErrorPixmap;
-
 static int gtkInitialized;
 
 #include "skinbrowser.h"
