@@ -16,39 +16,37 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include <glob.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 #include <strings.h>
 #include <sys/stat.h>
-#include <glob.h>
 #include <unistd.h>
 
-#include "config.h"
-#include "gui/ui/actions.h"
-
-#include "pixmaps/up.xpm"
+#include "fileselect.h"
+#include "dialog.h"
+#include "preferences.h"
+#include "tools.h"
 #include "pixmaps/dir.xpm"
 #include "pixmaps/file.xpm"
-
+#include "pixmaps/up.xpm"
 #include "gui/app/app.h"
+#include "gui/app/cfg.h"
 #include "gui/app/gui.h"
 #include "gui/interface.h"
+#include "gui/ui/actions.h"
 #include "gui/util/list.h"
 #include "gui/util/mem.h"
 #include "gui/util/string.h"
-#include "help_mp.h"
-#include "mpcommon.h"
-#include "stream/stream.h"
-#include "libavutil/common.h"
-
-#include "dialog.h"
-#include "fileselect.h"
-#include "preferences.h"
-#include "tools.h"
 
 #define CFG_OLD_FILESELECT
 #include "gui/app/cfg-old.c"
+
+#include "config.h"
+#include "help_mp.h"
+#include "libavutil/common.h"
+#include "mpcommon.h"
+#include "stream/stream.h"
 
 #ifndef __linux__
 #define get_current_dir_name()  getcwd(NULL, PATH_MAX)
