@@ -61,8 +61,6 @@ typedef struct {
 
 extern guiIcon_t guiIcon;
 
-void widgetsCreate(void);
-
 void gtkInit(char *display_name);
 void gtkAddIcon(GtkWidget *window);
 
