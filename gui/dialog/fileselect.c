@@ -726,7 +726,7 @@ void ShowFileSelector(int type)
     struct stat f;
 
     if (FileSelector)
-        gtkActive(FileSelector);
+        gtkRaise(FileSelector);
     else
         FileSelector = CreateFileSelect();
 

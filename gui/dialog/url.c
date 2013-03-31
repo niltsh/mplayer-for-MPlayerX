@@ -139,7 +139,7 @@ void ShowURLDialog(void)
     urlItem *item;
 
     if (URLDialog)
-        gtkActive(URLDialog);
+        gtkRaise(URLDialog);
     else
         URLDialog = CreateURLDialog();
 

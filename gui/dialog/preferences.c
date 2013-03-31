@@ -447,7 +447,7 @@ static void prToggled( GtkToggleButton * togglebutton,gpointer user_data )
 	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBShowVideoWindow ) ) )
 	 {
 	  window=wsShowWindow;
-	  gtkActive( Preferences );
+	  gtkRaise( Preferences );
 	 } else window=wsHideWindow;
 	// NOTE TO MYSELF: doesn't work with a fullscreen window
 	if ( !guiInfo.Playing ) wsWindowVisibility( &guiApp.videoWindow,window );
@@ -1097,7 +1097,7 @@ static GtkWidget * CreatePreferences( void )
 
 void ShowPreferences( void )
 {
- if ( Preferences ) gtkActive( Preferences );
+ if ( Preferences ) gtkRaise( Preferences );
    else Preferences=CreatePreferences();
 
 /* 1st page */
@@ -1677,7 +1677,7 @@ static GtkWidget *CreateAudioConfig( void ) {
 }
 
 void ShowAudioConfig( void ) {
-  if (AudioConfig) gtkActive(AudioConfig);
+  if (AudioConfig) gtkRaise(AudioConfig);
   else AudioConfig = CreateAudioConfig();
 
 #ifdef CONFIG_OSS_AUDIO
@@ -1723,7 +1723,7 @@ GtkWidget * CreateDXR3Config( void );
 
 void ShowDXR3Config( void )
 {
- if ( DXR3Config ) gtkActive( DXR3Config );
+ if ( DXR3Config ) gtkRaise( DXR3Config );
   else DXR3Config=CreateDXR3Config();
 
  gtk_entry_set_text( GTK_ENTRY( CEDXR3Device ),gtkDXR3Device );

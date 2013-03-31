@@ -474,7 +474,7 @@ static GtkWidget * CreateEqualizer( void )
 
 void ShowEqualizer( void )
 {
- if ( Equalizer ) gtkActive( Equalizer );
+ if ( Equalizer ) gtkRaise( Equalizer );
     else Equalizer=CreateEqualizer();
 
  if ( !gtkEquChannel1 ) gtkEquChannel1=strdup( MSGTR_EQU_Front_Right );
@@ -537,7 +537,7 @@ void ShowEquConfig( void )
 {
  GList * Items = NULL;
 
- if ( EquConfig ) gtkActive( EquConfig );
+ if ( EquConfig ) gtkRaise( EquConfig );
     else EquConfig=CreateEquConfig();
 
  Items=g_list_append( Items,(gpointer)MSGTR_EQU_Front_Right  );

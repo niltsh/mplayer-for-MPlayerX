@@ -352,7 +352,7 @@ static GtkWidget * CreateAbout( void )
 
 void ShowAbout( void )
 {
- if ( About ) gtkActive( About );
+ if ( About ) gtkRaise( About );
    else About=CreateAbout();
  gtk_widget_show( About );
 }

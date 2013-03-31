@@ -277,7 +277,7 @@ void gtkMessageBox(int type, const gchar *str)
 void gtkSetLayer(GtkWidget *window)
 {
     wsWindowLayer(gdk_display, GDK_WINDOW_XWINDOW(window->window), guiApp.videoWindow.isFullScreen);
-    gtkActive(window);
+    gtkRaise(window);
 }
 
 /**
@@ -285,7 +285,7 @@ void gtkSetLayer(GtkWidget *window)
  *
  * @param window pointer to a GtkWindow widget
  */
-void gtkActive(GtkWidget *window)
+void gtkRaise(GtkWidget *window)
 {
     wsWindowRaiseTop(gdk_display, GDK_WINDOW_XWINDOW(window->window));
 }

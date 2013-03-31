@@ -75,7 +75,7 @@ static void on_SkinList_select_row( GtkCList * clist,gint row,gint column,GdkEve
   {
    prev=sbSelectedSkin;
    uiChangeSkin( sbSelectedSkin );
-   gtkActive( SkinBrowser );
+   gtkRaise( SkinBrowser );
   }
  if( !event ) return;
  if( event->type == GDK_2BUTTON_PRESS )
@@ -166,7 +166,7 @@ static GtkWidget * CreateSkinBrowser( void )
 
 void ShowSkinBrowser( void )
 {
- if ( SkinBrowser ) gtkActive( SkinBrowser );
+ if ( SkinBrowser ) gtkRaise( SkinBrowser );
    else SkinBrowser=CreateSkinBrowser();
 }
 
