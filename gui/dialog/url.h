@@ -21,8 +21,8 @@
 
 #include <gtk/gtk.h>
 
-extern GtkWidget * URLDialog;
+extern GtkWidget *URLDialog;
 
-void ShowURLDialog( void );
+void ShowURLDialog(void);
 
 #endif /* MPLAYER_GUI_URL_H */
