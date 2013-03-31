@@ -155,6 +155,31 @@ GdkPixmap *fpixmap;
 GdkBitmap *dmask;
 GdkBitmap *fmask;
 
+static void fs_PersistantHistory(char *subject)
+{
+    unsigned int i;
+    char *entry;
+
+    if (!subject)
+        return;
+
+    for (i = 0; i < FF_ARRAY_ELEMS(fsHistory); i++)
+        if (gstrcmp(fsHistory[i], subject) == 0) {
+            entry = fsHistory[i];
+            break;
+        }
+
+    if (i == FF_ARRAY_ELEMS(fsHistory)) {
+        entry = strdup(subject);
+        free(fsHistory[--i]);
+    }
+
+    for (; i; i--)
+        fsHistory[i] = fsHistory[i - 1];
+
+    fsHistory[0] = entry;
+}
+
 static gchar *get_current_dir_name_utf8(void)
 {
     char *dir;
@@ -165,6 +190,27 @@ static gchar *get_current_dir_name_utf8(void)
     free(dir);
 
     return utf8dir;
+}
+
+static GList *fs_AddPath(GList *list, gpointer data, GtkPositionType pos)
+{
+    if (!g_list_find_custom(list, data, (GCompareFunc)strcmp)) {
+        if (pos == GTK_POS_TOP)
+            list = g_list_prepend(list, data);
+        else
+            list = g_list_append(list, data);
+    }
+
+    return list;
+}
+
+static void fs_AddPathUtf8(const char *name, GtkPositionType pos)
+{
+    gchar *utf8name;
+
+    utf8name = g_filename_display_name(name);
+    fsTopList_items = fs_AddPath(fsTopList_items, utf8name, pos);
+    g_hash_table_insert(fsPathTable, strdup(utf8name), strdup(name));
 }
 
 static void clist_append_fname(GtkWidget *list, char *fname,
@@ -251,62 +297,7 @@ static void CheckDir(GtkWidget *list)
     gtk_widget_show(list);
 }
 
-static GList *fs_AddPath(GList *list, gpointer data, GtkPositionType pos)
-{
-    if (!g_list_find_custom(list, data, (GCompareFunc)strcmp)) {
-        if (pos == GTK_POS_TOP)
-            list = g_list_prepend(list, data);
-        else
-            list = g_list_append(list, data);
-    }
-
-    return list;
-}
-
-static void fs_AddPathUtf8(const char *name, GtkPositionType pos)
-{
-    gchar *utf8name;
-
-    utf8name = g_filename_display_name(name);
-    fsTopList_items = fs_AddPath(fsTopList_items, utf8name, pos);
-    g_hash_table_insert(fsPathTable, strdup(utf8name), strdup(name));
-}
-
-static void fs_PersistantHistory(char *subject)
-{
-    unsigned int i;
-    char *entry;
-
-    if (!subject)
-        return;
-
-    for (i = 0; i < FF_ARRAY_ELEMS(fsHistory); i++)
-        if (gstrcmp(fsHistory[i], subject) == 0) {
-            entry = fsHistory[i];
-            break;
-        }
-
-    if (i == FF_ARRAY_ELEMS(fsHistory)) {
-        entry = strdup(subject);
-        free(fsHistory[--i]);
-    }
-
-    for (; i; i--)
-        fsHistory[i] = fsHistory[i - 1];
-
-    fsHistory[0] = entry;
-}
-
 /* ----------------------------------------------- */
-
-static void fs_fsFilterCombo_activate(GtkEntry *entry,
-                                      gpointer user_data)
-{
-    (void)entry;
-
-    fsFilter = gtk_entry_get_text(GTK_ENTRY(user_data));
-    CheckDir(fsFNameList);
-}
 
 static void fs_fsFilterCombo_changed(GtkEditable *editable,
                                      gpointer user_data)
@@ -376,19 +367,13 @@ static void fs_fsFilterCombo_changed(GtkEditable *editable,
     CheckDir(fsFNameList);
 }
 
-static void fs_fsPathCombo_activate(GtkEntry *entry,
-                                    gpointer user_data)
+static void fs_fsFilterCombo_activate(GtkEntry *entry,
+                                      gpointer user_data)
 {
-    const unsigned char *str;
-    gchar *dirname;
-
     (void)entry;
 
-    str     = gtk_entry_get_text(GTK_ENTRY(user_data));
-    dirname = g_hash_table_lookup(fsPathTable, str);
-
-    if (chdir(dirname ? (const unsigned char *)dirname : str) != -1)
-        CheckDir(fsFNameList);
+    fsFilter = gtk_entry_get_text(GTK_ENTRY(user_data));
+    CheckDir(fsFNameList);
 }
 
 static void fs_fsPathCombo_changed(GtkEditable *editable,
@@ -404,6 +389,57 @@ static void fs_fsPathCombo_changed(GtkEditable *editable,
 
     if (chdir(dirname ? (const unsigned char *)dirname : str) != -1)
         CheckDir(fsFNameList);
+}
+
+static void fs_fsPathCombo_activate(GtkEntry *entry,
+                                    gpointer user_data)
+{
+    const unsigned char *str;
+    gchar *dirname;
+
+    (void)entry;
+
+    str     = gtk_entry_get_text(GTK_ENTRY(user_data));
+    dirname = g_hash_table_lookup(fsPathTable, str);
+
+    if (chdir(dirname ? (const unsigned char *)dirname : str) != -1)
+        CheckDir(fsFNameList);
+}
+
+static gboolean fs_fsFNameList_event(GtkWidget *widget,
+                                     GdkEvent *event,
+                                     gpointer user_data)
+{
+    GdkEventButton *bevent;
+    gint row, col;
+
+    (void)user_data;
+
+    bevent = (GdkEventButton *)event;
+
+    if (event->type == GDK_BUTTON_RELEASE && bevent->button == 2) {
+        if (gtk_clist_get_selection_info(GTK_CLIST(widget), bevent->x, bevent->y, &row, &col)) {
+            fsSelectedFile = gtk_clist_get_row_data(GTK_CLIST(widget), row);
+            gtk_button_released(GTK_BUTTON(fsOk));
+
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+static void fs_fsFNameList_select_row(GtkCList *clist, gint row, gint column,
+                                      GdkEvent *event, gpointer user_data)
+{
+    (void)column;
+    (void)user_data;
+
+    fsCurrFNameListSelected = row;
+    fsSelectedFile = gtk_clist_get_row_data(clist, row);
+
+    if (event && event->type == GDK_BUTTON_PRESS)
+        gtk_button_released(GTK_BUTTON(fsOk));
 }
 
 static void fs_Up_released(GtkButton *button, gpointer user_data)
@@ -514,19 +550,6 @@ static void fs_Ok_released(GtkButton *button, gpointer user_data)
         gui(GUI_SET_STATE, (void *)GUI_STOP);
 }
 
-static void fs_fsFNameList_select_row(GtkCList *clist, gint row, gint column,
-                                      GdkEvent *event, gpointer user_data)
-{
-    (void)column;
-    (void)user_data;
-
-    fsCurrFNameListSelected = row;
-    fsSelectedFile = gtk_clist_get_row_data(clist, row);
-
-    if (event && event->type == GDK_BUTTON_PRESS)
-        gtk_button_released(GTK_BUTTON(fsOk));
-}
-
 static gboolean on_FileSelect_key_release_event(GtkWidget *widget,
                                                 GdkEvent *event,
                                                 gpointer user_data)
@@ -550,29 +573,6 @@ static gboolean on_FileSelect_key_release_event(GtkWidget *widget,
             gtk_button_released(GTK_BUTTON(fsUp));
             gtk_widget_grab_focus(fsFNameList);
             break;
-        }
-    }
-
-    return FALSE;
-}
-
-static gboolean fs_fsFNameList_event(GtkWidget *widget,
-                                     GdkEvent *event,
-                                     gpointer user_data)
-{
-    GdkEventButton *bevent;
-    gint row, col;
-
-    (void)user_data;
-
-    bevent = (GdkEventButton *)event;
-
-    if (event->type == GDK_BUTTON_RELEASE && bevent->button == 2) {
-        if (gtk_clist_get_selection_info(GTK_CLIST(widget), bevent->x, bevent->y, &row, &col)) {
-            fsSelectedFile = gtk_clist_get_row_data(GTK_CLIST(widget), row);
-            gtk_button_released(GTK_BUTTON(fsOk));
-
-            return TRUE;
         }
     }
 
