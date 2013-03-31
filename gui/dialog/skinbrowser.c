@@ -29,6 +29,7 @@
 #include "gui/app/app.h"
 #include "gui/app/cfg.h"
 #include "gui/app/gui.h"
+#include "gui/ui/actions.h"
 #include "gui/skin/skin.h"
 #include "help_mp.h"
 

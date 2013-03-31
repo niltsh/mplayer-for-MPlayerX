@@ -30,6 +30,7 @@
 #include "help_mp.h"
 #include "mixer.h"
 #include "mpcommon.h"
+#include "mplayer.h"
 #include "libao2/audio_out.h"
 #include "sub/sub.h"
 #include "libvo/video_out.h"

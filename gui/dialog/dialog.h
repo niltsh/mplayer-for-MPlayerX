@@ -19,16 +19,8 @@
 #ifndef MPLAYER_GUI_DIALOG_H
 #define MPLAYER_GUI_DIALOG_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 #include <X11/Xlib.h>
-#include <X11/Xproto.h>
-
-#include "osdep/shmem.h"
-#include "gui/ui/actions.h"
-#include "mplayer.h"
 
 #define GTK_MB_SIMPLE 0
 #define GTK_MB_MODAL 1

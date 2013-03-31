@@ -34,6 +34,7 @@
 #include "gui/app/gui.h"
 #include "gui/interface.h"
 #include "dialog.h"
+#include "gui/ui/actions.h"
 #include "gui/util/list.h"
 #include "gui/util/mem.h"
 #include "gui/util/string.h"

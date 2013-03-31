@@ -37,6 +37,7 @@
 #include "libvo/video_out.h"
 #include "libvo/x11_common.h"
 #include "mpbswap.h"
+#include "mplayer.h"
 #include "mp_core.h"
 #include "mp_msg.h"
 #include "osdep/timer.h"
