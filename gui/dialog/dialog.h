@@ -31,11 +31,7 @@
 extern GtkWidget *WarningPixmap;
 extern GtkWidget *ErrorPixmap;
 
-extern GtkWidget *SkinList;
 extern GtkWidget *gtkMessageBoxText;
-
-extern char *sbMPlayerDirInHome;
-extern char *sbMPlayerPrefixDir;
 
 typedef struct {
     Pixmap small;

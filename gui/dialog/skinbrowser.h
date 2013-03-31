@@ -23,6 +23,9 @@
 
 extern char      * sbSelectedSkin;
 extern GtkWidget * SkinBrowser;
+extern GtkWidget *SkinList;
+extern char *sbMPlayerDirInHome;
+extern char *sbMPlayerPrefixDir;
 
 void ShowSkinBrowser( void );
 
