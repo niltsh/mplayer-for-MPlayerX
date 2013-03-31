@@ -86,6 +86,9 @@
 #endif
 #include "pixmaps/empty1px.xpm"
 
+int gtkPopupMenu;
+int gtkPopupMenuParam;
+
 static void ActivateMenuItem( int Item )
 {
 // fprintf( stderr,"[menu] item: %d.%d\n",Item&0xffff,Item>>16 );

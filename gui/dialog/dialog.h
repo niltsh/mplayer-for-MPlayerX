@@ -34,9 +34,6 @@ extern GtkWidget *ErrorPixmap;
 extern GtkWidget *SkinList;
 extern GtkWidget *gtkMessageBoxText;
 
-extern int gtkPopupMenu;
-extern int gtkPopupMenuParam;
-
 extern char *sbMPlayerDirInHome;
 extern char *sbMPlayerPrefixDir;
 

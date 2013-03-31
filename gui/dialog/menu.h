@@ -21,6 +21,9 @@
 
 #include <gtk/gtk.h>
 
+extern int gtkPopupMenu;
+extern int gtkPopupMenuParam;
+
 GtkWidget * AddMenuItem( GtkWidget *window1, const char * immagine_xpm, GtkWidget * SubMenu, const char * label, int Number );
 GtkWidget * AddSubMenu( GtkWidget *window1, const char * immagine_xpm, GtkWidget * Menu, const char * label );
 GtkWidget * AddSeparator( GtkWidget * Menu );
