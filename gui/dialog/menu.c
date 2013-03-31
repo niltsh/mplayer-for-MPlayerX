@@ -402,7 +402,7 @@ static const char * GetLanguage( int language )
 #endif
 
 
-GtkWidget * DVDSubMenu;
+static GtkWidget * DVDSubMenu;
 GtkWidget * DVDTitleMenu;
 GtkWidget * DVDChapterMenu;
 GtkWidget * DVDAudioLanguageMenu;
