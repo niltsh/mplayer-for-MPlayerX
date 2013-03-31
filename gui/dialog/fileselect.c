@@ -48,10 +48,11 @@
 #include "mpcommon.h"
 #include "stream/stream.h"
 
-#ifndef __linux__
-#define get_current_dir_name()  getcwd(NULL, PATH_MAX)
-#else
+#ifdef __linux__
 char *get_current_dir_name(void);
+#else
+#include <limits.h>
+#define get_current_dir_name() getcwd(NULL, PATH_MAX)
 #endif
 
 const char *fsSelectedFile = NULL;
