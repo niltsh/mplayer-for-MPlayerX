@@ -47,7 +47,7 @@
 #include "preferences.h"
 #include "tools.h"
 
-#define CFG_OLD_FILESELECT 1
+#define CFG_OLD_FILESELECT
 #include "gui/app/cfg-old.c"
 
 #ifndef __linux__

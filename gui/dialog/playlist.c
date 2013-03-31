@@ -43,7 +43,7 @@
 #include "pixmaps/open2.xpm"
 #include "pixmaps/dir2.xpm"
 
-#define CFG_OLD_PLAYLIST 1
+#define CFG_OLD_PLAYLIST
 #include "gui/app/cfg-old.c"
 
        GtkWidget * Playlist = NULL;

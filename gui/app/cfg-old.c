@@ -44,6 +44,3 @@ static const gchar *cfg_old_filename_from_utf8(const gchar *fname)
 #endif
     return fname;
 }
-
-#undef CFG_OLD_FILESELECT
-#undef CFG_OLD_PLAYLIST
