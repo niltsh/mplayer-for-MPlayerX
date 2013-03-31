@@ -21,7 +21,7 @@
  * @brief Font file parser and font rendering
  */
 
-#include <gtk/gtk.h>
+#include <glib.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
