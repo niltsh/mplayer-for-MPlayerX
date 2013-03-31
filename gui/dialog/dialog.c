@@ -203,14 +203,6 @@ int gtkFindCList(GtkWidget *list, char *item)
     return -1;
 }
 
-static void gtkSelectInCList(GtkWidget *list, char *item)
-{
-    gint i;
-
-    if ((i = gtkFindCList(list, item)) > -1)
-        gtk_clist_select_row(GTK_CLIST(list), i, 0);
-}
-
 void gtkEventHandling(void)
 {
     int i;
@@ -283,6 +275,14 @@ void gtkSetLayer(GtkWidget *window)
 void gtkRaise(GtkWidget *window)
 {
     wsWindowRaiseTop(gdk_display, GDK_WINDOW_XWINDOW(window->window));
+}
+
+static void gtkSelectInCList(GtkWidget *list, char *item)
+{
+    gint i;
+
+    if ((i = gtkFindCList(list, item)) > -1)
+        gtk_clist_select_row(GTK_CLIST(list), i, 0);
 }
 
 void gtkShow(int type, char *param)
