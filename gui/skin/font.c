@@ -32,8 +32,8 @@
 #include "gui/util/mem.h"
 #include "gui/util/string.h"
 
-#include "libavutil/avstring.h"
 #include "mp_msg.h"
+#include "libavutil/avstring.h"
 
 #define MAX_FONTS 25
 

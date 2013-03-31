@@ -31,15 +31,15 @@
 
 #include "config.h"
 #include "help_mp.h"
+#include "mp_core.h"
+#include "mp_msg.h"
+#include "mpbswap.h"
+#include "mplayer.h"
 #include "libavutil/imgutils.h"
 #include "libavutil/pixfmt.h"
 #include "libswscale/swscale.h"
 #include "libvo/video_out.h"
 #include "libvo/x11_common.h"
-#include "mpbswap.h"
-#include "mplayer.h"
-#include "mp_core.h"
-#include "mp_msg.h"
 #include "osdep/timer.h"
 
 #ifdef HAVE_SHM

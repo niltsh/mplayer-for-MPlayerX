@@ -27,8 +27,8 @@
 #include "gui/util/string.h"
 
 #include "access_mpcontext.h"
-#include "libavutil/avstring.h"
 #include "mixer.h"
+#include "libavutil/avstring.h"
 #include "osdep/timer.h"
 #include "stream/stream.h"
 

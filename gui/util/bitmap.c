@@ -30,11 +30,11 @@
 #include "gui/app/gui.h"
 
 #include "help_mp.h"
+#include "mp_msg.h"
 #include "libavcodec/avcodec.h"
 #include "libavutil/common.h"
 #include "libavutil/intreadwrite.h"
 #include "libvo/fastmemcpy.h"
-#include "mp_msg.h"
 
 /**
  * @brief Check whether a (PNG) file exists.

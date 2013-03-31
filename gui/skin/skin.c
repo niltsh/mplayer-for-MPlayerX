@@ -26,17 +26,17 @@
 
 #include "skin.h"
 #include "font.h"
+#include "gui/interface.h"
 #include "gui/app/app.h"
 #include "gui/app/gui.h"
 #include "gui/dialog/dialog.h"
-#include "gui/interface.h"
 #include "gui/util/cut.h"
 #include "gui/util/string.h"
 
 #include "help_mp.h"
+#include "mp_msg.h"
 #include "libavutil/avstring.h"
 #include "libavutil/common.h"
-#include "mp_msg.h"
 
 typedef struct {
     const char *name;

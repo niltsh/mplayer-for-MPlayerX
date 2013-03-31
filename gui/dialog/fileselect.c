@@ -20,8 +20,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
-#include <sys/stat.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 #include "fileselect.h"
 #include "dialog.h"
@@ -30,10 +30,10 @@
 #include "pixmaps/dir.xpm"
 #include "pixmaps/file.xpm"
 #include "pixmaps/up.xpm"
+#include "gui/interface.h"
 #include "gui/app/app.h"
 #include "gui/app/cfg.h"
 #include "gui/app/gui.h"
-#include "gui/interface.h"
 #include "gui/ui/actions.h"
 #include "gui/util/list.h"
 #include "gui/util/mem.h"
@@ -44,8 +44,8 @@
 
 #include "config.h"
 #include "help_mp.h"
-#include "libavutil/common.h"
 #include "mpcommon.h"
+#include "libavutil/common.h"
 #include "stream/stream.h"
 
 #ifdef __linux__

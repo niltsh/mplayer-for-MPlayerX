@@ -38,6 +38,11 @@
 #include "codec-cfg.h"
 #include "config.h"
 #include "help_mp.h"
+#include "mixer.h"
+#include "mp_msg.h"
+#include "mpcommon.h"
+#include "mplayer.h"
+#include "path.h"
 #include "input/input.h"
 #include "libaf/equalizer.h"
 #include "libavutil/common.h"
@@ -47,11 +52,6 @@
 #include "libmpcodecs/vf.h"
 #include "libvo/video_out.h"
 #include "libvo/x11_common.h"
-#include "mixer.h"
-#include "mp_msg.h"
-#include "mpcommon.h"
-#include "mplayer.h"
-#include "path.h"
 #ifdef CONFIG_DVDREAD
 #include "stream/stream_dvd.h"
 #endif

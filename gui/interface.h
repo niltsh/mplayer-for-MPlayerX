@@ -19,11 +19,11 @@
 #ifndef MPLAYER_GUI_INTERFACE_H
 #define MPLAYER_GUI_INTERFACE_H
 
-#include "libaf/af.h"
-#include "libmpdemux/stheader.h"
 #include "m_config.h"
 #include "mp_core.h"
 #include "playtree.h"
+#include "libaf/af.h"
+#include "libmpdemux/stheader.h"
 #include "stream/stream.h"
 
 // These are in support of the non-GUI files that interact with

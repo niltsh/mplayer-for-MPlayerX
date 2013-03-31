@@ -25,8 +25,8 @@
 #include <string.h>
 
 #include "string.h"
-#include "gui/app/gui.h"
 #include "gui/interface.h"
+#include "gui/app/gui.h"
 
 #include "config.h"
 #include "help_mp.h"
