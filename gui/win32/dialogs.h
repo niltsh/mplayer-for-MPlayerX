@@ -124,10 +124,4 @@
 #define IDPLAYDISK           100
 #define IDPLAYDISK_LIMIT     164
 
-/* gtk emulation */
-#define GTK_MB_FATAL         0x1
-#define GTK_MB_ERROR         0x2
-#define GTK_MB_WARNING       0x4
-#define GTK_MB_SIMPLE        0x8
-
 #endif /* MPLAYER_GUI_DIALOGS_H */
