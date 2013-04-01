@@ -171,7 +171,7 @@ void ShowSkinBrowser( void )
    else SkinBrowser=CreateSkinBrowser();
 }
 
-int gtkFillSkinList( gchar * mdir )
+int FillSkinList( gchar * mdir )
 {
  gchar         * str[2];
  gchar         * tmp;

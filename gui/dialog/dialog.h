@@ -41,7 +41,6 @@ extern guiIcon_t guiIcon;
 
 void gtkAddIcon(GtkWidget *window);
 void gtkEventHandling(void);
-int gtkFillSkinList(gchar *dir);
 void gtkInit(char *display_name);
 void gtkMessageBox(int type, const gchar *str);
 void gtkRaise(GtkWidget *window);

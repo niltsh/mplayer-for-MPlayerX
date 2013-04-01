@@ -278,8 +278,8 @@ void gtkShow(int type, char *param)
         ShowSkinBrowser();
 
 //        gtk_clist_clear(GTK_CLIST(SkinList));
-        if (gtkFillSkinList(sbMPlayerPrefixDir) &&
-            gtkFillSkinList(sbMPlayerDirInHome)) {
+        if (FillSkinList(sbMPlayerPrefixDir) &&
+            FillSkinList(sbMPlayerDirInHome)) {
             gtkSelectInCList(SkinList, param);
             gtk_clist_sort(GTK_CLIST(SkinList));
             gtk_widget_show(SkinBrowser);
