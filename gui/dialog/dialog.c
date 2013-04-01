@@ -49,10 +49,6 @@
 #include "gui/ui/actions.h"
 #include "fileselect.h"
 
-static GtkWidget *PopUpMenu;
-
-static int gtkInitialized;
-
 #include "skinbrowser.h"
 #include "playlist.h"
 #include "msgbox.h"
@@ -62,6 +58,10 @@ static int gtkInitialized;
 #include "url.h"
 #include "equalizer.h"
 #include "tools.h"
+
+static GtkWidget *PopUpMenu;
+
+static int gtkInitialized;
 
 static const char gui_icon_name[] = "mplayer";
 
