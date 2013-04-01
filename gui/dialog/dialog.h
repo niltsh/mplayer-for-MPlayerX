@@ -39,16 +39,13 @@ typedef struct {
 
 extern guiIcon_t guiIcon;
 
-void gtkInit(char *display_name);
 void gtkAddIcon(GtkWidget *window);
-
-int gtkFillSkinList(gchar *dir);
-
 void gtkEventHandling(void);
-
-void gtkShow(int type, char *param);
+int gtkFillSkinList(gchar *dir);
+void gtkInit(char *display_name);
 void gtkMessageBox(int type, const gchar *str);
-void gtkSetLayer(GtkWidget *window);
 void gtkRaise(GtkWidget *window);
+void gtkSetLayer(GtkWidget *window);
+void gtkShow(int type, char *param);
 
 #endif /* MPLAYER_GUI_DIALOG_H */
