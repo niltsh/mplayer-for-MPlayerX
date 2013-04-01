@@ -16,48 +16,32 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <stdint.h>
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
-#include <unistd.h>
+#include <stdlib.h>
 #include <string.h>
-#include <signal.h>
-
-#include <gdk/gdkprivate.h>
-#include <gdk/gdkkeysyms.h>
 #include <gdk/gdkx.h>
-#include <gdk/gdk.h>
-#include <gtk/gtk.h>
+
+#include "dialog.h"
+#include "about.h"
+#include "equalizer.h"
+#include "fileselect.h"
+#include "menu.h"
+#include "msgbox.h"
+#include "playlist.h"
+#include "preferences.h"
+#include "skinbrowser.h"
+#include "tools.h"
+#include "url.h"
+#include "gui/interface.h"
+#include "gui/app/app.h"
+#include "gui/app/gui.h"
+#include "gui/util/string.h"
+#include "gui/wm/ws.h"
 
 #include "config.h"
 #include "help_mp.h"
 #include "mp_msg.h"
 #include "libavutil/intreadwrite.h"
-#include "libvo/x11_common.h"
-
-#include "dialog.h"
-#include "gui/app/app.h"
-#include "gui/app/gui.h"
-#include "gui/interface.h"
-#include "gui/util/string.h"
-#include "gui/wm/ws.h"
-
-#include "gui/ui/actions.h"
-#include "fileselect.h"
-
-#include "skinbrowser.h"
-#include "playlist.h"
-#include "msgbox.h"
-#include "about.h"
-#include "preferences.h"
-#include "menu.h"
-#include "url.h"
-#include "equalizer.h"
-#include "tools.h"
 
 static GtkWidget *PopUpMenu;
 
