@@ -210,19 +210,19 @@ void gtkMessageBox(int type, const gchar *str)
         gtk_label_set_line_wrap(GTK_LABEL(gtkMessageBoxText), FALSE);
 
     switch (type) {
-    case GTK_MB_FATAL:
+    case MSGBOX_FATAL:
         gtk_window_set_title(GTK_WINDOW(MessageBox), MSGTR_MSGBOX_LABEL_FatalError);
         gtk_widget_hide(WarningPixmap);
         gtk_widget_show(ErrorPixmap);
         break;
 
-    case GTK_MB_ERROR:
+    case MSGBOX_ERROR:
         gtk_window_set_title(GTK_WINDOW(MessageBox), MSGTR_MSGBOX_LABEL_Error);
         gtk_widget_hide(WarningPixmap);
         gtk_widget_show(ErrorPixmap);
         break;
 
-    case GTK_MB_WARNING:
+    case MSGBOX_WARNING:
         gtk_window_set_title(GTK_WINDOW(MessageBox), MSGTR_MSGBOX_LABEL_Warning);
         gtk_widget_show(WarningPixmap);
         gtk_widget_hide(ErrorPixmap);
@@ -232,7 +232,7 @@ void gtkMessageBox(int type, const gchar *str)
     gtk_widget_show(MessageBox);
     gtkSetLayer(MessageBox);
 
-    if (type == GTK_MB_FATAL)
+    if (type == MSGBOX_FATAL)
         while (MessageBox)
             gtk_main_iteration_do(0);
 }
@@ -286,7 +286,7 @@ void gtkShow(int type, char *param)
             gtkSetLayer(SkinBrowser);
         } else {
             gtk_widget_destroy(SkinBrowser);
-            gtkMessageBox(GTK_MB_ERROR, "Skin dirs not found ... Please install skins.");
+            gtkMessageBox(MSGBOX_ERROR, "Skin dirs not found ... Please install skins.");
         }
 
         break;

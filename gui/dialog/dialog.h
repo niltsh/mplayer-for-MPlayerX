@@ -22,11 +22,12 @@
 #include <gtk/gtk.h>
 #include <X11/Xlib.h>
 
-#define GTK_MB_SIMPLE 0
-#define GTK_MB_MODAL 1
-#define GTK_MB_FATAL 2
-#define GTK_MB_ERROR 4
-#define GTK_MB_WARNING 8
+/// MessageBox types
+enum {
+    MSGBOX_WARNING,
+    MSGBOX_ERROR,
+    MSGBOX_FATAL
+};
 
 typedef struct {
     Pixmap small;

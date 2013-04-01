@@ -655,7 +655,7 @@ int gui(int what, void *data)
         btnSet(evSetMoviePosition, state);
 
         if (video_driver_list && !gstrcmp(video_driver_list[0], "dxr3") && (((demuxer_t *)mpctx_get_demuxer(guiInfo.mpcontext))->file_format != DEMUXER_TYPE_MPEG_PS) && !gtkVfLAVC) {
-            gtkMessageBox(GTK_MB_FATAL, MSGTR_NEEDLAVC);
+            gtkMessageBox(MSGBOX_FATAL, MSGTR_NEEDLAVC);
             return False;
         }
 
@@ -1165,5 +1165,5 @@ void gmp_msg(int mod, int lev, const char *format, ...)
     mp_msg(mod, lev, msg);
 
     if (mp_msg_test(mod, lev))
-        gtkMessageBox(GTK_MB_FATAL, msg);
+        gtkMessageBox(MSGBOX_FATAL, msg);
 }

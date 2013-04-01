@@ -442,7 +442,7 @@ static void prToggled( GtkToggleButton * togglebutton,gpointer user_data )
 	break;
 //   case 1: // normalize
 //   case 2: // equalizer
-//	if ( guiInfo.Playing ) gtkMessageBox( GTK_MB_WARNING,"Please remember, this function need restart the playing." );
+//	if ( guiInfo.Playing ) gtkMessageBox( MSGBOX_WARNING,"Please remember, this function need restart the playing." );
 //	break;
    case 3:
 	if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( CBShowVideoWindow ) ) )
@@ -504,7 +504,7 @@ static void prCListRow( GtkCList * clist,gint row,gint column,GdkEvent * event,g
 	  gtk_widget_set_sensitive( AConfig,TRUE );
 #ifndef CONFIG_GTK2
         if ( !strncmp( ao_driver[0],"arts",4 ) )
-          gtkMessageBox(GTK_MB_WARNING|GTK_MB_SIMPLE, MSGTR_PREFERENCES_ArtsBroken);
+          gtkMessageBox(MSGBOX_WARNING, MSGTR_PREFERENCES_ArtsBroken);
 #endif
 	break;
    case 1: // video driver
@@ -1370,7 +1370,7 @@ void ShowPreferences( void )
   static int visible = True;
   if ( visible )
    {
-    gtkMessageBox( GTK_MB_WARNING,MSGTR_PREFERENCES_Message );
+    gtkMessageBox( MSGBOX_WARNING,MSGTR_PREFERENCES_Message );
     visible=False;
    }
  }
