@@ -2762,14 +2762,6 @@ if test -n "$CPPFLAGS" ; then
 fi
 
 
-echocheck "PIC"
-def_pic='#define CONFIG_PIC 0'
-pic=no
-cpp_condition_check '' 'defined(__PIC__) || defined(__pic__) || defined(PIC)' &&
-  pic=yes && extra_cflags="$extra_cflags -DPIC" && def_pic='#define CONFIG_PIC 1'
-echores $pic
-
-
 # try to create a relocatable binary by default
 echocheck "relocatable binary"
 if test $relocatable = "auto" ; then
@@ -2851,6 +2843,17 @@ if x86_32 ; then
   fi
 
 fi #if x86_32
+
+
+# Check if we need to compile as PIC for this combination of architecture, toolchain,
+# gcc configuration (e.g. hardened or not) and compiler options.
+# Needs to be after the relocatable handling, since PIE changes whether we need PIC or not.
+echocheck "PIC"
+def_pic='#define CONFIG_PIC 0'
+pic=no
+cpp_condition_check '' 'defined(__PIC__) || defined(__pic__) || defined(PIC)' &&
+  pic=yes && extra_cflags="$extra_cflags -DPIC" && def_pic='#define CONFIG_PIC 1'
+echores $pic
 
 
 def_bswap='#define HAVE_BSWAP 0'
