@@ -43,16 +43,16 @@
 #include "mp_msg.h"
 #include "libavutil/intreadwrite.h"
 
-static GtkWidget *PopUpMenu;
-
-static int gtkInitialized;
-
-static const char gui_icon_name[] = "mplayer";
-
 #define THRESHOLD 128   // transparency values equal to or above this will become
                         // opaque, all values below this will become transparent
 
 guiIcon_t guiIcon;
+
+static const char gui_icon_name[] = "mplayer";
+
+static GtkWidget *PopUpMenu;
+
+static int gtkInitialized;
 
 /**
  * @brief Add an icon to the #guiIcon icon structure.
