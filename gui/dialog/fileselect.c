@@ -56,8 +56,8 @@ char *get_current_dir_name(void);
 #endif
 
 const char *fsSelectedFile;
-const char *fsThisDir      = ".";
-const gchar *fsFilter      = "*";
+const char *fsThisDir = ".";
+const gchar *fsFilter = "*";
 
 int fsType;
 
