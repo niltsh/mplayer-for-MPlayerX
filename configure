@@ -2851,9 +2851,16 @@ fi #if x86_32
 echocheck "PIC"
 def_pic='#define CONFIG_PIC 0'
 pic=no
-cpp_condition_check '' 'defined(__PIC__) || defined(__pic__) || defined(PIC)' &&
-  pic=yes && extra_cflags="$extra_cflags -DPIC" && def_pic='#define CONFIG_PIC 1'
+cpp_condition_check '' 'defined(__PIC__) || defined(__pic__) || defined(PIC)' && pic=yes
+# This check is needed to work around issues with clang on OSX when compiling 64 bit relocatable binaries.
+if x86_64 && test "$relocatable" = "yes" && test "$pic" = "no"; then
+  res_comment="Broken compiler incorrectly claims PIC not necessary for PIE"
+  pic=yes
+fi
 echores $pic
+if test "$pic" = "yes" ; then
+  extra_cflags="$extra_cflags -DPIC" && def_pic='#define CONFIG_PIC 1'
+fi
 
 
 def_bswap='#define HAVE_BSWAP 0'
