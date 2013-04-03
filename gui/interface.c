@@ -116,11 +116,11 @@ void guiInit(void)
 
     /* load skin */
 
-    skinDirInHome  = get_path("skins");
-    skinMPlayerDir = MPLAYER_DATADIR "/skins";
+    skinDirInHome = get_path("skins");
+    skinDirInData = MPLAYER_DATADIR "/skins";
 
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] skin directory #1: %s\n", skinDirInHome);
-    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] skin directory #2: %s\n", skinMPlayerDir);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[interface] skin directory #2: %s\n", skinDirInData);
 
     if (!skinName)
         skinName = strdup("default");

@@ -44,7 +44,7 @@ typedef struct {
 } _item;
 
 char *skinDirInHome;
-char *skinMPlayerDir;
+char *skinDirInData;
 
 static guiItems *skin;
 
@@ -1050,7 +1050,7 @@ int skinRead(char *sname)
     skinfname = setname(skinDirInHome, sname);
 
     if ((skinfile = fopen(skinfname, "rt")) == NULL) {
-        skinfname = setname(skinMPlayerDir, sname);
+        skinfname = setname(skinDirInData, sname);
 
         if ((skinfile = fopen(skinfname, "rt")) == NULL) {
             mp_msg(MSGT_GPLAYER, MSGL_ERR, MSGTR_SKIN_SkinFileNotFound, skinfname);

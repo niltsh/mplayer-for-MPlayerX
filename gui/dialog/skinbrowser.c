@@ -37,8 +37,8 @@
 
 GtkWidget * SkinList = NULL;
 char      * sbSelectedSkin=NULL;
-char      * sbMPlayerDirInHome=NULL;
-char      * sbMPlayerPrefixDir=NULL;
+char      * sbSkinDirInHome=NULL;
+char      * sbSkinDirInData=NULL;
 
 char * gtkOldSkin=NULL;
 static char * prev=NULL;
@@ -154,10 +154,10 @@ static GtkWidget * CreateSkinBrowser( void )
  gtk_signal_connect( GTK_OBJECT( Ok ),"clicked",GTK_SIGNAL_FUNC( prButton ),(void *)1 );
  gtk_signal_connect( GTK_OBJECT( Cancel ),"clicked",GTK_SIGNAL_FUNC( prButton ),(void *)0 );
 
- if ( ( sbMPlayerDirInHome=calloc( 1,strlen( skinDirInHome ) + 4 ) ) != NULL )
-  { strcpy( sbMPlayerDirInHome,skinDirInHome ); strcat( sbMPlayerDirInHome,"/*" ); }
- if ( ( sbMPlayerPrefixDir=calloc( 1,strlen( skinMPlayerDir ) + 4 ) ) != NULL )
-  { strcpy( sbMPlayerPrefixDir,skinMPlayerDir ); strcat( sbMPlayerPrefixDir,"/*" ); }
+ if ( ( sbSkinDirInHome=calloc( 1,strlen( skinDirInHome ) + 4 ) ) != NULL )
+  { strcpy( sbSkinDirInHome,skinDirInHome ); strcat( sbSkinDirInHome,"/*" ); }
+ if ( ( sbSkinDirInData=calloc( 1,strlen( skinDirInData ) + 4 ) ) != NULL )
+  { strcpy( sbSkinDirInData,skinDirInData ); strcat( sbSkinDirInData,"/*" ); }
 
  gtk_window_add_accel_group( GTK_WINDOW( SkinBrowser ),accel_group );
  gtk_widget_grab_focus( SkinList );

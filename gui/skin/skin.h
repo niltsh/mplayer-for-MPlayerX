@@ -22,7 +22,7 @@
 #include "gui/util/bitmap.h"
 
 extern char *skinDirInHome;
-extern char *skinMPlayerDir;
+extern char *skinDirInData;
 
 int skinImageRead(char *fname, guiImage *img);
 int skinRead(char *dname);
