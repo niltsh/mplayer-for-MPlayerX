@@ -36,7 +36,7 @@ GtkWidget *URLDialog;
 
 static GtkWidget *URLCombo;
 static GtkWidget *URLEntry;
-static GList *URLComboEntrys;
+static GList *URLEntries;
 
 static void on_Button_pressed(GtkButton *button, gpointer user_data)
 {
@@ -56,7 +56,7 @@ static void on_Button_pressed(GtkButton *button, gpointer user_data)
                 str = tmp;
             }
 
-            URLComboEntrys = g_list_prepend(URLComboEntrys, (gchar *)str);
+            URLEntries = g_list_prepend(URLEntries, (gchar *)str);
 
             item      = calloc(1, sizeof(urlItem));
             item->url = gstrdup(str);
@@ -146,18 +146,18 @@ void ShowURLDialog(void)
     item = listMgr(URLLIST_GET, 0);
 
     if (item) {
-        g_list_free(URLComboEntrys);
-        URLComboEntrys = NULL;
+        g_list_free(URLEntries);
+        URLEntries = NULL;
 
         while (item) {
-            URLComboEntrys = g_list_append(URLComboEntrys, (gchar *)item->url);
-            item = item->next;
+            URLEntries = g_list_append(URLEntries, (gchar *)item->url);
+            item       = item->next;
         }
     }
 
-    if (URLComboEntrys) {
-        gtk_entry_set_text(GTK_ENTRY(URLEntry), URLComboEntrys->data);
-        gtk_combo_set_popdown_strings(GTK_COMBO(URLCombo), URLComboEntrys);
+    if (URLEntries) {
+        gtk_entry_set_text(GTK_ENTRY(URLEntry), URLEntries->data);
+        gtk_combo_set_popdown_strings(GTK_COMBO(URLCombo), URLEntries);
     }
 
     gtk_widget_show(URLDialog);
