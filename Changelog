@@ -14,6 +14,7 @@ MPlayer
     * Fixes for DVB, teletext and closed-caption based subtitles.
     * Support teletext and CC subtitles in WTV.
     * Support binding keys corresponding to non-ASCII characters.
+    * Limited -endpos support for -dump*
 
     Ports:
     * Windows: support file names as UTF-8 in slave mode and passing

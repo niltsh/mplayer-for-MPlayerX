@@ -1750,7 +1750,7 @@ double playing_audio_pts(sh_audio_t *sh_audio, demux_stream_t *d_audio,
 static int is_at_end(MPContext *mpctx, m_time_size_t *end_at, double pts)
 {
     switch (end_at->type) {
-    case END_AT_TIME: return end_at->pos <= pts;
+    case END_AT_TIME: return pts != MP_NOPTS_VALUE && end_at->pos <= pts;
     case END_AT_SIZE: return end_at->pos <= stream_tell(mpctx->stream);
     }
     return 0;
@@ -3269,6 +3269,11 @@ play_next_file:
         }
         stream_dump_progress_start();
         while (!mpctx->stream->eof && !async_quit_request) {
+            double pts;
+            if (stream_control(mpctx->stream, STREAM_CTRL_GET_CURRENT_TIME, &pts) != STREAM_OK)
+                pts = MP_NOPTS_VALUE;
+            if (is_at_end(mpctx, &end_at, pts))
+                break;
             len = stream_read(mpctx->stream, buf, 4096);
             if (len > 0) {
                 if (fwrite(buf, len, 1, f) != 1) {
@@ -3473,7 +3478,10 @@ goto_enable_cache:
         stream_dump_progress_start();
         while (!ds->eof) {
             unsigned char *start;
-            int in_size = ds_get_packet(ds, &start);
+            double pts;
+            int in_size = ds_get_packet_pts(ds, &start, &pts);
+            if (is_at_end(mpctx, &end_at, pts))
+                break;
             if ((mpctx->demuxer->file_format == DEMUXER_TYPE_AVI || mpctx->demuxer->file_format == DEMUXER_TYPE_ASF || mpctx->demuxer->file_format == DEMUXER_TYPE_MOV)
                 && stream_dump_type == 2)
                 fwrite(&in_size, 1, 4, f);
