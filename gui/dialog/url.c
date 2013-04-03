@@ -32,11 +32,11 @@
 #include "help_mp.h"
 #include "stream/stream.h"
 
-GtkWidget *URLDialog = NULL;
+GtkWidget *URLDialog;
 
 static GtkWidget *URLCombo;
 static GtkWidget *URLEntry;
-static GList *URLComboEntrys = NULL;
+static GList *URLComboEntrys;
 
 static void on_Button_pressed(GtkButton *button, gpointer user_data)
 {

@@ -55,11 +55,11 @@ char *get_current_dir_name(void);
 #define get_current_dir_name() getcwd(NULL, PATH_MAX)
 #endif
 
-const char *fsSelectedFile = NULL;
+const char *fsSelectedFile;
 const char *fsThisDir      = ".";
 const gchar *fsFilter      = "*";
 
-int fsType = 0;
+int fsType;
 
 static gint fsCurrFNameListSelected, fsLastFNameListSelected;
 
@@ -136,15 +136,15 @@ int fsLastFontFilterSelected = -1;
 
 GtkWidget *fsFileNamesList;
 GtkWidget *fsFNameList;
-GtkWidget *FileSelector = NULL;
+GtkWidget *FileSelector;
 GdkColormap *fsColorMap;
 GtkWidget *fsOk;
 GtkWidget *fsUp;
 GtkWidget *fsCancel;
 GtkWidget *fsCombo4;
 GtkWidget *fsPathCombo;
-GList *fsList_items    = NULL;
-GList *fsTopList_items = NULL;
+GList *fsList_items;
+GList *fsTopList_items;
 GHashTable *fsPathTable;
 GtkWidget *List;
 GtkWidget *fsFilterCombo;
