@@ -606,7 +606,6 @@ static GtkWidget *CreateFileSelect(void)
 
     FileSelector = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_widget_set_usize(FileSelector, 512, 300);
-    GTK_WIDGET_SET_FLAGS(FileSelector, GTK_CAN_DEFAULT);
     gtk_widget_set_events(FileSelector, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_FOCUS_CHANGE_MASK | GDK_STRUCTURE_MASK | GDK_PROPERTY_CHANGE_MASK | GDK_VISIBILITY_NOTIFY_MASK);
     gtk_window_set_title(GTK_WINDOW(FileSelector), MSGTR_FileSelect);
     gtk_window_set_position(GTK_WINDOW(FileSelector), GTK_WIN_POS_CENTER);

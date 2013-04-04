@@ -1733,7 +1733,6 @@ GtkWidget * CreateDXR3Config( void )
 
  DXR3Config=gtk_window_new( GTK_WINDOW_TOPLEVEL );
 // gtk_widget_set_usize( DXR3Config,300,156 );
- GTK_WIDGET_SET_FLAGS( DXR3Config,GTK_CAN_DEFAULT );
  gtk_window_set_title( GTK_WINDOW( DXR3Config ),"DXR3/H+" );
  gtk_window_set_position( GTK_WINDOW( DXR3Config ),GTK_WIN_POS_CENTER );
  gtk_window_set_policy( GTK_WINDOW( DXR3Config ),FALSE,FALSE,FALSE );

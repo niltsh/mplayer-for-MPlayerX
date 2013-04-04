@@ -589,7 +589,6 @@ GtkWidget * CreateEquConfig( void )
 
   EquConfig=gtk_window_new( GTK_WINDOW_TOPLEVEL );
   gtk_widget_set_usize( EquConfig,350,260 );
-  GTK_WIDGET_SET_FLAGS( EquConfig,GTK_CAN_DEFAULT );
   gtk_window_set_title( GTK_WINDOW( EquConfig ),MSGTR_ConfigureEqualizer );
   gtk_window_set_position( GTK_WINDOW( EquConfig ),GTK_WIN_POS_CENTER );
 //  gtk_window_set_modal( GTK_WINDOW( EquConfig ),TRUE );
