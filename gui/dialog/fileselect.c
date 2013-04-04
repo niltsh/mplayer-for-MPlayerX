@@ -611,7 +611,7 @@ static GtkWidget *CreateFileSelect(void)
     gtk_window_set_title(GTK_WINDOW(FileSelector), MSGTR_FileSelect);
     gtk_window_set_position(GTK_WINDOW(FileSelector), GTK_WIN_POS_CENTER);
     gtk_window_set_policy(GTK_WINDOW(FileSelector), TRUE, TRUE, TRUE);
-    gtk_window_set_wmclass(GTK_WINDOW(FileSelector), "FileSelect", MPlayer);
+    gtk_window_set_wmclass(GTK_WINDOW(FileSelector), "FileSelector", MPlayer);
     fsColorMap = gdk_colormap_get_system();
 
     gtk_widget_realize(FileSelector);

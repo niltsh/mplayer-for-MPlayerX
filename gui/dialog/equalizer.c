@@ -594,7 +594,7 @@ GtkWidget * CreateEquConfig( void )
   gtk_window_set_position( GTK_WINDOW( EquConfig ),GTK_WIN_POS_CENTER );
 //  gtk_window_set_modal( GTK_WINDOW( EquConfig ),TRUE );
   gtk_window_set_policy( GTK_WINDOW( EquConfig ),FALSE,FALSE,FALSE );
-  gtk_window_set_wmclass( GTK_WINDOW( EquConfig ),"EquConfig",MPlayer );
+  gtk_window_set_wmclass( GTK_WINDOW( EquConfig ),"EqualizerConfig",MPlayer );
 
   gtk_widget_realize( EquConfig );
   gtkAddIcon( EquConfig );
