@@ -445,7 +445,6 @@ static GtkWidget * CreatePlaylist( void )
   accel_group=gtk_accel_group_new();
 
   Playlist=gtk_window_new( GTK_WINDOW_TOPLEVEL );
-  gtk_object_set_data( GTK_OBJECT( Playlist ),"PlayList",Playlist );
   gtk_widget_set_usize( Playlist,512,384 );
   gtk_window_set_title( GTK_WINDOW( Playlist ),MSGTR_PlayList );
   gtk_window_set_position( GTK_WINDOW( Playlist ),GTK_WIN_POS_CENTER );

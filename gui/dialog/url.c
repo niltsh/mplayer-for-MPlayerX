@@ -86,7 +86,6 @@ static GtkWidget *CreateURLDialog(void)
 
     URLDialog = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_widget_set_name(URLDialog, "URL");
-    gtk_object_set_data(GTK_OBJECT(URLDialog), "URL", URLDialog);
     gtk_widget_set_usize(URLDialog, 384, 70);
     GTK_WIDGET_SET_FLAGS(URLDialog, GTK_CAN_DEFAULT);
     gtk_window_set_title(GTK_WINDOW(URLDialog), MSGTR_Network);

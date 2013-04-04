@@ -56,7 +56,6 @@ static GtkWidget * CreateMessageBox( void )
 
  MessageBox=gtk_window_new( GTK_WINDOW_TOPLEVEL );
  gtk_widget_set_name( MessageBox,"MessageBox" );
- gtk_object_set_data( GTK_OBJECT( MessageBox ),"MessageBox",MessageBox );
  gtk_widget_set_events( MessageBox,GDK_EXPOSURE_MASK | GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_VISIBILITY_NOTIFY_MASK );
  gtk_window_set_title( GTK_WINDOW( MessageBox ),"MPlayer ..." );
  gtk_window_set_position( GTK_WINDOW( MessageBox ),GTK_WIN_POS_CENTER );

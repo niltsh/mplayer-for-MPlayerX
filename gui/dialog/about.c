@@ -61,7 +61,6 @@ static GtkWidget * CreateAbout( void )
 
   About=gtk_window_new( GTK_WINDOW_TOPLEVEL );
   gtk_widget_set_name( About,MSGTR_About );
-  gtk_object_set_data( GTK_OBJECT( About ),MSGTR_About,About );
   gtk_widget_set_usize( About,340,415 );
   gtk_window_set_title( GTK_WINDOW( About ),MSGTR_About );
   gtk_window_set_position( GTK_WINDOW( About ),GTK_WIN_POS_CENTER );

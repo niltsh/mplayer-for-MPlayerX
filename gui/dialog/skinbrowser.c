@@ -100,7 +100,6 @@ static GtkWidget * CreateSkinBrowser( void )
 
  SkinBrowser=gtk_window_new( GTK_WINDOW_TOPLEVEL );
  gtk_widget_set_name( SkinBrowser,MSGTR_SkinBrowser );
- gtk_object_set_data( GTK_OBJECT( SkinBrowser ),MSGTR_SkinBrowser,SkinBrowser );
  gtk_widget_set_usize( SkinBrowser,256,320 );
  gtk_container_set_border_width( GTK_CONTAINER( SkinBrowser ),1 );
  GTK_WIDGET_SET_FLAGS( SkinBrowser,GTK_CAN_DEFAULT );

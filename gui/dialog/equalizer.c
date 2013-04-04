@@ -259,7 +259,6 @@ static GtkWidget * CreateEqualizer( void )
 
   Equalizer=gtk_window_new( GTK_WINDOW_TOPLEVEL );
   gtk_widget_set_name( Equalizer,MSGTR_Equalizer );
-  gtk_object_set_data( GTK_OBJECT( Equalizer ),MSGTR_Equalizer,Equalizer );
   gtk_widget_set_usize( Equalizer,-1,256 );
   gtk_window_set_title( GTK_WINDOW( Equalizer ),MSGTR_Equalizer );
   gtk_window_set_position( GTK_WINDOW( Equalizer ),GTK_WIN_POS_CENTER );
@@ -595,7 +594,6 @@ GtkWidget * CreateEquConfig( void )
 
   EquConfig=gtk_window_new( GTK_WINDOW_TOPLEVEL );
   gtk_widget_set_name( EquConfig,"EquConfig" );
-  gtk_object_set_data( GTK_OBJECT( EquConfig ),"EquConfig",EquConfig );
   gtk_widget_set_usize( EquConfig,350,260 );
   GTK_WIDGET_SET_FLAGS( EquConfig,GTK_CAN_DEFAULT );
   gtk_window_set_title( GTK_WINDOW( EquConfig ),MSGTR_ConfigureEqualizer );
