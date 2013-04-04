@@ -60,7 +60,6 @@ static GtkWidget * CreateAbout( void )
   accel_group=gtk_accel_group_new();
 
   About=gtk_window_new( GTK_WINDOW_TOPLEVEL );
-  gtk_widget_set_name( About,MSGTR_About );
   gtk_widget_set_usize( About,340,415 );
   gtk_window_set_title( GTK_WINDOW( About ),MSGTR_About );
   gtk_window_set_position( GTK_WINDOW( About ),GTK_WIN_POS_CENTER );
@@ -76,7 +75,6 @@ static GtkWidget * CreateAbout( void )
   pixmapwid=gdk_pixmap_colormap_create_from_xpm_d( About->window,gdk_colormap_get_system(),&mask,&pixmapstyle->bg[GTK_STATE_NORMAL],(gchar **) emblem_xpm );
   pixmap1=gtk_pixmap_new( pixmapwid,mask );
 
-  gtk_widget_set_name( pixmap1,"pixmap1" );
   gtk_widget_show( pixmap1 );
   gtk_box_pack_start( GTK_BOX( vbox ),pixmap1,FALSE,FALSE,0 );
   gtk_widget_set_usize( pixmap1,-2,174 );
@@ -84,7 +82,6 @@ static GtkWidget * CreateAbout( void )
   gtkAddHSeparator( vbox );
 
   scrolledwindow1=gtk_scrolled_window_new( NULL,NULL );
-  gtk_widget_set_name( scrolledwindow1,"scrolledwindow1" );
   gtk_widget_show( scrolledwindow1 );
   gtk_box_pack_start( GTK_BOX( vbox ),scrolledwindow1,TRUE,TRUE,0 );
   gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW( scrolledwindow1 ),GTK_POLICY_AUTOMATIC,GTK_POLICY_AUTOMATIC );
@@ -99,7 +96,6 @@ static GtkWidget * CreateAbout( void )
   AboutText=gtk_text_new( NULL,NULL );
   gtk_text_set_editable(GTK_TEXT(AboutText), FALSE);
 #endif
-  gtk_widget_set_name( AboutText,"AboutText" );
   gtk_widget_show( AboutText );
   gtk_container_add( GTK_CONTAINER( scrolledwindow1 ),AboutText );
   snprintf(title, sizeof(title), MP_TITLE, "MPlayer");

@@ -37,7 +37,6 @@ GtkWidget * gtkAddFrame( const char * title,int type,GtkWidget * parent,int add 
 {
  GtkWidget * frame = NULL;
  frame=gtk_frame_new( title );
- gtk_widget_set_name( frame,"frame" );
  gtk_widget_show( frame );
  gtk_frame_set_shadow_type( GTK_FRAME( frame ),type );
  if ( !parent ) return frame;
@@ -50,7 +49,6 @@ GtkWidget * gtkAddLabel( const char * title,GtkWidget * parent )
 {
  GtkWidget * label;
  label=gtk_label_new( title );
- gtk_widget_set_name( label,"label" );
  gtk_widget_show( label );
  if ( parent ) gtk_box_pack_start( GTK_BOX( parent ),label,FALSE,FALSE,0 );
  gtk_misc_set_alignment( GTK_MISC( label ),0,0.5 );
@@ -62,7 +60,6 @@ GtkWidget * gtkAddVBox( GtkWidget * parent,int type )
 {
  GtkWidget * vbox;
  vbox=gtk_vbox_new( FALSE,0 );
- gtk_widget_set_name( vbox,"vbox" );
  gtk_widget_show( vbox );
  if ( parent )
   {
@@ -76,7 +73,6 @@ GtkWidget * gtkAddHBox( GtkWidget * parent,int type )
 {
  GtkWidget * hbox;
  hbox=gtk_hbox_new( FALSE,0 );
- gtk_widget_set_name( hbox,"hbox" );
  gtk_widget_show( hbox );
  if ( parent )
   {
@@ -90,7 +86,6 @@ GtkWidget * gtkAddCheckButton( const char * title, GtkWidget * parent )
 {
  GtkWidget * CB;
  CB=gtk_check_button_new_with_label( title );
- gtk_widget_set_name( CB,"CB" );
  gtk_widget_show( CB );
  gtk_box_pack_start( GTK_BOX( parent ),CB,FALSE,FALSE,0 );
  return CB;
@@ -101,7 +96,6 @@ GtkWidget * gtkAddRadioButton( const char * title,GSList ** group,GtkWidget * pa
  GtkWidget * RB;
  RB=gtk_radio_button_new_with_label( *group,title );
  *group=gtk_radio_button_group( GTK_RADIO_BUTTON( RB ) );
- gtk_widget_set_name( RB,"RB" );
  gtk_widget_show( RB );
  gtk_box_pack_start( GTK_BOX( parent ),RB,FALSE,FALSE,0 );
  return RB;
@@ -116,7 +110,6 @@ GtkWidget * gtkAddSpinButton( const char * title,GtkAdjustment * adj,GtkWidget *
  gtk_box_pack_start( GTK_BOX( parent ),label,FALSE,FALSE,0 );
  gtk_widget_show( label );
  SB=gtk_spin_button_new( adj,0,0 );
- gtk_widget_set_name( SB,"SB" );
  gtk_box_pack_start( GTK_BOX( parent ),SB,FALSE,FALSE,0 );
  gtk_widget_show( SB );
  return SB;
@@ -126,7 +119,6 @@ GtkWidget * gtkAddButton( const char * title,GtkWidget * parent )
 {
  GtkWidget * B;
  B=gtk_button_new_with_label( title );
- gtk_widget_set_name( B,"B" );
  gtk_widget_show( B );
  gtk_container_add( GTK_CONTAINER( parent ),B );
  return B;
@@ -136,7 +128,6 @@ GtkWidget * gtkAddHSeparator( GtkWidget * parent )
 {
  GtkWidget * hseparator;
  hseparator=gtk_hseparator_new();
- gtk_widget_set_name( hseparator,"hseparator1" );
  gtk_widget_show( hseparator );
  gtk_box_pack_start( GTK_BOX( parent ),hseparator,FALSE,FALSE,0 );
  gtk_widget_set_usize( hseparator,-2,6 );
@@ -147,7 +138,6 @@ GtkWidget * gtkAddHButtonBox( GtkWidget * parent )
 {
  GtkWidget * hbuttonbox;
  hbuttonbox=gtk_hbutton_box_new();
- gtk_widget_set_name( hbuttonbox,"hbuttonbox" );
  gtk_widget_show( hbuttonbox );
  gtk_box_pack_start( GTK_BOX( parent ),hbuttonbox,FALSE,FALSE,0 );
  gtk_button_box_set_child_size( GTK_BUTTON_BOX( hbuttonbox ),85,20 );
@@ -158,7 +148,6 @@ GtkWidget * gtkAddHScale( GtkAdjustment * adj,GtkWidget * parent,int digit )
 {
  GtkWidget * HS;
  HS=gtk_hscale_new( adj );
- gtk_widget_set_name( HS,"HS" );
  gtk_widget_show( HS );
  if ( parent ) gtk_box_pack_start( GTK_BOX( parent ),HS,TRUE,TRUE,0 );
  gtk_scale_set_value_pos( GTK_SCALE( HS ),GTK_POS_RIGHT );
@@ -170,7 +159,6 @@ GtkWidget * gtkAddVScale( GtkAdjustment * adj,GtkWidget * parent,int digit )
 {
  GtkWidget * VS;
  VS=gtk_vscale_new( adj );
- gtk_widget_set_name( VS,"VS" );
  gtk_widget_show( VS );
  if ( parent ) gtk_box_pack_start( GTK_BOX( parent ),VS,TRUE,TRUE,0 );
 // gtk_scale_set_value_pos( GTK_SCALE( VS ),GTK_POS_RIGHT );
@@ -183,7 +171,6 @@ GtkWidget * gtkAddCombo( GtkWidget * parent )
 {
  GtkWidget * CB;
  CB=gtk_combo_new();
- gtk_widget_set_name( CB,"CB" );
  gtk_widget_show( CB );
  if ( parent ) gtk_box_pack_start( GTK_BOX( parent ),CB,TRUE,TRUE,0 );
  return CB;

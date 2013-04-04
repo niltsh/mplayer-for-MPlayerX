@@ -99,7 +99,6 @@ static GtkWidget * CreateSkinBrowser( void )
  accel_group = gtk_accel_group_new ();
 
  SkinBrowser=gtk_window_new( GTK_WINDOW_TOPLEVEL );
- gtk_widget_set_name( SkinBrowser,MSGTR_SkinBrowser );
  gtk_widget_set_usize( SkinBrowser,256,320 );
  gtk_container_set_border_width( GTK_CONTAINER( SkinBrowser ),1 );
  GTK_WIDGET_SET_FLAGS( SkinBrowser,GTK_CAN_DEFAULT );
@@ -117,7 +116,6 @@ static GtkWidget * CreateSkinBrowser( void )
  gtkAddHSeparator( vbox5 );
 
  scrolledwindow1=gtk_scrolled_window_new( NULL,NULL );
- gtk_widget_set_name( scrolledwindow1,"scrolledwindow1" );
  gtk_widget_ref( scrolledwindow1 );
  gtk_object_set_data_full( GTK_OBJECT( SkinBrowser ),"scrolledwindow1",scrolledwindow1,(GtkDestroyNotify)gtk_widget_unref );
  gtk_widget_show( scrolledwindow1 );
@@ -126,7 +124,6 @@ static GtkWidget * CreateSkinBrowser( void )
  gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW( scrolledwindow1 ),GTK_POLICY_NEVER,GTK_POLICY_AUTOMATIC );
 
  SkinList=gtk_clist_new( 1 );
- gtk_widget_set_name( SkinList,"SkinList" );
  gtk_widget_ref( SkinList );
  gtk_object_set_data_full( GTK_OBJECT( SkinBrowser ),"SkinList",SkinList,(GtkDestroyNotify)gtk_widget_unref );
  gtk_widget_show( SkinList );

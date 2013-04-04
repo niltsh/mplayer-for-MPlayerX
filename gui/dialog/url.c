@@ -85,7 +85,6 @@ static GtkWidget *CreateURLDialog(void)
     accel_group = gtk_accel_group_new();
 
     URLDialog = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_widget_set_name(URLDialog, "URL");
     gtk_widget_set_usize(URLDialog, 384, 70);
     GTK_WIDGET_SET_FLAGS(URLDialog, GTK_CAN_DEFAULT);
     gtk_window_set_title(GTK_WINDOW(URLDialog), MSGTR_Network);
@@ -103,12 +102,10 @@ static GtkWidget *CreateURLDialog(void)
     urlCombo = gtkAddCombo(hbox1);
 /*
  * gtk_combo_new();
- * gtk_widget_set_name( urlCombo,"urlCombo" );
  * gtk_widget_show( urlCombo );
  * gtk_box_pack_start( GTK_BOX( hbox1 ),urlCombo,TRUE,TRUE,0 );
  */
     urlEntry = GTK_COMBO(urlCombo)->entry;
-    gtk_widget_set_name(urlEntry, "URLEntry");
     gtk_widget_show(urlEntry);
 
     gtkAddHSeparator(vbox1);

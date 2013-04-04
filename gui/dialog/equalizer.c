@@ -258,7 +258,6 @@ static GtkWidget * CreateEqualizer( void )
   accel_group=gtk_accel_group_new();
 
   Equalizer=gtk_window_new( GTK_WINDOW_TOPLEVEL );
-  gtk_widget_set_name( Equalizer,MSGTR_Equalizer );
   gtk_widget_set_usize( Equalizer,-1,256 );
   gtk_window_set_title( GTK_WINDOW( Equalizer ),MSGTR_Equalizer );
   gtk_window_set_position( GTK_WINDOW( Equalizer ),GTK_WIN_POS_CENTER );
@@ -271,7 +270,6 @@ static GtkWidget * CreateEqualizer( void )
   vbox1=gtkAddVBox( gtkAddDialogFrame( Equalizer ),0 );
 
   Notebook=gtk_notebook_new();
-  gtk_widget_set_name( Notebook,"Notebook" );
   gtk_widget_show( Notebook );
   gtk_box_pack_start( GTK_BOX( vbox1 ),Notebook,TRUE,TRUE,0 );
   gtk_container_set_border_width( GTK_CONTAINER( Notebook ),1 );
@@ -279,21 +277,18 @@ static GtkWidget * CreateEqualizer( void )
   hbox1=gtkAddHBox( Notebook,0 );
 
   scrolledwindow1=gtk_scrolled_window_new( NULL,NULL );
-  gtk_widget_set_name( scrolledwindow1,"scrolledwindow1" );
   gtk_widget_show( scrolledwindow1 );
   gtk_box_pack_start( GTK_BOX( hbox1 ),scrolledwindow1,FALSE,FALSE,0 );
   gtk_widget_set_usize( scrolledwindow1,106,-2 );
   gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW( scrolledwindow1 ),GTK_POLICY_AUTOMATIC,GTK_POLICY_AUTOMATIC );
 
   ChannelsList=gtk_clist_new( 1 );
-  gtk_widget_set_name( ChannelsList,"ChannelsList" );
   gtk_widget_show( ChannelsList );
   gtk_container_add( GTK_CONTAINER( scrolledwindow1 ),ChannelsList );
   gtk_clist_set_column_width( GTK_CLIST( ChannelsList ),0,80 );
   gtk_clist_column_titles_hide( GTK_CLIST( ChannelsList ) );
 
   table1=gtk_table_new( 2,10,FALSE );
-  gtk_widget_set_name( table1,"table1" );
   gtk_widget_show( table1 );
   gtk_box_pack_start( GTK_BOX( hbox1 ),table1,FALSE,FALSE,0 );
   gtk_table_set_row_spacings( GTK_TABLE( table1 ),4 );
@@ -383,7 +378,6 @@ static GtkWidget * CreateEqualizer( void )
     gtkAddLabel( MSGTR_EQU_Audio,NULL ) );
 
   table1=gtk_table_new( 4,2,FALSE );
-  gtk_widget_set_name( table1,"table1" );
   gtk_widget_show( table1 );
   gtk_container_add( GTK_CONTAINER( Notebook ),table1 );
 
@@ -593,7 +587,6 @@ GtkWidget * CreateEquConfig( void )
   accel_group=gtk_accel_group_new();
 
   EquConfig=gtk_window_new( GTK_WINDOW_TOPLEVEL );
-  gtk_widget_set_name( EquConfig,"EquConfig" );
   gtk_widget_set_usize( EquConfig,350,260 );
   GTK_WIDGET_SET_FLAGS( EquConfig,GTK_CAN_DEFAULT );
   gtk_window_set_title( GTK_WINDOW( EquConfig ),MSGTR_ConfigureEqualizer );
@@ -608,7 +601,6 @@ GtkWidget * CreateEquConfig( void )
   vbox1=gtkAddVBox( gtkAddDialogFrame( EquConfig ),0 );
 
   table1=gtk_table_new( 6,2,FALSE );
-  gtk_widget_set_name( table1,"table1" );
   gtk_widget_show( table1 );
   gtk_box_pack_start( GTK_BOX( vbox1 ),table1,TRUE,TRUE,0 );
   gtk_table_set_row_spacings( GTK_TABLE( table1 ),4 );
@@ -642,42 +634,36 @@ GtkWidget * CreateEquConfig( void )
     gtk_table_attach( GTK_TABLE( table1 ),CBChannel1,1,2,0,1,(GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),(GtkAttachOptions)( 0 ),0,0 );
 
   CEChannel1=GTK_COMBO( CBChannel1 )->entry;
-  gtk_widget_set_name( CEChannel1,"CEChannel1" );
   gtk_widget_show( CEChannel1 );
 
   CBChannel2=gtkAddCombo( NULL );
     gtk_table_attach( GTK_TABLE( table1 ),CBChannel2,1,2,1,2,(GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),(GtkAttachOptions)( 0 ),0,0 );
 
   CEChannel2=GTK_COMBO( CBChannel2 )->entry;
-  gtk_widget_set_name( CEChannel2,"CEChannel2" );
   gtk_widget_show( CEChannel2 );
 
   CBChannel3=gtkAddCombo( NULL );
     gtk_table_attach( GTK_TABLE( table1 ),CBChannel3,1,2,2,3,(GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),(GtkAttachOptions)( 0 ),0,0 );
 
   CEChannel3=GTK_COMBO( CBChannel3 )->entry;
-  gtk_widget_set_name( CEChannel3,"CEChannel3" );
   gtk_widget_show( CEChannel3 );
 
   CBChannel4=gtkAddCombo( NULL );
     gtk_table_attach( GTK_TABLE( table1 ),CBChannel4,1,2,3,4,(GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),(GtkAttachOptions)( 0 ),0,0 );
 
   CEChannel4=GTK_COMBO( CBChannel4 )->entry;
-  gtk_widget_set_name( CEChannel4,"CEChannel4" );
   gtk_widget_show( CEChannel4 );
 
   CBChannel5=gtkAddCombo( NULL );
     gtk_table_attach( GTK_TABLE( table1 ),CBChannel5,1,2,4,5,(GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),(GtkAttachOptions)( 0 ),0,0 );
 
   CEChannel5=GTK_COMBO( CBChannel5 )->entry;
-  gtk_widget_set_name( CEChannel5,"CEChannel5" );
   gtk_widget_show( CEChannel5 );
 
   CBChannel6=gtkAddCombo( NULL );
     gtk_table_attach( GTK_TABLE( table1 ),CBChannel6,1,2,5,6,(GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),(GtkAttachOptions)( 0 ),0,0 );
 
   CEChannel6=GTK_COMBO( CBChannel6 )->entry;
-  gtk_widget_set_name( CEChannel6,"CEChannel6" );
   gtk_widget_show( CEChannel6 );
 
   gtkAddHSeparator( vbox1 );
