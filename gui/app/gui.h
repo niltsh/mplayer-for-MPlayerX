@@ -24,6 +24,9 @@
 #ifndef MPLAYER_GUI_GUI_H
 #define MPLAYER_GUI_GUI_H
 
+/// Name of the program the GUI utilizes
+#define MPlayer "MPlayer"
+
 //@{
 /// Boolean symbolic constant
 #if !defined(True) && !defined(False)

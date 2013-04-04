@@ -349,7 +349,7 @@ void uiMainInit (void)
     mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
   }
 
-  wsWindowCreate(&guiApp.mainWindow, guiApp.main.x, guiApp.main.y, guiApp.main.width, guiApp.main.height, (guiApp.mainDecoration ? wsShowFrame : 0 ) | wsMinSize | wsMaxSize | wsHideWindow, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, "MPlayer");
+  wsWindowCreate(&guiApp.mainWindow, guiApp.main.x, guiApp.main.y, guiApp.main.width, guiApp.main.height, (guiApp.mainDecoration ? wsShowFrame : 0 ) | wsMinSize | wsMaxSize | wsHideWindow, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, MPlayer);
   mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[main] mainWindow ID: 0x%x\n", (int) guiApp.mainWindow.WindowID);
   wsWindowShape(&guiApp.mainWindow, guiApp.main.Mask.Image);
   wsWindowIcon(wsDisplay, guiApp.mainWindow.WindowID, &guiIcon);

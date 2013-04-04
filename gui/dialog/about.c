@@ -18,6 +18,7 @@
 
 #include "config.h"
 #include "gui/app/app.h"
+#include "gui/app/gui.h"
 #include "help_mp.h"
 #include "version.h"
 
@@ -64,7 +65,7 @@ static GtkWidget * CreateAbout( void )
   gtk_window_set_title( GTK_WINDOW( About ),MSGTR_About );
   gtk_window_set_position( GTK_WINDOW( About ),GTK_WIN_POS_CENTER );
   gtk_window_set_policy( GTK_WINDOW( About ),TRUE,FALSE,FALSE );
-  gtk_window_set_wmclass( GTK_WINDOW( About ),"About","MPlayer" );
+  gtk_window_set_wmclass( GTK_WINDOW( About ),"About",MPlayer );
 
   gtk_widget_realize( About );
   gtkAddIcon( About );
@@ -98,7 +99,7 @@ static GtkWidget * CreateAbout( void )
 #endif
   gtk_widget_show( AboutText );
   gtk_container_add( GTK_CONTAINER( scrolledwindow1 ),AboutText );
-  snprintf(title, sizeof(title), MP_TITLE, "MPlayer");
+  snprintf(title, sizeof(title), MP_TITLE, MPlayer);
 #ifdef CONFIG_GTK2
   gtk_text_buffer_insert (AboutTextBuffer, &iter, title, -1);
   gtk_text_buffer_insert (AboutTextBuffer, &iter,

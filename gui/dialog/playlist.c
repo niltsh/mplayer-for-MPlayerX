@@ -449,7 +449,7 @@ static GtkWidget * CreatePlaylist( void )
   gtk_window_set_title( GTK_WINDOW( Playlist ),MSGTR_PlayList );
   gtk_window_set_position( GTK_WINDOW( Playlist ),GTK_WIN_POS_CENTER );
 //  gtk_window_set_policy( GTK_WINDOW( Playlist ),FALSE,FALSE,FALSE );
-  gtk_window_set_wmclass( GTK_WINDOW( Playlist ),"Playlist","MPlayer" );
+  gtk_window_set_wmclass( GTK_WINDOW( Playlist ),"Playlist",MPlayer );
 
   gtk_widget_realize( Playlist );
   gtkAddIcon( Playlist );

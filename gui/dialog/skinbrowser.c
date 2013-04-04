@@ -106,7 +106,7 @@ static GtkWidget * CreateSkinBrowser( void )
  gtk_window_set_title( GTK_WINDOW( SkinBrowser ),MSGTR_SkinBrowser );
  gtk_window_set_position( GTK_WINDOW( SkinBrowser ),GTK_WIN_POS_CENTER );
  gtk_window_set_policy( GTK_WINDOW( SkinBrowser ),FALSE,FALSE,TRUE );
- gtk_window_set_wmclass( GTK_WINDOW( SkinBrowser ),"SkinBrowser","MPlayer" );
+ gtk_window_set_wmclass( GTK_WINDOW( SkinBrowser ),"SkinBrowser",MPlayer );
 
  gtk_widget_realize( SkinBrowser );
  gtkAddIcon( SkinBrowser );

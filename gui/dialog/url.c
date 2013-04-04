@@ -25,6 +25,7 @@
 #include "tools.h"
 #include "gui/interface.h"
 #include "gui/app/app.h"
+#include "gui/app/gui.h"
 #include "gui/ui/actions.h"
 #include "gui/util/list.h"
 #include "gui/util/string.h"
@@ -90,7 +91,7 @@ static GtkWidget *CreateURLDialog(void)
     gtk_window_set_title(GTK_WINDOW(URLDialog), MSGTR_Network);
     gtk_window_set_position(GTK_WINDOW(URLDialog), GTK_WIN_POS_CENTER);
     gtk_window_set_policy(GTK_WINDOW(URLDialog), TRUE, TRUE, FALSE);
-    gtk_window_set_wmclass(GTK_WINDOW(URLDialog), "Network", "MPlayer");
+    gtk_window_set_wmclass(GTK_WINDOW(URLDialog), "Network", MPlayer);
 
     gtk_widget_realize(URLDialog);
     gtkAddIcon(URLDialog);

@@ -30,6 +30,9 @@
 #include "skinload.h"
 #include "playlist.h"
 
+/* Name of the program the GUI utilizes */
+#define MPlayer "MPlayer"
+
 extern float video_aspect;
 extern play_tree_t* playtree;
 extern int video_window;

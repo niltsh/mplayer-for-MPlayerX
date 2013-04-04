@@ -155,7 +155,7 @@ static void console_toggle(gui_t *gui)
         fp = freopen("con", "w", stdout);
         *stderr = *fp;
         setvbuf(stderr, NULL, _IONBF, 0);
-        print_version("MPlayer");
+        print_version(MPlayer);
         console_state = TRUE;
     }
 
@@ -186,7 +186,7 @@ void capitalize(char *fname)
 static void display_about_box(HWND hWnd)
 {
     char about_msg[512];
-    snprintf(about_msg, sizeof(about_msg), MP_TITLE "\n" COPYRIGHT, "MPlayer");
+    snprintf(about_msg, sizeof(about_msg), MP_TITLE "\n" COPYRIGHT, MPlayer);
     MessageBox(hWnd, about_msg, acp(MSGTR_About), MB_OK);
 }
 
@@ -1516,7 +1516,7 @@ int create_window(gui_t *gui, char *skindir)
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     wc.hIcon = gui->icon;
     wc.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));
-    wc.lpszClassName = gui->classname = "MPlayer";
+    wc.lpszClassName = gui->classname = MPlayer;
     wc.lpszMenuName = NULL;
     RegisterClass(&wc);
 
@@ -1552,7 +1552,7 @@ int create_window(gui_t *gui, char *skindir)
         gui_main_pos_y = y;
     }
 
-    gui->mainwindow = CreateWindowEx(0, gui->classname, "MPlayer", style,
+    gui->mainwindow = CreateWindowEx(0, gui->classname, MPlayer, style,
                                      x, y, rect.right-rect.left, rect.bottom-rect.top,
                                      NULL, NULL, instance, NULL);
 
@@ -1563,7 +1563,7 @@ int create_window(gui_t *gui, char *skindir)
     nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
     nid.uCallbackMessage = WM_SYSTRAY;
     nid.hIcon = gui->icon;
-    strcpy(nid.szTip, "MPlayer");
+    strcpy(nid.szTip, MPlayer);
 
     /* register the systray icon */
     Shell_NotifyIcon(NIM_ADD, &nid);
@@ -1587,7 +1587,7 @@ gui_t *create_gui(char *skindir, void (*playercontrol)(int event))
 {
     gui_t *gui = calloc(1, sizeof(gui_t));
     char temp[MAX_PATH];
-    HWND runningmplayer = FindWindow("MPlayer", "MPlayer");
+    HWND runningmplayer = FindWindow(MPlayer, MPlayer);
 
     if(runningmplayer)
     {

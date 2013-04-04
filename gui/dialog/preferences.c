@@ -568,7 +568,7 @@ static GtkWidget * CreatePreferences( void )
   gtk_window_set_title( GTK_WINDOW( Preferences ),MSGTR_Preferences );
   gtk_window_set_position( GTK_WINDOW( Preferences ),GTK_WIN_POS_CENTER );
 //  gtk_window_set_policy( GTK_WINDOW( Preferences ),FALSE,FALSE,FALSE );
-  gtk_window_set_wmclass( GTK_WINDOW( Preferences ),"Preferences","MPlayer" );
+  gtk_window_set_wmclass( GTK_WINDOW( Preferences ),"Preferences",MPlayer );
 
   gtk_widget_realize( Preferences );
   gtkAddIcon( Preferences );
@@ -1542,7 +1542,7 @@ static GtkWidget *CreateAudioConfig( void ) {
   gtk_window_set_title(GTK_WINDOW(AudioConfig), MSGTR_AudioPreferences);
   gtk_window_set_position(GTK_WINDOW(AudioConfig), GTK_WIN_POS_CENTER);
   gtk_window_set_policy(GTK_WINDOW(AudioConfig), FALSE, FALSE, FALSE);
-  gtk_window_set_wmclass(GTK_WINDOW(AudioConfig), "Audio Config", "MPlayer");
+  gtk_window_set_wmclass(GTK_WINDOW(AudioConfig), "Audio Config", MPlayer);
 
   gtk_widget_realize(AudioConfig);
   gtkAddIcon(AudioConfig);
@@ -1737,7 +1737,7 @@ GtkWidget * CreateDXR3Config( void )
  gtk_window_set_title( GTK_WINDOW( DXR3Config ),"DXR3/H+" );
  gtk_window_set_position( GTK_WINDOW( DXR3Config ),GTK_WIN_POS_CENTER );
  gtk_window_set_policy( GTK_WINDOW( DXR3Config ),FALSE,FALSE,FALSE );
- gtk_window_set_wmclass( GTK_WINDOW( DXR3Config ),"DXR3","MPlayer" );
+ gtk_window_set_wmclass( GTK_WINDOW( DXR3Config ),"DXR3",MPlayer );
 
  gtk_widget_realize( DXR3Config );
  gtkAddIcon( DXR3Config );
