@@ -122,7 +122,7 @@ void gtkInit(char *display_name)
 
     mp_msg(MSGT_GPLAYER, MSGL_V, "GTK init.\n");
 
-    arg[argc++] = GMPlayer;
+    arg[argc++] = gmplayer;
 
     if (display_name) {             // MPlayer option '-display' was given
         arg[argc++] = "--display";  // Pass corresponding command line arguments to GTK,

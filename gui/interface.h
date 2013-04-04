@@ -34,7 +34,8 @@
 extern int use_gui;             // this is defined in mplayer.c
 // ------------------------------------------------------------
 
-#define GMPlayer "gmplayer"
+/// Name of the GUI binary
+#define gmplayer "gmplayer"
 
 /// gui() instructions
 enum {

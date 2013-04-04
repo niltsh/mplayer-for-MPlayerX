@@ -2789,7 +2789,7 @@ int main(int argc, char *argv[])
     if (argc > 1 && argv[1] &&
         (!strcmp(argv[1], "-gui") || !strcmp(argv[1], "-nogui"))) {
         use_gui = !strcmp(argv[1], "-gui");
-    } else if (argv[0] && strstr(mp_basename(argv[0]), GMPlayer)) {
+    } else if (argv[0] && strstr(mp_basename(argv[0]), gmplayer)) {
         use_gui = 1;
     }
 
