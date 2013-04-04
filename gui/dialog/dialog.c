@@ -48,7 +48,7 @@
 
 guiIcon_t guiIcon;
 
-static const char gui_icon_name[] = "mplayer";
+static const char guiIconName[] = "mplayer";
 
 static GtkWidget *PopUpMenu;
 
@@ -70,7 +70,7 @@ static int gtkLoadIcon(GtkIconTheme *theme, gint size, GdkPixmap **gdkIcon, GdkB
     guchar *data;
     int csize, i;
 
-    pixbuf = gtk_icon_theme_load_icon(theme, gui_icon_name, size, 0, NULL);
+    pixbuf = gtk_icon_theme_load_icon(theme, guiIconName, size, 0, NULL);
 
     if (pixbuf)
         gdk_pixbuf_render_pixmap_and_mask_for_colormap(pixbuf, gdk_colormap_get_system(), gdkIcon, gdkIconMask, THRESHOLD);
@@ -96,7 +96,7 @@ static int gtkLoadIcon(GtkIconTheme *theme, gint size, GdkPixmap **gdkIcon, GdkB
 
         g_object_unref(pixbuf);
     } else
-        mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_ICONERROR, gui_icon_name, size);
+        mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_ICONERROR, guiIconName, size);
 
     /* start up GTK which realizes the pixmaps */
     gtk_main_iteration_do(FALSE);

@@ -68,7 +68,7 @@ guiInterface_t guiInfo = {
     .PlaylistNext = True
 };
 
-static int initialized;
+static int guiInitialized;
 
 /* MPlayer -> GUI */
 
@@ -208,7 +208,7 @@ void guiInit(void)
 
     mplayerLoadFont();
 
-    initialized = True;
+    guiInitialized = True;
 }
 
 /**
@@ -216,7 +216,7 @@ void guiInit(void)
  */
 void guiDone(void)
 {
-    if (initialized) {
+    if (guiInitialized) {
         if (gui_save_pos) {
             gui_main_pos_x  = guiApp.mainWindow.X;
             gui_main_pos_y  = guiApp.mainWindow.Y;
