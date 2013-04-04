@@ -1541,7 +1541,7 @@ static GtkWidget *CreateAudioConfig( void ) {
   AudioConfig = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title(GTK_WINDOW(AudioConfig), MSGTR_AudioPreferences);
   gtk_window_set_position(GTK_WINDOW(AudioConfig), GTK_WIN_POS_CENTER);
-  gtk_window_set_policy(GTK_WINDOW(AudioConfig), FALSE, FALSE, FALSE);
+  gtk_window_set_policy(GTK_WINDOW(AudioConfig), FALSE, FALSE, TRUE);
   gtk_window_set_wmclass(GTK_WINDOW(AudioConfig), "AudioConfig", MPlayer);
 
   gtk_widget_realize(AudioConfig);
@@ -1735,7 +1735,7 @@ GtkWidget * CreateDXR3Config( void )
 // gtk_widget_set_usize( DXR3Config,300,156 );
  gtk_window_set_title( GTK_WINDOW( DXR3Config ),"DXR3/H+" );
  gtk_window_set_position( GTK_WINDOW( DXR3Config ),GTK_WIN_POS_CENTER );
- gtk_window_set_policy( GTK_WINDOW( DXR3Config ),FALSE,FALSE,FALSE );
+ gtk_window_set_policy( GTK_WINDOW( DXR3Config ),FALSE,FALSE,TRUE );
  gtk_window_set_wmclass( GTK_WINDOW( DXR3Config ),"DXR3Config",MPlayer );
 
  gtk_widget_realize( DXR3Config );
