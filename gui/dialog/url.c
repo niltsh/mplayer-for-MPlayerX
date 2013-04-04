@@ -82,6 +82,7 @@ static GtkWidget *CreateURLDialog(void)
     GtkWidget *Ok;
     GtkWidget *Cancel;
     GtkAccelGroup *accel_group;
+    GdkGeometry geometry;
 
     accel_group = gtk_accel_group_new();
 
@@ -115,6 +116,10 @@ static GtkWidget *CreateURLDialog(void)
 
     Ok     = gtkAddButton(MSGTR_Ok, hbuttonbox1);
     Cancel = gtkAddButton(MSGTR_Cancel, hbuttonbox1);
+
+    geometry.max_width  = gdk_screen_get_width(gtk_widget_get_screen(URLDialog));
+    geometry.max_height = -1;
+    gtk_window_set_geometry_hints(GTK_WINDOW(URLDialog), NULL, &geometry, GDK_HINT_MAX_SIZE);
 
     gtk_widget_add_accelerator(Ok, "clicked", accel_group, GDK_Return, 0, GTK_ACCEL_VISIBLE);
     gtk_widget_add_accelerator(Cancel, "clicked", accel_group, GDK_Escape, 0, GTK_ACCEL_VISIBLE);
