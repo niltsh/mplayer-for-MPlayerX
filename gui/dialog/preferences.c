@@ -567,7 +567,6 @@ static GtkWidget * CreatePreferences( void )
   Preferences=gtk_window_new( GTK_WINDOW_TOPLEVEL );
   gtk_window_set_title( GTK_WINDOW( Preferences ),MSGTR_Preferences );
   gtk_window_set_position( GTK_WINDOW( Preferences ),GTK_WIN_POS_CENTER );
-//  gtk_window_set_policy( GTK_WINDOW( Preferences ),FALSE,FALSE,FALSE );
   gtk_window_set_wmclass( GTK_WINDOW( Preferences ),"Preferences",MPlayer );
 
   gtk_widget_realize( Preferences );
