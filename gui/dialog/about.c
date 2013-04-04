@@ -64,7 +64,7 @@ static GtkWidget * CreateAbout( void )
   gtk_widget_set_usize( About,340,415 );
   gtk_window_set_title( GTK_WINDOW( About ),MSGTR_About );
   gtk_window_set_position( GTK_WINDOW( About ),GTK_WIN_POS_CENTER );
-  gtk_window_set_policy( GTK_WINDOW( About ),TRUE,FALSE,FALSE );
+  gtk_window_set_policy( GTK_WINDOW( About ),FALSE,FALSE,TRUE );
   gtk_window_set_wmclass( GTK_WINDOW( About ),"About",MPlayer );
 
   gtk_widget_realize( About );
