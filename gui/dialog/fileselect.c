@@ -609,7 +609,7 @@ static GtkWidget *CreateFileSelect(void)
     gtk_widget_set_events(FileSelector, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_FOCUS_CHANGE_MASK | GDK_STRUCTURE_MASK | GDK_PROPERTY_CHANGE_MASK | GDK_VISIBILITY_NOTIFY_MASK);
     gtk_window_set_title(GTK_WINDOW(FileSelector), MSGTR_FileSelect);
     gtk_window_set_position(GTK_WINDOW(FileSelector), GTK_WIN_POS_CENTER);
-    gtk_window_set_policy(GTK_WINDOW(FileSelector), TRUE, TRUE, TRUE);
+    gtk_window_set_policy(GTK_WINDOW(FileSelector), FALSE, TRUE, FALSE);
     gtk_window_set_wmclass(GTK_WINDOW(FileSelector), "FileSelector", MPlayer);
     fsColorMap = gdk_colormap_get_system();
 
