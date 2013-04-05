@@ -761,7 +761,6 @@ int gui(int what, void *data)
     case GUI_HANDLE_X_EVENT:
 
         wsEvent(data);
-        gtkEventHandling();
         break;
 
     case GUI_END_FILE:
