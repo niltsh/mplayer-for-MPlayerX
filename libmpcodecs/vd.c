@@ -223,7 +223,7 @@ int mpcodecs_config_vo(sh_video_t *sh, int w, int h,
                 palette = 1;
         }
     }
-    if (j < 0) {
+    if (j < 0 && !IMGFMT_IS_HWACCEL(preferred_outfmt)) {
         // TODO: no match - we should use conversion...
         if (strcmp(vf->info->name, "scale") && palette != -1) {
             mp_msg(MSGT_DECVIDEO, MSGL_INFO, MSGTR_CouldNotFindColorspace);
@@ -264,6 +264,8 @@ int mpcodecs_config_vo(sh_video_t *sh, int w, int h,
                 vf_uninit_filter(vp);
             }
         }
+    }
+    if (j < 0) {
         mp_msg(MSGT_CPLAYER, MSGL_WARN, MSGTR_VOincompCodec);
         sh->vf_initialized = -1;
         return 0;               // failed
