@@ -335,6 +335,7 @@ int gui(int what, void *data)
 
         if (!guiInfo.Playing || !guiInfo.VideoWindow)
             wsEvents();
+        /* else it's handled by the vo driver calling GUI_HANDLE_X_EVENT */
 
         wsMouseAutohide();
         gtkEventHandling();
