@@ -1001,8 +1001,10 @@ static enum AVPixelFormat get_format(struct AVCodecContext *avctx,
         }
     }
     selected_format = fmt[i];
-    if (selected_format == PIX_FMT_NONE)
+    if (selected_format == PIX_FMT_NONE) {
         selected_format = avcodec_default_get_format(avctx, fmt);
+        init_vo(sh, selected_format);
+    }
     set_format_params(avctx, selected_format);
     return selected_format;
 }
