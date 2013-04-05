@@ -168,12 +168,13 @@ void gtkAddIcon(GtkWidget *window)
     wsWindowIcon(gdk_display, GDK_WINDOW_XWINDOW(window->window), &guiIcon);
 }
 
+/**
+ * @brief Process all pending events.
+ */
 void gtkEvents(void)
 {
-    int i;
-
-    for (i = 0; i < 25; i++)
-        gtk_main_iteration_do(0);
+    while (gtk_events_pending())
+        gtk_main_iteration();
 }
 
 /* funcs */
