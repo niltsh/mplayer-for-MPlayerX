@@ -605,13 +605,15 @@ buttonreleased:
     XSync(wsDisplay, False);
 }
 
+/**
+ * @brief Process all pending events.
+ */
 void wsEvents(void)
 {
     XEvent xev;
-    /* handle pending events */
+
     while (XPending(wsDisplay)) {
         XNextEvent(wsDisplay, &xev);
-//   printf("### X event: %d  [%d]\n",xev.type,delay);
         wsEvent(&xev);
     }
 }
