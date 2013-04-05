@@ -168,7 +168,7 @@ void gtkAddIcon(GtkWidget *window)
     wsWindowIcon(gdk_display, GDK_WINDOW_XWINDOW(window->window), &guiIcon);
 }
 
-void gtkEventHandling(void)
+void gtkEvents(void)
 {
     int i;
 

@@ -338,7 +338,7 @@ int gui(int what, void *data)
         /* else it's handled by the vo driver calling GUI_HANDLE_X_EVENT */
 
         wsMouseAutohide();
-        gtkEventHandling();
+        gtkEvents();
 
         break;
 
