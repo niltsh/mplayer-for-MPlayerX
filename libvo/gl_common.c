@@ -1913,11 +1913,10 @@ static void *w32gpa(const GLubyte *procName) {
 
 static int setGlWindow_w32(MPGLContext *ctx)
 {
-  HWND win = vo_w32_window;
   int *vinfo = &ctx->vinfo.w32;
   HGLRC *context = &ctx->context.w32;
   int new_vinfo;
-  HDC windc = vo_w32_get_dc(win);
+  HDC windc = vo_w32_get_dc(vo_w32_window);
   HGLRC new_context = 0;
   int keep_context = 0;
   int res = SET_WINDOW_FAILED;
@@ -1950,10 +1949,9 @@ static int setGlWindow_w32(MPGLContext *ctx)
   }
 
   // set new values
-  vo_w32_window = win;
   {
     RECT rect;
-    GetClientRect(win, &rect);
+    GetClientRect(vo_w32_window, &rect);
     vo_dwidth = rect.right;
     vo_dheight = rect.bottom;
   }
@@ -1970,7 +1968,7 @@ static int setGlWindow_w32(MPGLContext *ctx)
     res = SET_WINDOW_OK;
 
 out:
-  vo_w32_release_dc(win, windc);
+  vo_w32_release_dc(vo_w32_window, windc);
   return res;
 }
 
