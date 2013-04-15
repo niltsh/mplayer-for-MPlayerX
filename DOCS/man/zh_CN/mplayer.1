@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 35963
+.\" sync with en/mplayer.1 rev. 36136
 .\" MPlayer (C) 2000-2013 MPlayer Team
 .\" This man page was/is translated by JRaSH<jrash06 at gmail.com>
 .
@@ -1076,6 +1076,10 @@ mplayer \-heartbeat\-cmd "gnome\-screensaver\-command \-p" file
 .PD 1
 .
 .TP
+.B \-heartbeat\-interval
+指定每隔多久 \-heartbeat\-cmd 要执行一次，以两次执行间相隔的秒数为单位（默认值：30.0）。
+.
+.TP
 .B \-identify
 为 \-msglevel identify=4 的简便写法。\
 使用便于解析的格式显示文件参数。\
@@ -1669,7 +1673,8 @@ MPlayer 在关闭时将驱动器的速度重置为默认值。\
 .I 注意：
 字节数表示的位置可能不精确，因为只能停在帧数据块的边界上。\
 当与 \-ss 选项组合使用时，如非以字节数指定位置，\-endpos 的时间\
-会向前平移 \-ss 所指定的秒数。
+会向前平移 \-ss 所指定的秒数。\
+另外，当与任何 \-dump 选项一同使用时，该选项可能无法正确或有效地起作用。
 .sp 1
 .I 示例：
 .PD 0
