@@ -441,7 +441,11 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
                 type = 't';
             else if (codec->codec_id == AV_CODEC_ID_MOV_TEXT)
                 type = 'm';
-            else if (codec->codec_id == AV_CODEC_ID_SSA)
+            else if (codec->codec_id == AV_CODEC_ID_SSA
+#if LIBAVUTIL_VERSION_MICRO >= 100
+                     || codec->codec_id == AV_CODEC_ID_ASS
+#endif /* LIBAVUTIL_VERSION_MICRO >= 100 */
+                )
                 type = 'a';
             else if (codec->codec_id == AV_CODEC_ID_DVD_SUBTITLE)
                 type = 'v';
