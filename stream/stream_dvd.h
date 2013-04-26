@@ -26,7 +26,6 @@
 #include <dvdread/ifo_read.h>
 #include <dvdread/nav_read.h>
 #include "stream.h"
-#include "m_option.h"
 
 typedef struct {
   dvd_reader_t *dvd;
@@ -60,6 +59,5 @@ int dvd_number_of_subs(stream_t *stream);
 int dvd_aid_from_lang(stream_t *stream, const unsigned char* lang);
 int dvd_sid_from_lang(stream_t *stream, const unsigned char* lang);
 int dvd_chapter_from_cell(dvd_priv_t *dvd,int title,int cell);
-int dvd_parse_chapter_range(const m_option_t *conf, const char *range);
 
 #endif /* MPLAYER_STREAM_DVD_H */
