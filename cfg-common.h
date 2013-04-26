@@ -340,10 +340,9 @@ const m_option_t common_opts[] = {
     {"bluray-device",  &bluray_device,  CONF_TYPE_STRING, 0,          0,  0, NULL},
 #ifdef CONFIG_LIBBLURAY
     {"bluray-angle",   &bluray_angle,   CONF_TYPE_INT,    CONF_RANGE, 0, 999, NULL},
-    {"bluray-chapter", &bluray_chapter, CONF_TYPE_INT,    CONF_RANGE, 0, 999, NULL},
+    {"bluray-chapter", "The -bluray-chapter option was broken and thus removed, use -chapter instead.\n", CONF_TYPE_PRINT, CONF_NOCFG, 0, 0, NULL},
 #else
     {"bluray-angle",   "MPlayer was compiled without libbluray support.\n", CONF_TYPE_PRINT, 0, 0, 0, NULL},
-    {"bluray-chapter", "MPlayer was compiled without libbluray support.\n", CONF_TYPE_PRINT, CONF_NOCFG, 0, 0, NULL},
 #endif /* CONFIG_LIBBLURAY */
     {"alang", &audio_lang, CONF_TYPE_STRING, 0, 0, 0, NULL},
     {"slang", &dvdsub_lang, CONF_TYPE_STRING, 0, 0, 0, NULL},
