@@ -1192,7 +1192,7 @@ void ifo_print(dvd_reader_t *dvd, int title) {
       printf("No Menu VOBU address map present\n");
     }
 
-    printf("\nCell Adress table\n");
+    printf("\nCell Address table\n");
     printf(  "-----------------\n");
     ifoPrint_C_ADT(ifohandle->vts_c_adt);
 

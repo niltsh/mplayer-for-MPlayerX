@@ -8,9 +8,9 @@ lib_LTLIBRARIES = libdvdread.la
 
 libdvdread_la_SOURCES = dvd_reader.c nav_read.c ifo_read.c \
 	dvd_input.c dvd_udf.c md5.c nav_print.c ifo_print.c bitreader.c \
-	bswap.h dvd_input.h dvdread_internal.h dvd_udf.h md5.h bitreader.h
+	bswap.h dvd_input.h dvdread_internal.h md5.h
 
-libdvdread_la_LIBADD = $(DYNAMIC_LD_LIBS)
+libdvdread_la_LIBADD = $(DYNAMIC_LD_LIBS) @CSS_LIBS@
 
 libdvdread_la_LDFLAGS = -version-info $(DVDREAD_LT_CURRENT):$(DVDREAD_LT_REVISION):$(DVDREAD_LT_AGE) \
 	-export-symbols-regex "(^dvd.*|^nav.*|^ifo.*|^DVD.*|^UDF.*)"

@@ -28,6 +28,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#include <strings.h>
 #include <ctype.h>
 #include <unistd.h>
 #include <limits.h>
@@ -58,6 +59,10 @@ static inline int _private_gettimeofday( struct timeval *tv, void *tz )
 
 #if defined(__sun)
 #include <sys/mnttab.h>
+#elif defined(__APPLE__)
+#include <sys/param.h>
+#include <sys/ucred.h>
+#include <sys/mount.h>
 #elif defined(SYS_BSD)
 #include <fstab.h>
 #elif defined(__linux__)
@@ -474,7 +479,28 @@ dvd_reader_t *DVDOpen( const char *ppath )
       path_copy[1] = '\0';
     }
 
-#if defined(SYS_BSD)
+#if defined(__APPLE__)
+    struct statfs s[128];
+    int r = getfsstat(NULL, 0, MNT_NOWAIT);
+    if (r > 0) {
+        if (r > 128)
+            r = 128;
+        r = getfsstat(s, r * sizeof(s[0]), MNT_NOWAIT);
+        int i;
+        for (i=0; i<r; i++) {
+            if (!strcmp(path_copy, s[i].f_mntonname)) {
+                dev_name = bsd_block2char(s[i].f_mntfromname);
+                fprintf( stderr,
+                        "libdvdread: Attempting to use device %s"
+                        " mounted on %s for CSS authentication\n",
+                        dev_name,
+                        s[i].f_mntonname);
+                auth_drive = DVDOpenImageFile( dev_name, have_css );
+                break;
+            }
+        }
+    }
+#elif defined(SYS_BSD)
     if( ( fe = getfsfile( path_copy ) ) ) {
       dev_name = bsd_block2char( fe->fs_spec );
       fprintf( stderr,
@@ -716,6 +742,7 @@ static dvd_file_t *DVDOpenFilePath( dvd_reader_t *dvd, char *filename )
   if( stat( full_path, &fileinfo ) < 0 ) {
     fprintf( stderr, "libdvdread: Can't stat() %s.\n", filename );
     free( dvd_file );
+    dvdinput_close( dev );
     return NULL;
   }
   dvd_file->title_sizes[ 0 ] = fileinfo.st_size / DVD_VIDEO_LB_LEN;
