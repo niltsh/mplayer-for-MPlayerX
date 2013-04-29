@@ -153,7 +153,7 @@ void ShowURLDialog(void)
         urlEntries = NULL;
 
         while (item) {
-            urlEntries = g_list_append(urlEntries, (gchar *)item->url);
+            urlEntries = g_list_append(urlEntries, item->url);
             item       = item->next;
         }
     }
