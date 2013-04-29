@@ -61,15 +61,15 @@ static void button_clicked(GtkButton *button, gpointer user_data)
             }
 
             if (str) {
-            item      = calloc(1, sizeof(urlItem));
-            item->url = str;
-            listMgr(URLLIST_ITEM_ADD, item);
+                item      = calloc(1, sizeof(urlItem));
+                item->url = str;
+                listMgr(URLLIST_ITEM_ADD, item);
 
-            uiSetFile(NULL, str, STREAMTYPE_STREAM);
-            listMgr(PLAYLIST_DELETE, 0);
-            add_to_gui_playlist(str, PLAYLIST_ITEM_APPEND);
-            guiInfo.NewPlay = GUI_FILE_NEW;
-            uiEvent(evPlay, 0);
+                uiSetFile(NULL, str, STREAMTYPE_STREAM);
+                listMgr(PLAYLIST_DELETE, 0);
+                add_to_gui_playlist(str, PLAYLIST_ITEM_APPEND);
+                guiInfo.NewPlay = GUI_FILE_NEW;
+                uiEvent(evPlay, 0);
             }
         }
     }
