@@ -28,7 +28,6 @@
 #include "gui/app/gui.h"
 #include "gui/ui/actions.h"
 #include "gui/util/list.h"
-#include "gui/util/string.h"
 
 #include "help_mp.h"
 #include "stream/stream.h"
@@ -63,7 +62,7 @@ static void button_clicked(GtkButton *button, gpointer user_data)
 
             if (str) {
             item      = calloc(1, sizeof(urlItem));
-            item->url = gstrdup(str);
+            item->url = str;
             listMgr(URLLIST_ITEM_ADD, item);
 
             uiSetFile(NULL, str, STREAMTYPE_STREAM);
