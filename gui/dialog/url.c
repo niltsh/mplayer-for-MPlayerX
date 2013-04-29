@@ -65,11 +65,11 @@ static void button_clicked(GtkButton *button, gpointer user_data)
                 listMgr(PLAYLIST_DELETE, 0);
                 add_to_gui_playlist(str, PLAYLIST_ITEM_APPEND);
 
-                item      = calloc(1, sizeof(urlItem));
+                item = calloc(1, sizeof(urlItem));
 
                 if (item) {
-                item->url = str;
-                listMgr(URLLIST_ITEM_ADD, item);
+                    item->url = str;
+                    listMgr(URLLIST_ITEM_ADD, item);
                 }
 
                 guiInfo.NewPlay = GUI_FILE_NEW;
