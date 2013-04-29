@@ -49,9 +49,7 @@ static void button_clicked(GtkButton *button, gpointer user_data)
 
         if (str) {
             if (!strstr(str, "://")) {
-                char *tmp;
-
-                tmp = malloc(strlen(str) + 8);
+                char *tmp = malloc(strlen(str) + 8);
 
                 if (tmp)
                     sprintf(tmp, "http://%s", str);
