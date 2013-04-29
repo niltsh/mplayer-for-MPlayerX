@@ -46,11 +46,11 @@ static void button_clicked(GtkButton *button, gpointer user_data)
     (void)button;
 
     if (user_data) {
-        gchar *str = strdup(gtk_entry_get_text(GTK_ENTRY(urlEntry)));
+        char *str = strdup(gtk_entry_get_text(GTK_ENTRY(urlEntry)));
 
         if (str) {
             if (!strstr(str, "://")) {
-                gchar *tmp;
+                char *tmp;
 
                 tmp = malloc(strlen(str) + 8);
                 sprintf(tmp, "http://%s", str);
