@@ -53,11 +53,15 @@ static void button_clicked(GtkButton *button, gpointer user_data)
                 char *tmp;
 
                 tmp = malloc(strlen(str) + 8);
-                sprintf(tmp, "http://%s", str);
+
+                if (tmp)
+                    sprintf(tmp, "http://%s", str);
+
                 free(str);
                 str = tmp;
             }
 
+            if (str) {
             item      = calloc(1, sizeof(urlItem));
             item->url = gstrdup(str);
             listMgr(URLLIST_ITEM_ADD, item);
@@ -67,6 +71,7 @@ static void button_clicked(GtkButton *button, gpointer user_data)
             add_to_gui_playlist(str, PLAYLIST_ITEM_APPEND);
             guiInfo.NewPlay = GUI_FILE_NEW;
             uiEvent(evPlay, 0);
+            }
         }
     }
 
