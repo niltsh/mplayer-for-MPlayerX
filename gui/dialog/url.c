@@ -58,8 +58,6 @@ static void button_clicked(GtkButton *button, gpointer user_data)
                 str = tmp;
             }
 
-            urlEntries = g_list_prepend(urlEntries, (gchar *)str);
-
             item      = calloc(1, sizeof(urlItem));
             item->url = gstrdup(str);
             listMgr(URLLIST_ITEM_ADD, item);
