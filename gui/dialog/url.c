@@ -40,8 +40,6 @@ static GList *urlEntries;
 
 static void button_clicked(GtkButton *button, gpointer user_data)
 {
-    urlItem *item;
-
     (void)button;
 
     if (user_data) {
@@ -59,6 +57,8 @@ static void button_clicked(GtkButton *button, gpointer user_data)
             }
 
             if (str) {
+                urlItem *item;
+
                 uiSetFile(NULL, str, STREAMTYPE_STREAM);
                 listMgr(PLAYLIST_DELETE, 0);
                 add_to_gui_playlist(str, PLAYLIST_ITEM_APPEND);
