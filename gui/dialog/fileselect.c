@@ -367,15 +367,6 @@ static void fs_fsFilterCombo_changed(GtkEditable *editable,
     CheckDir(fsFNameList);
 }
 
-static void fs_fsFilterCombo_activate(GtkEntry *entry,
-                                      gpointer user_data)
-{
-    (void)entry;
-
-    fsFilter = gtk_entry_get_text(GTK_ENTRY(user_data));
-    CheckDir(fsFNameList);
-}
-
 static void fs_fsPathCombo_changed(GtkEditable *editable,
                                    gpointer user_data)
 {
@@ -383,21 +374,6 @@ static void fs_fsPathCombo_changed(GtkEditable *editable,
     gchar *dirname;
 
     (void)editable;
-
-    str     = gtk_entry_get_text(GTK_ENTRY(user_data));
-    dirname = g_hash_table_lookup(fsPathTable, str);
-
-    if (chdir(dirname ? (const unsigned char *)dirname : str) != -1)
-        CheckDir(fsFNameList);
-}
-
-static void fs_fsPathCombo_activate(GtkEntry *entry,
-                                    gpointer user_data)
-{
-    const unsigned char *str;
-    gchar *dirname;
-
-    (void)entry;
 
     str     = gtk_entry_get_text(GTK_ENTRY(user_data));
     dirname = g_hash_table_lookup(fsPathTable, str);
@@ -692,9 +668,7 @@ static GtkWidget *CreateFileSelect(void)
     gtk_signal_connect(GTK_OBJECT(fsFNameListWindow), "key_release_event", GTK_SIGNAL_FUNC(on_FileSelect_key_release_event), NULL);
 
     gtk_signal_connect(GTK_OBJECT(fsFilterCombo), "changed", GTK_SIGNAL_FUNC(fs_fsFilterCombo_changed), fsFilterCombo);
-    gtk_signal_connect(GTK_OBJECT(fsFilterCombo), "activate", GTK_SIGNAL_FUNC(fs_fsFilterCombo_activate), fsFilterCombo);
     gtk_signal_connect(GTK_OBJECT(fsPathCombo), "changed", GTK_SIGNAL_FUNC(fs_fsPathCombo_changed), fsPathCombo);
-    gtk_signal_connect(GTK_OBJECT(fsPathCombo), "activate", GTK_SIGNAL_FUNC(fs_fsPathCombo_activate), fsPathCombo);
     gtk_signal_connect(GTK_OBJECT(fsUp), "released", GTK_SIGNAL_FUNC(fs_Up_released), fsFNameList);
     gtk_signal_connect(GTK_OBJECT(fsUp), "key_release_event", GTK_SIGNAL_FUNC(on_FileSelect_key_release_event), NULL);
     gtk_signal_connect(GTK_OBJECT(fsOk), "released", GTK_SIGNAL_FUNC(fs_Ok_released), fsCombo4);
