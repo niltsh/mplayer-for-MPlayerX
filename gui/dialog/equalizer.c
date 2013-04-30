@@ -435,31 +435,31 @@ static GtkWidget * CreateEqualizer( void )
   gtk_widget_add_accelerator( Ok,"clicked",accel_group,GDK_Return,0,GTK_ACCEL_VISIBLE );
 
   gtk_signal_connect( GTK_OBJECT( Equalizer ),"destroy",GTK_SIGNAL_FUNC( gtk_widget_destroyed ),&Equalizer );
-  gtk_signal_connect( GTK_OBJECT( Equalizer ),"focus_in_event",GTK_SIGNAL_FUNC( eqFocus ),(void *)2 );
+  gtk_signal_connect( GTK_OBJECT( Equalizer ),"focus-in-event",GTK_SIGNAL_FUNC( eqFocus ),(void *)2 );
 
-  gtk_signal_connect( GTK_OBJECT( ChannelsList ),"select_row",GTK_SIGNAL_FUNC( eqSelectChannelsListRow ),NULL );
+  gtk_signal_connect( GTK_OBJECT( ChannelsList ),"select-row",GTK_SIGNAL_FUNC( eqSelectChannelsListRow ),NULL );
 
-  gtk_signal_connect( GTK_OBJECT( A3125 ),"motion_notify_event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)0 );
-  gtk_signal_connect( GTK_OBJECT( A6250 ),"motion_notify_event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)1 );
-  gtk_signal_connect( GTK_OBJECT( A125 ),"motion_notify_event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)2 );
-  gtk_signal_connect( GTK_OBJECT( A250 ),"motion_notify_event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)3 );
-  gtk_signal_connect( GTK_OBJECT( A500 ),"motion_notify_event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)4 );
-  gtk_signal_connect( GTK_OBJECT( A1000 ),"motion_notify_event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)5 );
-  gtk_signal_connect( GTK_OBJECT( A2000 ),"motion_notify_event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)6 );
-  gtk_signal_connect( GTK_OBJECT( A4000 ),"motion_notify_event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)7 );
-  gtk_signal_connect( GTK_OBJECT( A8000 ),"motion_notify_event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)8 );
-  gtk_signal_connect( GTK_OBJECT( A16000 ),"motion_notify_event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)9 );
+  gtk_signal_connect( GTK_OBJECT( A3125 ),"motion-notify-event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)0 );
+  gtk_signal_connect( GTK_OBJECT( A6250 ),"motion-notify-event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)1 );
+  gtk_signal_connect( GTK_OBJECT( A125 ),"motion-notify-event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)2 );
+  gtk_signal_connect( GTK_OBJECT( A250 ),"motion-notify-event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)3 );
+  gtk_signal_connect( GTK_OBJECT( A500 ),"motion-notify-event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)4 );
+  gtk_signal_connect( GTK_OBJECT( A1000 ),"motion-notify-event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)5 );
+  gtk_signal_connect( GTK_OBJECT( A2000 ),"motion-notify-event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)6 );
+  gtk_signal_connect( GTK_OBJECT( A4000 ),"motion-notify-event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)7 );
+  gtk_signal_connect( GTK_OBJECT( A8000 ),"motion-notify-event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)8 );
+  gtk_signal_connect( GTK_OBJECT( A16000 ),"motion-notify-event",GTK_SIGNAL_FUNC( eqHScaleMotion ),(void*)9 );
 
-  gtk_signal_connect( GTK_OBJECT( VContrast ),"motion_notify_event",GTK_SIGNAL_FUNC( eqVScaleMotion ),(void*)1 );
-  gtk_signal_connect( GTK_OBJECT( VBrightness ),"motion_notify_event",GTK_SIGNAL_FUNC( eqVScaleMotion ),(void*)2 );
-  gtk_signal_connect( GTK_OBJECT( VHue ),"motion_notify_event",GTK_SIGNAL_FUNC( eqVScaleMotion ),(void*)3 );
-  gtk_signal_connect( GTK_OBJECT( VSaturation ),"motion_notify_event",GTK_SIGNAL_FUNC( eqVScaleMotion ),(void *)4 );
+  gtk_signal_connect( GTK_OBJECT( VContrast ),"motion-notify-event",GTK_SIGNAL_FUNC( eqVScaleMotion ),(void*)1 );
+  gtk_signal_connect( GTK_OBJECT( VBrightness ),"motion-notify-event",GTK_SIGNAL_FUNC( eqVScaleMotion ),(void*)2 );
+  gtk_signal_connect( GTK_OBJECT( VHue ),"motion-notify-event",GTK_SIGNAL_FUNC( eqVScaleMotion ),(void*)3 );
+  gtk_signal_connect( GTK_OBJECT( VSaturation ),"motion-notify-event",GTK_SIGNAL_FUNC( eqVScaleMotion ),(void *)4 );
 
   gtk_signal_connect( GTK_OBJECT( Ok ),"clicked",GTK_SIGNAL_FUNC( eqButtonReleased ),(void *)0 );
   gtk_signal_connect( GTK_OBJECT( Clear ),"clicked",GTK_SIGNAL_FUNC( eqButtonReleased ),(void *)1 );
   gtk_signal_connect( GTK_OBJECT( Config ),"clicked",GTK_SIGNAL_FUNC( eqButtonReleased ),(void *)2 );
 
-  gtk_signal_connect( GTK_OBJECT( Notebook ),"switch_page",GTK_SIGNAL_FUNC( eqNotebook ),NULL );
+  gtk_signal_connect( GTK_OBJECT( Notebook ),"switch-page",GTK_SIGNAL_FUNC( eqNotebook ),NULL );
 
   gtk_window_add_accel_group( GTK_WINDOW( Equalizer ),accel_group );
 

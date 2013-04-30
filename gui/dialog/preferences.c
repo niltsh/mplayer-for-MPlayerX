@@ -1051,14 +1051,14 @@ static GtkWidget * CreatePreferences( void )
   gtk_signal_connect( GTK_OBJECT( CBAudioEqualizer ),"toggled",GTK_SIGNAL_FUNC( on_CBAudioEqualizer_toggled ),NULL );
 #endif
 #if 0
-  gtk_signal_connect( GTK_OBJECT( HSAudioDelay ),"motion_notify_event",GTK_SIGNAL_FUNC( on_HSAudioDelay_motion_notify_event ),NULL );
-  gtk_signal_connect( GTK_OBJECT( HSPanscan ),"motion_notify_event",GTK_SIGNAL_FUNC( on_HSPanscan_motion_notify_event ),NULL );
-  gtk_signal_connect( GTK_OBJECT( label2 ),"motion_notify_event",GTK_SIGNAL_FUNC( on_label2_motion_notify_event ),NULL );
-  gtk_signal_connect( GTK_OBJECT( HSSubDelay ),"motion_notify_event",GTK_SIGNAL_FUNC( on_HSSubDelay_motion_notify_event ),NULL );
-  gtk_signal_connect( GTK_OBJECT( HSSubPosition ),"motion_notify_event",GTK_SIGNAL_FUNC( on_HSSubPosition_motion_notify_event ),NULL );
-  gtk_signal_connect( GTK_OBJECT( HSSubFPS ),"motion_notify_event",GTK_SIGNAL_FUNC( on_HSSubFPS_motion_notify_event ),NULL );
-  gtk_signal_connect( GTK_OBJECT( HSFontFactor ),"motion_notify_event",GTK_SIGNAL_FUNC( on_HSFontFactor_motion_notify_event ),NULL );
-  gtk_signal_connect( GTK_OBJECT( HSPPQuality ),"motion_notify_event",GTK_SIGNAL_FUNC( on_HSPPQuality_motion_notify_event ),NULL );
+  gtk_signal_connect( GTK_OBJECT( HSAudioDelay ),"motion-notify-event",GTK_SIGNAL_FUNC( on_HSAudioDelay_motion_notify_event ),NULL );
+  gtk_signal_connect( GTK_OBJECT( HSPanscan ),"motion-notify-event",GTK_SIGNAL_FUNC( on_HSPanscan_motion_notify_event ),NULL );
+  gtk_signal_connect( GTK_OBJECT( label2 ),"motion-notify-event",GTK_SIGNAL_FUNC( on_label2_motion_notify_event ),NULL );
+  gtk_signal_connect( GTK_OBJECT( HSSubDelay ),"motion-notify-event",GTK_SIGNAL_FUNC( on_HSSubDelay_motion_notify_event ),NULL );
+  gtk_signal_connect( GTK_OBJECT( HSSubPosition ),"motion-notify-event",GTK_SIGNAL_FUNC( on_HSSubPosition_motion_notify_event ),NULL );
+  gtk_signal_connect( GTK_OBJECT( HSSubFPS ),"motion-notify-event",GTK_SIGNAL_FUNC( on_HSSubFPS_motion_notify_event ),NULL );
+  gtk_signal_connect( GTK_OBJECT( HSFontFactor ),"motion-notify-event",GTK_SIGNAL_FUNC( on_HSFontFactor_motion_notify_event ),NULL );
+  gtk_signal_connect( GTK_OBJECT( HSPPQuality ),"motion-notify-event",GTK_SIGNAL_FUNC( on_HSPPQuality_motion_notify_event ),NULL );
 #endif
 
   gtk_notebook_set_page( GTK_NOTEBOOK( notebook1 ),2 );
@@ -1314,27 +1314,27 @@ void ShowPreferences( void )
  gtk_signal_connect( GTK_OBJECT( CBUseASS ),"toggled",GTK_SIGNAL_FUNC( prToggled ),(void*)10);
 #endif
 
- gtk_signal_connect( GTK_OBJECT( HSExtraStereoMul ),"motion_notify_event",GTK_SIGNAL_FUNC( prHScaler ),(void*)0 );
- gtk_signal_connect( GTK_OBJECT( HSAudioDelay ),"motion_notify_event",GTK_SIGNAL_FUNC( prHScaler ),(void*)1 );
- gtk_signal_connect( GTK_OBJECT( HSPanscan ),"motion_notify_event",GTK_SIGNAL_FUNC( prHScaler ),(void*)2 );
- gtk_signal_connect( GTK_OBJECT( HSSubDelay ),"motion_notify_event",GTK_SIGNAL_FUNC( prHScaler ),(void*)3 );
- gtk_signal_connect( GTK_OBJECT( HSSubPosition ),"motion_notify_event",GTK_SIGNAL_FUNC( prHScaler ),(void*)4 );
+ gtk_signal_connect( GTK_OBJECT( HSExtraStereoMul ),"motion-notify-event",GTK_SIGNAL_FUNC( prHScaler ),(void*)0 );
+ gtk_signal_connect( GTK_OBJECT( HSAudioDelay ),"motion-notify-event",GTK_SIGNAL_FUNC( prHScaler ),(void*)1 );
+ gtk_signal_connect( GTK_OBJECT( HSPanscan ),"motion-notify-event",GTK_SIGNAL_FUNC( prHScaler ),(void*)2 );
+ gtk_signal_connect( GTK_OBJECT( HSSubDelay ),"motion-notify-event",GTK_SIGNAL_FUNC( prHScaler ),(void*)3 );
+ gtk_signal_connect( GTK_OBJECT( HSSubPosition ),"motion-notify-event",GTK_SIGNAL_FUNC( prHScaler ),(void*)4 );
 #ifndef CONFIG_FREETYPE
- gtk_signal_connect( GTK_OBJECT( HSFontFactor ),"motion_notify_event",GTK_SIGNAL_FUNC( prHScaler ),(void*)5 );
+ gtk_signal_connect( GTK_OBJECT( HSFontFactor ),"motion-notify-event",GTK_SIGNAL_FUNC( prHScaler ),(void*)5 );
 #else
- gtk_signal_connect( GTK_OBJECT( HSFontBlur ),"motion_notify_event",GTK_SIGNAL_FUNC( prHScaler ),(void*)6 );
- gtk_signal_connect( GTK_OBJECT( HSFontOutLine ),"motion_notify_event",GTK_SIGNAL_FUNC( prHScaler ),(void*)7 );
- gtk_signal_connect( GTK_OBJECT( HSFontTextScale ),"motion_notify_event",GTK_SIGNAL_FUNC( prHScaler ),(void*)8 );
- gtk_signal_connect( GTK_OBJECT( HSFontOSDScale ),"motion_notify_event",GTK_SIGNAL_FUNC( prHScaler ),(void*)9 );
+ gtk_signal_connect( GTK_OBJECT( HSFontBlur ),"motion-notify-event",GTK_SIGNAL_FUNC( prHScaler ),(void*)6 );
+ gtk_signal_connect( GTK_OBJECT( HSFontOutLine ),"motion-notify-event",GTK_SIGNAL_FUNC( prHScaler ),(void*)7 );
+ gtk_signal_connect( GTK_OBJECT( HSFontTextScale ),"motion-notify-event",GTK_SIGNAL_FUNC( prHScaler ),(void*)8 );
+ gtk_signal_connect( GTK_OBJECT( HSFontOSDScale ),"motion-notify-event",GTK_SIGNAL_FUNC( prHScaler ),(void*)9 );
  gtk_signal_connect( GTK_OBJECT( EFontEncoding ),"changed",GTK_SIGNAL_FUNC( prEntry ),(void *)0 );
 #endif
 #ifdef CONFIG_ICONV
  gtk_signal_connect( GTK_OBJECT( ESubEncoding ),"changed",GTK_SIGNAL_FUNC( prEntry ),(void *)1 );
 #endif
- gtk_signal_connect( GTK_OBJECT( HSPPQuality ),"motion_notify_event",GTK_SIGNAL_FUNC( prHScaler ),(void*)10 );
+ gtk_signal_connect( GTK_OBJECT( HSPPQuality ),"motion-notify-event",GTK_SIGNAL_FUNC( prHScaler ),(void*)10 );
 
- gtk_signal_connect( GTK_OBJECT( CLADrivers ),"select_row",GTK_SIGNAL_FUNC( prCListRow ),(void*)0 );
- gtk_signal_connect( GTK_OBJECT( CLVDrivers ),"select_row",GTK_SIGNAL_FUNC( prCListRow ),(void*)1 );
+ gtk_signal_connect( GTK_OBJECT( CLADrivers ),"select-row",GTK_SIGNAL_FUNC( prCListRow ),(void*)0 );
+ gtk_signal_connect( GTK_OBJECT( CLVDrivers ),"select-row",GTK_SIGNAL_FUNC( prCListRow ),(void*)1 );
 
  gtk_widget_show( Preferences );
  gtkSetLayer( Preferences );

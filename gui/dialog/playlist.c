@@ -464,8 +464,8 @@ static GtkWidget * CreatePlaylist( void )
   gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW( scrolledwindow1 ),GTK_POLICY_AUTOMATIC,GTK_POLICY_AUTOMATIC );
 
   CTDirTree=gtk_ctree_new( 1,0 );
-  gtk_signal_connect( GTK_OBJECT( CTDirTree ),"tree_expand",GTK_SIGNAL_FUNC( plCTree ),(void*)0 );
-  gtk_signal_connect( GTK_OBJECT( CTDirTree ),"select_row",GTK_SIGNAL_FUNC( plCTRow ),(void *)0 );
+  gtk_signal_connect( GTK_OBJECT( CTDirTree ),"tree-expand",GTK_SIGNAL_FUNC( plCTree ),(void*)0 );
+  gtk_signal_connect( GTK_OBJECT( CTDirTree ),"select-row",GTK_SIGNAL_FUNC( plCTRow ),(void *)0 );
   gtk_container_add( GTK_CONTAINER( scrolledwindow1 ),CTDirTree );
   gtk_clist_set_column_auto_resize( GTK_CLIST( CTDirTree ),0,TRUE );
   gtk_clist_set_column_width( GTK_CLIST( CTDirTree ),0,80 );
@@ -558,23 +558,23 @@ static GtkWidget * CreatePlaylist( void )
 
   gtk_signal_connect( GTK_OBJECT( Playlist ),"destroy",GTK_SIGNAL_FUNC( gtk_widget_destroyed ),&Playlist );
 
-  gtk_signal_connect( GTK_OBJECT( CLFiles ),"select_row",GTK_SIGNAL_FUNC( plRowSelect ),(void *)0 );
-  gtk_signal_connect( GTK_OBJECT( CLFiles ),"unselect_row",GTK_SIGNAL_FUNC( plUnRowSelect ),(void *)0 );
+  gtk_signal_connect( GTK_OBJECT( CLFiles ),"select-row",GTK_SIGNAL_FUNC( plRowSelect ),(void *)0 );
+  gtk_signal_connect( GTK_OBJECT( CLFiles ),"unselect-row",GTK_SIGNAL_FUNC( plUnRowSelect ),(void *)0 );
   gtk_signal_connect( GTK_OBJECT( CLFiles ),"event",GTK_SIGNAL_FUNC( plEvent ),(void *)0 );
-  gtk_signal_connect( GTK_OBJECT( CLFiles ),"key_release_event",GTK_SIGNAL_FUNC( plKeyReleased ),(void *)0 );
-  sigSel=gtk_signal_connect( GTK_OBJECT( CLSelected ),"select_row",GTK_SIGNAL_FUNC( plRowSelect ),(void*)1 );
-  sigUnsel=gtk_signal_connect( GTK_OBJECT( CLSelected ),"unselect_row",GTK_SIGNAL_FUNC( plUnRowSelect ),(void*)1 );
+  gtk_signal_connect( GTK_OBJECT( CLFiles ),"key-release-event",GTK_SIGNAL_FUNC( plKeyReleased ),(void *)0 );
+  sigSel=gtk_signal_connect( GTK_OBJECT( CLSelected ),"select-row",GTK_SIGNAL_FUNC( plRowSelect ),(void*)1 );
+  sigUnsel=gtk_signal_connect( GTK_OBJECT( CLSelected ),"unselect-row",GTK_SIGNAL_FUNC( plUnRowSelect ),(void*)1 );
   sigEvent=gtk_signal_connect( GTK_OBJECT( CLSelected ),"event",GTK_SIGNAL_FUNC( plEvent ),(void *)1 );
-  gtk_signal_connect( GTK_OBJECT( CLSelected ),"key_release_event",GTK_SIGNAL_FUNC( plKeyReleased ),(void *)1 );
+  gtk_signal_connect( GTK_OBJECT( CLSelected ),"key-release-event",GTK_SIGNAL_FUNC( plKeyReleased ),(void *)1 );
 
   gtk_signal_connect( GTK_OBJECT( Add ),"released",GTK_SIGNAL_FUNC( plButtonReleased ),(void*)3 );
-  gtk_signal_connect( GTK_OBJECT( Add ),"key_release_event",GTK_SIGNAL_FUNC( plKeyReleased ),(void*)3 );
+  gtk_signal_connect( GTK_OBJECT( Add ),"key-release-event",GTK_SIGNAL_FUNC( plKeyReleased ),(void*)3 );
   gtk_signal_connect( GTK_OBJECT( Remove ),"released",GTK_SIGNAL_FUNC( plButtonReleased ),(void*)2 );
-  gtk_signal_connect( GTK_OBJECT( Remove ),"key_release_event",GTK_SIGNAL_FUNC( plKeyReleased ),(void*)2 );
+  gtk_signal_connect( GTK_OBJECT( Remove ),"key-release-event",GTK_SIGNAL_FUNC( plKeyReleased ),(void*)2 );
   gtk_signal_connect( GTK_OBJECT( Ok ),"released",GTK_SIGNAL_FUNC( plButtonReleased ),(void*)1 );
-  gtk_signal_connect( GTK_OBJECT( Ok ),"key_release_event",GTK_SIGNAL_FUNC( plKeyReleased ),(void*)1 );
+  gtk_signal_connect( GTK_OBJECT( Ok ),"key-release-event",GTK_SIGNAL_FUNC( plKeyReleased ),(void*)1 );
   gtk_signal_connect( GTK_OBJECT( Cancel ),"released",GTK_SIGNAL_FUNC( plButtonReleased ),(void*)0 );
-  gtk_signal_connect( GTK_OBJECT( Cancel ),"key_release_event",GTK_SIGNAL_FUNC( plKeyReleased ),(void*)0 );
+  gtk_signal_connect( GTK_OBJECT( Cancel ),"key-release-event",GTK_SIGNAL_FUNC( plKeyReleased ),(void*)0 );
 
   gtk_window_add_accel_group( GTK_WINDOW( Playlist ),accel_group );
 
