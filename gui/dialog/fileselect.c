@@ -526,9 +526,17 @@ static void fs_Ok_released(GtkButton *button, gpointer user_data)
         gui(GUI_SET_STATE, (void *)GUI_STOP);
 }
 
-static gboolean on_FileSelect_key_release_event(GtkWidget *widget,
-                                                GdkEvent *event,
-                                                gpointer user_data)
+/**
+ * @brief The "key-release-event" signal user function.
+ *
+ * @param widget object which received the signal
+ * @param event GdkEventKey which triggered the signal
+ * @param user_data user data set when the signal handler was connected
+ *
+ * @return TRUE to stop other handlers from being invoked for the event or
+ *         FALSE to propagate the event further
+ */
+static gboolean fs_key_release_event(GtkWidget *widget, GdkEvent *event, gpointer user_data)
 {
     (void)user_data;
 
@@ -674,18 +682,18 @@ static GtkWidget *CreateFileSelect(void)
     fsCancel = gtkAddButton(MSGTR_Cancel, hbuttonbox3);
 
     gtk_signal_connect(GTK_OBJECT(FileSelector), "destroy", GTK_SIGNAL_FUNC(fs_Destroy), NULL);
-    gtk_signal_connect(GTK_OBJECT(fsFNameListWindow), "key_release_event", GTK_SIGNAL_FUNC(on_FileSelect_key_release_event), NULL);
+    gtk_signal_connect(GTK_OBJECT(fsFNameListWindow), "key_release_event", GTK_SIGNAL_FUNC(fs_key_release_event), NULL);
 
     gtk_signal_connect(GTK_OBJECT(fsFilterCombo), "changed", GTK_SIGNAL_FUNC(fs_fsFilterCombo_changed), fsFilterCombo);
-    gtk_signal_connect(GTK_OBJECT(fsFilterCombo), "key_release_event", GTK_SIGNAL_FUNC(on_FileSelect_key_release_event), NULL);
+    gtk_signal_connect(GTK_OBJECT(fsFilterCombo), "key_release_event", GTK_SIGNAL_FUNC(fs_key_release_event), NULL);
     gtk_signal_connect(GTK_OBJECT(fsPathCombo), "changed", GTK_SIGNAL_FUNC(fs_fsPathCombo_changed), fsPathCombo);
-    gtk_signal_connect(GTK_OBJECT(fsPathCombo), "key_release_event", GTK_SIGNAL_FUNC(on_FileSelect_key_release_event), NULL);
+    gtk_signal_connect(GTK_OBJECT(fsPathCombo), "key_release_event", GTK_SIGNAL_FUNC(fs_key_release_event), NULL);
     gtk_signal_connect(GTK_OBJECT(fsUp), "released", GTK_SIGNAL_FUNC(fs_Up_released), fsFNameList);
-    gtk_signal_connect(GTK_OBJECT(fsUp), "key_release_event", GTK_SIGNAL_FUNC(on_FileSelect_key_release_event), NULL);
+    gtk_signal_connect(GTK_OBJECT(fsUp), "key_release_event", GTK_SIGNAL_FUNC(fs_key_release_event), NULL);
     gtk_signal_connect(GTK_OBJECT(fsOk), "released", GTK_SIGNAL_FUNC(fs_Ok_released), fsCombo4);
-    gtk_signal_connect(GTK_OBJECT(fsOk), "key_release_event", GTK_SIGNAL_FUNC(on_FileSelect_key_release_event), NULL);
+    gtk_signal_connect(GTK_OBJECT(fsOk), "key_release_event", GTK_SIGNAL_FUNC(fs_key_release_event), NULL);
     gtk_signal_connect(GTK_OBJECT(fsCancel), "released", GTK_SIGNAL_FUNC(fs_Cancel_released), NULL);
-    gtk_signal_connect(GTK_OBJECT(fsCancel), "key_release_event", GTK_SIGNAL_FUNC(on_FileSelect_key_release_event), NULL);
+    gtk_signal_connect(GTK_OBJECT(fsCancel), "key_release_event", GTK_SIGNAL_FUNC(fs_key_release_event), NULL);
     gtk_signal_connect(GTK_OBJECT(fsFNameList), "select_row", (GtkSignalFunc)fs_fsFNameList_select_row, NULL);
     gtk_signal_connect(GTK_OBJECT(fsFNameList), "event", (GtkSignalFunc)fs_fsFNameList_event, NULL);
 
