@@ -125,6 +125,7 @@ static const struct AVCodecTag mp_codecid_override_tags[] = {
     { AV_CODEC_ID_MP2,               0x50 },
     { AV_CODEC_ID_MPEG2VIDEO,        MKTAG('M', 'P', 'G', '2') },
     { AV_CODEC_ID_TRUEHD,            MKTAG('T', 'R', 'H', 'D') },
+    { AV_CODEC_ID_VC1,               MKTAG('V', 'C', '-', '1') },
     { 0, 0 },
 };
 
