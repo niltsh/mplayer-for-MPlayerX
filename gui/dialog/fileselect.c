@@ -546,6 +546,8 @@ static gboolean on_FileSelect_key_release_event(GtkWidget *widget,
             gtk_button_released(GTK_BUTTON(fsOk));
         else if (GTK_IS_BUTTON(widget))
             gtk_button_released(GTK_BUTTON(widget));
+        else if (GTK_IS_ENTRY(widget))
+            gtk_widget_grab_focus(fsFNameList);
 
         break;
 
@@ -675,7 +677,9 @@ static GtkWidget *CreateFileSelect(void)
     gtk_signal_connect(GTK_OBJECT(fsFNameListWindow), "key_release_event", GTK_SIGNAL_FUNC(on_FileSelect_key_release_event), NULL);
 
     gtk_signal_connect(GTK_OBJECT(fsFilterCombo), "changed", GTK_SIGNAL_FUNC(fs_fsFilterCombo_changed), fsFilterCombo);
+    gtk_signal_connect(GTK_OBJECT(fsFilterCombo), "key_release_event", GTK_SIGNAL_FUNC(on_FileSelect_key_release_event), NULL);
     gtk_signal_connect(GTK_OBJECT(fsPathCombo), "changed", GTK_SIGNAL_FUNC(fs_fsPathCombo_changed), fsPathCombo);
+    gtk_signal_connect(GTK_OBJECT(fsPathCombo), "key_release_event", GTK_SIGNAL_FUNC(on_FileSelect_key_release_event), NULL);
     gtk_signal_connect(GTK_OBJECT(fsUp), "released", GTK_SIGNAL_FUNC(fs_Up_released), fsFNameList);
     gtk_signal_connect(GTK_OBJECT(fsUp), "key_release_event", GTK_SIGNAL_FUNC(on_FileSelect_key_release_event), NULL);
     gtk_signal_connect(GTK_OBJECT(fsOk), "released", GTK_SIGNAL_FUNC(fs_Ok_released), fsCombo4);
