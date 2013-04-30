@@ -532,24 +532,31 @@ static gboolean on_FileSelect_key_release_event(GtkWidget *widget,
 {
     (void)user_data;
 
-    if (GTK_WIDGET_TYPE(widget) == GTK_TYPE_BUTTON) {
-        if (event->key.keyval == GDK_Return)
-            gtk_button_released(GTK_BUTTON(widget));
-    } else {
         switch (event->key.keyval) {
         case GDK_Escape:
+
+        if (GTK_IS_SCROLLED_WINDOW(widget))
             gtk_button_released(GTK_BUTTON(fsCancel));
+
             break;
 
         case GDK_Return:
+
+        if (GTK_IS_SCROLLED_WINDOW(widget))
             gtk_button_released(GTK_BUTTON(fsOk));
+        else if (GTK_IS_BUTTON(widget))
+            gtk_button_released(GTK_BUTTON(widget));
+
             break;
 
         case GDK_BackSpace:
+
+        if (GTK_IS_SCROLLED_WINDOW(widget)) {
             gtk_button_released(GTK_BUTTON(fsUp));
             gtk_widget_grab_focus(fsFNameList);
-            break;
         }
+
+            break;
     }
 
     return FALSE;
