@@ -39,10 +39,15 @@ static GtkWidget *urlEntry;
 static GList *urlEntries;
 
 /**
- * @brief The "clicked" signal user function.
+ * @brief Add the entered URL to the URL list and stream it,
+ *        if the button clicked is the OK button
+ *
+ * @note If the scheme is missing, http is assumed (and added).
  *
  * @param button object which received the signal
  * @param user_data user data set when the signal handler was connected
+ *
+ * @note The button is determined by checking @a user_data.
  */
 static void button_clicked(GtkButton *button, gpointer user_data)
 {

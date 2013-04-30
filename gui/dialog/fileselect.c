@@ -527,7 +527,8 @@ static void fs_Ok_released(GtkButton *button, gpointer user_data)
 }
 
 /**
- * @brief The "key-release-event" signal user function.
+ * @brief Handle the escape, return and backspace key depending on the
+ *        @a widget it has been pressed on.
  *
  * @param widget object which received the signal
  * @param event GdkEventKey which triggered the signal
