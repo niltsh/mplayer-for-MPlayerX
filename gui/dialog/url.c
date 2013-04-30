@@ -38,6 +38,12 @@ static GtkWidget *urlCombo;
 static GtkWidget *urlEntry;
 static GList *urlEntries;
 
+/**
+ * @brief The "clicked" signal user function.
+ *
+ * @param button object which received the signal
+ * @param user_data user data set when the signal handler was connected
+ */
 static void button_clicked(GtkButton *button, gpointer user_data)
 {
     (void)button;
