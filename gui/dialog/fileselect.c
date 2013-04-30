@@ -532,31 +532,31 @@ static gboolean on_FileSelect_key_release_event(GtkWidget *widget,
 {
     (void)user_data;
 
-        switch (event->key.keyval) {
-        case GDK_Escape:
+    switch (event->key.keyval) {
+    case GDK_Escape:
 
         if (GTK_IS_SCROLLED_WINDOW(widget))
             gtk_button_released(GTK_BUTTON(fsCancel));
 
-            break;
+        break;
 
-        case GDK_Return:
+    case GDK_Return:
 
         if (GTK_IS_SCROLLED_WINDOW(widget))
             gtk_button_released(GTK_BUTTON(fsOk));
         else if (GTK_IS_BUTTON(widget))
             gtk_button_released(GTK_BUTTON(widget));
 
-            break;
+        break;
 
-        case GDK_BackSpace:
+    case GDK_BackSpace:
 
         if (GTK_IS_SCROLLED_WINDOW(widget)) {
             gtk_button_released(GTK_BUTTON(fsUp));
             gtk_widget_grab_focus(fsFNameList);
         }
 
-            break;
+        break;
     }
 
     return FALSE;
