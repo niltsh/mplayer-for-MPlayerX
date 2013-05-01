@@ -587,6 +587,7 @@ static int initGl(uint32_t d_width, uint32_t d_height) {
       mpglBindTexture(GL_TEXTURE_RECTANGLE, default_texs[i + 7]);
       mpglBindTexture(GL_TEXTURE_3D, default_texs[i + 14]);
     }
+    mpglActiveTexture(GL_TEXTURE0);
   }
   if (stereo_mode == GL_3D_STIPPLE)
     glSetupAlphaStippleTex(stipple);
