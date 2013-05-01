@@ -122,7 +122,7 @@ void mp_image_setfmt(mp_image_t* mpi,unsigned int out_fmt){
         return;
     }
     if (IMGFMT_IS_XYZ(out_fmt)) {
-        mpi->bpp=3*IMGFMT_XYZ_DEPTH(out_fmt);
+        mpi->bpp=3*((IMGFMT_XYZ_DEPTH(out_fmt) + 7) & ~7);
         return;
     }
     mpi->num_planes=3;
