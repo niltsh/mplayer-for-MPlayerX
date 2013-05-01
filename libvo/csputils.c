@@ -77,7 +77,7 @@ void mp_get_yuv2rgb_coeffs(struct mp_csp_params *params, float yuv2rgb[3][4]) {
     { 16 / 255.0 * 1.164, -128 / 255.0, -128 / 255.0, 1.0/1.164},
     { 0, -128 / 255.0, -128 / 255.0, 1},
   };
-  static const float xyz_level_adjust[4] = {0, 0, 0, 0};
+  static const float xyz_level_adjust[4] = {0, 0, 0, 1};
   static const float uv_coeffs_table[MP_CSP_COUNT][3][3] = {
     [MP_CSP_DEFAULT] = {
       {1,  0.000,  1.596},
