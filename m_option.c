@@ -1166,6 +1166,8 @@ static struct {
   {"argb", IMGFMT_ARGB},
   {"bgra", IMGFMT_BGRA},
   {"abgr", IMGFMT_ABGR},
+  {"xyz12be",  IMGFMT_XYZ12LE},
+  {"xyz12le",  IMGFMT_XYZ12BE},
   {"gbr14pbe", IMGFMT_GBR14PLE},
   {"gbr14ple", IMGFMT_GBR14PBE},
   {"gbr12pbe", IMGFMT_GBR12PLE},

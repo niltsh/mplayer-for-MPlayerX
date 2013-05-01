@@ -121,6 +121,10 @@ void mp_image_setfmt(mp_image_t* mpi,unsigned int out_fmt){
         mpi->flags|=MP_IMGFLAG_SWAPPED;
         return;
     }
+    if (IMGFMT_IS_XYZ(out_fmt)) {
+        mpi->bpp=3*IMGFMT_XYZ_DEPTH(out_fmt);
+        return;
+    }
     mpi->num_planes=3;
     if (out_fmt == IMGFMT_GBR24P) {
         mpi->bpp=24;
