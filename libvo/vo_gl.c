@@ -105,7 +105,7 @@ static int osd_color;
 static int use_aspect;
 static int use_ycbcr;
 #define MASK_ALL_YUV (~(1 << YUV_CONVERSION_NONE))
-#define MASK_NOT_COMBINERS (~((1 << YUV_CONVERSION_NONE) | (1 << YUV_CONVERSION_COMBINERS)))
+#define MASK_NOT_COMBINERS (~((1 << YUV_CONVERSION_NONE) | (1 << YUV_CONVERSION_COMBINERS) | (1 << YUV_CONVERSION_COMBINERS_ATI) | (1 << YUV_CONVERSION_TEXT_FRAGMENT)))
 #define MASK_GAMMA_SUPPORT MASK_NOT_COMBINERS
 static int use_yuv;
 static int colorspace;
