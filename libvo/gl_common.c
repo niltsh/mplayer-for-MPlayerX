@@ -1557,7 +1557,7 @@ int glAutodetectYUVConversion(void) {
   if (!extensions || !mpglMultiTexCoord2f)
     return YUV_CONVERSION_NONE;
   if (strstr(extensions, "GL_ARB_fragment_program") && !is_img)
-    return YUV_CONVERSION_FRAGMENT;
+    return YUV_CONVERSION_FRAGMENT_LOOKUP;
   if (strstr(extensions, "GL_ATI_text_fragment_shader") && !is_img)
     return YUV_CONVERSION_TEXT_FRAGMENT;
   if (strstr(extensions, "GL_ATI_fragment_shader"))
