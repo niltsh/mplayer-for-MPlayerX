@@ -274,6 +274,15 @@ int glFindFormat(uint32_t fmt, int *bpp, GLint *gl_texfmt,
   }
 
   *bpp = IMGFMT_IS_BGR(fmt)?IMGFMT_BGR_DEPTH(fmt):IMGFMT_RGB_DEPTH(fmt);
+  if (IMGFMT_IS_XYZ(fmt)) {
+    supported = 0; // no native XYZ support
+    *bpp = 24;
+    fmt = IMGFMT_RGB24;
+    if (IMGFMT_XYZ_DEPTH(fmt) > 8) {
+      *bpp = 48;
+      fmt = IMGFMT_RGB48NE;
+    }
+  }
   *gl_texfmt = GL_RGB;
   switch (fmt) {
     case IMGFMT_RGB64NE:
