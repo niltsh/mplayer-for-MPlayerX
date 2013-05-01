@@ -1405,6 +1405,8 @@ static void glSetupYUVFragprog(gl_conversion_params_t *params) {
   int texw = params->texw;
   int texh = params->texh;
   int rect = params->target == GL_TEXTURE_RECTANGLE;
+  int convtype = YUV_CONVERSION(type);
+  int has_gamma = params->csp_params.rgamma != 1 || params->csp_params.bgamma != 1 || params->csp_params.bgamma != 1;
   static const char prog_hdr[] =
     "!!ARBfp1.0\n"
     "OPTION ARB_precision_hint_fastest;\n"
@@ -1455,7 +1457,13 @@ static void glSetupYUVFragprog(gl_conversion_params_t *params) {
   add_scaler(YUV_CHROM_SCALER(type), &prog_pos, &prog_remain, chrom_scale_texs,
              '2', 'b', rect, params->chrom_texw, params->chrom_texh, params->filter_strength);
   mp_get_yuv2rgb_coeffs(&params->csp_params, yuv2rgb);
-  switch (YUV_CONVERSION(type)) {
+
+  // enable/disable gamma on demand
+  if (has_gamma && convtype == YUV_CONVERSION_FRAGMENT) convtype = YUV_CONVERSION_FRAGMENT_POW;
+  else if (!has_gamma && (convtype == YUV_CONVERSION_FRAGMENT_POW || convtype == YUV_CONVERSION_FRAGMENT_LOOKUP))
+    convtype = YUV_CONVERSION_FRAGMENT;
+
+  switch (convtype) {
     case YUV_CONVERSION_FRAGMENT:
       snprintf(prog_pos, prog_remain, yuv_prog_template,
                yuv2rgb[ROW_R][COL_Y], yuv2rgb[ROW_G][COL_Y], yuv2rgb[ROW_B][COL_Y],

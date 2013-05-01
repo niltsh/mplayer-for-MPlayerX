@@ -4213,15 +4213,15 @@ At least three texture units are needed.
 Provides saturation and hue control.
 This method is fast but inexact.
 .br
-2: Use a fragment program.
-Needs the GL_ARB_fragment_program extension and at least three texture units.
-Provides brightness, contrast, saturation and hue control.
-.br
-3: Use a fragment program using the POW instruction.
+2: Use a fragment program using the POW instruction.
 Needs the GL_ARB_fragment_program extension and at least three texture units.
 Provides brightness, contrast, saturation, hue and gamma control.
 Gamma can also be set independently for red, green and blue.
 Method 4 is usually faster.
+.br
+3: Same as 2.
+They exist as distinct values for legacy reasons, MPlayer now inserts
+the extra instructions for gamma control on-demand.
 .br
 4: Use a fragment program with additional lookup.
 Needs the GL_ARB_fragment_program extension and at least four texture units.

@@ -106,7 +106,7 @@ static int use_aspect;
 static int use_ycbcr;
 #define MASK_ALL_YUV (~(1 << YUV_CONVERSION_NONE))
 #define MASK_NOT_COMBINERS (~((1 << YUV_CONVERSION_NONE) | (1 << YUV_CONVERSION_COMBINERS)))
-#define MASK_GAMMA_SUPPORT (MASK_NOT_COMBINERS & ~(1 << YUV_CONVERSION_FRAGMENT))
+#define MASK_GAMMA_SUPPORT MASK_NOT_COMBINERS
 static int use_yuv;
 static int colorspace;
 static int levelconv;
@@ -1327,8 +1327,8 @@ static int preinit_internal(const char *arg, int allow_sw)
               "  yuv=<n>\n"
               "    0: use software YUV to RGB conversion.\n"
               "    1: use register combiners (nVidia only, for older cards).\n"
-              "    2: use fragment program.\n"
-              "    3: use fragment program with gamma correction.\n"
+              "    2: use fragment program with gamma correction.\n"
+              "    3: same as 2.\n"
               "    4: use fragment program with gamma correction via lookup.\n"
               "    5: use ATI-specific method (for older cards).\n"
               "    6: use lookup via 3D texture.\n"
