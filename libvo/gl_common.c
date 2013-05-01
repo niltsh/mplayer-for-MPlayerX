@@ -1459,12 +1459,24 @@ static void glSetupYUVFragprog(gl_conversion_params_t *params) {
   strcpy(yuv_prog, prog_hdr);
   prog_pos    = yuv_prog + sizeof(prog_hdr) - 1;
   prog_remain = MAX_PROGSZ - sizeof(prog_hdr);
+  if (!params->is_planar) {
+    // interleaved
+    snprintf(prog_pos, prog_remain, "TEX yuv.rgb, fragment.texcoord[0], texture[0], %s;\n", rect ? "RECT" : "2D");
+    prog_remain -= strlen(prog_pos);
+    prog_pos    += strlen(prog_pos);
+  } else {
   add_scaler(YUV_LUM_SCALER(type), &prog_pos, &prog_remain, lum_scale_texs,
              '0', 'r', rect, texw, texh, params->filter_strength);
   add_scaler(YUV_CHROM_SCALER(type), &prog_pos, &prog_remain, chrom_scale_texs,
              '1', 'g', rect, params->chrom_texw, params->chrom_texh, params->filter_strength);
   add_scaler(YUV_CHROM_SCALER(type), &prog_pos, &prog_remain, chrom_scale_texs,
              '2', 'b', rect, params->chrom_texw, params->chrom_texh, params->filter_strength);
+  }
+  if (params->csp_params.format == MP_CSP_XYZ) {
+    snprintf(prog_pos, prog_remain, "PARAM xyzgamma = {2.6};\nPOW yuv.r, yuv.r, xyzgamma.r;\nPOW yuv.g, yuv.g, xyzgamma.r;\nPOW yuv.b, yuv.b, xyzgamma.r;\n");
+    prog_remain -= strlen(prog_pos);
+    prog_pos    += strlen(prog_pos);
+  }
   mp_get_yuv2rgb_coeffs(&params->csp_params, yuv2rgb);
 
   // enable/disable gamma on demand

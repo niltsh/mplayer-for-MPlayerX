@@ -111,6 +111,7 @@ static int use_yuv;
 static int colorspace;
 static int levelconv;
 static int is_yuv;
+static int is_xyz;
 static int lscale;
 static int cscale;
 static float filter_strength;
@@ -259,6 +260,14 @@ static void update_yuvconv(void) {
   params.chrom_texw = params.texw >> xs;
   params.chrom_texh = params.texh >> ys;
   params.csp_params.input_shift = -depth & 7;
+  params.is_planar = is_yuv;
+  if (is_xyz) {
+    params.csp_params.format = MP_CSP_XYZ;
+    params.csp_params.input_shift = 0;
+    params.csp_params.rgamma *= 2.2;
+    params.csp_params.ggamma *= 2.2;
+    params.csp_params.bgamma *= 2.2;
+  }
   glSetupYUVConversion(&params);
   if (custom_prog) {
     FILE *f = fopen(custom_prog, "rb");
@@ -568,7 +577,7 @@ static int initGl(uint32_t d_width, uint32_t d_height) {
   if (mipmap_gen)
     mpglTexParameteri(gl_target, GL_GENERATE_MIPMAP, GL_TRUE);
 
-  if (is_yuv || stereo_mode == GL_3D_STIPPLE) {
+  if (is_yuv || is_xyz || custom_prog || stereo_mode == GL_3D_STIPPLE) {
     int i;
     mpglGenTextures(21, default_texs);
     default_texs[21] = 0;
@@ -602,7 +611,7 @@ static int initGl(uint32_t d_width, uint32_t d_height) {
     mpglActiveTexture(GL_TEXTURE0);
     mpglBindTexture(gl_target, 0);
   }
-  if (is_yuv || custom_prog)
+  if (is_yuv || is_xyz || custom_prog)
   {
     if ((MASK_NOT_COMBINERS & (1 << use_yuv)) || custom_prog) {
       if (!mpglGenPrograms || !mpglBindProgram) {
@@ -710,6 +719,7 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
   image_format = format;
   is_yuv = mp_get_chroma_shift(image_format, &xs, &ys, NULL) > 0;
   is_yuv |= (xs << 8) | (ys << 16);
+  is_xyz = IMGFMT_IS_XYZ(image_format);
   glFindFormat(format, NULL, &gl_texfmt, &gl_format, &gl_type);
 
   if (glctx.type == GLTYPE_OSX && vo_doublebuffering && !is_yuv) {
@@ -888,7 +898,7 @@ static void draw_osd(void)
 
 static void do_render(void) {
   mpglColor4f(1,1,1,1);
-  if (is_yuv || custom_prog)
+  if (is_yuv || is_xyz || custom_prog)
     glEnableYUVConversion(gl_target, yuvconvtype);
   if (stereo_mode) {
     glEnable3DLeft(stereo_mode);
@@ -911,7 +921,7 @@ static void do_render(void) {
               using_tex_rect, is_yuv,
               mpi_flipped ^ vo_flipped, 0);
   }
-  if (is_yuv || custom_prog)
+  if (is_yuv || is_xyz || custom_prog)
     glDisableYUVConversion(gl_target, yuvconvtype);
   did_render = 1;
 }
@@ -1187,6 +1197,8 @@ query_format(uint32_t format)
     if (use_yuv && mp_get_chroma_shift(format, NULL, NULL, &depth) &&
         (depth == 8 || depth == 16 || glYUVLargeRange(use_yuv)) &&
         (IMGFMT_IS_YUVP16_NE(format) || !IMGFMT_IS_YUVP16(format)))
+        return caps;
+    if ((MASK_NOT_COMBINERS & (1 << use_yuv)) && IMGFMT_IS_XYZ(format))
         return caps;
     // HACK, otherwise we get only b&w with some filters (e.g. -vf eq)
     // ideally MPlayer should be fixed instead not to use Y800 when it has the choice

@@ -157,6 +157,7 @@ typedef struct {
   int texh;
   int chrom_texw;
   int chrom_texh;
+  int is_planar;
   float filter_strength;
   float noise_strength;
   int has_alpha_tex;
