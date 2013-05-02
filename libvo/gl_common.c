@@ -1239,7 +1239,7 @@ static void create_conv_textures(gl_conversion_params_t *params, int *texu, char
       break;
     case YUV_CONVERSION_FRAGMENT_LOOKUP3D:
       {
-        int sz = LOOKUP_3DRES + 2; // texture size including borders
+        int sz = LOOKUP_3DRES; // texture size
         if (!mpglTexImage3D) {
           mp_msg(MSGT_VO, MSGL_ERR, "[gl] Missing 3D texture function!\n");
           break;
@@ -1250,14 +1250,14 @@ static void create_conv_textures(gl_conversion_params_t *params, int *texu, char
         mp_gen_yuv2rgb_map(&params->csp_params, lookup_data, LOOKUP_3DRES);
         glAdjustAlignment(sz);
         mpglPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-        mpglTexImage3D(GL_TEXTURE_3D, 0, 3, sz, sz, sz, 1,
+        mpglTexImage3D(GL_TEXTURE_3D, 0, 3, sz, sz, sz, 0,
                        GL_RGB, GL_UNSIGNED_BYTE, lookup_data);
         mpglTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_PRIORITY, 1.0);
         mpglTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         mpglTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        mpglTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-        mpglTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-        mpglTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP);
+        mpglTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        mpglTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        mpglTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
         mpglActiveTexture(GL_TEXTURE0);
         texs[0] += '0';
       }

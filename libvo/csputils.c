@@ -137,18 +137,22 @@ void mp_get_yuv2rgb_coeffs(struct mp_csp_params *params, float yuv2rgb[3][4]) {
   }
 }
 
+static float int2pos(int i, int size) {
+  if (i == 0) return 0;
+  if (i == size - 1) return 1;
+  return (i + 0.5) / size;
+}
+
 //! size of gamma map use to avoid slow exp function in gen_yuv2rgb_map
 #define GMAP_SIZE (1024)
 /**
  * \brief generate a 3D YUV -> RGB map
  * \param params struct containing parameters like brightness, gamma, ...
- * \param map where to store map. Must provide space for (size + 2)^3 elements
- * \param size size of the map, excluding border
+ * \param map where to store map. Must provide space for size^3 elements
+ * \param size size of the map
  */
 void mp_gen_yuv2rgb_map(struct mp_csp_params *params, unsigned char *map, int size) {
   int i, j, k, l;
-  float step = 1.0 / size;
-  float y, u, v;
   float yuv2rgb[3][4];
   unsigned char gmaps[3][GMAP_SIZE];
   mp_gen_gamma_map(gmaps[0], GMAP_SIZE, params->rgamma);
@@ -158,20 +162,17 @@ void mp_gen_yuv2rgb_map(struct mp_csp_params *params, unsigned char *map, int si
   for (i = 0; i < 3; i++)
     for (j = 0; j < 4; j++)
       yuv2rgb[i][j] *= GMAP_SIZE - 1;
-  v = 0;
-  for (i = -1; i <= size; i++) {
-    u = 0;
-    for (j = -1; j <= size; j++) {
-      y = 0;
-      for (k = -1; k <= size; k++) {
+  for (i = 0; i < size; i++) {
+    float v = int2pos(i, size);
+    for (j = 0; j < size; j++) {
+      float u = int2pos(j, size);
+      for (k = 0; k < size; k++) {
+        float y = int2pos(k, size);
         for (l = 0; l < 3; l++) {
           float rgb = yuv2rgb[l][COL_Y] * y + yuv2rgb[l][COL_U] * u + yuv2rgb[l][COL_V] * v + yuv2rgb[l][COL_C];
           *map++ = gmaps[l][av_clip(rgb, 0, GMAP_SIZE - 1)];
         }
-        y += (k == -1 || k == size - 1) ? step / 2 : step;
       }
-      u += (j == -1 || j == size - 1) ? step / 2 : step;
     }
-    v += (i == -1 || i == size - 1) ? step / 2 : step;
   }
 }
