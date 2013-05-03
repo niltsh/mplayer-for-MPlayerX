@@ -1396,6 +1396,7 @@ static int preinit_internal(const char *arg, int allow_sw)
               "    2: SDL\n"
               "    3: X11/EGL (experimental)\n"
               "    4: OSX/Cocoa\n"
+              "    5: Android (experimental)\n"
               "\n" );
       return -1;
     }
