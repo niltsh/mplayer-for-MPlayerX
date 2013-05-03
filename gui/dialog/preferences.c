@@ -188,6 +188,7 @@ static char * vo_driver[3];
 static int    old_video_driver = 0;
 
 static GtkWidget *AudioConfig;
+static GtkWidget *DXR3Config;
 
  void ShowDXR3Config( void );
  void ShowAudioConfig( void );
@@ -1678,7 +1679,6 @@ void ShowAudioConfig( void ) {
 
 /* dxr3 config box */
 
-static GtkWidget * DXR3Config;
 static GtkWidget * CBDevice;
 static GtkWidget * CEDXR3Device;
 static GtkWidget * RBVNone;
