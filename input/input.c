@@ -577,6 +577,8 @@ int (*mp_input_key_cb)(int code) = NULL;
 
 int async_quit_request;
 
+int pausing_default = 0;
+
 static mp_input_fd_t key_fds[MP_MAX_KEY_FD];
 static unsigned int num_key_fd = 0;
 static mp_input_fd_t cmd_fds[MP_MAX_CMD_FD];
@@ -836,7 +838,7 @@ mp_input_parse_cmd(char* str) {
       case MP_CMD_SET_MOUSE_POS:
         pausing = 4; break;
       default:
-        pausing = 0; break;
+        pausing = pausing_default; break;
     }
   }
   cmd->pausing = pausing;

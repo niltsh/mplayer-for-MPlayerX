@@ -334,4 +334,6 @@ mp_input_check_interrupt(int time);
 
 extern int async_quit_request;
 
+extern int pausing_default;
+
 #endif /* MPLAYER_INPUT_H */

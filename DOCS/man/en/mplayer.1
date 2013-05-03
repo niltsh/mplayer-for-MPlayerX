@@ -1246,6 +1246,26 @@ Useless with modern Linux kernels configured for desktop use as they already
 wake up the process with similar accuracy when using normal timed sleep.
 .
 .TP
+.B \-pausing <0\-3> (MPlayer only)
+Specifies the default pausing behaviour of commands, i.e. whether MPlayer
+will continue playback or stay paused after the command has finished.
+See DOCS/tech/slave.txt for further details.
+.PD 0
+.RSs
+.IPs 0
+resume
+.IPs 1
+pause (pausing)
+.IPs 2
+keep the paused / playing status (pausing_keep)
+.IPs 3
+toggle the paused / playing status (pausing_toggle)
+.IPs 4
+pause without frame step (experimental) (pausing_keep_force)
+.RE
+.PD 1
+.
+.TP
 .B \-playing\-msg <string>
 Print out a string before starting playback.
 The following expansions are supported:

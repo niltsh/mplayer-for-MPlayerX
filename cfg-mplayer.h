@@ -339,6 +339,7 @@ const m_option_t mplayer_opts[]={
     {"mouse-movements", &enable_mouse_movements, CONF_TYPE_FLAG, CONF_GLOBAL, 0, 1, NULL},
     {"nomouse-movements", &enable_mouse_movements, CONF_TYPE_FLAG, CONF_GLOBAL, 1, 0, NULL},
     {"doubleclick-time", &doubleclick_time, CONF_TYPE_INT, CONF_RANGE, 0, 1000, NULL},
+    {"pausing", &pausing_default, CONF_TYPE_INT, CONF_RANGE, 0, 4, NULL},
 #ifdef CONFIG_TV
     {"tvscan", tvscan_conf, CONF_TYPE_SUBCONFIG, 0, 0, 0, NULL},
 #else
