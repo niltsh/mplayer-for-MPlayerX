@@ -245,12 +245,12 @@ static int init(int rate, int channels, int format, int flags) {
   if (!port_name)
     port_flags |= JackPortIsPhysical;
   matching_ports = jack_get_ports(client, port_name, NULL, port_flags);
-  if (!matching_ports || !matching_ports[0]) {
+  i = 0;
+  while (matching_ports && matching_ports[i]) i++;
+  if (!i) {
     mp_msg(MSGT_AO, MSGL_FATAL, "[JACK] no physical ports available\n");
     goto err_out;
   }
-  i = 1;
-  while (matching_ports[i]) i++;
   if (channels > i) channels = i;
   num_ports = channels;
 
@@ -268,7 +268,7 @@ static int init(int rate, int channels, int format, int flags) {
     mp_msg(MSGT_AO, MSGL_FATAL, "[JACK] activate failed\n");
     goto err_out;
   }
-  for (i = 0; i < num_ports; i++) {
+  for (i = 0; i < num_ports && matching_ports && matching_ports[i]; i++) {
     if (jack_connect(client, jack_port_name(ports[i]), matching_ports[i])) {
       mp_msg(MSGT_AO, MSGL_FATAL, "[JACK] connecting failed\n");
       goto err_out;
