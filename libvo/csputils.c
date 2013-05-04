@@ -61,7 +61,7 @@ void mp_gen_gamma_map(uint8_t *map, int size, float gamma) {
  * Note: contrast, hue and saturation will only work as expected with YUV formats,
  * not with e.g. MP_CSP_XYZ
  */
-void mp_get_yuv2rgb_coeffs(struct mp_csp_params *params, float yuv2rgb[3][4]) {
+void mp_get_yuv2rgb_coeffs(const struct mp_csp_params *params, float yuv2rgb[3][4]) {
   float depth_multiplier = params->input_shift >= 0 ?
                            (1 << params->input_shift) :
                            (1.0 / (1 << -params->input_shift));
@@ -151,7 +151,7 @@ static float int2pos(int i, int size) {
  * \param map where to store map. Must provide space for size^3 elements
  * \param size size of the map
  */
-void mp_gen_yuv2rgb_map(struct mp_csp_params *params, unsigned char *map, int size) {
+void mp_gen_yuv2rgb_map(const struct mp_csp_params *params, unsigned char *map, int size) {
   int i, j, k, l;
   float yuv2rgb[3][4];
   unsigned char gmaps[3][GMAP_SIZE];
