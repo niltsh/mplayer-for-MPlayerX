@@ -2365,6 +2365,12 @@ static void *eglgpa(const GLubyte *name) {
   return res;
 }
 
+static void GLAPIENTRY dummy_color(GLubyte r, GLubyte g, GLubyte b, GLubyte a) {
+}
+
+static void GLAPIENTRY dummy_texenvi(GLenum t, GLenum p, GLint v) {
+}
+
 static int setGlWindow_egl(MPGLContext *ctx)
 {
   static const EGLint cfg_attribs[] = { EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, EGL_NONE };
@@ -2436,6 +2442,8 @@ static int setGlWindow_egl(MPGLContext *ctx)
   set_frag_src(gpu_def_sl_program, def_frag_shader);
   set_frag_src(gpu_yuv_sl_program, yuv_frag_shader);
   mpglLoadMatrixf = matrix_uniform;
+  mpglColor4ub = dummy_color;
+  mpglTexEnvi = dummy_texenvi;
   use_program(gpu_def_sl_program);
 
   // and inform that reinit is necessary
