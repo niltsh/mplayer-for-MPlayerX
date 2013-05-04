@@ -413,6 +413,18 @@
 #ifndef GL_PROGRAM_ERROR_STRING
 #define GL_PROGRAM_ERROR_STRING 0x8874
 #endif
+#ifndef GL_FRAGMENT_SHADER
+#define GL_FRAGMENT_SHADER 0x8B30
+#endif
+#ifndef GL_VERTEX_SHADER
+#define GL_VERTEX_SHADER 0x8B31
+#endif
+#ifndef GL_COMPILE_STATUS
+#define GL_COMPILE_STATUS 0x8B81
+#endif
+#ifndef GL_LINK_STATUS
+#define GL_LINK_STATUS 0x8B82
+#endif
 /** \} */ // end of glextdefines group
 
 #endif /* MPLAYER_GL_COMPAT_H */

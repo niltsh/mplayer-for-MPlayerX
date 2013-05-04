@@ -94,6 +94,7 @@ int loadGPUProgram(GLenum target, char *prog);
 #define YUV_CONVERSION_FRAGMENT_LOOKUP3D 6
 //! use ATI specific "text" register combiners ("fragment program")
 #define YUV_CONVERSION_TEXT_FRAGMENT 7
+#define YUV_CONVERSION_SL_PROGRAM 8
 //! use normal bilinear scaling for textures
 #define YUV_SCALER_BILIN 0
 //! use higher quality bicubic scaling for textures
@@ -238,7 +239,7 @@ extern void (GLAPIENTRY *mpglEnd)(void);
 extern void (GLAPIENTRY *mpglViewport)(GLint, GLint, GLsizei, GLsizei);
 extern void (GLAPIENTRY *mpglMatrixMode)(GLenum);
 extern void (GLAPIENTRY *mpglLoadIdentity)(void);
-extern void (GLAPIENTRY *mpglLoadMatrixf)(float *);
+extern void (GLAPIENTRY *mpglLoadMatrixf)(const float *);
 extern void (GLAPIENTRY *mpglClear)(GLbitfield);
 extern GLuint (GLAPIENTRY *mpglGenLists)(GLsizei);
 extern void (GLAPIENTRY *mpglDeleteLists)(GLuint, GLsizei);

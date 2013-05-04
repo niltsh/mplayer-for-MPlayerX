@@ -50,7 +50,7 @@ void (GLAPIENTRY *mpglEnd)(void);
 void (GLAPIENTRY *mpglViewport)(GLint, GLint, GLsizei, GLsizei);
 void (GLAPIENTRY *mpglMatrixMode)(GLenum);
 void (GLAPIENTRY *mpglLoadIdentity)(void);
-void (GLAPIENTRY *mpglLoadMatrixf)(float *);
+void (GLAPIENTRY *mpglLoadMatrixf)(const float *);
 void (GLAPIENTRY *mpglClear)(GLbitfield);
 GLuint (GLAPIENTRY *mpglGenLists)(GLsizei);
 void (GLAPIENTRY *mpglDeleteLists)(GLuint, GLsizei);
@@ -145,7 +145,27 @@ void (GLAPIENTRY *mpglTexCoordPointer)(GLint, GLenum, GLsizei, const GLvoid *);
 void (GLAPIENTRY *mpglClientActiveTexture)(GLenum);
 void (GLAPIENTRY *mpglEnableClientState)(GLenum);
 void (GLAPIENTRY *mpglDisableClientState)(GLenum);
+
+void (GLAPIENTRY *mpglVertexAttribPointer)(GLuint, GLint, GLenum, GLboolean, GLsizei, const void *);
+void (GLAPIENTRY *mpglEnableVertexAttribArray)(GLuint);
 void (GLAPIENTRY *mpglDrawArrays)(GLenum, GLint, GLsizei);
+
+GLuint (GLAPIENTRY *mpglCreateProgram)(void);
+GLuint (GLAPIENTRY *mpglCreateShader)(GLenum);
+void (GLAPIENTRY *mpglShaderSource)(GLuint, GLsizei, const char **, const GLint *);
+void (GLAPIENTRY *mpglCompileShader)(GLuint);
+void (GLAPIENTRY *mpglGetShaderiv)(GLuint, GLenum, GLint *);
+void (GLAPIENTRY *mpglGetShaderInfoLog)(GLuint, GLsizei, GLsizei *, char *);
+void (GLAPIENTRY *mpglAttachShader)(GLuint, GLuint);
+void (GLAPIENTRY *mpglDetachShader)(GLuint, GLuint);
+void (GLAPIENTRY *mpglDeleteShader)(GLuint);
+void (GLAPIENTRY *mpglBindAttribLocation)(GLuint, GLuint, const char *);
+void (GLAPIENTRY *mpglLinkProgram)(GLuint);
+void (GLAPIENTRY *mpglGetProgramInfoLog)(GLuint, GLsizei, GLsizei *, char *);
+void (GLAPIENTRY *mpglUseProgram)(GLuint);
+GLint (GLAPIENTRY *mpglGetUniformLocation)(GLuint, const char *);
+void (GLAPIENTRY *mpglUniform1iv)(GLint, GLsizei, const GLint *);
+void (GLAPIENTRY *mpglUniformMatrix4fv)(GLint, GLsizei, GLboolean, const float *);
 
 //! \defgroup glgeneral OpenGL general helper functions
 
@@ -158,6 +178,10 @@ void (GLAPIENTRY *mpglDrawArrays)(GLenum, GLint, GLsizei);
 static GLint hqtexfmt;
 static int use_depth_l16;
 static GLenum l16_format;
+static GLuint gpu_def_sl_program;
+static GLuint gpu_yuv_sl_program;
+static GLuint gpu_cur_sl_program;
+static float transform_matrix[16];
 
 /**
  * \brief adjusts the GL_UNPACK_ALIGNMENT to fit the stride.
@@ -501,7 +525,29 @@ static const extfunc_desc_t extfuncs[] = {
   SIMPLE_FUNC_DESC(ClientActiveTexture),
   SIMPLE_FUNC_DESC(EnableClientState),
   SIMPLE_FUNC_DESC(DisableClientState),
+
+  SIMPLE_FUNC_DESC(VertexAttribPointer),
+  SIMPLE_FUNC_DESC(EnableVertexAttribArray),
   SIMPLE_FUNC_DESC(DrawArrays),
+
+
+  SIMPLE_FUNC_DESC(CreateProgram),
+  SIMPLE_FUNC_DESC(CreateShader),
+  SIMPLE_FUNC_DESC(ShaderSource),
+  SIMPLE_FUNC_DESC(CompileShader),
+  SIMPLE_FUNC_DESC(GetShaderiv),
+  SIMPLE_FUNC_DESC(GetShaderInfoLog),
+  SIMPLE_FUNC_DESC(AttachShader),
+  SIMPLE_FUNC_DESC(DetachShader),
+  SIMPLE_FUNC_DESC(DeleteShader),
+  SIMPLE_FUNC_DESC(BindAttribLocation),
+  SIMPLE_FUNC_DESC(LinkProgram),
+  SIMPLE_FUNC_DESC(GetProgramiv),
+  SIMPLE_FUNC_DESC(GetProgramInfoLog),
+  SIMPLE_FUNC_DESC(UseProgram),
+  SIMPLE_FUNC_DESC(GetUniformLocation),
+  SIMPLE_FUNC_DESC(Uniform1iv),
+  SIMPLE_FUNC_DESC(UniformMatrix4fv),
   {NULL}
 };
 
@@ -1543,6 +1589,105 @@ static void glSetupYUVFragprog(gl_conversion_params_t *params) {
   free(yuv_prog);
 }
 
+static void print_result(int link, GLuint obj) {
+  char msgtmp[500];
+  GLint status;
+  (link ? mpglGetProgramiv : mpglGetShaderiv)(obj, link ? GL_LINK_STATUS : GL_COMPILE_STATUS, &status);
+  if (!status)
+    mp_msg(MSGT_VO, MSGL_ERR, "[gl] Shader %s failed.\n", link ? "linking" : "compilation");
+  msgtmp[0] = 0;
+  (link ? mpglGetProgramInfoLog : mpglGetShaderInfoLog)(obj, sizeof(msgtmp), NULL, msgtmp);
+  mp_msg(MSGT_VO, status ? MSGL_V : MSGL_ERR, "[gl] %s messages:\n%s\n", link ? "Linker" : "Compiler", msgtmp);
+}
+
+static GLuint compile_shader(GLenum type, const char *source) {
+  GLuint shader = mpglCreateShader(type);
+  mp_msg(MSGT_VO, MSGL_DBG2, "[gl] Compiling shader:\n%s\n", source);
+  mpglShaderSource(shader, 1, &source, NULL);
+  mpglCompileShader(shader);
+  print_result(0, shader);
+  return shader;
+}
+
+static const char vertex_shader[] =
+  "uniform mat4 matrix;\n"
+  "attribute vec4 vPos;\n"
+  "attribute vec2 tca, tca2, tca3;\n"
+  "varying vec2 tcv, tcv2, tcv3;\n"
+  "void main() {\n"
+  "  gl_Position = matrix * vPos;\n"
+  "  tcv = tca; tcv2 = tca2; tcv3 = tca3;\n"
+  "}\n";
+
+static GLuint new_gpu_program(void) {
+  GLuint program = mpglCreateProgram();
+  GLuint shader = compile_shader(GL_VERTEX_SHADER, vertex_shader);
+  mpglAttachShader(program, shader);
+  mpglDeleteShader(shader);
+  return program;
+}
+
+static const char def_frag_shader[] =
+  "precision mediump float;\n"
+  "uniform sampler2D texs[4];\n"
+  "varying vec2 tcv;\n"
+  "void main() {\n"
+  "  gl_FragColor = texture2D(texs[0], tcv);\n"
+  "}\n";
+
+static const char yuv_frag_shader[] =
+  "precision mediump float;\n"
+  "uniform sampler2D texs[4];\n"
+  "varying vec2 tcv, tcv2;\n"
+  "void main() {\n"
+  "  mat4 yuv_conv = mat4(\n"
+  "     1.164000e+00,  1.164000e+00,  1.164000e+00, 0,\n"
+  "     0.000000e+00, -3.910000e-01,  2.018000e+00, 0,\n"
+  "     1.596000e+00, -8.130000e-01,  0.000000e+00, 0,\n"
+  "    -8.741648e-01,  5.313256e-01, -1.085992e+00, 1\n"
+  "  );\n"
+  "  vec4 yuv = vec4(0.0, 0.5, 0.5, 1.0);\n"
+  "  yuv.r = texture2D(texs[0], tcv).r;\n"
+  "  yuv.g = texture2D(texs[1], tcv2).r;\n"
+  "  yuv.b = texture2D(texs[2], tcv2).r;\n"
+  "  gl_FragColor = yuv_conv * yuv;\n"
+  "}\n";
+
+static void set_frag_shader(GLuint prog, GLuint shader) {
+  mpglAttachShader(prog, shader);
+  mpglBindAttribLocation(prog, 0, "vPos");
+  mpglBindAttribLocation(prog, 1, "tca");
+  mpglBindAttribLocation(prog, 2, "tca2");
+  mpglBindAttribLocation(prog, 3, "tca3");
+  mpglLinkProgram(prog);
+  print_result(1, prog);
+}
+
+static void set_frag_src(GLuint prog, const char *src) {
+  GLuint shader = compile_shader(GL_FRAGMENT_SHADER, src);
+  set_frag_shader(prog, shader);
+  mpglDeleteShader(shader);
+}
+
+static void GLAPIENTRY matrix_uniform(const float *matrix)
+{
+  GLint loc;
+  if (matrix != transform_matrix)
+    memcpy(transform_matrix, matrix, sizeof(transform_matrix));
+  loc = mpglGetUniformLocation(gpu_cur_sl_program, "matrix");
+  mpglUniformMatrix4fv(loc, 1, GL_FALSE, transform_matrix);
+}
+
+static void use_program(GLuint prog) {
+  GLint loc;
+  static const GLint texs[] = {0, 1, 2, 3, 4};
+  mpglUseProgram(prog);
+  gpu_cur_sl_program = prog;
+  loc = mpglGetUniformLocation(prog, "texs");
+  mpglUniform1iv(loc, sizeof(texs)/sizeof(texs[0]), texs);
+  matrix_uniform(transform_matrix);
+}
+
 /**
  * \brief detect the best YUV->RGB conversion method available
  */
@@ -1551,6 +1696,8 @@ int glAutodetectYUVConversion(void) {
   const char *vendor     = mpglGetString(GL_VENDOR);
   // Imagination cannot parse floats in exponential representation (%e)
   int is_img = vendor && strstr(vendor, "Imagination") != NULL;
+  if (!mpglBegin)
+    return YUV_CONVERSION_SL_PROGRAM;
   if (!extensions || !mpglMultiTexCoord2f)
     return YUV_CONVERSION_NONE;
   if (strstr(extensions, "GL_ARB_fragment_program") && !is_img)
@@ -1588,6 +1735,8 @@ void glSetupYUVConversion(gl_conversion_params_t *params) {
     case YUV_CONVERSION_FRAGMENT:
     case YUV_CONVERSION_FRAGMENT_POW:
       glSetupYUVFragprog(params);
+      break;
+    case YUV_CONVERSION_SL_PROGRAM:
       break;
     case YUV_CONVERSION_NONE:
       break;
@@ -1635,6 +1784,9 @@ void glEnableYUVConversion(GLenum target, int type) {
     case YUV_CONVERSION_NONE:
       mpglEnable(GL_FRAGMENT_PROGRAM);
       break;
+    case YUV_CONVERSION_SL_PROGRAM:
+      use_program(gpu_yuv_sl_program);
+      break;
   }
 }
 
@@ -1680,6 +1832,9 @@ void glDisableYUVConversion(GLenum target, int type) {
     case YUV_CONVERSION_FRAGMENT:
     case YUV_CONVERSION_NONE:
       mpglDisable(GL_FRAGMENT_PROGRAM);
+      break;
+    case YUV_CONVERSION_SL_PROGRAM:
+      use_program(gpu_def_sl_program);
       break;
   }
 }
@@ -1821,37 +1976,15 @@ static void draw_vertices(GLfloat x, GLfloat y, GLfloat w, GLfloat h,
   GLfloat texcoords3[8] = {vo_dx / 4.0, vo_dy / 4.0, vo_dx / 4.0, (vo_dy + vo_dheight) / 4.0, (vo_dx + vo_dwidth) / 4.0, vo_dy / 4.0, (vo_dx + vo_dwidth) / 4.0, (vo_dy + vo_dheight) / 4.0};
 
   if (!mpglBegin) {
-    mpglEnableClientState(GL_VERTEX_ARRAY);
-    mpglVertexPointer(2, GL_FLOAT, 0, vertices);
-    mpglEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    mpglTexCoordPointer(2, GL_FLOAT, 0, texcoords);
-    if (use_stipple) {
-      mpglClientActiveTexture(GL_TEXTURE3);
-      mpglEnableClientState(GL_TEXTURE_COORD_ARRAY);
-      mpglTexCoordPointer(2, GL_FLOAT, 0, texcoords3);
-    }
-    if (is_yv12) {
-      mpglClientActiveTexture(GL_TEXTURE1);
-      mpglEnableClientState(GL_TEXTURE_COORD_ARRAY);
-      mpglTexCoordPointer(2, GL_FLOAT, 0, texcoords2);
-      mpglClientActiveTexture(GL_TEXTURE2);
-      mpglEnableClientState(GL_TEXTURE_COORD_ARRAY);
-      mpglTexCoordPointer(2, GL_FLOAT, 0, texcoords2);
-      mpglClientActiveTexture(GL_TEXTURE0);
-    }
+    mpglVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    mpglEnableVertexAttribArray(0);
+    mpglVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, texcoords);
+    mpglEnableVertexAttribArray(1);
+    mpglVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, texcoords2);
+    mpglEnableVertexAttribArray(2);
+    mpglVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 0, texcoords3);
+    mpglEnableVertexAttribArray(3);
     mpglDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    if (use_stipple) {
-      mpglClientActiveTexture(GL_TEXTURE3);
-      mpglDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    }
-    if (is_yv12) {
-      mpglClientActiveTexture(GL_TEXTURE1);
-      mpglDisableClientState(GL_TEXTURE_COORD_ARRAY);
-      mpglClientActiveTexture(GL_TEXTURE2);
-      mpglDisableClientState(GL_TEXTURE_COORD_ARRAY);
-      mpglClientActiveTexture(GL_TEXTURE0);
-    }
-    mpglDisableClientState(GL_VERTEX_ARRAY);
     return;
   }
 
@@ -2218,9 +2351,9 @@ static void *eglgpa(const GLubyte *name) {
   void *res = eglGetProcAddress(name);
   if (!res) {
     static const char * const paths[] = {
-      "/usr/lib/libGLESv1_CM.so",
-      "/usr/lib/x86_64-linux-gnu/libGLESv1_CM.so",
-      "/usr/lib/i386-linux-gnu/libGLESv1_CM.so",
+      "/usr/lib/libGLESv2.so",
+      "/usr/lib/x86_64-linux-gnu/libGLESv2.so",
+      "/usr/lib/i386-linux-gnu/libGLESv2.so",
       NULL};
     int i;
     void *h = NULL;
@@ -2235,8 +2368,8 @@ static void *eglgpa(const GLubyte *name) {
 
 static int setGlWindow_egl(MPGLContext *ctx)
 {
-  static const EGLint cfg_attribs[] = { EGL_NONE };
-  static const EGLint ctx_attribs[] = { EGL_NONE };
+  static const EGLint cfg_attribs[] = { EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, EGL_NONE };
+  static const EGLint ctx_attribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
   EGLContext *context = &ctx->context.egl;
   EGLContext new_context = NULL;
   EGLConfig eglConfig;
@@ -2298,6 +2431,13 @@ static int setGlWindow_egl(MPGLContext *ctx)
   getFunctions(eglgpa, eglQueryString(eglDisplay, EGL_EXTENSIONS));
   mpglBegin = NULL;
   mpglDrawBuffer = NULL;
+
+  gpu_def_sl_program = new_gpu_program();
+  gpu_yuv_sl_program = new_gpu_program();
+  set_frag_src(gpu_def_sl_program, def_frag_shader);
+  set_frag_src(gpu_yuv_sl_program, yuv_frag_shader);
+  mpglLoadMatrixf = matrix_uniform;
+  use_program(gpu_def_sl_program);
 
   // and inform that reinit is necessary
   return SET_WINDOW_REINIT;
