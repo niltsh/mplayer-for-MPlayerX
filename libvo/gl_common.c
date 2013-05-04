@@ -1813,48 +1813,18 @@ void glDisable3D(int type) {
   }
 }
 
-/**
- * \brief draw a texture part at given 2D coordinates
- * \param x screen top coordinate
- * \param y screen left coordinate
- * \param w screen width coordinate
- * \param h screen height coordinate
- * \param tx texture top coordinate in pixels
- * \param ty texture left coordinate in pixels
- * \param tw texture part width in pixels
- * \param th texture part height in pixels
- * \param sx width of texture in pixels
- * \param sy height of texture in pixels
- * \param rect_tex whether this texture uses texture_rectangle extension
- * \param is_yv12 if != 0, also draw the textures from units 1 and 2,
- *                bits 8 - 15 and 16 - 23 specify the x and y scaling of those textures
- * \param flip flip the texture upside down
- * \param use_stipple overlay texture 3 as 4x4 alpha stipple
- * \ingroup gltexture
- */
-void glDrawTex(GLfloat x, GLfloat y, GLfloat w, GLfloat h,
-               GLfloat tx, GLfloat ty, GLfloat tw, GLfloat th,
-               int sx, int sy, int rect_tex, int is_yv12, int flip,
-               int use_stipple) {
-  int chroma_x_shift = (is_yv12 >>  8) & 31;
-  int chroma_y_shift = (is_yv12 >> 16) & 31;
+static void draw_vertices(GLfloat x, GLfloat y, GLfloat w, GLfloat h,
+                          GLfloat tx, GLfloat ty, GLfloat tw, GLfloat th,
+                          GLfloat tx2, GLfloat ty2, GLfloat tw2, GLfloat th2,
+                          int is_yv12, int use_stipple)
+{
+  int i;
+  GLfloat vertices  [8] = { x,   y,   x,   y  +  h,   x  +  w,   y,   x  +  w,   y  +  h};
+  GLfloat texcoords [8] = {tx,  ty,  tx,  ty  + th,  tx  + tw,  ty,  tx  + tw,  ty  + th};
+  GLfloat texcoords2[8] = {tx2, ty2, tx2, ty2 + th2, tx2 + tw2, ty2, tx2 + tw2, ty2 + th2};
   GLfloat texcoords3[8] = {vo_dx / 4.0, vo_dy / 4.0, vo_dx / 4.0, (vo_dy + vo_dheight) / 4.0, (vo_dx + vo_dwidth) / 4.0, vo_dy / 4.0, (vo_dx + vo_dwidth) / 4.0, (vo_dy + vo_dheight) / 4.0};
-  GLfloat xscale = 1 << chroma_x_shift;
-  GLfloat yscale = 1 << chroma_y_shift;
-  GLfloat tx2 = tx / xscale, ty2 = ty / yscale, tw2 = tw / xscale, th2 = th / yscale;
-  if (!rect_tex) {
-    tx /= sx; ty /= sy; tw /= sx; th /= sy;
-    tx2 = tx, ty2 = ty, tw2 = tw, th2 = th;
-  }
-  if (flip) {
-    y += h;
-    h = -h;
-  }
 
   if (!mpglBegin) {
-    GLfloat vertices  [8] = { x,   y,   x,   y  +  h,   x  +  w,   y,   x  +  w,   y  +  h};
-    GLfloat texcoords [8] = {tx,  ty,  tx,  ty  + th,  tx  + tw,  ty,  tx  + tw,  ty  + th};
-    GLfloat texcoords2[8] = {tx2, ty2, tx2, ty2 + th2, tx2 + tw2, ty2, tx2 + tw2, ty2 + th2};
     mpglEnableClientState(GL_VERTEX_ARRAY);
     mpglVertexPointer(2, GL_FLOAT, 0, vertices);
     mpglEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -1889,40 +1859,59 @@ void glDrawTex(GLfloat x, GLfloat y, GLfloat w, GLfloat h,
     return;
   }
 
-  mpglBegin(GL_QUADS);
-  mpglTexCoord2f(tx, ty);
-  if (is_yv12) {
-    mpglMultiTexCoord2f(GL_TEXTURE1, tx2, ty2);
-    mpglMultiTexCoord2f(GL_TEXTURE2, tx2, ty2);
+  mpglBegin(GL_TRIANGLE_STRIP);
+  for (i = 0; i < 4; i++) {
+    int px = 2*i;
+    int py = 2*i + 1;
+    mpglTexCoord2f(texcoords[px], texcoords[py]);
+    if (is_yv12) {
+      mpglMultiTexCoord2f(GL_TEXTURE1, texcoords2[px], texcoords[py]);
+      mpglMultiTexCoord2f(GL_TEXTURE2, texcoords2[px], texcoords[py]);
+    }
+    if (use_stipple)
+      mpglMultiTexCoord2f(GL_TEXTURE3, texcoords3[px], texcoords3[py]);
+    mpglVertex2f(vertices[px], vertices[py]);
   }
-  if (use_stipple)
-    mpglMultiTexCoord2f(GL_TEXTURE3, texcoords3[0], texcoords3[1]);
-  mpglVertex2f(x, y);
-  mpglTexCoord2f(tx, ty + th);
-  if (is_yv12) {
-    mpglMultiTexCoord2f(GL_TEXTURE1, tx2, ty2 + th2);
-    mpglMultiTexCoord2f(GL_TEXTURE2, tx2, ty2 + th2);
-  }
-  if (use_stipple)
-    mpglMultiTexCoord2f(GL_TEXTURE3, texcoords3[2], texcoords3[3]);
-  mpglVertex2f(x, y + h);
-  mpglTexCoord2f(tx + tw, ty + th);
-  if (is_yv12) {
-    mpglMultiTexCoord2f(GL_TEXTURE1, tx2 + tw2, ty2 + th2);
-    mpglMultiTexCoord2f(GL_TEXTURE2, tx2 + tw2, ty2 + th2);
-  }
-  if (use_stipple)
-    mpglMultiTexCoord2f(GL_TEXTURE3, texcoords3[6], texcoords3[7]);
-  mpglVertex2f(x + w, y + h);
-  mpglTexCoord2f(tx + tw, ty);
-  if (is_yv12) {
-    mpglMultiTexCoord2f(GL_TEXTURE1, tx2 + tw2, ty2);
-    mpglMultiTexCoord2f(GL_TEXTURE2, tx2 + tw2, ty2);
-  }
-  if (use_stipple)
-    mpglMultiTexCoord2f(GL_TEXTURE3, texcoords3[4], texcoords3[5]);
-  mpglVertex2f(x + w, y);
   mpglEnd();
+}
+
+/**
+ * \brief draw a texture part at given 2D coordinates
+ * \param x screen top coordinate
+ * \param y screen left coordinate
+ * \param w screen width coordinate
+ * \param h screen height coordinate
+ * \param tx texture top coordinate in pixels
+ * \param ty texture left coordinate in pixels
+ * \param tw texture part width in pixels
+ * \param th texture part height in pixels
+ * \param sx width of texture in pixels
+ * \param sy height of texture in pixels
+ * \param rect_tex whether this texture uses texture_rectangle extension
+ * \param is_yv12 if != 0, also draw the textures from units 1 and 2,
+ *                bits 8 - 15 and 16 - 23 specify the x and y scaling of those textures
+ * \param flip flip the texture upside down
+ * \param use_stipple overlay texture 3 as 4x4 alpha stipple
+ * \ingroup gltexture
+ */
+void glDrawTex(GLfloat x, GLfloat y, GLfloat w, GLfloat h,
+               GLfloat tx, GLfloat ty, GLfloat tw, GLfloat th,
+               int sx, int sy, int rect_tex, int is_yv12, int flip,
+               int use_stipple) {
+  int chroma_x_shift = (is_yv12 >>  8) & 31;
+  int chroma_y_shift = (is_yv12 >> 16) & 31;
+  GLfloat xscale = 1 << chroma_x_shift;
+  GLfloat yscale = 1 << chroma_y_shift;
+  GLfloat tx2 = tx / xscale, ty2 = ty / yscale, tw2 = tw / xscale, th2 = th / yscale;
+  if (!rect_tex) {
+    tx /= sx; ty /= sy; tw /= sx; th /= sy;
+    tx2 = tx; ty2 = ty; tw2 = tw; th2 = th;
+  }
+  if (flip) {
+    y += h;
+    h = -h;
+  }
+  draw_vertices(x, y, w, h, tx, ty, tw, th, tx2, ty2, tw2, th2, is_yv12, use_stipple);
 }
 
 #ifdef CONFIG_GL_WIN32
