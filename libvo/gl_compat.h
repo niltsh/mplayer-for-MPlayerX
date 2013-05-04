@@ -419,6 +419,9 @@
 #ifndef GL_VERTEX_SHADER
 #define GL_VERTEX_SHADER 0x8B31
 #endif
+#ifndef GL_SHADER_TYPE
+#define GL_SHADER_TYPE 0x8B4F
+#endif
 #ifndef GL_COMPILE_STATUS
 #define GL_COMPILE_STATUS 0x8B81
 #endif

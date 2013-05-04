@@ -152,6 +152,7 @@ void (GLAPIENTRY *mpglShaderSource)(GLuint, GLsizei, const char **, const GLint 
 void (GLAPIENTRY *mpglCompileShader)(GLuint);
 void (GLAPIENTRY *mpglGetShaderiv)(GLuint, GLenum, GLint *);
 void (GLAPIENTRY *mpglGetShaderInfoLog)(GLuint, GLsizei, GLsizei *, char *);
+void (GLAPIENTRY *mpglGetAttachedShaders)(GLuint, GLsizei, GLsizei *, GLuint *);
 void (GLAPIENTRY *mpglAttachShader)(GLuint, GLuint);
 void (GLAPIENTRY *mpglDetachShader)(GLuint, GLuint);
 void (GLAPIENTRY *mpglDeleteShader)(GLuint);
@@ -529,6 +530,7 @@ static const extfunc_desc_t extfuncs[] = {
   SIMPLE_FUNC_DESC(CompileShader),
   SIMPLE_FUNC_DESC(GetShaderiv),
   SIMPLE_FUNC_DESC(GetShaderInfoLog),
+  SIMPLE_FUNC_DESC(GetAttachedShaders),
   SIMPLE_FUNC_DESC(AttachShader),
   SIMPLE_FUNC_DESC(DetachShader),
   SIMPLE_FUNC_DESC(DeleteShader),
@@ -1634,25 +1636,50 @@ static const char def_frag_shader[] =
   "  gl_FragColor = texture2D(texs[0], tcv);\n"
   "}\n";
 
-static const char yuv_frag_shader[] =
+static const char yuv_frag_shader_template[] =
   "precision mediump float;\n"
   "uniform sampler2D texs[4];\n"
-  "varying vec2 tcv, tcv2;\n"
+  "varying vec2 tcv, tcv2, tcv3;\n"
   "void main() {\n"
+  "  const vec3 gamma = vec3(%e, %e, %e);\n"
+  "  const float xyz_gamma = %e;\n"
   "  const mat4 yuv_conv = mat4(\n"
-  "     1.164000e+00,  1.164000e+00,  1.164000e+00, 0,\n"
-  "     0.000000e+00, -3.910000e-01,  2.018000e+00, 0,\n"
-  "     1.596000e+00, -8.130000e-01,  0.000000e+00, 0,\n"
-  "    -8.741648e-01,  5.313256e-01, -1.085992e+00, 1\n"
+  "    %e, %e, %e, 0,\n"
+  "    %e, %e, %e, 0,\n"
+  "    %e, %e, %e, 0,\n"
+  "    %e, %e, %e, 1\n"
   "  );\n"
   "  vec4 yuv = vec4(0.0, 0.5, 0.5, 1.0);\n"
-  "  yuv.r = texture2D(texs[0], tcv).r;\n"
-  "  yuv.g = texture2D(texs[1], tcv2).r;\n"
-  "  yuv.b = texture2D(texs[2], tcv2).r;\n"
-  "  gl_FragColor = yuv_conv * yuv;\n"
+  "  if (%i == 0) {\n"
+  "    yuv = texture2D(texs[0], tcv);\n"
+  "  } else {\n"
+  "    yuv.r = texture2D(texs[0], tcv).r;\n"
+  "    yuv.g = texture2D(texs[1], tcv2).r;\n"
+  "    yuv.b = texture2D(texs[2], tcv2).r;\n"
+  "  }\n"
+  "  if (xyz_gamma != 1.0)\n"
+  "    yuv.rgb = pow(yuv.rgb, vec3(xyz_gamma, xyz_gamma, xyz_gamma));\n"
+  "  vec4 rgb = yuv_conv * yuv;\n"
+  "  if (gamma != vec3(1.0, 1.0, 1.0))\n"
+  "    rgb.rgb = pow(rgb.rgb, gamma);\n"
+  "  rgb.a = %i == 0 ? 1.0 : texture2D(texs[3], tcv3).r;\n"
+  "  gl_FragColor = rgb;\n"
   "}\n";
 
+static void detach_shader(GLuint prog, GLenum type) {
+  GLuint attached[4];
+  GLsizei num_attached;
+  mpglGetAttachedShaders(prog, 4, &num_attached, attached);
+  while (num_attached--) {
+    GLint cur_type;
+    mpglGetShaderiv(attached[num_attached], GL_SHADER_TYPE, &cur_type);
+    if (cur_type == type)
+      mpglDetachShader(prog, attached[num_attached]);
+  }
+}
+
 static void set_frag_shader(GLuint prog, GLuint shader) {
+  detach_shader(prog, GL_FRAGMENT_SHADER);
   mpglAttachShader(prog, shader);
   mpglBindAttribLocation(prog, 0, "vPos");
   mpglBindAttribLocation(prog, 1, "tca");
@@ -1666,6 +1693,23 @@ static void set_frag_src(GLuint prog, const char *src) {
   GLuint shader = compile_shader(GL_FRAGMENT_SHADER, src);
   set_frag_shader(prog, shader);
   mpglDeleteShader(shader);
+}
+
+static void update_yuv_frag_src(const gl_conversion_params_t *params) {
+  char buffer[2000];
+  float yuv2rgb[3][4];
+  mp_get_yuv2rgb_coeffs(&params->csp_params, yuv2rgb);
+  snprintf(buffer, sizeof(buffer), yuv_frag_shader_template,
+    1.0 / params->csp_params.rgamma,
+    1.0 / params->csp_params.ggamma,
+    1.0 / params->csp_params.bgamma,
+    params->csp_params.format == MP_CSP_XYZ ? 2.6 : 1.0,
+    yuv2rgb[0][0], yuv2rgb[1][0], yuv2rgb[2][0],
+    yuv2rgb[0][1], yuv2rgb[1][1], yuv2rgb[2][1],
+    yuv2rgb[0][2], yuv2rgb[1][2], yuv2rgb[2][2],
+    yuv2rgb[0][3], yuv2rgb[1][3], yuv2rgb[2][3],
+    params->is_planar, 0);
+  set_frag_src(gpu_yuv_sl_program, buffer);
 }
 
 static void GLAPIENTRY matrix_uniform(const float *matrix)
@@ -1736,6 +1780,7 @@ void glSetupYUVConversion(gl_conversion_params_t *params) {
       glSetupYUVFragprog(params);
       break;
     case YUV_CONVERSION_SL_PROGRAM:
+      update_yuv_frag_src(params);
       break;
     case YUV_CONVERSION_NONE:
       break;
@@ -2440,7 +2485,6 @@ static int setGlWindow_egl(MPGLContext *ctx)
   gpu_def_sl_program = new_gpu_program();
   gpu_yuv_sl_program = new_gpu_program();
   set_frag_src(gpu_def_sl_program, def_frag_shader);
-  set_frag_src(gpu_yuv_sl_program, yuv_frag_shader);
   mpglLoadMatrixf = matrix_uniform;
   mpglColor4ub = dummy_color;
   mpglTexEnvi = dummy_texenvi;
