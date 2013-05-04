@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 36136
+.\" sync with en/mplayer.1 rev. 36213
 .\" MPlayer (C) 2000-2013 MPlayer Team
 .\" This man page was/is translated by JRaSH<jrash06 at gmail.com>
 .
@@ -1246,6 +1246,26 @@ mplayer \-heartbeat\-cmd "gnome\-screensaver\-command \-p" file
 时方式的 sleep 时，这些内核已经以相类似的精度唤醒进程了。
 .
 .TP
+.B \-pausing <0\-3>（仅用于 MPlayer）
+指定命令默认使用的暂时行为，也就是命令结后，\
+MPlayer 是继续播放还是暂停。\
+参见 DOCS/tech/slave.txt 以了解更多详情。
+.PD 0
+.RSs
+.IPs 0
+继续
+.IPs 1
+暂停（pausing）
+.IPs 2
+保持暂停 / 播放状态（pausing_keep）
+.IPs 3
+切换暂停 / 播放状态（pausing_toggle）
+.IPs 4
+暂停同时画面帧无步进（实验性）（pausing_keep_force）
+.RE
+.PD 1
+.
+.TP
 .B \-playing\-msg <字符串>
 开始播放前打印字符串。\
 支持以下的变量替换：
@@ -1432,10 +1452,6 @@ MPlayer 在输出详细信息模式下（\-v）运行时会打印可用的语言
 这个选项可以告诉 MPlayer 使用哪个角度（默认值：1）。
 .
 .TP
-.B \-bluray\-chapter <章节代码>（仅用于蓝光 DVD）
-告诉 MPlayer 从哪个蓝光 DVD 章节开始播放当前标题的内容（默认值：1）。
-.
-.TP
 .B \-bluray\-device <碟片路径>（仅用于蓝光 DVD）
 指定蓝光碟片的位置。必须是一个具有蓝光 DVD 结构的目录。
 .
@@ -1543,7 +1559,7 @@ MPlayer 要求解码器将音频解码为该选项所指定的\
 .PD 1
 .
 .TP
-.B \-chapter <章节代码>[\-<中止章节代码>]（仅用于 dvd:// 和 dvdnav://）
+.B \-chapter <章节代码>[\-<中止章节代码>]
 指定从哪个章节开始播放。\
 可同时指定播放至哪个场景中止（默认值：1）。
 .
@@ -4159,6 +4175,8 @@ OpenGL 视频输出驱动，简单版本。\
 3：X11/EGL（高度处于实验阶段）
 .br
 4：OSX/Cocoa
+.br
+5：Android（十分糟糕的实现，仅用于测试）
 .RE
 .IPs (no)ati\-hack
 当使用了 PBO 时（当使用了 \-dr 或强制使用 \-pbo 时），\
@@ -4217,15 +4235,15 @@ OSD 的颜色（默认值是：0x00ffffff，对应不透明的白色）。
 提供饱和度和色调的控制功能。\
 该方法速度快但不精确。
 .br
-2：使用片断程序。\
-需要 GL_ARB_fragment_program 扩展组件和至少三个纹理处理单元。\
-提供亮度、对比度、饱和度和色调控制。
-.br
-3：使用利用 POW 指令的片断程序。\
+2：使用利用 POW 指令的片断程序。\
 需要 GL_ARB_fragment_program 扩展组件和至少三个纹理处理单元。\
 提供亮度、对比度、饱和度、色调和伽玛校正值的控制功能。\
 伽玛校正值也能在红、绿和蓝三个方面单独设置。\
 方法 4 通常更快。
+.br
+3：与 2 相同。\
+为该类型专门分配一个值是出于历史原因，MPlayer 现在为按需启用的\
+伽玛校正值控制功能插入额外的指令。
 .br
 4：使用具有额外查阅操作的片断程序。\
 需要 GL_ARB_fragment_program 扩展组件和至少四个纹理处理单元。\
