@@ -769,6 +769,7 @@ int glFmt2bpp(GLenum format, GLenum type) {
 void glUploadTex(GLenum target, GLenum format, GLenum type,
                  const void *dataptr, int stride,
                  int x, int y, int w, int h, int slice) {
+  int bpp;
   const uint8_t *data = dataptr;
   int y_max = y + h;
   if (w <= 0 || h <= 0) return;
@@ -782,9 +783,15 @@ void glUploadTex(GLenum target, GLenum format, GLenum type,
     format = l16_format;
     if (l16_format == GL_LUMINANCE_ALPHA) type = GL_UNSIGNED_BYTE;
   }
-  // this is not always correct, but should work for MPlayer
-  glAdjustAlignment(stride);
-  mpglPixelStorei(GL_UNPACK_ROW_LENGTH, stride / glFmt2bpp(format, type));
+  bpp = glFmt2bpp(format, type);
+  if (!mpglBegin) {
+    // we have to copy line-by-line for GLES
+    if (stride != w*bpp) slice = 1;
+  } else {
+    // this is not always correct, but should work for MPlayer
+    glAdjustAlignment(stride);
+    mpglPixelStorei(GL_UNPACK_ROW_LENGTH, stride / bpp);
+  }
   if (slice < 0) {
     mpglPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
     mpglTexImage2D(target, 0, GL_RGB, w, h, 0, format, type, data);

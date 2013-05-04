@@ -1185,13 +1185,8 @@ query_format(uint32_t format)
 {
     int depth;
     int caps = VFCAP_CSP_SUPPORTED | VFCAP_CSP_SUPPORTED_BY_HW |
-               VFCAP_FLIP |
+               VFCAP_FLIP | VFCAP_ACCEPT_STRIDE |
                VFCAP_HWSCALE_UP | VFCAP_HWSCALE_DOWN;
-    // TODO: This assumes backend auto-detection was run
-    // before this code.
-    // In addition strides might not work with X11 GLES either.
-    if (glctx.type != GLTYPE_EGL_ANDROID)
-      caps |= VFCAP_ACCEPT_STRIDE;
     if (use_osd)
       caps |= VFCAP_OSD | VFCAP_EOSD | (scaled_osd ? 0 : VFCAP_EOSD_UNSCALED);
     if (format == IMGFMT_RGB24 || format == IMGFMT_RGBA)
