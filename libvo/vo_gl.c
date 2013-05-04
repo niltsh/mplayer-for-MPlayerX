@@ -175,14 +175,16 @@ static int did_render;
 
 static void redraw(void);
 
+static float video_matrix[16];
+
 static void resize(int x,int y){
   // simple orthogonal projection for 0-image_width;0-image_height
-  float matrix[16] = {
-    2.0/image_width,   0, 0, 0,
-    0, -2.0/image_height, 0, 0,
-    0, 0, 0, 0,
-    -1, 1, 0, 1
-  };
+  memset(video_matrix, 0, sizeof(video_matrix));
+  video_matrix[0]  = 2.0/image_width;
+  video_matrix[5]  = -2.0/image_height;
+  video_matrix[12] = -1;
+  video_matrix[13] = 1;
+  video_matrix[15] = 1;
   mp_msg(MSGT_VO, MSGL_V, "[gl] Resize: %dx%d\n",x,y);
   if (WinID >= 0) {
     int left = 0, top = 0, w = x, h = y;
@@ -203,14 +205,14 @@ static void resize(int x,int y){
     new_h += vo_panscan_y;
     scale_x = (double)new_w / (double)x;
     scale_y = (double)new_h / (double)y;
-    matrix[0]  *= scale_x;
-    matrix[12] *= scale_x;
-    matrix[5]  *= scale_y;
-    matrix[13] *= scale_y;
+    video_matrix[0]  *= scale_x;
+    video_matrix[12] *= scale_x;
+    video_matrix[5]  *= scale_y;
+    video_matrix[13] *= scale_y;
     ass_border_x = (vo_dwidth - new_w) / 2;
     ass_border_y = (vo_dheight - new_h) / 2;
   }
-  mpglLoadMatrixf(matrix);
+  mpglLoadMatrixf(video_matrix);
 
   mpglMatrixMode(GL_MODELVIEW);
   mpglLoadIdentity();
@@ -842,7 +844,6 @@ static void do_render_osd(int type) {
       -1, 1, 0, 1
     };
     mpglMatrixMode(GL_PROJECTION);
-    mpglPushMatrix();
     mpglLoadMatrixf(matrix);
   }
   mpglEnable(GL_BLEND);
@@ -879,7 +880,7 @@ static void do_render_osd(int type) {
   // set rendering parameters back to defaults
   mpglDisable(GL_BLEND);
   if (!scaled_osd)
-    mpglPopMatrix();
+    mpglLoadMatrixf(video_matrix);
   mpglBindTexture(gl_target, 0);
 }
 
