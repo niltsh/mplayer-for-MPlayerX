@@ -409,8 +409,9 @@ typedef struct {
   void *fallback;
 } extfunc_desc_t;
 
+#define SIMPLE_FUNC_DESC(name) {&mpgl##name, NULL, {"gl"#name, NULL}, NULL}
 #if !defined(CONFIG_GL_WIN32) && !defined(CONFIG_GL_X11)
-#define DEF_FUNC_DESC(name) {&mpgl##name, NULL, {"gl"#name, NULL}, NULL}
+#define DEF_FUNC_DESC(name) SIMPLE_FUNC_DESC(name)
 #else
 #define DEF_FUNC_DESC(name) {&mpgl##name, NULL, {"gl"#name, NULL}, gl ##name}
 #endif
@@ -499,12 +500,12 @@ static const extfunc_desc_t extfuncs[] = {
   {&mpglFreeMemoryMESA, "GLX_MESA_allocate_memory", {"glXFreeMemoryMESA", NULL}},
 
   // Things needed to run on GLES
-  {&mpglVertexPointer, NULL, {"glVertexPointer", NULL}},
-  {&mpglTexCoordPointer, NULL, {"glTexCoordPointer", NULL}},
-  {&mpglClientActiveTexture, NULL, {"glClientActiveTexture", NULL}},
-  {&mpglEnableClientState, NULL, {"glEnableClientState", NULL}},
-  {&mpglDisableClientState, NULL, {"glDisableClientState", NULL}},
-  {&mpglDrawArrays, NULL, {"glDrawArrays", NULL}},
+  SIMPLE_FUNC_DESC(VertexPointer),
+  SIMPLE_FUNC_DESC(TexCoordPointer),
+  SIMPLE_FUNC_DESC(ClientActiveTexture),
+  SIMPLE_FUNC_DESC(EnableClientState),
+  SIMPLE_FUNC_DESC(DisableClientState),
+  SIMPLE_FUNC_DESC(DrawArrays),
   {NULL}
 };
 
