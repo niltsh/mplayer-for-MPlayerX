@@ -1613,7 +1613,7 @@ mp_input_parse_config(char *file) {
 	eof = 1;
       } else {
 	bs += r+1;
-	buffer[bs-1] = '\0';
+	buffer[bs-1] = 0;
       }
     }
     // Empty buffer : return
@@ -1626,9 +1626,9 @@ mp_input_parse_config(char *file) {
     iter = buffer;
 
     if(comments) {
-      for( ; iter[0] != '\0' && iter[0] != '\n' ; iter++)
+      for( ; iter[0] && iter[0] != '\n' ; iter++)
 	/* NOTHING */;
-      if(iter[0] == '\0') { // Buffer was full of comment
+      if(!iter[0]) { // Buffer was full of comment
 	bs = 0;
 	continue;
       }
@@ -1643,9 +1643,9 @@ mp_input_parse_config(char *file) {
     // Find the wanted key
     if(keys[0] == 0) {
       // Jump beginning space
-      for(  ; iter[0] != '\0' && strchr(SPACE_CHAR,iter[0]) != NULL ; iter++)
+      for(  ; iter[0] && strchr(SPACE_CHAR,iter[0]) != NULL ; iter++)
 	/* NOTHING */;
-      if(iter[0] == '\0') { // Buffer was full of space char
+      if(!iter[0]) { // Buffer was full of space char
 	bs = 0;
 	continue;
       }
@@ -1654,9 +1654,9 @@ mp_input_parse_config(char *file) {
 	continue;
       }
       // Find the end of the key code name
-      for(end = iter; end[0] != '\0' && strchr(SPACE_CHAR,end[0]) == NULL ; end++)
+      for(end = iter; end[0] && strchr(SPACE_CHAR,end[0]) == NULL ; end++)
 	/*NOTHING */;
-      if(end[0] == '\0') { // Key name doesn't fit in the buffer
+      if(!end[0]) { // Key name doesn't fit in the buffer
 	if(buffer == iter) {
 	  if(eof && (buffer-iter) == bs)
 	    mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrUnfinishedBinding,iter);
@@ -1671,7 +1671,7 @@ mp_input_parse_config(char *file) {
       {
 	char name[end-iter+1];
 	strncpy(name,iter,end-iter);
-	name[end-iter] = '\0';
+	name[end-iter] = 0;
 	if(! mp_input_get_input_from_name(name,keys)) {
 	  mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrUnknownKey,name);
 	  close(fd);
@@ -1698,9 +1698,9 @@ mp_input_parse_config(char *file) {
 	}
 	continue;
       }
-      for(end = iter ; end[0] != '\n' && end[0] != '\r' && end[0] != '\0' ; end++)
+      for(end = iter ; end[0] != '\n' && end[0] != '\r' && end[0] ; end++)
 	/* NOTHING */;
-      if(end[0] == '\0' && ! (eof && ((end+1) - buffer) == bs)) {
+      if(!end[0] && ! (eof && ((end+1) - buffer) == bs)) {
 	if(iter == buffer) {
 	  mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrBuffer2SmallForCmd,buffer);
 	  close(fd);
@@ -1713,7 +1713,7 @@ mp_input_parse_config(char *file) {
       {
 	char cmd[end-iter+1];
 	strncpy(cmd,iter,end-iter);
-	cmd[end-iter] = '\0';
+	cmd[end-iter] = 0;
 	//printf("Set bind %d => %s\n",keys[0],cmd);
 	mp_input_bind_keys(keys,cmd);
 	n_binds++;
