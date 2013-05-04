@@ -1723,7 +1723,6 @@ mp_input_parse_config(char *file) {
       if(bs > (end-buffer))
 	memmove(buffer,end,bs-(end-buffer));
       bs -= (end-buffer);
-      buffer[bs-1] = '\0';
       continue;
     }
   }
