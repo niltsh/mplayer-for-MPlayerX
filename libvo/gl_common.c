@@ -1639,7 +1639,7 @@ static const char yuv_frag_shader[] =
   "uniform sampler2D texs[4];\n"
   "varying vec2 tcv, tcv2;\n"
   "void main() {\n"
-  "  mat4 yuv_conv = mat4(\n"
+  "  const mat4 yuv_conv = mat4(\n"
   "     1.164000e+00,  1.164000e+00,  1.164000e+00, 0,\n"
   "     0.000000e+00, -3.910000e-01,  2.018000e+00, 0,\n"
   "     1.596000e+00, -8.130000e-01,  0.000000e+00, 0,\n"
