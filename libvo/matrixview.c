@@ -77,7 +77,7 @@ static void draw_char(int num, float light, float x, float y, float z)
     ty = (float)num2 / 7;
     tx = (float)num3 / 10;
     mpglNormal3f(0.0f, 0.0f, 1.0f);        // Needed for lighting
-    mpglColor4ub(0, 255, 255, light);        // Basic polygon color
+    mpglColor4ub(0, 255, 0, light);        // Basic polygon color
 
     mpglTexCoord2f(tx, ty);
     mpglVertex3f(x, y, z);
