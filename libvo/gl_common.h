@@ -247,7 +247,6 @@ extern void (GLAPIENTRY *mpglCallList)(GLuint);
 extern void (GLAPIENTRY *mpglCallLists)(GLsizei, GLenum, const GLvoid *);
 extern void (GLAPIENTRY *mpglGenTextures)(GLsizei, GLuint *);
 extern void (GLAPIENTRY *mpglDeleteTextures)(GLsizei, const GLuint *);
-extern void (GLAPIENTRY *mpglTexEnvf)(GLenum, GLenum, GLfloat);
 extern void (GLAPIENTRY *mpglTexEnvi)(GLenum, GLenum, GLint);
 extern void (GLAPIENTRY *mpglColor4ub)(GLubyte, GLubyte, GLubyte, GLubyte);
 extern void (GLAPIENTRY *mpglClearColor)(GLclampf, GLclampf, GLclampf, GLclampf);

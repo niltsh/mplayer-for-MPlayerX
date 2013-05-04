@@ -58,7 +58,6 @@ void (GLAPIENTRY *mpglCallList)(GLuint);
 void (GLAPIENTRY *mpglCallLists)(GLsizei, GLenum, const GLvoid *);
 void (GLAPIENTRY *mpglGenTextures)(GLsizei, GLuint *);
 void (GLAPIENTRY *mpglDeleteTextures)(GLsizei, const GLuint *);
-void (GLAPIENTRY *mpglTexEnvf)(GLenum, GLenum, GLfloat);
 void (GLAPIENTRY *mpglTexEnvi)(GLenum, GLenum, GLint);
 void (GLAPIENTRY *mpglColor4ub)(GLubyte, GLubyte, GLubyte, GLubyte);
 void (GLAPIENTRY *mpglClearColor)(GLclampf, GLclampf, GLclampf, GLclampf);
@@ -451,7 +450,6 @@ static const extfunc_desc_t extfuncs[] = {
   DEF_FUNC_DESC(CallLists),
   DEF_FUNC_DESC(GenTextures),
   DEF_FUNC_DESC(DeleteTextures),
-  DEF_FUNC_DESC(TexEnvf),
   DEF_FUNC_DESC(TexEnvi),
   DEF_FUNC_DESC(Color4ub),
   DEF_FUNC_DESC(ClearColor),
