@@ -1581,10 +1581,14 @@ mp_input_free_binds(mp_cmd_bind_t* binds) {
 
 }
 
+static void strmove(char *dst, const char *src) {
+  memmove(dst, src, strlen(src) + 1);
+}
+
 static int
 mp_input_parse_config(char *file) {
   int fd;
-  int bs = 0,r,eof = 0,comments = 0;
+  int eof = 0,comments = 0;
   char *iter,*end;
   char buffer[BS_MAX];
   int n_binds = 0, keys[MP_MAX_KEY_DOWN+1] = { 0 };
@@ -1599,25 +1603,24 @@ mp_input_parse_config(char *file) {
 
   mp_msg(MSGT_INPUT,MSGL_V,"Parsing input config file %s\n",file);
 
+  buffer[0] = 0;
   while(1) {
+    int bs = strlen(buffer);
     if(! eof && bs < BS_MAX-1) {
-      if(bs > 0) bs--;
-      r = read(fd,buffer+bs,BS_MAX-1-bs);
+      int r = read(fd,buffer+bs,BS_MAX-1-bs);
       if(r < 0) {
 	if(errno == EINTR)
 	  continue;
 	mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrReadingInputConfig,file,strerror(errno));
 	close(fd);
 	return 0;
-      } else if(r == 0) {
-	eof = 1;
-      } else {
-	bs += r+1;
-	buffer[bs-1] = 0;
       }
+      eof = r == 0;
+      bs += r;
+      buffer[bs] = 0;
     }
     // Empty buffer : return
-    if(bs <= 1) {
+    if(!buffer[0]) {
       mp_msg(MSGT_INPUT,MSGL_V,"Input config file %s parsed: %d binds\n",file,n_binds);
       close(fd);
       return 1;
@@ -1626,17 +1629,15 @@ mp_input_parse_config(char *file) {
     iter = buffer;
 
     if(comments) {
+      // search for newline ending comment
       for( ; iter[0] && iter[0] != '\n' ; iter++)
 	/* NOTHING */;
       if(!iter[0]) { // Buffer was full of comment
-	bs = 0;
+	buffer[0] = 0;
 	continue;
       }
-      iter++;
-      r = strlen(iter);
-      memmove(buffer,iter,r+1);
-      bs = r+1;
       comments = 0;
+      strmove(buffer, iter+1);
       continue;
     }
 
@@ -1646,7 +1647,7 @@ mp_input_parse_config(char *file) {
       for(  ; iter[0] && strchr(SPACE_CHAR,iter[0]) != NULL ; iter++)
 	/* NOTHING */;
       if(!iter[0]) { // Buffer was full of space char
-	bs = 0;
+	buffer[0] = 0;
 	continue;
       }
       if(iter[0] == '#') { // Comments
@@ -1658,29 +1659,19 @@ mp_input_parse_config(char *file) {
 	/*NOTHING */;
       if(!end[0]) { // Key name doesn't fit in the buffer
 	if(buffer == iter) {
-	  if(eof && (buffer-iter) == bs)
-	    mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrUnfinishedBinding,iter);
-	  else
-	    mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrBuffer2SmallForKeyName,iter);
+	  mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrBuffer2SmallForKeyName,iter);
 	  return 0;
 	}
-	memmove(buffer,iter,end-iter);
-	bs = end-iter;
+	strmove(buffer,iter);
 	continue;
       }
-      {
-	char name[end-iter+1];
-	strncpy(name,iter,end-iter);
-	name[end-iter] = 0;
-	if(! mp_input_get_input_from_name(name,keys)) {
-	  mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrUnknownKey,name);
+	end[0] = 0;
+	if(! mp_input_get_input_from_name(iter,keys)) {
+	  mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrUnknownKey,iter);
 	  close(fd);
 	  return 0;
 	}
-      }
-      if( bs > (end-buffer))
-	memmove(buffer,end,bs - (end-buffer));
-      bs -= end-buffer;
+      strmove(buffer,end+1);
       continue;
     } else { // Get the command
       while(iter[0] == ' ' || iter[0] == '\t') iter++;
@@ -1692,37 +1683,25 @@ mp_input_parse_config(char *file) {
 	  mp_msg(MSGT_INPUT,MSGL_ERR,"-%s",mp_input_get_key_name(keys[i]));
 	mp_msg(MSGT_INPUT,MSGL_ERR,"\n");
 	keys[0] = 0;
-	if(iter > buffer) {
-	  memmove(buffer,iter,bs- (iter-buffer));
-	  bs -= (iter-buffer);
-	}
+	strmove(buffer,iter+1);
 	continue;
       }
       for(end = iter ; end[0] != '\n' && end[0] != '\r' && end[0] ; end++)
 	/* NOTHING */;
-      if(!end[0] && ! (eof && ((end+1) - buffer) == bs)) {
+      if(!end[0]) {
 	if(iter == buffer) {
 	  mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrBuffer2SmallForCmd,buffer);
 	  close(fd);
 	  return 0;
 	}
-	memmove(buffer,iter,end - iter);
-	bs = end - iter;
+	strmove(buffer,iter);
 	continue;
       }
-      {
-	char cmd[end-iter+1];
-	strncpy(cmd,iter,end-iter);
-	cmd[end-iter] = 0;
-	//printf("Set bind %d => %s\n",keys[0],cmd);
-	mp_input_bind_keys(keys,cmd);
+	end[0] = 0;
+	mp_input_bind_keys(keys,iter);
 	n_binds++;
-      }
       keys[0] = 0;
-      end++;
-      if(bs > (end-buffer))
-	memmove(buffer,end,bs-(end-buffer));
-      bs -= (end-buffer);
+      strmove(buffer,end+1);
       continue;
     }
   }
