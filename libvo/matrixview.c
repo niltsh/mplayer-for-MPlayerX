@@ -71,13 +71,13 @@ static void draw_char(int num, float light, float x, float y, float z)
 
     num &= 63;
     //light = light / 255;        //light=7-light;num+=(light*60);
-    light = light / 255 * matrix_brightness;
+    light *= matrix_brightness;
     num2 = num / 10;
     num3 = num - (num2 * 10);
     ty = (float)num2 / 7;
     tx = (float)num3 / 10;
     mpglNormal3f(0.0f, 0.0f, 1.0f);        // Needed for lighting
-    mpglColor4f(0.0, 1.0, 0.0, light);        // Basic polygon color
+    mpglColor4ub(0, 255, 255, light);        // Basic polygon color
 
     mpglTexCoord2f(tx, ty);
     mpglVertex3f(x, y, z);
@@ -99,7 +99,7 @@ static void draw_illuminatedchar(int num, float x, float y, float z)
     ty = (float)num2 / 7;
     tx = (float)num3 / 10;
     mpglNormal3f(0.0f, 0.0f, 1.0f);        // Needed for lighting
-    mpglColor4f(1.0, 1.0, 1.0, .5);        // Basic polygon color
+    mpglColor4ub(255, 255, 255, 128);        // Basic polygon color
 
     mpglTexCoord2f(tx, ty);
     mpglVertex3f(x, y, z);
@@ -114,7 +114,7 @@ static void draw_illuminatedchar(int num, float x, float y, float z)
 static void draw_flare(float x, float y, float z)        //flare
 {
     mpglNormal3f(0.0f, 0.0f, 1.0f);        // Needed for lighting
-    mpglColor4f(1.0, 1.0, 1.0, .8);        // Basic polygon color
+    mpglColor4ub(255, 255, 255, 204);        // Basic polygon color
 
     mpglTexCoord2f(0, 0);
     mpglVertex3f(x - 1, y + 1, z);

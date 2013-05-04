@@ -899,7 +899,7 @@ static void draw_osd(void)
 }
 
 static void do_render(void) {
-  mpglColor4f(1,1,1,1);
+  mpglColor4ub(255, 255, 255, 255);
   if (is_yuv || is_xyz || custom_prog)
     glEnableYUVConversion(gl_target, yuvconvtype);
   if (stereo_mode) {
