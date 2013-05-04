@@ -194,7 +194,6 @@ static void resize(int x,int y){
   } else
     mpglViewport( 0, 0, x, y );
 
-  mpglMatrixMode(GL_PROJECTION);
   ass_border_x = ass_border_y = 0;
   if (aspect_scaling() && use_aspect) {
     int new_w, new_h;
@@ -213,9 +212,6 @@ static void resize(int x,int y){
     ass_border_y = (vo_dheight - new_h) / 2;
   }
   mpglLoadMatrixf(video_matrix);
-
-  mpglMatrixMode(GL_MODELVIEW);
-  mpglLoadIdentity();
 
   if (!scaled_osd) {
 #ifdef CONFIG_FREETYPE
@@ -843,7 +839,6 @@ static void do_render_osd(int type) {
       0,  0, 0, 0,
       -1, 1, 0, 1
     };
-    mpglMatrixMode(GL_PROJECTION);
     mpglLoadMatrixf(matrix);
   }
   mpglEnable(GL_BLEND);

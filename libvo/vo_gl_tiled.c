@@ -446,11 +446,7 @@ static void resize(int x,int y){
       glViewport( 0, 0, x, y );
   }
 
-  glMatrixMode(GL_PROJECTION);
   glLoadMatrixf(matrix);
-
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
 }
 
 static void draw_alpha(int x0,int y0, int w,int h, unsigned char* src, unsigned char *srca, int stride){

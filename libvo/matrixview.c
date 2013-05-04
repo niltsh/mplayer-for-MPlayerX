@@ -322,11 +322,7 @@ void matrixview_reshape(int w, int h)
     };
     mpglViewport(0, 0, w, h);
 
-    mpglMatrixMode(GL_PROJECTION);
     mpglLoadMatrixf(matrix);
-
-    mpglMatrixMode(GL_MODELVIEW);
-    mpglLoadIdentity();
 }
 
 
