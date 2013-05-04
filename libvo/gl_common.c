@@ -2232,7 +2232,16 @@ EGLNativeWindowType android_createDisplaySurface(void);
 static void *eglgpa(const GLubyte *name) {
   void *res = eglGetProcAddress(name);
   if (!res) {
-    void *h = dlopen("/usr/lib/libGLESv1_CM.so", RTLD_LAZY);
+    static const char * const paths[] = {
+      "/usr/lib/libGLESv1_CM.so",
+      "/usr/lib/x86_64-linux-gnu/libGLESv1_CM.so",
+      "/usr/lib/i386-linux-gnu/libGLESv1_CM.so",
+      NULL};
+    int i;
+    void *h = NULL;
+    for (i = 0; !h && paths[i]; i++)
+      h = dlopen(paths[i], RTLD_LAZY);
+    if (!h) return NULL;
     res = dlsym(h, name);
     dlclose(h);
   }
