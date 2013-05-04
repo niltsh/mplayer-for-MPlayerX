@@ -239,8 +239,6 @@ extern void (GLAPIENTRY *mpglViewport)(GLint, GLint, GLsizei, GLsizei);
 extern void (GLAPIENTRY *mpglMatrixMode)(GLenum);
 extern void (GLAPIENTRY *mpglLoadIdentity)(void);
 extern void (GLAPIENTRY *mpglLoadMatrixf)(float *);
-extern void (GLAPIENTRY *mpglPushMatrix)(void);
-extern void (GLAPIENTRY *mpglPopMatrix)(void);
 extern void (GLAPIENTRY *mpglClear)(GLbitfield);
 extern GLuint (GLAPIENTRY *mpglGenLists)(GLsizei);
 extern void (GLAPIENTRY *mpglDeleteLists)(GLuint, GLsizei);

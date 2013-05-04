@@ -51,8 +51,6 @@ void (GLAPIENTRY *mpglViewport)(GLint, GLint, GLsizei, GLsizei);
 void (GLAPIENTRY *mpglMatrixMode)(GLenum);
 void (GLAPIENTRY *mpglLoadIdentity)(void);
 void (GLAPIENTRY *mpglLoadMatrixf)(float *);
-void (GLAPIENTRY *mpglPushMatrix)(void);
-void (GLAPIENTRY *mpglPopMatrix)(void);
 void (GLAPIENTRY *mpglClear)(GLbitfield);
 GLuint (GLAPIENTRY *mpglGenLists)(GLsizei);
 void (GLAPIENTRY *mpglDeleteLists)(GLuint, GLsizei);
@@ -425,8 +423,6 @@ static const extfunc_desc_t extfuncs[] = {
   DEF_FUNC_DESC(MatrixMode),
   DEF_FUNC_DESC(LoadIdentity),
   DEF_FUNC_DESC(LoadMatrixf),
-  DEF_FUNC_DESC(PushMatrix),
-  DEF_FUNC_DESC(PopMatrix),
   DEF_FUNC_DESC(Clear),
   DEF_FUNC_DESC(GenLists),
   DEF_FUNC_DESC(DeleteLists),
