@@ -942,7 +942,8 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
 
     if (mpi->w != pic->width || mpi->h != pic->height ||
         pic->width != avctx->width || pic->height != avctx->height) {
-        mp_msg(MSGT_DECVIDEO, MSGL_ERR, "Dropping frame with size not matching configured size\n");
+        mp_msg(MSGT_DECVIDEO, MSGL_ERR, "Dropping frame with size not matching configured size (%ix%i vs %ix%i vs %ix%i)\n",
+               mpi->w, mpi->h, pic->width, pic->height, avctx->width, avctx->height);
         return NULL;
     }
 
