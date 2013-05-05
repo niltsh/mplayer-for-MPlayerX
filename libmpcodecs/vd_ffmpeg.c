@@ -929,7 +929,7 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
     if(init_vo(sh, avctx->pix_fmt) < 0) return NULL;
 
     if(dr1 && pic->opaque){
-        mpi= (mp_image_t *)pic->opaque;
+        mpi=pic->opaque;
     }
 
     if(!mpi)
