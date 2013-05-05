@@ -552,8 +552,8 @@ static int get_buffer(AVCodecContext *avctx, AVFrame *pic){
     mp_image_t *mpi=NULL;
     int flags= MP_IMGFLAG_ACCEPT_ALIGNED_STRIDE | MP_IMGFLAG_PREFER_ALIGNED_STRIDE;
     int type= MP_IMGTYPE_IPB;
-    int width= avctx->width;
-    int height= avctx->height;
+    int width = FFMAX(avctx->width,  -(-avctx->coded_width  >> avctx->lowres));
+    int height= FFMAX(avctx->height, -(-avctx->coded_height >> avctx->lowres));
     // special case to handle reget_buffer
     if (pic->opaque && pic->data[0] && (!pic->buffer_hints || pic->buffer_hints & FF_BUFFER_HINTS_REUSABLE))
         return 0;
