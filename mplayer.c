@@ -330,6 +330,8 @@ static char *prog_path;
 static int crash_debug;
 #endif
 
+static int allow_playlist_parsing;
+
 /* This header requires all the global variable declarations. */
 #include "cfg-mplayer.h"
 
@@ -3245,8 +3247,12 @@ play_next_file:
         current_module = "handle_playlist";
         mp_msg(MSGT_CPLAYER, MSGL_V, "Parsing playlist %s...\n",
                filename_recode(filename));
-        entry      = parse_playtree(mpctx->stream, use_gui);
-        mpctx->eof = playtree_add_playlist(entry);
+        if (allow_playlist_parsing) {
+            entry      = parse_playtree(mpctx->stream, use_gui);
+            mpctx->eof = playtree_add_playlist(entry);
+        } else {
+            mp_msg(MSGT_CPLAYER, MSGL_ERR, "Playlist parsing disabled for security reasons. Ignoring file.\n");
+        }
         goto goto_next_file;
     }
     mpctx->stream->start_pos += seek_to_byte;

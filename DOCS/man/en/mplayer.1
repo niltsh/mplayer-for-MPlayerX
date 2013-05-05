@@ -1290,6 +1290,13 @@ only to the elements of this playlist.
 FIXME: This needs to be clarified and documented thoroughly.
 .
 .TP
+.B \-allow-dangerous-playlist-parsing
+This enables parsing any file as a playlist if e.g. a server advertises
+a file as playlist.
+Only enable if you know all servers involved are trustworthy.
+MPlayer's playlist code is not designed to handle malicious playlist files.
+.
+.TP
 .B \-rtc\-device <device>
 Use the specified device for RTC timing.
 .
