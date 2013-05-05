@@ -389,7 +389,7 @@ asx_get_element(ASX_Parser_t* parser,char** _buffer,
 
 static void
 asx_parse_param(ASX_Parser_t* parser, char** attribs, play_tree_t* pt) {
-  char *name,*val;
+  char *name = NULL,*val = NULL;
 
   name = asx_get_attrib("NAME",attribs);
   if(!name) {
@@ -403,10 +403,11 @@ asx_parse_param(ASX_Parser_t* parser, char** attribs, play_tree_t* pt) {
       mp_msg(MSGT_PLAYTREE,MSGL_WARN,"=%s\n",val);
     else
       mp_msg(MSGT_PLAYTREE,MSGL_WARN,"\n");
-    return;
+    goto err_out;
   }
   mp_msg(MSGT_PLAYTREE, MSGL_ERR, "Support for specifying parameters in playlists has been disabled.\n");
 //  play_tree_set_param(pt,name,val);
+err_out:
   free(name);
   free(val);
 }
