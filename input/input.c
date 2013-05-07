@@ -1587,6 +1587,7 @@ static void strmove(char *dst, const char *src) {
 
 static int
 mp_input_parse_config(char *file) {
+  int res = 0;
   int fd;
   int eof = 0,comments = 0;
   char *iter,*end;
@@ -1614,16 +1615,15 @@ mp_input_parse_config(char *file) {
 	if(errno == EINTR)
 	  continue;
 	mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrReadingInputConfig,file,strerror(errno));
-	close(fd);
-	return 0;
+	break;
       }
       eof = r == 0;
     }
     // Empty buffer : return
     if(!buffer[0]) {
       mp_msg(MSGT_INPUT,MSGL_V,"Input config file %s parsed: %d binds\n",file,n_binds);
-      close(fd);
-      return 1;
+      res = 1;
+      break;
     }
 
     iter = buffer;
@@ -1660,7 +1660,7 @@ mp_input_parse_config(char *file) {
       if(!end[0]) { // Key name doesn't fit in the buffer
 	if(buffer == iter) {
 	  mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrBuffer2SmallForKeyName,iter);
-	  return 0;
+	  break;
 	}
 	strmove(buffer,iter);
 	continue;
@@ -1668,8 +1668,7 @@ mp_input_parse_config(char *file) {
 	end[0] = 0;
 	if(! mp_input_get_input_from_name(iter,keys)) {
 	  mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrUnknownKey,iter);
-	  close(fd);
-	  return 0;
+	  break;
 	}
       strmove(buffer,end+1);
       continue;
@@ -1691,8 +1690,7 @@ mp_input_parse_config(char *file) {
       if(!end[0]) {
 	if(iter == buffer) {
 	  mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrBuffer2SmallForCmd,buffer);
-	  close(fd);
-	  return 0;
+	  break;
 	}
 	strmove(buffer,iter);
 	continue;
@@ -1705,10 +1703,8 @@ mp_input_parse_config(char *file) {
       continue;
     }
   }
-  mp_msg(MSGT_INPUT,MSGL_ERR,MSGTR_INPUT_INPUT_ErrWhyHere);
   close(fd);
-  mp_input_set_section(NULL);
-  return 0;
+  return res;
 }
 
 void
