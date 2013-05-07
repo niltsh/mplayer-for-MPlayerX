@@ -153,6 +153,8 @@ static int open_txt(menu_t* menu, char* args) {
 
   while(1) {
     r = fread(buf+pos,1,BUF_SIZE-pos-1,fd);
+    if (r > 0) pos += r;
+    buf[pos] = '\0';
     if(r <= 0) {
       if(pos > 0) {
 	mpriv->lines = realloc(mpriv->lines,(mpriv->num_lines + 1)*sizeof(char*));
@@ -162,8 +164,6 @@ static int open_txt(menu_t* menu, char* args) {
       fclose(fd);
       break;
     }
-    pos += r;
-    buf[pos] = '\0';
 
     while((l = strchr(buf,'\n')) != NULL) {
       s = l-buf;
