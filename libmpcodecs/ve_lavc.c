@@ -667,8 +667,9 @@ static int config(struct vf_instance *vf,
 	return 0;
     }
     if (av_dict_count(opts)) {
-        AVDictionaryEntry *e = av_dict_get(opts, "", NULL, 0);
-        mp_msg(MSGT_MENCODER,MSGL_ERR,"Unknown option %s\n");
+        AVDictionaryEntry *e = NULL;
+        while ((e = av_dict_get(opts, "", e, AV_DICT_IGNORE_SUFFIX)))
+            mp_msg(MSGT_MENCODER,MSGL_ERR,"Unknown option %s\n", e->key);
         return 0;
     }
     av_dict_free(&opts);
