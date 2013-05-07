@@ -1608,6 +1608,8 @@ mp_input_parse_config(char *file) {
     int bs = strlen(buffer);
     if(! eof && bs < BS_MAX-1) {
       int r = read(fd,buffer+bs,BS_MAX-1-bs);
+      if (r > 0) bs += r;
+      buffer[bs] = 0;
       if(r < 0) {
 	if(errno == EINTR)
 	  continue;
@@ -1616,8 +1618,6 @@ mp_input_parse_config(char *file) {
 	return 0;
       }
       eof = r == 0;
-      bs += r;
-      buffer[bs] = 0;
     }
     // Empty buffer : return
     if(!buffer[0]) {
