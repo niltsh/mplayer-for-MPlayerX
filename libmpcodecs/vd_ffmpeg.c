@@ -494,12 +494,39 @@ static void draw_slice(struct AVCodecContext *s,
     }
 }
 
+static void update_configuration(sh_video_t *sh, enum AVPixelFormat pix_fmt) {
+    vd_ffmpeg_ctx *ctx = sh->context;
+    const AVCodecContext *avctx = ctx->avctx;
+     // it is possible another vo buffers to be used after vo config()
+     // lavc reset its buffers on width/heigh change but not on aspect change!!!
+    if (av_cmp_q(avctx->sample_aspect_ratio, ctx->last_sample_aspect_ratio) ||
+        pix_fmt != ctx->pix_fmt ||
+        !ctx->vo_initialized)
+    {
+        float aspect= av_q2d(avctx->sample_aspect_ratio) * avctx->width / avctx->height;
+        ctx->vo_initialized = 0;
+        // this is a special-case HACK for MPEG-1/2 VDPAU that uses neither get_format nor
+        // sets the value correctly in avcodec_open.
+        set_format_params(avctx, pix_fmt);
+        mp_msg(MSGT_DECVIDEO, MSGL_V, "[ffmpeg] aspect_ratio: %f\n", aspect);
+
+        // Do not overwrite s->aspect on the first call, so that a container
+        // aspect if available is preferred.
+        // But set it even if the sample aspect did not change, since a
+        // resolution change can cause an aspect change even if the
+        // _sample_ aspect is unchanged.
+        if (sh->aspect == 0 || ctx->last_sample_aspect_ratio.den)
+            sh->aspect = aspect;
+        ctx->last_sample_aspect_ratio = avctx->sample_aspect_ratio;
+        ctx->pix_fmt = pix_fmt;
+        ctx->best_csp = pixfmt2imgfmt(pix_fmt);
+    }
+}
 
 static int init_vo(sh_video_t *sh, enum AVPixelFormat pix_fmt)
 {
     vd_ffmpeg_ctx *ctx = sh->context;
-    AVCodecContext *avctx = ctx->avctx;
-    float aspect= av_q2d(avctx->sample_aspect_ratio) * avctx->width / avctx->height;
+    const AVCodecContext *avctx = ctx->avctx;
     int width, height;
 
     width = avctx->width;
@@ -512,33 +539,14 @@ static int init_vo(sh_video_t *sh, enum AVPixelFormat pix_fmt)
         width = sh->bih->biWidth>>lavc_param_lowres;
         height = sh->bih->biHeight>>lavc_param_lowres;
     }
-
-     // it is possible another vo buffers to be used after vo config()
-     // lavc reset its buffers on width/heigh change but not on aspect change!!!
-    if (av_cmp_q(avctx->sample_aspect_ratio, ctx->last_sample_aspect_ratio) ||
-        width != sh->disp_w  ||
-        height != sh->disp_h ||
-        pix_fmt != ctx->pix_fmt ||
-        !ctx->vo_initialized)
-    {
+    if (width != sh->disp_w  || height != sh->disp_h)
         ctx->vo_initialized = 0;
-        // this is a special-case HACK for MPEG-1/2 VDPAU that uses neither get_format nor
-        // sets the value correctly in avcodec_open.
-        set_format_params(avctx, avctx->pix_fmt);
-        mp_msg(MSGT_DECVIDEO, MSGL_V, "[ffmpeg] aspect_ratio: %f\n", aspect);
 
-        // Do not overwrite s->aspect on the first call, so that a container
-        // aspect if available is preferred.
-        // But set it even if the sample aspect did not change, since a
-        // resolution change can cause an aspect change even if the
-        // _sample_ aspect is unchanged.
-        if (sh->aspect == 0 || ctx->last_sample_aspect_ratio.den)
-            sh->aspect = aspect;
-        ctx->last_sample_aspect_ratio = avctx->sample_aspect_ratio;
+    update_configuration(sh, pix_fmt);
+    if (!ctx->vo_initialized)
+    {
         sh->disp_w = width;
         sh->disp_h = height;
-        ctx->pix_fmt = pix_fmt;
-        ctx->best_csp = pixfmt2imgfmt(pix_fmt);
         if (!mpcodecs_config_vo(sh, sh->disp_w, sh->disp_h, ctx->best_csp))
             return -1;
         ctx->vo_initialized = 1;
@@ -1004,7 +1012,7 @@ static enum AVPixelFormat get_format(struct AVCodecContext *avctx,
     selected_format = fmt[i];
     if (selected_format == PIX_FMT_NONE) {
         selected_format = avcodec_default_get_format(avctx, fmt);
-        init_vo(sh, selected_format);
+        update_configuration(sh, selected_format);
     }
     set_format_params(avctx, selected_format);
     return selected_format;
