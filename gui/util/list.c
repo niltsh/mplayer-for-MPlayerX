@@ -367,8 +367,10 @@ int add_to_gui_playlist(const char *what, int how)
 
     item = calloc(1, sizeof(plItem));
 
-    if (!item)
+    if (!item) {
+        free(path);
         return False;
+    }
 
     mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[list] adding %s/%s\n", path, file);
 
