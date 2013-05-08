@@ -357,6 +357,9 @@ int add_to_gui_playlist(const char *what, int how)
     file = mp_basename(what);
     path = strdup(what);
 
+    if (!path)
+        return False;
+
     if (file > what)
         path[file - what - 1] = 0;
     else
