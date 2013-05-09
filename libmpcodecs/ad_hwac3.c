@@ -551,18 +551,18 @@ static int decode_audio_dts(unsigned char *indata_ptr, int len, unsigned char *b
   buf16[3] = fsize << 3;
 
   if (!convert_16bits) {
-  int be_stream = indata_ptr[0] == 0x1f || indata_ptr[0] == 0x7f;
-  if (be_stream == HAVE_BIGENDIAN)
-  memcpy(&buf[8], indata_ptr, fsize);
-  else
-  {
-  swab(indata_ptr, &buf[8], fsize);
-  if (fsize & 1) {
-    buf[8+fsize-1] = 0;
-    buf[8+fsize] = indata_ptr[fsize-1];
-    fsize++;
-  }
-  }
+    int be_stream = indata_ptr[0] == 0x1f || indata_ptr[0] == 0x7f;
+    if (be_stream == HAVE_BIGENDIAN)
+      memcpy(&buf[8], indata_ptr, fsize);
+    else
+    {
+      swab(indata_ptr, &buf[8], fsize);
+      if (fsize & 1) {
+        buf[8+fsize-1] = 0;
+        buf[8+fsize] = indata_ptr[fsize-1];
+        fsize++;
+      }
+    }
   }
   memset(&buf[fsize + 8], 0, nr_samples * 2 * 2 - (fsize + 8));
 
