@@ -890,44 +890,26 @@ static int handle_x11_event(Display *mydisplay, XEvent *event)
             case MotionNotify:
                 vo_mouse_movement(event->xmotion.x, event->xmotion.y);
 
-                if (vo_mouse_autohide)
-                {
-                    vo_showcursor(mydisplay, vo_window);
-                    mouse_waiting_hide = 1;
-                    mouse_timer = GetTimerMS();
-                }
-                break;
+                return VO_EVENT_MOUSE;
             case ButtonPress:
-                if (vo_mouse_autohide)
-                {
-                    vo_showcursor(mydisplay, vo_window);
-                    mouse_waiting_hide = 1;
-                    mouse_timer = GetTimerMS();
-                }
 #ifdef CONFIG_GUI
                 // Ignore mouse button 1-3 under GUI.
                 if (use_gui && (event->xbutton.button >= 1)
                     && (event->xbutton.button <= 3))
-                    break;
+                    return VO_EVENT_MOUSE;
 #endif
                 mplayer_put_key((MOUSE_BTN0 + event->xbutton.button -
                                  1) | MP_KEY_DOWN);
-                break;
+                return VO_EVENT_MOUSE;
             case ButtonRelease:
-                if (vo_mouse_autohide)
-                {
-                    vo_showcursor(mydisplay, vo_window);
-                    mouse_waiting_hide = 1;
-                    mouse_timer = GetTimerMS();
-                }
 #ifdef CONFIG_GUI
                 // Ignore mouse button 1-3 under GUI.
                 if (use_gui && (event->xbutton.button >= 1)
                     && (event->xbutton.button <= 3))
-                    break;
+                    return VO_EVENT_MOUSE;
 #endif
                 mplayer_put_key(MOUSE_BTN0 + event->xbutton.button - 1);
-                break;
+                return VO_EVENT_MOUSE;
             case PropertyNotify:
                 {
                     char *name =
@@ -976,6 +958,12 @@ int vo_x11_check_events(Display * mydisplay)
     {
         XNextEvent(mydisplay, &Event);
         ret |= handle_x11_event(mydisplay, &Event);
+    }
+    if (vo_mouse_autohide && (ret & VO_EVENT_MOUSE))
+    {
+        vo_showcursor(mydisplay, vo_window);
+        mouse_waiting_hide = 1;
+        mouse_timer = GetTimerMS();
     }
     return ret;
 }

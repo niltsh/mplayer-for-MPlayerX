@@ -35,6 +35,7 @@
 #define VO_EVENT_KEYPRESS 4
 #define VO_EVENT_REINIT 8
 #define VO_EVENT_MOVE 16
+#define VO_EVENT_MOUSE 32
 
 /* Obsolete: VOCTRL_QUERY_VAA 1 */
 /* does the device support the required format */
