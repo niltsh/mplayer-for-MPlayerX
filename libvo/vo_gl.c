@@ -177,7 +177,7 @@ static void redraw(void);
 
 static float video_matrix[16];
 
-static void resize(int x,int y){
+static void resize(void) {
   // simple orthogonal projection for 0-image_width;0-image_height
   memset(video_matrix, 0, sizeof(video_matrix));
   video_matrix[0]  = 2.0/image_width;
@@ -185,14 +185,14 @@ static void resize(int x,int y){
   video_matrix[12] = -1;
   video_matrix[13] = 1;
   video_matrix[15] = 1;
-  mp_msg(MSGT_VO, MSGL_V, "[gl] Resize: %dx%d\n",x,y);
+  mp_msg(MSGT_VO, MSGL_V, "[gl] Resize: %dx%d\n", vo_dwidth, vo_dheight);
   if (WinID >= 0) {
-    int left = 0, top = 0, w = x, h = y;
+    int left = 0, top = 0, w = vo_dwidth, h = vo_dheight;
     geometry(&left, &top, &w, &h, vo_dwidth, vo_dheight);
-    top = y - h - top;
+    top = vo_dheight - h - top;
     mpglViewport(left, top, w, h);
   } else
-    mpglViewport( 0, 0, x, y );
+    mpglViewport(0, 0, vo_dwidth, vo_dheight);
 
   ass_border_x = ass_border_y = 0;
   if (aspect_scaling() && use_aspect) {
@@ -202,8 +202,8 @@ static void resize(int x,int y){
     panscan_calc_windowed();
     new_w += vo_panscan_x;
     new_h += vo_panscan_y;
-    scale_x = (double)new_w / (double)x;
-    scale_y = (double)new_h / (double)y;
+    scale_x = (double)new_w / (double)vo_dwidth;
+    scale_y = (double)new_h / (double)vo_dheight;
     video_matrix[0]  *= scale_x;
     video_matrix[12] *= scale_x;
     video_matrix[5]  *= scale_y;
@@ -547,7 +547,7 @@ static GLint get_scale_type(int chroma) {
  * \brief Initialize a (new or reused) OpenGL context.
  * set global gl-related variables to their default values
  */
-static int initGl(uint32_t d_width, uint32_t d_height) {
+static int initGl(void) {
   GLint scale_type = get_scale_type(0);
   autodetectGlExtensions();
   using_tex_rect = gl_format == GL_YCBCR_422_APPLE || use_rectangle == 1;
@@ -623,7 +623,7 @@ static int initGl(uint32_t d_width, uint32_t d_height) {
     update_yuvconv();
   }
 
-  resize(d_width, d_height);
+  resize();
 
   mpglClearColor( 0.0f,0.0f,0.0f,0.0f );
   mpglClear( GL_COLOR_BUFFER_BIT );
@@ -702,7 +702,7 @@ static int create_window(uint32_t d_width, uint32_t d_height, uint32_t flags, co
 static void osx_redraw(void)
 {
   // resize will call redraw to refresh the screen
-  resize(vo_dwidth, vo_dheight);
+  resize();
 }
 #endif
 
@@ -744,7 +744,7 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
     mp_msg(MSGT_VO, MSGL_ERR, "Can not enable mesa-buffer because AllocateMemoryMESA was not found\n");
     mesa_buffer = 0;
   }
-  initGl(vo_dwidth, vo_dheight);
+  initGl();
 
 #ifdef CONFIG_GL_OSX
   vo_osx_redraw_func = osx_redraw;
@@ -757,9 +757,9 @@ static void check_events(void)
     int e=glctx.check_events();
     if(e&VO_EVENT_REINIT) {
         uninitGl();
-        initGl(vo_dwidth, vo_dheight);
+        initGl();
     }
-    if(e&VO_EVENT_RESIZE) resize(vo_dwidth,vo_dheight);
+    if(e&VO_EVENT_RESIZE) resize();
     else if(e&VO_EVENT_EXPOSE) redraw();
 }
 
@@ -1480,18 +1480,18 @@ static int control(uint32_t request, void *data)
     return VO_TRUE;
   case VOCTRL_FULLSCREEN:
     glctx.fullscreen();
-    resize(vo_dwidth, vo_dheight);
+    resize();
     return VO_TRUE;
   case VOCTRL_BORDER:
     glctx.border();
-    resize(vo_dwidth, vo_dheight);
+    resize();
     return VO_TRUE;
   case VOCTRL_GET_PANSCAN:
     if (!use_aspect) return VO_NOTIMPL;
     return VO_TRUE;
   case VOCTRL_SET_PANSCAN:
     if (!use_aspect) return VO_NOTIMPL;
-    resize(vo_dwidth, vo_dheight);
+    resize();
     return VO_TRUE;
   case VOCTRL_GET_EQUALIZER:
     if (is_yuv) {
