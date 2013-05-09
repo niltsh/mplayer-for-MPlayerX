@@ -32,6 +32,7 @@
 #include "help_mp.h"
 #include "m_config.h"
 #include "mpcommon.h"
+#include "codec-cfg.h"
 
 #include "libvo/fastmemcpy.h"
 
@@ -561,6 +562,8 @@ static void get_parser(sh_common_t *sh, AVCodecContext **avctx, AVCodecParserCon
         return;
 
     allocate_parser(avctx, parser, sh->format);
+    if (!*parser && sh->codec) // fallback to support forcing a codec
+        allocate_parser(avctx, parser, sh->codec->fourcc[0]);
     sh->avctx  = *avctx;
     sh->parser = *parser;
 }
