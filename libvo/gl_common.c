@@ -2433,6 +2433,8 @@ static int setGlWindow_egl(MPGLContext *ctx)
     vo_screenheight = vo_dheight = h;
     return SET_WINDOW_OK;
   }
+  if (WinID != -1)
+    vo_window = (EGLNativeWindowType)(intptr_t)WinID;
   if (!vo_window)
     vo_window = android_createDisplaySurface();
   if (!vo_window)
