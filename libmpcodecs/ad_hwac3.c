@@ -551,13 +551,8 @@ static int decode_audio_dts(unsigned char *indata_ptr, int len, unsigned char *b
   buf16[3] = fsize << 3;
 
   if (!convert_16bits) {
-#if HAVE_BIGENDIAN
-  /* BE stream */
-  if (indata_ptr[0] == 0x1f || indata_ptr[0] == 0x7f)
-#else
-  /* LE stream */
-  if (indata_ptr[0] == 0xff || indata_ptr[0] == 0xfe)
-#endif
+  int be_stream = indata_ptr[0] == 0x1f || indata_ptr[0] == 0x7f;
+  if (be_stream == HAVE_BIGENDIAN)
   memcpy(&buf[8], indata_ptr, fsize);
   else
   {
