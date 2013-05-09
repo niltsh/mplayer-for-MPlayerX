@@ -766,6 +766,8 @@ all: $(ALL_PRG-yes)
 %-rc.o: %.rc
 	$(WINDRES) -I. $< -o $@
 
+ffmpeglibs: $(FFMPEGLIBS)
+
 $(FFMPEGLIBS): $(FFMPEGFILES) config.h
 	$(MAKE) -C ffmpeg $(@:ffmpeg/%=%)
 
