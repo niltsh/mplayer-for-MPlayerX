@@ -828,6 +828,7 @@ err:
 
 static int handle_x11_event(Display *mydisplay, XEvent *event)
 {
+    int key = 0;
     uint8_t buf[16] = {0};
     KeySym keySym;
     static XComposeStatus stat;
@@ -892,15 +893,7 @@ static int handle_x11_event(Display *mydisplay, XEvent *event)
 
                 return VO_EVENT_MOUSE;
             case ButtonPress:
-#ifdef CONFIG_GUI
-                // Ignore mouse button 1-3 under GUI.
-                if (use_gui && (event->xbutton.button >= 1)
-                    && (event->xbutton.button <= 3))
-                    return VO_EVENT_MOUSE;
-#endif
-                mplayer_put_key((MOUSE_BTN0 + event->xbutton.button -
-                                 1) | MP_KEY_DOWN);
-                return VO_EVENT_MOUSE;
+                key = MP_KEY_DOWN;
             case ButtonRelease:
 #ifdef CONFIG_GUI
                 // Ignore mouse button 1-3 under GUI.
@@ -908,7 +901,8 @@ static int handle_x11_event(Display *mydisplay, XEvent *event)
                     && (event->xbutton.button <= 3))
                     return VO_EVENT_MOUSE;
 #endif
-                mplayer_put_key(MOUSE_BTN0 + event->xbutton.button - 1);
+                key |= MOUSE_BTN0 + event->xbutton.button - 1;
+                mplayer_put_key(key);
                 return VO_EVENT_MOUSE;
             case PropertyNotify:
                 {
