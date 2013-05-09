@@ -25,6 +25,8 @@ MPlayer
       via OpenGL ES.
       Note that just a bit of seeking etc. would cause reproducible
       system reboots after just a few seconds on my Galaxy S2.
+    * Android: -wid is supported. This should allow using MPlayer in slave
+      mode, a native window pointer needs to be passed as -wid. Untested.
 
   1.1: "We gave up on 1.0"
 
