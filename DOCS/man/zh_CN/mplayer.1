@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 36213
+.\" sync with en/mplayer.1 rev. 36241
 .\" MPlayer (C) 2000-2013 MPlayer Team
 .\" This man page was/is translated by JRaSH<jrash06 at gmail.com>
 .
@@ -1283,11 +1283,27 @@ MPlayer 是继续播放还是暂停。\
 根据播放列表播放文件（支持 ASX、Winamp、SMIL、或\
 每行一个文件名的格式）。
 .br
+.I 警告：\
+MPlayer 解析及使用播放列表文件的方式不具备防范恶意构建文件的\
+安全性。\
+这些文件可能触发危险行为。\
+该隐患存在于迄今所有的 MPlayer 的版本中，但不幸的是之前未能\
+将此情况妥善写入文档中，而且一些用户已受此误导而将 -playlist 用于\
+不可信来源的参数。\
+请勿将 -playlist 用于任意的因特网来源或你不信任的文件！
+.br
 .I 注意：
 该选项处理为一项条目，其后的选项仅应用于该播放列表\
 的元素。
 .br
 FIXME: 需彻底解释清楚并记入文档。
+.
+.TP
+.B \-allow-dangerous-playlist-parsing
+该选项允许将任何文件解析为播放列表。用于例如一台服务将一个文件公告为播放列表\
+类型的情况。\
+仅当清楚知道所有涉及的服务器都可信任时才启用该选项。\
+MPlayer 的播放列表处理代码设计上并不能应对恶意播放列表文件。
 .
 .TP
 .B \-rtc\-device <设备>
