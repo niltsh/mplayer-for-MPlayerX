@@ -30,6 +30,13 @@
 #include "libmpcodecs/img_format.h"
 //#include "vidix/vidix.h"
 
+
+#define ROTATE(t, x, y) do { \
+  t rot_tmp = x; \
+  x = y; \
+  y = -rot_tmp; \
+} while(0)
+
 #define VO_EVENT_EXPOSE 1
 #define VO_EVENT_RESIZE 2
 #define VO_EVENT_KEYPRESS 4
@@ -225,6 +232,7 @@ extern int vo_vsync;
 extern int vo_fs;
 extern int vo_fsmode;
 extern float vo_panscan;
+extern int vo_rotate;
 extern int vo_adapter_num;
 extern int vo_refresh_rate;
 extern int vo_keepaspect;

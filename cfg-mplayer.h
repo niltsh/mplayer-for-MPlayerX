@@ -173,6 +173,7 @@ const m_option_t mplayer_opts[]={
     {"novsync", &vo_vsync, CONF_TYPE_FLAG, 0, 1, 0, NULL},
     {"panscan", &vo_panscan, CONF_TYPE_FLOAT, CONF_RANGE, -1.0, 1.0, NULL},
     {"panscanrange", &vo_panscanrange, CONF_TYPE_FLOAT, CONF_RANGE, -19.0, 99.0, NULL},
+    {"monitor-orientation", &vo_rotate, CONF_TYPE_INT, CONF_RANGE, 0, 3, NULL},
 
     {"grabpointer", &vo_grabpointer, CONF_TYPE_FLAG, 0, 0, 1, NULL},
     {"nograbpointer", &vo_grabpointer, CONF_TYPE_FLAG, 0, 1, 0, NULL},

@@ -46,25 +46,44 @@ static struct {
   int orgh; // real height
   int prew; // prescaled width
   int preh; // prescaled height
+  int orgw_norot;
+  int orgh_norot;
+  int prew_norot;
+  int preh_norot;
   int scrw; // horizontal resolution
   int scrh; // vertical resolution
   float asp;
 } aspdat;
 
+static void aspect_rotate(void) {
+  int i;
+  if (vo_rotate & 1) {
+    aspdat.orgw = aspdat.orgh_norot;
+    aspdat.orgh = aspdat.orgw_norot;
+    aspdat.prew = aspdat.preh_norot;
+    aspdat.preh = aspdat.prew_norot;
+  } else {
+    aspdat.orgw = aspdat.orgw_norot;
+    aspdat.orgh = aspdat.orgh_norot;
+    aspdat.prew = aspdat.prew_norot;
+    aspdat.preh = aspdat.preh_norot;
+  }
+}
+
 void aspect_save_orig(int orgw, int orgh){
 #ifdef ASPECT_DEBUG
   printf("aspect_save_orig %dx%d \n",orgw,orgh);
 #endif
-  aspdat.orgw = orgw;
-  aspdat.orgh = orgh;
+  aspdat.orgw_norot = orgw;
+  aspdat.orgh_norot = orgh;
 }
 
 void aspect_save_prescale(int prew, int preh){
 #ifdef ASPECT_DEBUG
   printf("aspect_save_prescale %dx%d \n",prew,preh);
 #endif
-  aspdat.prew = prew;
-  aspdat.preh = preh;
+  aspdat.prew_norot = prew;
+  aspdat.preh_norot = preh;
 }
 
 void aspect_save_screenres(int scrw, int scrh){
@@ -92,6 +111,7 @@ void aspect_save_screenres(int scrw, int scrh){
 void aspect_fit(int *srcw, int *srch, int fitw, int fith){
   int tmpw;
 
+  aspect_rotate();
 #ifdef ASPECT_DEBUG
   printf("aspect(0) fitin: %dx%d screenaspect: %.2f\n",aspdat.scrw,aspdat.scrh,
       monitor_aspect);
@@ -139,6 +159,7 @@ static void get_max_dims(int *w, int *h, int zoom)
 void aspect(int *srcw, int *srch, int zoom){
   int fitw;
   int fith;
+  aspect_rotate();
   get_max_dims(&fitw, &fith, zoom);
   if( !zoom && geometry_wh_changed ) {
 #ifdef ASPECT_DEBUG
@@ -161,6 +182,7 @@ static void panscan_calc_internal(int zoom)
  int fwidth,fheight;
  int vo_panscan_area;
  int max_w, max_h;
+ aspect_rotate();
  get_max_dims(&max_w, &max_h, zoom);
 
  if (vo_panscanrange > 0) {

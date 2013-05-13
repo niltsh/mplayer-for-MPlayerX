@@ -120,6 +120,7 @@ static int yuvconvtype;
 static int use_rectangle;
 static int using_tex_rect;
 static int err_shown;
+static int draw_width, draw_height;
 static uint32_t image_width;
 static uint32_t image_height;
 static uint32_t image_format;
@@ -176,8 +177,12 @@ static int did_render;
 static void redraw(void);
 
 static float video_matrix[16];
+static float osd_matrix[16];
 
 static void resize(void) {
+  int i;
+  draw_width  = (vo_rotate & 1) ? vo_dheight : vo_dwidth;
+  draw_height = (vo_rotate & 1) ? vo_dwidth  : vo_dheight;
   // simple orthogonal projection for 0-image_width;0-image_height
   memset(video_matrix, 0, sizeof(video_matrix));
   video_matrix[0]  = 2.0/image_width;
@@ -185,6 +190,12 @@ static void resize(void) {
   video_matrix[12] = -1;
   video_matrix[13] = 1;
   video_matrix[15] = 1;
+  memcpy(osd_matrix, video_matrix, sizeof(osd_matrix));
+  if (!scaled_osd) {
+    // simple orthogonal projection for 0-vo_dwidth;0-vo_dheight
+    osd_matrix[0] =  2.0/draw_width;
+    osd_matrix[5] = -2.0/draw_height;
+  }
   mp_msg(MSGT_VO, MSGL_V, "[gl] Resize: %dx%d\n", vo_dwidth, vo_dheight);
   if (WinID >= 0) {
     int left = 0, top = 0, w = vo_dwidth, h = vo_dheight;
@@ -193,6 +204,14 @@ static void resize(void) {
     mpglViewport(left, top, w, h);
   } else
     mpglViewport(0, 0, vo_dwidth, vo_dheight);
+
+  for (i = 0; i < (vo_rotate & 3); i++) {
+    int j;
+    for (j = 0; j < 16; j += 4) {
+      ROTATE(float, video_matrix[j], video_matrix[j+1]);
+      ROTATE(float, osd_matrix[j], osd_matrix[j+1]);
+    }
+  }
 
   ass_border_x = ass_border_y = 0;
   if (aspect_scaling() && use_aspect) {
@@ -205,11 +224,16 @@ static void resize(void) {
     scale_x = (double)new_w / (double)vo_dwidth;
     scale_y = (double)new_h / (double)vo_dheight;
     video_matrix[0]  *= scale_x;
+    video_matrix[4]  *= scale_x;
     video_matrix[12] *= scale_x;
+    video_matrix[1]  *= scale_y;
     video_matrix[5]  *= scale_y;
     video_matrix[13] *= scale_y;
-    ass_border_x = (vo_dwidth - new_w) / 2;
-    ass_border_y = (vo_dheight - new_h) / 2;
+    if (vo_rotate & 1) {
+      int tmp = new_w; new_w = new_h; new_h = tmp;
+    }
+    ass_border_x = (draw_width  - new_w) / 2;
+    ass_border_y = (draw_height - new_h) / 2;
   }
   mpglLoadMatrixf(video_matrix);
 
@@ -831,16 +855,7 @@ static void do_render_osd(int type) {
   if (!draw_osd && !draw_eosd)
     return;
   // set special rendering parameters
-  if (!scaled_osd) {
-    // simple orthogonal projection for 0-vo_dwidth;0-vo_dheight
-    float matrix[16] = {
-      2.0/vo_dwidth,   0, 0, 0,
-      0, -2.0/vo_dheight, 0, 0,
-      0,  0, 0, 0,
-      -1, 1, 0, 1
-    };
-    mpglLoadMatrixf(matrix);
-  }
+  mpglLoadMatrixf(osd_matrix);
   mpglEnable(GL_BLEND);
   if (draw_eosd) {
     mpglTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
@@ -874,8 +889,7 @@ static void do_render_osd(int type) {
   }
   // set rendering parameters back to defaults
   mpglDisable(GL_BLEND);
-  if (!scaled_osd)
-    mpglLoadMatrixf(video_matrix);
+  mpglLoadMatrixf(video_matrix);
   mpglBindTexture(gl_target, 0);
 }
 
@@ -885,8 +899,8 @@ static void draw_osd(void)
   if (vo_osd_changed(0)) {
     int osd_h, osd_w;
     clearOSD();
-    osd_w = scaled_osd ? image_width : vo_dwidth;
-    osd_h = scaled_osd ? image_height : vo_dheight;
+    osd_w = scaled_osd ? image_width  : draw_width;
+    osd_h = scaled_osd ? image_height : draw_height;
     vo_draw_text_ext(osd_w, osd_h, ass_border_x, ass_border_y, ass_border_x, ass_border_y,
                      image_width, image_height, create_osd_texture);
   }
@@ -1463,7 +1477,7 @@ static int control(uint32_t request, void *data)
   case VOCTRL_GET_EOSD_RES:
     {
       struct mp_eosd_settings *r = data;
-      r->w = vo_dwidth; r->h = vo_dheight;
+      r->w = draw_width; r->h = draw_height;
       r->srcw = image_width; r->srch = image_height;
       r->mt = r->mb = r->ml = r->mr = 0;
       if (scaled_osd) {r->w = image_width; r->h = image_height;}

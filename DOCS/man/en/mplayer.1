@@ -3628,6 +3628,13 @@ E.g.\& \-panscanrange \-3 allows a zoom factor of up to 4.
 This feature is experimental.
 .
 .TP
+.B \-monitor\-orientation <0-3> (experimental)
+Rotate display by 90, 180 or 270 degrees.
+Rotates also the OSD, not just the video image itself.
+Currently only supported by the gl video output driver.
+For all other video outputs -vf ass,expand=osd=1,rotate=n can be used, in the future this might even happen automatically.
+.
+.TP
 .B \-refreshrate <Hz>
 Set the monitor refreshrate in Hz.
 Currently only supported by \-vo directx combined with the \-vm option.
