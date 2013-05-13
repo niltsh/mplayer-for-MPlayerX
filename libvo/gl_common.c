@@ -326,6 +326,8 @@ int glFindFormat(uint32_t fmt, int *bpp, GLint *gl_texfmt,
       *gl_format = GL_LUMINANCE;
       *gl_type = GL_UNSIGNED_SHORT;
       break;
+    case IMGFMT_NV12:
+    case IMGFMT_NV21:
     case IMGFMT_YV12:
       supported = 0; // no native YV12 support
     case IMGFMT_Y800:

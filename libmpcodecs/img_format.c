@@ -220,6 +220,11 @@ int mp_get_chroma_shift(int format, int *x_shift, int *y_shift, int *component_b
         xs = 31;
         ys = 31;
         break;
+    case IMGFMT_NV12:
+    case IMGFMT_NV21:
+        xs = 1;
+        ys = 1;
+        err = 1;
     default:
         err = 1;
         break;
