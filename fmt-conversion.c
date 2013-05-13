@@ -180,7 +180,7 @@ static const struct {
     {AF_FORMAT_S16_NE, AV_SAMPLE_FMT_S16},
     {AF_FORMAT_S32_NE, AV_SAMPLE_FMT_S32},
     {AF_FORMAT_FLOAT_NE, AV_SAMPLE_FMT_FLT},
-    {0, AV_SAMPLE_FMT_NONE}
+    {AF_FORMAT_UNKNOWN, AV_SAMPLE_FMT_NONE}
 };
 
 enum AVSampleFormat affmt2samplefmt(int fmt)
@@ -206,7 +206,7 @@ int samplefmt2affmt(enum AVSampleFormat sample_fmt)
         if (samplefmt_conversion_map[i].sample_fmt == sample_fmt)
             break;
     fmt = samplefmt_conversion_map[i].fmt;
-    if (!fmt)
+    if (fmt == AF_FORMAT_UNKNOWN)
         mp_msg(MSGT_GLOBAL, MSGL_ERR, "Unsupported AVSampleFormat %i\n", sample_fmt);
     return fmt;
 }

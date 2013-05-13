@@ -199,6 +199,10 @@ int mpae_init_lavc(audio_encoder_t *encoder)
 		}
 	}
 	encoder->input_format = samplefmt2affmt(lavc_actx->sample_fmt);
+	if (encoder->input_format == AF_FORMAT_UNKNOWN) {
+            mp_msg(MSGT_MENCODER,MSGL_ERR, "Audio encoder requires unknown or unsupported input format\n");
+            return 0;
+	}
 	lavc_actx->channels = encoder->params.channels;
 	lavc_actx->sample_rate = encoder->params.sample_rate;
 	lavc_actx->time_base.num = 1;
