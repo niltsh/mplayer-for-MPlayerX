@@ -2768,6 +2768,9 @@ if test $relocatable = "auto" ; then
   if test -n "$ld_static" ; then
     relocatable=no
     res_comment="PIE + static assumed to be broken"
+  elif win32 && ! wine ; then
+    relocatable=no
+    res_comment="unnecessary and broken on win32"
   elif x86_32 && cflag_check -pie ; then
     extra_ldflags="$extra_ldflags -pie"
     relocatable=yes
