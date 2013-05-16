@@ -986,26 +986,14 @@ static int draw_slice(uint8_t *src[], int stride[], int w,int h,int x,int y)
   return 0;
 }
 
-static uint32_t get_image(mp_image_t *mpi) {
+static int get_pbo_image(mp_image_t *mpi) {
   int needed_size;
-  dr_rejectcnt++;
   if (!mpglGenBuffers || !mpglBindBuffer || !mpglBufferData || !mpglMapBuffer) {
     if (!err_shown)
       mp_msg(MSGT_VO, MSGL_ERR, "[gl] extensions missing for dr\n"
                                 "Expect a _major_ speed penalty\n");
     err_shown = 1;
-    return VO_FALSE;
-  }
-  if (gl_bufferptr) return VO_FALSE;
-  if (mpi->flags & MP_IMGFLAG_READABLE) return VO_FALSE;
-  if (mpi->type != MP_IMGTYPE_STATIC && mpi->type != MP_IMGTYPE_TEMP &&
-      mpi->type != MP_IMGTYPE_IPB &&
-      mpi->type != MP_IMGTYPE_NUMBERED)
-    return VO_FALSE;
-  if (mesa_buffer) mpi->width = texture_width;
-  else if (ati_hack) {
-    mpi->width = texture_width;
-    mpi->height = texture_height;
+    return 0;
   }
   mpi->stride[0] = mpi->width * mpi->bpp / 8;
   needed_size = mpi->stride[0] * mpi->height + 31;
@@ -1040,7 +1028,7 @@ static uint32_t get_image(mp_image_t *mpi) {
       mp_msg(MSGT_VO, MSGL_ERR, "[gl] could not acquire buffer for dr\n"
                                 "Expect a _major_ speed penalty\n");
     err_shown = 1;
-    return VO_FALSE;
+    return 0;
   }
   if (is_yuv) {
     // planar YUV
@@ -1076,6 +1064,24 @@ static uint32_t get_image(mp_image_t *mpi) {
       mpi->planes[2] = gl_bufferptr_uv[1];
     }
   }
+  return 1;
+}
+
+static uint32_t get_image(mp_image_t *mpi) {
+  dr_rejectcnt++;
+  if (gl_bufferptr) return VO_FALSE;
+  if (mpi->flags & MP_IMGFLAG_READABLE) return VO_FALSE;
+  if (mpi->type != MP_IMGTYPE_STATIC && mpi->type != MP_IMGTYPE_TEMP &&
+      mpi->type != MP_IMGTYPE_IPB &&
+      mpi->type != MP_IMGTYPE_NUMBERED)
+    return VO_FALSE;
+  if (mesa_buffer) mpi->width = texture_width;
+  else if (ati_hack) {
+    mpi->width = texture_width;
+    mpi->height = texture_height;
+  }
+  if (!get_pbo_image(mpi))
+    return VO_FALSE;
   mpi->flags |= MP_IMGFLAG_DIRECT;
   dr_rejectcnt--;
   return VO_TRUE;
