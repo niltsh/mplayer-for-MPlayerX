@@ -10,7 +10,7 @@ MPlayer
     * -vo gl now supports OSD (not EOSD though) with GLES backend.
     * GLES backend now uses GLES v2 with YUV support via shaders
     * -vo gl supports rotated display without needing video filters via
-      -rotate command-line option.
+      -monitor-orientation command-line option.
     * -vo gl now has an OSX/Cocoa backend, so it should be a better
       alternative to -vo corevideo now.
     * -vo gl2 renamed to -vo gl_tiled to stop people from assuming it is
