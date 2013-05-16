@@ -595,7 +595,8 @@ static void getFunctions(void *(*getProcAddress)(const GLubyte *),
   else
     hqtexfmt = GL_RGB16;
   use_depth_l16 = !!strstr(allexts, "GL_EXT_shadow") ||
-                  !!strstr(allexts, "GL_ARB_shadow");
+                  !!strstr(allexts, "GL_ARB_shadow") ||
+                  !!strstr(allexts, "GL_OES_depth_texture");
   free(allexts);
 }
 
@@ -635,8 +636,8 @@ void glCreateClearTex(GLenum target, GLenum fmt, GLenum format, GLenum type, GLi
     // ensure we get enough bits
     GLint bits = 0;
     mpglGetTexLevelParameteriv(target, 0, GL_TEXTURE_LUMINANCE_SIZE, &bits);
-    if (bits > 0 && bits < 14 && (use_depth_l16 || HAVE_BIGENDIAN)) {
-      fmt = GL_DEPTH_COMPONENT16;
+    if (bits >= 0 && bits < 14 && (use_depth_l16 || HAVE_BIGENDIAN)) {
+      fmt = GL_DEPTH_COMPONENT;
       format = GL_DEPTH_COMPONENT;
       if (!use_depth_l16) {
         // if we cannot get 16 bit anyway, we can fall back
