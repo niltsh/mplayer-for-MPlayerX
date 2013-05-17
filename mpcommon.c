@@ -106,7 +106,7 @@ if (HAVE_SSE42)
     mp_msg(MSGT_CPLAYER,MSGL_V," SSE4.2");
 if (HAVE_AVX)
     mp_msg(MSGT_CPLAYER,MSGL_V," AVX");
-if (HAVE_CMOV)
+if (HAVE_I686)
     mp_msg(MSGT_CPLAYER,MSGL_V," CMOV");
     mp_msg(MSGT_CPLAYER,MSGL_V,"\n");
 #endif /* CONFIG_RUNTIME_CPUDETECT */
