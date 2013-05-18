@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 36241
+.\" sync with en/mplayer.1 rev. 36267
 .\" MPlayer (C) 2000-2013 MPlayer Team
 .\" This man page was/is translated by JRaSH<jrash06 at gmail.com>
 .
@@ -3626,6 +3626,13 @@ ggi 和 gl_tiled 的驱动都支持。
 值为负数表示可以放大至 \-panscanrange+1 所表示的因数。\
 例如 \-panscanrange \-3 允许缩放因子达到 4。\
 该功能是实验性的。
+.
+.TP
+.B \-monitor\-orientation <0-3>（实验性选项）
+将显示的图像旋转 90、180 或 270 度。\
+也旋转 OSD，而不只是视频图像本身。\
+当前只有 gl 视频输出驱动支持。\
+对于其它视频输出类型可以使用 -vf ass,expand=osd=1,rotate=n。以后甚至可以自动应用这一行为。
 .
 .TP
 .B \-refreshrate <Hz>
