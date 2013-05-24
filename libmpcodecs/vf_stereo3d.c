@@ -422,7 +422,7 @@ static const struct format_preset {
     {"arcc",                             ANAGLYPH_RC_COLOR},
     {"anaglyph_red_cyan_color",          ANAGLYPH_RC_COLOR},
     {"arcd",                             ANAGLYPH_RC_DUBOIS},
-    {"anaglyph_red_cyan_dubios",         ANAGLYPH_RC_DUBOIS},
+    {"anaglyph_red_cyan_dubois",         ANAGLYPH_RC_DUBOIS},
     {"agmg",                             ANAGLYPH_GM_GRAY},
     {"anaglyph_green_magenta_gray",      ANAGLYPH_GM_GRAY},
     {"agmh",                             ANAGLYPH_GM_HALF},
