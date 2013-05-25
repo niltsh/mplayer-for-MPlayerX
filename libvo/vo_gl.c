@@ -179,6 +179,15 @@ static void redraw(void);
 static float video_matrix[16];
 static float osd_matrix[16];
 
+static int apply_border_pos(int full, int part, float pos) {
+  if (pos >= 0.0 && pos <= 1.0) {
+    return pos*(full - part);
+  }
+  if (pos < 0)
+    return pos * part;
+  return full - part + (pos - 1) * part;
+}
+
 static void resize(void) {
   int i;
   draw_width  = (vo_rotate & 1) ? vo_dheight : vo_dwidth;
@@ -225,15 +234,15 @@ static void resize(void) {
     scale_y = (double)new_h / (double)vo_dheight;
     video_matrix[0]  *= scale_x;
     video_matrix[4]  *= scale_x;
-    video_matrix[12] *= scale_x;
+    video_matrix[12] = -1 + apply_border_pos(vo_dwidth, new_w, vo_border_pos_x) * 2.0 / vo_dwidth;
     video_matrix[1]  *= scale_y;
     video_matrix[5]  *= scale_y;
-    video_matrix[13] *= scale_y;
+    video_matrix[13] = 1 - apply_border_pos(vo_dheight, new_h, vo_border_pos_y) * 2.0 / vo_dheight;
     if (vo_rotate & 1) {
       int tmp = new_w; new_w = new_h; new_h = tmp;
     }
-    ass_border_x = (draw_width  - new_w) / 2;
-    ass_border_y = (draw_height - new_h) / 2;
+    ass_border_x = apply_border_pos(draw_width, new_w, vo_border_pos_x);
+    ass_border_y = apply_border_pos(draw_height, new_h, vo_border_pos_y);
   }
   mpglLoadMatrixf(video_matrix);
 

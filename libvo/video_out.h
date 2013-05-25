@@ -232,6 +232,8 @@ extern int vo_vsync;
 extern int vo_fs;
 extern int vo_fsmode;
 extern float vo_panscan;
+extern float vo_border_pos_x;
+extern float vo_border_pos_y;
 extern int vo_rotate;
 extern int vo_adapter_num;
 extern int vo_refresh_rate;

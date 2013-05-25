@@ -65,6 +65,8 @@ int vo_vsync = 0;
 int vo_fs = 0;
 int vo_fsmode = 0;
 float vo_panscan = 0.0f;
+float vo_border_pos_x = 0.5;
+float vo_border_pos_y = 0.5;
 int vo_rotate;
 int vo_ontop = 0;
 int vo_adapter_num=0;
