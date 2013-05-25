@@ -305,4 +305,13 @@ static inline int aspect_scaling(void)
   return vo_fs || vo_keepaspect;
 }
 
+static inline int apply_border_pos(int full, int part, float pos) {
+  if (pos >= 0.0 && pos <= 1.0) {
+    return pos*(full - part);
+  }
+  if (pos < 0)
+    return pos * part;
+  return full - part + (pos - 1) * part;
+}
+
 #endif /* MPLAYER_VIDEO_OUT_H */

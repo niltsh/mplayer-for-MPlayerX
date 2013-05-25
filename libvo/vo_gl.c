@@ -179,15 +179,6 @@ static void redraw(void);
 static float video_matrix[16];
 static float osd_matrix[16];
 
-static int apply_border_pos(int full, int part, float pos) {
-  if (pos >= 0.0 && pos <= 1.0) {
-    return pos*(full - part);
-  }
-  if (pos < 0)
-    return pos * part;
-  return full - part + (pos - 1) * part;
-}
-
 static void resize(void) {
   int i;
   draw_width  = (vo_rotate & 1) ? vo_dheight : vo_dwidth;
