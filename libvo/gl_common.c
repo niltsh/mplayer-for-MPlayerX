@@ -1623,6 +1623,7 @@ static const char vertex_shader[] =
   "  tcv = tca; tcv2 = tca2; tcv3 = tca3;\n"
   "}\n";
 
+#if defined(CONFIG_GL_EGL_X11) || defined(CONFIG_GL_EGL_ANDROID)
 static GLuint new_gpu_program(void) {
   GLuint program = mpglCreateProgram();
   GLuint shader = compile_shader(GL_VERTEX_SHADER, vertex_shader);
@@ -1630,6 +1631,7 @@ static GLuint new_gpu_program(void) {
   mpglDeleteShader(shader);
   return program;
 }
+#endif
 
 static const char def_frag_shader[] =
   "precision mediump float;\n"
