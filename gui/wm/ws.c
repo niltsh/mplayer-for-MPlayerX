@@ -755,9 +755,10 @@ static void wsWindowMapWait(wsWindow *win)
     XEvent xev;
 
     if (win->Property & wsWaitMap) {
-        do
+        do {
             XNextEvent(wsDisplay, &xev);
-        while (xev.type != MapNotify || xev.xmap.event != win->WindowID);
+            wsEvent(&xev);
+        } while (xev.type != MapNotify || xev.xmap.event != win->WindowID);
 
         win->Mapped = wsMapped;
     }
