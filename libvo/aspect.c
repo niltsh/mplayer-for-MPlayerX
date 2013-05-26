@@ -56,7 +56,6 @@ static struct {
 } aspdat;
 
 static void aspect_rotate(void) {
-  int i;
   if (vo_rotate & 1) {
     aspdat.orgw = aspdat.orgh_norot;
     aspdat.orgh = aspdat.orgw_norot;
