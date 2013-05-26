@@ -786,22 +786,18 @@ Window LeaderWindow;
 // ----------------------------------------------------------------------------------------------
 void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, char *label)
 {
-    int depth;
+    int i, depth;
 
-    {
-        int i;
+    for (i = 0; i < wsWLCount; i++)
+        if (wsWindowList[i] == NULL)
+            break;
 
-        for (i = 0; i < wsWLCount; i++)
-            if (wsWindowList[i] == NULL)
-                break;
-
-        if (i == wsWLCount) {
-            mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_WS_TooManyOpenWindows);
-            mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
-        }
-
-        wsWindowList[i] = win;
+    if (i == wsWLCount) {
+        mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_WS_TooManyOpenWindows);
+        mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
     }
+
+    wsWindowList[i] = win;
 
     win->Property = p;
 
