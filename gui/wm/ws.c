@@ -788,6 +788,21 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
 {
     int depth;
 
+    {
+        int i;
+
+        for (i = 0; i < wsWLCount; i++)
+            if (wsWindowList[i] == NULL)
+                break;
+
+        if (i == wsWLCount) {
+            mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_WS_TooManyOpenWindows);
+            mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
+        }
+
+        wsWindowList[i] = win;
+    }
+
     win->Property = p;
 
     win->Decoration = ((p & wsShowFrame) != 0);
@@ -908,21 +923,6 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
 
     wsImageCreate(win, win->Width, win->Height);
 /* End of creating -------------------------------------------------------------------------- */
-
-    {
-        int i;
-
-        for (i = 0; i < wsWLCount; i++)
-            if (wsWindowList[i] == NULL)
-                break;
-
-        if (i == wsWLCount) {
-            mp_msg(MSGT_GPLAYER, MSGL_FATAL, MSGTR_WS_TooManyOpenWindows);
-            mplayer(MPLAYER_EXIT_GUI, EXIT_ERROR, 0);
-        }
-
-        wsWindowList[i] = win;
-    }
 
     XFlush(wsDisplay);
     XSync(wsDisplay, False);
