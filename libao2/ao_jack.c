@@ -254,7 +254,7 @@ static int init(int rate, int channels, int format, int flags) {
   if (channels > i) channels = i;
   num_ports = channels;
 
-  // create out output ports
+  // create out_* output ports
   for (i = 0; i < num_ports; i++) {
     char pname[30];
     snprintf(pname, 30, "out_%d", i);
