@@ -225,10 +225,12 @@ static void resize(void) {
     scale_y = (double)new_h / (double)vo_dheight;
     video_matrix[0]  *= scale_x;
     video_matrix[4]  *= scale_x;
-    video_matrix[12] = -1 + apply_border_pos(vo_dwidth, new_w, vo_border_pos_x) * 2.0 / vo_dwidth;
+    video_matrix[12] *= scale_x;
+    video_matrix[12] += (apply_border_pos(vo_dwidth, new_w, vo_border_pos_x) - apply_border_pos(vo_dwidth, new_w, 0.5)) * 2.0 / vo_dwidth;
     video_matrix[1]  *= scale_y;
     video_matrix[5]  *= scale_y;
-    video_matrix[13] = 1 - apply_border_pos(vo_dheight, new_h, vo_border_pos_y) * 2.0 / vo_dheight;
+    video_matrix[13] *= scale_y;
+    video_matrix[13] -= (apply_border_pos(vo_dheight, new_h, vo_border_pos_y) - apply_border_pos(vo_dheight, new_h, 0.5)) * 2.0 / vo_dheight;
     if (vo_rotate & 1) {
       int tmp = new_w; new_w = new_h; new_h = tmp;
     }
