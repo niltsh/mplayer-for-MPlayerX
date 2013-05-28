@@ -266,6 +266,13 @@ static void video_to_output_surface(void)
     }
 }
 
+static const uint32_t rotate_flags[4] = {
+    VDP_OUTPUT_SURFACE_RENDER_ROTATE_0,
+    VDP_OUTPUT_SURFACE_RENDER_ROTATE_90,
+    VDP_OUTPUT_SURFACE_RENDER_ROTATE_180,
+    VDP_OUTPUT_SURFACE_RENDER_ROTATE_270
+};
+
 static void resize(void)
 {
     VdpStatus vdp_st;
@@ -314,12 +321,12 @@ static void resize(void)
         vdp_st = vdp_output_surface_render_output_surface(output_surfaces[surface_num],
                                                           NULL, VDP_INVALID_HANDLE,
                                                           NULL, NULL, NULL,
-                                                          VDP_OUTPUT_SURFACE_RENDER_ROTATE_0);
+                                                          rotate_flags[vo_rotate & 3]);
         CHECK_ST_WARNING("Error when calling vdp_output_surface_render_output_surface")
         vdp_st = vdp_output_surface_render_output_surface(output_surfaces[1 - surface_num],
                                                           NULL, VDP_INVALID_HANDLE,
                                                           NULL, NULL, NULL,
-                                                          VDP_OUTPUT_SURFACE_RENDER_ROTATE_0);
+                                                          rotate_flags[vo_rotate & 3]);
         CHECK_ST_WARNING("Error when calling vdp_output_surface_render_output_surface")
     } else
         video_to_output_surface();
@@ -827,7 +834,7 @@ static void draw_osd_I8A8(int x0,int y0, int w,int h, unsigned char *src,
                                                       &output_indexed_rect_vid,
                                                       NULL,
                                                       &blend_state,
-                                                      VDP_OUTPUT_SURFACE_RENDER_ROTATE_0);
+                                                      rotate_flags[vo_rotate & 3]);
     CHECK_ST_WARNING("Error when calling vdp_output_surface_render_output_surface")
 }
 
@@ -851,7 +858,7 @@ static void draw_eosd(void)
             output_surface, &eosd_targets[i].dest,
             eosd_targets[i].surface, &eosd_targets[i].source,
             &eosd_targets[i].color, &blend_state,
-            VDP_OUTPUT_SURFACE_RENDER_ROTATE_0);
+            rotate_flags[vo_rotate & 3]);
         CHECK_ST_WARNING("EOSD: Error when rendering")
     }
 }
@@ -1041,7 +1048,7 @@ static uint32_t draw_image(mp_image_t *mpi)
                                                           &out_rect_vid,
                                                           output_surfaces[2],
                                                           &src_rect_vid, NULL, NULL,
-                                                          VDP_OUTPUT_SURFACE_RENDER_ROTATE_0);
+                                                          rotate_flags[vo_rotate & 3]);
         CHECK_ST_ERROR("Error when calling vdp_output_surface_render_output_surface")
     } else if (!(mpi->flags & MP_IMGFLAG_DRAW_CALLBACK)) {
         VdpStatus vdp_st;
