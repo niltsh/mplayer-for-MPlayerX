@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 36267
+.\" sync with en/mplayer.1 rev. 36283
 .\" MPlayer (C) 2000-2013 MPlayer Team
 .\" This man page was/is translated by JRaSH<jrash06 at gmail.com>
 .
@@ -3626,6 +3626,18 @@ ggi 和 gl_tiled 的驱动都支持。
 值为负数表示可以放大至 \-panscanrange+1 所表示的因数。\
 例如 \-panscanrange \-3 允许缩放因子达到 4。\
 该功能是实验性的。
+.
+.TP
+.B \-border\-pos\-x <0.0\-1.0>（仅用于 -vo gl,xv,xvmc,vdpau,direct3d，默认值为 0.5）
+当使用黑边以调整画面大小适应屏幕宽高比时，该选项用于确定在何处摆放黑边。\
+值为 0.0 时将黑边放在右边，1.0 则放在左边。\
+值超出 0.0 \- 1.0 的范围时将在所对应的一边额外增加黑边的宽度并使另一边的部分画面\
+被移除。
+.
+.TP
+.B \-border\-pos\-y <0.0\-1.0>（仅用于 -vo gl,xv,xvmc,vdpau,direct3d only，默认值为 0.5）
+与 \-border\-pos\-x 相似，但用于上下位置的黑边。\
+值为 0.0 时将黑边放在底部，1.0 则放在底部。
 .
 .TP
 .B \-monitor\-orientation <0-3>（实验性选项）
