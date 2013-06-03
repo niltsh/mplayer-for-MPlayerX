@@ -192,6 +192,8 @@ static void print_help (void)
            "Example: mplayer -ao jack:port=myout\n"
            "  connects MPlayer to the jack ports named myout\n"
            "\nOptions:\n"
+           "  connect\n"
+           "    Automatically connect to output ports\n"
            "  port=<port name>\n"
            "    Connects to the given ports instead of the default physical ones\n"
            "  name=<client name>\n"
@@ -208,11 +210,13 @@ static int init(int rate, int channels, int format, int flags) {
   char *port_name = NULL;
   char *client_name = NULL;
   int autostart = 0;
+  int connect = 1;
   const opt_t subopts[] = {
     {"port", OPT_ARG_MSTRZ, &port_name, NULL},
     {"name", OPT_ARG_MSTRZ, &client_name, NULL},
     {"estimate", OPT_ARG_BOOL, &estimate, NULL},
     {"autostart", OPT_ARG_BOOL, &autostart, NULL},
+    {"connect", OPT_ARG_BOOL, &connect, NULL},
     {NULL}
   };
   jack_options_t open_options = JackUseExactName;
@@ -241,7 +245,8 @@ static int init(int rate, int channels, int format, int flags) {
   buffer = av_fifo_alloc(BUFFSIZE);
   jack_set_process_callback(client, outputaudio, 0);
 
-  // list matching ports
+  // list matching ports if connections should be made
+  if (connect) {
   if (!port_name)
     port_flags |= JackPortIsPhysical;
   matching_ports = jack_get_ports(client, port_name, NULL, port_flags);
@@ -252,6 +257,7 @@ static int init(int rate, int channels, int format, int flags) {
     goto err_out;
   }
   if (channels > i) channels = i;
+  }
   num_ports = channels;
 
   // create out_* output ports

@@ -3027,6 +3027,11 @@ Wähle den zu benutzenden ESD-Server explizit (Standard: localhost).
 Audioausgabe über JACK (Jack Audio Connection Kit)
 .PD 0
 .RSs
+.IPs (no)connect
+Erzeugt automatisch Verbindungen zu den Ausgabeports
+(Standard: eingeschaltet).
+Falls eingeschaltet wird die Anzahl der Audiokanäle durch die Anzahl der
+gefundenen Ausgabeports nach oben begrenzt.
 .IPs port=<Name>
 Verbindet zu den Ports mit dem angegebenen Namen (Standard: physikalische
 Ports).
