@@ -247,16 +247,16 @@ static int init(int rate, int channels, int format, int flags) {
 
   // list matching ports if connections should be made
   if (connect) {
-  if (!port_name)
-    port_flags |= JackPortIsPhysical;
-  matching_ports = jack_get_ports(client, port_name, NULL, port_flags);
-  i = 0;
-  while (matching_ports && matching_ports[i]) i++;
-  if (!i) {
-    mp_msg(MSGT_AO, MSGL_FATAL, "[JACK] no physical ports available\n");
-    goto err_out;
-  }
-  if (channels > i) channels = i;
+    if (!port_name)
+      port_flags |= JackPortIsPhysical;
+    matching_ports = jack_get_ports(client, port_name, NULL, port_flags);
+    i = 0;
+    while (matching_ports && matching_ports[i]) i++;
+    if (!i) {
+      mp_msg(MSGT_AO, MSGL_FATAL, "[JACK] no physical ports available\n");
+      goto err_out;
+    }
+    if (channels > i) channels = i;
   }
   num_ports = channels;
 
