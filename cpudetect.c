@@ -177,7 +177,6 @@ static void check_os_katmai_support( void )
         mp_msg(MSGT_CPUDETECT,MSGL_V, gCpuCaps.hasSSE ? "yes.\n" : "no!\n" );
     }
 #elif defined(__linux__)
-#if defined(_POSIX_SOURCE)
     struct sigaction saved_sigill;
 
     /* Save the original signal handlers.
@@ -209,13 +208,6 @@ static void check_os_katmai_support( void )
      * safe to go ahead and hook out the SSE code throughout Mesa.
      */
     mp_msg(MSGT_CPUDETECT,MSGL_V, "Tests of OS support for SSE %s\n", gCpuCaps.hasSSE ? "passed." : "failed!" );
-#else
-    /* We can't use POSIX signal handling to test the availability of
-     * SSE, so we disable it by default.
-     */
-    mp_msg(MSGT_CPUDETECT,MSGL_WARN, "Cannot test OS support for SSE, disabling to be safe.\n" );
-    gCpuCaps.hasSSE=0;
-#endif /* _POSIX_SOURCE */
 #else
     /* Do nothing on other platforms for now.
      */
