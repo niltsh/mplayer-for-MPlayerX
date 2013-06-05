@@ -56,7 +56,7 @@ CpuCaps gCpuCaps;
 #if CONFIG_RUNTIME_CPUDETECT
 /* I believe this code works.  However, it has only been used on a PII and PIII */
 
-#if defined(__linux__) && defined(_POSIX_SOURCE) && !ARCH_X86_64
+#if defined(__linux__) && !ARCH_X86_64
 static void sigill_handler_sse( int signal, struct sigcontext sc )
 {
    mp_msg(MSGT_CPUDETECT,MSGL_V, "SIGILL, " );
@@ -75,7 +75,7 @@ static void sigill_handler_sse( int signal, struct sigcontext sc )
 
    gCpuCaps.hasSSE=0;
 }
-#endif /* __linux__ && _POSIX_SOURCE */
+#endif /* __linux__ */
 
 #if (defined(__MINGW32__) || defined(__CYGWIN__)) && !ARCH_X86_64
 LONG CALLBACK win32_sig_handler_sse(EXCEPTION_POINTERS* ep)
