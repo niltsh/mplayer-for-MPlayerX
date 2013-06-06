@@ -328,8 +328,11 @@ static void resize(void)
         }
     }
     video_to_output_surface();
-    if (visible_buf)
+    if (visible_buf) {
+        draw_eosd();
+        draw_osd();
         flip_page();
+    }
 }
 
 static void preemption_callback(VdpDevice device, void *context)
