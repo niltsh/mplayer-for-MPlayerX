@@ -781,7 +781,7 @@ static void check_events(void)
             /* redraw the last visible buffer */
             VdpStatus vdp_st;
             vdp_st = vdp_presentation_queue_display(vdp_flip_queue,
-                                                    output_surfaces[surface_num],
+                                                    output_surfaces[(surface_num + NUM_OUTPUT_SURFACES - 1) % NUM_OUTPUT_SURFACES],
                                                     vo_dwidth, vo_dheight,
                                                     0);
             CHECK_ST_WARNING("Error when calling vdp_presentation_queue_display")
