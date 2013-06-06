@@ -147,6 +147,7 @@ static VdpPreemptionCallbackRegister             *vdp_preemption_callback_regist
 /* output_surfaces[NUM_OUTPUT_SURFACES] is misused for OSD. */
 #define osd_surface output_surfaces[NUM_OUTPUT_SURFACES]
 static VdpOutputSurface                   output_surfaces[NUM_OUTPUT_SURFACES + 1];
+static VdpOutputSurface                   rgba_surface;
 static VdpVideoSurface                    deint_surfaces[3];
 static mp_image_t                        *deint_mpi[2];
 static int                                output_surface_width, output_surface_height;
@@ -225,11 +226,27 @@ static void push_deint_surface(VdpVideoSurface surface)
     deint_surfaces[0] = surface;
 }
 
+static const uint32_t rotate_flags[4] = {
+    VDP_OUTPUT_SURFACE_RENDER_ROTATE_0,
+    VDP_OUTPUT_SURFACE_RENDER_ROTATE_90,
+    VDP_OUTPUT_SURFACE_RENDER_ROTATE_180,
+    VDP_OUTPUT_SURFACE_RENDER_ROTATE_270
+};
+
 static void video_to_output_surface(void)
 {
     VdpTime dummy;
     VdpStatus vdp_st;
     int i;
+    if (image_format == IMGFMT_BGRA) {
+        vdp_st = vdp_output_surface_render_output_surface(output_surfaces[surface_num],
+                                                          &out_rect_vid,
+                                                          rgba_surface,
+                                                          &src_rect_vid, NULL, NULL,
+                                                          rotate_flags[vo_rotate & 3]);
+        CHECK_ST_WARNING("Error when calling vdp_output_surface_render_output_surface")
+        return;
+    }
     if (vid_surface_num < 0)
         return;
 
@@ -265,13 +282,6 @@ static void video_to_output_surface(void)
         push_deint_surface(surface_render[vid_surface_num].surface);
     }
 }
-
-static const uint32_t rotate_flags[4] = {
-    VDP_OUTPUT_SURFACE_RENDER_ROTATE_0,
-    VDP_OUTPUT_SURFACE_RENDER_ROTATE_90,
-    VDP_OUTPUT_SURFACE_RENDER_ROTATE_180,
-    VDP_OUTPUT_SURFACE_RENDER_ROTATE_270
-};
 
 static void resize(void)
 {
@@ -317,19 +327,7 @@ static void resize(void)
             mp_msg(MSGT_VO, MSGL_DBG2, "OUT CREATE: %u\n", output_surfaces[i]);
         }
     }
-    if (image_format == IMGFMT_BGRA) {
-        vdp_st = vdp_output_surface_render_output_surface(output_surfaces[surface_num],
-                                                          NULL, VDP_INVALID_HANDLE,
-                                                          NULL, NULL, NULL,
-                                                          rotate_flags[vo_rotate & 3]);
-        CHECK_ST_WARNING("Error when calling vdp_output_surface_render_output_surface")
-        vdp_st = vdp_output_surface_render_output_surface(output_surfaces[1 - surface_num],
-                                                          NULL, VDP_INVALID_HANDLE,
-                                                          NULL, NULL, NULL,
-                                                          rotate_flags[vo_rotate & 3]);
-        CHECK_ST_WARNING("Error when calling vdp_output_surface_render_output_surface")
-    } else
-        video_to_output_surface();
+    video_to_output_surface();
     if (visible_buf)
         flip_page();
 }
@@ -538,6 +536,8 @@ static void mark_invalid(void)
     decoder = VDP_INVALID_HANDLE;
     video_mixer = VDP_INVALID_HANDLE;
 
+    rgba_surface = VDP_INVALID_HANDLE;
+
     for (i = 0; i < 3; i++)
         deint_surfaces[i] = VDP_INVALID_HANDLE;
 
@@ -557,6 +557,11 @@ static void free_video_specific(void)
     if (decoder != VDP_INVALID_HANDLE)
         vdp_decoder_destroy(decoder);
     decoder_max_refs = -1;
+
+    if (rgba_surface != VDP_INVALID_HANDLE) {
+        vdp_st = vdp_output_surface_destroy(rgba_surface);
+        CHECK_ST_WARNING("Error destroying RGBA surface")
+    }
 
     for (i = 0; i < MAX_VIDEO_SURFACES; i++) {
         if (surface_render[i].surface != VDP_INVALID_HANDLE) {
@@ -662,6 +667,7 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
                   uint32_t d_height, uint32_t flags, char *title,
                   uint32_t format)
 {
+    VdpStatus vdp_st;
     XVisualInfo vinfo;
     XSetWindowAttributes xswa;
     XWindowAttributes attribs;
@@ -741,6 +747,13 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
     case IMGFMT_UYVY:
         vdp_pixel_format = VDP_YCBCR_FORMAT_UYVY;
         vdp_chroma_type  = VDP_CHROMA_TYPE_422;
+        break;
+    case IMGFMT_BGRA:
+        vdp_st = vdp_output_surface_create(vdp_device, VDP_RGBA_FORMAT_B8G8R8A8,
+                                           vid_width, vid_height,
+                                           &rgba_surface);
+        CHECK_ST_ERROR("Error creating RGBA surface")
+        break;
     }
     if (create_vdp_mixer(vdp_chroma_type))
         return -1;
@@ -1040,16 +1053,10 @@ static uint32_t draw_image(mp_image_t *mpi)
     } else if (image_format == IMGFMT_BGRA) {
         VdpStatus vdp_st;
         VdpRect r = {0, 0, vid_width, vid_height};
-        vdp_st = vdp_output_surface_put_bits_native(output_surfaces[2],
+        vdp_st = vdp_output_surface_put_bits_native(rgba_surface,
                                                     (void const*const*)mpi->planes,
                                                     mpi->stride, &r);
         CHECK_ST_ERROR("Error when calling vdp_output_surface_put_bits_native")
-        vdp_st = vdp_output_surface_render_output_surface(output_surfaces[surface_num],
-                                                          &out_rect_vid,
-                                                          output_surfaces[2],
-                                                          &src_rect_vid, NULL, NULL,
-                                                          rotate_flags[vo_rotate & 3]);
-        CHECK_ST_ERROR("Error when calling vdp_output_surface_render_output_surface")
     } else if (!(mpi->flags & MP_IMGFLAG_DRAW_CALLBACK)) {
         VdpStatus vdp_st;
         void *destdata[3] = {mpi->planes[0], mpi->planes[2], mpi->planes[1]};
@@ -1270,6 +1277,7 @@ static int preinit(const char *arg)
         output_surfaces[i] = VDP_INVALID_HANDLE;
     vdp_flip_queue = VDP_INVALID_HANDLE;
     output_surface_width = output_surface_height = -1;
+    rgba_surface = VDP_INVALID_HANDLE;
 
     // full grayscale palette.
     for (i = 0; i < PALETTE_SIZE; ++i)
