@@ -774,8 +774,7 @@ static void check_events(void)
 
     if (e & VO_EVENT_RESIZE)
         resize();
-
-    if ((e & VO_EVENT_EXPOSE || e & VO_EVENT_RESIZE) && int_pause) {
+    else if (e & VO_EVENT_EXPOSE) {
         /* did we already draw a buffer */
         if (visible_buf) {
             /* redraw the last visible buffer */
