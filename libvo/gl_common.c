@@ -635,7 +635,8 @@ void glCreateClearTex(GLenum target, GLenum fmt, GLenum format, GLenum type, GLi
   if (format == GL_LUMINANCE && type == GL_UNSIGNED_SHORT) {
     // ensure we get enough bits
     GLint bits = 0;
-    mpglGetTexLevelParameteriv(target, 0, GL_TEXTURE_LUMINANCE_SIZE, &bits);
+    if (mpglGetTexLevelParameteriv)
+      mpglGetTexLevelParameteriv(target, 0, GL_TEXTURE_LUMINANCE_SIZE, &bits);
     if (bits >= 0 && bits < 14 && (use_depth_l16 || HAVE_BIGENDIAN)) {
       fmt = GL_DEPTH_COMPONENT;
       format = GL_DEPTH_COMPONENT;
@@ -2394,7 +2395,7 @@ static EGLSurface eglSurface = EGL_NO_SURFACE;
 static EGLNativeWindowType vo_window;
 #define eglGetProcAddress(a) 0
 #define mDisplay EGL_DEFAULT_DISPLAY
-EGLNativeWindowType android_createDisplaySurface(void);
+static EGLNativeWindowType (*android_createDisplaySurface)(void);
 #endif
 static void *eglgpa(const GLubyte *name) {
   void *res = eglGetProcAddress(name);
@@ -2440,8 +2441,17 @@ static int setGlWindow_egl(MPGLContext *ctx)
   }
   if (WinID != -1)
     vo_window = (EGLNativeWindowType)(intptr_t)WinID;
-  if (!vo_window)
+  if (!vo_window) {
+    if (!android_createDisplaySurface) {
+      void *handle = dlopen("libui.so", RTLD_LAZY);
+      if (!handle)
+        return SET_WINDOW_FAILED;
+      android_createDisplaySurface = dlsym(handle, "android_createDisplaySurface");
+      if (!android_createDisplaySurface)
+        return SET_WINDOW_FAILED;
+    }
     vo_window = android_createDisplaySurface();
+  }
   if (!vo_window)
     return SET_WINDOW_FAILED;
 #endif

@@ -5289,10 +5289,7 @@ int main(int argc, char *argv[]) {
 #else
   glXCreateContext(NULL, NULL, NULL, True);
 #endif
-#ifdef GL_EGL_ANDROID
-  EGLNativeWindowType android_createDisplaySurface(void);
-  android_createDisplaySurface();
-#elif !defined(GL_EGL_X11)
+#if !defined(GL_EGL_X11) && !defined(GL_EGL_ANDROID)
   glFinish();
 #endif
   return 0;
@@ -5307,14 +5304,13 @@ EOF
       break
     fi
   done
-  if cc_check -DGL_EGL_ANDROID -lEGL -lui ; then
-    _gl=yes
-    _gl_egl_android=yes
-    libs_mplayer="$libs_mplayer -lEGL -lui $ld_dl"
-  fi
   if test "$_x11" = yes && cc_check -DGL_EGL_X11 -lEGL ; then
     _gl=yes
     _gl_egl_x11=yes
+    libs_mplayer="$libs_mplayer -lEGL $ld_dl"
+  elif cc_check -DGL_EGL_ANDROID -lEGL ; then
+    _gl=yes
+    _gl_egl_android=yes
     libs_mplayer="$libs_mplayer -lEGL $ld_dl"
   fi
   if win32 && cc_check -DGL_WIN32 -lopengl32 ; then
