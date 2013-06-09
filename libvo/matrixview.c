@@ -126,7 +126,7 @@ static void draw_flare(float x, float y, float z)        //flare
     mpglVertex3f(x - 1, y - 2, z);
 }
 
-static void draw_text(uint8_t *pic)
+static void draw_text(const uint8_t *pic)
 {
     int x, y;
     int p = 0;
@@ -326,8 +326,7 @@ void matrixview_reshape(int w, int h)
 }
 
 
-void matrixview_draw(int w, int h, double currentTime, float frameTime,
-                     uint8_t *data)
+void matrixview_draw(double currentTime, const uint8_t *data)
 {
     // Clear the color and depth buffers.
     mpglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
