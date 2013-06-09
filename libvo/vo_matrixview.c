@@ -148,8 +148,7 @@ static void check_events(void)
     int e = glctx.check_events();
     if (e & VO_EVENT_RESIZE) {
         resize();
-    }
-    if (e & VO_EVENT_EXPOSE && int_pause)
+    } else if (e & VO_EVENT_EXPOSE)
         flip_page();
 }
 
