@@ -50,7 +50,6 @@ const LIBVO_EXTERN(matrixview)
 
 static MPGLContext glctx;
 
-static int int_pause;
 static int eq_contrast;
 static int eq_brightness;
 static uint32_t image_width;
@@ -105,8 +104,6 @@ static int config(uint32_t width, uint32_t height,
     image_height = height;
     image_width  = width;
     image_format = format;
-
-    int_pause = 0;
 
     flags |= VOFLAG_DEPTH;
     if (mpglcontext_create_window(&glctx, d_width, d_height, flags, title) < 0)
@@ -259,10 +256,6 @@ static int preinit(const char *arg)
 static int control(uint32_t request, void *data)
 {
     switch (request) {
-    case VOCTRL_PAUSE:
-    case VOCTRL_RESUME:
-        int_pause = (request == VOCTRL_PAUSE);
-        return VO_TRUE;
     case VOCTRL_QUERY_FORMAT:
         return query_format(*(uint32_t*)data);
     case VOCTRL_ONTOP:
