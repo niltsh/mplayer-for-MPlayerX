@@ -154,6 +154,9 @@ static void draw_osd(void)
 static void flip_page(void)
 {
     matrixview_draw(vo_dwidth, vo_dheight, GetTimer(), 0.0, map_image[0]);
+    // Needed at least on PPC Mac Mini on OSX. Should not hurt
+    // much to do always.
+    mpglFlush();
     glctx.swapGlBuffers(&glctx);
 }
 
