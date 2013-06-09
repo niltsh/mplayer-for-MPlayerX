@@ -565,6 +565,7 @@ static int initGl(uint32_t d_width, uint32_t d_height)
     params.chrom_texw = params.texw >> xs;
     params.chrom_texh = params.texh >> ys;
     params.csp_params.input_shift = -depth & 7;
+    params.is_planar = is_yuv;
     glSetupYUVConversion(&params);
   }
 
