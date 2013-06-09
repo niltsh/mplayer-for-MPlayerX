@@ -513,7 +513,7 @@ static int choose_glx_visual(Display *dpy, int scr, XVisualInfo *res_vi)
   return (best_weight < 1000000) ? 0 : -1;
 }
 
-static int config_glx(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uint32_t flags, char *title, uint32_t format) {
+static int config_glx(uint32_t d_width, uint32_t d_height, uint32_t flags, char *title) {
   XVisualInfo *vinfo, vinfo_buf;
     vinfo = choose_glx_visual(mDisplay,mScreen,&vinfo_buf) < 0 ? NULL : &vinfo_buf;
     if (vinfo == NULL) {
@@ -604,7 +604,7 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
   int_pause = 0;
 
 #ifdef CONFIG_GL_X11
-  if (glctx.type == GLTYPE_X11 && config_glx(width, height, d_width, d_height, flags, title, format) == -1)
+  if (glctx.type == GLTYPE_X11 && config_glx(d_width, d_height, flags, title) == -1)
     return -1;
 #endif
   if (glctx.type != GLTYPE_X11 && mpglcontext_create_window(&glctx, d_width, d_height, flags, title) < 0)
@@ -834,7 +834,7 @@ static int preinit(const char *arg)
     if(!init_mpglcontext(&glctx, gltype)) goto err_out;
     if (use_yuv == -1) {
 #ifdef CONFIG_GL_X11
-      if (glctx.type == GLTYPE_X11 && config_glx(320, 200, 320, 200, VOFLAG_HIDDEN, "", 0) == -1)
+      if (glctx.type == GLTYPE_X11 && config_glx(320, 200, VOFLAG_HIDDEN, "") == -1)
         goto err_out;
 #endif
       if (glctx.type != GLTYPE_X11 && mpglcontext_create_window(&glctx, 320, 200, VOFLAG_HIDDEN, "") < 0)
