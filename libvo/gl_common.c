@@ -2422,6 +2422,10 @@ static void GLAPIENTRY dummy_color(GLubyte r, GLubyte g, GLubyte b, GLubyte a) {
 static void GLAPIENTRY dummy_texenvi(GLenum t, GLenum p, GLint v) {
 }
 
+static int GLAPIENTRY SwapInterval_egl(int i) {
+  return eglSwapInterval(eglDisplay, i);
+}
+
 static int setGlWindow_egl(MPGLContext *ctx)
 {
   static const EGLint cfg_attribs[] = { EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, EGL_NONE };
@@ -2538,6 +2542,7 @@ static int setGlWindow_egl(MPGLContext *ctx)
   getFunctions(eglgpa, eglQueryString(eglDisplay, EGL_EXTENSIONS));
   mpglBegin = NULL;
   mpglDrawBuffer = NULL;
+  mpglSwapInterval = SwapInterval_egl;
 
   gpu_def_sl_program = new_gpu_program();
   gpu_yuv_sl_program = new_gpu_program();
