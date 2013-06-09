@@ -2501,10 +2501,10 @@ static int setGlWindow_egl(MPGLContext *ctx)
       }
       mp_msg(MSGT_VO, MSGL_V, "0x%03x %2i %2i %2i %2i %2i %2i %c %c %c %c %2i 0x%03x %s (0x%x)\n",
         id, rs, gs, bs, as, ds, ss,
-	renderable & EGL_OPENGL_BIT ? '+' : '-',
-	renderable & EGL_OPENGL_ES_BIT ? '+' : '-',
-	renderable & EGL_OPENGL_ES2_BIT ? '+' : '-',
-	renderable & EGL_OPENVG_BIT ? '+' : '-',
+        renderable & EGL_OPENGL_BIT ? '+' : '-',
+        renderable & EGL_OPENGL_ES_BIT ? '+' : '-',
+        renderable & EGL_OPENGL_ES2_BIT ? '+' : '-',
+        renderable & EGL_OPENVG_BIT ? '+' : '-',
         samples, surfaces, caveatstr, caveat);
     }
     free(configs);
