@@ -2561,13 +2561,18 @@ static int setGlWindow_egl(MPGLContext *ctx)
  */
 static void releaseGlContext_egl(MPGLContext *ctx) {
   EGLContext *context = &ctx->context.egl;
-  if (*context != EGL_NO_CONTEXT)
-  {
+  if (*context != EGL_NO_CONTEXT) {
     mpglFinish();
     eglMakeCurrent(eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
     eglDestroyContext(eglDisplay, *context);
   }
   *context = EGL_NO_CONTEXT;
+  if (eglSurface != EGL_NO_SURFACE)
+    eglDestroySurface(eglDisplay, eglSurface);
+  eglSurface = EGL_NO_SURFACE;
+  if (eglDisplay != EGL_NO_DISPLAY)
+    eglTerminate(eglDisplay);
+  eglDisplay = EGL_NO_DISPLAY;
 }
 
 static void swapGlBuffers_egl(MPGLContext *ctx) {
