@@ -185,6 +185,8 @@ void vo_osx_swap_buffers(void)
 
 - (void) config:(uint32_t)width:(uint32_t)height:(uint32_t)flags
 {
+	if (flags & VOFLAG_HIDDEN)
+		return;
 	config_movie_aspect((float)width/height);
 
 	vo_dwidth  = width  *= self->winSizeMult;
@@ -212,9 +214,8 @@ void vo_osx_swap_buffers(void)
 
 	[self ontop];
 
-	if (!(flags & VOFLAG_HIDDEN))
-		//show window
-		[window makeKeyAndOrderFront:self];
+	//show window
+	[window makeKeyAndOrderFront:self];
 }
 
 - (void) drawRect: (NSRect *) bounds
