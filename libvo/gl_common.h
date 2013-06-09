@@ -231,6 +231,7 @@ typedef struct MPGLContext {
 } MPGLContext;
 
 int init_mpglcontext(MPGLContext *ctx, enum MPGLType type);
+int mpglcontext_create_window(MPGLContext *ctx, uint32_t d_width, uint32_t d_height, uint32_t flags, const char *title);
 void uninit_mpglcontext(MPGLContext *ctx);
 
 extern GLenum (GLAPIENTRY *mpglGetError)(void);

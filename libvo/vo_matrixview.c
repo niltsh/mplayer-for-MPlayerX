@@ -50,18 +50,6 @@ const LIBVO_EXTERN(matrixview)
 
 static MPGLContext glctx;
 
-#ifdef CONFIG_GL_X11
-static int wsGLXAttrib[] = {
-    GLX_RGBA,
-    GLX_RED_SIZE,1,
-    GLX_GREEN_SIZE,1,
-    GLX_BLUE_SIZE,1,
-    GLX_DEPTH_SIZE,1,
-    GLX_DOUBLEBUFFER,
-    None
-};
-#endif
-
 static int int_pause;
 static int eq_contrast;
 static int eq_brightness;
@@ -115,26 +103,9 @@ static int config(uint32_t width, uint32_t height,
 
     int_pause = 0;
 
-#ifdef CONFIG_GL_WIN32
-    if (glctx.type == GLTYPE_W32 && !vo_w32_config(d_width, d_height, flags))
+    flags |= VOFLAG_DEPTH;
+    if (mpglcontext_create_window(&glctx, d_width, d_height, flags, title) < 0)
         return -1;
-#endif
-#ifdef CONFIG_GL_X11
-    if (glctx.type == GLTYPE_X11) {
-        XVisualInfo *vinfo=glXChooseVisual( mDisplay,mScreen,wsGLXAttrib );
-        if (vinfo == NULL) {
-            mp_msg(MSGT_VO, MSGL_ERR, "[matrixview] no GLX support present\n");
-            return -1;
-        }
-        mp_msg(MSGT_VO, MSGL_V, "[matrixview] GLX chose visual with ID 0x%x\n",
-               (int)vinfo->visualid);
-
-        vo_x11_create_vo_window(vinfo, vo_dx, vo_dy, d_width, d_height, flags,
-                                XCreateColormap(mDisplay, mRootWin,
-                                                vinfo->visual, AllocNone),
-                                "matrixview", title);
-    }
-#endif /* CONFIG_GL_WIN32 */
     if (glctx.setGlWindow(&glctx) == SET_WINDOW_FAILED)
         return -1;
 
@@ -244,10 +215,7 @@ static const opt_t subopts[] =
 
 static int preinit(const char *arg)
 {
-    enum MPGLType gltype = GLTYPE_X11;
-#ifdef CONFIG_GL_WIN32
-    gltype = GLTYPE_W32;
-#endif
+    enum MPGLType gltype = GLTYPE_AUTO;
     if (!init_mpglcontext(&glctx, gltype))
         return -1;
 

@@ -115,6 +115,7 @@ typedef struct {
 #define VOFLAG_FLIPPING           0x08
 #define VOFLAG_HIDDEN             0x10  //< Use to create a hidden window
 #define VOFLAG_STEREO             0x20  //< Use to create a stereo-capable window
+#define VOFLAG_DEPTH              0x40  //< Request a depth buffer
 #define VOFLAG_XOVERLAY_SUB_VO 0x10000
 
 typedef struct vo_info_s

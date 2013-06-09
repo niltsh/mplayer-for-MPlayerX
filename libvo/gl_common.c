@@ -2700,6 +2700,61 @@ int init_mpglcontext(MPGLContext *ctx, enum MPGLType type) {
   }
 }
 
+int mpglcontext_create_window(MPGLContext *ctx, uint32_t d_width, uint32_t d_height,
+                              uint32_t flags, const char *title)
+{
+#ifdef CONFIG_GL_WIN32
+  if (ctx->type == GLTYPE_W32 && !vo_w32_config(d_width, d_height, flags))
+    return -1;
+#endif
+#ifdef CONFIG_GL_OSX
+  if (ctx->type == GLTYPE_OSX && !vo_osx_config(d_width, d_height, flags))
+    return -1;
+#endif
+#ifdef CONFIG_GL_EGL_X11
+  if (ctx->type == GLTYPE_EGL_X11) {
+    XVisualInfo vinfo = { .visual = CopyFromParent, .depth = CopyFromParent };
+    vo_x11_create_vo_window(&vinfo, vo_dx, vo_dy, d_width, d_height, flags,
+            CopyFromParent, "gl", title);
+  }
+#endif
+#ifdef CONFIG_GL_X11
+  if (ctx->type == GLTYPE_X11) {
+    int default_glx_attribs[] = {
+      GLX_RGBA, GLX_RED_SIZE, 1, GLX_GREEN_SIZE, 1, GLX_BLUE_SIZE, 1,
+      GLX_DOUBLEBUFFER, GLX_DEPTH_SIZE, (flags & VOFLAG_DEPTH) ? 1 : 0, None
+    };
+    static const int stereo_glx_attribs[]  = {
+      GLX_RGBA, GLX_RED_SIZE, 1, GLX_GREEN_SIZE, 1, GLX_BLUE_SIZE, 1,
+      GLX_DOUBLEBUFFER, GLX_STEREO, None
+    };
+    XVisualInfo *vinfo = NULL;
+    if (flags & VOFLAG_STEREO) {
+      vinfo = glXChooseVisual(mDisplay, mScreen, stereo_glx_attribs);
+      if (!vinfo)
+        mp_msg(MSGT_VO, MSGL_ERR, "[gl] Could not find a stereo visual, "
+                                  "3D will probably not work!\n");
+    }
+    if (!vinfo)
+      vinfo = glXChooseVisual(mDisplay, mScreen, default_glx_attribs);
+    if (!vinfo) {
+      mp_msg(MSGT_VO, MSGL_ERR, "[gl] no GLX support present\n");
+      return -1;
+    }
+    mp_msg(MSGT_VO, MSGL_V, "[gl] GLX chose visual with ID 0x%x\n", (int)vinfo->visualid);
+
+    vo_x11_create_vo_window(vinfo, vo_dx, vo_dy, d_width, d_height, flags,
+            XCreateColormap(mDisplay, mRootWin, vinfo->visual, AllocNone),
+            "gl", title);
+  }
+#endif
+#ifdef CONFIG_GL_SDL
+  if (ctx->type == GLTYPE_SDL && !vo_sdl_config(d_width, d_height, flags, title))
+    return -1;
+#endif
+  return 0;
+}
+
 void uninit_mpglcontext(MPGLContext *ctx) {
   ctx->releaseGlContext(ctx);
   switch (ctx->type) {
