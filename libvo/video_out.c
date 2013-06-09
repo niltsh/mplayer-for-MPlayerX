@@ -210,7 +210,7 @@ const vo_functions_t* const video_out_drivers[] =
 #ifdef CONFIG_GL
         &video_out_gl,
 #endif
-#if defined(CONFIG_GL_WIN32) || defined(CONFIG_GL_X11)
+#if defined(CONFIG_GL_WIN32) || defined(CONFIG_GL_X11) || defined(CONFIG_GL_OSX)
         &video_out_gl_tiled,
 #endif
 #ifdef CONFIG_DGA
