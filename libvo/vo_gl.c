@@ -678,14 +678,6 @@ static int create_window(uint32_t d_width, uint32_t d_height, uint32_t flags, co
   return mpglcontext_create_window(&glctx, d_width, d_height, flags, title);
 }
 
-#ifdef CONFIG_GL_OSX
-static void osx_redraw(void)
-{
-  // resize will call redraw to refresh the screen
-  resize();
-}
-#endif
-
 /* connect to server, create and map window,
  * allocate colors and (shared) memory
  */
@@ -717,7 +709,7 @@ config(uint32_t width, uint32_t height, uint32_t d_width, uint32_t d_height, uin
   initGl();
 
 #ifdef CONFIG_GL_OSX
-  vo_osx_redraw_func = osx_redraw;
+  vo_osx_redraw_func = resize;
 #endif
   return 0;
 }
