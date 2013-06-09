@@ -2429,6 +2429,7 @@ static int setGlWindow_egl(MPGLContext *ctx)
   EGLContext *context = &ctx->context.egl;
   EGLContext new_context = NULL;
   EGLConfig eglConfig;
+  EGLint id;
   int num_configs;
 #ifdef CONFIG_GL_EGL_ANDROID
   EGLint w, h;
@@ -2471,9 +2472,48 @@ static int setGlWindow_egl(MPGLContext *ctx)
     eglDestroyContext(eglDisplay, *context);
     eglDestroySurface(eglDisplay, eglSurface);
   }
+  if (mp_msg_test(MSGT_VO, MSGL_DBG2)) {
+    EGLConfig *configs;
+    EGLint count = 0, i;
+    eglGetConfigs(eglDisplay, NULL, 0, &count);
+    configs = calloc(count, sizeof(*configs));
+    eglGetConfigs(eglDisplay, configs, count, &count);
+    mp_msg(MSGT_VO, MSGL_V, " ID  |     sizes     | gl |es2| samples | caveat\n"
+                            "       r  g  b  a  d  s | es| vg | surfaces |\n");
+    for (i = 0; i < count; i++) {
+      EGLint rs, gs, bs, as, ds, ss, samples, surfaces, renderable, caveat;
+      const char *caveatstr = "unknown";
+      eglGetConfigAttrib(eglDisplay, configs[i], EGL_CONFIG_ID, &id);
+      eglGetConfigAttrib(eglDisplay, configs[i], EGL_RED_SIZE, &rs);
+      eglGetConfigAttrib(eglDisplay, configs[i], EGL_GREEN_SIZE, &gs);
+      eglGetConfigAttrib(eglDisplay, configs[i], EGL_BLUE_SIZE, &bs);
+      eglGetConfigAttrib(eglDisplay, configs[i], EGL_ALPHA_SIZE, &as);
+      eglGetConfigAttrib(eglDisplay, configs[i], EGL_DEPTH_SIZE, &ds);
+      eglGetConfigAttrib(eglDisplay, configs[i], EGL_STENCIL_SIZE, &ss);
+      eglGetConfigAttrib(eglDisplay, configs[i], EGL_SAMPLES, &samples);
+      eglGetConfigAttrib(eglDisplay, configs[i], EGL_SURFACE_TYPE, &surfaces);
+      eglGetConfigAttrib(eglDisplay, configs[i], EGL_RENDERABLE_TYPE, &renderable);
+      eglGetConfigAttrib(eglDisplay, configs[i], EGL_CONFIG_CAVEAT, &caveat);
+      switch (caveat) {
+      case EGL_SLOW_CONFIG:           caveatstr = "slow"; break;
+      case EGL_NON_CONFORMANT_CONFIG: caveatstr = "nonconf"; break;
+      case EGL_NONE:                  caveatstr = "none"; break;
+      }
+      mp_msg(MSGT_VO, MSGL_V, "0x%03x %2i %2i %2i %2i %2i %2i %c %c %c %c %2i 0x%03x %s (0x%x)\n",
+        id, rs, gs, bs, as, ds, ss,
+	renderable & EGL_OPENGL_BIT ? '+' : '-',
+	renderable & EGL_OPENGL_ES_BIT ? '+' : '-',
+	renderable & EGL_OPENGL_ES2_BIT ? '+' : '-',
+	renderable & EGL_OPENVG_BIT ? '+' : '-',
+        samples, surfaces, caveatstr, caveat);
+    }
+    free(configs);
+  }
   if (!eglChooseConfig(eglDisplay, cfg_attribs, &eglConfig, 1, &num_configs) ||
       num_configs != 1)
     return SET_WINDOW_FAILED;
+  eglGetConfigAttrib(eglDisplay, eglConfig, EGL_CONFIG_ID, &id);
+  mp_msg(MSGT_VO, MSGL_V, "Chosen config %x\n", id);
   eglSurface = eglCreateWindowSurface(eglDisplay, eglConfig, vo_window, NULL);
   if (eglSurface == EGL_NO_SURFACE)
     return SET_WINDOW_FAILED;
