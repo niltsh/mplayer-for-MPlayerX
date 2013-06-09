@@ -514,7 +514,7 @@ static int isSoftwareGl(void)
 {
   const char *renderer = mpglGetString(GL_RENDERER);
   return !renderer || strcmp(renderer, "Software Rasterizer") == 0 ||
-         strstr(renderer, "Software Renderer") == 0 ||
+         strstr(renderer, "Software Renderer") ||
          strstr(renderer, "llvmpipe");
 }
 
