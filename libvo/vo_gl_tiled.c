@@ -102,6 +102,7 @@ struct TexSquare
 
 static GLint getInternalFormat(void)
 {
+  r_sz = g_sz = b_sz = a_sz = 0;
   switch (glctx.type) {
 #ifdef CONFIG_GL_WIN32
   case GLTYPE_W32:
@@ -109,9 +110,7 @@ static GLint getInternalFormat(void)
   PIXELFORMATDESCRIPTOR pfd;
   HDC vo_hdc = vo_w32_get_dc(vo_w32_window);
   int pf = GetPixelFormat(vo_hdc);
-  if (!DescribePixelFormat(vo_hdc, pf, sizeof pfd, &pfd)) {
-    r_sz = g_sz = b_sz = a_sz = 0;
-  } else {
+  if (DescribePixelFormat(vo_hdc, pf, sizeof pfd, &pfd)) {
     r_sz = pfd.cRedBits;
     g_sz = pfd.cGreenBits;
     b_sz = pfd.cBlueBits;
