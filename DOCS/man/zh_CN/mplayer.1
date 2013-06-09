@@ -1,4 +1,4 @@
-.\" sync with en/mplayer.1 rev. 36283
+.\" sync with en/mplayer.1 rev. 36297
 .\" MPlayer (C) 2000-2013 MPlayer Team
 .\" This man page was/is translated by JRaSH<jrash06 at gmail.com>
 .
@@ -3118,6 +3118,10 @@ OSS 音频输出驱动
 通过 JACK（Jack 音频连接组件）的音频输出
 .PD 0
 .RSs
+.IPs (no)connect
+自动创建至输出端口的连接（默认值：启用）。\
+当启用时，输出信道的数量最大限制为可用的\
+输出端口数量。
 .IPs port=<名称>
 连接至所给名称的端口（默认值：物理端口）。
 .IPs name=<客户端名称>
