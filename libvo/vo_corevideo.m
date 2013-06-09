@@ -390,9 +390,6 @@ static int control(uint32_t request, void *data)
 	switch (request)
 	{
 		case VOCTRL_DRAW_IMAGE: return draw_image(data);
-		case VOCTRL_PAUSE:
-		case VOCTRL_RESUME:
-			return VO_TRUE;
 		case VOCTRL_QUERY_FORMAT: return query_format(*(uint32_t*)data);
 		case VOCTRL_GET_IMAGE: return get_image(data);
 		case VOCTRL_ONTOP: vo_ontop = !vo_ontop; if(!shared_buffer){ [mpGLView ontop]; } else { [mplayerosxProto ontop]; } return VO_TRUE;

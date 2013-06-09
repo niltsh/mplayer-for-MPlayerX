@@ -215,7 +215,6 @@ static VdpProcamp procamp;
  * X11 specific
  */
 static int                                visible_buf;
-static int                                int_pause;
 
 static void draw_eosd(void);
 
@@ -1359,10 +1358,6 @@ static int control(uint32_t request, void *data)
             CHECK_ST_WARNING("Error changing deinterlacing settings")
         }
         return VO_TRUE;
-    case VOCTRL_PAUSE:
-        return int_pause = 1;
-    case VOCTRL_RESUME:
-        return int_pause = 0;
     case VOCTRL_QUERY_FORMAT:
         return query_format(*(uint32_t *)data);
     case VOCTRL_GET_IMAGE:
