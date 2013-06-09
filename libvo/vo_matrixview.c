@@ -92,6 +92,11 @@ static void brightness_set(int value)
     matrixview_brightness_set(brightness);
 }
 
+static void resize(void)
+{
+    matrixview_reshape(vo_dwidth, vo_dheight);
+    flip_page();
+}
 
 static int config(uint32_t width, uint32_t height,
                   uint32_t d_width, uint32_t d_height,
@@ -130,6 +135,10 @@ static int config(uint32_t width, uint32_t height,
     contrast_set(eq_contrast);
     brightness_set(eq_brightness);
     matrixview_reshape(vo_dwidth, vo_dheight);
+
+#ifdef CONFIG_GL_OSX
+    vo_osx_redraw_func = resize;
+#endif
     return 0;
 }
 
@@ -138,7 +147,7 @@ static void check_events(void)
 {
     int e = glctx.check_events();
     if (e & VO_EVENT_RESIZE) {
-        matrixview_reshape(vo_dwidth, vo_dheight);
+        resize();
     }
     if (e & VO_EVENT_EXPOSE && int_pause)
         flip_page();
@@ -262,7 +271,7 @@ static int control(uint32_t request, void *data)
         return VO_TRUE;
     case VOCTRL_FULLSCREEN:
         glctx.fullscreen();
-        matrixview_reshape(vo_dwidth, vo_dheight);
+        resize();
         return VO_TRUE;
     case VOCTRL_BORDER:
         glctx.border();
