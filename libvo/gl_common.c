@@ -787,11 +787,10 @@ void glUploadTex(GLenum target, GLenum format, GLenum type,
   if (!mpglBegin) {
     // we have to copy line-by-line for GLES
     if (stride != w*bpp) slice = 1;
-  } else {
-    // this is not always correct, but should work for MPlayer
-    glAdjustAlignment(stride);
-    mpglPixelStorei(GL_UNPACK_ROW_LENGTH, stride / bpp);
   }
+  // this is not always correct, but should work for MPlayer
+  glAdjustAlignment(stride);
+  mpglPixelStorei(GL_UNPACK_ROW_LENGTH, stride / bpp);
   if (slice < 0) {
     mpglPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
     mpglTexImage2D(target, 0, GL_RGB, w, h, 0, format, type, data);
