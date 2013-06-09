@@ -3939,7 +3939,10 @@ int main(void) {
 }
 EOF
   _iconv=no
-  for ld_tmp in "" "-liconv" "-liconv $ld_dl" ; do
+  # NOTE: -L/usr/lib is a hack to avoid issues due to a
+  # broken libiconv that e.g. macports installs into /opt/local/lib
+  # which might get addded to the search path later by e.g. SDL
+  for ld_tmp in "" "-L/usr/lib -liconv" "-liconv" "-liconv $ld_dl" ; do
     cc_check $ld_tmp && extra_ldflags="$extra_ldflags $ld_tmp" &&
       ld_iconv="$ld_tmp" && _iconv=yes && break
   done
