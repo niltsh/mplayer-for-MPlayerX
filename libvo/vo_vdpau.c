@@ -689,7 +689,6 @@ static int config(uint32_t width, uint32_t height, uint32_t d_width,
         && !create_vdp_decoder(image_format, vid_width, vid_height, 2))
         return -1;
 
-    int_pause   = 0;
     visible_buf = 0;
 
     {
