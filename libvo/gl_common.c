@@ -2043,8 +2043,8 @@ static void draw_vertices(GLfloat x, GLfloat y, GLfloat w, GLfloat h,
     int py = 2*i + 1;
     mpglTexCoord2f(texcoords[px], texcoords[py]);
     if (is_yv12) {
-      mpglMultiTexCoord2f(GL_TEXTURE1, texcoords2[px], texcoords[py]);
-      mpglMultiTexCoord2f(GL_TEXTURE2, texcoords2[px], texcoords[py]);
+      mpglMultiTexCoord2f(GL_TEXTURE1, texcoords2[px], texcoords2[py]);
+      mpglMultiTexCoord2f(GL_TEXTURE2, texcoords2[px], texcoords2[py]);
     }
     if (use_stipple)
       mpglMultiTexCoord2f(GL_TEXTURE3, texcoords3[px], texcoords3[py]);
