@@ -613,6 +613,7 @@ static int parse_suboptions(const char *arg) {
         p->name = booleans_list[i] + 1;
         p->type = OPT_ARG_BOOL;
         p->valp = &booleans[i];
+        booleans[i] = -1;
     }
     memcpy(p, extra_opts, sizeof(extra_opts));
 
@@ -640,6 +641,7 @@ static int parse_suboptions(const char *arg) {
         }
         pseudoargv[2] = NULL;
         for (i=0; i<nbooleans; i++) {
+            if (booleans[i] == -1) continue;
             pseudoargc = 2;
             if (booleans[i]) pseudoargv[1] = booleans_list[i];
             else pseudoargv[1] = nobooleans_list[i];
