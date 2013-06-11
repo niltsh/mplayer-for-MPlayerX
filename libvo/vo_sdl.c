@@ -68,6 +68,7 @@
 #include "aspect.h"
 #include "libmpcodecs/vfcap.h"
 #include "osdep/setenv.h"
+#include "libavutil/common.h"
 
 #ifdef CONFIG_X11
 #include <X11/Xlib.h>
@@ -712,7 +713,7 @@ static int setup_surfaces(void)
     int surfwidth, surfheight;
 
     surfwidth = priv->width;
-    surfheight = priv->height + (priv->surface->h - priv->dstheight) / v_scale;
+    surfheight = priv->height + FFMAX(priv->surface->h - priv->dstheight, 0) / v_scale + 1;
     surfheight&= ~1;
     /* Place the image in the middle of the screen */
     priv->y = (surfheight - priv->height) / 2;
