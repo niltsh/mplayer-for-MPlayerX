@@ -1619,8 +1619,15 @@ static const char vertex_shader[] =
   "attribute vec2 tca, tca2, tca3;\n"
   "varying vec2 tcv, tcv2, tcv3;\n"
   "void main() {\n"
+  "#ifdef GL_ES\n"
   "  gl_Position = matrix * vPos;\n"
   "  tcv = tca; tcv2 = tca2; tcv3 = tca3;\n"
+  "#else\n"
+  "  gl_Position = gl_ModelViewProjectionMatrix * vPos;\n"
+  "  tcv  = vec2(gl_MultiTexCoord0);\n"
+  "  tcv2 = vec2(gl_MultiTexCoord1);\n"
+  "  tcv3 = vec2(gl_MultiTexCoord2);\n"
+  "#endif\n"
   "}\n";
 
 #if defined(CONFIG_GL_EGL_X11) || defined(CONFIG_GL_EGL_ANDROID)
@@ -1634,7 +1641,9 @@ static GLuint new_gpu_program(void) {
 #endif
 
 static const char def_frag_shader[] =
+  "#ifdef GL_ES\n"
   "precision mediump float;\n"
+  "#endif\n"
   "uniform sampler2D texs[4];\n"
   "varying vec2 tcv;\n"
   "void main() {\n"
@@ -1642,7 +1651,9 @@ static const char def_frag_shader[] =
   "}\n";
 
 static const char yuv_frag_shader_template[] =
+  "#ifdef GL_ES\n"
   "precision mediump float;\n"
+  "#endif\n"
   "uniform sampler2D texs[4];\n"
   "varying vec2 tcv, tcv2, tcv3;\n"
   "void main() {\n"
@@ -1731,6 +1742,7 @@ static void use_program(GLuint prog) {
   static const GLint texs[] = {0, 1, 2, 3, 4};
   mpglUseProgram(prog);
   gpu_cur_sl_program = prog;
+  if (!prog) return;
   loc = mpglGetUniformLocation(prog, "texs");
   mpglUniform1iv(loc, sizeof(texs)/sizeof(texs[0]), texs);
   matrix_uniform(transform_matrix);
@@ -1785,6 +1797,8 @@ void glSetupYUVConversion(gl_conversion_params_t *params) {
       glSetupYUVFragprog(params);
       break;
     case YUV_CONVERSION_SL_PROGRAM:
+      if (!gpu_yuv_sl_program)
+        gpu_yuv_sl_program = new_gpu_program();
       update_yuv_frag_src(params);
       break;
     case YUV_CONVERSION_NONE:
@@ -2159,6 +2173,8 @@ static int setGlWindow_w32(MPGLContext *ctx)
     *vinfo = new_vinfo;
     getFunctions(w32gpa, NULL);
 
+    gpu_yuv_sl_program = 0;
+
     // and inform that reinit is neccessary
     res = SET_WINDOW_REINIT;
   } else
@@ -2306,6 +2322,8 @@ static int setGlWindow_x11(MPGLContext *ctx)
     }
     free(glxstr);
 
+    gpu_yuv_sl_program = 0;
+
     // and inform that reinit is neccessary
     return SET_WINDOW_REINIT;
   }
@@ -2358,6 +2376,7 @@ static int setGlWindow_sdl(MPGLContext *ctx) {
     return SET_WINDOW_FAILED;
   SDL_GL_LoadLibrary(NULL);
   getFunctions(sdlgpa, NULL);
+  gpu_yuv_sl_program = 0;
   return SET_WINDOW_OK;
 }
 
@@ -2544,12 +2563,13 @@ static int setGlWindow_egl(MPGLContext *ctx)
   mpglSwapInterval = SwapInterval_egl;
 
   gpu_def_sl_program = new_gpu_program();
-  gpu_yuv_sl_program = new_gpu_program();
   set_frag_src(gpu_def_sl_program, def_frag_shader);
   mpglLoadMatrixf = matrix_uniform;
   mpglColor4ub = dummy_color;
   mpglTexEnvi = dummy_texenvi;
   use_program(gpu_def_sl_program);
+
+  gpu_yuv_sl_program = 0;
 
   // and inform that reinit is necessary
   return SET_WINDOW_REINIT;
@@ -2583,6 +2603,7 @@ static void swapGlBuffers_egl(MPGLContext *ctx) {
 
 static int setGlWindow_dummy(MPGLContext *ctx) {
   getFunctions(NULL, NULL);
+  gpu_yuv_sl_program = 0;
   return SET_WINDOW_OK;
 }
 
