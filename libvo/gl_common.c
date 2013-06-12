@@ -1630,7 +1630,6 @@ static const char vertex_shader[] =
   "#endif\n"
   "}\n";
 
-#if defined(CONFIG_GL_EGL_X11) || defined(CONFIG_GL_EGL_ANDROID)
 static GLuint new_gpu_program(void) {
   GLuint program = mpglCreateProgram();
   GLuint shader = compile_shader(GL_VERTEX_SHADER, vertex_shader);
@@ -1638,7 +1637,6 @@ static GLuint new_gpu_program(void) {
   mpglDeleteShader(shader);
   return program;
 }
-#endif
 
 static const char def_frag_shader[] =
   "#ifdef GL_ES\n"
