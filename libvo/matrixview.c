@@ -34,13 +34,6 @@
 static float matrix_contrast   = 1.5;
 static float matrix_brightness = 1.0;
 
-static const uint8_t flare[4][4] = {
-    {  0,   0,   0,   0},
-    {  0, 180,   0,   0},
-    {  0,   0,   0,   0},
-    {  0,   0,   0,   0}
-};
-
 #define MAX_TEXT_X 0x4000
 #define MAX_TEXT_Y 0x4000
 static int text_x = 0;
@@ -109,13 +102,13 @@ static void draw_flare(float x, float y, float z)        //flare
 {
     mpglColor4ub(204, 204, 204, 255);        // Basic polygon color
 
-    mpglTexCoord2f(0, 0);
+    mpglTexCoord2f(1.0 - 4.0/128, 1.0 - 4.0/64);
     mpglVertex3f(x - 1, y + 1, z);
-    mpglTexCoord2f(0.75, 0);
+    mpglTexCoord2f(1.0 - 1.0/128, 1.0 - 4.0/64);
     mpglVertex3f(x + 2, y + 1, z);
-    mpglTexCoord2f(0.75, 0.75);
+    mpglTexCoord2f(1.0 - 1.0/128, 1.0 - 1.0/64);
     mpglVertex3f(x + 2, y - 2, z);
-    mpglTexCoord2f(0, 0.75);
+    mpglTexCoord2f(1.0 - 4.0/128, 1.0 - 1.0/64);
     mpglVertex3f(x - 1, y - 2, z);
 }
 
@@ -248,17 +241,6 @@ static void ourBuildTextures(void)
                    font_texture);
     mpglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     mpglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    mpglBindTexture(GL_TEXTURE_2D, 1);
-    mpglTexImage2D(GL_TEXTURE_2D, 0, 1, 4, 4, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE,
-                   flare);
-    mpglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    mpglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    // Some pretty standard settings for wrapping and filtering.
-    mpglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    mpglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    mpglBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void matrixview_init(int w, int h)
@@ -308,13 +290,8 @@ void matrixview_draw(double currentTime, const uint8_t *data)
     // OK, let's start drawing our planer quads.
     mpglBegin(GL_QUADS);
     draw_text(data);
-    mpglEnd();
-
-    mpglBindTexture(GL_TEXTURE_2D, 1);
-    mpglBegin(GL_QUADS);
     draw_flares();
     mpglEnd();
-    mpglBindTexture(GL_TEXTURE_2D, 0);
 
     make_change(currentTime);
 }
