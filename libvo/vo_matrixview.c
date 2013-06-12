@@ -105,7 +105,6 @@ static int config(uint32_t width, uint32_t height,
     image_width  = width;
     image_format = format;
 
-    flags |= VOFLAG_DEPTH;
     if (mpglcontext_create_window(&glctx, d_width, d_height, flags, title) < 0)
         return -1;
     if (glctx.setGlWindow(&glctx) == SET_WINDOW_FAILED)

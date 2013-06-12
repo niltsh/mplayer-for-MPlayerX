@@ -269,10 +269,6 @@ void matrixview_init(int w, int h)
     // Color to clear color buffer to.
     mpglClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-    // Depth to clear depth buffer to; type of test.
-    mpglClearDepth(1.0);
-    mpglDepthFunc(GL_LESS);
-
     // Allow adjusting of texture color via glColor
     mpglTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
@@ -280,7 +276,6 @@ void matrixview_init(int w, int h)
     mpglEnable(GL_TEXTURE_2D);
 
     mpglBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    mpglDisable(GL_DEPTH_TEST);
 
     matrixview_reshape(w, h);
 }
@@ -307,7 +302,7 @@ void matrixview_reshape(int w, int h)
 void matrixview_draw(double currentTime, const uint8_t *data)
 {
     // Clear the color and depth buffers.
-    mpglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    mpglClear(GL_COLOR_BUFFER_BIT);
 
     // OK, let's start drawing our planer quads.
     mpglBegin(GL_QUADS);
