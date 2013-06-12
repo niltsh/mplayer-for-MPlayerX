@@ -48,7 +48,6 @@ static int text_y = 0;
 static uint8_t *speed;
 static uint8_t *text;
 static uint8_t *text_light;
-static float *text_depth;
 
 static float *bump_pic;
 
@@ -146,16 +145,11 @@ static void draw_text(const uint8_t *pic)
             }
 
             if (c > 10)
-                draw_char(text[p], c, x, y, text_depth[p] + bump_pic[p]);
-
-            if (text_depth[p] < 0.1)
-                text_depth[p] = 0;
-            else
-                text_depth[p] /= 1.1;
+                draw_char(text[p], c, x, y, bump_pic[p]);
 
             if (text_light[p] > 128 && text_light[p + text_x] < 10)
                 draw_illuminatedchar(text[p], x, y,
-                                     text_depth[p] + bump_pic[p]);
+                                     bump_pic[p]);
 
             p++;
         }
@@ -170,7 +164,7 @@ static void draw_flares(void)
     for (y = _text_y; y > -_text_y; y--) {
         for (x = -_text_x; x < _text_x; x++) {
             if (text_light[p] > 128 && text_light[p + text_x] < 10)
-                draw_flare(x, y, text_depth[p] + bump_pic[p]);
+                draw_flare(x, y, bump_pic[p]);
             p++;
         }
     }
@@ -316,15 +310,12 @@ void matrixview_matrix_resize(int w, int h)
     text = NULL;
     free(text_light);
     text_light = NULL;
-    free(text_depth);
-    text_depth = NULL;
     if (w > MAX_TEXT_X || h > MAX_TEXT_Y)
         return;
     elems = w * (h + 1);
     speed      = calloc(w,     sizeof(*speed));
     text       = calloc(elems, sizeof(*text));
     text_light = calloc(elems, sizeof(*text_light));
-    text_depth = calloc(elems, sizeof(*text_depth));
     bump_pic   = calloc(elems, sizeof(*bump_pic));
     text_x = w;
     text_y = h;
