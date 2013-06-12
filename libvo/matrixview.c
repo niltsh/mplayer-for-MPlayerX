@@ -145,8 +145,8 @@ static void draw_text(const uint8_t *pic)
                 bump_pic[p] = Z_Depth;
             }
 
-            if (text[p] && c > 10)
-                draw_char(text[p] + 1, c, x, y, text_depth[p] + bump_pic[p]);
+            if (c > 10)
+                draw_char(text[p], c, x, y, text_depth[p] + bump_pic[p]);
 
             if (text_depth[p] < 0.1)
                 text_depth[p] = 0;
@@ -154,7 +154,7 @@ static void draw_text(const uint8_t *pic)
                 text_depth[p] /= 1.1;
 
             if (text_light[p] > 128 && text_light[p + text_x] < 10)
-                draw_illuminatedchar(text[p] + 1, x, y,
+                draw_illuminatedchar(text[p], x, y,
                                      text_depth[p] + bump_pic[p]);
 
             p++;
