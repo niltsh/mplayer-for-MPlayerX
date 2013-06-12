@@ -51,41 +51,29 @@ static uint8_t *text_light;
 
 static float *bump_pic;
 
-static void draw_char(int num, float light, float x, float y, float z)
+static void draw_flare(float x, float y, float z);
+
+static void draw_char(int num, int light, int illuminated, float x, float y, float z)
 {
+    int light2 = 0;
     float tx, ty;
     int num2, num3;
 
     num %= 55;
+    if (light < 10) light = 0;
     //light = light / 255;        //light=7-light;num+=(light*60);
     light *= matrix_brightness;
+    if (illuminated) {
+        draw_flare(x, y, z);
+        light += 128;
+        if (light > 255) light = 255;
+        light2 = 128;
+    }
     num2 = num / 10;
     num3 = num - (num2 * 10);
     ty = (float)num2 / 6;
     tx = (float)num3 / 10;
-    mpglColor4ub(0, light, 0, 255);        // Basic polygon color
-
-    mpglTexCoord2f(tx, ty);
-    mpglVertex3f(x, y, z);
-    mpglTexCoord2f(tx + 0.1, ty);
-    mpglVertex3f(x + 1, y, z);
-    mpglTexCoord2f(tx + 0.1, ty + 0.166);
-    mpglVertex3f(x + 1, y - 1, z);
-    mpglTexCoord2f(tx, ty + 0.166);
-    mpglVertex3f(x, y - 1, z);
-}
-
-static void draw_illuminatedchar(int num, float x, float y, float z)
-{
-    float tx, ty;
-    int num2, num3;
-
-    num %= 55;
-    num2 = num / 10;
-    num3 = num - (num2 * 10);
-    ty = (float)num2 / 6;
-    tx = (float)num3 / 10;
-    mpglColor4ub(128, 128, 128, 255);        // Basic polygon color
+    mpglColor4ub(light2, light, light2, 255);        // Basic polygon color
 
     mpglTexCoord2f(tx, ty);
     mpglVertex3f(x, y, z);
@@ -117,6 +105,7 @@ static void draw_text(const uint8_t *pic)
     int p = 0;
     int c, c_pic;
     int pic_fade = 255;
+    int illuminated;
 
     for (y = _text_y; y > -_text_y; y--) {
         for (x = -_text_x; x < _text_x; x++) {
@@ -144,27 +133,9 @@ static void draw_text(const uint8_t *pic)
                 bump_pic[p] = Z_Depth;
             }
 
-            if (c > 10)
-                draw_char(text[p], c, x, y, bump_pic[p]);
+            illuminated = text_light[p] > 128 && text_light[p + text_x] < 10;
+            draw_char(text[p], c, illuminated, x, y, bump_pic[p]);
 
-            if (text_light[p] > 128 && text_light[p + text_x] < 10)
-                draw_illuminatedchar(text[p], x, y,
-                                     bump_pic[p]);
-
-            p++;
-        }
-    }
-}
-
-static void draw_flares(void)
-{
-    float x, y;
-    int p = 0;
-
-    for (y = _text_y; y > -_text_y; y--) {
-        for (x = -_text_x; x < _text_x; x++) {
-            if (text_light[p] > 128 && text_light[p + text_x] < 10)
-                draw_flare(x, y, bump_pic[p]);
             p++;
         }
     }
@@ -284,7 +255,6 @@ void matrixview_draw(double currentTime, const uint8_t *data)
     // OK, let's start drawing our planer quads.
     mpglBegin(GL_QUADS);
     draw_text(data);
-    draw_flares();
     mpglEnd();
 
     make_change(currentTime);
