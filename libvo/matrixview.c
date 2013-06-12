@@ -57,7 +57,6 @@ static void draw_char(int num, int light, int illuminated, float x, float y, flo
 {
     int light2 = 0;
     float tx, ty;
-    int num2, num3;
 
     num %= 55;
     if (light < 10) light = 0;
@@ -69,10 +68,8 @@ static void draw_char(int num, int light, int illuminated, float x, float y, flo
         if (light > 255) light = 255;
         light2 = 128;
     }
-    num2 = num / 10;
-    num3 = num - (num2 * 10);
-    ty = (float)num2 / 6;
-    tx = (float)num3 / 10;
+    ty = (float)(num / 10) / 6;
+    tx = (float)(num % 10) / 10;
     mpglColor4ub(light2, light, light2, 255);        // Basic polygon color
 
     mpglTexCoord2f(tx, ty);
