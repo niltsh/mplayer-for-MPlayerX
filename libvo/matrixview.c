@@ -64,12 +64,12 @@ static void draw_char(int num, float light, float x, float y, float z)
     float tx, ty;
     int num2, num3;
 
-    num &= 63;
+    num %= 55;
     //light = light / 255;        //light=7-light;num+=(light*60);
     light *= matrix_brightness;
     num2 = num / 10;
     num3 = num - (num2 * 10);
-    ty = (float)num2 / 7;
+    ty = (float)num2 / 6;
     tx = (float)num3 / 10;
     mpglColor4ub(0, light, 0, 255);        // Basic polygon color
 
@@ -88,9 +88,10 @@ static void draw_illuminatedchar(int num, float x, float y, float z)
     float tx, ty;
     int num2, num3;
 
+    num %= 55;
     num2 = num / 10;
     num3 = num - (num2 * 10);
-    ty = (float)num2 / 7;
+    ty = (float)num2 / 6;
     tx = (float)num3 / 10;
     mpglColor4ub(128, 128, 128, 255);        // Basic polygon color
 
