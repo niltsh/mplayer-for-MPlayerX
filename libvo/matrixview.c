@@ -71,7 +71,7 @@ static void draw_char(int num, float light, float x, float y, float z)
     num3 = num - (num2 * 10);
     ty = (float)num2 / 7;
     tx = (float)num3 / 10;
-    mpglColor4ub(0, 255, 0, light);        // Basic polygon color
+    mpglColor4ub(0, light, 0, 255);        // Basic polygon color
 
     mpglTexCoord2f(tx, ty);
     mpglVertex3f(x, y, z);
@@ -92,7 +92,7 @@ static void draw_illuminatedchar(int num, float x, float y, float z)
     num3 = num - (num2 * 10);
     ty = (float)num2 / 7;
     tx = (float)num3 / 10;
-    mpglColor4ub(255, 255, 255, 128);        // Basic polygon color
+    mpglColor4ub(128, 128, 128, 255);        // Basic polygon color
 
     mpglTexCoord2f(tx, ty);
     mpglVertex3f(x, y, z);
@@ -106,7 +106,7 @@ static void draw_illuminatedchar(int num, float x, float y, float z)
 
 static void draw_flare(float x, float y, float z)        //flare
 {
-    mpglColor4ub(255, 255, 255, 204);        // Basic polygon color
+    mpglColor4ub(204, 204, 204, 255);        // Basic polygon color
 
     mpglTexCoord2f(0, 0);
     mpglVertex3f(x - 1, y + 1, z);
@@ -275,7 +275,7 @@ void matrixview_init(int w, int h)
     mpglEnable(GL_BLEND);
     mpglEnable(GL_TEXTURE_2D);
 
-    mpglBlendFunc(GL_SRC_ALPHA, GL_ONE);
+    mpglBlendFunc(GL_ONE, GL_ONE);
 
     matrixview_reshape(w, h);
 }
