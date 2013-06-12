@@ -34,11 +34,6 @@
 static float matrix_contrast   = 1.5;
 static float matrix_brightness = 1.0;
 
-// Settings for our light.  Try playing with these (or add more lights).
-static float Light_Ambient[]  = { 0.1f, 0.1f, 0.1f, 1.0f };
-static float Light_Diffuse[]  = { 1.2f, 1.2f, 1.2f, 1.0f };
-static float Light_Position[] = { 2.0f, 2.0f, 0.0f, 1.0f };
-
 static const uint8_t flare[4][4] = {
     {  0,   0,   0,   0},
     {  0, 180,   0,   0},
@@ -76,7 +71,6 @@ static void draw_char(int num, float light, float x, float y, float z)
     num3 = num - (num2 * 10);
     ty = (float)num2 / 7;
     tx = (float)num3 / 10;
-    mpglNormal3f(0.0f, 0.0f, 1.0f);        // Needed for lighting
     mpglColor4ub(0, 255, 0, light);        // Basic polygon color
 
     mpglTexCoord2f(tx, ty);
@@ -98,7 +92,6 @@ static void draw_illuminatedchar(int num, float x, float y, float z)
     num3 = num - (num2 * 10);
     ty = (float)num2 / 7;
     tx = (float)num3 / 10;
-    mpglNormal3f(0.0f, 0.0f, 1.0f);        // Needed for lighting
     mpglColor4ub(255, 255, 255, 128);        // Basic polygon color
 
     mpglTexCoord2f(tx, ty);
@@ -113,7 +106,6 @@ static void draw_illuminatedchar(int num, float x, float y, float z)
 
 static void draw_flare(float x, float y, float z)        //flare
 {
-    mpglNormal3f(0.0f, 0.0f, 1.0f);        // Needed for lighting
     mpglColor4ub(255, 255, 255, 204);        // Basic polygon color
 
     mpglTexCoord2f(0, 0);
@@ -281,26 +273,12 @@ void matrixview_init(int w, int h)
     mpglClearDepth(1.0);
     mpglDepthFunc(GL_LESS);
 
-    // Enables Smooth Color Shading; try GL_FLAT for (lack of) fun.
-    mpglShadeModel(GL_SMOOTH);
-
-    // Set up a light, turn it on.
-    mpglLightfv(GL_LIGHT1, GL_POSITION, Light_Position);
-    mpglLightfv(GL_LIGHT1, GL_AMBIENT, Light_Ambient);
-    mpglLightfv(GL_LIGHT1, GL_DIFFUSE, Light_Diffuse);
-    mpglEnable(GL_LIGHT1);
-
-    // A handy trick -- have surface material mirror the color.
-    mpglColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-    mpglEnable(GL_COLOR_MATERIAL);
-
     // Allow adjusting of texture color via glColor
     mpglTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
     mpglEnable(GL_BLEND);
     mpglEnable(GL_TEXTURE_2D);
 
-    mpglDisable(GL_LIGHTING);
     mpglBlendFunc(GL_SRC_ALPHA, GL_ONE);
     mpglDisable(GL_DEPTH_TEST);
 
