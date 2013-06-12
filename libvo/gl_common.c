@@ -2171,6 +2171,7 @@ static int setGlWindow_w32(MPGLContext *ctx)
     *vinfo = new_vinfo;
     getFunctions(w32gpa, NULL);
 
+    gpu_def_sl_program = 0;
     gpu_yuv_sl_program = 0;
 
     // and inform that reinit is neccessary
@@ -2320,6 +2321,7 @@ static int setGlWindow_x11(MPGLContext *ctx)
     }
     free(glxstr);
 
+    gpu_def_sl_program = 0;
     gpu_yuv_sl_program = 0;
 
     // and inform that reinit is neccessary
@@ -2374,6 +2376,7 @@ static int setGlWindow_sdl(MPGLContext *ctx) {
     return SET_WINDOW_FAILED;
   SDL_GL_LoadLibrary(NULL);
   getFunctions(sdlgpa, NULL);
+  gpu_def_sl_program = 0;
   gpu_yuv_sl_program = 0;
   return SET_WINDOW_OK;
 }
@@ -2601,6 +2604,7 @@ static void swapGlBuffers_egl(MPGLContext *ctx) {
 
 static int setGlWindow_dummy(MPGLContext *ctx) {
   getFunctions(NULL, NULL);
+  gpu_def_sl_program = 0;
   gpu_yuv_sl_program = 0;
   return SET_WINDOW_OK;
 }
