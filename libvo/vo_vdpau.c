@@ -326,6 +326,12 @@ static void resize(void)
             mp_msg(MSGT_VO, MSGL_DBG2, "OUT CREATE: %u\n", output_surfaces[i]);
         }
     }
+    // clear surfaces
+    for (i = 0; i <= NUM_OUTPUT_SURFACES; i++) {
+        vdp_output_surface_render_output_surface(output_surfaces[i], NULL,
+                                                 VDP_INVALID_HANDLE, NULL,
+                                                 NULL, NULL, VDP_OUTPUT_SURFACE_RENDER_ROTATE_0);
+    }
     video_to_output_surface();
     if (visible_buf) {
         draw_eosd();
