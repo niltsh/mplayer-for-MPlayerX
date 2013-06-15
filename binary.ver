@@ -1,3 +1,5 @@
 MPLAYER_1 {
+  # to support glibcs abhorrent backwards-compatibility hack
+  global: _IO_stdin_used;
   local: *;
 };
