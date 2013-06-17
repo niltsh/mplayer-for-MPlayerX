@@ -23,6 +23,28 @@
 #ifndef MPLAYER_OSDEP_H
 #define MPLAYER_OSDEP_H
 
+#include "config.h"
+
+#if CONFIG_PATH_MAX_CHECK
+#include <stdio.h>      /* fopen()   */
+#include <dirent.h>     /* opendir() */
+#include <io.h>         /* open()    */
+#include <fcntl.h>      /* open()    */
+#include <string.h>     /* strlen()  */
+#include <limits.h>     /* PATH_MAX  */
+#include <errno.h>      /* errno     */
+
+#define fopen(n, m) \
+    (strlen(n) >= PATH_MAX ? (errno = ENAMETOOLONG, NULL) : (fopen)(n, m))
+
+#define opendir(n) \
+    (strlen(n) >= PATH_MAX ? (errno = ENOENT, NULL) : (opendir)(n))
+
+#define open(n, ...) \
+    (strlen(n) >= PATH_MAX ? (errno = ENAMETOOLONG, -1) : \
+                             (open)(n, __VA_ARGS__))
+#endif /* CONFIG_PATH_MAX_CHECK */
+
 #ifdef __OS2__
 #define INCL_DOS
 #define INCL_DOSDEVIOCTL

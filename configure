@@ -855,6 +855,7 @@ _stream_cache=yes
 _priority=no
 def_dos_paths="#define HAVE_DOS_PATHS 0"
 def_stream_cache="#define CONFIG_STREAM_CACHE 1"
+def_path_max_check="#define CONFIG_PATH_MAX_CHECK 0"
 def_priority="#undef CONFIG_PRIORITY"
 def_pthread_cache="#undef PTHREAD_CACHE"
 shmem=no
@@ -1780,6 +1781,7 @@ if os2 ; then
   _priority=yes
   def_dos_paths="#define HAVE_DOS_PATHS 1"
   def_priority="#define CONFIG_PRIORITY 1"
+  def_path_max_check="#define CONFIG_PATH_MAX_CHECK 1"
 fi
 
 if wine ; then
@@ -8723,6 +8725,7 @@ $def_macosx_bundle
 $def_macosx_finder
 $def_maemo
 $def_memalign_hack
+$def_path_max_check
 $def_priority
 $def_quicktime
 $def_restrict_keyword

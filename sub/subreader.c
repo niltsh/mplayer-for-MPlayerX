@@ -42,6 +42,7 @@
 #include "stream/stream.h"
 #include "libavutil/common.h"
 #include "libavutil/avstring.h"
+#include "osdep/osdep.h"
 
 #ifdef CONFIG_ENCA
 #include <enca.h>

@@ -42,6 +42,7 @@
 #include "unrar_exec.h"
 #include "libavutil/common.h"
 #include "libavutil/intreadwrite.h"
+#include "osdep/osdep.h"
 
 // Record the original -vobsubid set by commandline, since vobsub_id will be
 // overridden if slang match any of vobsub streams.
