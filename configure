@@ -6313,7 +6313,7 @@ if test "$_zlib" = yes ; then
   mplayer_encoders="$mplayer_encoders PNG_ENCODER"
 else
   def_zlib='#define CONFIG_ZLIB 0'
-  libavdecoders=$(filter_out_component decoder 'FLASHSV FLASHSV2 PNG ZMBV ZLIB DXA EXR TSCC ZEROCODEC')
+  libavdecoders=$(filter_out_component decoder 'FLASHSV FLASHSV2 PNG ZMBV ZLIB DXA EXR G2M TSCC ZEROCODEC')
   libavencoders=$(filter_out_component encoder 'FLASHSV FLASHSV2 PNG ZMBV ZLIB')
 fi
 echores "$_zlib"
