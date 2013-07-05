@@ -9068,7 +9068,7 @@ $def_sinf
 $def_trunc
 $def_truncf
 
-#define AV_HAVE_INCOMPATIBLE_LIBAV_ABI 0
+#define HAVE_INCOMPATIBLE_LIBAV_ABI 0
 #define CONFIG_AUDIO_FLOAT 0
 #define CONFIG_AVCODEC 1
 #define CONFIG_AVSERVER 0
