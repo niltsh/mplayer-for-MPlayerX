@@ -9068,7 +9068,7 @@ $def_sinf
 $def_trunc
 $def_truncf
 
-#define AV_HAVE_INCOMPATIBLE_FORK_ABI 0
+#define AV_HAVE_INCOMPATIBLE_LIBAV_ABI 0
 #define CONFIG_AUDIO_FLOAT 0
 #define CONFIG_AVCODEC 1
 #define CONFIG_AVSERVER 0
@@ -9177,7 +9177,7 @@ cat > "$TMPH" << EOF
 #define AVUTIL_AVCONFIG_H
 $def_av_bigendian
 $def_av_fast_unaligned
-#define AV_HAVE_INCOMPATIBLE_FORK_ABI 0
+#define AV_HAVE_INCOMPATIBLE_LIBAV_ABI 0
 #endif /* AVUTIL_AVCONFIG_H */
 EOF
 
