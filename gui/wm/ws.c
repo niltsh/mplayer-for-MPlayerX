@@ -831,6 +831,8 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
 
     XMatchVisualInfo(wsDisplay, wsScreen, depth, TrueColor, &win->VisualInfo);
 
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] visual: ID %#lx\n", win->VisualInfo.visualid);
+
 /* --- */
     win->AtomLeaderClient = XInternAtom(wsDisplay, "WM_CLIENT_LEADER", False);
     win->AtomDeleteWindow = XInternAtom(wsDisplay, "WM_DELETE_WINDOW", False);
