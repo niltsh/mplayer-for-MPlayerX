@@ -929,7 +929,7 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
     win->DrawHandler  = NULL;
     win->MouseHandler = NULL;
     win->KeyHandler   = NULL;
-    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] window is created. ( %s ).\n", label);
+    mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[ws] window successfully created: %s\n", label);
 }
 
 void wsWindowDestroy(wsWindow *win)
