@@ -160,6 +160,8 @@ connect2Server_with_af(char *host, int port, int af,int verb) {
 			return TCP_ERROR_FATAL;
 		}
 
+		if (af != hp->h_addrtype) return TCP_ERROR_FATAL;
+
 		memcpy( our_s_addr, hp->h_addr_list[0], hp->h_length );
 	}
 #if HAVE_WINSOCK2_H
