@@ -640,6 +640,7 @@ int gui(int what, void *data)
         /* video */
 
         guiInfo.sh_video = data;
+        guiInfo.VideoAspect = 0;
 
         nfree(guiInfo.CodecName);
 

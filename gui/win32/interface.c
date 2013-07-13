@@ -628,6 +628,7 @@ int gui(int what, void *data)
         case GUI_SET_VIDEO:
         {
             guiInfo.sh_video = data;
+            guiInfo.VideoAspect = 0;
             if (data)
             {
                 sh_video_t *sh = data;

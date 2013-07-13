@@ -104,6 +104,7 @@ typedef struct {
     int VideoWindow;
     int VideoWidth;
     int VideoHeight;
+    float VideoAspect;
 
     char *CodecName;
 

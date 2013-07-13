@@ -353,6 +353,8 @@ static void updatedisplay(gui_t *gui, HWND hwnd)
 
 static LRESULT CALLBACK VideoProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    float aspect;
+    char cmd[32];
     gui_t *gui = (gui_t *) GetWindowLongPtr(hWnd, GWLP_USERDATA);
     if (gui && (gui->videowindow != hWnd)) return FALSE;
 
@@ -468,16 +470,27 @@ static LRESULT CALLBACK VideoProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                     mp_input_queue_cmd(mp_input_parse_cmd("mute"));
                     break;
                 case ID_ASPECT1:
-                    mp_input_queue_cmd(mp_input_parse_cmd("switch_ratio 1.777777"));
+                case ID_ASPECT2:
+                case ID_ASPECT3:
+                case ID_ASPECT4:
+                    if (guiInfo.VideoAspect == 0) guiInfo.VideoAspect = guiInfo.sh_video->aspect;
+                    switch (LOWORD(wParam))
+                    {
+                case ID_ASPECT1:
+                    aspect = 16.0f / 9.0f;
                     break;
                 case ID_ASPECT2:
-                    mp_input_queue_cmd(mp_input_parse_cmd("switch_ratio 1.333333"));
+                    aspect = 4.0f / 3.0f;
                     break;
                 case ID_ASPECT3:
-                    mp_input_queue_cmd(mp_input_parse_cmd("switch_ratio 2.35"));
+                    aspect = 2.35;
                     break;
-                case ID_ASPECT4:
-                    mp_input_queue_cmd(mp_input_parse_cmd("switch_ratio 0"));
+                default:
+                    aspect = guiInfo.VideoAspect;
+                    break;
+                    }
+                    snprintf(cmd, sizeof(cmd), "switch_ratio %f", aspect);
+                    mp_input_queue_cmd(mp_input_parse_cmd(cmd));
                     break;
                 case IDSUB_TOGGLE:
                     mp_input_queue_cmd(mp_input_parse_cmd("sub_visibility"));
