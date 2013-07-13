@@ -578,13 +578,21 @@ GtkWidget * CreatePopUpMenu( void )
 //    AddMenuItem( SubMenu,MSGTR_MENU_DoubleSize, evDoubleSize );
 //    AddMenuItem( SubMenu,MSGTR_MENU_FullScreen, evFullScreen + ( True << 16 ) );
 
-//  if ( guiInfo.Playing )
+  if ( guiInfo.VideoWindow )
    {
     AspectMenu=AddSubMenu( window1, (const char*)aspect_xpm, Menu,MSGTR_MENU_AspectRatio );
-    AddMenuItem( window1, (const char*)aspect11_xpm, AspectMenu,MSGTR_MENU_Original,evSetAspect + ( 1 << 16 ) );
-    AddMenuItem( window1, (const char*)aspect169_xpm, AspectMenu,"16:9",evSetAspect + ( 2 << 16 ) );
-    AddMenuItem( window1, (const char*)aspect43_xpm, AspectMenu,"4:3",evSetAspect + ( 3 << 16 ) );
-    AddMenuItem( window1, (const char*)aspect235_xpm, AspectMenu,"2.35",evSetAspect + ( 4 << 16 ) );
+    H=AddMenuItem( window1, (const char*)aspect11_xpm, AspectMenu,MSGTR_MENU_Original,evSetAspect + ( 1 << 16 ) );
+    N=AddMenuItem( window1, (const char*)aspect169_xpm, AspectMenu,"16:9",evSetAspect + ( 2 << 16 ) );
+    D=AddMenuItem( window1, (const char*)aspect43_xpm, AspectMenu,"4:3",evSetAspect + ( 3 << 16 ) );
+    F=AddMenuItem( window1, (const char*)aspect235_xpm, AspectMenu,"2.35",evSetAspect + ( 4 << 16 ) );
+
+  if ( !guiInfo.Playing )
+   {
+    gtk_widget_set_sensitive( H,FALSE );
+    gtk_widget_set_sensitive( N,FALSE );
+    gtk_widget_set_sensitive( D,FALSE );
+    gtk_widget_set_sensitive( F,FALSE );
+   }
    }
 
   if ( guiInfo.Playing && demuxer && guiInfo.StreamType != STREAMTYPE_DVD )
