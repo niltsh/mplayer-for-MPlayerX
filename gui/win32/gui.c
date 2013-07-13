@@ -473,7 +473,6 @@ static LRESULT CALLBACK VideoProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                 case ID_ASPECT2:
                 case ID_ASPECT3:
                 case ID_ASPECT4:
-                    if (guiInfo.VideoAspect == 0) guiInfo.VideoAspect = guiInfo.sh_video->aspect;
                     switch (LOWORD(wParam))
                     {
                         case ID_ASPECT1:
@@ -486,7 +485,7 @@ static LRESULT CALLBACK VideoProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                             aspect = 2.35;
                             break;
                         default:
-                            aspect = guiInfo.VideoAspect;
+                            aspect = (float) guiInfo.sh_video->disp_w / guiInfo.sh_video->disp_h;
                             break;
                     }
                     snprintf(cmd, sizeof(cmd), "switch_ratio %f", aspect);

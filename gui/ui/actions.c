@@ -425,9 +425,6 @@ play:
 
     case evSetAspect:
 
-        if (guiInfo.VideoAspect == 0)
-            guiInfo.VideoAspect = guiInfo.sh_video->aspect;
-
         switch (iparam) {
         case 2:
             aspect = 16.0f / 9.0f;
@@ -443,7 +440,7 @@ play:
 
         case 1:
         default:
-            aspect = guiInfo.VideoAspect;
+            aspect = (float)guiInfo.sh_video->disp_w / guiInfo.sh_video->disp_h;
         }
 
         snprintf(cmd, sizeof(cmd), "switch_ratio %f", aspect);
