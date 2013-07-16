@@ -62,7 +62,7 @@
 
 //window & rendering
 - (void) preinit;
-- (void) config:(uint32_t)width:(uint32_t)height:(uint32_t)flags;
+- (void) configWidth: (uint32_t) width height: (uint32_t) height flags: (uint32_t)flags;
 - (void) drawRect: (NSRect *) bounds;
 - (void) reshape;
 

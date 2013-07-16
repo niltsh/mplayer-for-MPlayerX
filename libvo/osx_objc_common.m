@@ -73,7 +73,7 @@ void vo_osx_uninit(void)
 
 int vo_osx_config(uint32_t width, uint32_t height, uint32_t flags)
 {
-    [oglv config:width:height:flags];
+    [oglv configWidth:width height:height flags:flags];
     return 1;
 }
 
@@ -183,7 +183,7 @@ void vo_osx_swap_buffers(void)
 	[super dealloc];
 }
 
-- (void) config:(uint32_t)width:(uint32_t)height:(uint32_t)flags
+- (void) configWidth:(uint32_t)width height:(uint32_t)height flags:(uint32_t)flags
 {
 	if (flags & VOFLAG_HIDDEN)
 		return;
