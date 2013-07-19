@@ -2705,11 +2705,7 @@ fi # if darwin && test "$cc_vendor" = "gnu" ; then
 
 # Checking for CFLAGS
 _install_strip="-s"
-if test "$_profile" != "" || test "$_debug" != "" ; then
-  CFLAGS="-O2 $_march $_mcpu $_pipe $_debug $_profile"
-  WARNFLAGS="-W -Wall"
-  _install_strip=
-elif test -z "$CFLAGS" ; then
+if test -z "$CFLAGS" || test "$_profile" != "" || test "$_debug" != ""; then
   if test "$cc_vendor" = "intel" ; then
     CFLAGS="-O2 $_march $_mcpu $_pipe -fomit-frame-pointer"
     WARNFLAGS="-wd167 -wd556 -wd144"
@@ -2724,6 +2720,12 @@ elif test -z "$CFLAGS" ; then
     WARNFLAGS="-Wall -Wno-switch -Wno-parentheses -Wpointer-arith -Wredundant-decls"
     WARN_CFLAGS="-Werror-implicit-function-declaration"
     extra_ldflags="$extra_ldflags -ffast-math"
+  fi
+
+  if test "$_profile" != "" || test "$_debug" != ""; then
+    CFLAGS="-O2 $_march $_mcpu $_pipe $_debug $_profile"
+    WARNFLAGS="-W -Wall $WARNFLAGS"
+    _install_strip=
   fi
 else
   warn_cflags=yes
