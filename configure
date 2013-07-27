@@ -5090,7 +5090,8 @@ fi
 if test "$_gif" = auto ; then
   _gif=no
   for ld_gif in "-lungif" "-lgif" ; do
-    statement_check gif_lib.h 'QuantizeBuffer(0, 0, 0, 0, 0, 0, 0, 0); PrintGifError()' $ld_gif && _gif=yes && break
+    statement_check gif_lib.h 'QuantizeBuffer(0, 0, 0, 0, 0, 0, 0, 0)' $ld_gif && _gif=yes && break
+    statement_check_broken stdlib.h gif_lib.h 'GifQuantizeBuffer(0, 0, 0, 0, 0, 0, 0, 0)' $ld_gif && _gif=yes && break
   done
 fi
 
