@@ -440,7 +440,7 @@ play:
 
         case 1:
         default:
-            aspect = (float)guiInfo.sh_video->disp_w / guiInfo.sh_video->disp_h;
+            aspect = -1;
         }
 
         snprintf(cmd, sizeof(cmd), "switch_ratio %f", aspect);

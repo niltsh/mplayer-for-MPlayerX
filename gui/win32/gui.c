@@ -485,7 +485,7 @@ static LRESULT CALLBACK VideoProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                             aspect = 2.35;
                             break;
                         default:
-                            aspect = (float) guiInfo.sh_video->disp_w / guiInfo.sh_video->disp_h;
+                            aspect = -1;
                             break;
                     }
                     snprintf(cmd, sizeof(cmd), "switch_ratio %f", aspect);
