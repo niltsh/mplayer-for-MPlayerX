@@ -93,7 +93,7 @@ void uiEvent(int ev, float param)
     int iparam     = (int)param, osd;
     mixer_t *mixer = mpctx_get_mixer(guiInfo.mpcontext);
     float aspect;
-    char cmd[32];
+    char cmd[40];
 
     switch (ev) {
 /* user events */
@@ -443,7 +443,7 @@ play:
             aspect = -1;
         }
 
-        snprintf(cmd, sizeof(cmd), "switch_ratio %f", aspect);
+        snprintf(cmd, sizeof(cmd), "pausing_keep switch_ratio %f", aspect);
         mp_input_queue_cmd(mp_input_parse_cmd(cmd));
 
         break;

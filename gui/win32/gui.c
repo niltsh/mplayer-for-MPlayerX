@@ -354,7 +354,7 @@ static void updatedisplay(gui_t *gui, HWND hwnd)
 static LRESULT CALLBACK VideoProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     float aspect;
-    char cmd[32];
+    char cmd[40];
     gui_t *gui = (gui_t *) GetWindowLongPtr(hWnd, GWLP_USERDATA);
     if (gui && (gui->videowindow != hWnd)) return FALSE;
 
@@ -488,7 +488,7 @@ static LRESULT CALLBACK VideoProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                             aspect = -1;
                             break;
                     }
-                    snprintf(cmd, sizeof(cmd), "switch_ratio %f", aspect);
+                    snprintf(cmd, sizeof(cmd), "pausing_keep switch_ratio %f", aspect);
                     mp_input_queue_cmd(mp_input_parse_cmd(cmd));
                     break;
                 case IDSUB_TOGGLE:
