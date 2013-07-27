@@ -34,6 +34,8 @@
 #include "gui/interface.h"
 
 #include "stream/stream.h"
+#include "libavutil/common.h"
+#include "libmpcodecs/vd.h"
 #include "libmpdemux/demuxer.h"
 #include "libmpdemux/stheader.h"
 #include "libavutil/avstring.h"
@@ -580,11 +582,21 @@ GtkWidget * CreatePopUpMenu( void )
 
   if ( guiInfo.VideoWindow )
    {
+    int a11 = False, a169 = False, a43 = False, a235 = False;
+
+    if (movie_aspect == -1 || FFABS(movie_aspect - (float) guiInfo.sh_video->disp_w / guiInfo.sh_video->disp_h) <= 0.01f) a11 = True;
+    else
+     {
+       a169 = (FFABS(movie_aspect - 16.0f / 9.0f) <= 0.01f);
+       a43 = (FFABS(movie_aspect - 4.0f / 3.0f) <= 0.01f);
+       a235 = (FFABS(movie_aspect - 2.35) <= 0.01f);
+     }
+
     AspectMenu=AddSubMenu( window1, (const char*)aspect_xpm, Menu,MSGTR_MENU_AspectRatio );
-    H=AddMenuItem( window1, (const char*)aspect11_xpm, AspectMenu,MSGTR_MENU_Original,evSetAspect + ( 1 << 16 ) );
-    N=AddMenuItem( window1, (const char*)aspect169_xpm, AspectMenu,"16:9",evSetAspect + ( 2 << 16 ) );
-    D=AddMenuItem( window1, (const char*)aspect43_xpm, AspectMenu,"4:3",evSetAspect + ( 3 << 16 ) );
-    F=AddMenuItem( window1, (const char*)aspect235_xpm, AspectMenu,"2.35",evSetAspect + ( 4 << 16 ) );
+    H=AddMenuCheckItem( window1, (const char*)aspect11_xpm, AspectMenu,MSGTR_MENU_Original, a11, evSetAspect + ( 1 << 16 ) );
+    N=AddMenuCheckItem( window1, (const char*)aspect169_xpm, AspectMenu,"16:9", a169, evSetAspect + ( 2 << 16 ) );
+    D=AddMenuCheckItem( window1, (const char*)aspect43_xpm, AspectMenu,"4:3", a43, evSetAspect + ( 3 << 16 ) );
+    F=AddMenuCheckItem( window1, (const char*)aspect235_xpm, AspectMenu,"2.35", a235, evSetAspect + ( 4 << 16 ) );
 
   if ( !guiInfo.Playing )
    {
