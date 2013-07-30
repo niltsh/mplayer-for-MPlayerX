@@ -589,7 +589,7 @@ GtkWidget * CreatePopUpMenu( void )
      {
        a169 = (FFABS(movie_aspect - 16.0f / 9.0f) <= 0.01f);
        a43 = (FFABS(movie_aspect - 4.0f / 3.0f) <= 0.01f);
-       a235 = (FFABS(movie_aspect - 2.35) <= 0.01f);
+       a235 = (FFABS(movie_aspect - 2.35f) <= 0.01f);
      }
 
     AspectMenu=AddSubMenu( window1, (const char*)aspect_xpm, Menu,MSGTR_MENU_AspectRatio );

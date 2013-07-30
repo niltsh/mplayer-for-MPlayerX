@@ -435,7 +435,7 @@ play:
             break;
 
         case 4:
-            aspect = 2.35;
+            aspect = 2.35f;
             break;
 
         case 1:

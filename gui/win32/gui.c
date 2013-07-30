@@ -482,7 +482,7 @@ static LRESULT CALLBACK VideoProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
                             aspect = 4.0f / 3.0f;
                             break;
                         case ID_ASPECT3:
-                            aspect = 2.35;
+                            aspect = 2.35f;
                             break;
                         default:
                             aspect = -1;
