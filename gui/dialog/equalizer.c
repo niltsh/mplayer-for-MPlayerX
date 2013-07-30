@@ -76,16 +76,16 @@ void ShowEquConfig( void );
 static void eqSetBands( int channel )
 {
  if ( channel < 0 ) channel=0;
- gtk_adjustment_set_value( A3125adj,0.0f - gtkEquChannels[channel][0] );
- gtk_adjustment_set_value( A6250adj,0.0f - gtkEquChannels[channel][1] );
- gtk_adjustment_set_value( A125adj,0.0f - gtkEquChannels[channel][2] );
- gtk_adjustment_set_value( A250adj,0.0f - gtkEquChannels[channel][3] );
- gtk_adjustment_set_value( A500adj,0.0f - gtkEquChannels[channel][4] );
- gtk_adjustment_set_value( A1000adj,0.0f - gtkEquChannels[channel][5] );
- gtk_adjustment_set_value( A2000adj,0.0f - gtkEquChannels[channel][6] );
- gtk_adjustment_set_value( A4000adj,0.0f - gtkEquChannels[channel][7] );
- gtk_adjustment_set_value( A8000adj,0.0f - gtkEquChannels[channel][8] );
- gtk_adjustment_set_value( A16000adj,0.0f - gtkEquChannels[channel][9] );
+ gtk_adjustment_set_value( A3125adj,-gtkEquChannels[channel][0] );
+ gtk_adjustment_set_value( A6250adj,-gtkEquChannels[channel][1] );
+ gtk_adjustment_set_value( A125adj,-gtkEquChannels[channel][2] );
+ gtk_adjustment_set_value( A250adj,-gtkEquChannels[channel][3] );
+ gtk_adjustment_set_value( A500adj,-gtkEquChannels[channel][4] );
+ gtk_adjustment_set_value( A1000adj,-gtkEquChannels[channel][5] );
+ gtk_adjustment_set_value( A2000adj,-gtkEquChannels[channel][6] );
+ gtk_adjustment_set_value( A4000adj,-gtkEquChannels[channel][7] );
+ gtk_adjustment_set_value( A8000adj,-gtkEquChannels[channel][8] );
+ gtk_adjustment_set_value( A16000adj,-gtkEquChannels[channel][9] );
 
  if ( guiInfo.sh_video )
   {
@@ -147,7 +147,7 @@ static gboolean eqHScaleMotion( GtkWidget * widget,GdkEventMotion  * event,gpoin
    case 9: eq.gain=A16000adj->value; break;
    default: return FALSE;
   }
- eq.gain=0.0f - eq.gain;
+ eq.gain=-eq.gain;
  eq.band=(int)user_data;
  if ( Channel == -1 )
   {
