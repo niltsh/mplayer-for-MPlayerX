@@ -1273,7 +1273,7 @@ static void create_videomenu(gui_t *gui)
     AppendMenu(gui->subtitlemenu, MF_STRING, IDSUB_CYCLE, acp(MSGTR_MENU_SubtitleLanguages));
     AppendMenu(gui->aspectmenu, MF_STRING, ID_ASPECT1, "16:9");
     AppendMenu(gui->aspectmenu, MF_STRING, ID_ASPECT2, "4:3");
-    AppendMenu(gui->aspectmenu, MF_STRING, ID_ASPECT3, "2.35");
+    AppendMenu(gui->aspectmenu, MF_STRING, ID_ASPECT3, "2.35:1");
     AppendMenu(gui->aspectmenu, MF_SEPARATOR, 0, 0);
     AppendMenu(gui->aspectmenu, MF_STRING, ID_ASPECT4, acp(MSGTR_MENU_Original));
     AppendMenu(gui->videomenu, MF_SEPARATOR, 0, 0);

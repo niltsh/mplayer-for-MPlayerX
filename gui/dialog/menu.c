@@ -596,7 +596,7 @@ GtkWidget * CreatePopUpMenu( void )
     H=AddMenuCheckItem( window1, (const char*)aspect11_xpm, AspectMenu,MSGTR_MENU_Original, a11, evSetAspect + ( 1 << 16 ) );
     N=AddMenuCheckItem( window1, (const char*)aspect169_xpm, AspectMenu,"16:9", a169, evSetAspect + ( 2 << 16 ) );
     D=AddMenuCheckItem( window1, (const char*)aspect43_xpm, AspectMenu,"4:3", a43, evSetAspect + ( 3 << 16 ) );
-    F=AddMenuCheckItem( window1, (const char*)aspect235_xpm, AspectMenu,"2.35", a235, evSetAspect + ( 4 << 16 ) );
+    F=AddMenuCheckItem( window1, (const char*)aspect235_xpm, AspectMenu,"2.35:1", a235, evSetAspect + ( 4 << 16 ) );
 
   if ( !guiInfo.Playing )
    {
