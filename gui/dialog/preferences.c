@@ -1203,8 +1203,8 @@ void ShowPreferences( void )
 #ifndef CONFIG_FREETYPE
  gtk_adjustment_set_value( HSFontFactoradj,font_factor );
 #else
- gtk_adjustment_set_value( HSFontBluradj,( subtitle_font_radius / 8.0f ) * 100.0f );
- gtk_adjustment_set_value( HSFontOutLineadj,( subtitle_font_thickness / 8.0f ) * 100.0f );
+ gtk_adjustment_set_value( HSFontBluradj,subtitle_font_radius / 8.0 * 100.0);         // transform 0..8 to 0..100
+ gtk_adjustment_set_value( HSFontOutLineadj,subtitle_font_thickness / 8.0 * 100.0);   // transform 0..8 to 0..100
  gtk_adjustment_set_value( HSFontTextScaleadj,text_font_scale_factor );
  gtk_adjustment_set_value( HSFontOSDScaleadj,osd_font_scale_factor );
  if ( subtitle_font_encoding )

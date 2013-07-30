@@ -936,12 +936,12 @@ void mplayer(int what, float value, void *data)
         break;
 
     case MPLAYER_SET_FONT_OUTLINE:
-        subtitle_font_thickness = (8.0f / 100.0f) * value;
+        subtitle_font_thickness = 8.0 * value / 100.0;   // transform 0..100 to 0..8
         mplayerLoadFont();
         break;
 
     case MPLAYER_SET_FONT_BLUR:
-        subtitle_font_radius = (8.0f / 100.0f) * value;
+        subtitle_font_radius = 8.0 * value / 100.0;      // transform 0..100 to 0..8
         mplayerLoadFont();
         break;
 
