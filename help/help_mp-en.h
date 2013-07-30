@@ -672,6 +672,7 @@ static const char help_text[]=
 #define MSGTR_MENU_Exit "Exit"
 #define MSGTR_MENU_Mute "Mute"
 #define MSGTR_MENU_Original "Original"
+#define MSGTR_MENU_235 "2.35:1"
 #define MSGTR_MENU_AspectRatio "Aspect ratio"
 #define MSGTR_MENU_AudioTrack "Audio track"
 #define MSGTR_MENU_Track "Track %d"
