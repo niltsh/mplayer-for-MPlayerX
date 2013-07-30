@@ -1162,8 +1162,8 @@ void ShowPreferences( void )
 #ifdef CONFIG_ASS
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBUseASS ),gtkASS.enabled );
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBASSUseMargins ),gtkASS.use_margins );
- gtk_spin_button_set_value( (GtkSpinButton *)SBASSTopMargin,(gdouble)gtkASS.top_margin );
- gtk_spin_button_set_value( (GtkSpinButton *)SBASSBottomMargin,(gdouble)gtkASS.bottom_margin );
+ gtk_spin_button_set_value( (GtkSpinButton *)SBASSTopMargin,gtkASS.top_margin );
+ gtk_spin_button_set_value( (GtkSpinButton *)SBASSBottomMargin,gtkASS.bottom_margin );
 
  if ( !gtkASS.enabled )
   {
