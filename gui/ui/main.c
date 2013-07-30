@@ -148,12 +148,12 @@ static void uiMainMouse( int Button,int X,int Y,int RX,int RY )
            {
             case itPotmeter:
             case itHPotmeter:
-                 btnModify( item->message,(float)( X - item->x ) / item->width * 100.0f );
+                 btnModify( item->message,(float)( X - item->x ) / item->width * 100.0 );
 		 uiEvent( item->message,item->value );
                  value=item->value;
                  break;
 	    case itVPotmeter:
-                 btnModify( item->message, ( 1.0 - (float)( Y - item->y ) / item->height) * 100.0f );
+                 btnModify( item->message, ( 1.0 - (float)( Y - item->y ) / item->height) * 100.0 );
 		 uiEvent( item->message,item->value );
                  value=item->value;
                  break;
@@ -194,13 +194,13 @@ rollerhandled:
                  if (guiApp.menuIsPresent) guiApp.menuWindow.MouseHandler( 0,RX,RY,0,0 );
                  break;
             case itPotmeter:
-                 item->value=(float)( X - item->x ) / item->width * 100.0f;
+                 item->value=(float)( X - item->x ) / item->width * 100.0;
                  goto potihandled;
             case itVPotmeter:
-                 item->value=(1.0 - (float)( Y - item->y ) / item->height) * 100.0f;
+                 item->value=(1.0 - (float)( Y - item->y ) / item->height) * 100.0;
                  goto potihandled;
             case itHPotmeter:
-                 item->value=(float)( X - item->x ) / item->width * 100.0f;
+                 item->value=(float)( X - item->x ) / item->width * 100.0;
 potihandled:
                  if ( item->value > 100.0f ) item->value=100.0f;
                  if ( item->value < 0.0f ) item->value=0.0f;
