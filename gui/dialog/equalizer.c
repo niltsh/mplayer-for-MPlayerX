@@ -95,10 +95,10 @@ static void eqSetBands( int channel )
    get_video_colors( guiInfo.sh_video,"saturation",&vo_gamma_saturation );
   }
 
- gtk_adjustment_set_value( VContrastadj,(float)vo_gamma_contrast );
- gtk_adjustment_set_value( VBrightnessadj,(float)vo_gamma_brightness );
- gtk_adjustment_set_value( VHueadj,(float)vo_gamma_hue );
- gtk_adjustment_set_value( VSaturationadj,(float)vo_gamma_saturation );
+ gtk_adjustment_set_value( VContrastadj,vo_gamma_contrast );
+ gtk_adjustment_set_value( VBrightnessadj,vo_gamma_brightness );
+ gtk_adjustment_set_value( VHueadj,vo_gamma_hue );
+ gtk_adjustment_set_value( VSaturationadj,vo_gamma_saturation );
 }
 
 static void eqSetChannelNames( void )

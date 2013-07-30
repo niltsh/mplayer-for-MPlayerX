@@ -1275,12 +1275,12 @@ void ShowPreferences( void )
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBNoIdle ),!player_idle_mode );
 
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBCache ),0 );
- gtk_adjustment_set_value( SBCacheadj,(float)gtkCacheSize );
+ gtk_adjustment_set_value( SBCacheadj,gtkCacheSize );
  if ( !gtkCacheOn ) gtk_widget_set_sensitive( SBCache,FALSE );
   else gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBCache ),TRUE );
 
  gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBAutoSync ),0 );
- gtk_adjustment_set_value( SBAutoSyncadj,(float)gtkAutoSync );
+ gtk_adjustment_set_value( SBAutoSyncadj,gtkAutoSync );
  if ( !gtkAutoSyncOn ) gtk_widget_set_sensitive( SBAutoSync,FALSE );
   else gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( CBAutoSync ),TRUE );
 
