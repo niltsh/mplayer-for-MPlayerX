@@ -818,7 +818,7 @@ int gui(int what, void *data)
             }
 
             guiInfo.ElapsedTime = 0;
-            guiInfo.Position    = 0;
+            guiInfo.Position    = 0.0f;
 
             if (gtkShowVideoWindow) {
                 guiInfo.VideoWindow = True;
