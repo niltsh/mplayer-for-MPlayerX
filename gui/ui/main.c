@@ -365,4 +365,5 @@ void uiMainDone (void)
 {
   nfree(mainDrawBuffer);
   wsWindowDestroy(&guiApp.mainWindow);
+  wsEvents();
 }

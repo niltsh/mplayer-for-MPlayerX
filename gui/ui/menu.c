@@ -130,6 +130,7 @@ void uiMenuDone( void )
 {
   nfree(menuDrawBuffer);
   wsWindowDestroy(&guiApp.menuWindow);
+  wsEvents();
 }
 
 void uiMenuShow( int mx,int my )

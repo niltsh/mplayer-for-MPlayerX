@@ -262,6 +262,7 @@ void uiPlaybarDone( void )
 {
   nfree(playbarDrawBuffer);
   wsWindowDestroy(&guiApp.playbarWindow);
+  wsEvents();
 }
 
 void uiPlaybarShow( int y )

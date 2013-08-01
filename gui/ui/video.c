@@ -130,4 +130,5 @@ void uiVideoInit (void)
 void uiVideoDone (void)
 {
   wsWindowDestroy(&guiApp.videoWindow);
+  wsEvents();
 }
