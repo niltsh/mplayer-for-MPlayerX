@@ -598,9 +598,6 @@ buttonreleased:
         wsXDNDProcessSelection(wsWindowList[l], event);
         break;
     }
-
-    XFlush(wsDisplay);
-    XSync(wsDisplay, False);
 }
 
 /**
@@ -896,9 +893,6 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
 
     wsImageCreate(win, win->Width, win->Height);
 /* End of creating -------------------------------------------------------------------------- */
-
-    XFlush(wsDisplay);
-    XSync(wsDisplay, False);
 
     win->DrawHandler  = NULL;
     win->MouseHandler = NULL;
@@ -1219,7 +1213,6 @@ void wsWindowFullscreen(wsWindow *win)
         wsWindowLayer(wsDisplay, win->WindowID, vo_ontop);
 
     wsWindowRaiseTop(wsDisplay, win->WindowID);
-    XFlush(wsDisplay);
 }
 
 /**
@@ -1289,7 +1282,6 @@ void wsWindowRedraw(wsWindow *win)
     if (win->DrawHandler) {
         win->State = wsWindowExpose;
         win->DrawHandler();
-        XFlush(wsDisplay);
     }
 }
 
@@ -1331,7 +1323,6 @@ void wsImageCreate(wsWindow *win, int w, int h)
         win->xImage->data     = win->Shminfo.shmaddr;
         win->Shminfo.readOnly = False;
         XShmAttach(wsDisplay, &win->Shminfo);
-        XSync(wsDisplay, False);
         shmctl(win->Shminfo.shmid, IPC_RMID, 0);
     } else
 #endif
