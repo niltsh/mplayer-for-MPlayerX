@@ -52,6 +52,7 @@
 #include "libmpcodecs/vf.h"
 #include "libvo/video_out.h"
 #include "libvo/x11_common.h"
+#include "osdep/timer.h"
 #ifdef CONFIG_DVDREAD
 #include "stream/stream_dvd.h"
 #endif
@@ -382,7 +383,10 @@ int gui(int what, void *data)
 
     case GUI_PREPARE:
 
+        uiEvent(ivRedraw, True);
         wsMouseVisibility(&guiApp.videoWindow, wsHideMouseCursor);
+        usec_sleep(20000);
+        wsEvents();
 
         if (guiInfo.NewPlay == GUI_FILE_NEW) {
             audio_id  = -1;
