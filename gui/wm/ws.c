@@ -219,8 +219,6 @@ void wsInit(Display *display)
     if (!wsUseXShape)
         mp_msg(MSGT_GPLAYER, MSGL_WARN, MSGTR_WS_NoXshape);
 
-    XSynchronize(wsDisplay, True);
-
     wsScreen  = DefaultScreen(wsDisplay);
     wsRootWin = RootWindow(wsDisplay, wsScreen);
 #ifdef CONFIG_XF86VM
