@@ -2718,7 +2718,7 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
             if (!sh_video)
                 break;
             if (cmd->nargs == 0 || cmd->args[0].v.f == -1)
-                movie_aspect = (float) sh_video->disp_w / sh_video->disp_h;
+                movie_aspect = sh_video->original_aspect;
             else
                 movie_aspect = cmd->args[0].v.f;
             mpcodecs_config_vo(sh_video, sh_video->disp_w, sh_video->disp_h, 0);

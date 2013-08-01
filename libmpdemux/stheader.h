@@ -102,7 +102,8 @@ typedef struct sh_video {
   // output format: (set by demuxer)
   float fps;              // frames per second (set only if constant fps)
   float frametime;        // 1/fps
-  float aspect;           // aspect ratio stored in the file (for prescaling)
+  float aspect;           // current aspect ratio (for prescaling)
+  float original_aspect;  // original aspect ratio stored in the file
   float stream_aspect;  // aspect ratio stored in the media headers (e.g. in DVD IFO files)
   int i_bps;              // == bitrate  (compressed bytes/sec)
   int disp_w,disp_h;      // display size (filled by fileformat parser)
