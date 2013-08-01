@@ -843,9 +843,9 @@ int gui(int what, void *data)
 
             gui(GUI_SET_STATE, (void *)GUI_STOP);
 
-            wsEvents();
             wsWindowRedraw(&guiApp.videoWindow);
             wsMouseVisibility(&guiApp.videoWindow, wsShowMouseCursor);
+            wsEvents();
         }
 
         break;
