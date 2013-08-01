@@ -2565,7 +2565,6 @@ static void pause_loop(void)
 #ifdef CONFIG_GUI
         if (use_gui) {
             gui(GUI_REDRAW, 0);
-            gui(GUI_HANDLE_EVENTS, 0);
             if (guiInfo.Playing != GUI_PAUSE || (rel_seek_secs || abs_seek_pos))
                 break;
         }
@@ -3096,7 +3095,6 @@ play_next_file:
             mp_cmd_t *cmd;
             usec_sleep(20000);
             gui(GUI_REDRAW, 0);
-            gui(GUI_HANDLE_EVENTS, 0);
             if ((cmd = mp_input_get_cmd(0, 0, 0)) != NULL) {
                 if (cmd->id == MP_CMD_GUI)
                     gui(GUI_RUN_MESSAGE, cmd->args[0].v.s);
@@ -4009,7 +4007,6 @@ goto_enable_cache:
                 guiInfo.RunningTime = demuxer_get_time_length(mpctx->demuxer);
                 gui(GUI_SET_MIXER, 0);
                 gui(GUI_REDRAW, 0);
-                gui(GUI_HANDLE_EVENTS, 0);
                 if (guiInfo.Playing == GUI_STOP)
                     break;                  // STOP
                 if (guiInfo.Playing == GUI_PAUSE)

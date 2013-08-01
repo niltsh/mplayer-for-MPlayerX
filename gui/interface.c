@@ -332,7 +332,9 @@ int gui(int what, void *data)
         uiState();
         break;
 
-    case GUI_HANDLE_EVENTS:
+    case GUI_REDRAW:
+
+        uiEvent(ivRedraw, 0);
 
         if (!guiInfo.Playing || !guiInfo.VideoWindow)
             wsEvents();
@@ -733,11 +735,6 @@ int gui(int what, void *data)
             }
         }
 
-        break;
-
-    case GUI_REDRAW:
-
-        uiEvent(ivRedraw, 0);
         break;
 
     case GUI_SETUP_VIDEO_WINDOW:
