@@ -584,7 +584,7 @@ GtkWidget * CreatePopUpMenu( void )
    {
     int a11 = False, a169 = False, a43 = False, a235 = False;
 
-    if (movie_aspect == -1 || FFABS(movie_aspect - (float) guiInfo.sh_video->disp_w / guiInfo.sh_video->disp_h) <= 0.01f) a11 = True;
+    if (FFABS(guiInfo.sh_video->aspect - guiInfo.sh_video->original_aspect) <= 0.01f) a11 = True;
     else
      {
        a169 = (FFABS(movie_aspect - 16.0f / 9.0f) <= 0.01f);
