@@ -3815,11 +3815,6 @@ goto_enable_cache:
 //    current_module="draw_osd";
 //    if(vo_config_count) mpctx->video_out->draw_osd();
 
-#ifdef CONFIG_GUI
-                if (use_gui)
-                    gui(GUI_HANDLE_EVENTS, 0);
-#endif
-
                 current_module = "vo_check_events";
                 if (vo_config_count)
                     mpctx->video_out->check_events();
