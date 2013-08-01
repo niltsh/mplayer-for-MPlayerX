@@ -112,7 +112,7 @@ static void uiVideoMouse( int Button,int X,int Y,int RX,int RY )
 
 void uiVideoInit (void)
 {
-  wsWindowCreate(&guiApp.videoWindow, guiApp.video.x, guiApp.video.y, guiApp.video.width, guiApp.video.height, wsShowFrame | wsHideWindow | wsWaitMap | wsAspect, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, "MPlayer - Video");
+  wsWindowCreate(&guiApp.videoWindow, guiApp.video.x, guiApp.video.y, guiApp.video.width, guiApp.video.height, wsShowFrame | wsHideWindow | wsAspect, wsShowMouseCursor | wsHandleMouseButton | wsHandleMouseMove, "MPlayer - Video");
   mp_msg(MSGT_GPLAYER, MSGL_DBG2, "[video] videoWindow ID: 0x%x\n", (int) guiApp.videoWindow.WindowID);
   wsWindowIcon(wsDisplay, guiApp.videoWindow.WindowID, &guiIcon);
   if (guiApp.video.Bitmap.Image)

@@ -62,7 +62,6 @@
 #define  wsShowWindow   8
 #define  wsHideWindow   16
 #define  wsOverredirect 32
-#define  wsWaitMap      64
 #define  wsAspect       128
 
 #define wsNone                   0

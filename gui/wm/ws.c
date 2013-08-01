@@ -745,25 +745,6 @@ static void wsWindowDecoration(wsWindow *win)
                     PropModeReplace, (unsigned char *)&wsMotifWmHints, 5);
 }
 
-/**
- * @brief Wait until a window is mapped if its property requires it.
- *
- * @param win pointer to a ws window structure
- */
-static void wsWindowMapWait(wsWindow *win)
-{
-    XEvent xev;
-
-    if (win->Property & wsWaitMap) {
-        do {
-            XNextEvent(wsDisplay, &xev);
-            wsEvent(&xev);
-        } while (xev.type != MapNotify || xev.xmap.event != win->WindowID);
-
-        win->Mapped = wsMapped;
-    }
-}
-
 // ----------------------------------------------------------------------------------------------
 //   Create window.
 //     X,Y   : window position
@@ -914,11 +895,6 @@ void wsWindowCreate(wsWindow *win, int x, int y, int w, int h, int p, int c, cha
     win->Focused = wsNo;
     win->Mapped  = wsNo;
     win->Rolled  = wsNo;
-
-    if (p & wsShowWindow) {
-        XMapWindow(wsDisplay, win->WindowID);
-        wsWindowMapWait(win);
-    }
 
     wsImageCreate(win, win->Width, win->Height);
 /* End of creating -------------------------------------------------------------------------- */
@@ -1264,7 +1240,6 @@ void wsWindowVisibility(wsWindow *win, int vis)
     case wsShowWindow:
 
         XMapRaised(wsDisplay, win->WindowID);
-        wsWindowMapWait(win);
 
         if (vo_fs_type & vo_wm_FULLSCREEN)
             win->isFullScreen = False;
