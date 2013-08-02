@@ -1079,9 +1079,10 @@ void wsWindowBackground(wsWindow *win, int r, int g, int b)
         ;
     }
 
-    if (r == -1 && g == -1 && b == -1)
+    if (r == -1 && g == -1 && b == -1) {
+        XSync(wsDisplay, False);
         XSetWindowBackgroundPixmap(wsDisplay, win->WindowID, None);
-    else {
+    } else {
         XSetWindowBackground(wsDisplay, win->WindowID, color);
         XClearWindow(wsDisplay, win->WindowID);
     }
