@@ -1242,8 +1242,6 @@ void wsWindowVisibility(wsWindow *win, int vis)
         XUnmapWindow(wsDisplay, win->WindowID);
         break;
     }
-
-    XFlush(wsDisplay);
 }
 
 /**
@@ -1447,8 +1445,6 @@ void wsMouseVisibility(wsWindow *win, int vis)
         XDefineCursor(wsDisplay, win->WindowID, win->wsCursor);
         break;
     }
-
-    XFlush(wsDisplay);
 }
 
 /**
