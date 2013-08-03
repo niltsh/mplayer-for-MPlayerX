@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 35968
+// Synced with help_mp-en.h rev. 36374
 //
 // Translated by JRaSH <jrash06@gmail.com>
 
@@ -672,6 +672,7 @@ static const char help_text[]=
 #define MSGTR_MENU_Exit "退出"
 #define MSGTR_MENU_Mute "静音"
 #define MSGTR_MENU_Original "原始的"
+#define MSGTR_MENU_235 "2.35:1"
 #define MSGTR_MENU_AspectRatio "宽高比"
 #define MSGTR_MENU_AudioTrack "音频轨迹"
 #define MSGTR_MENU_Track "轨迹 %d"
