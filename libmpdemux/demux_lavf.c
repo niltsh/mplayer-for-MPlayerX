@@ -545,6 +545,8 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
     if(demuxer->stream->url) {
         if (!strncmp(demuxer->stream->url, "ffmpeg://", 9))
             av_strlcpy(mp_filename, demuxer->stream->url + 9, sizeof(mp_filename));
+        else if (!strncmp(demuxer->stream->url, "rtsp://", 7))
+            av_strlcpy(mp_filename, demuxer->stream->url, sizeof(mp_filename));
         else
             av_strlcat(mp_filename, demuxer->stream->url, sizeof(mp_filename));
     } else

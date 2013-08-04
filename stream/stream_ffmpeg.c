@@ -25,6 +25,7 @@
 #include "m_option.h"
 #include "m_struct.h"
 #include "av_helpers.h"
+#include "libmpdemux/demuxer.h"
 
 static int fill_buffer(stream_t *s, char *buffer, int max_len)
 {
@@ -136,7 +137,9 @@ static int open_f(stream_t *stream, int mode, void *opts, int *file_format)
         stream->type = STREAMTYPE_STREAM;
         stream->seek = NULL;
     }
-    if (!dummy) {
+    if (dummy) {
+        *file_format = DEMUXER_TYPE_LAVF;
+    } else {
         stream->fill_buffer = fill_buffer;
         stream->write_buffer = write_buffer;
         stream->control = control;
@@ -154,7 +157,7 @@ const stream_info_t stream_info_ffmpeg = {
   "",
   "",
   open_f,
-  { "ffmpeg", "rtmp", NULL },
+  { "ffmpeg", "rtmp", "rtsp", NULL },
   NULL,
   1 // Urls are an option string
 };

@@ -105,6 +105,9 @@ static const stream_info_t* const auto_open_streams[] = {
 #endif
   &stream_info_rtp,
   &stream_info_udp,
+#ifdef CONFIG_FFMPEG
+  &stream_info_ffmpeg,
+#endif
   &stream_info_http2,
 #endif
 #ifdef CONFIG_DVBIN
@@ -138,9 +141,6 @@ static const stream_info_t* const auto_open_streams[] = {
 #endif
 #ifdef CONFIG_LIBBLURAY
   &stream_info_bluray,
-#endif
-#ifdef CONFIG_FFMPEG
-  &stream_info_ffmpeg,
 #endif
 
   &stream_info_null,
