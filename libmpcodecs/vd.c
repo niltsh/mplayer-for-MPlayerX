@@ -292,7 +292,7 @@ int mpcodecs_config_vo(sh_video_t *sh, int w, int h,
     }
     // time to do aspect ratio corrections...
 
-    if (!sh->original_aspect)
+    if (sh->original_aspect == -1.0)
         sh->original_aspect = sh->stream_aspect != 0.0 ? sh->stream_aspect : sh->aspect;
 
     if (movie_aspect > -1.0)

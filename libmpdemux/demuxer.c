@@ -380,6 +380,7 @@ sh_video_t *new_sh_video_vid(demuxer_t *demuxer, int id, int vid)
         mp_msg(MSGT_DEMUXER, MSGL_WARN, MSGTR_VideoStreamRedefined, id);
     else {
         sh_video_t *sh = calloc(1, sizeof(sh_video_t));
+        sh->original_aspect = -1.0;
         mp_msg(MSGT_DEMUXER, MSGL_V, "==> Found video stream: %d\n", id);
         demuxer->v_streams[id] = sh;
         sh->vid = vid;
