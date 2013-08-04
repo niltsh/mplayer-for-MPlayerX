@@ -70,7 +70,7 @@ typedef struct lavf_priv {
     AVInputFormat *avif;
     AVFormatContext *avfc;
     AVIOContext *pb;
-    uint8_t buffer[BIO_BUFFER_SIZE];
+    uint8_t *buffer;
     int audio_streams;
     int video_streams;
     int sub_streams;
@@ -551,6 +551,7 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
         av_strlcat(mp_filename, "foobar.dummy", sizeof(mp_filename));
 
     if (!(priv->avif->flags & AVFMT_NOFILE)) {
+        priv->buffer = av_mallocz(BIO_BUFFER_SIZE);
         priv->pb = avio_alloc_context(priv->buffer, BIO_BUFFER_SIZE, 0,
                                       demuxer, mp_read, NULL, mp_seek);
         priv->pb->read_seek = mp_read_seek;
@@ -870,6 +871,7 @@ static void demux_close_lavf(demuxer_t *demuxer)
          av_freep(&priv->avfc->key);
          avformat_close_input(&priv->avfc);
         }
+        av_freep(&priv->buffer);
         av_freep(&priv->pb);
         free(priv); demuxer->priv= NULL;
     }
