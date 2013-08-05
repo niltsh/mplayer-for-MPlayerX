@@ -59,10 +59,24 @@ struct vf_priv_s {
 
 //===========================================================================//
 
+static void draw_slice(struct vf_instance *vf, unsigned char** src,
+                       int* stride, int w,int h, int x, int y)
+{
+    if (vf->priv->store_slices) {
+        uint8_t *dst[MP_MAX_PLANES] = {NULL};
+        int dst_stride[MP_MAX_PLANES] = {0};
+        dst_stride[0] = vf->priv->stride;
+        dst[0] = vf->priv->buffer;
+        sws_scale(vf->priv->ctx, src, stride, y, h, dst, dst_stride);
+    }
+    vf_next_draw_slice(vf,src,stride,w,h,x,y);
+}
+
 static int config(struct vf_instance *vf,
                   int width, int height, int d_width, int d_height,
                   unsigned int flags, unsigned int outfmt)
 {
+    int res;
     vf->priv->ctx=sws_getContextFromCmdLine(width, height, outfmt,
                                  d_width, d_height, IMGFMT_RGB24);
 
@@ -78,7 +92,11 @@ static int config(struct vf_instance *vf,
     free(vf->priv->buffer); // probably reconfigured
     vf->priv->buffer = NULL;
 
-    return vf_next_config(vf,width,height,d_width,d_height,flags,outfmt);
+    res = vf_next_config(vf,width,height,d_width,d_height,flags,outfmt);
+    // Our draw_slice only works properly if the
+    // following filter can do slices.
+    vf->draw_slice=vf->next->draw_slice ? draw_slice : NULL;
+    return res;
 }
 
 static void write_png(struct vf_priv_s *priv)
@@ -148,19 +166,6 @@ static void start_slice(struct vf_instance *vf, mp_image_t *mpi)
             vf->priv->buffer = av_malloc(vf->priv->stride*vf->priv->dh);
     }
 
-}
-
-static void draw_slice(struct vf_instance *vf, unsigned char** src,
-                       int* stride, int w,int h, int x, int y)
-{
-    if (vf->priv->store_slices) {
-        uint8_t *dst[MP_MAX_PLANES] = {NULL};
-        int dst_stride[MP_MAX_PLANES] = {0};
-        dst_stride[0] = vf->priv->stride;
-        dst[0] = vf->priv->buffer;
-        sws_scale(vf->priv->ctx, src, stride, y, h, dst, dst_stride);
-    }
-    vf_next_draw_slice(vf,src,stride,w,h,x,y);
 }
 
 static void get_image(struct vf_instance *vf, mp_image_t *mpi)
