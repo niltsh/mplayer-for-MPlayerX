@@ -1361,11 +1361,11 @@ static int preinit_internal(const char *arg, int allow_sw)
     if (use_yuv == -1 || !allow_sw) {
       if (create_window(320, 200, VOFLAG_HIDDEN, NULL) < 0)
         goto err_out;
-      if (glctx.setGlWindow(&glctx) == SET_WINDOW_FAILED)
-        goto err_out;
-      if (!allow_sw && isSoftwareGl())
-        goto err_out;
-      autodetectGlExtensions();
+      if (glctx.setGlWindow(&glctx) != SET_WINDOW_FAILED) {
+        if (!allow_sw && isSoftwareGl())
+          goto err_out;
+        autodetectGlExtensions();
+      }
     }
     if (use_yuv == -1)
       use_yuv = glctx.type == GLTYPE_EGL_X11 || glctx.type == GLTYPE_EGL_ANDROID ? YUV_CONVERSION_SL_PROGRAM : YUV_CONVERSION_FRAGMENT_LOOKUP; // mostly sensible fallback
