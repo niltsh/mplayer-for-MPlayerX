@@ -1100,6 +1100,16 @@ void vo_x11_create_vo_window(XVisualInfo *vis, int x, int y,
                              Colormap col_map,
                              const char *classname, const char *title)
 {
+  if (flags & VOFLAG_HIDDEN) {
+    // unmapped windows cause lots of issues, in particular
+    // -geometry might be ignore when finally mapping them etc.
+    if (vo_window == None)
+      vo_window = mRootWin;
+    window_state = VOFLAG_HIDDEN;
+    goto final;
+  } else if (vo_window == mRootWin && (window_state & VOFLAG_HIDDEN)) {
+    vo_window = None;
+  }
   if (vo_wintitle)
     title = vo_wintitle;
   if (WinID >= 0) {
@@ -1138,8 +1148,6 @@ void vo_x11_create_vo_window(XVisualInfo *vis, int x, int y,
                       x, y, width, height, vis->depth, col_map);
     window_state = VOFLAG_HIDDEN;
   }
-  if (flags & VOFLAG_HIDDEN)
-    goto final;
   XStoreName(mDisplay, vo_window, title);
   XChangeProperty(mDisplay, vo_window, XA_NET_WM_NAME, XAUTF8_STRING,
                   8, PropModeReplace, title, strlen(title));

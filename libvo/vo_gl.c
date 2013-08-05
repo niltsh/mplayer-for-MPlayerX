@@ -1366,7 +1366,10 @@ static int preinit_internal(const char *arg, int allow_sw)
       if (!allow_sw && isSoftwareGl())
         goto err_out;
       autodetectGlExtensions();
-    } else if (use_ycbcr == -1) {
+    }
+    if (use_yuv == -1)
+      use_yuv = glctx.type == GLTYPE_EGL_X11 || glctx.type == GLTYPE_EGL_ANDROID ? YUV_CONVERSION_SL_PROGRAM : YUV_CONVERSION_FRAGMENT_LOOKUP; // mostly sensible fallback
+    if (use_ycbcr == -1) {
       // rare feature, not worth creating a window to detect
       use_ycbcr = 0;
     }
