@@ -8539,6 +8539,8 @@ CONFIG_MPEGVIDEO    = yes
 CONFIG_MPEGVIDEOENC = yes
 CONFIG_RANGECODER   = yes
 CONFIG_RDFT    = yes
+CONFIG_RIFFDEC = yes
+CONFIG_RIFFENC = yes
 CONFIG_RTPENC_CHAIN = yes
 CONFIG_SINEWIN = yes
 CONFIG_VIDEODSP = yes
@@ -9142,6 +9144,8 @@ $def_truncf
 #define CONFIG_MDCT 1
 #define CONFIG_MPEGVIDEO 1
 #define CONFIG_RDFT 1
+#define CONFIG_RIFFDEC 1
+#define CONFIG_RIFFENC 1
 #define CONFIG_VIDEODSP 1
 
 /* Use these registers in FFmpeg x86 inline asm. No proper detection yet. */
