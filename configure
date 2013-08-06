@@ -5087,11 +5087,12 @@ if test "$_gif" = yes ; then
   _gif=auto
 fi
 
+gif_new=no
 if test "$_gif" = auto ; then
   _gif=no
   for ld_gif in "-lungif" "-lgif" ; do
     statement_check gif_lib.h 'QuantizeBuffer(0, 0, 0, 0, 0, 0, 0, 0)' $ld_gif && _gif=yes && break
-    statement_check_broken stdlib.h gif_lib.h 'GifQuantizeBuffer(0, 0, 0, 0, 0, 0, 0, 0)' $ld_gif && _gif=yes && break
+    statement_check_broken stdlib.h gif_lib.h 'GifQuantizeBuffer(0, 0, 0, 0, 0, 0, 0, 0)' $ld_gif && _gif=yes && gif_new=yes && break
   done
 fi
 
@@ -5113,7 +5114,7 @@ if test "$_gif" = yes ; then
   def_gif='#define CONFIG_GIF 1'
   codecmodules="gif $codecmodules"
   vomodules="gif89a $vomodules"
-  res_comment="old version, some encoding functions disabled"
+  res_comment=""
   def_gif_4='#undef CONFIG_GIF_4'
   extra_ldflags="$extra_ldflags $ld_gif"
 
@@ -5132,7 +5133,8 @@ int main(void) {
 EOF
   if cc_check "$ld_gif" ; then
     def_gif_4='#define CONFIG_GIF_4 1'
-    res_comment=""
+  elif test "$gif_new" = no ; then
+    res_comment="old version, some encoding functions disabled"
   fi
 else
   def_gif='#undef CONFIG_GIF'
