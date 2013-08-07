@@ -2719,8 +2719,11 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
                 break;
             if (cmd->nargs == 0)
                 movie_aspect = -1.0;
-            else
+            else if (cmd->args[0].v.f == -1 || cmd->args[0].v.f >= 0)
                 movie_aspect = cmd->args[0].v.f;
+            else
+                mp_msg(MSGT_CPLAYER, MSGL_WARN, MSGTR_InvalidSwitchRatio,
+                       cmd->args[0].v.f);
             mpcodecs_config_vo(sh_video, sh_video->disp_w, sh_video->disp_h, 0);
             break;
 

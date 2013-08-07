@@ -188,6 +188,7 @@ static const char help_text[]=
 #define MSGTR_PtsAfterFiltersMissing "pts after filters MISSING\n"
 #define MSGTR_CommandLine "CommandLine:"
 #define MSGTR_MenuInitFailed "Menu init failed.\n"
+#define MSGTR_InvalidSwitchRatio "Invalid aspect ratio '%f', it remains unchanged.\n"
 
 // --- edit decision lists
 #define MSGTR_EdlOutOfMem "Can't allocate enough memory to hold EDL data.\n"

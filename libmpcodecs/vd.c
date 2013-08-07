@@ -327,7 +327,7 @@ int mpcodecs_config_vo(sh_video_t *sh, int w, int h,
                 screen_size_y = screen_size_xy * sh->disp_h / sh->disp_w;
             }
         }
-        if (sh->aspect > 0.01) {
+        if (sh->aspect >= 0.01) {
             int w;
             mp_msg(MSGT_CPLAYER, MSGL_INFO, MSGTR_MovieAspectIsSet,
                    sh->aspect);

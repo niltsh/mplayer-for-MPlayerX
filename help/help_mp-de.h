@@ -200,6 +200,7 @@ static const char help_text[]=
 #define MSGTR_PtsAfterFiltersMissing "PTS nach Filter FEHLT\n"
 #define MSGTR_CommandLine "Kommandozeile:"
 #define MSGTR_MenuInitFailed "Initialisierung des Menüs fehlgeschlagen.\n"
+#define MSGTR_InvalidSwitchRatio "Ungültiges Seitenverhältnis '%f', es bleibt unverändert.\n"
 
 // --- edit decision lists
 #define MSGTR_EdlOutOfMem "Es kann nicht genug Speicher für EDL-Daten reserviert werden.\n"
