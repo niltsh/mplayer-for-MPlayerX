@@ -410,7 +410,8 @@ switch_angle [value] (DVDs only)
 switch_ratio [value]
     Change aspect ratio at runtime. [value] is the new aspect ratio expressed
     as a float (e.g. 1.77778 for 16/9), or special value -1 to reset to
-    original aspect ratio (ditto if [value] is missing).
+    original aspect ratio (ditto if [value] is missing), or special value 0
+    to disable automatic movie aspect ratio compensation.
     There might be problems with some video filters.
 
 switch_title [value] (DVDNAV only)
