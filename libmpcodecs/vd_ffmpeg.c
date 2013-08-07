@@ -609,11 +609,7 @@ static int get_buffer(AVCodecContext *avctx, AVFrame *pic){
 
     if(init_vo(sh, avctx->pix_fmt) < 0){
         avctx->release_buffer= avcodec_default_release_buffer;
-        avctx->get_buffer= avcodec_default_get_buffer;
-        avctx->reget_buffer= avcodec_default_reget_buffer;
-        if (pic->data[0])
-            release_buffer(avctx, pic);
-        return avctx->get_buffer(avctx, pic);
+        goto disable_dr1;
     }
 
     if (IMGFMT_IS_HWACCEL(ctx->best_csp)) {
@@ -627,17 +623,7 @@ static int get_buffer(AVCodecContext *avctx, AVFrame *pic){
     if (type == MP_IMGTYPE_IP || type == MP_IMGTYPE_IPB) {
         if(ctx->b_count>1 || ctx->ip_count>2){
             mp_msg(MSGT_DECVIDEO, MSGL_WARN, MSGTR_MPCODECS_DRIFailure);
-
-            ctx->do_dr1=0; //FIXME
-            // For frame-multithreading these contexts aren't
-            // the same and must both be updated.
-            ctx->avctx->get_buffer=
-            avctx->get_buffer= avcodec_default_get_buffer;
-            ctx->avctx->reget_buffer=
-            avctx->reget_buffer= avcodec_default_reget_buffer;
-            if (pic->data[0])
-                release_buffer(avctx, pic);
-            return avctx->get_buffer(avctx, pic);
+            goto disable_dr1;
         }
 
         mp_msg(MSGT_DECVIDEO, MSGL_DBG2, type== MP_IMGTYPE_IPB ? "using IPB\n" : "using IP\n");
@@ -726,6 +712,18 @@ else
 #endif
     pic->type= FF_BUFFER_TYPE_USER;
     return 0;
+
+disable_dr1:
+    ctx->do_dr1 = 0;
+    // For frame-multithreading these contexts aren't
+    // the same and must both be updated.
+    ctx->avctx->get_buffer   =
+    avctx->get_buffer        = avcodec_default_get_buffer;
+    ctx->avctx->reget_buffer =
+    avctx->reget_buffer      = avcodec_default_reget_buffer;
+    if (pic->data[0])
+        release_buffer(avctx, pic);
+    return avctx->get_buffer(avctx, pic);
 }
 
 static void release_buffer(struct AVCodecContext *avctx, AVFrame *pic){
