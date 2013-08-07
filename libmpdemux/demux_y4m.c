@@ -232,7 +232,7 @@ static void read_streaminfo(demuxer_t *demuxer)
 	sh->disp_h = y4m_si_get_height(priv->si);
 
 	if (ratio.d != 0 && ratio.n != 0)
-	    sh->aspect = (float)(sh->disp_w*ratio.n)/(float)(sh->disp_h*ratio.d);
+	    sh->original_aspect = (float)(sh->disp_w*ratio.n)/(float)(sh->disp_h*ratio.d);
 
     	demuxer->seekable = 0;
     }

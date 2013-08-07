@@ -158,7 +158,6 @@ int mpcodecs_config_vo(sh_video_t *sh, int w, int h,
     vf_instance_t *vf = sh->vfilter, *sc = NULL;
     int palette = 0;
     int vocfg_flags = 0;
-    static float last_movie_aspect;
 
     if (w)
         sh->disp_w = w;
@@ -291,25 +290,14 @@ int mpcodecs_config_vo(sh_video_t *sh, int w, int h,
         vf_add_before_vo(&vf, "flip", NULL);
         sh->vfilter = vf;
     }
-    // time to do aspect ratio corrections (after saving the original aspect ratio)...
+    // time to do aspect ratio corrections...
 
-    if (sh->original_aspect == -1.0) {
-        sh->original_aspect = sh->stream_aspect != 0.0 ? sh->stream_aspect : sh->aspect;
-        last_movie_aspect = -1.0;
-    }
-
-    if (movie_aspect > -1.0) {
-        if (sh->aspect != movie_aspect && movie_aspect == last_movie_aspect)
-            sh->original_aspect = sh->stream_aspect != 0.0 ? sh->stream_aspect : sh->aspect;
+    if (movie_aspect > -1.0)
         sh->aspect = movie_aspect;      // cmdline overrides autodetect
-    }
     else if (sh->stream_aspect != 0.0)
-        sh->original_aspect = sh->aspect = sh->stream_aspect;
+        sh->aspect = sh->stream_aspect;
     else
-        sh->original_aspect = sh->aspect;
-//  if(!sh->aspect) sh->aspect=1.0;
-
-    last_movie_aspect = movie_aspect;
+        sh->aspect = sh->original_aspect;
 
     if (opt_screen_size_x || opt_screen_size_y) {
         screen_size_x = opt_screen_size_x;

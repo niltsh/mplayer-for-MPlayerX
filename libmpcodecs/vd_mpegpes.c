@@ -64,13 +64,13 @@ static mp_image_t* decode(sh_video_t *sh,void* data,int len,int flags){
     if (len <= 0 && !data) return NULL; // delay flush
 
     if(len>10 && !d[0] && !d[1] && d[2]==1 && d[3]==0xB3) {
-        float old_aspect = sh->aspect;
+        float old_aspect = sh->original_aspect;
         int oldw = sh->disp_w, oldh = sh->disp_h;
         mp_header_process_sequence_header(&picture, &d[4]);
-        sh->aspect = mpeg12_aspect_info(&picture);
+        sh->original_aspect = mpeg12_aspect_info(&picture);
         sh->disp_w = picture.display_picture_width;
         sh->disp_h = picture.display_picture_height;
-        if(sh->aspect != old_aspect || sh->disp_w != oldw || sh->disp_h != oldh) {
+        if(sh->original_aspect != old_aspect || sh->disp_w != oldw || sh->disp_h != oldh) {
             if(!mpcodecs_config_vo(sh, sh->disp_w,sh->disp_h,IMGFMT_MPEGPES))
                 return 0;
         }

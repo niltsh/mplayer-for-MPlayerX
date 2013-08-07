@@ -278,7 +278,7 @@ static mp_image_t* decode(sh_video_t *sh, void* data, int len, int flags)
 		/* Found a VOL information stats, if VO plugin is not initialized
 		 * yet then do it now */
 		if (stats.type == XVID_TYPE_VOL && !p->vo_initialized) {
-			sh->aspect = stats2aspect(&stats);
+			sh->original_aspect = stats2aspect(&stats);
 			if(!mpcodecs_config_vo(sh, stats.data.vol.width, stats.data.vol.height, IMGFMT_YV12))
 				return NULL;
 

@@ -405,7 +405,7 @@ static mp_image_t* decode(sh_video_t *sh,void* data,int len,int flags){
 		transform_out, sh->context);
 
 	if(!initialized){  // rv30 width/height now known
-	    sh->aspect=(float)sh->disp_w/(float)sh->disp_h;
+	    sh->original_aspect=(float)sh->disp_w/(float)sh->disp_h;
 	    sh->disp_w=transform_out[3];
 	    sh->disp_h=transform_out[4];
 	    if (!mpcodecs_config_vo(sh,sh->disp_w,sh->disp_h,IMGFMT_I420)) return 0;

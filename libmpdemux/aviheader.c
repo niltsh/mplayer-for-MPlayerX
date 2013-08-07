@@ -364,7 +364,7 @@ while(1){
 		le2me_VIDEO_FIELD_DESC(&vprp->FieldInfo[i]);
 	}
 	if (sh_video) {
-		sh_video->aspect = GET_AVI_ASPECT(vprp->dwFrameAspectRatio);
+		sh_video->original_aspect = GET_AVI_ASPECT(vprp->dwFrameAspectRatio);
 	}
 	if( mp_msg_test(MSGT_HEADER,MSGL_V) ) print_vprp(vprp,MSGL_V);
 	free(vprp);

@@ -166,8 +166,8 @@ static demuxer_t * demux_open_nut(demuxer_t * demuxer) {
 			sh_video->format = 0;
 			for (j = 0; j < s[i].fourcc_len && j < 4; j++)
 				sh_video->format |= s[i].fourcc[j]<<(j*8);
-			if (!s[i].sample_height) sh_video->aspect = 0;
-			else sh_video->aspect =
+			if (!s[i].sample_height) sh_video->original_aspect = 0;
+			else sh_video->original_aspect =
 				s[i].sample_width / (float)s[i].sample_height;
 			sh_video->i_bps = 0; // FIXME
 

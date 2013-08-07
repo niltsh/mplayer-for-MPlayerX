@@ -512,7 +512,7 @@ int read_asf_header(demuxer_t *demuxer,struct asf_priv* asf){
         if (!get_ext_stream_properties(hdr, hdr_len, streamh->stream_no, asf, 1))
             goto len_err_out;
         if (get_meta(hdr, hdr_len, streamh->stream_no, &asp_ratio)) {
-          sh_video->aspect = asp_ratio * sh_video->bih->biWidth /
+          sh_video->original_aspect = asp_ratio * sh_video->bih->biWidth /
             sh_video->bih->biHeight;
         }
         sh_video->i_bps = asf->bps;

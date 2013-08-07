@@ -1143,8 +1143,8 @@ static int gen_sh_video(sh_video_t* sh, mov_track_t* trak, int timescale) {
 		    sh->disp_h=trak->tkdata[81]|(trak->tkdata[80]<<8);
 		  } else if(sh->disp_w!=(trak->tkdata[77]|(trak->tkdata[76]<<8))){
 		    // codec and display width differ... use display one for aspect
-		    sh->aspect=trak->tkdata[77]|(trak->tkdata[76]<<8);
-		    sh->aspect/=trak->tkdata[81]|(trak->tkdata[80]<<8);
+		    sh->original_aspect=trak->tkdata[77]|(trak->tkdata[76]<<8);
+		    sh->original_aspect/=trak->tkdata[81]|(trak->tkdata[80]<<8);
 		  }
 		}
 
