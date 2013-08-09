@@ -346,6 +346,8 @@ static void preemption_callback(VdpDevice device, void *context)
     is_preempted = 1;
 }
 
+static void mark_vdpau_objects_uninitialized(void);
+
 /* Initialize vdp_get_proc_address, called from preinit() */
 static int win_x11_init_vdpau_procs(void)
 {
@@ -407,6 +409,8 @@ static int win_x11_init_vdpau_procs(void)
                         &vdp_preemption_callback_register},
         {0, NULL}
     };
+
+    mark_vdpau_objects_uninitialized();
 
     vdp_st = vdp_device_create_x11(mDisplay, mScreen,
                                &vdp_device, &vdp_get_proc_address);
@@ -654,7 +658,6 @@ static int handle_preemption(void)
         return 0;
     is_preempted = 0;
     mp_msg(MSGT_VO, MSGL_INFO, "[vdpau] Attempting to recover from preemption.\n");
-    mark_vdpau_objects_uninitialized();
     if (win_x11_init_vdpau_procs() < 0 ||
         win_x11_init_vdpau_flip_queue() < 0 ||
         create_vdp_mixer(vdp_chroma_type) < 0) {
@@ -1274,16 +1277,6 @@ static int preinit(const char *arg)
 
     if (!vo_init() || win_x11_init_vdpau_procs())
         return -1;
-
-    decoder = VDP_INVALID_HANDLE;
-    for (i = 0; i < MAX_VIDEO_SURFACES; i++)
-        surface_render[i].surface = VDP_INVALID_HANDLE;
-    video_mixer = VDP_INVALID_HANDLE;
-    for (i = 0; i <= NUM_OUTPUT_SURFACES; i++)
-        output_surfaces[i] = VDP_INVALID_HANDLE;
-    vdp_flip_queue = VDP_INVALID_HANDLE;
-    output_surface_width = output_surface_height = -1;
-    rgba_surface = VDP_INVALID_HANDLE;
 
     // full grayscale palette.
     for (i = 0; i < PALETTE_SIZE; ++i)
