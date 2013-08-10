@@ -1,4 +1,4 @@
-// Synced with help_mp-en.h rev. 36374
+// Synced with help_mp-en.h rev. 36413
 //
 // Translated by JRaSH <jrash06@gmail.com>
 
@@ -188,6 +188,7 @@ static const char help_text[]=
 #define MSGTR_PtsAfterFiltersMissing "缺失过滤器后的 PTS\n"
 #define MSGTR_CommandLine "命令行："
 #define MSGTR_MenuInitFailed "菜单初始化失败。\n"
+#define MSGTR_InvalidSwitchRatio "无效的宽高比‘%f’，宽高比将保持不变。\n"
 
 // --- edit decision lists
 #define MSGTR_EdlOutOfMem "无法分配足够的内存以存放 EDL 数据。\n"
