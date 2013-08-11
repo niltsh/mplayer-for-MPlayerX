@@ -1009,8 +1009,8 @@ static int draw_slice(uint8_t *image[], int stride[], int w, int h,
                       int x, int y)
 {
     VdpStatus vdp_st;
-    struct vdpau_render_state *rndr = (struct vdpau_render_state *)image[0];
-    int max_refs = image_format == IMGFMT_VDPAU_H264 ? rndr->info.h264.num_ref_frames : 2;
+    struct vdpau_frame_data *rndr = (struct vdpau_frame_data *)image[0];
+    int max_refs = image_format == IMGFMT_VDPAU_H264 ? ((VdpPictureInfoH264 *)rndr->info)->num_ref_frames : 2;
 
     if (handle_preemption() < 0)
         return VO_TRUE;
@@ -1021,7 +1021,7 @@ static int draw_slice(uint8_t *image[], int stride[], int w, int h,
         && !create_vdp_decoder(image_format, vid_width, vid_height, max_refs))
         return VO_FALSE;
 
-    vdp_st = vdp_decoder_render(decoder, rndr->surface, (void *)&rndr->info, rndr->bitstream_buffers_used, rndr->bitstream_buffers);
+    vdp_st = vdp_decoder_render(decoder, rndr->render_state->surface, rndr->info, rndr->bitstream_buffers_used, rndr->bitstream_buffers);
     CHECK_ST_WARNING("Failed VDPAU decoder rendering");
     return VO_TRUE;
 }

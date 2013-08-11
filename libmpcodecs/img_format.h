@@ -296,6 +296,13 @@ typedef struct {
     int timestamp; // pts, 90000 Hz counter based
 } vo_mpegpes_t;
 
+struct vdpau_frame_data {
+    struct vdpau_render_state *render_state;
+    const void *info;
+    unsigned bitstream_buffers_used;
+    const void *bitstream_buffers;
+};
+
 const char *vo_format_name(int format);
 
 /**

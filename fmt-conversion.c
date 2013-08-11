@@ -137,12 +137,6 @@ static const struct {
 
     { IMGFMT_XVMC_MOCO_MPEG2, AV_PIX_FMT_XVMC_MPEG2_MC },
     { IMGFMT_XVMC_IDCT_MPEG2, AV_PIX_FMT_XVMC_MPEG2_IDCT },
-    { IMGFMT_VDPAU_MPEG1,     AV_PIX_FMT_VDPAU_MPEG1 },
-    { IMGFMT_VDPAU_MPEG2,     AV_PIX_FMT_VDPAU_MPEG2 },
-    { IMGFMT_VDPAU_H264,      AV_PIX_FMT_VDPAU_H264 },
-    { IMGFMT_VDPAU_WMV3,      AV_PIX_FMT_VDPAU_WMV3 },
-    { IMGFMT_VDPAU_VC1,       AV_PIX_FMT_VDPAU_VC1 },
-    { IMGFMT_VDPAU_MPEG4,     AV_PIX_FMT_VDPAU_MPEG4 },
     { 0,                      AV_PIX_FMT_NONE }
 };
 
@@ -150,6 +144,7 @@ enum AVPixelFormat imgfmt2pixfmt(int fmt)
 {
     int i;
     enum AVPixelFormat pix_fmt;
+    if (IMGFMT_IS_VDPAU(fmt)) return AV_PIX_FMT_VDPAU;
     for (i = 0; conversion_map[i].fmt; i++)
         if (conversion_map[i].fmt == fmt)
             break;

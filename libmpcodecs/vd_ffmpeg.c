@@ -36,6 +36,10 @@
 
 #include "vd_internal.h"
 
+#if CONFIG_VDPAU
+#include "libavcodec/vdpau.h"
+#endif
+
 static const vd_info_t info = {
     "FFmpeg's libavcodec codec family",
     "ffmpeg",
@@ -201,19 +205,49 @@ static int control(sh_video_t *sh, int cmd, void *arg, ...){
     return CONTROL_UNKNOWN;
 }
 
+#if CONFIG_VDPAU
+static int vdpau_render_wrapper(AVCodecContext *s, AVFrame *f,
+    const VdpPictureInfo *info, uint32_t count, const VdpBitstreamBuffer *buffers)
+{
+    mp_image_t *mpi = f->opaque;
+    sh_video_t *sh = s->opaque;
+    struct vdpau_frame_data data;
+    uint8_t *planes[4] = {(void *)&data};
+    data.render_state = mpi->priv;
+    data.info = info;
+    data.bitstream_buffers_used = count;
+    data.bitstream_buffers = buffers;
+    mpcodecs_draw_slice(sh, planes, NULL, sh->disp_w, sh->disp_h, 0, 0);
+    return 0;
+}
+#endif
+
+static int pixfmt2imgfmt2(enum AVPixelFormat fmt, enum AVCodecID cid)
+{
+    if (fmt == AV_PIX_FMT_VDPAU)
+        switch (cid) {
+        case AV_CODEC_ID_H264:       return IMGFMT_VDPAU_H264;
+        case AV_CODEC_ID_MPEG1VIDEO: return IMGFMT_VDPAU_MPEG1;
+        case AV_CODEC_ID_MPEG2VIDEO: return IMGFMT_VDPAU_MPEG2;
+        case AV_CODEC_ID_MPEG4:      return IMGFMT_VDPAU_MPEG4;
+        case AV_CODEC_ID_WMV3:       return IMGFMT_VDPAU_WMV3;
+        case AV_CODEC_ID_VC1:        return IMGFMT_VDPAU_VC1;
+        }
+    return pixfmt2imgfmt(fmt);
+}
+
 static void set_format_params(struct AVCodecContext *avctx,
                               enum AVPixelFormat fmt)
 {
     int imgfmt;
     if (fmt == PIX_FMT_NONE)
         return;
-    imgfmt = pixfmt2imgfmt(fmt);
+    imgfmt = pixfmt2imgfmt2(fmt, avctx->codec_id);
     if (IMGFMT_IS_HWACCEL(imgfmt)) {
         sh_video_t *sh     = avctx->opaque;
         vd_ffmpeg_ctx *ctx = sh->context;
         ctx->do_dr1    = 1;
         ctx->nonref_dr = 0;
-        ctx->do_slices = 1;
         // HACK: FFmpeg thread handling is a major mess and
         // hinders any attempt to decide on hwaccel after the
         // codec is open. We really want this to change, so
@@ -223,9 +257,16 @@ static void set_format_params(struct AVCodecContext *avctx,
         avctx->get_buffer      = get_buffer;
         avctx->release_buffer  = release_buffer;
         avctx->reget_buffer    = get_buffer;
-        avctx->draw_horiz_band = draw_slice;
         mp_msg(MSGT_DECVIDEO, MSGL_INFO, MSGTR_MPCODECS_XVMCAcceleratedMPEG2);
-        avctx->slice_flags = SLICE_FLAG_CODED_ORDER|SLICE_FLAG_ALLOW_FIELD;
+        if (IMGFMT_IS_VDPAU(imgfmt)) {
+            avctx->draw_horiz_band = NULL;
+            avctx->slice_flags = 0;
+            ctx->do_slices = 0;
+        } else {
+            avctx->draw_horiz_band = draw_slice;
+            avctx->slice_flags = SLICE_FLAG_CODED_ORDER|SLICE_FLAG_ALLOW_FIELD;
+            ctx->do_slices = 1;
+        }
     } else {
         avctx->slice_flags &= ~(SLICE_FLAG_CODED_ORDER|SLICE_FLAG_ALLOW_FIELD);
     }
@@ -459,6 +500,7 @@ static void uninit(sh_video_t *sh){
             mp_msg(MSGT_DECVIDEO, MSGL_ERR, MSGTR_CantCloseCodec);
 
         av_freep(&avctx->extradata);
+        av_freep(&avctx->hwaccel_context);
         av_freep(&avctx->slice_offset);
     }
 
@@ -470,11 +512,16 @@ static void uninit(sh_video_t *sh){
 static void draw_slice(struct AVCodecContext *s,
                         const AVFrame *src, int offset[4],
                         int y, int type, int height){
+    mp_image_t *mpi = src->opaque;
     sh_video_t *sh = s->opaque;
     uint8_t *source[MP_MAX_PLANES]= {src->data[0] + offset[0], src->data[1] + offset[1], src->data[2] + offset[2]};
     int strides[MP_MAX_PLANES] = {src->linesize[0], src->linesize[1], src->linesize[2]};
     if (!src->data[0]) {
         mp_msg(MSGT_DECVIDEO, MSGL_FATAL, "BUG in FFmpeg, draw_slice called with NULL pointer!\n");
+        return;
+    }
+    if (IMGFMT_IS_VDPAU(mpi->imgfmt)) {
+        mp_msg(MSGT_DECVIDEO, MSGL_FATAL, "BUG in FFmpeg, draw_slice called for VDPAU!\n");
         return;
     }
     if (height < 0)
@@ -519,7 +566,7 @@ static void update_configuration(sh_video_t *sh, enum AVPixelFormat pix_fmt) {
             sh->original_aspect = aspect;
         ctx->last_sample_aspect_ratio = avctx->sample_aspect_ratio;
         ctx->pix_fmt = pix_fmt;
-        ctx->best_csp = pixfmt2imgfmt(pix_fmt);
+        ctx->best_csp = pixfmt2imgfmt2(pix_fmt, avctx->codec_id);
     }
 }
 
@@ -644,6 +691,18 @@ static int get_buffer(AVCodecContext *avctx, AVFrame *pic){
     if(IMGFMT_IS_HWACCEL(mpi->imgfmt)) {
         avctx->draw_horiz_band= draw_slice;
     }
+#if CONFIG_VDPAU
+    if (IMGFMT_IS_VDPAU(mpi->imgfmt)) {
+        struct vdpau_render_state *render = mpi->priv;
+        AVVDPAUContext *vdpc;
+        avctx->draw_horiz_band= NULL;
+        if (!avctx->hwaccel_context)
+            avctx->hwaccel_context = av_alloc_vdpaucontext();
+        vdpc = avctx->hwaccel_context;
+        vdpc->render2 = vdpau_render_wrapper;
+        mpi->planes[3] = render->surface;
+    }
+#endif
 #if CONFIG_XVMC
     if(IMGFMT_IS_XVMC(mpi->imgfmt)) {
         struct xvmc_pix_fmt *render = mpi->priv; //same as data[2]
@@ -1000,7 +1059,7 @@ static enum AVPixelFormat get_format(struct AVCodecContext *avctx,
     int i;
 
     for(i=0;fmt[i]!=PIX_FMT_NONE;i++){
-        imgfmt = pixfmt2imgfmt(fmt[i]);
+        imgfmt = pixfmt2imgfmt2(fmt[i], avctx->codec_id);
         if(!IMGFMT_IS_HWACCEL(imgfmt)) continue;
         mp_msg(MSGT_DECVIDEO, MSGL_INFO, MSGTR_MPCODECS_TryingPixfmt, i);
         if(init_vo(sh, fmt[i]) >= 0) {
