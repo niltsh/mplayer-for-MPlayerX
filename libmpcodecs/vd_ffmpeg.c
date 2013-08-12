@@ -520,7 +520,7 @@ static void draw_slice(struct AVCodecContext *s,
         mp_msg(MSGT_DECVIDEO, MSGL_FATAL, "BUG in FFmpeg, draw_slice called with NULL pointer!\n");
         return;
     }
-    if (IMGFMT_IS_VDPAU(mpi->imgfmt)) {
+    if (mpi && IMGFMT_IS_VDPAU(mpi->imgfmt)) {
         mp_msg(MSGT_DECVIDEO, MSGL_FATAL, "BUG in FFmpeg, draw_slice called for VDPAU!\n");
         return;
     }
