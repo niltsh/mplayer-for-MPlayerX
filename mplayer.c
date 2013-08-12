@@ -2422,6 +2422,13 @@ err_out:
     return 0;
 }
 
+static void advance_timer(double amount)
+{
+    mpctx->sh_video->timer += amount;
+    if (mpctx->sh_audio)
+        mpctx->delay -= amount;
+}
+
 static double update_video(int *blit_frame)
 {
     sh_video_t *const sh_video = mpctx->sh_video;
@@ -2477,9 +2484,7 @@ static double update_video(int *blit_frame)
                 return -1;
 
             if (full_frame) {
-                sh_video->timer += frame_time;
-                if (mpctx->sh_audio)
-                    mpctx->delay -= frame_time;
+                advance_timer(frame_time);
                 // video_read_frame can change fps (e.g. for ASF video)
                 vo_fps = sh_video->fps;
                 update_subtitles(sh_video, sh_video->pts, mpctx->d_sub, 0);
@@ -2521,9 +2526,7 @@ static double update_video(int *blit_frame)
         if (!frame_time)
             frame_time = sh_video->frametime;
         sh_video->last_pts = sh_video->pts;
-        sh_video->timer   += frame_time;
-        if (mpctx->sh_audio)
-            mpctx->delay -= frame_time;
+        advance_timer(frame_time);
         *blit_frame = res > 0;
     }
     return frame_time;
@@ -3798,6 +3801,8 @@ goto_enable_cache:
                     if (frame_time < 0) {
                         // if we have no more video, sleep some arbitrary time
                         frame_time = 1.0 / 20.0;
+                        // Ensure vo_pts is updated so that ao_pcm will not hang.
+                        advance_timer(frame_time);
                         // only stop playing when audio is at end as well
                         if (!mpctx->sh_audio || mpctx->d_audio->eof)
                             mpctx->eof = 1;
