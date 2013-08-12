@@ -1788,7 +1788,7 @@ static int generate_video_frame(sh_video_t *sh_video, demux_stream_t *d_video)
     double pts;
 
     while (1) {
-        int drop_frame = check_framedrop(sh_video->frametime);
+        int drop_frame = 0;
         void *decoded_frame;
         current_module = "decode video";
         // XXX Time used in this call is not counted in any performance
@@ -1803,8 +1803,8 @@ static int generate_video_frame(sh_video_t *sh_video, demux_stream_t *d_video)
             start   = NULL;
             pts     = MP_NOPTS_VALUE;
             hit_eof = 1;
-            drop_frame = 0;
-        }
+        } else
+	    drop_frame = check_framedrop(sh_video->frametime);
         if (in_size > max_framesize)
             max_framesize = in_size;
         current_module = "decode video";
