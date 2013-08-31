@@ -461,7 +461,11 @@ while(1){
 
 }
 
-if (priv->suidx_size > 0 && priv->idx_size == 0) {
+// Some files contain a dummy non-odml index.
+// Ignore an index smaller than some arbitrary size.
+// Some Canon cameras recording in MJPEG do this
+// (encoder software identifier CanonMVI06).
+if (priv->suidx_size > 0 && priv->idx_size < 4) {
     /*
      * No NEWAVIINDEX, but we got an OpenDML index.
      */
