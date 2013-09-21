@@ -1561,7 +1561,7 @@ libavdecoders=$(filter_out_component decoder 'LIB[A-Z0-9_]*')
 libavencoders=$(filter_out_component encoder 'LIB[A-Z0-9_]*')
 libavdemuxers=$(filter_out_component demuxer 'AVISYNTH LIB[A-Z0-9_]* REDIR')
 libavmuxers=$(filter_out_component muxer 'LIB[A-Z0-9_]* RTP RTSP SAP')
-libavprotocols=$(filter_out_component protocol 'BLURAY FFRTMPCRYPT HTTPS TLS')
+libavprotocols=$(filter_out_component protocol 'BLURAY FFRTMPCRYPT HTTPS LIB[A-Z0-9_]* TLS')
 libavfilters=$(filter_out_component filter 'FREI0R[A-Z0-9_]* LIB[A-Z0-9_]* MP OCV')
 
 # second pass command line parsing for options needing local FFmpeg checkout
