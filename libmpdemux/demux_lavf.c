@@ -540,6 +540,9 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
             mp_msg(MSGT_HEADER,MSGL_ERR, "demux_lavf, couldn't set option analyzeduration to %u\n", opt_analyzeduration);
     }
 
+    if (rtsp_transport_http || rtsp_transport_tcp)
+       av_dict_set(&opts, "rtsp_transport", rtsp_transport_http ? "http" : "tcp", 0);
+
     if(opt_avopt){
         if(parse_avopts(avfc, opt_avopt) < 0){
             mp_msg(MSGT_HEADER,MSGL_ERR, "Your options /%s/ look like gibberish to me pal\n", opt_avopt);
@@ -571,6 +574,19 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
         mp_msg(MSGT_HEADER,MSGL_ERR,"LAVF_header: av_open_input_stream() failed\n");
         return NULL;
     }
+    if (av_dict_count(opts)) {
+        AVDictionaryEntry *e = NULL;
+        int invalid = 0;
+        while ((e = av_dict_get(opts, "", e, AV_DICT_IGNORE_SUFFIX))) {
+            if (strcmp(e->key, "rtsp_transport")) {
+                invalid++;
+                mp_msg(MSGT_HEADER,MSGL_ERR,"Unknown option %s\n", e->key);
+            }
+        }
+        if (invalid)
+            return 0;
+    }
+    av_dict_free(&opts);
 
     priv->avfc= avfc;
 
