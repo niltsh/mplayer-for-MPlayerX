@@ -3835,6 +3835,22 @@ else
 fi
 echores "$_pthreads"
 
+pthread_cancel=no
+if test "$_pthreads" = yes ; then
+  echocheck "pthread_cancel"
+cat > $TMPC << EOF
+#include <pthread.h>
+int main(void) { pthread_t t; return pthread_cancel(t); }
+EOF
+  cc_check $ld_pthread && pthread_cancel=yes
+  echores "$pthread_cancel"
+fi
+if test "$pthread_cancel" = yes ; then
+  def_pthread_cancel='#define HAVE_PTHREAD_CANCEL 1'
+else
+  def_pthread_cancel='#define HAVE_PTHREAD_CANCEL 0'
+fi
+
 if cygwin ; then
   if test "$_pthreads" = yes ; then
     def_pthread_cache="#define PTHREAD_CACHE 1"
@@ -9030,6 +9046,7 @@ $def_local_aligned_16
 $def_os2threads
 $def_pic
 $def_pthreads
+$def_pthread_cancel
 $def_socklen_t
 $def_struct_addrinfo
 $def_struct_ipv6_mreq
@@ -9115,7 +9132,6 @@ $def_truncf
 #define HAVE_MIPSDSPR1 0
 #define HAVE_MIPSFPU 0
 #define HAVE_MM_EMPTY 0
-#define HAVE_PTHREAD_CANCEL 0
 #define HAVE_PPC4XX 0
 #define HAVE_RDTSC 0
 #define HAVE_STRERROR_R 0
