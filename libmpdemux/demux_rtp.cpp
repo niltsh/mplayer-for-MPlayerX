@@ -114,14 +114,6 @@ static char* openURL_sip(SIPClient* client, char const* url) {
   }
 }
 
-#ifdef CONFIG_LIBNEMESI
-extern int rtsp_transport_tcp;
-extern int rtsp_transport_http;
-#else
-int rtsp_transport_tcp = 0;
-int rtsp_transport_http = 0;
-#endif
-
 #ifdef CONFIG_FFMPEG
 extern AVCodecContext *avcctx;
 #endif

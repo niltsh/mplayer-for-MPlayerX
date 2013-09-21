@@ -57,6 +57,11 @@
 #endif
 #include "libavutil/avstring.h"
 
+// Options shared between demuxers
+int rtsp_transport_http = 0;
+int rtsp_transport_tcp = 0;
+int rtsp_transport_sctp = 0;
+
 // This is quite experimental, in particular it will mess up the pts values
 // in the queue - on the other hand it might fix some issues like generating
 // broken files with mencoder and stream copy.
