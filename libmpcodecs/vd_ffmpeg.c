@@ -900,7 +900,7 @@ static mp_image_t *decode(sh_video_t *sh, void *data, int len, int flags){
     ret = avcodec_decode_video2(avctx, pic, &got_picture, &pkt);
     pkt.data = NULL;
     pkt.size = 0;
-    av_destruct_packet(&pkt);
+    av_packet_free_side_data(&pkt);
 
     // even when we do dr we might actually get a buffer we had
     // FFmpeg allocate - this mostly happens with nonref_dr.

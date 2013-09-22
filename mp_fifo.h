@@ -25,5 +25,6 @@ extern unsigned doubleclick_time;
 
 int mplayer_get_key(int fd);
 void mplayer_put_key(int code);
+void mplayer_key_fifo_uninit(void);
 
 #endif /* MPLAYER_MP_FIFO_H */

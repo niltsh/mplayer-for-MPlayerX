@@ -101,3 +101,11 @@ void mplayer_put_key(int code) {
       now - last_key_time[1] < doubleclick_time)
     put_double(code);
 }
+
+void mplayer_key_fifo_uninit(void) {
+  free(key_fifo_data);
+  key_fifo_data = NULL;
+  key_fifo_read = 0;
+  key_fifo_write = 0;
+  previous_down_key = 0;
+}

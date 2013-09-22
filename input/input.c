@@ -1387,10 +1387,12 @@ mp_cmd_t*
 mp_input_get_cmd(int time, int paused, int peek_only) {
   mp_cmd_t* ret = NULL;
   mp_cmd_filter_t* cf;
-  int from_queue;
+  int from_queue = 0;
 
-  if (async_quit_request)
-    return mp_input_parse_cmd("quit 1");
+  if (async_quit_request) {
+    ret = mp_input_parse_cmd("quit 1");
+    goto end;
+  }
   while(1) {
     from_queue = 1;
     ret = mp_input_get_queued_cmd(peek_only);
@@ -1415,8 +1417,13 @@ mp_input_get_cmd(int time, int paused, int peek_only) {
     }
   }
 
-  if (!from_queue && peek_only)
-    mp_input_queue_cmd(ret);
+end:
+  // enqueue if necessary, if not possible rather drop
+  // command than leak memory
+  if (!from_queue && peek_only && !mp_input_queue_cmd(ret)) {
+    mp_cmd_free(ret);
+    return NULL;
+  }
 
   return ret;
 }
@@ -1824,6 +1831,7 @@ void
 mp_input_uninit(void) {
   unsigned int i;
   mp_cmd_bind_section_t* bind_section;
+  mp_cmd_t *cmd;
 
   for(i=0; i < num_key_fd; i++) {
     if(key_fds[i].close_func)
@@ -1842,6 +1850,11 @@ mp_input_uninit(void) {
     cmd_binds_section=bind_section;
   }
   cmd_binds_section=NULL;
+  // Drop command queue contents to avoid valgrind
+  // warnings
+  while ((cmd = mp_input_get_queued_cmd(0)))
+    mp_cmd_free(cmd);
+  mplayer_key_fifo_uninit();
 }
 
 void

@@ -2773,10 +2773,11 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
             file_filter = cmd->args[0].v.i;
             break;
 
-        case MP_CMD_QUIT:
-            exit_player_with_rc(EXIT_QUIT,
-                                (cmd->nargs > 0) ? cmd->args[0].v.i : 0);
-
+        case MP_CMD_QUIT: {
+                int rc = cmd->nargs > 0 ? cmd->args[0].v.i : 0;
+                mp_cmd_free(cmd);
+                exit_player_with_rc(EXIT_QUIT, rc);
+            }
         case MP_CMD_PLAY_TREE_STEP:{
                 int n = cmd->args[0].v.i == 0 ? 1 : cmd->args[0].v.i;
                 int force = cmd->args[1].v.i;
