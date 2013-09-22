@@ -514,7 +514,7 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
 }
 
 static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
-    AVDictionary *opts;
+    AVDictionary *opts = NULL;
     AVFormatContext *avfc;
     AVDictionaryEntry *t = NULL;
     lavf_priv_t *priv= demuxer->priv;
