@@ -387,6 +387,8 @@ void ass_process_force_style(ASS_Track *track)
             track->ScaledBorderAndShadow = parse_bool(token);
         else if (!strcasecmp(*fs, "Kerning"))
             track->Kerning = parse_bool(token);
+        else if (!strcasecmp(*fs, "YCbCr Matrix"))
+            track->YCbCrMatrix = parse_ycbcr_matrix(token);
 
         dt = strrchr(*fs, '.');
         if (dt) {
@@ -424,6 +426,7 @@ void ass_process_force_style(ASS_Track *track)
                     FPVAL(ScaleY)
                     FPVAL(Outline)
                     FPVAL(Shadow)
+                    FPVAL(Blur)
                 }
             }
         }
@@ -514,7 +517,7 @@ static int process_style(ASS_Track *track, char *str)
             INTVAL(Underline)
             INTVAL(StrikeOut)
             FPVAL(Spacing)
-            INTVAL(Angle)
+            FPVAL(Angle)
             INTVAL(BorderStyle)
             INTVAL(Alignment)
             if (track->track_type == TRACK_TYPE_ASS)
@@ -573,6 +576,8 @@ static int process_info_line(ASS_Track *track, char *str)
         track->ScaledBorderAndShadow = parse_bool(str + 22);
     } else if (!strncmp(str, "Kerning:", 8)) {
         track->Kerning = parse_bool(str + 8);
+    } else if (!strncmp(str, "YCbCr Matrix:", 13)) {
+        track->YCbCrMatrix = parse_ycbcr_matrix(str + 13);
     } else if (!strncmp(str, "Language:", 9)) {
         char *p = str + 9;
         while (*p && isspace(*p)) p++;
@@ -587,10 +592,10 @@ static void event_format_fallback(ASS_Track *track)
 {
     track->parser_priv->state = PST_EVENTS;
     if (track->track_type == TRACK_TYPE_SSA)
-        track->event_format = strdup("Format: Marked, Start, End, Style, "
+        track->event_format = strdup("Marked, Start, End, Style, "
             "Name, MarginL, MarginR, MarginV, Effect, Text");
     else
-        track->event_format = strdup("Format: Layer, Start, End, Style, "
+        track->event_format = strdup("Layer, Start, End, Style, "
             "Actor, MarginL, MarginR, MarginV, Effect, Text");
     ass_msg(track->library, MSGL_V,
             "No event format found, using fallback");

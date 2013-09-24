@@ -311,6 +311,14 @@ static char *select_font(FT_Library ftlibrary, ASS_Library *library, FCInstance 
     rc = FcConfigSubstitute(priv->config, pat, FcMatchPattern);
     if (!rc)
         goto error;
+    /* Fontconfig defaults include a language setting, which it sets based on
+     * some environment variables or defaults to "en". Unset this as we don't
+     * know the real language, and because some some attached fonts lack
+     * non-ascii characters included in fontconfig's list of characters
+     * required for English support and therefore don't match the lang=en
+     * criterion.
+     */
+    FcPatternDel(pat, "lang");
 
     fsorted = FcFontSort(priv->config, pat, FcTrue, NULL, &result);
     ffullname = match_fullname(library, priv, family, bold, italic);
