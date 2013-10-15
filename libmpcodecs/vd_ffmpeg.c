@@ -31,6 +31,7 @@
 #include "libavutil/common.h"
 #include "libavutil/dict.h"
 #include "libavutil/intreadwrite.h"
+#include "libavutil/opt.h"
 #include "mpbswap.h"
 #include "fmt-conversion.h"
 
@@ -373,6 +374,7 @@ static int init(sh_video_t *sh){
     avctx->skip_loop_filter = str2AVDiscard(lavc_param_skip_loop_filter_str);
     avctx->skip_idct        = str2AVDiscard(lavc_param_skip_idct_str);
     avctx->skip_frame       = str2AVDiscard(lavc_param_skip_frame_str);
+    av_opt_set_int(avctx, "skip_alpha", 1, 0);
 
     if(lavc_avopt){
         if (parse_avopts(avctx, lavc_avopt) < 0 &&
