@@ -47,6 +47,10 @@ LIBAD_EXTERN(ffmpeg)
 #include "libavcodec/avcodec.h"
 #include "libavutil/dict.h"
 
+struct adctx {
+    int last_samplerate;
+    int srate_changed;
+};
 
 static int preinit(sh_audio_t *sh)
 {
@@ -62,13 +66,15 @@ static int setup_format(sh_audio_t *sh_audio, const AVCodecContext *lavc_context
     if (!sample_format)
         sample_format = sh_audio->sample_format;
     if(sh_audio->wf){
+        struct adctx *c = lavc_context->opaque;
+        c->srate_changed |= c->last_samplerate && c->last_samplerate != samplerate;
         // If the decoder uses the wrong number of channels all is lost anyway.
         // sh_audio->channels=sh_audio->wf->nChannels;
 
         if (lavc_context->codec_id == AV_CODEC_ID_AAC &&
             samplerate == 2*sh_audio->wf->nSamplesPerSec) {
             broken_srate = 1;
-        } else if (sh_audio->wf->nSamplesPerSec)
+        } else if (sh_audio->wf->nSamplesPerSec && !c->srate_changed)
             samplerate=sh_audio->wf->nSamplesPerSec;
     }
     if (lavc_context->channels != sh_audio->channels ||
@@ -106,6 +112,7 @@ static int init(sh_audio_t *sh_audio)
 
     lavc_context = avcodec_alloc_context3(lavc_codec);
     sh_audio->context=lavc_context;
+    lavc_context->opaque = calloc(sizeof(struct adctx), 1);
 
     snprintf(tmpstr, sizeof(tmpstr), "%f", drc_level);
     av_dict_set(&opts, "drc_scale", tmpstr, 0);
@@ -187,6 +194,7 @@ static void uninit(sh_audio_t *sh)
 
     if (avcodec_close(lavc_context) < 0)
 	mp_msg(MSGT_DECVIDEO, MSGL_ERR, MSGTR_CantCloseCodec);
+    av_freep(&lavc_context->opaque);
     av_freep(&lavc_context->extradata);
     av_freep(&lavc_context);
 }
