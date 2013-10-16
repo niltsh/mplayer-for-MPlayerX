@@ -68,6 +68,7 @@ static int setup_format(sh_audio_t *sh_audio, const AVCodecContext *lavc_context
     if(sh_audio->wf){
         struct adctx *c = lavc_context->opaque;
         c->srate_changed |= c->last_samplerate && c->last_samplerate != samplerate;
+        c->last_samplerate = samplerate;
         // If the decoder uses the wrong number of channels all is lost anyway.
         // sh_audio->channels=sh_audio->wf->nChannels;
 
@@ -112,7 +113,7 @@ static int init(sh_audio_t *sh_audio)
 
     lavc_context = avcodec_alloc_context3(lavc_codec);
     sh_audio->context=lavc_context;
-    lavc_context->opaque = calloc(sizeof(struct adctx), 1);
+    lavc_context->opaque = av_mallocz(sizeof(struct adctx));
 
     snprintf(tmpstr, sizeof(tmpstr), "%f", drc_level);
     av_dict_set(&opts, "drc_scale", tmpstr, 0);
