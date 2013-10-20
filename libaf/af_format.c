@@ -491,28 +491,28 @@ static void float2int(float* in, void* out, int len, int bps)
   switch(bps){
   case(1):
     for(i=0;i<len;i++)
-      ((int8_t *)out)[i] = av_clip_int8(lrintf(128.0 * in[i]));
+      ((int8_t *)out)[i] = av_clip_int8(lrintf(128.0f * in[i]));
     break;
   case(2):
     for(i=0;i<len;i++)
-      ((int16_t*)out)[i] = av_clip_int16(lrintf(32768.0 * in[i]));
+      ((int16_t*)out)[i] = av_clip_int16(lrintf(32768.0f * in[i]));
     break;
   case(3):
     for(i=0;i<len;i++){
-      f = in[i] * 8388608;
+      f = in[i] * 8388608.0f;
       store24bit(out, i,   av_clip(lrintf(f), -1*(1<<23), (1<<23)-1) << 8);
     }
     break;
   case(4):
     for(i=0;i<len;i++){
       f = in[i];
-      if (f <= -1.0)
+      if (f <= -1.0f)
         ((int32_t*)out)[i] = INT_MIN;
       else
-      if (f >=  1.0)//no need to use corrected constant, rounding won't cause overflow
+      if (f >=  1.0f)//no need to use corrected constant, rounding won't cause overflow
         ((int32_t*)out)[i] = INT_MAX;
       else
-        ((int32_t*)out)[i] = lrintf(f*2147483648.0);
+        ((int32_t*)out)[i] = lrintf(f*2147483648.0f);
 
     }
     break;
@@ -525,19 +525,19 @@ static void int2float(void* in, float* out, int len, int bps)
   switch(bps){
   case(1):
     for(i=0;i<len;i++)
-      out[i]=(1.0/128.0)*((int8_t*)in)[i];
+      out[i]=(1.0f/128.0f)*((int8_t*)in)[i];
     break;
   case(2):
     for(i=0;i<len;i++)
-      out[i]=(1.0/32768.0)*((int16_t*)in)[i];
+      out[i]=(1.0f/32768.0f)*((int16_t*)in)[i];
     break;
   case(3):
     for(i=0;i<len;i++)
-      out[i]=(1.0/2147483648.0)*((int32_t)load24bit(in, i));
+      out[i]=(1.0f/2147483648.0f)*((int32_t)load24bit(in, i));
     break;
   case(4):
     for(i=0;i<len;i++)
-      out[i]=(1.0/2147483648.0)*((int32_t*)in)[i];
+      out[i]=(1.0f/2147483648.0f)*((int32_t*)in)[i];
     break;
   }
 }
