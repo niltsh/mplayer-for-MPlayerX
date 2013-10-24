@@ -97,6 +97,7 @@
 #define STREAM_CTRL_GET_NUM_TITLES 12
 #define STREAM_CTRL_GET_LANG 13
 #define STREAM_CTRL_GET_CURRENT_TITLE 14
+#define STREAM_CTRL_GET_CHAPTER_INFO 15
 
 enum stream_ctrl_type {
 	stream_ctrl_audio,

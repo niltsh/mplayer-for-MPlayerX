@@ -53,13 +53,15 @@ char* ass_color = NULL;
 char* ass_border_color = NULL;
 char* ass_styles_file = NULL;
 int ass_hinting = ASS_HINTING_NATIVE + 4; // native hinting for unscaled osd
+float ass_bottom_margin_ratio = -1.0f;
+float ass_top_margin_ratio = -1.0f;
 
 static void init_style(ASS_Style *style, const char *name, double playres)
 {
 	double fs;
 	uint32_t c1, c2;
 	style->Name = strdup(name);
-	style->FontName = (font_fontconfig >= 0 && sub_font_name) ? strdup(sub_font_name) : (font_fontconfig >= 0 && font_name) ? strdup(font_name) : strdup("Sans");
+	style->FontName = (font_fontconfig >= 0 && sub_font_name) ? strdup(sub_font_name) : (font_fontconfig >= 0 && font_name) ? strdup(font_name) : strdup("Invalid");
 	style->treat_fontname_as_pattern = 1;
 
 	fs = playres * text_font_scale_factor / 100.;
@@ -271,18 +273,21 @@ static void ass_configure(ASS_Renderer* priv, int w, int h, int unscaled) {
 }
 
 static void ass_configure_fonts(ASS_Renderer* priv) {
-	char *dir, *path, *family;
-	dir = get_path("fonts");
-	if (font_fontconfig < 0 && sub_font_name) path = strdup(sub_font_name);
-	else if (font_fontconfig < 0 && font_name) path = strdup(font_name);
-	else path = get_path("subfont.ttf");
-	if (font_fontconfig >= 0 && sub_font_name) family = strdup(sub_font_name);
-	else if (font_fontconfig >= 0 && font_name) family = strdup(font_name);
-	else family = 0;
+	char *path, *family;
+
+	if (sub_font_name) {
+		path = strdup(sub_font_name);
+		family = strdup(sub_font_name);
+	} else if (font_name) {
+		path = strdup(font_name);
+		family = strdup(font_name);
+	} else {
+		path = get_path("subfont.ttf");
+		family = 0;
+	}
 
         ass_set_fonts(priv, path, family, font_fontconfig, NULL, 1);
 
-	free(dir);
 	free(path);
 	free(family);
 }

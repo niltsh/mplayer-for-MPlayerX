@@ -338,8 +338,10 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
                     sh_audio->format = 0x7;
                     break;
             }
-            if (title && title->value)
+            if (title && title->value) {
                 mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_AID_%d_NAME=%s\n", priv->audio_streams, title->value);
+				sh_audio->name = strdup(title->value);
+            }
             if (st->disposition & AV_DISPOSITION_DEFAULT)
               sh_audio->default_track = 1;
             if(mp_msg_test(MSGT_HEADER,MSGL_V) ) print_wave_header(sh_audio->wf, MSGL_V);
@@ -400,8 +402,10 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
                 sh_video->original_aspect = codec->width * codec->sample_aspect_ratio.num
                        / (float)(codec->height * codec->sample_aspect_ratio.den);
             sh_video->i_bps=codec->bit_rate/8;
-            if (title && title->value)
+            if (title && title->value) {
                 mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_VID_%d_NAME=%s\n", priv->video_streams, title->value);
+				sh_video->name = strdup(title->value);
+            }
             if (rot && rot->value)
                 mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_VID_%d_ROTATE=%s\n", priv->video_streams, rot->value);
             mp_msg(MSGT_DEMUX,MSGL_DBG2,"aspect= %d*%d/(%d*%d)\n",
@@ -474,8 +478,10 @@ static void handle_stream(demuxer_t *demuxer, AVFormatContext *avfc, int i) {
                 memcpy(sh_sub->extradata, codec->extradata, codec->extradata_size);
                 sh_sub->extradata_len = codec->extradata_size;
             }
-            if (title && title->value)
+            if (title && title->value) {
                 mp_msg(MSGT_IDENTIFY, MSGL_INFO, "ID_SID_%d_NAME=%s\n", priv->sub_streams, title->value);
+				sh_sub->name = strdup(title->value);
+			}
             if (st->disposition & AV_DISPOSITION_DEFAULT)
               sh_sub->default_track = 1;
             stream_id = priv->sub_streams++;
@@ -583,6 +589,26 @@ static demuxer_t* demux_open_lavf(demuxer_t *demuxer){
         uint64_t end   = av_rescale_q(c->end, c->time_base, (AVRational){1,1000});
         t = av_dict_get(c->metadata, "title", NULL, 0);
         demuxer_add_chapter(demuxer, t ? t->value : NULL, start, end);
+    }
+    
+    { // QZY
+        char *pout = (char*)malloc(8000);
+        char *chptStr = (char*)malloc(200);
+        *pout = 0;
+        *chptStr = 0;
+        for (i=0; i < demuxer->num_chapters; ++i) {
+            snprintf(chptStr, 200, ";;%s^^%"PRIu64"^^%"PRIu64"", 
+                     demuxer->chapters[i].name,
+                     demuxer->chapters[i].start,
+                     demuxer->chapters[i].end);
+            strcat(pout, chptStr);
+        }
+
+        if (*pout) {
+            mp_msg(MSGT_IDENTIFY,MSGL_INFO, "MPX_CHAPTERSINFO=%s\n", pout+2);
+        }
+        free(chptStr);
+        free(pout);
     }
 
     for(i=0; i<avfc->nb_streams; i++)

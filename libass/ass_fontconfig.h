@@ -35,7 +35,7 @@ FCInstance *fontconfig_init(ASS_Library *library,
                             FT_Library ftlibrary, const char *family,
                             const char *path, int fc, const char *config,
                             int update);
-char *fontconfig_select(ASS_Library *library, FCInstance *priv,
+char *fontconfig_select(FT_Library ftlibrary, ASS_Library *library, FCInstance *priv,
                         const char *family, int treat_family_as_pattern,
                         unsigned bold, unsigned italic, int *index,
                         uint32_t code);

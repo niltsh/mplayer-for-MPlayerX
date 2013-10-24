@@ -1467,8 +1467,8 @@ static int mp_property_sub(m_option_t *prop, int action, void *arg,
     case M_PROPERTY_PRINT:
         if (!arg)
             return M_PROPERTY_ERROR;
-        *(char **) arg = malloc(64);
-        (*(char **) arg)[63] = 0;
+        *(char **) arg = malloc(512);
+        (*(char **) arg)[511] = 0;
         sub_name = 0;
         if (subdata)
             sub_name = subdata->filename;
@@ -1479,32 +1479,36 @@ static int mp_property_sub(m_option_t *prop, int action, void *arg,
         if (sub_name) {
             const char *tmp = mp_basename(sub_name);
 
-            snprintf(*(char **) arg, 63, "(%d) %s%s",
+            snprintf(*(char **) arg, 511, "(%d) %s",
                      mpctx->set_of_sub_pos + 1,
-                     strlen(tmp) < 20 ? "" : "...",
-                     strlen(tmp) < 20 ? tmp : tmp + strlen(tmp) - 19);
+                     tmp);
             return M_PROPERTY_OK;
         }
 
         if (vo_vobsub && vobsub_id >= 0) {
             const char *language = MSGTR_Unknown;
             language = vobsub_get_id(vo_vobsub, (unsigned int) vobsub_id);
-            snprintf(*(char **) arg, 63, "(%d) %s",
+            snprintf(*(char **) arg, 511, "(%d) %s",
                      vobsub_id, language ? language : MSGTR_Unknown);
             return M_PROPERTY_OK;
         }
         if (dvdsub_id >= 0) {
-            char lang[40] = MSGTR_Unknown;
-            int id = dvdsub_id;
-            // HACK: for DVDs sub->sh/id will be invalid until
-            // we actually get the first packet
-            if (d_sub && d_sub->sh)
-                id = d_sub->id;
-            demuxer_sub_lang(mpctx->demuxer, id, lang, sizeof(lang));
-            snprintf(*(char **) arg, 63, "(%d) %s", dvdsub_id, lang);
+            char lang[512] = MSGTR_Unknown;
+            char *name = NULL;
+            // dvdsub_id is actually the sid
+            // looking for id from dvdsub_id
+            for (int i = 0; i < MAX_S_STREAMS; i++) {
+                sh_sub_t *sh = mpctx->demuxer->s_streams[i];
+                if (sh && sh->sid == dvdsub_id) {
+                    demuxer_sub_lang(mpctx->demuxer, i, lang, sizeof(lang));
+                    name = sh->name;
+                    break;
+                }
+            }
+            snprintf(*(char **) arg, 511, "(%d) %s [%s]", dvdsub_id, (name)?(name):("noname"), lang);
             return M_PROPERTY_OK;
         }
-        snprintf(*(char **) arg, 63, MSGTR_Disabled);
+        snprintf(*(char **) arg, 511, MSGTR_Disabled);
         return M_PROPERTY_OK;
 
     case M_PROPERTY_SET:
@@ -1916,9 +1920,12 @@ static int mp_property_sub_scale(m_option_t *prop, int action, void *arg,
             if (ass_enabled) {
                 ass_font_scale = *(float *) arg;
                 ass_force_reload = 1;
+            } else {
+#endif
+				text_font_scale_factor = *(float *) arg;
+#ifdef CONFIG_ASS
             }
 #endif
-            text_font_scale_factor = *(float *) arg;
             force_load_font = 1;
             vo_osd_changed(OSDTYPE_SUBTITLE);
             return M_PROPERTY_OK;
@@ -1930,11 +1937,14 @@ static int mp_property_sub_scale(m_option_t *prop, int action, void *arg,
                   (action == M_PROPERTY_STEP_UP ? 1.0 : -1.0);
                 M_PROPERTY_CLAMP(prop, ass_font_scale);
                 ass_force_reload = 1;
+            } else {
+#endif
+				text_font_scale_factor += (arg ? *(float *) arg : 0.1)*
+				(action == M_PROPERTY_STEP_UP ? 1.0 : -1.0);
+				M_PROPERTY_CLAMP(prop, text_font_scale_factor);
+#ifdef CONFIG_ASS
             }
 #endif
-            text_font_scale_factor += (arg ? *(float *) arg : 0.1)*
-              (action == M_PROPERTY_STEP_UP ? 1.0 : -1.0);
-            M_PROPERTY_CLAMP(prop, text_font_scale_factor);
             force_load_font = 1;
             vo_osd_changed(OSDTYPE_SUBTITLE);
             return M_PROPERTY_OK;
@@ -2753,9 +2763,11 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
 
         case MP_CMD_FRAME_STEP:
         case MP_CMD_PAUSE:
-            cmd->pausing = 1;
-            brk_cmd = 1;
-            break;
+				if (cmd->args[0].v.i != -1) {
+					cmd->pausing = 1;
+					brk_cmd = 1;
+				}
+				break;
 
         case MP_CMD_FILE_FILTER:
             file_filter = cmd->args[0].v.i;
@@ -3440,6 +3452,26 @@ int run_command(MPContext *mpctx, mp_cmd_t *cmd)
             af_uninit(mpctx->mixer.afilter);
             af_init(mpctx->mixer.afilter);
         }
+#ifdef CONFIG_ASS
+	case MP_ASS_MARGIN:
+		if (mpctx->sh_video && 
+			((fabsf(ass_bottom_margin_ratio - cmd->args[0].v.f) > 0.001) || 
+			(fabsf(ass_top_margin_ratio - cmd->args[1].v.f) > 0.001) ||
+			(ass_use_margins != cmd->args[2].v.i))) {
+			ass_bottom_margin_ratio = cmd->args[0].v.f;
+			ass_top_margin_ratio = cmd->args[1].v.f;
+			ass_use_margins = cmd->args[2].v.i;
+			
+			uninit_player(INITIALIZED_VO);
+			reinit_video_chain();
+		}
+		break;
+#endif
+    case MP_CMD_ABLOOP:
+        abloop_start = cmd->args[0].v.f;
+        abloop_stop = cmd->args[1].v.f;
+        abloop_firstentry = 0;
+        break;
     case MP_CMD_AF_ADD:
     case MP_CMD_AF_DEL:
         if (!sh_audio)
